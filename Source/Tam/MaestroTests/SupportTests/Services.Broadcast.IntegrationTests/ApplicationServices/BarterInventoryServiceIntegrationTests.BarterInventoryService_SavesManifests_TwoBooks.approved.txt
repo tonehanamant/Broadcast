@@ -546,7 +546,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -1096,7 +1096,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "CBS",
           "CallLetters": "KOLN+",
@@ -1646,7 +1646,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -2238,7 +2238,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "PBS",
           "CallLetters": "KUON-TV 12.1",
@@ -2788,7 +2788,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -3353,7 +3353,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -3903,7 +3903,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "CBS",
           "CallLetters": "KOLN+",
@@ -4453,7 +4453,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -5045,7 +5045,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "PBS",
           "CallLetters": "KUON-TV 12.1",
@@ -5595,7 +5595,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -6160,7 +6160,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -6710,7 +6710,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "CBS",
           "CallLetters": "KOLN+",
@@ -7260,7 +7260,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -7852,7 +7852,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "PBS",
           "CallLetters": "KUON-TV 12.1",
@@ -8402,7 +8402,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -8967,7 +8967,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -9517,7 +9517,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "CBS",
           "CallLetters": "KOLN+",
@@ -10067,7 +10067,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -10659,7 +10659,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "PBS",
           "CallLetters": "KUON-TV 12.1",
@@ -11209,7 +11209,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -11774,7 +11774,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -12324,7 +12324,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "CBS",
           "CallLetters": "KOLN+",
@@ -12874,7 +12874,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -13466,7 +13466,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "PBS",
           "CallLetters": "KUON-TV 12.1",
@@ -14016,7 +14016,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -14581,7 +14581,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -15131,7 +15131,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "CBS",
           "CallLetters": "KOLN+",
@@ -15681,7 +15681,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -16273,7 +16273,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "PBS",
           "CallLetters": "KUON-TV 12.1",
@@ -16823,7 +16823,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -17388,7 +17388,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -17938,7 +17938,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "CBS",
           "CallLetters": "KOLN+",
@@ -18488,7 +18488,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -19080,7 +19080,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "PBS",
           "CallLetters": "KUON-TV 12.1",
@@ -19630,7 +19630,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -20195,7 +20195,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -20745,7 +20745,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "CBS",
           "CallLetters": "KOLN+",
@@ -21295,7 +21295,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -21887,7 +21887,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "PBS",
           "CallLetters": "KUON-TV 12.1",
@@ -22437,7 +22437,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -23002,7 +23002,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -23552,7 +23552,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "CBS",
           "CallLetters": "KOLN+",
@@ -24102,7 +24102,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -24694,7 +24694,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "PBS",
           "CallLetters": "KUON-TV 12.1",
@@ -25244,7 +25244,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -25809,7 +25809,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -26359,7 +26359,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "CBS",
           "CallLetters": "KOLN+",
@@ -26909,7 +26909,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -27501,7 +27501,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "PBS",
           "CallLetters": "KUON-TV 12.1",
@@ -28051,7 +28051,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -28616,7 +28616,7 @@
         ],
         "SpotLengthId": 2,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -29166,7 +29166,7 @@
         ],
         "SpotLengthId": 2,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "CBS",
           "CallLetters": "KOLN+",
@@ -29716,7 +29716,7 @@
         ],
         "SpotLengthId": 2,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -30308,7 +30308,7 @@
         ],
         "SpotLengthId": 2,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "PBS",
           "CallLetters": "KUON-TV 12.1",
@@ -30858,7 +30858,7 @@
         ],
         "SpotLengthId": 2,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -31423,7 +31423,7 @@
         ],
         "SpotLengthId": 2,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -31973,7 +31973,7 @@
         ],
         "SpotLengthId": 2,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "CBS",
           "CallLetters": "KOLN+",
@@ -32523,7 +32523,7 @@
         ],
         "SpotLengthId": 2,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -33115,7 +33115,7 @@
         ],
         "SpotLengthId": 2,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "PBS",
           "CallLetters": "KUON-TV 12.1",
@@ -33665,7 +33665,7 @@
         ],
         "SpotLengthId": 2,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -34230,7 +34230,7 @@
         ],
         "SpotLengthId": 2,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -34780,7 +34780,7 @@
         ],
         "SpotLengthId": 2,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "CBS",
           "CallLetters": "KOLN+",
@@ -35330,7 +35330,7 @@
         ],
         "SpotLengthId": 2,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -35922,7 +35922,7 @@
         ],
         "SpotLengthId": 2,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "PBS",
           "CallLetters": "KUON-TV 12.1",
@@ -36472,7 +36472,7 @@
         ],
         "SpotLengthId": 2,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -37037,7 +37037,7 @@
         ],
         "SpotLengthId": 2,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -37587,7 +37587,7 @@
         ],
         "SpotLengthId": 2,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "CBS",
           "CallLetters": "KOLN+",
@@ -38137,7 +38137,7 @@
         ],
         "SpotLengthId": 2,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -38729,7 +38729,7 @@
         ],
         "SpotLengthId": 2,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "PBS",
           "CallLetters": "KUON-TV 12.1",
@@ -39279,7 +39279,7 @@
         ],
         "SpotLengthId": 2,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -39844,7 +39844,7 @@
         ],
         "SpotLengthId": 2,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -40394,7 +40394,7 @@
         ],
         "SpotLengthId": 2,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "CBS",
           "CallLetters": "KOLN+",
@@ -40944,7 +40944,7 @@
         ],
         "SpotLengthId": 2,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -41536,7 +41536,7 @@
         ],
         "SpotLengthId": 2,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "PBS",
           "CallLetters": "KUON-TV 12.1",
@@ -42086,7 +42086,7 @@
         ],
         "SpotLengthId": 2,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -42651,7 +42651,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -43201,7 +43201,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "CBS",
           "CallLetters": "KOLN+",
@@ -43751,7 +43751,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -44343,7 +44343,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "PBS",
           "CallLetters": "KUON-TV 12.1",
@@ -44893,7 +44893,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -45458,7 +45458,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -46008,7 +46008,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "CBS",
           "CallLetters": "KOLN+",
@@ -46558,7 +46558,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -47150,7 +47150,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "PBS",
           "CallLetters": "KUON-TV 12.1",
@@ -47700,7 +47700,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -48265,7 +48265,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -48815,7 +48815,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "CBS",
           "CallLetters": "KOLN+",
@@ -49365,7 +49365,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -49957,7 +49957,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "PBS",
           "CallLetters": "KUON-TV 12.1",
@@ -50507,7 +50507,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -51072,7 +51072,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -51622,7 +51622,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "CBS",
           "CallLetters": "KOLN+",
@@ -52172,7 +52172,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -52764,7 +52764,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "PBS",
           "CallLetters": "KUON-TV 12.1",
@@ -53314,7 +53314,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -53879,7 +53879,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -54429,7 +54429,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "CBS",
           "CallLetters": "KOLN+",
@@ -54979,7 +54979,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -55571,7 +55571,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "PBS",
           "CallLetters": "KUON-TV 12.1",
@@ -56121,7 +56121,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -56686,7 +56686,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -57236,7 +57236,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "CBS",
           "CallLetters": "KOLN+",
@@ -57786,7 +57786,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -58378,7 +58378,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "PBS",
           "CallLetters": "KUON-TV 12.1",
@@ -58928,7 +58928,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -59493,7 +59493,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -60043,7 +60043,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "CBS",
           "CallLetters": "KOLN+",
@@ -60593,7 +60593,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -61185,7 +61185,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "PBS",
           "CallLetters": "KUON-TV 12.1",
@@ -61735,7 +61735,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -62300,7 +62300,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -62850,7 +62850,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "CBS",
           "CallLetters": "KOLN+",
@@ -63400,7 +63400,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -63992,7 +63992,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "PBS",
           "CallLetters": "KUON-TV 12.1",
@@ -64542,7 +64542,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -65107,7 +65107,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -65657,7 +65657,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "CBS",
           "CallLetters": "KOLN+",
@@ -66207,7 +66207,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -66799,7 +66799,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "PBS",
           "CallLetters": "KUON-TV 12.1",
@@ -67349,7 +67349,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -67914,7 +67914,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -68464,7 +68464,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "CBS",
           "CallLetters": "KOLN+",
@@ -69014,7 +69014,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -69606,7 +69606,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "PBS",
           "CallLetters": "KUON-TV 12.1",
@@ -70156,7 +70156,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -70721,7 +70721,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -71271,7 +71271,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "CBS",
           "CallLetters": "KOLN+",
@@ -71821,7 +71821,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -72413,7 +72413,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "PBS",
           "CallLetters": "KUON-TV 12.1",
@@ -72963,7 +72963,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -73528,7 +73528,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -74078,7 +74078,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "CBS",
           "CallLetters": "KOLN+",
@@ -74628,7 +74628,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -75220,7 +75220,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "PBS",
           "CallLetters": "KUON-TV 12.1",
@@ -75770,7 +75770,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -76335,7 +76335,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -76885,7 +76885,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "CBS",
           "CallLetters": "KOLN+",
@@ -77435,7 +77435,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -78027,7 +78027,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "PBS",
           "CallLetters": "KUON-TV 12.1",
@@ -78577,7 +78577,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -79142,7 +79142,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -79692,7 +79692,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "CBS",
           "CallLetters": "KOLN+",
@@ -80242,7 +80242,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -80834,7 +80834,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "PBS",
           "CallLetters": "KUON-TV 12.1",
@@ -81384,7 +81384,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -81949,7 +81949,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -82499,7 +82499,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "CBS",
           "CallLetters": "KOLN+",
@@ -83049,7 +83049,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -83641,7 +83641,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "PBS",
           "CallLetters": "KUON-TV 12.1",
@@ -84191,7 +84191,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -84756,7 +84756,7 @@
         ],
         "SpotLengthId": 3,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -85306,7 +85306,7 @@
         ],
         "SpotLengthId": 3,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "CBS",
           "CallLetters": "KOLN+",
@@ -85856,7 +85856,7 @@
         ],
         "SpotLengthId": 3,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -86448,7 +86448,7 @@
         ],
         "SpotLengthId": 3,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "PBS",
           "CallLetters": "KUON-TV 12.1",
@@ -86998,7 +86998,7 @@
         ],
         "SpotLengthId": 3,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -87563,7 +87563,7 @@
         ],
         "SpotLengthId": 3,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -88113,7 +88113,7 @@
         ],
         "SpotLengthId": 3,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "CBS",
           "CallLetters": "KOLN+",
@@ -88663,7 +88663,7 @@
         ],
         "SpotLengthId": 3,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -89255,7 +89255,7 @@
         ],
         "SpotLengthId": 3,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "PBS",
           "CallLetters": "KUON-TV 12.1",
@@ -89805,7 +89805,7 @@
         ],
         "SpotLengthId": 3,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -90370,7 +90370,7 @@
         ],
         "SpotLengthId": 3,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -90920,7 +90920,7 @@
         ],
         "SpotLengthId": 3,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "CBS",
           "CallLetters": "KOLN+",
@@ -91470,7 +91470,7 @@
         ],
         "SpotLengthId": 3,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -92062,7 +92062,7 @@
         ],
         "SpotLengthId": 3,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "PBS",
           "CallLetters": "KUON-TV 12.1",
@@ -92612,7 +92612,7 @@
         ],
         "SpotLengthId": 3,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -93177,7 +93177,7 @@
         ],
         "SpotLengthId": 3,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -93727,7 +93727,7 @@
         ],
         "SpotLengthId": 3,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "CBS",
           "CallLetters": "KOLN+",
@@ -94277,7 +94277,7 @@
         ],
         "SpotLengthId": 3,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -94869,7 +94869,7 @@
         ],
         "SpotLengthId": 3,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "PBS",
           "CallLetters": "KUON-TV 12.1",
@@ -95419,7 +95419,7 @@
         ],
         "SpotLengthId": 3,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -95984,7 +95984,7 @@
         ],
         "SpotLengthId": 3,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -96534,7 +96534,7 @@
         ],
         "SpotLengthId": 3,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "CBS",
           "CallLetters": "KOLN+",
@@ -97084,7 +97084,7 @@
         ],
         "SpotLengthId": 3,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",
@@ -97676,7 +97676,7 @@
         ],
         "SpotLengthId": 3,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "PBS",
           "CallLetters": "KUON-TV 12.1",
@@ -98226,7 +98226,7 @@
         ],
         "SpotLengthId": 3,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "MET",
           "CallLetters": "WESH 2.2",

@@ -423,6 +423,9 @@
     <None Include="Files\BarterDataFiles\OAndO_No_HH_HeaderCell.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Files\BarterDataFiles\OAndO_UnknownAudience.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Files\BarterDataFiles\OAndO_ValidFile1.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

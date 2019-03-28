@@ -63,6 +63,8 @@ namespace Services.Broadcast.Repositories
             return _InReadUncommitedTransaction(context =>
             {
                 var file = context.inventory_files.Single(x => x.id == fileId, $"Could not find existing file with id={fileId}");
+                var header = file.inventory_file_barter_header.First();
+                var audience = header.audience;
 
                 return new BarterInventoryFile
                 {
@@ -82,15 +84,25 @@ namespace Services.Broadcast.Repositories
                     },
                     Header = new BarterInventoryHeader
                     {
-                        AudienceId = file.inventory_file_barter_header.First().audience_id,
-                        ContractedDaypartId = file.inventory_file_barter_header.First().contracted_daypart_id,
-                        Cpm = file.inventory_file_barter_header.First().cpm,
-                        DaypartCode = file.inventory_file_barter_header.First().daypart_code,
-                        EffectiveDate = file.inventory_file_barter_header.First().effective_date,
-                        EndDate = file.inventory_file_barter_header.First().end_date,
-                        HutBookId = file.inventory_file_barter_header.First().hut_projection_book_id,
-                        ShareBookId = file.inventory_file_barter_header.First().share_projection_book_id,
-                        PlaybackType = (ProposalPlaybackType)file.inventory_file_barter_header.First().playback_type
+                        Audience = new BroadcastAudience
+                        {
+                            Id = audience.id,
+                            CategoryCode = (EBroadcastAudienceCategoryCode)audience.category_code,
+                            SubCategoryCode = audience.sub_category_code,
+                            RangeStart = audience.range_start,
+                            RangeEnd = audience.range_end,
+                            Custom = audience.custom,
+                            Code = audience.code,
+                            Name = audience.name
+                        },
+                        ContractedDaypartId = header.contracted_daypart_id,
+                        Cpm = header.cpm,
+                        DaypartCode = header.daypart_code,
+                        EffectiveDate = header.effective_date,
+                        EndDate = header.end_date,
+                        HutBookId = header.hut_projection_book_id,
+                        ShareBookId = header.share_projection_book_id,
+                        PlaybackType = (ProposalPlaybackType)header.playback_type
                     }
                 };
             });
@@ -110,7 +122,7 @@ namespace Services.Broadcast.Repositories
                 inventoryFile.inventory_file_barter_header = new List<inventory_file_barter_header>{
                             new inventory_file_barter_header
                             {
-                                audience_id = barterFile.Header.AudienceId,
+                                audience_id = barterFile.Header.Audience.Id,
                                 contracted_daypart_id = barterFile.Header.ContractedDaypartId,
                                 cpm = barterFile.Header.Cpm,
                                 daypart_code = barterFile.Header.DaypartCode,

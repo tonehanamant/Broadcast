@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Text.RegularExpressions;
 using Common.Services.Repositories;
 using OfficeOpenXml;
 using Services.Broadcast.BusinessEngines;
@@ -59,7 +60,7 @@ namespace Services.Broadcast.Converters.RateImport
             }
 
             var rowIndex = stationHeaderRowIndex.Value + 1;
-            var weeks = _ReadWeeks(worksheet);
+            var weeks = _ReadWeeks(worksheet, barterFile);
             var emptyLinesProcessedAfterLastDataLine = 0;
 
             while (true)
@@ -219,10 +220,10 @@ namespace Services.Broadcast.Converters.RateImport
                 line.Weeks.All(x => !x.Spots.HasValue);
         }
 
-        private List<int> _ReadWeeks(ExcelWorksheet worksheet)
+        private List<int> _ReadWeeks(ExcelWorksheet worksheet, BarterInventoryFile barterFile)
         {
-            const string hhHeader = "HH";
             const int firstColumnIndex = 6;
+            var audienceCode = barterFile.Header.Audience.Code;
             var dateFormats = new string[] { "d-MMM-yyyy", "M/d/yyyy" };
             var result = new List<int>();
             var lastColumnIndex = firstColumnIndex;
@@ -234,18 +235,18 @@ namespace Services.Broadcast.Converters.RateImport
             }
 
             var weeksRowIndex = weeksStartHeaderRowIndex.Value + 1;
-            var hhHeaderCellRowIndex = weeksStartHeaderRowIndex.Value + 2;
+            var audienceCodeHeaderCellRowIndex = weeksStartHeaderRowIndex.Value + 2;
 
-            // let's find lastColumnIndex by looking for cell value which starts from "HH"
+            // let's find lastColumnIndex by looking for cell value which starts from audienceCode
             while (true)
             {
                 try
                 {
-                    // hh cell should be 2 cell after last week column
-                    var hhHeaderCell = worksheet.Cells[hhHeaderCellRowIndex, lastColumnIndex + 2].GetStringValue();
-                    var ishhHeaderCell = !string.IsNullOrWhiteSpace(hhHeaderCell) && hhHeaderCell.StartsWith(hhHeader, StringComparison.OrdinalIgnoreCase);
+                    // audienceCode cell should be 2 cell after last week column
+                    var audienceCodeHeaderCell = worksheet.Cells[audienceCodeHeaderCellRowIndex, lastColumnIndex + 2].GetStringValue();
+                    var isAudienceCodeHeaderCell = !string.IsNullOrWhiteSpace(audienceCodeHeaderCell) && audienceCodeHeaderCell.StartsWith(audienceCode, StringComparison.OrdinalIgnoreCase);
 
-                    if (ishhHeaderCell)
+                    if (isAudienceCodeHeaderCell)
                     {
                         break;
                     }
@@ -258,11 +259,11 @@ namespace Services.Broadcast.Converters.RateImport
                 }
             }
 
-            var beforehhHeaderCell = worksheet.Cells[weeksRowIndex, lastColumnIndex + 1].GetStringValue();
+            var beforeAudienceCodeHeaderCell = worksheet.Cells[weeksRowIndex, lastColumnIndex + 1].GetStringValue();
 
-            if (!string.IsNullOrWhiteSpace(beforehhHeaderCell))
+            if (!string.IsNullOrWhiteSpace(beforeAudienceCodeHeaderCell))
             {
-                throw new Exception("Valid template should contain an empty column between last week column and HH IMPS column");
+                throw new Exception("Valid template should contain an empty column between last week column and '{audience} IMPS' column");
             }
 
             for (var i = firstColumnIndex; i <= lastColumnIndex; i++)
@@ -310,7 +311,7 @@ namespace Services.Broadcast.Converters.RateImport
                     {
                         new StationInventoryManifestAudience
                         {
-                            Audience = new DisplayAudience { Id = fileHeader.AudienceId.Value },
+                            Audience = new DisplayAudience(fileHeader.Audience.Id, fileHeader.Audience.Name),
                             CPM = x.CPM.Value,
                             Impressions = x.Impressions
                         }
@@ -343,12 +344,58 @@ namespace Services.Broadcast.Converters.RateImport
             _ProcessShareBook(worksheet, validationProblems, header, out var shareBookParsedCorrectly, out var shareBook);
             _ProcessHutBook(worksheet, validationProblems, header, shareBookParsedCorrectly, shareBook);
             _ProcessPlaybackType(worksheet, validationProblems, header);
-            
-            // for now we suppose it`s always House Holds
-            header.AudienceId = AudienceCache.GetDisplayAudienceByCode(BroadcastConstants.HOUSEHOLD_CODE).Id;
+            _ProcessAudience(worksheet, validationProblems, header);         
 
             barterFile.Header = header;
             barterFile.ValidationProblems.AddRange(validationProblems);
+        }
+
+        private void _ProcessAudience(ExcelWorksheet worksheet, List<string> validationProblems, BarterInventoryHeader header)
+        {
+            // let`s find header with audience
+            const int firstColumnIndex = 6;
+            const int firstRowIndex = 13;
+            const int lastRowIndex = 14;
+            var columnIndex = firstColumnIndex;
+            var audienceRegex = new Regex(@"(?<Audience>([a-z-+\d])+)\s+IMPS.*", RegexOptions.IgnoreCase);
+
+            while (true)
+            {
+                try
+                {
+                    var audienceParsed = false;
+
+                    for (var i = firstRowIndex; i <= lastRowIndex; i++)
+                    {
+                        var cellValue = worksheet.Cells[i, columnIndex].GetStringValue() ?? string.Empty;
+                        var match = audienceRegex.Match(cellValue);
+
+                        if (match.Success)
+                        {
+                            var audienceCode = match.Groups["Audience"].Value;
+                            header.Audience = AudienceCache.GetBroadcastAudienceByCode(audienceCode);
+                            audienceParsed = true;
+                            break;
+                        }
+                    }
+
+                    if (audienceParsed)
+                    {
+                        break;
+                    }
+
+                    columnIndex++;
+                }
+                catch
+                {
+                    throw new Exception("Couldn't find audience. Please specify '{audience} IMPS' cell");
+                }
+            }
+
+            if (header.Audience == null)
+            {
+                throw new Exception("Unknown audience was found. Please specify '{audience} IMPS' cell with valid audience");
+            }
         }
 
         private void _ProcessInventorySource(ExcelWorksheet worksheet, List<string> validationProblems)

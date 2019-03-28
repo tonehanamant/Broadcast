@@ -95,15 +95,6 @@ namespace Services.Broadcast.ApplicationServices
             fileImporter.LoadFromSaveRequest(request);
             fileImporter.CheckFileHash();
 
-            try
-            {
-                _DataLakeFileService.Save(request);
-            }
-            catch(Exception ex)
-            {
-                throw new ApplicationException("Unable to send file to Data Lake shared folder and e-mail reporting the error:" + ex);
-            }
-
             BarterInventoryFile barterFile = fileImporter.GetPendingBarterInventoryFile(userName, inventorySource);
 
             _CheckValidationProblems(barterFile);
@@ -158,6 +149,15 @@ namespace Services.Broadcast.ApplicationServices
             _CheckValidationProblems(barterFile);
 
             _InventoryRatingsService.QueueInventoryFileRatingsJob(barterFile.Id);
+
+            try
+            {
+                _DataLakeFileService.Save(request);
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("Unable to send file to Data Lake shared folder and e-mail reporting the error:" + ex);
+            }
 
             return new InventoryFileSaveResult
             {

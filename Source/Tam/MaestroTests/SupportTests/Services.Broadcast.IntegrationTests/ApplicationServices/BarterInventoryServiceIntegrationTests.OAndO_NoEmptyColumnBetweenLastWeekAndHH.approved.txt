@@ -1,7 +1,7 @@
 ﻿[
   {
     "AffectedProposals": null,
-    "ProblemDescription": "Valid template should contain an empty column between last week column and HH IMPS column",
+    "ProblemDescription": "Valid template should contain an empty column between last week column and '{audience} IMPS' column",
     "ProgramName": null,
     "StationLetters": null
   }

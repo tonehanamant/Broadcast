@@ -5,7 +5,7 @@
   "FileStatus": 1,
   "Hash": "3D-EF-6C-47-4F-28-1F-09-78-7E-82-33-BB-2B-A4-DF-42-77-AA-06",
   "Header": {
-    "AudienceId": null,
+    "Audience": null,
     "Cpm": null,
     "DaypartCode": "EMN",
     "EffectiveDate": "0001-01-01T00:00:00",

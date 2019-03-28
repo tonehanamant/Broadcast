@@ -1,7 +1,7 @@
 ﻿[
   {
     "AffectedProposals": null,
-    "ProblemDescription": "Couldn't find last week column",
+    "ProblemDescription": "Couldn't find audience. Please specify '{audience} IMPS' cell",
     "ProgramName": null,
     "StationLetters": null
   }

@@ -112,10 +112,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var inventoryFileId = _InventoryFileRepository.GetInventoryFileIdByHash("ExpiresGroupsTest");
                 var contractedDaypartId = 5;
                 var inventoryFile = new InventoryFile
                 {
+                    Id = _InventoryFileRepository.GetInventoryFileIdByHash("ExpiresGroupsTest"),
                     InventorySource = new InventorySource
                     {
                         Id = 7,
@@ -123,24 +123,44 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     }
                 };
 
-                var groupsBeforeExpiring = _InventoryRepository.GetStationInventoryGroupsByFileId(inventoryFileId)
+                var groupsBeforeExpiring = _InventoryRepository.GetStationInventoryGroupsByFileId(inventoryFile.Id)
                     .Select((x, index) => new
                     {
                         index,
                         x.StartDate,
                         x.EndDate,
-                        Manifests = x.Manifests.Select(m => new { m.EffectiveDate, m.EndDate })
+                        Manifests = x.Manifests.Select(m => new
+                        {
+                            m.EffectiveDate,
+                            m.EndDate,
+                            Weeks = m.ManifestWeeks.Select(w => new
+                            {
+                                w.Spots,
+                                w.MediaWeek.StartDate,
+                                w.MediaWeek.EndDate,
+                            })
+                        })
                     });
 
                 _StationInventoryGroupService.AddNewStationInventory(inventoryFile, start, end, contractedDaypartId);
 
-                var groupsAfterExpiring = _InventoryRepository.GetStationInventoryGroupsByFileId(inventoryFileId)
+                var groupsAfterExpiring = _InventoryRepository.GetStationInventoryGroupsByFileId(inventoryFile.Id)
                     .Select((x, index) => new
                     {
                         index,
                         x.StartDate,
                         x.EndDate,
-                        Manifests = x.Manifests.Select(m => new { m.EffectiveDate, m.EndDate })
+                        Manifests = x.Manifests.Select(m => new
+                        {
+                            m.EffectiveDate,
+                            m.EndDate,
+                            Weeks = m.ManifestWeeks.Select(w => new
+                            {
+                                w.Spots,
+                                w.MediaWeek.StartDate,
+                                w.MediaWeek.EndDate,
+                            })
+                        })
                     });
 
                 var result = new { groupsBeforeExpiring, groupsAfterExpiring };
@@ -154,10 +174,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var inventoryFileId = _InventoryFileRepository.GetInventoryFileIdByHash("ExpiresManifestsTest");
                 var contractedDaypartId = 5;
                 var inventoryFile = new InventoryFile
                 {
+                    Id = _InventoryFileRepository.GetInventoryFileIdByHash("ExpiresManifestsTest"),
                     InventorySource = new InventorySource
                     {
                         Id = 10,
@@ -165,13 +185,35 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     }
                 };
 
-                var manifestsBeforeExpiring = _InventoryRepository.GetStationInventoryManifestsByFileId(inventoryFileId)
-                    .Select((x, index) => new { index, x.EffectiveDate, x.EndDate });
+                var manifestsBeforeExpiring = _InventoryRepository.GetStationInventoryManifestsByFileId(inventoryFile.Id)
+                    .Select((x, index) => new
+                    {
+                        index,
+                        x.EffectiveDate,
+                        x.EndDate,
+                        Weeks = x.ManifestWeeks.Select(w => new
+                        {
+                            w.Spots,
+                            w.MediaWeek.StartDate,
+                            w.MediaWeek.EndDate,
+                        })
+                    });
 
                 _StationInventoryGroupService.AddNewStationInventory(inventoryFile, start, end, contractedDaypartId);
 
-                var manifestsAfterExpiring = _InventoryRepository.GetStationInventoryManifestsByFileId(inventoryFileId)
-                    .Select((x, index) => new { index, x.EffectiveDate, x.EndDate });
+                var manifestsAfterExpiring = _InventoryRepository.GetStationInventoryManifestsByFileId(inventoryFile.Id)
+                    .Select((x, index) => new
+                    {
+                        index,
+                        x.EffectiveDate,
+                        x.EndDate,
+                        Weeks = x.ManifestWeeks.Select(w => new
+                        {
+                            w.Spots,
+                            w.MediaWeek.StartDate,
+                            w.MediaWeek.EndDate,
+                        })
+                    });
 
                 var result = new { manifestsBeforeExpiring, manifestsAfterExpiring };
                 var resultJson = IntegrationTestHelper.ConvertToJson(result);

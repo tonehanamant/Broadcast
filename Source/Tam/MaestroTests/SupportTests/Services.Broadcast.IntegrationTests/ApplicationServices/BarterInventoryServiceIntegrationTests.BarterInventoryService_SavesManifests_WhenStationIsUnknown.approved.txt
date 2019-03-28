@@ -546,7 +546,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": null,
           "CallLetters": "Unknowns-TV",
@@ -1111,7 +1111,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": null,
           "CallLetters": "Unknowns-TV",
@@ -1676,7 +1676,7 @@
         ],
         "SpotLengthId": 2,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": null,
           "CallLetters": "Unknowns-TV",
@@ -2241,7 +2241,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": null,
           "CallLetters": "Unknowns-TV",
@@ -2806,7 +2806,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": null,
           "CallLetters": "Unknowns-TV",
@@ -3371,7 +3371,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": null,
           "CallLetters": "Unknowns-TV",
@@ -3936,7 +3936,7 @@
         ],
         "SpotLengthId": 3,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": null,
           "CallLetters": "Unknowns-TV",

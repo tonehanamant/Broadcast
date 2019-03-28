@@ -134,7 +134,7 @@ namespace Services.Broadcast.Converters.RateImport
             }
             else
             {
-                header.AudienceId = AudienceCache.GetDisplayAudienceByCode(demo).Id;
+                header.Audience = AudienceCache.GetBroadcastAudienceByCode(demo);
             }
 
             //Format: M-F 6:30PM-11PM and Standard Cadent Daypart rules
@@ -395,7 +395,7 @@ namespace Services.Broadcast.Converters.RateImport
                             {
                                 new StationInventoryManifestAudience
                                 {
-                                    Audience = new DisplayAudience { Id = fileHeader.AudienceId.Value },
+                                    Audience = new DisplayAudience(fileHeader.Audience.Id, fileHeader.Audience.Name),
                                     CPM = fileHeader.Cpm.Value
                                 }
                             }

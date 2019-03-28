@@ -22,6 +22,7 @@ namespace Services.Broadcast
         IEnumerable<BroadcastAudience> FindByAgeRangeAndSubcategory(int fromAge, int toAge, string subcategory);
         BroadcastAudience GetDefaultAudience();
         LookupDto FindDto(int id);
+        BroadcastAudience GetBroadcastAudienceByCode(string audienceCode);
     }
 
     public class BroadcastAudiencesCache : IBroadcastAudiencesCache
@@ -76,6 +77,11 @@ namespace Services.Broadcast
                     Id = a.Id,
                     AudienceString = a.Name
                 }).SingleOrDefault();
+        }
+
+        public BroadcastAudience GetBroadcastAudienceByCode(string audienceCode)
+        {
+            return _Audiences.SingleOrDefault(x => x.Code == audienceCode);
         }
 
         public IEnumerable<BroadcastAudience> FindByAgeRange(int fromAge, int toAge)

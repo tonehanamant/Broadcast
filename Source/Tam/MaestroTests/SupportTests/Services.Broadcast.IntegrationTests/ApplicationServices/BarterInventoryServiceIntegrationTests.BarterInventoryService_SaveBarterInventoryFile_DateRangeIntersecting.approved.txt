@@ -76,7 +76,7 @@
         ],
         "SpotLengthId": 2,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "CBS",
           "CallLetters": "WCBS-TV 2.1",
@@ -156,7 +156,7 @@
         ],
         "SpotLengthId": 2,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "FOX",
           "CallLetters": "WNYW 5.1",
@@ -251,7 +251,7 @@
         ],
         "SpotLengthId": 2,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "CBS",
           "CallLetters": "WCBS-TV 2.1",
@@ -331,7 +331,7 @@
         ],
         "SpotLengthId": 2,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "FOX",
           "CallLetters": "WNYW 5.1",
@@ -426,7 +426,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "CBS",
           "CallLetters": "WCBS-TV 2.1",
@@ -506,7 +506,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "FOX",
           "CallLetters": "WNYW 5.1",
@@ -601,7 +601,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "CBS",
           "CallLetters": "WCBS-TV 2.1",
@@ -681,7 +681,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "FOX",
           "CallLetters": "WNYW 5.1",
@@ -776,7 +776,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "CBS",
           "CallLetters": "WCBS-TV 2.1",
@@ -856,7 +856,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "FOX",
           "CallLetters": "WNYW 5.1",
@@ -951,7 +951,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "CBS",
           "CallLetters": "WCBS-TV 2.1",
@@ -1031,7 +1031,7 @@
         ],
         "SpotLengthId": 1,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "FOX",
           "CallLetters": "WNYW 5.1",
@@ -1126,7 +1126,7 @@
         ],
         "SpotLengthId": 3,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "CBS",
           "CallLetters": "WCBS-TV 2.1",
@@ -1206,7 +1206,7 @@
         ],
         "SpotLengthId": 3,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "FOX",
           "CallLetters": "WNYW 5.1",
@@ -1301,7 +1301,7 @@
         ],
         "SpotLengthId": 3,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "CBS",
           "CallLetters": "WCBS-TV 2.1",
@@ -1381,7 +1381,7 @@
         ],
         "SpotLengthId": 3,
         "SpotsPerDay": null,
-        "SpotsPerWeek": 0,
+        "SpotsPerWeek": null,
         "Station": {
           "Affiliation": "FOX",
           "CallLetters": "WNYW 5.1",

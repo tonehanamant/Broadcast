@@ -120,7 +120,17 @@
   "FileStatus": 1,
   "Hash": "E5-45-84-EE-93-50-74-51-63-2C-9A-BE-65-CD-18-0B-E3-CB-18-DC",
   "Header": {
-    "AudienceId": 37,
+    "Audience": {
+      "_CategoryCode": 0,
+      "_Code": "A25-54",
+      "_Custom": true,
+      "_Id": 37,
+      "_Name": "Adults 25-54",
+      "_RangeEnd": 54,
+      "_RangeStart": 25,
+      "_SubCategoryCode": "A",
+      "IsDirty": true
+    },
     "Cpm": 222.22,
     "DaypartCode": null,
     "EffectiveDate": "2019-05-03T00:00:00",

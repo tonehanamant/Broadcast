@@ -5,7 +5,17 @@
   "FileStatus": 1,
   "Hash": "6A-E7-B4-E2-57-EA-64-97-9A-87-39-1F-EB-AD-03-AC-01-FE-2B-BE",
   "Header": {
-    "AudienceId": 37,
+    "Audience": {
+      "_CategoryCode": 0,
+      "_Code": "A25-54",
+      "_Custom": true,
+      "_Id": 37,
+      "_Name": "Adults 25-54",
+      "_RangeEnd": 54,
+      "_RangeStart": 25,
+      "_SubCategoryCode": "A",
+      "IsDirty": true
+    },
     "Cpm": null,
     "DaypartCode": "EMN",
     "EffectiveDate": "2018-01-31T00:00:00",
