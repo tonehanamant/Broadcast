@@ -25,7 +25,8 @@ namespace WWTVData.Service
             {
                 new WWTVOutboundService(),             //Outbound - ProcessFiles, create zip archive and send to WWTV
                 new WWTVInboundErrorService(),           //Outbound - Process error files discovered by WWTV
-                new WWTVInboundService()      //Inbound - Processes files and sends error
+                new WWTVInboundService(),      //Inbound - Processes files and sends error
+                new InventoryRatingsSchedulerService()  //Processing inventory ratings jobs
             }; 
 
             var rc = HostFactory.Run(x =>

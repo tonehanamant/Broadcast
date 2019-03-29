@@ -289,262 +289,6 @@ namespace Tam.Maestro.Common.SystemComponentParameter
         }
 	}
 	 
-	public static class AppSettings_Service_GandhiSystemParameterNames
-	{
-		public static string ComponentID
-        {
-            get { return "AppSettings_Service_Gandhi" ; }
-        }
-	  
-		public static string ACCT  
-		{
-            get { return "ACCT"; }
-        }
-	 
-		public static string ACS  
-		{
-            get { return "ACS"; }
-        }
-	 
-		public static string ARS  
-		{
-            get { return "ARS"; }
-        }
-	 
-		public static string ARSLoader  
-		{
-            get { return "ARSLoader"; }
-        }
-	 
-		public static string BOMS  
-		{
-            get { return "BOMS"; }
-        }
-	 
-		public static string BRS  
-		{
-            get { return "BRS"; }
-        }
-	 
-		public static string BS  
-		{
-            get { return "BS"; }
-        }
-	 
-		public static string CUS  
-		{
-            get { return "CUS"; }
-        }
-	 
-		public static string DES  
-		{
-            get { return "DES"; }
-        }
-	 
-		public static string FTP  
-		{
-            get { return "FTP"; }
-        }
-	 
-		public static string ICS  
-		{
-            get { return "ICS"; }
-        }
-	 
-		public static string MAS  
-		{
-            get { return "MAS"; }
-        }
-	 
-		public static string MCS  
-		{
-            get { return "MCS"; }
-        }
-	 
-		public static string PCS  
-		{
-            get { return "PCS"; }
-        }
-	 
-		public static string PLS  
-		{
-            get { return "PLS"; }
-        }
-	 
-		public static string PST  
-		{
-            get { return "PST"; }
-        }
-	 
-		public static string RCS  
-		{
-            get { return "RCS"; }
-        }
-	 
-		public static string REL  
-		{
-            get { return "REL"; }
-        }
-	 
-		public static string REL2  
-		{
-            get { return "REL2"; }
-        }
-	 
-		public static string RS  
-		{
-            get { return "RS"; }
-        }
-	 
-		public static string SingletonTestService  
-		{
-            get { return "SingletonTestService"; }
-        }
-	 
-		public static string SMS  
-		{
-            get { return "SMS"; }
-        }
-	 
-		public static string STS2  
-		{
-            get { return "STS2"; }
-        }
-	 
-		public static string TCS  
-		{
-            get { return "TCS"; }
-        }
-	}
-	 
-	public static class AppSettings_Service_SenthilSystemParameterNames
-	{
-		public static string ComponentID
-        {
-            get { return "AppSettings_Service_Senthil" ; }
-        }
-	  
-		public static string ACCT  
-		{
-            get { return "ACCT"; }
-        }
-	 
-		public static string ACS  
-		{
-            get { return "ACS"; }
-        }
-	 
-		public static string ARS  
-		{
-            get { return "ARS"; }
-        }
-	 
-		public static string ARSLoader  
-		{
-            get { return "ARSLoader"; }
-        }
-	 
-		public static string BOMS  
-		{
-            get { return "BOMS"; }
-        }
-	 
-		public static string BRS  
-		{
-            get { return "BRS"; }
-        }
-	 
-		public static string BS  
-		{
-            get { return "BS"; }
-        }
-	 
-		public static string CUS  
-		{
-            get { return "CUS"; }
-        }
-	 
-		public static string DES  
-		{
-            get { return "DES"; }
-        }
-	 
-		public static string FTP  
-		{
-            get { return "FTP"; }
-        }
-	 
-		public static string ICS  
-		{
-            get { return "ICS"; }
-        }
-	 
-		public static string MAS  
-		{
-            get { return "MAS"; }
-        }
-	 
-		public static string MCS  
-		{
-            get { return "MCS"; }
-        }
-	 
-		public static string PCS  
-		{
-            get { return "PCS"; }
-        }
-	 
-		public static string PLS  
-		{
-            get { return "PLS"; }
-        }
-	 
-		public static string PST  
-		{
-            get { return "PST"; }
-        }
-	 
-		public static string RCS  
-		{
-            get { return "RCS"; }
-        }
-	 
-		public static string REL  
-		{
-            get { return "REL"; }
-        }
-	 
-		public static string REL2  
-		{
-            get { return "REL2"; }
-        }
-	 
-		public static string RS  
-		{
-            get { return "RS"; }
-        }
-	 
-		public static string SingletonTestService  
-		{
-            get { return "SingletonTestService"; }
-        }
-	 
-		public static string SMS  
-		{
-            get { return "SMS"; }
-        }
-	 
-		public static string STS2  
-		{
-            get { return "STS2"; }
-        }
-	 
-		public static string TCS  
-		{
-            get { return "TCS"; }
-        }
-	}
-	 
 	public static class AudienceAndRatingsServiceSystemParameterNames
 	{
 		public static string ComponentID
@@ -726,6 +470,16 @@ namespace Tam.Maestro.Common.SystemComponentParameter
 		public static string EmailWhiteList  
 		{
             get { return "EmailWhiteList"; }
+        }
+	 
+		public static string InventoryRatingsJobIntervalSeconds  
+		{
+            get { return "InventoryRatingsJobIntervalSeconds"; }
+        }
+	 
+		public static string InventoryRatingsParallelJobs  
+		{
+            get { return "InventoryRatingsParallelJobs"; }
         }
 	 
 		public static string MediaMonthCruchCacheSlidingExpirationSeconds  
@@ -930,6 +684,24 @@ namespace Tam.Maestro.Common.SystemComponentParameter
 		public static string RatingSourcesToCalculateDeliveryFor  
 		{
             get { return "RatingSourcesToCalculateDeliveryFor"; }
+        }
+	}
+	 
+	public static class EmailSystemParameterNames
+	{
+		public static string ComponentID
+        {
+            get { return "Email" ; }
+        }
+	  
+		public static string EnableEmailOverride  
+		{
+            get { return "EnableEmailOverride"; }
+        }
+	 
+		public static string OverrideEmailAddresses  
+		{
+            get { return "OverrideEmailAddresses"; }
         }
 	}
 	 
@@ -1675,6 +1447,11 @@ namespace Tam.Maestro.Common.SystemComponentParameter
             get { return "AutoDailyMODStartingHour"; }
         }
 	 
+		public static string ConfirmationProposalCreditApplicationFilePath  
+		{
+            get { return "ConfirmationProposalCreditApplicationFilePath"; }
+        }
+	 
 		public static string ConfirmationProposalEmailDefaultTemplate  
 		{
             get { return "ConfirmationProposalEmailDefaultTemplate"; }
@@ -1695,6 +1472,16 @@ namespace Tam.Maestro.Common.SystemComponentParameter
             get { return "ConfirmationProposalSaveEmailTemplate"; }
         }
 	 
+		public static string ConfirmationsClientApprovalFeatureToggle  
+		{
+            get { return "ConfirmationsClientApprovalFeatureToggle"; }
+        }
+	 
+		public static string ConfirmationsVerificationOfBillingFeatureToggle  
+		{
+            get { return "ConfirmationsVerificationOfBillingFeatureToggle"; }
+        }
+	 
 		public static string ErrorNotificationRecipients  
 		{
             get { return "ErrorNotificationRecipients"; }
@@ -1703,6 +1490,11 @@ namespace Tam.Maestro.Common.SystemComponentParameter
 		public static string ExportMediaOceanToFileSystem  
 		{
             get { return "ExportMediaOceanToFileSystem"; }
+        }
+	 
+		public static string ISCIMappingAutomationFeatureToggle  
+		{
+            get { return "ISCIMappingAutomationFeatureToggle"; }
         }
 	 
 		public static string LinkISCIToPostPlan  
@@ -2127,6 +1919,11 @@ namespace Tam.Maestro.Common.SystemComponentParameter
             get { return "TrafficComposerWeb" ; }
         }
 	  
+		public static string CancellationNotificationCriticalTime  
+		{
+            get { return "CancellationNotificationCriticalTime"; }
+        }
+	 
 		public static string CancellationNotificationEmailList  
 		{
             get { return "CancellationNotificationEmailList"; }
@@ -2135,6 +1932,11 @@ namespace Tam.Maestro.Common.SystemComponentParameter
 		public static string CancellationNotificationEndPoint  
 		{
             get { return "CancellationNotificationEndPoint"; }
+        }
+	 
+		public static string CancellationNotificationRetryTime  
+		{
+            get { return "CancellationNotificationRetryTime"; }
         }
 	 
 		public static string CancellationNotificationUri  
@@ -2175,6 +1977,11 @@ namespace Tam.Maestro.Common.SystemComponentParameter
 		public static string MVPDTotalOrderMinimumFeatureEnabled  
 		{
             get { return "MVPDTotalOrderMinimumFeatureEnabled"; }
+        }
+	 
+		public static string SendCancellationToMarryWizard  
+		{
+            get { return "SendCancellationToMarryWizard"; }
         }
 	}
 	 

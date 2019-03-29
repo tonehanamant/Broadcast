@@ -83,10 +83,10 @@ namespace Services.Broadcast.ApplicationServices
                 throw new ApplicationException($"Job with id {jobId} already has status {job.Status}");
             }
 
-            job.Status = InventoryFileRatingsProcessingStatus.Processing;
-            _InventoryFileRatingsJobsRepository.UpdateJob(job);
             try
             {
+                job.Status = InventoryFileRatingsProcessingStatus.Processing;
+                _InventoryFileRatingsJobsRepository.UpdateJob(job);
 
                 //This just processed barter files right now. Needs to be consolidated to 
                 var barterFile = _BarterRepository.GetBarterInventoryFileById(job.InventoryFileId);
@@ -102,16 +102,14 @@ namespace Services.Broadcast.ApplicationServices
 
                 job.Status = InventoryFileRatingsProcessingStatus.Succeeded;
                 job.CompletedAt = DateTime.Now;
+                _InventoryFileRatingsJobsRepository.UpdateJob(job);
             }
             catch (Exception e)
             {
-                //need to log the error
-
+                System.Diagnostics.Debug.WriteLine(e);
                 job.Status = InventoryFileRatingsProcessingStatus.Failed;
-            }
-            finally
-            {
                 _InventoryFileRatingsJobsRepository.UpdateJob(job);
+                throw;
             }
         }
     }
