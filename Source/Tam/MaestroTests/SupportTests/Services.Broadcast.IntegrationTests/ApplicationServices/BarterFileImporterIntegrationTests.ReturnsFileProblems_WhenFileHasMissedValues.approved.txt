@@ -201,7 +201,7 @@
   "InventorySource": null,
   "UniqueIdentifier": null,
   "ValidationProblems": [
-    "Line 16 contains an empty station cell",
-    "Line 19 contains an empty daypart cell"
+    "Line 18 contains an empty station cell",
+    "Line 21 contains an empty daypart cell"
   ]
 }

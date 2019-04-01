@@ -31,8 +31,6 @@ namespace Services.Broadcast.ApplicationServices
 
     public class BarterInventoryService : IBarterInventoryService
     {
-        private const string INVENTORY_SOURCE_CELL = "B2";
-
         private readonly IInventoryRepository _InventoryRepository;
         private readonly IInventoryFileRepository _InventoryFileRepository;
         private readonly IBarterRepository _BarterRepository;
@@ -169,12 +167,31 @@ namespace Services.Broadcast.ApplicationServices
 
         private InventorySource _ReadInventorySourceFromFile(Stream streamData)
         {
+            const int searchInventorySourceHeaderCellRowIndexStart = 2;
+            const int searchInventorySourceHeaderCellRowIndexEnd = 3;
+            const int inventorySourceHeaderCellColumnIndex = 1;
+            var inventorySourceHeaderCellTexts = new List<string> { "Inventory Source", "Inv Source" };
+
             InventorySource inventorySource = null;
 
             using (var package = new ExcelPackage(streamData))
             {
                 var worksheet = package.Workbook.Worksheets.First();
-                inventorySource = _InventoryRepository.GetInventorySourceByName(worksheet.Cells[INVENTORY_SOURCE_CELL].GetStringValue());
+
+                for (var i = searchInventorySourceHeaderCellRowIndexStart; i <= searchInventorySourceHeaderCellRowIndexEnd; i++)
+                {
+                    var inventorySourceHeaderCell = worksheet.Cells[i, inventorySourceHeaderCellColumnIndex].GetStringValue();
+                    var isInventorySourceHeaderCell = !string.IsNullOrWhiteSpace(inventorySourceHeaderCell) &&
+                        inventorySourceHeaderCellTexts.Any(x => inventorySourceHeaderCell.Equals(x, StringComparison.OrdinalIgnoreCase));
+
+                    if (isInventorySourceHeaderCell)
+                    {
+                        // inventory source value should be next after the header cell
+                        var inventorySourceString = worksheet.Cells[i, inventorySourceHeaderCellColumnIndex + 1].GetStringValue();
+                        inventorySource = _InventoryRepository.GetInventorySourceByName(inventorySourceString);
+                        break;
+                    }
+                }   
             }
 
             if (inventorySource == null)

@@ -375,6 +375,9 @@
     <None Include="Files\BarterDataFiles\BarterFileImporter_ValidFormat_SingleBook.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Files\BarterDataFiles\BarterFileImporter_ValidFormat_SpotLengthWithColon.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Files\BarterDataFiles\BarterFileImporter_ValidFormat_TwoBooks.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

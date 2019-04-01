@@ -28,7 +28,7 @@ namespace Services.Broadcast.Converters.RateImport
     public abstract class BarterFileImporterBase : IBarterFileImporter
     {
         protected const string CPM_FORMAT = "##.##";
-        protected readonly string[] BOOK_DATE_FORMATS = new string[] { "MMM yy", "MMM-yy", "MMM/yy", "yy-MMM", "yy/MMM" };
+        protected readonly string[] BOOK_DATE_FORMATS = new string[] { "MMM yy", "MMM-yy", "MMM/yy", "yy-MMM", "yy/MMM", "MMM yyyy" };
         protected readonly string[] DATE_FORMATS = new string[] { "MM/dd/yyyy", "M/dd/yyyy", "M/d/yyyy" };
 
         private string _FileHash { get; set; }

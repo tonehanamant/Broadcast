@@ -1,13 +1,13 @@
 ﻿[
   {
     "AffectedProposals": null,
-    "ProblemDescription": "Line 16 contains an empty station cell",
+    "ProblemDescription": "Line 18 contains an empty station cell",
     "ProgramName": null,
     "StationLetters": null
   },
   {
     "AffectedProposals": null,
-    "ProblemDescription": "Line 19 contains an empty daypart cell",
+    "ProblemDescription": "Line 21 contains an empty daypart cell",
     "ProgramName": null,
     "StationLetters": null
   }

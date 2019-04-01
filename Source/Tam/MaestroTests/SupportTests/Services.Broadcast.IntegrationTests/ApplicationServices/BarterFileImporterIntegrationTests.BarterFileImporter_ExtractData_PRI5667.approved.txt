@@ -118,7 +118,7 @@
   ],
   "FileName": "BarterDataFiles\\BarterFileImporter_BadFormats_PRI5667.xlsx",
   "FileStatus": 1,
-  "Hash": "A8-E0-D6-00-F9-B4-FE-5B-3F-C5-D9-30-4D-BC-66-7B-77-49-06-FA",
+  "Hash": "17-90-78-C1-9B-5E-18-0F-A8-68-39-31-6D-44-21-F5-B0-77-59-7B",
   "Header": {
     "Audience": {
       "_CategoryCode": 0,

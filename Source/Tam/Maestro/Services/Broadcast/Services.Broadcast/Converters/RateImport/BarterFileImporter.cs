@@ -22,16 +22,16 @@ namespace Services.Broadcast.Converters.RateImport
 {
     public class BarterFileImporter : BarterFileImporterBase
     {
-        private const string INVENTORY_SOURCE_CELL = "B2";
-        private const string DAYPART_CODE_CELL = "B3";
-        private const string EFFECTIVE_DATE_CELL = "B4";
-        private const string END_DATE_CELL = "B5";
-        private const string CPM_CELL = "B6";
-        private const string DEMO_CELL = "B7";
-        private const string CONTRACTED_DAYPART_CELL = "B8";
-        private const string SHARE_BOOK_CELL = "B9";
-        private const string HUT_BOOK_CELL = "B10";
-        private const string PLAYBACK_TYPE_CELL = "B11";
+        private const string INVENTORY_SOURCE_CELL = "B3";
+        private const string DAYPART_CODE_CELL = "B4";
+        private const string EFFECTIVE_DATE_CELL = "B5";
+        private const string END_DATE_CELL = "B6";
+        private const string CPM_CELL = "B7";
+        private const string DEMO_CELL = "B8";
+        private const string CONTRACTED_DAYPART_CELL = "B9";
+        private const string SHARE_BOOK_CELL = "B10";
+        private const string HUT_BOOK_CELL = "B11";
+        private const string PLAYBACK_TYPE_CELL = "B12";
 
         private readonly IProprietarySpotCostCalculationEngine _ProprietarySpotCostCalculationEngine;
         private readonly IImpressionsService _ImpressionsService;
@@ -203,8 +203,9 @@ namespace Services.Broadcast.Converters.RateImport
 
         public override void LoadAndValidateDataLines(ExcelWorksheet worksheet, BarterInventoryFile barterFile)
         {
-            const int firstColumnIndex = 2;
-            var rowIndex = 16;
+            const int firstColumnIndex = 1;
+            const int firstDataLineRowIndex = 18;
+            var rowIndex = firstDataLineRowIndex;
             var columnIndex = firstColumnIndex;
             var units = _ReadBarterInventoryUnits(worksheet);
 
@@ -267,11 +268,11 @@ namespace Services.Broadcast.Converters.RateImport
         private List<BarterInventoryUnit> _ReadBarterInventoryUnits(ExcelWorksheet worksheet)
         {
             const string commentsHeader = "COMMENTS";
-            const int nameRowIndex = 14;
-            const int spotLengthRowIndex = 15;
-            const int firstColumnIndex = 4;
+            const int unitNameRowIndex = 16;
+            const int spotLengthRowIndex = 17;
+            const int firstUnitColumnIndex = 3;
             var result = new List<BarterInventoryUnit>();
-            var lastColumnIndex = firstColumnIndex;
+            var lastColumnIndex = firstUnitColumnIndex;
 
             // let's find lastColumnIndex by looking for "COMMENTS" cell
             while (true)
@@ -295,9 +296,9 @@ namespace Services.Broadcast.Converters.RateImport
                 }
             }
 
-            for (var i = firstColumnIndex; i <= lastColumnIndex; i++)
+            for (var i = firstUnitColumnIndex; i <= lastColumnIndex; i++)
             {
-                var name = worksheet.Cells[nameRowIndex, i].GetStringValue();
+                var name = worksheet.Cells[unitNameRowIndex, i].GetStringValue();
                 if (string.IsNullOrWhiteSpace(name))
                 {
                     throw new Exception("Unit name missing");
@@ -310,14 +311,16 @@ namespace Services.Broadcast.Converters.RateImport
                     throw new Exception("Invalid unit was found");
                 }
 
-                var spotLength = worksheet.Cells[spotLengthRowIndex, i].GetIntValue(); 
+                var spotLengthString = worksheet.Cells[spotLengthRowIndex, i].GetStringValue(); 
                 
-                if (!spotLength.HasValue)
+                if (string.IsNullOrWhiteSpace(spotLengthString))
                 {
                     throw new Exception("Spot length is missing");
                 }
 
-                if (!SpotLengthEngine.SpotLengthExists(spotLength.Value))
+                spotLengthString = spotLengthString.Replace(":", string.Empty);
+
+                if (!int.TryParse(spotLengthString, out var spotLength) || !SpotLengthEngine.SpotLengthExists(spotLength))
                 {
                     throw new Exception("Invalid spot length was found");
                 }
@@ -325,7 +328,7 @@ namespace Services.Broadcast.Converters.RateImport
                 result.Add(new BarterInventoryUnit
                 {
                     Name = name,
-                    SpotLength = spotLength.Value
+                    SpotLength = spotLength
                 });
             }
 

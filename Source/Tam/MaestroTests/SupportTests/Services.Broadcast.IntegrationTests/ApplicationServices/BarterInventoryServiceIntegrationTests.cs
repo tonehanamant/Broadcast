@@ -11,7 +11,6 @@ using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.BarterInventory;
 using Services.Broadcast.Entities.StationInventory;
 using Services.Broadcast.Exceptions;
-using Services.Broadcast.IntegrationTests.Stubbs;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
@@ -44,7 +43,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             _InventoryRatingsProcessingService = IntegrationTestApplicationServiceFactory.GetApplicationService<IInventoryRatingsProcessingService>();
         }
 
-    [Test]
+        [Test]
         [UseReporter(typeof(DiffReporter))]
         public void BarterInventoryService_SaveBarterInventoryFile()
         {
@@ -78,10 +77,18 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        public void BarterFileImporter_ValidFormat_SpotLengthWithColon()
+        {
+            const string fileName = @"BarterDataFiles\BarterFileImporter_ValidFormat_SpotLengthWithColon.xlsx";
+            _VerifyFileInventoryGroups(fileName);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
         public void BarterInventoryService_SavesManifests_SingleBook()
         {
             const string fileName = @"BarterDataFiles\BarterFileImporter_ValidFormat_SingleBook.xlsx";
-            _VerifyInventoryGroups(fileName);
+            _VerifyFileInventoryGroups(fileName);
         }
 
         [Test]
@@ -89,7 +96,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         public void BarterInventoryService_SavesManifests_TwoBooks()
         {
             const string fileName = @"BarterDataFiles\BarterFileImporter_ValidFormat_TwoBooks.xlsx";
-            _VerifyInventoryGroups(fileName);
+            _VerifyFileInventoryGroups(fileName);
         }
 
         [Test]
@@ -97,7 +104,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         public void BarterInventoryService_SavesManifests_WhenStationIsUnknown()
         {
             const string fileName = @"BarterDataFiles\BarterFileImporter_ValidFormat_UnknownStation.xlsx";
-            _VerifyInventoryGroups(fileName);
+            _VerifyFileInventoryGroups(fileName);
         }
 
         [Test]
@@ -142,7 +149,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         public void BarterInventoryService_SaveBarterInventoryFile_PRI5667()
         {
             const string fileName = @"BarterDataFiles\BarterFileImporter_BadFormats_PRI5667.xlsx";
-            _VerifyInventoryGroups(fileName);
+            _VerifyFileInventoryGroups(fileName);
         }
 
         [Test]
@@ -158,7 +165,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         public void BarterInventoryService_SaveBarterInventoryFile_SingleDataColumn()
         {
             const string fileName = @"BarterDataFiles\BarterFileImporter_SingleDataColumn.xlsx";
-            _VerifyInventoryGroups(fileName);
+            _VerifyFileInventoryGroups(fileName);
         }
 
         [Test]
@@ -166,7 +173,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         public void BarterInventoryService_SaveBarterInventoryFile_DateRangeIntersecting()
         {
             const string fileName = @"BarterDataFiles\BarterFileImporter_DateRangeIntersecting.xlsx";
-            _VerifyInventoryGroups(fileName);
+            _VerifyFileInventoryGroups(fileName);
         }
 
         [Test]
@@ -240,7 +247,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         public void SavesOAndOBarterInventoryFileManifests()
         {
             const string fileName = @"BarterDataFiles\OAndO_ValidFile1.xlsx";
-            _VerifyInventoryManifests(fileName);
+            _VerifyFileInventoryManifests(fileName);
         }
 
         [Test]
@@ -248,7 +255,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         public void SavesOAndOBarterInventoryFileManifests_EmptyAndSummaryRows()
         {
             const string fileName = @"BarterDataFiles\OAndO_ValidFile2.xlsx";
-            _VerifyInventoryManifests(fileName);
+            _VerifyFileInventoryManifests(fileName);
         }
 
         [Test]
@@ -359,7 +366,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         public void SaveBarterInventoryFile_DuplicateDataError_ForecastDb_TwoBooks()
         {
             const string fileName = @"BarterDataFiles\DuplicateData_ForecastDB_TwoBooks.xlsx";
-            _VerifyInventoryGroups(fileName);
+            _VerifyFileInventoryGroups(fileName);
         }
 
         [Test]
@@ -367,7 +374,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         public void SaveBarterInventoryFile_DuplicateDataError_ForecastDb_SingleBook()
         {
             const string fileName = @"BarterDataFiles\DuplicateData_ForecastDB_SingleBook.xlsx";
-            _VerifyInventoryGroups(fileName);
+            _VerifyFileInventoryGroups(fileName);
         }
 
         private void _VerifyInventoryFileProblems(string fileName)
@@ -420,7 +427,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
         }
 
-        private void _VerifyInventoryGroups(string fileName)
+        private void _VerifyFileInventoryGroups(string fileName)
         {
             using (new TransactionScopeWrapper())
             {
@@ -433,11 +440,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var now = new DateTime(2019, 02, 02);
                 var result = _BarterService.SaveBarterInventoryFile(request, "IntegrationTestUser", now);
 
-                _VerifyInventoryGroups(result.FileId);
+                _VerifyFileInventoryGroups(result.FileId);
             }
         }
 
-        private void _VerifyInventoryGroups(int fileId)
+        private void _VerifyFileInventoryGroups(int fileId)
         {
             var jsonResolver = new IgnorableSerializerContractResolver();
             jsonResolver.Ignore(typeof(StationInventoryGroup), "Id");
@@ -462,7 +469,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             Approvals.Verify(groupsJson);
         }
 
-        private void _VerifyInventoryManifests(string fileName)
+        private void _VerifyFileInventoryManifests(string fileName)
         {
             using (new TransactionScopeWrapper())
             {
@@ -475,11 +482,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var now = new DateTime(2019, 02, 02);
                 var result = _BarterService.SaveBarterInventoryFile(request, "IntegrationTestUser", now);
 
-                _VerifyInventoryManifests(result.FileId);
+                _VerifyFileInventoryManifests(result.FileId);
             }
         }
 
-        private void _VerifyInventoryManifests(int fileId)
+        private void _VerifyFileInventoryManifests(int fileId)
         {
             var jsonResolver = new IgnorableSerializerContractResolver();
             jsonResolver.Ignore(typeof(StationInventoryManifest), "Id");

@@ -3,7 +3,7 @@
   "DataLines": [],
   "FileName": "BarterDataFiles\\BarterFileImporter_BadFormats.xlsx",
   "FileStatus": 1,
-  "Hash": "3D-EF-6C-47-4F-28-1F-09-78-7E-82-33-BB-2B-A4-DF-42-77-AA-06",
+  "Hash": "64-D2-7C-19-DA-A9-95-8B-7B-6E-16-18-22-FB-CA-47-E6-1F-9D-08",
   "Header": {
     "Audience": null,
     "Cpm": null,
@@ -25,8 +25,8 @@
     "CPM is not in the correct format (##.##)",
     "Invalid demo (A25-5422)",
     "Invalid contracted daypart (M-SU 4:00AM - 10:00 AM)",
-    "Share book (1-Feb-17) is not in the correct format (MMM yy, MMM-yy, MMM/yy, yy-MMM, yy/MMM)",
-    "Hut book (02-17) is not in the correct format (MMM yy, MMM-yy, MMM/yy, yy-MMM, yy/MMM)",
+    "Share book (1-Feb-17) is not in the correct format (MMM yy, MMM-yy, MMM/yy, yy-MMM, yy/MMM, MMM yyyy)",
+    "Hut book (02-17) is not in the correct format (MMM yy, MMM-yy, MMM/yy, yy-MMM, yy/MMM, MMM yyyy)",
     "Invalid playback type (LIVE+31)"
   ]
 }
