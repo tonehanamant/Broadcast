@@ -16,7 +16,7 @@ namespace BroadcastComposerWeb.Controllers
         public List<TProblem> Problems { get; set; }
     }
 
-    [EnableCors(origins: "*", headers: "*", methods: "*")]
+    //[EnableCors(origins: "*", headers: "*", methods: "*")] //CORS enabled in global.asax file
     public class BroadcastControllerBase : ControllerBase
     {
         public BroadcastControllerBase(IWebLogger logger, ControllerNameRetriever controllerNameRetriever) 

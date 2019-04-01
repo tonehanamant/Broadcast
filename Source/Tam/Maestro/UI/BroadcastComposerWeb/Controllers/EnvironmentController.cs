@@ -13,7 +13,7 @@ namespace BroadcastComposerWeb.Controllers
 {
     [RoutePrefix("api")]
     [RestrictedAccess(RequiredRole = RoleType.Broadcast_Proposer)]
-    [EnableCors(origins: "*", headers: "*", methods: "*")]
+    //[EnableCors(origins: "*", headers: "*", methods: "*")] //Enabled globally in global.asax
     public class EnvironmentController : ControllerBase
     {
         public EnvironmentController(IWebLogger logger)
