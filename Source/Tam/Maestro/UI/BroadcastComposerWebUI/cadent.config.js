@@ -1,13 +1,13 @@
 const path = require("path");
 
 // local api environment variables
+const apiName = "/Broadcast/api/";
 const api = {
   global: {
-    __API__: "/api/"
+    __API__: apiName
   },
   local: {
-    __API__: "http://localhost:61720/api/"
-    // __API__: "http://devvmqa2.dev.crossmw.com/Broadcast/api/"
+    __API__: `http://devvmqa2.dev.crossmw.com${apiName}`
   }
 };
 

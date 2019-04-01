@@ -67,7 +67,7 @@
     "text-mask-addons": "^3.7.2"
   },
   "devDependencies": {
-    "@cadent/cadent-webapp": "^3.6.0",
+    "@cadent/cadent-webapp": "^3.6.9",
     "@cadent/styles": "^3.0.0",
     "core-js": "^2.6.3"
   }
