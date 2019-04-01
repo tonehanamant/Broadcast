@@ -1073,7 +1073,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     Isci = "AAAAAAAA"
                 };
-                var result = _AffidavitService.ScrubUnlinkedAffidavitDetailsByIsci(request.Isci, DateTime.Now, "test-user");
+                
+                var result = _AffidavitService.ScrubUnlinkedAffidavitDetailsByIsci(request.Isci, new DateTime(2019, 3, 31), "test-user");
 
                 var affidavit = _AffidavitRepository.GetAffidavit(157, true);
 
@@ -1133,7 +1134,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     ScrubbingIds = new List<int> {1008, 1009},
                     ProposalDetailId = 9954
                 };
-                var result = _AffidavitService.SwapProposalDetails(request, DateTime.Now, "test-user");
+                
+                var result = _AffidavitService.SwapProposalDetails(request, new DateTime(2019, 3, 31), "test-user");
 
                 var affidavit = _AffidavitRepository.GetAffidavit(161, true);
 

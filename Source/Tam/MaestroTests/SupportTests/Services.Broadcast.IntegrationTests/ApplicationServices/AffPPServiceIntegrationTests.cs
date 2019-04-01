@@ -15,6 +15,7 @@ using Services.Broadcast.ApplicationServices.Security;
 using System.Net.Mail;
 using Services.Broadcast.Entities.Enums;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
+using System;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
@@ -50,7 +51,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var filePath = @".\Files\WWTV_AffidavitValidFile.txt";
                 var fileContents = File.ReadAllText(filePath);
 
-                WWTVSaveResult response = _AffidavitPostProcessingService.ProcessFileContents(_UserName, filePath, fileContents);
+                WWTVSaveResult response = _AffidavitPostProcessingService.ProcessFileContents(_UserName, filePath, fileContents, new DateTime(2019, 3, 31));
 
                 VerifyAffidavit(response.Id.Value);
             }
@@ -66,7 +67,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var filePath = @".\Files\WWTV_AffidavitValidFile_NullValues.txt";
                 var fileContents = File.ReadAllText(filePath);
 
-                WWTVSaveResult response = _AffidavitPostProcessingService.ProcessFileContents(_UserName, filePath, fileContents);
+                WWTVSaveResult response = _AffidavitPostProcessingService.ProcessFileContents(_UserName, filePath, fileContents, new DateTime(2019, 3, 31));
 
                 VerifyAffidavit(response.Id.Value);
             }
@@ -81,7 +82,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var filePath = @".\Files\WWTV_AffidavitValidFileContent_SpotCost.txt";
                 var fileContents = File.ReadAllText(filePath);
 
-                WWTVSaveResult response = _AffidavitPostProcessingService.ProcessFileContents(_UserName, filePath, fileContents);
+                WWTVSaveResult response = _AffidavitPostProcessingService.ProcessFileContents(_UserName, filePath, fileContents, new DateTime(2019, 3, 31));
                 VerifyAffidavit(response.Id.Value);
             }
         }
@@ -95,7 +96,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var filePath = @".\Files\WWTV_AffidavitValidFileContent_NullDemo.txt";
                 var fileContents = File.ReadAllText(filePath);
                 
-                WWTVSaveResult response = _AffidavitPostProcessingService.ProcessFileContents(_UserName, filePath, fileContents);
+                WWTVSaveResult response = _AffidavitPostProcessingService.ProcessFileContents(_UserName, filePath, fileContents, new DateTime(2019, 3, 31));
                 VerifyAffidavit(response.Id.Value);
             }
         }
@@ -109,7 +110,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var filePath = @".\Files\WWTV_bad_file_Times.txt";
                 var fileContents = File.ReadAllText(filePath);
 
-                WWTVSaveResult response = _AffidavitPostProcessingService.ProcessFileContents(_UserName, filePath, fileContents);
+                WWTVSaveResult response = _AffidavitPostProcessingService.ProcessFileContents(_UserName, filePath, fileContents, new DateTime(2019, 3, 31));
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(WWTVSaveResult), "Id");
@@ -133,7 +134,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var filePath = @".\Files\WWTV_Basic_Required_Validation.txt";
                 var fileContents = File.ReadAllText(filePath);
 
-                WWTVSaveResult response = _AffidavitPostProcessingService.ProcessFileContents(_UserName, filePath, fileContents);
+                WWTVSaveResult response = _AffidavitPostProcessingService.ProcessFileContents(_UserName, filePath, fileContents, new DateTime(2019, 3, 31));
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(WWTVSaveResult), "Id");
@@ -163,7 +164,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var filePath = @".\Files\WWTV_Basic_Required_Validation.txt";
                 var fileContents = File.ReadAllText(filePath);
 
-                WWTVSaveResult response = _AffidavitPostProcessingService.ProcessFileContents(_UserName, filePath, fileContents);
+                WWTVSaveResult response = _AffidavitPostProcessingService.ProcessFileContents(_UserName, filePath, fileContents, new DateTime(2019, 3, 31));
                 
                 VerifyAffidavit(response.Id.Value);
             }
@@ -178,7 +179,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var filePath = @".\Files\WWTV_Escaped_DoubleQuotes.txt";
                 var fileContents = File.ReadAllText(filePath);
 
-                WWTVSaveResult response = _AffidavitPostProcessingService.ProcessFileContents(_UserName, filePath, fileContents);
+                WWTVSaveResult response = _AffidavitPostProcessingService.ProcessFileContents(_UserName, filePath, fileContents, new DateTime(2019, 3, 31));
                 VerifyAffidavit(response.Id.Value);
             }
         }
@@ -192,7 +193,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var filePath = @".\Files\WWTV_Affidavit_Decimal_Overnight_Impressions.txt";
                 var fileContents = File.ReadAllText(filePath);
 
-                WWTVSaveResult response = _AffidavitPostProcessingService.ProcessFileContents(_UserName, filePath, fileContents);
+                WWTVSaveResult response = _AffidavitPostProcessingService.ProcessFileContents(_UserName, filePath, fileContents, new DateTime(2019, 3, 31));
                 VerifyAffidavit(response.Id.Value);
             }
         }
@@ -250,7 +251,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var srv = IntegrationTestApplicationServiceFactory
                     .GetApplicationService<IAffidavitPostProcessingService>();
 
-                var response = srv.DownloadAndProcessWWTVFiles("WWTV Service");
+                var response = srv.DownloadAndProcessWWTVFiles("WWTV Service", new DateTime(2019, 3, 31));
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 //jsonResolver.Ignore(typeof(StationInventoryManifestDaypart), "Id");
@@ -280,7 +281,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     .GetApplicationService<IAffidavitPostProcessingService>();
 
                 EmailerServiceStubb.LastMailMessageGenerated = null;
-                srv.DownloadAndProcessWWTVFiles("WWTV Service");
+                srv.DownloadAndProcessWWTVFiles("WWTV Service", new DateTime(2019, 3, 31));
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 //jsonResolver.Ignore(typeof(StationInventoryManifestDaypart), "Id");
@@ -313,7 +314,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     .GetApplicationService<IAffidavitPostProcessingService>();
 
                 EmailerServiceStubb.LastMailMessageGenerated = null;
-                srv.DownloadAndProcessWWTVFiles("WWTV Service");
+                srv.DownloadAndProcessWWTVFiles("WWTV Service", new DateTime(2019, 3, 31));
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 //jsonResolver.Ignore(typeof(StationInventoryManifestDaypart), "Id");
@@ -343,7 +344,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     .GetApplicationService<IAffidavitPostProcessingService>();
 
                 EmailerServiceStubb.LastMailMessageGenerated = null;
-                var response = srv.DownloadAndProcessWWTVFiles("WWTV Service");
+                var response = srv.DownloadAndProcessWWTVFiles("WWTV Service", new DateTime(2019, 3, 31));
 
                 Assert.IsNull(EmailerServiceStubb.LastMailMessageGenerated);
                 Assert.IsEmpty(response.FailedDownloads);
@@ -368,7 +369,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var srv = IntegrationTestApplicationServiceFactory
                     .GetApplicationService<IAffidavitPostProcessingService>();
 
-                var response = srv.DownloadAndProcessWWTVFiles("WWTV Service");
+                var response = srv.DownloadAndProcessWWTVFiles("WWTV Service", new DateTime(2019, 3, 31));
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(WWTVSaveResult), "Id");
@@ -396,7 +397,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var srv = IntegrationTestApplicationServiceFactory
                     .GetApplicationService<IAffidavitPostProcessingService>();
 
-                var response = srv.DownloadAndProcessWWTVFiles("WWTV Service");
+                var response = srv.DownloadAndProcessWWTVFiles("WWTV Service", new DateTime(2019, 3, 31));
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(WWTVSaveResult), "Id");
@@ -480,7 +481,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var filePath = @".\Files\WWTV_AffidavitValidFile_BCOP4270.txt";
                 var fileContents = File.ReadAllText(filePath);
 
-                WWTVSaveResult response = _AffidavitPostProcessingService.ProcessFileContents(_UserName, filePath, fileContents);
+                WWTVSaveResult response = _AffidavitPostProcessingService.ProcessFileContents(_UserName, filePath, fileContents, new DateTime(2019, 3, 31));
 
                 VerifyAffidavit(response.Id.Value);
             }
@@ -495,7 +496,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var filePath = @".\Files\WWTV_StrataValidFile_BCOP-4333.txt";
                 var fileContents = File.ReadAllText(filePath);
 
-                WWTVSaveResult response = _AffidavitPostProcessingService.ProcessFileContents(_UserName, filePath, fileContents);
+                WWTVSaveResult response = _AffidavitPostProcessingService.ProcessFileContents(_UserName, filePath, fileContents, new DateTime(2019, 3, 31));
 
                 VerifyAffidavit(response.Id.Value);
             }
@@ -520,7 +521,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     fileService.Delete(filePath);
                 }
                 
-                affidavitPostProcessingService.DownloadAndProcessWWTVFiles("WWTV Service");
+                affidavitPostProcessingService.DownloadAndProcessWWTVFiles("WWTV Service", new DateTime(2019, 3, 31));
                 
                 Assert.True(fileService.Exists(filePath));
             }

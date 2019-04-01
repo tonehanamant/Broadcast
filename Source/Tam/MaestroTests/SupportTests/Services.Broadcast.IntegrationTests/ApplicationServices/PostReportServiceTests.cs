@@ -442,7 +442,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var fileContents = File.ReadAllText(filePath);
 
                 var processingResult = IntegrationTestApplicationServiceFactory.GetApplicationService<IAffidavitPostProcessingService>()
-                    .ProcessFileContents("integration test", filePath, fileContents);
+                    .ProcessFileContents("integration test", filePath, fileContents, new DateTime(2019, 3, 31));
                 
                 var affidavit = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IAffidavitRepository>().GetAffidavit(processingResult.Id.Value);
                 

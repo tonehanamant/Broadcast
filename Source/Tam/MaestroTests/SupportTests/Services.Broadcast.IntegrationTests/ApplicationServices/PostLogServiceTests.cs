@@ -330,7 +330,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     Isci = "AAAAAAAA"
                 };
-                _PostLogService.ScrubUnlinkedPostLogDetailsByIsci(request.Isci, DateTime.Now, "test-user");
+                _PostLogService.ScrubUnlinkedPostLogDetailsByIsci(request.Isci, new DateTime(2019, 3, 31), "test-user");
 
                 var postLogFile = _PostLogRepository.GetPostLogFile(1, true);
 
@@ -345,11 +345,12 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
+                var date = new DateTime(2019, 3, 31);
                 IProposalService _ProposalService = IntegrationTestApplicationServiceFactory.GetApplicationService<IProposalService>();
                 var proposal = _ProposalService.GetProposalById(253);
                 proposal.Details[0].Quarters[0].Weeks[0].IsHiatus = true;
                 _ProposalService.CalculateProposalChanges(new ProposalChangeRequest() { Details = proposal.Details });
-                _ProposalService.SaveProposal(proposal, "test user", DateTime.Now);
+                _ProposalService.SaveProposal(proposal, "test user", date);
 
 
                 var request = new ScrubIsciRequest
@@ -357,7 +358,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     Isci = "AAAAAAAA"
                 };
                
-                _PostLogService.ScrubUnlinkedPostLogDetailsByIsci(request.Isci, DateTime.Now, "test-user");
+                _PostLogService.ScrubUnlinkedPostLogDetailsByIsci(request.Isci, date, "test-user");
 
                 var postLogFile = _PostLogRepository.GetPostLogFile(1, true);
 
@@ -483,7 +484,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     ScrubbingIds = new List<int> { 3029, 3502 },
                     ProposalDetailId = 11199
                 };
-                var result = _PostLogService.SwapProposalDetails(request, DateTime.Now, "test-user");
+                var result = _PostLogService.SwapProposalDetails(request, new DateTime(2019, 3, 31), "test-user");
 
                 var postlogFile = _PostLogRepository.GetPostLogFile(1, true);
 

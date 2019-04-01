@@ -19,9 +19,9 @@ namespace Services.Broadcast.ApplicationServices
         /// <summary>
         /// Downloads the WWTV processed files and calls the affidavit processing service
         /// </summary>
-        DownloadAndProcessWWTVFilesResponse DownloadAndProcessWWTVFiles(string userName);
+        DownloadAndProcessWWTVFilesResponse DownloadAndProcessWWTVFiles(string userName, DateTime currentDateTime);
 
-        WWTVSaveResult ProcessFileContents(string userName, string fileName, string fileContents);
+        WWTVSaveResult ProcessFileContents(string userName, string fileName, string fileContents, DateTime currentDateTime);
 
         /// <summary>
         /// Process error files created by WWTV based on files uploaded by us
@@ -66,7 +66,7 @@ namespace Services.Broadcast.ApplicationServices
         /// return true if download success, false if download fails (use for loggin)
         /// This involves FTP 
         /// </summary>
-        public DownloadAndProcessWWTVFilesResponse DownloadAndProcessWWTVFiles(string userName)
+        public DownloadAndProcessWWTVFilesResponse DownloadAndProcessWWTVFiles(string userName, DateTime currentDateTime)
         {
             var inboundFile  = BroadcastServiceSystemParameter.WWTV_FtpInboundFolder;
             if (!inboundFile.EndsWith("/"))
@@ -108,7 +108,7 @@ namespace Services.Broadcast.ApplicationServices
 
                 SendFileToDataLake(fileContents, fileName);
 
-                var result = ProcessFileContents(userName, fileName, fileContents);
+                var result = ProcessFileContents(userName, fileName, fileContents, currentDateTime);
                 response.SaveResults.Add(result);
                 if (result.ValidationResults.Any())
                 {
@@ -124,7 +124,7 @@ namespace Services.Broadcast.ApplicationServices
             return response;
         }
         
-        public WWTVSaveResult ProcessFileContents(string userName, string fileName, string fileContents)
+        public WWTVSaveResult ProcessFileContents(string userName, string fileName, string fileContents, DateTime currentDateTime)
         {
             List<WWTVInboundFileValidationResult> validationErrors = new List<WWTVInboundFileValidationResult>();
             InboundFileSaveRequest affidavitSaveRequest = ParseWWTVFile(fileName, fileContents, validationErrors);
@@ -136,7 +136,7 @@ namespace Services.Broadcast.ApplicationServices
             WWTVSaveResult result;
             try
             {
-                result = _AffidavidService.SaveAffidavit(affidavitSaveRequest, userName, DateTime.Now);
+                result = _AffidavidService.SaveAffidavit(affidavitSaveRequest, userName, currentDateTime);
             }
             catch (Exception e)
             {

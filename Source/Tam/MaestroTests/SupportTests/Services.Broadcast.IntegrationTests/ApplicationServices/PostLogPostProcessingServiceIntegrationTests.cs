@@ -15,6 +15,7 @@ using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Services.Broadcast.Repositories;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 using System.Linq;
+using System;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
@@ -44,7 +45,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var filePath = @".\Files\WWTV_KeepingTracValidFile.txt";
                 var fileContents = File.ReadAllText(filePath);
 
-                WWTVSaveResult response = _PostLogPostProcessingService.ProcessFileContents(_UserName, filePath, fileContents);
+                WWTVSaveResult response = _PostLogPostProcessingService.ProcessFileContents(_UserName, filePath, fileContents, new DateTime(2019, 3, 31));
                 VerifyPostLogFile(response.Id.Value);
             }
         }
@@ -59,7 +60,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var filePath = @".\Files\WWTV_KeepingTracValidFile_WithNullValues.txt";
                 var fileContents = File.ReadAllText(filePath);
 
-                WWTVSaveResult response = _PostLogPostProcessingService.ProcessFileContents(_UserName, filePath, fileContents);
+                WWTVSaveResult response = _PostLogPostProcessingService.ProcessFileContents(_UserName, filePath, fileContents, new DateTime(2019, 3, 31));
                 VerifyPostLogFile(response.Id.Value);
             }
         }
@@ -73,7 +74,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var filePath = @".\Files\Keeping Trac BCOP-3771.txt";
                 var fileContents = File.ReadAllText(filePath);
 
-                _PostLogPostProcessingService.ProcessFileContents(_UserName, filePath, fileContents);
+                _PostLogPostProcessingService.ProcessFileContents(_UserName, filePath, fileContents, new DateTime(2019, 3, 31));
                 var result = _PostLogService.GetClientScrubbingForProposal(33029, new ProposalScrubbingRequest());
                 VerifyClientPostScrubbingObject(result);
             }
@@ -88,7 +89,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var filePath = @".\Files\BCOP3666.txt";
                 var fileContents = File.ReadAllText(filePath);
 
-                WWTVSaveResult response = _PostLogPostProcessingService.ProcessFileContents(_UserName, filePath, fileContents);
+                WWTVSaveResult response = _PostLogPostProcessingService.ProcessFileContents(_UserName, filePath, fileContents, new DateTime(2019, 3, 31));
                 // technically nothing to verify, but the original error caused an exception and this is for a black listed isci anyway, so nothing to process
                 VerifyResults(response);
             }
@@ -103,7 +104,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var filePath = @".\Files\WWTV_bad_file_Times.txt";
                 var fileContents = File.ReadAllText(filePath);
 
-                WWTVSaveResult response = _PostLogPostProcessingService.ProcessFileContents(_UserName, filePath, fileContents);
+                WWTVSaveResult response = _PostLogPostProcessingService.ProcessFileContents(_UserName, filePath, fileContents, new DateTime(2019, 3, 31));
 
                 VerifyResults(response);
             }
@@ -118,7 +119,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var filePath = @".\Files\WWTV_Basic_Required_Validation.txt";
                 var fileContents = File.ReadAllText(filePath);
 
-                WWTVSaveResult response = _PostLogPostProcessingService.ProcessFileContents(_UserName, filePath, fileContents);
+                WWTVSaveResult response = _PostLogPostProcessingService.ProcessFileContents(_UserName, filePath, fileContents, new DateTime(2019, 3, 31));
 
                 VerifyResults(response);
             }
@@ -133,7 +134,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var filePath = @".\Files\WWTV_AffidavitValidFile_BCOP4270.txt";
                 var fileContents = File.ReadAllText(filePath);
 
-                WWTVSaveResult response = _PostLogPostProcessingService.ProcessFileContents(_UserName, filePath, fileContents);
+                WWTVSaveResult response = _PostLogPostProcessingService.ProcessFileContents(_UserName, filePath, fileContents, new DateTime(2019, 3, 31));
 
                 VerifyPostLogFile(response.Id.Value);
             }
@@ -159,7 +160,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     fileService.Delete(filePath);
                 }
 
-                postLogPostProcessingService.DownloadAndProcessWWTVFiles("WWTV Service");
+                postLogPostProcessingService.DownloadAndProcessWWTVFiles("WWTV Service", new DateTime(2019, 3, 31));
 
                 Assert.True(fileService.Exists(filePath));
             }
@@ -174,7 +175,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var filePath = @".\Files\WWTV_NonRatedStation.txt";
                 var fileContents = File.ReadAllText(filePath);
 
-                WWTVSaveResult response = _PostLogPostProcessingService.ProcessFileContents(_UserName, filePath, fileContents);
+                WWTVSaveResult response = _PostLogPostProcessingService.ProcessFileContents(_UserName, filePath, fileContents, new DateTime(2019, 3, 31));
                 var postlogFile = VerifyPostLogFile(response.Id.Value);
 
                 Assert.IsTrue(response.ValidationResults.Count == 0);

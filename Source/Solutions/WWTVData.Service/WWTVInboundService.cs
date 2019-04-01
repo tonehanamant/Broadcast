@@ -46,8 +46,9 @@ namespace WWTVData.Service
 
             try
             {
-                ApplicationServiceFactory.GetApplicationService<IAffidavitPostProcessingService>().DownloadAndProcessWWTVFiles("WWTV Service");
-                ApplicationServiceFactory.GetApplicationService<IPostLogPostProcessingService>().DownloadAndProcessWWTVFiles("WWTV Service");
+                var now = DateTime.Now;
+                ApplicationServiceFactory.GetApplicationService<IAffidavitPostProcessingService>().DownloadAndProcessWWTVFiles("WWTV Service", now);
+                ApplicationServiceFactory.GetApplicationService<IPostLogPostProcessingService>().DownloadAndProcessWWTVFiles("WWTV Service", now);
                 _LastRun = DateTime.Now;
             }
             catch (Exception e)

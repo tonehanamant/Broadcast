@@ -19,7 +19,7 @@ namespace Services.Broadcast.ApplicationServices
         /// return true if download success, false if download fails (use for loggin)
         /// This involves FTP 
         /// </summary>        
-        DownloadAndProcessWWTVFilesResponse DownloadAndProcessWWTVFiles(string userName);
+        DownloadAndProcessWWTVFilesResponse DownloadAndProcessWWTVFiles(string userName, DateTime currentDateTime);
 
         /// <summary>
         /// Processes the file content
@@ -28,7 +28,7 @@ namespace Services.Broadcast.ApplicationServices
         /// <param name="fileName">FIlename to be processed</param>
         /// <param name="fileContents">File content as string</param>
         /// <returns>WWTVSaveResult object</returns>
-        WWTVSaveResult ProcessFileContents(string userName, string fileName, string fileContents);
+        WWTVSaveResult ProcessFileContents(string userName, string fileName, string fileContents, DateTime currentDateTime);
 
         /// <summary>
         /// Process error files created by WWTV based on files uploaded by us
@@ -68,7 +68,7 @@ namespace Services.Broadcast.ApplicationServices
         /// return true if download success, false if download fails (use for loggin)
         /// This involves FTP 
         /// </summary>
-        public DownloadAndProcessWWTVFilesResponse DownloadAndProcessWWTVFiles(string userName)
+        public DownloadAndProcessWWTVFilesResponse DownloadAndProcessWWTVFiles(string userName, DateTime currentDateTime)
         {
             var inboundFile = BroadcastServiceSystemParameter.WWTV_KeepingTracFtpInboundFolder;
             if (!inboundFile.EndsWith("/"))
@@ -108,7 +108,7 @@ namespace Services.Broadcast.ApplicationServices
 
                 SendFileToDataLake(fileContents, fileName);
 
-                var result = ProcessFileContents(userName, fileName, fileContents);
+                var result = ProcessFileContents(userName, fileName, fileContents, currentDateTime);
                 response.SaveResults.Add(result);
                 if (result.ValidationResults.Any())
                 {
@@ -130,7 +130,7 @@ namespace Services.Broadcast.ApplicationServices
         /// <param name="fileName">FIlename to be processed</param>
         /// <param name="fileContents">File content as string</param>
         /// <returns>WWTVSaveResult object</returns>
-        public WWTVSaveResult ProcessFileContents(string userName, string fileName, string fileContents)
+        public WWTVSaveResult ProcessFileContents(string userName, string fileName, string fileContents, DateTime currentDateTime)
         {
             List<WWTVInboundFileValidationResult> validationErrors = new List<WWTVInboundFileValidationResult>();
             InboundFileSaveRequest saveRequest = ParseWWTVFile(fileName, fileContents, validationErrors);
@@ -142,7 +142,7 @@ namespace Services.Broadcast.ApplicationServices
             WWTVSaveResult result;
             try
             {
-                result = _PostLogService.SaveKeepingTracFile(saveRequest, userName, DateTime.Now);
+                result = _PostLogService.SaveKeepingTracFile(saveRequest, userName, currentDateTime);
             }
             catch (Exception e)
             {
