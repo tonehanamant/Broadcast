@@ -4,7 +4,14 @@ import axios from "axios";
 const createApiBase = () => __API__;
 /* eslint-enable no-undef */
 
+// axios defaults:
+const axiosDefaults = {
+  headers: { "Content-Type": "application/json" },
+  withCredentials: true
+};
+
 const instance = axios.create({
+  ...axiosDefaults,
   baseURL: createApiBase()
 });
 
