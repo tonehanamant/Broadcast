@@ -22,7 +22,6 @@ namespace Services.Broadcast.Converters.RateImport
         void LoadFromSaveRequest(InventoryFileSaveRequest request);
         void LoadAndValidateDataLines(ExcelWorksheet worksheet, BarterInventoryFile barterFile);
         void PopulateManifests(BarterInventoryFile barterFile, List<DisplayBroadcastStation> stations);
-        void PopulateRates(BarterInventoryFile barterFile);
     }
 
     public abstract class BarterFileImporterBase : IBarterFileImporter
@@ -107,7 +106,5 @@ namespace Services.Broadcast.Converters.RateImport
         public abstract void LoadAndValidateDataLines(ExcelWorksheet worksheet, BarterInventoryFile barterFile);
 
         public abstract void PopulateManifests(BarterInventoryFile barterFile, List<DisplayBroadcastStation> stations);
-
-        public abstract void PopulateRates(BarterInventoryFile barterFile);
     }
 }

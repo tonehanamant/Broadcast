@@ -7,21 +7,23 @@ namespace Services.Broadcast.BusinessEngines
 {
     public interface IProprietarySpotCostCalculationEngine : IApplicationService
     {
-        void CalculateSpotCost(IEnumerable<StationInventoryManifest> manifests);
+        void CalculateSpotCost(IEnumerable<StationInventoryManifest> manifests, bool useProvidedImpressions = false);
     }
 
     public class ProprietarySpotCostCalculationEngine : IProprietarySpotCostCalculationEngine
     {
-        public void CalculateSpotCost(IEnumerable<StationInventoryManifest> manifests)
+        public void CalculateSpotCost(IEnumerable<StationInventoryManifest> manifests, bool useProvidedImpressions)
         {
             foreach (var manifest in manifests)
             {
                 var firstAudience = manifest.ManifestAudiences.FirstOrDefault();
 
-                if (firstAudience == null || !manifest.ProjectedStationImpressions.Any())
+                if (firstAudience == null)
                     continue;
 
-                var impressions = manifest.ProjectedStationImpressions.Average(x => x.impressions);
+                var impressions = useProvidedImpressions ?
+                    firstAudience.Impressions.Value :
+                    manifest.ProjectedStationImpressions.Average(x => x.impressions);
 
                 if (impressions == 0)
                     continue;

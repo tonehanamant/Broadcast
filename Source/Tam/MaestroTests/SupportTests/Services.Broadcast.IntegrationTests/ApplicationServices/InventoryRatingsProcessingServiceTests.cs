@@ -72,6 +72,52 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void ProcessInventoryRatingsAfterBarterFileLoad_OAndO()
+        {
+            const string fileName = @"BarterDataFiles\OAndO_ValidFile1.xlsx";
+
+            using (new TransactionScopeWrapper())
+            {
+                var request = new InventoryFileSaveRequest
+                {
+                    StreamData = new FileStream($@".\Files\{fileName}", FileMode.Open, FileAccess.Read),
+                    FileName = fileName
+                };
+
+                var now = new DateTime(2019, 02, 02);
+                var result = _BarterService.SaveBarterInventoryFile(request, "IntegrationTestUser", now);
+                var jobs = _InventoryRatingsProcessingService.GetQueuedJobs(1);
+                _InventoryRatingsProcessingService.ProcessInventoryRatingsJob(jobs[0].id.Value);
+
+                _VerifyFileInventoryManifests(result.FileId);
+            }
+        }
+
+        private void _VerifyFileInventoryManifests(int fileId)
+        {
+            var jsonResolver = new IgnorableSerializerContractResolver();
+            jsonResolver.Ignore(typeof(StationInventoryManifest), "Id");
+            jsonResolver.Ignore(typeof(StationInventoryManifest), "FileId");
+            jsonResolver.Ignore(typeof(StationInventoryManifestAudience), "Id");
+            jsonResolver.Ignore(typeof(StationInventoryManifestWeek), "Id");
+            jsonResolver.Ignore(typeof(StationInventoryManifestDaypart), "Id");
+            jsonResolver.Ignore(typeof(StationInventoryManifestRate), "Id");
+            jsonResolver.Ignore(typeof(MediaWeek), "_Id");
+            jsonResolver.Ignore(typeof(DisplayBroadcastStation), "Id");
+            var jsonSettings = new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                ContractResolver = jsonResolver
+            };
+
+            var manifests = _IInventoryRepository.GetStationInventoryManifestsByFileId(fileId);
+            var manifestsJson = IntegrationTestHelper.ConvertToJson(manifests, jsonSettings);
+
+            Approvals.Verify(manifestsJson);
+        }
+
         private void _VerifyInventoryGroups(int fileId)
         {
             var jsonResolver = new IgnorableSerializerContractResolver();

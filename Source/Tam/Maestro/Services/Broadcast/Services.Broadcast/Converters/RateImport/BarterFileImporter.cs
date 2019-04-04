@@ -417,13 +417,5 @@ namespace Services.Broadcast.Converters.RateImport
             var mediaWeeks = MediaMonthAndWeekAggregateCache.GetMediaWeeksIntersecting(startDate, endDate);
             return mediaWeeks.Select(x => new StationInventoryManifestWeek { MediaWeek = x, Spots = spots }).ToList();
         }
-
-        public override void PopulateRates(BarterInventoryFile barterFile)
-        {
-            var header = barterFile.Header;
-            var manifests = barterFile.InventoryGroups.SelectMany(x => x.Manifests);
-            _ImpressionsService.GetProjectedStationImpressions(manifests, header.PlaybackType, header.ShareBookId, header.HutBookId);
-            _ProprietarySpotCostCalculationEngine.CalculateSpotCost(manifests);
-        }
     }
 }

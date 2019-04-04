@@ -317,7 +317,7 @@ namespace Services.Broadcast.Converters.RateImport
                         {
                             Audience = new DisplayAudience(fileHeader.Audience.Id, fileHeader.Audience.Name),
                             CPM = x.CPM.Value,
-                            Impressions = x.Impressions
+                            Impressions = x.Impressions.Value * 1000
                         }
                     },
                     ManifestDayparts = x.Dayparts.Select(d => new StationInventoryManifestDaypart
@@ -625,20 +625,6 @@ namespace Services.Broadcast.Converters.RateImport
             }
 
             return null;
-        }
-
-        public override void PopulateRates(BarterInventoryFile barterFile)
-        {
-            foreach (var manifest in barterFile.InventoryManifests)
-            {
-                var audience = manifest.ManifestAudiences.Single();
-
-                manifest.ManifestRates.Add(new StationInventoryManifestRate
-                {
-                    SpotLengthId = manifest.SpotLengthId,
-                    SpotCost = ProposalMath.CalculateCost(audience.CPM, audience.Impressions.Value)
-                });
-            }
         }
     }
 }

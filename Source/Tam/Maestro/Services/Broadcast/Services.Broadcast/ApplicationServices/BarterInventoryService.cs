@@ -123,10 +123,6 @@ namespace Services.Broadcast.ApplicationServices
 
                         var manifests = barterFile.InventoryGroups.SelectMany(x => x.Manifests);
 
-                        //The following two steps are processed as a separate background job. See below.
-                        //_ImpressionsService.GetProjectedStationImpressions(manifests, header.PlaybackType, header.ShareBookId, header.HutBookId);
-                        //_ProprietarySpotCostCalculationEngine.CalculateSpotCost(manifests);
-
                         _StationInventoryGroupService.AddNewStationInventory(barterFile, header.EffectiveDate, header.EndDate, header.ContractedDaypartId);
 
                         _StationRepository.UpdateStationList(stationsDict.Keys.ToList(), userName, now, barterFile.InventorySource.Id);

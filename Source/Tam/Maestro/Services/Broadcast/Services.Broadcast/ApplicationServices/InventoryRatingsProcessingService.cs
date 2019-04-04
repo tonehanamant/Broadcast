@@ -5,8 +5,6 @@ using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Services.Broadcast.ApplicationServices
 {
@@ -90,18 +88,40 @@ namespace Services.Broadcast.ApplicationServices
 
                 //This just processed barter files right now. Needs to be consolidated to 
                 var barterFile = _BarterRepository.GetBarterInventoryFileById(job.InventoryFileId);
-                barterFile.InventoryGroups = _InventoryRepository.GetStationInventoryGroupsByFileId(job.InventoryFileId);
-                var manifests = barterFile.InventoryGroups.SelectMany(x => x.Manifests).ToList();
 
-                //process impressions/cost    
-                _ImpressionsService.GetProjectedStationImpressions(manifests, barterFile.Header.PlaybackType, barterFile.Header.ShareBookId, barterFile.Header.HutBookId);
-                _ProprietarySpotCostCalculationEngine.CalculateSpotCost(manifests);
+                if (barterFile.InventorySource.InventoryType == Entities.Enums.InventorySourceTypeEnum.Barter)
+                {
+                    barterFile.InventoryGroups = _InventoryRepository.GetStationInventoryGroupsByFileId(job.InventoryFileId);
+                    var manifests = barterFile.InventoryGroups.SelectMany(x => x.Manifests).ToList();
 
-                //update manifest rates
-                _InventoryRepository.UpdateInventoryRatesForManifests(manifests);
+                    //process impressions/cost
+                    _ImpressionsService.GetProjectedStationImpressions(manifests, barterFile.Header.PlaybackType, barterFile.Header.ShareBookId, barterFile.Header.HutBookId);
+                    _ProprietarySpotCostCalculationEngine.CalculateSpotCost(manifests);
 
-                job.Status = InventoryFileRatingsProcessingStatus.Succeeded;
-                job.CompletedAt = DateTime.Now;
+                    //update manifest rates
+                    _InventoryRepository.UpdateInventoryRatesForManifests(manifests);
+
+                    job.Status = InventoryFileRatingsProcessingStatus.Succeeded;
+                    job.CompletedAt = DateTime.Now;
+                }
+                else if (barterFile.InventorySource.InventoryType == Entities.Enums.InventorySourceTypeEnum.ProprietaryOAndO)
+                {
+                    //process cost
+                    var manifests = _InventoryRepository.GetStationInventoryManifestsByFileId(job.InventoryFileId);
+                    _ProprietarySpotCostCalculationEngine.CalculateSpotCost(manifests, useProvidedImpressions: true);
+
+                    //update manifest rates
+                    _InventoryRepository.UpdateInventoryRatesForManifests(manifests);
+
+                    job.Status = InventoryFileRatingsProcessingStatus.Succeeded;
+                    job.CompletedAt = DateTime.Now;
+                }
+                else
+                {
+                    // Failed for unsupported types
+                    job.Status = InventoryFileRatingsProcessingStatus.Failed;
+                }
+                
                 _InventoryFileRatingsJobsRepository.UpdateJob(job);
             }
             catch (Exception e)
