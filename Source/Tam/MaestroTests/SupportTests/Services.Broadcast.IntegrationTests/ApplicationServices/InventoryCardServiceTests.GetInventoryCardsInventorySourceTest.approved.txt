@@ -1,0 +1,87 @@
+﻿[
+  {
+    "HouseholdImpressions": 0.0,
+    "InventorySourceId": 3,
+    "InventorySourceName": "TVB",
+    "IsUpdating": false,
+    "LastUpdatedDate": null,
+    "Quarter": {
+      "Quarter": 1,
+      "Year": 2018
+    },
+    "RatesAvailableFromQuarter": null,
+    "RatesAvailableToQuarter": null,
+    "TotalDaypartCodes": 0,
+    "TotalMarkets": 0,
+    "TotalStations": 0,
+    "TotalUnits": 0
+  },
+  {
+    "HouseholdImpressions": 0.0,
+    "InventorySourceId": 3,
+    "InventorySourceName": "TVB",
+    "IsUpdating": false,
+    "LastUpdatedDate": null,
+    "Quarter": {
+      "Quarter": 2,
+      "Year": 2018
+    },
+    "RatesAvailableFromQuarter": null,
+    "RatesAvailableToQuarter": null,
+    "TotalDaypartCodes": 0,
+    "TotalMarkets": 0,
+    "TotalStations": 0,
+    "TotalUnits": 0
+  },
+  {
+    "HouseholdImpressions": 0.0,
+    "InventorySourceId": 3,
+    "InventorySourceName": "TVB",
+    "IsUpdating": false,
+    "LastUpdatedDate": null,
+    "Quarter": {
+      "Quarter": 3,
+      "Year": 2018
+    },
+    "RatesAvailableFromQuarter": null,
+    "RatesAvailableToQuarter": null,
+    "TotalDaypartCodes": 0,
+    "TotalMarkets": 0,
+    "TotalStations": 0,
+    "TotalUnits": 0
+  },
+  {
+    "HouseholdImpressions": 0.0,
+    "InventorySourceId": 3,
+    "InventorySourceName": "TVB",
+    "IsUpdating": false,
+    "LastUpdatedDate": null,
+    "Quarter": {
+      "Quarter": 4,
+      "Year": 2018
+    },
+    "RatesAvailableFromQuarter": null,
+    "RatesAvailableToQuarter": null,
+    "TotalDaypartCodes": 0,
+    "TotalMarkets": 0,
+    "TotalStations": 0,
+    "TotalUnits": 0
+  },
+  {
+    "HouseholdImpressions": 0.0,
+    "InventorySourceId": 3,
+    "InventorySourceName": "TVB",
+    "IsUpdating": false,
+    "LastUpdatedDate": null,
+    "Quarter": {
+      "Quarter": 1,
+      "Year": 2019
+    },
+    "RatesAvailableFromQuarter": null,
+    "RatesAvailableToQuarter": null,
+    "TotalDaypartCodes": 0,
+    "TotalMarkets": 0,
+    "TotalStations": 0,
+    "TotalUnits": 0
+  }
+]

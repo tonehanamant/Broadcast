@@ -3,6 +3,7 @@ import post from "./api.post";
 import planning from "./api.planning";
 import app from "./api.app";
 import tracker from "./api.tracker";
+import inventory from "./api.inventory";
 
 export { createApiBase } from "./config";
 
@@ -11,5 +12,6 @@ export default {
   post,
   planning,
   app,
-  tracker
+  tracker,
+  inventory
 };

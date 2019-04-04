@@ -4,6 +4,7 @@ import { reducer as postPrePosting } from "PostPrePosting";
 import { reducer as app } from "Main";
 import { reducer as post } from "Post";
 import { reducer as tracker } from "Tracker";
+import { reducer as inventory } from "Inventory";
 import * as oldReducers from "Ducks";
 
 export const rootReducer = combineReducers({
@@ -12,5 +13,6 @@ export const rootReducer = combineReducers({
   app,
   post,
   tracker,
+  inventory,
   postPrePosting
 });

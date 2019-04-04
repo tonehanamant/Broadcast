@@ -1,0 +1,108 @@
+﻿{
+  "InventorySources": [
+    {
+      "Id": 3,
+      "InventoryType": 2,
+      "IsActive": true,
+      "Name": "TVB"
+    },
+    {
+      "Id": 4,
+      "InventoryType": 2,
+      "IsActive": true,
+      "Name": "TTNW"
+    },
+    {
+      "Id": 5,
+      "InventoryType": 2,
+      "IsActive": true,
+      "Name": "CNN"
+    },
+    {
+      "Id": 6,
+      "InventoryType": 2,
+      "IsActive": true,
+      "Name": "Sinclair"
+    },
+    {
+      "Id": 7,
+      "InventoryType": 2,
+      "IsActive": true,
+      "Name": "LilaMax"
+    },
+    {
+      "Id": 8,
+      "InventoryType": 2,
+      "IsActive": true,
+      "Name": "MLB"
+    },
+    {
+      "Id": 9,
+      "InventoryType": 2,
+      "IsActive": true,
+      "Name": "Ference Media"
+    }
+  ],
+  "Quarters": [
+    {
+      "Quarter": 2,
+      "Year": 2016
+    },
+    {
+      "Quarter": 3,
+      "Year": 2016
+    },
+    {
+      "Quarter": 4,
+      "Year": 2016
+    },
+    {
+      "Quarter": 1,
+      "Year": 2017
+    },
+    {
+      "Quarter": 2,
+      "Year": 2017
+    },
+    {
+      "Quarter": 3,
+      "Year": 2017
+    },
+    {
+      "Quarter": 4,
+      "Year": 2017
+    },
+    {
+      "Quarter": 1,
+      "Year": 2018
+    },
+    {
+      "Quarter": 2,
+      "Year": 2018
+    },
+    {
+      "Quarter": 3,
+      "Year": 2018
+    },
+    {
+      "Quarter": 4,
+      "Year": 2018
+    },
+    {
+      "Quarter": 1,
+      "Year": 2019
+    },
+    {
+      "Quarter": 2,
+      "Year": 2019
+    },
+    {
+      "Quarter": 3,
+      "Year": 2019
+    },
+    {
+      "Quarter": 4,
+      "Year": 2019
+    }
+  ]
+}

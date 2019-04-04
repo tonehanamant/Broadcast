@@ -1,20 +1,20 @@
-﻿using Common.Services.Repositories;
+﻿using Common.Services.Extensions;
+using Common.Services.Repositories;
+using EntityFrameworkMapping.Broadcast;
+using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.DTO;
-using Services.Broadcast.Entities.OpenMarketInventory;
-using System.Linq;
-using Tam.Maestro.Data.Entities.DataTransferObjects;
-using Common.Services.Extensions;
-using System.Data.Entity;
-using Tam.Maestro.Services.Clients;
-using Tam.Maestro.Common.DataLayer;
-using Tam.Maestro.Data.EntityFrameworkMapping;
-using EntityFrameworkMapping.Broadcast;
-using Services.Broadcast.Entities.Enums;
-using Services.Broadcast.BusinessEngines;
-using System.Collections.Generic;
 using Services.Broadcast.Entities.DTO.PricingGuide;
+using Services.Broadcast.Entities.Enums;
+using Services.Broadcast.Entities.OpenMarketInventory;
 using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
+using Tam.Maestro.Common.DataLayer;
+using Tam.Maestro.Data.Entities.DataTransferObjects;
+using Tam.Maestro.Data.EntityFrameworkMapping;
+using Tam.Maestro.Services.Clients;
 
 namespace Services.Broadcast.Repositories
 {

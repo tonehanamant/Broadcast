@@ -224,6 +224,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\BroadcastControllerBase\" />
+    <Folder Include="Views\InventoryCard\" />
     <Folder Include="Views\PricingGuide\" />
   </ItemGroup>
   <ItemGroup>
@@ -235,6 +236,7 @@
     <Compile Include="Controllers\EnvironmentController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ImageApiController.cs" />
+    <Compile Include="Controllers\InventoryCardApiController.cs" />
     <Compile Include="Controllers\MaintenanceController.cs" />
     <Compile Include="Controllers\PostApiController.cs" />
     <Compile Include="Controllers\PostLogController.cs" />

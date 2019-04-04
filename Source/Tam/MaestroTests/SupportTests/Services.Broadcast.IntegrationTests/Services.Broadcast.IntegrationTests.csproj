@@ -229,6 +229,7 @@
     <Compile Include="ApplicationServices\AffidavitServiceTests.cs" />
     <Compile Include="ApplicationServices\AffidavitPreprocessingServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\DataLakeFileServiceTests.cs" />
+    <Compile Include="ApplicationServices\InventoryCardServiceTests.cs" />
     <Compile Include="ApplicationServices\InventoryDaypartParsingEngineIntegrationTests.cs" />
     <Compile Include="ApplicationServices\InventoryRatingsProcessingServiceTests.cs" />
     <Compile Include="ApplicationServices\IsciServiceIntegrationTests.cs" />

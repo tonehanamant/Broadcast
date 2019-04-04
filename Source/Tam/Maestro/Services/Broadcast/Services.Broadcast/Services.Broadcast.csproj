@@ -215,10 +215,17 @@
     <Compile Include="ApplicationServices\BarterInventoryService.cs" />
     <Compile Include="ApplicationServices\DataLakeFileService.cs" />
     <Compile Include="ApplicationServices\InventoryRatingsProcessingService.cs" />
+	<Compile Include="ApplicationServices\InventoryCardService.cs" />
     <Compile Include="Converters\RateImport\BarterFileImporterBase.cs" />
     <Compile Include="Converters\RateImport\BarterFileImporterFactory.cs" />
     <Compile Include="Converters\RateImport\OAndOBarterFileImporter.cs" />
     <Compile Include="Entities\DaypartCode.cs" />
+	<Compile Include="Entities\InventoryCardBooks.cs" />
+    <Compile Include="Entities\InventoryCardDto.cs" />
+    <Compile Include="Entities\InventoryCardFilterDto.cs" />
+    <Compile Include="Entities\InventoryCardInitialData.cs" />
+    <Compile Include="Entities\InventoryCardManifestFileDto.cs" />
+    <Compile Include="Entities\InventoryCardQuarter.cs" />
     <Compile Include="Entities\ProposalDetailPricingGuideSave.cs" />
     <Compile Include="Helpers\DataLakeSystemParameters.cs" />
     <Compile Include="BusinessEngines\InventoryDaypartParsing\DaypartParserBase.cs" />
@@ -596,6 +603,8 @@
     <Compile Include="Repositories\BvsPostDetailsRepository.cs" />
     <Compile Include="Repositories\InventoryFileRatingsJobsRepository.cs" />
     <Compile Include="Repositories\DaypartCodeRepository.cs" />
+	<Compile Include="Entities\InventoryCardManifestDto.cs" />
+    <Compile Include="Repositories\InventoryCardRepository.cs" />
     <Compile Include="Repositories\IsciRepository.cs" />
     <Compile Include="Repositories\NtiTransmittalsRepository.cs" />
     <Compile Include="Repositories\PricingGuideRepository.cs" />

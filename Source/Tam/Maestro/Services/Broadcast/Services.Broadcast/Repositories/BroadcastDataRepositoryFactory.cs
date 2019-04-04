@@ -63,7 +63,6 @@ namespace Services.Broadcast.Repositories
             instance.RegisterType<IShowTypeRepository, ShowTypeRepository>();
             instance.RegisterType<INtiTransmittalsRepository, NtiTransmittalsRepository>();
             instance.RegisterType<IPricingGuideRepository, PricingGuideRepository>();
-
             instance.RegisterType<IMediaMonthAndWeekAggregateRepository, MediaMonthAndWeekAggregateAndWeekAggregateRepository>();
             instance.RegisterType<IMediaMonthAndWeekAggregateCache, MediaMonthAndWeekAggregateCache>();
             instance.RegisterType<IDisplayDaypartRepository, DisplayDaypartBroadcastRepository>();
@@ -79,6 +78,7 @@ namespace Services.Broadcast.Repositories
             instance.RegisterType<IStationProcessingEngine, StationProcessingEngine>();
             instance.RegisterType<IBarterRepository, BarterInventoryRepository>();
             instance.RegisterType<IDaypartCodeRepository, DaypartCodeRepository>();
+            instance.RegisterType<IInventoryCardRepository, InventoryCardRepository>();
 
             WasRegistered = true;
         }
