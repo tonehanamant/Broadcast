@@ -35,7 +35,7 @@ namespace BroadcastComposerWeb.Controllers
         [Route("Cards")]
         public BaseResponse<List<InventoryCardDto>> GetInventoryCards(InventoryCardFilterDto inventorySourceCardFilter)
         {
-            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IInventoryCardService>().GetInventoryCards(inventorySourceCardFilter));
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IInventoryCardService>().GetInventoryCards(inventorySourceCardFilter, DateTime.Now));
         }
     }
 }
