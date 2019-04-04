@@ -83,7 +83,7 @@ namespace Services.Broadcast.BusinessEngines.InventoryDaypartParsing
             // lets replace all range weekdays definitions with enumerations because the general parser doesn`t support this format of weekdays: M-F,SU
             if (weekDays.Contains("-"))
             {
-                var weekDaysRangeMatches = Regex.Matches(weekDays, @"[a-z]{1,3}-[a-z]{1,3}", RegexOptions.IgnoreCase);
+                var weekDaysRangeMatches = Regex.Matches(weekDays, @"[a-z]{1,3}\s*-\s*[a-z]{1,3}", RegexOptions.IgnoreCase);
 
                 foreach (Match match in weekDaysRangeMatches)
                 {
@@ -100,6 +100,9 @@ namespace Services.Broadcast.BusinessEngines.InventoryDaypartParsing
         {
             weekDays = Regex.Replace(weekDays, @"\s*;\s*", ",");
             weekDays = Regex.Replace(weekDays, @"\s*\+\s*", ",");
+
+            //remove space before and after any dash
+            weekDays = Regex.Replace(weekDays, @"\s*-\s*", "-");
 
             var weekDaysSplit = weekDays.Split(new char[] { '-', ',' });
 
@@ -129,6 +132,7 @@ namespace Services.Broadcast.BusinessEngines.InventoryDaypartParsing
             var result = new List<string>();
             var startIndex = -1;
             var endIndex = -1;
+
             var splitDays = daypartRange.Split(new char[] { '-' });
 
             for (int i = 0; i < splitDays.Length; i++)

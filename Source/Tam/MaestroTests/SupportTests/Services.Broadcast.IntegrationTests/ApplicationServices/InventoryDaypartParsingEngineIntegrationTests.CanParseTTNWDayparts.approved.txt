@@ -200,6 +200,9 @@
     ],
     "SA-SU 6A-9A": [
       "SA-SU 6AM-9AM"
+    ],
+    "SA - SU 8-859A": [
+      "SA-SU 8AM-8:59AM"
     ]
   }
 }
