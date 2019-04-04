@@ -1,0 +1,43 @@
+@mixin make_flex($direction, $justify, $align) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: $justify;
+  align-items: $align;
+}
+
+@mixin make_flex_col_center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+@mixin make_flex_col_center {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+@mixin make_flex_row_center {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin make_general_container {
+  flex: 1;
+  width: 100%;
+}
+
+@mixin dimensions($height, $width) {
+  height: $height;
+  width: $width;
+}
+
+@mixin create_dashboard_header($backgroundColor) {
+  background-color: $backgroundColor;
+  width: 100%;
+  height: 72px;
+  padding-left: 25px;
+
+  @include make_flex(row, space-between, center);
+}

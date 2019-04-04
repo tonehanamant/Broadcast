@@ -15,8 +15,8 @@ export const INVENTORY_FILTER_CARDS = createAction(
 );
 
 const initialState = {
-  initialInventoryData: {},
-  cardsInventoryData: []
+  initialInventoryData: null,
+  cardsInventoryData: null
 };
 
 // Reducer

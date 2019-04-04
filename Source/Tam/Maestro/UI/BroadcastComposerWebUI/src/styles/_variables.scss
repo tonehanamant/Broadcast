@@ -1,5 +1,37 @@
 @import "./functions/index";
 
+// Breakpoints
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  xxl: 1440px
+) !default;
+
+// Fonts
+$font-family-heading: "Varela Round", sans-serif;
+$font-family-regular: "Avenir";
+$font-family-black: "Avenir Black";
+$font-family-book: "Avenir Book";
+$font-line-height: 1.4;
+$font-line-height-ratio: 1.5;
+$font-size: 16px;
+$h1: 37px;
+$h2: 32px;
+$h3: 28px;
+$h4: 24px;
+$h5: 21px;
+$h6: 18px;
+$modularscale: (
+  base: 16px,
+  ratio: 1.15,
+  768px: (
+    base: 18px,
+    ratio: 1.15
+  )
+);
 $font-weight: (
   regular: normal,
   light: 300,
@@ -10,7 +42,7 @@ $font-weight: (
 // Colors
 $color-primary: #ec1a63;
 $color-secondary: #432c76;
-$color-tertiary:#fafafa;
+$color-tertiary: #fafafa;
 $color-success: #13d666;
 $color-warning: #ffc612;
 $color-invalid: #e50000;

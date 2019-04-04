@@ -1,0 +1,49 @@
+@import "src/styles/mixins/index";
+
+.sub-menu {
+  background-color: rgba(0, 0, 0, 0.85);
+  width: 150px;
+  height: 100%;
+  z-index: 10;
+  position: absolute;
+  right: 0;
+
+  &-header {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    z-index: 10;
+
+    button {
+      left: 0;
+      top: 0;
+      width: inherit;
+      height: inherit;
+      background-color: $color-contrast-0;
+      border-color: $color-contrast-0;
+      cursor: pointer;
+    }
+  }
+
+  &-options {
+    @include make_flex(column, space-around, center);
+    padding: 20px 0;
+    height: 100%;
+
+    &-link {
+      button {
+        @include font_machine(
+          $weight: light,
+          $family: $font-family-regular,
+          $size: 14px,
+          $color: $color-grayscale-0
+        );
+
+        :hover {
+          transition: color 0.15s ease-in-out;
+          color: $color-primary-0;
+        }
+      }
+    }
+  }
+}

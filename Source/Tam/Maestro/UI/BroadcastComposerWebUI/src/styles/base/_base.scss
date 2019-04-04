@@ -1,0 +1,41 @@
+* {
+  box-sizing: border-box;
+  position: relative;
+
+  &::after,
+  &::before {
+    box-sizing: border-box;
+    font-size: inherit;
+  }
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+body {
+  & > section {
+    height: 100%;
+    width: 100%;
+  }
+}
+
+button,
+a {
+  cursor: pointer;
+}
+
+code {
+  background: rgba($color-grayscale-1, 0.25);
+  padding: 3px 7px;
+  font-size: 14px;
+  color: $color-grayscale-4;
+  font-family: "Courier New", Courier, monospace;
+
+  &.block {
+    width: 100%;
+  }
+}

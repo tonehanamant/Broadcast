@@ -1,0 +1,51 @@
+@import "../variables";
+
+@mixin transition-button-hover(
+  $time: $transition-default-time,
+  $ease: $transition-default-easing
+) {
+  transition: background-color $time $ease, border-color $time $ease,
+    color $time $ease;
+}
+
+@mixin transition-input-focus(
+  $time: $transition-default-time,
+  $ease: $transition-default-easing
+) {
+  transition: border-color $time $ease, color $time $ease;
+}
+
+@mixin transition_height(
+  $time: $transition-default-time,
+  $ease: $transition-default-easing
+) {
+  transition: height $time $ease;
+}
+
+@mixin transition_all(
+  $time: $transition-default-time,
+  $ease: $transition-default-easing
+) {
+  transition: all $time $ease;
+}
+
+@mixin transition_boxshadow(
+  $time: $transition-default-time,
+  $ease: $transition-default-easing
+) {
+  transition: box-shadow $time $ease;
+}
+
+@mixin transition_background(
+  $time: $transition-default-time,
+  $ease: $transition-default-easing
+) {
+  transition: box-shadow $time $ease;
+}
+
+@mixin transition_border(
+  $time: $transition-default-time,
+  $ease: $transition-default-easing
+) {
+  transition: box-shadow $time $ease;
+}

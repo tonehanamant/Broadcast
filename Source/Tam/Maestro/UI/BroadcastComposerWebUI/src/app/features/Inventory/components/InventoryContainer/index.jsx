@@ -6,29 +6,31 @@ import CSSModules from "react-css-modules";
 import AppBody from "Patterns/layout/Body";
 import PageTitle from "Patterns/PageTitle";
 // import InventoryHeader from "Inventory/components/InventoryHeader";
-// import InventoryCards from "Inventory/components/InventoryCards";
+import InventoryCards from "Inventory/components/InventoryCards";
 
 import { getInventoryInitialData } from "Inventory/redux/ducks";
 
 import styles from "./index.style.scss";
 
 export class SectionInventory extends Component {
-  /* constructor(props) {
-    super(props);
-  } */
-
   componentWillMount() {
     const { getInventoryInitialData } = this.props;
     getInventoryInitialData();
   }
 
   render() {
+    const { cardsInventoryData, initialInventoryData } = this.props;
     return (
       <div id="inventory-section">
         <AppBody>
           <PageTitle title="Inventory Management" />
-          {/*  <InventoryHeader />
-      <InventoryCards /> */}
+          {/* <InventoryHeader /> */}
+          {cardsInventoryData && (
+            <InventoryCards
+              data={cardsInventoryData}
+              initialData={initialInventoryData}
+            />
+          )}
         </AppBody>
       </div>
     );
@@ -36,8 +38,22 @@ export class SectionInventory extends Component {
 }
 
 SectionInventory.propTypes = {
-  getInventoryInitialData: PropTypes.func.isRequired
+  getInventoryInitialData: PropTypes.func.isRequired,
+  initialInventoryData: PropTypes.object,
+  cardsInventoryData: PropTypes.array
 };
+
+SectionInventory.defaultProps = {
+  initialInventoryData: null,
+  cardsInventoryData: null
+};
+
+const mapStateToProps = ({
+  inventory: { initialInventoryData, cardsInventoryData }
+}) => ({
+  initialInventoryData,
+  cardsInventoryData
+});
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
@@ -48,6 +64,6 @@ const mapDispatchToProps = dispatch =>
   );
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(CSSModules(SectionInventory, styles));

@@ -1,0 +1,84 @@
+@mixin make_button_disabled {
+  background-color: $color-grayscale-1 !important;
+  border-color: $color-grayscale-1 !important;
+  color: $color-grayscale-2 !important;
+  cursor: default;
+}
+
+@mixin make_button_default(
+  $font-size: $button-font-size,
+  $line-height: $button-font-size
+) {
+  @include font_machine("light", $size: $font-size);
+  @include transition_button_hover(0.15s, ease-out);
+  border-radius: $button-border-radius;
+  min-width: $button-min-width;
+  padding: $button-padding;
+  display: inline-block;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  &:disabled {
+    @include make_button_disabled();
+  }
+  & > div {
+    @include make_flex(row, center, stretch);
+    & > div {
+      margin-left: 10px;
+    }
+  }
+}
+@mixin make_button(
+  $color-1,
+  $color-2,
+  $color-3,
+  $font-color: $color-grayscale-3
+) {
+  background-color: $color-1;
+  border: $button-border-stroke $color-1;
+  color: $font-color;
+  &:hover {
+    background-color: $color-2;
+    border-color: $color-2;
+  }
+  &:active {
+    background-color: $color-3;
+    border-color: $color-3;
+  }
+}
+@mixin make_button_alternative($color-1, $color-2, $color-3) {
+  background-color: transparent;
+  border: $button-border-stroke $color-1;
+  color: $color-1;
+  &:hover {
+    border-color: $color-2;
+    color: $color-2;
+  }
+  &:active {
+    border-color: $color-3;
+    color: $color-3;
+  }
+}
+@mixin make_button_spacing {
+  & + .primary,
+  & + .secondary,
+  & + .contrast,
+  & + .tertiary {
+    margin-left: 20px;
+  }
+}
+@mixin make_button_contrast {
+  background-color: transparent;
+  border: $button-border-stroke $color-contrast-2;
+  color: $color-contrast-active;
+  &:hover {
+    border-color: $color-contrast-active;
+    color: $color-contrast-active;
+  }
+}
+@mixin make_link_border {
+  padding: 10px 30px;
+  text-align: center;
+  border: 1px solid $color-primary-1;
+  border-radius: 3px;
+}

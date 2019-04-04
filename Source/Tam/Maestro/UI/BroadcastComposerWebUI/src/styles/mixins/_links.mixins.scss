@@ -1,0 +1,18 @@
+@mixin make_link {
+  @include font_machine(light, $color: $color-primary-1);
+  margin-top: 20px;
+  border: none;
+  background: none;
+}
+
+@mixin make_mini_link {
+  @include font_machine(
+    "heavy",
+    $color: $color-primary-1,
+    $size: 14px,
+    $line-height: 16px
+  );
+  letter-spacing: -0.5px;
+  border: none;
+  background: none;
+}

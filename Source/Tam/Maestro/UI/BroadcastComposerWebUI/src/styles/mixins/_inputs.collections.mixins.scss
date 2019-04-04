@@ -1,0 +1,361 @@
+// ************* Base Styles ************* \\
+@mixin collection_treatment_proxy {
+  & + span {
+    @content;
+  }
+}
+
+@mixin collection_switch_knob_proxy {
+  &::after {
+    @content;
+  }
+}
+
+@mixin collection_base {
+  position: relative;
+  display: none;
+
+  @include collection_treatment_proxy {
+    position: relative;
+    display: block;
+    @content;
+  }
+}
+
+@mixin collection_disabled_base {
+  &:disabled {
+    @include collection_treatment_proxy {
+      @content;
+    }
+  }
+}
+
+@mixin collection_hover-focus_base {
+  &:focus,
+  &:hover {
+    @include collection_treatment_proxy {
+      @content;
+    }
+  }
+}
+
+@mixin collection_checked_base {
+  &:checked {
+    @include collection_treatment_proxy {
+      @content;
+    }
+  }
+}
+
+@mixin collection_radio_base {
+  .label {
+    width: 20px;
+    height: 20px;
+  }
+
+  @include collection_base {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    @content;
+  }
+}
+@mixin collection_radio-checked_base($border, $background) {
+  border: $border;
+
+  &::after {
+    content: "";
+    height: $input-radio-button-checked-size;
+    width: $input-radio-button-checked-size;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: (($input-radio-button-checked-size / 2) * -1);
+    margin-top: (($input-radio-button-checked-size / 2) * -1);
+    border-radius: 50%;
+    background: $background;
+  }
+}
+
+@mixin collection_checkbox_base {
+  @include collection_base {
+    width: 20px;
+    height: 20px;
+    border-radius: 2px;
+    @content;
+  }
+}
+@mixin collection_checkbox-checked_base {
+  @content;
+  background-image: url("~Icons/icon-check.png");
+  background-size: 12px 10px;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+@mixin collection_switch_base {
+  @include collection_base {
+    position: relative;
+    width: 34px;
+    height: 15px;
+    border-radius: 12px;
+    transition: background 0.15s ease-in-out;
+    cursor: pointer;
+    @content;
+  }
+}
+@mixin collection_switch-knob_base {
+  &::after {
+    content: "";
+    display: block;
+    position: absolute;
+    height: 20px;
+    width: 20px;
+    border: none;
+    border-radius: 50%;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+    margin-top: -10px;
+    top: 50%;
+    transition: background 0.15s ease-in-out, left 0.15s ease-in-out;
+    @content;
+  }
+}
+@mixin collection_switch-checked_base {
+  @content;
+  background-size: 12px 10px;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+// ************* Radio Style Types ************* \\
+@mixin collection_radio-container__default {
+  @include collection_radio_base {
+    background: $color-grayscale-0;
+    border: 2px solid $color-grayscale-2;
+  }
+}
+@mixin collection_radio-container__contrast {
+  @include collection_radio_base {
+    background: transparent;
+    border: 2px solid $color-contrast-3;
+  }
+}
+@mixin collection_radio-disabled__default {
+  @include collection_disabled_base {
+  }
+}
+@mixin collection_radio-disabled__contrast {
+  @include collection_disabled_base {
+  }
+}
+@mixin collection_radio-hover-focus__default {
+  @include collection_hover-focus_base {
+    background: $color-grayscale-0;
+    border: 2px solid $color-primary-1;
+  }
+}
+@mixin collection_radio-hover-focus__contrast {
+  @include collection_hover-focus_base {
+    background: transparent;
+    border: 2px solid $color-contrast-active;
+  }
+}
+@mixin collection_radio-checked__default {
+  @include collection_checked_base {
+    @include collection_radio-checked_base(
+      $border: 2px solid $color-primary-1,
+      $background: $color-primary-1
+    );
+  }
+}
+@mixin collection_radio-checked__contrast {
+  @include collection_checked_base {
+    @include collection_radio-checked_base(
+      $border: 2px solid $color-contrast-opaque,
+      $background: $color-grayscale-0
+    );
+  }
+}
+// ************* Checkbox Style Types ************* \\
+@mixin collection_checkbox-container__default {
+  @include collection_checkbox_base {
+    background: $color-grayscale-0;
+    border: 2px solid $color-grayscale-2;
+  }
+}
+@mixin collection_checkbox-container__contrast {
+  @include collection_checkbox_base {
+    background: transparent;
+    border: 2px solid $color-contrast-3;
+  }
+}
+@mixin collection_checkbox-disabled__default {
+  @include collection_disabled_base {
+  }
+}
+@mixin collection_checkbox-disabled__contrast {
+  @include collection_disabled_base {
+  }
+}
+@mixin collection_checkbox-hover-focus__default {
+  @include collection_hover-focus_base {
+    background: $color-grayscale-0;
+    border: 2px solid $color-primary-1;
+  }
+}
+@mixin collection_checkbox-hover-focus__contrast {
+  @include collection_hover-focus_base {
+    background: transparent;
+    border: 2px solid $color-contrast-active;
+  }
+}
+@mixin collection_checkbox-checked__default {
+  @include collection_checked_base {
+    @include collection_checkbox-checked_base {
+      border: 2px solid $color-primary-1;
+      background: $color-primary-1;
+    }
+  }
+}
+@mixin collection_checkbox-checked__contrast {
+  @include collection_checked_base {
+    @include collection_checkbox-checked_base {
+      background: $color-contrast-opaque;
+      border: 2px solid $color-contrast-opaque;
+    }
+  }
+}
+// ************* Switch Style Types ************* \\
+@mixin collection_switch-container__default {
+  @include collection_switch_base {
+    background: $color-grayscale-2;
+    @include collection_switch-knob_base {
+      left: -2px;
+      background: $color-grayscale-0;
+    }
+  }
+}
+@mixin collection_switch-container__neutral {
+  @include collection_switch_base {
+    background:  $color-primary-4;
+    @include collection_switch-knob_base {
+      left: -2px;
+      background:  $color-primary-1;
+    }
+  }
+}
+@mixin collection_switch-container__contrast {
+  @include collection_switch_base {
+  }
+}
+@mixin collection_switch-disabled__default {
+  @include collection_disabled_base {
+    background: $color-grayscale-2;
+  }
+}
+@mixin collection_switch-disabled__contrast {
+  @include collection_disabled_base {
+    @include collection_switch-checked_base {
+      background: $color-grayscale-1;
+      @include collection_switch-knob_base {
+        background: $color-grayscale-1;
+      }
+    }
+  }
+}
+@mixin collection_switch-hover-focus__default {
+  @include collection_hover-focus_base {
+  }
+}
+@mixin collection_switch-hover-focus__contrast {
+  @include collection_hover-focus_base {
+  }
+}
+@mixin collection_switch-checked__default {
+  @include collection_checked_base {
+    @include collection_switch-checked_base {
+      background: $color-primary-4;
+      @include collection_switch-knob_base {
+        left: 18px;
+        background: $color-primary-1;
+      }
+    }
+  }
+}
+@mixin collection_switch-checked__contrast {
+  @include collection_checked_base {
+    @include collection_switch-checked_base {
+      background: $color-contrast-opaque;
+      border: 2px solid $color-contrast-opaque;
+    }
+  }
+}
+// ************* Compositions ************* \\
+@mixin input_radio__default {
+  @include collection_radio-container__default;
+  @include collection_radio-disabled__default;
+  @include collection_radio-disabled__default;
+  @include collection_radio-hover-focus__default;
+  @include collection_radio-checked__default;
+  &.touched {
+    display: none;
+  }
+}
+@mixin input_radio__contrast {
+  @include collection_radio-container__contrast;
+  @include collection_radio-disabled__contrast;
+  @include collection_radio-disabled__contrast;
+  @include collection_radio-hover-focus__contrast;
+  @include collection_radio-checked__contrast;
+  &.touched {
+    display: none;
+  }
+}
+@mixin input_checkbox__default {
+  @include collection_checkbox-container__default;
+  @include collection_checkbox-disabled__default;
+  @include collection_checkbox-disabled__default;
+  @include collection_checkbox-hover-focus__default;
+  @include collection_checkbox-checked__default;
+  &.touched {
+    display: none;
+  }
+}
+@mixin input_checkbox__contrast {
+  @include collection_checkbox-container__contrast;
+  @include collection_checkbox-disabled__contrast;
+  @include collection_checkbox-disabled__contrast;
+  @include collection_checkbox-hover-focus__contrast;
+  @include collection_checkbox-checked__contrast;
+  &.touched {
+    display: none;
+  }
+}
+@mixin input_switch__base {
+  @include collection_switch-disabled__default;
+  @include collection_switch-disabled__default;
+  @include collection_switch-hover-focus__default;
+  @include collection_switch-checked__default;
+  &.touched {
+    display: none;
+  }
+}
+@mixin input_switch__default {
+  @include collection_switch-container__default;
+  @include input_switch__base;
+
+}
+@mixin input_switch__neutral {
+  @include collection_switch-container__neutral;
+  @include input_switch__base;
+}
+@mixin input_switch__contrast {
+  @include collection_switch-container__contrast;
+  @include collection_switch-disabled__contrast;
+  @include collection_switch-disabled__contrast;
+  @include collection_switch-hover-focus__contrast;
+  @include collection_switch-checked__contrast;
+  &.touched {
+    display: none;
+  }
+}

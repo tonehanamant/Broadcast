@@ -3,6 +3,9 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 // light
 import {
   faSpinnerThird as falSpinnerThird,
+  faQuestionCircle as falQuestionCircle,
+  faEllipsisH as falEllipsisH,
+  faTimes as falTimes,
   faCircle as falCircle
 } from "@fortawesome/pro-light-svg-icons";
 
@@ -22,14 +25,15 @@ import {
 
 export const configureIcons = () => {
   // light
-  library.add(falSpinnerThird);
-  library.add(falCircle);
+  library.add(
+    falSpinnerThird,
+    falCircle,
+    falQuestionCircle,
+    falEllipsisH,
+    falTimes
+  );
   // solid
-  library.add(fasCircle);
-  library.add(fasBolt);
-  library.add(fasCheckCircle);
-  library.add(fasTimesCircle);
+  library.add(fasCircle, fasBolt, fasCheckCircle, fasTimesCircle);
   // refular
-  library.add(farCheckCircle);
-  library.add(farTimesCircle);
+  library.add(farCheckCircle, farTimesCircle);
 };

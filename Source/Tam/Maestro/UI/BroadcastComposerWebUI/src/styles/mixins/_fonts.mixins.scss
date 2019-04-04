@@ -1,0 +1,94 @@
+// Base mixin used for ALL fonts
+@mixin font_machine(
+  $weight: normal,
+  $style: normal,
+  $family: $font-family-regular,
+  $color: $color-grayscale-3,
+  $size: $font-size,
+  $line-height: $font-line-height-ratio
+) {
+  font-family: $family;
+  color: $color;
+  font-weight: #{map-get($font-weight, $weight)};
+  font-style: $style;
+  line-height: $line-height;
+  font-size: $size;
+}
+
+// Creates all the font styles for static builds
+@mixin create_static_font_styles(
+  $weight: normal,
+  $family: $font-family-regular,
+  $color: $color-grayscale-3,
+  $size: $font-size,
+  $line-height: $font-line-height-ratio
+) {
+  @include font_machine(
+    $weight: $weight,
+    $family: $family,
+    $color: $color,
+    $size: $size
+  );
+
+  &.medium {
+    @include font_machine(
+      $weight: medium,
+      $family: $family,
+      $style: normal,
+      $color: $color,
+      $size: $size
+    );
+  }
+
+  &.italic {
+    @include font_machine(
+      $weight: $weight,
+      $family: $family,
+      $style: italic,
+      $color: $color,
+      $size: $size
+    );
+  }
+}
+
+@mixin make_font_color_scale($size, $family) {
+  &.white {
+    @include make_font_styles_header($size, $family, $color-grayscale-0);
+  }
+  &.lightest {
+    @include make_font_styles_header($size, $family, $color-grayscale-1);
+  }
+  &.lighter {
+    @include make_font_styles_header($size, $family, $color-grayscale-2);
+  }
+  &.default {
+    @include make_font_styles_header($size, $family, $color-grayscale-3);
+  }
+  &.black {
+    @include make_font_styles_header($size, $family, $color-grayscale-4);
+  }
+  &.invalid {
+    @include make_font_styles_header($size, $family, $color-invalid);
+  }
+}
+@mixin make_font_styles_header($size, $family, $color) {
+  &-regular {
+    @include font_machine($family: $family, $color: $color, $size: $size);
+  }
+  &-italic {
+    @include font_machine(
+      $family: $family,
+      $style: italic,
+      $color: $color,
+      $size: $size
+    );
+  }
+  &-bold {
+    @include font_machine(
+      $family: $family,
+      $style: bold,
+      $color: $color,
+      $size: $size
+    );
+  }
+}

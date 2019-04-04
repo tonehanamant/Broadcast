@@ -1,0 +1,126 @@
+@import "node_modules/animatewithsass/_fading-entrances/fadeIn";
+
+@mixin modal-animation {
+  @include fadeIn($duration: 0.225s, $function: ease);
+}
+
+// Base
+@mixin make_modal_base {
+  @include modal-animation;
+  display: block;
+  position: $modal-base-position;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: $modal-base-zindex;
+  pointer-events: none;
+}
+
+@mixin make_modal_base_lightbox {
+  @include make_modal_base;
+  background: $modal-lightbox-background;
+}
+
+@mixin make_modal_base_dialog {
+  @include make_modal_base;
+  background: $modal-loading-background;
+}
+
+// Header
+@mixin make_modal_header {
+  display: block;
+  width: $modal-general-items-width;
+  text-align: $modal-header-text-align;
+  margin-bottom: 20px;
+}
+
+// Body
+@mixin make_modal_body_base {
+  display: block;
+  width: $modal-general-items-width;
+}
+
+// Footer
+@mixin make_modal_footer {
+  display: block;
+  box-shadow: 0 -1px 2px 0 rgba($color-grayscale-1, 0.5);
+  width: $modal-general-items-width;
+  padding: $modal-general-padding;
+}
+
+// Content
+@mixin make_modal_content_base {
+  @include make_flex(column, start, center);
+  @include modal-animation;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: $modal-content-background;
+  border-radius: $modal-content-border-radius;
+  box-shadow: $modal-content-shadow;
+  padding: $modal-general-padding 0 0 0;
+  pointer-events: all;
+
+  p {
+    max-width: 500px;
+  }
+
+  @include breakpoint(xs) {
+    width: $modal-content-width;
+    max-width: $modal-content-width;
+    max-height: $modal-content-height;
+    // height: $modal-content-height;
+  }
+
+  @include breakpoint(lg) {
+    width: $modal-content-width;
+    max-width: 800px;
+  }
+
+  & > *:not(form) {
+    padding-left: $modal-general-padding;
+    padding-right: $modal-general-padding;
+  }
+
+  header {
+    @include make_modal_header;
+    width: 100%;
+  }
+
+  form {
+    @include make_flex(column, start, center);
+    flex: 1;
+    width: 100%;
+    min-height: 1px;
+  }
+
+  article {
+    @include make_modal_body_base;
+    @include make_flex(column, flex-start, center);
+    padding: 0 $modal-general-padding $modal-general-padding
+      $modal-general-padding;
+    width: 100%;
+    flex: 1;
+
+    & > div {
+      width: 100%;
+    }
+  }
+
+  &.overflow {
+    article {
+      overflow-y: auto;
+    }
+  }
+
+  footer {
+    @include make_modal_footer;
+    width: 100%;
+
+    & > div {
+      margin-top: 0;
+    }
+  }
+}

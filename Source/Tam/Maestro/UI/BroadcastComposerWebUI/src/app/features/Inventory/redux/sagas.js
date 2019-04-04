@@ -1,11 +1,6 @@
 import { takeEvery, put } from "redux-saga/effects";
 
-import {
-  setOverlayLoading
-  // setOverlayProcessing,
-  // createAlert,
-  // toggleModal
-} from "Main/redux/ducks";
+import { setOverlayLoading } from "Main/redux/ducks";
 
 import sagaWrapper from "Utils/saga-wrapper";
 import api from "API";
@@ -30,7 +25,6 @@ export function* requestInventoryInitialData() {
 
 export function* requestInventoryInitialDataSuccess({ data }) {
   const params = { Quarter: data.Data.DefaultQuarter };
-  // console.log("requestinventory success", data, params);
   yield put(requestLoadInventoryCards(params));
 }
 
