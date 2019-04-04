@@ -14,8 +14,8 @@ namespace Services.Broadcast.ApplicationServices
 {
     public interface IInventoryCardService : IApplicationService
     {
-       InventoryCardInitialData GetInitialData(DateTime dateTime);
-        List<InventoryCardDto> GetInventoryCards(InventoryCardFilterDto inventoryCardFilterDto);
+       InventoryCardInitialData GetInitialData(DateTime currentDate);
+        List<InventoryCardDto> GetInventoryCards(InventoryCardFilterDto inventoryCardFilterDto, DateTime currentDate);
         string GetInventoryLogo();
         void GetInventoryCardDetails();
     }
@@ -37,17 +37,17 @@ namespace Services.Broadcast.ApplicationServices
             _InventoryCardRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryCardRepository>();
         }
 
-        public InventoryCardInitialData GetInitialData(DateTime dateTime)
+        public InventoryCardInitialData GetInitialData(DateTime currentDate)
         {
             return new InventoryCardInitialData
             {
                 InventorySources = _InventoryCardRepository.GetAllInventorySources(),
-                Quarters = _GetInitialDataQuarters(),
-                DefaultQuarter = _GetDefaultQuarter(dateTime)
+                Quarters = _GetInitialDataQuarters(currentDate),
+                DefaultQuarter = _GetDefaultQuarter(currentDate)
             }; ;
         }     
 
-        public List<InventoryCardDto> GetInventoryCards(InventoryCardFilterDto inventoryCardFilterDto)
+        public List<InventoryCardDto> GetInventoryCards(InventoryCardFilterDto inventoryCardFilterDto, DateTime currentDate)
         {
             var inventoryCardDtos = new List<InventoryCardDto>();
             var houseHoldAudience = _AudiencesCache.GetDisplayAudienceByCode(BroadcastConstants.HOUSEHOLD_CODE);
@@ -70,7 +70,7 @@ namespace Services.Broadcast.ApplicationServices
                 var inventorySourceId = inventoryCardFilterDto.InventorySourceId.Value;
                 var inventorySource = _InventoryCardRepository.GetInventorySource(inventorySourceId);
                 var inventorySourceDateRange = _GetInventorySourceDateRange(inventorySourceId) ?? 
-                                               _GetCurrentQuarterDateRange();
+                                               _GetCurrentQuarterDateRange(currentDate);
                 var startDate = inventorySourceDateRange.Item1;
                 var endDate = inventorySourceDateRange.Item2;
                 var allQuartersBetweenDates = _QuarterCalculationEngine.GetAllQuartersBetweenDates(startDate, endDate);
@@ -99,9 +99,10 @@ namespace Services.Broadcast.ApplicationServices
             return _GetInventoryQuarter(_GetQuarterDetailForDate(dateTime));
         }
 
-        private List<InventoryCardQuarter> _GetInitialDataQuarters()
+        private List<InventoryCardQuarter> _GetInitialDataQuarters(DateTime currentDate)
         {
-            var inventoriesDateRange = _GetAllInventoriesDateRange() ?? _GetCurrentQuarterDateRange();
+            var inventoriesDateRange = _GetAllInventoriesDateRange() ?? 
+                                       _GetCurrentQuarterDateRange(currentDate);
             var allQuartersBetweenDates = _QuarterCalculationEngine.GetAllQuartersBetweenDates(inventoriesDateRange.Item1, inventoriesDateRange.Item2);
             return allQuartersBetweenDates.Select(x => new InventoryCardQuarter
             {
@@ -110,9 +111,9 @@ namespace Services.Broadcast.ApplicationServices
             }).ToList();
         }
 
-        private Tuple<DateTime, DateTime> _GetCurrentQuarterDateRange()
+        private Tuple<DateTime, DateTime> _GetCurrentQuarterDateRange(DateTime currentDate)
         {
-            var dateRangeTuple = _QuarterCalculationEngine.GetDatesForTimeframe(RatesTimeframe.THISQUARTER, DateTime.Now);
+            var dateRangeTuple = _QuarterCalculationEngine.GetDatesForTimeframe(RatesTimeframe.THISQUARTER, currentDate);
 
             return new Tuple<DateTime, DateTime>(dateRangeTuple.Item1, dateRangeTuple.Item2);
         }

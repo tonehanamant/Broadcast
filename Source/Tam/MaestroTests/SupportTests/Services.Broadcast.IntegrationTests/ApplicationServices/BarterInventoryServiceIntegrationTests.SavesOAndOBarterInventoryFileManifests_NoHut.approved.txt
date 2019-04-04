@@ -12,7 +12,7 @@
           "Id": 31
         },
         "CPM": 6.2500,
-        "Impressions": 160.0,
+        "Impressions": 160000.0,
         "IsReference": false,
         "Rating": null
       }
@@ -103,7 +103,7 @@
           "Id": 31
         },
         "CPM": 5.6250,
-        "Impressions": 160.0,
+        "Impressions": 160000.0,
         "IsReference": false,
         "Rating": null
       }
@@ -184,7 +184,7 @@
           "Id": 31
         },
         "CPM": 6.2500,
-        "Impressions": 160.0,
+        "Impressions": 160000.0,
         "IsReference": false,
         "Rating": null
       }

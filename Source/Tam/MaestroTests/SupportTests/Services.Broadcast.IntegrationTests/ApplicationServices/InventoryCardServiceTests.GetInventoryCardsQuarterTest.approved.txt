@@ -1,6 +1,8 @@
 ﻿[
   {
-    "HouseholdImpressions": 0.0,
+    "HasRatesAvailableForQuarter": false,
+    "HouseholdImpressions": null,
+    "InventoryPostingBooks": [],
     "InventorySourceId": 3,
     "InventorySourceName": "TVB",
     "IsUpdating": false,
@@ -17,30 +19,28 @@
     "TotalUnits": 0
   },
   {
-    "HouseholdImpressions": 0.0,
+    "HasRatesAvailableForQuarter": false,
+    "HouseholdImpressions": null,
+    "InventoryPostingBooks": [],
     "InventorySourceId": 4,
     "InventorySourceName": "TTNW",
     "IsUpdating": false,
-    "LastUpdatedDate": "2019-03-25T09:24:12.897",
+    "LastUpdatedDate": null,
     "Quarter": {
       "Quarter": 1,
       "Year": 2019
     },
-    "RatesAvailableFromQuarter": {
-      "Quarter": 1,
-      "Year": 2018
-    },
-    "RatesAvailableToQuarter": {
-      "Quarter": 1,
-      "Year": 2019
-    },
-    "TotalDaypartCodes": 1,
-    "TotalMarkets": 37,
-    "TotalStations": 67,
-    "TotalUnits": 349
+    "RatesAvailableFromQuarter": null,
+    "RatesAvailableToQuarter": null,
+    "TotalDaypartCodes": 0,
+    "TotalMarkets": 0,
+    "TotalStations": 0,
+    "TotalUnits": 0
   },
   {
-    "HouseholdImpressions": 0.0,
+    "HasRatesAvailableForQuarter": false,
+    "HouseholdImpressions": null,
+    "InventoryPostingBooks": [],
     "InventorySourceId": 5,
     "InventorySourceName": "CNN",
     "IsUpdating": false,
@@ -57,7 +57,9 @@
     "TotalUnits": 0
   },
   {
-    "HouseholdImpressions": 0.0,
+    "HasRatesAvailableForQuarter": false,
+    "HouseholdImpressions": null,
+    "InventoryPostingBooks": [],
     "InventorySourceId": 6,
     "InventorySourceName": "Sinclair",
     "IsUpdating": false,
@@ -74,7 +76,14 @@
     "TotalUnits": 0
   },
   {
-    "HouseholdImpressions": 0.0,
+    "HasRatesAvailableForQuarter": true,
+    "HouseholdImpressions": null,
+    "InventoryPostingBooks": [
+      {
+        "HutProjectBookId": 437,
+        "ShareProjectionBookId": 438
+      }
+    ],
     "InventorySourceId": 7,
     "InventorySourceName": "LilaMax",
     "IsUpdating": false,
@@ -97,7 +106,9 @@
     "TotalUnits": 3
   },
   {
-    "HouseholdImpressions": 0.0,
+    "HasRatesAvailableForQuarter": false,
+    "HouseholdImpressions": null,
+    "InventoryPostingBooks": [],
     "InventorySourceId": 8,
     "InventorySourceName": "MLB",
     "IsUpdating": false,
@@ -114,7 +125,9 @@
     "TotalUnits": 0
   },
   {
-    "HouseholdImpressions": 0.0,
+    "HasRatesAvailableForQuarter": false,
+    "HouseholdImpressions": null,
+    "InventoryPostingBooks": [],
     "InventorySourceId": 9,
     "InventorySourceName": "Ference Media",
     "IsUpdating": false,

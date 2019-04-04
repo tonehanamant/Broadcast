@@ -28,8 +28,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             var inventoryCards = _InventoryCardService.GetInventoryCards(new InventoryCardFilterDto
             {
-                InventorySourceId = 3
-            });
+                InventorySourceId = 7
+            }, new DateTime(2019, 2, 1));
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(inventoryCards));
         }
@@ -41,7 +41,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var inventoryCards = _InventoryCardService.GetInventoryCards(new InventoryCardFilterDto
             {
                 InventorySourceId = 8
-            });
+            }, new DateTime(2019, 2, 1));
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(inventoryCards));
         }
@@ -57,7 +57,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     Quarter = 1,
                     Year = 2019
                 }
-            });
+            }, new DateTime(2019, 2, 1));
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(inventoryCards));
         }

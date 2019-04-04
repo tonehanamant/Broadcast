@@ -1,4 +1,8 @@
 ﻿{
+  "DefaultQuarter": {
+    "Quarter": 2,
+    "Year": 2019
+  },
   "InventorySources": [
     {
       "Id": 3,
