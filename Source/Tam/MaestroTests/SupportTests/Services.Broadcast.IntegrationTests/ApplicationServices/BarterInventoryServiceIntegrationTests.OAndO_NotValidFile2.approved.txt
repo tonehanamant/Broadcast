@@ -43,7 +43,7 @@
   },
   {
     "AffectedProposals": null,
-    "ProblemDescription": "Line 17 contains an invalid daypart(s): M-F 12n-1p",
+    "ProblemDescription": "Line 19 contains an invalid daypart(s): M-F 12n-1p",
     "ProgramName": null,
     "StationLetters": null
   }

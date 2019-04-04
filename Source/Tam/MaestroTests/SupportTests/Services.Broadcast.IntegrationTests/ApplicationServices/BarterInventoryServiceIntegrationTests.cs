@@ -260,6 +260,14 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        public void SavesOAndOBarterInventoryFileManifests_NoHut()
+        {
+            const string fileName = @"BarterDataFiles\OAndO_ValidFile3_NoHut.xlsx";
+            _VerifyFileInventoryManifests(fileName);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
         public void OAndO_NoStationHeaderCell()
         {
             const string fileName = @"BarterDataFiles\OAndO_NoStationHeaderCell.xlsx";

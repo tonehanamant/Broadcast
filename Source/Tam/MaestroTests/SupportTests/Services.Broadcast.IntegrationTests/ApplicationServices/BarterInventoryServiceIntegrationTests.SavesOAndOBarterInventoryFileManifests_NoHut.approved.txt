@@ -1,0 +1,255 @@
+﻿[
+  {
+    "Comment": null,
+    "DaypartCode": "EMN",
+    "EffectiveDate": "2019-04-01T00:00:00",
+    "EndDate": "2019-04-02T00:00:00",
+    "InventorySourceId": 10,
+    "ManifestAudiences": [
+      {
+        "Audience": {
+          "AudienceString": "House Holds",
+          "Id": 31
+        },
+        "CPM": 6.2500,
+        "Impressions": 160.0,
+        "IsReference": false,
+        "Rating": null
+      }
+    ],
+    "ManifestAudiencesReferences": [],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 35999,
+          "_Friday": false,
+          "_Id": 51352,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": false,
+          "_Name": "Custom",
+          "_Saturday": true,
+          "_StartTime": 21600,
+          "_Sunday": true,
+          "_Thursday": false,
+          "_Tuesday": false,
+          "_Wednesday": false
+        },
+        "Genres": [],
+        "ProgramName": null
+      }
+    ],
+    "ManifestRates": [],
+    "ManifestWeeks": [
+      {
+        "MediaWeek": {
+          "_EndDate": "2019-02-10T00:00:00",
+          "_MediaMonthId": 449,
+          "_StartDate": "2019-02-04T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 5
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2019-02-24T00:00:00",
+          "_MediaMonthId": 449,
+          "_StartDate": "2019-02-18T00:00:00",
+          "_WeekNumber": 4,
+          "IsDirty": true
+        },
+        "Spots": 5
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2019-03-03T00:00:00",
+          "_MediaMonthId": 450,
+          "_StartDate": "2019-02-25T00:00:00",
+          "_WeekNumber": 1,
+          "IsDirty": true
+        },
+        "Spots": 5
+      }
+    ],
+    "ProjectedStationImpressions": [],
+    "SpotLengthId": 3,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": {
+      "Affiliation": "ABC",
+      "CallLetters": "WABC-TV 7.1",
+      "Code": 5015,
+      "LegacyCallLetters": "WABC",
+      "ManifestMaxEndDate": null,
+      "MarketCode": 101,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "RateDataThrough": null
+    }
+  },
+  {
+    "Comment": null,
+    "DaypartCode": "EMN",
+    "EffectiveDate": "2019-04-01T00:00:00",
+    "EndDate": "2019-04-02T00:00:00",
+    "InventorySourceId": 10,
+    "ManifestAudiences": [
+      {
+        "Audience": {
+          "AudienceString": "House Holds",
+          "Id": 31
+        },
+        "CPM": 5.6250,
+        "Impressions": 160.0,
+        "IsReference": false,
+        "Rating": null
+      }
+    ],
+    "ManifestAudiencesReferences": [],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 35999,
+          "_Friday": false,
+          "_Id": 51352,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": false,
+          "_Name": "Custom",
+          "_Saturday": true,
+          "_StartTime": 21600,
+          "_Sunday": true,
+          "_Thursday": false,
+          "_Tuesday": false,
+          "_Wednesday": false
+        },
+        "Genres": [],
+        "ProgramName": null
+      }
+    ],
+    "ManifestRates": [],
+    "ManifestWeeks": [
+      {
+        "MediaWeek": {
+          "_EndDate": "2019-02-10T00:00:00",
+          "_MediaMonthId": 449,
+          "_StartDate": "2019-02-04T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 2
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2019-03-03T00:00:00",
+          "_MediaMonthId": 450,
+          "_StartDate": "2019-02-25T00:00:00",
+          "_WeekNumber": 1,
+          "IsDirty": true
+        },
+        "Spots": 2
+      }
+    ],
+    "ProjectedStationImpressions": [],
+    "SpotLengthId": 3,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": {
+      "Affiliation": "ABC",
+      "CallLetters": "WABC-TV 7.1",
+      "Code": 5015,
+      "LegacyCallLetters": "WABC",
+      "ManifestMaxEndDate": null,
+      "MarketCode": 101,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "RateDataThrough": null
+    }
+  },
+  {
+    "Comment": null,
+    "DaypartCode": "EMN",
+    "EffectiveDate": "2019-04-01T00:00:00",
+    "EndDate": "2019-04-02T00:00:00",
+    "InventorySourceId": 10,
+    "ManifestAudiences": [
+      {
+        "Audience": {
+          "AudienceString": "House Holds",
+          "Id": 31
+        },
+        "CPM": 6.2500,
+        "Impressions": 160.0,
+        "IsReference": false,
+        "Rating": null
+      }
+    ],
+    "ManifestAudiencesReferences": [],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 35999,
+          "_Friday": false,
+          "_Id": 51352,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": false,
+          "_Name": "Custom",
+          "_Saturday": true,
+          "_StartTime": 21600,
+          "_Sunday": true,
+          "_Thursday": false,
+          "_Tuesday": false,
+          "_Wednesday": false
+        },
+        "Genres": [],
+        "ProgramName": null
+      }
+    ],
+    "ManifestRates": [],
+    "ManifestWeeks": [
+      {
+        "MediaWeek": {
+          "_EndDate": "2019-02-17T00:00:00",
+          "_MediaMonthId": 449,
+          "_StartDate": "2019-02-11T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 1
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2019-03-03T00:00:00",
+          "_MediaMonthId": 450,
+          "_StartDate": "2019-02-25T00:00:00",
+          "_WeekNumber": 1,
+          "IsDirty": true
+        },
+        "Spots": 2
+      }
+    ],
+    "ProjectedStationImpressions": [],
+    "SpotLengthId": 3,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": {
+      "Affiliation": "ABC",
+      "CallLetters": "WABC-TV 7.1",
+      "Code": 5015,
+      "LegacyCallLetters": "WABC",
+      "ManifestMaxEndDate": null,
+      "MarketCode": 101,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "RateDataThrough": null
+    }
+  }
+]

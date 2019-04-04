@@ -31,6 +31,8 @@ namespace Services.Broadcast.ApplicationServices
 
     public class BarterInventoryService : IBarterInventoryService
     {
+        private const string INVENTORY_SOURCE_CELL = "B3";
+
         private readonly IInventoryRepository _InventoryRepository;
         private readonly IInventoryFileRepository _InventoryFileRepository;
         private readonly IBarterRepository _BarterRepository;

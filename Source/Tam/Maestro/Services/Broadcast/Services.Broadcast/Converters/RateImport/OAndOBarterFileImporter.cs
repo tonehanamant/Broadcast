@@ -21,13 +21,13 @@ namespace Services.Broadcast.Converters.RateImport
 {
     public class OAndOBarterFileImporter : BarterFileImporterBase
     {
-        private const string INVENTORY_SOURCE_CELL = "B2";
-        private const string SPOT_LENGTH_CELL = "B3";
-        private const string EFFECTIVE_DATE_CELL = "B4";
-        private const string END_DATE_CELL = "B5";
-        private const string DAYPART_CODE_CELL = "B6";
-        private const string CONTRACTED_DAYPART_CELL = "B7";
-        private const string SHARE_BOOK_CELL = "B8";
+        private const string INVENTORY_SOURCE_CELL = "B3";
+        private const string SPOT_LENGTH_CELL = "B4";
+        private const string EFFECTIVE_DATE_CELL = "B5";
+        private const string END_DATE_CELL = "B6";
+        private const string DAYPART_CODE_CELL = "B7";
+        private const string CONTRACTED_DAYPART_CELL = "B8";
+        private const string SHARE_BOOK_CELL = "B9";
 
         public OAndOBarterFileImporter(
             IDataRepositoryFactory broadcastDataRepositoryFactory,
@@ -47,11 +47,13 @@ namespace Services.Broadcast.Converters.RateImport
 
         public override void LoadAndValidateDataLines(ExcelWorksheet worksheet, BarterInventoryFile barterFile)
         {
-            const int firstColumnIndex = 2;
+            const int firstColumnIndex = 1;
             const int emptyLinesLimitToStopProcessing = 5;
+            const int firstRowToSearch = 15;
+            const int lastRowToSearch = 16;
 
             // index might differ depending on hut book specified or not
-            var stationHeaderRowIndex = _FindRowNumber("STATION", firstColumnIndex, 12, 14, worksheet);
+            var stationHeaderRowIndex = _FindRowNumber("Station", firstColumnIndex, firstRowToSearch, lastRowToSearch, worksheet);
 
             if (!stationHeaderRowIndex.HasValue)
             {
@@ -222,12 +224,14 @@ namespace Services.Broadcast.Converters.RateImport
 
         private List<int> _ReadWeeks(ExcelWorksheet worksheet, BarterInventoryFile barterFile)
         {
-            const int firstColumnIndex = 6;
+            const int firstColumnIndex = 5;
+            const int firstRowIndex = 14;
+            const int lastRowIndex = 15;
             var audienceCode = barterFile.Header.Audience.Code;
             var dateFormats = new string[] { "d-MMM-yyyy", "M/d/yyyy" };
             var result = new List<int>();
             var lastColumnIndex = firstColumnIndex;
-            var weeksStartHeaderRowIndex = _FindRowNumber("Weeks Start", firstColumnIndex, 10, 13, worksheet);
+            var weeksStartHeaderRowIndex = _FindRowNumber("Weeks Start", firstColumnIndex, firstRowIndex, lastRowIndex, worksheet);
 
             if (!weeksStartHeaderRowIndex.HasValue)
             {
@@ -235,7 +239,7 @@ namespace Services.Broadcast.Converters.RateImport
             }
 
             var weeksRowIndex = weeksStartHeaderRowIndex.Value + 1;
-            var audienceCodeHeaderCellRowIndex = weeksStartHeaderRowIndex.Value + 2;
+            var audienceCodeHeaderCellRowIndex = weeksStartHeaderRowIndex.Value + 1;
 
             // let's find lastColumnIndex by looking for cell value which starts from audienceCode
             while (true)
@@ -354,8 +358,8 @@ namespace Services.Broadcast.Converters.RateImport
         {
             // let`s find header with audience
             const int firstColumnIndex = 6;
-            const int firstRowIndex = 13;
-            const int lastRowIndex = 14;
+            const int firstRowIndex = 15;
+            const int lastRowIndex = 16;
             var columnIndex = firstColumnIndex;
             var audienceRegex = new Regex(@"(?<Audience>([a-z-+\d])+)\s+IMPS.*", RegexOptions.IgnoreCase);
 
@@ -546,8 +550,12 @@ namespace Services.Broadcast.Converters.RateImport
 
         private void _ProcessHutBook(ExcelWorksheet worksheet, List<string> validationProblems, BarterInventoryHeader header, bool shareBookParsedCorrectly, DateTime shareBook)
         {
+            const int hutBookColumn = 1;
+            const int hutBookRowStart = 10;
+            const int hutBookRowEnd = 11;
+
             // let`s check if hut book specified
-            var hutBookRowIndex = _FindRowNumber("HUT Book", 1, 9, 10, worksheet);
+            var hutBookRowIndex = _FindRowNumber("HUT Book", hutBookColumn, hutBookRowStart, hutBookRowEnd, worksheet);
 
             if (!hutBookRowIndex.HasValue) return;
 
@@ -571,8 +579,12 @@ namespace Services.Broadcast.Converters.RateImport
 
         private void _ProcessPlaybackType(ExcelWorksheet worksheet, List<string> validationProblems, BarterInventoryHeader header)
         {
+            const int playbackTypeColumn = 1;
+            const int playbackTypeRowStart = 10;
+            const int playbackTypeRowEnd = 11;
+
             // index might differ depending on hut book specified or not
-            var playbackRowIndex = _FindRowNumber("Playback type", 1, 9, 10, worksheet);
+            var playbackRowIndex = _FindRowNumber("Playback Type", playbackTypeColumn, playbackTypeRowStart, playbackTypeRowEnd, worksheet);
 
             if (!playbackRowIndex.HasValue)
             {

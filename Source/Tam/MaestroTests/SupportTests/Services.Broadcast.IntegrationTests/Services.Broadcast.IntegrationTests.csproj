@@ -435,6 +435,9 @@
     <None Include="Files\BarterDataFiles\OAndO_ValidFile2.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Files\BarterDataFiles\OAndO_ValidFile3_NoHut.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Files\BarterDataFiles\OAndO_WeekIsMissing.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
