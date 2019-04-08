@@ -1,8 +1,0 @@
-.tmp/
-src/app/messages/
-coverage/
-dist/
-node_modules/
-.DS_Store
-.orig
-.zip
