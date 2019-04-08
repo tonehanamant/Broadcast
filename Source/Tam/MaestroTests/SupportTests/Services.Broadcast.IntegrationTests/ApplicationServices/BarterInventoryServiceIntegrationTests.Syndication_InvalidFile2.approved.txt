@@ -1,0 +1,44 @@
+﻿[
+  {
+    "AffectedProposals": null,
+    "ProblemDescription": "Effective date is not in the correct format (MM/dd/yyyy, M/dd/yyyy, M/d/yyyy)",
+    "ProgramName": null,
+    "StationLetters": null
+  },
+  {
+    "AffectedProposals": null,
+    "ProblemDescription": "End date is not in the correct format (MM/dd/yyyy, M/dd/yyyy, M/d/yyyy)",
+    "ProgramName": null,
+    "StationLetters": null
+  },
+  {
+    "AffectedProposals": null,
+    "ProblemDescription": "Not acceptable daypart code is specified",
+    "ProgramName": null,
+    "StationLetters": null
+  },
+  {
+    "AffectedProposals": null,
+    "ProblemDescription": "Invalid NTI to NSI increase is specified",
+    "ProgramName": null,
+    "StationLetters": null
+  },
+  {
+    "AffectedProposals": null,
+    "ProblemDescription": "Share book (Mar;19) is not in the correct format (MMM yy, MMM-yy, MMM/yy, yy-MMM, yy/MMM, MMM yyyy)",
+    "ProgramName": null,
+    "StationLetters": null
+  },
+  {
+    "AffectedProposals": null,
+    "ProblemDescription": "Hut book (Feb;19) is not in the correct format (MMM yy, MMM-yy, MMM/yy, yy-MMM, yy/MMM, MMM yyyy)",
+    "ProgramName": null,
+    "StationLetters": null
+  },
+  {
+    "AffectedProposals": null,
+    "ProblemDescription": "Invalid playback type (QWE)",
+    "ProgramName": null,
+    "StationLetters": null
+  }
+]

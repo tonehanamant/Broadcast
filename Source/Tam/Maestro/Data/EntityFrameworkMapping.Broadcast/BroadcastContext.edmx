@@ -292,6 +292,7 @@
           <Property Name="share_projection_book_id" Type="int" Nullable="false" />
           <Property Name="hut_projection_book_id" Type="int" />
           <Property Name="playback_type" Type="int" Nullable="false" />
+          <Property Name="nti_to_nsi_increase" Type="decimal" Precision="18" Scale="10" />
         </EntityType>
         <EntityType Name="inventory_file_problems">
           <Key>
@@ -8511,6 +8512,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="inventory_files" Relationship="BroadcastModel.FK_inventory_file_barter_header_inventory_files" FromRole="inventory_file_barter_header" ToRole="inventory_files" />
           <NavigationProperty Name="media_months" Relationship="BroadcastModel.FK_inventory_file_barter_header_media_months" FromRole="inventory_file_barter_header" ToRole="media_months" />
           <NavigationProperty Name="media_months1" Relationship="BroadcastModel.FK_inventory_file_barter_header_media_months_hut_book" FromRole="inventory_file_barter_header" ToRole="media_months" />
+          <Property Name="nti_to_nsi_increase" Type="Decimal" Precision="18" Scale="10" />
         </EntityType>
         <Association Name="FK_inventory_file_barter_header_audiences">
           <End Type="BroadcastModel.audience" Role="audience" Multiplicity="0..1" />
@@ -10002,6 +10004,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="inventory_file_barter_header">
             <EntityTypeMapping TypeName="BroadcastModel.inventory_file_barter_header">
               <MappingFragment StoreEntitySet="inventory_file_barter_header">
+                <ScalarProperty Name="nti_to_nsi_increase" ColumnName="nti_to_nsi_increase" />
                 <ScalarProperty Name="playback_type" ColumnName="playback_type" />
                 <ScalarProperty Name="hut_projection_book_id" ColumnName="hut_projection_book_id" />
                 <ScalarProperty Name="share_projection_book_id" ColumnName="share_projection_book_id" />

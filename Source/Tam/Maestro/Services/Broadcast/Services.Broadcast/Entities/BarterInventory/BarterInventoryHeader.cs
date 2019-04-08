@@ -15,5 +15,6 @@ namespace Services.Broadcast.Entities.BarterInventory
         public int? HutBookId { get; set; }
         public ProposalEnums.ProposalPlaybackType PlaybackType { get; set; }
         public int? SpotLengthId { get; set; }
+        public decimal? NtiToNsiIncrease { get; set; }
     }
 }

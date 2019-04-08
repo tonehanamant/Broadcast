@@ -1,0 +1,29 @@
+﻿{
+  "CreatedBy": "IntegrationTestUser",
+  "DataLines": [],
+  "FileName": "BarterDataFiles\\Syndication_ValidFile1.xlsx",
+  "FileStatus": 2,
+  "Hash": "1A-6B-0C-11-7F-19-2F-2B-F1-20-DE-CB-8A-73-29-62-BE-DB-CE-D7",
+  "Header": {
+    "Audience": null,
+    "ContractedDaypartId": 38,
+    "Cpm": null,
+    "DaypartCode": "SYN",
+    "EffectiveDate": "2019-10-31T00:00:00",
+    "EndDate": "2019-12-30T00:00:00",
+    "HutBookId": 437,
+    "NtiToNsiIncrease": 233.5680000000,
+    "PlaybackType": 3,
+    "ShareBookId": 438,
+    "SpotLengthId": null
+  },
+  "InventoryGroups": [],
+  "InventoryManifests": [],
+  "InventorySource": {
+    "InventoryType": 4,
+    "IsActive": true,
+    "Name": "20th Century Fox (Twentieth Century)"
+  },
+  "UniqueIdentifier": null,
+  "ValidationProblems": []
+}

@@ -22,6 +22,7 @@
     "EffectiveDate": "2018-10-10T00:00:00",
     "EndDate": "2018-11-10T00:00:00",
     "HutBookId": 443,
+    "NtiToNsiIncrease": null,
     "PlaybackType": 3,
     "ShareBookId": 444,
     "SpotLengthId": null

@@ -1,4 +1,5 @@
-﻿using Common.Services.ApplicationServices;
+﻿using Common.Services;
+using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.BusinessEngines;
@@ -24,6 +25,7 @@ namespace Services.Broadcast.Converters.RateImport
         private readonly ISpotLengthEngine _SpotLengthEngine;
         private readonly IProprietarySpotCostCalculationEngine _ProprietarySpotCostCalculationEngine;
         private readonly IImpressionsService _ImpressionsService;
+        private readonly IDaypartCache _DaypartCache;
 
         public BarterFileImporterFactory(
             IDataRepositoryFactory broadcastDataRepositoryFactory,
@@ -33,7 +35,8 @@ namespace Services.Broadcast.Converters.RateImport
             IStationProcessingEngine stationProcessingEngine,
             ISpotLengthEngine spotLengthEngine,
             IProprietarySpotCostCalculationEngine proprietarySpotCostCalculationEngine,
-            IImpressionsService impressionsService)
+            IImpressionsService impressionsService,
+            IDaypartCache daypartCache)
         {
             _BroadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
             _BroadcastAudiencesCache = broadcastAudiencesCache;
@@ -43,6 +46,7 @@ namespace Services.Broadcast.Converters.RateImport
             _SpotLengthEngine = spotLengthEngine;
             _ProprietarySpotCostCalculationEngine = proprietarySpotCostCalculationEngine;
             _ImpressionsService = impressionsService;
+            _DaypartCache = daypartCache;
         }
 
         public BarterFileImporterBase GetFileImporterInstance(InventorySource inventorySource)
@@ -71,6 +75,17 @@ namespace Services.Broadcast.Converters.RateImport
                         _SpotLengthEngine,
                         _ProprietarySpotCostCalculationEngine,
                         _ImpressionsService);
+                    break;
+
+                case InventorySourceTypeEnum.Syndication:
+                    fileImporter = new SyndicationFileImporter(
+                        _BroadcastDataRepositoryFactory,
+                        _BroadcastAudiencesCache,
+                        _InventoryDaypartParsingEngine,
+                        _MediaMonthAndWeekAggregateCache,
+                        _StationProcessingEngine,
+                        _SpotLengthEngine,
+                        _DaypartCache);
                     break;
 
                 default:

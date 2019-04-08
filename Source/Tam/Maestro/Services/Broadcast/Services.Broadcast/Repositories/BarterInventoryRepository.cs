@@ -27,7 +27,7 @@ namespace Services.Broadcast.Repositories
         /// <param name="barterFile">Barter inventory file</param>
         void AddValidationProblems(BarterInventoryFile barterFile);
 
-        BarterInventoryFile GetBarterInventoryFileById(int fileId);
+        BarterInventoryFile GetInventoryFileWithHeaderById(int fileId);
     }
 
     public class BarterInventoryRepository : BroadcastRepositoryBase, IBarterRepository
@@ -58,7 +58,7 @@ namespace Services.Broadcast.Repositories
             });
         }
 
-        public BarterInventoryFile GetBarterInventoryFileById(int fileId)
+        public BarterInventoryFile GetInventoryFileWithHeaderById(int fileId)
         {
             return _InReadUncommitedTransaction(context =>
             {
@@ -66,7 +66,7 @@ namespace Services.Broadcast.Repositories
                 var header = file.inventory_file_barter_header.First();
                 var audience = header.audience;
 
-                return new BarterInventoryFile
+                var result = new BarterInventoryFile
                 {
                     Id = file.id,
                     FileName = file.name,
@@ -84,17 +84,6 @@ namespace Services.Broadcast.Repositories
                     },
                     Header = new BarterInventoryHeader
                     {
-                        Audience = new BroadcastAudience
-                        {
-                            Id = audience.id,
-                            CategoryCode = (EBroadcastAudienceCategoryCode)audience.category_code,
-                            SubCategoryCode = audience.sub_category_code,
-                            RangeStart = audience.range_start,
-                            RangeEnd = audience.range_end,
-                            Custom = audience.custom,
-                            Code = audience.code,
-                            Name = audience.name
-                        },
                         ContractedDaypartId = header.contracted_daypart_id,
                         Cpm = header.cpm,
                         DaypartCode = header.daypart_code,
@@ -102,9 +91,27 @@ namespace Services.Broadcast.Repositories
                         EndDate = header.end_date,
                         HutBookId = header.hut_projection_book_id,
                         ShareBookId = header.share_projection_book_id,
-                        PlaybackType = (ProposalPlaybackType)header.playback_type
+                        PlaybackType = (ProposalPlaybackType)header.playback_type,
+                        NtiToNsiIncrease = header.nti_to_nsi_increase
                     }
                 };
+
+                if (audience != null)
+                {
+                    result.Header.Audience = new BroadcastAudience
+                    {
+                        Id = audience.id,
+                        CategoryCode = (EBroadcastAudienceCategoryCode)audience.category_code,
+                        SubCategoryCode = audience.sub_category_code,
+                        RangeStart = audience.range_start,
+                        RangeEnd = audience.range_end,
+                        Custom = audience.custom,
+                        Code = audience.code,
+                        Name = audience.name
+                    };
+                }
+
+                return result;
             });
         }
 
@@ -122,7 +129,7 @@ namespace Services.Broadcast.Repositories
                 inventoryFile.inventory_file_barter_header = new List<inventory_file_barter_header>{
                             new inventory_file_barter_header
                             {
-                                audience_id = barterFile.Header.Audience.Id,
+                                audience_id = barterFile.Header.Audience?.Id,
                                 contracted_daypart_id = barterFile.Header.ContractedDaypartId,
                                 cpm = barterFile.Header.Cpm,
                                 daypart_code = barterFile.Header.DaypartCode,
@@ -130,7 +137,8 @@ namespace Services.Broadcast.Repositories
                                 end_date = barterFile.Header.EndDate,
                                 hut_projection_book_id = barterFile.Header.HutBookId,
                                 playback_type = (int)barterFile.Header.PlaybackType,
-                                share_projection_book_id = barterFile.Header.ShareBookId
+                                share_projection_book_id = barterFile.Header.ShareBookId,
+                                nti_to_nsi_increase = barterFile.Header.NtiToNsiIncrease
                             }
                         };
                 inventoryFile.inventory_file_problems = barterFile.ValidationProblems.Select(

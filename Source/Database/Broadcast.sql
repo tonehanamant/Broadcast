@@ -50,6 +50,35 @@ GO
 
 /*************************************** START UPDATE SCRIPT *****************************************************/
 
+/*************************************** START PRI-6132 *****************************************************/
+--add nti_to_nsi_increase column
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE OBJECT_ID = OBJECT_ID('inventory_file_barter_header') AND name = 'nti_to_nsi_increase')
+BEGIN
+	ALTER TABLE inventory_file_barter_header ADD nti_to_nsi_increase DECIMAL(18, 10) NULL
+END
+
+--add Syndication sources
+IF NOT EXISTS (SELECT * FROM inventory_sources WHERE [name] = '20th Century Fox (Twentieth Century)')
+BEGIN
+	INSERT INTO inventory_sources([name], is_active, inventory_source_type) VALUES('20th Century Fox (Twentieth Century)', 1, 4)
+END
+
+IF NOT EXISTS (SELECT * FROM inventory_sources WHERE [name] = 'CBS Synd')
+BEGIN
+	INSERT INTO inventory_sources([name], is_active, inventory_source_type) VALUES('CBS Synd', 1, 4)
+END
+
+IF NOT EXISTS (SELECT * FROM inventory_sources WHERE [name] = 'NBCU Syn')
+BEGIN
+	INSERT INTO inventory_sources([name], is_active, inventory_source_type) VALUES('NBCU Syn', 1, 4)
+END
+
+IF NOT EXISTS (SELECT * FROM inventory_sources WHERE [name] = 'WB Syn')
+BEGIN
+	INSERT INTO inventory_sources([name], is_active, inventory_source_type) VALUES('WB Syn', 1, 4)
+END
+/*************************************** END PRI-6132 *****************************************************/
+
 /*************************************** START PRI-5638 *****************************************************/
 IF NOT EXISTS(SELECT 1 FROM sys.tables WHERE OBJECT_ID = OBJECT_ID('[dbo].[daypart_codes]'))
 BEGIN

@@ -213,33 +213,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         public void SavesOAndOBarterInventoryFile()
         {
             const string fileName = @"BarterDataFiles\OAndO_ValidFile1.xlsx";
-
-            using (new TransactionScopeWrapper())
-            {
-                var request = new InventoryFileSaveRequest
-                {
-                    StreamData = new FileStream($@".\Files\{fileName}", FileMode.Open, FileAccess.Read),
-                    FileName = fileName
-                };
-
-                var now = new DateTime(2019, 02, 02);
-                var result = _BarterService.SaveBarterInventoryFile(request, "IntegrationTestUser", now);
-
-                var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(InventoryFileBase), "Id");
-                jsonResolver.Ignore(typeof(BarterInventoryFile), "CreatedDate");
-                jsonResolver.Ignore(typeof(InventorySource), "Id");
-                var jsonSettings = new JsonSerializerSettings()
-                {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                    ContractResolver = jsonResolver
-                };
-
-                var file = _BarterRepository.GetBarterInventoryFileById(result.FileId);
-                var fileJson = IntegrationTestHelper.ConvertToJson(file, jsonSettings);
-
-                Approvals.Verify(fileJson);
-            }
+            _VerifyInventoryFileMetadataAndHeaderData(fileName);
         }
 
         [Test]
@@ -385,6 +359,38 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             _VerifyFileInventoryGroups(fileName);
         }
 
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void SavesSyndicationInventoryFile()
+        {
+            const string fileName = @"BarterDataFiles\Syndication_ValidFile1.xlsx";
+            _VerifyInventoryFileMetadataAndHeaderData(fileName);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void Syndication_InvalidFile1()
+        {
+            const string fileName = @"BarterDataFiles\Syndication_InvalidFile1.xlsx";
+            _VerifyInventoryFileProblems(fileName);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void Syndication_InvalidFile2()
+        {
+            const string fileName = @"BarterDataFiles\Syndication_InvalidFile2.xlsx";
+            _VerifyInventoryFileProblems(fileName);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void Syndication_InvalidFile3()
+        {
+            const string fileName = @"BarterDataFiles\Syndication_InvalidFile3.xlsx";
+            _VerifyInventoryFileProblems(fileName);
+        }
+
         private void _VerifyInventoryFileProblems(string fileName)
         {
             using (new TransactionScopeWrapper())
@@ -515,6 +521,36 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var manifestsJson = IntegrationTestHelper.ConvertToJson(manifests, jsonSettings);
 
             Approvals.Verify(manifestsJson);
+        }
+
+        private void _VerifyInventoryFileMetadataAndHeaderData(string fileName)
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var request = new InventoryFileSaveRequest
+                {
+                    StreamData = new FileStream($@".\Files\{fileName}", FileMode.Open, FileAccess.Read),
+                    FileName = fileName
+                };
+
+                var now = new DateTime(2019, 02, 02);
+                var result = _BarterService.SaveBarterInventoryFile(request, "IntegrationTestUser", now);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(InventoryFileBase), "Id");
+                jsonResolver.Ignore(typeof(BarterInventoryFile), "CreatedDate");
+                jsonResolver.Ignore(typeof(InventorySource), "Id");
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                var file = _BarterRepository.GetInventoryFileWithHeaderById(result.FileId);
+                var fileJson = IntegrationTestHelper.ConvertToJson(file, jsonSettings);
+
+                Approvals.Verify(fileJson);
+            }
         }
     }
 }

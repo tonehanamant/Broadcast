@@ -11,6 +11,7 @@
     "EffectiveDate": "0001-01-01T00:00:00",
     "EndDate": "0001-01-01T00:00:00",
     "HutBookId": null,
+    "NtiToNsiIncrease": null,
     "PlaybackType": 0,
     "ShareBookId": 0,
     "SpotLengthId": null

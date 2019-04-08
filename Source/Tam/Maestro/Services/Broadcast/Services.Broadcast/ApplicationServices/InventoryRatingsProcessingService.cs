@@ -87,7 +87,8 @@ namespace Services.Broadcast.ApplicationServices
                 _InventoryFileRatingsJobsRepository.UpdateJob(job);
 
                 //This just processed barter files right now. Needs to be consolidated to 
-                var barterFile = _BarterRepository.GetBarterInventoryFileById(job.InventoryFileId);
+                var barterFile = _BarterRepository.GetInventoryFileWithHeaderById(job.InventoryFileId);
+                barterFile.InventoryGroups = _InventoryRepository.GetStationInventoryGroupsByFileId(job.InventoryFileId);
 
                 if (barterFile.InventorySource.InventoryType == Entities.Enums.InventorySourceTypeEnum.Barter)
                 {

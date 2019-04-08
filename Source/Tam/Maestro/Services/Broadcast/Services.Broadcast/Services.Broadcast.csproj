@@ -219,6 +219,7 @@
     <Compile Include="Converters\RateImport\BarterFileImporterBase.cs" />
     <Compile Include="Converters\RateImport\BarterFileImporterFactory.cs" />
     <Compile Include="Converters\RateImport\OAndOBarterFileImporter.cs" />
+    <Compile Include="Converters\RateImport\SyndicationFileImporter.cs" />
     <Compile Include="Entities\DaypartCode.cs" />
 	<Compile Include="Entities\InventoryCardBooks.cs" />
     <Compile Include="Entities\InventoryCardDto.cs" />

@@ -25,6 +25,7 @@ namespace EntityFrameworkMapping.Broadcast
         public int share_projection_book_id { get; set; }
         public Nullable<int> hut_projection_book_id { get; set; }
         public int playback_type { get; set; }
+        public Nullable<decimal> nti_to_nsi_increase { get; set; }
     
         public virtual audience audience { get; set; }
         public virtual daypart daypart { get; set; }
