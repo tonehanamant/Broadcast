@@ -221,7 +221,7 @@ BEGIN
 	ALTER TABLE [dbo].[inventory_file_ratings_jobs] CHECK CONSTRAINT [FK_inventory_file_ratings_jobs_inventory_files]
 	CREATE INDEX IX_inventory_file_ratings_jobs_status ON [inventory_file_ratings_jobs] ([status])
 END
-
+GO
 /*************************************** END PRI-5655 *****************************************************/
 
 /*************************************** START PRI-7081 *****************************************************/
@@ -259,10 +259,9 @@ BEGIN
 	from proposal_versions v
 		join proposals p on p.id = v.proposal_id
 	where v.status = 3
-
 END
+GO
 /*************************************** END PRI-7081 *****************************************************/
-
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version
