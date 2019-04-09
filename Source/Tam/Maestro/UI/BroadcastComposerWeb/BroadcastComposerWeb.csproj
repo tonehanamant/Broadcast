@@ -229,6 +229,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\PreflightRequestHandler.cs" />
     <Compile Include="App_Start\Startup.cs" />
     <Compile Include="Attributes\CacheWebApiAttribute.cs" />
     <Compile Include="Controllers\AffidavitUploadApiController.cs" />
