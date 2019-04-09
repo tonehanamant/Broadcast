@@ -41,14 +41,13 @@ namespace BroadcastComposerWeb
             var allowedOrigins = "http://localhost,https://localhost,http://localhost:9015,https://localhost:9015,http://localhost:9016,https://localhost:9016,http://localhost:9017,https://localhost:9017,http://localhost:9018,https://localhost:9018,http://localhost:9019,https://localhost:9019,http://localhost:9020,https://localhost:9020";
             var allowedHeaders = "Origin, Content-Type, Accept";
             var allowedMethods = "GET, POST, PUT, DELETE, OPTIONS";
-            GlobalConfiguration.Configuration.MessageHandlers.Add(new PreflightRequestsHandler(allowedOrigins, allowedHeaders, allowedMethods));
             var cors = new EnableCorsAttribute(
                         origins: allowedOrigins,
                         headers: allowedHeaders,
                         methods: allowedMethods);
             cors.SupportsCredentials = true;
             GlobalConfiguration.Configuration.EnableCors(cors);
-
+            GlobalConfiguration.Configuration.MessageHandlers.Add(new PreflightRequestsHandler(allowedOrigins, allowedHeaders, allowedMethods));
 
             GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);

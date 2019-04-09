@@ -30,6 +30,7 @@ namespace BroadcastComposerWeb.App_Start
                 response.Headers.Add("Access-Control-Allow-Origin", _AllowedOrigins);
                 response.Headers.Add("Access-Control-Allow-Headers", _AllowedHeaders);
                 response.Headers.Add("Access-Control-Allow-Methods", _AllowedMethods);
+                response.Headers.Add("Access-Control-Allow-Credentials", "true");
                 var tsc = new TaskCompletionSource<HttpResponseMessage>();
                 tsc.SetResult(response);
                 return tsc.Task;
