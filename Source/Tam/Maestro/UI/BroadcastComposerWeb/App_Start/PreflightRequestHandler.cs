@@ -11,10 +11,10 @@ namespace BroadcastComposerWeb.App_Start
 {
     public class PreflightRequestsHandler : DelegatingHandler
     {
-        private readonly string _AllowedOrigins;
-        private readonly string _AllowedHeaders;
-        private readonly string _AllowedMethods;
-        public PreflightRequestsHandler(string allowedOrigins, string allowedHeaders, string allowedMethods) : base()
+        private readonly string[] _AllowedOrigins;
+        private readonly string[] _AllowedHeaders;
+        private readonly string[] _AllowedMethods;
+        public PreflightRequestsHandler(string[] allowedOrigins, string[] allowedHeaders, string[] allowedMethods) : base()
         {
             _AllowedOrigins = allowedOrigins;
             _AllowedHeaders = allowedHeaders;
@@ -25,11 +25,16 @@ namespace BroadcastComposerWeb.App_Start
         {
             if (request.Headers.Contains("Origin") && request.Method.Method.Equals("OPTIONS"))
             {
+                var requestOrigin = request.Headers.GetValues("Origin").SingleOrDefault();
+
                 var response = new HttpResponseMessage { StatusCode = HttpStatusCode.OK };
-                // Define and add values to variables: origins, headers, methods (can be global)               
-                response.Headers.Add("Access-Control-Allow-Origin", _AllowedOrigins);
-                response.Headers.Add("Access-Control-Allow-Headers", _AllowedHeaders);
-                response.Headers.Add("Access-Control-Allow-Methods", _AllowedMethods);
+                // Define and add values to variables: origins, headers, methods (can be global) 
+                if (_AllowedOrigins.Contains(requestOrigin))
+                {
+                    response.Headers.Add("Access-Control-Allow-Origin", requestOrigin);
+                }
+                response.Headers.Add("Access-Control-Allow-Headers", string.Join(", ",_AllowedHeaders));
+                response.Headers.Add("Access-Control-Allow-Methods", string.Join(", ", _AllowedMethods));
                 response.Headers.Add("Access-Control-Allow-Credentials", "true");
                 var tsc = new TaskCompletionSource<HttpResponseMessage>();
                 tsc.SetResult(response);
