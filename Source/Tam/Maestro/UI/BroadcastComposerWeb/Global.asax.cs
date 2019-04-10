@@ -47,7 +47,7 @@ namespace BroadcastComposerWeb
                         methods: string.Join(", ", allowedMethods));
             cors.SupportsCredentials = true;
             GlobalConfiguration.Configuration.EnableCors(cors);
-            GlobalConfiguration.Configuration.MessageHandlers.Add(new PreflightRequestsHandler(allowedOrigins, allowedHeaders, allowedMethods));
+            //GlobalConfiguration.Configuration.MessageHandlers.Add(new PreflightRequestsHandler(allowedOrigins, allowedHeaders, allowedMethods));
 
             GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
