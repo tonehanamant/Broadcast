@@ -7,6 +7,7 @@ using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.StationInventory;
 using Services.Broadcast.Repositories;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
@@ -121,11 +122,12 @@ namespace Services.Broadcast.ApplicationServices
         {
             var manifestsByContractedAudienceList = manifests
                 .Where(m => m.ManifestAudiences.Any())
-                .GroupBy(m => m.ManifestAudiences.Where(ma => ma.IsReference == false).Single()).ToList();
+                .GroupBy(m => m.ManifestAudiences.Where(ma => ma.IsReference == false).Single().Audience.Id).ToList();
 
             foreach (var manifestsByContractedAudience in manifestsByContractedAudienceList)
             {
-                var contractedAudience = manifestsByContractedAudience.Key.Audience.Id;
+                //Debug.WriteLine($"Processing impressions for manifest by audience {manifestsByContractedAudience.Key}");
+                var contractedAudience = manifestsByContractedAudience.Key;
 
                 var audiencesMappings = _BroadcastAudienceRepository
                     .GetRatingsAudiencesByMaestroAudience(new List<int> { contractedAudience }).ToList();
@@ -156,21 +158,30 @@ namespace Services.Broadcast.ApplicationServices
                                 LegacyCallLetters = msd.Key.LegacyCallLetters
                             }
                         );
+                    Debug.WriteLine($"station detail: {msd.Key.daypart} {msd.Key.LegacyCallLetters}");
                 }
 
                 List<StationImpressions> stationImpressions = null;
 
+                //Stopwatch sw;
+
                 if (hutBook.HasValue)
                 {
+                    //sw = Stopwatch.StartNew();
                     stationImpressions = _RatingsRepository
                         .GetImpressionsDaypart((short)hutBook.Value, (short)shareBook, ratingAudiences, stationDetails, playbackType, BroadcastComposerWebSystemParameter.UseDayByDayImpressions);
+                    //sw.Stop();
+                    //Debug.WriteLine($"GetImpressionsDaypart for 2 books: {sw.ElapsedMilliseconds} ");
                 }
                 else
                 {
+                    //sw = Stopwatch.StartNew();
                     stationImpressions = _RatingsRepository
                         .GetImpressionsDaypart(shareBook, ratingAudiences, stationDetails, playbackType, BroadcastComposerWebSystemParameter.UseDayByDayImpressions)
                         .Select(x => (StationImpressions)x)
                         .ToList();
+                    //sw.Stop();
+                    //Debug.WriteLine($"GetImpressionsDaypart for 1 book: {sw.ElapsedMilliseconds}");                    
                 }
 
                 counter = 1;

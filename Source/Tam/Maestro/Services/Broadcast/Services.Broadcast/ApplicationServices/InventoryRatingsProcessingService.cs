@@ -4,6 +4,7 @@ using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace Services.Broadcast.ApplicationServices
@@ -87,26 +88,44 @@ namespace Services.Broadcast.ApplicationServices
                 _InventoryFileRatingsJobsRepository.UpdateJob(job);
 
                 //This just processed barter files right now. Needs to be consolidated to 
+                //var sw = Stopwatch.StartNew();
                 var barterFile = _BarterRepository.GetInventoryFileWithHeaderById(job.InventoryFileId);
-                barterFile.InventoryGroups = _InventoryRepository.GetStationInventoryGroupsByFileId(job.InventoryFileId);
+                //sw.Stop();
+                //Debug.WriteLine($"GetInventoryFileWithHeaderById: {sw.ElapsedMilliseconds}");
 
                 if (barterFile.InventorySource.InventoryType == Entities.Enums.InventorySourceTypeEnum.Barter)
                 {
+                    //Debug.WriteLine("Barter Source");
+                    //sw = Stopwatch.StartNew();
                     barterFile.InventoryGroups = _InventoryRepository.GetStationInventoryGroupsByFileId(job.InventoryFileId);
+                    //sw.Stop();
+                    //Debug.WriteLine($"GetStationInventoryGroupsByFileId: {sw.ElapsedMilliseconds}");
+
                     var manifests = barterFile.InventoryGroups.SelectMany(x => x.Manifests).ToList();
 
                     //process impressions/cost
+                    //sw = Stopwatch.StartNew();
                     _ImpressionsService.GetProjectedStationImpressions(manifests, barterFile.Header.PlaybackType, barterFile.Header.ShareBookId, barterFile.Header.HutBookId);
+                    //sw.Stop();
+                    //Debug.WriteLine($"GetProjectedStationImpressions: {sw.ElapsedMilliseconds}");
+
+                    //sw = Stopwatch.StartNew();
                     _ProprietarySpotCostCalculationEngine.CalculateSpotCost(manifests);
+                    //sw.Stop();
+                    //Debug.WriteLine($"CalculateSpotCost: {sw.ElapsedMilliseconds}");
 
                     //update manifest rates
+                    //sw = Stopwatch.StartNew();
                     _InventoryRepository.UpdateInventoryRatesForManifests(manifests);
+                    //sw.Stop();
+                    //Debug.WriteLine($"UpdateInventoryRatesForManifests: {sw.ElapsedMilliseconds}");
 
                     job.Status = InventoryFileRatingsProcessingStatus.Succeeded;
                     job.CompletedAt = DateTime.Now;
                 }
                 else if (barterFile.InventorySource.InventoryType == Entities.Enums.InventorySourceTypeEnum.ProprietaryOAndO)
                 {
+                    //Debug.WriteLine("OandO Source");
                     //process cost
                     var manifests = _InventoryRepository.GetStationInventoryManifestsByFileId(job.InventoryFileId);
                     _ProprietarySpotCostCalculationEngine.CalculateSpotCost(manifests, useProvidedImpressions: true);
@@ -119,6 +138,7 @@ namespace Services.Broadcast.ApplicationServices
                 }
                 else
                 {
+                    //Debug.WriteLine("Unknown source");
                     // Failed for unsupported types
                     job.Status = InventoryFileRatingsProcessingStatus.Failed;
                 }
