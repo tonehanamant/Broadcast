@@ -1,12 +1,12 @@
+using System;
 using Common.Services.Repositories;
 using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.SqlClient;
 using System.Linq;
-using System.Transactions;
-using Tam.Maestro.Common;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
 using Tam.Maestro.Services.Clients;
@@ -66,10 +66,10 @@ namespace Services.Broadcast.Repositories
 
         public int SavePost(post_files file)
         {
-            _InReadUncommitedTransaction(
-            context =>
+            if (file.id > 0)
             {
-                if (file.id > 0)
+                 _InReadUncommitedTransaction(
+                context =>
                 {
                     var dbPost = context.post_files.Find(file.id);
                     dbPost.equivalized = file.equivalized;
@@ -78,17 +78,55 @@ namespace Services.Broadcast.Repositories
                     var oldPostFileDemos = context.post_file_demos.Where(pfd => pfd.post_file_id == file.id);
                     context.post_file_demos.RemoveRange(oldPostFileDemos);
 
-                    dbPost.post_file_demos = file.post_file_demos.Select(pfd => new post_file_demos { demo = pfd.demo }).ToList();
+                    dbPost.post_file_demos = file.post_file_demos
+                        .Select(pfd => new post_file_demos {demo = pfd.demo}).ToList();
                     dbPost.playback_type = file.playback_type;
                     dbPost.modified_date = file.modified_date;
-                }
-                else
+
+                    context.SaveChanges();
+                });
+                return file.id;
+            }
+            else
+            {
+                return DoLockAndRetry(() =>
                 {
-                    context.post_files.Add(file);
-                }
-                context.SaveChanges();
-            });
-            return file.id;
+                    var fileDetails = new List<post_file_details>();
+                    _InReadUncommitedTransaction(
+                    context =>
+                    {
+                        context.Configuration.AutoDetectChangesEnabled = false;
+                        // PRI-6647: Clear the file details so that the add doesn't try to insert them all at once
+                        fileDetails.AddRange(file.post_file_details);
+                        file.post_file_details.Clear();
+                        // Add file here to get id
+                        context.post_files.Add(file);
+                        context.SaveChanges();
+                        
+                        // Set the details' file ids to the returned id
+                        fileDetails.ForEach(detail =>
+                        {
+                            detail.post_file_id = file.id;
+                        });
+                        SetPostFileDetailIds(context, fileDetails);
+
+                        try
+                        {
+                            BulkInsert(context, fileDetails);
+                        }
+                        catch (SqlException ex) when (ex.Number == 547)
+                        {
+                            // Exception occurs from adding duplicate ids, which means more details were added since the table was read last
+                            // Reset the ids of the details we're inserting
+                            SetPostFileDetailIds(context, fileDetails);
+                            BulkInsert(context, fileDetails);
+                        }
+                    });
+                    file.post_file_details = fileDetails;
+
+                    return file.id;
+                });
+            }
         }
 
         public bool DeletePost(int id)
@@ -135,6 +173,18 @@ namespace Services.Broadcast.Repositories
         public bool PostExist(string fileName)
         {
             return _InReadUncommitedTransaction(c => { return c.post_files.Any(f => f.file_name == fileName); });
+        }
+        
+        // Manually set detail ids based on the next available ids in the database
+        private void SetPostFileDetailIds(QueryHintBroadcastContext context, List<post_file_details> fileDetails)
+        {
+            int nextSequence = context.post_file_details.Max(detail => detail.id) + 1;
+            fileDetails.ForEach(detail =>
+            {
+                // manually set the id to the next available
+                detail.id = nextSequence;
+                nextSequence++;
+            });
         }
     }
 
