@@ -202,6 +202,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(DisplayBroadcastStation), "ModifiedDate");
                 jsonResolver.Ignore(typeof(DisplayBroadcastStation), "FlightWeeks");
+                jsonResolver.Ignore(typeof(DisplayBroadcastStation), "RateDataThrough");
+                jsonResolver.Ignore(typeof(DisplayBroadcastStation), "FlightWeeks");
                 jsonResolver.Ignore(typeof(DisplayBroadcastStation), "Id");
                 var jsonSettings = new JsonSerializerSettings()
                 {
@@ -225,6 +227,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(DisplayBroadcastStation), "ModifiedDate");
                 jsonResolver.Ignore(typeof(DisplayBroadcastStation), "FlightWeeks");
+                jsonResolver.Ignore(typeof(DisplayBroadcastStation), "ManifestMaxEndDate");
+                jsonResolver.Ignore(typeof(DisplayBroadcastStation), "RateDataThrough");
                 jsonResolver.Ignore(typeof(DisplayBroadcastStation), "Id");
                 var jsonSettings = new JsonSerializerSettings()
                 {

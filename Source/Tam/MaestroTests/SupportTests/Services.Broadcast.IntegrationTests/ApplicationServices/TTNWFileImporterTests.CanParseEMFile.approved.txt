@@ -32,24 +32,6 @@
     },
     {
       "AffectedProposals": null,
-      "ProblemDescription": "Invalid station: NECN   ",
-      "ProgramName": null,
-      "StationLetters": null
-    },
-    {
-      "AffectedProposals": null,
-      "ProblemDescription": "Invalid station: NECN   ",
-      "ProgramName": null,
-      "StationLetters": null
-    },
-    {
-      "AffectedProposals": null,
-      "ProblemDescription": "Invalid station: NECN   ",
-      "ProgramName": null,
-      "StationLetters": null
-    },
-    {
-      "AffectedProposals": null,
       "ProblemDescription": "Invalid station: WCIV-DT",
       "ProgramName": null,
       "StationLetters": null
@@ -1444,7 +1426,16 @@
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 1,
-            "Station": null
+            "Station": {
+              "Affiliation": null,
+              "CallLetters": "NECN",
+              "Code": null,
+              "LegacyCallLetters": "NECN",
+              "ManifestMaxEndDate": null,
+              "MarketCode": null,
+              "OriginMarket": null,
+              "RateDataThrough": null
+            }
           },
           {
             "Comment": null,
@@ -7963,7 +7954,16 @@
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 1,
-            "Station": null
+            "Station": {
+              "Affiliation": null,
+              "CallLetters": "NECN",
+              "Code": null,
+              "LegacyCallLetters": "NECN",
+              "ManifestMaxEndDate": null,
+              "MarketCode": null,
+              "OriginMarket": null,
+              "RateDataThrough": null
+            }
           },
           {
             "Comment": null,
@@ -27371,7 +27371,16 @@
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 1,
-            "Station": null
+            "Station": {
+              "Affiliation": null,
+              "CallLetters": "NECN",
+              "Code": null,
+              "LegacyCallLetters": "NECN",
+              "ManifestMaxEndDate": null,
+              "MarketCode": null,
+              "OriginMarket": null,
+              "RateDataThrough": null
+            }
           },
           {
             "Comment": null,

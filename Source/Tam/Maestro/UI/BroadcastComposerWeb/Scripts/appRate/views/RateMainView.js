@@ -25,6 +25,8 @@ var RateMainView = BaseView.extend({
         $('body').tooltip({
             selector: '[data-toggle="tooltip"]'
         });
+        $("#unit_scx_button").on('click', this.controller.openUnitSCX.bind(this));
+        $('#unit_scx_button').hide();
     },
 
     //New Rates based Tabs - source
@@ -40,7 +42,10 @@ var RateMainView = BaseView.extend({
             me.uploadManager.setActiveSourceType(type);
             if (type === 'Barter') {
                 $('.grid_hider').hide();
+                $('#unit_scx_button').show();
+                
             } else {
+                $('#unit_scx_button').hide();
                 $('.grid_hider').show();
                 //load and reset
                 me.resetStationDataFilterAll();

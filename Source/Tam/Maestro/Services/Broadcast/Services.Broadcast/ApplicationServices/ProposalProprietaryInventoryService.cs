@@ -196,7 +196,7 @@ namespace Services.Broadcast.ApplicationServices
             var ratingAudiences = BroadcastDataRepositoryFactory.GetDataRepository<IBroadcastAudienceRepository>().GetRatingsAudiencesByMaestroAudience(new List<int> { proposalDetailInventory.GuaranteedAudience.Value }).Select(r => r.rating_audience_id).Distinct().ToList();
 
             foreach (var imp in GetImpressions(proposalDetailInventory, ratingAudiences, impressionRequests))
-                stationDetailImpressions[imp.id].Impressions += imp.impressions;
+                stationDetailImpressions[imp.Id].Impressions += imp.Impressions;
 
             foreach (var week in proposalDetailInventory.Weeks)
                 foreach (var daypartGroup in week.DaypartGroups)

@@ -341,6 +341,9 @@
     <Reference Include="Tam.Maestro.Common.Systems, Version=18.4.1.12, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\Tam.Maestro.Common.Systems.18.4.1.12\lib\net45\Tam.Maestro.Common.Systems.dll</HintPath>
     </Reference>
+    <Reference Include="Tam.Maestro.Data.EntityFrameworkMapping.ExternalRating, Version=18.4.1.11, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\Tam.Maestro.Data.EntityFrameworkMapping.ExternalRating.18.4.1.11\lib\net45\Tam.Maestro.Data.EntityFrameworkMapping.ExternalRating.dll</HintPath>
+    </Reference>
     <Reference Include="Tam.Maestro.IntegrationTests.Common, Version=18.4.1.12, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\Tam.Maestro.IntegrationTests.Common.18.4.1.12\lib\net45\Tam.Maestro.IntegrationTests.Common.dll</HintPath>
     </Reference>
@@ -417,7 +420,9 @@
     <None Include="BroadcastForecastContext.edmx.diagram">
       <DependentUpon>BroadcastForecastContext.edmx</DependentUpon>
     </None>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

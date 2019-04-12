@@ -231,6 +231,7 @@
     <Compile Include="ApplicationServices\DataLakeFileServiceTests.cs" />
     <Compile Include="ApplicationServices\InventoryCardServiceTests.cs" />
     <Compile Include="ApplicationServices\InventoryDaypartParsingEngineIntegrationTests.cs" />
+    <Compile Include="ApplicationServices\InventoryScxDataPrepIntegrationTests.cs" />
     <Compile Include="ApplicationServices\InventoryRatingsProcessingServiceTests.cs" />
     <Compile Include="ApplicationServices\IsciServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\NtiTransmittalsServiceIntegrationTests.cs" />
@@ -438,6 +439,12 @@
     </None>
     <None Include="Files\BarterDataFiles\OAndO_WeekIsMissing.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\BarterDataFiles\TTWN EMN Q1 Barter_Inventory Template_2.6.2019 %2817%29.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\BarterDataFiles\TTWN EVENING NEWS Q2 Barter_Inventory Template_2.6.2019 %286%29.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Files\BarterDataFiles\Syndication_InvalidFile1.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

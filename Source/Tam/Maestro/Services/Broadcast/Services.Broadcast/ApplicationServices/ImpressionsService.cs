@@ -102,7 +102,7 @@ namespace Services.Broadcast.ApplicationServices
                 ctr = 1;
                 foreach (var affidavitFileDetail in affidavitDetailsForPostingBook)
                 {
-                    var imps = impressionsPointInTime.Where(i => i.id == ctr).ToList();
+                    var imps = impressionsPointInTime.Where(i => i.Id == ctr).ToList();
 
                     affidavitFileDetail.ClientScrubs.Where(s => s.PostingBookId == postingData.PostingBookId &&
                                                                          s.PostingPlaybackType == postingData.PostingPlaybackType)
@@ -110,7 +110,7 @@ namespace Services.Broadcast.ApplicationServices
                         {
                             ClientScrubId = s.Id,
                             AudienceId = imp.audience_id,
-                            Impressions = imp.impressions
+                            Impressions = imp.Impressions
                         }).ToList()
                         );
                     ctr++;
@@ -187,14 +187,14 @@ namespace Services.Broadcast.ApplicationServices
                 counter = 1;
                 foreach (var manifestsByStationDaypart in manifestsByStationDaypartList)
                 {
-                    var impressions = stationImpressions.Where(i => i.id == counter).ToList();
+                    var impressions = stationImpressions.Where(i => i.Id == counter).ToList();
                     foreach(var msd in manifestsByStationDaypart)
                     {
                         msd.manifest.ProjectedStationImpressions.Add(
                             new StationImpressions
                             {
-                                impressions = impressions.Sum(i => i.impressions),
-                                legacy_call_letters = impressions.Select(i => i.legacy_call_letters).FirstOrDefault()
+                                Impressions = impressions.Sum(i => i.Impressions),
+                                Legacy_call_letters = impressions.Select(i => i.Legacy_call_letters).FirstOrDefault()
                             });
                     }
                     counter++;

@@ -38,7 +38,7 @@
           "_Wednesday": false
         },
         "Genres": [],
-        "ProgramName": null
+        "ProgramName": "Eyewitness News/GMA Weekend"
       }
     ],
     "ManifestRates": [],
@@ -129,7 +129,7 @@
           "_Wednesday": false
         },
         "Genres": [],
-        "ProgramName": null
+        "ProgramName": "Eyewitness News/GMA Weekend"
       }
     ],
     "ManifestRates": [],
@@ -210,7 +210,7 @@
           "_Wednesday": false
         },
         "Genres": [],
-        "ProgramName": null
+        "ProgramName": "Eyewitness News/GMA Weekend"
       }
     ],
     "ManifestRates": [],

@@ -28,6 +28,8 @@ using Services.Broadcast.Extensions;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Helpers;
 using System.Text;
+using Services.Broadcast.Converters.Scx;
+using Services.Broadcast.Entities.Scx;
 
 namespace Services.Broadcast.ApplicationServices
 {
@@ -527,7 +529,7 @@ namespace Services.Broadcast.ApplicationServices
                         ? BroadcastServiceSystemParameter.DefaultNtiConversionFactor
                         : detail.NtiConversionFactor.Value;
                 }
-                
+
                 //set default value for My Events Report Name
                 detail.Quarters.ForEach(y => y.Weeks.ForEach(week =>
                 {
@@ -885,7 +887,7 @@ namespace Services.Broadcast.ApplicationServices
             foreach (var detail in proposalDto.Details)
             {
                 _ValidateProposalProjectionBooks(detail);
-                
+
                 if (detail.FlightEndDate == default(DateTime) || detail.FlightStartDate == default(DateTime))
                     throw new Exception("Cannot save proposal detail without specifying flight start/end date.");
 
@@ -1212,7 +1214,7 @@ namespace Services.Broadcast.ApplicationServices
                 SchedulePostTypes =
                     Enum.GetValues(typeof(SchedulePostType))
                         .Cast<SchedulePostType>()
-                        .Select(e => new LookupDto {Display = e.ToString(), Id = (int) e})
+                        .Select(e => new LookupDto { Display = e.ToString(), Id = (int)e })
                         .ToList(),
                 Markets = _BroadcastDataRepositoryFactory.GetDataRepository<IMarketRepository>().GetMarketDtos()
                     .OrderBy(m => m.Display).ToList(),
@@ -1389,8 +1391,8 @@ namespace Services.Broadcast.ApplicationServices
                 foreach (var scxFile in scxFiles)
                 {
                     var detailName = string.Format(detailInfoTemplate,
-                        _FileDateFormat(scxFile.ProposalDetailDto.FlightStartDate),
-                        _FileDateFormat(scxFile.ProposalDetailDto.FlightEndDate),
+                        scxFile.ProposalDetailDto.FlightStartDate.ToFileDateFormat(),
+                        scxFile.ProposalDetailDto.FlightEndDate.ToFileDateFormat(),
                         ctr++);
                     string scxFileName = string.Format(fileNameTemplate, proposalName, proposal.Id, detailName);
 
@@ -1405,12 +1407,6 @@ namespace Services.Broadcast.ApplicationServices
             var archiveFileName = string.Format(fileArchiveTemplate, proposalName, proposal.Id);
             return new Tuple<string, Stream>(archiveFileName, archiveFile);
         }
-
-        private string _FileDateFormat(DateTime date)
-        {
-            return date.ToString("MMddyyyyy");
-        }
-
 
         public List<LookupDto> FindGenres(string genreSearchString)
         {
@@ -1480,7 +1476,7 @@ namespace Services.Broadcast.ApplicationServices
 
             return proposalBuy.Errors;
         }
-        
+
         public Tuple<string, Stream> GenerateScxFileDetail(int proposalDetailId)
         {
             string fileNameTemplate = "{0}({1}) - {2} - Export.scx";
@@ -1489,7 +1485,7 @@ namespace Services.Broadcast.ApplicationServices
             var proposal = _ProposalRepository.GetProposalByDetailId(proposalDetailId);
             var proposalDetail = proposal.Details.Single(d => d.Id == proposalDetailId);
             ProposalScxFile scxFile = null;
-            _ProposalScxConverter.ConvertProposalDetail(proposal,proposalDetail,ref scxFile);
+            _ProposalScxConverter.ConvertProposalDetail(proposal, proposalDetail, ref scxFile);
             if (scxFile == null)
                 throw new InvalidOperationException("Could not generate SCX file.");
 
@@ -1498,8 +1494,8 @@ namespace Services.Broadcast.ApplicationServices
             string proposalName = proposal.ProposalName.PrepareForUsingInFileName();
 
             var detailName = string.Format(detailInfoTemplate,
-                _FileDateFormat(scxFile.ProposalDetailDto.FlightStartDate),
-                _FileDateFormat(scxFile.ProposalDetailDto.FlightEndDate),
+                scxFile.ProposalDetailDto.FlightStartDate.ToFileDateFormat(),
+                scxFile.ProposalDetailDto.FlightEndDate.ToFileDateFormat(),
                 1);
 
             var detailFileName = string.Format(fileNameTemplate, proposalName, proposal.Id, detailName);
@@ -1512,18 +1508,18 @@ namespace Services.Broadcast.ApplicationServices
             var messageBuilder = new StringBuilder();
             List<Tuple<int, int>> proposalDetailDaypartList = _ProposalRepository.GetIdsOfProposalDetailsWithMisalignedDayparts();
             List<Tuple<int, int>> updateProposalDetailDaypartMap = new List<Tuple<int, int>>();
-            foreach(var detailDaypart in proposalDetailDaypartList)
+            foreach (var detailDaypart in proposalDetailDaypartList)
             {
                 messageBuilder.AppendLine($"Updating daypart on proposal detail {detailDaypart.Item1}");
 
                 var daypart = _DaypartCache.GetDisplayDaypart(detailDaypart.Item2);
                 daypart.StartTime = daypart.StartTime - (daypart.StartTime % 60);
-                if(daypart.EndTime % 60 != 59)
+                if (daypart.EndTime % 60 != 59)
                 {
                     daypart.EndTime = daypart.EndTime - (daypart.EndTime % 60) - 1;
                 }
                 var daypartId = _DaypartCache.GetIdByDaypart(daypart);
-                updateProposalDetailDaypartMap.Add(Tuple.Create(detailDaypart.Item1, daypartId));              
+                updateProposalDetailDaypartMap.Add(Tuple.Create(detailDaypart.Item1, daypartId));
             }
             _ProposalRepository.UpdateProposalDetailDayparts(updateProposalDetailDaypartMap);
             return messageBuilder.ToString();

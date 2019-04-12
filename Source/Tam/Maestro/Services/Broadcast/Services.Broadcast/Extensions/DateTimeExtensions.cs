@@ -28,5 +28,10 @@ namespace Services.Broadcast.Extensions
 
             return date.AddDays(-differenceToMonday);
         }
+
+        public static string ToFileDateFormat(this DateTime date, string format = null)
+        {
+            return date.ToString(format ?? "MMddyyyyy");
+        }
     }
 }

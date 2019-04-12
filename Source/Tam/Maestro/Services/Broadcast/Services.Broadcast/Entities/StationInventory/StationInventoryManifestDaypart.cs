@@ -10,12 +10,9 @@ namespace Services.Broadcast.Entities.StationInventory
         public DisplayDaypart Daypart { get; set; }
         public string ProgramName { get; set; }
         
-        public List<LookupDto> Genres { get; set; }
+        public List<LookupDto> Genres { get; set; } = new List<LookupDto>();
 
-        public StationInventoryManifestDaypart()
-        {
-            Genres = new List<LookupDto>();
-        }
+        public StationInventoryManifestDaypart() { }
 
         public StationInventoryManifestDaypart(int id,DisplayDaypart daypart, string programName)
         {

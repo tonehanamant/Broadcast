@@ -37,7 +37,7 @@
           "_Wednesday": true
         },
         "Genres": [],
-        "ProgramName": null
+        "ProgramName": "GENERAL HOSPITAL"
       }
     ],
     "ManifestRates": [
@@ -75,6 +75,7 @@
       }
     ],
     "ManifestWeeks": [],
+    "ProjectedStationImpressions": [],
     "SpotLengthId": 1,
     "SpotsPerDay": null,
     "SpotsPerWeek": null,
@@ -127,7 +128,7 @@
           "_Wednesday": true
         },
         "Genres": [],
-        "ProgramName": null
+        "ProgramName": "LIVE WITH KELLY"
       }
     ],
     "ManifestRates": [
@@ -165,6 +166,7 @@
       }
     ],
     "ManifestWeeks": [],
+    "ProjectedStationImpressions": [],
     "SpotLengthId": 1,
     "SpotsPerDay": null,
     "SpotsPerWeek": null,
@@ -217,7 +219,7 @@
           "_Wednesday": true
         },
         "Genres": [],
-        "ProgramName": null
+        "ProgramName": "THE CHEW"
       }
     ],
     "ManifestRates": [
@@ -255,6 +257,7 @@
       }
     ],
     "ManifestWeeks": [],
+    "ProjectedStationImpressions": [],
     "SpotLengthId": 1,
     "SpotsPerDay": null,
     "SpotsPerWeek": null,
@@ -307,7 +310,7 @@
           "_Wednesday": true
         },
         "Genres": [],
-        "ProgramName": null
+        "ProgramName": "THE VIEW"
       }
     ],
     "ManifestRates": [
@@ -345,6 +348,7 @@
       }
     ],
     "ManifestWeeks": [],
+    "ProjectedStationImpressions": [],
     "SpotLengthId": 1,
     "SpotsPerDay": null,
     "SpotsPerWeek": null,
@@ -397,7 +401,7 @@
           "_Wednesday": true
         },
         "Genres": [],
-        "ProgramName": null
+        "ProgramName": "WINDY CITY LIVE"
       }
     ],
     "ManifestRates": [
@@ -435,6 +439,7 @@
       }
     ],
     "ManifestWeeks": [],
+    "ProjectedStationImpressions": [],
     "SpotLengthId": 1,
     "SpotsPerDay": null,
     "SpotsPerWeek": null,
@@ -487,7 +492,7 @@
           "_Wednesday": true
         },
         "Genres": [],
-        "ProgramName": null
+        "ProgramName": "INSIDE EDITION"
       }
     ],
     "ManifestRates": [
@@ -525,6 +530,7 @@
       }
     ],
     "ManifestWeeks": [],
+    "ProjectedStationImpressions": [],
     "SpotLengthId": 1,
     "SpotsPerDay": null,
     "SpotsPerWeek": null,
@@ -577,7 +583,7 @@
           "_Wednesday": true
         },
         "Genres": [],
-        "ProgramName": null
+        "ProgramName": "JEOPARDY"
       }
     ],
     "ManifestRates": [
@@ -615,6 +621,7 @@
       }
     ],
     "ManifestWeeks": [],
+    "ProjectedStationImpressions": [],
     "SpotLengthId": 1,
     "SpotsPerDay": null,
     "SpotsPerWeek": null,
@@ -667,7 +674,7 @@
           "_Wednesday": false
         },
         "Genres": [],
-        "ProgramName": null
+        "ProgramName": "ABC7 LATE NEWS (R)"
       }
     ],
     "ManifestRates": [
@@ -705,6 +712,7 @@
       }
     ],
     "ManifestWeeks": [],
+    "ProjectedStationImpressions": [],
     "SpotLengthId": 1,
     "SpotsPerDay": null,
     "SpotsPerWeek": null,
@@ -757,7 +765,7 @@
           "_Wednesday": true
         },
         "Genres": [],
-        "ProgramName": null
+        "ProgramName": "ABC7 LATE NEWS (R)"
       }
     ],
     "ManifestRates": [
@@ -795,6 +803,7 @@
       }
     ],
     "ManifestWeeks": [],
+    "ProjectedStationImpressions": [],
     "SpotLengthId": 1,
     "SpotsPerDay": null,
     "SpotsPerWeek": null,
@@ -847,7 +856,7 @@
           "_Wednesday": false
         },
         "Genres": [],
-        "ProgramName": null
+        "ProgramName": "CASTLE"
       }
     ],
     "ManifestRates": [
@@ -885,6 +894,7 @@
       }
     ],
     "ManifestWeeks": [],
+    "ProjectedStationImpressions": [],
     "SpotLengthId": 1,
     "SpotsPerDay": null,
     "SpotsPerWeek": null,
@@ -937,7 +947,7 @@
           "_Wednesday": false
         },
         "Genres": [],
-        "ProgramName": null
+        "ProgramName": "CASTLE"
       }
     ],
     "ManifestRates": [
@@ -975,6 +985,7 @@
       }
     ],
     "ManifestWeeks": [],
+    "ProjectedStationImpressions": [],
     "SpotLengthId": 1,
     "SpotsPerDay": null,
     "SpotsPerWeek": null,
@@ -1027,7 +1038,7 @@
           "_Wednesday": false
         },
         "Genres": [],
-        "ProgramName": null
+        "ProgramName": "CASTLE"
       }
     ],
     "ManifestRates": [
@@ -1065,6 +1076,7 @@
       }
     ],
     "ManifestWeeks": [],
+    "ProjectedStationImpressions": [],
     "SpotLengthId": 1,
     "SpotsPerDay": null,
     "SpotsPerWeek": null,
@@ -1117,7 +1129,7 @@
           "_Wednesday": false
         },
         "Genres": [],
-        "ProgramName": null
+        "ProgramName": "CASTLE"
       }
     ],
     "ManifestRates": [
@@ -1155,6 +1167,7 @@
       }
     ],
     "ManifestWeeks": [],
+    "ProjectedStationImpressions": [],
     "SpotLengthId": 1,
     "SpotsPerDay": null,
     "SpotsPerWeek": null,
@@ -1207,7 +1220,7 @@
           "_Wednesday": false
         },
         "Genres": [],
-        "ProgramName": null
+        "ProgramName": "INSIDE EDITION W"
       }
     ],
     "ManifestRates": [
@@ -1245,6 +1258,7 @@
       }
     ],
     "ManifestWeeks": [],
+    "ProjectedStationImpressions": [],
     "SpotLengthId": 1,
     "SpotsPerDay": null,
     "SpotsPerWeek": null,
@@ -1297,7 +1311,7 @@
           "_Wednesday": true
         },
         "Genres": [],
-        "ProgramName": null
+        "ProgramName": "JIMMY KIMMEL"
       }
     ],
     "ManifestRates": [
@@ -1335,6 +1349,7 @@
       }
     ],
     "ManifestWeeks": [],
+    "ProjectedStationImpressions": [],
     "SpotLengthId": 1,
     "SpotsPerDay": null,
     "SpotsPerWeek": null,
@@ -1387,7 +1402,7 @@
           "_Wednesday": true
         },
         "Genres": [],
-        "ProgramName": null
+        "ProgramName": "NIGHTLINE"
       }
     ],
     "ManifestRates": [
@@ -1425,6 +1440,7 @@
       }
     ],
     "ManifestWeeks": [],
+    "ProjectedStationImpressions": [],
     "SpotLengthId": 1,
     "SpotsPerDay": null,
     "SpotsPerWeek": null,
@@ -1477,7 +1493,7 @@
           "_Wednesday": false
         },
         "Genres": [],
-        "ProgramName": null
+        "ProgramName": "SCANDAL"
       }
     ],
     "ManifestRates": [
@@ -1515,6 +1531,7 @@
       }
     ],
     "ManifestWeeks": [],
+    "ProjectedStationImpressions": [],
     "SpotLengthId": 1,
     "SpotsPerDay": null,
     "SpotsPerWeek": null,
@@ -1567,7 +1584,7 @@
           "_Wednesday": false
         },
         "Genres": [],
-        "ProgramName": null
+        "ProgramName": "SCANDAL"
       }
     ],
     "ManifestRates": [
@@ -1605,6 +1622,7 @@
       }
     ],
     "ManifestWeeks": [],
+    "ProjectedStationImpressions": [],
     "SpotLengthId": 1,
     "SpotsPerDay": null,
     "SpotsPerWeek": null,
@@ -1657,7 +1675,7 @@
           "_Wednesday": true
         },
         "Genres": [],
-        "ProgramName": null
+        "ProgramName": "WINDY CITY LIVE B"
       }
     ],
     "ManifestRates": [
@@ -1695,6 +1713,7 @@
       }
     ],
     "ManifestWeeks": [],
+    "ProjectedStationImpressions": [],
     "SpotLengthId": 1,
     "SpotsPerDay": null,
     "SpotsPerWeek": null,
@@ -1747,7 +1766,7 @@
           "_Wednesday": false
         },
         "Genres": [],
-        "ProgramName": null
+        "ProgramName": "WINDY CITY WKND"
       }
     ],
     "ManifestRates": [
@@ -1785,6 +1804,7 @@
       }
     ],
     "ManifestWeeks": [],
+    "ProjectedStationImpressions": [],
     "SpotLengthId": 1,
     "SpotsPerDay": null,
     "SpotsPerWeek": null,

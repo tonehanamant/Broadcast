@@ -70,7 +70,11 @@ namespace Services.Broadcast.Converters.RateImport
                 .Where(x => string.IsNullOrWhiteSpace(worksheet.Cells[x.Value].GetStringValue()))
                 .ForEach(x => validationProblems.Add($"Required value for {x.Key} is missing"));
 
-            if (validationProblems.Any()) return;
+            if (validationProblems.Any())
+            {
+                barterFile.ValidationProblems.AddRange(validationProblems);
+                return;
+            }
 
             var daypartCode = worksheet.Cells[DAYPART_CODE_CELL].GetStringValue();
 
@@ -388,7 +392,7 @@ namespace Services.Broadcast.Converters.RateImport
                             EffectiveDate = fileHeader.EffectiveDate,
                             EndDate = fileHeader.EndDate,
                             InventorySourceId = barterFile.InventorySource.Id,
-                            FileId = barterFile.Id,
+                            InventoryFileId = barterFile.Id,
                             Station = stationsDict[StationProcessingEngine.StripStationSuffix(manifest.Station)],
                             SpotLengthId = SpotLengthEngine.GetSpotLengthIdByValue(manifestGroup.SpotLength),
                             Comment = manifest.Comment,

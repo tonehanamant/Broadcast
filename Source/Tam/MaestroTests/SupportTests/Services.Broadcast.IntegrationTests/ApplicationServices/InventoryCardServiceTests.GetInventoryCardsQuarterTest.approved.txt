@@ -30,8 +30,14 @@
       "Quarter": 1,
       "Year": 2019
     },
-    "RatesAvailableFromQuarter": null,
-    "RatesAvailableToQuarter": null,
+    "RatesAvailableFromQuarter": {
+      "Quarter": 2,
+      "Year": 2019
+    },
+    "RatesAvailableToQuarter": {
+      "Quarter": 2,
+      "Year": 2019
+    },
     "TotalDaypartCodes": 0,
     "TotalMarkets": 0,
     "TotalStations": 0,

@@ -2,9 +2,9 @@
 {
     public class StationImpressions
     {
-        public int id { get; set; }
-        public string legacy_call_letters { get; set; }
-        public double impressions { get; set; }
-        public double rating  { get; set; }
+        public int Id { get; set; }
+        public string Legacy_call_letters { get; set; }
+        public double Impressions { get; set; }
+        public double Rating  { get; set; }
     }
 }

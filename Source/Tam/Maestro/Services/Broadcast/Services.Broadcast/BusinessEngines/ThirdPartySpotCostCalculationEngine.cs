@@ -22,8 +22,8 @@ namespace Services.Broadcast.BusinessEngines
                     continue;
 
                 var impressions = useProvidedImpressions ?
-                    firstAudience.Impressions.Value :
-                    manifest.ProjectedStationImpressions.Average(x => x.impressions);
+                   firstAudience.Impressions.Value :
+                   manifest.ProjectedStationImpressions.Average(x => x.Impressions);
 
                 if (impressions == 0)
                     continue;

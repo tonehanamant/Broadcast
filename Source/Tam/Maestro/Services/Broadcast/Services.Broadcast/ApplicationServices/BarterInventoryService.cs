@@ -4,9 +4,11 @@ using OfficeOpenXml;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.BusinessEngines.InventoryDaypartParsing;
 using Services.Broadcast.Converters.RateImport;
+using Services.Broadcast.Converters.Scx;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.BarterInventory;
 using Services.Broadcast.Entities.Enums;
+using Services.Broadcast.Entities.Scx;
 using Services.Broadcast.Exceptions;
 using Services.Broadcast.Extensions;
 using Services.Broadcast.Helpers;
@@ -14,7 +16,9 @@ using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
+using Tam.Maestro.Data.Entities;
 
 namespace Services.Broadcast.ApplicationServices
 {
@@ -27,6 +31,12 @@ namespace Services.Broadcast.ApplicationServices
         /// <param name="userName">Username requesting the operation</param>
         /// <returns>InventoryFileSaveResult object</returns>
         InventoryFileSaveResult SaveBarterInventoryFile(InventoryFileSaveRequest request, string userName, DateTime now);
+
+        /// <summary>
+        /// Generates one SCX archive for the current quarter
+        /// </summary>
+        /// <returns>Returnsa zip archive as stream and the zip name</returns>
+        Tuple<string, Stream> GenerateScxFileArchive(DateTime nowDate);
     }
 
     public class BarterInventoryService : IBarterInventoryService
@@ -41,20 +51,28 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IStationRepository _StationRepository;
         private readonly ILockingEngine _LockingEngine;
         private readonly IInventoryDaypartParsingEngine _DaypartParsingEngine;
+        private readonly IProprietarySpotCostCalculationEngine _ProprietarySpotCostCalculationEngine;
         private readonly IStationInventoryGroupService _StationInventoryGroupService;
         private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekCache;
+        private readonly IInventoryScxDataConverter _InventoryScxDataConverter;
         private readonly IDataLakeFileService _DataLakeFileService;
+        private readonly IInventoryScxDataPrep _InventoryScxDataPrep;
         private readonly IInventoryRatingsProcessingService _InventoryRatingsService;
+        private readonly IQuarterCalculationEngine _QuarterCalculationEngine;
 
         public BarterInventoryService(IDataRepositoryFactory broadcastDataRepositoryFactory
             , IBarterFileImporterFactory barterFileImporterFactory
             , IStationProcessingEngine stationProcessingEngine
             , ILockingEngine lockingEngine
             , IInventoryDaypartParsingEngine inventoryDaypartParsingEngine
+            , IProprietarySpotCostCalculationEngine proprietarySpotCostCalculationEngine
             , IStationInventoryGroupService stationInventoryGroupService
             , IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache
+            , IInventoryScxDataConverter inventoryScxDataConverter
             , IDataLakeFileService dataLakeFileService
-            , IInventoryRatingsProcessingService inventoryRatingsService)
+            , IInventoryRatingsProcessingService inventoryRatingsService
+            , IInventoryScxDataPrep inventoryScxDataPrep
+            , IQuarterCalculationEngine quarterCalculationEngine)
         {
             _BarterRepository = broadcastDataRepositoryFactory.GetDataRepository<IBarterRepository>();
             _InventoryRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
@@ -64,10 +82,14 @@ namespace Services.Broadcast.ApplicationServices
             _StationRepository = broadcastDataRepositoryFactory.GetDataRepository<IStationRepository>();
             _LockingEngine = lockingEngine;
             _DaypartParsingEngine = inventoryDaypartParsingEngine;
+            _ProprietarySpotCostCalculationEngine = proprietarySpotCostCalculationEngine;
             _StationInventoryGroupService = stationInventoryGroupService;
             _MediaMonthAndWeekCache = mediaMonthAndWeekAggregateCache;
+            _InventoryScxDataConverter = inventoryScxDataConverter;
             _DataLakeFileService = dataLakeFileService;
+            _InventoryScxDataPrep = inventoryScxDataPrep;
             _InventoryRatingsService = inventoryRatingsService;
+            _QuarterCalculationEngine = quarterCalculationEngine;
         }
 
         /// <summary>
@@ -117,7 +139,7 @@ namespace Services.Broadcast.ApplicationServices
                         var stations = _GetFileStationsOrCreate(barterFile, userName);
                         var stationsDict = stations.ToDictionary(x => x.Id, x => x.LegacyCallLetters);
 
-                        fileImporter.PopulateManifests(barterFile, stations);
+                        fileImporter.PopulateManifests(barterFile, stations);                     
 
                         _LockingEngine.LockStations(stationsDict, lockedStationIds, stationLocks);
 
@@ -161,6 +183,39 @@ namespace Services.Broadcast.ApplicationServices
                 ValidationProblems = barterFile.ValidationProblems,
                 Status = barterFile.FileStatus
             };
+        }
+
+        /// <summary>
+        /// Generates one SCX archive for the current quarter
+        /// </summary>
+        /// <returns>Returnsa zip archive as stream and the zip name</returns>
+        public Tuple<string, Stream> GenerateScxFileArchive(DateTime nowDate)
+        {
+            string fileNameTemplate = "Barter{0}{1}.scx";
+            string archiveFileName = $"InventoryUnits_{DateTime.Now.ToString("yyyyMMddhhmmss")}.zip"; //Sebastian add some timestamp to the name
+
+            QuarterDetailDto currentQuarter = _QuarterCalculationEngine.GetQuarterRangeByDate(nowDate, 0);
+            var inventoryData = _InventoryScxDataPrep.GetInventoryScxData(currentQuarter);
+
+            List<InventoryScxFile> scxFiles = _InventoryScxDataConverter.ConvertInventoryData(inventoryData);
+
+            MemoryStream archiveFile = new MemoryStream();
+
+            using (var archive = new ZipArchive(archiveFile, ZipArchiveMode.Create, true))
+            {
+                foreach (var scxFile in scxFiles)
+                {                    
+                    string scxFileName = string.Format(fileNameTemplate, scxFile.InventorySourceName, scxFile.UnitName);
+
+                    var archiveEntry = archive.CreateEntry(scxFileName, System.IO.Compression.CompressionLevel.Fastest);
+                    using (var zippedStreamEntry = archiveEntry.Open())
+                    {
+                        scxFile.ScxStream.CopyTo(zippedStreamEntry);
+                    }
+                }
+            }
+            archiveFile.Seek(0, SeekOrigin.Begin);
+            return new Tuple<string, Stream>(archiveFileName, archiveFile);
         }
 
         private InventorySource _ReadInventorySourceFromFile(Stream streamData)

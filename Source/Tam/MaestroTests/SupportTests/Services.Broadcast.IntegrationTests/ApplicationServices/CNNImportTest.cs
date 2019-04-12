@@ -72,7 +72,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             jsonResolver.Ignore(typeof(StationInventoryGroup), "Id");
             jsonResolver.Ignore(typeof(StationInventoryManifest), "Id");
             jsonResolver.Ignore(typeof(StationInventoryManifest), "InventorySourceId");
-            jsonResolver.Ignore(typeof(StationInventoryManifest), "FileId");
+            jsonResolver.Ignore(typeof(StationInventoryManifest), "InventoryFileId");
             jsonResolver.Ignore(typeof(StationInventoryManifest), "ProjectedStationImpressions");
             jsonResolver.Ignore(typeof(InventoryFile), "Id");
             jsonResolver.Ignore(typeof(InventorySource), "Id");

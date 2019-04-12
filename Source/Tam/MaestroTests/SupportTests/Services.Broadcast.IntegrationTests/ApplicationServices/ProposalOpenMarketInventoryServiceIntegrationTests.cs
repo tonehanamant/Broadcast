@@ -81,8 +81,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var proposalInventory = _ProposalOpenMarketInventoryService.GetInventory(7);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(ProposalInventoryMarketDto.InventoryMarketStationProgram), "Genres");
-                jsonResolver.Ignore(typeof(ProposalInventoryMarketDto.InventoryMarketStationProgram), "ProgramId");
+                jsonResolver.Ignore(typeof(InventoryMarketStationProgram), "Genres");
+                jsonResolver.Ignore(typeof(InventoryMarketStationProgram), "ProgramId");
                 jsonResolver.Ignore(typeof(ProposalOpenMarketFilter), "SpotFilter");
                 jsonResolver.Ignore(typeof(ProposalDetailOpenMarketInventoryDto), "RefineFilterPrograms");
                 jsonResolver.Ignore(typeof(ProposalOpenMarketInventoryWeekDto.InventoryWeekProgram), "ProgramId");
@@ -126,7 +126,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var proposalInventory = _ProposalOpenMarketInventoryService.RefinePrograms(request);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(ProposalInventoryMarketDto.InventoryMarketStationProgram), "Genres");
+                jsonResolver.Ignore(typeof(InventoryMarketStationProgram), "Genres");
                 jsonResolver.Ignore(typeof(ProposalOpenMarketFilter), "SpotFilter");
                 jsonResolver.Ignore(typeof(ProposalDetailOpenMarketInventoryDto), "RefineFilterPrograms");
                 jsonResolver.Ignore(typeof(CpmCriteria), "Id");
@@ -167,7 +167,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var proposalInventory = _ProposalOpenMarketInventoryService.RefinePrograms(request);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(ProposalInventoryMarketDto.InventoryMarketStationProgram), "Genres");
+                jsonResolver.Ignore(typeof(InventoryMarketStationProgram), "Genres");
                 jsonResolver.Ignore(typeof(ProposalOpenMarketFilter), "SpotFilter");
                 jsonResolver.Ignore(typeof(ProposalDetailOpenMarketInventoryDto), "RefineFilterPrograms");
                 jsonResolver.Ignore(typeof(CpmCriteria), "Id");
@@ -212,7 +212,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var proposalInventory = _ProposalOpenMarketInventoryService.RefinePrograms(request);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(ProposalInventoryMarketDto.InventoryMarketStationProgram), "Genres");
+                jsonResolver.Ignore(typeof(InventoryMarketStationProgram), "Genres");
                 jsonResolver.Ignore(typeof(ProposalOpenMarketFilter), "SpotFilter");
                 jsonResolver.Ignore(typeof(ProposalDetailOpenMarketInventoryDto), "RefineFilterPrograms");
                 jsonResolver.Ignore(typeof(ProgramCriteria), "Id");
@@ -402,7 +402,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 jsonResolver.Ignore(typeof(LookupDto), "Id");
                 jsonResolver.Ignore(typeof(ProgramCriteria), "Id");
                 jsonResolver.Ignore(typeof(GenreCriteria), "Id");
-                jsonResolver.Ignore(typeof(ProposalInventoryMarketDto.InventoryMarketStationProgram), "ProgramId");
+                jsonResolver.Ignore(typeof(InventoryMarketStationProgram), "ProgramId");
                 jsonResolver.Ignore(typeof(LookupDto), "Id");
 
                 var jsonSettings = new JsonSerializerSettings
@@ -438,7 +438,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 jsonResolver.Ignore(typeof(ProgramCriteria), "Id");
                 jsonResolver.Ignore(typeof(GenreCriteria), "Id");
                 jsonResolver.Ignore(typeof(LookupDto), "Id");
-                jsonResolver.Ignore(typeof(ProposalInventoryMarketDto.InventoryMarketStationProgram), "ProgramId");
+                jsonResolver.Ignore(typeof(InventoryMarketStationProgram), "ProgramId");
 
                 var jsonSettings = new JsonSerializerSettings
                 {
@@ -486,8 +486,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var proposalInventory = _ProposalOpenMarketInventoryService.GetInventory(7);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(ProposalInventoryMarketDto.InventoryMarketStationProgram), "Genres");
-                jsonResolver.Ignore(typeof(ProposalInventoryMarketDto.InventoryMarketStationProgram), "ProgramId");
+                jsonResolver.Ignore(typeof(InventoryMarketStationProgram), "Genres");
+                jsonResolver.Ignore(typeof(InventoryMarketStationProgram), "ProgramId");
                 jsonResolver.Ignore(typeof(ProposalOpenMarketFilter), "SpotFilter");
                 jsonResolver.Ignore(typeof(ProposalDetailOpenMarketInventoryDto), "RefineFilterPrograms");
                 jsonResolver.Ignore(typeof(ProposalOpenMarketInventoryWeekDto.InventoryWeekProgram), "ProgramId");
@@ -517,8 +517,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var proposalInventory = _ProposalOpenMarketInventoryService.GetInventory(14);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(ProposalInventoryMarketDto.InventoryMarketStationProgram), "Genres");
-                jsonResolver.Ignore(typeof(ProposalInventoryMarketDto.InventoryMarketStationProgram), "ProgramId");
+                jsonResolver.Ignore(typeof(InventoryMarketStationProgram), "Genres");
+                jsonResolver.Ignore(typeof(InventoryMarketStationProgram), "ProgramId");
                 jsonResolver.Ignore(typeof(ProposalOpenMarketFilter), "SpotFilter");
                 jsonResolver.Ignore(typeof(ProposalDetailOpenMarketInventoryDto), "RefineFilterPrograms");
                 jsonResolver.Ignore(typeof(ProposalOpenMarketInventoryWeekDto.InventoryWeekProgram), "ProgramId");
@@ -634,7 +634,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     _ProposalOpenMarketInventoryService.UpdateOpenMarketInventoryTotals(filteredProposal);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(ProposalInventoryMarketDto.InventoryMarketStationProgram), "Genres");
+                jsonResolver.Ignore(typeof(InventoryMarketStationProgram), "Genres");
                 jsonResolver.Ignore(typeof(ProposalDetailInventoryBase), "ProposalFlightWeeks");
                 jsonResolver.Ignore(typeof(ProposalDetailInventoryBase), "DetailFlightWeeks");
                 jsonResolver.Ignore(typeof(ProposalDetailInventoryBase), "ProposalVersionId");

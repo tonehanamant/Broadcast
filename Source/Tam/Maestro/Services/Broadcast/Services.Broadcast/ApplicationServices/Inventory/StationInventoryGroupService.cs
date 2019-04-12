@@ -233,7 +233,7 @@ namespace Services.Broadcast.ApplicationServices
                 SpotLengthId = manifest.SpotLengthId,
                 SpotsPerWeek = manifest.SpotsPerWeek,
                 SpotsPerDay = manifest.SpotsPerDay,
-                FileId = manifest.FileId,
+                InventoryFileId = manifest.InventoryFileId,
                 InventorySourceId = manifest.InventorySourceId,
                 EffectiveDate = manifest.EffectiveDate,
                 EndDate = manifest.EndDate,

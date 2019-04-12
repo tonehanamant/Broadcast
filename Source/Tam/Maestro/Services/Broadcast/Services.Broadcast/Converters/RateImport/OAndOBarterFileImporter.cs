@@ -297,7 +297,7 @@ namespace Services.Broadcast.Converters.RateImport
                     EffectiveDate = fileHeader.EffectiveDate,
                     EndDate = fileHeader.EndDate,
                     InventorySourceId = barterFile.InventorySource.Id,
-                    FileId = barterFile.Id,
+                    InventoryFileId = barterFile.Id,
                     Station = stationsDict[StationProcessingEngine.StripStationSuffix(x.Station)],
                     SpotLengthId = fileHeader.SpotLengthId.Value,
                     DaypartCode = fileHeader.DaypartCode,

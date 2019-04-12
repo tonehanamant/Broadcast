@@ -10,7 +10,7 @@ namespace Services.Broadcast.Entities.StationInventory
         public int SpotLengthId { get; set; }
         public int? SpotsPerWeek { get; set; }
         public int? SpotsPerDay { get; set; }
-        public int? FileId { get; set; }
+        public int? InventoryFileId { get; set; }
         public int InventorySourceId { get; set; }
         public DateTime EffectiveDate { get; set; }
         public DateTime? EndDate { get; set; }

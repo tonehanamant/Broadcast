@@ -1,21 +1,14 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
-using Services.Broadcast.Converters;
-using Services.Broadcast.Entities;
-using System.Collections.Generic;
 using System.Linq;
-using System.Xml;
 using ApprovalTests;
 using ApprovalTests.Reporters;
 using IntegrationTests.Common;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using Services.Broadcast.Entities.DTO;
-using Services.Broadcast.Entities.OpenMarketInventory;
 using Services.Broadcast.Entities.spotcableXML;
 using Tam.Maestro.Common.DataLayer;
+using Services.Broadcast.Converters.Scx;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {

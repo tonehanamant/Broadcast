@@ -280,5 +280,9 @@ var RateMainController = BaseController.extend({
                TitleErrorMessage: 'File Import Options',
                StatusMessage: 'File Import Options'
            });
+    },
+    openUnitSCX: function (scheduleId) {
+        var url = baseUrl + 'api/RatesManager/GenerateScxArchive';
+        window.open(url);
     }
 });

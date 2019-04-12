@@ -130,7 +130,7 @@ namespace Services.Broadcast.BusinessEngines
                                                                             Dictionary<int, int> scheduleAudiences,
                                                                             IReadOnlyDictionary<int, List<int>> customAudienceMappings)
         {
-            var ratingsDict = ratings.GroupBy(g => g.id)
+            var ratingsDict = ratings.GroupBy(g => g.Id)
                 .ToDictionary(k => k.Key,
                     v => v.ToList());
 
@@ -146,7 +146,7 @@ namespace Services.Broadcast.BusinessEngines
                         delivery = detailRatingList
                                             .Where(r => customAudienceMappings[audience.Value]
                                                             .Contains(r.audience_id))
-                                            .Sum(r => r.impressions);
+                                            .Sum(r => r.Impressions);
                     }
                     yield return new BvsPostDetailAudience(bvsDetail.BvsFileDetailId, audience.Key, audience.Value, delivery);
                 }

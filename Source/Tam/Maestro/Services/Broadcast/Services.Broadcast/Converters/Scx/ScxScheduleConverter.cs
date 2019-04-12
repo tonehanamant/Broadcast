@@ -3,6 +3,7 @@ using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
 using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.Scx;
 using Services.Broadcast.Entities.spotcableXML;
 using Services.Broadcast.Repositories;
 using System;
@@ -11,11 +12,10 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Xml;
-using Tam.Maestro.Common;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.ContractInterfaces.Common;
 
-namespace Services.Broadcast.Converters
+namespace Services.Broadcast.Converters.Scx
 {
     public interface IScxScheduleConverter : IApplicationService, IScheduleConverter
     {

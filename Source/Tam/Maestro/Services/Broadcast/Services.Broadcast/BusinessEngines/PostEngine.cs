@@ -51,7 +51,7 @@ namespace Services.Broadcast.BusinessEngines
 
             var ratingsData = _DataRepositoryFactory.GetDataRepository<IRatingForecastRepository>().GetImpressionsPointInTime(postFile.posting_book_id, uniqueRatingsAudiences, postDetails, (ProposalEnums.ProposalPlaybackType)postFile.playback_type, BroadcastComposerWebSystemParameter.UseDayByDayImpressions);
 
-            var ratingsByStation = ratingsData.ToLookup(rd => rd.id);
+            var ratingsByStation = ratingsData.ToLookup(rd => rd.Id);
             var allImpressions = new List<post_file_detail_impressions>();
             foreach (var postDetail in postDetails)
             {
@@ -64,7 +64,7 @@ namespace Services.Broadcast.BusinessEngines
                         var imp = impPerMaestroDemo.GetOrInitialize(demo);
                         imp.demo = demo;
                         imp.post_file_detail_id = postDetail.Id;
-                        imp.impression += rating.impressions;
+                        imp.impression += rating.Impressions;
                     }
                 }
                 allImpressions.AddRange(impPerMaestroDemo.Values);

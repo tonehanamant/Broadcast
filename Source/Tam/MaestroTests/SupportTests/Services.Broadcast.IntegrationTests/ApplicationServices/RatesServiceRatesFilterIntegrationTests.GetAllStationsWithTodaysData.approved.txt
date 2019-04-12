@@ -6,8 +6,7 @@
     "LegacyCallLetters": "KOB",
     "ManifestMaxEndDate": "2019-12-08T00:00:00",
     "MarketCode": 390,
-    "OriginMarket": "Albuquerque-Santa Fe",
-    "RateDataThrough": "12/8/2019"
+    "OriginMarket": "Albuquerque-Santa Fe"
   },
   {
     "Affiliation": "CBS",
@@ -16,8 +15,7 @@
     "LegacyCallLetters": "WRGB",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 132,
-    "OriginMarket": "Albany-Schenectady-Troy",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Albany-Schenectady-Troy"
   },
   {
     "Affiliation": "CBS",
@@ -26,8 +24,7 @@
     "LegacyCallLetters": "WTTV",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 127,
-    "OriginMarket": "Indianapolis",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Indianapolis"
   },
   {
     "Affiliation": "NBC",
@@ -36,8 +33,7 @@
     "LegacyCallLetters": "KPNX",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 353,
-    "OriginMarket": "Phoenix (Prescott)",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Phoenix (Prescott)"
   },
   {
     "Affiliation": "NBC",
@@ -46,8 +42,7 @@
     "LegacyCallLetters": "KCEN",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 225,
-    "OriginMarket": "Waco-Temple-Bryan",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Waco-Temple-Bryan"
   },
   {
     "Affiliation": "FOX",
@@ -56,8 +51,7 @@
     "LegacyCallLetters": "KCYU",
     "ManifestMaxEndDate": "2017-09-24T00:00:00",
     "MarketCode": 410,
-    "OriginMarket": "Yakima-Pasco-Rchlnd-Knnwck",
-    "RateDataThrough": "9/24/2017"
+    "OriginMarket": "Yakima-Pasco-Rchlnd-Knnwck"
   },
   {
     "Affiliation": "FOX",
@@ -66,8 +60,7 @@
     "LegacyCallLetters": "KFNB",
     "ManifestMaxEndDate": "2017-09-24T00:00:00",
     "MarketCode": 367,
-    "OriginMarket": "Casper-Riverton",
-    "RateDataThrough": "9/24/2017"
+    "OriginMarket": "Casper-Riverton"
   },
   {
     "Affiliation": "IND",
@@ -76,8 +69,7 @@
     "LegacyCallLetters": "GPHL",
     "ManifestMaxEndDate": "2018-12-28T00:00:00",
     "MarketCode": 104,
-    "OriginMarket": "Philadelphia",
-    "RateDataThrough": "12/28/2018"
+    "OriginMarket": "Philadelphia"
   },
   {
     "Affiliation": "FOX",
@@ -86,8 +78,7 @@
     "LegacyCallLetters": "KDVR",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 351,
-    "OriginMarket": "Denver",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Denver"
   },
   {
     "Affiliation": "ABC",
@@ -96,8 +87,7 @@
     "LegacyCallLetters": "NHQA",
     "ManifestMaxEndDate": "2017-09-24T00:00:00",
     "MarketCode": 317,
-    "OriginMarket": "Quincy-Hannibal-Keokuk",
-    "RateDataThrough": "9/24/2017"
+    "OriginMarket": "Quincy-Hannibal-Keokuk"
   },
   {
     "Affiliation": "CW",
@@ -106,8 +96,7 @@
     "LegacyCallLetters": "EHAM",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 138,
-    "OriginMarket": "Rochester, NY",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Rochester, NY"
   },
   {
     "Affiliation": "CW",
@@ -116,8 +105,7 @@
     "LegacyCallLetters": "KCWQ",
     "ManifestMaxEndDate": "2017-09-24T00:00:00",
     "MarketCode": 404,
-    "OriginMarket": "Palm Springs",
-    "RateDataThrough": "9/24/2017"
+    "OriginMarket": "Palm Springs"
   },
   {
     "Affiliation": "CW",
@@ -126,8 +114,7 @@
     "LegacyCallLetters": "NION",
     "ManifestMaxEndDate": "2017-09-22T00:00:00",
     "MarketCode": 428,
-    "OriginMarket": "Monterey-Salinas",
-    "RateDataThrough": "9/22/2017"
+    "OriginMarket": "Monterey-Salinas"
   },
   {
     "Affiliation": "IND",
@@ -136,8 +123,7 @@
     "LegacyCallLetters": "WCUU",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 202,
-    "OriginMarket": "Chicago",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Chicago"
   },
   {
     "Affiliation": "NBC",
@@ -146,8 +132,7 @@
     "LegacyCallLetters": "KNBN",
     "ManifestMaxEndDate": "2017-09-24T00:00:00",
     "MarketCode": 364,
-    "OriginMarket": "Rapid City",
-    "RateDataThrough": "9/24/2017"
+    "OriginMarket": "Rapid City"
   },
   {
     "Affiliation": "MET",
@@ -156,8 +141,7 @@
     "LegacyCallLetters": "OWWL",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 237,
-    "OriginMarket": "Cedar Rapids-Wtrlo-IWC&Dub",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Cedar Rapids-Wtrlo-IWC&Dub"
   },
   {
     "Affiliation": "CW",
@@ -166,8 +150,7 @@
     "LegacyCallLetters": "NWWL",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 237,
-    "OriginMarket": "Cedar Rapids-Wtrlo-IWC&Dub",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Cedar Rapids-Wtrlo-IWC&Dub"
   },
   {
     "Affiliation": "MET",
@@ -176,8 +159,7 @@
     "LegacyCallLetters": "EESH",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 134,
-    "OriginMarket": "Orlando-Daytona Bch-Melbrn",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Orlando-Daytona Bch-Melbrn"
   },
   {
     "Affiliation": "MET",
@@ -186,8 +168,7 @@
     "LegacyCallLetters": "EJAR",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 121,
-    "OriginMarket": "Providence-New Bedford",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Providence-New Bedford"
   },
   {
     "Affiliation": "IND",
@@ -196,8 +177,7 @@
     "LegacyCallLetters": "WMEU",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 202,
-    "OriginMarket": "Chicago",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Chicago"
   },
   {
     "Affiliation": "CW",
@@ -206,8 +186,7 @@
     "LegacyCallLetters": "WBSF",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 113,
-    "OriginMarket": "Flint-Saginaw-Bay City",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Flint-Saginaw-Bay City"
   },
   {
     "Affiliation": "MET",
@@ -216,8 +195,7 @@
     "LegacyCallLetters": "NXLY",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 481,
-    "OriginMarket": "Spokane",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Spokane"
   },
   {
     "Affiliation": "FOX",
@@ -226,8 +204,7 @@
     "LegacyCallLetters": "WGHP",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 118,
-    "OriginMarket": "Greensboro-H.Point-W.Salem",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Greensboro-H.Point-W.Salem"
   },
   {
     "Affiliation": "NBC",
@@ -236,8 +213,7 @@
     "LegacyCallLetters": "WNBC",
     "ManifestMaxEndDate": "2016-06-06T00:00:00",
     "MarketCode": 101,
-    "OriginMarket": "New York",
-    "RateDataThrough": "6/6/2016"
+    "OriginMarket": "New York"
   },
   {
     "Affiliation": "CW",
@@ -246,8 +222,7 @@
     "LegacyCallLetters": "WPIX",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 101,
-    "OriginMarket": "New York",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "New York"
   },
   {
     "Affiliation": "CBS",
@@ -256,8 +231,7 @@
     "LegacyCallLetters": "KENS",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 241,
-    "OriginMarket": "San Antonio",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "San Antonio"
   },
   {
     "Affiliation": "NBC",
@@ -266,8 +240,7 @@
     "LegacyCallLetters": "KING",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 419,
-    "OriginMarket": "Seattle-Tacoma",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Seattle-Tacoma"
   },
   {
     "Affiliation": "CBS",
@@ -276,8 +249,7 @@
     "LegacyCallLetters": "KPHO",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 353,
-    "OriginMarket": "Phoenix (Prescott)",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Phoenix (Prescott)"
   },
   {
     "Affiliation": "IND",
@@ -286,8 +258,7 @@
     "LegacyCallLetters": "KRON",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 407,
-    "OriginMarket": "San Francisco-Oak-San Jose",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "San Francisco-Oak-San Jose"
   },
   {
     "Affiliation": "CW",
@@ -296,8 +267,7 @@
     "LegacyCallLetters": "KTLA",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 403,
-    "OriginMarket": "Los Angeles",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Los Angeles"
   },
   {
     "Affiliation": "NBC",
@@ -306,8 +276,7 @@
     "LegacyCallLetters": "WVTM",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 230,
-    "OriginMarket": "Birmingham (Ann and Tusc)",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Birmingham (Ann and Tusc)"
   },
   {
     "Affiliation": "NBC",
@@ -316,8 +285,7 @@
     "LegacyCallLetters": "WAVE",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 129,
-    "OriginMarket": "Louisville",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Louisville"
   },
   {
     "Affiliation": "CBS",
@@ -326,8 +294,7 @@
     "LegacyCallLetters": "WIVB",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 114,
-    "OriginMarket": "Buffalo",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Buffalo"
   },
   {
     "Affiliation": "CBS",
@@ -336,8 +303,7 @@
     "LegacyCallLetters": "WBNS",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 135,
-    "OriginMarket": "Columbus, OH",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Columbus, OH"
   },
   {
     "Affiliation": "FOX",
@@ -346,8 +312,7 @@
     "LegacyCallLetters": "WBRC",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 230,
-    "OriginMarket": "Birmingham (Ann and Tusc)",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Birmingham (Ann and Tusc)"
   },
   {
     "Affiliation": "CBS",
@@ -356,8 +321,7 @@
     "LegacyCallLetters": "WBTV",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 117,
-    "OriginMarket": "Charlotte",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Charlotte"
   },
   {
     "Affiliation": "FOX",
@@ -366,8 +330,7 @@
     "LegacyCallLetters": "WDAF",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 216,
-    "OriginMarket": "Kansas City",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Kansas City"
   },
   {
     "Affiliation": "ABC",
@@ -376,8 +339,7 @@
     "LegacyCallLetters": "WQAD",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 282,
-    "OriginMarket": "Davenport-R.Island-Moline",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Davenport-R.Island-Moline"
   },
   {
     "Affiliation": "CBS",
@@ -386,8 +348,7 @@
     "LegacyCallLetters": "WFMY",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 118,
-    "OriginMarket": "Greensboro-H.Point-W.Salem",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Greensboro-H.Point-W.Salem"
   },
   {
     "Affiliation": "IND",
@@ -396,8 +357,7 @@
     "LegacyCallLetters": "WGN",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 202,
-    "OriginMarket": "Chicago",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Chicago"
   },
   {
     "Affiliation": "CBS",
@@ -406,8 +366,7 @@
     "LegacyCallLetters": "WHIO",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 142,
-    "OriginMarket": "Dayton",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Dayton"
   },
   {
     "Affiliation": "NBC",
@@ -416,8 +375,7 @@
     "LegacyCallLetters": "WJAR",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 121,
-    "OriginMarket": "Providence-New Bedford",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Providence-New Bedford"
   },
   {
     "Affiliation": "CBS",
@@ -426,8 +384,7 @@
     "LegacyCallLetters": "WKRC",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 115,
-    "OriginMarket": "Cincinnati",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Cincinnati"
   },
   {
     "Affiliation": "NBC",
@@ -436,8 +393,7 @@
     "LegacyCallLetters": "KFOR",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 250,
-    "OriginMarket": "Oklahoma City",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Oklahoma City"
   },
   {
     "Affiliation": "NBC",
@@ -446,8 +402,7 @@
     "LegacyCallLetters": "WLWT",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 115,
-    "OriginMarket": "Cincinnati",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Cincinnati"
   },
   {
     "Affiliation": "ABC",
@@ -456,8 +411,7 @@
     "LegacyCallLetters": "WMAR",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 112,
-    "OriginMarket": "Baltimore",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Baltimore"
   },
   {
     "Affiliation": "NBC",
@@ -466,8 +420,7 @@
     "LegacyCallLetters": "WMC",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 240,
-    "OriginMarket": "Memphis",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Memphis"
   },
   {
     "Affiliation": "IND",
@@ -476,8 +429,7 @@
     "LegacyCallLetters": "WHDH",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 106,
-    "OriginMarket": "Boston (Manchester)",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Boston (Manchester)"
   },
   {
     "Affiliation": "ABC",
@@ -486,8 +438,7 @@
     "LegacyCallLetters": "WTNH",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 133,
-    "OriginMarket": "Hartford & New Haven",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Hartford & New Haven"
   },
   {
     "Affiliation": "CBS",
@@ -496,8 +447,7 @@
     "LegacyCallLetters": "WUSA",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 111,
-    "OriginMarket": "Washington, DC (Hagrstwn)",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Washington, DC (Hagrstwn)"
   },
   {
     "Affiliation": "NBC",
@@ -506,8 +456,7 @@
     "LegacyCallLetters": "WSMV",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 259,
-    "OriginMarket": "Nashville",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Nashville"
   },
   {
     "Affiliation": "CBS",
@@ -516,8 +465,7 @@
     "LegacyCallLetters": "WTKR",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 144,
-    "OriginMarket": "Norfolk-Portsmth-Newpt Nws",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Norfolk-Portsmth-Newpt Nws"
   },
   {
     "Affiliation": "ABC",
@@ -526,8 +474,7 @@
     "LegacyCallLetters": "WSYX",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 135,
-    "OriginMarket": "Columbus, OH",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Columbus, OH"
   },
   {
     "Affiliation": "CBS",
@@ -536,8 +483,7 @@
     "LegacyCallLetters": "WTVR",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 156,
-    "OriginMarket": "Richmond-Petersburg",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Richmond-Petersburg"
   },
   {
     "Affiliation": "NBC",
@@ -546,8 +492,7 @@
     "LegacyCallLetters": "WXIA",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 124,
-    "OriginMarket": "Atlanta",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Atlanta"
   },
   {
     "Affiliation": "CW",
@@ -556,8 +501,7 @@
     "LegacyCallLetters": "KWGN",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 351,
-    "OriginMarket": "Denver",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Denver"
   },
   {
     "Affiliation": "NBC",
@@ -566,8 +510,7 @@
     "LegacyCallLetters": "WSLS",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 173,
-    "OriginMarket": "Roanoke-Lynchburg",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Roanoke-Lynchburg"
   },
   {
     "Affiliation": "ABC",
@@ -576,8 +519,7 @@
     "LegacyCallLetters": "KXLY",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 481,
-    "OriginMarket": "Spokane",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Spokane"
   },
   {
     "Affiliation": "CBS",
@@ -586,8 +528,7 @@
     "LegacyCallLetters": "KOLD",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 389,
-    "OriginMarket": "Tucson (Sierra Vista)",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Tucson (Sierra Vista)"
   },
   {
     "Affiliation": "CBS",
@@ -596,8 +537,7 @@
     "LegacyCallLetters": "WCSC",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 119,
-    "OriginMarket": "Charleston, SC",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Charleston, SC"
   },
   {
     "Affiliation": "NBC",
@@ -606,8 +546,7 @@
     "LegacyCallLetters": "KOAA",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 352,
-    "OriginMarket": "Colorado Springs-Pueblo",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Colorado Springs-Pueblo"
   },
   {
     "Affiliation": "NBC",
@@ -616,8 +555,7 @@
     "LegacyCallLetters": "KTVB",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 357,
-    "OriginMarket": "Boise",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Boise"
   },
   {
     "Affiliation": "NBC",
@@ -626,8 +564,7 @@
     "LegacyCallLetters": "KARE",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 213,
-    "OriginMarket": "Minneapolis-St. Paul",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Minneapolis-St. Paul"
   },
   {
     "Affiliation": "CBS",
@@ -636,8 +573,7 @@
     "LegacyCallLetters": "KHQA",
     "ManifestMaxEndDate": "2017-09-24T00:00:00",
     "MarketCode": 317,
-    "OriginMarket": "Quincy-Hannibal-Keokuk",
-    "RateDataThrough": "9/24/2017"
+    "OriginMarket": "Quincy-Hannibal-Keokuk"
   },
   {
     "Affiliation": "NBC",
@@ -646,8 +582,7 @@
     "LegacyCallLetters": "WGEM",
     "ManifestMaxEndDate": "2017-09-24T00:00:00",
     "MarketCode": 317,
-    "OriginMarket": "Quincy-Hannibal-Keokuk",
-    "RateDataThrough": "9/24/2017"
+    "OriginMarket": "Quincy-Hannibal-Keokuk"
   },
   {
     "Affiliation": "ABC",
@@ -656,8 +591,7 @@
     "LegacyCallLetters": "WKRN",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 259,
-    "OriginMarket": "Nashville",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Nashville"
   },
   {
     "Affiliation": "CBS",
@@ -666,8 +600,7 @@
     "LegacyCallLetters": "KGBT",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 236,
-    "OriginMarket": "Harlingen-Wslco-Brnsvl-Mca",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Harlingen-Wslco-Brnsvl-Mca"
   },
   {
     "Affiliation": "CBS",
@@ -676,8 +609,7 @@
     "LegacyCallLetters": "WTOC",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 107,
-    "OriginMarket": "Savannah",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Savannah"
   },
   {
     "Affiliation": "CBS",
@@ -686,8 +618,7 @@
     "LegacyCallLetters": "KIDK",
     "ManifestMaxEndDate": "2017-09-24T00:00:00",
     "MarketCode": 358,
-    "OriginMarket": "Idaho Fals-Pocatllo(Jcksn)",
-    "RateDataThrough": "9/24/2017"
+    "OriginMarket": "Idaho Fals-Pocatllo(Jcksn)"
   },
   {
     "Affiliation": "NBC",
@@ -696,8 +627,7 @@
     "LegacyCallLetters": "KWWL",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 237,
-    "OriginMarket": "Cedar Rapids-Wtrlo-IWC&Dub",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Cedar Rapids-Wtrlo-IWC&Dub"
   },
   {
     "Affiliation": "CBS",
@@ -706,8 +636,7 @@
     "LegacyCallLetters": "KSLA",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 212,
-    "OriginMarket": "Shreveport",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Shreveport"
   },
   {
     "Affiliation": "NBC",
@@ -716,8 +645,7 @@
     "LegacyCallLetters": "WLBT",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 318,
-    "OriginMarket": "Jackson, MS",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Jackson, MS"
   },
   {
     "Affiliation": "CBS",
@@ -726,8 +654,7 @@
     "LegacyCallLetters": "WNEM",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 113,
-    "OriginMarket": "Flint-Saginaw-Bay City",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Flint-Saginaw-Bay City"
   },
   {
     "Affiliation": "NBC",
@@ -736,8 +663,7 @@
     "LegacyCallLetters": "WHO",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 279,
-    "OriginMarket": "Des Moines-Ames",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Des Moines-Ames"
   },
   {
     "Affiliation": "CBS",
@@ -746,8 +672,7 @@
     "LegacyCallLetters": "WINK",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 171,
-    "OriginMarket": "Ft. Myers-Naples",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Ft. Myers-Naples"
   },
   {
     "Affiliation": "NBC",
@@ -756,8 +681,7 @@
     "LegacyCallLetters": "WGRZ",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 114,
-    "OriginMarket": "Buffalo",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Buffalo"
   },
   {
     "Affiliation": "CBS",
@@ -766,8 +690,7 @@
     "LegacyCallLetters": "KMOV",
     "ManifestMaxEndDate": "2018-12-29T00:00:00",
     "MarketCode": 209,
-    "OriginMarket": "St. Louis",
-    "RateDataThrough": "12/29/2018"
+    "OriginMarket": "St. Louis"
   },
   {
     "Affiliation": "CBS",
@@ -776,8 +699,7 @@
     "LegacyCallLetters": "WTVF",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 259,
-    "OriginMarket": "Nashville",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Nashville"
   },
   {
     "Affiliation": "CBS",
@@ -786,8 +708,7 @@
     "LegacyCallLetters": "KFVS",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 232,
-    "OriginMarket": "Paducah-Cape Girard-Harsbg",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Paducah-Cape Girard-Harsbg"
   },
   {
     "Affiliation": "CBS",
@@ -796,8 +717,7 @@
     "LegacyCallLetters": "KUTV",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 370,
-    "OriginMarket": "Salt Lake City",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Salt Lake City"
   },
   {
     "Affiliation": "ABC",
@@ -806,8 +726,7 @@
     "LegacyCallLetters": "WISN",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 217,
-    "OriginMarket": "Milwaukee",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Milwaukee"
   },
   {
     "Affiliation": "NBC",
@@ -816,8 +735,7 @@
     "LegacyCallLetters": "WFLA",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 139,
-    "OriginMarket": "Tampa-St. Pete (Sarasota)",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Tampa-St. Pete (Sarasota)"
   },
   {
     "Affiliation": "PBS",
@@ -826,8 +744,7 @@
     "LegacyCallLetters": "WUNC",
     "ManifestMaxEndDate": "2017-05-14T00:00:00",
     "MarketCode": 160,
-    "OriginMarket": "Raleigh-Durham (Fayetvlle)",
-    "RateDataThrough": "5/14/2017"
+    "OriginMarket": "Raleigh-Durham (Fayetvlle)"
   },
   {
     "Affiliation": "ABC",
@@ -836,8 +753,7 @@
     "LegacyCallLetters": "KIII",
     "ManifestMaxEndDate": "2017-09-24T00:00:00",
     "MarketCode": 200,
-    "OriginMarket": "Corpus Christi",
-    "RateDataThrough": "9/24/2017"
+    "OriginMarket": "Corpus Christi"
   },
   {
     "Affiliation": "IND",
@@ -846,8 +762,7 @@
     "LegacyCallLetters": "KTVK",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 353,
-    "OriginMarket": "Phoenix (Prescott)",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Phoenix (Prescott)"
   },
   {
     "Affiliation": "ABC",
@@ -856,8 +771,7 @@
     "LegacyCallLetters": "KXTV",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 462,
-    "OriginMarket": "Sacramnto-Stkton-Modesto",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Sacramnto-Stkton-Modesto"
   },
   {
     "Affiliation": "IND",
@@ -866,8 +780,7 @@
     "LegacyCallLetters": "KJZZ",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 370,
-    "OriginMarket": "Salt Lake City",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Salt Lake City"
   },
   {
     "Affiliation": "CBS",
@@ -876,8 +789,7 @@
     "LegacyCallLetters": "KCCI",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 279,
-    "OriginMarket": "Des Moines-Ames",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Des Moines-Ames"
   },
   {
     "Affiliation": "ABC",
@@ -886,8 +798,7 @@
     "LegacyCallLetters": "WRIC",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 156,
-    "OriginMarket": "Richmond-Petersburg",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Richmond-Petersburg"
   },
   {
     "Affiliation": "NBC",
@@ -896,8 +807,7 @@
     "LegacyCallLetters": "WWBT",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 156,
-    "OriginMarket": "Richmond-Petersburg",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Richmond-Petersburg"
   },
   {
     "Affiliation": "FOX",
@@ -906,8 +816,7 @@
     "LegacyCallLetters": "WITI",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 217,
-    "OriginMarket": "Milwaukee",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Milwaukee"
   },
   {
     "Affiliation": "NBC",
@@ -916,8 +825,7 @@
     "LegacyCallLetters": "WESH",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 134,
-    "OriginMarket": "Orlando-Daytona Bch-Melbrn",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Orlando-Daytona Bch-Melbrn"
   },
   {
     "Affiliation": "CBS",
@@ -926,8 +834,7 @@
     "LegacyCallLetters": "WISC",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 269,
-    "OriginMarket": "Madison",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Madison"
   },
   {
     "Affiliation": "NBC",
@@ -936,8 +843,7 @@
     "LegacyCallLetters": "WBIR",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 157,
-    "OriginMarket": "Knoxville",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Knoxville"
   },
   {
     "Affiliation": "CBS",
@@ -946,8 +852,7 @@
     "LegacyCallLetters": "KFSM",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 270,
-    "OriginMarket": "Ft. Smith-Fay-Sprngdl-Rgrs",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Ft. Smith-Fay-Sprngdl-Rgrs"
   },
   {
     "Affiliation": "NBC",
@@ -956,8 +861,7 @@
     "LegacyCallLetters": "KGW",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 420,
-    "OriginMarket": "Portland, OR",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Portland, OR"
   },
   {
     "Affiliation": "ABC",
@@ -966,8 +870,7 @@
     "LegacyCallLetters": "KSAT",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 241,
-    "OriginMarket": "San Antonio",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "San Antonio"
   },
   {
     "Affiliation": "NBC",
@@ -976,8 +879,7 @@
     "LegacyCallLetters": "WAVY",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 144,
-    "OriginMarket": "Norfolk-Portsmth-Newpt Nws",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Norfolk-Portsmth-Newpt Nws"
   },
   {
     "Affiliation": "NBC",
@@ -986,8 +888,7 @@
     "LegacyCallLetters": "WPSD",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 232,
-    "OriginMarket": "Paducah-Cape Girard-Harsbg",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Paducah-Cape Girard-Harsbg"
   },
   {
     "Affiliation": "ABC",
@@ -996,8 +897,7 @@
     "LegacyCallLetters": "KTWO",
     "ManifestMaxEndDate": "2017-09-24T00:00:00",
     "MarketCode": 367,
-    "OriginMarket": "Casper-Riverton",
-    "RateDataThrough": "9/24/2017"
+    "OriginMarket": "Casper-Riverton"
   },
   {
     "Affiliation": "ABC",
@@ -1006,8 +906,7 @@
     "LegacyCallLetters": "KETV",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 252,
-    "OriginMarket": "Omaha",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Omaha"
   },
   {
     "Affiliation": "NBC",
@@ -1016,8 +915,7 @@
     "LegacyCallLetters": "WTLV",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 161,
-    "OriginMarket": "Jacksonville",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Jacksonville"
   },
   {
     "Affiliation": "CBS",
@@ -1026,8 +924,7 @@
     "LegacyCallLetters": "WWL",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 222,
-    "OriginMarket": "New Orleans",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "New Orleans"
   },
   {
     "Affiliation": "CBS",
@@ -1036,8 +933,7 @@
     "LegacyCallLetters": "WFSB",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 133,
-    "OriginMarket": "Hartford & New Haven",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Hartford & New Haven"
   },
   {
     "Affiliation": "ABC",
@@ -1046,8 +942,7 @@
     "LegacyCallLetters": "WTVC",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 175,
-    "OriginMarket": "Chattanooga",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Chattanooga"
   },
   {
     "Affiliation": "CBS",
@@ -1056,8 +951,7 @@
     "LegacyCallLetters": "KXGN",
     "ManifestMaxEndDate": "2017-09-24T00:00:00",
     "MarketCode": 398,
-    "OriginMarket": "Glendive",
-    "RateDataThrough": "9/24/2017"
+    "OriginMarket": "Glendive"
   },
   {
     "Affiliation": "CBS",
@@ -1066,8 +960,7 @@
     "LegacyCallLetters": "WTOL",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 147,
-    "OriginMarket": "Toledo",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Toledo"
   },
   {
     "Affiliation": "NBC",
@@ -1076,8 +969,7 @@
     "LegacyCallLetters": "WNYT",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 132,
-    "OriginMarket": "Albany-Schenectady-Troy",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Albany-Schenectady-Troy"
   },
   {
     "Affiliation": "CW",
@@ -1086,8 +978,7 @@
     "LegacyCallLetters": "KPLR",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 209,
-    "OriginMarket": "St. Louis",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "St. Louis"
   },
   {
     "Affiliation": "FOX",
@@ -1096,8 +987,7 @@
     "LegacyCallLetters": "KVVU",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 439,
-    "OriginMarket": "Las Vegas",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Las Vegas"
   },
   {
     "Affiliation": "CW",
@@ -1106,8 +996,7 @@
     "LegacyCallLetters": "WKCF",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 134,
-    "OriginMarket": "Orlando-Daytona Bch-Melbrn",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Orlando-Daytona Bch-Melbrn"
   },
   {
     "Affiliation": "CW",
@@ -1116,8 +1005,7 @@
     "LegacyCallLetters": "KRCW",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 420,
-    "OriginMarket": "Portland, OR",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Portland, OR"
   },
   {
     "Affiliation": "IND",
@@ -1126,8 +1014,7 @@
     "LegacyCallLetters": "WCTX",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 133,
-    "OriginMarket": "Hartford & New Haven",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Hartford & New Haven"
   },
   {
     "Affiliation": "IND",
@@ -1136,8 +1023,7 @@
     "LegacyCallLetters": "WUPL",
     "ManifestMaxEndDate": "2018-12-28T00:00:00",
     "MarketCode": 222,
-    "OriginMarket": "New Orleans",
-    "RateDataThrough": "12/28/2018"
+    "OriginMarket": "New Orleans"
   },
   {
     "Affiliation": "ABC",
@@ -1146,8 +1032,7 @@
     "LegacyCallLetters": "WVEC",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 144,
-    "OriginMarket": "Norfolk-Portsmth-Newpt Nws",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Norfolk-Portsmth-Newpt Nws"
   },
   {
     "Affiliation": "NBC",
@@ -1156,8 +1041,7 @@
     "LegacyCallLetters": "KRNV",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 411,
-    "OriginMarket": "Reno",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Reno"
   },
   {
     "Affiliation": "ABC",
@@ -1166,8 +1050,7 @@
     "LegacyCallLetters": "WHAM",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 138,
-    "OriginMarket": "Rochester, NY",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Rochester, NY"
   },
   {
     "Affiliation": "ABC",
@@ -1176,8 +1059,7 @@
     "LegacyCallLetters": "WZZM",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 163,
-    "OriginMarket": "Grand Rapids-Kalmzoo-B.Crk",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Grand Rapids-Kalmzoo-B.Crk"
   },
   {
     "Affiliation": "NBC",
@@ -1186,8 +1068,7 @@
     "LegacyCallLetters": "WBRE",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 177,
-    "OriginMarket": "Wilkes Barre-Scranton-Hztn",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Wilkes Barre-Scranton-Hztn"
   },
   {
     "Affiliation": "NBC",
@@ -1196,8 +1077,7 @@
     "LegacyCallLetters": "WEEK",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 275,
-    "OriginMarket": "Peoria-Bloomington",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Peoria-Bloomington"
   },
   {
     "Affiliation": "FOX",
@@ -1206,8 +1086,7 @@
     "LegacyCallLetters": "WPMT",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 166,
-    "OriginMarket": "Harrisburg-Lncstr-Leb-York",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Harrisburg-Lncstr-Leb-York"
   },
   {
     "Affiliation": "CBS",
@@ -1216,8 +1095,7 @@
     "LegacyCallLetters": "WYOU",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 177,
-    "OriginMarket": "Wilkes Barre-Scranton-Hztn",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Wilkes Barre-Scranton-Hztn"
   },
   {
     "Affiliation": "NBC",
@@ -1226,8 +1104,7 @@
     "LegacyCallLetters": "WEYI",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 113,
-    "OriginMarket": "Flint-Saginaw-Bay City",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Flint-Saginaw-Bay City"
   },
   {
     "Affiliation": "ABC",
@@ -1236,8 +1113,7 @@
     "LegacyCallLetters": "WHTM",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 166,
-    "OriginMarket": "Harrisburg-Lncstr-Leb-York",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Harrisburg-Lncstr-Leb-York"
   },
   {
     "Affiliation": "CBS",
@@ -1246,8 +1122,7 @@
     "LegacyCallLetters": "WHP",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 166,
-    "OriginMarket": "Harrisburg-Lncstr-Leb-York",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Harrisburg-Lncstr-Leb-York"
   },
   {
     "Affiliation": "CW",
@@ -1256,8 +1131,7 @@
     "LegacyCallLetters": "WGNT",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 144,
-    "OriginMarket": "Norfolk-Portsmth-Newpt Nws",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Norfolk-Portsmth-Newpt Nws"
   },
   {
     "Affiliation": "NBC",
@@ -1266,8 +1140,7 @@
     "LegacyCallLetters": "WAND",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 248,
-    "OriginMarket": "Champaign&Sprngfld-Decatur",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Champaign&Sprngfld-Decatur"
   },
   {
     "Affiliation": "CBS",
@@ -1276,8 +1149,7 @@
     "LegacyCallLetters": "WLTX",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 146,
-    "OriginMarket": "Columbia, SC",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Columbia, SC"
   },
   {
     "Affiliation": "IND",
@@ -1286,8 +1158,7 @@
     "LegacyCallLetters": "WPHL",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 104,
-    "OriginMarket": "Philadelphia",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Philadelphia"
   },
   {
     "Affiliation": "CW",
@@ -1296,8 +1167,7 @@
     "LegacyCallLetters": "WWHO",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 135,
-    "OriginMarket": "Columbus, OH",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Columbus, OH"
   },
   {
     "Affiliation": "FOX",
@@ -1306,8 +1176,7 @@
     "LegacyCallLetters": "WDRB",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 129,
-    "OriginMarket": "Louisville",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Louisville"
   },
   {
     "Affiliation": "CW",
@@ -1316,8 +1185,7 @@
     "LegacyCallLetters": "WLVI",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 106,
-    "OriginMarket": "Boston (Manchester)",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Boston (Manchester)"
   },
   {
     "Affiliation": "ABC",
@@ -1326,8 +1194,7 @@
     "LegacyCallLetters": "WNEP",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 177,
-    "OriginMarket": "Wilkes Barre-Scranton-Hztn",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Wilkes Barre-Scranton-Hztn"
   },
   {
     "Affiliation": "ABC",
@@ -1336,8 +1203,7 @@
     "LegacyCallLetters": "WGNO",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 222,
-    "OriginMarket": "New Orleans",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "New Orleans"
   },
   {
     "Affiliation": "IND",
@@ -1346,8 +1212,7 @@
     "LegacyCallLetters": "WPCH",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 124,
-    "OriginMarket": "Atlanta",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Atlanta"
   },
   {
     "Affiliation": "NBC",
@@ -1356,8 +1221,7 @@
     "LegacyCallLetters": "WAFF",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 291,
-    "OriginMarket": "Huntsville-Decatur (Flor)",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Huntsville-Decatur (Flor)"
   },
   {
     "Affiliation": "NBC",
@@ -1366,8 +1230,7 @@
     "LegacyCallLetters": "WLEX",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 141,
-    "OriginMarket": "Lexington",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Lexington"
   },
   {
     "Affiliation": "CW",
@@ -1376,8 +1239,7 @@
     "LegacyCallLetters": "KXVO",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 252,
-    "OriginMarket": "Omaha",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Omaha"
   },
   {
     "Affiliation": "IND",
@@ -1386,8 +1248,7 @@
     "LegacyCallLetters": "KOFY",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 407,
-    "OriginMarket": "San Francisco-Oak-San Jose",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "San Francisco-Oak-San Jose"
   },
   {
     "Affiliation": "FOX",
@@ -1396,8 +1257,7 @@
     "LegacyCallLetters": "WUTV",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 114,
-    "OriginMarket": "Buffalo",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Buffalo"
   },
   {
     "Affiliation": "CBS",
@@ -1406,8 +1266,7 @@
     "LegacyCallLetters": "WGCL",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 124,
-    "OriginMarket": "Atlanta",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Atlanta"
   },
   {
     "Affiliation": "FOX",
@@ -1416,8 +1275,7 @@
     "LegacyCallLetters": "WXIX",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 115,
-    "OriginMarket": "Cincinnati",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Cincinnati"
   },
   {
     "Affiliation": "CW",
@@ -1426,8 +1284,7 @@
     "LegacyCallLetters": "WUAB",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 110,
-    "OriginMarket": "Cleveland-Akron (Canton)",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Cleveland-Akron (Canton)"
   },
   {
     "Affiliation": "CBS",
@@ -1436,8 +1293,7 @@
     "LegacyCallLetters": "KION",
     "ManifestMaxEndDate": "2017-09-24T00:00:00",
     "MarketCode": 428,
-    "OriginMarket": "Monterey-Salinas",
-    "RateDataThrough": "9/24/2017"
+    "OriginMarket": "Monterey-Salinas"
   },
   {
     "Affiliation": "FOX",
@@ -1446,8 +1302,7 @@
     "LegacyCallLetters": "KTXL",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 462,
-    "OriginMarket": "Sacramnto-Stkton-Modesto",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Sacramnto-Stkton-Modesto"
   },
   {
     "Affiliation": "ABC",
@@ -1456,8 +1311,7 @@
     "LegacyCallLetters": "WWSB",
     "ManifestMaxEndDate": "2017-09-24T00:00:00",
     "MarketCode": 139,
-    "OriginMarket": "Tampa-St. Pete (Sarasota)",
-    "RateDataThrough": "9/24/2017"
+    "OriginMarket": "Tampa-St. Pete (Sarasota)"
   },
   {
     "Affiliation": "FOX",
@@ -1466,8 +1320,7 @@
     "LegacyCallLetters": "KMPH",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 466,
-    "OriginMarket": "Fresno-Visalia",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Fresno-Visalia"
   },
   {
     "Affiliation": "ABC",
@@ -1476,8 +1329,7 @@
     "LegacyCallLetters": "WPBF",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 148,
-    "OriginMarket": "West Palm Beach-Ft. Pierce",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "West Palm Beach-Ft. Pierce"
   },
   {
     "Affiliation": "ABC",
@@ -1486,8 +1338,7 @@
     "LegacyCallLetters": "KATN",
     "ManifestMaxEndDate": "2017-09-24T00:00:00",
     "MarketCode": 345,
-    "OriginMarket": "Fairbanks",
-    "RateDataThrough": "9/24/2017"
+    "OriginMarket": "Fairbanks"
   },
   {
     "Affiliation": "ABC",
@@ -1496,8 +1347,7 @@
     "LegacyCallLetters": "KYUR",
     "ManifestMaxEndDate": "2017-09-24T00:00:00",
     "MarketCode": 343,
-    "OriginMarket": "Anchorage",
-    "RateDataThrough": "9/24/2017"
+    "OriginMarket": "Anchorage"
   },
   {
     "Affiliation": "IND",
@@ -1506,8 +1356,7 @@
     "LegacyCallLetters": "KFVE",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 344,
-    "OriginMarket": "Honolulu",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Honolulu"
   },
   {
     "Affiliation": "FOX",
@@ -1516,8 +1365,7 @@
     "LegacyCallLetters": "WRAZ",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 160,
-    "OriginMarket": "Raleigh-Durham (Fayetvlle)",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Raleigh-Durham (Fayetvlle)"
   },
   {
     "Affiliation": "ABC",
@@ -1526,8 +1374,7 @@
     "LegacyCallLetters": "WBND",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 188,
-    "OriginMarket": "South Bend-Elkhart",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "South Bend-Elkhart"
   },
   {
     "Affiliation": "FOX",
@@ -1536,8 +1383,7 @@
     "LegacyCallLetters": "KSWB",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 425,
-    "OriginMarket": "San Diego",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "San Diego"
   },
   {
     "Affiliation": "FOX",
@@ -1546,8 +1392,7 @@
     "LegacyCallLetters": "WDBD",
     "ManifestMaxEndDate": "2017-09-24T00:00:00",
     "MarketCode": 318,
-    "OriginMarket": "Jackson, MS",
-    "RateDataThrough": "9/24/2017"
+    "OriginMarket": "Jackson, MS"
   },
   {
     "Affiliation": "CBS",
@@ -1556,8 +1401,7 @@
     "LegacyCallLetters": "WOIO",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 110,
-    "OriginMarket": "Cleveland-Akron (Canton)",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Cleveland-Akron (Canton)"
   },
   {
     "Affiliation": "CW",
@@ -1566,8 +1410,7 @@
     "LegacyCallLetters": "KFRE",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 466,
-    "OriginMarket": "Fresno-Visalia",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Fresno-Visalia"
   },
   {
     "Affiliation": "IND",
@@ -1576,8 +1419,7 @@
     "LegacyCallLetters": "WBNX",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 110,
-    "OriginMarket": "Cleveland-Akron (Canton)",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Cleveland-Akron (Canton)"
   },
   {
     "Affiliation": "NBC",
@@ -1586,8 +1428,7 @@
     "LegacyCallLetters": "KTFT",
     "ManifestMaxEndDate": "2017-09-24T00:00:00",
     "MarketCode": 360,
-    "OriginMarket": "Twin Falls",
-    "RateDataThrough": "9/24/2017"
+    "OriginMarket": "Twin Falls"
   },
   {
     "Affiliation": "FOX",
@@ -1596,8 +1437,7 @@
     "LegacyCallLetters": "KPTM",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 252,
-    "OriginMarket": "Omaha",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Omaha"
   },
   {
     "Affiliation": "CW",
@@ -1606,8 +1446,7 @@
     "LegacyCallLetters": "WNLO",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 114,
-    "OriginMarket": "Buffalo",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Buffalo"
   },
   {
     "Affiliation": "IND",
@@ -1616,8 +1455,7 @@
     "LegacyCallLetters": "KONG",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 419,
-    "OriginMarket": "Seattle-Tacoma",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Seattle-Tacoma"
   },
   {
     "Affiliation": "FOX",
@@ -1626,8 +1464,7 @@
     "LegacyCallLetters": "WNTZ",
     "ManifestMaxEndDate": "2017-09-24T00:00:00",
     "MarketCode": 244,
-    "OriginMarket": "Alexandria, LA",
-    "RateDataThrough": "9/24/2017"
+    "OriginMarket": "Alexandria, LA"
   },
   {
     "Affiliation": "FOX",
@@ -1636,8 +1473,7 @@
     "LegacyCallLetters": "KXPI",
     "ManifestMaxEndDate": "2017-09-24T00:00:00",
     "MarketCode": 358,
-    "OriginMarket": "Idaho Fals-Pocatllo(Jcksn)",
-    "RateDataThrough": "9/24/2017"
+    "OriginMarket": "Idaho Fals-Pocatllo(Jcksn)"
   },
   {
     "Affiliation": "FOX",
@@ -1646,8 +1482,7 @@
     "LegacyCallLetters": "KQFX",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 204,
-    "OriginMarket": "Columbia-Jefferson City",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Columbia-Jefferson City"
   },
   {
     "Affiliation": "FOX",
@@ -1656,8 +1491,7 @@
     "LegacyCallLetters": "KRXI",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 411,
-    "OriginMarket": "Reno",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Reno"
   },
   {
     "Affiliation": "FOX",
@@ -1666,8 +1500,7 @@
     "LegacyCallLetters": "KTBY",
     "ManifestMaxEndDate": "2017-09-24T00:00:00",
     "MarketCode": 343,
-    "OriginMarket": "Anchorage",
-    "RateDataThrough": "9/24/2017"
+    "OriginMarket": "Anchorage"
   },
   {
     "Affiliation": "ABC",
@@ -1676,8 +1509,7 @@
     "LegacyCallLetters": "KJUD",
     "ManifestMaxEndDate": "2017-09-24T00:00:00",
     "MarketCode": 347,
-    "OriginMarket": "Juneau",
-    "RateDataThrough": "9/24/2017"
+    "OriginMarket": "Juneau"
   },
   {
     "Affiliation": "FOX",
@@ -1686,8 +1518,7 @@
     "LegacyCallLetters": "WFXT",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 106,
-    "OriginMarket": "Boston (Manchester)",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Boston (Manchester)"
   },
   {
     "Affiliation": "FOX",
@@ -1696,8 +1527,7 @@
     "LegacyCallLetters": "KSTU",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 370,
-    "OriginMarket": "Salt Lake City",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Salt Lake City"
   },
   {
     "Affiliation": "IND",
@@ -1706,8 +1536,7 @@
     "LegacyCallLetters": "WATL",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 124,
-    "OriginMarket": "Atlanta",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Atlanta"
   },
   {
     "Affiliation": "FOX",
@@ -1716,8 +1545,7 @@
     "LegacyCallLetters": "KFOX",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 365,
-    "OriginMarket": "El Paso (Las Cruces)",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "El Paso (Las Cruces)"
   },
   {
     "Affiliation": "FOX",
@@ -1726,8 +1554,7 @@
     "LegacyCallLetters": "WUHF",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 138,
-    "OriginMarket": "Rochester, NY",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Rochester, NY"
   },
   {
     "Affiliation": "IND",
@@ -1736,8 +1563,7 @@
     "LegacyCallLetters": "WSTR",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 115,
-    "OriginMarket": "Cincinnati",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Cincinnati"
   },
   {
     "Affiliation": "CBS",
@@ -1746,8 +1572,7 @@
     "LegacyCallLetters": "WJAX",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 161,
-    "OriginMarket": "Jacksonville",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Jacksonville"
   },
   {
     "Affiliation": "FOX",
@@ -1756,8 +1581,7 @@
     "LegacyCallLetters": "KOKI",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 271,
-    "OriginMarket": "Tulsa",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Tulsa"
   },
   {
     "Affiliation": "IND",
@@ -1766,8 +1590,7 @@
     "LegacyCallLetters": "KAUT",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 250,
-    "OriginMarket": "Oklahoma City",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Oklahoma City"
   },
   {
     "Affiliation": "ABC",
@@ -1776,8 +1599,7 @@
     "LegacyCallLetters": "WPDE",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 170,
-    "OriginMarket": "Myrtle Beach-Florence",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Myrtle Beach-Florence"
   },
   {
     "Affiliation": "FOX",
@@ -1786,8 +1608,7 @@
     "LegacyCallLetters": "WFOX",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 161,
-    "OriginMarket": "Jacksonville",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Jacksonville"
   },
   {
     "Affiliation": "IND",
@@ -1796,8 +1617,7 @@
     "LegacyCallLetters": "KAME",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 411,
-    "OriginMarket": "Reno",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Reno"
   },
   {
     "Affiliation": "CW",
@@ -1806,8 +1626,7 @@
     "LegacyCallLetters": "WDCW",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 111,
-    "OriginMarket": "Washington, DC (Hagrstwn)",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Washington, DC (Hagrstwn)"
   },
   {
     "Affiliation": "ABC",
@@ -1816,8 +1635,7 @@
     "LegacyCallLetters": "WFTS",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 139,
-    "OriginMarket": "Tampa-St. Pete (Sarasota)",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Tampa-St. Pete (Sarasota)"
   },
   {
     "Affiliation": "FOX",
@@ -1826,8 +1644,7 @@
     "LegacyCallLetters": "WFXL",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 125,
-    "OriginMarket": "Albany, GA",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Albany, GA"
   },
   {
     "Affiliation": "FOX",
@@ -1836,8 +1653,7 @@
     "LegacyCallLetters": "WXMI",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 163,
-    "OriginMarket": "Grand Rapids-Kalmzoo-B.Crk",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Grand Rapids-Kalmzoo-B.Crk"
   },
   {
     "Affiliation": "IND",
@@ -1846,8 +1662,7 @@
     "LegacyCallLetters": "KUSI",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 425,
-    "OriginMarket": "San Diego",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "San Diego"
   },
   {
     "Affiliation": "FOX",
@@ -1856,8 +1671,7 @@
     "LegacyCallLetters": "WFLX",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 148,
-    "OriginMarket": "West Palm Beach-Ft. Pierce",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "West Palm Beach-Ft. Pierce"
   },
   {
     "Affiliation": "CW",
@@ -1866,8 +1680,7 @@
     "LegacyCallLetters": "WBKI",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 129,
-    "OriginMarket": "Louisville",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Louisville"
   },
   {
     "Affiliation": "CBS",
@@ -1876,8 +1689,7 @@
     "LegacyCallLetters": "KEYE",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 235,
-    "OriginMarket": "Austin",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Austin"
   },
   {
     "Affiliation": "FOX",
@@ -1886,8 +1698,7 @@
     "LegacyCallLetters": "WTNZ",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 157,
-    "OriginMarket": "Knoxville",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Knoxville"
   },
   {
     "Affiliation": "FOX",
@@ -1896,8 +1707,7 @@
     "LegacyCallLetters": "WXIN",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 127,
-    "OriginMarket": "Indianapolis",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Indianapolis"
   },
   {
     "Affiliation": "CW",
@@ -1906,8 +1716,7 @@
     "LegacyCallLetters": "WNOL",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 222,
-    "OriginMarket": "New Orleans",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "New Orleans"
   },
   {
     "Affiliation": "FOX",
@@ -1916,8 +1725,7 @@
     "LegacyCallLetters": "WTTE",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 135,
-    "OriginMarket": "Columbus, OH",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Columbus, OH"
   },
   {
     "Affiliation": "FOX",
@@ -1926,8 +1734,7 @@
     "LegacyCallLetters": "WFXB",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 170,
-    "OriginMarket": "Myrtle Beach-Florence",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Myrtle Beach-Florence"
   },
   {
     "Affiliation": "FOX",
@@ -1936,8 +1743,7 @@
     "LegacyCallLetters": "KDFX",
     "ManifestMaxEndDate": "2017-09-24T00:00:00",
     "MarketCode": 404,
-    "OriginMarket": "Palm Springs",
-    "RateDataThrough": "9/24/2017"
+    "OriginMarket": "Palm Springs"
   },
   {
     "Affiliation": "CW",
@@ -1946,8 +1752,7 @@
     "LegacyCallLetters": "WCWW",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 188,
-    "OriginMarket": "South Bend-Elkhart",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "South Bend-Elkhart"
   },
   {
     "Affiliation": "IND",
@@ -1956,8 +1761,7 @@
     "LegacyCallLetters": "WTTA",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 139,
-    "OriginMarket": "Tampa-St. Pete (Sarasota)",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Tampa-St. Pete (Sarasota)"
   },
   {
     "Affiliation": "IND",
@@ -1966,8 +1770,7 @@
     "LegacyCallLetters": "KSBI",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 250,
-    "OriginMarket": "Oklahoma City",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Oklahoma City"
   },
   {
     "Affiliation": "FOX",
@@ -1976,8 +1779,7 @@
     "LegacyCallLetters": "WVBT",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 144,
-    "OriginMarket": "Norfolk-Portsmth-Newpt Nws",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Norfolk-Portsmth-Newpt Nws"
   },
   {
     "Affiliation": "CW",
@@ -1986,8 +1788,7 @@
     "LegacyCallLetters": "WCWN",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 132,
-    "OriginMarket": "Albany-Schenectady-Troy",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Albany-Schenectady-Troy"
   },
   {
     "Affiliation": "AZA",
@@ -1996,8 +1797,7 @@
     "LegacyCallLetters": "AZSD",
     "ManifestMaxEndDate": "2018-01-01T00:00:00",
     "MarketCode": 425,
-    "OriginMarket": "San Diego",
-    "RateDataThrough": "1/1/2018"
+    "OriginMarket": "San Diego"
   },
   {
     "Affiliation": "CW",
@@ -2006,8 +1806,7 @@
     "LegacyCallLetters": "KCWE",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 216,
-    "OriginMarket": "Kansas City",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Kansas City"
   },
   {
     "Affiliation": "IND",
@@ -2016,8 +1815,7 @@
     "LegacyCallLetters": "WNYO",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 114,
-    "OriginMarket": "Buffalo",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Buffalo"
   },
   {
     "Affiliation": "MET",
@@ -2026,8 +1824,7 @@
     "LegacyCallLetters": "WWME",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 202,
-    "OriginMarket": "Chicago",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Chicago"
   },
   {
     "Affiliation": "ABC",
@@ -2036,8 +1833,7 @@
     "LegacyCallLetters": "WJXX",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 161,
-    "OriginMarket": "Jacksonville",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Jacksonville"
   },
   {
     "Affiliation": "FOX",
@@ -2046,8 +1842,7 @@
     "LegacyCallLetters": "GGEM",
     "ManifestMaxEndDate": "2017-09-24T00:00:00",
     "MarketCode": 317,
-    "OriginMarket": "Quincy-Hannibal-Keokuk",
-    "RateDataThrough": "9/24/2017"
+    "OriginMarket": "Quincy-Hannibal-Keokuk"
   },
   {
     "Affiliation": "IND",
@@ -2056,8 +1851,7 @@
     "LegacyCallLetters": "KMYU",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 370,
-    "OriginMarket": "Salt Lake City",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Salt Lake City"
   },
   {
     "Affiliation": "FOX",
@@ -2066,8 +1860,7 @@
     "LegacyCallLetters": "WPFO",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 100,
-    "OriginMarket": "Portland-Auburn",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Portland-Auburn"
   },
   {
     "Affiliation": "IND",
@@ -2076,8 +1869,7 @@
     "LegacyCallLetters": "WMYS",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 188,
-    "OriginMarket": "South Bend-Elkhart",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "South Bend-Elkhart"
   },
   {
     "Affiliation": "IND",
@@ -2086,8 +1878,7 @@
     "LegacyCallLetters": "KXNW",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 270,
-    "OriginMarket": "Ft. Smith-Fay-Sprngdl-Rgrs",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Ft. Smith-Fay-Sprngdl-Rgrs"
   },
   {
     "Affiliation": "IND",
@@ -2096,8 +1887,7 @@
     "LegacyCallLetters": "WNYA",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 132,
-    "OriginMarket": "Albany-Schenectady-Troy",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Albany-Schenectady-Troy"
   },
   {
     "Affiliation": "CW",
@@ -2106,8 +1896,7 @@
     "LegacyCallLetters": "WQWQ",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 232,
-    "OriginMarket": "Paducah-Cape Girard-Harsbg",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Paducah-Cape Girard-Harsbg"
   },
   {
     "Affiliation": "IND",
@@ -2116,8 +1905,7 @@
     "LegacyCallLetters": "WAXN",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 117,
-    "OriginMarket": "Charlotte",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Charlotte"
   },
   {
     "Affiliation": "MET",
@@ -2126,8 +1914,7 @@
     "LegacyCallLetters": "NETV",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 252,
-    "OriginMarket": "Omaha",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Omaha"
   },
   {
     "Affiliation": "CW",
@@ -2136,8 +1923,7 @@
     "LegacyCallLetters": "EKRC",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 115,
-    "OriginMarket": "Cincinnati",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Cincinnati"
   },
   {
     "Affiliation": "CW",
@@ -2146,8 +1932,7 @@
     "LegacyCallLetters": "WSTQ",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 155,
-    "OriginMarket": "Syracuse",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Syracuse"
   },
   {
     "Affiliation": "BOU",
@@ -2156,8 +1941,7 @@
     "LegacyCallLetters": "EUVP",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 104,
-    "OriginMarket": "Philadelphia",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Philadelphia"
   },
   {
     "Affiliation": "BOU",
@@ -2166,8 +1950,7 @@
     "LegacyCallLetters": "NUVN",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 223,
-    "OriginMarket": "Dallas-Ft. Worth",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Dallas-Ft. Worth"
   },
   {
     "Affiliation": "FOX",
@@ -2176,8 +1959,7 @@
     "LegacyCallLetters": "KJNB",
     "ManifestMaxEndDate": "2017-09-24T00:00:00",
     "MarketCode": 334,
-    "OriginMarket": "Jonesboro",
-    "RateDataThrough": "9/24/2017"
+    "OriginMarket": "Jonesboro"
   },
   {
     "Affiliation": "CBS",
@@ -2186,8 +1968,7 @@
     "LegacyCallLetters": "NJNB",
     "ManifestMaxEndDate": "2017-09-24T00:00:00",
     "MarketCode": 334,
-    "OriginMarket": "Jonesboro",
-    "RateDataThrough": "9/24/2017"
+    "OriginMarket": "Jonesboro"
   },
   {
     "Affiliation": "CW",
@@ -2196,8 +1977,7 @@
     "LegacyCallLetters": "GHP",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 166,
-    "OriginMarket": "Harrisburg-Lncstr-Leb-York",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Harrisburg-Lncstr-Leb-York"
   },
   {
     "Affiliation": "ABC",
@@ -2206,8 +1986,7 @@
     "LegacyCallLetters": "EEEK",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 275,
-    "OriginMarket": "Peoria-Bloomington",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Peoria-Bloomington"
   },
   {
     "Affiliation": "IND",
@@ -2216,8 +1995,7 @@
     "LegacyCallLetters": "YMYO",
     "ManifestMaxEndDate": "2018-12-30T00:00:00",
     "MarketCode": 129,
-    "OriginMarket": "Louisville",
-    "RateDataThrough": "12/30/2018"
+    "OriginMarket": "Louisville"
   },
   {
     "Affiliation": null,
@@ -2226,7 +2004,6 @@
     "LegacyCallLetters": "WLS_UNKNOWN2",
     "ManifestMaxEndDate": "2019-12-08T00:00:00",
     "MarketCode": null,
-    "OriginMarket": null,
-    "RateDataThrough": "12/8/2019"
+    "OriginMarket": null
   }
 ]

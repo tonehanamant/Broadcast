@@ -151,8 +151,8 @@ namespace Services.Broadcast.ApplicationServices
 
         private void _ApplyProgramAndGenreFilter(ProposalDetailOpenMarketInventoryDto dto, OpenMarketCriterion criteria)
         {
-            List<ProposalInventoryMarketDto.InventoryMarketStationProgram> programsToExclude =
-                new List<ProposalInventoryMarketDto.InventoryMarketStationProgram>();
+            List<InventoryMarketStationProgram> programsToExclude =
+                new List<InventoryMarketStationProgram>();
             var programNamesToExclude = criteria.ProgramNameSearchCriteria
                 .Where(x => x.Contain == ContainTypeEnum.Exclude).Select(x => x.Program.Display).ToList();
             var genreIdsToInclude = criteria.GenreSearchCriteria.Where(x => x.Contain == ContainTypeEnum.Include)
@@ -261,7 +261,7 @@ namespace Services.Broadcast.ApplicationServices
                                     filter.Affiliations == null || !filter.Affiliations.Any() ||
                                     filter.Affiliations.Any(
                                         a => s.Affiliation.ToLower().Contains(a.ToLower())))
-                            .Select(s1 => new ProposalInventoryMarketDto.InventoryMarketStation
+                            .Select(s1 => new InventoryMarketStation
                             {
                                 StationCode = s1.StationCode,
                                 Affiliation = s1.Affiliation,
@@ -304,7 +304,7 @@ namespace Services.Broadcast.ApplicationServices
                                                 ProposalOpenMarketFilter.OpenMarketSpotFilter.ProgramWithoutSpots &&
                                                 listOfPrograms.Where(pa => pa.ProgramId == ap.ProgramId)
                                                     .Sum(s => s.Spots) == 0)
-                                        .Select(pro => new ProposalInventoryMarketDto.InventoryMarketStationProgram
+                                        .Select(pro => new InventoryMarketStationProgram
                                         {
                                             ProgramId = pro.ProgramId,
                                             ProgramNames = pro.ProgramNames,
@@ -667,13 +667,13 @@ namespace Services.Broadcast.ApplicationServices
                     MarketId = g.Key,
                     MarketName = g.First().Market.Display,
                     Stations = g.GroupBy(p => p.Station.StationCode).Select(s =>
-                        new ProposalInventoryMarketDto.InventoryMarketStation
+                        new InventoryMarketStation
                         {
                             Affiliation = s.First().Station.Affiliation,
                             CallLetters = s.First().Station.CallLetters,
                             LegacyCallLetters = s.First().Station.LegacyCallLetters,
                             StationCode = s.First().Station.StationCode,
-                            Programs = s.Select(p => new ProposalInventoryMarketDto.InventoryMarketStationProgram
+                            Programs = s.Select(p => new InventoryMarketStationProgram
                             {
                                 ProgramId = p.ManifestId,
                                 ProgramNames = p.ManifestDayparts.Select(md => md.ProgramName).ToList(),

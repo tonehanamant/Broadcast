@@ -4,33 +4,24 @@ namespace Services.Broadcast.Entities.OpenMarketInventory
 {
     public class ProposalOpenMarketInventoryWeekDto : BaseProposalInventoryWeekDto
     {
-        public List<InventoryWeekMarket> Markets { get; set; }
+        public List<InventoryWeekMarket> Markets { get; set; } = new List<InventoryWeekMarket>();
         public int ProposalVersionDetailQuarterWeekId { get; set; }
 
         public class InventoryWeekMarket
         {
-            public InventoryWeekMarket()
-            {
-                Stations = new List<InventoryWeekStation>();
-            }
             public int MarketId { get; set; }
             public int Spots { get; set; }
             public double Impressions { get; set; }
             public decimal Cost { get; set; }
-            public List<InventoryWeekStation> Stations { get; set; }
+            public List<InventoryWeekStation> Stations { get; set; } = new List<InventoryWeekStation>();
             public double DisplayImpressions { get; set; }
             public double DisplayStationImpressions { get; set; }
-
         }
 
         public class InventoryWeekStation
         {
-            public InventoryWeekStation()
-            {
-                Programs = new List<InventoryWeekProgram>();
-            }
-            public int StationCode { get; set; }
-            public List<InventoryWeekProgram> Programs { get; set; }
+            public int? StationCode { get; set; }
+            public List<InventoryWeekProgram> Programs { get; set; } = new List<InventoryWeekProgram>();
         }
 
         public class InventoryWeekProgram

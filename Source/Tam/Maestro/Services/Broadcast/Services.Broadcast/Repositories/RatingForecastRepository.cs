@@ -47,11 +47,11 @@ namespace Services.Broadcast.Repositories
 
             return result.Select(r =>
             {
-                var manifestDaypart = manifestDayparts.First(m => m.Id == r.id);
+                var manifestDaypart = manifestDayparts.First(m => m.Id == r.Id);
                 return new RatingsResult()
                 {
                     Daypart = manifestDaypart.DisplayDaypart,
-                    Rating = r.rating,
+                    Rating = r.Rating,
                     LegacyCallLetters = manifestDaypart.LegacyCallLetters
                 };
             }).ToList();

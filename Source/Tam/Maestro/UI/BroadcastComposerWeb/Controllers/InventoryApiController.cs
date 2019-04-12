@@ -13,11 +13,13 @@ using Tam.Maestro.Services.Cable.Entities;
 using Tam.Maestro.Services.Cable.Security;
 using Tam.Maestro.Services.ContractInterfaces;
 using Tam.Maestro.Web.Common;
+using System.Net.Http.Headers;
+using System.Net;
 
 namespace BroadcastComposerWeb.Controllers
 {
     [RoutePrefix("api/RatesManager")]
-    [RestrictedAccess(RequiredRole = RoleType.Broadcast_Proposer)]
+    //[RestrictedAccess(RequiredRole = RoleType.Broadcast_Proposer)]
     public class InventoryApiController : BroadcastControllerBase
     {
         private readonly BroadcastApplicationServiceFactory _ApplicationServiceFactory;
@@ -274,6 +276,23 @@ namespace BroadcastComposerWeb.Controllers
                     () =>
                         _ApplicationServiceFactory.GetApplicationService<IInventoryService>()
                             .HasSpotsAllocated(programId));
+        }
+
+        [HttpGet]
+        [Route("GenerateScxArchive/{nowDate?}")]
+        public HttpResponseMessage GenerateScxArchive(DateTime? nowDate = null)
+        {
+            var archive = _ApplicationServiceFactory.GetApplicationService<IBarterInventoryService>().GenerateScxFileArchive(nowDate ?? DateTime.Now);
+
+            var result = Request.CreateResponse(HttpStatusCode.OK);
+            result.Content = new StreamContent(archive.Item2);
+            result.Content.Headers.ContentType = new MediaTypeHeaderValue("application/zip");
+            result.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
+            {
+                FileName = archive.Item1
+            };
+
+            return result;
         }
     }
 }

@@ -38,7 +38,7 @@
           "_Wednesday": true
         },
         "Genres": [],
-        "ProgramName": null
+        "ProgramName": "Eyewitness News at 430a"
       }
     ],
     "ManifestRates": [],
@@ -109,7 +109,7 @@
           "_Wednesday": true
         },
         "Genres": [],
-        "ProgramName": null
+        "ProgramName": "Eyewitness News/GMA Weekend"
       }
     ],
     "ManifestRates": [],
@@ -200,7 +200,7 @@
           "_Wednesday": true
         },
         "Genres": [],
-        "ProgramName": null
+        "ProgramName": "Eyewitness News/GMA Weekend"
       }
     ],
     "ManifestRates": [],
@@ -281,7 +281,7 @@
           "_Wednesday": true
         },
         "Genres": [],
-        "ProgramName": null
+        "ProgramName": "Eyewitness News at Noon"
       }
     ],
     "ManifestRates": [],
@@ -352,7 +352,7 @@
           "_Wednesday": true
         },
         "Genres": [],
-        "ProgramName": null
+        "ProgramName": "Eyewitness News at 4p"
       }
     ],
     "ManifestRates": [],
@@ -453,7 +453,7 @@
           "_Wednesday": true
         },
         "Genres": [],
-        "ProgramName": null
+        "ProgramName": "Eyewitness News at 5p"
       }
     ],
     "ManifestRates": [],
@@ -544,7 +544,7 @@
           "_Wednesday": true
         },
         "Genres": [],
-        "ProgramName": null
+        "ProgramName": "Eyewitness News at 11p"
       }
     ],
     "ManifestRates": [],
@@ -645,7 +645,7 @@
           "_Wednesday": true
         },
         "Genres": [],
-        "ProgramName": null
+        "ProgramName": "Eyewitness 11p News Encore"
       }
     ],
     "ManifestRates": [],
@@ -746,7 +746,7 @@
           "_Wednesday": true
         },
         "Genres": [],
-        "ProgramName": null
+        "ProgramName": "Eyewitness News at 430a"
       }
     ],
     "ManifestRates": [],
@@ -817,7 +817,7 @@
           "_Wednesday": false
         },
         "Genres": [],
-        "ProgramName": null
+        "ProgramName": "Eyewitness News/GMA Weekend"
       }
     ],
     "ManifestRates": [],
@@ -908,7 +908,7 @@
           "_Wednesday": false
         },
         "Genres": [],
-        "ProgramName": null
+        "ProgramName": "Eyewitness News/GMA Weekend"
       }
     ],
     "ManifestRates": [],
@@ -989,7 +989,7 @@
           "_Wednesday": false
         },
         "Genres": [],
-        "ProgramName": null
+        "ProgramName": "Eyewitness News/GMA Weekend"
       }
     ],
     "ManifestRates": [],

@@ -99,7 +99,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             var jsonResolver = new IgnorableSerializerContractResolver();
             jsonResolver.Ignore(typeof(StationInventoryManifest), "Id");
-            jsonResolver.Ignore(typeof(StationInventoryManifest), "FileId");
+            jsonResolver.Ignore(typeof(StationInventoryManifest), "InventoryFileId");
             jsonResolver.Ignore(typeof(StationInventoryManifestAudience), "Id");
             jsonResolver.Ignore(typeof(StationInventoryManifestWeek), "Id");
             jsonResolver.Ignore(typeof(StationInventoryManifestDaypart), "Id");
@@ -123,7 +123,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var jsonResolver = new IgnorableSerializerContractResolver();
             jsonResolver.Ignore(typeof(StationInventoryGroup), "Id");
             jsonResolver.Ignore(typeof(StationInventoryManifest), "Id");
-            jsonResolver.Ignore(typeof(StationInventoryManifest), "FileId");
+            jsonResolver.Ignore(typeof(StationInventoryManifest), "InventoryFileId");
             jsonResolver.Ignore(typeof(StationInventoryManifest), "ProjectedStationImpressions");
             jsonResolver.Ignore(typeof(StationInventoryManifestAudience), "Id");
             jsonResolver.Ignore(typeof(StationInventoryManifestWeek), "Id");

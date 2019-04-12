@@ -20,6 +20,7 @@ using Services.Broadcast.Entities.DTO;
 using Services.Broadcast.ApplicationServices.Helpers;
 using Services.Broadcast.Helpers;
 using Services.Broadcast.BusinessEngines.InventoryDaypartParsing;
+using Services.Broadcast.Converters.Scx;
 
 namespace Services.Broadcast.ApplicationServices
 {
@@ -83,7 +84,9 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IPricingGuideService, PricingGuideService>();
             unityContainer.RegisterType<IProposalScxConverter, ProposalScxConverter>();
             unityContainer.RegisterType<IProposalScxDataPrep, ProposalScxDataPrep>();
-
+            unityContainer.RegisterType<IInventoryScxDataConverter, InventoryScxDataConverter>();
+            unityContainer.RegisterType<IInventoryScxDataPrep, InventoryScxDataPrep>();
+            
             unityContainer.RegisterType<IProposalCalculationEngine, ProposalCalculationEngine>();
             unityContainer.RegisterType<IQuarterCalculationEngine, QuarterCalculationEngine>();
             unityContainer.RegisterType<INsiUniverseService, NsiUniverseService>();

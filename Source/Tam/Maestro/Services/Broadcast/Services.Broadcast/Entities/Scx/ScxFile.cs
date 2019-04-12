@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Tam.Maestro.Common;
 
-namespace Services.Broadcast.Entities
+namespace Services.Broadcast.Entities.Scx
 {
     public class ScxFile
     {

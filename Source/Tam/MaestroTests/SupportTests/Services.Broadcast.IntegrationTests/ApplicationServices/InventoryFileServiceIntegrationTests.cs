@@ -172,10 +172,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         private static void VerifyInventoryRaw(List<StationInventoryGroup> inventory)
         {
             var jsonResolver = new IgnorableSerializerContractResolver();
-            jsonResolver.Ignore(typeof(StationInventoryManifest), "FileId");
             jsonResolver.Ignore(typeof(StationInventoryGroup), "Id");
             jsonResolver.Ignore(typeof(DisplayDaypart), "_Id");
-            jsonResolver.Ignore(typeof(StationInventoryManifest), "Id");
             jsonResolver.Ignore(typeof(StationInventoryManifestRate), "Id");
             jsonResolver.Ignore(typeof(StationInventoryManifestDaypart), "Id");
             //jsonResolver.Ignore(typeof(DisplayAudience), "Id");
@@ -388,6 +386,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             jsonResolver.Ignore(typeof(DisplayBroadcastStation), "FlightWeeks");
             jsonResolver.Ignore(typeof(DisplayBroadcastStation), "MarketCode");
             jsonResolver.Ignore(typeof(DisplayBroadcastStation), "Id");
+            jsonResolver.Ignore(typeof(DisplayBroadcastStation), "ManifestMaxEndDate");
+            jsonResolver.Ignore(typeof(DisplayBroadcastStation), "RateDataThrough");
             var jsonSettings = new JsonSerializerSettings()
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
@@ -409,6 +409,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             jsonResolver.Ignore(typeof(DisplayBroadcastStation), "ModifiedDate");
             jsonResolver.Ignore(typeof(DisplayBroadcastStation), "FlightWeeks");
             jsonResolver.Ignore(typeof(DisplayBroadcastStation), "MarketCode");
+            jsonResolver.Ignore(typeof(DisplayBroadcastStation), "ManifestMaxEndDate");
             jsonResolver.Ignore(typeof(DisplayBroadcastStation), "RateDataThrough");
             jsonResolver.Ignore(typeof(DisplayBroadcastStation), "Id");
             var jsonSettings = new JsonSerializerSettings()
@@ -3740,10 +3741,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 var request = _GetInventoryFileSaveRequest(@".\Files\1Chicago WLS Syn 4Q16 UNKNOWN.xml");
                 var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(StationInventoryManifest), "Id");
-                jsonResolver.Ignore(typeof(StationInventoryManifest), "FileId");
-                jsonResolver.Ignore(typeof(StationInventoryManifest), "ProjectedStationImpressions");
                 jsonResolver.Ignore(typeof(StationInventoryManifestDaypart), "Id");
+                jsonResolver.Ignore(typeof(StationInventoryManifest), "InventoryFileId");
+                jsonResolver.Ignore(typeof(StationInventoryManifest), "Id");
                 jsonResolver.Ignore(typeof(LookupDto), "Id");
                 jsonResolver.Ignore(typeof(DisplayAudience), "Id");
                 jsonResolver.Ignore(typeof(StationInventoryManifestRate), "Id");

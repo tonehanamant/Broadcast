@@ -6,6 +6,7 @@
 // ------------------------------------------------------------------------------
 
 using Services.Broadcast.Converters;
+using Services.Broadcast.Converters.Scx;
 using System;
 using System.ComponentModel;
 using System.IO;

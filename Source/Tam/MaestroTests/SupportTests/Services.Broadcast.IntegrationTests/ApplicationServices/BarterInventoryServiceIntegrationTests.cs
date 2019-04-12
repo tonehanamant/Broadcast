@@ -76,6 +76,35 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Ignore("This test was used to load data into dbs")]
+        [UseReporter(typeof(DiffReporter))]
+        public void BarterInventoryService_LoadBarterFilesIntoDbs()
+        {
+            foreach (string fileName in new List<string>{
+                "TTWN EMN Q1 Barter_Inventory Template_2.6.2019 (17).xlsx",
+                //"TTWN EVENING NEWS Q2 Barter_Inventory Template_2.6.2019 (6).xlsx"  //this file has an outdated template
+            })
+            {
+                using (var transaction = new TransactionScopeWrapper())
+                {
+                    var request = new InventoryFileSaveRequest
+                    {
+                        StreamData = new FileStream($@".\Files\BarterDataFiles\{fileName}", FileMode.Open, FileAccess.Read),
+                        FileName = fileName
+                    };
+
+                    var now = new DateTime(2019, 02, 02);
+                    var result = _BarterService.SaveBarterInventoryFile(request, "sroibu", now);
+
+                    if (result.FileId > 0 && result.Status == Entities.Enums.FileStatusEnum.Loaded)
+                    {
+                        transaction.Complete();
+                    }
+                }
+            }
+        }
+
+        [Test]
         [UseReporter(typeof(DiffReporter))]
         public void BarterFileImporter_ValidFormat_SpotLengthWithColon()
         {
@@ -303,7 +332,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             const string fileName = @"BarterDataFiles\OAndO_NoWeeksStartHeaderCell.xlsx";
             _VerifyInventoryFileProblems(fileName);
         }
-        
+
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void BarterInventoryService_SendFileToDataLake()
@@ -455,7 +484,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var jsonResolver = new IgnorableSerializerContractResolver();
             jsonResolver.Ignore(typeof(StationInventoryGroup), "Id");
             jsonResolver.Ignore(typeof(StationInventoryManifest), "Id");
-            jsonResolver.Ignore(typeof(StationInventoryManifest), "FileId");
+            jsonResolver.Ignore(typeof(StationInventoryManifest), "InventoryFileId");
             jsonResolver.Ignore(typeof(StationInventoryManifest), "ProjectedStationImpressions");
             jsonResolver.Ignore(typeof(StationInventoryManifestAudience), "Id");
             jsonResolver.Ignore(typeof(StationInventoryManifestWeek), "Id");
@@ -496,7 +525,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             var jsonResolver = new IgnorableSerializerContractResolver();
             jsonResolver.Ignore(typeof(StationInventoryManifest), "Id");
-            jsonResolver.Ignore(typeof(StationInventoryManifest), "FileId");
+            jsonResolver.Ignore(typeof(StationInventoryManifest), "InventoryFileId");
             jsonResolver.Ignore(typeof(StationInventoryManifestAudience), "Id");
             jsonResolver.Ignore(typeof(StationInventoryManifestWeek), "Id");
             jsonResolver.Ignore(typeof(StationInventoryManifestDaypart), "Id");
