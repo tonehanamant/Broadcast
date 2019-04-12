@@ -193,9 +193,6 @@ namespace Services.Broadcast.Converters.RateImport
                 });
             }
 
-            // skip an empty column
-            columnIndex++;
-
             line.Impressions = worksheet.Cells[rowIndex, columnIndex++].GetDoubleValue();
             line.CPM = worksheet.Cells[rowIndex, columnIndex++].GetDecimalValue();
 
@@ -231,7 +228,7 @@ namespace Services.Broadcast.Converters.RateImport
             var dateFormats = new string[] { "d-MMM-yyyy", "M/d/yyyy" };
             var result = new List<int>();
             var lastColumnIndex = firstColumnIndex;
-            var weeksStartHeaderRowIndex = _FindRowNumber("Weeks Start", firstColumnIndex, firstRowIndex, lastRowIndex, worksheet);
+            var weeksStartHeaderRowIndex = _FindRowNumber("Start Week", firstColumnIndex, firstRowIndex, lastRowIndex, worksheet);
 
             if (!weeksStartHeaderRowIndex.HasValue)
             {
@@ -246,8 +243,8 @@ namespace Services.Broadcast.Converters.RateImport
             {
                 try
                 {
-                    // audienceCode cell should be 2 cell after last week column
-                    var audienceCodeHeaderCell = worksheet.Cells[audienceCodeHeaderCellRowIndex, lastColumnIndex + 2].GetStringValue();
+                    // audienceCode cell should be after last week column
+                    var audienceCodeHeaderCell = worksheet.Cells[audienceCodeHeaderCellRowIndex, lastColumnIndex + 1].GetStringValue();
                     var isAudienceCodeHeaderCell = !string.IsNullOrWhiteSpace(audienceCodeHeaderCell) && audienceCodeHeaderCell.StartsWith(audienceCode, StringComparison.OrdinalIgnoreCase);
 
                     if (isAudienceCodeHeaderCell)
@@ -261,14 +258,7 @@ namespace Services.Broadcast.Converters.RateImport
                 {
                     throw new Exception("Couldn't find last week column");
                 }
-            }
-
-            var beforeAudienceCodeHeaderCell = worksheet.Cells[weeksRowIndex, lastColumnIndex + 1].GetStringValue();
-
-            if (!string.IsNullOrWhiteSpace(beforeAudienceCodeHeaderCell))
-            {
-                throw new Exception("Valid template should contain an empty column between last week column and '{audience} IMPS' column");
-            }
+            }         
 
             for (var i = firstColumnIndex; i <= lastColumnIndex; i++)
             {

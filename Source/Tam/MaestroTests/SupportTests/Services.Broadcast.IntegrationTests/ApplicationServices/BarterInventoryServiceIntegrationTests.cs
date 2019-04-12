@@ -262,15 +262,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             const string fileName = @"BarterDataFiles\OAndO_UnknownAudience.xlsx";
             _VerifyInventoryFileProblems(fileName);
-        }
-
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
-        public void OAndO_NoEmptyColumnBetweenLastWeekAndHH()
-        {
-            const string fileName = @"BarterDataFiles\OAndO_NoEmptyColumnBetweenLastWeekAndHH.xlsx";
-            _VerifyInventoryFileProblems(fileName);
-        }
+        }      
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
