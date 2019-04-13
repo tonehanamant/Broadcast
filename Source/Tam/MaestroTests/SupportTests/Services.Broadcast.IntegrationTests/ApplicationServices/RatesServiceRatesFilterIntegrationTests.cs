@@ -201,6 +201,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var response = _inventoryService.GetStationsWithFilter("OpenMarket", "withtodaysdata", today);
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(DisplayBroadcastStation), "ModifiedDate");
+                jsonResolver.Ignore(typeof(DisplayBroadcastStation), "ManifestMaxEndDate");
+                jsonResolver.Ignore(typeof(DisplayBroadcastStation), "FlightWeeks");
+                jsonResolver.Ignore(typeof(DisplayBroadcastStation), "RateDataThrough");
                 jsonResolver.Ignore(typeof(DisplayBroadcastStation), "FlightWeeks");
                 jsonResolver.Ignore(typeof(DisplayBroadcastStation), "RateDataThrough");
                 jsonResolver.Ignore(typeof(DisplayBroadcastStation), "FlightWeeks");

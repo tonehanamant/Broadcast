@@ -41,12 +41,7 @@
         "ProgramName": "Eyewitness News at 430a"
       }
     ],
-    "ManifestRates": [
-      {
-        "SpotCost": 599.9928,
-        "SpotLengthId": 1
-      }
-    ],
+    "ManifestRates": [],
     "ManifestWeeks": [
       {
         "MediaWeek": {
@@ -117,12 +112,7 @@
         "ProgramName": "Eyewitness News/GMA Weekend"
       }
     ],
-    "ManifestRates": [
-      {
-        "SpotCost": 1000.0000,
-        "SpotLengthId": 1
-      }
-    ],
+    "ManifestRates": [],
     "ManifestWeeks": [
       {
         "MediaWeek": {
@@ -213,12 +203,7 @@
         "ProgramName": "Eyewitness News/GMA Weekend"
       }
     ],
-    "ManifestRates": [
-      {
-        "SpotCost": 900.0000,
-        "SpotLengthId": 1
-      }
-    ],
+    "ManifestRates": [],
     "ManifestWeeks": [
       {
         "MediaWeek": {
@@ -299,12 +284,7 @@
         "ProgramName": "Eyewitness News at Noon"
       }
     ],
-    "ManifestRates": [
-      {
-        "SpotCost": 1000.0000,
-        "SpotLengthId": 1
-      }
-    ],
+    "ManifestRates": [],
     "ManifestWeeks": [
       {
         "MediaWeek": {
@@ -375,12 +355,7 @@
         "ProgramName": "Eyewitness News at 4p"
       }
     ],
-    "ManifestRates": [
-      {
-        "SpotCost": 1599.9880,
-        "SpotLengthId": 1
-      }
-    ],
+    "ManifestRates": [],
     "ManifestWeeks": [
       {
         "MediaWeek": {
@@ -481,12 +456,7 @@
         "ProgramName": "Eyewitness News at 5p"
       }
     ],
-    "ManifestRates": [
-      {
-        "SpotCost": 1399.9960,
-        "SpotLengthId": 1
-      }
-    ],
+    "ManifestRates": [],
     "ManifestWeeks": [
       {
         "MediaWeek": {
@@ -577,12 +547,7 @@
         "ProgramName": "Eyewitness News at 11p"
       }
     ],
-    "ManifestRates": [
-      {
-        "SpotCost": 2699.9931,
-        "SpotLengthId": 1
-      }
-    ],
+    "ManifestRates": [],
     "ManifestWeeks": [
       {
         "MediaWeek": {
@@ -683,12 +648,7 @@
         "ProgramName": "Eyewitness 11p News Encore"
       }
     ],
-    "ManifestRates": [
-      {
-        "SpotCost": 699.9930,
-        "SpotLengthId": 1
-      }
-    ],
+    "ManifestRates": [],
     "ManifestWeeks": [
       {
         "MediaWeek": {
@@ -789,12 +749,7 @@
         "ProgramName": "Eyewitness News at 430a"
       }
     ],
-    "ManifestRates": [
-      {
-        "SpotCost": 599.9928,
-        "SpotLengthId": 1
-      }
-    ],
+    "ManifestRates": [],
     "ManifestWeeks": [
       {
         "MediaWeek": {
@@ -865,12 +820,7 @@
         "ProgramName": "Eyewitness News/GMA Weekend"
       }
     ],
-    "ManifestRates": [
-      {
-        "SpotCost": 1000.0000,
-        "SpotLengthId": 1
-      }
-    ],
+    "ManifestRates": [],
     "ManifestWeeks": [
       {
         "MediaWeek": {
@@ -961,12 +911,7 @@
         "ProgramName": "Eyewitness News/GMA Weekend"
       }
     ],
-    "ManifestRates": [
-      {
-        "SpotCost": 900.0000,
-        "SpotLengthId": 1
-      }
-    ],
+    "ManifestRates": [],
     "ManifestWeeks": [
       {
         "MediaWeek": {
@@ -1047,12 +992,7 @@
         "ProgramName": "Eyewitness News/GMA Weekend"
       }
     ],
-    "ManifestRates": [
-      {
-        "SpotCost": 1000.0000,
-        "SpotLengthId": 1
-      }
-    ],
+    "ManifestRates": [],
     "ManifestWeeks": [
       {
         "MediaWeek": {
