@@ -1082,8 +1082,14 @@ namespace Services.Broadcast.ApplicationServices
         {
             foreach (var selectedMarket in markets)
             {
-                var market = allMarkets.Single(x => x.Id == selectedMarket.MarketId);
-                market.Selected = true;
+                //PRI-7148
+                //if you blacklist a market already present in the distribution report, the allMarkets object does not contain that market
+                //that is why I went with SingleOrDefault call here 
+                var market = allMarkets.SingleOrDefault(x => x.Id == selectedMarket.MarketId);
+                if(market != null)
+                {
+                    market.Selected = true;
+                }
             }
         }
 

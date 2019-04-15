@@ -79,6 +79,22 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        public void GetPricingGuideForProposalDetail_PRI7148()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var proposal = _ProposalService.GetProposalById(26025);
+                proposal.Markets.Add(new ProposalMarketDto { Id = 160, IsBlackout = true});
+                _ProposalService.SaveProposal(proposal, "integration test", null);
+
+                PricingGuideDto proposalInventory = _PricingGuideService.GetPricingGuideForProposalDetail(9987);
+
+                _VerifyPricingGuideModel(proposalInventory);
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
         public void GetOpenMarketInventory_WithEnteredManuallySpots_WithoutGoals()
         {
             using (new TransactionScopeWrapper())

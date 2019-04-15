@@ -1,0 +1,118 @@
+﻿{
+  "AllMarkets": [],
+  "BudgetGoal": null,
+  "DisplayFilter": {
+    "Affiliations": [
+      "PBS"
+    ],
+    "Genres": [
+      {
+        "Display": "Adventure"
+      }
+    ],
+    "Markets": [
+      {
+        "Display": "Raleigh-Durham (Fayetvlle)"
+      }
+    ],
+    "ProgramNames": [
+      "Adventure Time"
+    ]
+  },
+  "Filter": {},
+  "ImpressionGoal": null,
+  "ImpressionLoss": null,
+  "Inflation": null,
+  "InventorySourceEnum": {
+    "0": "Blank",
+    "1": "OpenMarket",
+    "2": "Assembly",
+    "3": "TVB",
+    "4": "TTNW",
+    "5": "CNN",
+    "6": "Sinclair",
+    "7": "LilaMax",
+    "8": "FerencMedia",
+    "9": "OAndO"
+  },
+  "Margin": null,
+  "Markets": [
+    {
+      "AvgCpm": 0.9615,
+      "CPM": 1.5865445636329370497578836842,
+      "DisplayImpressions": 1748245.857143,
+      "DisplayStationImpressions": 2079992.0,
+      "MarketCoverage": 1.01,
+      "MarketName": "Raleigh-Durham (Fayetvlle)",
+      "MarketRank": 25,
+      "MaxCpm": 0.9615,
+      "MinCpm": 0.9615,
+      "Stations": [
+        {
+          "Affiliation": "PBS",
+          "CallLetters": "WUNC-TV 4.1",
+          "CPM": 1.5865445636329370497578836842,
+          "LegacyCallLetters": "WUNC",
+          "MinProgramsBlendedCpm": 0.9615,
+          "Programs": [
+            {
+              "BlendedCpm": 0.9615,
+              "Cost": 3300.0000,
+              "CostPerSpot": 66.0000,
+              "Daypart": {
+                "Display": "M-SU 9AM-12AM"
+              },
+              "DisplayCost": 3300.0000,
+              "DisplayImpressions": 1748245.857143,
+              "DisplayStationImpressions": 2079992.0,
+              "EffectiveImpressionsPerSpot": 41599.84,
+              "Genres": [
+                {
+                  "Display": "Adventure"
+                }
+              ],
+              "HasImpressions": true,
+              "Impressions": 2079992.0,
+              "ImpressionsPerSpot": 34964.91714286,
+              "ProgramName": "Adventure Time",
+              "Spots": 50,
+              "StationImpressionsPerSpot": 41599.84
+            }
+          ],
+          "StationCode": 5316,
+          "TotalCost": 3300.0000,
+          "TotalImpressions": 2079992.0,
+          "TotalSpots": 50
+        }
+      ],
+      "TotalCost": 3300.0000,
+      "TotalImpressions": 2079992.0,
+      "TotalSpots": 50
+    }
+  ],
+  "OpenMarketPricing": {
+    "CpmMax": null,
+    "CpmMin": null,
+    "OpenMarketCpmTarget": 1,
+    "UnitCapPerStation": 1
+  },
+  "OpenMarketShare": 0.0,
+  "OpenMarketTotals": {
+    "Cost": 1000.0000,
+    "Coverage": 80.0,
+    "Cpm": 10.0000,
+    "Impressions": 10000.0
+  },
+  "PricingTotals": {
+    "Cost": 1010.0000,
+    "Coverage": 80.0,
+    "Cpm": 50.5,
+    "Impressions": 20000.0
+  },
+  "ProprietaryPricing": [],
+  "ProprietaryTotals": {
+    "Cost": 10.0000,
+    "Cpm": 10.0000,
+    "Impressions": 10000.0
+  }
+}
