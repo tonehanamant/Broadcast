@@ -112,17 +112,17 @@ namespace Services.Broadcast.ApplicationServices
             {
                 var proposal = _ProposalRepository.GetProposalById(distribution.ProposalId);
                 distribution.PricingTotals = _SumPricingTotals(distribution.OpenMarketTotals, distribution.ProprietaryTotals);
-                distribution.Markets = _LoadMarketsForDistribution(distribution.DistributionId, proposal.Details.Single(x => x.Id == proposalDetailId));
-                distribution.AllMarkets = _LoadAllMarketsForDistribution(distribution.ProposalDetailId, distribution.Markets);
+                distribution.Markets = _LoadMarketsForDistribution(distribution, proposal.Details.Single(x => x.Id == proposalDetailId));
+                distribution.AllMarkets = _LoadAllMarketsForDistribution(distribution, distribution.Markets);
                 _SetProposalOpenMarketPricingGuideGridDisplayFilters(distribution);                
             }
 
             return distribution;
         }
 
-        private List<PricingGuideMarketTotalsDto> _LoadAllMarketsForDistribution(int detailId, List<PricingGuideMarketDto> selectedMarkets)
+        private List<PricingGuideMarketTotalsDto> _LoadAllMarketsForDistribution(PricingGuideDto distribution, List<PricingGuideMarketDto> selectedMarkets)
         {
-            var inventory = GetPricingGuideInventory(detailId);
+            var inventory = GetPricingGuideInventory(distribution.ProposalDetailId);
             var programs = _GetPrograms(inventory);
             _FilterProgramsByDaypart(inventory, programs);
             ApplyDaypartNames(programs);
@@ -133,7 +133,7 @@ namespace Services.Broadcast.ApplicationServices
             _CalculateProgramsTotals(programs);
 
             var markets = _GroupProgramsByMarketAndStationForPricingGuide(programs);
-            var marketCoverages = _GetMarketCoverages(markets.Select(x => x.MarketId).AsEnumerable());
+            var marketCoverages = _GetMarketCoverages(markets.Select(x => x.MarketId).AsEnumerable(), distribution.MarketCoverageFileId);
 
             foreach (var inventoryMarket in markets)
             {
@@ -147,9 +147,9 @@ namespace Services.Broadcast.ApplicationServices
             return allMarkets;
         }
 
-        private List<PricingGuideMarketDto> _LoadMarketsForDistribution(int distributionId, ProposalDetailDto proposalDetail)
+        private List<PricingGuideMarketDto> _LoadMarketsForDistribution(PricingGuideDto distribution, ProposalDetailDto proposalDetail)
         {
-            var distributionMarkets = _PricingGuideRepository.GetDistributionMarkets(distributionId);
+            var distributionMarkets = _PricingGuideRepository.GetDistributionMarkets(distribution.DistributionId);
             var inventoryMarkets = distributionMarkets.GroupBy(p => p.Market.Id).Select(
                 g => new PricingGuideMarketDto
                 {
@@ -180,7 +180,7 @@ namespace Services.Broadcast.ApplicationServices
            
             var postingBookId = ProposalServiceHelper.GetBookId(proposalDetail);
             var marketRankings = BroadcastDataRepositoryFactory.GetDataRepository<INsiMarketRepository>().GetMarketRankingsByMediaMonth(postingBookId);
-            var marketCoverages = _GetMarketCoverages(inventoryMarkets.Select(x => x.MarketId).AsEnumerable());
+            var marketCoverages = _GetMarketCoverages(inventoryMarkets.Select(x => x.MarketId).AsEnumerable(), distribution.MarketCoverageFileId);
 
             foreach (var inventoryMarket in inventoryMarkets)
             {
@@ -665,7 +665,16 @@ namespace Services.Broadcast.ApplicationServices
             var postingBookId = ProposalServiceHelper.GetBookId(inventory);
 
             var marketRankings = BroadcastDataRepositoryFactory.GetDataRepository<INsiMarketRepository>().GetMarketRankingsByMediaMonth(postingBookId);
-            var marketCoverages = _GetMarketCoverages(markets.Select(x => x.MarketId).AsEnumerable());
+
+            MarketCoverageDto marketCoverages;
+            if (shouldRunDistribution)
+            {
+                marketCoverages = _GetMarketCoverages(markets.Select(x => x.MarketId).AsEnumerable(), null);
+            }
+            else
+            {
+                marketCoverages = _GetMarketCoverages(markets.Select(x => x.MarketId).AsEnumerable(), pricingGuide.MarketCoverageFileId);
+            }
 
             foreach (var inventoryMarket in markets)
             {
@@ -1065,11 +1074,19 @@ namespace Services.Broadcast.ApplicationServices
             }
         }
 
-        private MarketCoverageDto _GetMarketCoverages(IEnumerable<int> marketIds)
+        private MarketCoverageDto _GetMarketCoverages(IEnumerable<int> marketIds, int? marketCoverageFileId)
         {
             var marketCoverageRepository = BroadcastDataRepositoryFactory.GetDataRepository<IMarketCoverageRepository>();
 
-            return marketCoverageRepository.GetLatestMarketCoverages(marketIds);
+            if (marketCoverageFileId.HasValue)
+            {
+                return marketCoverageRepository.GetMarketCoveragesForFile(marketIds, marketCoverageFileId.Value);
+            }
+            else
+            {
+                return marketCoverageRepository.GetLatestMarketCoverages(marketIds);
+            }
+
         }
 
         private void _ApplyInventoryMarketCoverage(PricingGuideMarketDto inventoryMarket, MarketCoverageDto marketCoverageDto)

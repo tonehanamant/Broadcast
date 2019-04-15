@@ -30,12 +30,12 @@ namespace Services.Broadcast.Repositories
         /// <param name="marketIds">Market id list.</param>
         /// <returns>Dictionary of market code and percentage coverage</returns>
         MarketCoverageDto GetLatestMarketCoverages(IEnumerable<int> marketIds);
-
+        MarketCoverageDto GetMarketCoveragesForFile(IEnumerable<int> marketIds, int marketCoverageFileId);
         MarketCoverageByStation GetLatestMarketCoveragesWithStations();
 
         List<MarketCoverageFile> GetMarketCoverageFiles();
 
-        MarketCoverageByStation GetMarketCoveragesWithStations(int marketCoverageFileId);
+        MarketCoverageByStation GetMarketCoveragesWithStations(int marketCoverageFileId);        
     }
 
     public class MarketCoverageRepository : BroadcastRepositoryBase, IMarketCoverageRepository
@@ -102,6 +102,25 @@ namespace Services.Broadcast.Repositories
                         MarketCoveragesByMarketCode = marketCoveragesByMarketCode
                     };
                  });
+        }
+
+        public MarketCoverageDto GetMarketCoveragesForFile(IEnumerable<int> marketIds, int marketCoverageFileId)
+        {
+            return _InReadUncommitedTransaction(
+                context =>
+                {
+                    var marketCoverageFile = context.market_coverage_files.Find(marketCoverageFileId);
+
+                    var marketCoveragesByMarketCode = (from m in marketCoverageFile.market_coverages
+                                                       where marketIds.Contains(m.market_code)
+                                                       select m).ToDictionary(m => Convert.ToInt32(m.market_code), m => m.percentage_of_us);
+
+                    return new MarketCoverageDto
+                    {
+                        MarketCoverageFileId = marketCoverageFile.id,
+                        MarketCoveragesByMarketCode = marketCoveragesByMarketCode
+                    };
+                });
         }
 
         public MarketCoverageByStation GetLatestMarketCoveragesWithStations()

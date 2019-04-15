@@ -2,7 +2,7 @@
   "AllMarkets": [
     {
       "AvgCpm": 7.3691967575534266764922623434,
-      "Coverage": 10.0,
+      "Coverage": 6.309,
       "Id": 101,
       "MaxCpm": 7.3691967575534266764922623434,
       "MinCpm": 7.3691967575534266764922623434,
@@ -66,7 +66,7 @@
       "CPM": 0.0231713882594196218936310181,
       "DisplayImpressions": 10.0,
       "DisplayStationImpressions": 43156.671875,
-      "MarketCoverage": 10.0,
+      "MarketCoverage": 6.309,
       "MarketName": "New York",
       "MarketRank": 1,
       "MaxCpm": 7.5307,
