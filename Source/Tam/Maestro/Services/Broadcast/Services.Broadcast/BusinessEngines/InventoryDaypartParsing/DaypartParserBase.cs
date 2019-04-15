@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Services.Broadcast.Extensions;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 
@@ -98,11 +99,11 @@ namespace Services.Broadcast.BusinessEngines.InventoryDaypartParsing
 
         private string _GetCommonFormatWeekDays(string weekDays)
         {
-            weekDays = Regex.Replace(weekDays, @"\s*;\s*", ",");
-            weekDays = Regex.Replace(weekDays, @"\s*\+\s*", ",");
+            const string separators = @"[,-]";
 
-            //remove space before and after any dash
-            weekDays = Regex.Replace(weekDays, @"\s*-\s*", "-");
+            weekDays = weekDays.RemoveWhiteSpaces();
+            weekDays = Regex.Replace(weekDays, @";", ",");
+            weekDays = Regex.Replace(weekDays, @"\+", ",");
 
             var weekDaysSplit = weekDays.Split(new char[] { '-', ',' });
 
@@ -114,7 +115,11 @@ namespace Services.Broadcast.BusinessEngines.InventoryDaypartParsing
                         weekDay.Equals(_DayConstants3[i], System.StringComparison.OrdinalIgnoreCase) ||
                         weekDay.Equals(_DayConstants4[i], System.StringComparison.OrdinalIgnoreCase))
                     {
-                        weekDays = weekDays.Replace(weekDay, (_DayConstants1[i]));
+                        var replaceRegexPattern = $"(^{weekDay}{separators})|({separators}{weekDay}{separators})|({separators}{weekDay}$)|(^{weekDay}$)";
+                        weekDays = Regex.Replace(
+                            weekDays, 
+                            string.Format(replaceRegexPattern, weekDay), 
+                            (match) => match.Value.Replace(weekDay, _DayConstants1[i]));
                     }
                 }
             }

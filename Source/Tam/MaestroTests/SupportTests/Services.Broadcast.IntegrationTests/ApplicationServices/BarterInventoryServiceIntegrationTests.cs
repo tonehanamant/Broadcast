@@ -271,6 +271,22 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        public void SavesOAndOInventoryFileManifests_OAndO_PRI7393_DaypartParsingBug()
+        {
+            const string fileName = @"BarterDataFiles\OAndO_PRI7393.xlsx";
+            _VerifyFileInventoryManifests(fileName);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void SavesOAndOInventoryFileManifests_OAndO_PRI7410_DaypartParsingBug()
+        {
+            const string fileName = @"BarterDataFiles\OAndO_PRI7410.xlsx";
+            _VerifyFileInventoryManifests(fileName);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
         public void OAndO_NoStationHeaderCell()
         {
             const string fileName = @"BarterDataFiles\OAndO_NoStationHeaderCell.xlsx";
