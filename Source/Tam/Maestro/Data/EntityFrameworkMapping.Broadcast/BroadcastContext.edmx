@@ -288,10 +288,10 @@
           <Property Name="end_date" Type="datetime" Nullable="false" />
           <Property Name="cpm" Type="money" />
           <Property Name="audience_id" Type="int" />
-          <Property Name="contracted_daypart_id" Type="int" Nullable="false" />
-          <Property Name="share_projection_book_id" Type="int" Nullable="false" />
+          <Property Name="contracted_daypart_id" Type="int" />
+          <Property Name="share_projection_book_id" Type="int" />
           <Property Name="hut_projection_book_id" Type="int" />
-          <Property Name="playback_type" Type="int" Nullable="false" />
+          <Property Name="playback_type" Type="int" />
           <Property Name="nti_to_nsi_increase" Type="decimal" Precision="18" Scale="10" />
         </EntityType>
         <EntityType Name="inventory_file_problems">
@@ -1645,7 +1645,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_inventory_file_barter_header_dayparts">
-          <End Role="dayparts" Type="Self.dayparts" Multiplicity="1" />
+          <End Role="dayparts" Type="Self.dayparts" Multiplicity="0..1" />
           <End Role="inventory_file_barter_header" Type="Self.inventory_file_barter_header" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="dayparts">
@@ -1669,7 +1669,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_inventory_file_barter_header_media_months">
-          <End Role="media_months" Type="Self.media_months" Multiplicity="1" />
+          <End Role="media_months" Type="Self.media_months" Multiplicity="0..1" />
           <End Role="inventory_file_barter_header" Type="Self.inventory_file_barter_header" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="media_months">
@@ -8503,10 +8503,10 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="end_date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="cpm" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="audience_id" Type="Int32" />
-          <Property Name="contracted_daypart_id" Type="Int32" Nullable="false" />
-          <Property Name="share_projection_book_id" Type="Int32" Nullable="false" />
+          <Property Name="contracted_daypart_id" Type="Int32" />
+          <Property Name="share_projection_book_id" Type="Int32" />
           <Property Name="hut_projection_book_id" Type="Int32" />
-          <Property Name="playback_type" Type="Int32" Nullable="false" />
+          <Property Name="playback_type" Type="Int32" />
           <NavigationProperty Name="audience" Relationship="BroadcastModel.FK_inventory_file_barter_header_audiences" FromRole="inventory_file_barter_header" ToRole="audience" />
           <NavigationProperty Name="daypart" Relationship="BroadcastModel.FK_inventory_file_barter_header_dayparts" FromRole="inventory_file_barter_header" ToRole="daypart" />
           <NavigationProperty Name="inventory_files" Relationship="BroadcastModel.FK_inventory_file_barter_header_inventory_files" FromRole="inventory_file_barter_header" ToRole="inventory_files" />
@@ -8527,7 +8527,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_inventory_file_barter_header_dayparts">
-          <End Type="BroadcastModel.daypart" Role="daypart" Multiplicity="1" />
+          <End Type="BroadcastModel.daypart" Role="daypart" Multiplicity="0..1" />
           <End Type="BroadcastModel.inventory_file_barter_header" Role="inventory_file_barter_header" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="daypart">
@@ -8551,7 +8551,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_inventory_file_barter_header_media_months">
-          <End Type="BroadcastModel.media_months" Role="media_months" Multiplicity="1" />
+          <End Type="BroadcastModel.media_months" Role="media_months" Multiplicity="0..1" />
           <End Type="BroadcastModel.inventory_file_barter_header" Role="inventory_file_barter_header" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="media_months">

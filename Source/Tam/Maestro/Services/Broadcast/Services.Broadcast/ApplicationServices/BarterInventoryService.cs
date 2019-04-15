@@ -135,7 +135,6 @@ namespace Services.Broadcast.ApplicationServices
                 {
                     using (var transaction = TransactionScopeHelper.CreateTransactionScopeWrapper(TimeSpan.FromMinutes(20)))
                     {
-                        var header = barterFile.Header;
                         var stations = _GetFileStationsOrCreate(barterFile, userName);
                         var stationsDict = stations.ToDictionary(x => x.Id, x => x.LegacyCallLetters);
 
@@ -143,9 +142,7 @@ namespace Services.Broadcast.ApplicationServices
 
                         _LockingEngine.LockStations(stationsDict, lockedStationIds, stationLocks);
 
-                        var manifests = barterFile.InventoryGroups.SelectMany(x => x.Manifests);
-
-                        _StationInventoryGroupService.AddNewStationInventory(barterFile, header.EffectiveDate, header.EndDate, header.ContractedDaypartId);
+                        _AddNewStationInventory(barterFile);
 
                         _StationRepository.UpdateStationList(stationsDict.Keys.ToList(), userName, now, barterFile.InventorySource.Id);
 
@@ -216,6 +213,20 @@ namespace Services.Broadcast.ApplicationServices
             }
             archiveFile.Seek(0, SeekOrigin.Begin);
             return new Tuple<string, Stream>(archiveFileName, archiveFile);
+        }
+
+        private void _AddNewStationInventory(BarterInventoryFile barterFile)
+        {
+            var header = barterFile.Header;
+
+            if (barterFile.InventorySource.InventoryType == InventorySourceTypeEnum.Diginet)
+            {
+                // For Diginet we will use ContractedDaypartId from datalines
+            }
+            else
+            {
+                _StationInventoryGroupService.AddNewStationInventory(barterFile, header.EffectiveDate, header.EndDate, header.ContractedDaypartId.Value);
+            }
         }
 
         private InventorySource _ReadInventorySourceFromFile(Stream streamData)

@@ -91,7 +91,7 @@ namespace Services.Broadcast.Repositories
                         EndDate = header.end_date,
                         HutBookId = header.hut_projection_book_id,
                         ShareBookId = header.share_projection_book_id,
-                        PlaybackType = (ProposalPlaybackType)header.playback_type,
+                        PlaybackType = (ProposalPlaybackType?)header.playback_type,
                         NtiToNsiIncrease = header.nti_to_nsi_increase
                     }
                 };
@@ -136,7 +136,7 @@ namespace Services.Broadcast.Repositories
                                 effective_date = barterFile.Header.EffectiveDate,
                                 end_date = barterFile.Header.EndDate,
                                 hut_projection_book_id = barterFile.Header.HutBookId,
-                                playback_type = (int)barterFile.Header.PlaybackType,
+                                playback_type = (int?)barterFile.Header.PlaybackType,
                                 share_projection_book_id = barterFile.Header.ShareBookId,
                                 nti_to_nsi_increase = barterFile.Header.NtiToNsiIncrease
                             }

@@ -22,7 +22,7 @@
     "EndDate": "2019-03-31T00:00:00",
     "HutBookId": null,
     "NtiToNsiIncrease": null,
-    "PlaybackType": 0,
+    "PlaybackType": null,
     "ShareBookId": 425,
     "SpotLengthId": null
   },

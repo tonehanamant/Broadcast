@@ -5,6 +5,7 @@
         OpenMarket = 1,
         Barter = 2,
         ProprietaryOAndO = 3,
-        Syndication = 4
+        Syndication = 4,
+        Diginet = 5
     }
 }

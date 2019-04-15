@@ -88,6 +88,17 @@ namespace Services.Broadcast.Converters.RateImport
                         _DaypartCache);
                     break;
 
+                case InventorySourceTypeEnum.Diginet:
+                    fileImporter = new DiginetFileImporter(
+                        _BroadcastDataRepositoryFactory,
+                        _BroadcastAudiencesCache,
+                        _InventoryDaypartParsingEngine,
+                        _MediaMonthAndWeekAggregateCache,
+                        _StationProcessingEngine,
+                        _SpotLengthEngine,
+                        _DaypartCache);
+                    break;
+
                 default:
                     throw new NotImplementedException("Unsupported inventory source");
             }

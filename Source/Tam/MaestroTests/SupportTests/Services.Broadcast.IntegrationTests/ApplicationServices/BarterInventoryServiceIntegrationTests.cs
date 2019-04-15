@@ -428,6 +428,38 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             _VerifyInventoryFileProblems(fileName);
         }
 
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void SavesDiginetInventoryFile()
+        {
+            const string fileName = @"BarterDataFiles\Diginet_ValidFile1.xlsx";
+            _VerifyInventoryFileMetadataAndHeaderData(fileName);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void Diginet_InvalidFile1()
+        {
+            const string fileName = @"BarterDataFiles\Diginet_InvalidFile1.xlsx";
+            _VerifyInventoryFileProblems(fileName);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void Diginet_InvalidFile2()
+        {
+            const string fileName = @"BarterDataFiles\Diginet_InvalidFile2.xlsx";
+            _VerifyInventoryFileProblems(fileName);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void Diginet_InvalidFile3()
+        {
+            const string fileName = @"BarterDataFiles\Diginet_InvalidFile3.xlsx";
+            _VerifyInventoryFileProblems(fileName);
+        }
+
         private void _VerifyInventoryFileProblems(string fileName)
         {
             using (new TransactionScopeWrapper())

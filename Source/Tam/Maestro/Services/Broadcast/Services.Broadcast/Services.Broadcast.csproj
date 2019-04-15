@@ -221,6 +221,7 @@
     <Compile Include="Converters\Scx\ScxBaseConverter.cs" />
     <Compile Include="Converters\RateImport\BarterFileImporterBase.cs" />
     <Compile Include="Converters\RateImport\BarterFileImporterFactory.cs" />
+    <Compile Include="Converters\RateImport\DiginetFileImporter.cs" />
     <Compile Include="Converters\RateImport\OAndOBarterFileImporter.cs" />
     <Compile Include="Converters\RateImport\SyndicationFileImporter.cs" />
     <Compile Include="Entities\DaypartCode.cs" />

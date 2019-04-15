@@ -1,0 +1,20 @@
+﻿[
+  {
+    "AffectedProposals": null,
+    "ProblemDescription": "Effective date is missing",
+    "ProgramName": null,
+    "StationLetters": null
+  },
+  {
+    "AffectedProposals": null,
+    "ProblemDescription": "End date is missing",
+    "ProgramName": null,
+    "StationLetters": null
+  },
+  {
+    "AffectedProposals": null,
+    "ProblemDescription": "NTI to NSI Increase is missing",
+    "ProgramName": null,
+    "StationLetters": null
+  }
+]

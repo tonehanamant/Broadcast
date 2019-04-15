@@ -10,10 +10,10 @@ namespace Services.Broadcast.Entities.BarterInventory
         public DateTime EndDate { get; set; }
         public decimal? Cpm { get; set; }
         public BroadcastAudience Audience { get; set; }
-        public int ContractedDaypartId { get; set; }
-        public int ShareBookId { get; set; }
+        public int? ContractedDaypartId { get; set; }
+        public int? ShareBookId { get; set; }
         public int? HutBookId { get; set; }
-        public ProposalEnums.ProposalPlaybackType PlaybackType { get; set; }
+        public ProposalEnums.ProposalPlaybackType? PlaybackType { get; set; }
         public int? SpotLengthId { get; set; }
         public decimal? NtiToNsiIncrease { get; set; }
     }

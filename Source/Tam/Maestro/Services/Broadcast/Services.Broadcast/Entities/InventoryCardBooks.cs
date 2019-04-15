@@ -9,6 +9,6 @@ namespace Services.Broadcast.Entities
     public class InventoryCardBooks
     {
         public int? HutProjectBookId { get; set; }
-        public int ShareProjectionBookId { get; set; }
+        public int? ShareProjectionBookId { get; set; }
     }
 }

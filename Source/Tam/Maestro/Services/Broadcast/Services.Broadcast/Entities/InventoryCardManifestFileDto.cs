@@ -7,7 +7,7 @@ namespace Services.Broadcast.Entities
     {
         public DateTime CreatedDate { get; set; }
         public int? HutProjectionBookId { get; set; }
-        public int ShareProjectionBookId { get; set; }
+        public int? ShareProjectionBookId { get; set; }
         public FileStatusEnum Status { get; set; }
     }
 }

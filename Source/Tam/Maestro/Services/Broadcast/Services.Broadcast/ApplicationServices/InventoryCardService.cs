@@ -194,6 +194,7 @@ namespace Services.Broadcast.ApplicationServices
         private List<InventoryCardBooks> _GetInventoryPostingBooks(List<InventoryCardManifestFileDto> inventoryCardManifestFileDtos)
         {
             return inventoryCardManifestFileDtos.
+                        Where(x => x.HutProjectionBookId.HasValue || x.ShareProjectionBookId.HasValue).
                         GroupBy(x => new { x.HutProjectionBookId, x.ShareProjectionBookId }).
                         Select(x => new InventoryCardBooks
                         {

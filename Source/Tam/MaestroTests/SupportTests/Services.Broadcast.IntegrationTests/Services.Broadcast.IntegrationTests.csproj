@@ -386,6 +386,18 @@
     <None Include="Files\BarterDataFiles\BarterFileImporter_ValidFormat_UnknownStation.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Files\BarterDataFiles\Diginet_InvalidFile1.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\BarterDataFiles\Diginet_InvalidFile2.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\BarterDataFiles\Diginet_InvalidFile3.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\BarterDataFiles\Diginet_ValidFile1.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Files\BarterDataFiles\DuplicateData_ForecastDB_SingleBook.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

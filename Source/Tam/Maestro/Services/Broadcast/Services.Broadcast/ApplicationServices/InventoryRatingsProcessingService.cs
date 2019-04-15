@@ -105,7 +105,7 @@ namespace Services.Broadcast.ApplicationServices
 
                     //process impressions/cost
                     //sw = Stopwatch.StartNew();
-                    _ImpressionsService.GetProjectedStationImpressions(manifests, barterFile.Header.PlaybackType, barterFile.Header.ShareBookId, barterFile.Header.HutBookId);
+                    _ImpressionsService.GetProjectedStationImpressions(manifests, barterFile.Header.PlaybackType, barterFile.Header.ShareBookId.Value, barterFile.Header.HutBookId);
                     //sw.Stop();
                     //Debug.WriteLine($"GetProjectedStationImpressions: {sw.ElapsedMilliseconds}");
 
@@ -133,6 +133,12 @@ namespace Services.Broadcast.ApplicationServices
                     //update manifest rates
                     _InventoryRepository.UpdateInventoryRatesForManifests(manifests);
 
+                    job.Status = InventoryFileRatingsProcessingStatus.Succeeded;
+                    job.CompletedAt = DateTime.Now;
+                }
+                else if (barterFile.InventorySource.InventoryType == Entities.Enums.InventorySourceTypeEnum.Diginet)
+                {
+                    // nothing to process for now so just set Succeeded status
                     job.Status = InventoryFileRatingsProcessingStatus.Succeeded;
                     job.CompletedAt = DateTime.Now;
                 }

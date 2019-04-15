@@ -1,0 +1,29 @@
+﻿{
+  "CreatedBy": "IntegrationTestUser",
+  "DataLines": [],
+  "FileName": "BarterDataFiles\\Diginet_ValidFile1.xlsx",
+  "FileStatus": 2,
+  "Hash": "5B-4B-3A-ED-09-49-89-62-86-F8-9D-B8-A8-3C-DF-9D-59-D7-34-26",
+  "Header": {
+    "Audience": null,
+    "ContractedDaypartId": null,
+    "Cpm": null,
+    "DaypartCode": "DIGI",
+    "EffectiveDate": "2018-10-10T00:00:00",
+    "EndDate": "2018-10-17T00:00:00",
+    "HutBookId": null,
+    "NtiToNsiIncrease": 25.1230000000,
+    "PlaybackType": null,
+    "ShareBookId": null,
+    "SpotLengthId": null
+  },
+  "InventoryGroups": [],
+  "InventoryManifests": [],
+  "InventorySource": {
+    "InventoryType": 5,
+    "IsActive": true,
+    "Name": "COZI"
+  },
+  "UniqueIdentifier": null,
+  "ValidationProblems": []
+}

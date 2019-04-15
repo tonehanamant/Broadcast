@@ -21,10 +21,10 @@ namespace EntityFrameworkMapping.Broadcast
         public System.DateTime end_date { get; set; }
         public Nullable<decimal> cpm { get; set; }
         public Nullable<int> audience_id { get; set; }
-        public int contracted_daypart_id { get; set; }
-        public int share_projection_book_id { get; set; }
+        public Nullable<int> contracted_daypart_id { get; set; }
+        public Nullable<int> share_projection_book_id { get; set; }
         public Nullable<int> hut_projection_book_id { get; set; }
-        public int playback_type { get; set; }
+        public Nullable<int> playback_type { get; set; }
         public Nullable<decimal> nti_to_nsi_increase { get; set; }
     
         public virtual audience audience { get; set; }
