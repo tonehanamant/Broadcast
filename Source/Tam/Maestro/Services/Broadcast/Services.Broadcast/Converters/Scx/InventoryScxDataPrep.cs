@@ -103,8 +103,8 @@ namespace Services.Broadcast.Converters.Scx
                 _SetMarketIds(scxData);
 
                 BarterInventoryHeader inventoryHeader = _InventoryRepository.GetInventoryFileHeader(inventoryFileId.Value);
-                var marketSubscribers = _NsiUniverseRepository.GetUniverseDataByAudience(inventoryHeader.ShareBookId, new List<int> { inventoryHeader.Audience.Id });
-                var marketRankings = _NsiMarketRepository.GetMarketRankingsByMediaMonth(inventoryHeader.ShareBookId);
+                var marketSubscribers = _NsiUniverseRepository.GetUniverseDataByAudience(inventoryHeader.ShareBookId.Value, new List<int> { inventoryHeader.Audience.Id });
+                var marketRankings = _NsiMarketRepository.GetMarketRankingsByMediaMonth(inventoryHeader.ShareBookId.Value);
                 var marketCoverages = _MarketCoverageRepository.GetLatestMarketCoverages(scxData.MarketIds).MarketCoveragesByMarketCode;
 
                 _SetMarketProperties(scxData, marketRankings, marketSubscribers, marketCoverages);
@@ -149,10 +149,10 @@ namespace Services.Broadcast.Converters.Scx
         {
             var bookingMediaMonthId = inventoryHeader.HutBookId ?? inventoryHeader.ShareBookId;
 
-            var mediaMonth = _MediaMonthAndWeekCache.GetMediaMonthById(bookingMediaMonthId);
+            var mediaMonth = _MediaMonthAndWeekCache.GetMediaMonthById(bookingMediaMonthId.Value);
             string mediaMonthInfo = mediaMonth.Abbreviation + mediaMonth.Year.ToString().Substring(2);
 
-            var rawData = _RatingForecastRepository.GetPlaybackForMarketBy(bookingMediaMonthId, inventoryHeader.PlaybackType);
+            var rawData = _RatingForecastRepository.GetPlaybackForMarketBy(bookingMediaMonthId.Value, inventoryHeader.PlaybackType);
             data.MarketPlaybackTypes = rawData.Where(d => data.MarketIds.Contains(d.market_code)).ToList();
             data.SurveyData = rawData.ToDictionary(
                 k => k.MarketId,
