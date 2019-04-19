@@ -361,6 +361,19 @@ BEGIN
 END
 GO
 /*************************************** END PRI-7081 *****************************************************/
+
+/*************************************** START PRI-7386 *****************************************************/
+
+IF (SELECT name FROM inventory_sources
+    WHERE id = 4) = 'TTNW'
+BEGIN
+	UPDATE inventory_sources
+	SET name = 'TTWN'
+	WHERE id = 4
+END
+
+/*************************************** END PRI-7386 *******************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

@@ -14,7 +14,7 @@
       "Id": 4,
       "InventoryType": 2,
       "IsActive": true,
-      "Name": "TTNW"
+      "Name": "TTWN"
     },
     {
       "Id": 5,

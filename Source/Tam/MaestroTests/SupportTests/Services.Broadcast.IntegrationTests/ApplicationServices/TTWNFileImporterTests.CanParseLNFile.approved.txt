@@ -1,0 +1,5603 @@
+﻿{
+  "fileProblems": [],
+  "inventoryFile": {
+    "EndDate": "0001-01-01T00:00:00",
+    "FileName": null,
+    "FileStatus": 0,
+    "Hash": null,
+    "Id": 0,
+    "InventoryGroups": [
+      {
+        "DaypartCode": "LN",
+        "EndDate": null,
+        "Id": null,
+        "Manifests": [
+          {
+            "Comment": null,
+            "DaypartCode": "LN",
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "CPM": 0.0,
+                "Impressions": 37000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "CPM": 0.0,
+                "Impressions": 20000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "CPM": 0.0,
+                "Impressions": 31000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "CPM": 0.0,
+                "Impressions": 34000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "CPM": 0.0,
+                "Impressions": 16000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "CPM": 0.0,
+                "Impressions": 17000.0,
+                "IsReference": true,
+                "Rating": null
+              }
+            ],
+            "ManifestDayparts": [
+              {
+                "Daypart": {
+                  "_Code": "CUS",
+                  "_EndTime": 7199,
+                  "_Friday": true,
+                  "_Id": 6029,
+                  "_Is24Hour": false,
+                  "_LastEndTime": 0,
+                  "_LastStartTime": 0,
+                  "_Monday": true,
+                  "_Name": "Custom",
+                  "_Saturday": true,
+                  "_StartTime": 82800,
+                  "_Sunday": true,
+                  "_Thursday": true,
+                  "_Tuesday": true,
+                  "_Wednesday": true
+                },
+                "Genres": [],
+                "ProgramName": null
+              }
+            ],
+            "ManifestRates": [],
+            "ManifestWeeks": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 1,
+            "Station": {
+              "Affiliation": "NBC",
+              "CallLetters": "WNBC 4.1",
+              "Code": 5013,
+              "LegacyCallLetters": "WNBC",
+              "ManifestMaxEndDate": null,
+              "MarketCode": 101,
+              "OriginMarket": "New York",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "Comment": null,
+            "DaypartCode": "LN",
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "CPM": 0.0,
+                "Impressions": 76000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "CPM": 0.0,
+                "Impressions": 35000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "CPM": 0.0,
+                "Impressions": 52000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "CPM": 0.0,
+                "Impressions": 56000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "CPM": 0.0,
+                "Impressions": 28000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "CPM": 0.0,
+                "Impressions": 31000.0,
+                "IsReference": true,
+                "Rating": null
+              }
+            ],
+            "ManifestDayparts": [
+              {
+                "Daypart": {
+                  "_Code": "CUS",
+                  "_EndTime": 79199,
+                  "_Friday": false,
+                  "_Id": 30773,
+                  "_Is24Hour": false,
+                  "_LastEndTime": 0,
+                  "_LastStartTime": 0,
+                  "_Monday": false,
+                  "_Name": "Custom",
+                  "_Saturday": true,
+                  "_StartTime": 75600,
+                  "_Sunday": true,
+                  "_Thursday": false,
+                  "_Tuesday": false,
+                  "_Wednesday": false
+                },
+                "Genres": [],
+                "ProgramName": null
+              }
+            ],
+            "ManifestRates": [],
+            "ManifestWeeks": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 1,
+            "Station": {
+              "Affiliation": "FOX",
+              "CallLetters": "KDFW 4.1",
+              "Code": 5035,
+              "LegacyCallLetters": "KDFW",
+              "ManifestMaxEndDate": null,
+              "MarketCode": 223,
+              "OriginMarket": "Dallas-Ft. Worth",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "Comment": null,
+            "DaypartCode": "LN",
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "CPM": 0.0,
+                "Impressions": 35000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "CPM": 0.0,
+                "Impressions": 10000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "CPM": 0.0,
+                "Impressions": 18000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "CPM": 0.0,
+                "Impressions": 20000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "CPM": 0.0,
+                "Impressions": 4000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "CPM": 0.0,
+                "Impressions": 5000.0,
+                "IsReference": true,
+                "Rating": null
+              }
+            ],
+            "ManifestDayparts": [
+              {
+                "Daypart": {
+                  "_Code": "CUS",
+                  "_EndTime": 84899,
+                  "_Friday": true,
+                  "_Id": 62725,
+                  "_Is24Hour": false,
+                  "_LastEndTime": 0,
+                  "_LastStartTime": 0,
+                  "_Monday": true,
+                  "_Name": "Custom",
+                  "_Saturday": false,
+                  "_StartTime": 82800,
+                  "_Sunday": false,
+                  "_Thursday": true,
+                  "_Tuesday": true,
+                  "_Wednesday": true
+                },
+                "Genres": [],
+                "ProgramName": null
+              }
+            ],
+            "ManifestRates": [],
+            "ManifestWeeks": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 1,
+            "Station": {
+              "Affiliation": "CBS",
+              "CallLetters": "WUSA 9.1",
+              "Code": 5098,
+              "LegacyCallLetters": "WUSA",
+              "ManifestMaxEndDate": null,
+              "MarketCode": 111,
+              "OriginMarket": "Washington, DC (Hagrstwn)",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "Comment": null,
+            "DaypartCode": "LN",
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "CPM": 0.0,
+                "Impressions": 51000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "CPM": 0.0,
+                "Impressions": 25000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "CPM": 0.0,
+                "Impressions": 37000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "CPM": 0.0,
+                "Impressions": 40000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "CPM": 0.0,
+                "Impressions": 16000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "CPM": 0.0,
+                "Impressions": 16000.0,
+                "IsReference": true,
+                "Rating": null
+              }
+            ],
+            "ManifestDayparts": [
+              {
+                "Daypart": {
+                  "_Code": "CUS",
+                  "_EndTime": 84599,
+                  "_Friday": true,
+                  "_Id": 14794,
+                  "_Is24Hour": false,
+                  "_LastEndTime": 0,
+                  "_LastStartTime": 0,
+                  "_Monday": true,
+                  "_Name": "Custom",
+                  "_Saturday": false,
+                  "_StartTime": 79200,
+                  "_Sunday": false,
+                  "_Thursday": true,
+                  "_Tuesday": true,
+                  "_Wednesday": true
+                },
+                "Genres": [],
+                "ProgramName": null
+              },
+              {
+                "Daypart": {
+                  "_Code": "CUS",
+                  "_EndTime": 82799,
+                  "_Friday": false,
+                  "_Id": 14728,
+                  "_Is24Hour": false,
+                  "_LastEndTime": 0,
+                  "_LastStartTime": 0,
+                  "_Monday": false,
+                  "_Name": "Custom",
+                  "_Saturday": true,
+                  "_StartTime": 79200,
+                  "_Sunday": true,
+                  "_Thursday": false,
+                  "_Tuesday": false,
+                  "_Wednesday": false
+                },
+                "Genres": [],
+                "ProgramName": null
+              }
+            ],
+            "ManifestRates": [],
+            "ManifestWeeks": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 1,
+            "Station": {
+              "Affiliation": "FOX",
+              "CallLetters": "WFXT-DT 25.1",
+              "Code": 6705,
+              "LegacyCallLetters": "WFXT",
+              "ManifestMaxEndDate": null,
+              "MarketCode": 106,
+              "OriginMarket": "Boston (Manchester)",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "Comment": null,
+            "DaypartCode": "LN",
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "CPM": 0.0,
+                "Impressions": 98000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "CPM": 0.0,
+                "Impressions": 57000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "CPM": 0.0,
+                "Impressions": 73000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "CPM": 0.0,
+                "Impressions": 80000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "CPM": 0.0,
+                "Impressions": 38000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "CPM": 0.0,
+                "Impressions": 42000.0,
+                "IsReference": true,
+                "Rating": null
+              }
+            ],
+            "ManifestDayparts": [
+              {
+                "Daypart": {
+                  "_Code": "CUS",
+                  "_EndTime": 82739,
+                  "_Friday": true,
+                  "_Id": 67264,
+                  "_Is24Hour": false,
+                  "_LastEndTime": 0,
+                  "_LastStartTime": 0,
+                  "_Monday": true,
+                  "_Name": "Custom",
+                  "_Saturday": true,
+                  "_StartTime": 79200,
+                  "_Sunday": true,
+                  "_Thursday": true,
+                  "_Tuesday": true,
+                  "_Wednesday": true
+                },
+                "Genres": [],
+                "ProgramName": null
+              }
+            ],
+            "ManifestRates": [],
+            "ManifestWeeks": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 1,
+            "Station": {
+              "Affiliation": "FOX",
+              "CallLetters": "WAGA-TV 5.1",
+              "Code": 5045,
+              "LegacyCallLetters": "WAGA",
+              "ManifestMaxEndDate": null,
+              "MarketCode": 124,
+              "OriginMarket": "Atlanta",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "Comment": null,
+            "DaypartCode": "LN",
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "CPM": 0.0,
+                "Impressions": 71000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "CPM": 0.0,
+                "Impressions": 38000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "CPM": 0.0,
+                "Impressions": 50000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "CPM": 0.0,
+                "Impressions": 55000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "CPM": 0.0,
+                "Impressions": 26000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "CPM": 0.0,
+                "Impressions": 28000.0,
+                "IsReference": true,
+                "Rating": null
+              }
+            ],
+            "ManifestDayparts": [
+              {
+                "Daypart": {
+                  "_Code": "CUS",
+                  "_EndTime": 86339,
+                  "_Friday": true,
+                  "_Id": 67265,
+                  "_Is24Hour": false,
+                  "_LastEndTime": 0,
+                  "_LastStartTime": 0,
+                  "_Monday": true,
+                  "_Name": "Custom",
+                  "_Saturday": false,
+                  "_StartTime": 84600,
+                  "_Sunday": false,
+                  "_Thursday": true,
+                  "_Tuesday": true,
+                  "_Wednesday": true
+                },
+                "Genres": [],
+                "ProgramName": null
+              }
+            ],
+            "ManifestRates": [],
+            "ManifestWeeks": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 1,
+            "Station": {
+              "Affiliation": "FOX",
+              "CallLetters": "WAGA-TV 5.1",
+              "Code": 5045,
+              "LegacyCallLetters": "WAGA",
+              "ManifestMaxEndDate": null,
+              "MarketCode": 124,
+              "OriginMarket": "Atlanta",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "Comment": null,
+            "DaypartCode": "LN",
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "CPM": 0.0,
+                "Impressions": 45000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "CPM": 0.0,
+                "Impressions": 24000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "CPM": 0.0,
+                "Impressions": 32000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "CPM": 0.0,
+                "Impressions": 34000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "CPM": 0.0,
+                "Impressions": 18000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "CPM": 0.0,
+                "Impressions": 19000.0,
+                "IsReference": true,
+                "Rating": null
+              }
+            ],
+            "ManifestDayparts": [
+              {
+                "Daypart": {
+                  "_Code": "CUS",
+                  "_EndTime": 80999,
+                  "_Friday": true,
+                  "_Id": 31516,
+                  "_Is24Hour": false,
+                  "_LastEndTime": 0,
+                  "_LastStartTime": 0,
+                  "_Monday": true,
+                  "_Name": "Custom",
+                  "_Saturday": true,
+                  "_StartTime": 79200,
+                  "_Sunday": true,
+                  "_Thursday": true,
+                  "_Tuesday": true,
+                  "_Wednesday": true
+                },
+                "Genres": [],
+                "ProgramName": null
+              }
+            ],
+            "ManifestRates": [],
+            "ManifestWeeks": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 2,
+            "Station": {
+              "Affiliation": "IND",
+              "CallLetters": "WATL 36.1",
+              "Code": 6797,
+              "LegacyCallLetters": "WATL",
+              "ManifestMaxEndDate": null,
+              "MarketCode": 124,
+              "OriginMarket": "Atlanta",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "Comment": null,
+            "DaypartCode": "LN",
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "CPM": 0.0,
+                "Impressions": 35000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "CPM": 0.0,
+                "Impressions": 14000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "CPM": 0.0,
+                "Impressions": 23000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "CPM": 0.0,
+                "Impressions": 25000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "CPM": 0.0,
+                "Impressions": 8000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "CPM": 0.0,
+                "Impressions": 10000.0,
+                "IsReference": true,
+                "Rating": null
+              }
+            ],
+            "ManifestDayparts": [
+              {
+                "Daypart": {
+                  "_Code": "CUS",
+                  "_EndTime": 84899,
+                  "_Friday": true,
+                  "_Id": 62724,
+                  "_Is24Hour": false,
+                  "_LastEndTime": 0,
+                  "_LastStartTime": 0,
+                  "_Monday": true,
+                  "_Name": "Custom",
+                  "_Saturday": true,
+                  "_StartTime": 82800,
+                  "_Sunday": true,
+                  "_Thursday": true,
+                  "_Tuesday": true,
+                  "_Wednesday": true
+                },
+                "Genres": [],
+                "ProgramName": null
+              }
+            ],
+            "ManifestRates": [],
+            "ManifestWeeks": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 2,
+            "Station": {
+              "Affiliation": "CBS",
+              "CallLetters": "WGCL-TV 46.1",
+              "Code": 5893,
+              "LegacyCallLetters": "WGCL",
+              "ManifestMaxEndDate": null,
+              "MarketCode": 124,
+              "OriginMarket": "Atlanta",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "Comment": null,
+            "DaypartCode": "LN",
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "CPM": 0.0,
+                "Impressions": 41000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "CPM": 0.0,
+                "Impressions": 23000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "CPM": 0.0,
+                "Impressions": 32000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "CPM": 0.0,
+                "Impressions": 35000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "CPM": 0.0,
+                "Impressions": 18000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "CPM": 0.0,
+                "Impressions": 21000.0,
+                "IsReference": true,
+                "Rating": null
+              }
+            ],
+            "ManifestDayparts": [
+              {
+                "Daypart": {
+                  "_Code": "CUS",
+                  "_EndTime": 84599,
+                  "_Friday": true,
+                  "_Id": 37524,
+                  "_Is24Hour": false,
+                  "_LastEndTime": 0,
+                  "_LastStartTime": 0,
+                  "_Monday": true,
+                  "_Name": "Custom",
+                  "_Saturday": true,
+                  "_StartTime": 82800,
+                  "_Sunday": true,
+                  "_Thursday": true,
+                  "_Tuesday": true,
+                  "_Wednesday": true
+                },
+                "Genres": [],
+                "ProgramName": null
+              }
+            ],
+            "ManifestRates": [],
+            "ManifestWeeks": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 1,
+            "Station": {
+              "Affiliation": "NBC",
+              "CallLetters": "WXIA-TV 11.1",
+              "Code": 5117,
+              "LegacyCallLetters": "WXIA",
+              "ManifestMaxEndDate": null,
+              "MarketCode": 124,
+              "OriginMarket": "Atlanta",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "Comment": null,
+            "DaypartCode": "LN",
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "CPM": 0.0,
+                "Impressions": 194000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "CPM": 0.0,
+                "Impressions": 115000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "CPM": 0.0,
+                "Impressions": 150000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "CPM": 0.0,
+                "Impressions": 167000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "CPM": 0.0,
+                "Impressions": 77000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "CPM": 0.0,
+                "Impressions": 84000.0,
+                "IsReference": true,
+                "Rating": null
+              }
+            ],
+            "ManifestDayparts": [
+              {
+                "Daypart": {
+                  "_Code": "CUS",
+                  "_EndTime": 82799,
+                  "_Friday": true,
+                  "_Id": 31032,
+                  "_Is24Hour": false,
+                  "_LastEndTime": 0,
+                  "_LastStartTime": 0,
+                  "_Monday": true,
+                  "_Name": "Custom",
+                  "_Saturday": false,
+                  "_StartTime": 79200,
+                  "_Sunday": false,
+                  "_Thursday": true,
+                  "_Tuesday": true,
+                  "_Wednesday": true
+                },
+                "Genres": [],
+                "ProgramName": null
+              }
+            ],
+            "ManifestRates": [],
+            "ManifestWeeks": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 2,
+            "Station": {
+              "Affiliation": "FOX",
+              "CallLetters": "WJBK 2.1",
+              "Code": 5075,
+              "LegacyCallLetters": "WJBK",
+              "ManifestMaxEndDate": null,
+              "MarketCode": 105,
+              "OriginMarket": "Detroit",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "Comment": null,
+            "DaypartCode": "LN",
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "CPM": 0.0,
+                "Impressions": 25000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "CPM": 0.0,
+                "Impressions": 15000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "CPM": 0.0,
+                "Impressions": 18000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "CPM": 0.0,
+                "Impressions": 22000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "CPM": 0.0,
+                "Impressions": 11000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "CPM": 0.0,
+                "Impressions": 12000.0,
+                "IsReference": true,
+                "Rating": null
+              }
+            ],
+            "ManifestDayparts": [
+              {
+                "Daypart": {
+                  "_Code": "CUS",
+                  "_EndTime": 80999,
+                  "_Friday": true,
+                  "_Id": 31516,
+                  "_Is24Hour": false,
+                  "_LastEndTime": 0,
+                  "_LastStartTime": 0,
+                  "_Monday": true,
+                  "_Name": "Custom",
+                  "_Saturday": true,
+                  "_StartTime": 79200,
+                  "_Sunday": true,
+                  "_Thursday": true,
+                  "_Tuesday": true,
+                  "_Wednesday": true
+                },
+                "Genres": [],
+                "ProgramName": null
+              }
+            ],
+            "ManifestRates": [],
+            "ManifestWeeks": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 1,
+            "Station": {
+              "Affiliation": "FOX",
+              "CallLetters": "KCPQ 13.1",
+              "Code": 6019,
+              "LegacyCallLetters": "KCPQ",
+              "ManifestMaxEndDate": null,
+              "MarketCode": 419,
+              "OriginMarket": "Seattle-Tacoma",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "Comment": null,
+            "DaypartCode": "LN",
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "CPM": 0.0,
+                "Impressions": 24000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "CPM": 0.0,
+                "Impressions": 15000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "CPM": 0.0,
+                "Impressions": 17000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "CPM": 0.0,
+                "Impressions": 20000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "CPM": 0.0,
+                "Impressions": 11000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "CPM": 0.0,
+                "Impressions": 11000.0,
+                "IsReference": true,
+                "Rating": null
+              }
+            ],
+            "ManifestDayparts": [
+              {
+                "Daypart": {
+                  "_Code": "CUS",
+                  "_EndTime": 82799,
+                  "_Friday": true,
+                  "_Id": 31032,
+                  "_Is24Hour": false,
+                  "_LastEndTime": 0,
+                  "_LastStartTime": 0,
+                  "_Monday": true,
+                  "_Name": "Custom",
+                  "_Saturday": false,
+                  "_StartTime": 79200,
+                  "_Sunday": false,
+                  "_Thursday": true,
+                  "_Tuesday": true,
+                  "_Wednesday": true
+                },
+                "Genres": [],
+                "ProgramName": null
+              },
+              {
+                "Daypart": {
+                  "_Code": "CUS",
+                  "_EndTime": 80999,
+                  "_Friday": false,
+                  "_Id": 7235,
+                  "_Is24Hour": false,
+                  "_LastEndTime": 0,
+                  "_LastStartTime": 0,
+                  "_Monday": false,
+                  "_Name": "Custom",
+                  "_Saturday": true,
+                  "_StartTime": 79200,
+                  "_Sunday": true,
+                  "_Thursday": false,
+                  "_Tuesday": false,
+                  "_Wednesday": false
+                },
+                "Genres": [],
+                "ProgramName": null
+              }
+            ],
+            "ManifestRates": [],
+            "ManifestWeeks": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 1,
+            "Station": {
+              "Affiliation": "FOX",
+              "CallLetters": "KCPQ 13.1",
+              "Code": 6019,
+              "LegacyCallLetters": "KCPQ",
+              "ManifestMaxEndDate": null,
+              "MarketCode": 419,
+              "OriginMarket": "Seattle-Tacoma",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "Comment": null,
+            "DaypartCode": "LN",
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "CPM": 0.0,
+                "Impressions": 13000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "CPM": 0.0,
+                "Impressions": 6000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "CPM": 0.0,
+                "Impressions": 10000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "CPM": 0.0,
+                "Impressions": 12000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "CPM": 0.0,
+                "Impressions": 3000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "CPM": 0.0,
+                "Impressions": 4000.0,
+                "IsReference": true,
+                "Rating": null
+              }
+            ],
+            "ManifestDayparts": [
+              {
+                "Daypart": {
+                  "_Code": "CUS",
+                  "_EndTime": 79139,
+                  "_Friday": true,
+                  "_Id": 67266,
+                  "_Is24Hour": false,
+                  "_LastEndTime": 0,
+                  "_LastStartTime": 0,
+                  "_Monday": true,
+                  "_Name": "Custom",
+                  "_Saturday": false,
+                  "_StartTime": 75600,
+                  "_Sunday": false,
+                  "_Thursday": true,
+                  "_Tuesday": true,
+                  "_Wednesday": true
+                },
+                "Genres": [],
+                "ProgramName": null
+              },
+              {
+                "Daypart": {
+                  "_Code": "CUS",
+                  "_EndTime": 77339,
+                  "_Friday": false,
+                  "_Id": 67267,
+                  "_Is24Hour": false,
+                  "_LastEndTime": 0,
+                  "_LastStartTime": 0,
+                  "_Monday": false,
+                  "_Name": "Custom",
+                  "_Saturday": true,
+                  "_StartTime": 75600,
+                  "_Sunday": true,
+                  "_Thursday": false,
+                  "_Tuesday": false,
+                  "_Wednesday": false
+                },
+                "Genres": [],
+                "ProgramName": null
+              }
+            ],
+            "ManifestRates": [],
+            "ManifestWeeks": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 1,
+            "Station": {
+              "Affiliation": "IND",
+              "CallLetters": "KZJO 22.1",
+              "Code": 6193,
+              "LegacyCallLetters": "KZJO",
+              "ManifestMaxEndDate": null,
+              "MarketCode": 419,
+              "OriginMarket": "Seattle-Tacoma",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "Comment": null,
+            "DaypartCode": "LN",
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "CPM": 0.0,
+                "Impressions": 39000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "CPM": 0.0,
+                "Impressions": 17000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "CPM": 0.0,
+                "Impressions": 27000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "CPM": 0.0,
+                "Impressions": 29000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "CPM": 0.0,
+                "Impressions": 10000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "CPM": 0.0,
+                "Impressions": 11000.0,
+                "IsReference": true,
+                "Rating": null
+              }
+            ],
+            "ManifestDayparts": [
+              {
+                "Daypart": {
+                  "_Code": "CUS",
+                  "_EndTime": 84899,
+                  "_Friday": true,
+                  "_Id": 62724,
+                  "_Is24Hour": false,
+                  "_LastEndTime": 0,
+                  "_LastStartTime": 0,
+                  "_Monday": true,
+                  "_Name": "Custom",
+                  "_Saturday": true,
+                  "_StartTime": 82800,
+                  "_Sunday": true,
+                  "_Thursday": true,
+                  "_Tuesday": true,
+                  "_Wednesday": true
+                },
+                "Genres": [],
+                "ProgramName": null
+              }
+            ],
+            "ManifestRates": [],
+            "ManifestWeeks": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 1,
+            "Station": {
+              "Affiliation": "ABC",
+              "CallLetters": "WPLG 10.1",
+              "Code": 5412,
+              "LegacyCallLetters": "WPLG",
+              "ManifestMaxEndDate": null,
+              "MarketCode": 128,
+              "OriginMarket": "Miami-Ft. Lauderdale",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "Comment": null,
+            "DaypartCode": "LN",
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "CPM": 0.0,
+                "Impressions": 70000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "CPM": 0.0,
+                "Impressions": 40000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "CPM": 0.0,
+                "Impressions": 52000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "CPM": 0.0,
+                "Impressions": 60000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "CPM": 0.0,
+                "Impressions": 28000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "CPM": 0.0,
+                "Impressions": 30000.0,
+                "IsReference": true,
+                "Rating": null
+              }
+            ],
+            "ManifestDayparts": [
+              {
+                "Daypart": {
+                  "_Code": "CUS",
+                  "_EndTime": 84599,
+                  "_Friday": true,
+                  "_Id": 67268,
+                  "_Is24Hour": false,
+                  "_LastEndTime": 0,
+                  "_LastStartTime": 0,
+                  "_Monday": true,
+                  "_Name": "Custom",
+                  "_Saturday": true,
+                  "_StartTime": 79200,
+                  "_Sunday": true,
+                  "_Thursday": true,
+                  "_Tuesday": true,
+                  "_Wednesday": true
+                },
+                "Genres": [],
+                "ProgramName": null
+              }
+            ],
+            "ManifestRates": [],
+            "ManifestWeeks": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 2,
+            "Station": {
+              "Affiliation": "FOX",
+              "CallLetters": "WSVN 7.1",
+              "Code": 5375,
+              "LegacyCallLetters": "WSVN",
+              "ManifestMaxEndDate": null,
+              "MarketCode": 128,
+              "OriginMarket": "Miami-Ft. Lauderdale",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "Comment": null,
+            "DaypartCode": "LN",
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "CPM": 0.0,
+                "Impressions": 32000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "CPM": 0.0,
+                "Impressions": 15000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "CPM": 0.0,
+                "Impressions": 23000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "CPM": 0.0,
+                "Impressions": 27000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "CPM": 0.0,
+                "Impressions": 10000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "CPM": 0.0,
+                "Impressions": 10000.0,
+                "IsReference": true,
+                "Rating": null
+              }
+            ],
+            "ManifestDayparts": [
+              {
+                "Daypart": {
+                  "_Code": "CUS",
+                  "_EndTime": 84899,
+                  "_Friday": true,
+                  "_Id": 62725,
+                  "_Is24Hour": false,
+                  "_LastEndTime": 0,
+                  "_LastStartTime": 0,
+                  "_Monday": true,
+                  "_Name": "Custom",
+                  "_Saturday": false,
+                  "_StartTime": 82800,
+                  "_Sunday": false,
+                  "_Thursday": true,
+                  "_Tuesday": true,
+                  "_Wednesday": true
+                },
+                "Genres": [],
+                "ProgramName": null
+              }
+            ],
+            "ManifestRates": [],
+            "ManifestWeeks": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 1,
+            "Station": {
+              "Affiliation": "NBC",
+              "CallLetters": "WTVJ 6.1",
+              "Code": 5111,
+              "LegacyCallLetters": "WTVJ",
+              "ManifestMaxEndDate": null,
+              "MarketCode": 128,
+              "OriginMarket": "Miami-Ft. Lauderdale",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "Comment": null,
+            "DaypartCode": "LN",
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "CPM": 0.0,
+                "Impressions": 34000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "CPM": 0.0,
+                "Impressions": 14000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "CPM": 0.0,
+                "Impressions": 24000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "CPM": 0.0,
+                "Impressions": 28000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "CPM": 0.0,
+                "Impressions": 9000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "CPM": 0.0,
+                "Impressions": 11000.0,
+                "IsReference": true,
+                "Rating": null
+              }
+            ],
+            "ManifestDayparts": [
+              {
+                "Daypart": {
+                  "_Code": "CUS",
+                  "_EndTime": 82799,
+                  "_Friday": true,
+                  "_Id": 31003,
+                  "_Is24Hour": false,
+                  "_LastEndTime": 0,
+                  "_LastStartTime": 0,
+                  "_Monday": true,
+                  "_Name": "Custom",
+                  "_Saturday": false,
+                  "_StartTime": 79200,
+                  "_Sunday": true,
+                  "_Thursday": true,
+                  "_Tuesday": true,
+                  "_Wednesday": true
+                },
+                "Genres": [],
+                "ProgramName": null
+              }
+            ],
+            "ManifestRates": [],
+            "ManifestWeeks": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 2,
+            "Station": {
+              "Affiliation": "FOX",
+              "CallLetters": "WOFL 35.1",
+              "Code": 6818,
+              "LegacyCallLetters": "WOFL",
+              "ManifestMaxEndDate": null,
+              "MarketCode": 134,
+              "OriginMarket": "Orlando-Daytona Bch-Melbrn",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "Comment": null,
+            "DaypartCode": "LN",
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "CPM": 0.0,
+                "Impressions": 24000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "CPM": 0.0,
+                "Impressions": 13000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "CPM": 0.0,
+                "Impressions": 16000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "CPM": 0.0,
+                "Impressions": 19000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "CPM": 0.0,
+                "Impressions": 10000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "CPM": 0.0,
+                "Impressions": 11000.0,
+                "IsReference": true,
+                "Rating": null
+              }
+            ],
+            "ManifestDayparts": [
+              {
+                "Daypart": {
+                  "_Code": "CUS",
+                  "_EndTime": 82799,
+                  "_Friday": true,
+                  "_Id": 31003,
+                  "_Is24Hour": false,
+                  "_LastEndTime": 0,
+                  "_LastStartTime": 0,
+                  "_Monday": true,
+                  "_Name": "Custom",
+                  "_Saturday": false,
+                  "_StartTime": 79200,
+                  "_Sunday": true,
+                  "_Thursday": true,
+                  "_Tuesday": true,
+                  "_Wednesday": true
+                },
+                "Genres": [],
+                "ProgramName": null
+              }
+            ],
+            "ManifestRates": [],
+            "ManifestWeeks": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 2,
+            "Station": {
+              "Affiliation": "CW",
+              "CallLetters": "WCCB 18.1",
+              "Code": 5765,
+              "LegacyCallLetters": "WCCB",
+              "ManifestMaxEndDate": null,
+              "MarketCode": 117,
+              "OriginMarket": "Charlotte",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "Comment": null,
+            "DaypartCode": "LN",
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "CPM": 0.0,
+                "Impressions": 26000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "CPM": 0.0,
+                "Impressions": 8000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "CPM": 0.0,
+                "Impressions": 12000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "CPM": 0.0,
+                "Impressions": 12000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "CPM": 0.0,
+                "Impressions": 7000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "CPM": 0.0,
+                "Impressions": 7000.0,
+                "IsReference": true,
+                "Rating": null
+              }
+            ],
+            "ManifestDayparts": [
+              {
+                "Daypart": {
+                  "_Code": "CUS",
+                  "_EndTime": 84899,
+                  "_Friday": true,
+                  "_Id": 62724,
+                  "_Is24Hour": false,
+                  "_LastEndTime": 0,
+                  "_LastStartTime": 0,
+                  "_Monday": true,
+                  "_Name": "Custom",
+                  "_Saturday": true,
+                  "_StartTime": 82800,
+                  "_Sunday": true,
+                  "_Thursday": true,
+                  "_Tuesday": true,
+                  "_Wednesday": true
+                },
+                "Genres": [],
+                "ProgramName": null
+              }
+            ],
+            "ManifestRates": [],
+            "ManifestWeeks": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 1,
+            "Station": {
+              "Affiliation": "CBS",
+              "CallLetters": "KFMB-TV 8.1",
+              "Code": 5024,
+              "LegacyCallLetters": "KFMB",
+              "ManifestMaxEndDate": null,
+              "MarketCode": 425,
+              "OriginMarket": "San Diego",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "Comment": null,
+            "DaypartCode": "LN",
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "CPM": 0.0,
+                "Impressions": 21000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "CPM": 0.0,
+                "Impressions": 6000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "CPM": 0.0,
+                "Impressions": 9000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "CPM": 0.0,
+                "Impressions": 9000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "CPM": 0.0,
+                "Impressions": 4000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "CPM": 0.0,
+                "Impressions": 5000.0,
+                "IsReference": true,
+                "Rating": null
+              }
+            ],
+            "ManifestDayparts": [
+              {
+                "Daypart": {
+                  "_Code": "CUS",
+                  "_EndTime": 84899,
+                  "_Friday": false,
+                  "_Id": 62968,
+                  "_Is24Hour": false,
+                  "_LastEndTime": 0,
+                  "_LastStartTime": 0,
+                  "_Monday": false,
+                  "_Name": "Custom",
+                  "_Saturday": true,
+                  "_StartTime": 82800,
+                  "_Sunday": true,
+                  "_Thursday": false,
+                  "_Tuesday": false,
+                  "_Wednesday": false
+                },
+                "Genres": [],
+                "ProgramName": null
+              }
+            ],
+            "ManifestRates": [],
+            "ManifestWeeks": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 1,
+            "Station": {
+              "Affiliation": "CBS",
+              "CallLetters": "KFMB-TV 8.1",
+              "Code": 5024,
+              "LegacyCallLetters": "KFMB",
+              "ManifestMaxEndDate": null,
+              "MarketCode": 425,
+              "OriginMarket": "San Diego",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "Comment": null,
+            "DaypartCode": "LN",
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "CPM": 0.0,
+                "Impressions": 30000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "CPM": 0.0,
+                "Impressions": 10000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "CPM": 0.0,
+                "Impressions": 18000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "CPM": 0.0,
+                "Impressions": 20000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "CPM": 0.0,
+                "Impressions": 7000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "CPM": 0.0,
+                "Impressions": 7000.0,
+                "IsReference": true,
+                "Rating": null
+              }
+            ],
+            "ManifestDayparts": [
+              {
+                "Daypart": {
+                  "_Code": "CUS",
+                  "_EndTime": 80999,
+                  "_Friday": true,
+                  "_Id": 31516,
+                  "_Is24Hour": false,
+                  "_LastEndTime": 0,
+                  "_LastStartTime": 0,
+                  "_Monday": true,
+                  "_Name": "Custom",
+                  "_Saturday": true,
+                  "_StartTime": 79200,
+                  "_Sunday": true,
+                  "_Thursday": true,
+                  "_Tuesday": true,
+                  "_Wednesday": true
+                },
+                "Genres": [],
+                "ProgramName": null
+              }
+            ],
+            "ManifestRates": [],
+            "ManifestWeeks": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 2,
+            "Station": {
+              "Affiliation": "IND",
+              "CallLetters": "WCTX 59.1",
+              "Code": 5593,
+              "LegacyCallLetters": "WCTX",
+              "ManifestMaxEndDate": null,
+              "MarketCode": 133,
+              "OriginMarket": "Hartford & New Haven",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "Comment": null,
+            "DaypartCode": "LN",
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "CPM": 0.0,
+                "Impressions": 45000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "CPM": 0.0,
+                "Impressions": 19000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "CPM": 0.0,
+                "Impressions": 29000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "CPM": 0.0,
+                "Impressions": 33000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "CPM": 0.0,
+                "Impressions": 14000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "CPM": 0.0,
+                "Impressions": 16000.0,
+                "IsReference": true,
+                "Rating": null
+              }
+            ],
+            "ManifestDayparts": [
+              {
+                "Daypart": {
+                  "_Code": "CUS",
+                  "_EndTime": 82799,
+                  "_Friday": true,
+                  "_Id": 31006,
+                  "_Is24Hour": false,
+                  "_LastEndTime": 0,
+                  "_LastStartTime": 0,
+                  "_Monday": true,
+                  "_Name": "Custom",
+                  "_Saturday": true,
+                  "_StartTime": 79200,
+                  "_Sunday": true,
+                  "_Thursday": true,
+                  "_Tuesday": true,
+                  "_Wednesday": true
+                },
+                "Genres": [],
+                "ProgramName": null
+              }
+            ],
+            "ManifestRates": [],
+            "ManifestWeeks": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 1,
+            "Station": {
+              "Affiliation": "FOX",
+              "CallLetters": "WTTE 28.1",
+              "Code": 6995,
+              "LegacyCallLetters": "WTTE",
+              "ManifestMaxEndDate": null,
+              "MarketCode": 135,
+              "OriginMarket": "Columbus, OH",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "Comment": null,
+            "DaypartCode": "LN",
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "CPM": 0.0,
+                "Impressions": 57000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "CPM": 0.0,
+                "Impressions": 17000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "CPM": 0.0,
+                "Impressions": 37000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "CPM": 0.0,
+                "Impressions": 41000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "CPM": 0.0,
+                "Impressions": 11000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "CPM": 0.0,
+                "Impressions": 13000.0,
+                "IsReference": true,
+                "Rating": null
+              }
+            ],
+            "ManifestDayparts": [
+              {
+                "Daypart": {
+                  "_Code": "CUS",
+                  "_EndTime": 81299,
+                  "_Friday": true,
+                  "_Id": 62717,
+                  "_Is24Hour": false,
+                  "_LastEndTime": 0,
+                  "_LastStartTime": 0,
+                  "_Monday": true,
+                  "_Name": "Custom",
+                  "_Saturday": false,
+                  "_StartTime": 79200,
+                  "_Sunday": false,
+                  "_Thursday": true,
+                  "_Tuesday": true,
+                  "_Wednesday": true
+                },
+                "Genres": [],
+                "ProgramName": null
+              }
+            ],
+            "ManifestRates": [],
+            "ManifestWeeks": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 1,
+            "Station": {
+              "Affiliation": "ABC",
+              "CallLetters": "KMBC-TV 9.1",
+              "Code": 5163,
+              "LegacyCallLetters": "KMBC",
+              "ManifestMaxEndDate": null,
+              "MarketCode": 216,
+              "OriginMarket": "Kansas City",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "Comment": null,
+            "DaypartCode": "LN",
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "CPM": 0.0,
+                "Impressions": 32000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "CPM": 0.0,
+                "Impressions": 9000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "CPM": 0.0,
+                "Impressions": 15000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "CPM": 0.0,
+                "Impressions": 16000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "CPM": 0.0,
+                "Impressions": 7000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "CPM": 0.0,
+                "Impressions": 7000.0,
+                "IsReference": true,
+                "Rating": null
+              }
+            ],
+            "ManifestDayparts": [
+              {
+                "Daypart": {
+                  "_Code": "CUS",
+                  "_EndTime": 84899,
+                  "_Friday": true,
+                  "_Id": 62725,
+                  "_Is24Hour": false,
+                  "_LastEndTime": 0,
+                  "_LastStartTime": 0,
+                  "_Monday": true,
+                  "_Name": "Custom",
+                  "_Saturday": false,
+                  "_StartTime": 82800,
+                  "_Sunday": false,
+                  "_Thursday": true,
+                  "_Tuesday": true,
+                  "_Wednesday": true
+                },
+                "Genres": [],
+                "ProgramName": null
+              }
+            ],
+            "ManifestRates": [],
+            "ManifestWeeks": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 1,
+            "Station": {
+              "Affiliation": "ABC",
+              "CallLetters": "WLOS 13.1",
+              "Code": 5289,
+              "LegacyCallLetters": "WLOS",
+              "ManifestMaxEndDate": null,
+              "MarketCode": 167,
+              "OriginMarket": "Greenvll-Spart-Ashevll-And",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "Comment": null,
+            "DaypartCode": "LN",
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "CPM": 0.0,
+                "Impressions": 85000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "CPM": 0.0,
+                "Impressions": 30000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "CPM": 0.0,
+                "Impressions": 49000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "CPM": 0.0,
+                "Impressions": 52000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "CPM": 0.0,
+                "Impressions": 21000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "CPM": 0.0,
+                "Impressions": 23000.0,
+                "IsReference": true,
+                "Rating": null
+              }
+            ],
+            "ManifestDayparts": [
+              {
+                "Daypart": {
+                  "_Code": "CUS",
+                  "_EndTime": 84599,
+                  "_Friday": false,
+                  "_Id": 37526,
+                  "_Is24Hour": false,
+                  "_LastEndTime": 0,
+                  "_LastStartTime": 0,
+                  "_Monday": false,
+                  "_Name": "Custom",
+                  "_Saturday": true,
+                  "_StartTime": 82800,
+                  "_Sunday": true,
+                  "_Thursday": false,
+                  "_Tuesday": false,
+                  "_Wednesday": false
+                },
+                "Genres": [],
+                "ProgramName": null
+              }
+            ],
+            "ManifestRates": [],
+            "ManifestWeeks": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 2,
+            "Station": {
+              "Affiliation": "ABC",
+              "CallLetters": "WLOS 13.1",
+              "Code": 5289,
+              "LegacyCallLetters": "WLOS",
+              "ManifestMaxEndDate": null,
+              "MarketCode": 167,
+              "OriginMarket": "Greenvll-Spart-Ashevll-And",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "Comment": null,
+            "DaypartCode": "LN",
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "CPM": 0.0,
+                "Impressions": 17000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "CPM": 0.0,
+                "Impressions": 9000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "CPM": 0.0,
+                "Impressions": 14000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "CPM": 0.0,
+                "Impressions": 16000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "CPM": 0.0,
+                "Impressions": 7000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "CPM": 0.0,
+                "Impressions": 8000.0,
+                "IsReference": true,
+                "Rating": null
+              }
+            ],
+            "ManifestDayparts": [
+              {
+                "Daypart": {
+                  "_Code": "CUS",
+                  "_EndTime": 78599,
+                  "_Friday": true,
+                  "_Id": 63037,
+                  "_Is24Hour": false,
+                  "_LastEndTime": 0,
+                  "_LastStartTime": 0,
+                  "_Monday": true,
+                  "_Name": "Custom",
+                  "_Saturday": false,
+                  "_StartTime": 75600,
+                  "_Sunday": false,
+                  "_Thursday": true,
+                  "_Tuesday": true,
+                  "_Wednesday": true
+                },
+                "Genres": [],
+                "ProgramName": null
+              }
+            ],
+            "ManifestRates": [],
+            "ManifestWeeks": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 1,
+            "Station": {
+              "Affiliation": "FOX",
+              "CallLetters": "KOKH-TV 25.1",
+              "Code": 6704,
+              "LegacyCallLetters": "KOKH",
+              "ManifestMaxEndDate": null,
+              "MarketCode": 250,
+              "OriginMarket": "Oklahoma City",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "Comment": null,
+            "DaypartCode": "LN",
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "CPM": 0.0,
+                "Impressions": 28000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "CPM": 0.0,
+                "Impressions": 15000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "CPM": 0.0,
+                "Impressions": 20000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "CPM": 0.0,
+                "Impressions": 24000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "CPM": 0.0,
+                "Impressions": 11000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "CPM": 0.0,
+                "Impressions": 13000.0,
+                "IsReference": true,
+                "Rating": null
+              }
+            ],
+            "ManifestDayparts": [
+              {
+                "Daypart": {
+                  "_Code": "CUS",
+                  "_EndTime": 78299,
+                  "_Friday": false,
+                  "_Id": 35554,
+                  "_Is24Hour": false,
+                  "_LastEndTime": 0,
+                  "_LastStartTime": 0,
+                  "_Monday": false,
+                  "_Name": "Custom",
+                  "_Saturday": true,
+                  "_StartTime": 75600,
+                  "_Sunday": true,
+                  "_Thursday": false,
+                  "_Tuesday": false,
+                  "_Wednesday": false
+                },
+                "Genres": [],
+                "ProgramName": null
+              }
+            ],
+            "ManifestRates": [],
+            "ManifestWeeks": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 2,
+            "Station": {
+              "Affiliation": "FOX",
+              "CallLetters": "KOKH-TV 25.1",
+              "Code": 6704,
+              "LegacyCallLetters": "KOKH",
+              "ManifestMaxEndDate": null,
+              "MarketCode": 250,
+              "OriginMarket": "Oklahoma City",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "Comment": null,
+            "DaypartCode": "LN",
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "CPM": 0.0,
+                "Impressions": 12000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "CPM": 0.0,
+                "Impressions": 3000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "CPM": 0.0,
+                "Impressions": 6000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "CPM": 0.0,
+                "Impressions": 6000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "CPM": 0.0,
+                "Impressions": 3000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "CPM": 0.0,
+                "Impressions": 3000.0,
+                "IsReference": true,
+                "Rating": null
+              }
+            ],
+            "ManifestDayparts": [
+              {
+                "Daypart": {
+                  "_Code": "CUS",
+                  "_EndTime": 84599,
+                  "_Friday": true,
+                  "_Id": 37536,
+                  "_Is24Hour": false,
+                  "_LastEndTime": 0,
+                  "_LastStartTime": 0,
+                  "_Monday": true,
+                  "_Name": "Custom",
+                  "_Saturday": false,
+                  "_StartTime": 82800,
+                  "_Sunday": false,
+                  "_Thursday": true,
+                  "_Tuesday": true,
+                  "_Wednesday": true
+                },
+                "Genres": [],
+                "ProgramName": null
+              }
+            ],
+            "ManifestRates": [],
+            "ManifestWeeks": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 1,
+            "Station": {
+              "Affiliation": "CBS",
+              "CallLetters": "WHP-TV 21.1",
+              "Code": 5734,
+              "LegacyCallLetters": "WHP",
+              "ManifestMaxEndDate": null,
+              "MarketCode": 166,
+              "OriginMarket": "Harrisburg-Lncstr-Leb-York",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "Comment": null,
+            "DaypartCode": "LN",
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "CPM": 0.0,
+                "Impressions": 15000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "CPM": 0.0,
+                "Impressions": 4000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "CPM": 0.0,
+                "Impressions": 8000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "CPM": 0.0,
+                "Impressions": 9000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "CPM": 0.0,
+                "Impressions": 3000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "CPM": 0.0,
+                "Impressions": 3000.0,
+                "IsReference": true,
+                "Rating": null
+              }
+            ],
+            "ManifestDayparts": [
+              {
+                "Daypart": {
+                  "_Code": "CUS",
+                  "_EndTime": 84899,
+                  "_Friday": false,
+                  "_Id": 62968,
+                  "_Is24Hour": false,
+                  "_LastEndTime": 0,
+                  "_LastStartTime": 0,
+                  "_Monday": false,
+                  "_Name": "Custom",
+                  "_Saturday": true,
+                  "_StartTime": 82800,
+                  "_Sunday": true,
+                  "_Thursday": false,
+                  "_Tuesday": false,
+                  "_Wednesday": false
+                },
+                "Genres": [],
+                "ProgramName": null
+              }
+            ],
+            "ManifestRates": [],
+            "ManifestWeeks": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 2,
+            "Station": {
+              "Affiliation": "CBS",
+              "CallLetters": "WHP-TV 21.1",
+              "Code": 5734,
+              "LegacyCallLetters": "WHP",
+              "ManifestMaxEndDate": null,
+              "MarketCode": 166,
+              "OriginMarket": "Harrisburg-Lncstr-Leb-York",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "Comment": null,
+            "DaypartCode": "LN",
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "CPM": 0.0,
+                "Impressions": 53000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "CPM": 0.0,
+                "Impressions": 22000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "CPM": 0.0,
+                "Impressions": 31000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "CPM": 0.0,
+                "Impressions": 36000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "CPM": 0.0,
+                "Impressions": 19000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "CPM": 0.0,
+                "Impressions": 20000.0,
+                "IsReference": true,
+                "Rating": null
+              }
+            ],
+            "ManifestDayparts": [
+              {
+                "Daypart": {
+                  "_Code": "CUS",
+                  "_EndTime": 82799,
+                  "_Friday": true,
+                  "_Id": 31006,
+                  "_Is24Hour": false,
+                  "_LastEndTime": 0,
+                  "_LastStartTime": 0,
+                  "_Monday": true,
+                  "_Name": "Custom",
+                  "_Saturday": true,
+                  "_StartTime": 79200,
+                  "_Sunday": true,
+                  "_Thursday": true,
+                  "_Tuesday": true,
+                  "_Wednesday": true
+                },
+                "Genres": [],
+                "ProgramName": null
+              }
+            ],
+            "ManifestRates": [],
+            "ManifestWeeks": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 4,
+            "Station": {
+              "Affiliation": "FOX",
+              "CallLetters": "WPMT 43.1",
+              "Code": 5717,
+              "LegacyCallLetters": "WPMT",
+              "ManifestMaxEndDate": null,
+              "MarketCode": 166,
+              "OriginMarket": "Harrisburg-Lncstr-Leb-York",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "Comment": null,
+            "DaypartCode": "LN",
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "CPM": 0.0,
+                "Impressions": 97000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "CPM": 0.0,
+                "Impressions": 41000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "CPM": 0.0,
+                "Impressions": 68000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "CPM": 0.0,
+                "Impressions": 73000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "CPM": 0.0,
+                "Impressions": 26000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "CPM": 0.0,
+                "Impressions": 29000.0,
+                "IsReference": true,
+                "Rating": null
+              }
+            ],
+            "ManifestDayparts": [
+              {
+                "Daypart": {
+                  "_Code": "CUS",
+                  "_EndTime": 80999,
+                  "_Friday": true,
+                  "_Id": 41701,
+                  "_Is24Hour": false,
+                  "_LastEndTime": 0,
+                  "_LastStartTime": 0,
+                  "_Monday": true,
+                  "_Name": "Custom",
+                  "_Saturday": false,
+                  "_StartTime": 75600,
+                  "_Sunday": false,
+                  "_Thursday": true,
+                  "_Tuesday": true,
+                  "_Wednesday": true
+                },
+                "Genres": [],
+                "ProgramName": null
+              }
+            ],
+            "ManifestRates": [],
+            "ManifestWeeks": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 2,
+            "Station": {
+              "Affiliation": "FOX",
+              "CallLetters": "WBRC 6.1",
+              "Code": 5052,
+              "LegacyCallLetters": "WBRC",
+              "ManifestMaxEndDate": null,
+              "MarketCode": 230,
+              "OriginMarket": "Birmingham (Ann and Tusc)",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "Comment": null,
+            "DaypartCode": "LN",
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "CPM": 0.0,
+                "Impressions": 33000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "CPM": 0.0,
+                "Impressions": 14000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "CPM": 0.0,
+                "Impressions": 22000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "CPM": 0.0,
+                "Impressions": 25000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "CPM": 0.0,
+                "Impressions": 10000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "CPM": 0.0,
+                "Impressions": 12000.0,
+                "IsReference": true,
+                "Rating": null
+              }
+            ],
+            "ManifestDayparts": [
+              {
+                "Daypart": {
+                  "_Code": "CUS",
+                  "_EndTime": 81299,
+                  "_Friday": true,
+                  "_Id": 62836,
+                  "_Is24Hour": false,
+                  "_LastEndTime": 0,
+                  "_LastStartTime": 0,
+                  "_Monday": true,
+                  "_Name": "Custom",
+                  "_Saturday": true,
+                  "_StartTime": 79200,
+                  "_Sunday": true,
+                  "_Thursday": true,
+                  "_Tuesday": true,
+                  "_Wednesday": true
+                },
+                "Genres": [],
+                "ProgramName": null
+              }
+            ],
+            "ManifestRates": [],
+            "ManifestWeeks": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 1,
+            "Station": {
+              "Affiliation": "CBS",
+              "CallLetters": "WWL-TV 4.1",
+              "Code": 5417,
+              "LegacyCallLetters": "WWL",
+              "ManifestMaxEndDate": null,
+              "MarketCode": 222,
+              "OriginMarket": "New Orleans",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "Comment": null,
+            "DaypartCode": "LN",
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "CPM": 0.0,
+                "Impressions": 33000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "CPM": 0.0,
+                "Impressions": 17000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "CPM": 0.0,
+                "Impressions": 24000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "CPM": 0.0,
+                "Impressions": 26000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "CPM": 0.0,
+                "Impressions": 11000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "CPM": 0.0,
+                "Impressions": 12000.0,
+                "IsReference": true,
+                "Rating": null
+              }
+            ],
+            "ManifestDayparts": [
+              {
+                "Daypart": {
+                  "_Code": "CUS",
+                  "_EndTime": 82799,
+                  "_Friday": true,
+                  "_Id": 31006,
+                  "_Is24Hour": false,
+                  "_LastEndTime": 0,
+                  "_LastStartTime": 0,
+                  "_Monday": true,
+                  "_Name": "Custom",
+                  "_Saturday": true,
+                  "_StartTime": 79200,
+                  "_Sunday": true,
+                  "_Thursday": true,
+                  "_Tuesday": true,
+                  "_Wednesday": true
+                },
+                "Genres": [],
+                "ProgramName": null
+              }
+            ],
+            "ManifestRates": [],
+            "ManifestWeeks": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 2,
+            "Station": {
+              "Affiliation": "FOX",
+              "CallLetters": "WNAC-TV 64.1",
+              "Code": 6924,
+              "LegacyCallLetters": "WNAC",
+              "ManifestMaxEndDate": null,
+              "MarketCode": 121,
+              "OriginMarket": "Providence-New Bedford",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "Comment": null,
+            "DaypartCode": "LN",
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "CPM": 0.0,
+                "Impressions": 20000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "CPM": 0.0,
+                "Impressions": 7000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "CPM": 0.0,
+                "Impressions": 11000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "CPM": 0.0,
+                "Impressions": 12000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "CPM": 0.0,
+                "Impressions": 5000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "CPM": 0.0,
+                "Impressions": 6000.0,
+                "IsReference": true,
+                "Rating": null
+              }
+            ],
+            "ManifestDayparts": [
+              {
+                "Daypart": {
+                  "_Code": "CUS",
+                  "_EndTime": 84899,
+                  "_Friday": true,
+                  "_Id": 62724,
+                  "_Is24Hour": false,
+                  "_LastEndTime": 0,
+                  "_LastStartTime": 0,
+                  "_Monday": true,
+                  "_Name": "Custom",
+                  "_Saturday": true,
+                  "_StartTime": 82800,
+                  "_Sunday": true,
+                  "_Thursday": true,
+                  "_Tuesday": true,
+                  "_Wednesday": true
+                },
+                "Genres": [],
+                "ProgramName": null
+              }
+            ],
+            "ManifestRates": [],
+            "ManifestWeeks": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 1,
+            "Station": {
+              "Affiliation": "CBS",
+              "CallLetters": "WPRI-TV 12.1",
+              "Code": 5208,
+              "LegacyCallLetters": "WPRI",
+              "ManifestMaxEndDate": null,
+              "MarketCode": 121,
+              "OriginMarket": "Providence-New Bedford",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "Comment": null,
+            "DaypartCode": "LN",
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "CPM": 0.0,
+                "Impressions": 9000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "CPM": 0.0,
+                "Impressions": 3000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "CPM": 0.0,
+                "Impressions": 5000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "CPM": 0.0,
+                "Impressions": 6000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "CPM": 0.0,
+                "Impressions": 3000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "CPM": 0.0,
+                "Impressions": 3000.0,
+                "IsReference": true,
+                "Rating": null
+              }
+            ],
+            "ManifestDayparts": [
+              {
+                "Daypart": {
+                  "_Code": "CUS",
+                  "_EndTime": 84599,
+                  "_Friday": true,
+                  "_Id": 37536,
+                  "_Is24Hour": false,
+                  "_LastEndTime": 0,
+                  "_LastStartTime": 0,
+                  "_Monday": true,
+                  "_Name": "Custom",
+                  "_Saturday": false,
+                  "_StartTime": 82800,
+                  "_Sunday": false,
+                  "_Thursday": true,
+                  "_Tuesday": true,
+                  "_Wednesday": true
+                },
+                "Genres": [],
+                "ProgramName": null
+              }
+            ],
+            "ManifestRates": [],
+            "ManifestWeeks": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 1,
+            "Station": {
+              "Affiliation": "FOX",
+              "CallLetters": "WFTX-TV 36.1",
+              "Code": 6247,
+              "LegacyCallLetters": "WFTX",
+              "ManifestMaxEndDate": null,
+              "MarketCode": 171,
+              "OriginMarket": "Ft. Myers-Naples",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "Comment": null,
+            "DaypartCode": "LN",
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "CPM": 0.0,
+                "Impressions": 11000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "CPM": 0.0,
+                "Impressions": 4000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "CPM": 0.0,
+                "Impressions": 5000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "CPM": 0.0,
+                "Impressions": 6000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "CPM": 0.0,
+                "Impressions": 3000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "CPM": 0.0,
+                "Impressions": 3000.0,
+                "IsReference": true,
+                "Rating": null
+              }
+            ],
+            "ManifestDayparts": [
+              {
+                "Daypart": {
+                  "_Code": "CUS",
+                  "_EndTime": 80999,
+                  "_Friday": true,
+                  "_Id": 31516,
+                  "_Is24Hour": false,
+                  "_LastEndTime": 0,
+                  "_LastStartTime": 0,
+                  "_Monday": true,
+                  "_Name": "Custom",
+                  "_Saturday": true,
+                  "_StartTime": 79200,
+                  "_Sunday": true,
+                  "_Thursday": true,
+                  "_Tuesday": true,
+                  "_Wednesday": true
+                },
+                "Genres": [],
+                "ProgramName": null
+              }
+            ],
+            "ManifestRates": [],
+            "ManifestWeeks": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 1,
+            "Station": {
+              "Affiliation": "FOX",
+              "CallLetters": "WFTX-TV 36.1",
+              "Code": 6247,
+              "LegacyCallLetters": "WFTX",
+              "ManifestMaxEndDate": null,
+              "MarketCode": 171,
+              "OriginMarket": "Ft. Myers-Naples",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "Comment": null,
+            "DaypartCode": "LN",
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "CPM": 0.0,
+                "Impressions": 9000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "CPM": 0.0,
+                "Impressions": 3000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "CPM": 0.0,
+                "Impressions": 4000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "CPM": 0.0,
+                "Impressions": 5000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "CPM": 0.0,
+                "Impressions": 2000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "CPM": 0.0,
+                "Impressions": 2000.0,
+                "IsReference": true,
+                "Rating": null
+              }
+            ],
+            "ManifestDayparts": [
+              {
+                "Daypart": {
+                  "_Code": "CUS",
+                  "_EndTime": 82799,
+                  "_Friday": true,
+                  "_Id": 34851,
+                  "_Is24Hour": false,
+                  "_LastEndTime": 0,
+                  "_LastStartTime": 0,
+                  "_Monday": true,
+                  "_Name": "Custom",
+                  "_Saturday": true,
+                  "_StartTime": 81000,
+                  "_Sunday": true,
+                  "_Thursday": true,
+                  "_Tuesday": true,
+                  "_Wednesday": true
+                },
+                "Genres": [],
+                "ProgramName": null
+              }
+            ],
+            "ManifestRates": [],
+            "ManifestWeeks": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 1,
+            "Station": {
+              "Affiliation": "FOX",
+              "CallLetters": "WFTX-TV 36.1",
+              "Code": 6247,
+              "LegacyCallLetters": "WFTX",
+              "ManifestMaxEndDate": null,
+              "MarketCode": 171,
+              "OriginMarket": "Ft. Myers-Naples",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "Comment": null,
+            "DaypartCode": "LN",
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "CPM": 0.0,
+                "Impressions": 11000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "CPM": 0.0,
+                "Impressions": 6000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "CPM": 0.0,
+                "Impressions": 9000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "CPM": 0.0,
+                "Impressions": 10000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "CPM": 0.0,
+                "Impressions": 5000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "CPM": 0.0,
+                "Impressions": 5000.0,
+                "IsReference": true,
+                "Rating": null
+              }
+            ],
+            "ManifestDayparts": [
+              {
+                "Daypart": {
+                  "_Code": "CUS",
+                  "_EndTime": 82799,
+                  "_Friday": true,
+                  "_Id": 31032,
+                  "_Is24Hour": false,
+                  "_LastEndTime": 0,
+                  "_LastStartTime": 0,
+                  "_Monday": true,
+                  "_Name": "Custom",
+                  "_Saturday": false,
+                  "_StartTime": 79200,
+                  "_Sunday": false,
+                  "_Thursday": true,
+                  "_Tuesday": true,
+                  "_Wednesday": true
+                },
+                "Genres": [],
+                "ProgramName": null
+              }
+            ],
+            "ManifestRates": [],
+            "ManifestWeeks": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 1,
+            "Station": {
+              "Affiliation": "FOX",
+              "CallLetters": "WRGT-TV 45.1",
+              "Code": 6154,
+              "LegacyCallLetters": "WRGT",
+              "ManifestMaxEndDate": null,
+              "MarketCode": 142,
+              "OriginMarket": "Dayton",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "Comment": null,
+            "DaypartCode": "LN",
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "CPM": 0.0,
+                "Impressions": 9000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "CPM": 0.0,
+                "Impressions": 5000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "CPM": 0.0,
+                "Impressions": 6000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "CPM": 0.0,
+                "Impressions": 7000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "CPM": 0.0,
+                "Impressions": 4000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "CPM": 0.0,
+                "Impressions": 4000.0,
+                "IsReference": true,
+                "Rating": null
+              }
+            ],
+            "ManifestDayparts": [
+              {
+                "Daypart": {
+                  "_Code": "CUS",
+                  "_EndTime": 80999,
+                  "_Friday": false,
+                  "_Id": 7235,
+                  "_Is24Hour": false,
+                  "_LastEndTime": 0,
+                  "_LastStartTime": 0,
+                  "_Monday": false,
+                  "_Name": "Custom",
+                  "_Saturday": true,
+                  "_StartTime": 79200,
+                  "_Sunday": true,
+                  "_Thursday": false,
+                  "_Tuesday": false,
+                  "_Wednesday": false
+                },
+                "Genres": [],
+                "ProgramName": null
+              }
+            ],
+            "ManifestRates": [],
+            "ManifestWeeks": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 1,
+            "Station": {
+              "Affiliation": "FOX",
+              "CallLetters": "WRGT-TV 45.1",
+              "Code": 6154,
+              "LegacyCallLetters": "WRGT",
+              "ManifestMaxEndDate": null,
+              "MarketCode": 142,
+              "OriginMarket": "Dayton",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "Comment": null,
+            "DaypartCode": "LN",
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "CPM": 0.0,
+                "Impressions": 2000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "CPM": 0.0,
+                "Impressions": 1000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "CPM": 0.0,
+                "Impressions": 2000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "CPM": 0.0,
+                "Impressions": 2000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "CPM": 0.0,
+                "Impressions": 1000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "CPM": 0.0,
+                "Impressions": 1000.0,
+                "IsReference": true,
+                "Rating": null
+              }
+            ],
+            "ManifestDayparts": [
+              {
+                "Daypart": {
+                  "_Code": "CUS",
+                  "_EndTime": 84599,
+                  "_Friday": true,
+                  "_Id": 37536,
+                  "_Is24Hour": false,
+                  "_LastEndTime": 0,
+                  "_LastStartTime": 0,
+                  "_Monday": true,
+                  "_Name": "Custom",
+                  "_Saturday": false,
+                  "_StartTime": 82800,
+                  "_Sunday": false,
+                  "_Thursday": true,
+                  "_Tuesday": true,
+                  "_Wednesday": true
+                },
+                "Genres": [],
+                "ProgramName": null
+              }
+            ],
+            "ManifestRates": [],
+            "ManifestWeeks": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 1,
+            "Station": {
+              "Affiliation": "FOX",
+              "CallLetters": "WACH 57.1",
+              "Code": 6873,
+              "LegacyCallLetters": "WACH",
+              "ManifestMaxEndDate": null,
+              "MarketCode": 146,
+              "OriginMarket": "Columbia, SC",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "Comment": null,
+            "DaypartCode": "LN",
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "CPM": 0.0,
+                "Impressions": 3000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "CPM": 0.0,
+                "Impressions": 2000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "CPM": 0.0,
+                "Impressions": 3000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "CPM": 0.0,
+                "Impressions": 3000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "CPM": 0.0,
+                "Impressions": 2000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "CPM": 0.0,
+                "Impressions": 3000.0,
+                "IsReference": true,
+                "Rating": null
+              }
+            ],
+            "ManifestDayparts": [
+              {
+                "Daypart": {
+                  "_Code": "CUS",
+                  "_EndTime": 84599,
+                  "_Friday": false,
+                  "_Id": 37526,
+                  "_Is24Hour": false,
+                  "_LastEndTime": 0,
+                  "_LastStartTime": 0,
+                  "_Monday": false,
+                  "_Name": "Custom",
+                  "_Saturday": true,
+                  "_StartTime": 82800,
+                  "_Sunday": true,
+                  "_Thursday": false,
+                  "_Tuesday": false,
+                  "_Wednesday": false
+                },
+                "Genres": [],
+                "ProgramName": null
+              }
+            ],
+            "ManifestRates": [],
+            "ManifestWeeks": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 2,
+            "Station": {
+              "Affiliation": "FOX",
+              "CallLetters": "WACH 57.1",
+              "Code": 6873,
+              "LegacyCallLetters": "WACH",
+              "ManifestMaxEndDate": null,
+              "MarketCode": 146,
+              "OriginMarket": "Columbia, SC",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "Comment": null,
+            "DaypartCode": "LN",
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "CPM": 0.0,
+                "Impressions": 55000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "CPM": 0.0,
+                "Impressions": 19000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "CPM": 0.0,
+                "Impressions": 36000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "CPM": 0.0,
+                "Impressions": 39000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "CPM": 0.0,
+                "Impressions": 9000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "CPM": 0.0,
+                "Impressions": 9000.0,
+                "IsReference": true,
+                "Rating": null
+              }
+            ],
+            "ManifestDayparts": [
+              {
+                "Daypart": {
+                  "_Code": "CUS",
+                  "_EndTime": 80939,
+                  "_Friday": true,
+                  "_Id": 67269,
+                  "_Is24Hour": false,
+                  "_LastEndTime": 0,
+                  "_LastStartTime": 0,
+                  "_Monday": true,
+                  "_Name": "Custom",
+                  "_Saturday": true,
+                  "_StartTime": 79200,
+                  "_Sunday": true,
+                  "_Thursday": true,
+                  "_Tuesday": true,
+                  "_Wednesday": true
+                },
+                "Genres": [],
+                "ProgramName": null
+              }
+            ],
+            "ManifestRates": [],
+            "ManifestWeeks": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 3,
+            "Station": {
+              "Affiliation": "CBS",
+              "CallLetters": "KKTV 11.1",
+              "Code": 5130,
+              "LegacyCallLetters": "KKTV",
+              "ManifestMaxEndDate": null,
+              "MarketCode": 352,
+              "OriginMarket": "Colorado Springs-Pueblo",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "Comment": null,
+            "DaypartCode": "LN",
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "CPM": 0.0,
+                "Impressions": 17000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "CPM": 0.0,
+                "Impressions": 11000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "CPM": 0.0,
+                "Impressions": 20000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "CPM": 0.0,
+                "Impressions": 21000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "CPM": 0.0,
+                "Impressions": 7000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "CPM": 0.0,
+                "Impressions": 7000.0,
+                "IsReference": true,
+                "Rating": null
+              }
+            ],
+            "ManifestDayparts": [
+              {
+                "Daypart": {
+                  "_Code": "CUS",
+                  "_EndTime": 81299,
+                  "_Friday": true,
+                  "_Id": 63004,
+                  "_Is24Hour": false,
+                  "_LastEndTime": 0,
+                  "_LastStartTime": 0,
+                  "_Monday": true,
+                  "_Name": "Custom",
+                  "_Saturday": false,
+                  "_StartTime": 79200,
+                  "_Sunday": true,
+                  "_Thursday": true,
+                  "_Tuesday": true,
+                  "_Wednesday": true
+                },
+                "Genres": [],
+                "ProgramName": null
+              }
+            ],
+            "ManifestRates": [],
+            "ManifestWeeks": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 1,
+            "Station": {
+              "Affiliation": "NBC",
+              "CallLetters": "KOAA-TV 5.1",
+              "Code": 5151,
+              "LegacyCallLetters": "KOAA",
+              "ManifestMaxEndDate": null,
+              "MarketCode": 352,
+              "OriginMarket": "Colorado Springs-Pueblo",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "Comment": null,
+            "DaypartCode": "LN",
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "CPM": 0.0,
+                "Impressions": 13000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "CPM": 0.0,
+                "Impressions": 7000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "CPM": 0.0,
+                "Impressions": 8000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "CPM": 0.0,
+                "Impressions": 10000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "CPM": 0.0,
+                "Impressions": 6000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "CPM": 0.0,
+                "Impressions": 6000.0,
+                "IsReference": true,
+                "Rating": null
+              }
+            ],
+            "ManifestDayparts": [
+              {
+                "Daypart": {
+                  "_Code": "CUS",
+                  "_EndTime": 84599,
+                  "_Friday": true,
+                  "_Id": 37536,
+                  "_Is24Hour": false,
+                  "_LastEndTime": 0,
+                  "_LastStartTime": 0,
+                  "_Monday": true,
+                  "_Name": "Custom",
+                  "_Saturday": false,
+                  "_StartTime": 82800,
+                  "_Sunday": false,
+                  "_Thursday": true,
+                  "_Tuesday": true,
+                  "_Wednesday": true
+                },
+                "Genres": [],
+                "ProgramName": null
+              }
+            ],
+            "ManifestRates": [],
+            "ManifestWeeks": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 1,
+            "Station": {
+              "Affiliation": "ABC",
+              "CallLetters": "WTVC 9.1",
+              "Code": 5437,
+              "LegacyCallLetters": "WTVC",
+              "ManifestMaxEndDate": null,
+              "MarketCode": 175,
+              "OriginMarket": "Chattanooga",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "Comment": null,
+            "DaypartCode": "LN",
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "CPM": 0.0,
+                "Impressions": 24000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "CPM": 0.0,
+                "Impressions": 14000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "CPM": 0.0,
+                "Impressions": 20000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "CPM": 0.0,
+                "Impressions": 23000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "CPM": 0.0,
+                "Impressions": 11000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "CPM": 0.0,
+                "Impressions": 11000.0,
+                "IsReference": true,
+                "Rating": null
+              }
+            ],
+            "ManifestDayparts": [
+              {
+                "Daypart": {
+                  "_Code": "CUS",
+                  "_EndTime": 84599,
+                  "_Friday": false,
+                  "_Id": 37526,
+                  "_Is24Hour": false,
+                  "_LastEndTime": 0,
+                  "_LastStartTime": 0,
+                  "_Monday": false,
+                  "_Name": "Custom",
+                  "_Saturday": true,
+                  "_StartTime": 82800,
+                  "_Sunday": true,
+                  "_Thursday": false,
+                  "_Tuesday": false,
+                  "_Wednesday": false
+                },
+                "Genres": [],
+                "ProgramName": null
+              }
+            ],
+            "ManifestRates": [],
+            "ManifestWeeks": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 2,
+            "Station": {
+              "Affiliation": "ABC",
+              "CallLetters": "WTVC 9.1",
+              "Code": 5437,
+              "LegacyCallLetters": "WTVC",
+              "ManifestMaxEndDate": null,
+              "MarketCode": 175,
+              "OriginMarket": "Chattanooga",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "Comment": null,
+            "DaypartCode": "LN",
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "CPM": 0.0,
+                "Impressions": 5000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "CPM": 0.0,
+                "Impressions": 2000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "CPM": 0.0,
+                "Impressions": 3000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "CPM": 0.0,
+                "Impressions": 3000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "CPM": 0.0,
+                "Impressions": 1000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "CPM": 0.0,
+                "Impressions": 1000.0,
+                "IsReference": true,
+                "Rating": null
+              }
+            ],
+            "ManifestDayparts": [
+              {
+                "Daypart": {
+                  "_Code": "CUS",
+                  "_EndTime": 84599,
+                  "_Friday": true,
+                  "_Id": 37536,
+                  "_Is24Hour": false,
+                  "_LastEndTime": 0,
+                  "_LastStartTime": 0,
+                  "_Monday": true,
+                  "_Name": "Custom",
+                  "_Saturday": false,
+                  "_StartTime": 82800,
+                  "_Sunday": false,
+                  "_Thursday": true,
+                  "_Tuesday": true,
+                  "_Wednesday": true
+                },
+                "Genres": [],
+                "ProgramName": null
+              }
+            ],
+            "ManifestRates": [],
+            "ManifestWeeks": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 1,
+            "Station": {
+              "Affiliation": "ABC",
+              "CallLetters": "WCIV 36.2",
+              "Code": 5672,
+              "LegacyCallLetters": "ECIV",
+              "ManifestMaxEndDate": null,
+              "MarketCode": 119,
+              "OriginMarket": "Charleston, SC",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "Comment": null,
+            "DaypartCode": "LN",
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "CPM": 0.0,
+                "Impressions": 14000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "CPM": 0.0,
+                "Impressions": 6000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "CPM": 0.0,
+                "Impressions": 9000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "CPM": 0.0,
+                "Impressions": 10000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "CPM": 0.0,
+                "Impressions": 4000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "CPM": 0.0,
+                "Impressions": 5000.0,
+                "IsReference": true,
+                "Rating": null
+              }
+            ],
+            "ManifestDayparts": [
+              {
+                "Daypart": {
+                  "_Code": "CUS",
+                  "_EndTime": 84599,
+                  "_Friday": false,
+                  "_Id": 37526,
+                  "_Is24Hour": false,
+                  "_LastEndTime": 0,
+                  "_LastStartTime": 0,
+                  "_Monday": false,
+                  "_Name": "Custom",
+                  "_Saturday": true,
+                  "_StartTime": 82800,
+                  "_Sunday": true,
+                  "_Thursday": false,
+                  "_Tuesday": false,
+                  "_Wednesday": false
+                },
+                "Genres": [],
+                "ProgramName": null
+              }
+            ],
+            "ManifestRates": [],
+            "ManifestWeeks": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 2,
+            "Station": {
+              "Affiliation": "ABC",
+              "CallLetters": "WCIV 36.2",
+              "Code": 5672,
+              "LegacyCallLetters": "ECIV",
+              "ManifestMaxEndDate": null,
+              "MarketCode": 119,
+              "OriginMarket": "Charleston, SC",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "Comment": null,
+            "DaypartCode": "LN",
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "CPM": 0.0,
+                "Impressions": 8000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "CPM": 0.0,
+                "Impressions": 3000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "CPM": 0.0,
+                "Impressions": 5000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "CPM": 0.0,
+                "Impressions": 5000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "CPM": 0.0,
+                "Impressions": 3000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "CPM": 0.0,
+                "Impressions": 3000.0,
+                "IsReference": true,
+                "Rating": null
+              }
+            ],
+            "ManifestDayparts": [
+              {
+                "Daypart": {
+                  "_Code": "CUS",
+                  "_EndTime": 82739,
+                  "_Friday": true,
+                  "_Id": 67270,
+                  "_Is24Hour": false,
+                  "_LastEndTime": 0,
+                  "_LastStartTime": 0,
+                  "_Monday": true,
+                  "_Name": "Custom",
+                  "_Saturday": false,
+                  "_StartTime": 79200,
+                  "_Sunday": false,
+                  "_Thursday": true,
+                  "_Tuesday": true,
+                  "_Wednesday": true
+                },
+                "Genres": [],
+                "ProgramName": null
+              }
+            ],
+            "ManifestRates": [],
+            "ManifestWeeks": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 1,
+            "Station": {
+              "Affiliation": "FOX",
+              "CallLetters": "WTAT-TV 24.1",
+              "Code": 6239,
+              "LegacyCallLetters": "WTAT",
+              "ManifestMaxEndDate": null,
+              "MarketCode": 119,
+              "OriginMarket": "Charleston, SC",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "Comment": null,
+            "DaypartCode": "LN",
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "CPM": 0.0,
+                "Impressions": 32000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "CPM": 0.0,
+                "Impressions": 10000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "CPM": 0.0,
+                "Impressions": 18000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "CPM": 0.0,
+                "Impressions": 20000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "CPM": 0.0,
+                "Impressions": 7000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "CPM": 0.0,
+                "Impressions": 7000.0,
+                "IsReference": true,
+                "Rating": null
+              }
+            ],
+            "ManifestDayparts": [
+              {
+                "Daypart": {
+                  "_Code": "CUS",
+                  "_EndTime": 84599,
+                  "_Friday": true,
+                  "_Id": 37524,
+                  "_Is24Hour": false,
+                  "_LastEndTime": 0,
+                  "_LastStartTime": 0,
+                  "_Monday": true,
+                  "_Name": "Custom",
+                  "_Saturday": true,
+                  "_StartTime": 82800,
+                  "_Sunday": true,
+                  "_Thursday": true,
+                  "_Tuesday": true,
+                  "_Wednesday": true
+                },
+                "Genres": [],
+                "ProgramName": null
+              }
+            ],
+            "ManifestRates": [],
+            "ManifestWeeks": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 2,
+            "Station": {
+              "Affiliation": "CBS",
+              "CallLetters": "WANE-TV 15.1",
+              "Code": 5848,
+              "LegacyCallLetters": "WANE",
+              "ManifestMaxEndDate": null,
+              "MarketCode": 109,
+              "OriginMarket": "Ft. Wayne",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "Comment": null,
+            "DaypartCode": "LN",
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "CPM": 0.0,
+                "Impressions": 12000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "CPM": 0.0,
+                "Impressions": 5000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "CPM": 0.0,
+                "Impressions": 9000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "CPM": 0.0,
+                "Impressions": 9000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "CPM": 0.0,
+                "Impressions": 4000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "CPM": 0.0,
+                "Impressions": 4000.0,
+                "IsReference": true,
+                "Rating": null
+              }
+            ],
+            "ManifestDayparts": [
+              {
+                "Daypart": {
+                  "_Code": "CUS",
+                  "_EndTime": 84539,
+                  "_Friday": true,
+                  "_Id": 67271,
+                  "_Is24Hour": false,
+                  "_LastEndTime": 0,
+                  "_LastStartTime": 0,
+                  "_Monday": true,
+                  "_Name": "Custom",
+                  "_Saturday": true,
+                  "_StartTime": 82800,
+                  "_Sunday": true,
+                  "_Thursday": true,
+                  "_Tuesday": true,
+                  "_Wednesday": true
+                },
+                "Genres": [],
+                "ProgramName": null
+              }
+            ],
+            "ManifestRates": [],
+            "ManifestWeeks": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 1,
+            "Station": {
+              "Affiliation": "NBC",
+              "CallLetters": "WILX-TV 10.1",
+              "Code": 5494,
+              "LegacyCallLetters": "WILX",
+              "ManifestMaxEndDate": null,
+              "MarketCode": 151,
+              "OriginMarket": "Lansing",
+              "RateDataThrough": null
+            }
+          },
+          {
+            "Comment": null,
+            "DaypartCode": "LN",
+            "EndDate": null,
+            "Id": null,
+            "InventorySourceId": 0,
+            "ManifestAudiences": [],
+            "ManifestAudiencesReferences": [
+              {
+                "Audience": {
+                  "AudienceString": "House Holds",
+                  "Id": 31
+                },
+                "CPM": 0.0,
+                "Impressions": 1000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-54",
+                  "Id": 37
+                },
+                "CPM": 0.0,
+                "Impressions": 1000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 35-64",
+                  "Id": 40
+                },
+                "CPM": 0.0,
+                "Impressions": 1000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-64",
+                  "Id": 257
+                },
+                "CPM": 0.0,
+                "Impressions": 1000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 25-49",
+                  "Id": 36
+                },
+                "CPM": 0.0,
+                "Impressions": 1000.0,
+                "IsReference": true,
+                "Rating": null
+              },
+              {
+                "Audience": {
+                  "AudienceString": "Adults 18-49",
+                  "Id": 33
+                },
+                "CPM": 0.0,
+                "Impressions": 1000.0,
+                "IsReference": true,
+                "Rating": null
+              }
+            ],
+            "ManifestDayparts": [
+              {
+                "Daypart": {
+                  "_Code": "CUS",
+                  "_EndTime": 84899,
+                  "_Friday": true,
+                  "_Id": 62725,
+                  "_Is24Hour": false,
+                  "_LastEndTime": 0,
+                  "_LastStartTime": 0,
+                  "_Monday": true,
+                  "_Name": "Custom",
+                  "_Saturday": false,
+                  "_StartTime": 82800,
+                  "_Sunday": false,
+                  "_Thursday": true,
+                  "_Tuesday": true,
+                  "_Wednesday": true
+                },
+                "Genres": [],
+                "ProgramName": null
+              }
+            ],
+            "ManifestRates": [],
+            "ManifestWeeks": [],
+            "SpotLengthId": 1,
+            "SpotsPerDay": null,
+            "SpotsPerWeek": 2,
+            "Station": {
+              "Affiliation": "ABC",
+              "CallLetters": "WVII-TV 7.1",
+              "Code": 5452,
+              "LegacyCallLetters": "WVII",
+              "ManifestMaxEndDate": null,
+              "MarketCode": 137,
+              "OriginMarket": "Bangor",
+              "RateDataThrough": null
+            }
+          }
+        ],
+        "Name": "LN1",
+        "SlotNumber": 1,
+        "StartDate": "2017-10-01T00:00:00"
+      }
+    ],
+    "InventoryManifests": [],
+    "InventorySource": {
+      "Id": 4,
+      "InventoryType": 2,
+      "IsActive": true,
+      "Name": "TTWN"
+    },
+    "StartDate": "0001-01-01T00:00:00",
+    "StationContacts": [],
+    "UniqueIdentifier": null
+  }
+}

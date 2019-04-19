@@ -41,9 +41,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void CanParseTTNWDayparts()
+        public void CanParseTTWNDayparts()
         {
-            const string fileName = @".\Files\InventoryDaypartParsing\TTNW_dayparts.xlsx";
+            const string fileName = @".\Files\InventoryDaypartParsing\TTWN_dayparts.xlsx";
 
             var daypartStrings = _LoadDaypartsFromFile(fileName);
             var result = _ParseDayparts(daypartStrings);
@@ -53,9 +53,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void CanParseTTNWDayparts_2()
+        public void CanParseTTWNDayparts_2()
         {
-            const string fileName = @".\Files\InventoryDaypartParsing\TTNW_dayparts_2.xlsx";
+            const string fileName = @".\Files\InventoryDaypartParsing\TTWN_dayparts_2.xlsx";
 
             var daypartStrings = _LoadDaypartsFromFile(fileName);
             var result = _ParseDayparts(daypartStrings);

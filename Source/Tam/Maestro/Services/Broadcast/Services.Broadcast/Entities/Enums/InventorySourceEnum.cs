@@ -16,8 +16,8 @@ namespace Services.Broadcast.Entities.Enums
         [Description("TVB")]
         TVB = 3,
 
-        [Description("TTNW")]
-        TTNW = 4,
+        [Description("TTWN")]
+        TTWN = 4,
 
         [Description("CNN")]
         CNN = 5,

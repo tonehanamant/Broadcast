@@ -3,7 +3,7 @@
   "DataLines": [],
   "FileName": "BarterDataFiles\\BarterFileImporter_BadFormats3.xlsx",
   "FileStatus": 1,
-  "Hash": "93-DC-7E-D8-56-EB-00-9F-86-6B-57-99-96-0D-B3-17-CA-E3-C2-0E",
+  "Hash": "59-2F-6B-36-1E-CA-4C-4F-F5-BD-8F-EE-9E-04-26-D0-F5-04-20-57",
   "Header": {
     "Audience": {
       "_CategoryCode": 0,

@@ -19,7 +19,7 @@ using Services.Broadcast.Entities.Enums;
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
     [TestFixture]
-    public class TTNWFileImporterTests
+    public class TTWNFileImporterTests
     {
         private readonly IInventoryDaypartParsingEngine _InventoryDaypartParsingEngine = IntegrationTestApplicationServiceFactory.GetApplicationService<IInventoryDaypartParsingEngine>();
 
@@ -27,25 +27,25 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void CanParseLNFile()
         {
-            var _ttnwFileImporter = new TTNWFileImporter();
-            _ttnwFileImporter.InventoryDaypartParsingEngine = _InventoryDaypartParsingEngine;
-            _ttnwFileImporter.BroadcastDataDataRepository =
+            var _ttwnFileImporter = new TTWNFileImporter();
+            _ttwnFileImporter.InventoryDaypartParsingEngine = _InventoryDaypartParsingEngine;
+            _ttwnFileImporter.BroadcastDataDataRepository =
                 IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory;
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
             {
-                //var filename = @".\Files\TTNW_AMNews-06.09.17.xlsx";
-                var filename = @".\Files\TTNW_06.09.17.xlsx";
+                //var filename = @".\Files\TTWN_AMNews-06.09.17.xlsx";
+                var filename = @".\Files\TTWN_06.09.17.xlsx";
                 var fileStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
 
                 var inventoryFile = new InventoryFile
                 {
-                    InventorySource = GetTtnwInventorySource()
+                    InventorySource = GetTtwnInventorySource()
                 };
 
                 var effectiveDate = DateTime.Parse("10/1/2017");
                 var fileProblems = new List<InventoryFileProblem>();
-                _ttnwFileImporter.ExtractFileData(fileStream, inventoryFile, effectiveDate );
-                fileProblems = _ttnwFileImporter.FileProblems;
+                _ttwnFileImporter.ExtractFileData(fileStream, inventoryFile, effectiveDate );
+                fileProblems = _ttwnFileImporter.FileProblems;
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(StationInventoryManifest), "EffectiveDate");
@@ -69,25 +69,25 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void CanParseEMFile()
         {
-            var _ttnwFileImporter = new TTNWFileImporter();
-            _ttnwFileImporter.InventoryDaypartParsingEngine = _InventoryDaypartParsingEngine;
-            _ttnwFileImporter.BroadcastDataDataRepository =
+            var _ttwnFileImporter = new TTWNFileImporter();
+            _ttwnFileImporter.InventoryDaypartParsingEngine = _InventoryDaypartParsingEngine;
+            _ttwnFileImporter.BroadcastDataDataRepository =
                 IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory;
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
             {
-                var filename = @".\Files\TTNW_AMNews-06.09.17.xlsx";
+                var filename = @".\Files\TTWN_AMNews-06.09.17.xlsx";
                 var fileStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
 
                 var inventoryFile = new InventoryFile
                 {
-                    InventorySource = GetTtnwInventorySource()
+                    InventorySource = GetTtwnInventorySource()
                 };
 
                 var  effectiveDate = DateTime.Parse("10/1/2017");
                 var fileProblems = new List<InventoryFileProblem>();
 
-                _ttnwFileImporter.ExtractFileData(fileStream, inventoryFile, effectiveDate);
-                fileProblems = _ttnwFileImporter.FileProblems;
+                _ttwnFileImporter.ExtractFileData(fileStream, inventoryFile, effectiveDate);
+                fileProblems = _ttwnFileImporter.FileProblems;
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(StationInventoryManifest), "EffectiveDate");
@@ -112,25 +112,25 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void CanParseENFile()
         {
-            var _ttnwFileImporter = new TTNWFileImporter();
-            _ttnwFileImporter.InventoryDaypartParsingEngine = _InventoryDaypartParsingEngine;
-            _ttnwFileImporter.BroadcastDataDataRepository =
+            var _ttwnFileImporter = new TTWNFileImporter();
+            _ttwnFileImporter.InventoryDaypartParsingEngine = _InventoryDaypartParsingEngine;
+            _ttwnFileImporter.BroadcastDataDataRepository =
                 IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory;
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
             {
-                var filename = @".\Files\TTNW_EN_06.09.17.xlsx";
+                var filename = @".\Files\TTWN_EN_06.09.17.xlsx";
                 var fileStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
 
                 var inventoryFile = new InventoryFile
                 {
-                    InventorySource = GetTtnwInventorySource()
+                    InventorySource = GetTtwnInventorySource()
                 };
 
                 var effectiveDate = DateTime.Parse("10/1/2017");
                 var fileProblems = new List<InventoryFileProblem>();
 
-                _ttnwFileImporter.ExtractFileData(fileStream, inventoryFile, effectiveDate);
-                fileProblems = _ttnwFileImporter.FileProblems;
+                _ttwnFileImporter.ExtractFileData(fileStream, inventoryFile, effectiveDate);
+                fileProblems = _ttwnFileImporter.FileProblems;
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(StationInventoryManifest), "EffectiveDate");
@@ -155,21 +155,21 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void InvalidStation()
         {
-            var _ttnwFileImporter = new TTNWFileImporter();
-            _ttnwFileImporter.InventoryDaypartParsingEngine = _InventoryDaypartParsingEngine;
-            _ttnwFileImporter.BroadcastDataDataRepository =
+            var _ttwnFileImporter = new TTWNFileImporter();
+            _ttwnFileImporter.InventoryDaypartParsingEngine = _InventoryDaypartParsingEngine;
+            _ttwnFileImporter.BroadcastDataDataRepository =
                 IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory;
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
             {
-                var filename = @".\Files\TTNW_InvalidStation.xlsx";
+                var filename = @".\Files\TTWN_InvalidStation.xlsx";
                 var fileStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
 
                 var inventoryFile = new InventoryFile();
 
                 var effectiveDate = DateTime.Parse("10/1/2017");
                 var fileProblems = new List<InventoryFileProblem>();
-                _ttnwFileImporter.ExtractFileData(fileStream, inventoryFile, effectiveDate);
-                fileProblems = _ttnwFileImporter.FileProblems;
+                _ttwnFileImporter.ExtractFileData(fileStream, inventoryFile, effectiveDate);
+                fileProblems = _ttwnFileImporter.FileProblems;
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(StationInventoryGroup), "InventorySource");
@@ -189,21 +189,21 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void NoKnownStations()
         {
-            var _ttnwFileImporter = new TTNWFileImporter();
-            _ttnwFileImporter.InventoryDaypartParsingEngine = _InventoryDaypartParsingEngine;
-            _ttnwFileImporter.BroadcastDataDataRepository =
+            var _ttwnFileImporter = new TTWNFileImporter();
+            _ttwnFileImporter.InventoryDaypartParsingEngine = _InventoryDaypartParsingEngine;
+            _ttwnFileImporter.BroadcastDataDataRepository =
                 IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory;
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
             {
-                var filename = @".\Files\TTNW_NoKnownStations.xlsx";
+                var filename = @".\Files\TTWN_NoKnownStations.xlsx";
                 var fileStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
 
                 var inventoryFile = new InventoryFile();
 
                 var effectiveDate = DateTime.Parse("10/1/2017");
                 var fileProblems = new List<InventoryFileProblem>();
-                _ttnwFileImporter.ExtractFileData(fileStream, inventoryFile, effectiveDate);
-                fileProblems = _ttnwFileImporter.FileProblems;
+                _ttwnFileImporter.ExtractFileData(fileStream, inventoryFile, effectiveDate);
+                fileProblems = _ttwnFileImporter.FileProblems;
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 //jsonResolver.Ignore(typeof(DisplayDaypart), "_Id");
@@ -221,21 +221,21 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void InvalidDaypartSpots()
         {
-            var _ttnwFileImporter = new TTNWFileImporter();
-            _ttnwFileImporter.InventoryDaypartParsingEngine = _InventoryDaypartParsingEngine;
-            _ttnwFileImporter.BroadcastDataDataRepository =
+            var _ttwnFileImporter = new TTWNFileImporter();
+            _ttwnFileImporter.InventoryDaypartParsingEngine = _InventoryDaypartParsingEngine;
+            _ttwnFileImporter.BroadcastDataDataRepository =
                 IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory;
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
             {
-                var filename = @".\Files\TTNW_InvalidDaypartSpots.xlsx";
+                var filename = @".\Files\TTWN_InvalidDaypartSpots.xlsx";
                 var fileStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
 
                 var inventoryFile = new InventoryFile();
 
                 var effectiveDate = DateTime.Parse("10/1/2017");
                 var fileProblems = new List<InventoryFileProblem>();
-                _ttnwFileImporter.ExtractFileData(fileStream, inventoryFile, effectiveDate);
-                fileProblems = _ttnwFileImporter.FileProblems;
+                _ttwnFileImporter.ExtractFileData(fileStream, inventoryFile, effectiveDate);
+                fileProblems = _ttwnFileImporter.FileProblems;
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 //jsonResolver.Ignore(typeof(DisplayDaypart), "_Id");
@@ -253,25 +253,25 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void ValidDayparts()
         {
-            var _ttnwFileImporter = new TTNWFileImporter();
-            _ttnwFileImporter.InventoryDaypartParsingEngine = _InventoryDaypartParsingEngine;
-            _ttnwFileImporter.BroadcastDataDataRepository =
+            var _ttwnFileImporter = new TTWNFileImporter();
+            _ttwnFileImporter.InventoryDaypartParsingEngine = _InventoryDaypartParsingEngine;
+            _ttwnFileImporter.BroadcastDataDataRepository =
                 IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory;
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
             {
-                var filename = @".\Files\TTNW_ValidDayparts.xlsx";
+                var filename = @".\Files\TTWN_ValidDayparts.xlsx";
                 var fileStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
 
                 var inventoryFile = new InventoryFile
                 {
-                    InventorySource = GetTtnwInventorySource()
+                    InventorySource = GetTtwnInventorySource()
                 };
 
                 var effectiveDate = DateTime.Parse("10/1/2017");
                 var fileProblems = new List<InventoryFileProblem>();
 
-                _ttnwFileImporter.ExtractFileData(fileStream, inventoryFile, effectiveDate);
-                fileProblems = _ttnwFileImporter.FileProblems;
+                _ttwnFileImporter.ExtractFileData(fileStream, inventoryFile, effectiveDate);
+                fileProblems = _ttwnFileImporter.FileProblems;
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(StationInventoryManifest), "EffectiveDate");
@@ -296,22 +296,22 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void InvalidDaypart()
         {
-            var _ttnwFileImporter = new TTNWFileImporter();
-            _ttnwFileImporter.InventoryDaypartParsingEngine = _InventoryDaypartParsingEngine;
-            _ttnwFileImporter.BroadcastDataDataRepository =
+            var _ttwnFileImporter = new TTWNFileImporter();
+            _ttwnFileImporter.InventoryDaypartParsingEngine = _InventoryDaypartParsingEngine;
+            _ttwnFileImporter.BroadcastDataDataRepository =
                 IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory;
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
             {
 
-                var filename = @".\Files\TTNW_InvalidDaypart.xlsx";
+                var filename = @".\Files\TTWN_InvalidDaypart.xlsx";
                 var fileStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
 
                 var inventoryFile = new InventoryFile();
 
                 var effectiveDate = DateTime.Parse("10/1/2017");
                 var fileProblems = new List<InventoryFileProblem>();
-                _ttnwFileImporter.ExtractFileData(fileStream, inventoryFile, effectiveDate);
-                fileProblems = _ttnwFileImporter.FileProblems;
+                _ttwnFileImporter.ExtractFileData(fileStream, inventoryFile, effectiveDate);
+                fileProblems = _ttwnFileImporter.FileProblems;
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(StationInventoryGroup), "InventorySource"); 
@@ -330,20 +330,20 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void ZeroInDaypartSpot()
         {
-            var _ttnwFileImporter = new TTNWFileImporter();
-            _ttnwFileImporter.InventoryDaypartParsingEngine = _InventoryDaypartParsingEngine;
-            _ttnwFileImporter.BroadcastDataDataRepository =
+            var _ttwnFileImporter = new TTWNFileImporter();
+            _ttwnFileImporter.InventoryDaypartParsingEngine = _InventoryDaypartParsingEngine;
+            _ttwnFileImporter.BroadcastDataDataRepository =
                 IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory;
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
             {
-                var filename = @".\Files\TTNW_ZeroInDaypartSpot.xlsx";
+                var filename = @".\Files\TTWN_ZeroInDaypartSpot.xlsx";
                 var fileStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
                 var inventoryFile = new InventoryFile();
                 var effectiveDate = DateTime.Parse("10/1/2017");
                 var fileProblems = new List<InventoryFileProblem>();
 
-                _ttnwFileImporter.ExtractFileData(fileStream, inventoryFile, effectiveDate);
-                fileProblems = _ttnwFileImporter.FileProblems;
+                _ttwnFileImporter.ExtractFileData(fileStream, inventoryFile, effectiveDate);
+                fileProblems = _ttwnFileImporter.FileProblems;
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 
@@ -361,14 +361,14 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        private static InventorySource GetTtnwInventorySource()
+        private static InventorySource GetTtwnInventorySource()
         {
             return new InventorySource
             {
                 Id = 4,
                 InventoryType = InventorySourceTypeEnum.Barter,
                 IsActive = true,
-                Name = "TTNW"
+                Name = "TTWN"
             };
         }
     }

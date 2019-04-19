@@ -32,13 +32,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         private IStationInventoryGroupService _StationInventoryGroupService = IntegrationTestApplicationServiceFactory.GetApplicationService<IStationInventoryGroupService>();
         private IInventoryRepository _InventoryRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
         private IInventoryFileRepository _InventoryFileRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryFileRepository>();
-        private static InventorySource _ttnwInventorySource;
+        private static InventorySource _ttwnInventorySource;
         private static InventorySource _cnnInventorySource;
         private static InventorySource _openMarketInventorySource;
 
         public InventoryFileServiceIntegrationTests()
         {
-            _ttnwInventorySource = _InventoryRepository.GetInventorySourceByName("TTNW");
+            _ttwnInventorySource = _InventoryRepository.GetInventorySourceByName("TTWN");
             _cnnInventorySource = _InventoryRepository.GetInventorySourceByName("CNN");
             _openMarketInventorySource = _InventoryRepository.GetInventorySourceByName("OpenMarket");
             IntegrationTestApplicationServiceFactory.Instance.RegisterType<IDataLakeFileService, DataLakeFileServiceStub>();
@@ -194,12 +194,12 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
             {
-                var filename = @".\Files\TTNW_06.09.17.xlsx";
+                var filename = @".\Files\TTWN_06.09.17.xlsx";
                 var request = new InventoryFileSaveRequest();
                 request.StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read);
                 request.FileName = filename;
                 request.UserName = "IntegrationTestUser";
-                request.InventorySource = "TTNW";
+                request.InventorySource = "TTWN";
                 request.EffectiveDate = DateTime.Parse("10/1/2017");
                 request.AudiencePricing = new List<AudiencePricingDto>()
                 {
@@ -214,11 +214,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var result = _InventoryFileService.SaveInventoryFile(request);
 
                 var daypartCodes = new List<string>() { "LN1" };
-                var inventoryGroups = _InventoryRepository.GetActiveInventoryBySourceAndName(_ttnwInventorySource, daypartCodes, request.EffectiveDate);
+                var inventoryGroups = _InventoryRepository.GetActiveInventoryBySourceAndName(_ttwnInventorySource, daypartCodes, request.EffectiveDate);
 
                 _InventoryRepository.ExpireInventoryGroupsAndManifests(inventoryGroups, expireDate, request.EffectiveDate);
 
-                inventoryGroups = _InventoryRepository.GetInventoryBySourceAndName(_ttnwInventorySource, daypartCodes);
+                inventoryGroups = _InventoryRepository.GetInventoryBySourceAndName(_ttwnInventorySource, daypartCodes);
 
                 VerifyInventoryRaw(inventoryGroups);
             }
@@ -228,17 +228,17 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Ignore]
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void TTNWCanLoadFile()
+        public void TTWNCanLoadFile()
         {
             using (var tran = new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
             {
-                var filename = @".\Files\TTNW_06.09.17.xlsx";
+                var filename = @".\Files\TTWN_06.09.17.xlsx";
                 var request = new InventoryFileSaveRequest
                 {
                     StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
                     UserName = "IntegrationTestUser",
-                    InventorySource = "TTNW",
+                    InventorySource = "TTWN",
                     EffectiveDate = DateTime.Parse("10/1/2017"),
                     AudiencePricing = new List<AudiencePricingDto>()
                 {
@@ -252,24 +252,24 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var result = _InventoryFileService.SaveInventoryFile(request);
 
                 var daypartCodes = new List<string>() { "LN" };
-                VerifyInventory(_ttnwInventorySource, daypartCodes);
+                VerifyInventory(_ttwnInventorySource, daypartCodes);
             }
         }
 
         [Ignore]
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void TTNWCanUpdateInventory()
+        public void TTWNCanUpdateInventory()
         {
             using (var tran = new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
             {
                 // first do initial load
-                var filename = @".\Files\TTNW_06.09.17.xlsx";
+                var filename = @".\Files\TTWN_06.09.17.xlsx";
                 var request = new InventoryFileSaveRequest();
                 request.StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read);
                 request.FileName = filename;
                 request.UserName = "IntegrationTestUser";
-                request.InventorySource = "TTNW";
+                request.InventorySource = "TTWN";
                 request.EffectiveDate = DateTime.Parse("10/1/2017");
 
                 request.RatingBook = 416;
@@ -281,13 +281,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var result = _InventoryFileService.SaveInventoryFile(request);
 
-                filename = @".\Files\TTNW_UPDATE_06.09.17.xlsx";
+                filename = @".\Files\TTWN_UPDATE_06.09.17.xlsx";
                 request = new InventoryFileSaveRequest
                 {
                     StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
                     UserName = "IntegrationTestUser",
-                    InventorySource = "TTNW",
+                    InventorySource = "TTWN",
                     EffectiveDate = DateTime.Parse("10/10/2017"),
                     AudiencePricing = new List<AudiencePricingDto>()
                 {
@@ -301,7 +301,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 result = _InventoryFileService.SaveInventoryFile(request);
 
                 var daypartCodes = new List<string>() { "LN" };
-                VerifyInventory(_ttnwInventorySource, daypartCodes);
+                VerifyInventory(_ttwnInventorySource, daypartCodes);
             }
         }
 
@@ -1522,18 +1522,18 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Ignore]
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void TTNWFileHasInvalidStationProgramCPM()
+        public void TTWNFileHasInvalidStationProgramCPM()
         {
             using (new TransactionScopeWrapper())
             {
-                const string filename = @".\Files\TTNWFileLoadTestInvalidCPM.csv";
+                const string filename = @".\Files\TTWNFileLoadTestInvalidCPM.csv";
 
                 var request = new InventoryFileSaveRequest
                 {
                     StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
                     UserName = "IntegrationTestUser",
-                    InventorySource = "TTNW",
+                    InventorySource = "TTWN",
                     EffectiveDate = new DateTime(2016, 11, 06),
                     RatingBook = 416
                 };
@@ -1908,7 +1908,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [Ignore]
-        public void LoadTTNWExcelFile()
+        public void LoadTTWNExcelFile()
         {
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
             {
@@ -1919,7 +1919,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
                     UserName = "IntegrationTestUser",
-                    InventorySource = "TTNW",
+                    InventorySource = "TTWN",
                     EffectiveDate = new DateTime(2016, 11, 06),
                     RatingBook = 416
                 };
@@ -1940,18 +1940,18 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         [Ignore]
         [UseReporter(typeof(DiffReporter))]
-        public void TTNWFileHasDuplicateStationProgram()
+        public void TTWNFileHasDuplicateStationProgram()
         {
             using (new TransactionScopeWrapper())
             {
-                const string filename = @".\Files\TTNWFileLoadTestDuplicateStation.csv";
+                const string filename = @".\Files\TTWNFileLoadTestDuplicateStation.csv";
 
                 var request = new InventoryFileSaveRequest
                 {
                     StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
                     UserName = "IntegrationTestUser",
-                    InventorySource = "TTNW",
+                    InventorySource = "TTWN",
                     EffectiveDate = new DateTime(2016, 11, 06),
                     RatingBook = 416
                 };
@@ -1981,17 +1981,17 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Ignore]
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void TTNWFileHasStationProgramWithInvalidSpotLength()
+        public void TTWNFileHasStationProgramWithInvalidSpotLength()
         {
             using (new TransactionScopeWrapper())
             {
-                const string filename = @".\Files\TTNWBFileLoadTestInvalidSpothLenght.csv";
+                const string filename = @".\Files\TTWNBFileLoadTestInvalidSpothLenght.csv";
                 var request = new InventoryFileSaveRequest
                 {
                     StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
                     UserName = "IntegrationTestUser",
-                    InventorySource = "TTNW",
+                    InventorySource = "TTWN",
                     EffectiveDate = new DateTime(2016, 11, 06),
                     RatingBook = 416
                 };
@@ -2019,17 +2019,17 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Ignore]
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void TTNWFileHasInvalidStationName()
+        public void TTWNFileHasInvalidStationName()
         {
             using (new TransactionScopeWrapper())
             {
-                const string filename = @".\Files\TTNWFileLoadTestInvalidStation.csv";
+                const string filename = @".\Files\TTWNFileLoadTestInvalidStation.csv";
                 var request = new InventoryFileSaveRequest
                 {
                     StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
                     UserName = "IntegrationTestUser",
-                    InventorySource = "TTNW",
+                    InventorySource = "TTWN",
                     EffectiveDate = new DateTime(2016, 11, 06),
                     RatingBook = 416
                 };
@@ -2057,18 +2057,18 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         [Ignore]
         [ExpectedException(typeof(BroadcastInventoryDataException), ExpectedMessage = "There are no known stations in the file", MatchType = MessageMatch.Contains)]
-        public void TTNWFileHasAllStationsUnknown()
+        public void TTWNFileHasAllStationsUnknown()
         {
             using (new TransactionScopeWrapper())
             {
-                const string filename = @".\Files\TTNWFileHasInvalidStations.csv";
+                const string filename = @".\Files\TTWNFileHasInvalidStations.csv";
 
                 var request = new InventoryFileSaveRequest
                 {
                     StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
                     UserName = "IntegrationTestUser",
-                    InventorySource = "TTNW",
+                    InventorySource = "TTWN",
                     EffectiveDate = new DateTime(2016, 11, 06),
                     RatingBook = 416
                 };
@@ -2125,18 +2125,18 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Ignore]
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void TTNWFileHasInvalidDaypart()
+        public void TTWNFileHasInvalidDaypart()
         {
             using (new TransactionScopeWrapper())
             {
-                const string filename = @".\Files\TTNWFileHasInvalidDayPart.csv";
+                const string filename = @".\Files\TTWNFileHasInvalidDayPart.csv";
 
                 var request = new InventoryFileSaveRequest
                 {
                     StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
                     UserName = "IntegrationTestUser",
-                    InventorySource = "TTNW",
+                    InventorySource = "TTWN",
                     EffectiveDate = new DateTime(2016, 11, 06),
                     RatingBook = 416
                 };
@@ -2244,18 +2244,18 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Ignore]
         [Test]
         [ExpectedException(typeof(BroadcastInventoryDataException), ExpectedMessage = "There are no valid dayparts in the file ", MatchType = MessageMatch.Contains)]
-        public void TTNWFileHasAllDaypartInvalid()
+        public void TTWNFileHasAllDaypartInvalid()
         {
             using (new TransactionScopeWrapper())
             {
-                const string filename = @".\Files\TTNWFileHasAllDaypartsInvalid.csv";
+                const string filename = @".\Files\TTWNFileHasAllDaypartsInvalid.csv";
 
                 var request = new InventoryFileSaveRequest
                 {
                     StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
                     UserName = "IntegrationTestUser",
-                    InventorySource = "TTNW",
+                    InventorySource = "TTWN",
                     EffectiveDate = new DateTime(2016, 11, 06),
                     RatingBook = 416
                 };
@@ -2292,18 +2292,18 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Ignore]
         [Test]
         [ExpectedException(typeof(BroadcastInventoryDataException), ExpectedMessage = "There are no valid spot length in the file", MatchType = MessageMatch.Contains)]
-        public void TTNWFileHasAllSpotLengthInvalid()
+        public void TTWNFileHasAllSpotLengthInvalid()
         {
             using (new TransactionScopeWrapper())
             {
-                const string filename = @".\Files\TTNWFileHasAllSpotLengthInvalid.csv";
+                const string filename = @".\Files\TTWNFileHasAllSpotLengthInvalid.csv";
 
                 var request = new InventoryFileSaveRequest
                 {
                     StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
                     UserName = "IntegrationTestUser",
-                    InventorySource = "TTNW",
+                    InventorySource = "TTWN",
                     EffectiveDate = new DateTime(2016, 11, 06),
                     RatingBook = 416
                 };
@@ -2407,11 +2407,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Ignore]
         [Test]
         [ExpectedException(typeof(BroadcastInventoryDataException), ExpectedMessage = "Unable to parse any file records", MatchType = MessageMatch.Contains)]
-        public void TTNWFileHasAllEntriesInvalid()
+        public void TTWNFileHasAllEntriesInvalid()
         {
             using (new TransactionScopeWrapper())
             {
-                const string filename = @".\Files\TTNWFileHasAllEntriesInvalid.csv";
+                const string filename = @".\Files\TTWNFileHasAllEntriesInvalid.csv";
 
                 var request = new InventoryFileSaveRequest
                 {
@@ -2430,18 +2430,18 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         [Ignore]
         [UseReporter(typeof(DiffReporter))]
-        public void TTNWFileHasInvalidAudience()
+        public void TTWNFileHasInvalidAudience()
         {
             using (new TransactionScopeWrapper())
             {
-                const string filename = @".\Files\TTNWFileHasInvalidAudience.csv";
+                const string filename = @".\Files\TTWNFileHasInvalidAudience.csv";
 
                 var request = new InventoryFileSaveRequest
                 {
                     StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
                     UserName = "IntegrationTestUser",
-                    InventorySource = "TTNW",
+                    InventorySource = "TTWN",
                     EffectiveDate = new DateTime(2016, 11, 06),
                     RatingBook = 416
                 };
@@ -2588,18 +2588,18 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Ignore]
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void TTNWFileHasInvalidAudienceAndStation()
+        public void TTWNFileHasInvalidAudienceAndStation()
         {
             using (new TransactionScopeWrapper())
             {
-                const string filename = @".\Files\TTNWFileHasInvalidAudienceAndStation.csv";
+                const string filename = @".\Files\TTWNFileHasInvalidAudienceAndStation.csv";
 
                 var request = new InventoryFileSaveRequest
                 {
                     StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
                     UserName = "IntegrationTestUser",
-                    InventorySource = "TTNW",
+                    InventorySource = "TTWN",
                     EffectiveDate = new DateTime(2016, 11, 06),
                     RatingBook = 416
                 };
@@ -2784,11 +2784,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         [Ignore]
         [UseReporter(typeof(DiffReporter))]
-        public void TTNWFileHasInvalidDaypartCode()
+        public void TTWNFileHasInvalidDaypartCode()
         {
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
             {
-                const string filename = @".\Files\TTNWFileHasInvalidDaypartCode.csv";
+                const string filename = @".\Files\TTWNFileHasInvalidDaypartCode.csv";
 
                 var request = new InventoryFileSaveRequest
                 {
@@ -2835,7 +2835,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
                     UserName = "IntegrationTestUser",
-                    InventorySource = "TTNW",
+                    InventorySource = "TTWN",
                     EffectiveDate = new DateTime(2016, 11, 06),
                     RatingBook = 416
                 };
@@ -2862,7 +2862,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [Ignore]
-        public void TTNWCanLoadFileWithDaypartCodeWithSpaces()
+        public void TTWNCanLoadFileWithDaypartCodeWithSpaces()
         {
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
             {
@@ -2873,7 +2873,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
                     UserName = "IntegrationTestUser",
-                    InventorySource = "TTNW",
+                    InventorySource = "TTWN",
                     EffectiveDate = new DateTime(2016, 11, 06),
                     RatingBook = 416
                 };
@@ -2975,21 +2975,21 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
             {
-                const string filename = @".\Files\TTNWFileLoadTest.csv";
+                const string filename = @".\Files\TTWNFileLoadTest.csv";
 
                 var request = new InventoryFileSaveRequest
                 {
                     StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
                     UserName = "IntegrationTestUser",
-                    InventorySource = "TTNW",
+                    InventorySource = "TTWN",
                     RatingBook = 413,
                     EffectiveDate = new DateTime(2016, 11, 06)
                 };
 
                 _InventoryFileService.SaveInventoryFile(request);
 
-                //var rates = _ratesService.GetAllStationRates("TTNW", 1003);
+                //var rates = _ratesService.GetAllStationRates("TTWN", 1003);
 
                 //Approvals.Verify(IntegrationTestHelper.ConvertToJson(rates));
             }
@@ -2997,7 +2997,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [Ignore]
-        public void TTNWCanLoadFileWithFixedPriceColumn()
+        public void TTWNCanLoadFileWithFixedPriceColumn()
         {
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
             {
@@ -3008,7 +3008,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
                     UserName = "IntegrationTestUser",
-                    InventorySource = "TTNW",
+                    InventorySource = "TTWN",
                     EffectiveDate = new DateTime(2017, 11, 06),
                     RatingBook = 416
                 };
@@ -3094,7 +3094,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Ignore]
         [Test]
         [ExpectedException(typeof(BroadcastInventoryDataException), ExpectedMessage = "Daypart code", MatchType = MessageMatch.Contains)]
-        public void TTNWThrowExceptionWhenMultipleFixedPriceForSameDaypart()
+        public void TTWNThrowExceptionWhenMultipleFixedPriceForSameDaypart()
         {
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
             {
@@ -3105,7 +3105,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
                     UserName = "IntegrationTestUser",
-                    InventorySource = "TTNW",
+                    InventorySource = "TTWN",
                     EffectiveDate = new DateTime(2017, 11, 06),
                     RatingBook = 416
                 };
@@ -3220,7 +3220,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [Ignore]
-        public void TTNWCanLoadFileWithSameSpotLengthDaypartAndStation()
+        public void TTWNCanLoadFileWithSameSpotLengthDaypartAndStation()
         {
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
             {
@@ -3231,7 +3231,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
                     UserName = "IntegrationTestUser",
-                    InventorySource = "TTNW",
+                    InventorySource = "TTWN",
                     EffectiveDate = new DateTime(2016, 11, 06),
                     RatingBook = 416
                 };

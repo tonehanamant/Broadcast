@@ -641,10 +641,10 @@
     <None Include="Files\InventoryDaypartParsing\CNN_dayparts_2.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Files\InventoryDaypartParsing\TTNW_dayparts.xlsx">
+    <None Include="Files\InventoryDaypartParsing\TTWN_dayparts.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Files\InventoryDaypartParsing\TTNW_dayparts_2.xlsx">
+    <None Include="Files\InventoryDaypartParsing\TTWN_dayparts_2.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Files\KeepingTrac_MissingData.xlsx">
@@ -762,73 +762,73 @@
     <None Include="Files\ThirdPartyFileWithSameStationDaypartSpotLength.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Files\TTNW_UPDATE_06.09.17.xlsx">
+    <None Include="Files\TTWN_UPDATE_06.09.17.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Files\TTNW_AMNews-06.09.17.xlsx">
+    <None Include="Files\TTWN_AMNews-06.09.17.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Files\TTNWBFileLoadTestInvalidSpothLenght.csv">
+    <None Include="Files\TTWNBFileLoadTestInvalidSpothLenght.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Files\TTNWFileHasAllDaypartsInvalid.csv">
+    <None Include="Files\TTWNFileHasAllDaypartsInvalid.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Files\TTNWFileHasAllEntriesInvalid.csv">
+    <None Include="Files\TTWNFileHasAllEntriesInvalid.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Files\TTNWFileHasAllSpotLengthInvalid.csv">
+    <None Include="Files\TTWNFileHasAllSpotLengthInvalid.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Files\TTNWFileHasInvalidAudience.csv">
+    <None Include="Files\TTWNFileHasInvalidAudience.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Files\TTNWFileHasInvalidAudienceAndStation.csv">
+    <None Include="Files\TTWNFileHasInvalidAudienceAndStation.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Files\TTNWFileHasInvalidDayPart.csv">
+    <None Include="Files\TTWNFileHasInvalidDayPart.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Files\TTNWFileHasInvalidDaypartCode.csv">
+    <None Include="Files\TTWNFileHasInvalidDaypartCode.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Files\TTNWFileHasInvalidStations.csv">
+    <None Include="Files\TTWNFileHasInvalidStations.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Files\TTNWFileLoadTest.csv">
+    <None Include="Files\TTWNFileLoadTest.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Files\TTNWFileLoadTestDuplicateStation.csv">
+    <None Include="Files\TTWNFileLoadTestDuplicateStation.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Files\TTNWFileLoadTestInvalidCPM.csv">
+    <None Include="Files\TTWNFileLoadTestInvalidCPM.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Files\TTNWFileLoadTestInvalidStation.csv">
+    <None Include="Files\TTWNFileLoadTestInvalidStation.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Files\TTNW_06.09.17.xlsx">
+    <None Include="Files\TTWN_06.09.17.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Files\TTNW_EN_06.09.17.xlsx">
+    <None Include="Files\TTWN_EN_06.09.17.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Files\TTNW_InvalidDaypart.xlsx">
+    <None Include="Files\TTWN_InvalidDaypart.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Files\TTNW_InvalidDaypartSpots.xlsx">
+    <None Include="Files\TTWN_InvalidDaypartSpots.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Files\TTNW_InvalidStation.xlsx">
+    <None Include="Files\TTWN_InvalidStation.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Files\TTNW_NoKnownStations.xlsx">
+    <None Include="Files\TTWN_NoKnownStations.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Files\TTNW_ValidDayparts.xlsx">
+    <None Include="Files\TTWN_ValidDayparts.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Files\TTNW_ZeroInDaypartSpot.xlsx">
+    <None Include="Files\TTWN_ZeroInDaypartSpot.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Files\TVBFileHasAllDaypartsInvalid.csv">

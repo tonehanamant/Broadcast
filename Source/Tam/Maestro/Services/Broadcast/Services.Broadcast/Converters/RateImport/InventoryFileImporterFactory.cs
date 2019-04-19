@@ -52,8 +52,8 @@ namespace Services.Broadcast.Converters.RateImport
                 case "CNN":
                     fileImporter = new CNNFileImporter(_CNNStationInventoryGroupService,_InventoryFileValidator);
                     break;
-                case "TTNW":
-                    fileImporter = new TTNWFileImporter();
+                case "TTWN":
+                    fileImporter = new TTWNFileImporter();
                     break;
                 case "OpenMarket":
                     fileImporter = new OpenMarketFileImporter();

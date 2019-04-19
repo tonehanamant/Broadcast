@@ -322,7 +322,7 @@ namespace Services.Broadcast.ApplicationServices
                     _LockingEngine.LockStations(fileStationsDict, lockedStationIds, stationLocks);
 
                     var isProprietary = inventorySource.Name == "CNN" ||
-                                        inventorySource.Name == "TTNW";
+                                        inventorySource.Name == "TTWN";
 
                     _AddRequestAudienceInfo(request, inventoryFile);
 

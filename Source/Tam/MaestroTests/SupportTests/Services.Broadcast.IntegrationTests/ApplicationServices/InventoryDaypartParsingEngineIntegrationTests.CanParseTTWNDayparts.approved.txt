@@ -1,0 +1,208 @@
+﻿{
+  "failures": [
+    "SU 7A-10:30A (SU 7-8A)",
+    "SU 7-8A (may be SU 8-9A)",
+    "SA 6-10A  (6-8:30A)",
+    "NOV'17 (Adj. -20%)",
+    "SPOT/MKT RATIO (SAG) Both TTWN & BUY",
+    "US % HH COV'G Both TTWN & BUY"
+  ],
+  "success": {
+    "M-F 5-6A": [
+      "M-F 5AM-6AM"
+    ],
+    "M-F 5-9A": [
+      "M-F 5AM-9AM"
+    ],
+    "M-F 6-9A": [
+      "M-F 6AM-9AM"
+    ],
+    "SA 7-10A": [
+      "SA 7AM-10AM"
+    ],
+    "SU 8-9A": [
+      "SU 8AM-9AM"
+    ],
+    "M-F 11A-1129A": [
+      "M-F 11AM-11:29AM"
+    ],
+    "M-F 528-659A": [
+      "M-F 5:28AM-6:59AM"
+    ],
+    "M-F 5:30-9A": [
+      "M-F 5:30AM-9AM"
+    ],
+    "M-F 6-7A": [
+      "M-F 6AM-7AM"
+    ],
+    "M-F 7-8A": [
+      "M-F 7AM-8AM"
+    ],
+    "M-F 8-9A": [
+      "M-F 8AM-9AM"
+    ],
+    "M-F 7-9A": [
+      "M-F 7AM-9AM"
+    ],
+    "SA 8-9A": [
+      "SA 8AM-9AM"
+    ],
+    "SA 7-9A": [
+      "SA 7AM-9AM"
+    ],
+    "SU 6-8A": [
+      "SU 6AM-8AM"
+    ],
+    "M-F 6-659A": [
+      "M-F 6AM-6:59AM"
+    ],
+    "M-F 7-759A": [
+      "M-F 7AM-7:59AM"
+    ],
+    "SA 8-859A / SU 8-829A": [
+      "SA 8AM-8:59AM",
+      "SU 8AM-8:29AM"
+    ],
+    "M-F 5-559A": [
+      "M-F 5AM-5:59AM"
+    ],
+    "M-F 5-7A  ": [
+      "M-F 5AM-7AM"
+    ],
+    "SU 10-1059A": [
+      "SU 10AM-10:59AM"
+    ],
+    "SU 6-659A": [
+      "SU 6AM-6:59AM"
+    ],
+    "SU 7-759A": [
+      "SU 7AM-7:59AM"
+    ],
+    "SU 9-959A": [
+      "SU 9AM-9:59AM"
+    ],
+    "M-F 8-859A": [
+      "M-F 8AM-8:59AM"
+    ],
+    "M-F 6-859A": [
+      "M-F 6AM-8:59AM"
+    ],
+    "SA 5A-859A": [
+      "SA 5AM-8:59AM"
+    ],
+    "SU 5-11:29A": [
+      "SU 5AM-11:29AM"
+    ],
+    "SA 8-10A": [
+      "SA 8AM-10AM"
+    ],
+    "SU 8-1030A": [
+      "SU 8AM-10:30AM"
+    ],
+    "M-F 5-6:59A": [
+      "M-F 5AM-6:59AM"
+    ],
+    "M-F 7A-8:59A": [
+      "M-F 7AM-8:59AM"
+    ],
+    "M-F 4:30-6A": [
+      "M-F 4:30AM-6AM"
+    ],
+    "SA-SU 6-9A": [
+      "SA-SU 6AM-9AM"
+    ],
+    "M-F 7-859A": [
+      "M-F 7AM-8:59AM"
+    ],
+    "SA 6-759A": [
+      "SA 6AM-7:59AM"
+    ],
+    "SU 6-759A": [
+      "SU 6AM-7:59AM"
+    ],
+    "SA-SU 8-10A": [
+      "SA-SU 8AM-10AM"
+    ],
+    "SA 6-8A": [
+      "SA 6AM-8AM"
+    ],
+    "SU 8-12:30P": [
+      "SU 8PM-12:30PM"
+    ],
+    "SA 6-9A": [
+      "SA 6AM-9AM"
+    ],
+    "SU 7-8A": [
+      "SU 7AM-8AM"
+    ],
+    "M-SU 6-9A": [
+      "M-SU 6AM-9AM"
+    ],
+    "M-F 7A-9A": [
+      "M-F 7AM-9AM"
+    ],
+    "M-SU 5-9A": [
+      "M-SU 5AM-9AM"
+    ],
+    "M-F 5-8A": [
+      "M-F 5AM-8AM"
+    ],
+    "M-F 5A-9A": [
+      "M-F 5AM-9AM"
+    ],
+    "SA-SU 6A-10A": [
+      "SA-SU 6AM-10AM"
+    ],
+    "M-F 5A-7A": [
+      "M-F 5AM-7AM"
+    ],
+    "SA 7:30A-9A": [
+      "SA 7:30AM-9AM"
+    ],
+    "SU 6A-9A": [
+      "SU 6AM-9AM"
+    ],
+    "SU 7A-8A": [
+      "SU 7AM-8AM"
+    ],
+    "SA-SU 5-7A": [
+      "SA-SU 5AM-7AM"
+    ],
+    "SA-SU 7-9A": [
+      "SA-SU 7AM-9AM"
+    ],
+    "M-F 5-7A": [
+      "M-F 5AM-7AM"
+    ],
+    "M-F 5-659A": [
+      "M-F 5AM-6:59AM"
+    ],
+    "M-F 5:30-6A": [
+      "M-F 5:30AM-6AM"
+    ],
+    "SA-SU 6-8A": [
+      "SA-SU 6AM-8AM"
+    ],
+    "SU 6-859A": [
+      "SU 6AM-8:59AM"
+    ],
+    "M-F 11A-12:59P": [
+      "M-F 11AM-12:59PM"
+    ],
+    "SA 9-10:30A": [
+      "SA 9AM-10:30AM"
+    ],
+    "SA-SU 6-8:59A": [
+      "SA-SU 6AM-8:59AM"
+    ],
+    "M-F 530-6A": [
+      "M-F 5:30AM-6AM"
+    ],
+    "SA-SU 6A-9A": [
+      "SA-SU 6AM-9AM"
+    ],
+    "SA - SU 8-859A": [
+      "SA-SU 8AM-8:59AM"
+    ]
+  }
+}

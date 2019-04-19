@@ -1,0 +1,99 @@
+﻿{
+  "failures": [],
+  "success": {
+    "M-F + SU 10-1035P": [
+      "M-F,SU 10PM-10:35PM"
+    ],
+    "M-F 5-630P": [
+      "M-F 5PM-6:30PM"
+    ],
+    "M-F 4-559P": [
+      "M-F 4PM-5:59PM"
+    ],
+    "SA-SU 6-630P": [
+      "SA-SU 6PM-6:30PM"
+    ],
+    "M-F 6-730P": [
+      "M-F 6PM-7:30PM"
+    ],
+    "M-F 4-459P": [
+      "M-F 4PM-4:59PM"
+    ],
+    "M-F 6-629P": [
+      "M-F 6PM-6:29PM"
+    ],
+    "M-SA 5-6P": [
+      "M-SA 5PM-6PM"
+    ],
+    "M-SA 6-630P": [
+      "M-SA 6PM-6:30PM"
+    ],
+    "M-F 5-559P": [
+      "M-F 5PM-5:59PM"
+    ],
+    "M-F 5-629P": [
+      "M-F 5PM-6:29PM"
+    ],
+    "M-F 5-630p": [
+      "M-F 5PM-6:30PM"
+    ],
+    "M-F 6-659P": [
+      "M-F 6PM-6:59PM"
+    ],
+    "M-F 6-7P": [
+      "M-F 6PM-7PM"
+    ],
+    "TH-F 4-629P + SU-TU 6-629P": [
+      "TH-F 4PM-6:29PM",
+      "M-TU,SU 6PM-6:29PM"
+    ],
+    "M-F 4-629P + SA-SU 6-629P": [
+      "M-F 4PM-6:29PM",
+      "SA-SU 6PM-6:29PM"
+    ],
+    "SA-SU 5-7P": [
+      "SA-SU 5PM-7PM"
+    ],
+    "M-SU 6-7P": [
+      "M-SU 6PM-7PM"
+    ],
+    "M-F 5-7P": [
+      "M-F 5PM-7PM"
+    ],
+    "M-F 5-6P": [
+      "M-F 5PM-6PM"
+    ],
+    "M-F 5-7P + SA 6-630P + SU 6-7P": [
+      "M-F 5PM-7PM",
+      "SA 6PM-6:30PM",
+      "SU 6PM-7PM"
+    ],
+    "M-F 530-630P": [
+      "M-F 5:30PM-6:30PM"
+    ],
+    "SA-SU 5-630P": [
+      "SA-SU 5PM-6:30PM"
+    ],
+    "M-SU 5-630P": [
+      "M-SU 5PM-6:30PM"
+    ],
+    "M-F 4-630P": [
+      "M-F 4PM-6:30PM"
+    ],
+    "M-F 6-6:30P": [
+      "M-F 6PM-6:30PM"
+    ],
+    "M-F 4-5P": [
+      "M-F 4PM-5PM"
+    ],
+    "M-F 6-630P": [
+      "M-F 6PM-6:30PM"
+    ],
+    "M-F 5-529P": [
+      "M-F 5PM-5:29PM"
+    ],
+    "M-SU 6-629P": [
+      "M-SU 6PM-6:29PM"
+    ]
+  }
+}

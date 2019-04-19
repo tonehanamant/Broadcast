@@ -10,7 +10,7 @@ using Services.Broadcast.Entities.StationInventory;
 
 namespace Services.Broadcast.Converters.RateImport
 {
-    public class TTNWFileImporter : InventoryFileImporterBase
+    public class TTWNFileImporter : InventoryFileImporterBase
     {
         private Dictionary<string, int> standardColumnOffsets = new Dictionary<string, int>()
         {
@@ -21,7 +21,7 @@ namespace Services.Broadcast.Converters.RateImport
             {"daypart",6}
         };
 
-        private readonly int _TTNWStandardSpotLength = 30;
+        private readonly int _TTWNStandardSpotLength = 30;
 
         class SpreadsheetTableDescriptor
         {
@@ -33,7 +33,7 @@ namespace Services.Broadcast.Converters.RateImport
             public Dictionary<string, int> AudienceImpressionsColumns { get; set; }
         }
 
-        class TTNWFileRecord
+        class TTWNFileRecord
         {
             public string StationLetters { get; set; }
             public string DaypartsString { get; set; }
@@ -44,7 +44,7 @@ namespace Services.Broadcast.Converters.RateImport
 
         public override void ExtractFileData(System.IO.Stream stream, InventoryFile inventoryFile, DateTime effectiveDate)
         {
-            var spotLengthId = _BroadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthAndIds()[_TTNWStandardSpotLength];
+            var spotLengthId = _BroadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthAndIds()[_TTWNStandardSpotLength];
 
             using (var excelPackage = new ExcelPackage(stream))
             {
@@ -56,14 +56,14 @@ namespace Services.Broadcast.Converters.RateImport
                     FileProblems.Add(new InventoryFileProblem(string.Format("No valid daypart codes (spot columns) found in file.")));
                 }
 
-                var ttnwRecords = _GetTTNWRecords(sheet, dataTable);
+                var ttwnRecords = _GetTTWNRecords(sheet, dataTable);
 
-                if (ttnwRecords.Count == 0)
+                if (ttwnRecords.Count == 0)
                 {
                     return;
                 }
 
-                var validStations = FindStations(ttnwRecords.Select(r => r.StationLetters).Distinct().ToList());
+                var validStations = FindStations(ttwnRecords.Select(r => r.StationLetters).Distinct().ToList());
 
                 if (validStations == null || validStations.Count == 0)
                 {
@@ -73,16 +73,16 @@ namespace Services.Broadcast.Converters.RateImport
 
                 var inventoryGroups = new Dictionary<string, StationInventoryGroup>();
 
-                foreach (var ttnwRecord in ttnwRecords)
+                foreach (var ttwnRecord in ttwnRecords)
                 {
                     DisplayBroadcastStation station;
 
-                    if(!validStations.TryGetValue(ttnwRecord.StationLetters, out station))
+                    if(!validStations.TryGetValue(ttwnRecord.StationLetters, out station))
                     {
-                        FileProblems.Add(new InventoryFileProblem(string.Format("Invalid station: {0}", ttnwRecord.StationLetters)));
+                        FileProblems.Add(new InventoryFileProblem(string.Format("Invalid station: {0}", ttwnRecord.StationLetters)));
                     }
 
-                    var dayparts = ParseDayparts(ttnwRecord.DaypartsString, ttnwRecord.StationLetters);
+                    var dayparts = ParseDayparts(ttwnRecord.DaypartsString, ttwnRecord.StationLetters);
 
                     var manifestDayparts = dayparts.Select(
                         d => new StationInventoryManifestDaypart()
@@ -90,9 +90,9 @@ namespace Services.Broadcast.Converters.RateImport
                             Daypart = d
                         }).ToList();
 
-                    var manifestAudiences = _ParseManifestAudiences(ttnwRecord.AudienceImpressions);
+                    var manifestAudiences = _ParseManifestAudiences(ttwnRecord.AudienceImpressions);
 
-                    foreach (var daypartCodeSpots in ttnwRecord.Spots)
+                    foreach (var daypartCodeSpots in ttwnRecord.Spots)
                     {
                         var slotNumber = 1;
                         var daypartCode = daypartCodeSpots.Key;
@@ -162,9 +162,9 @@ namespace Services.Broadcast.Converters.RateImport
             return manifestAudiences;
         }
 
-        private List<TTNWFileRecord> _GetTTNWRecords(ExcelWorksheet sheet, SpreadsheetTableDescriptor dataTable)
+        private List<TTWNFileRecord> _GetTTWNRecords(ExcelWorksheet sheet, SpreadsheetTableDescriptor dataTable)
         {
-            var recordList = new List<TTNWFileRecord>();
+            var recordList = new List<TTWNFileRecord>();
             
             for (int i = dataTable.StartRow; i <= dataTable.EndRow; i++)
             {
@@ -174,7 +174,7 @@ namespace Services.Broadcast.Converters.RateImport
                     continue;
                 }
 
-                var row = new TTNWFileRecord
+                var row = new TTWNFileRecord
                 {
                     StationLetters = sheet.Cells[i, dataTable.StartCol + standardColumnOffsets["station"]].Text,
                     DaypartsString = sheet.Cells[i, dataTable.StartCol + standardColumnOffsets["daypart"]].Text,
@@ -263,7 +263,7 @@ namespace Services.Broadcast.Converters.RateImport
             }
 
             // Try again, but one row below. 
-            // TTNW EN tables audience header data is one row below the other two formats.
+            // TTWN EN tables audience header data is one row below the other two formats.
             if (impressionsFirstCol == 0)
             {
                 for (int i = lastTableCol + 1; i <= sheet.Dimension.End.Column; i++)
@@ -361,7 +361,7 @@ namespace Services.Broadcast.Converters.RateImport
                 }
             }
 
-            throw new ApplicationException("Could not locate data table in TTNW file.");
+            throw new ApplicationException("Could not locate data table in TTWN file.");
 
         }
 

@@ -23,7 +23,7 @@
     "HouseholdImpressions": null,
     "InventoryPostingBooks": [],
     "InventorySourceId": 4,
-    "InventorySourceName": "TTNW",
+    "InventorySourceName": "TTWN",
     "IsUpdating": false,
     "LastUpdatedDate": null,
     "Quarter": {
