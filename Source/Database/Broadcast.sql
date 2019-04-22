@@ -50,76 +50,6 @@ GO
 
 /*************************************** START UPDATE SCRIPT *****************************************************/
 
-/*************************************** START PRI-6133 *****************************************************/
---add DIGI daypart code
-IF NOT EXISTS(SELECT * FROM daypart_codes WHERE [name] = 'DIGI')
-BEGIN
-	INSERT INTO daypart_codes([name], is_active) VALUES('DIGI', 1)
-END
-
---add Diginet sources
-IF NOT EXISTS (SELECT * FROM inventory_sources WHERE [name] = 'Antenna TV')
-BEGIN
-	INSERT INTO inventory_sources([name], is_active, inventory_source_type) VALUES('Antenna TV', 1, 5)
-END
-
-IF NOT EXISTS (SELECT * FROM inventory_sources WHERE [name] = 'Bounce')
-BEGIN
-	INSERT INTO inventory_sources([name], is_active, inventory_source_type) VALUES('Bounce', 1, 5)
-END
-
-IF NOT EXISTS (SELECT * FROM inventory_sources WHERE [name] = 'BUZZR')
-BEGIN
-	INSERT INTO inventory_sources([name], is_active, inventory_source_type) VALUES('BUZZR', 1, 5)
-END
-
-IF NOT EXISTS (SELECT * FROM inventory_sources WHERE [name] = 'COZI')
-BEGIN
-	INSERT INTO inventory_sources([name], is_active, inventory_source_type) VALUES('COZI', 1, 5)
-END
-
-IF NOT EXISTS (SELECT * FROM inventory_sources WHERE [name] = 'Escape')
-BEGIN
-	INSERT INTO inventory_sources([name], is_active, inventory_source_type) VALUES('Escape', 1, 5)
-END
-
-IF NOT EXISTS (SELECT * FROM inventory_sources WHERE [name] = 'Grit')
-BEGIN
-	INSERT INTO inventory_sources([name], is_active, inventory_source_type) VALUES('Grit', 1, 5)
-END
-
-IF NOT EXISTS (SELECT * FROM inventory_sources WHERE [name] = 'HITV')
-BEGIN
-	INSERT INTO inventory_sources([name], is_active, inventory_source_type) VALUES('HITV', 1, 5)
-END
-
-IF NOT EXISTS (SELECT * FROM inventory_sources WHERE [name] = 'Laff')
-BEGIN
-	INSERT INTO inventory_sources([name], is_active, inventory_source_type) VALUES('Laff', 1, 5)
-END
-
-IF NOT EXISTS (SELECT * FROM inventory_sources WHERE [name] = 'Me TV')
-BEGIN
-	INSERT INTO inventory_sources([name], is_active, inventory_source_type) VALUES('Me TV', 1, 5)
-END
-
---make share_projection_book_id, contracted_daypart_id and playback_type nullable
-IF EXISTS(SELECT 1 FROM sys.columns WHERE OBJECT_ID = OBJECT_ID('inventory_file_barter_header') AND name = 'share_projection_book_id')
-BEGIN
-	ALTER TABLE inventory_file_barter_header ALTER COLUMN share_projection_book_id int NULL
-END
-
-IF EXISTS(SELECT 1 FROM sys.columns WHERE OBJECT_ID = OBJECT_ID('inventory_file_barter_header') AND name = 'playback_type')
-BEGIN
-	ALTER TABLE inventory_file_barter_header ALTER COLUMN playback_type int NULL
-END
-
-IF EXISTS(SELECT 1 FROM sys.columns WHERE OBJECT_ID = OBJECT_ID('inventory_file_barter_header') AND name = 'contracted_daypart_id')
-BEGIN
-	ALTER TABLE inventory_file_barter_header ALTER COLUMN contracted_daypart_id int NULL
-END
-/*************************************** END PRI-6133 *****************************************************/
-
 /*************************************** START PRI-6132 *****************************************************/
 --add nti_to_nsi_increase column
 IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE OBJECT_ID = OBJECT_ID('inventory_file_barter_header') AND name = 'nti_to_nsi_increase')
@@ -373,6 +303,76 @@ BEGIN
 END
 
 /*************************************** END PRI-7386 *******************************************************/
+
+/*************************************** START PRI-6133 *****************************************************/
+--add DIGI daypart code
+IF NOT EXISTS(SELECT * FROM daypart_codes WHERE [name] = 'DIGI')
+BEGIN
+	INSERT INTO daypart_codes([name], is_active) VALUES('DIGI', 1)
+END
+
+--add Diginet sources
+IF NOT EXISTS (SELECT * FROM inventory_sources WHERE [name] = 'Antenna TV')
+BEGIN
+	INSERT INTO inventory_sources([name], is_active, inventory_source_type) VALUES('Antenna TV', 1, 5)
+END
+
+IF NOT EXISTS (SELECT * FROM inventory_sources WHERE [name] = 'Bounce')
+BEGIN
+	INSERT INTO inventory_sources([name], is_active, inventory_source_type) VALUES('Bounce', 1, 5)
+END
+
+IF NOT EXISTS (SELECT * FROM inventory_sources WHERE [name] = 'BUZZR')
+BEGIN
+	INSERT INTO inventory_sources([name], is_active, inventory_source_type) VALUES('BUZZR', 1, 5)
+END
+
+IF NOT EXISTS (SELECT * FROM inventory_sources WHERE [name] = 'COZI')
+BEGIN
+	INSERT INTO inventory_sources([name], is_active, inventory_source_type) VALUES('COZI', 1, 5)
+END
+
+IF NOT EXISTS (SELECT * FROM inventory_sources WHERE [name] = 'Escape')
+BEGIN
+	INSERT INTO inventory_sources([name], is_active, inventory_source_type) VALUES('Escape', 1, 5)
+END
+
+IF NOT EXISTS (SELECT * FROM inventory_sources WHERE [name] = 'Grit')
+BEGIN
+	INSERT INTO inventory_sources([name], is_active, inventory_source_type) VALUES('Grit', 1, 5)
+END
+
+IF NOT EXISTS (SELECT * FROM inventory_sources WHERE [name] = 'HITV')
+BEGIN
+	INSERT INTO inventory_sources([name], is_active, inventory_source_type) VALUES('HITV', 1, 5)
+END
+
+IF NOT EXISTS (SELECT * FROM inventory_sources WHERE [name] = 'Laff')
+BEGIN
+	INSERT INTO inventory_sources([name], is_active, inventory_source_type) VALUES('Laff', 1, 5)
+END
+
+IF NOT EXISTS (SELECT * FROM inventory_sources WHERE [name] = 'Me TV')
+BEGIN
+	INSERT INTO inventory_sources([name], is_active, inventory_source_type) VALUES('Me TV', 1, 5)
+END
+
+--make share_projection_book_id, contracted_daypart_id and playback_type nullable
+IF EXISTS(SELECT 1 FROM sys.columns WHERE OBJECT_ID = OBJECT_ID('inventory_file_barter_header') AND name = 'share_projection_book_id')
+BEGIN
+	ALTER TABLE inventory_file_barter_header ALTER COLUMN share_projection_book_id int NULL
+END
+
+IF EXISTS(SELECT 1 FROM sys.columns WHERE OBJECT_ID = OBJECT_ID('inventory_file_barter_header') AND name = 'playback_type')
+BEGIN
+	ALTER TABLE inventory_file_barter_header ALTER COLUMN playback_type int NULL
+END
+
+IF EXISTS(SELECT 1 FROM sys.columns WHERE OBJECT_ID = OBJECT_ID('inventory_file_barter_header') AND name = 'contracted_daypart_id')
+BEGIN
+	ALTER TABLE inventory_file_barter_header ALTER COLUMN contracted_daypart_id int NULL
+END
+/*************************************** END PRI-6133 *****************************************************/
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
