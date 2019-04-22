@@ -44,11 +44,21 @@ namespace Services.Broadcast.IntegrationTests
 
     public class FtpServiceStubb_SingleFile : FtpServiceStubb_Empty
     {
+        private readonly string _Filename;
+        public FtpServiceStubb_SingleFile() : base()
+        {
+            _Filename = "Special_Ftp_Phantom_File.txt";
+        }
+        
+        public FtpServiceStubb_SingleFile(string fileName): base()
+        {
+            _Filename = fileName;
+        }
         public override List<string> GetFileList(NetworkCredential credentials, string remoteFTPPath)
         {
             return new List<string>()
             {
-                "Special_Ftp_Phantom_File.txt"
+                _Filename
             };
         }
 

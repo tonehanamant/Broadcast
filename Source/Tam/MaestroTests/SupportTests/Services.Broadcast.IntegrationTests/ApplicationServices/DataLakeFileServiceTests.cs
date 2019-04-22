@@ -22,7 +22,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         public void FileStreamSaveTest()
         {
-            IntegrationTestApplicationServiceFactory.Instance.RegisterType<IFileService, FileServiceDataLakeStubb>();
+            IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<IFileService>(new FileServiceDataLakeStubb());
             var fileService = IntegrationTestApplicationServiceFactory.Instance.Resolve<IFileService>();
 
             var dataLakeFolder = BroadcastServiceSystemParameter.DataLake_SharedFolder;
@@ -49,7 +49,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         public void FileSaveTest()
         {
-            IntegrationTestApplicationServiceFactory.Instance.RegisterType<IFileService, FileServiceDataLakeStubb>();
+            IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<IFileService>(new FileServiceDataLakeStubb());
             var fileService = IntegrationTestApplicationServiceFactory.Instance.Resolve<IFileService>();
 
             var filePath = @".\Files\1Chicago WLS Syn 4Q16.xml";

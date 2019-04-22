@@ -140,21 +140,23 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore]
+        //[Ignore]
         [Test]
         public void DLAndProcessWWTVFiles_DataLakeCopy()
         {
+            var filename = "PostLogDLAndProcessWWTVFiles_DataLakeCopy.txt";
             using (var trans = new TransactionScopeWrapper())
             {
-                IntegrationTestApplicationServiceFactory.Instance.RegisterType<IFtpService, FtpServiceStubb_SingleFile>();
+                IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<IFtpService>(new FtpServiceStubb_SingleFile(filename));
                 IntegrationTestApplicationServiceFactory.Instance.RegisterType<IImpersonateUser, ImpersonateUserStubb>();
-                IntegrationTestApplicationServiceFactory.Instance.RegisterType<IFileService, FileServiceDataLakeStubb>();
+                IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<IFileService>(new FileServiceDataLakeStubb());
+                IntegrationTestApplicationServiceFactory.Instance.RegisterType<IDataLakeFileService, DataLakeFileService>();
 
                 var postLogPostProcessingService = IntegrationTestApplicationServiceFactory.GetApplicationService<IPostLogPostProcessingService>();
                 var fileService = IntegrationTestApplicationServiceFactory.Instance.Resolve<IFileService>();
 
                 var dataLakeFolder = BroadcastServiceSystemParameter.DataLake_SharedFolder;
-                string filePath = Path.Combine(dataLakeFolder, "Special_Ftp_Phantom_File.txt");
+                string filePath = Path.Combine(dataLakeFolder, filename);
                 if (fileService.Exists(filePath))
                 {
                     fileService.Delete(filePath);

@@ -63,10 +63,19 @@ namespace Services.Broadcast.IntegrationTests
 
     public class FileServiceDataLakeStubb : FileServiceStubb
     {
-        private static List<string> _Files = new List<string>();
+        private List<string> _Files = new List<string>();
         
         public override bool Exists(string path)
         {
+            var frame = new StackFrame(1);
+            var method = frame.GetMethod();
+            Debug.WriteLine($"===> Called Exists({path}) from {method.Name} {method.DeclaringType}");
+            Debug.WriteLine("===> Existing files:");
+            foreach(var file in _Files)
+            {
+                Debug.WriteLine(file);
+            }
+            Debug.WriteLine("<===");
             return _Files.Where(x=> x.Equals(path)).Count() == 1;
         }
 
@@ -84,10 +93,19 @@ namespace Services.Broadcast.IntegrationTests
 
         public override void Delete(params string[] paths)
         {
-            foreach(string path in paths)
+            var frame = new StackFrame(1);
+            var method = frame.GetMethod();
+            Debug.WriteLine($"===> Called Delete({paths}) from {method.Name} {method.DeclaringType}");
+            Debug.WriteLine("===> Existing files:");
+            foreach (string path in paths)
             {
                 _Files.RemoveAll(x => x.Equals(path));
             }
+            foreach (var file in _Files)
+            {
+                Debug.WriteLine(file);
+            }
+            Debug.WriteLine("<===");
         }
     }
 }
