@@ -28,7 +28,7 @@
     "1": "OpenMarket",
     "2": "Assembly",
     "3": "TVB",
-    "4": "TTNW",
+    "4": "TTWN",
     "5": "CNN",
     "6": "Sinclair",
     "7": "LilaMax",
