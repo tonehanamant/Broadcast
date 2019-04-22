@@ -208,6 +208,9 @@ namespace Common.Services
                 }
             }
 
+            // If all ids are in cache then return the dictionary; no need to talk to db
+            if (idsToGet.Count == 0) return dict;
+
             //if not in _cache, get from database
             var dayparts = _DisplayDaypartRepository.GetDisplayDayparts(idsToGet);
             foreach (var displayDaypart in dayparts)

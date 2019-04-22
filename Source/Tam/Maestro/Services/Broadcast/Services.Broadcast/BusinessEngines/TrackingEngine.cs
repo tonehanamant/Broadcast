@@ -157,6 +157,21 @@ namespace Services.Broadcast.BusinessEngines
             {
                 bvsDetail.MatchIsci = schedule.ContainsIsci(bvsDetail.Isci);
             }
+            
+            // Iterate through stations to get every daypart needed for this file, then add them all to the cache in one go
+            // Improves performance by reducing database connections
+            var daypartsToCache = new List<int>();
+            bvsStations.ForEach(station =>
+            {
+                var bvsDetailsByStation = bvsDetailsToProcess.Where(x => x.Station == station).ToList();
+                bvsDetailsByStation.ForEach(detail =>
+                {
+                    var stationSchedules = _FindDeliveryStationMatch(station, scheduleSpotTargets);
+                    var daypartIds = stationSchedules.Select(d => d.ScheduleDetail.DaypartId).ToList();
+                    daypartsToCache.AddRange(daypartIds);
+                });
+            });
+            _DaypartCache.GetDisplayDayparts(daypartsToCache);
 
             foreach (var station in bvsStations)
             {

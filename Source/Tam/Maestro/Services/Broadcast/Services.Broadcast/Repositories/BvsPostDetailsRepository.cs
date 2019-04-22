@@ -27,8 +27,7 @@ namespace Services.Broadcast.Repositories
             _InReadUncommitedTransaction(
                 context =>
                 {
-                    context.bvs_post_details.AddRange(Convert(postResults));
-                    context.SaveChanges();
+                    BulkInsert(context, Convert(postResults));
                 });
         }
 
