@@ -1,0 +1,8 @@
+﻿[
+  {
+    "AffectedProposals": null,
+    "ProblemDescription": "Audience 'HH1' from cell(row: 11, column: 4) should be the same as audience 'HH' from cell(row: 11, column: 3)",
+    "ProgramName": null,
+    "StationLetters": null
+  }
+]

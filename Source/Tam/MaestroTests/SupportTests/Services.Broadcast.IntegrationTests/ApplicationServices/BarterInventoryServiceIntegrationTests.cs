@@ -438,6 +438,14 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        public void SavesDiginetInventoryFileManifests()
+        {
+            const string fileName = @"BarterDataFiles\Diginet_ValidFile2.xlsx";
+            _VerifyFileInventoryManifests(fileName);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
         public void Diginet_InvalidFile1()
         {
             const string fileName = @"BarterDataFiles\Diginet_InvalidFile1.xlsx";
@@ -457,6 +465,62 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         public void Diginet_InvalidFile3()
         {
             const string fileName = @"BarterDataFiles\Diginet_InvalidFile3.xlsx";
+            _VerifyInventoryFileProblems(fileName);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void Diginet_InvalidFile4()
+        {
+            const string fileName = @"BarterDataFiles\Diginet_InvalidFile4.xlsx";
+            _VerifyInventoryFileProblems(fileName);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void Diginet_InvalidFile5()
+        {
+            const string fileName = @"BarterDataFiles\Diginet_InvalidFile5.xlsx";
+            _VerifyInventoryFileProblems(fileName);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void Diginet_InvalidFile6()
+        {
+            const string fileName = @"BarterDataFiles\Diginet_InvalidFile6.xlsx";
+            _VerifyInventoryFileProblems(fileName);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void Diginet_InvalidFile7()
+        {
+            const string fileName = @"BarterDataFiles\Diginet_InvalidFile7.xlsx";
+            _VerifyInventoryFileProblems(fileName);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void Diginet_InvalidFile8()
+        {
+            const string fileName = @"BarterDataFiles\Diginet_InvalidFile8.xlsx";
+            _VerifyInventoryFileProblems(fileName);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void Diginet_InvalidFile9()
+        {
+            const string fileName = @"BarterDataFiles\Diginet_InvalidFile9.xlsx";
+            _VerifyInventoryFileProblems(fileName);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void Diginet_InvalidFile10()
+        {
+            const string fileName = @"BarterDataFiles\Diginet_InvalidFile10.xlsx";
             _VerifyInventoryFileProblems(fileName);
         }
 

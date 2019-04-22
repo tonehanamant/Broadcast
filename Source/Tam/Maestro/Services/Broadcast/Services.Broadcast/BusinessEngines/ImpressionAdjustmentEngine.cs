@@ -29,6 +29,14 @@ namespace Services.Broadcast.BusinessEngines
         /// <param name="ntiConversionFactor">NTI Conversion Factor</param>
         /// <returns>Adjusted impressions</returns>
         double AdjustImpression(double impressions, double ntiConversionFactor);
+
+        /// <summary>
+        /// Converts NTI impressions to NSI
+        /// </summary>
+        /// <param name="impressions">NTI Impressions</param>
+        /// <param name="ntiToNsiIncrease">NTI to NSI increase</param>
+        /// <returns>NSI impressions</returns>
+        double ConvertNtiImpressionsToNsi(double impressions, double ntiToNsiIncrease);
     }
 
     public class ImpressionAdjustmentEngine : IImpressionAdjustmentEngine
@@ -36,7 +44,6 @@ namespace Services.Broadcast.BusinessEngines
         private readonly Lazy<Dictionary<int, double>> _SpotLengthMultipliers;
         private readonly Lazy<Dictionary<int, int>> _SpotLengths;
         private readonly Lazy<Dictionary<int, RatingAdjustmentsDto>> _RatingAdjustments;
-        private int spotLength;
 
         public ImpressionAdjustmentEngine(IDataRepositoryFactory broadcastDataRepositoryFactory)
         {
@@ -112,6 +119,11 @@ namespace Services.Broadcast.BusinessEngines
         public double AdjustImpression(double impressions, double ntiConversionFactor)
         {
             return impressions * (1 - ntiConversionFactor);
+        }
+
+        public double ConvertNtiImpressionsToNsi(double impressions, double ntiToNsiIncrease)
+        {
+            return impressions / (1 - ntiToNsiIncrease);
         }
     }
 }

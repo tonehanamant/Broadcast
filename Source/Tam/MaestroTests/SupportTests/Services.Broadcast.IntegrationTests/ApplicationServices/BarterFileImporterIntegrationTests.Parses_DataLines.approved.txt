@@ -3,6 +3,7 @@
   "CreatedDate": "0001-01-01T00:00:00",
   "DataLines": [
     {
+      "Audiences": [],
       "Comment": "Comment 1",
       "CPM": null,
       "Dayparts": [
@@ -26,6 +27,7 @@
       ],
       "Impressions": null,
       "Program": null,
+      "SpotCost": null,
       "Station": "KOB+",
       "Units": [
         {
@@ -60,6 +62,7 @@
       "Weeks": []
     },
     {
+      "Audiences": [],
       "Comment": "Comment 2",
       "CPM": null,
       "Dayparts": [
@@ -83,6 +86,7 @@
       ],
       "Impressions": null,
       "Program": null,
+      "SpotCost": null,
       "Station": "KOLN",
       "Units": [
         {
@@ -117,6 +121,7 @@
       "Weeks": []
     },
     {
+      "Audiences": [],
       "Comment": "Comment 3",
       "CPM": null,
       "Dayparts": [
@@ -157,6 +162,7 @@
       ],
       "Impressions": null,
       "Program": null,
+      "SpotCost": null,
       "Station": "KRQE+",
       "Units": [
         {
@@ -191,6 +197,7 @@
       "Weeks": []
     },
     {
+      "Audiences": [],
       "Comment": "Comment 4",
       "CPM": null,
       "Dayparts": [
@@ -248,6 +255,7 @@
       ],
       "Impressions": null,
       "Program": null,
+      "SpotCost": null,
       "Station": "KUON-TV 12.1",
       "Units": [
         {
@@ -282,6 +290,7 @@
       "Weeks": []
     },
     {
+      "Audiences": [],
       "Comment": "Comment 5",
       "CPM": null,
       "Dayparts": [
@@ -305,6 +314,7 @@
       ],
       "Impressions": null,
       "Program": null,
+      "SpotCost": null,
       "Station": "KSWB-TV 69.2",
       "Units": [
         {

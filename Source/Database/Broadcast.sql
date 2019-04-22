@@ -50,6 +50,19 @@ GO
 
 /*************************************** START UPDATE SCRIPT *****************************************************/
 
+/*************************************** START PRI-6136 *****************************************************/
+IF EXISTS(SELECT 1 FROM sys.columns WHERE OBJECT_ID = OBJECT_ID('station_inventory_manifest_audiences') AND name = 'cpm')
+BEGIN
+	ALTER TABLE station_inventory_manifest_audiences ALTER COLUMN cpm money NULL
+END
+
+IF EXISTS(SELECT 1 FROM sys.columns WHERE OBJECT_ID = OBJECT_ID('station_inventory_manifest') AND name = 'station_id')
+BEGIN
+	ALTER TABLE station_inventory_manifest ALTER COLUMN station_id int NULL
+END
+/*************************************** END PRI-6136 *****************************************************/
+
+
 /*************************************** START PRI-6132 *****************************************************/
 --add nti_to_nsi_increase column
 IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE OBJECT_ID = OBJECT_ID('inventory_file_barter_header') AND name = 'nti_to_nsi_increase')

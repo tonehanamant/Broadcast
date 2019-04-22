@@ -3,6 +3,7 @@
   "CreatedDate": "0001-01-01T00:00:00",
   "DataLines": [
     {
+      "Audiences": [],
       "Comment": "Comment 2",
       "CPM": null,
       "Dayparts": [
@@ -26,6 +27,7 @@
       ],
       "Impressions": null,
       "Program": null,
+      "SpotCost": null,
       "Station": "KOLN",
       "Units": [
         {
@@ -60,6 +62,7 @@
       "Weeks": []
     },
     {
+      "Audiences": [],
       "Comment": null,
       "CPM": null,
       "Dayparts": [
@@ -100,6 +103,7 @@
       ],
       "Impressions": null,
       "Program": null,
+      "SpotCost": null,
       "Station": "KRQE+",
       "Units": [
         {
@@ -134,6 +138,7 @@
       "Weeks": []
     },
     {
+      "Audiences": [],
       "Comment": "Comment 5",
       "CPM": null,
       "Dayparts": [
@@ -157,6 +162,7 @@
       ],
       "Impressions": null,
       "Program": null,
+      "SpotCost": null,
       "Station": "KSWB-TV 69.2",
       "Units": [
         {

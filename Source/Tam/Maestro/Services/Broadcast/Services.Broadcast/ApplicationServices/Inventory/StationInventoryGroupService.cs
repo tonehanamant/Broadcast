@@ -17,7 +17,7 @@ namespace Services.Broadcast.ApplicationServices
     public interface IStationInventoryGroupService : IApplicationService
     {
         void AddNewStationInventoryGroups(InventoryFileBase inventoryFile, DateTime newEffectiveDate);
-        void AddNewStationInventory(InventoryFileBase inventoryFile, DateTime newEffectiveDate, DateTime newEndDate, int contractedDaypartId);
+        void AddNewStationInventory(InventoryFileBase inventoryFile, DateTime newEffectiveDate, DateTime newEndDate, int? contractedDaypartId = null);
         List<StationInventoryGroup> GetStationInventoryGroupsByFileId(int fileId);
     }
 
@@ -38,11 +38,6 @@ namespace Services.Broadcast.ApplicationServices
             _daypartCache = daypartCache;
             _audiencesCache = audiencesCache;
             _MediaMonthAndWeekAggregateCache = mediaMonthAndWeekAggregateCache;
-        }
-
-        public string GenerateGroupName(string daypartCode, int slotNumber)
-        {
-           return null;    
         }
 
         public void AddNewStationInventoryGroups(InventoryFileBase inventoryFile, DateTime newEffectiveDate)
@@ -91,15 +86,46 @@ namespace Services.Broadcast.ApplicationServices
             dayparts.ForEach(d=> d = _daypartCache.GetDisplayDaypart(d.Id));
         }
 
-        public void AddNewStationInventory(InventoryFileBase inventoryFile, DateTime newEffectiveDate, DateTime newEndDate, int contractedDaypartId)
+        public void AddNewStationInventory(InventoryFileBase inventoryFile, DateTime newEffectiveDate, DateTime newEndDate, int? contractedDaypartId)
         {
             if (inventoryFile.InventorySource == null || !inventoryFile.InventorySource.IsActive)
                 throw new Exception(string.Format("The selected source type is invalid or inactive."));
 
-            _ExpireExistingInventoryGroups(inventoryFile, newEffectiveDate, newEndDate, contractedDaypartId);
-            _ExpireExistingInventoryManifests(inventoryFile, newEffectiveDate, newEndDate, contractedDaypartId);
+            if (contractedDaypartId.HasValue)
+            {
+                _ExpireExistingInventoryGroups(inventoryFile, newEffectiveDate, newEndDate, contractedDaypartId.Value);
+                _ExpireExistingInventoryManifests(inventoryFile, newEffectiveDate, newEndDate, contractedDaypartId.Value);
+            }
+            else
+            {
+                _ExpireExistingInventoryManifestsByManifestDayparts(inventoryFile, newEffectiveDate, newEndDate);
+            }
 
             _inventoryRepository.AddNewInventory(inventoryFile);
+        }
+
+        private void _ExpireExistingInventoryManifestsByManifestDayparts(InventoryFileBase inventoryFile, DateTime newEffectiveDate, DateTime newEndDate)
+        {
+            var manifestsToCreate = new List<StationInventoryManifest>();
+            var manifestContractedDaypartSets = inventoryFile.InventoryManifests.Select(x => x.ManifestDayparts.Select(d => d.Daypart.Id).OrderBy(d => d)).ToList();
+            var existingInventoryManifests = _inventoryRepository.GetActiveInventoryManifestsBySource(inventoryFile.InventorySource, newEffectiveDate, newEndDate);
+            var manifestsToExpire = new List<StationInventoryManifest>();
+            
+            // match manifests by contracted dayparts
+            foreach (var manifest in existingInventoryManifests)
+            {
+                var contractedDaypartIds = manifest.ManifestDayparts.Select(x => x.Daypart.Id).OrderBy(x => x);
+
+                if (manifestContractedDaypartSets.Any(x => contractedDaypartIds.SequenceEqual(x)))
+                {
+                    manifestsToExpire.Add(manifest);
+                }
+            }
+
+            manifestsToExpire.ForEach(manifest => _ExpireInventoryManifest(manifest, newEffectiveDate, newEndDate, manifestsToCreate));
+
+            _inventoryRepository.UpdateInventoryManifestsDateIntervals(manifestsToExpire);
+            _inventoryRepository.AddInventoryManifests(manifestsToCreate, inventoryFile);
         }
 
         private void _ExpireExistingInventoryGroups(InventoryFileBase inventoryFile, DateTime newEffectiveDate, DateTime newEndDate, int contractedDaypartId)

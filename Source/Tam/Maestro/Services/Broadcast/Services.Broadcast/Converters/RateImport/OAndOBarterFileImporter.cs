@@ -305,7 +305,7 @@ namespace Services.Broadcast.Converters.RateImport
                     {
                         new StationInventoryManifestAudience
                         {
-                            Audience = new DisplayAudience(fileHeader.Audience.Id, fileHeader.Audience.Name),
+                            Audience = fileHeader.Audience.ToDisplayAudience(),
                             CPM = x.CPM.Value,
                             Impressions = x.Impressions.Value * 1000
                         }

@@ -36,7 +36,7 @@ namespace Services.Broadcast.BusinessEngines
                     manifest.ManifestRates.Add(rate);
                 }
 
-                rate.SpotCost = ProposalMath.CalculateCost(firstAudience.CPM, impressions);
+                rate.SpotCost = ProposalMath.CalculateCost(firstAudience.CPM.Value, impressions);
             }
         }
     }

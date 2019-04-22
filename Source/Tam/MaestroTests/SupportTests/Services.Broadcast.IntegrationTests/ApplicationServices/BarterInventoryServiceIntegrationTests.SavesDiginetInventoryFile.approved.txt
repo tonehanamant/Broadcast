@@ -3,7 +3,7 @@
   "DataLines": [],
   "FileName": "BarterDataFiles\\Diginet_ValidFile1.xlsx",
   "FileStatus": 2,
-  "Hash": "5B-4B-3A-ED-09-49-89-62-86-F8-9D-B8-A8-3C-DF-9D-59-D7-34-26",
+  "Hash": "98-7E-58-C8-CC-12-04-D0-F8-61-7E-DD-D5-C7-6A-E0-FD-8E-1F-4C",
   "Header": {
     "Audience": null,
     "ContractedDaypartId": null,

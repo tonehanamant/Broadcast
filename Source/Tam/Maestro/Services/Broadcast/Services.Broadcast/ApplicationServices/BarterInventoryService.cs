@@ -135,6 +135,7 @@ namespace Services.Broadcast.ApplicationServices
                 {
                     using (var transaction = TransactionScopeHelper.CreateTransactionScopeWrapper(TimeSpan.FromMinutes(20)))
                     {
+                        var header = barterFile.Header;
                         var stations = _GetFileStationsOrCreate(barterFile, userName);
                         var stationsDict = stations.ToDictionary(x => x.Id, x => x.LegacyCallLetters);
 
@@ -142,7 +143,7 @@ namespace Services.Broadcast.ApplicationServices
 
                         _LockingEngine.LockStations(stationsDict, lockedStationIds, stationLocks);
 
-                        _AddNewStationInventory(barterFile);
+                        _StationInventoryGroupService.AddNewStationInventory(barterFile, header.EffectiveDate, header.EndDate, header.ContractedDaypartId);
 
                         _StationRepository.UpdateStationList(stationsDict.Keys.ToList(), userName, now, barterFile.InventorySource.Id);
 
@@ -215,20 +216,6 @@ namespace Services.Broadcast.ApplicationServices
             return new Tuple<string, Stream>(archiveFileName, archiveFile);
         }
 
-        private void _AddNewStationInventory(BarterInventoryFile barterFile)
-        {
-            var header = barterFile.Header;
-
-            if (barterFile.InventorySource.InventoryType == InventorySourceTypeEnum.Diginet)
-            {
-                // For Diginet we will use ContractedDaypartId from datalines
-            }
-            else
-            {
-                _StationInventoryGroupService.AddNewStationInventory(barterFile, header.EffectiveDate, header.EndDate, header.ContractedDaypartId.Value);
-            }
-        }
-
         private InventorySource _ReadInventorySourceFromFile(Stream streamData)
         {
             const int searchInventorySourceHeaderCellRowIndexStart = 2;
@@ -281,7 +268,7 @@ namespace Services.Broadcast.ApplicationServices
         private List<DisplayBroadcastStation> _GetFileStationsOrCreate(BarterInventoryFile barterFile, string userName)
         {
             var now = DateTime.Now;
-            var allStationNames = barterFile.DataLines.Select(x => x.Station).Distinct();
+            var allStationNames = barterFile.DataLines.Select(x => x.Station).Where(x => !string.IsNullOrWhiteSpace(x)).Distinct();
             var allLegacyStationNames = allStationNames.Select(_StationProcessingEngine.StripStationSuffix).Distinct().ToList();
             var existingStations = _StationRepository.GetBroadcastStationListByLegacyCallLetters(allLegacyStationNames);
             var existingStationNames = existingStations.Select(x => x.LegacyCallLetters);

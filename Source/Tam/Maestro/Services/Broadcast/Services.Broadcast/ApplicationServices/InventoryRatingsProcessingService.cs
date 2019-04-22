@@ -138,7 +138,7 @@ namespace Services.Broadcast.ApplicationServices
                 }
                 else if (barterFile.InventorySource.InventoryType == Entities.Enums.InventorySourceTypeEnum.Diginet)
                 {
-                    // nothing to process for now so just set Succeeded status
+                    // nothing to process so just set Succeeded status. Diginet template already have spot cost calculated
                     job.Status = InventoryFileRatingsProcessingStatus.Succeeded;
                     job.CompletedAt = DateTime.Now;
                 }

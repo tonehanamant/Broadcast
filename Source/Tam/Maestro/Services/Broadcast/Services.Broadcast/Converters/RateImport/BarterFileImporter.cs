@@ -15,7 +15,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
-using Tam.Maestro.Services.ContractInterfaces.AudienceAndRatingsBusinessObjects;
 using static Services.Broadcast.Entities.BarterInventory.BarterInventoryFile;
 
 namespace Services.Broadcast.Converters.RateImport
@@ -396,13 +395,13 @@ namespace Services.Broadcast.Converters.RateImport
                             Station = stationsDict[StationProcessingEngine.StripStationSuffix(manifest.Station)],
                             SpotLengthId = SpotLengthEngine.GetSpotLengthIdByValue(manifestGroup.SpotLength),
                             Comment = manifest.Comment,
-                            ManifestWeeks = _GetManifestWeeksInRange(fileHeader.EffectiveDate, fileHeader.EndDate, manifest.Spots.Value),
+                            ManifestWeeks = GetManifestWeeksInRange(fileHeader.EffectiveDate, fileHeader.EndDate, manifest.Spots.Value),
                             ManifestDayparts = manifest.Dayparts.Select(x => new StationInventoryManifestDaypart { Daypart = x }).ToList(),
                             ManifestAudiences = new List<StationInventoryManifestAudience>
                             {
                                 new StationInventoryManifestAudience
                                 {
-                                    Audience = new DisplayAudience(fileHeader.Audience.Id, fileHeader.Audience.Name),
+                                    Audience = fileHeader.Audience.ToDisplayAudience(),
                                     CPM = fileHeader.Cpm.Value
                                 }
                             }
@@ -414,12 +413,6 @@ namespace Services.Broadcast.Converters.RateImport
         {
             var slotNumberString = Regex.Match(unitName, @"[0-9]+", RegexOptions.IgnoreCase).Value;
             return int.TryParse(slotNumberString, out var slotNumber) ? slotNumber : 0;
-        }
-
-        private List<StationInventoryManifestWeek> _GetManifestWeeksInRange(DateTime startDate, DateTime endDate, int spots)
-        {
-            var mediaWeeks = MediaMonthAndWeekAggregateCache.GetMediaWeeksIntersecting(startDate, endDate);
-            return mediaWeeks.Select(x => new StationInventoryManifestWeek { MediaWeek = x, Spots = spots }).ToList();
         }
     }
 }

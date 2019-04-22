@@ -20,7 +20,7 @@ namespace EntityFrameworkMapping.Broadcast
         public int id { get; set; }
         public Nullable<double> rating { get; set; }
         public bool is_reference { get; set; }
-        public decimal cpm { get; set; }
+        public Nullable<decimal> cpm { get; set; }
     
         public virtual audience audience { get; set; }
         public virtual station_inventory_manifest station_inventory_manifest { get; set; }

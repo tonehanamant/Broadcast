@@ -1204,7 +1204,7 @@
           <Property Name="spots_per_day" Type="int" />
           <Property Name="end_date" Type="date" />
           <Property Name="comment" Type="varchar" MaxLength="255" />
-          <Property Name="station_id" Type="int" Nullable="false" />
+          <Property Name="station_id" Type="int" />
         </EntityType>
         <EntityType Name="station_inventory_manifest_audiences">
           <Key>
@@ -1213,7 +1213,7 @@
           <Property Name="station_inventory_manifest_id" Type="int" Nullable="false" />
           <Property Name="audience_id" Type="int" Nullable="false" />
           <Property Name="impressions" Type="float" />
-          <Property Name="cpm" Type="money" Nullable="false" />
+          <Property Name="cpm" Type="money" />
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="is_reference" Type="bit" Nullable="false" />
           <Property Name="rating" Type="float" />
@@ -3249,7 +3249,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_station_inventory_manifest_stations">
-          <End Role="stations" Type="Self.stations" Multiplicity="1" />
+          <End Role="stations" Type="Self.stations" Multiplicity="0..1" />
           <End Role="station_inventory_manifest" Type="Self.station_inventory_manifest" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="stations">
@@ -6010,7 +6010,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="is_reference" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="audience" Relationship="BroadcastModel.FK_station_inventory_manifest_audiences_audiences" FromRole="station_inventory_manifest_audiences" ToRole="audience" />
           <NavigationProperty Name="station_inventory_manifest" Relationship="BroadcastModel.FK_station_inventory_manifest_audiences_station_inventory_manifest" FromRole="station_inventory_manifest_audiences" ToRole="station_inventory_manifest" />
-          <Property Name="cpm" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="cpm" Type="Decimal" Precision="19" Scale="4" />
         </EntityType>
         <EntityType Name="station_inventory_manifest_dayparts">
           <Key>
@@ -6123,7 +6123,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="station_inventory_manifest_audiences" Relationship="BroadcastModel.FK_station_inventory_manifest_audiences_station_inventory_manifest" FromRole="station_inventory_manifest" ToRole="station_inventory_manifest_audiences" />
           <NavigationProperty Name="station_inventory_manifest_rates" Relationship="BroadcastModel.FK_station_inventory_manifest_rates_station_inventory_manifest" FromRole="station_inventory_manifest" ToRole="station_inventory_manifest_rates" />
           <NavigationProperty Name="station_inventory_manifest_weeks" Relationship="BroadcastModel.FK_station_inventory_manifest_weeks_station_inventory_manifest" FromRole="station_inventory_manifest" ToRole="station_inventory_manifest_weeks" />
-          <Property Name="station_id" Type="Int32" Nullable="false" />
+          <Property Name="station_id" Type="Int32" />
           <NavigationProperty Name="station" Relationship="BroadcastModel.FK_station_inventory_manifest_stations" FromRole="station_inventory_manifest" ToRole="station" />
         </EntityType>
         <Association Name="FK_station_inventory_manifest_inventory_sources">
@@ -8469,7 +8469,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_station_inventory_manifest_stations">
-          <End Type="BroadcastModel.station" Role="station" Multiplicity="1" />
+          <End Type="BroadcastModel.station" Role="station" Multiplicity="0..1" />
           <End Type="BroadcastModel.station_inventory_manifest" Role="station_inventory_manifest" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="station">

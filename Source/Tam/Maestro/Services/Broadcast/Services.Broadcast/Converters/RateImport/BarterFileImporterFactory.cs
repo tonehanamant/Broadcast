@@ -26,6 +26,7 @@ namespace Services.Broadcast.Converters.RateImport
         private readonly IProprietarySpotCostCalculationEngine _ProprietarySpotCostCalculationEngine;
         private readonly IImpressionsService _ImpressionsService;
         private readonly IDaypartCache _DaypartCache;
+        private readonly IImpressionAdjustmentEngine _ImpressionAdjustmentEngine;
 
         public BarterFileImporterFactory(
             IDataRepositoryFactory broadcastDataRepositoryFactory,
@@ -36,7 +37,8 @@ namespace Services.Broadcast.Converters.RateImport
             ISpotLengthEngine spotLengthEngine,
             IProprietarySpotCostCalculationEngine proprietarySpotCostCalculationEngine,
             IImpressionsService impressionsService,
-            IDaypartCache daypartCache)
+            IDaypartCache daypartCache,
+            IImpressionAdjustmentEngine impressionAdjustmentEngine)
         {
             _BroadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
             _BroadcastAudiencesCache = broadcastAudiencesCache;
@@ -47,6 +49,7 @@ namespace Services.Broadcast.Converters.RateImport
             _ProprietarySpotCostCalculationEngine = proprietarySpotCostCalculationEngine;
             _ImpressionsService = impressionsService;
             _DaypartCache = daypartCache;
+            _ImpressionAdjustmentEngine = impressionAdjustmentEngine;
         }
 
         public BarterFileImporterBase GetFileImporterInstance(InventorySource inventorySource)
@@ -96,7 +99,8 @@ namespace Services.Broadcast.Converters.RateImport
                         _MediaMonthAndWeekAggregateCache,
                         _StationProcessingEngine,
                         _SpotLengthEngine,
-                        _DaypartCache);
+                        _DaypartCache,
+                        _ImpressionAdjustmentEngine);
                     break;
 
                 default:

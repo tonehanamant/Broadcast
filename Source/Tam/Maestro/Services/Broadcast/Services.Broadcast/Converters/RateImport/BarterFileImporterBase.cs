@@ -5,6 +5,7 @@ using Services.Broadcast.BusinessEngines.InventoryDaypartParsing;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.BarterInventory;
 using Services.Broadcast.Entities.Enums;
+using Services.Broadcast.Entities.StationInventory;
 using Services.Broadcast.Exceptions;
 using Services.Broadcast.Repositories;
 using System;
@@ -99,6 +100,12 @@ namespace Services.Broadcast.Converters.RateImport
                 LoadAndValidateHeaderData(worksheet, barterFile);
                 LoadAndValidateDataLines(worksheet, barterFile);
             }
+        }
+
+        protected List<StationInventoryManifestWeek> GetManifestWeeksInRange(DateTime startDate, DateTime endDate, int spots)
+        {
+            var mediaWeeks = MediaMonthAndWeekAggregateCache.GetMediaWeeksIntersecting(startDate, endDate);
+            return mediaWeeks.Select(x => new StationInventoryManifestWeek { MediaWeek = x, Spots = spots }).ToList();
         }
 
         protected abstract void LoadAndValidateHeaderData(ExcelWorksheet worksheet, BarterInventoryFile barterFile);

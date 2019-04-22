@@ -237,6 +237,7 @@
     <Compile Include="Entities\Scx\ScxData.cs" />
     <Compile Include="Entities\Scx\ProposalScxFile.cs" />
     <Compile Include="Entities\Scx\ScxMarketStationProgramSpotWeek.cs" />
+    <Compile Include="Extensions\AudienceExtensions.cs" />
     <Compile Include="Helpers\DataLakeSystemParameters.cs" />
     <Compile Include="BusinessEngines\InventoryDaypartParsing\DaypartParserBase.cs" />
     <Compile Include="BusinessEngines\InventoryDaypartParsing\InventoryDaypartParsingEngine.cs" />

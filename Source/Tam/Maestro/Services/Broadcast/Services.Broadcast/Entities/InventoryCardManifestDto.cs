@@ -4,7 +4,7 @@ namespace Services.Broadcast.Entities
 {
     public class InventoryCardManifestDto
     {
-        public int StationId { get; set; }
+        public int? StationId { get; set; }
         public short? MarketCode { get; set; }
         public string DaypartCode { get; set; }
         public DateTime EffectiveDate { get; set; }

@@ -36,7 +36,7 @@ namespace EntityFrameworkMapping.Broadcast
         public Nullable<int> spots_per_day { get; set; }
         public Nullable<System.DateTime> end_date { get; set; }
         public string comment { get; set; }
-        public int station_id { get; set; }
+        public Nullable<int> station_id { get; set; }
     
         public virtual inventory_sources inventory_sources { get; set; }
         public virtual spot_lengths spot_lengths { get; set; }

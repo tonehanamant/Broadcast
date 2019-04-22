@@ -159,7 +159,7 @@ namespace Services.Broadcast.ApplicationServices
             var inventoryPostingBooks = _GetInventoryPostingBooks(inventoryCardManifestFileDtos);
             var inventoryQuarter = _GetInventoryQuarter(quarterDetail);
             var totalMarkets = inventoryCardManifestDtos.GroupBy(x => x.MarketCode).Count();
-            var totalStations = inventoryCardManifestDtos.GroupBy(x => x.StationId).Count();
+            var totalStations = inventoryCardManifestDtos.Where(x => x.StationId.HasValue).GroupBy(x => x.StationId).Count();
             var totalDaypartsCodes = inventoryCardManifestDtos.GroupBy(x => x.DaypartCode).Count();
             var totalUnits = inventoryCardManifestDtos.Count();
             var inventorySourceDateRange = _GetInventorySourceDateRange(inventorySource.Id);
