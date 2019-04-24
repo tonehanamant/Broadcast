@@ -67,7 +67,7 @@ var RateMainView = BaseView.extend({
     //intercept via InventorySource if TVB/CNN (todo) send to VM for input - add source to request or handle in controller?
     //REVISED = process as multiple files queue if applicable - rateRequest will be array
     processUploadFileRequest: function (rateRequest, rateSource) {
-        if ((rateSource == 'TVB') || (rateSource == 'CNN') || (rateSource == 'TTNW')) {
+        if ((rateSource == 'TVB') || (rateSource == 'CNN') || (rateSource == 'TTWN')) {
             this.controller.thirdPartyViewModel.setActiveImport(rateRequest[0], rateSource);
         } else {
             //this.controller.apiUploadInventoryFile(rateRequest);

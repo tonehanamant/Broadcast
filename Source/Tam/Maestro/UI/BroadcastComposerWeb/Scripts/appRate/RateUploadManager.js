@@ -45,10 +45,10 @@ var RateUploadManager = UploadManager.extend({
             fileType: 'xls',
             checkType: function (fileExt) {
                 return fileExt == 'xls' || fileExt == 'xlsx';
-            }
+            } 
         },
-        TTNW: {
-            name: 'TTNW',
+        TTWN: {
+            name: 'TTWN',
             enabled: true,
             isSingleFile: true, //single file only
             fileType: 'xls',
