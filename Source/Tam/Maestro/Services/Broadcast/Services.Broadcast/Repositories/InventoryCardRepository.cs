@@ -58,7 +58,7 @@ namespace Services.Broadcast.Repositories
                                                                     Include(x => x.station).
                                                                     Include(x => x.station_inventory_group).
                                                                     Include(x => x.inventory_files).
-                                                                    Include(x => x.inventory_files.inventory_file_barter_header)
+                                                                    Include(x => x.inventory_files.inventory_file_proprietary_header)
                             where manifest.inventory_source_id == inventorySource.Id &&
                                   manifest.effective_date <= quarterDateRangeTuple.Item2 &&
                                   manifest.end_date >= quarterDateRangeTuple.Item1
@@ -103,7 +103,7 @@ namespace Services.Broadcast.Repositories
                 context =>
                 {
                     return (from file in context.inventory_files
-                            from header in file.inventory_file_barter_header
+                            from header in file.inventory_file_proprietary_header
                             where inventoryFileIds.Contains(file.id)
                             select new
                             {

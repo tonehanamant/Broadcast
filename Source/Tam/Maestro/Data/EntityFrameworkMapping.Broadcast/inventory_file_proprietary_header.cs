@@ -12,7 +12,7 @@ namespace EntityFrameworkMapping.Broadcast
     using System;
     using System.Collections.Generic;
     
-    public partial class inventory_file_barter_header
+    public partial class inventory_file_proprietary_header
     {
         public int id { get; set; }
         public int inventory_file_id { get; set; }

@@ -1,7 +1,7 @@
 ﻿{
   "CreatedBy": "integration test",
   "DataLines": [],
-  "FileName": "BarterDataFiles\\BarterFileImporter_BadFormats3.xlsx",
+  "FileName": "ProprietaryDataFiles\\Barter_BadFormats3.xlsx",
   "FileStatus": 1,
   "Hash": "59-2F-6B-36-1E-CA-4C-4F-F5-BD-8F-EE-9E-04-26-D0-F5-04-20-57",
   "Header": {

@@ -6,7 +6,7 @@ using Services.Broadcast.BusinessEngines.InventoryDaypartParsing;
 using Services.Broadcast.Converters.RateImport;
 using Services.Broadcast.Converters.Scx;
 using Services.Broadcast.Entities;
-using Services.Broadcast.Entities.BarterInventory;
+using Services.Broadcast.Entities.ProprietaryInventory;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Scx;
 using Services.Broadcast.Exceptions;
@@ -18,19 +18,18 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
-using Tam.Maestro.Data.Entities;
 
 namespace Services.Broadcast.ApplicationServices
 {
-    public interface IBarterInventoryService : IApplicationService
+    public interface IProprietaryInventoryService : IApplicationService
     {
         /// <summary>
-        /// Saves a barter inventory file
+        /// Saves a proprietary inventory file
         /// </summary>
-        /// <param name="request">InventoryFileSaveRequest object containing a barter inventory file</param>
+        /// <param name="request">InventoryFileSaveRequest object containing a proprietary inventory file</param>
         /// <param name="userName">Username requesting the operation</param>
         /// <returns>InventoryFileSaveResult object</returns>
-        InventoryFileSaveResult SaveBarterInventoryFile(InventoryFileSaveRequest request, string userName, DateTime now);
+        InventoryFileSaveResult SaveProprietaryInventoryFile(InventoryFileSaveRequest request, string userName, DateTime now);
 
         /// <summary>
         /// Generates one SCX archive for the current quarter
@@ -39,14 +38,14 @@ namespace Services.Broadcast.ApplicationServices
         Tuple<string, Stream> GenerateScxFileArchive(DateTime nowDate);
     }
 
-    public class BarterInventoryService : IBarterInventoryService
+    public class ProprietaryInventoryService : IProprietaryInventoryService
     {
         private const string INVENTORY_SOURCE_CELL = "B3";
 
         private readonly IInventoryRepository _InventoryRepository;
         private readonly IInventoryFileRepository _InventoryFileRepository;
-        private readonly IBarterRepository _BarterRepository;
-        private readonly IBarterFileImporterFactory _BarterFileImporterFactory;
+        private readonly IProprietaryRepository _ProprietaryRepository;
+        private readonly IProprietaryFileImporterFactory _ProprietaryFileImporterFactory;
         private readonly IStationProcessingEngine _StationProcessingEngine;
         private readonly IStationRepository _StationRepository;
         private readonly ILockingEngine _LockingEngine;
@@ -60,8 +59,8 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IInventoryRatingsProcessingService _InventoryRatingsService;
         private readonly IQuarterCalculationEngine _QuarterCalculationEngine;
 
-        public BarterInventoryService(IDataRepositoryFactory broadcastDataRepositoryFactory
-            , IBarterFileImporterFactory barterFileImporterFactory
+        public ProprietaryInventoryService(IDataRepositoryFactory broadcastDataRepositoryFactory
+            , IProprietaryFileImporterFactory proprietaryFileImporterFactory
             , IStationProcessingEngine stationProcessingEngine
             , ILockingEngine lockingEngine
             , IInventoryDaypartParsingEngine inventoryDaypartParsingEngine
@@ -74,10 +73,10 @@ namespace Services.Broadcast.ApplicationServices
             , IInventoryScxDataPrep inventoryScxDataPrep
             , IQuarterCalculationEngine quarterCalculationEngine)
         {
-            _BarterRepository = broadcastDataRepositoryFactory.GetDataRepository<IBarterRepository>();
+            _ProprietaryRepository = broadcastDataRepositoryFactory.GetDataRepository<IProprietaryRepository>();
             _InventoryRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
             _InventoryFileRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryFileRepository>();
-            _BarterFileImporterFactory = barterFileImporterFactory;
+            _ProprietaryFileImporterFactory = proprietaryFileImporterFactory;
             _StationProcessingEngine = stationProcessingEngine;
             _StationRepository = broadcastDataRepositoryFactory.GetDataRepository<IStationRepository>();
             _LockingEngine = lockingEngine;
@@ -93,12 +92,12 @@ namespace Services.Broadcast.ApplicationServices
         }
 
         /// <summary>
-        /// Saves a barter inventory file
+        /// Saves a proprietary inventory file
         /// </summary>
-        /// <param name="request">InventoryFileSaveRequest object containing a barter inventory file</param>
+        /// <param name="request">InventoryFileSaveRequest object containing a proprietary inventory file</param>
         /// <param name="userName">Username requesting the operation</param>
         /// <returns>InventoryFileSaveResult object</returns>
-        public InventoryFileSaveResult SaveBarterInventoryFile(InventoryFileSaveRequest request, string userName, DateTime now)
+        public InventoryFileSaveResult SaveProprietaryInventoryFile(InventoryFileSaveRequest request, string userName, DateTime now)
         {
             if (!request.FileName.EndsWith(".xlsx"))
             {
@@ -112,42 +111,42 @@ namespace Services.Broadcast.ApplicationServices
             var stationLocks = new List<IDisposable>();
             var lockedStationIds = new List<int>();
             var inventorySource = _ReadInventorySourceFromFile(request.StreamData);
-            var fileImporter = _BarterFileImporterFactory.GetFileImporterInstance(inventorySource);
+            var fileImporter = _ProprietaryFileImporterFactory.GetFileImporterInstance(inventorySource);
 
             fileImporter.LoadFromSaveRequest(request);
             fileImporter.CheckFileHash();
 
-            BarterInventoryFile barterFile = fileImporter.GetPendingBarterInventoryFile(userName, inventorySource);
+            ProprietaryInventoryFile proprietaryFile = fileImporter.GetPendingProprietaryInventoryFile(userName, inventorySource);
 
-            _CheckValidationProblems(barterFile);
+            _CheckValidationProblems(proprietaryFile);
 
-            barterFile.Id = _InventoryFileRepository.CreateInventoryFile(barterFile, userName);
+            proprietaryFile.Id = _InventoryFileRepository.CreateInventoryFile(proprietaryFile, userName);
             try
             {
-                fileImporter.ExtractData(barterFile);
-                barterFile.FileStatus = barterFile.ValidationProblems.Any() ? FileStatusEnum.Failed : FileStatusEnum.Loaded;
+                fileImporter.ExtractData(proprietaryFile);
+                proprietaryFile.FileStatus = proprietaryFile.ValidationProblems.Any() ? FileStatusEnum.Failed : FileStatusEnum.Loaded;
 
-                if (barterFile.ValidationProblems.Any())
+                if (proprietaryFile.ValidationProblems.Any())
                 {
-                    _BarterRepository.AddValidationProblems(barterFile);
+                    _ProprietaryRepository.AddValidationProblems(proprietaryFile);
                 }
                 else
                 {
                     using (var transaction = TransactionScopeHelper.CreateTransactionScopeWrapper(TimeSpan.FromMinutes(20)))
                     {
-                        var header = barterFile.Header;
-                        var stations = _GetFileStationsOrCreate(barterFile, userName);
+                        var header = proprietaryFile.Header;
+                        var stations = _GetFileStationsOrCreate(proprietaryFile, userName);
                         var stationsDict = stations.ToDictionary(x => x.Id, x => x.LegacyCallLetters);
 
-                        fileImporter.PopulateManifests(barterFile, stations);                     
+                        fileImporter.PopulateManifests(proprietaryFile, stations);                     
 
                         _LockingEngine.LockStations(stationsDict, lockedStationIds, stationLocks);
 
-                        _StationInventoryGroupService.AddNewStationInventory(barterFile, header.EffectiveDate, header.EndDate, header.ContractedDaypartId);
+                        _StationInventoryGroupService.AddNewStationInventory(proprietaryFile, header.EffectiveDate, header.EndDate, header.ContractedDaypartId);
 
-                        _StationRepository.UpdateStationList(stationsDict.Keys.ToList(), userName, now, barterFile.InventorySource.Id);
+                        _StationRepository.UpdateStationList(stationsDict.Keys.ToList(), userName, now, proprietaryFile.InventorySource.Id);
 
-                        _BarterRepository.SaveBarterInventoryFile(barterFile);
+                        _ProprietaryRepository.SaveProprietaryInventoryFile(proprietaryFile);
                         transaction.Complete();
 
                         _LockingEngine.UnlockStations(lockedStationIds, stationLocks);
@@ -157,14 +156,14 @@ namespace Services.Broadcast.ApplicationServices
             catch (Exception ex)
             {
                 _LockingEngine.UnlockStations(lockedStationIds, stationLocks);
-                barterFile.ValidationProblems.Add(ex.Message);
-                barterFile.FileStatus = FileStatusEnum.Failed;
-                _BarterRepository.AddValidationProblems(barterFile);
+                proprietaryFile.ValidationProblems.Add(ex.Message);
+                proprietaryFile.FileStatus = FileStatusEnum.Failed;
+                _ProprietaryRepository.AddValidationProblems(proprietaryFile);
             }
 
-            _CheckValidationProblems(barterFile);
+            _CheckValidationProblems(proprietaryFile);
 
-            _InventoryRatingsService.QueueInventoryFileRatingsJob(barterFile.Id);
+            _InventoryRatingsService.QueueInventoryFileRatingsJob(proprietaryFile.Id);
 
             try
             {
@@ -177,9 +176,9 @@ namespace Services.Broadcast.ApplicationServices
 
             return new InventoryFileSaveResult
             {
-                FileId = barterFile.Id,
-                ValidationProblems = barterFile.ValidationProblems,
-                Status = barterFile.FileStatus
+                FileId = proprietaryFile.Id,
+                ValidationProblems = proprietaryFile.ValidationProblems,
+                Status = proprietaryFile.FileStatus
             };
         }
 
@@ -256,19 +255,19 @@ namespace Services.Broadcast.ApplicationServices
             return inventorySource;
         }
 
-        private static void _CheckValidationProblems(BarterInventoryFile barterFile)
+        private static void _CheckValidationProblems(ProprietaryInventoryFile proprietaryFile)
         {
-            if (barterFile.ValidationProblems.Any())
+            if (proprietaryFile.ValidationProblems.Any())
             {
-                var fileProblems = barterFile.ValidationProblems.Select(x => new InventoryFileProblem(x)).ToList();
+                var fileProblems = proprietaryFile.ValidationProblems.Select(x => new InventoryFileProblem(x)).ToList();
                 throw new FileUploadException<InventoryFileProblem>(fileProblems);
             }
         }
         
-        private List<DisplayBroadcastStation> _GetFileStationsOrCreate(BarterInventoryFile barterFile, string userName)
+        private List<DisplayBroadcastStation> _GetFileStationsOrCreate(ProprietaryInventoryFile proprietaryFile, string userName)
         {
             var now = DateTime.Now;
-            var allStationNames = barterFile.DataLines.Select(x => x.Station).Where(x => !string.IsNullOrWhiteSpace(x)).Distinct();
+            var allStationNames = proprietaryFile.DataLines.Select(x => x.Station).Where(x => !string.IsNullOrWhiteSpace(x)).Distinct();
             var allLegacyStationNames = allStationNames.Select(_StationProcessingEngine.StripStationSuffix).Distinct().ToList();
             var existingStations = _StationRepository.GetBroadcastStationListByLegacyCallLetters(allLegacyStationNames);
             var existingStationNames = existingStations.Select(x => x.LegacyCallLetters);

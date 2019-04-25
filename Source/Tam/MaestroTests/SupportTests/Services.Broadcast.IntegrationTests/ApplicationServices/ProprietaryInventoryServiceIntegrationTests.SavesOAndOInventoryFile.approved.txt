@@ -1,7 +1,7 @@
 ﻿{
   "CreatedBy": "IntegrationTestUser",
   "DataLines": [],
-  "FileName": "BarterDataFiles\\OAndO_ValidFile1.xlsx",
+  "FileName": "ProprietaryDataFiles\\OAndO_ValidFile1.xlsx",
   "FileStatus": 2,
   "Hash": "4F-AD-D9-0B-B9-E7-A5-87-DD-07-22-C5-DE-7E-63-19-0F-2B-80-C2",
   "Header": {

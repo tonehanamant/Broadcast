@@ -10,12 +10,12 @@ using System;
 
 namespace Services.Broadcast.Converters.RateImport
 {
-    public interface IBarterFileImporterFactory : IApplicationService
+    public interface IProprietaryFileImporterFactory : IApplicationService
     {
-        BarterFileImporterBase GetFileImporterInstance(InventorySource inventorySource);
+        ProprietaryFileImporterBase GetFileImporterInstance(InventorySource inventorySource);
     }
 
-    public class BarterFileImporterFactory : IBarterFileImporterFactory
+    public class ProprietaryFileImporterFactory : IProprietaryFileImporterFactory
     {
         private readonly IDataRepositoryFactory _BroadcastDataRepositoryFactory;
         private readonly IBroadcastAudiencesCache _BroadcastAudiencesCache;
@@ -28,7 +28,7 @@ namespace Services.Broadcast.Converters.RateImport
         private readonly IDaypartCache _DaypartCache;
         private readonly IImpressionAdjustmentEngine _ImpressionAdjustmentEngine;
 
-        public BarterFileImporterFactory(
+        public ProprietaryFileImporterFactory(
             IDataRepositoryFactory broadcastDataRepositoryFactory,
             IBroadcastAudiencesCache broadcastAudiencesCache,
             IInventoryDaypartParsingEngine inventoryDaypartParsingEngine,
@@ -52,14 +52,14 @@ namespace Services.Broadcast.Converters.RateImport
             _ImpressionAdjustmentEngine = impressionAdjustmentEngine;
         }
 
-        public BarterFileImporterBase GetFileImporterInstance(InventorySource inventorySource)
+        public ProprietaryFileImporterBase GetFileImporterInstance(InventorySource inventorySource)
         {
-            BarterFileImporterBase fileImporter;
+            ProprietaryFileImporterBase fileImporter;
 
             switch (inventorySource.InventoryType)
             {
                 case InventorySourceTypeEnum.ProprietaryOAndO:
-                    fileImporter = new OAndOBarterFileImporter(
+                    fileImporter = new OAndOProprietaryFileImporter(
                         _BroadcastDataRepositoryFactory,
                         _BroadcastAudiencesCache,
                         _InventoryDaypartParsingEngine,

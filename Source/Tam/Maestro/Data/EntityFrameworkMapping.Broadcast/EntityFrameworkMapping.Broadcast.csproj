@@ -413,10 +413,10 @@
     <Compile Include="inventory_files.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="inventory_file_barter_header.cs">
+    <Compile Include="inventory_file_problems.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="inventory_file_problems.cs">
+    <Compile Include="inventory_file_proprietary_header.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
     <Compile Include="inventory_file_ratings_jobs.cs">

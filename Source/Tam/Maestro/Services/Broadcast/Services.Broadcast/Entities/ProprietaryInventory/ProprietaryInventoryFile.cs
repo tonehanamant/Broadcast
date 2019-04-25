@@ -3,18 +3,18 @@ using System.Collections.Generic;
 using Tam.Maestro.Services.ContractInterfaces.AudienceAndRatingsBusinessObjects;
 using Tam.Maestro.Services.ContractInterfaces.Common;
 
-namespace Services.Broadcast.Entities.BarterInventory
+namespace Services.Broadcast.Entities.ProprietaryInventory
 {
-    public class BarterInventoryFile : InventoryFileBase
+    public class ProprietaryInventoryFile : InventoryFileBase
     {
-        public BarterInventoryHeader Header { get; set; } 
+        public ProprietaryInventoryHeader Header { get; set; } 
         public string CreatedBy { get; set; }
         public DateTime CreatedDate { get; set; }
         public List<string> ValidationProblems { get; set; } = new List<string>();
 
-        public List<BarterInventoryDataLine> DataLines { get; set; } = new List<BarterInventoryDataLine>();
+        public List<ProprietaryInventoryDataLine> DataLines { get; set; } = new List<ProprietaryInventoryDataLine>();
 
-        public class BarterInventoryDataLine
+        public class ProprietaryInventoryDataLine
         {
             public string Station { get; set; }
 
@@ -38,7 +38,7 @@ namespace Services.Broadcast.Entities.BarterInventory
 
             public class Unit
             {
-                public BarterInventoryUnit BarterInventoryUnit { get; set; }
+                public ProprietaryInventoryUnit ProprietaryInventoryUnit { get; set; }
 
                 public int? Spots { get; set; }
             }

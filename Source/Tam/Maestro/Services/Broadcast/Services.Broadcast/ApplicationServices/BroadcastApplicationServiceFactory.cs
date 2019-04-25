@@ -69,7 +69,7 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IAssemblyScheduleConverter, AssemblyScheduleConverter>();
             unityContainer.RegisterType<IBroadcastAudiencesCache, BroadcastAudiencesCache>();
             unityContainer.RegisterType<IInventoryService, InventoryService>();
-            unityContainer.RegisterType<IBarterInventoryService, BarterInventoryService>();
+            unityContainer.RegisterType<IProprietaryInventoryService, ProprietaryInventoryService>();
             unityContainer.RegisterType<IInventoryFileValidator, InventoryFileValidator>();
             unityContainer.RegisterType<ISchedulesReportService, SchedulesReportService>();
             unityContainer.RegisterType<IScheduleAggregateFactoryService, ScheduleAggregateFactoryService>();
@@ -117,7 +117,7 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IMyEventsReportNamingEngine, MyEventsReportNamingEngine>();
             unityContainer.RegisterType<IPostLogValidationEngine, PostLogValidationEngine>();
             unityContainer.RegisterType<IPricingGuideDistributionEngine, PricingGuideDistributionEngine>();
-            unityContainer.RegisterType<IBarterFileImporterFactory, BarterFileImporterFactory>();
+            unityContainer.RegisterType<IProprietaryFileImporterFactory, ProprietaryFileImporterFactory>();
             unityContainer.RegisterType<IInventoryFileImporterFactory, InventoryFileImporterFactory>();
             unityContainer.RegisterType<ICNNStationInventoryGroupService, CNNStationInventoryGroupService>();
             unityContainer.RegisterType<IStationInventoryManifestService, StationInventoryManifestService>();

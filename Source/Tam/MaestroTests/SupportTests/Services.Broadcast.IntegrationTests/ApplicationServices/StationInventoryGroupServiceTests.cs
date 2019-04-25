@@ -21,7 +21,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
     [TestFixture]
     public class StationInventoryGroupServiceTests
     {
-        private IBarterInventoryService _BarterService;
+        private IProprietaryInventoryService _ProprietaryService;
         private IStationInventoryGroupService _StationInventoryGroupService;
         private IInventoryRepository _InventoryRepository;
         private IInventoryFileRepository _InventoryFileRepository;
@@ -34,7 +34,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             IntegrationTestApplicationServiceFactory.Instance.RegisterType<IImpersonateUser, ImpersonateUserStubb>();
             IntegrationTestApplicationServiceFactory.Instance.RegisterType<IFileService, FileServiceDataLakeStubb>();
             IntegrationTestApplicationServiceFactory.Instance.RegisterType<IEmailerService, EmailerServiceStubb>();
-            _BarterService = IntegrationTestApplicationServiceFactory.GetApplicationService<IBarterInventoryService>();
+            _ProprietaryService = IntegrationTestApplicationServiceFactory.GetApplicationService<IProprietaryInventoryService>();
             _StationInventoryGroupService = IntegrationTestApplicationServiceFactory.GetApplicationService<IStationInventoryGroupService>();
             _InventoryRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
             _InventoryFileRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryFileRepository>();
@@ -136,7 +136,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void ExpiresManifests_WhenAllContractedDaypartsMatchInventory()
         {
-            const string fileName = @"BarterDataFiles\Diginet_ValidFile2.xlsx";
+            const string fileName = @"ProprietaryDataFiles\Diginet_ValidFile2.xlsx";
             const string inventorySourceName = "COZI";
             const string daypartString = "M-F 9a-10a SA-SU 6a-7a";
             var effectiveDate = new DateTime(2018, 10, 5);
@@ -149,7 +149,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void DoesNotExpireManifests_WhenOnlyOneContractedDaypartMatchInventory()
         {
-            const string fileName = @"BarterDataFiles\Diginet_ValidFile2.xlsx";
+            const string fileName = @"ProprietaryDataFiles\Diginet_ValidFile2.xlsx";
             const string inventorySourceName = "COZI";
             const string daypartString = "M-F 9a-10a";
             var effectiveDate = new DateTime(2018, 10, 5);
@@ -162,7 +162,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void DoesNotExpireManifests_WhenAdditionalContractedDaypartSpecified()
         {
-            const string fileName = @"BarterDataFiles\Diginet_ValidFile2.xlsx";
+            const string fileName = @"ProprietaryDataFiles\Diginet_ValidFile2.xlsx";
             const string inventorySourceName = "COZI";
             const string daypartString = "M-F 9a-10a SA-SU 6a-7a SA-SU 10p-11p";
             var effectiveDate = new DateTime(2018, 10, 5);
@@ -250,7 +250,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             };
 
             var now = new DateTime(2019, 02, 02);
-            return _BarterService.SaveBarterInventoryFile(request, "IntegrationTestUser", now).FileId;
+            return _ProprietaryService.SaveProprietaryInventoryFile(request, "IntegrationTestUser", now).FileId;
         }
 
         private void _VerifyGroupsExpiringForDateInterval(DateTime start, DateTime end)

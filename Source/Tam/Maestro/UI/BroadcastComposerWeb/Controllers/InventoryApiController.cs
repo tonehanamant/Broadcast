@@ -148,7 +148,7 @@ namespace BroadcastComposerWeb.Controllers
             try
             {
                 var result = string.Equals(ratesSaveRequest.InventorySource, "Barter", StringComparison.InvariantCultureIgnoreCase)
-                    ? _ApplicationServiceFactory.GetApplicationService<IBarterInventoryService>().SaveBarterInventoryFile(ratesSaveRequest, ratesSaveRequest.UserName, DateTime.Now)
+                    ? _ApplicationServiceFactory.GetApplicationService<IProprietaryInventoryService>().SaveProprietaryInventoryFile(ratesSaveRequest, ratesSaveRequest.UserName, DateTime.Now)
                     : _ApplicationServiceFactory.GetApplicationService<IInventoryService>().SaveInventoryFile(ratesSaveRequest);
 
                 return new BaseResponse<InventoryFileSaveResult>()
@@ -282,7 +282,7 @@ namespace BroadcastComposerWeb.Controllers
         [Route("GenerateScxArchive/{nowDate?}")]
         public HttpResponseMessage GenerateScxArchive(DateTime? nowDate = null)
         {
-            var archive = _ApplicationServiceFactory.GetApplicationService<IBarterInventoryService>().GenerateScxFileArchive(nowDate ?? DateTime.Now);
+            var archive = _ApplicationServiceFactory.GetApplicationService<IProprietaryInventoryService>().GenerateScxFileArchive(nowDate ?? DateTime.Now);
 
             var result = Request.CreateResponse(HttpStatusCode.OK);
             result.Content = new StreamContent(archive.Item2);

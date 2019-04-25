@@ -1,7 +1,7 @@
 ﻿{
   "CreatedBy": "integration test",
   "DataLines": [],
-  "FileName": "BarterDataFiles\\BarterFileImporter_GetPendingBarterInventoryFile.xlsx",
+  "FileName": "ProprietaryDataFiles\\Barter_GetPendingBarterInventoryFile.xlsx",
   "FileStatus": 1,
   "Hash": "12-30-BF-B9-80-07-2E-87-83-EA-F4-15-DD-4E-8A-3A-47-2C-EF-B2",
   "Header": null,

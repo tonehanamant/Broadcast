@@ -9,15 +9,15 @@ using OfficeOpenXml;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.BusinessEngines.InventoryDaypartParsing;
 using Services.Broadcast.Entities;
-using Services.Broadcast.Entities.BarterInventory;
+using Services.Broadcast.Entities.ProprietaryInventory;
 using Services.Broadcast.Entities.StationInventory;
 using Services.Broadcast.Extensions;
-using static Services.Broadcast.Entities.BarterInventory.BarterInventoryFile;
-using static Services.Broadcast.Entities.BarterInventory.BarterInventoryFile.BarterInventoryDataLine;
+using static Services.Broadcast.Entities.ProprietaryInventory.ProprietaryInventoryFile;
+using static Services.Broadcast.Entities.ProprietaryInventory.ProprietaryInventoryFile.ProprietaryInventoryDataLine;
 
 namespace Services.Broadcast.Converters.RateImport
 {
-    public class DiginetFileImporter : BarterFileImporterBase
+    public class DiginetFileImporter : ProprietaryFileImporterBase
     {
         private const string EFFECTIVE_DATE_CELL = "B4";
         private const string END_DATE_CELL = "B5";
@@ -47,7 +47,7 @@ namespace Services.Broadcast.Converters.RateImport
             _ImpressionAdjustmentEngine = impressionAdjustmentEngine;
         }
 
-        public override void LoadAndValidateDataLines(ExcelWorksheet worksheet, BarterInventoryFile barterFile)
+        public override void LoadAndValidateDataLines(ExcelWorksheet worksheet, ProprietaryInventoryFile proprietaryFile)
         {
             const int firstColumnIndex = 1;
             const int firstDataLineRowIndex = 12;
@@ -58,12 +58,12 @@ namespace Services.Broadcast.Converters.RateImport
 
             if (audienceProblems.Any())
             {
-                barterFile.ValidationProblems.AddRange(audienceProblems);
+                proprietaryFile.ValidationProblems.AddRange(audienceProblems);
                 return;
             }
             else if (!audiences.Any(x => x.Code.Equals(BroadcastConstants.HOUSEHOLD_CODE, StringComparison.OrdinalIgnoreCase)))
             {
-                barterFile.ValidationProblems.Add("File must contain data for House Holds(HH)");
+                proprietaryFile.ValidationProblems.Add("File must contain data for House Holds(HH)");
                 return;
             }
 
@@ -90,11 +90,11 @@ namespace Services.Broadcast.Converters.RateImport
 
                 if (lineProblems.Any())
                 {
-                    barterFile.ValidationProblems.AddRange(lineProblems);
+                    proprietaryFile.ValidationProblems.AddRange(lineProblems);
                 }
                 else
                 {
-                    barterFile.DataLines.Add(line);
+                    proprietaryFile.DataLines.Add(line);
                 }
 
                 emptyLinesProcessedAfterLastDataLine = 0;
@@ -103,7 +103,7 @@ namespace Services.Broadcast.Converters.RateImport
             }
         }
 
-        private BarterInventoryDataLine _ReadAndValidateDataLine(
+        private ProprietaryInventoryDataLine _ReadAndValidateDataLine(
             ExcelWorksheet worksheet, 
             int rowIndex, 
             int columnIndex, 
@@ -111,7 +111,7 @@ namespace Services.Broadcast.Converters.RateImport
             out List<string> problems)
         {
             problems = new List<string>();
-            var line = new BarterInventoryDataLine();
+            var line = new ProprietaryInventoryDataLine();
 
             _ValidateAndSetDayparts(worksheet, rowIndex, columnIndex++, line, problems);
             _ValidateAndSetSpotCost(worksheet, rowIndex, columnIndex++, line, problems);
@@ -132,7 +132,7 @@ namespace Services.Broadcast.Converters.RateImport
             return line;
         }
 
-        private void _ValidateAndSetDayparts(ExcelWorksheet worksheet, int rowIndex, int columnIndex, BarterInventoryDataLine line, List<string> problems)
+        private void _ValidateAndSetDayparts(ExcelWorksheet worksheet, int rowIndex, int columnIndex, ProprietaryInventoryDataLine line, List<string> problems)
         {
             var daypartText = worksheet.Cells[rowIndex, columnIndex].GetStringValue();
 
@@ -150,7 +150,7 @@ namespace Services.Broadcast.Converters.RateImport
             }
         }
 
-        private void _ValidateAndSetSpotCost(ExcelWorksheet worksheet, int rowIndex, int columnIndex, BarterInventoryDataLine line, List<string> problems)
+        private void _ValidateAndSetSpotCost(ExcelWorksheet worksheet, int rowIndex, int columnIndex, ProprietaryInventoryDataLine line, List<string> problems)
         {
             var spotCostText = worksheet.Cells[rowIndex, columnIndex].GetStringValue();
 
@@ -213,21 +213,21 @@ namespace Services.Broadcast.Converters.RateImport
             return true;
         }
 
-        public override void PopulateManifests(BarterInventoryFile barterFile, List<DisplayBroadcastStation> stations)
+        public override void PopulateManifests(ProprietaryInventoryFile proprietaryFile, List<DisplayBroadcastStation> stations)
         {
             const int defaultSpotLength = 30;
             const int defaultSpotsNumberPerWeek = 1;
-            var fileHeader = barterFile.Header;
+            var fileHeader = proprietaryFile.Header;
             var ntiToNsiIncreaseInDecimals = (double)(fileHeader.NtiToNsiIncrease.Value / 100);
             var defaultSpotLengthId = SpotLengthEngine.GetSpotLengthIdByValue(defaultSpotLength);
 
-            barterFile.InventoryManifests = barterFile.DataLines
+            proprietaryFile.InventoryManifests = proprietaryFile.DataLines
                 .Select(x => new StationInventoryManifest
                 {
                     EffectiveDate = fileHeader.EffectiveDate,
                     EndDate = fileHeader.EndDate,
-                    InventorySourceId = barterFile.InventorySource.Id,
-                    InventoryFileId = barterFile.Id,
+                    InventorySourceId = proprietaryFile.InventorySource.Id,
+                    InventoryFileId = proprietaryFile.Id,
                     SpotLengthId = defaultSpotLengthId,
                     DaypartCode = fileHeader.DaypartCode,
                     ManifestDayparts = x.Dayparts.Select(d => new StationInventoryManifestDaypart { Daypart = d }).ToList(),
@@ -250,19 +250,19 @@ namespace Services.Broadcast.Converters.RateImport
                 }).ToList();
         }
 
-        protected override void LoadAndValidateHeaderData(ExcelWorksheet worksheet, BarterInventoryFile barterFile)
+        protected override void LoadAndValidateHeaderData(ExcelWorksheet worksheet, ProprietaryInventoryFile proprietaryFile)
         {
-            var header = new BarterInventoryHeader { DaypartCode = DEFAULT_DAYPART_CODE };
+            var header = new ProprietaryInventoryHeader { DaypartCode = DEFAULT_DAYPART_CODE };
             var validationProblems = new List<string>();
 
             _ValidateAndSetEffectiveAndEndDates(worksheet, validationProblems, header);
             _ValidateAndSetNTIToNSIIncrease(worksheet, validationProblems, header);
 
-            barterFile.Header = header;
-            barterFile.ValidationProblems.AddRange(validationProblems);
+            proprietaryFile.Header = header;
+            proprietaryFile.ValidationProblems.AddRange(validationProblems);
         }
 
-        private void _ValidateAndSetEffectiveAndEndDates(ExcelWorksheet worksheet, List<string> validationProblems, BarterInventoryHeader header)
+        private void _ValidateAndSetEffectiveAndEndDates(ExcelWorksheet worksheet, List<string> validationProblems, ProprietaryInventoryHeader header)
         {
             var effectiveDateText = worksheet.Cells[EFFECTIVE_DATE_CELL].GetTextValue();
             var endDateText = worksheet.Cells[END_DATE_CELL].GetTextValue();
@@ -317,7 +317,7 @@ namespace Services.Broadcast.Converters.RateImport
             }
         }
 
-        private void _ValidateAndSetNTIToNSIIncrease(ExcelWorksheet worksheet, List<string> validationProblems, BarterInventoryHeader header)
+        private void _ValidateAndSetNTIToNSIIncrease(ExcelWorksheet worksheet, List<string> validationProblems, ProprietaryInventoryHeader header)
         {
             var ntiToNsiIncreaseText = worksheet.Cells[NTI_TO_NSI_INCREASE_CELL].GetTextValue();
 

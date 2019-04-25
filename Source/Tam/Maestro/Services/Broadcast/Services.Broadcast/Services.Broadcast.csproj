@@ -212,17 +212,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Aggregates\SchedulesAggregate.cs" />
-    <Compile Include="ApplicationServices\BarterInventoryService.cs" />
+    <Compile Include="ApplicationServices\ProprietaryInventoryService.cs" />
     <Compile Include="ApplicationServices\DataLakeFileService.cs" />
+    <Compile Include="Converters\RateImport\BarterFileImporter.cs" />
     <Compile Include="Converters\Scx\InventoryScxDataConverter.cs" />
     <Compile Include="Converters\Scx\InventoryScxDataPrep.cs" />
     <Compile Include="ApplicationServices\InventoryRatingsProcessingService.cs" />
     <Compile Include="ApplicationServices\InventoryCardService.cs" />
     <Compile Include="Converters\Scx\ScxBaseConverter.cs" />
-    <Compile Include="Converters\RateImport\BarterFileImporterBase.cs" />
-    <Compile Include="Converters\RateImport\BarterFileImporterFactory.cs" />
+    <Compile Include="Converters\RateImport\ProprietaryFileImporterBase.cs" />
+    <Compile Include="Converters\RateImport\ProprietaryFileImporterFactory.cs" />
     <Compile Include="Converters\RateImport\DiginetFileImporter.cs" />
-    <Compile Include="Converters\RateImport\OAndOBarterFileImporter.cs" />
+    <Compile Include="Converters\RateImport\OAndOProprietaryFileImporter.cs" />
     <Compile Include="Converters\RateImport\SyndicationFileImporter.cs" />
     <Compile Include="Entities\DaypartCode.cs" />
     <Compile Include="Entities\InventoryCardBooks.cs" />
@@ -245,10 +246,9 @@
     <Compile Include="BusinessEngines\InventoryDaypartParsing\WeekdayFirstDaypartParser.cs" />
     <Compile Include="BusinessEngines\LockingEngine.cs" />
     <Compile Include="BusinessEngines\SpotLengthEngine.cs" />
-    <Compile Include="Converters\RateImport\BarterFileImporter.cs" />
-    <Compile Include="Entities\BarterInventory\BarterInventoryFile.cs" />
-    <Compile Include="Entities\BarterInventory\BarterInventoryHeader.cs" />
-    <Compile Include="Entities\BarterInventory\BarterInventoryUnit.cs" />
+    <Compile Include="Entities\ProprietaryInventory\ProprietaryInventoryFile.cs" />
+    <Compile Include="Entities\ProprietaryInventory\ProprietaryInventoryHeader.cs" />
+    <Compile Include="Entities\ProprietaryInventory\ProprietaryInventoryUnit.cs" />
     <Compile Include="Entities\Enums\DeliveryFileSourceEnum.cs" />
     <Compile Include="Entities\DTO\ProgramSpotsDto.cs" />
     <Compile Include="Entities\Enums\FileStatusEnum.cs" />
@@ -604,7 +604,7 @@
     <Compile Include="ProposalCache.cs" />
     <Compile Include="ReportGenerators\SpotTrackerReportGenerator.cs" />
     <Compile Include="Repositories\AudienceRepository.cs" />
-    <Compile Include="Repositories\BarterInventoryRepository.cs" />
+    <Compile Include="Repositories\ProprietaryInventoryRepository.cs" />
     <Compile Include="Repositories\BroadcastAudienceRepository.cs" />
     <Compile Include="Repositories\BroadcastForecastRepositoryBase.cs" />
     <Compile Include="Entities\BvsFileDetailFilterResult.cs" />

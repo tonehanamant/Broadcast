@@ -123,7 +123,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<market_coverage_files> market_coverage_files { get; set; }
         public virtual DbSet<station_inventory_loaded> station_inventory_loaded { get; set; }
         public virtual DbSet<inventory_files> inventory_files { get; set; }
-        public virtual DbSet<inventory_file_barter_header> inventory_file_barter_header { get; set; }
         public virtual DbSet<inventory_file_problems> inventory_file_problems { get; set; }
         public virtual DbSet<market> markets { get; set; }
         public virtual DbSet<station_inventory_manifest_audiences> station_inventory_manifest_audiences { get; set; }
@@ -132,5 +131,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<station> stations { get; set; }
         public virtual DbSet<inventory_file_ratings_jobs> inventory_file_ratings_jobs { get; set; }
         public virtual DbSet<daypart_codes> daypart_codes { get; set; }
+        public virtual DbSet<inventory_file_proprietary_header> inventory_file_proprietary_header { get; set; }
     }
 }

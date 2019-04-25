@@ -1,9 +1,9 @@
 ﻿using Services.Broadcast.Entities.Enums;
 using System;
 
-namespace Services.Broadcast.Entities.BarterInventory
+namespace Services.Broadcast.Entities.ProprietaryInventory
 {
-    public class BarterInventoryHeader
+    public class ProprietaryInventoryHeader
     {
         public string DaypartCode { get; set; }
         public DateTime EffectiveDate { get; set; }

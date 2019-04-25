@@ -4,6 +4,65 @@
   "DataLines": [
     {
       "Audiences": [],
+      "Comment": "Comment 1",
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 84839,
+          "_Friday": true,
+          "_Id": 70631,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 82800,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "SpotCost": null,
+      "Station": "KOB+",
+      "Units": [
+        {
+          "ProprietaryInventoryUnit": {
+            "Name": "AM 1",
+            "SpotLength": 60
+          },
+          "Spots": 3
+        },
+        {
+          "ProprietaryInventoryUnit": {
+            "Name": "AM 2",
+            "SpotLength": 30
+          },
+          "Spots": 2
+        },
+        {
+          "ProprietaryInventoryUnit": {
+            "Name": "AM 3",
+            "SpotLength": 30
+          },
+          "Spots": 1
+        },
+        {
+          "ProprietaryInventoryUnit": {
+            "Name": "AM 4",
+            "SpotLength": 15
+          },
+          "Spots": 1
+        }
+      ],
+      "Weeks": []
+    },
+    {
+      "Audiences": [],
       "Comment": "Comment 2",
       "CPM": null,
       "Dayparts": [
@@ -31,28 +90,28 @@
       "Station": "KOLN",
       "Units": [
         {
-          "BarterInventoryUnit": {
+          "ProprietaryInventoryUnit": {
             "Name": "AM 1",
             "SpotLength": 60
           },
           "Spots": 1
         },
         {
-          "BarterInventoryUnit": {
+          "ProprietaryInventoryUnit": {
             "Name": "AM 2",
             "SpotLength": 30
           },
-          "Spots": null
+          "Spots": 7
         },
         {
-          "BarterInventoryUnit": {
+          "ProprietaryInventoryUnit": {
             "Name": "AM 3",
             "SpotLength": 30
           },
           "Spots": 1
         },
         {
-          "BarterInventoryUnit": {
+          "ProprietaryInventoryUnit": {
             "Name": "AM 4",
             "SpotLength": 15
           },
@@ -63,7 +122,7 @@
     },
     {
       "Audiences": [],
-      "Comment": null,
+      "Comment": "Comment 3",
       "CPM": null,
       "Dayparts": [
         {
@@ -107,32 +166,125 @@
       "Station": "KRQE+",
       "Units": [
         {
-          "BarterInventoryUnit": {
+          "ProprietaryInventoryUnit": {
             "Name": "AM 1",
             "SpotLength": 60
           },
           "Spots": 2
         },
         {
-          "BarterInventoryUnit": {
+          "ProprietaryInventoryUnit": {
             "Name": "AM 2",
             "SpotLength": 30
           },
           "Spots": 2
         },
         {
-          "BarterInventoryUnit": {
+          "ProprietaryInventoryUnit": {
             "Name": "AM 3",
             "SpotLength": 30
           },
           "Spots": 3
         },
         {
-          "BarterInventoryUnit": {
+          "ProprietaryInventoryUnit": {
             "Name": "AM 4",
             "SpotLength": 15
           },
           "Spots": 1
+        }
+      ],
+      "Weeks": []
+    },
+    {
+      "Audiences": [],
+      "Comment": "Comment 4",
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 68399,
+          "_Friday": true,
+          "_Id": 34021,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 61200,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        {
+          "_Code": "CUS",
+          "_EndTime": 66599,
+          "_Friday": false,
+          "_Id": 35436,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": false,
+          "_Name": "Custom",
+          "_Saturday": true,
+          "_StartTime": 64800,
+          "_Sunday": false,
+          "_Thursday": false,
+          "_Tuesday": false,
+          "_Wednesday": false
+        },
+        {
+          "_Code": "CUS",
+          "_EndTime": 68399,
+          "_Friday": false,
+          "_Id": 14750,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": false,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 64800,
+          "_Sunday": true,
+          "_Thursday": false,
+          "_Tuesday": false,
+          "_Wednesday": false
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "SpotCost": null,
+      "Station": "KUON-TV 12.1",
+      "Units": [
+        {
+          "ProprietaryInventoryUnit": {
+            "Name": "AM 1",
+            "SpotLength": 60
+          },
+          "Spots": 4
+        },
+        {
+          "ProprietaryInventoryUnit": {
+            "Name": "AM 2",
+            "SpotLength": 30
+          },
+          "Spots": 1
+        },
+        {
+          "ProprietaryInventoryUnit": {
+            "Name": "AM 3",
+            "SpotLength": 30
+          },
+          "Spots": 2
+        },
+        {
+          "ProprietaryInventoryUnit": {
+            "Name": "AM 4",
+            "SpotLength": 15
+          },
+          "Spots": 3
         }
       ],
       "Weeks": []
@@ -166,28 +318,28 @@
       "Station": "KSWB-TV 69.2",
       "Units": [
         {
-          "BarterInventoryUnit": {
+          "ProprietaryInventoryUnit": {
             "Name": "AM 1",
             "SpotLength": 60
           },
           "Spots": 1
         },
         {
-          "BarterInventoryUnit": {
+          "ProprietaryInventoryUnit": {
             "Name": "AM 2",
             "SpotLength": 30
           },
           "Spots": 4
         },
         {
-          "BarterInventoryUnit": {
+          "ProprietaryInventoryUnit": {
             "Name": "AM 3",
             "SpotLength": 30
           },
           "Spots": 5
         },
         {
-          "BarterInventoryUnit": {
+          "ProprietaryInventoryUnit": {
             "Name": "AM 4",
             "SpotLength": 15
           },
@@ -206,8 +358,5 @@
   "InventoryManifests": [],
   "InventorySource": null,
   "UniqueIdentifier": null,
-  "ValidationProblems": [
-    "Line 18 contains an empty station cell",
-    "Line 21 contains an empty daypart cell"
-  ]
+  "ValidationProblems": []
 }

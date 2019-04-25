@@ -8,7 +8,7 @@ using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.ApplicationServices.Security;
 using Services.Broadcast.Entities;
-using Services.Broadcast.Entities.BarterInventory;
+using Services.Broadcast.Entities.ProprietaryInventory;
 using Services.Broadcast.Entities.StationInventory;
 using Services.Broadcast.Exceptions;
 using Services.Broadcast.Repositories;
@@ -22,12 +22,12 @@ using Tam.Maestro.Services.Cable.SystemComponentParameters;
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
     [TestFixture]
-    public class BarterInventoryServiceIntegrationTests
+    public class ProprietaryInventoryServiceIntegrationTests
     {
-        private IBarterInventoryService _BarterService;
+        private IProprietaryInventoryService _ProprietaryService;
         private IInventoryFileRepository _InventoryFileRepository;
         private IInventoryRepository _IInventoryRepository;
-        private IBarterRepository _BarterRepository;
+        private IProprietaryRepository _ProprietaryRepository;
         private IInventoryRatingsProcessingService _InventoryRatingsProcessingService;
 
         [TestFixtureSetUp]
@@ -36,18 +36,18 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             IntegrationTestApplicationServiceFactory.Instance.RegisterType<IImpersonateUser, ImpersonateUserStubb>();
             IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<IFileService>(new FileServiceDataLakeStubb());
             IntegrationTestApplicationServiceFactory.Instance.RegisterType<IEmailerService, EmailerServiceStubb>();
-            _BarterService = IntegrationTestApplicationServiceFactory.GetApplicationService<IBarterInventoryService>();
+            _ProprietaryService = IntegrationTestApplicationServiceFactory.GetApplicationService<IProprietaryInventoryService>();
             _InventoryFileRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryFileRepository>();
             _IInventoryRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
-            _BarterRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IBarterRepository>();
+            _ProprietaryRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IProprietaryRepository>();
             _InventoryRatingsProcessingService = IntegrationTestApplicationServiceFactory.GetApplicationService<IInventoryRatingsProcessingService>();
         }
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void BarterInventoryService_SaveBarterInventoryFile()
+        public void SavesBarterInventoryFile()
         {
-            const string fileName = @"BarterDataFiles\BarterFileImporter_ValidFormat.xlsx";
+            const string fileName = @"ProprietaryDataFiles\Barter_ValidFormat.xlsx";
 
             using (new TransactionScopeWrapper())
             {
@@ -58,7 +58,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 };
 
                 var now = new DateTime(2019, 02, 02);
-                var result = _BarterService.SaveBarterInventoryFile(request, "IntegrationTestUser", now);
+                var result = _ProprietaryService.SaveProprietaryInventoryFile(request, "IntegrationTestUser", now);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(InventoryFileBase), "Id");
@@ -78,7 +78,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         [Ignore("This test was used to load data into dbs")]
         [UseReporter(typeof(DiffReporter))]
-        public void BarterInventoryService_LoadBarterFilesIntoDbs()
+        public void Barter_LoadBarterFilesIntoDbs()
         {
             foreach (string fileName in new List<string>{
                 "TTWN EMN Q1 Barter_Inventory Template_2.6.2019 (17).xlsx",
@@ -89,12 +89,12 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     var request = new InventoryFileSaveRequest
                     {
-                        StreamData = new FileStream($@".\Files\BarterDataFiles\{fileName}", FileMode.Open, FileAccess.Read),
+                        StreamData = new FileStream($@".\Files\ProprietaryDataFiles\{fileName}", FileMode.Open, FileAccess.Read),
                         FileName = fileName
                     };
 
                     var now = new DateTime(2019, 02, 02);
-                    var result = _BarterService.SaveBarterInventoryFile(request, "sroibu", now);
+                    var result = _ProprietaryService.SaveProprietaryInventoryFile(request, "sroibu", now);
 
                     if (result.FileId > 0 && result.Status == Entities.Enums.FileStatusEnum.Loaded)
                     {
@@ -106,47 +106,47 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void BarterFileImporter_ValidFormat_SpotLengthWithColon()
+        public void Barter_ValidFormat_SpotLengthWithColon()
         {
-            const string fileName = @"BarterDataFiles\BarterFileImporter_ValidFormat_SpotLengthWithColon.xlsx";
+            const string fileName = @"ProprietaryDataFiles\Barter_ValidFormat_SpotLengthWithColon.xlsx";
             _VerifyFileInventoryGroups(fileName);
         }
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void BarterInventoryService_SavesManifests_SingleBook()
+        public void Barter_SavesManifests_SingleBook()
         {
-            const string fileName = @"BarterDataFiles\BarterFileImporter_ValidFormat_SingleBook.xlsx";
+            const string fileName = @"ProprietaryDataFiles\Barter_ValidFormat_SingleBook.xlsx";
             _VerifyFileInventoryGroups(fileName);
         }
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void BarterInventoryService_SavesManifests_TwoBooks()
+        public void Barter_SavesManifests_TwoBooks()
         {
-            const string fileName = @"BarterDataFiles\BarterFileImporter_ValidFormat_TwoBooks.xlsx";
+            const string fileName = @"ProprietaryDataFiles\Barter_ValidFormat_TwoBooks.xlsx";
             _VerifyFileInventoryGroups(fileName);
         }
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void BarterInventoryService_SavesManifests_WhenStationIsUnknown()
+        public void Barter_SavesManifests_WhenStationIsUnknown()
         {
-            const string fileName = @"BarterDataFiles\BarterFileImporter_ValidFormat_UnknownStation.xlsx";
+            const string fileName = @"ProprietaryDataFiles\Barter_ValidFormat_UnknownStation.xlsx";
             _VerifyFileInventoryGroups(fileName);
         }
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void BarterInventoryService_ValidationErrors()
+        public void Barter_ValidationErrors()
         {
-            const string fileName = @"BarterDataFiles\Barter DataLines file with missed values.xlsx";
+            const string fileName = @"ProprietaryDataFiles\Barter_DataLines file with missed values.xlsx";
             _VerifyInventoryFileProblems(fileName);
         }
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void BarterInventoryService_InvalidFileFormat()
+        public void Barter_InvalidFileFormat()
         {
             const string fileName = @"1Chicago WLS Syn 4Q16 UNKNOWN.xml";
 
@@ -159,7 +159,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 };
 
                 var now = new DateTime(2019, 02, 02);
-                var result = _BarterService.SaveBarterInventoryFile(request, "IntegrationTestUser", now);
+                var result = _ProprietaryService.SaveProprietaryInventoryFile(request, "IntegrationTestUser", now);
 
                 _VerifyInventoryFileSaveResult(result);
             }
@@ -167,41 +167,41 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void BarterFileImporter_ExtractData_PRI5390()
+        public void Barter_ExtractData_PRI5390()
         {
-            const string fileName = @"BarterDataFiles\BarterFileImporter_BadFormats_PRI5390.xlsx";
+            const string fileName = @"ProprietaryDataFiles\Barter_BadFormats_PRI5390.xlsx";
             _VerifyInventoryFileProblems(fileName);
         }
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void BarterInventoryService_SaveBarterInventoryFile_PRI5667()
+        public void Barter_SaveBarterInventoryFile_PRI5667()
         {
-            const string fileName = @"BarterDataFiles\BarterFileImporter_BadFormats_PRI5667.xlsx";
+            const string fileName = @"ProprietaryDataFiles\Barter_BadFormats_PRI5667.xlsx";
             _VerifyFileInventoryGroups(fileName);
         }
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void BarterInventoryService_SaveBarterInventoryFile_InvalidDaypart()
+        public void Barter_SaveBarterInventoryFile_InvalidDaypart()
         {
-            const string fileName = @"BarterDataFiles\Barter DataLines file with invalid daypart.xlsx";
+            const string fileName = @"ProprietaryDataFiles\Barter_DataLines file with invalid daypart.xlsx";
             _VerifyInventoryFileProblems(fileName);
         }
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void BarterInventoryService_SaveBarterInventoryFile_SingleDataColumn()
+        public void Barter_SaveBarterInventoryFile_SingleDataColumn()
         {
-            const string fileName = @"BarterDataFiles\BarterFileImporter_SingleDataColumn.xlsx";
+            const string fileName = @"ProprietaryDataFiles\Barter_SingleDataColumn.xlsx";
             _VerifyFileInventoryGroups(fileName);
         }
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void BarterInventoryService_SaveBarterInventoryFile_DateRangeIntersecting()
+        public void Barter_SaveBarterInventoryFile_DateRangeIntersecting()
         {
-            const string fileName = @"BarterDataFiles\BarterFileImporter_DateRangeIntersecting.xlsx";
+            const string fileName = @"ProprietaryDataFiles\Barter_DateRangeIntersecting.xlsx";
             _VerifyFileInventoryGroups(fileName);
         }
 
@@ -209,7 +209,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void OAndO_NotValidFile1()
         {
-            const string fileName = @"BarterDataFiles\OAndO_InvalidFile1.xlsx";
+            const string fileName = @"ProprietaryDataFiles\OAndO_InvalidFile1.xlsx";
             _VerifyInventoryFileProblems(fileName);
         }
 
@@ -217,7 +217,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void OAndO_NotValidFile2()
         {
-            const string fileName = @"BarterDataFiles\OAndO_InvalidFile2.xlsx";
+            const string fileName = @"ProprietaryDataFiles\OAndO_InvalidFile2.xlsx";
             _VerifyInventoryFileProblems(fileName);
         }
 
@@ -225,7 +225,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void OAndO_NotValidFile3()
         {
-            const string fileName = @"BarterDataFiles\OAndO_InvalidFile3.xlsx";
+            const string fileName = @"ProprietaryDataFiles\OAndO_InvalidFile3.xlsx";
             _VerifyInventoryFileProblems(fileName);
         }
 
@@ -233,39 +233,39 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void OAndO_NotValidFile4()
         {
-            const string fileName = @"BarterDataFiles\OAndO_InvalidFile4.xlsx";
+            const string fileName = @"ProprietaryDataFiles\OAndO_InvalidFile4.xlsx";
             _VerifyInventoryFileProblems(fileName);
         }
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void SavesOAndOBarterInventoryFile()
+        public void SavesOAndOInventoryFile()
         {
-            const string fileName = @"BarterDataFiles\OAndO_ValidFile1.xlsx";
+            const string fileName = @"ProprietaryDataFiles\OAndO_ValidFile1.xlsx";
             _VerifyInventoryFileMetadataAndHeaderData(fileName);
         }
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void SavesOAndOBarterInventoryFileManifests()
+        public void SavesOAndOInventoryFileManifests()
         {
-            const string fileName = @"BarterDataFiles\OAndO_ValidFile1.xlsx";
+            const string fileName = @"ProprietaryDataFiles\OAndO_ValidFile1.xlsx";
             _VerifyFileInventoryManifests(fileName);
         }
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void SavesOAndOBarterInventoryFileManifests_EmptyAndSummaryRows()
+        public void SavesOAndOInventoryFileManifests_EmptyAndSummaryRows()
         {
-            const string fileName = @"BarterDataFiles\OAndO_ValidFile2.xlsx";
+            const string fileName = @"ProprietaryDataFiles\OAndO_ValidFile2.xlsx";
             _VerifyFileInventoryManifests(fileName);
         }
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void SavesOAndOBarterInventoryFileManifests_NoHut()
+        public void SavesOAndOInventoryFileManifests_NoHut()
         {
-            const string fileName = @"BarterDataFiles\OAndO_ValidFile3_NoHut.xlsx";
+            const string fileName = @"ProprietaryDataFiles\OAndO_ValidFile3_NoHut.xlsx";
             _VerifyFileInventoryManifests(fileName);
         }
 
@@ -273,7 +273,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void SavesOAndOInventoryFileManifests_OAndO_PRI7393_DaypartParsingBug()
         {
-            const string fileName = @"BarterDataFiles\OAndO_PRI7393.xlsx";
+            const string fileName = @"ProprietaryDataFiles\OAndO_PRI7393.xlsx";
             _VerifyFileInventoryManifests(fileName);
         }
 
@@ -281,7 +281,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void SavesOAndOInventoryFileManifests_OAndO_PRI7410_DaypartParsingBug()
         {
-            const string fileName = @"BarterDataFiles\OAndO_PRI7410.xlsx";
+            const string fileName = @"ProprietaryDataFiles\OAndO_PRI7410.xlsx";
             _VerifyFileInventoryManifests(fileName);
         }
 
@@ -289,7 +289,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void OAndO_NoStationHeaderCell()
         {
-            const string fileName = @"BarterDataFiles\OAndO_NoStationHeaderCell.xlsx";
+            const string fileName = @"ProprietaryDataFiles\OAndO_NoStationHeaderCell.xlsx";
             _VerifyInventoryFileProblems(fileName);
         }
 
@@ -297,7 +297,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void OAndO_No_HH_HeaderCell()
         {
-            const string fileName = @"BarterDataFiles\OAndO_No_HH_HeaderCell.xlsx";
+            const string fileName = @"ProprietaryDataFiles\OAndO_No_HH_HeaderCell.xlsx";
             _VerifyInventoryFileProblems(fileName);
         }
 
@@ -305,7 +305,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void OAndO_UnknownAudience()
         {
-            const string fileName = @"BarterDataFiles\OAndO_UnknownAudience.xlsx";
+            const string fileName = @"ProprietaryDataFiles\OAndO_UnknownAudience.xlsx";
             _VerifyInventoryFileProblems(fileName);
         }      
 
@@ -313,7 +313,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void OAndO_WeekIsMissing()
         {
-            const string fileName = @"BarterDataFiles\OAndO_WeekIsMissing.xlsx";
+            const string fileName = @"ProprietaryDataFiles\OAndO_WeekIsMissing.xlsx";
             _VerifyInventoryFileProblems(fileName);
         }
 
@@ -321,7 +321,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void OAndO_NotValidWeek()
         {
-            const string fileName = @"BarterDataFiles\OAndO_NotValidWeek.xlsx";
+            const string fileName = @"ProprietaryDataFiles\OAndO_NotValidWeek.xlsx";
             _VerifyInventoryFileProblems(fileName);
         }
 
@@ -329,7 +329,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void OAndO_NoMediaWeekFound()
         {
-            const string fileName = @"BarterDataFiles\OAndO_NoMediaWeekFound.xlsx";
+            const string fileName = @"ProprietaryDataFiles\OAndO_NoMediaWeekFound.xlsx";
             _VerifyInventoryFileProblems(fileName);
         }
 
@@ -337,7 +337,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void OAndO_MissingData1()
         {
-            const string fileName = @"BarterDataFiles\OAndO_MissingData1.xlsx";
+            const string fileName = @"ProprietaryDataFiles\OAndO_MissingData1.xlsx";
             _VerifyInventoryFileProblems(fileName);
         }
 
@@ -345,22 +345,22 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void OAndO_NoWeeksStartHeaderCell()
         {
-            const string fileName = @"BarterDataFiles\OAndO_NoWeeksStartHeaderCell.xlsx";
+            const string fileName = @"ProprietaryDataFiles\OAndO_NoWeeksStartHeaderCell.xlsx";
             _VerifyInventoryFileProblems(fileName);
         }
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void BarterInventoryService_SendFileToDataLake()
+        public void Barter_SendFileToDataLake()
         {
-            const string fileName = @"BarterDataFiles\BarterFileImporter_ValidFormat.xlsx";
+            const string fileName = @"ProprietaryDataFiles\Barter_ValidFormat.xlsx";
 
             using (new TransactionScopeWrapper())
             {
                 var fileService = IntegrationTestApplicationServiceFactory.Instance.Resolve<IFileService>();
                 var dataLakeFolder = BroadcastServiceSystemParameter.DataLake_SharedFolder;
                 var filePath = Path.Combine(dataLakeFolder, fileName);
-                var barterService = IntegrationTestApplicationServiceFactory.GetApplicationService<IBarterInventoryService>();
+                var proprietaryService = IntegrationTestApplicationServiceFactory.GetApplicationService<IProprietaryInventoryService>();
 
                 if (fileService.Exists(filePath))
                 {
@@ -374,7 +374,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 };
 
                 var now = new DateTime(2019, 02, 02);
-                var result = barterService.SaveBarterInventoryFile(request, "IntegrationTestUser", now);
+                var result = proprietaryService.SaveProprietaryInventoryFile(request, "IntegrationTestUser", now);
 
                 Assert.True(fileService.Exists(filePath));
             }
@@ -384,7 +384,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void SaveBarterInventoryFile_DuplicateDataError_ForecastDb_TwoBooks()
         {
-            const string fileName = @"BarterDataFiles\DuplicateData_ForecastDB_TwoBooks.xlsx";
+            const string fileName = @"ProprietaryDataFiles\DuplicateData_ForecastDB_TwoBooks.xlsx";
             _VerifyFileInventoryGroups(fileName);
         }
 
@@ -392,7 +392,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void SaveBarterInventoryFile_DuplicateDataError_ForecastDb_SingleBook()
         {
-            const string fileName = @"BarterDataFiles\DuplicateData_ForecastDB_SingleBook.xlsx";
+            const string fileName = @"ProprietaryDataFiles\DuplicateData_ForecastDB_SingleBook.xlsx";
             _VerifyFileInventoryGroups(fileName);
         }
 
@@ -400,7 +400,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void SavesSyndicationInventoryFile()
         {
-            const string fileName = @"BarterDataFiles\Syndication_ValidFile1.xlsx";
+            const string fileName = @"ProprietaryDataFiles\Syndication_ValidFile1.xlsx";
             _VerifyInventoryFileMetadataAndHeaderData(fileName);
         }
 
@@ -408,7 +408,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void Syndication_InvalidFile1()
         {
-            const string fileName = @"BarterDataFiles\Syndication_InvalidFile1.xlsx";
+            const string fileName = @"ProprietaryDataFiles\Syndication_InvalidFile1.xlsx";
             _VerifyInventoryFileProblems(fileName);
         }
 
@@ -416,7 +416,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void Syndication_InvalidFile2()
         {
-            const string fileName = @"BarterDataFiles\Syndication_InvalidFile2.xlsx";
+            const string fileName = @"ProprietaryDataFiles\Syndication_InvalidFile2.xlsx";
             _VerifyInventoryFileProblems(fileName);
         }
 
@@ -424,7 +424,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void Syndication_InvalidFile3()
         {
-            const string fileName = @"BarterDataFiles\Syndication_InvalidFile3.xlsx";
+            const string fileName = @"ProprietaryDataFiles\Syndication_InvalidFile3.xlsx";
             _VerifyInventoryFileProblems(fileName);
         }
 
@@ -432,7 +432,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void SavesDiginetInventoryFile()
         {
-            const string fileName = @"BarterDataFiles\Diginet_ValidFile1.xlsx";
+            const string fileName = @"ProprietaryDataFiles\Diginet_ValidFile1.xlsx";
             _VerifyInventoryFileMetadataAndHeaderData(fileName);
         }
 
@@ -440,7 +440,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void SavesDiginetInventoryFileManifests()
         {
-            const string fileName = @"BarterDataFiles\Diginet_ValidFile2.xlsx";
+            const string fileName = @"ProprietaryDataFiles\Diginet_ValidFile2.xlsx";
             _VerifyFileInventoryManifests(fileName);
         }
 
@@ -448,7 +448,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void Diginet_InvalidFile1()
         {
-            const string fileName = @"BarterDataFiles\Diginet_InvalidFile1.xlsx";
+            const string fileName = @"ProprietaryDataFiles\Diginet_InvalidFile1.xlsx";
             _VerifyInventoryFileProblems(fileName);
         }
 
@@ -456,7 +456,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void Diginet_InvalidFile2()
         {
-            const string fileName = @"BarterDataFiles\Diginet_InvalidFile2.xlsx";
+            const string fileName = @"ProprietaryDataFiles\Diginet_InvalidFile2.xlsx";
             _VerifyInventoryFileProblems(fileName);
         }
 
@@ -464,7 +464,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void Diginet_InvalidFile3()
         {
-            const string fileName = @"BarterDataFiles\Diginet_InvalidFile3.xlsx";
+            const string fileName = @"ProprietaryDataFiles\Diginet_InvalidFile3.xlsx";
             _VerifyInventoryFileProblems(fileName);
         }
 
@@ -472,7 +472,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void Diginet_InvalidFile4()
         {
-            const string fileName = @"BarterDataFiles\Diginet_InvalidFile4.xlsx";
+            const string fileName = @"ProprietaryDataFiles\Diginet_InvalidFile4.xlsx";
             _VerifyInventoryFileProblems(fileName);
         }
 
@@ -480,7 +480,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void Diginet_InvalidFile5()
         {
-            const string fileName = @"BarterDataFiles\Diginet_InvalidFile5.xlsx";
+            const string fileName = @"ProprietaryDataFiles\Diginet_InvalidFile5.xlsx";
             _VerifyInventoryFileProblems(fileName);
         }
 
@@ -488,7 +488,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void Diginet_InvalidFile6()
         {
-            const string fileName = @"BarterDataFiles\Diginet_InvalidFile6.xlsx";
+            const string fileName = @"ProprietaryDataFiles\Diginet_InvalidFile6.xlsx";
             _VerifyInventoryFileProblems(fileName);
         }
 
@@ -496,7 +496,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void Diginet_InvalidFile7()
         {
-            const string fileName = @"BarterDataFiles\Diginet_InvalidFile7.xlsx";
+            const string fileName = @"ProprietaryDataFiles\Diginet_InvalidFile7.xlsx";
             _VerifyInventoryFileProblems(fileName);
         }
 
@@ -504,7 +504,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void Diginet_InvalidFile8()
         {
-            const string fileName = @"BarterDataFiles\Diginet_InvalidFile8.xlsx";
+            const string fileName = @"ProprietaryDataFiles\Diginet_InvalidFile8.xlsx";
             _VerifyInventoryFileProblems(fileName);
         }
 
@@ -512,7 +512,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void Diginet_InvalidFile9()
         {
-            const string fileName = @"BarterDataFiles\Diginet_InvalidFile9.xlsx";
+            const string fileName = @"ProprietaryDataFiles\Diginet_InvalidFile9.xlsx";
             _VerifyInventoryFileProblems(fileName);
         }
 
@@ -520,7 +520,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void Diginet_InvalidFile10()
         {
-            const string fileName = @"BarterDataFiles\Diginet_InvalidFile10.xlsx";
+            const string fileName = @"ProprietaryDataFiles\Diginet_InvalidFile10.xlsx";
             _VerifyInventoryFileProblems(fileName);
         }
 
@@ -538,7 +538,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 try
                 {
                     var now = new DateTime(2019, 02, 02);
-                    var result = _BarterService.SaveBarterInventoryFile(request, "IntegrationTestUser", now);
+                    var result = _ProprietaryService.SaveProprietaryInventoryFile(request, "IntegrationTestUser", now);
                 }
                 catch (FileUploadException<InventoryFileProblem> e)
                 {
@@ -585,7 +585,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 };
 
                 var now = new DateTime(2019, 02, 02);
-                var result = _BarterService.SaveBarterInventoryFile(request, "IntegrationTestUser", now);
+                var result = _ProprietaryService.SaveProprietaryInventoryFile(request, "IntegrationTestUser", now);
 
                 _VerifyFileInventoryGroups(result.FileId);
             }
@@ -627,7 +627,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 };
 
                 var now = new DateTime(2019, 02, 02);
-                var result = _BarterService.SaveBarterInventoryFile(request, "IntegrationTestUser", now);
+                var result = _ProprietaryService.SaveProprietaryInventoryFile(request, "IntegrationTestUser", now);
 
                 _VerifyFileInventoryManifests(result.FileId);
             }
@@ -667,11 +667,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 };
 
                 var now = new DateTime(2019, 02, 02);
-                var result = _BarterService.SaveBarterInventoryFile(request, "IntegrationTestUser", now);
+                var result = _ProprietaryService.SaveProprietaryInventoryFile(request, "IntegrationTestUser", now);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(InventoryFileBase), "Id");
-                jsonResolver.Ignore(typeof(BarterInventoryFile), "CreatedDate");
+                jsonResolver.Ignore(typeof(ProprietaryInventoryFile), "CreatedDate");
                 jsonResolver.Ignore(typeof(InventorySource), "Id");
                 var jsonSettings = new JsonSerializerSettings()
                 {
@@ -679,7 +679,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     ContractResolver = jsonResolver
                 };
 
-                var file = _BarterRepository.GetInventoryFileWithHeaderById(result.FileId);
+                var file = _ProprietaryRepository.GetInventoryFileWithHeaderById(result.FileId);
                 var fileJson = IntegrationTestHelper.ConvertToJson(file, jsonSettings);
 
                 Approvals.Verify(fileJson);

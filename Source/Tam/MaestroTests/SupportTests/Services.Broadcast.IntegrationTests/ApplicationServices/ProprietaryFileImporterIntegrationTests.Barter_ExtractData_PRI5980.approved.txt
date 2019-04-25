@@ -30,28 +30,28 @@
       "Station": "WCBS",
       "Units": [
         {
-          "BarterInventoryUnit": {
+          "ProprietaryInventoryUnit": {
             "Name": "AM 1",
             "SpotLength": 60
           },
           "Spots": null
         },
         {
-          "BarterInventoryUnit": {
+          "ProprietaryInventoryUnit": {
             "Name": "AM 2",
             "SpotLength": 30
           },
           "Spots": null
         },
         {
-          "BarterInventoryUnit": {
+          "ProprietaryInventoryUnit": {
             "Name": "AM 3",
             "SpotLength": 30
           },
           "Spots": 1
         },
         {
-          "BarterInventoryUnit": {
+          "ProprietaryInventoryUnit": {
             "Name": "AM 4",
             "SpotLength": 15
           },
@@ -89,28 +89,28 @@
       "Station": "WNYW",
       "Units": [
         {
-          "BarterInventoryUnit": {
+          "ProprietaryInventoryUnit": {
             "Name": "AM 1",
             "SpotLength": 60
           },
           "Spots": null
         },
         {
-          "BarterInventoryUnit": {
+          "ProprietaryInventoryUnit": {
             "Name": "AM 2",
             "SpotLength": 30
           },
           "Spots": 1
         },
         {
-          "BarterInventoryUnit": {
+          "ProprietaryInventoryUnit": {
             "Name": "AM 3",
             "SpotLength": 30
           },
           "Spots": null
         },
         {
-          "BarterInventoryUnit": {
+          "ProprietaryInventoryUnit": {
             "Name": "AM 4",
             "SpotLength": 15
           },
@@ -120,9 +120,9 @@
       "Weeks": []
     }
   ],
-  "FileName": "BarterDataFiles\\BarterFileImporter_BadFormats_PRI5667.xlsx",
+  "FileName": "ProprietaryDataFiles\\Barter_BadFormats_PRI5980.xlsx",
   "FileStatus": 1,
-  "Hash": "8A-ED-EA-21-9E-2C-C1-5D-FB-90-1A-70-F0-BB-01-F2-AE-68-38-75",
+  "Hash": "32-FB-D8-EA-5A-09-8D-1B-56-88-2A-AB-3E-7C-6E-EA-7A-84-82-5D",
   "Header": {
     "Audience": {
       "_CategoryCode": 0,
@@ -136,9 +136,9 @@
       "IsDirty": true
     },
     "Cpm": 222.22,
-    "DaypartCode": "LN",
-    "EffectiveDate": "2019-05-22T00:00:00",
-    "EndDate": "2019-05-30T00:00:00",
+    "DaypartCode": null,
+    "EffectiveDate": "2019-05-03T00:00:00",
+    "EndDate": "2019-05-09T00:00:00",
     "HutBookId": 449,
     "NtiToNsiIncrease": null,
     "PlaybackType": 5,
@@ -147,7 +147,14 @@
   },
   "InventoryGroups": [],
   "InventoryManifests": [],
-  "InventorySource": null,
+  "InventorySource": {
+    "Id": 0,
+    "InventoryType": 2,
+    "IsActive": false,
+    "Name": null
+  },
   "UniqueIdentifier": null,
-  "ValidationProblems": []
+  "ValidationProblems": [
+    "Not acceptable daypart code is specified"
+  ]
 }

@@ -16,7 +16,7 @@ using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Services.Broadcast.Entities.StationInventory;
 using Tam.Maestro.Data.Entities;
 using Services.Broadcast.Entities.Enums;
-using Services.Broadcast.Entities.BarterInventory;
+using Services.Broadcast.Entities.ProprietaryInventory;
 
 namespace Services.Broadcast.Repositories
 {
@@ -67,8 +67,8 @@ namespace Services.Broadcast.Repositories
         /// Gets the header information for an inventory file id
         /// </summary>
         /// <param name="inventoryFileId">Inventory file id to get the data for</param>
-        /// <returns>BarterInventoryHeader object containing the header data</returns>
-        BarterInventoryHeader GetInventoryFileHeader(int inventoryFileId);
+        /// <returns>ProprietaryInventoryHeader object containing the header data</returns>
+        ProprietaryInventoryHeader GetInventoryFileHeader(int inventoryFileId);
     }
 
     public class InventoryRepository : BroadcastRepositoryBase, IInventoryRepository
@@ -341,12 +341,12 @@ namespace Services.Broadcast.Repositories
                                 .Include(x => x.station_inventory_manifest_dayparts)
                                 .Include(s => s.station)
                                 .Include(x => x.inventory_files)
-                                .Include(x => x.inventory_files.inventory_file_barter_header)
+                                .Include(x => x.inventory_files.inventory_file_proprietary_header)
                          where m.file_id == fileId
                          select m).ToList();
 
                     return manifests
-                        .Select(manifest => _MapToInventoryManifest(manifest, manifest.inventory_files.inventory_file_barter_header.SingleOrDefault()?.daypart_code))
+                        .Select(manifest => _MapToInventoryManifest(manifest, manifest.inventory_files.inventory_file_proprietary_header.SingleOrDefault()?.daypart_code))
                         .ToList();
                 });
         }
@@ -493,7 +493,7 @@ namespace Services.Broadcast.Repositories
                         .Include(x => x.station_inventory_manifest_weeks)
                         .Where(x => x.inventory_source_id == source.Id &&
                                     x.inventory_files.status == (int)FileStatusEnum.Loaded &&
-                                    x.inventory_files.inventory_file_barter_header.FirstOrDefault().contracted_daypart_id == contractedDaypartId);
+                                    x.inventory_files.inventory_file_proprietary_header.FirstOrDefault().contracted_daypart_id == contractedDaypartId);
 
                     query = query.Where(x => endDate >= x.effective_date && endDate < x.end_date ||
                                              endDate >= x.end_date && effectiveDate <= x.end_date);
@@ -1092,7 +1092,7 @@ namespace Services.Broadcast.Repositories
                     var fileIds = c.inventory_files
                         .Where(x =>
                             x.status == (int)FileStatusEnum.Loaded &&
-                            x.inventory_file_barter_header.FirstOrDefault().contracted_daypart_id == contractedDaypartId)
+                            x.inventory_file_proprietary_header.FirstOrDefault().contracted_daypart_id == contractedDaypartId)
                         .Select(x => x.id)
                         .ToList();
 
@@ -1141,16 +1141,16 @@ namespace Services.Broadcast.Repositories
         /// Gets the header information for an inventory file id
         /// </summary>
         /// <param name="inventoryFileId">Inventory file id to get the data for</param>
-        /// <returns>BarterInventoryHeader object containing the header data</returns>
-        public BarterInventoryHeader GetInventoryFileHeader(int inventoryFileId)
+        /// <returns>ProprietaryInventoryHeader object containing the header data</returns>
+        public ProprietaryInventoryHeader GetInventoryFileHeader(int inventoryFileId)
         {
             return _InReadUncommitedTransaction(
                 context =>
                 {
-                    var query = (from header in context.inventory_file_barter_header
+                    var query = (from header in context.inventory_file_proprietary_header
                                  where header.inventory_file_id == inventoryFileId
                                  select header);
-                    return query.Select(x => new BarterInventoryHeader
+                    return query.Select(x => new ProprietaryInventoryHeader
                     {
                         Audience = new BroadcastAudience { Id = x.audience_id.Value },
                         ContractedDaypartId = x.contracted_daypart_id,

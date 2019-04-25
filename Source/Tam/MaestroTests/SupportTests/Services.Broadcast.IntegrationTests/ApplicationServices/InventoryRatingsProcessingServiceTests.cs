@@ -5,11 +5,7 @@ using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Repositories;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Tam.Maestro.Common.DataLayer;
 using Microsoft.Practices.Unity;
 using IntegrationTests.Common;
@@ -23,10 +19,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
     [TestFixture]
     public class InventoryRatingsProcessingServiceTests
     {
-        private IBarterInventoryService _BarterService;
-        //private IInventoryFileRepository _InventoryFileRepository;
+        private IProprietaryInventoryService _ProprietaryService;
         private IInventoryRepository _IInventoryRepository;
-        //private IBarterRepository _BarterRepository;
         private IInventoryRatingsProcessingService _InventoryRatingsProcessingService;
 
         [TestFixtureSetUp]
@@ -35,10 +29,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             try
             {
                 IntegrationTestApplicationServiceFactory.Instance.RegisterType<IFileService, FileServiceDataLakeStubb>();
-                _BarterService = IntegrationTestApplicationServiceFactory.GetApplicationService<IBarterInventoryService>();
-                //_InventoryFileRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryFileRepository>();
+                _ProprietaryService = IntegrationTestApplicationServiceFactory.GetApplicationService<IProprietaryInventoryService>();
                 _IInventoryRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
-                //_BarterRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IBarterRepository>();
                 _InventoryRatingsProcessingService = IntegrationTestApplicationServiceFactory.GetApplicationService<IInventoryRatingsProcessingService>();
             }
             catch (Exception e)
@@ -53,7 +45,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void ProcessInventoryRatingsAfterBarterFileLoad()
         {
-            const string fileName = @"BarterDataFiles\BarterFileImporter_ValidFormat_SingleBook.xlsx";
+            const string fileName = @"ProprietaryDataFiles\Barter_ValidFormat_SingleBook.xlsx";
 
             using (new TransactionScopeWrapper())
             {
@@ -64,7 +56,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 };
 
                 var now = new DateTime(2019, 02, 02);
-                var result = _BarterService.SaveBarterInventoryFile(request, "IntegrationTestUser", now);
+                var result = _ProprietaryService.SaveProprietaryInventoryFile(request, "IntegrationTestUser", now);
                 var jobs = _InventoryRatingsProcessingService.GetQueuedJobs(1);
                 _InventoryRatingsProcessingService.ProcessInventoryRatingsJob(jobs[0].id.Value);
 
@@ -74,9 +66,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void ProcessInventoryRatingsAfterBarterFileLoad_OAndO()
+        public void ProcessInventoryRatingsAfterProprietaryFileLoad_OAndO()
         {
-            const string fileName = @"BarterDataFiles\OAndO_ValidFile1.xlsx";
+            const string fileName = @"ProprietaryDataFiles\OAndO_ValidFile1.xlsx";
 
             using (new TransactionScopeWrapper())
             {
@@ -87,7 +79,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 };
 
                 var now = new DateTime(2019, 02, 02);
-                var result = _BarterService.SaveBarterInventoryFile(request, "IntegrationTestUser", now);
+                var result = _ProprietaryService.SaveProprietaryInventoryFile(request, "IntegrationTestUser", now);
                 var jobs = _InventoryRatingsProcessingService.GetQueuedJobs(1);
                 _InventoryRatingsProcessingService.ProcessInventoryRatingsJob(jobs[0].id.Value);
 

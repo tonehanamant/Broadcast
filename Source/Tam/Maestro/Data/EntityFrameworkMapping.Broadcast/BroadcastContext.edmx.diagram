@@ -233,14 +233,8 @@
         <AssociationConnector Association="BroadcastModel.FK_station_contacts_inventory_files_modified" />
         <AssociationConnector Association="BroadcastModel.FK_station_inventory_manifest_inventory_files" />
         <AssociationConnector Association="BroadcastModel.FK_station_inventory_manifest_staging_inventory_files" />
-        <EntityTypeShape EntityType="BroadcastModel.inventory_file_barter_header" Width="1.5" PointX="24" PointY="32.25" />
-        <AssociationConnector Association="BroadcastModel.FK_inventory_file_barter_header_audiences" />
-        <AssociationConnector Association="BroadcastModel.FK_inventory_file_barter_header_dayparts" />
-        <AssociationConnector Association="BroadcastModel.FK_inventory_file_barter_header_inventory_files" />
-        <AssociationConnector Association="BroadcastModel.FK_inventory_file_barter_header_media_months" />
         <EntityTypeShape EntityType="BroadcastModel.inventory_file_problems" Width="1.5" PointX="5" PointY="45.375" />
         <AssociationConnector Association="BroadcastModel.FK_inventory_file_problems_inventory_files" />
-        <AssociationConnector Association="BroadcastModel.FK_inventory_file_barter_header_media_months_hut_book" />
         <EntityTypeShape EntityType="BroadcastModel.market" Width="1.5" PointX="0.75" PointY="18.625" />
         <AssociationConnector Association="BroadcastModel.FK_market_coverages_markets" />
         <AssociationConnector Association="BroadcastModel.FK_market_dma_map_market_code" />
@@ -268,6 +262,12 @@
         <EntityTypeShape EntityType="BroadcastModel.inventory_file_ratings_jobs" Width="1.5" PointX="5" PointY="48.375" />
         <AssociationConnector Association="BroadcastModel.FK_inventory_file_ratings_jobs_inventory_files" />
         <EntityTypeShape EntityType="BroadcastModel.daypart_codes" Width="1.5" PointX="5.375" PointY="0.75" />
+        <EntityTypeShape EntityType="BroadcastModel.inventory_file_proprietary_header" Width="1.5" PointX="24" PointY="32.375" />
+        <AssociationConnector Association="BroadcastModel.FK_inventory_file_proprietary_header_audiences" />
+        <AssociationConnector Association="BroadcastModel.FK_inventory_file_proprietary_header_dayparts" />
+        <AssociationConnector Association="BroadcastModel.FK_inventory_file_proprietary_header_inventory_files" />
+        <AssociationConnector Association="BroadcastModel.FK_inventory_file_proprietary_header_media_months" />
+        <AssociationConnector Association="BroadcastModel.FK_inventory_file_proprietary_header_media_months_hut_book" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

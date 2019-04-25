@@ -51,6 +51,73 @@ GO
 /*************************************** START UPDATE SCRIPT *****************************************************/
 
 
+/*************************************** START PRI-8007 *****************************************************/
+--update the table name
+IF EXISTS(SELECT 1 FROM sys.tables WHERE OBJECT_ID = OBJECT_ID('dbo.inventory_file_barter_header'))
+BEGIN
+	exec sp_rename 'dbo.inventory_file_barter_header', 'inventory_file_proprietary_header'
+END
+
+--update the primary key constraint name
+IF EXISTS(SELECT 1 FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS WHERE CONSTRAINT_TYPE = 'PRIMARY KEY' AND CONSTRAINT_NAME ='PK_inventory_file_barter_header')
+BEGIN
+	EXEC sp_rename N'dbo.PK_inventory_file_barter_header', N'PK_inventory_file_proprietary_header'
+END
+
+--update the constraints names
+IF EXISTS(SELECT 1 FROM INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS WHERE CONSTRAINT_NAME ='FK_inventory_file_barter_header_audiences')
+BEGIN
+	EXEC sp_rename N'dbo.FK_inventory_file_barter_header_audiences', N'FK_inventory_file_proprietary_header_audiences', N'OBJECT'
+END
+
+IF EXISTS(SELECT 1 FROM INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS WHERE CONSTRAINT_NAME ='FK_inventory_file_barter_header_dayparts')
+BEGIN
+	EXEC sp_rename N'dbo.FK_inventory_file_barter_header_dayparts', N'FK_inventory_file_proprietary_header_dayparts', N'OBJECT'
+END
+
+IF EXISTS(SELECT 1 FROM INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS WHERE CONSTRAINT_NAME ='FK_inventory_file_barter_header_inventory_files')
+BEGIN
+	EXEC sp_rename N'dbo.FK_inventory_file_barter_header_inventory_files', N'FK_inventory_file_proprietary_header_inventory_files', N'OBJECT'
+END
+
+IF EXISTS(SELECT 1 FROM INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS WHERE CONSTRAINT_NAME ='FK_inventory_file_barter_header_media_months')
+BEGIN
+	EXEC sp_rename N'dbo.FK_inventory_file_barter_header_media_months', N'FK_inventory_file_proprietary_header_media_months', N'OBJECT'
+END
+
+IF EXISTS(SELECT 1 FROM INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS WHERE CONSTRAINT_NAME ='FK_inventory_file_barter_header_media_months_hut_book')
+BEGIN
+	EXEC sp_rename N'dbo.FK_inventory_file_barter_header_media_months_hut_book', N'FK_inventory_file_proprietary_header_media_months_hut_book', N'OBJECT'
+END
+
+--update the indexes names
+IF EXISTS(SELECT 1 FROM sys.indexes WHERE name='IX_inventory_file_barter_header_audience_id' AND object_id = OBJECT_ID('dbo.inventory_file_proprietary_header'))
+BEGIN
+	EXEC sp_rename N'dbo.inventory_file_proprietary_header.IX_inventory_file_barter_header_audience_id', N'IX_inventory_file_proprietary_header_audience_id', N'INDEX'
+END
+
+IF EXISTS(SELECT 1 FROM sys.indexes WHERE name='IX_inventory_file_barter_header_contracted_daypart_id' AND object_id = OBJECT_ID('dbo.inventory_file_proprietary_header'))
+BEGIN
+	EXEC sp_rename N'dbo.inventory_file_proprietary_header.IX_inventory_file_barter_header_contracted_daypart_id', N'IX_inventory_file_proprietary_header_contracted_daypart_id', N'INDEX'
+END
+
+IF EXISTS(SELECT 1 FROM sys.indexes WHERE name='IX_inventory_file_barter_header_hut_projection_book_id' AND object_id = OBJECT_ID('dbo.inventory_file_proprietary_header'))
+BEGIN
+	EXEC sp_rename N'dbo.inventory_file_proprietary_header.IX_inventory_file_barter_header_hut_projection_book_id', N'IX_inventory_file_proprietary_header_hut_projection_book_id', N'INDEX'
+END
+
+IF EXISTS(SELECT 1 FROM sys.indexes WHERE name='IX_inventory_file_barter_header_inventory_file_id' AND object_id = OBJECT_ID('dbo.inventory_file_proprietary_header'))
+BEGIN
+	EXEC sp_rename N'dbo.inventory_file_proprietary_header.IX_inventory_file_barter_header_inventory_file_id', N'IX_inventory_file_proprietary_header_inventory_file_id', N'INDEX'
+END
+
+IF EXISTS(SELECT 1 FROM sys.indexes WHERE name='IX_inventory_file_barter_header_share_projection_book_id' AND object_id = OBJECT_ID('dbo.inventory_file_proprietary_header'))
+BEGIN
+	EXEC sp_rename N'dbo.inventory_file_proprietary_header.IX_inventory_file_barter_header_share_projection_book_id', N'IX_inventory_file_proprietary_header_share_projection_book_id', N'INDEX'
+END
+
+/*************************************** END PRI-8007 *****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

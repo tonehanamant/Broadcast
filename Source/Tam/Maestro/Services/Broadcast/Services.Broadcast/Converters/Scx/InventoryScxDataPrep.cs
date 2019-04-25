@@ -1,7 +1,7 @@
 ﻿using Common.Services.ApplicationServices;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
-using Services.Broadcast.Entities.BarterInventory;
+using Services.Broadcast.Entities.ProprietaryInventory;
 using Services.Broadcast.Entities.OpenMarketInventory;
 using Services.Broadcast.Entities.Scx;
 using Services.Broadcast.Entities.StationInventory;
@@ -102,7 +102,7 @@ namespace Services.Broadcast.Converters.Scx
 
                 _SetMarketIds(scxData);
 
-                BarterInventoryHeader inventoryHeader = _InventoryRepository.GetInventoryFileHeader(inventoryFileId.Value);
+                ProprietaryInventoryHeader inventoryHeader = _InventoryRepository.GetInventoryFileHeader(inventoryFileId.Value);
                 var marketSubscribers = _NsiUniverseRepository.GetUniverseDataByAudience(inventoryHeader.ShareBookId.Value, new List<int> { inventoryHeader.Audience.Id });
                 var marketRankings = _NsiMarketRepository.GetMarketRankingsByMediaMonth(inventoryHeader.ShareBookId.Value);
                 var marketCoverages = _MarketCoverageRepository.GetLatestMarketCoverages(scxData.MarketIds).MarketCoveragesByMarketCode;
@@ -145,7 +145,7 @@ namespace Services.Broadcast.Converters.Scx
             }).ToList();
         }
 
-        private void _SetMarketSurveyData(ScxData data, BarterInventoryHeader inventoryHeader)
+        private void _SetMarketSurveyData(ScxData data, ProprietaryInventoryHeader inventoryHeader)
         {
             var bookingMediaMonthId = inventoryHeader.HutBookId ?? inventoryHeader.ShareBookId;
 

@@ -8,18 +8,18 @@ using OfficeOpenXml;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.BusinessEngines.InventoryDaypartParsing;
 using Services.Broadcast.Entities;
-using Services.Broadcast.Entities.BarterInventory;
+using Services.Broadcast.Entities.ProprietaryInventory;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.StationInventory;
 using Services.Broadcast.Extensions;
 using Services.Broadcast.Helpers;
 using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Services.ContractInterfaces.AudienceAndRatingsBusinessObjects;
-using static Services.Broadcast.Entities.BarterInventory.BarterInventoryFile;
+using static Services.Broadcast.Entities.ProprietaryInventory.ProprietaryInventoryFile;
 
 namespace Services.Broadcast.Converters.RateImport
 {
-    public class OAndOBarterFileImporter : BarterFileImporterBase
+    public class OAndOProprietaryFileImporter : ProprietaryFileImporterBase
     {
         private const string INVENTORY_SOURCE_CELL = "B3";
         private const string SPOT_LENGTH_CELL = "B4";
@@ -29,7 +29,7 @@ namespace Services.Broadcast.Converters.RateImport
         private const string CONTRACTED_DAYPART_CELL = "B8";
         private const string SHARE_BOOK_CELL = "B9";
 
-        public OAndOBarterFileImporter(
+        public OAndOProprietaryFileImporter(
             IDataRepositoryFactory broadcastDataRepositoryFactory,
             IBroadcastAudiencesCache broadcastAudiencesCache,
             IInventoryDaypartParsingEngine inventoryDaypartParsingEngine,
@@ -45,7 +45,7 @@ namespace Services.Broadcast.Converters.RateImport
         {
         }
 
-        public override void LoadAndValidateDataLines(ExcelWorksheet worksheet, BarterInventoryFile barterFile)
+        public override void LoadAndValidateDataLines(ExcelWorksheet worksheet, ProprietaryInventoryFile proprietaryFile)
         {
             const int firstColumnIndex = 1;
             const int emptyLinesLimitToStopProcessing = 5;
@@ -57,12 +57,12 @@ namespace Services.Broadcast.Converters.RateImport
 
             if (!stationHeaderRowIndex.HasValue)
             {
-                barterFile.ValidationProblems.Add($"Can not find first data line");
+                proprietaryFile.ValidationProblems.Add($"Can not find first data line");
                 return;
             }
 
             var rowIndex = stationHeaderRowIndex.Value + 1;
-            var weeks = _ReadWeeks(worksheet, barterFile);
+            var weeks = _ReadWeeks(worksheet, proprietaryFile);
             var emptyLinesProcessedAfterLastDataLine = 0;
 
             while (true)
@@ -95,11 +95,11 @@ namespace Services.Broadcast.Converters.RateImport
 
                 if (validationProblems.Any())
                 {
-                    barterFile.ValidationProblems.AddRange(validationProblems);
+                    proprietaryFile.ValidationProblems.AddRange(validationProblems);
                 }
                 else
                 {
-                    barterFile.DataLines.Add(line);
+                    proprietaryFile.DataLines.Add(line);
                 }
 
                 rowIndex++;
@@ -107,7 +107,7 @@ namespace Services.Broadcast.Converters.RateImport
             }
         }
 
-        private List<string> _ValidateLine(BarterInventoryDataLine line, int rowIndex, string dayText, string timeText)
+        private List<string> _ValidateLine(ProprietaryInventoryDataLine line, int rowIndex, string dayText, string timeText)
         {
             var validationProblems = new List<string>();
 
@@ -155,7 +155,7 @@ namespace Services.Broadcast.Converters.RateImport
             return validationProblems;
         }
 
-        private BarterInventoryDataLine _ReadDataLine(
+        private ProprietaryInventoryDataLine _ReadDataLine(
             ExcelWorksheet worksheet, 
             int rowIndex, 
             int firstColumnIndex, 
@@ -166,7 +166,7 @@ namespace Services.Broadcast.Converters.RateImport
             var columnIndex = firstColumnIndex;
 
             // don`t simplify object initialization because line columns should be read with the current order 
-            var line = new BarterInventoryDataLine();
+            var line = new ProprietaryInventoryDataLine();
             line.Station = worksheet.Cells[rowIndex, columnIndex++].GetStringValue();
 
             dayText = worksheet.Cells[rowIndex, columnIndex++].GetStringValue();
@@ -186,7 +186,7 @@ namespace Services.Broadcast.Converters.RateImport
 
             foreach (var weekId in mediaWeekIds)
             {
-                line.Weeks.Add(new BarterInventoryDataLine.Week
+                line.Weeks.Add(new ProprietaryInventoryDataLine.Week
                 {
                     MediaWeekId = weekId,
                     Spots = worksheet.Cells[rowIndex, columnIndex++].GetIntValue()
@@ -199,7 +199,7 @@ namespace Services.Broadcast.Converters.RateImport
             return line;
         }
 
-        private bool _IsSummaryLine(BarterInventoryDataLine line)
+        private bool _IsSummaryLine(ProprietaryInventoryDataLine line)
         {
             return !string.IsNullOrWhiteSpace(line.Station) &&
                 string.IsNullOrWhiteSpace(line.Program) &&
@@ -209,7 +209,7 @@ namespace Services.Broadcast.Converters.RateImport
                 line.Weeks.All(x => !x.Spots.HasValue);
         }
 
-        private bool _IsLineEmpty(BarterInventoryDataLine line)
+        private bool _IsLineEmpty(ProprietaryInventoryDataLine line)
         {
             return string.IsNullOrWhiteSpace(line.Station) &&
                 string.IsNullOrWhiteSpace(line.Program) &&
@@ -219,12 +219,12 @@ namespace Services.Broadcast.Converters.RateImport
                 line.Weeks.All(x => !x.Spots.HasValue);
         }
 
-        private List<int> _ReadWeeks(ExcelWorksheet worksheet, BarterInventoryFile barterFile)
+        private List<int> _ReadWeeks(ExcelWorksheet worksheet, ProprietaryInventoryFile proprietaryFile)
         {
             const int firstColumnIndex = 5;
             const int firstRowIndex = 14;
             const int lastRowIndex = 15;
-            var audienceCode = barterFile.Header.Audience.Code;
+            var audienceCode = proprietaryFile.Header.Audience.Code;
             var dateFormats = new string[] { "d-MMM-yyyy", "M/d/yyyy" };
             var result = new List<int>();
             var lastColumnIndex = firstColumnIndex;
@@ -281,23 +281,23 @@ namespace Services.Broadcast.Converters.RateImport
             return result;
         }
 
-        public override void PopulateManifests(BarterInventoryFile barterFile, List<DisplayBroadcastStation> stations)
+        public override void PopulateManifests(ProprietaryInventoryFile proprietaryFile, List<DisplayBroadcastStation> stations)
         {
-            barterFile.InventoryManifests = _GetStationInventoryManifests(barterFile, stations);
+            proprietaryFile.InventoryManifests = _GetStationInventoryManifests(proprietaryFile, stations);
         }
 
-        private List<StationInventoryManifest> _GetStationInventoryManifests(BarterInventoryFile barterFile, List<DisplayBroadcastStation> stations)
+        private List<StationInventoryManifest> _GetStationInventoryManifests(ProprietaryInventoryFile proprietaryFile, List<DisplayBroadcastStation> stations)
         {
-            var fileHeader = barterFile.Header;
+            var fileHeader = proprietaryFile.Header;
             var stationsDict = stations.ToDictionary(x => x.LegacyCallLetters, x => x, StringComparer.OrdinalIgnoreCase);
 
-            return barterFile.DataLines
+            return proprietaryFile.DataLines
                 .Select(x => new StationInventoryManifest
                 {
                     EffectiveDate = fileHeader.EffectiveDate,
                     EndDate = fileHeader.EndDate,
-                    InventorySourceId = barterFile.InventorySource.Id,
-                    InventoryFileId = barterFile.Id,
+                    InventorySourceId = proprietaryFile.InventorySource.Id,
+                    InventoryFileId = proprietaryFile.Id,
                     Station = stationsDict[StationProcessingEngine.StripStationSuffix(x.Station)],
                     SpotLengthId = fileHeader.SpotLengthId.Value,
                     DaypartCode = fileHeader.DaypartCode,
@@ -325,9 +325,9 @@ namespace Services.Broadcast.Converters.RateImport
                 }).ToList();
         }
 
-        protected override void LoadAndValidateHeaderData(ExcelWorksheet worksheet, BarterInventoryFile barterFile)
+        protected override void LoadAndValidateHeaderData(ExcelWorksheet worksheet, ProprietaryInventoryFile proprietaryFile)
         {
-            var header = new BarterInventoryHeader();
+            var header = new ProprietaryInventoryHeader();
             var validationProblems = new List<string>();
 
             _ProcessInventorySource(worksheet, validationProblems);
@@ -340,11 +340,11 @@ namespace Services.Broadcast.Converters.RateImport
             _ProcessPlaybackType(worksheet, validationProblems, header);
             _ProcessAudience(worksheet, validationProblems, header);         
 
-            barterFile.Header = header;
-            barterFile.ValidationProblems.AddRange(validationProblems);
+            proprietaryFile.Header = header;
+            proprietaryFile.ValidationProblems.AddRange(validationProblems);
         }
 
-        private void _ProcessAudience(ExcelWorksheet worksheet, List<string> validationProblems, BarterInventoryHeader header)
+        private void _ProcessAudience(ExcelWorksheet worksheet, List<string> validationProblems, ProprietaryInventoryHeader header)
         {
             // let`s find header with audience
             const int firstColumnIndex = 6;
@@ -400,7 +400,7 @@ namespace Services.Broadcast.Converters.RateImport
             }
         }
 
-        private void _ProcessSpotLength(ExcelWorksheet worksheet, List<string> validationProblems, BarterInventoryHeader header)
+        private void _ProcessSpotLength(ExcelWorksheet worksheet, List<string> validationProblems, ProprietaryInventoryHeader header)
         {
             var spotLengthString = worksheet.Cells[SPOT_LENGTH_CELL].GetStringValue();
 
@@ -422,7 +422,7 @@ namespace Services.Broadcast.Converters.RateImport
             }
         }
 
-        private void _ProcessEffectiveAndEndDates(ExcelWorksheet worksheet, List<string> validationProblems, BarterInventoryHeader header)
+        private void _ProcessEffectiveAndEndDates(ExcelWorksheet worksheet, List<string> validationProblems, ProprietaryInventoryHeader header)
         {
             var effectiveDateText = worksheet.Cells[EFFECTIVE_DATE_CELL].GetTextValue();
             var endDateText = worksheet.Cells[END_DATE_CELL].GetTextValue();
@@ -477,7 +477,7 @@ namespace Services.Broadcast.Converters.RateImport
             }
         }
 
-        private void _ProcessDaypartCode(ExcelWorksheet worksheet, List<string> validationProblems, BarterInventoryHeader header)
+        private void _ProcessDaypartCode(ExcelWorksheet worksheet, List<string> validationProblems, ProprietaryInventoryHeader header)
         {
             var daypartCode = worksheet.Cells[DAYPART_CODE_CELL].GetStringValue();
 
@@ -495,7 +495,7 @@ namespace Services.Broadcast.Converters.RateImport
             }
         }
 
-        private void _ProcessContractedDaypart(ExcelWorksheet worksheet, List<string> validationProblems, BarterInventoryHeader header)
+        private void _ProcessContractedDaypart(ExcelWorksheet worksheet, List<string> validationProblems, ProprietaryInventoryHeader header)
         {
             var daypartString = worksheet.Cells[CONTRACTED_DAYPART_CELL].GetStringValue();
 
@@ -517,7 +517,7 @@ namespace Services.Broadcast.Converters.RateImport
             }
         }
 
-        private void _ProcessShareBook(ExcelWorksheet worksheet, List<string> validationProblems, BarterInventoryHeader header, out bool shareBookParsedCorrectly, out DateTime shareBook)
+        private void _ProcessShareBook(ExcelWorksheet worksheet, List<string> validationProblems, ProprietaryInventoryHeader header, out bool shareBookParsedCorrectly, out DateTime shareBook)
         {
             shareBookParsedCorrectly = false;
             shareBook = default(DateTime);
@@ -538,7 +538,7 @@ namespace Services.Broadcast.Converters.RateImport
             }
         }
 
-        private void _ProcessHutBook(ExcelWorksheet worksheet, List<string> validationProblems, BarterInventoryHeader header, bool shareBookParsedCorrectly, DateTime shareBook)
+        private void _ProcessHutBook(ExcelWorksheet worksheet, List<string> validationProblems, ProprietaryInventoryHeader header, bool shareBookParsedCorrectly, DateTime shareBook)
         {
             const int hutBookColumn = 1;
             const int hutBookRowStart = 10;
@@ -567,7 +567,7 @@ namespace Services.Broadcast.Converters.RateImport
             }
         }
 
-        private void _ProcessPlaybackType(ExcelWorksheet worksheet, List<string> validationProblems, BarterInventoryHeader header)
+        private void _ProcessPlaybackType(ExcelWorksheet worksheet, List<string> validationProblems, ProprietaryInventoryHeader header)
         {
             const int playbackTypeColumn = 1;
             const int playbackTypeRowStart = 10;

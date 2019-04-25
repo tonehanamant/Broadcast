@@ -3,7 +3,7 @@
   "DataLines": [
     {
       "Audiences": [],
-      "Comment": null,
+      "Comment": "Test1",
       "CPM": null,
       "Dayparts": [
         {
@@ -30,32 +30,32 @@
       "Station": "WCBS",
       "Units": [
         {
-          "BarterInventoryUnit": {
+          "ProprietaryInventoryUnit": {
             "Name": "AM 1",
             "SpotLength": 60
           },
-          "Spots": 0
+          "Spots": null
         },
         {
-          "BarterInventoryUnit": {
+          "ProprietaryInventoryUnit": {
             "Name": "AM 2",
             "SpotLength": 30
           },
-          "Spots": 0
+          "Spots": null
         },
         {
-          "BarterInventoryUnit": {
+          "ProprietaryInventoryUnit": {
             "Name": "AM 3",
             "SpotLength": 30
           },
           "Spots": 1
         },
         {
-          "BarterInventoryUnit": {
+          "ProprietaryInventoryUnit": {
             "Name": "AM 4",
             "SpotLength": 15
           },
-          "Spots": 0
+          "Spots": null
         }
       ],
       "Weeks": []
@@ -89,40 +89,40 @@
       "Station": "WNYW",
       "Units": [
         {
-          "BarterInventoryUnit": {
+          "ProprietaryInventoryUnit": {
             "Name": "AM 1",
             "SpotLength": 60
           },
-          "Spots": 0
+          "Spots": null
         },
         {
-          "BarterInventoryUnit": {
+          "ProprietaryInventoryUnit": {
             "Name": "AM 2",
             "SpotLength": 30
           },
           "Spots": 1
         },
         {
-          "BarterInventoryUnit": {
+          "ProprietaryInventoryUnit": {
             "Name": "AM 3",
             "SpotLength": 30
           },
-          "Spots": 0
+          "Spots": null
         },
         {
-          "BarterInventoryUnit": {
+          "ProprietaryInventoryUnit": {
             "Name": "AM 4",
             "SpotLength": 15
           },
-          "Spots": 0
+          "Spots": null
         }
       ],
       "Weeks": []
     }
   ],
-  "FileName": "BarterDataFiles\\BarterFileImporter_BadFormats_PRI5379.xlsx",
+  "FileName": "ProprietaryDataFiles\\Barter_BadFormats_PRI5667.xlsx",
   "FileStatus": 1,
-  "Hash": "73-28-0D-ED-A7-61-3E-49-5B-27-89-43-59-2A-AA-96-F9-9A-3B-38",
+  "Hash": "8A-ED-EA-21-9E-2C-C1-5D-FB-90-1A-70-F0-BB-01-F2-AE-68-38-75",
   "Header": {
     "Audience": {
       "_CategoryCode": 0,
@@ -135,13 +135,13 @@
       "_SubCategoryCode": "A",
       "IsDirty": true
     },
-    "Cpm": 62.2,
-    "DaypartCode": null,
-    "EffectiveDate": "0001-01-01T00:00:00",
-    "EndDate": "0001-01-01T00:00:00",
+    "Cpm": 222.22,
+    "DaypartCode": "LN",
+    "EffectiveDate": "2019-05-22T00:00:00",
+    "EndDate": "2019-05-30T00:00:00",
     "HutBookId": 449,
     "NtiToNsiIncrease": null,
-    "PlaybackType": 2,
+    "PlaybackType": 5,
     "ShareBookId": 450,
     "SpotLengthId": null
   },
@@ -149,9 +149,5 @@
   "InventoryManifests": [],
   "InventorySource": null,
   "UniqueIdentifier": null,
-  "ValidationProblems": [
-    "Not acceptable daypart code is specified",
-    "Effective date is not in the correct format (MM/dd/yyyy, M/dd/yyyy, M/d/yyyy)",
-    "End date is not in the correct format (MM/dd/yyyy, M/dd/yyyy, M/d/yyyy)"
-  ]
+  "ValidationProblems": []
 }

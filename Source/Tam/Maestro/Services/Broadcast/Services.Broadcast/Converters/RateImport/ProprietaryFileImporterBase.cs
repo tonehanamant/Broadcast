@@ -3,7 +3,7 @@ using OfficeOpenXml;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.BusinessEngines.InventoryDaypartParsing;
 using Services.Broadcast.Entities;
-using Services.Broadcast.Entities.BarterInventory;
+using Services.Broadcast.Entities.ProprietaryInventory;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.StationInventory;
 using Services.Broadcast.Exceptions;
@@ -15,17 +15,17 @@ using Tam.Maestro.Common;
 
 namespace Services.Broadcast.Converters.RateImport
 {
-    public interface IBarterFileImporter
+    public interface IProprietaryFileImporter
     {
         void CheckFileHash();
-        BarterInventoryFile GetPendingBarterInventoryFile(string userName, InventorySource inventorySource);
-        void ExtractData(BarterInventoryFile barterFile);
+        ProprietaryInventoryFile GetPendingProprietaryInventoryFile(string userName, InventorySource inventorySource);
+        void ExtractData(ProprietaryInventoryFile proprietaryFile);
         void LoadFromSaveRequest(InventoryFileSaveRequest request);
-        void LoadAndValidateDataLines(ExcelWorksheet worksheet, BarterInventoryFile barterFile);
-        void PopulateManifests(BarterInventoryFile barterFile, List<DisplayBroadcastStation> stations);
+        void LoadAndValidateDataLines(ExcelWorksheet worksheet, ProprietaryInventoryFile proprietaryFile);
+        void PopulateManifests(ProprietaryInventoryFile proprietaryFile, List<DisplayBroadcastStation> stations);
     }
 
-    public abstract class BarterFileImporterBase : IBarterFileImporter
+    public abstract class ProprietaryFileImporterBase : IProprietaryFileImporter
     {
         protected const string CPM_FORMAT = "##.##";
         protected readonly string[] BOOK_DATE_FORMATS = new string[] { "MMM yy", "MMM-yy", "MMM/yy", "yy-MMM", "yy/MMM", "MMM yyyy" };
@@ -45,7 +45,7 @@ namespace Services.Broadcast.Converters.RateImport
         protected readonly ISpotLengthEngine SpotLengthEngine;
         protected readonly IDaypartCodeRepository DaypartCodeRepository;
 
-        public BarterFileImporterBase(
+        public ProprietaryFileImporterBase(
             IDataRepositoryFactory broadcastDataRepositoryFactory,
             IBroadcastAudiencesCache broadcastAudiencesCache,
             IInventoryDaypartParsingEngine inventoryDaypartParsingEngine,
@@ -79,9 +79,9 @@ namespace Services.Broadcast.Converters.RateImport
             _FileHash = HashGenerator.ComputeHash(StreamHelper.ReadToEnd(request.StreamData));
         }
 
-        public BarterInventoryFile GetPendingBarterInventoryFile(string userName, InventorySource inventorySource)
+        public ProprietaryInventoryFile GetPendingProprietaryInventoryFile(string userName, InventorySource inventorySource)
         {
-            return new BarterInventoryFile
+            return new ProprietaryInventoryFile
             {
                 FileName = Request.FileName ?? "unknown",
                 FileStatus = FileStatusEnum.Pending,
@@ -92,13 +92,13 @@ namespace Services.Broadcast.Converters.RateImport
             };
         }
 
-        public void ExtractData(BarterInventoryFile barterFile)
+        public void ExtractData(ProprietaryInventoryFile proprietaryFile)
         {
             using (var package = new ExcelPackage(Request.StreamData))
             {
                 var worksheet = package.Workbook.Worksheets.First();
-                LoadAndValidateHeaderData(worksheet, barterFile);
-                LoadAndValidateDataLines(worksheet, barterFile);
+                LoadAndValidateHeaderData(worksheet, proprietaryFile);
+                LoadAndValidateDataLines(worksheet, proprietaryFile);
             }
         }
 
@@ -108,10 +108,10 @@ namespace Services.Broadcast.Converters.RateImport
             return mediaWeeks.Select(x => new StationInventoryManifestWeek { MediaWeek = x, Spots = spots }).ToList();
         }
 
-        protected abstract void LoadAndValidateHeaderData(ExcelWorksheet worksheet, BarterInventoryFile barterFile);
+        protected abstract void LoadAndValidateHeaderData(ExcelWorksheet worksheet, ProprietaryInventoryFile proprietaryFile);
 
-        public abstract void LoadAndValidateDataLines(ExcelWorksheet worksheet, BarterInventoryFile barterFile);
+        public abstract void LoadAndValidateDataLines(ExcelWorksheet worksheet, ProprietaryInventoryFile proprietaryFile);
 
-        public abstract void PopulateManifests(BarterInventoryFile barterFile, List<DisplayBroadcastStation> stations);
+        public abstract void PopulateManifests(ProprietaryInventoryFile proprietaryFile, List<DisplayBroadcastStation> stations);
     }
 }

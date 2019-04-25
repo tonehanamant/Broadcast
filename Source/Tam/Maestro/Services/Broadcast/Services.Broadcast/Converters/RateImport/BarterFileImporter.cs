@@ -5,8 +5,8 @@ using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.BusinessEngines.InventoryDaypartParsing;
 using Services.Broadcast.Entities;
-using Services.Broadcast.Entities.BarterInventory;
 using Services.Broadcast.Entities.Enums;
+using Services.Broadcast.Entities.ProprietaryInventory;
 using Services.Broadcast.Entities.StationInventory;
 using Services.Broadcast.Extensions;
 using Services.Broadcast.Helpers;
@@ -15,11 +15,11 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
-using static Services.Broadcast.Entities.BarterInventory.BarterInventoryFile;
+using static Services.Broadcast.Entities.ProprietaryInventory.ProprietaryInventoryFile;
 
 namespace Services.Broadcast.Converters.RateImport
 {
-    public class BarterFileImporter : BarterFileImporterBase
+    public class BarterFileImporter : ProprietaryFileImporterBase
     {
         private const string INVENTORY_SOURCE_CELL = "B3";
         private const string DAYPART_CODE_CELL = "B4";
@@ -55,9 +55,9 @@ namespace Services.Broadcast.Converters.RateImport
             _ImpressionsService = impressionsService;
         }
 
-        protected override void LoadAndValidateHeaderData(ExcelWorksheet worksheet, BarterInventoryFile barterFile)
+        protected override void LoadAndValidateHeaderData(ExcelWorksheet worksheet, ProprietaryInventoryFile proprietaryFile)
         {
-            var header = new BarterInventoryHeader();
+            var header = new ProprietaryInventoryHeader();
             var validationProblems = new List<string>();
             Dictionary<string, string> requiredProperties = new Dictionary<string, string>
                 { {"Inv Source", INVENTORY_SOURCE_CELL }, {"Daypart Code",DAYPART_CODE_CELL }, {"Effective Date", EFFECTIVE_DATE_CELL }
@@ -71,7 +71,7 @@ namespace Services.Broadcast.Converters.RateImport
 
             if (validationProblems.Any())
             {
-                barterFile.ValidationProblems.AddRange(validationProblems);
+                proprietaryFile.ValidationProblems.AddRange(validationProblems);
                 return;
             }
 
@@ -200,11 +200,11 @@ namespace Services.Broadcast.Converters.RateImport
                 header.PlaybackType = playback;
             }
 
-            barterFile.Header = header;
-            barterFile.ValidationProblems.AddRange(validationProblems);
+            proprietaryFile.Header = header;
+            proprietaryFile.ValidationProblems.AddRange(validationProblems);
         }
 
-        public override void LoadAndValidateDataLines(ExcelWorksheet worksheet, BarterInventoryFile barterFile)
+        public override void LoadAndValidateDataLines(ExcelWorksheet worksheet, ProprietaryInventoryFile proprietaryFile)
         {
             const int firstColumnIndex = 1;
             const int firstDataLineRowIndex = 18;
@@ -215,7 +215,7 @@ namespace Services.Broadcast.Converters.RateImport
             while (true)
             {
                 // don`t simplify object initialization because line columns should be read with the current order 
-                var line = new BarterInventoryDataLine();
+                var line = new ProprietaryInventoryDataLine();
                 line.Station = worksheet.Cells[rowIndex, columnIndex++].GetStringValue();
                 var daypartText = worksheet.Cells[rowIndex, columnIndex++].GetStringValue();
 
@@ -226,9 +226,9 @@ namespace Services.Broadcast.Converters.RateImport
 
                 foreach (var unit in units)
                 {
-                    line.Units.Add(new BarterInventoryDataLine.Unit
+                    line.Units.Add(new ProprietaryInventoryDataLine.Unit
                     {
-                        BarterInventoryUnit = unit,
+                        ProprietaryInventoryUnit = unit,
                         Spots = worksheet.Cells[rowIndex, columnIndex++].GetIntValue()
                     });
                 }
@@ -244,7 +244,7 @@ namespace Services.Broadcast.Converters.RateImport
 
                 if (string.IsNullOrWhiteSpace(line.Station))
                 {
-                    barterFile.ValidationProblems.Add($"Line {rowIndex} contains an empty station cell");
+                    proprietaryFile.ValidationProblems.Add($"Line {rowIndex} contains an empty station cell");
                     hasValidationProblems = true;
                 }
 
@@ -254,13 +254,13 @@ namespace Services.Broadcast.Converters.RateImport
                        $"Line {rowIndex} contains an empty daypart cell" :
                        $"Line {rowIndex} contains an invalid daypart(s): {daypartText}";
 
-                    barterFile.ValidationProblems.Add(message);
+                    proprietaryFile.ValidationProblems.Add(message);
                     hasValidationProblems = true;
                 }
 
                 if (!hasValidationProblems)
                 {
-                    barterFile.DataLines.Add(line);
+                    proprietaryFile.DataLines.Add(line);
                 }
 
                 columnIndex = firstColumnIndex;
@@ -268,13 +268,13 @@ namespace Services.Broadcast.Converters.RateImport
             }
         }
 
-        private List<BarterInventoryUnit> _ReadBarterInventoryUnits(ExcelWorksheet worksheet)
+        private List<ProprietaryInventoryUnit> _ReadBarterInventoryUnits(ExcelWorksheet worksheet)
         {
             const string commentsHeader = "COMMENTS";
             const int unitNameRowIndex = 16;
             const int spotLengthRowIndex = 17;
             const int firstUnitColumnIndex = 3;
-            var result = new List<BarterInventoryUnit>();
+            var result = new List<ProprietaryInventoryUnit>();
             var lastColumnIndex = firstUnitColumnIndex;
 
             // let's find lastColumnIndex by looking for "COMMENTS" cell
@@ -328,7 +328,7 @@ namespace Services.Broadcast.Converters.RateImport
                     throw new Exception("Invalid spot length was found");
                 }
 
-                result.Add(new BarterInventoryUnit
+                result.Add(new ProprietaryInventoryUnit
                 {
                     Name = name,
                     SpotLength = spotLength
@@ -338,7 +338,7 @@ namespace Services.Broadcast.Converters.RateImport
             return result;
         }
 
-        private bool _IsLineEmpty(BarterInventoryDataLine line)
+        private bool _IsLineEmpty(ProprietaryInventoryDataLine line)
         {
             return string.IsNullOrWhiteSpace(line.Station) &&
                 string.IsNullOrWhiteSpace(line.Comment) &&
@@ -346,23 +346,23 @@ namespace Services.Broadcast.Converters.RateImport
                 line.Units.All(x => !x.Spots.HasValue);
         }
 
-        public override void PopulateManifests(BarterInventoryFile barterFile, List<DisplayBroadcastStation> stations)
+        public override void PopulateManifests(ProprietaryInventoryFile proprietaryFile, List<DisplayBroadcastStation> stations)
         {
-            barterFile.InventoryGroups = _GetStationInventoryGroups(barterFile, stations);
+            proprietaryFile.InventoryGroups = _GetStationInventoryGroups(proprietaryFile, stations);
         }
 
-        private List<StationInventoryGroup> _GetStationInventoryGroups(BarterInventoryFile barterFile, List<DisplayBroadcastStation> stations)
+        private List<StationInventoryGroup> _GetStationInventoryGroups(ProprietaryInventoryFile proprietaryFile, List<DisplayBroadcastStation> stations)
         {
-            var fileHeader = barterFile.Header;
+            var fileHeader = proprietaryFile.Header;
             var stationsDict = stations.ToDictionary(x => x.LegacyCallLetters, x => x, StringComparer.OrdinalIgnoreCase);
-            return barterFile.DataLines
+            return proprietaryFile.DataLines
                 .SelectMany(x => x.Units, (dataLine, unit) => new
                 {
                     dataLine,
-                    unit.BarterInventoryUnit,
+                    unit.ProprietaryInventoryUnit,
                     unit.Spots
                 })
-                .GroupBy(x => new { x.BarterInventoryUnit.Name, x.BarterInventoryUnit.SpotLength })
+                .GroupBy(x => new { x.ProprietaryInventoryUnit.Name, x.ProprietaryInventoryUnit.SpotLength })
                 .Select(groupingByUnit => new
                 {
                     UnitName = groupingByUnit.Key.Name,
@@ -380,7 +380,7 @@ namespace Services.Broadcast.Converters.RateImport
                 {
                     Name = manifestGroup.UnitName,
                     DaypartCode = Regex.Match(manifestGroup.UnitName, @"[a-z]+", RegexOptions.IgnoreCase).Value,
-                    InventorySource = barterFile.InventorySource,
+                    InventorySource = proprietaryFile.InventorySource,
                     StartDate = fileHeader.EffectiveDate,
                     EndDate = fileHeader.EndDate,
                     SlotNumber = _ParseSlotNumber(manifestGroup.UnitName),
@@ -390,8 +390,8 @@ namespace Services.Broadcast.Converters.RateImport
                         {
                             EffectiveDate = fileHeader.EffectiveDate,
                             EndDate = fileHeader.EndDate,
-                            InventorySourceId = barterFile.InventorySource.Id,
-                            InventoryFileId = barterFile.Id,
+                            InventorySourceId = proprietaryFile.InventorySource.Id,
+                            InventoryFileId = proprietaryFile.Id,
                             Station = stationsDict[StationProcessingEngine.StripStationSuffix(manifest.Station)],
                             SpotLengthId = SpotLengthEngine.GetSpotLengthIdByValue(manifestGroup.SpotLength),
                             Comment = manifest.Comment,

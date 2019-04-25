@@ -7,7 +7,7 @@ using OfficeOpenXml;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.BusinessEngines.InventoryDaypartParsing;
 using Services.Broadcast.Entities;
-using Services.Broadcast.Entities.BarterInventory;
+using Services.Broadcast.Entities.ProprietaryInventory;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Extensions;
 using Services.Broadcast.Helpers;
@@ -15,7 +15,7 @@ using Tam.Maestro.Services.ContractInterfaces.Common;
 
 namespace Services.Broadcast.Converters.RateImport
 {
-    public class SyndicationFileImporter : BarterFileImporterBase
+    public class SyndicationFileImporter : ProprietaryFileImporterBase
     {
         private const string EFFECTIVE_DATE_CELL = "B4";
         private const string END_DATE_CELL = "B5";
@@ -45,17 +45,17 @@ namespace Services.Broadcast.Converters.RateImport
             _DaypartCache = daypartCache;
         }
 
-        public override void LoadAndValidateDataLines(ExcelWorksheet worksheet, BarterInventoryFile barterFile)
+        public override void LoadAndValidateDataLines(ExcelWorksheet worksheet, ProprietaryInventoryFile proprietaryFile)
         {
         }
 
-        public override void PopulateManifests(BarterInventoryFile barterFile, List<DisplayBroadcastStation> stations)
+        public override void PopulateManifests(ProprietaryInventoryFile proprietaryFile, List<DisplayBroadcastStation> stations)
         {
         }
 
-        protected override void LoadAndValidateHeaderData(ExcelWorksheet worksheet, BarterInventoryFile barterFile)
+        protected override void LoadAndValidateHeaderData(ExcelWorksheet worksheet, ProprietaryInventoryFile proprietaryFile)
         {
-            var header = new BarterInventoryHeader();
+            var header = new ProprietaryInventoryHeader();
             var validationProblems = new List<string>();
             
             _ProcessEffectiveAndEndDates(worksheet, validationProblems, header);
@@ -66,11 +66,11 @@ namespace Services.Broadcast.Converters.RateImport
             _ProcessHutBook(worksheet, validationProblems, header, shareBookParsedCorrectly, shareBook);
             _ProcessPlaybackType(worksheet, validationProblems, header);
 
-            barterFile.Header = header;
-            barterFile.ValidationProblems.AddRange(validationProblems);
+            proprietaryFile.Header = header;
+            proprietaryFile.ValidationProblems.AddRange(validationProblems);
         }
 
-        private void _ProcessEffectiveAndEndDates(ExcelWorksheet worksheet, List<string> validationProblems, BarterInventoryHeader header)
+        private void _ProcessEffectiveAndEndDates(ExcelWorksheet worksheet, List<string> validationProblems, ProprietaryInventoryHeader header)
         {
             var effectiveDateText = worksheet.Cells[EFFECTIVE_DATE_CELL].GetTextValue();
             var endDateText = worksheet.Cells[END_DATE_CELL].GetTextValue();
@@ -125,7 +125,7 @@ namespace Services.Broadcast.Converters.RateImport
             }
         }
 
-        private void _ProcessDaypartCode(ExcelWorksheet worksheet, List<string> validationProblems, BarterInventoryHeader header)
+        private void _ProcessDaypartCode(ExcelWorksheet worksheet, List<string> validationProblems, ProprietaryInventoryHeader header)
         {
             var daypartCode = worksheet.Cells[DAYPART_CODE_CELL].GetStringValue();
 
@@ -143,7 +143,7 @@ namespace Services.Broadcast.Converters.RateImport
             }
         }
 
-        private void _ProcessContractedDaypart(List<string> validationProblems, BarterInventoryHeader header)
+        private void _ProcessContractedDaypart(List<string> validationProblems, ProprietaryInventoryHeader header)
         {
             // all day and week daypart
             var daypart = new DisplayDaypart
@@ -161,7 +161,7 @@ namespace Services.Broadcast.Converters.RateImport
             header.ContractedDaypartId = _DaypartCache.GetIdByDaypart(daypart);
         }
 
-        private void _ProcessNTIToNSIIncrease(ExcelWorksheet worksheet, List<string> validationProblems, BarterInventoryHeader header)
+        private void _ProcessNTIToNSIIncrease(ExcelWorksheet worksheet, List<string> validationProblems, ProprietaryInventoryHeader header)
         {
             var ntiToNsiIncreaseText = worksheet.Cells[NTI_TO_NSI_INCREASE_CELL].GetTextValue();
 
@@ -183,7 +183,7 @@ namespace Services.Broadcast.Converters.RateImport
             }
         }
 
-        private void _ProcessShareBook(ExcelWorksheet worksheet, List<string> validationProblems, BarterInventoryHeader header, out bool shareBookParsedCorrectly, out DateTime shareBook)
+        private void _ProcessShareBook(ExcelWorksheet worksheet, List<string> validationProblems, ProprietaryInventoryHeader header, out bool shareBookParsedCorrectly, out DateTime shareBook)
         {
             shareBookParsedCorrectly = false;
             shareBook = default(DateTime);
@@ -204,7 +204,7 @@ namespace Services.Broadcast.Converters.RateImport
             }
         }
 
-        private void _ProcessHutBook(ExcelWorksheet worksheet, List<string> validationProblems, BarterInventoryHeader header, bool shareBookParsedCorrectly, DateTime shareBook)
+        private void _ProcessHutBook(ExcelWorksheet worksheet, List<string> validationProblems, ProprietaryInventoryHeader header, bool shareBookParsedCorrectly, DateTime shareBook)
         {
             string hutBookText = worksheet.Cells[HUT_BOOK_CELL].GetTextValue();
 
@@ -224,7 +224,7 @@ namespace Services.Broadcast.Converters.RateImport
             }
         }
 
-        private void _ProcessPlaybackType(ExcelWorksheet worksheet, List<string> validationProblems, BarterInventoryHeader header)
+        private void _ProcessPlaybackType(ExcelWorksheet worksheet, List<string> validationProblems, ProprietaryInventoryHeader header)
         {
             var playbackString = worksheet.Cells[PLAYBACK_TYPE_CELL].GetStringValue()?.RemoveWhiteSpaces();
 

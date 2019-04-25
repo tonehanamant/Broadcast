@@ -34,7 +34,7 @@ namespace Services.Broadcast.ApplicationServices
     public class InventoryRatingsProcessingService : IInventoryRatingsProcessingService
     {
         private readonly IInventoryFileRatingsJobsRepository _InventoryFileRatingsJobsRepository;
-        private readonly IBarterRepository _BarterRepository;
+        private readonly IProprietaryRepository _ProprietaryRepository;
         private readonly IInventoryRepository _InventoryRepository;
         private readonly IImpressionsService _ImpressionsService;
         private readonly IProprietarySpotCostCalculationEngine _ProprietarySpotCostCalculationEngine;
@@ -45,8 +45,8 @@ namespace Services.Broadcast.ApplicationServices
         {
             _InventoryFileRatingsJobsRepository = broadcastDataRepositoryFactory
                 .GetDataRepository<IInventoryFileRatingsJobsRepository>();
-            _BarterRepository = broadcastDataRepositoryFactory
-                .GetDataRepository<IBarterRepository>();
+            _ProprietaryRepository = broadcastDataRepositoryFactory
+                .GetDataRepository<IProprietaryRepository>();
             _InventoryRepository = broadcastDataRepositoryFactory
                 .GetDataRepository<IInventoryRepository>();
             _ImpressionsService = impressionsService;
@@ -87,25 +87,25 @@ namespace Services.Broadcast.ApplicationServices
                 job.Status = InventoryFileRatingsProcessingStatus.Processing;
                 _InventoryFileRatingsJobsRepository.UpdateJob(job);
 
-                //This just processed barter files right now. Needs to be consolidated to 
+                //This just processed proprietary files right now. Needs to be consolidated to 
                 //var sw = Stopwatch.StartNew();
-                var barterFile = _BarterRepository.GetInventoryFileWithHeaderById(job.InventoryFileId);
+                var proprietaryFile = _ProprietaryRepository.GetInventoryFileWithHeaderById(job.InventoryFileId);
                 //sw.Stop();
                 //Debug.WriteLine($"GetInventoryFileWithHeaderById: {sw.ElapsedMilliseconds}");
 
-                if (barterFile.InventorySource.InventoryType == Entities.Enums.InventorySourceTypeEnum.Barter)
+                if (proprietaryFile.InventorySource.InventoryType == Entities.Enums.InventorySourceTypeEnum.Barter)
                 {
                     //Debug.WriteLine("Barter Source");
                     //sw = Stopwatch.StartNew();
-                    barterFile.InventoryGroups = _InventoryRepository.GetStationInventoryGroupsByFileId(job.InventoryFileId);
+                    proprietaryFile.InventoryGroups = _InventoryRepository.GetStationInventoryGroupsByFileId(job.InventoryFileId);
                     //sw.Stop();
                     //Debug.WriteLine($"GetStationInventoryGroupsByFileId: {sw.ElapsedMilliseconds}");
 
-                    var manifests = barterFile.InventoryGroups.SelectMany(x => x.Manifests).ToList();
+                    var manifests = proprietaryFile.InventoryGroups.SelectMany(x => x.Manifests).ToList();
 
                     //process impressions/cost
                     //sw = Stopwatch.StartNew();
-                    _ImpressionsService.GetProjectedStationImpressions(manifests, barterFile.Header.PlaybackType, barterFile.Header.ShareBookId.Value, barterFile.Header.HutBookId);
+                    _ImpressionsService.GetProjectedStationImpressions(manifests, proprietaryFile.Header.PlaybackType, proprietaryFile.Header.ShareBookId.Value, proprietaryFile.Header.HutBookId);
                     //sw.Stop();
                     //Debug.WriteLine($"GetProjectedStationImpressions: {sw.ElapsedMilliseconds}");
 
@@ -123,7 +123,7 @@ namespace Services.Broadcast.ApplicationServices
                     job.Status = InventoryFileRatingsProcessingStatus.Succeeded;
                     job.CompletedAt = DateTime.Now;
                 }
-                else if (barterFile.InventorySource.InventoryType == Entities.Enums.InventorySourceTypeEnum.ProprietaryOAndO)
+                else if (proprietaryFile.InventorySource.InventoryType == Entities.Enums.InventorySourceTypeEnum.ProprietaryOAndO)
                 {
                     //Debug.WriteLine("OandO Source");
                     //process cost
@@ -136,7 +136,7 @@ namespace Services.Broadcast.ApplicationServices
                     job.Status = InventoryFileRatingsProcessingStatus.Succeeded;
                     job.CompletedAt = DateTime.Now;
                 }
-                else if (barterFile.InventorySource.InventoryType == Entities.Enums.InventorySourceTypeEnum.Diginet)
+                else if (proprietaryFile.InventorySource.InventoryType == Entities.Enums.InventorySourceTypeEnum.Diginet)
                 {
                     // nothing to process so just set Succeeded status. Diginet template already have spot cost calculated
                     job.Status = InventoryFileRatingsProcessingStatus.Succeeded;
