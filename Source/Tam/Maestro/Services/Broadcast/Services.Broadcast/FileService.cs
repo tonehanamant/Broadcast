@@ -61,6 +61,8 @@ namespace Common.Services
         /// <param name="filePaths">List of file paths to add to the archive</param>
         /// <param name="zipFileName">Zip archive file name</param>
         void CreateZipArchive(List<string> filePaths, string zipFileName);
+        bool DirectoryExists(string filePath);
+        void CreateDirectory(string filePath);
     }
 
     public class FileService : IFileService
@@ -190,6 +192,16 @@ namespace Common.Services
                     zip.CreateEntryFromFile(filePath, Path.GetFileName(filePath), CompressionLevel.Fastest);
                 }
             }
+        }
+
+        public bool DirectoryExists(string filePath)
+        {
+            return Directory.Exists(filePath);
+        }
+
+        public void CreateDirectory(string filePath)
+        {
+            Directory.CreateDirectory(filePath);
         }
     }
 }

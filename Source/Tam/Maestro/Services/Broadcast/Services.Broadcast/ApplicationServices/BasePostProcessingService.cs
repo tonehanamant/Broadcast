@@ -122,6 +122,8 @@ namespace Services.Broadcast.ApplicationServices
                     var localPath = localFolder + @"\" + filePath.Replace(@"/", @"\");
                     if (_FileService.Exists(localPath))
                         _FileService.Delete(localPath);
+                    if (!_FileService.DirectoryExists(localPath))
+                        _FileService.CreateDirectory(localPath);
 
                     _WWTVFtpHelper.DownloadFileFromClient(ftpClient, path, localPath);
                     localPaths.Add(localPath);
