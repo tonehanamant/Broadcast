@@ -238,7 +238,7 @@
       "DisplayStationImpressions": 0.0,
       "MarketCoverage": 1.676,
       "MarketName": "Tampa-St. Pete (Sarasota)",
-      "MarketRank": 11,
+      "MarketRank": 13,
       "MaxCpm": 100.96548242569571527733955954,
       "MinCpm": 4.6155621370052694334397476826,
       "Stations": [
@@ -400,7 +400,7 @@
       "DisplayStationImpressions": 0.0,
       "MarketCoverage": 0.177,
       "MarketName": "Corpus Christi",
-      "MarketRank": 129,
+      "MarketRank": 128,
       "MaxCpm": 14.231499051233396584440227704,
       "MinCpm": 3.4504770284491830995635146559,
       "Stations": [
@@ -581,7 +581,7 @@
       "DisplayStationImpressions": 0.0,
       "MarketCoverage": 0.133,
       "MarketName": "Anchorage",
-      "MarketRank": 148,
+      "MarketRank": 147,
       "MaxCpm": 50.61369100341642414273060863,
       "MinCpm": 17.897091722595078299776286353,
       "Stations": [
@@ -718,7 +718,7 @@
       "DisplayStationImpressions": 0.0,
       "MarketCoverage": 0.073,
       "MarketName": "Alexandria, LA",
-      "MarketRank": 179,
+      "MarketRank": 178,
       "MaxCpm": 0.0,
       "MinCpm": 0.0,
       "Stations": [

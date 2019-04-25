@@ -23,7 +23,6 @@ namespace Services.Broadcast.Repositories
         /// </summary>
         List<MarketCoverage> GetAll();
         bool HasFile(string fileHash);
-
         /// <summary>
         /// Returns a dictionary of market code and percentage coverage based on the market ids sent.
         /// </summary>
@@ -32,10 +31,8 @@ namespace Services.Broadcast.Repositories
         MarketCoverageDto GetLatestMarketCoverages(IEnumerable<int> marketIds);
         MarketCoverageDto GetMarketCoveragesForFile(IEnumerable<int> marketIds, int marketCoverageFileId);
         MarketCoverageByStation GetLatestMarketCoveragesWithStations();
-
         List<MarketCoverageFile> GetMarketCoverageFiles();
-
-        MarketCoverageByStation GetMarketCoveragesWithStations(int marketCoverageFileId);        
+        MarketCoverageByStation GetMarketCoveragesWithStations(int marketCoverageFileId);
     }
 
     public class MarketCoverageRepository : BroadcastRepositoryBase, IMarketCoverageRepository
@@ -141,6 +138,7 @@ namespace Services.Broadcast.Repositories
                         {
                             MarketCode = x.market_code,
                             Rank = x.rank,
+                            Coverage = x.percentage_of_us,
                             Stations = x.market.stations.Select(s => new MarketCoverageByStation.Market.Station
                             {
                                 LegacyCallLetters = s.legacy_call_letters
@@ -167,6 +165,7 @@ namespace Services.Broadcast.Repositories
                         {
                             MarketCode = x.market_code,
                             Rank = x.rank,
+                            Coverage = x.percentage_of_us,
                             Stations = x.market.stations.Select(s => new MarketCoverageByStation.Market.Station
                             {
                                 LegacyCallLetters = s.legacy_call_letters
@@ -212,5 +211,10 @@ namespace Services.Broadcast.Repositories
 
             return marketCoverageFileDb;
         }
+
+        public Dictionary<int, int> GetMarketRanksForFile()
+        {
+            throw new NotImplementedException();
+        }       
     }
 }

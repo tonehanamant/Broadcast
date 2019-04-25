@@ -56,7 +56,7 @@
       "DisplayStationImpressions": 0.0,
       "MarketCoverage": 0.602,
       "MarketName": "Albuquerque-Santa Fe",
-      "MarketRank": 48,
+      "MarketRank": 46,
       "MaxCpm": 1.2268876637993601245089787885,
       "MinCpm": 1.2268876637993601245089787885,
       "Stations": [

@@ -225,7 +225,7 @@
       "DisplayStationImpressions": 0.0,
       "MarketCoverage": 1.676,
       "MarketName": "Tampa-St. Pete (Sarasota)",
-      "MarketRank": 11,
+      "MarketRank": 13,
       "MaxCpm": 100.96548242569571527733955954,
       "MinCpm": 4.6155621370052694334397476826,
       "Stations": [
@@ -387,7 +387,7 @@
       "DisplayStationImpressions": 0.0,
       "MarketCoverage": 0.073,
       "MarketName": "Alexandria, LA",
-      "MarketRank": 179,
+      "MarketRank": 178,
       "MaxCpm": 0.0,
       "MinCpm": 0.0,
       "Stations": [

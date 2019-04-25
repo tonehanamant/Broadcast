@@ -228,7 +228,7 @@
       "DisplayStationImpressions": 0.0,
       "MarketCoverage": 0.073,
       "MarketName": "Alexandria, LA",
-      "MarketRank": 179,
+      "MarketRank": 178,
       "MaxCpm": 76.955013162738919167850415819,
       "MinCpm": 76.955013162738919167850415819,
       "Stations": [

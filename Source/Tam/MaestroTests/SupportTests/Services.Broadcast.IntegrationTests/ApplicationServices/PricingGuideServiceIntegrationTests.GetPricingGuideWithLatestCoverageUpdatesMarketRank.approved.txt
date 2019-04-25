@@ -56,7 +56,7 @@
       "DisplayStationImpressions": 51999.8,
       "MarketCoverage": 5.0,
       "MarketName": "Raleigh-Durham (Fayetvlle)",
-      "MarketRank": 1,
+      "MarketRank": 5,
       "MaxCpm": 0.9615421597775376059138688995,
       "MinCpm": 0.9615421597775376059138688995,
       "Stations": [

@@ -1415,7 +1415,33 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 const string filename = @".\Files\Market_Coverages_Pricing_Guide.xlsx";
 
-                _MarketService.LoadCoverages(new FileStream(filename, FileMode.Open, FileAccess.Read), filename, "IntegrationTestUser", new DateTime(2018, 12, 18));
+                _MarketService.LoadCoverages(new FileStream(filename, FileMode.Open, FileAccess.Read), filename, "IntegrationTestUser", new DateTime(2018, 12, 19));
+
+                var request = new PricingGuideOpenMarketInventoryRequestDto
+                {
+                    ProposalId = 26024,
+                    ProposalDetailId = 9986,
+                    OpenMarketShare = 1,
+                    OpenMarketPricing = new OpenMarketPricingGuideDto
+                    {
+                        OpenMarketCpmTarget = OpenMarketCpmTarget.Min
+                    }
+                };
+
+                var pricingGuideOpenMarketDto = IntegrationTestApplicationServiceFactory.GetApplicationService<IPricingGuideService>().GetOpenMarketInventory(request);
+                _VerifyPricingGuideModel(pricingGuideOpenMarketDto);
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetPricingGuideWithLatestCoverageUpdatesMarketRank()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                const string filename = @".\Files\Market_Coverages_Pricing_Guide_Updated_Rank.xlsx";
+
+                _MarketService.LoadCoverages(new FileStream(filename, FileMode.Open, FileAccess.Read), filename, "IntegrationTestUser", new DateTime(2018, 12, 20));
 
                 var request = new PricingGuideOpenMarketInventoryRequestDto
                 {
