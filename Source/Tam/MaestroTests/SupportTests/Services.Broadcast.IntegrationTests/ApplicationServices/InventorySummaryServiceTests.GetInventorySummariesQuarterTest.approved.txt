@@ -51,17 +51,12 @@
     "TotalUnits": 0
   },
   {
-    "HasRatesAvailableForQuarter": true,
+    "HasRatesAvailableForQuarter": false,
     "HouseholdImpressions": null,
-    "InventoryPostingBooks": [
-      {
-        "HutProjectBookId": null,
-        "ShareProjectionBookId": 437
-      }
-    ],
+    "InventoryPostingBooks": [],
     "InventorySourceId": 4,
     "InventorySourceName": "TTWN",
-    "IsUpdating": true,
+    "IsUpdating": false,
     "LastUpdatedDate": null,
     "Quarter": {
       "EndDate": "2019-03-31T23:59:59",
@@ -70,21 +65,21 @@
       "Year": 2019
     },
     "RatesAvailableFromQuarter": {
-      "EndDate": "2019-03-31T23:59:59",
-      "Quarter": 1,
-      "StartDate": "2018-12-31T00:00:00",
+      "EndDate": "2019-06-30T23:59:59",
+      "Quarter": 2,
+      "StartDate": "2019-04-01T00:00:00",
       "Year": 2019
     },
     "RatesAvailableToQuarter": {
-      "EndDate": "2020-03-29T23:59:59",
-      "Quarter": 1,
-      "StartDate": "2019-12-30T00:00:00",
-      "Year": 2020
+      "EndDate": "2019-06-30T23:59:59",
+      "Quarter": 2,
+      "StartDate": "2019-04-01T00:00:00",
+      "Year": 2019
     },
-    "TotalDaypartCodes": 1,
-    "TotalMarkets": 3,
-    "TotalStations": 4,
-    "TotalUnits": 35
+    "TotalDaypartCodes": 0,
+    "TotalMarkets": 0,
+    "TotalStations": 0,
+    "TotalUnits": 0
   },
   {
     "HasRatesAvailableForQuarter": false,

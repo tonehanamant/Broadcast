@@ -65,10 +65,6 @@
     {
       "Quarter": 4,
       "Year": 2019
-    },
-    {
-      "Quarter": 1,
-      "Year": 2020
     }
   ]
 }
