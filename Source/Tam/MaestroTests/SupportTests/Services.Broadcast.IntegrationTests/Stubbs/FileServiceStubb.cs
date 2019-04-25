@@ -43,6 +43,16 @@ namespace Services.Broadcast.IntegrationTests
         {
             throw new NotImplementedException();
         }
+
+        public bool DirectoryExists(string filePath)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CreateDirectory(string filePath)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public class FileServiceSingleFileStubb : FileServiceStubb
