@@ -3,12 +3,14 @@
     "HasRatesAvailableForQuarter": false,
     "HouseholdImpressions": null,
     "InventoryPostingBooks": [],
-    "InventorySourceId": 8,
-    "InventorySourceName": "MLB",
+    "InventorySourceId": 3,
+    "InventorySourceName": "TVB",
     "IsUpdating": false,
     "LastUpdatedDate": null,
     "Quarter": {
-      "Quarter": 1,
+      "EndDate": "2019-06-30T23:59:59",
+      "Quarter": 2,
+      "StartDate": "2019-04-01T00:00:00",
       "Year": 2019
     },
     "RatesAvailableFromQuarter": null,

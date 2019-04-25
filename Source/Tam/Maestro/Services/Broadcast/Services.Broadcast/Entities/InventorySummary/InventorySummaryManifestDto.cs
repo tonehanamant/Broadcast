@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace Services.Broadcast.Entities
+namespace Services.Broadcast.Entities.InventorySummary
 {
-    public class InventoryCardManifestDto
+    public class InventorySummaryManifestDto
     {
         public int? StationId { get; set; }
         public short? MarketCode { get; set; }

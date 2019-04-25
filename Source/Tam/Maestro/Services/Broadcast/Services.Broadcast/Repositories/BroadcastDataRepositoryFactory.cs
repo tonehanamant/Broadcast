@@ -78,7 +78,8 @@ namespace Services.Broadcast.Repositories
             instance.RegisterType<IStationProcessingEngine, StationProcessingEngine>();
             instance.RegisterType<IProprietaryRepository, ProprietaryInventoryRepository>();
             instance.RegisterType<IDaypartCodeRepository, DaypartCodeRepository>();
-            instance.RegisterType<IInventoryCardRepository, InventoryCardRepository>();
+            instance.RegisterType<IInventorySummaryRepository, InventorySummaryRepository>();
+            instance.RegisterType<IProgramRepository, ProgramRepository>();
 
             WasRegistered = true;
         }

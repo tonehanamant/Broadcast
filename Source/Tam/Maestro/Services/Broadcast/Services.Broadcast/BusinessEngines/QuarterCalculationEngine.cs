@@ -9,6 +9,7 @@ namespace Services.Broadcast.BusinessEngines
     public interface IQuarterCalculationEngine
     {
         Tuple<DateTime, DateTime> GetDatesForTimeframe(RatesTimeframe timeFrameValue, DateTime currentDate);
+        QuarterDetailDto GetQuarterRangeByDate(DateTime? currentDate);
         QuarterDetailDto GetQuarterRangeByDate(DateTime currentDate, int quarterShift);
         List<QuarterDetailDto> GetAllQuartersBetweenDates(DateTime startDate, DateTime endDate);
         QuarterDetailDto GetQuarterDetail(int quarter, int year);
@@ -46,6 +47,13 @@ namespace Services.Broadcast.BusinessEngines
                 default:
                     throw new ApplicationException(string.Format("Don't know how to handle timeframe: {0}", timeFrameValue));
             }
+        }
+        public QuarterDetailDto GetQuarterRangeByDate(DateTime? currentDate)
+        {
+            if (!currentDate.HasValue)
+                return null;
+
+            return GetQuarterRangeByDate(currentDate.Value, 0);
         }
 
         public QuarterDetailDto GetQuarterRangeByDate(DateTime currentDate, int quarterShift)

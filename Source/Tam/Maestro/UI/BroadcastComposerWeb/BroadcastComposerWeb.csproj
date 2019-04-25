@@ -237,7 +237,7 @@
     <Compile Include="Controllers\EnvironmentController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ImageApiController.cs" />
-    <Compile Include="Controllers\InventoryCardApiController.cs" />
+    <Compile Include="Controllers\InventorySummaryApiController.cs" />
     <Compile Include="Controllers\MaintenanceController.cs" />
     <Compile Include="Controllers\PostApiController.cs" />
     <Compile Include="Controllers\PostLogController.cs" />

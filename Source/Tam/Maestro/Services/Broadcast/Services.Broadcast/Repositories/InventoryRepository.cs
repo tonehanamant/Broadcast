@@ -54,6 +54,9 @@ namespace Services.Broadcast.Repositories
 	    void AddInventoryGroups(List<StationInventoryGroup> groups, InventoryFileBase inventoryFile);
         void AddInventoryManifests(List<StationInventoryManifest> manifests, InventoryFileBase inventoryFile);
         void UpdateInventoryRatesForManifests(List<StationInventoryManifest> manifests);
+        InventorySource GetInventorySource(int inventorySourceId);
+        DateRange GetInventorySourceDateRange(int inventorySourceId);
+        DateRange GetAllInventoriesDateRange();
 
         /// <summary>
         /// Get inventory data for the sxc file        
@@ -1271,6 +1274,65 @@ namespace Services.Broadcast.Repositories
                    }
 
                    context.SaveChanges();
+               });
+        }
+
+        public InventorySource GetInventorySource(int inventorySourceId)
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                return context.inventory_sources.
+                            Where(x => x.id == inventorySourceId).
+                            Select(x => new InventorySource
+                            {
+                                Id = x.id,
+                                Name = x.name,
+                                InventoryType = (InventorySourceTypeEnum)x.inventory_source_type,
+                                IsActive = x.is_active
+                            }).Single();
+            });
+        }
+
+        public DateRange GetInventorySourceDateRange(int inventorySourceId)
+        {
+            return _InReadUncommitedTransaction(
+               context =>
+               {
+                   var manifestDates = (from manifest in context.station_inventory_manifest.
+                                                                   Include(x => x.station).
+                                                                   Include(x => x.station_inventory_group)
+                                        where manifest.inventory_source_id == inventorySourceId
+                                        select new
+                                        {
+                                            manifest.effective_date,
+                                            manifest.end_date,
+                                        });
+
+                   var minDate = manifestDates.Min(x => (DateTime?)x.effective_date);
+                   var maxDate = manifestDates.Max(x => x.end_date);
+
+                   return new DateRange(minDate, maxDate);
+               });
+        }
+
+        public DateRange GetAllInventoriesDateRange()
+        {
+            return _InReadUncommitedTransaction(
+               context =>
+               {
+                   var manifestDates = (from manifest in context.station_inventory_manifest.
+                                                                   Include(x => x.station).
+                                                                   Include(x => x.station_inventory_group)
+                                        select new
+                                        {
+                                            manifest.effective_date,
+                                            manifest.end_date,
+                                        });
+
+                   var minDate = manifestDates.Min(x => (DateTime?)x.effective_date);
+                   var maxDate = manifestDates.Max(x => x.end_date);
+
+                   return new DateRange(minDate, maxDate);
                });
         }
     }

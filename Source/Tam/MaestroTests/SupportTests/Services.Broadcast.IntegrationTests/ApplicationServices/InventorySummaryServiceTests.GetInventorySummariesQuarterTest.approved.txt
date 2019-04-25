@@ -3,12 +3,44 @@
     "HasRatesAvailableForQuarter": false,
     "HouseholdImpressions": null,
     "InventoryPostingBooks": [],
+    "InventorySourceId": 1,
+    "InventorySourceName": "OpenMarket",
+    "IsUpdating": false,
+    "LastUpdatedDate": null,
+    "Quarter": {
+      "EndDate": "2019-03-31T23:59:59",
+      "Quarter": 1,
+      "StartDate": "2018-12-31T00:00:00",
+      "Year": 2019
+    },
+    "RatesAvailableFromQuarter": {
+      "EndDate": "2016-06-26T23:59:59",
+      "Quarter": 2,
+      "StartDate": "2016-03-28T00:00:00",
+      "Year": 2016
+    },
+    "RatesAvailableToQuarter": {
+      "EndDate": "2019-12-29T23:59:59",
+      "Quarter": 4,
+      "StartDate": "2019-09-30T00:00:00",
+      "Year": 2019
+    },
+    "TotalMarkets": 0,
+    "TotalPrograms": 0,
+    "TotalStations": 0
+  },
+  {
+    "HasRatesAvailableForQuarter": false,
+    "HouseholdImpressions": null,
+    "InventoryPostingBooks": [],
     "InventorySourceId": 3,
     "InventorySourceName": "TVB",
     "IsUpdating": false,
     "LastUpdatedDate": null,
     "Quarter": {
+      "EndDate": "2019-03-31T23:59:59",
       "Quarter": 1,
+      "StartDate": "2018-12-31T00:00:00",
       "Year": 2019
     },
     "RatesAvailableFromQuarter": null,
@@ -19,29 +51,40 @@
     "TotalUnits": 0
   },
   {
-    "HasRatesAvailableForQuarter": false,
+    "HasRatesAvailableForQuarter": true,
     "HouseholdImpressions": null,
-    "InventoryPostingBooks": [],
+    "InventoryPostingBooks": [
+      {
+        "HutProjectBookId": null,
+        "ShareProjectionBookId": 437
+      }
+    ],
     "InventorySourceId": 4,
     "InventorySourceName": "TTWN",
-    "IsUpdating": false,
+    "IsUpdating": true,
     "LastUpdatedDate": null,
     "Quarter": {
+      "EndDate": "2019-03-31T23:59:59",
       "Quarter": 1,
+      "StartDate": "2018-12-31T00:00:00",
       "Year": 2019
     },
     "RatesAvailableFromQuarter": {
-      "Quarter": 2,
+      "EndDate": "2019-03-31T23:59:59",
+      "Quarter": 1,
+      "StartDate": "2018-12-31T00:00:00",
       "Year": 2019
     },
     "RatesAvailableToQuarter": {
-      "Quarter": 2,
-      "Year": 2019
+      "EndDate": "2020-03-29T23:59:59",
+      "Quarter": 1,
+      "StartDate": "2019-12-30T00:00:00",
+      "Year": 2020
     },
-    "TotalDaypartCodes": 0,
-    "TotalMarkets": 0,
-    "TotalStations": 0,
-    "TotalUnits": 0
+    "TotalDaypartCodes": 1,
+    "TotalMarkets": 3,
+    "TotalStations": 4,
+    "TotalUnits": 35
   },
   {
     "HasRatesAvailableForQuarter": false,
@@ -52,7 +95,9 @@
     "IsUpdating": false,
     "LastUpdatedDate": null,
     "Quarter": {
+      "EndDate": "2019-03-31T23:59:59",
       "Quarter": 1,
+      "StartDate": "2018-12-31T00:00:00",
       "Year": 2019
     },
     "RatesAvailableFromQuarter": null,
@@ -71,7 +116,9 @@
     "IsUpdating": false,
     "LastUpdatedDate": null,
     "Quarter": {
+      "EndDate": "2019-03-31T23:59:59",
       "Quarter": 1,
+      "StartDate": "2018-12-31T00:00:00",
       "Year": 2019
     },
     "RatesAvailableFromQuarter": null,
@@ -84,26 +131,27 @@
   {
     "HasRatesAvailableForQuarter": true,
     "HouseholdImpressions": null,
-    "InventoryPostingBooks": [
-      {
-        "HutProjectBookId": 437,
-        "ShareProjectionBookId": 438
-      }
-    ],
+    "InventoryPostingBooks": [],
     "InventorySourceId": 7,
     "InventorySourceName": "LilaMax",
     "IsUpdating": false,
-    "LastUpdatedDate": "2019-02-06T00:00:00",
+    "LastUpdatedDate": null,
     "Quarter": {
+      "EndDate": "2019-03-31T23:59:59",
       "Quarter": 1,
+      "StartDate": "2018-12-31T00:00:00",
       "Year": 2019
     },
     "RatesAvailableFromQuarter": {
+      "EndDate": "2019-03-31T23:59:59",
       "Quarter": 1,
+      "StartDate": "2018-12-31T00:00:00",
       "Year": 2019
     },
     "RatesAvailableToQuarter": {
+      "EndDate": "2019-03-31T23:59:59",
       "Quarter": 1,
+      "StartDate": "2018-12-31T00:00:00",
       "Year": 2019
     },
     "TotalDaypartCodes": 1,
@@ -120,7 +168,9 @@
     "IsUpdating": false,
     "LastUpdatedDate": null,
     "Quarter": {
+      "EndDate": "2019-03-31T23:59:59",
       "Quarter": 1,
+      "StartDate": "2018-12-31T00:00:00",
       "Year": 2019
     },
     "RatesAvailableFromQuarter": null,
@@ -139,7 +189,9 @@
     "IsUpdating": false,
     "LastUpdatedDate": null,
     "Quarter": {
+      "EndDate": "2019-03-31T23:59:59",
       "Quarter": 1,
+      "StartDate": "2018-12-31T00:00:00",
       "Year": 2019
     },
     "RatesAvailableFromQuarter": null,

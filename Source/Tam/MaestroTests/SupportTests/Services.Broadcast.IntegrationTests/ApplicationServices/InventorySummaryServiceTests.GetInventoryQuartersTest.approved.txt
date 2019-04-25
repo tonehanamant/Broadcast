@@ -1,52 +1,10 @@
 ﻿{
   "DefaultQuarter": {
+    "EndDate": "2019-06-30T23:59:59",
     "Quarter": 2,
+    "StartDate": "2019-04-01T00:00:00",
     "Year": 2019
   },
-  "InventorySources": [
-    {
-      "Id": 3,
-      "InventoryType": 2,
-      "IsActive": true,
-      "Name": "TVB"
-    },
-    {
-      "Id": 4,
-      "InventoryType": 2,
-      "IsActive": true,
-      "Name": "TTWN"
-    },
-    {
-      "Id": 5,
-      "InventoryType": 2,
-      "IsActive": true,
-      "Name": "CNN"
-    },
-    {
-      "Id": 6,
-      "InventoryType": 2,
-      "IsActive": true,
-      "Name": "Sinclair"
-    },
-    {
-      "Id": 7,
-      "InventoryType": 2,
-      "IsActive": true,
-      "Name": "LilaMax"
-    },
-    {
-      "Id": 8,
-      "InventoryType": 2,
-      "IsActive": true,
-      "Name": "MLB"
-    },
-    {
-      "Id": 9,
-      "InventoryType": 2,
-      "IsActive": true,
-      "Name": "Ference Media"
-    }
-  ],
   "Quarters": [
     {
       "Quarter": 2,
@@ -107,6 +65,10 @@
     {
       "Quarter": 4,
       "Year": 2019
+    },
+    {
+      "Quarter": 1,
+      "Year": 2020
     }
   ]
 }

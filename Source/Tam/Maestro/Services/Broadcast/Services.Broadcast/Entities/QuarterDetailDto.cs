@@ -8,12 +8,5 @@ namespace Services.Broadcast.Entities
         public int Year { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        public Tuple<DateTime, DateTime> QuarterDateRangeTuple
-        {
-            get
-            {
-                return new Tuple<DateTime, DateTime>(StartDate, EndDate);
-            }
-        }
     }
 }
