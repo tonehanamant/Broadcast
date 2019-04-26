@@ -394,8 +394,8 @@ namespace Services.Broadcast.Converters.RateImport
                 if (invalidAudience)
                     break;
 
-                var ratingAudience = ratingMatch.Groups["Audience"].Value;
-                var impressionsAudience = impressionsMatch.Groups["Audience"].Value;
+                var ratingAudience = ratingMatch.Groups["Audience"].Value.RemoveWhiteSpaces();
+                var impressionsAudience = impressionsMatch.Groups["Audience"].Value.RemoveWhiteSpaces();
 
                 if (ratingAudience != impressionsAudience)
                 {

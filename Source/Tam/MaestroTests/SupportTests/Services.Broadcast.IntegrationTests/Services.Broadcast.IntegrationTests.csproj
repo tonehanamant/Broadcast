@@ -425,6 +425,9 @@
     <None Include="Files\ProprietaryDataFiles\Diginet_ValidFile2.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Files\ProprietaryDataFiles\Diginet_ValidFile3.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Files\ProprietaryDataFiles\DuplicateData_ForecastDB_SingleBook.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -706,6 +709,9 @@
     </None>
     <None Include="Files\Market_Coverages_Pricing_Guide.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\Market_Coverages_Pricing_Guide_Updated_Rank.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Files\Market_Coverages_With_Not_Existing_Markets.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

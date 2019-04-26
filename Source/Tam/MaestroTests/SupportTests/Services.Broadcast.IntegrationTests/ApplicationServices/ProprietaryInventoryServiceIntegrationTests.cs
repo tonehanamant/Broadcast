@@ -446,6 +446,14 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        public void SavesDiginetInventoryFileManifests_WithSpacesInAudience()
+        {
+            const string fileName = @"ProprietaryDataFiles\Diginet_ValidFile3.xlsx";
+            _VerifyFileInventoryManifests(fileName);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
         public void Diginet_InvalidFile1()
         {
             const string fileName = @"ProprietaryDataFiles\Diginet_InvalidFile1.xlsx";

@@ -667,7 +667,7 @@ namespace Services.Broadcast.ApplicationServices
             var postingBookId = ProposalServiceHelper.GetBookId(inventory);
 
             MarketCoverageByStation marketCoverageByStation;
-            
+
             if (shouldRunDistribution)
             {
                 marketCoverageByStation = _GetMarketCoveragesAndRanks(null);
