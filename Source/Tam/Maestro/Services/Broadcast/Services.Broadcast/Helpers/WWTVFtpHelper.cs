@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using Common.Services;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
+using Tam.Maestro.Services.Clients;
 
 namespace Services.Broadcast.ApplicationServices.Helpers
 {
@@ -69,6 +70,7 @@ namespace Services.Broadcast.ApplicationServices.Helpers
         private const string FTP_SCHEME = "ftp://";
 
         private IFtpService _FtpService;
+        private string _Environment;
         public string Host
         {
             get
@@ -82,6 +84,7 @@ namespace Services.Broadcast.ApplicationServices.Helpers
         public WWTVFtpHelper(IFtpService ftpService)
         {
             _FtpService = ftpService;
+            _Environment = new AppSettings().Environment.ToString();
         }
 
         /// <summary>
@@ -173,13 +176,24 @@ namespace Services.Broadcast.ApplicationServices.Helpers
             var remoteFTPPath = GetRemoteFullPath(path);
 
             var credentials = GetClientCredentials();
-            var list = _FtpService.GetFileList(credentials, remoteFTPPath);
+            try
+            {
 
-            var validList = list;
-            if (isValidFile != null)
-                validList = list.Where(f => isValidFile(f)).ToList();
+                List<string> list;
 
-            return validList;
+                list = _FtpService.GetFileList(credentials, remoteFTPPath);
+
+
+                var validList = list;
+                if (isValidFile != null)
+                    validList = list.Where(f => isValidFile(f)).ToList();
+
+                return validList;
+            }
+            catch (Exception e)
+            {
+                throw new ApplicationException($"Unable to get list of files from {remoteFTPPath} using the {credentials.UserName} user in the {_Environment} environment.", e);
+            }
         }
 
         /// <summary>
