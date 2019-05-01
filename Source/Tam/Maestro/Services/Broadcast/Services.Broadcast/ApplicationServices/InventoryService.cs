@@ -330,7 +330,7 @@ namespace Services.Broadcast.ApplicationServices
                     {
                         _EnsureInventoryDaypartIds(inventoryFile);
                         var manifests = inventoryFile.InventoryGroups.SelectMany(x => x.Manifests);
-                        _ImpressionsService.GetProjectedStationImpressions(manifests, request.PlaybackType, request.RatingBook.Value);
+                        _ImpressionsService.AddProjectedImpressionsToManifests(manifests, request.PlaybackType, request.RatingBook.Value);
                         _ProprietarySpotCostCalculationEngine.CalculateSpotCost(manifests);
                     }
 

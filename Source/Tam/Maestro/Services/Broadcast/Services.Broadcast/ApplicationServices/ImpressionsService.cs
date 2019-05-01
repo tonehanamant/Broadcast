@@ -6,11 +6,13 @@ using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.StationInventory;
 using Services.Broadcast.Repositories;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
+using Tam.Maestro.Services.ContractInterfaces.AudienceAndRatingsBusinessObjects;
 
 namespace Services.Broadcast.ApplicationServices
 {
@@ -20,7 +22,16 @@ namespace Services.Broadcast.ApplicationServices
 
         void RecalculateImpressionsForProposalDetail(int proposalDetailId);
 
-        void GetProjectedStationImpressions(IEnumerable<StationInventoryManifest> manifests, ProposalEnums.ProposalPlaybackType? playbackType, int shareBook, int? hutBook = null);
+        void AddProjectedImpressionsToManifests(IEnumerable<StationInventoryManifest> manifests, ProposalEnums.ProposalPlaybackType? playbackType, int shareBook, int? hutBook = null);
+
+        /// <summary>
+        /// Calculates the projected station impressions for all nsi components
+        /// </summary>
+        /// <param name="manifests">List of manifests to calculate the component impressions</param>
+        /// <param name="playbackType">Playback type</param>
+        /// <param name="shareBook">Share book</param>
+        /// <param name="hutBook">Hut book</param>
+        void AddProjectedImpressionsForComponentsToManifests(IEnumerable<StationInventoryManifest> manifests, ProposalEnums.ProposalPlaybackType? playbackType, int shareBook, int? hutBook);
     }
 
     public class ImpressionsService : IImpressionsService
@@ -118,10 +129,9 @@ namespace Services.Broadcast.ApplicationServices
             }
         }
 
-        public void GetProjectedStationImpressions(IEnumerable<StationInventoryManifest> manifests, ProposalEnums.ProposalPlaybackType? playbackType, int shareBook, int? hutBook)
+        public void AddProjectedImpressionsToManifests(IEnumerable<StationInventoryManifest> manifests, ProposalEnums.ProposalPlaybackType? playbackType, int shareBook, int? hutBook)
         {
-            var manifestsByContractedAudienceList = manifests
-                .Where(m => m.ManifestAudiences.Any())
+            var manifestsByContractedAudienceList = manifests.Where(m => m.ManifestAudiences.Any())
                 .GroupBy(m => m.ManifestAudiences.Where(ma => ma.IsReference == false).Single().Audience.Id).ToList();
 
             foreach (var manifestsByContractedAudience in manifestsByContractedAudienceList)
@@ -188,7 +198,7 @@ namespace Services.Broadcast.ApplicationServices
                 foreach (var manifestsByStationDaypart in manifestsByStationDaypartList)
                 {
                     var impressions = stationImpressions.Where(i => i.Id == counter).ToList();
-                    foreach(var msd in manifestsByStationDaypart)
+                    foreach (var msd in manifestsByStationDaypart)
                     {
                         msd.manifest.ProjectedStationImpressions.Add(
                             new StationImpressions
@@ -199,9 +209,74 @@ namespace Services.Broadcast.ApplicationServices
                     }
                     counter++;
                 }
-
             }
-            
+        }
+
+        /// <summary>
+        /// Calculates the projected station impressions for all nsi components
+        /// </summary>
+        /// <param name="manifests">List of manifests to calculate the component impressions</param>
+        /// <param name="playbackType">Playback type</param>
+        /// <param name="shareBook">Share book</param>
+        /// <param name="hutBook">Hut book</param>
+        public void AddProjectedImpressionsForComponentsToManifests(IEnumerable<StationInventoryManifest> manifests, ProposalEnums.ProposalPlaybackType? playbackType, int shareBook, int? hutBook)
+        {
+            var componentAudiences = _NsiComponentAudienceRepository.GetAllNsiComponentAudiences();
+            var manifestsByStation = manifests.GroupBy(x => x.Station.LegacyCallLetters).ToList();
+
+            var manifestsByStationDaypartList =
+                   (
+                       from manifest in manifests
+                       from manifestDaypart in manifest.ManifestDayparts
+                       select new { id = manifestDaypart.Daypart.Id, manifest, daypart = manifestDaypart.Daypart }
+                   ).GroupBy(g => new { g.manifest.Station.LegacyCallLetters, g.daypart }).ToList();
+
+            foreach (var msd in manifestsByStationDaypartList)
+            {
+                var stationDetail = new ManifestDetailDaypart()
+                {
+                    DisplayDaypart = msd.Key.daypart,
+                    LegacyCallLetters = msd.Key.LegacyCallLetters
+                };
+
+                //get the impressions for this station detail and all the nsi components
+                var stationInventoryManifestAudiences = _LoadImpressionsForComponents(componentAudiences, new List<ManifestDetailDaypart>() { stationDetail }, hutBook, shareBook, playbackType);
+
+                //each manifest in this group has the same impressions for the nsi componentns
+                foreach (var manifest in msd.Select(x => x.manifest).ToList())
+                {
+                    manifest.ManifestAudiences = stationInventoryManifestAudiences;
+                }
+            }
+        }
+
+        private List<StationInventoryManifestAudience> _LoadImpressionsForComponents(List<BroadcastAudience> componentAudiences, List<ManifestDetailDaypart> stationDetail
+            , int? hutBook, int shareBook, ProposalEnums.ProposalPlaybackType? playbackType)
+        {
+            List<StationInventoryManifestAudience> result = new List<StationInventoryManifestAudience>();
+            List<StationImpressions> stationImpressions = new List<StationImpressions>();
+            foreach (var component in componentAudiences)
+            {
+                if (hutBook.HasValue)
+                {
+                    stationImpressions.AddRange(_RatingsRepository.GetImpressionsDaypart((short)hutBook.Value, (short)shareBook,
+                        new List<int> { component.Id }, stationDetail, playbackType, BroadcastComposerWebSystemParameter.UseDayByDayImpressions));
+                }
+                else
+                {
+                    stationImpressions.AddRange(_RatingsRepository
+                        .GetImpressionsDaypart(shareBook, new List<int> { component.Id }, stationDetail, playbackType, BroadcastComposerWebSystemParameter.UseDayByDayImpressions)
+                        .Select(x => (StationImpressions)x)
+                        .ToList());
+                }
+                result.Add(new StationInventoryManifestAudience
+                {
+                    Audience = new DisplayAudience { Id = component.Id },
+                    Impressions = stationImpressions.Sum(x => x.Impressions),
+                    IsReference = false
+                });
+            }
+            return result;
         }
     }
 }

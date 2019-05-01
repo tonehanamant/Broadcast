@@ -29,6 +29,7 @@ namespace Services.Broadcast.ApplicationServices
     {
         void QueueInventoryFileRatingsJob(int inventoryFileId);
         List<InventoryFileRatingsProcessingJob> GetQueuedJobs(int limit);
+        InventoryFileRatingsProcessingJob GetJobByFileId(int fileId);
         void ProcessInventoryRatingsJob(int jobId);
     }
     public class InventoryRatingsProcessingService : IInventoryRatingsProcessingService
@@ -38,17 +39,16 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IInventoryRepository _InventoryRepository;
         private readonly IImpressionsService _ImpressionsService;
         private readonly IProprietarySpotCostCalculationEngine _ProprietarySpotCostCalculationEngine;
+
         public InventoryRatingsProcessingService
             (IDataRepositoryFactory broadcastDataRepositoryFactory,
             IImpressionsService impressionsService,
             IProprietarySpotCostCalculationEngine proprietarySpotCostCalculationEngine)
         {
-            _InventoryFileRatingsJobsRepository = broadcastDataRepositoryFactory
-                .GetDataRepository<IInventoryFileRatingsJobsRepository>();
+            _InventoryFileRatingsJobsRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryFileRatingsJobsRepository>();
             _ProprietaryRepository = broadcastDataRepositoryFactory
                 .GetDataRepository<IProprietaryRepository>();
-            _InventoryRepository = broadcastDataRepositoryFactory
-                .GetDataRepository<IInventoryRepository>();
+            _InventoryRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
             _ImpressionsService = impressionsService;
             _ProprietarySpotCostCalculationEngine = proprietarySpotCostCalculationEngine;
         }
@@ -56,6 +56,11 @@ namespace Services.Broadcast.ApplicationServices
         public List<InventoryFileRatingsProcessingJob> GetQueuedJobs(int limit)
         {
             return _InventoryFileRatingsJobsRepository.GetJobsBatch(limit);
+        }
+
+        public InventoryFileRatingsProcessingJob GetJobByFileId(int fileId)
+        {
+            return _InventoryFileRatingsJobsRepository.GetJobByFileId(fileId);
         }
 
         public void QueueInventoryFileRatingsJob(int inventoryFileId)
@@ -95,17 +100,15 @@ namespace Services.Broadcast.ApplicationServices
 
                 if (proprietaryFile.InventorySource.InventoryType == Entities.Enums.InventorySourceTypeEnum.Barter)
                 {
-                    //Debug.WriteLine("Barter Source");
+                    //load manifests for file
                     //sw = Stopwatch.StartNew();
-                    proprietaryFile.InventoryGroups = _InventoryRepository.GetStationInventoryGroupsByFileId(job.InventoryFileId);
+                    var manifests = _InventoryRepository.GetStationInventoryManifestsByFileId(job.InventoryFileId);
                     //sw.Stop();
-                    //Debug.WriteLine($"GetStationInventoryGroupsByFileId: {sw.ElapsedMilliseconds}");
-
-                    var manifests = proprietaryFile.InventoryGroups.SelectMany(x => x.Manifests).ToList();
+                    //Debug.WriteLine($"_InventoryRepository.GetStationInventoryManifestsByFileId: {sw.ElapsedMilliseconds}");
 
                     //process impressions/cost
                     //sw = Stopwatch.StartNew();
-                    _ImpressionsService.GetProjectedStationImpressions(manifests, proprietaryFile.Header.PlaybackType, proprietaryFile.Header.ShareBookId.Value, proprietaryFile.Header.HutBookId);
+                    _ImpressionsService.AddProjectedImpressionsToManifests(manifests, proprietaryFile.Header.PlaybackType, proprietaryFile.Header.ShareBookId.Value, proprietaryFile.Header.HutBookId);
                     //sw.Stop();
                     //Debug.WriteLine($"GetProjectedStationImpressions: {sw.ElapsedMilliseconds}");
 
@@ -113,10 +116,16 @@ namespace Services.Broadcast.ApplicationServices
                     _ProprietarySpotCostCalculationEngine.CalculateSpotCost(manifests);
                     //sw.Stop();
                     //Debug.WriteLine($"CalculateSpotCost: {sw.ElapsedMilliseconds}");
-
-                    //update manifest rates
+                    
+                    //process components impressions
                     //sw = Stopwatch.StartNew();
-                    _InventoryRepository.UpdateInventoryRatesForManifests(manifests);
+                    _ImpressionsService.AddProjectedImpressionsForComponentsToManifests(manifests, proprietaryFile.Header.PlaybackType, proprietaryFile.Header.ShareBookId.Value, proprietaryFile.Header.HutBookId);
+                    //sw.Stop();
+                    //Debug.WriteLine($"GetProjectedStationImpressionsForComponents: {sw.ElapsedMilliseconds}");
+                    
+                    //update manifest rates and audiences
+                    //sw = Stopwatch.StartNew();
+                    _InventoryRepository.UpdateInventoryManifests(manifests);
                     //sw.Stop();
                     //Debug.WriteLine($"UpdateInventoryRatesForManifests: {sw.ElapsedMilliseconds}");
 
@@ -124,14 +133,20 @@ namespace Services.Broadcast.ApplicationServices
                     job.CompletedAt = DateTime.Now;
                 }
                 else if (proprietaryFile.InventorySource.InventoryType == Entities.Enums.InventorySourceTypeEnum.ProprietaryOAndO)
-                {
+                {                    
                     //Debug.WriteLine("OandO Source");
                     //process cost
                     var manifests = _InventoryRepository.GetStationInventoryManifestsByFileId(job.InventoryFileId);
                     _ProprietarySpotCostCalculationEngine.CalculateSpotCost(manifests, useProvidedImpressions: true);
 
+                    //process components impressions
+                    //sw = Stopwatch.StartNew();
+                    _ImpressionsService.AddProjectedImpressionsForComponentsToManifests(manifests, proprietaryFile.Header.PlaybackType, proprietaryFile.Header.ShareBookId.Value, proprietaryFile.Header.HutBookId);
+                    //sw.Stop();
+                    //Debug.WriteLine($"GetProjectedStationImpressionsForComponents: {sw.ElapsedMilliseconds}");
+
                     //update manifest rates
-                    _InventoryRepository.UpdateInventoryRatesForManifests(manifests);
+                    _InventoryRepository.UpdateInventoryManifests(manifests);
 
                     job.Status = InventoryFileRatingsProcessingStatus.Succeeded;
                     job.CompletedAt = DateTime.Now;
@@ -153,11 +168,12 @@ namespace Services.Broadcast.ApplicationServices
             }
             catch (Exception e)
             {
-                System.Diagnostics.Debug.WriteLine(e);
+                //Debug.WriteLine(e);
                 job.Status = InventoryFileRatingsProcessingStatus.Failed;
                 _InventoryFileRatingsJobsRepository.UpdateJob(job);
                 throw;
             }
         }
+
     }
 }

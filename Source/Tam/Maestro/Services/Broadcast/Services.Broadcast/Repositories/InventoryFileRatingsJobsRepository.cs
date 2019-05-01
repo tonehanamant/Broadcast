@@ -18,6 +18,7 @@ namespace Services.Broadcast.Repositories
         List<InventoryFileRatingsProcessingJob> GetJobsBatch(int limit);
         InventoryFileRatingsProcessingJob GetJobById(int jobId);
         void UpdateJob(InventoryFileRatingsProcessingJob job);
+        InventoryFileRatingsProcessingJob GetJobByFileId(int fileId);
     }
     public class InventoryFileRatingsJobsRepository : BroadcastRepositoryBase, IInventoryFileRatingsJobsRepository
     {
@@ -52,6 +53,27 @@ namespace Services.Broadcast.Repositories
                 {
                     var jobs = context.inventory_file_ratings_jobs
                         .Where(j => j.id == jobId)
+                        .Select(j => new InventoryFileRatingsProcessingJob
+                        {
+                            id = j.id,
+                            InventoryFileId = j.inventory_file_id,
+                            Status = (InventoryFileRatingsProcessingStatus)j.status,
+                            QueuedAt = j.queued_at,
+                            CompletedAt = j.completed_at
+                        }).SingleOrDefault();
+
+                    return jobs;
+                });
+        }
+
+        public InventoryFileRatingsProcessingJob GetJobByFileId(int fileId)
+        {
+            return _InReadUncommitedTransaction(
+                context =>
+                {
+                    var jobs = context.inventory_file_ratings_jobs
+                        .Where(j => j.inventory_file_id == fileId)
+                        .OrderBy(j => j.queued_at)
                         .Select(j => new InventoryFileRatingsProcessingJob
                         {
                             id = j.id,

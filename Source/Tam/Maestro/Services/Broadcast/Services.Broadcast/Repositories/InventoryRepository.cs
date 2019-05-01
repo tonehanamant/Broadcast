@@ -51,12 +51,17 @@ namespace Services.Broadcast.Repositories
         bool HasSpotsAllocated(int manifestId);
         List<StationInventoryGroup> GetActiveInventoryGroupsBySourceAndContractedDaypart(InventorySource source, int contractedDaypartId, DateTime effectiveDate, DateTime endDate);
         void UpdateInventoryGroupsDateIntervals(List<StationInventoryGroup> inventoryGroups);
-	    void AddInventoryGroups(List<StationInventoryGroup> groups, InventoryFileBase inventoryFile);
+        void AddInventoryGroups(List<StationInventoryGroup> groups, InventoryFileBase inventoryFile);
         void AddInventoryManifests(List<StationInventoryManifest> manifests, InventoryFileBase inventoryFile);
-        void UpdateInventoryRatesForManifests(List<StationInventoryManifest> manifests);
-        InventorySource GetInventorySource(int inventorySourceId);
+ 	InventorySource GetInventorySource(int inventorySourceId);
         DateRange GetInventorySourceDateRange(int inventorySourceId);
         DateRange GetAllInventoriesDateRange();
+
+        /// <summary>
+        /// Update the rates and adds the audiences for all the manifests in the list
+        /// </summary>        
+        /// <param name="manifests">List of manifests to process</param>
+        void UpdateInventoryManifests(List<StationInventoryManifest> manifests);
 
         /// <summary>
         /// Get inventory data for the sxc file        
@@ -72,6 +77,12 @@ namespace Services.Broadcast.Repositories
         /// <param name="inventoryFileId">Inventory file id to get the data for</param>
         /// <returns>ProprietaryInventoryHeader object containing the header data</returns>
         ProprietaryInventoryHeader GetInventoryFileHeader(int inventoryFileId);
+
+        /// <summary>
+        /// Adds the manifest audiences
+        /// </summary>
+        /// <param name="manifests">List of manifests containing audiences</param>
+        void AddInventoryAudiencesForManifests(List<StationInventoryManifest> manifests);
     }
 
     public class InventoryRepository : BroadcastRepositoryBase, IInventoryRepository
@@ -509,7 +520,7 @@ namespace Services.Broadcast.Repositories
 
         public List<StationInventoryManifest> GetActiveInventoryManifestsBySource(
             InventorySource source,
-            DateTime effectiveDate, 
+            DateTime effectiveDate,
             DateTime endDate)
         {
             return _InReadUncommitedTransaction(
@@ -521,12 +532,12 @@ namespace Services.Broadcast.Repositories
                         .Include(x => x.station_inventory_manifest_audiences)
                         .Include(x => x.station_inventory_manifest_rates)
                         .Include(x => x.station_inventory_manifest_weeks)
-                        .Where(x => x.inventory_source_id == source.Id && 
+                        .Where(x => x.inventory_source_id == source.Id &&
                                     x.inventory_files.status == (int)FileStatusEnum.Loaded);
 
                     query = query.Where(x => endDate >= x.effective_date && endDate < x.end_date ||
                                              endDate >= x.end_date && effectiveDate <= x.end_date);
-                    
+
                     return query.ToList().Select(x => _MapToInventoryManifest(x)).ToList();
                 });
         }
@@ -1159,7 +1170,7 @@ namespace Services.Broadcast.Repositories
                         ContractedDaypartId = x.contracted_daypart_id,
                         Cpm = x.cpm,
                         DaypartCode = x.daypart_code,
-                        EffectiveDate  = x.effective_date,
+                        EffectiveDate = x.effective_date,
                         EndDate = x.end_date,
                         HutBookId = x.hut_projection_book_id,
                         PlaybackType = (ProposalEnums.ProposalPlaybackType)x.playback_type,
@@ -1223,7 +1234,7 @@ namespace Services.Broadcast.Repositories
                     var newGroups = groups
                         .Select(inventoryGroup => _MapToStationInventoryGroup(inventoryGroup, inventoryFile))
                         .ToList();
-                    
+
                     context.station_inventory_group.AddRange(newGroups);
                     context.SaveChanges();
                 });
@@ -1243,24 +1254,29 @@ namespace Services.Broadcast.Repositories
                 });
         }
 
-        public void UpdateInventoryRatesForManifests(List<StationInventoryManifest> manifests)
+        /// <summary>
+        /// Update the rates and add the audiences for all the manifests in the list
+        /// </summary>
+        /// <param name="manifests">List of manifests to process</param>
+        public void UpdateInventoryManifests(List<StationInventoryManifest> manifests)
         {
             _InReadUncommitedTransaction(
                context =>
                {
-                   foreach(var manifest in manifests)
+                   foreach (var manifest in manifests)
                    {
                        var dbManifest = context.station_inventory_manifest
                             .Include(m => m.station_inventory_manifest_rates)
                             .SingleOrDefault(m => m.id == manifest.Id);
                        if (dbManifest == null) continue;
 
-                       foreach(var rate in manifest.ManifestRates)
+                       //add rates to db
+                       foreach (var rate in manifest.ManifestRates)
                        {
                            var dbRate = dbManifest.station_inventory_manifest_rates
                                 .Where(r => r.spot_length_id == rate.SpotLengthId).SingleOrDefault();
 
-                           if(dbRate == null)
+                           if (dbRate == null)
                            {
                                dbRate = new station_inventory_manifest_rates
                                {
@@ -1271,8 +1287,19 @@ namespace Services.Broadcast.Repositories
                            dbRate.spot_cost = rate.SpotCost;
                        }
 
+                       //add audiences to db
+                       var manifestAudiences = manifest.ManifestAudiences.Select(x => new station_inventory_manifest_audiences
+                       {
+                           audience_id = x.Audience.Id,
+                           impressions = x.Impressions,
+                           is_reference = x.IsReference,
+                           rating = x.Rating,
+                           cpm = x.CPM,
+                           station_inventory_manifest_id = dbManifest.id
+                       }).ToList();
+                       context.station_inventory_manifest_audiences
+                                .AddRange(manifestAudiences);
                    }
-
                    context.SaveChanges();
                });
         }
@@ -1334,6 +1361,41 @@ namespace Services.Broadcast.Repositories
 
                    return new DateRange(minDate, maxDate);
                });
+        }
+
+        /// <summary>
+        /// Adds the manifest audiences
+        /// </summary>
+        /// <param name="manifests">List of manifests containing audiences</param>
+        public void AddInventoryAudiencesForManifests(List<StationInventoryManifest> manifests)
+        {
+            _InReadUncommitedTransaction(
+               context =>
+               {
+                   var manifestAudiences = manifests.SelectMany(y => y.ManifestAudiences.Select(x => new station_inventory_manifest_audiences
+                   {
+                       audience_id = x.Audience.Id,
+                       impressions = x.Impressions,
+                       is_reference = x.IsReference,
+                       rating = x.Rating,
+                       cpm = x.CPM,
+                       station_inventory_manifest_id = y.Id.Value
+                   }).ToList()).ToList();
+                   SetManifestAudiencesIds(context, manifestAudiences);
+                   BulkInsert(context, manifestAudiences);
+               });
+        }
+
+        // Manually set detail ids based on the next available ids in the database
+        private void SetManifestAudiencesIds(QueryHintBroadcastContext context, List<station_inventory_manifest_audiences> manifestAudiences)
+        {
+            int nextSequence = context.station_inventory_manifest_audiences.Max(detail => detail.id) + 1;
+            manifestAudiences.ForEach(audience =>
+            {
+                // manually set the id to the next available
+                audience.id = nextSequence;
+                nextSequence++;
+            });
         }
     }
 }

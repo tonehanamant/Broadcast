@@ -58,7 +58,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 }
             };
 
-            _ImpressionsService.GetProjectedStationImpressions(manifests, playbackType, shareBook, hutBook);
+            _ImpressionsService.AddProjectedImpressionsToManifests(manifests, playbackType, shareBook, hutBook);
             _ProprietarySpotCostCalculationEngine.CalculateSpotCost(manifests);
 
             Assert.AreEqual(3.83, Math.Round(manifests.First().ManifestRates.First().SpotCost, 2));
@@ -102,7 +102,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 }
             };
 
-            _ImpressionsService.GetProjectedStationImpressions(manifests, playbackType, shareBook);
+            _ImpressionsService.AddProjectedImpressionsToManifests(manifests, playbackType, shareBook);
             _ProprietarySpotCostCalculationEngine.CalculateSpotCost(manifests);
 
             Assert.AreEqual(3.97, Math.Round(manifests.First().ManifestRates.First().SpotCost, 2));
