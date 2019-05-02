@@ -51,7 +51,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             using (new TransactionScopeWrapper())
             {
-                var request = new InventoryFileSaveRequest
+                var request = new FileRequest
                 {
                     StreamData = new FileStream($@".\Files\{fileName}", FileMode.Open, FileAccess.Read),
                     FileName = fileName
@@ -87,7 +87,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 using (var transaction = new TransactionScopeWrapper())
                 {
-                    var request = new InventoryFileSaveRequest
+                    var request = new FileRequest
                     {
                         StreamData = new FileStream($@".\Files\ProprietaryDataFiles\{fileName}", FileMode.Open, FileAccess.Read),
                         FileName = fileName
@@ -152,7 +152,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             using (new TransactionScopeWrapper())
             {
-                var request = new InventoryFileSaveRequest
+                var request = new FileRequest
                 {
                     StreamData = new FileStream($@".\Files\{fileName}", FileMode.Open, FileAccess.Read),
                     FileName = fileName
@@ -367,7 +367,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     fileService.Delete(filePath);
                 }
 
-                var request = new InventoryFileSaveRequest
+                var request = new FileRequest
                 {
                     StreamData = new FileStream($@".\Files\{fileName}", FileMode.Open, FileAccess.Read),
                     FileName = fileName
@@ -536,7 +536,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var request = new InventoryFileSaveRequest
+                var request = new FileRequest
                 {
                     StreamData = new FileStream($@".\Files\{fileName}", FileMode.Open, FileAccess.Read),
                     FileName = fileName
@@ -586,7 +586,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var request = new InventoryFileSaveRequest
+                var request = new FileRequest
                 {
                     StreamData = new FileStream($@".\Files\{fileName}", FileMode.Open, FileAccess.Read),
                     FileName = fileName
@@ -628,7 +628,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var request = new InventoryFileSaveRequest
+                var request = new FileRequest
                 {
                     StreamData = new FileStream($@".\Files\{fileName}", FileMode.Open, FileAccess.Read),
                     FileName = fileName
@@ -668,7 +668,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var request = new InventoryFileSaveRequest
+                var request = new FileRequest
                 {
                     StreamData = new FileStream($@".\Files\{fileName}", FileMode.Open, FileAccess.Read),
                     FileName = fileName

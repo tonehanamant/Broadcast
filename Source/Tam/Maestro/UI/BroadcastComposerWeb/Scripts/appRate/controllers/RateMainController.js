@@ -282,7 +282,7 @@ var RateMainController = BaseController.extend({
            });
     },
     openUnitSCX: function (scheduleId) {
-        var url = baseUrl + 'api/RatesManager/GenerateScxArchive';
+        var url = baseUrl + 'api/v1/Inventory/ScxArchive';
         window.open(url);
     }
 });

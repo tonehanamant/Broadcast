@@ -29,7 +29,7 @@ namespace Services.Broadcast.ApplicationServices
         /// <param name="request">InventoryFileSaveRequest object containing a proprietary inventory file</param>
         /// <param name="userName">Username requesting the operation</param>
         /// <returns>InventoryFileSaveResult object</returns>
-        InventoryFileSaveResult SaveProprietaryInventoryFile(InventoryFileSaveRequest request, string userName, DateTime now);
+        InventoryFileSaveResult SaveProprietaryInventoryFile(FileRequest request, string userName, DateTime now);
 
         /// <summary>
         /// Generates one SCX archive for the current quarter
@@ -97,7 +97,7 @@ namespace Services.Broadcast.ApplicationServices
         /// <param name="request">InventoryFileSaveRequest object containing a proprietary inventory file</param>
         /// <param name="userName">Username requesting the operation</param>
         /// <returns>InventoryFileSaveResult object</returns>
-        public InventoryFileSaveResult SaveProprietaryInventoryFile(InventoryFileSaveRequest request, string userName, DateTime now)
+        public InventoryFileSaveResult SaveProprietaryInventoryFile(FileRequest request, string userName, DateTime now)
         {
             if (!request.FileName.EndsWith(".xlsx"))
             {

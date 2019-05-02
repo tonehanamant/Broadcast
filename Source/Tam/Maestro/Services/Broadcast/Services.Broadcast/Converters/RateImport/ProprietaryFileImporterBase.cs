@@ -20,7 +20,7 @@ namespace Services.Broadcast.Converters.RateImport
         void CheckFileHash();
         ProprietaryInventoryFile GetPendingProprietaryInventoryFile(string userName, InventorySource inventorySource);
         void ExtractData(ProprietaryInventoryFile proprietaryFile);
-        void LoadFromSaveRequest(InventoryFileSaveRequest request);
+        void LoadFromSaveRequest(FileRequest request);
         void LoadAndValidateDataLines(ExcelWorksheet worksheet, ProprietaryInventoryFile proprietaryFile);
         void PopulateManifests(ProprietaryInventoryFile proprietaryFile, List<DisplayBroadcastStation> stations);
     }
@@ -36,7 +36,7 @@ namespace Services.Broadcast.Converters.RateImport
         private readonly IInventoryFileRepository _InventoryFileRepository;
         private readonly IInventoryRepository _InventoryRepository;
 
-        protected InventoryFileSaveRequest Request { get; set; }
+        protected FileRequest Request { get; set; }
 
         protected readonly IBroadcastAudiencesCache AudienceCache;
         protected readonly IInventoryDaypartParsingEngine DaypartParsingEngine;
@@ -73,7 +73,7 @@ namespace Services.Broadcast.Converters.RateImport
             }
         }
 
-        public void LoadFromSaveRequest(InventoryFileSaveRequest request)
+        public void LoadFromSaveRequest(FileRequest request)
         {
             Request = request;
             _FileHash = HashGenerator.ComputeHash(StreamHelper.ReadToEnd(request.StreamData));
