@@ -58,7 +58,7 @@ namespace Services.Broadcast.ApplicationServices
             catch (Exception e)
             {
                 var emailBody =
-                "There was an error reading from or connecting to the FTP server. \n\nHere is some technical information." + e;
+                "There was an error reading from or connecting to the FTP server. \n\nHere is some technical information: \n" + e;
                 _EmailHelper.SendEmail(emailBody, "WWTV FTP Error");
                 throw;
             }

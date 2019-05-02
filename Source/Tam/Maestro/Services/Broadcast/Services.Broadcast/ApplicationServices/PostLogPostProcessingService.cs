@@ -62,7 +62,7 @@ namespace Services.Broadcast.ApplicationServices
             _EmailerService = emailerService;
             _FileService = fileService;
         }
-
+    
         /// <summary>
         /// Downloads the WWTV processed files and calls the postlog processing service
         /// return true if download success, false if download fails (use for loggin)

@@ -207,13 +207,21 @@ namespace Services.Broadcast.ApplicationServices.Helpers
             string remoteFTPPath = GetRemoteFullPath(path);
 
             var credentials = GetClientCredentials();
-            var list = _FtpService.GetFileList(credentials, remoteFTPPath);
+            List<string> list;
+            try
+            {
+                list = _FtpService.GetFileList(credentials, remoteFTPPath);
 
-            var validList = list;
-            if (isValidFile != null)
-                validList = list.Where(f => isValidFile(f)).ToList();
+                var validList = list;
+                if (isValidFile != null)
+                    validList = list.Where(f => isValidFile(f)).ToList();
 
-            return validList;
+                return validList;
+            }
+            catch (Exception e)
+            {
+                throw new ApplicationException($"Unable to get list of files from {remoteFTPPath} using the {credentials.UserName} user in the {_Environment} environment.", e);
+            }
         }
 
         /// <summary>

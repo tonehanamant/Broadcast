@@ -64,6 +64,7 @@ namespace Common.Services
 
             request.Method = WebRequestMethods.Ftp.ListDirectory;
             request.Credentials = credentials;
+            request.UsePassive = true;
 
             FtpWebResponse response = (FtpWebResponse)request.GetResponse();
             List<string> files = new List<string>();
