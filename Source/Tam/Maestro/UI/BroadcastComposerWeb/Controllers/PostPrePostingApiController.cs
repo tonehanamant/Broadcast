@@ -84,9 +84,9 @@ namespace BroadcastComposerWeb.Controllers
 
         [HttpGet]
         [Route("{id}")]
-        public BaseResponse<PostPrePostingFile> GetPost(int id)
+        public BaseResponse<PostPrePostingFileSettings> GetPost(int id)
         {
-            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPostPrePostingService>().GetPost(id));
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPostPrePostingService>().GetPostSettings(id));
         }
 
         [HttpDelete]

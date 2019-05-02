@@ -19,6 +19,7 @@ namespace Services.Broadcast.Repositories
         List<PostPrePostingFile> GetAllPosts();
         int SavePost(post_files file);
         PostPrePostingFile GetPost(int id);
+        PostPrePostingFileSettings GetPostSettings(int id);
         bool DeletePost(int id);
         void SavePostImpressions(List<post_file_detail_impressions> impressions);
         void DeletePostImpressions(int id);
@@ -61,6 +62,16 @@ namespace Services.Broadcast.Repositories
                 return c.post_files.Include(f => f.post_file_details)
                                     .Include(f => f.post_file_details.Select(fd => fd.post_file_detail_impressions))
                                     .Single(f => f.id == id).Convert();
+            });
+        }
+
+        // This returns a post file without details or impressions, which can take a long time to query and aren't always needed
+        public PostPrePostingFileSettings GetPostSettings(int id)
+        {
+            return _InReadUncommitedTransaction(c =>
+            {
+                return c.post_files
+                    .Single(f => f.id == id).ConvertSettings();
             });
         }
 
@@ -150,13 +161,18 @@ namespace Services.Broadcast.Repositories
             });
         }
 
-        public void DeletePostImpressions(int id)
+        // Delete all existing impressions for post file
+        public void DeletePostImpressions(int fileId)
         {
-                _InReadUncommitedTransaction(c =>
-                {
-                    c.post_file_detail_impressions.RemoveRange(c.post_file_details.Where(d => d.post_file_id == id).SelectMany(d => d.post_file_detail_impressions));
-                    c.SaveChanges();
-                });
+            _InReadUncommitedTransaction(c =>
+            {
+                SqlParameter param1 = new SqlParameter("@file_id", fileId);
+                c.Database.ExecuteSqlCommand(@"
+                    DELETE FROM post_file_detail_impressions 
+                    WHERE post_file_detail_id in (
+                        SELECT id FROM post_file_details WHERE post_file_id = @file_id
+                    )", param1);
+            });
         }
 
         public post_files GetPostEF(int id)
@@ -198,6 +214,11 @@ namespace Services.Broadcast.Repositories
         public static PostPrePostingFile Convert(this post_files x)
         {
             var postUpload = new PostPrePostingFile(x.id, x.equivalized, x.posting_book_id, (ProposalEnums.ProposalPlaybackType)x.playback_type, x.post_file_demos, x.file_name, x.upload_date, x.modified_date, x.post_file_details.Select(d => d.Convert()).ToList());
+            return postUpload;
+        }
+        public static PostPrePostingFileSettings ConvertSettings(this post_files x)
+        {
+            var postUpload = new PostPrePostingFileSettings(x.id, x.equivalized, x.posting_book_id, (ProposalEnums.ProposalPlaybackType)x.playback_type, x.post_file_demos, x.file_name, x.upload_date, x.modified_date);
             return postUpload;
         }
 

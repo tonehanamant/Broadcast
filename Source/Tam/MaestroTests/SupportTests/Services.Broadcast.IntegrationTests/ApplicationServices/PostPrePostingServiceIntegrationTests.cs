@@ -25,5 +25,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var x = IntegrationTestApplicationServiceFactory.GetApplicationService<IPostPrePostingService>();
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(x.GetPost(158)));
         }
+        
+        [Test]
+        public void GetPostSettings()
+        {
+            var x = IntegrationTestApplicationServiceFactory.GetApplicationService<IPostPrePostingService>();
+            var settings = x.GetPostSettings(158);
+            Assert.AreEqual(settings.Id, 158);
+        }
     }
 }

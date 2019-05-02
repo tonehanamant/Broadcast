@@ -236,6 +236,7 @@
     <Compile Include="Entities\InventorySummary\InventorySummaryQuarterDto.cs" />
     <Compile Include="Converters\InventorySummary\OpenMarketSummaryFactory.cs" />
     <Compile Include="Converters\InventorySummary\ProprietaryInventorySummaryFactory.cs" />
+    <Compile Include="Entities\PostPrePostingFileSettings.cs" />
     <Compile Include="Entities\ProposalDetailPricingGuideSave.cs" />
     <Compile Include="Entities\Scx\InventoryMarketDto.cs" />
     <Compile Include="Entities\Scx\InventoryScxFile.cs" />

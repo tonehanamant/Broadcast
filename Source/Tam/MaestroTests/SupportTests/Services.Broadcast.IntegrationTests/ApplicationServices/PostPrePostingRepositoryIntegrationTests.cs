@@ -172,5 +172,24 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Assert.That(modifiedFile.modified_date, Is.EqualTo(file.modified_date));
             }
         }
+
+        [Test]
+        public void Get_Post_Settings_Works()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var postUploadRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IPostPrePostingRepository>();
+
+                int fileId = 1615;
+
+                var fileSettings = postUploadRepository.GetPostSettings(fileId);
+                var fullFile = postUploadRepository.GetPost(fileId);
+
+                // Should return the full file except details
+                Assert.That(fileSettings.Id == fileId);
+                Assert.That(fileSettings.Demos.Count == fullFile.Demos.Count);
+                Assert.That(fileSettings.PostingBookId == fullFile.PostingBookId);
+            }
+        }
     }
 }

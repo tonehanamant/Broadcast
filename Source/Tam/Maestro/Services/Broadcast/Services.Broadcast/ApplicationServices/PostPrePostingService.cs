@@ -20,6 +20,7 @@ namespace Services.Broadcast.ApplicationServices
         int SavePost(PostRequest request);
         List<PostPrePostingFile> GetPosts();
         PostPrePostingFile GetPost(int uploadId);
+        PostPrePostingFileSettings GetPostSettings(int uploadId);
         bool DeletePost(int id);
         ReportOutput GenerateReportWithImpression(int id);
         int EditPost(PostRequest request);
@@ -154,6 +155,16 @@ namespace Services.Broadcast.ApplicationServices
             var allDemos = _AudiencesCache.GetAllLookups().ToDictionary(l => l.Id);
 
             var postFile = _BroadcastDataRepositoryFactory.GetDataRepository<IPostPrePostingRepository>().GetPost(uploadId);
+            postFile.DemoLookups = postFile.Demos.Select(d => allDemos[d]).ToList();
+
+            return postFile;
+        }
+
+        public PostPrePostingFileSettings GetPostSettings(int uploadId)
+        {
+            var allDemos = _AudiencesCache.GetAllLookups().ToDictionary(l => l.Id);
+
+            var postFile = _BroadcastDataRepositoryFactory.GetDataRepository<IPostPrePostingRepository>().GetPostSettings(uploadId);
             postFile.DemoLookups = postFile.Demos.Select(d => allDemos[d]).ToList();
 
             return postFile;
