@@ -135,7 +135,7 @@ namespace Services.Broadcast.ApplicationServices
                     using (var transaction = TransactionScopeHelper.CreateTransactionScopeWrapper(TimeSpan.FromMinutes(20)))
                     {
                         var header = proprietaryFile.Header;
-                        var stations = _GetFileStationsOrCreate(proprietaryFile, userName);
+                        var stations = _GetFileStationsOrCreate(proprietaryFile, userName, now);
                         var stationsDict = stations.ToDictionary(x => x.Id, x => x.LegacyCallLetters);
 
                         fileImporter.PopulateManifests(proprietaryFile, stations);                     
@@ -264,9 +264,8 @@ namespace Services.Broadcast.ApplicationServices
             }
         }
         
-        private List<DisplayBroadcastStation> _GetFileStationsOrCreate(ProprietaryInventoryFile proprietaryFile, string userName)
-        {
-            var now = DateTime.Now;
+        private List<DisplayBroadcastStation> _GetFileStationsOrCreate(ProprietaryInventoryFile proprietaryFile, string userName, DateTime now)
+        { 
             var allStationNames = proprietaryFile.DataLines.Select(x => x.Station).Where(x => !string.IsNullOrWhiteSpace(x)).Distinct();
             var allLegacyStationNames = allStationNames.Select(_StationProcessingEngine.StripStationSuffix).Distinct().ToList();
             var existingStations = _StationRepository.GetBroadcastStationListByLegacyCallLetters(allLegacyStationNames);
