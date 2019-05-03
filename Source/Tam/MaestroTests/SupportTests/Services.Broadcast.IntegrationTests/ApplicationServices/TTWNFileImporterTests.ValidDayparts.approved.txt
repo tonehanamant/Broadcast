@@ -28,7 +28,8 @@
                 "CPM": null,
                 "Impressions": 37000.0,
                 "IsReference": true,
-                "Rating": null
+                "Rating": null,
+                "Vpvh": null
               },
               {
                 "Audience": {
@@ -38,7 +39,8 @@
                 "CPM": null,
                 "Impressions": 20000.0,
                 "IsReference": true,
-                "Rating": null
+                "Rating": null,
+                "Vpvh": null
               },
               {
                 "Audience": {
@@ -48,7 +50,8 @@
                 "CPM": null,
                 "Impressions": 31000.0,
                 "IsReference": true,
-                "Rating": null
+                "Rating": null,
+                "Vpvh": null
               },
               {
                 "Audience": {
@@ -58,7 +61,8 @@
                 "CPM": null,
                 "Impressions": 34000.0,
                 "IsReference": true,
-                "Rating": null
+                "Rating": null,
+                "Vpvh": null
               },
               {
                 "Audience": {
@@ -68,7 +72,8 @@
                 "CPM": null,
                 "Impressions": 16000.0,
                 "IsReference": true,
-                "Rating": null
+                "Rating": null,
+                "Vpvh": null
               },
               {
                 "Audience": {
@@ -78,7 +83,8 @@
                 "CPM": null,
                 "Impressions": 17000.0,
                 "IsReference": true,
-                "Rating": null
+                "Rating": null,
+                "Vpvh": null
               }
             ],
             "ManifestDayparts": [
@@ -135,7 +141,8 @@
                 "CPM": null,
                 "Impressions": 76000.0,
                 "IsReference": true,
-                "Rating": null
+                "Rating": null,
+                "Vpvh": null
               },
               {
                 "Audience": {
@@ -145,7 +152,8 @@
                 "CPM": null,
                 "Impressions": 35000.0,
                 "IsReference": true,
-                "Rating": null
+                "Rating": null,
+                "Vpvh": null
               },
               {
                 "Audience": {
@@ -155,7 +163,8 @@
                 "CPM": null,
                 "Impressions": 52000.0,
                 "IsReference": true,
-                "Rating": null
+                "Rating": null,
+                "Vpvh": null
               },
               {
                 "Audience": {
@@ -165,7 +174,8 @@
                 "CPM": null,
                 "Impressions": 56000.0,
                 "IsReference": true,
-                "Rating": null
+                "Rating": null,
+                "Vpvh": null
               },
               {
                 "Audience": {
@@ -175,7 +185,8 @@
                 "CPM": null,
                 "Impressions": 28000.0,
                 "IsReference": true,
-                "Rating": null
+                "Rating": null,
+                "Vpvh": null
               },
               {
                 "Audience": {
@@ -185,7 +196,8 @@
                 "CPM": null,
                 "Impressions": 31000.0,
                 "IsReference": true,
-                "Rating": null
+                "Rating": null,
+                "Vpvh": null
               }
             ],
             "ManifestDayparts": [
@@ -242,7 +254,8 @@
                 "CPM": null,
                 "Impressions": 13000.0,
                 "IsReference": true,
-                "Rating": null
+                "Rating": null,
+                "Vpvh": null
               },
               {
                 "Audience": {
@@ -252,7 +265,8 @@
                 "CPM": null,
                 "Impressions": 4000.0,
                 "IsReference": true,
-                "Rating": null
+                "Rating": null,
+                "Vpvh": null
               },
               {
                 "Audience": {
@@ -262,7 +276,8 @@
                 "CPM": null,
                 "Impressions": 7000.0,
                 "IsReference": true,
-                "Rating": null
+                "Rating": null,
+                "Vpvh": null
               },
               {
                 "Audience": {
@@ -272,7 +287,8 @@
                 "CPM": null,
                 "Impressions": 8000.0,
                 "IsReference": true,
-                "Rating": null
+                "Rating": null,
+                "Vpvh": null
               },
               {
                 "Audience": {
@@ -282,7 +298,8 @@
                 "CPM": null,
                 "Impressions": 3000.0,
                 "IsReference": true,
-                "Rating": null
+                "Rating": null,
+                "Vpvh": null
               },
               {
                 "Audience": {
@@ -292,7 +309,8 @@
                 "CPM": null,
                 "Impressions": 3000.0,
                 "IsReference": true,
-                "Rating": null
+                "Rating": null,
+                "Vpvh": null
               }
             ],
             "ManifestDayparts": [
@@ -369,7 +387,8 @@
                 "CPM": null,
                 "Impressions": 35000.0,
                 "IsReference": true,
-                "Rating": null
+                "Rating": null,
+                "Vpvh": null
               },
               {
                 "Audience": {
@@ -379,7 +398,8 @@
                 "CPM": null,
                 "Impressions": 10000.0,
                 "IsReference": true,
-                "Rating": null
+                "Rating": null,
+                "Vpvh": null
               },
               {
                 "Audience": {
@@ -389,7 +409,8 @@
                 "CPM": null,
                 "Impressions": 18000.0,
                 "IsReference": true,
-                "Rating": null
+                "Rating": null,
+                "Vpvh": null
               },
               {
                 "Audience": {
@@ -399,7 +420,8 @@
                 "CPM": null,
                 "Impressions": 20000.0,
                 "IsReference": true,
-                "Rating": null
+                "Rating": null,
+                "Vpvh": null
               },
               {
                 "Audience": {
@@ -409,7 +431,8 @@
                 "CPM": null,
                 "Impressions": 4000.0,
                 "IsReference": true,
-                "Rating": null
+                "Rating": null,
+                "Vpvh": null
               },
               {
                 "Audience": {
@@ -419,7 +442,8 @@
                 "CPM": null,
                 "Impressions": 5000.0,
                 "IsReference": true,
-                "Rating": null
+                "Rating": null,
+                "Vpvh": null
               }
             ],
             "ManifestDayparts": [

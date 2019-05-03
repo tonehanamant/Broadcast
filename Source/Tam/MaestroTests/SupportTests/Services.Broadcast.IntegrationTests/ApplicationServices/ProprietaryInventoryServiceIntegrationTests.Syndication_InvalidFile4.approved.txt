@@ -1,0 +1,8 @@
+﻿[
+  {
+    "AffectedProposals": null,
+    "ProblemDescription": "Rating header is expected. Row: 15, column: 6",
+    "ProgramName": null,
+    "StationLetters": null
+  }
+]

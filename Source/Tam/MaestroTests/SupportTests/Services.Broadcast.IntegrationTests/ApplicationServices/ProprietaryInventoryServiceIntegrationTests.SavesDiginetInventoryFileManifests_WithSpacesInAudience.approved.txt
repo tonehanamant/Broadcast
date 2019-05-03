@@ -15,7 +15,8 @@
         "CPM": null,
         "Impressions": 12500.0,
         "IsReference": true,
-        "Rating": 11.0
+        "Rating": 11.0,
+        "Vpvh": null
       },
       {
         "Audience": {
@@ -25,7 +26,8 @@
         "CPM": null,
         "Impressions": 17500.0,
         "IsReference": true,
-        "Rating": 13.0
+        "Rating": 13.0,
+        "Vpvh": null
       }
     ],
     "ManifestDayparts": [
@@ -101,7 +103,8 @@
         "CPM": null,
         "Impressions": 21250.0,
         "IsReference": true,
-        "Rating": 16.0
+        "Rating": 16.0,
+        "Vpvh": null
       },
       {
         "Audience": {
@@ -111,7 +114,8 @@
         "CPM": null,
         "Impressions": 23750.0,
         "IsReference": true,
-        "Rating": 18.0
+        "Rating": 18.0,
+        "Vpvh": null
       }
     ],
     "ManifestDayparts": [

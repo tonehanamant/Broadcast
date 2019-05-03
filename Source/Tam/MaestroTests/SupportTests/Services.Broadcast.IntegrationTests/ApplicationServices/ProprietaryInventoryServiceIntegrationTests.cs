@@ -398,10 +398,26 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void SavesSyndicationInventoryFile()
+        public void Syndication_ValidFile()
         {
             const string fileName = @"ProprietaryDataFiles\Syndication_ValidFile1.xlsx";
             _VerifyInventoryFileMetadataAndHeaderData(fileName);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void Syndication_ValidFile2()
+        {
+            const string fileName = @"ProprietaryDataFiles\Syndication_ValidFile2.xlsx";
+            _VerifyInventoryFileMetadataAndHeaderData(fileName);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void Syndication_ValidFile3()
+        {
+            const string fileName = @"ProprietaryDataFiles\Syndication_ValidFile3.xlsx";
+            _VerifyFileInventoryManifests(fileName);
         }
 
         [Test]
@@ -425,6 +441,38 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         public void Syndication_InvalidFile3()
         {
             const string fileName = @"ProprietaryDataFiles\Syndication_InvalidFile3.xlsx";
+            _VerifyInventoryFileProblems(fileName);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void Syndication_InvalidFile4()
+        {
+            const string fileName = @"ProprietaryDataFiles\Syndication_InvalidFile4.xlsx";
+            _VerifyInventoryFileProblems(fileName);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void Syndication_InvalidFile5()
+        {
+            const string fileName = @"ProprietaryDataFiles\Syndication_InvalidFile5.xlsx";
+            _VerifyInventoryFileProblems(fileName);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void Syndication_InvalidFile6()
+        {
+            const string fileName = @"ProprietaryDataFiles\Syndication_InvalidFile4.xlsx";
+            _VerifyInventoryFileProblems(fileName);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void Syndication_InvalidFile7()
+        {
+            const string fileName = @"ProprietaryDataFiles\Syndication_InvalidFile5.xlsx";
             _VerifyInventoryFileProblems(fileName);
         }
 

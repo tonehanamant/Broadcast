@@ -118,6 +118,18 @@ END
 
 /*************************************** END PRI-8007 *****************************************************/
 
+/*************************************** START PRI-6134 *****************************************************/
+
+IF NOT EXISTS(SELECT 1 FROM sys.columns 
+              WHERE name = N'vpvh' AND 
+			  OBJECT_ID = OBJECT_ID(N'station_inventory_manifest_audiences'))
+BEGIN
+    ALTER TABLE station_inventory_manifest_audiences
+	ADD vpvh FLOAT NULL
+END
+
+/*************************************** END PRI-6134 *****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

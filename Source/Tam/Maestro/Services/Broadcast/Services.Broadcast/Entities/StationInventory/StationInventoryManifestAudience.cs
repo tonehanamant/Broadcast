@@ -9,5 +9,6 @@ namespace Services.Broadcast.Entities.StationInventory
         public double? Impressions { get; set; }
         public double? Rating { get; set; }
         public decimal? CPM { get; set; }
+        public double? Vpvh { get; set; }
     }
 }

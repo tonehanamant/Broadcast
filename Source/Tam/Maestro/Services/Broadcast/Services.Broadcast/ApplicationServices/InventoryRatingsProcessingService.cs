@@ -157,6 +157,12 @@ namespace Services.Broadcast.ApplicationServices
                     job.Status = InventoryFileRatingsProcessingStatus.Succeeded;
                     job.CompletedAt = DateTime.Now;
                 }
+                else if (proprietaryFile.InventorySource.InventoryType == Entities.Enums.InventorySourceTypeEnum.Syndication)
+                {
+                    // nothing to process so just set succeeded status. Syndication template already have spot cost calculated
+                    job.Status = InventoryFileRatingsProcessingStatus.Succeeded;
+                    job.CompletedAt = DateTime.Now;
+                }
                 else
                 {
                     //Debug.WriteLine("Unknown source");

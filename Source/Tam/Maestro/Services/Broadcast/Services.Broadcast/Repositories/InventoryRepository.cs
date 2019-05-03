@@ -203,6 +203,7 @@ namespace Services.Broadcast.Repositories
                                                 impressions = audience.Impressions,
                                                 rating = audience.Rating,
                                                 cpm = audience.CPM,
+                                                vpvh = audience.Vpvh,
                                                 is_reference = audience.IsReference
                                             })
                                             .Union(
@@ -421,7 +422,8 @@ namespace Services.Broadcast.Repositories
                                     IsReference = false,
                                     Impressions = audience.impressions,
                                     CPM = audience.cpm,
-                                    Rating = audience.rating
+                                    Rating = audience.rating,
+                                    Vpvh = audience.vpvh
                                 }).ToList(),
                 ManifestAudiencesReferences = manifest.station_inventory_manifest_audiences.Where(ma => ma.is_reference == true).Select(
                                 audience => new StationInventoryManifestAudience()
@@ -434,7 +436,8 @@ namespace Services.Broadcast.Repositories
                                     IsReference = true,
                                     Impressions = audience.impressions,
                                     CPM = audience.cpm,
-                                    Rating = audience.rating
+                                    Rating = audience.rating,
+                                    Vpvh = audience.vpvh
                                 }).ToList(),
                 ManifestRates = manifest.station_inventory_manifest_rates
                                 .Select(r => new StationInventoryManifestRate()

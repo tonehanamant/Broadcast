@@ -10,5 +10,11 @@
     "ProblemDescription": "HUT Book must be prior to the Share book",
     "ProgramName": null,
     "StationLetters": null
+  },
+  {
+    "AffectedProposals": null,
+    "ProblemDescription": "Unknown audience is specified: P25-54. Row: 15, column: 6",
+    "ProgramName": null,
+    "StationLetters": null
   }
 ]

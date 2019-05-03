@@ -24,7 +24,8 @@
             "CPM": 222.2200,
             "Impressions": null,
             "IsReference": false,
-            "Rating": null
+            "Rating": null,
+            "Vpvh": null
           }
         ],
         "ManifestAudiencesReferences": [],
@@ -104,182 +105,8 @@
             "CPM": 222.2200,
             "Impressions": null,
             "IsReference": false,
-            "Rating": null
-          }
-        ],
-        "ManifestAudiencesReferences": [],
-        "ManifestDayparts": [
-          {
-            "Daypart": {
-              "_Code": "CUS",
-              "_EndTime": 23399,
-              "_Friday": false,
-              "_Id": 30028,
-              "_Is24Hour": false,
-              "_LastEndTime": 0,
-              "_LastStartTime": 0,
-              "_Monday": false,
-              "_Name": "BRDCST DP362",
-              "_Saturday": true,
-              "_StartTime": 21600,
-              "_Sunday": true,
-              "_Thursday": false,
-              "_Tuesday": false,
-              "_Wednesday": false
-            },
-            "Genres": [],
-            "ProgramName": null
-          }
-        ],
-        "ManifestRates": [],
-        "ManifestWeeks": [
-          {
-            "MediaWeek": {
-              "_EndDate": "2019-03-24T00:00:00",
-              "_MediaMonthId": 450,
-              "_StartDate": "2019-03-18T00:00:00",
-              "_WeekNumber": 4,
-              "IsDirty": true
-            },
-            "Spots": 0
-          },
-          {
-            "MediaWeek": {
-              "_EndDate": "2019-03-31T00:00:00",
-              "_MediaMonthId": 450,
-              "_StartDate": "2019-03-25T00:00:00",
-              "_WeekNumber": 5,
-              "IsDirty": true
-            },
-            "Spots": 0
-          }
-        ],
-        "SpotLengthId": 2,
-        "SpotsPerDay": null,
-        "SpotsPerWeek": null,
-        "Station": {
-          "Affiliation": "FOX",
-          "CallLetters": "WNYW 5.1",
-          "Code": 5010,
-          "LegacyCallLetters": "WNYW",
-          "ManifestMaxEndDate": null,
-          "MarketCode": 101,
-          "ModifiedDate": null,
-          "OriginMarket": null,
-          "RateDataThrough": null
-        }
-      }
-    ],
-    "Name": "AM 1",
-    "SlotNumber": 1,
-    "StartDate": "2019-03-22T00:00:00"
-  },
-  {
-    "DaypartCode": "AM",
-    "EndDate": "2019-03-30T00:00:00",
-    "InventorySource": {
-      "Id": 4,
-      "InventoryType": 2,
-      "IsActive": true,
-      "Name": "TTWN"
-    },
-    "Manifests": [
-      {
-        "Comment": "Test12",
-        "DaypartCode": "AM",
-        "EffectiveDate": "2019-03-22T00:00:00",
-        "EndDate": "2019-03-30T00:00:00",
-        "InventorySourceId": 4,
-        "ManifestAudiences": [
-          {
-            "Audience": {
-              "AudienceString": "Adults 25-54",
-              "Id": 37
-            },
-            "CPM": 222.2200,
-            "Impressions": null,
-            "IsReference": false,
-            "Rating": null
-          }
-        ],
-        "ManifestAudiencesReferences": [],
-        "ManifestDayparts": [
-          {
-            "Daypart": {
-              "_Code": "CUS",
-              "_EndTime": 21599,
-              "_Friday": true,
-              "_Id": 29862,
-              "_Is24Hour": false,
-              "_LastEndTime": 0,
-              "_LastStartTime": 0,
-              "_Monday": true,
-              "_Name": "BRDCST DP362",
-              "_Saturday": false,
-              "_StartTime": 18000,
-              "_Sunday": false,
-              "_Thursday": true,
-              "_Tuesday": true,
-              "_Wednesday": true
-            },
-            "Genres": [],
-            "ProgramName": null
-          }
-        ],
-        "ManifestRates": [],
-        "ManifestWeeks": [
-          {
-            "MediaWeek": {
-              "_EndDate": "2019-03-24T00:00:00",
-              "_MediaMonthId": 450,
-              "_StartDate": "2019-03-18T00:00:00",
-              "_WeekNumber": 4,
-              "IsDirty": true
-            },
-            "Spots": 0
-          },
-          {
-            "MediaWeek": {
-              "_EndDate": "2019-03-31T00:00:00",
-              "_MediaMonthId": 450,
-              "_StartDate": "2019-03-25T00:00:00",
-              "_WeekNumber": 5,
-              "IsDirty": true
-            },
-            "Spots": 0
-          }
-        ],
-        "SpotLengthId": 2,
-        "SpotsPerDay": null,
-        "SpotsPerWeek": null,
-        "Station": {
-          "Affiliation": "CBS",
-          "CallLetters": "WCBS-TV 2.1",
-          "Code": 5012,
-          "LegacyCallLetters": "WCBS",
-          "ManifestMaxEndDate": null,
-          "MarketCode": 101,
-          "ModifiedDate": null,
-          "OriginMarket": null,
-          "RateDataThrough": null
-        }
-      },
-      {
-        "Comment": null,
-        "DaypartCode": "AM",
-        "EffectiveDate": "2019-03-22T00:00:00",
-        "EndDate": "2019-03-30T00:00:00",
-        "InventorySourceId": 4,
-        "ManifestAudiences": [
-          {
-            "Audience": {
-              "AudienceString": "Adults 25-54",
-              "Id": 37
-            },
-            "CPM": 222.2200,
-            "Impressions": null,
-            "IsReference": false,
-            "Rating": null
+            "Rating": null,
+            "Vpvh": null
           }
         ],
         "ManifestAudiencesReferences": [],
@@ -374,7 +201,185 @@
             "CPM": 222.2200,
             "Impressions": null,
             "IsReference": false,
-            "Rating": null
+            "Rating": null,
+            "Vpvh": null
+          }
+        ],
+        "ManifestAudiencesReferences": [],
+        "ManifestDayparts": [
+          {
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 21599,
+              "_Friday": true,
+              "_Id": 29862,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "BRDCST DP362",
+              "_Saturday": false,
+              "_StartTime": 18000,
+              "_Sunday": false,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "Genres": [],
+            "ProgramName": null
+          }
+        ],
+        "ManifestRates": [],
+        "ManifestWeeks": [
+          {
+            "MediaWeek": {
+              "_EndDate": "2019-03-24T00:00:00",
+              "_MediaMonthId": 450,
+              "_StartDate": "2019-03-18T00:00:00",
+              "_WeekNumber": 4,
+              "IsDirty": true
+            },
+            "Spots": 0
+          },
+          {
+            "MediaWeek": {
+              "_EndDate": "2019-03-31T00:00:00",
+              "_MediaMonthId": 450,
+              "_StartDate": "2019-03-25T00:00:00",
+              "_WeekNumber": 5,
+              "IsDirty": true
+            },
+            "Spots": 0
+          }
+        ],
+        "SpotLengthId": 2,
+        "SpotsPerDay": null,
+        "SpotsPerWeek": null,
+        "Station": {
+          "Affiliation": "CBS",
+          "CallLetters": "WCBS-TV 2.1",
+          "Code": 5012,
+          "LegacyCallLetters": "WCBS",
+          "ManifestMaxEndDate": null,
+          "MarketCode": 101,
+          "ModifiedDate": null,
+          "OriginMarket": null,
+          "RateDataThrough": null
+        }
+      },
+      {
+        "Comment": null,
+        "DaypartCode": "AM",
+        "EffectiveDate": "2019-03-22T00:00:00",
+        "EndDate": "2019-03-30T00:00:00",
+        "InventorySourceId": 4,
+        "ManifestAudiences": [
+          {
+            "Audience": {
+              "AudienceString": "Adults 25-54",
+              "Id": 37
+            },
+            "CPM": 222.2200,
+            "Impressions": null,
+            "IsReference": false,
+            "Rating": null,
+            "Vpvh": null
+          }
+        ],
+        "ManifestAudiencesReferences": [],
+        "ManifestDayparts": [
+          {
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 23399,
+              "_Friday": false,
+              "_Id": 30028,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": false,
+              "_Name": "BRDCST DP362",
+              "_Saturday": true,
+              "_StartTime": 21600,
+              "_Sunday": true,
+              "_Thursday": false,
+              "_Tuesday": false,
+              "_Wednesday": false
+            },
+            "Genres": [],
+            "ProgramName": null
+          }
+        ],
+        "ManifestRates": [],
+        "ManifestWeeks": [
+          {
+            "MediaWeek": {
+              "_EndDate": "2019-03-24T00:00:00",
+              "_MediaMonthId": 450,
+              "_StartDate": "2019-03-18T00:00:00",
+              "_WeekNumber": 4,
+              "IsDirty": true
+            },
+            "Spots": 0
+          },
+          {
+            "MediaWeek": {
+              "_EndDate": "2019-03-31T00:00:00",
+              "_MediaMonthId": 450,
+              "_StartDate": "2019-03-25T00:00:00",
+              "_WeekNumber": 5,
+              "IsDirty": true
+            },
+            "Spots": 0
+          }
+        ],
+        "SpotLengthId": 2,
+        "SpotsPerDay": null,
+        "SpotsPerWeek": null,
+        "Station": {
+          "Affiliation": "FOX",
+          "CallLetters": "WNYW 5.1",
+          "Code": 5010,
+          "LegacyCallLetters": "WNYW",
+          "ManifestMaxEndDate": null,
+          "MarketCode": 101,
+          "ModifiedDate": null,
+          "OriginMarket": null,
+          "RateDataThrough": null
+        }
+      }
+    ],
+    "Name": "AM 1",
+    "SlotNumber": 1,
+    "StartDate": "2019-03-22T00:00:00"
+  },
+  {
+    "DaypartCode": "AM",
+    "EndDate": "2019-03-30T00:00:00",
+    "InventorySource": {
+      "Id": 4,
+      "InventoryType": 2,
+      "IsActive": true,
+      "Name": "TTWN"
+    },
+    "Manifests": [
+      {
+        "Comment": "Test12",
+        "DaypartCode": "AM",
+        "EffectiveDate": "2019-03-22T00:00:00",
+        "EndDate": "2019-03-30T00:00:00",
+        "InventorySourceId": 4,
+        "ManifestAudiences": [
+          {
+            "Audience": {
+              "AudienceString": "Adults 25-54",
+              "Id": 37
+            },
+            "CPM": 222.2200,
+            "Impressions": null,
+            "IsReference": false,
+            "Rating": null,
+            "Vpvh": null
           }
         ],
         "ManifestAudiencesReferences": [],
@@ -454,7 +459,8 @@
             "CPM": 222.2200,
             "Impressions": null,
             "IsReference": false,
-            "Rating": null
+            "Rating": null,
+            "Vpvh": null
           }
         ],
         "ManifestAudiencesReferences": [],
@@ -549,7 +555,8 @@
             "CPM": 222.2200,
             "Impressions": null,
             "IsReference": false,
-            "Rating": null
+            "Rating": null,
+            "Vpvh": null
           }
         ],
         "ManifestAudiencesReferences": [],
@@ -629,7 +636,8 @@
             "CPM": 222.2200,
             "Impressions": null,
             "IsReference": false,
-            "Rating": null
+            "Rating": null,
+            "Vpvh": null
           }
         ],
         "ManifestAudiencesReferences": [],
@@ -724,7 +732,8 @@
             "CPM": 222.2200,
             "Impressions": null,
             "IsReference": false,
-            "Rating": null
+            "Rating": null,
+            "Vpvh": null
           }
         ],
         "ManifestAudiencesReferences": [],
@@ -804,7 +813,8 @@
             "CPM": 222.2200,
             "Impressions": null,
             "IsReference": false,
-            "Rating": null
+            "Rating": null,
+            "Vpvh": null
           }
         ],
         "ManifestAudiencesReferences": [],
@@ -899,7 +909,8 @@
             "CPM": 222.2200,
             "Impressions": null,
             "IsReference": false,
-            "Rating": null
+            "Rating": null,
+            "Vpvh": null
           }
         ],
         "ManifestAudiencesReferences": [],
@@ -979,7 +990,8 @@
             "CPM": 222.2200,
             "Impressions": null,
             "IsReference": false,
-            "Rating": null
+            "Rating": null,
+            "Vpvh": null
           }
         ],
         "ManifestAudiencesReferences": [],
@@ -1074,7 +1086,8 @@
             "CPM": 222.2200,
             "Impressions": null,
             "IsReference": false,
-            "Rating": null
+            "Rating": null,
+            "Vpvh": null
           }
         ],
         "ManifestAudiencesReferences": [],
@@ -1154,7 +1167,8 @@
             "CPM": 222.2200,
             "Impressions": null,
             "IsReference": false,
-            "Rating": null
+            "Rating": null,
+            "Vpvh": null
           }
         ],
         "ManifestAudiencesReferences": [],
@@ -1249,7 +1263,8 @@
             "CPM": 222.2200,
             "Impressions": null,
             "IsReference": false,
-            "Rating": null
+            "Rating": null,
+            "Vpvh": null
           }
         ],
         "ManifestAudiencesReferences": [],
@@ -1329,7 +1344,8 @@
             "CPM": 222.2200,
             "Impressions": null,
             "IsReference": false,
-            "Rating": null
+            "Rating": null,
+            "Vpvh": null
           }
         ],
         "ManifestAudiencesReferences": [],

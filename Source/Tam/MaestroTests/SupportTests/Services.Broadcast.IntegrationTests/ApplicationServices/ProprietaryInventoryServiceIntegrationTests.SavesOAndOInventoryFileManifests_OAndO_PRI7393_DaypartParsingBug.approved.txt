@@ -14,7 +14,8 @@
         "CPM": 920.0000,
         "Impressions": 95000.0,
         "IsReference": false,
-        "Rating": null
+        "Rating": null,
+        "Vpvh": null
       }
     ],
     "ManifestAudiencesReferences": [],

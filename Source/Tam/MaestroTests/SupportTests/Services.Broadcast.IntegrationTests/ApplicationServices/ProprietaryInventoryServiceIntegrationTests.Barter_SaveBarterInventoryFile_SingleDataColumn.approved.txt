@@ -24,7 +24,8 @@
             "CPM": 99.8800,
             "Impressions": null,
             "IsReference": false,
-            "Rating": null
+            "Rating": null,
+            "Vpvh": null
           }
         ],
         "ManifestAudiencesReferences": [],
@@ -124,7 +125,8 @@
             "CPM": 99.8800,
             "Impressions": null,
             "IsReference": false,
-            "Rating": null
+            "Rating": null,
+            "Vpvh": null
           }
         ],
         "ManifestAudiencesReferences": [],
@@ -224,7 +226,8 @@
             "CPM": 99.8800,
             "Impressions": null,
             "IsReference": false,
-            "Rating": null
+            "Rating": null,
+            "Vpvh": null
           }
         ],
         "ManifestAudiencesReferences": [],
@@ -324,7 +327,8 @@
             "CPM": 99.8800,
             "Impressions": null,
             "IsReference": false,
-            "Rating": null
+            "Rating": null,
+            "Vpvh": null
           }
         ],
         "ManifestAudiencesReferences": [],
@@ -466,7 +470,8 @@
             "CPM": 99.8800,
             "Impressions": null,
             "IsReference": false,
-            "Rating": null
+            "Rating": null,
+            "Vpvh": null
           }
         ],
         "ManifestAudiencesReferences": [],
@@ -581,7 +586,8 @@
             "CPM": 99.8800,
             "Impressions": null,
             "IsReference": false,
-            "Rating": null
+            "Rating": null,
+            "Vpvh": null
           }
         ],
         "ManifestAudiencesReferences": [],
@@ -681,7 +687,8 @@
             "CPM": 99.8800,
             "Impressions": null,
             "IsReference": false,
-            "Rating": null
+            "Rating": null,
+            "Vpvh": null
           }
         ],
         "ManifestAudiencesReferences": [],
@@ -781,7 +788,8 @@
             "CPM": 99.8800,
             "Impressions": null,
             "IsReference": false,
-            "Rating": null
+            "Rating": null,
+            "Vpvh": null
           }
         ],
         "ManifestAudiencesReferences": [],
@@ -881,7 +889,8 @@
             "CPM": 99.8800,
             "Impressions": null,
             "IsReference": false,
-            "Rating": null
+            "Rating": null,
+            "Vpvh": null
           }
         ],
         "ManifestAudiencesReferences": [],
@@ -1023,7 +1032,8 @@
             "CPM": 99.8800,
             "Impressions": null,
             "IsReference": false,
-            "Rating": null
+            "Rating": null,
+            "Vpvh": null
           }
         ],
         "ManifestAudiencesReferences": [],
@@ -1138,7 +1148,8 @@
             "CPM": 99.8800,
             "Impressions": null,
             "IsReference": false,
-            "Rating": null
+            "Rating": null,
+            "Vpvh": null
           }
         ],
         "ManifestAudiencesReferences": [],
@@ -1238,7 +1249,8 @@
             "CPM": 99.8800,
             "Impressions": null,
             "IsReference": false,
-            "Rating": null
+            "Rating": null,
+            "Vpvh": null
           }
         ],
         "ManifestAudiencesReferences": [],
@@ -1338,7 +1350,8 @@
             "CPM": 99.8800,
             "Impressions": null,
             "IsReference": false,
-            "Rating": null
+            "Rating": null,
+            "Vpvh": null
           }
         ],
         "ManifestAudiencesReferences": [],
@@ -1438,7 +1451,8 @@
             "CPM": 99.8800,
             "Impressions": null,
             "IsReference": false,
-            "Rating": null
+            "Rating": null,
+            "Vpvh": null
           }
         ],
         "ManifestAudiencesReferences": [],
@@ -1580,7 +1594,8 @@
             "CPM": 99.8800,
             "Impressions": null,
             "IsReference": false,
-            "Rating": null
+            "Rating": null,
+            "Vpvh": null
           }
         ],
         "ManifestAudiencesReferences": [],
@@ -1695,7 +1710,8 @@
             "CPM": 99.8800,
             "Impressions": null,
             "IsReference": false,
-            "Rating": null
+            "Rating": null,
+            "Vpvh": null
           }
         ],
         "ManifestAudiencesReferences": [],
@@ -1795,7 +1811,8 @@
             "CPM": 99.8800,
             "Impressions": null,
             "IsReference": false,
-            "Rating": null
+            "Rating": null,
+            "Vpvh": null
           }
         ],
         "ManifestAudiencesReferences": [],
@@ -1895,7 +1912,8 @@
             "CPM": 99.8800,
             "Impressions": null,
             "IsReference": false,
-            "Rating": null
+            "Rating": null,
+            "Vpvh": null
           }
         ],
         "ManifestAudiencesReferences": [],
@@ -1995,7 +2013,8 @@
             "CPM": 99.8800,
             "Impressions": null,
             "IsReference": false,
-            "Rating": null
+            "Rating": null,
+            "Vpvh": null
           }
         ],
         "ManifestAudiencesReferences": [],
@@ -2137,7 +2156,8 @@
             "CPM": 99.8800,
             "Impressions": null,
             "IsReference": false,
-            "Rating": null
+            "Rating": null,
+            "Vpvh": null
           }
         ],
         "ManifestAudiencesReferences": [],
@@ -2252,7 +2272,8 @@
             "CPM": 99.8800,
             "Impressions": null,
             "IsReference": false,
-            "Rating": null
+            "Rating": null,
+            "Vpvh": null
           }
         ],
         "ManifestAudiencesReferences": [],
@@ -2352,7 +2373,8 @@
             "CPM": 99.8800,
             "Impressions": null,
             "IsReference": false,
-            "Rating": null
+            "Rating": null,
+            "Vpvh": null
           }
         ],
         "ManifestAudiencesReferences": [],
@@ -2452,7 +2474,8 @@
             "CPM": 99.8800,
             "Impressions": null,
             "IsReference": false,
-            "Rating": null
+            "Rating": null,
+            "Vpvh": null
           }
         ],
         "ManifestAudiencesReferences": [],
@@ -2552,7 +2575,8 @@
             "CPM": 99.8800,
             "Impressions": null,
             "IsReference": false,
-            "Rating": null
+            "Rating": null,
+            "Vpvh": null
           }
         ],
         "ManifestAudiencesReferences": [],
@@ -2694,7 +2718,8 @@
             "CPM": 99.8800,
             "Impressions": null,
             "IsReference": false,
-            "Rating": null
+            "Rating": null,
+            "Vpvh": null
           }
         ],
         "ManifestAudiencesReferences": [],

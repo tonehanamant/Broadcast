@@ -1,0 +1,470 @@
+﻿[
+  {
+    "Comment": null,
+    "DaypartCode": "SYN",
+    "EffectiveDate": "2019-05-02T00:00:00",
+    "EndDate": "2019-05-05T00:00:00",
+    "InventorySourceId": 13,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "House Holds",
+          "Id": 31
+        },
+        "CPM": null,
+        "Impressions": 5012531.3283208022,
+        "IsReference": true,
+        "Rating": 10.0,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Adults 18-34",
+          "Id": 32
+        },
+        "CPM": null,
+        "Impressions": 1002506.2656641604,
+        "IsReference": true,
+        "Rating": 50.0,
+        "Vpvh": 2000.0
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 86399,
+          "_Friday": true,
+          "_Id": 38,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": true,
+          "_StartTime": 0,
+          "_Sunday": true,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "Genres": [],
+        "ProgramName": "House"
+      }
+    ],
+    "ManifestRates": [
+      {
+        "SpotCost": 20.0000,
+        "SpotLengthId": 1
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "MediaWeek": {
+          "_EndDate": "2019-05-05T00:00:00",
+          "_MediaMonthId": 452,
+          "_StartDate": "2019-04-29T00:00:00",
+          "_WeekNumber": 1,
+          "IsDirty": true
+        },
+        "Spots": 1
+      }
+    ],
+    "ProjectedStationImpressions": [],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": null
+  },
+  {
+    "Comment": null,
+    "DaypartCode": "SYN",
+    "EffectiveDate": "2019-05-02T00:00:00",
+    "EndDate": "2019-05-05T00:00:00",
+    "InventorySourceId": 13,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "House Holds",
+          "Id": 31
+        },
+        "CPM": null,
+        "Impressions": 2757894.7368421052,
+        "IsReference": true,
+        "Rating": 2.29,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Adults 18-34",
+          "Id": 32
+        },
+        "CPM": null,
+        "Impressions": 1629072.6817042606,
+        "IsReference": true,
+        "Rating": 1.35,
+        "Vpvh": 591.0
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 86399,
+          "_Friday": true,
+          "_Id": 38,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": true,
+          "_StartTime": 0,
+          "_Sunday": true,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "Genres": [],
+        "ProgramName": "Modern Family Weekend"
+      }
+    ],
+    "ManifestRates": [
+      {
+        "SpotCost": 6.0000,
+        "SpotLengthId": 1
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "MediaWeek": {
+          "_EndDate": "2019-05-05T00:00:00",
+          "_MediaMonthId": 452,
+          "_StartDate": "2019-04-29T00:00:00",
+          "_WeekNumber": 1,
+          "IsDirty": true
+        },
+        "Spots": 1
+      }
+    ],
+    "ProjectedStationImpressions": [],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": null
+  },
+  {
+    "Comment": null,
+    "DaypartCode": "SYN",
+    "EffectiveDate": "2019-05-02T00:00:00",
+    "EndDate": "2019-05-05T00:00:00",
+    "InventorySourceId": 13,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "House Holds",
+          "Id": 31
+        },
+        "CPM": null,
+        "Impressions": 855137.8446115288,
+        "IsReference": true,
+        "Rating": 0.71,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Adults 18-34",
+          "Id": 32
+        },
+        "CPM": null,
+        "Impressions": 433082.70676691725,
+        "IsReference": true,
+        "Rating": 0.36,
+        "Vpvh": 506.0
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 86399,
+          "_Friday": true,
+          "_Id": 38,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": true,
+          "_StartTime": 0,
+          "_Sunday": true,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "Genres": [],
+        "ProgramName": "Page Six"
+      }
+    ],
+    "ManifestRates": [
+      {
+        "SpotCost": 8.0000,
+        "SpotLengthId": 1
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "MediaWeek": {
+          "_EndDate": "2019-05-05T00:00:00",
+          "_MediaMonthId": 452,
+          "_StartDate": "2019-04-29T00:00:00",
+          "_WeekNumber": 1,
+          "IsDirty": true
+        },
+        "Spots": 1
+      }
+    ],
+    "ProjectedStationImpressions": [],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": null
+  },
+  {
+    "Comment": null,
+    "DaypartCode": "SYN",
+    "EffectiveDate": "2019-05-02T00:00:00",
+    "EndDate": "2019-05-05T00:00:00",
+    "InventorySourceId": 13,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "House Holds",
+          "Id": 31
+        },
+        "CPM": null,
+        "Impressions": 1201002.506265664,
+        "IsReference": true,
+        "Rating": 1.0,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Adults 18-34",
+          "Id": 32
+        },
+        "CPM": null,
+        "Impressions": 541353.3834586466,
+        "IsReference": true,
+        "Rating": 0.45,
+        "Vpvh": 451.0
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 86399,
+          "_Friday": true,
+          "_Id": 38,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": true,
+          "_StartTime": 0,
+          "_Sunday": true,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "Genres": [],
+        "ProgramName": "True Crime Files"
+      }
+    ],
+    "ManifestRates": [
+      {
+        "SpotCost": 8.0000,
+        "SpotLengthId": 1
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "MediaWeek": {
+          "_EndDate": "2019-05-05T00:00:00",
+          "_MediaMonthId": 452,
+          "_StartDate": "2019-04-29T00:00:00",
+          "_WeekNumber": 1,
+          "IsDirty": true
+        },
+        "Spots": 1
+      }
+    ],
+    "ProjectedStationImpressions": [],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": null
+  },
+  {
+    "Comment": null,
+    "DaypartCode": "SYN",
+    "EffectiveDate": "2019-05-02T00:00:00",
+    "EndDate": "2019-05-05T00:00:00",
+    "InventorySourceId": 13,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "House Holds",
+          "Id": 31
+        },
+        "CPM": null,
+        "Impressions": 1378446.1152882206,
+        "IsReference": true,
+        "Rating": 1.15,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Adults 18-34",
+          "Id": 32
+        },
+        "CPM": null,
+        "Impressions": 642606.51629072684,
+        "IsReference": true,
+        "Rating": 0.53,
+        "Vpvh": 466.0
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 86399,
+          "_Friday": true,
+          "_Id": 38,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": true,
+          "_StartTime": 0,
+          "_Sunday": true,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "Genres": [],
+        "ProgramName": "Wendy Williams"
+      }
+    ],
+    "ManifestRates": [
+      {
+        "SpotCost": 6.0000,
+        "SpotLengthId": 1
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "MediaWeek": {
+          "_EndDate": "2019-05-05T00:00:00",
+          "_MediaMonthId": 452,
+          "_StartDate": "2019-04-29T00:00:00",
+          "_WeekNumber": 1,
+          "IsDirty": true
+        },
+        "Spots": 1
+      }
+    ],
+    "ProjectedStationImpressions": [],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": null
+  },
+  {
+    "Comment": null,
+    "DaypartCode": "SYN",
+    "EffectiveDate": "2019-05-02T00:00:00",
+    "EndDate": "2019-05-05T00:00:00",
+    "InventorySourceId": 13,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "House Holds",
+          "Id": 31
+        },
+        "CPM": null,
+        "Impressions": 556390.977443609,
+        "IsReference": true,
+        "Rating": 0.46,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Adults 18-34",
+          "Id": 32
+        },
+        "CPM": null,
+        "Impressions": 312781.954887218,
+        "IsReference": true,
+        "Rating": 0.26,
+        "Vpvh": 562.0
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 86399,
+          "_Friday": true,
+          "_Id": 38,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": true,
+          "_StartTime": 0,
+          "_Sunday": true,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "Genres": [],
+        "ProgramName": "Cleveland/King of the Hill Combo"
+      }
+    ],
+    "ManifestRates": [
+      {
+        "SpotCost": 10.0000,
+        "SpotLengthId": 1
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "MediaWeek": {
+          "_EndDate": "2019-05-05T00:00:00",
+          "_MediaMonthId": 452,
+          "_StartDate": "2019-04-29T00:00:00",
+          "_WeekNumber": 1,
+          "IsDirty": true
+        },
+        "Spots": 1
+      }
+    ],
+    "ProjectedStationImpressions": [],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": null
+  }
+]

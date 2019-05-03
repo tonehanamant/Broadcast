@@ -24,7 +24,8 @@
             "CPM": 222.2200,
             "Impressions": null,
             "IsReference": false,
-            "Rating": null
+            "Rating": null,
+            "Vpvh": null
           }
         ],
         "ManifestAudiencesReferences": [],
@@ -119,7 +120,8 @@
             "CPM": 222.2200,
             "Impressions": null,
             "IsReference": false,
-            "Rating": null
+            "Rating": null,
+            "Vpvh": null
           }
         ],
         "ManifestAudiencesReferences": [],

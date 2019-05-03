@@ -277,6 +277,14 @@
           <Property Name="modified_by" Type="varchar" MaxLength="63" Nullable="false" />
           <Property Name="modified_date" Type="datetime" Nullable="false" />
         </EntityType>
+        <EntityType Name="inventory_file_problems">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="inventory_file_id" Type="int" Nullable="false" />
+          <Property Name="problem_description" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
         <EntityType Name="inventory_file_proprietary_header">
           <Key>
             <PropertyRef Name="id" />
@@ -293,14 +301,6 @@
           <Property Name="hut_projection_book_id" Type="int" />
           <Property Name="playback_type" Type="int" />
           <Property Name="nti_to_nsi_increase" Type="decimal" Precision="18" Scale="10" />
-        </EntityType>
-        <EntityType Name="inventory_file_problems">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="inventory_file_id" Type="int" Nullable="false" />
-          <Property Name="problem_description" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
         <EntityType Name="inventory_file_ratings_jobs">
           <Key>
@@ -1217,6 +1217,7 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="is_reference" Type="bit" Nullable="false" />
           <Property Name="rating" Type="float" />
+          <Property Name="vpvh" Type="float" />
         </EntityType>
         <EntityType Name="station_inventory_manifest_daypart_genres">
           <Key>
@@ -1632,6 +1633,18 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_inventory_file_problems_inventory_files">
+          <End Role="inventory_files" Type="Self.inventory_files" Multiplicity="1" />
+          <End Role="inventory_file_problems" Type="Self.inventory_file_problems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="inventory_files">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="inventory_file_problems">
+              <PropertyRef Name="inventory_file_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_inventory_file_proprietary_header_audiences">
           <End Role="audiences" Type="Self.audiences" Multiplicity="0..1" />
           <End Role="inventory_file_proprietary_header" Type="Self.inventory_file_proprietary_header" Multiplicity="*" />
@@ -1689,18 +1702,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Principal>
             <Dependent Role="inventory_file_proprietary_header">
               <PropertyRef Name="hut_projection_book_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_inventory_file_problems_inventory_files">
-          <End Role="inventory_files" Type="Self.inventory_files" Multiplicity="1" />
-          <End Role="inventory_file_problems" Type="Self.inventory_file_problems" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="inventory_files">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="inventory_file_problems">
-              <PropertyRef Name="inventory_file_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3624,6 +3625,10 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="days" EntitySet="days" />
             <End Role="daypart_days" EntitySet="daypart_days" />
           </AssociationSet>
+          <AssociationSet Name="FK_inventory_file_problems_inventory_files" Association="Self.FK_inventory_file_problems_inventory_files">
+            <End Role="inventory_files" EntitySet="inventory_files" />
+            <End Role="inventory_file_problems" EntitySet="inventory_file_problems" />
+          </AssociationSet>
           <AssociationSet Name="FK_inventory_file_proprietary_header_audiences" Association="Self.FK_inventory_file_proprietary_header_audiences">
             <End Role="audiences" EntitySet="audiences" />
             <End Role="inventory_file_proprietary_header" EntitySet="inventory_file_proprietary_header" />
@@ -3642,12 +3647,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           </AssociationSet>
           <AssociationSet Name="FK_inventory_file_proprietary_header_media_months_hut_book" Association="Self.FK_inventory_file_proprietary_header_media_months_hut_book">
             <End Role="media_months" EntitySet="media_months" />
-			
             <End Role="inventory_file_proprietary_header" EntitySet="inventory_file_proprietary_header" />
-          </AssociationSet>
-          <AssociationSet Name="FK_inventory_file_problems_inventory_files" Association="Self.FK_inventory_file_problems_inventory_files">
-            <End Role="inventory_files" EntitySet="inventory_files" />
-            <End Role="inventory_file_problems" EntitySet="inventory_file_problems" />
           </AssociationSet>
           <AssociationSet Name="FK_inventory_file_ratings_jobs_inventory_files" Association="Self.FK_inventory_file_ratings_jobs_inventory_files">
             <End Role="inventory_files" EntitySet="inventory_files" />
@@ -6012,6 +6012,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="audience" Relationship="BroadcastModel.FK_station_inventory_manifest_audiences_audiences" FromRole="station_inventory_manifest_audiences" ToRole="audience" />
           <NavigationProperty Name="station_inventory_manifest" Relationship="BroadcastModel.FK_station_inventory_manifest_audiences_station_inventory_manifest" FromRole="station_inventory_manifest_audiences" ToRole="station_inventory_manifest" />
           <Property Name="cpm" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="vpvh" Type="Double" />
         </EntityType>
         <EntityType Name="station_inventory_manifest_dayparts">
           <Key>
@@ -9189,6 +9190,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="station_inventory_manifest_audiences">
             <EntityTypeMapping TypeName="BroadcastModel.station_inventory_manifest_audiences">
               <MappingFragment StoreEntitySet="station_inventory_manifest_audiences">
+                <ScalarProperty Name="vpvh" ColumnName="vpvh" />
                 <ScalarProperty Name="cpm" ColumnName="cpm" />
                 <ScalarProperty Name="is_reference" ColumnName="is_reference" />
                 <ScalarProperty Name="rating" ColumnName="rating" />

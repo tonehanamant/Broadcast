@@ -40,5 +40,11 @@
     "ProblemDescription": "Invalid playback type (QWE)",
     "ProgramName": null,
     "StationLetters": null
+  },
+  {
+    "AffectedProposals": null,
+    "ProblemDescription": "Unknown audience is specified: P25-54. Row: 15, column: 6",
+    "ProgramName": null,
+    "StationLetters": null
   }
 ]
