@@ -43,6 +43,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Ignore]
         public void ProcessInventoryRatingsAfterProprietaryFileLoad()
         {
             const string fileName = @"ProprietaryDataFiles\Barter_ValidFormat_SingleBook.xlsx";
