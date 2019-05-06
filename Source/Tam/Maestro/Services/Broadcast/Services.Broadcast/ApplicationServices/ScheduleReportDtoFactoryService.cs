@@ -802,24 +802,10 @@ namespace Services.Broadcast.ApplicationServices
             if (marketCoverageFilesForYear.Count() == 1)
                 return marketCoverageFilesForYear.First();
 
-            // More than one coverage file for that year. Use the one closest to the posting book month.
+            // More than one coverage file for that year. Use the latest for that year.
             if (marketCoverageFilesForYear.Count() > 1)
             {
-                MarketCoverageFile marketCoverageFileToUse = null;
-                var minMonthDistance = int.MaxValue;
-
-                foreach (var marketCoverageFile in marketCoverageFilesForYear)
-                {
-                    var monthDistance = Math.Abs(marketCoverageFile.CreatedDate.Month - mediaMonth.Month);
-
-                    if (monthDistance < minMonthDistance)
-                    {
-                        minMonthDistance = monthDistance;
-                        marketCoverageFileToUse = marketCoverageFile;
-                    }
-                }
-
-                return marketCoverageFileToUse;
+                return marketCoverageFilesForYear.OrderByDescending(x => x.CreatedDate).First();
             }
 
             // No coverage for the posting book year, use the latest available.

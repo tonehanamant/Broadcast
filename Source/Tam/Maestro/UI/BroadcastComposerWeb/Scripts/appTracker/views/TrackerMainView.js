@@ -179,7 +179,7 @@ var TrackerMainView = BaseView.extend({
 
         if (qtrReset) {
             qSelect.empty();
-            var qopts = '<option value="all">All</option>';
+            var qopts = '';
             $.each(quarters, function (index, qt) {
                 qopts += '<option value="' + qt.Id + '">' + qt.Display + '</option>';
             });

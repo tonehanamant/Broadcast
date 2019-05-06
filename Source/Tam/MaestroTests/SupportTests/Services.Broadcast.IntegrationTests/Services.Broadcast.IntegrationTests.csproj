@@ -428,6 +428,9 @@
     <None Include="Files\ProprietaryDataFiles\Diginet_ValidFile3.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Files\ProprietaryDataFiles\Diginet_ValidFile4.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Files\ProprietaryDataFiles\DuplicateData_ForecastDB_SingleBook.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -1059,7 +1062,6 @@
     </Content>
     <Content Include="Repositories\ScheduleRepositoryTests.GetDisplaySchedules_DateRange_null_End.approved.txt" />
     <Content Include="Repositories\ScheduleRepositoryTests.GetDisplaySchedules_DateRange_null_Start.approved.txt" />
-    <Content Include="Repositories\ScheduleRepositoryTests.GetDisplaySchedules_DateRange_null_Start_End.approved.txt" />
     <Content Include="Repositories\ScheduleRepositoryTests.GetDisplaySchedules_DateRange_Start_End.approved.txt" />
     <None Include="Files\simple_period_rate_file_wvtm.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

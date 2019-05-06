@@ -306,7 +306,7 @@ namespace Services.Broadcast.Converters.RateImport
 
             if (endDate <= effectiveDate)
             {
-                validationProblems.Add($"End date ({endDateText}) should be greater then effective date ({effectiveDateText})");
+                validationProblems.Add($"End date ({endDateText}) should be greater than effective date ({effectiveDateText})");
                 validDate = false;
             }
 

@@ -502,6 +502,14 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        public void SavesManifests_WhenAudienceThatCanBeMappedIsSpecified()
+        {
+            const string fileName = @"ProprietaryDataFiles\Diginet_ValidFile4.xlsx";
+            _VerifyFileInventoryManifests(fileName);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
         public void Diginet_InvalidFile1()
         {
             const string fileName = @"ProprietaryDataFiles\Diginet_InvalidFile1.xlsx";

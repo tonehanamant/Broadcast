@@ -36,7 +36,9 @@ namespace Services.Broadcast.IntegrationTests.Repositories
             Console.WriteLine(response.Count + " Records returned.");
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(response));
         }
+
         [Test]
+        [Ignore("We do not support this case")]
         [UseReporter(typeof(DiffReporter))]
         public void GetDisplaySchedules_DateRange_null_End()
         {
@@ -46,15 +48,14 @@ namespace Services.Broadcast.IntegrationTests.Repositories
             Console.WriteLine(response.Count + " Records returned.");
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(response));
         }
+
         [Test]
-        [Ignore]
-        [UseReporter(typeof(DiffReporter))]
+        //PRI-8165 We no longer support the ALL option
         public void GetDisplaySchedules_DateRange_null_Start_End()
         {
             var response = _ScheduleRepository.GetDisplaySchedules(null, null);
 
-            Console.WriteLine(response.Count + " Records returned.");
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(response));
+            Assert.IsTrue(response.Count == 0);
         }
     }
 }

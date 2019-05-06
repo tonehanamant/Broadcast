@@ -1,0 +1,199 @@
+﻿[
+  {
+    "Comment": null,
+    "DaypartCode": "DIGI",
+    "EffectiveDate": "2018-10-10T00:00:00",
+    "EndDate": "2018-10-17T00:00:00",
+    "InventorySourceId": 20,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "House Holds",
+          "Id": 31
+        },
+        "CPM": null,
+        "Impressions": 12500.0,
+        "IsReference": true,
+        "Rating": 11.0,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Adults 18-49",
+          "Id": 33
+        },
+        "CPM": null,
+        "Impressions": 17500.0,
+        "IsReference": true,
+        "Rating": 13.0,
+        "Vpvh": null
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 35772,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "BRDCST DP362",
+          "_Saturday": false,
+          "_StartTime": 25200,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "Genres": [],
+        "ProgramName": null
+      }
+    ],
+    "ManifestRates": [
+      {
+        "SpotCost": 10.0000,
+        "SpotLengthId": 1
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "MediaWeek": {
+          "_EndDate": "2018-10-14T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-08T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 1
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2018-10-21T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-15T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 1
+      }
+    ],
+    "ProjectedStationImpressions": [],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": null
+  },
+  {
+    "Comment": null,
+    "DaypartCode": "DIGI",
+    "EffectiveDate": "2018-10-10T00:00:00",
+    "EndDate": "2018-10-17T00:00:00",
+    "InventorySourceId": 20,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "House Holds",
+          "Id": 31
+        },
+        "CPM": null,
+        "Impressions": 21250.0,
+        "IsReference": true,
+        "Rating": 16.0,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Adults 18-49",
+          "Id": 33
+        },
+        "CPM": null,
+        "Impressions": 23750.0,
+        "IsReference": true,
+        "Rating": 18.0,
+        "Vpvh": null
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 35999,
+          "_Friday": true,
+          "_Id": 6724,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 32400,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "Genres": [],
+        "ProgramName": null
+      },
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 25199,
+          "_Friday": false,
+          "_Id": 6448,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": false,
+          "_Name": "Custom",
+          "_Saturday": true,
+          "_StartTime": 21600,
+          "_Sunday": true,
+          "_Thursday": false,
+          "_Tuesday": false,
+          "_Wednesday": false
+        },
+        "Genres": [],
+        "ProgramName": null
+      }
+    ],
+    "ManifestRates": [
+      {
+        "SpotCost": 15.0000,
+        "SpotLengthId": 1
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "MediaWeek": {
+          "_EndDate": "2018-10-14T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-08T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 1
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2018-10-21T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-15T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 1
+      }
+    ],
+    "ProjectedStationImpressions": [],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": null
+  }
+]

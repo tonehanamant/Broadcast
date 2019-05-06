@@ -87,16 +87,20 @@ namespace Services.Broadcast.Repositories
                 {
                     if (startDate == null && endDate == null)
                     {
-                        startDate = new DateTime(1901, 1, 1);
-                        endDate = new DateTime(2999, 12, 31);
+                        //Based on the comment on bug PRI-8165 we are not supporting "All" feature anymore
+                        //startDate = new DateTime(1901, 1, 1);
+                        //endDate = new DateTime(2999, 12, 31);
+                        return new List<DisplaySchedule>();
                     }
 
-                    var query = context.schedules.AsQueryable();
+                    var query = context.schedules.Where(x => x.estimate_id != null)
+                                        .Include(x => x.schedule_details)
+                                        .Include(x => x.schedule_details.Select(y => y.schedule_detail_audiences))
+                                        .AsQueryable();
                     if (startDate.HasValue)
                         query = query.Where(s => s.start_date >= startDate);
                     if (endDate.HasValue)
                         query = query.Where(s => s.start_date <= endDate);
-
                     return query.Select(s => new DisplaySchedule
                     {
                         Id = s.id,
@@ -125,13 +129,13 @@ namespace Services.Broadcast.Repositories
                                                    && sda.audience_rank == 1
                                              select sd.total_spots * sda.impressions).Sum(),
                         DeliveryDetails = (from bfd in context.bvs_file_details
-                                           where bfd.estimate_id == s.estimate_id 
+                                           where bfd.estimate_id == s.estimate_id
                                                  && bfd.status == (int)TrackingStatus.InSpec
                                            select new ScheduleDeliveryDetails
                                            {
                                                SpotLength = bfd.spot_length,
                                                Impressions = (from x in context.bvs_post_details
-                                                              where x.bvs_file_detail_id == bfd.id && 
+                                                              where x.bvs_file_detail_id == bfd.id &&
                                                                     x.audience_rank == 1
                                                               select x.delivery).Sum()
                                            }).ToList()
@@ -583,7 +587,8 @@ namespace Services.Broadcast.Repositories
                                          orderby a.rank
                                          select new BvsTrackingAudience()
                                          {
-                                             AudienceId = a.audience_id, Rank = a.rank
+                                             AudienceId = a.audience_id,
+                                             Rank = a.rank
                                          }).ToList()
                         }).First();
 

@@ -54,7 +54,7 @@ var TrackerMainController = BaseController.extend({
     //filter data by quarter: called from view quarter change - can be 'all'
     //change: if "all" - set activeQuarter and activeQuarterId to null - so sends no params when refresh schedules later
     setScheduleByQuarterFilter: function (quarterId) {
-        if (!quarterId || quarterId === 'all') {
+        if (!quarterId) {
             this.activeQuarterId = null;
             this.activeQuarter = null;
             return this.apiLoadSchedules();

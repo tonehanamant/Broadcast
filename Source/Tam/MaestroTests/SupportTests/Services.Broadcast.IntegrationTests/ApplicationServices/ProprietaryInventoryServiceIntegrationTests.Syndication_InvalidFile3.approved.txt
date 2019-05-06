@@ -13,7 +13,7 @@
   },
   {
     "AffectedProposals": null,
-    "ProblemDescription": "Unknown audience is specified: P25-54. Row: 15, column: 6",
+    "ProblemDescription": "Unknown audience is specified: P25-25. Row: 15, column: 6",
     "ProgramName": null,
     "StationLetters": null
   }

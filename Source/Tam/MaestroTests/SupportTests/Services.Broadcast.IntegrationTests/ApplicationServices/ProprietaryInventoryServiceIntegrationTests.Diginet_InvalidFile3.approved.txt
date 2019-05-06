@@ -1,7 +1,7 @@
 ﻿[
   {
     "AffectedProposals": null,
-    "ProblemDescription": "End date (09/10/2018) should be greater then effective date (10/10/2018)",
+    "ProblemDescription": "End date (09/10/2018) should be greater than effective date (10/10/2018)",
     "ProgramName": null,
     "StationLetters": null
   }

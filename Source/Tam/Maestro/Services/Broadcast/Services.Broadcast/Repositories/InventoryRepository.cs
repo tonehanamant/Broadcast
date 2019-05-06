@@ -458,7 +458,7 @@ namespace Services.Broadcast.Repositories
                         StartDate = x.media_weeks.start_date,
                         EndDate = x.media_weeks.end_date
                     }
-                }).ToList()
+                }).OrderBy(x => x.Id).ToList()
             };
 
             if (manifest.station != null)
@@ -1273,7 +1273,6 @@ namespace Services.Broadcast.Repositories
                             .SingleOrDefault(m => m.id == manifest.Id);
                        if (dbManifest == null) continue;
 
-                       //add rates to db
                        foreach (var rate in manifest.ManifestRates)
                        {
                            var dbRate = dbManifest.station_inventory_manifest_rates

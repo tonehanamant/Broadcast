@@ -1,5 +1,6 @@
 ﻿using Common.Services.Extensions;
 using Common.Services.Repositories;
+using Services.Broadcast.Converters;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Repositories;
 using System.Collections.Generic;
@@ -65,23 +66,30 @@ namespace Services.Broadcast
 
         public bool IsValidAudienceCode(string audienceCode)
         {
-            return _Audiences.Any(a => a.Code == audienceCode);
+            return GetBroadcastAudienceByCode(audienceCode) != null;
         }
 
         public DisplayAudience GetDisplayAudienceByCode(string audienceCode)
         {
-            return (from a in _Audiences
-                    where a.Code == audienceCode
-                select new DisplayAudience()
-                {
-                    Id = a.Id,
-                    AudienceString = a.Name
-                }).SingleOrDefault();
+            var audience = GetBroadcastAudienceByCode(audienceCode);
+
+            return audience == null ? null : new DisplayAudience()
+            {
+                Id = audience.Id,
+                AudienceString = audience.Name
+            };
         }
 
         public BroadcastAudience GetBroadcastAudienceByCode(string audienceCode)
         {
-            return _Audiences.SingleOrDefault(x => x.Code == audienceCode);
+            var audience = _Audiences.SingleOrDefault(x => x.Code == audienceCode);
+
+            if (audience == null && AudienceHelper.TryMapToSupportedFormat(audienceCode, out var mappingResult))
+            {
+                audience = _Audiences.SingleOrDefault(x => x.Code == mappingResult);
+            }
+
+            return audience;
         }
 
         public IEnumerable<BroadcastAudience> FindByAgeRange(int fromAge, int toAge)

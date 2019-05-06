@@ -214,6 +214,7 @@
     <Compile Include="Aggregates\SchedulesAggregate.cs" />
     <Compile Include="ApplicationServices\ProprietaryInventoryService.cs" />
     <Compile Include="ApplicationServices\DataLakeFileService.cs" />
+    <Compile Include="Converters\AudienceHelper.cs" />
     <Compile Include="Converters\RateImport\BarterFileImporter.cs" />
     <Compile Include="Converters\Scx\InventoryScxDataConverter.cs" />
     <Compile Include="Converters\Scx\InventoryScxDataPrep.cs" />

@@ -118,6 +118,53 @@ END
 
 /*************************************** END PRI-8007 *****************************************************/
 
+/*************************************** START PRI-8453 *****************************************************/
+
+IF NOT EXISTS(SELECT 1 FROM sys.indexes WHERE OBJECT_ID = OBJECT_ID('schedule_details') AND name = 'IX_schedule_details_schedule_id_total_spots')
+BEGIN
+	CREATE NONCLUSTERED INDEX [IX_schedule_details_schedule_id_total_spots] ON [dbo].[schedule_details]
+	(
+		[schedule_id] ASC
+	)
+	INCLUDE ( 	[total_spots])
+END
+GO
+
+IF NOT EXISTS(SELECT 1 FROM sys.indexes WHERE OBJECT_ID = OBJECT_ID('schedule_detail_audiences') AND name = 'IX_schedule_detail_audiences_schedule_detail_id_audience_rank_impressions')
+BEGIN
+	CREATE NONCLUSTERED INDEX [IX_schedule_detail_audiences_schedule_detail_id_audience_rank_impressions] ON [dbo].[schedule_detail_audiences]
+	(
+		[schedule_detail_id] ASC,
+		[audience_rank] ASC
+	)
+	INCLUDE ( 	[impressions])
+END
+GO
+
+IF NOT EXISTS(SELECT 1 FROM sys.indexes WHERE OBJECT_ID = OBJECT_ID('bvs_file_details') AND name = 'IX_bvs_file_details_estimate_id_status_spot_length')
+BEGIN
+	CREATE NONCLUSTERED INDEX [IX_bvs_file_details_estimate_id_status_spot_length] ON [dbo].[bvs_file_details]
+	(
+		[estimate_id] ASC,
+		[status] ASC
+	)
+	INCLUDE ( 	[spot_length])
+END
+GO
+
+IF NOT EXISTS(SELECT 1 FROM sys.indexes WHERE OBJECT_ID = OBJECT_ID('bvs_post_details') AND name = 'IX_bvs_post_details_bvs_file_detail_id_audience_rank_delivery')
+BEGIN
+	CREATE NONCLUSTERED INDEX [IX_bvs_post_details_bvs_file_detail_id_audience_rank_delivery] ON [dbo].[bvs_post_details]
+	(
+		[bvs_file_detail_id] ASC,
+		[audience_rank] ASC
+	)
+	INCLUDE ( 	[delivery])
+END
+GO
+
+/*************************************** END PRI-8453 *****************************************************/
+
 /*************************************** START PRI-6134 *****************************************************/
 
 IF NOT EXISTS(SELECT 1 FROM sys.columns 
