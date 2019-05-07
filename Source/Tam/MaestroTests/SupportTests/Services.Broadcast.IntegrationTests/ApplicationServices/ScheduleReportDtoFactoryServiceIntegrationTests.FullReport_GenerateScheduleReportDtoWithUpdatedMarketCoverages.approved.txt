@@ -415,28 +415,28 @@
         "AirTime": 32932,
         "AudienceImpressions": [
           {
-            "AudienceId": 31,
-            "Delivery": 13058.092,
-            "Impressions": 0.0,
-            "NsiDelivery": 16322.615
-          },
-          {
             "AudienceId": 33,
             "Delivery": 5213.524,
             "Impressions": 0.0,
             "NsiDelivery": 6516.905
           },
           {
-            "AudienceId": 53,
-            "Delivery": 1453.804,
+            "AudienceId": 31,
+            "Delivery": 13058.092,
             "Impressions": 0.0,
-            "NsiDelivery": 1817.255
+            "NsiDelivery": 16322.615
           },
           {
             "AudienceId": 61,
             "Delivery": 7832.674,
             "Impressions": 0.0,
             "NsiDelivery": 9790.8425
+          },
+          {
+            "AudienceId": 53,
+            "Delivery": 1453.804,
+            "Impressions": 0.0,
+            "NsiDelivery": 1817.255
           }
         ],
         "Brand": "",
@@ -466,28 +466,28 @@
         "AirTime": 34617,
         "AudienceImpressions": [
           {
-            "AudienceId": 31,
-            "Delivery": 1946.854,
-            "Impressions": 0.0,
-            "NsiDelivery": 2433.5675
-          },
-          {
             "AudienceId": 33,
             "Delivery": 957.486,
             "Impressions": 0.0,
             "NsiDelivery": 1196.8575
           },
           {
-            "AudienceId": 53,
-            "Delivery": 299.706,
+            "AudienceId": 31,
+            "Delivery": 1946.854,
             "Impressions": 0.0,
-            "NsiDelivery": 374.6325
+            "NsiDelivery": 2433.5675
           },
           {
             "AudienceId": 61,
             "Delivery": 1564.954,
             "Impressions": 0.0,
             "NsiDelivery": 1956.1925
+          },
+          {
+            "AudienceId": 53,
+            "Delivery": 299.706,
+            "Impressions": 0.0,
+            "NsiDelivery": 374.6325
           }
         ],
         "Brand": "",
@@ -517,28 +517,28 @@
         "AirTime": 34617,
         "AudienceImpressions": [
           {
-            "AudienceId": 31,
-            "Delivery": 1946.854,
-            "Impressions": 0.0,
-            "NsiDelivery": 2433.5675
-          },
-          {
             "AudienceId": 33,
             "Delivery": 957.486,
             "Impressions": 0.0,
             "NsiDelivery": 1196.8575
           },
           {
-            "AudienceId": 53,
-            "Delivery": 299.706,
+            "AudienceId": 31,
+            "Delivery": 1946.854,
             "Impressions": 0.0,
-            "NsiDelivery": 374.6325
+            "NsiDelivery": 2433.5675
           },
           {
             "AudienceId": 61,
             "Delivery": 1564.954,
             "Impressions": 0.0,
             "NsiDelivery": 1956.1925
+          },
+          {
+            "AudienceId": 53,
+            "Delivery": 299.706,
+            "Impressions": 0.0,
+            "NsiDelivery": 374.6325
           }
         ],
         "Brand": "",
