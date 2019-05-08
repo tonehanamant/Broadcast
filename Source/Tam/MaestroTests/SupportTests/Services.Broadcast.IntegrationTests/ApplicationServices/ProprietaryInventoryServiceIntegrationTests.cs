@@ -502,10 +502,42 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        public void SavesDiginetInventoryFileManifests_WithSpacesInDaypart()
+        {
+            const string fileName = @"ProprietaryDataFiles\Diginet_PRI8845.xlsx";
+            _VerifyFileInventoryManifests(fileName);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
         public void SavesManifests_WhenAudienceThatCanBeMappedIsSpecified()
         {
             const string fileName = @"ProprietaryDataFiles\Diginet_ValidFile4.xlsx";
             _VerifyFileInventoryManifests(fileName);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void SavesManifests_ButSkipsDefaultDemoAudiences()
+        {
+            const string fileName = @"ProprietaryDataFiles\Diginet_ValidFile5.xlsx";
+            _VerifyFileInventoryManifests(fileName);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void SavesManifests_ButSkipsEmptyDemoAudiences()
+        {
+            const string fileName = @"ProprietaryDataFiles\Diginet_PRI8905_ValidFile.xlsx";
+            _VerifyFileInventoryManifests(fileName);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void Diginet_PRI8905_InvalidFile()
+        {
+            const string fileName = @"ProprietaryDataFiles\Diginet_PRI8905_InvalidFile.xlsx";
+            _VerifyInventoryFileProblems(fileName);
         }
 
         [Test]
@@ -585,6 +617,14 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         public void Diginet_InvalidFile10()
         {
             const string fileName = @"ProprietaryDataFiles\Diginet_InvalidFile10.xlsx";
+            _VerifyInventoryFileProblems(fileName);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void Diginet_InvalidFile11()
+        {
+            const string fileName = @"ProprietaryDataFiles\Diginet_InvalidFile11.xlsx";
             _VerifyInventoryFileProblems(fileName);
         }
 

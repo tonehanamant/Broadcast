@@ -9,7 +9,7 @@
             */
 
             var weekDayPattern = @"[a-z]{1,3}";
-            var timePattern = @"(([0-9]{1,2}:[0-9]{1,2})|([0-9]{1,4}))[a-z]{0,2}";
+            var timePattern = @"(([0-9]{1,2}:[0-9]{1,2})|([0-9]{1,4}))\s*[a-z]{0,2}";
             return $@"(?<![;:-]|(,\s))(?<WeekDays>{weekDayPattern}(\s*[-,+]\s*{weekDayPattern})*)\s(?<TimeFrom>{timePattern})-(?<TimeTo>{timePattern})";
         }
     }

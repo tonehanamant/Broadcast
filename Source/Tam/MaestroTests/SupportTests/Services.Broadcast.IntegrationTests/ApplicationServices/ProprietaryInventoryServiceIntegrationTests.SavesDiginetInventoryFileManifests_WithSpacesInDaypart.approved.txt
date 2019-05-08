@@ -1,0 +1,90 @@
+﻿[
+  {
+    "Comment": null,
+    "DaypartCode": "DIGI",
+    "EffectiveDate": "2019-03-01T00:00:00",
+    "EndDate": "2019-03-05T00:00:00",
+    "InventorySourceId": 21,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "House Holds",
+          "Id": 31
+        },
+        "CPM": null,
+        "Impressions": 3728560.775540641,
+        "IsReference": true,
+        "Rating": 1.36,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Adults 18-49",
+          "Id": 33
+        },
+        "CPM": null,
+        "Impressions": 84856.900408855974,
+        "IsReference": true,
+        "Rating": 25.01,
+        "Vpvh": null
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 32399,
+          "_Friday": true,
+          "_Id": 7059,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 28800,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "Genres": [],
+        "ProgramName": null
+      }
+    ],
+    "ManifestRates": [
+      {
+        "SpotCost": 92.0000,
+        "SpotLengthId": 1
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "MediaWeek": {
+          "_EndDate": "2019-03-03T00:00:00",
+          "_MediaMonthId": 450,
+          "_StartDate": "2019-02-25T00:00:00",
+          "_WeekNumber": 1,
+          "IsDirty": true
+        },
+        "Spots": 1
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2019-03-10T00:00:00",
+          "_MediaMonthId": 450,
+          "_StartDate": "2019-03-04T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 1
+      }
+    ],
+    "ProjectedStationImpressions": [],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": null
+  }
+]

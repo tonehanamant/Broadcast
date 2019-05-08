@@ -1,0 +1,147 @@
+﻿[
+  {
+    "Comment": null,
+    "DaypartCode": "DIGI",
+    "EffectiveDate": "2019-07-01T00:00:00",
+    "EndDate": "2019-07-06T00:00:00",
+    "InventorySourceId": 25,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "House Holds",
+          "Id": 31
+        },
+        "CPM": null,
+        "Impressions": 206250.0,
+        "IsReference": true,
+        "Rating": 0.35,
+        "Vpvh": null
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "EAM",
+          "_EndTime": 32399,
+          "_Friday": true,
+          "_Id": 6,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Early Morning",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "Genres": [],
+        "ProgramName": null
+      }
+    ],
+    "ManifestRates": [
+      {
+        "SpotCost": 341.0000,
+        "SpotLengthId": 1
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "MediaWeek": {
+          "_EndDate": "2019-07-07T00:00:00",
+          "_MediaMonthId": 454,
+          "_StartDate": "2019-07-01T00:00:00",
+          "_WeekNumber": 1,
+          "IsDirty": true
+        },
+        "Spots": 1
+      }
+    ],
+    "ProjectedStationImpressions": [],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": null
+  },
+  {
+    "Comment": null,
+    "DaypartCode": "DIGI",
+    "EffectiveDate": "2019-07-01T00:00:00",
+    "EndDate": "2019-07-06T00:00:00",
+    "InventorySourceId": 25,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "House Holds",
+          "Id": 31
+        },
+        "CPM": null,
+        "Impressions": 206250.0,
+        "IsReference": true,
+        "Rating": 0.35,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Females 12-14",
+          "Id": 4
+        },
+        "CPM": null,
+        "Impressions": 207500.0,
+        "IsReference": true,
+        "Rating": 0.36,
+        "Vpvh": null
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "EAM",
+          "_EndTime": 32399,
+          "_Friday": true,
+          "_Id": 6,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Early Morning",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "Genres": [],
+        "ProgramName": null
+      }
+    ],
+    "ManifestRates": [
+      {
+        "SpotCost": 341.0000,
+        "SpotLengthId": 1
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "MediaWeek": {
+          "_EndDate": "2019-07-07T00:00:00",
+          "_MediaMonthId": 454,
+          "_StartDate": "2019-07-01T00:00:00",
+          "_WeekNumber": 1,
+          "IsDirty": true
+        },
+        "Spots": 1
+      }
+    ],
+    "ProjectedStationImpressions": [],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": null
+  }
+]

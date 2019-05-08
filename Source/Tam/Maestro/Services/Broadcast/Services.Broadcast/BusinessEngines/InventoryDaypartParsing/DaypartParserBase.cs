@@ -79,6 +79,10 @@ namespace Services.Broadcast.BusinessEngines.InventoryDaypartParsing
 
         protected string GetCommonFormatDaypartString(string weekDays, string timeFrom, string timeTo)
         {
+            // support of spaces is requested in PRI-8845. Correct format is {time}tt
+            timeFrom = timeFrom.RemoveWhiteSpaces();
+            timeTo = timeTo.RemoveWhiteSpaces();
+
             weekDays = _GetCommonFormatWeekDays(weekDays);
 
             // lets replace all range weekdays definitions with enumerations because the general parser doesn`t support this format of weekdays: M-F,SU

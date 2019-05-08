@@ -395,6 +395,9 @@
     <None Include="Files\ProprietaryDataFiles\Diginet_InvalidFile10.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Files\ProprietaryDataFiles\Diginet_InvalidFile11.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Files\ProprietaryDataFiles\Diginet_InvalidFile2.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -419,6 +422,15 @@
     <None Include="Files\ProprietaryDataFiles\Diginet_InvalidFile9.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Files\ProprietaryDataFiles\Diginet_PRI8845.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\ProprietaryDataFiles\Diginet_PRI8905_InvalidFile.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\ProprietaryDataFiles\Diginet_PRI8905_ValidFile.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Files\ProprietaryDataFiles\Diginet_ValidFile1.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -430,6 +442,9 @@
     </None>
     <None Include="Files\ProprietaryDataFiles\Diginet_ValidFile4.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\ProprietaryDataFiles\Diginet_ValidFile5.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Files\ProprietaryDataFiles\DuplicateData_ForecastDB_SingleBook.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

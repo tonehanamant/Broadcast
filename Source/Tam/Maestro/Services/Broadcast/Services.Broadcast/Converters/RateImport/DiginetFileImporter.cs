@@ -51,39 +51,28 @@ namespace Services.Broadcast.Converters.RateImport
         {
             const int firstColumnIndex = 1;
             const int firstDataLineRowIndex = 12;
-            const int emptyLinesLimitToStopProcessing = 5;
             var rowIndex = firstDataLineRowIndex;
             var columnIndex = firstColumnIndex;
+            var lastRowIndex = worksheet.Dimension.End.Row;
             var audiences = _ReadAudiences(worksheet, out var audienceProblems);
-
+            
             if (audienceProblems.Any())
             {
                 proprietaryFile.ValidationProblems.AddRange(audienceProblems);
                 return;
             }
-            else if (!audiences.Any(x => x.Code.Equals(BroadcastConstants.HOUSEHOLD_CODE, StringComparison.OrdinalIgnoreCase)))
+            else if (!audiences.Where(x => x != null).Any(x => x.Code.Equals(BroadcastConstants.HOUSEHOLD_CODE, StringComparison.OrdinalIgnoreCase)))
             {
                 proprietaryFile.ValidationProblems.Add("File must contain data for House Holds(HH)");
                 return;
             }
 
-            var emptyLinesProcessedAfterLastDataLine = 0;
-
-            while (true)
+            while (rowIndex <= lastRowIndex)
             {
                 if (_IsLineEmpty(worksheet, rowIndex, columnIndex, audiences))
                 {
-                    emptyLinesProcessedAfterLastDataLine++;
-
-                    if (emptyLinesProcessedAfterLastDataLine == emptyLinesLimitToStopProcessing)
-                    {
-                        break;
-                    }
-                    else
-                    {
-                        rowIndex++;
-                        continue;
-                    }
+                    rowIndex++;
+                    continue;
                 }
 
                 var line = _ReadAndValidateDataLine(worksheet, rowIndex, columnIndex, audiences, out var lineProblems);
@@ -96,8 +85,7 @@ namespace Services.Broadcast.Converters.RateImport
                 {
                     proprietaryFile.DataLines.Add(line);
                 }
-
-                emptyLinesProcessedAfterLastDataLine = 0;
+                
                 columnIndex = firstColumnIndex;
                 rowIndex++;
             }
@@ -118,10 +106,28 @@ namespace Services.Broadcast.Converters.RateImport
 
             foreach (var audience in audiences)
             {
+                if (audience == null)
+                {
+                    columnIndex += 2;
+                    continue;
+                }
+
                 var lineAudience = new LineAudience { Audience = audience.ToDisplayAudience() };
 
-                lineAudience.Rating = _GetAndValidateCellValue(worksheet, rowIndex, columnIndex++, problems, "rating");
-                lineAudience.Impressions = _GetAndValidateCellValue(worksheet, rowIndex, columnIndex++, problems, "impressions");
+                var ratingCellColumnIndex = columnIndex++;
+                var impressionsCellColumnIndex = columnIndex++;
+
+                var ratingCellText = worksheet.Cells[rowIndex, ratingCellColumnIndex].GetStringValue();
+                var impressionsCellText = worksheet.Cells[rowIndex, impressionsCellColumnIndex].GetStringValue();
+
+                // Skip if both cells are empty. See PRI-8905
+                if (string.IsNullOrEmpty(ratingCellText) && string.IsNullOrEmpty(impressionsCellText))
+                {
+                    continue;
+                }
+
+                lineAudience.Rating = _ParseAndValidateCellValue(ratingCellText, rowIndex, ratingCellColumnIndex, problems, "rating");
+                lineAudience.Impressions = _ParseAndValidateCellValue(impressionsCellText, rowIndex, impressionsCellColumnIndex, problems, "impressions");
                 
                 if (lineAudience.Rating.HasValue && lineAudience.Impressions.HasValue)
                 {
@@ -172,10 +178,8 @@ namespace Services.Broadcast.Converters.RateImport
             }
         }
 
-        private double? _GetAndValidateCellValue(ExcelWorksheet worksheet, int rowIndex, int columnIndex, List<string> problems, string cellName)
+        private double? _ParseAndValidateCellValue(string cellText, int rowIndex, int columnIndex, List<string> problems, string cellName)
         {
-            var cellText = worksheet.Cells[rowIndex, columnIndex].GetStringValue();
-
             if (string.IsNullOrEmpty(cellText))
             {
                 problems.Add($"Line {rowIndex} contains an empty {cellName} cell in column {columnIndex}");
@@ -345,8 +349,8 @@ namespace Services.Broadcast.Converters.RateImport
             const int audienceRowIndex = 11;
             var result = new List<BroadcastAudience>();
             var currentAudienceColumnIndex = 3;
-            var ratingRegex = new Regex(@"(?<Audience>[a-z0-9\s-]+)\sRtg.*", RegexOptions.IgnoreCase);
-            var impressionsRegex = new Regex(@"(?<Audience>[a-z0-9\s-]+)\sImps\s*\(000\).*", RegexOptions.IgnoreCase);
+            var ratingRegex = new Regex(@"(?<Audience>[a-z0-9\s-\[\]]+)\sRtg.*", RegexOptions.IgnoreCase);
+            var impressionsRegex = new Regex(@"(?<Audience>[a-z0-9\s-\[\]]+)\sImps\s*\(000\).*", RegexOptions.IgnoreCase);
 
             while (true)
             {
@@ -403,21 +407,30 @@ namespace Services.Broadcast.Converters.RateImport
                     break;
                 }
 
-                var audience = AudienceCache.GetBroadcastAudienceByCode(ratingAudience);
-
-                if (audience == null)
+                if (ratingAudience.Equals("[DEMO]", StringComparison.OrdinalIgnoreCase))
                 {
-                    validationProblems.Add($"Unknown audience is specified: {ratingAudience}. Row: {audienceRowIndex}, column: {ratingColumnIndex}");
-                    break;
+                    // null is used later to skip [DEMO] columns
+                    result.Add(null);
+                }
+                else
+                {
+                    var audience = AudienceCache.GetBroadcastAudienceByCode(ratingAudience);
+
+                    if (audience == null)
+                    {
+                        validationProblems.Add($"Unknown audience is specified: {ratingAudience}. Row: {audienceRowIndex}, column: {ratingColumnIndex}");
+                        break;
+                    }
+
+                    if (result.Where(x => x != null).Any(x => x.Code == audience.Code))
+                    {
+                        validationProblems.Add($"Data for audience '{audience.Code}' have been already read. Please specify unique audiences. Row: {audienceRowIndex}, column: {ratingColumnIndex}");
+                        break;
+                    }
+
+                    result.Add(audience);
                 }
 
-                if (result.Any(x => x.Code == audience.Code))
-                {
-                    validationProblems.Add($"Data for audience '{audience.Code}' have been already read. Please specify unique audiences. Row: {audienceRowIndex}, column: {ratingColumnIndex}");
-                    break;
-                }
-
-                result.Add(audience);
                 currentAudienceColumnIndex = currentAudienceColumnIndex + 2;
             }
 
