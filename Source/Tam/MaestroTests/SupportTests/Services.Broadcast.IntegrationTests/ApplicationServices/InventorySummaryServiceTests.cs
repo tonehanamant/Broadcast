@@ -96,7 +96,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 ContractResolver = jsonResolver
             };
 
-            var openMarketCard = _InventoryCardService.GetInventorySummaries(request, new DateTime(2019, 04, 01)).Single(x => x.InventorySourceName == "OpenMarket");
+            var openMarketCard = _InventoryCardService.GetInventorySummaries(request, new DateTime(2019, 04, 01)).Single(x => x.InventorySourceName == "Open Market");
             var openMarketCardJson = IntegrationTestHelper.ConvertToJson(openMarketCard, jsonSettings);
 
             Approvals.Verify(openMarketCardJson);
@@ -108,7 +108,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             var request = new InventorySummaryFilterDto
             {
-                InventorySourceId = _InventoryRepository.GetInventorySourceByName("OpenMarket").Id,
+                InventorySourceId = _InventoryRepository.GetInventorySourceByName("Open Market").Id,
                 Quarter = new InventorySummaryQuarter
                 {
                     Quarter = 1,

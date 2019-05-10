@@ -177,6 +177,18 @@ END
 
 /*************************************** END PRI-6134 *****************************************************/
 
+/*************************************** START PRI-8858 *****************************************************/
+
+IF (SELECT name FROM inventory_sources
+    WHERE name = 'OpenMarket') IS NOT NULL
+BEGIN
+	UPDATE inventory_sources
+	SET name = 'Open Market'
+	WHERE name = 'OpenMarket'
+END
+
+/*************************************** END PRI-8858 *****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

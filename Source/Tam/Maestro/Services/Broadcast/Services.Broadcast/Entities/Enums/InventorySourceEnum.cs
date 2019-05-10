@@ -7,7 +7,7 @@ namespace Services.Broadcast.Entities.Enums
         [Description("Blank")]
         Blank = 0,
 
-        [Description("OpenMarket")]
+        [Description("Open Market")]
         OpenMarket = 1,
 
         [Description("Assembly")]

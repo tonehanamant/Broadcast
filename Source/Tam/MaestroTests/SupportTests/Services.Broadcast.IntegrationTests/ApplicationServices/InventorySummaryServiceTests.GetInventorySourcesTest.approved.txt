@@ -3,7 +3,7 @@
     "Id": 1,
     "InventoryType": 1,
     "IsActive": true,
-    "Name": "OpenMarket"
+    "Name": "Open Market"
   },
   {
     "Id": 3,

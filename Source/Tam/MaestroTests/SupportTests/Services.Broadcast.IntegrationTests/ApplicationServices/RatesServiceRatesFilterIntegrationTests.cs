@@ -49,7 +49,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 _Setup(MethodBase.GetCurrentMethod().Name);
-                var response = _inventoryService.GetStationPrograms("OpenMarket", _stationCodeWVTM, "today", new DateTime(2016, 01, 01));
+                var response = _inventoryService.GetStationPrograms("Open Market", _stationCodeWVTM, "today", new DateTime(2016, 01, 01));
 
                 //Ignore the Id on each Rate record
                 var jsonResolver = new IgnorableSerializerContractResolver();
@@ -73,7 +73,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 _Setup(MethodBase.GetCurrentMethod().Name);
                 var response = _inventoryService.GetStationPrograms(
-                    "OpenMarket", 
+                    "Open Market", 
                     _stationCodeWVTM,
                     "thisquarter",
                     new DateTime(2016, 08, 15));
@@ -99,7 +99,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 _Setup(MethodBase.GetCurrentMethod().Name);
                 var response = _inventoryService.GetStationPrograms(
-                    "OpenMarket", 
+                    "Open Market", 
                     _stationCodeWVTM,
                     "lastquarter",
                     new DateTime(2016, 08, 15));
@@ -125,7 +125,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 _Setup(MethodBase.GetCurrentMethod().Name);
                 var response = _inventoryService.GetStationPrograms(
-                    "OpenMarket", 
+                    "Open Market", 
                     _stationCodeWVTM,
                     new DateTime(2016, 05, 15),
                     new DateTime(2016, 12, 15));
@@ -150,7 +150,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 _Setup(MethodBase.GetCurrentMethod().Name);
-                var response = _inventoryService.GetAllStationPrograms("OpenMarket", _stationCodeWVTM);
+                var response = _inventoryService.GetAllStationPrograms("Open Market", _stationCodeWVTM);
 
                 //Ignore the Id on each Rate record
                 var jsonResolver = new IgnorableSerializerContractResolver();
@@ -173,7 +173,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 //_Setup(MethodBase.GetCurrentMethod().Name);
-                //var response = _ratesService.GetStationRates("OpenMarket", _stationCodeWVTM, "today", new DateTime(2016, 10, 01));
+                //var response = _ratesService.GetStationRates("Open Market", _stationCodeWVTM, "today", new DateTime(2016, 10, 01));
 
                 ////Ignore the Id on each Rate record
                 //var jsonResolver = new IgnorableSerializerContractResolver();
@@ -198,7 +198,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 _Setup(MethodBase.GetCurrentMethod().Name);
                 var today = new DateTime(2016, 01, 01);
-                var response = _inventoryService.GetStationsWithFilter("OpenMarket", "withtodaysdata", today);
+                var response = _inventoryService.GetStationsWithFilter("Open Market", "withtodaysdata", today);
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(DisplayBroadcastStation), "ModifiedDate");
                 jsonResolver.Ignore(typeof(DisplayBroadcastStation), "ManifestMaxEndDate");
@@ -226,7 +226,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 _Setup(MethodBase.GetCurrentMethod().Name);
                 var today = new DateTime(2016, 01, 01);
-                var response = _inventoryService.GetStationsWithFilter("OpenMarket", "withouttodaysdata", today);
+                var response = _inventoryService.GetStationsWithFilter("Open Market", "withouttodaysdata", today);
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(DisplayBroadcastStation), "ModifiedDate");
                 jsonResolver.Ignore(typeof(DisplayBroadcastStation), "FlightWeeks");
@@ -252,7 +252,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var fileId =_Setup(MethodBase.GetCurrentMethod().Name);
                 _inventoryFileRepository.UpdateInventoryFileStatus(fileId, FileStatusEnum.Failed);
                 var today = new DateTime(2016, 01, 01);
-                var response = _inventoryService.GetStationsWithFilter("OpenMarket", "withtodaysdata", today);
+                var response = _inventoryService.GetStationsWithFilter("Open Market", "withtodaysdata", today);
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(DisplayBroadcastStation), "ModifiedDate");
                 jsonResolver.Ignore(typeof(DisplayBroadcastStation), "Id");

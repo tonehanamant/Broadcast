@@ -55,7 +55,7 @@ namespace Services.Broadcast.Converters.RateImport
                 case "TTWN":
                     fileImporter = new TTWNFileImporter();
                     break;
-                case "OpenMarket":
+                case "Open Market":
                     fileImporter = new OpenMarketFileImporter();
                     break;
                 default:

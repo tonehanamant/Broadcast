@@ -40,7 +40,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             _ttwnInventorySource = _InventoryRepository.GetInventorySourceByName("TTWN");
             _cnnInventorySource = _InventoryRepository.GetInventorySourceByName("CNN");
-            _openMarketInventorySource = _InventoryRepository.GetInventorySourceByName("OpenMarket");
+            _openMarketInventorySource = _InventoryRepository.GetInventorySourceByName("Open Market");
             IntegrationTestApplicationServiceFactory.Instance.RegisterType<IDataLakeFileService, DataLakeFileServiceStub>();
             _InventoryFileService = IntegrationTestApplicationServiceFactory.GetApplicationService<IInventoryService>();
     }
@@ -85,7 +85,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     StreamData = new FileStream(filePath, FileMode.Open, FileAccess.Read),
                     FileName = Path.GetFileName(filePath),
-                    InventorySource = "OpenMarket",
+                    InventorySource = "Open Market",
                     UserName = "IntegrationTestUser"
                 };
                 request.EffectiveDate = DateTime.Parse("02/06/2019");
@@ -378,7 +378,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             var currentDate = new DateTime(2016, 11, 1);
             var response = _InventoryFileService.GetStationsWithFilter(
-                "OpenMarket",
+                "Open Market",
                 "WithTodaysData",
                 new DateTime(2017, 03, 06));
             var jsonResolver = new IgnorableSerializerContractResolver();
@@ -402,7 +402,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             var currentDate = new DateTime(2016, 11, 1);
             var response = _InventoryFileService.GetStationsWithFilter(
-                "OpenMarket",
+                "Open Market",
                 "WithoutTodaysData",
                 new DateTime(2017, 03, 06));
             var jsonResolver = new IgnorableSerializerContractResolver();
@@ -438,7 +438,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.RatingBook = 416;
 
                 _InventoryFileService.SaveInventoryFile(request);
-                var response = _InventoryFileService.GetStationDetailByCode("OpenMarket", stationCodeWVTM);
+                var response = _InventoryFileService.GetStationDetailByCode("Open Market", stationCodeWVTM);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(StationProgram), "Id");
@@ -495,7 +495,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 };
 
                 //first make sure the contacts don't exist
-                var stationContacts = _InventoryFileService.GetStationContacts("OpenMarket", stationCodeWVTM);
+                var stationContacts = _InventoryFileService.GetStationContacts("Open Market", stationCodeWVTM);
                 Assert.AreEqual(1, stationContacts.Count);
 
                 request.StreamData = new FileStream(
@@ -508,7 +508,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 _InventoryFileService.SaveInventoryFile(request);
 
                 //then confirm the contacts are added
-                stationContacts = _InventoryFileService.GetStationContacts("OpenMarket", stationCodeWVTM);
+                stationContacts = _InventoryFileService.GetStationContacts("Open Market", stationCodeWVTM);
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(stationContacts, jsonSettings));
             }
         }
@@ -547,7 +547,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.UserName = "IntegrationTestUser";
                 _InventoryFileService.SaveInventoryFile(request);
 
-                var stationContacts = _InventoryFileService.GetStationContacts("OpenMarket", stationCodeWVTM);
+                var stationContacts = _InventoryFileService.GetStationContacts("Open Market", stationCodeWVTM);
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(stationContacts, jsonSettings));
             }
         }
@@ -558,7 +558,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 var currentDate = new DateTime(2016, 11, 1);
-                var station = _InventoryFileService.GetStations("OpenMarket", currentDate).First();
+                var station = _InventoryFileService.GetStations("Open Market", currentDate).First();
                 var stationCode = station.Code.Value;               
                 var stationContactName = "Unit Test " + DateTime.Now.Ticks;
 
@@ -578,8 +578,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var saved = _InventoryFileService.SaveStationContact(contact, "");
                 Assert.IsTrue(saved);
                 var stationContact =
-                    _InventoryFileService.GetStationContacts("OpenMarket", stationCode).Find(q => q.Name == stationContactName);
-                _InventoryFileService.DeleteStationContact("OpenMarket", stationContact.Id, "system");
+                    _InventoryFileService.GetStationContacts("Open Market", stationCode).Find(q => q.Name == stationContactName);
+                _InventoryFileService.DeleteStationContact("Open Market", stationContact.Id, "system");
             }
         }
 
@@ -591,7 +591,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 var currentDate = new DateTime(2016, 11, 1);
-                var stationCode = _InventoryFileService.GetStations("OpenMarket", currentDate).First().Code.Value;
+                var stationCode = _InventoryFileService.GetStations("Open Market", currentDate).First().Code.Value;
                 var contact = new StationContact()
                 {
                     Id = 0,
@@ -615,7 +615,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 //get station code and fill in initial data
                 var currentDate = new DateTime(2016, 11, 1);
-                var station = _InventoryFileService.GetStations("OpenMarket", currentDate).First();
+                var station = _InventoryFileService.GetStations("Open Market", currentDate).First();
                 var stationCode = station.Code.Value;
                 var name = "Unit Test " + DateTime.Now.Ticks;
                 var company = "Company Test " + DateTime.Now.Ticks;
@@ -636,7 +636,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 //save and return station contact
                 _InventoryFileService.SaveStationContact(contact, "");
-                returnContact = _InventoryFileService.GetStationContacts("OpenMarket", stationCode).Find(q => q.Name == name);
+                returnContact = _InventoryFileService.GetStationContacts("Open Market", stationCode).Find(q => q.Name == name);
 
                 // modify a property, save
                 company = "Modified Company " + DateTime.Now.Ticks;
@@ -644,10 +644,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 _InventoryFileService.SaveStationContact(returnContact, "");
 
                 // return the updated contacts to check if the values are equal
-                returnContact = _InventoryFileService.GetStationContacts("OpenMarket", stationCode).Find(q => q.Name == name);
+                returnContact = _InventoryFileService.GetStationContacts("Open Market", stationCode).Find(q => q.Name == name);
 
                 Assert.AreEqual(returnContact.Company, company);
-                _InventoryFileService.DeleteStationContact("OpenMarket", returnContact.Id, "system");
+                _InventoryFileService.DeleteStationContact("Open Market", returnContact.Id, "system");
             }
         }
 
@@ -657,7 +657,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 var currentDate = new DateTime(2016, 11, 1);
-                var station = _InventoryFileService.GetStations("OpenMarket", currentDate).First();
+                var station = _InventoryFileService.GetStations("Open Market", currentDate).First();
                 var stationCode = station.Code.Value;
                 var stationContactName = "Unit Test " + DateTime.Now.Ticks;
                 var contact = new StationContact()
@@ -677,8 +677,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 // remove 
                 var stationContact =
-                    _InventoryFileService.GetStationContacts("OpenMarket", stationCode).Find(q => q.Name == stationContactName);
-                var deleted = _InventoryFileService.DeleteStationContact("OpenMarket", stationContact.Id, "system");
+                    _InventoryFileService.GetStationContacts("Open Market", stationCode).Find(q => q.Name == stationContactName);
+                var deleted = _InventoryFileService.DeleteStationContact("Open Market", stationContact.Id, "system");
 
                 Assert.IsTrue(deleted);
             }
@@ -762,7 +762,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 _InventoryFileService.SaveInventoryFile(request);
                 var stationCodeWVTM = 1027;
                 var endDate = DateFormatter.AdjustEndDate(new DateTime(1988, 01, 20));
-                var stationDetails = _InventoryFileService.GetStationDetailByCode("OpenMarket", stationCodeWVTM);
+                var stationDetails = _InventoryFileService.GetStationDetailByCode("Open Market", stationCodeWVTM);
                 //var program = stationDetails.Rates.Single(q => q.Program == "TR_WVTM-TV_TEST_1 11:30AM");
                 //_ratesService.TrimProgramFlight(program.Id, endDate, endDate, "IntegrationTestUser");
             }
@@ -789,7 +789,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var stationCodeWVTM = 5044;
                 var startDate = new DateTime(2016, 9, 26);
                 var endDate = new DateTime(2016, 10, 09);
-                //var stationRates = _ratesService.GetStationRates("OpenMarket", stationCodeWVTM, startDate, endDate);
+                //var stationRates = _ratesService.GetStationRates("Open Market", stationCodeWVTM, startDate, endDate);
                 //var rate = stationRates.Where(p => p.Program == "CADENT NEWS AFTER MIDNIGHT").Single();
                 //Assert.AreEqual("M-F 2AM-4AM", rate.Airtime);
             }
@@ -813,7 +813,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 };
 
                 _InventoryFileService.SaveInventoryFile(request);
-                //var result = _ratesService.GetStationDetailByCode("OpenMarket", stationCodeWVTM).Rates.Where(p => p.Program == "Simple Period News").ToList();
+                //var result = _ratesService.GetStationDetailByCode("Open Market", stationCodeWVTM).Rates.Where(p => p.Program == "Simple Period News").ToList();
 
                 //var jsonResolver = new IgnorableSerializerContractResolver();
                 ////jsonResolver.Ignore(typeof(StationProgramAudienceRateDto), "Audiences");
@@ -949,7 +949,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 _InventoryFileService.SaveInventoryFile(request);
 
-                var results = _InventoryFileService.GetAllStationPrograms("OpenMarket", stationCode);
+                var results = _InventoryFileService.GetAllStationPrograms("Open Market", stationCode);
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(results, jsonSettings));
             }
         }
@@ -966,7 +966,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 _InventoryFileService.SaveInventoryFile(request);
 
-                var results = _InventoryFileService.GetAllStationPrograms("OpenMarket", stationCode);
+                var results = _InventoryFileService.GetAllStationPrograms("Open Market", stationCode);
                 var json = IntegrationTestHelper.ConvertToJson(results, jsonSettings);
                 Approvals.Verify(json);
             }
@@ -983,7 +983,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 _InventoryFileService.SaveInventoryFile(request);
 
-                var results = _InventoryFileService.GetAllStationPrograms("OpenMarket", stationCode);
+                var results = _InventoryFileService.GetAllStationPrograms("Open Market", stationCode);
                 var resultsHaveProgramWithNameLengthLongerThan63Symbols = results.Any(x => x.ProgramNames.Any(p => p.Length > 63));
 
                 Assert.True(resultsHaveProgramWithNameLengthLongerThan63Symbols);
@@ -1020,7 +1020,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 _InventoryFileService.SaveInventoryFile(request);
 
-                var results = _InventoryFileService.GetAllStationPrograms("OpenMarket", stationCode);
+                var results = _InventoryFileService.GetAllStationPrograms("Open Market", stationCode);
                 var json = IntegrationTestHelper.ConvertToJson(results, jsonSettings);
                 Approvals.Verify(json);
             }
@@ -1113,7 +1113,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 _InventoryFileService.SaveInventoryFile(request);
 
-                var results = _InventoryFileService.GetAllStationPrograms("OpenMarket", stationCode);
+                var results = _InventoryFileService.GetAllStationPrograms("Open Market", stationCode);
                 var json = IntegrationTestHelper.ConvertToJson(results, jsonSettings);
                 Approvals.Verify(json);
             }
@@ -1161,12 +1161,12 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 _InventoryFileService.SaveInventoryFile(request);
 
-                var stationDetails = _InventoryFileService.GetStationDetailByCode("OpenMarket", stationCodeWVTM);
+                var stationDetails = _InventoryFileService.GetStationDetailByCode("Open Market", stationCodeWVTM);
 
                 //if (stationDetails.Rates.Count > 0)
                 //{
                 //    StationProgramAudienceRateDto programDetails = stationDetails.Rates[0];
-                //    var programLastDate = _ratesService.GetStations("OpenMarket", programDetails.FlightStartDate).Single(q => q.Code == stationCodeWVTM).ModifiedDate;
+                //    var programLastDate = _ratesService.GetStations("Open Market", programDetails.FlightStartDate).Single(q => q.Code == stationCodeWVTM).ModifiedDate;
 
                 //    programDetails.Impressions = 100;
                 //    programDetails.Rate15 = 12;
@@ -1180,7 +1180,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 //        });
 
                 //    _ratesService.UpdateProgramRate(programDetails.Id, programDetails, "IntegrationTestUser");
-                //    var updatedLastDate = _ratesService.GetStations("OpenMarket", programDetails.FlightStartDate).Single(q => q.Code == stationCodeWVTM).ModifiedDate;
+                //    var updatedLastDate = _ratesService.GetStations("Open Market", programDetails.FlightStartDate).Single(q => q.Code == stationCodeWVTM).ModifiedDate;
 
                 //    Assert.IsTrue(updatedLastDate > programLastDate);
                 //}
@@ -1205,7 +1205,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 _InventoryFileService.SaveInventoryFile(request);
 
                 // it seems datetime.now has some resolution issues when the time is updated. using utcnow seems to have a higher resolution
-                var stationLastModifiedDate = _InventoryFileService.GetStations("OpenMarket", new DateTime(2016, 09, 26)).Single(q => q.Code == stationCodeWVTM).ModifiedDate?.ToUniversalTime();
+                var stationLastModifiedDate = _InventoryFileService.GetStations("Open Market", new DateTime(2016, 09, 26)).Single(q => q.Code == stationCodeWVTM).ModifiedDate?.ToUniversalTime();
 
                 Assert.IsTrue(stationLastModifiedDate != default(DateTime));
                 var dateToCompare = DateTime.UtcNow;
@@ -1223,7 +1223,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var stations = _InventoryFileService.GetStations("OpenMarket", new DateTime(2016, 09, 26));
+                var stations = _InventoryFileService.GetStations("Open Market", new DateTime(2016, 09, 26));
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(DisplayBroadcastStation), "ModifiedDate");
@@ -1277,7 +1277,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 _InventoryFileService.SaveInventoryFile(request);
 
-                var stationDetails = _InventoryFileService.GetStationDetailByCode("OpenMarket", stationCodeWVTM);
+                var stationDetails = _InventoryFileService.GetStationDetailByCode("Open Market", stationCodeWVTM);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 //jsonResolver.Ignore(typeof(StationProgramAudienceRateDto), "Id");
@@ -1313,7 +1313,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 _InventoryFileService.SaveInventoryFile(request);
 
-                var stationDetails = _InventoryFileService.GetStationDetailByCode("OpenMarket", stationCodeWVTM);
+                var stationDetails = _InventoryFileService.GetStationDetailByCode("Open Market", stationCodeWVTM);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 //jsonResolver.Ignore(typeof(StationProgramAudienceRateDto), "Id");
@@ -3342,11 +3342,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     Rating = 50,
                     ProgramNames = new List<string>() { "Testing Program" },
                     StationCode = stationCode,
-                    RateSource = "OpenMarket",
+                    RateSource = "Open Market",
                     Airtimes = new List<DaypartDto>() { DaypartDto.ConvertDisplayDaypart(DaypartCache.Instance.GetDisplayDaypart(1)) }
                 }, "TestUser");
 
-                var programsForStation = _InventoryFileService.GetAllStationPrograms("OpenMarket", stationCode);
+                var programsForStation = _InventoryFileService.GetAllStationPrograms("Open Market", stationCode);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(StationProgram), "Id");
@@ -3386,11 +3386,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     Rating = 50,
                     ProgramNames = new List<string>() { "Edited Program Name 54" },
                     StationCode = stationCode,
-                    RateSource = "OpenMarket",
+                    RateSource = "Open Market",
                     Airtimes = new List<DaypartDto>() { DaypartDto.ConvertDisplayDaypart(DaypartCache.Instance.GetDisplayDaypart(1)) }
                 }, "TestUser");
 
-                var programsForStation = _InventoryFileService.GetAllStationPrograms("OpenMarket", stationCode);
+                var programsForStation = _InventoryFileService.GetAllStationPrograms("Open Market", stationCode);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(StationProgram), "Id");
@@ -3430,7 +3430,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     Rating = 50,
                     ProgramNames = new List<string>() { "Edited Program Name 54" },
                     StationCode = stationCode,
-                    RateSource = "OpenMarket",
+                    RateSource = "Open Market",
                     Conflicts = new List<StationProgram.StationProgramConflictChangeDto>
                     {
                         new StationProgram.StationProgramConflictChangeDto
@@ -3449,7 +3449,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     Airtimes = new List<DaypartDto>() { DaypartDto.ConvertDisplayDaypart(DaypartCache.Instance.GetDisplayDaypart(1)) }
                 }, "TestUser");
 
-                var programsForStation = _InventoryFileService.GetAllStationPrograms("OpenMarket", stationCode);
+                var programsForStation = _InventoryFileService.GetAllStationPrograms("Open Market", stationCode);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(StationProgram), "Id");
@@ -3499,7 +3499,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     Rating = 50,
                     ProgramNames = new List<string>() { "Multiple Flight Weeks" },
                     StationCode = stationCode,
-                    RateSource = "OpenMarket",
+                    RateSource = "Open Market",
                     Conflicts = new List<StationProgram.StationProgramConflictChangeDto>
                     {
                         new StationProgram.StationProgramConflictChangeDto
@@ -3519,7 +3519,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     Airtimes = new List<DaypartDto>() { DaypartDto.ConvertDisplayDaypart(DaypartCache.Instance.GetDisplayDaypart(1)) }
                 }, "TestUser");
 
-                var programsForStation = _InventoryFileService.GetAllStationPrograms("OpenMarket", stationCode);
+                var programsForStation = _InventoryFileService.GetAllStationPrograms("Open Market", stationCode);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(StationProgram), "Id");
@@ -3542,7 +3542,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var conflicts = _InventoryFileService.GetStationProgramConflicts(new StationProgramConflictRequest
                 {
                     Airtime = DaypartDto.ConvertDisplayDaypart(DaypartCache.Instance.GetDisplayDaypart(1)),
-                    RateSource = "OpenMarket",
+                    RateSource = "Open Market",
                     StartDate = new DateTime(2017, 12, 01),
                     EndDate = new DateTime(2018, 01, 01),
                     StationCode = 7353,
@@ -3560,7 +3560,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var conflicts = _InventoryFileService.GetStationProgramConflicts(new StationProgramConflictRequest
                 {
                     Airtime = DaypartDto.ConvertDisplayDaypart(DaypartCache.Instance.GetDisplayDaypart(28)),
-                    RateSource = "OpenMarket",
+                    RateSource = "Open Market",
                     StartDate = new DateTime(2017, 12, 01),
                     EndDate = new DateTime(2018, 01, 01),
                     StationCode = 7353,
@@ -3578,7 +3578,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var conflicts = _InventoryFileService.GetStationProgramConflicts(new StationProgramConflictRequest
                 {
                     Airtime = DaypartDto.ConvertDisplayDaypart(DaypartCache.Instance.GetDisplayDaypart(28)),
-                    RateSource = "OpenMarket",
+                    RateSource = "Open Market",
                     StartDate = new DateTime(2018, 12, 01),
                     EndDate = new DateTime(2019, 01, 01),
                     StationCode = 7353,
@@ -3596,7 +3596,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var conflicted = _InventoryFileService.GetStationProgramConflicted(new StationProgramConflictRequest
                 {
                     Airtime = DaypartDto.ConvertDisplayDaypart(DaypartCache.Instance.GetDisplayDaypart(1)),
-                    RateSource = "OpenMarket",
+                    RateSource = "Open Market",
                     StartDate = new DateTime(2017, 12, 01),
                     EndDate = new DateTime(2018, 01, 01),
                     ConflictedProgramNewEndDate = new DateTime(2018, 01, 25),
@@ -3615,9 +3615,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 const int manifestId = 26684;
 
-                _InventoryFileService.DeleteProgram(manifestId, "OpenMarket", 5319, "test integration");
+                _InventoryFileService.DeleteProgram(manifestId, "Open Market", 5319, "test integration");
 
-                var allStationPrograms = _InventoryFileService.GetAllStationPrograms("OpenMarket", 5319);
+                var allStationPrograms = _InventoryFileService.GetAllStationPrograms("Open Market", 5319);
 
                 var deletedStationProgram = allStationPrograms.FirstOrDefault(p => p.Id == manifestId);
 
@@ -3633,9 +3633,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 const int manifestId = 26684;
                 var expireDate = new DateTime(2017, 9, 17);
 
-                _InventoryFileService.ExpireManifest(manifestId, expireDate, "OpenMarket", 5319, "test integration");
+                _InventoryFileService.ExpireManifest(manifestId, expireDate, "Open Market", 5319, "test integration");
 
-                var allStationPrograms = _InventoryFileService.GetAllStationPrograms("OpenMarket", 5319);
+                var allStationPrograms = _InventoryFileService.GetAllStationPrograms("Open Market", 5319);
 
                 var manifest = allStationPrograms.First(p => p.Id == manifestId);
 
@@ -3678,14 +3678,14 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     Rating = 50,
                     ProgramNames = new List<string>() { "Testing Program" },
                     StationCode = stationCode,
-                    RateSource = "OpenMarket",
+                    RateSource = "Open Market",
                     Airtimes = new List<DaypartDto>() { DaypartDto.ConvertDisplayDaypart(DaypartCache.Instance.GetDisplayDaypart(1)) },
                     Genres = new List<LookupDto> { new LookupDto { Id = genreId, Display = genreName } }
                 };
 
                 _InventoryFileService.SaveProgram(program, "TestUser");
 
-                var stationDetail = _InventoryFileService.GetStationDetailByCode("OpenMarket", stationCode);
+                var stationDetail = _InventoryFileService.GetStationDetailByCode("Open Market", stationCode);
                 var stationDetailContainsProgramWithExpectedGenre = stationDetail.Programs.Any(x => x.Genres.Any(g => g.Id == genreId));
 
                 Assert.True(stationDetailContainsProgramWithExpectedGenre);
@@ -3719,14 +3719,14 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     Rating = 50,
                     ProgramNames = new List<string>() { "Edited Program Name 54" },
                     StationCode = stationCode,
-                    RateSource = "OpenMarket",
+                    RateSource = "Open Market",
                     Airtimes = new List<DaypartDto>() { DaypartDto.ConvertDisplayDaypart(DaypartCache.Instance.GetDisplayDaypart(1)) },
                     Genres = new List<LookupDto> { new LookupDto { Id = genreId, Display = genreName } }
                 };
 
                 _InventoryFileService.SaveProgram(program, "TestUser");
 
-                var stationDetail = _InventoryFileService.GetStationDetailByCode("OpenMarket", stationCode);
+                var stationDetail = _InventoryFileService.GetStationDetailByCode("Open Market", stationCode);
                 var stationDetailContainsProgramWithExpectedGenre = stationDetail.Programs.Any(x => x.Genres.Any(g => g.Id == genreId));
 
                 Assert.True(stationDetailContainsProgramWithExpectedGenre);
@@ -3833,7 +3833,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     problems = e.Problems;
                 }
 
-                var stationContacts = _InventoryFileService.GetStationContacts("OpenMarket", 5879);
+                var stationContacts = _InventoryFileService.GetStationContacts("Open Market", 5879);
 
                 Assert.AreEqual(1, stationContacts.Count);
 

@@ -217,7 +217,7 @@
   ],
   "InventorySources": [
     {
-      "Display": "OpenMarket",
+      "Display": "Open Market",
       "Id": 1
     },
     {

@@ -2,7 +2,7 @@
   "HasRatesAvailableForQuarter": true,
   "HouseholdImpressions": 1000.0,
   "InventoryPostingBooks": [],
-  "InventorySourceName": "OpenMarket",
+  "InventorySourceName": "Open Market",
   "IsUpdating": false,
   "LastUpdatedDate": null,
   "Quarter": {
