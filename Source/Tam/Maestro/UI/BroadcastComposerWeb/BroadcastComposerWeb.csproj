@@ -31,8 +31,8 @@
     <TypeScriptToolsVersion>2.2</TypeScriptToolsVersion>
     <Use64BitIISExpress />
     <TargetFrameworkProfile />
-	<NoWarn>1591</NoWarn>
-	<DocumentationFile>bin\BroadcastComposerWeb.xml</DocumentationFile>
+    <NoWarn>1591</NoWarn>
+    <DocumentationFile>bin\BroadcastComposerWeb.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -213,9 +213,6 @@
     </Reference>
     <Reference Include="Tam.Maestro.Common.Systems, Version=18.4.1.12, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\Tam.Maestro.Common.Systems.18.4.1.12\lib\net45\Tam.Maestro.Common.Systems.dll</HintPath>
-    </Reference>
-    <Reference Include="Tam.Maestro.IntegrationTests.Common, Version=18.4.1.12, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\Tam.Maestro.IntegrationTests.Common.18.4.1.12\lib\net45\Tam.Maestro.IntegrationTests.Common.dll</HintPath>
     </Reference>
     <Reference Include="Tam.Maestro.Web.Common, Version=18.4.1.12, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\Tam.Maestro.Web.Common.18.4.1.12\lib\net45\Tam.Maestro.Web.Common.dll</HintPath>
