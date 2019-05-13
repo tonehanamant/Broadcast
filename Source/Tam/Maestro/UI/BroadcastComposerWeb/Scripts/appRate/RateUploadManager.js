@@ -72,7 +72,14 @@ var RateUploadManager = UploadManager.extend({
 
     //add change of file input multiple or remove attribute
     setActiveSourceType: function (type) {
-        this.activeSourceType = this.sourceTypes[type] || null;
+        this.activeSourceType = null;
+        for (var sourceType in this.sourceTypes) {
+            if (this.sourceTypes.hasOwnProperty(sourceType)) {
+                var currentSourceType = this.sourceTypes[sourceType];
+                if (currentSourceType.name === type)
+                    this.activeSourceType = this.sourceTypes[sourceType];
+            }
+        }
         var multiple = this.activeSourceType.isSingleFile ? false : true;
         this.setMultipleFileUpload(multiple);
     },
