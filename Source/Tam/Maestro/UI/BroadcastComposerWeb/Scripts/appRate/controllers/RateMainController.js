@@ -5,7 +5,7 @@ var RateMainController = BaseController.extend({
     thirdPartyViewModel: null,
     stationController: null,
     stationsData: null,
-    activeRateSource: 'OpenMarket',  //active source for loading/uploading rates
+    activeRateSource: 'Open Market',  //active source for loading/uploading rates
     activeStationsDataFilter: null, //store the active filter for refresh (with state) after edit
 
     isThirdParty: false, //on tab change in main view set this property so other sections can use
@@ -43,7 +43,7 @@ var RateMainController = BaseController.extend({
         this.activeRateSource = source;
         this.activeStationsDataFilter = filter ? filter : null;
 
-        this.isThirdParty = (source != 'OpenMarket') && (source != 'Assembly');
+        this.isThirdParty = (source != 'Open Market') && (source != 'Assembly');
         //console.log('isThirdParty', source, this.isThirdParty);
 
         httpService.get(url,

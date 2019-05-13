@@ -11,7 +11,7 @@ var RateUploadManager = UploadManager.extend({
 
     sourceTypes: {
         OpenMarket: {
-            name: 'OpenMarket',
+            name: 'Open Market',
             enabled: true,
             isSingleFile: false,
             fileType: 'xml',

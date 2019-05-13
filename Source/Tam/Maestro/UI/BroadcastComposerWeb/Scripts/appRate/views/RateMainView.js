@@ -60,7 +60,7 @@ var RateMainView = BaseView.extend({
 
     initUpload: function () {
         this.uploadManager = new RateUploadManager(this);//will call init
-        this.uploadManager.setActiveSourceType('OpenMarket');
+        this.uploadManager.setActiveSourceType('Open Market');
     },
 
     //passed from upload manager
