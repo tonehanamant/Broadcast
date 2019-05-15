@@ -7,6 +7,7 @@ namespace Services.Broadcast.Entities.Scx
     public class ScxMarketDto
     {
         public string MarketName { get; set; }
+        public string DmaMarketName { get; set; }
         public int? MarketId { get; set; }
         public int? MarketRank { get; set; }
         public double? MarketCoverage { get; set; }

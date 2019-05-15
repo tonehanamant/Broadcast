@@ -48,7 +48,7 @@ namespace Services.Broadcast.Converters.Scx
             _SetScxMakeGoodPolicy(camp);
             _SetScxDemographics(data, camp);
             _SetScxOrders(data, camp);
-            
+
             return xp;
         }
 
@@ -67,11 +67,11 @@ namespace Services.Broadcast.Converters.Scx
 
                 _SetScxOrderKeys(scxOrder, marketId);
 
-                var market = data.InventoryMarkets[marketId];
+                var market = data.InventoryMarkets.Where(x => x.MarketId == marketId).Single();
                 scxOrder.market = new market()
                 {
                     nsi_id = market.MarketId ?? 0,
-                    name = market.MarketId.HasValue ? data.DmaMarketName[market.MarketId.Value] : null
+                    name = market.MarketId.HasValue? market.DmaMarketName : null
                 };
 
                 _SetScxOrderSurvey(scxOrder, marketId, data);
@@ -273,7 +273,7 @@ namespace Services.Broadcast.Converters.Scx
 
         private void _SetDetailLineDemoValue(detailLine detLine, ScxData data, string legacyCallLetters, ScxProgram programInfo)
         {
-            if(data.Demos == null)
+            if (data.Demos == null)
             {
                 detLine.demoValue = new demoValue[0];
                 return;
@@ -329,7 +329,7 @@ namespace Services.Broadcast.Converters.Scx
 
         private static void _SetSystemOrderPopulations(systemOrder sysOrder, List<DemoData> demos, int? marketId)
         {
-            if(demos == null)
+            if (demos == null)
             {
                 sysOrder.populations = new populations[0];
                 return;
@@ -356,7 +356,7 @@ namespace Services.Broadcast.Converters.Scx
             scxOrder.survey.comment[0] = new surveyComment
             {
                 codeOwner = "Spotcable",
-                Value = marketId.HasValue 
+                Value = marketId.HasValue
                             ? data.SurveyData.Any() ? data.SurveyData[marketId.Value] : string.Empty
                             : string.Empty
             };

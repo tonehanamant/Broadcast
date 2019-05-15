@@ -14,11 +14,14 @@ using Services.Broadcast.Entities.spotcableXML;
 
 namespace Services.Broadcast.Converters.Scx
 {
+    /// <summary>
+    /// Feature not available
+    /// </summary>
     public interface IProposalScxConverter : IApplicationService
     {
-        List<ProposalScxFile> ConvertProposal(ProposalDto proposal);
-        void ConvertProposalDetail(ProposalDto proposal, ProposalDetailDto propDetail, ref ProposalScxFile scxFile);
-        adx BuildFromProposalDetail(ProposalDto proposal, ProposalDetailDto propDetail);
+        //List<ProposalScxFile> ConvertProposal(ProposalDto proposal);
+        //void ConvertProposalDetail(ProposalDto proposal, ProposalDetailDto propDetail, ref ProposalScxFile scxFile);
+        //adx BuildFromProposalDetail(ProposalDto proposal, ProposalDetailDto propDetail);
     }
     
     public class ProposalScxConverter : ScxBaseConverter, IProposalScxConverter
@@ -31,43 +34,43 @@ namespace Services.Broadcast.Converters.Scx
             _proposalScxDataPrep = proposalScxDataPrep;
         }
 
-        public List<ProposalScxFile> ConvertProposal(ProposalDto proposal)
-        {
-            List<ProposalScxFile> scxFiles = new List<ProposalScxFile>();
-            foreach (var propDetail in proposal.Details)
-            {
-                ProposalScxFile scxFile = new ProposalScxFile();
-                ConvertProposalDetail(proposal, propDetail, ref scxFile);
-                scxFiles.Add(scxFile);
-            }
+        //public List<ProposalScxFile> ConvertProposal(ProposalDto proposal)
+        //{
+        //    List<ProposalScxFile> scxFiles = new List<ProposalScxFile>();
+        //    foreach (var propDetail in proposal.Details)
+        //    {
+        //        ProposalScxFile scxFile = new ProposalScxFile();
+        //        ConvertProposalDetail(proposal, propDetail, ref scxFile);
+        //        scxFiles.Add(scxFile);
+        //    }
 
-            return scxFiles;
-        }
+        //    return scxFiles;
+        //}
 
-        public void ConvertProposalDetail(ProposalDto proposal, ProposalDetailDto propDetail, ref ProposalScxFile scxFile)
-        {
-            adx a = BuildFromProposalDetail(proposal, propDetail);
+        //public void ConvertProposalDetail(ProposalDto proposal, ProposalDetailDto propDetail, ref ProposalScxFile scxFile)
+        //{
+        //    adx a = BuildFromProposalDetail(proposal, propDetail);
 
-            if (a == null)
-                return;
+        //    if (a == null)
+        //        return;
 
-            string xml = a.Serialize();
-            var stream = new MemoryStream(Encoding.UTF8.GetBytes(xml));
-            scxFile = new ProposalScxFile()
-            {
-                ProposalDetailDto = propDetail,
-                ScxStream = stream
-            };
-        }
+        //    string xml = a.Serialize();
+        //    var stream = new MemoryStream(Encoding.UTF8.GetBytes(xml));
+        //    scxFile = new ProposalScxFile()
+        //    {
+        //        ProposalDetailDto = propDetail,
+        //        ScxStream = stream
+        //    };
+        //}
 
-        public adx BuildFromProposalDetail(ProposalDto proposal, ProposalDetailDto propDetail)
-        {
-            var data = _proposalScxDataPrep.GetDataFromProposalDetail(proposal, propDetail);
-            if (data.MarketIds.IsNullOrEmpty())
-                return null;
+        //public adx BuildFromProposalDetail(ProposalDto proposal, ProposalDetailDto propDetail)
+        //{
+        //    var data = _proposalScxDataPrep.GetDataFromProposalDetail(proposal, propDetail);
+        //    if (data.MarketIds.IsNullOrEmpty())
+        //        return null;
 
-            return CreateAdxObject(data);
-        }
+        //    return CreateAdxObject(data);
+        //}
     }
 }
 

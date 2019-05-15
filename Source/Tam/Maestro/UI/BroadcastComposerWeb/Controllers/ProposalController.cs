@@ -12,6 +12,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Web;
 using System.Web.Http;
 using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
@@ -99,18 +100,20 @@ namespace BroadcastComposerWeb.Controllers
         [RestrictedAccess(RequiredRole = RoleType.Broadcast_Proposer)]
         public HttpResponseMessage GenerateScxArchive(int proposalId)
         {
-            var archive = _ApplicationServiceFactory.GetApplicationService<IProposalService>()
-                .GenerateScxFileArchive(proposalId);
+            throw new HttpException(404, "Feature not supported");
 
-            var result = Request.CreateResponse(HttpStatusCode.OK);
-            result.Content = new StreamContent(archive.Item2);
-            result.Content.Headers.ContentType = new MediaTypeHeaderValue("application/zip");
-            result.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
-            {
-                FileName = archive.Item1
-            };
+            //var archive = _ApplicationServiceFactory.GetApplicationService<IProposalService>()
+            //    .GenerateScxFileArchive(proposalId);
 
-            return result;
+            //var result = Request.CreateResponse(HttpStatusCode.OK);
+            //result.Content = new StreamContent(archive.Item2);
+            //result.Content.Headers.ContentType = new MediaTypeHeaderValue("application/zip");
+            //result.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
+            //{
+            //    FileName = archive.Item1
+            //};
+
+            //return result;
         }
 
         [HttpPut]
@@ -281,18 +284,20 @@ namespace BroadcastComposerWeb.Controllers
         [RestrictedAccess(RequiredRole = RoleType.Broadcast_Proposer)]
         public HttpResponseMessage GgenerateScxDetail(int proposalDetailId)
         {
-            var archive = _ApplicationServiceFactory.GetApplicationService<IProposalService>()
-                .GenerateScxFileDetail(proposalDetailId);
+            throw new HttpException(404, "Feature not supported");
 
-            var result = Request.CreateResponse(HttpStatusCode.OK);
-            result.Content = new StreamContent(archive.Item2);
-            result.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
-            result.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
-            {
-                FileName = archive.Item1
-            };
+            //var archive = _ApplicationServiceFactory.GetApplicationService<IProposalService>()
+            //    .GenerateScxFileDetail(proposalDetailId);
 
-            return result;
+            //var result = Request.CreateResponse(HttpStatusCode.OK);
+            //result.Content = new StreamContent(archive.Item2);
+            //result.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
+            //result.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
+            //{
+            //    FileName = archive.Item1
+            //};
+
+            //return result;
         }
     }
 }

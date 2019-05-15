@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Common.Services;
 using Common.Services.Repositories;
@@ -10,12 +11,13 @@ using Services.Broadcast.Entities.Scx;
 using Services.Broadcast.Repositories;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 using Tam.Maestro.Services.Clients;
+using static Services.Broadcast.Entities.Scx.ScxMarketDto;
 
 namespace Services.Broadcast.Converters.Scx
 {
     public interface IProposalScxDataPrep
     {
-        ScxData GetDataFromProposalDetail(ProposalDto dto, ProposalDetailDto proposalDetailDto);
+        //ScxData GetDataFromProposalDetail(ProposalDto dto, ProposalDetailDto proposalDetailDto);
     }
 
     public class ProposalScxDataPrep : IProposalScxDataPrep
@@ -40,63 +42,71 @@ namespace Services.Broadcast.Converters.Scx
             _DaypartCache = daypartCache;
             _BroadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
         }
-
+        
         /// <summary>
+        /// The feature is not available for now
         /// fyi: open market inventory are assumed to have 1 daypart and 1 program name.  Any more or less will throw exception.
         /// </summary>
-        public ScxData GetDataFromProposalDetail(ProposalDto dto, ProposalDetailDto proposalDetailDto)
-        {
-            var proposalDetailInventory = _ProposalOpenMarketInventoryService.GetInventory(proposalDetailDto.Id.Value, impressionsEquivalized: false);
-            var dmaMarketRepo = _BroadcastDataRepositoryFactory.GetDataRepository<IMarketDmaMapRepository>();
-            var advertisers = _SmsClient.FindAdvertiserById(dto.AdvertiserId);
+        //public ScxData GetDataFromProposalDetail(ProposalDto dto, ProposalDetailDto proposalDetailDto)
+        //{
+        //    var proposalDetailInventory = _ProposalOpenMarketInventoryService.GetInventory(proposalDetailDto.Id.Value, impressionsEquivalized: false);
+        //    var advertisers = _SmsClient.FindAdvertiserById(dto.AdvertiserId);
 
-            var data = new ScxData
+        //    var data = new ScxData
+        //    {
+        //        GuaranteedDemoId = dto.GuaranteedDemoId,
+        //        SecondaryDemos = dto.SecondaryDemos,
+        //        StartDate = proposalDetailDto.FlightStartDate,
+        //        EndDate = proposalDetailDto.FlightEndDate,               
+        //        InventoryMarkets = proposalDetailInventory.Markets.Select(m => new ScxMarketDto
+        //        {
+        //            MarketCoverage = m.MarketCoverage,
+        //            MarketId = m.MarketId,
+        //            MarketName = m.MarketName,
+        //            MarketRank = m.MarketRank,
+        //            MarketSubscribers = m.MarketSubscribers,
+        //            Stations = m.Stations.Select(x => new ScxStation
+        //            {
+        //                Affiliation = x.Affiliation,
+        //                CallLetters = x.CallLetters,
+        //                LegacyCallLetters = x.LegacyCallLetters,
+        //                StationCode = x.StationCode,
+        //                Programs = x.Programs.Select(y => new ScxProgram
+        //                {
+        //                    Dayparts = y.Dayparts,
+        //                    FlightWeeks = y.FlightWeeks,
+        //                    StationCode = y.StationCode,
+        //                    Genres = y.Genres,
+        //                    ProgramId = y.ProgramId,
+        //                    ProgramNames = y.ProgramNames,
+        //                    ProvidedUnitImpressions = y.ProvidedUnitImpressions,
+        //                    TargetCpm = y.TargetCpm,
+        //                    TargetImpressions = y.TargetImpressions,
+        //                    UnitImpressions = y.UnitImpressions
+        //                }).ToList()
+        //            }).ToList()
+        //        }).ToList(),
+        //        DaypartCode = proposalDetailDto.DaypartCode,
+        //        SpotLength = proposalDetailInventory.DetailSpotLength.ToString(),
+        //        AdvertisersName = advertisers.Display
+        //    };
+
+        //    data.WeekData = _SetProgramWeeks(proposalDetailInventory);
+        //    _SetMarketSurveyData(data, proposalDetailDto);
+        //    _SetDemos(data, proposalDetailDto);
+        //    _SetDmaMarketName(data.InventoryMarkets, data.MarketIds);
+        //    return data;
+        //}
+
+        private void _SetDmaMarketName(List<ScxMarketDto> inventoryMarkets, List<int> marketIds)
+        {
+            var dmaMarketRepo = _BroadcastDataRepositoryFactory.GetDataRepository<IMarketDmaMapRepository>();
+            var dmaMarketNames = dmaMarketRepo.GetMarketMapFromMarketCodes(marketIds)
+                                           .ToDictionary(k => (int)k.market_code, v => v.dma_mapped_value);
+            foreach (var id in marketIds)
             {
-                ProposalDto = dto,
-                StartDate = proposalDetailDto.FlightStartDate,
-                EndDate = proposalDetailDto.FlightEndDate,
-                MarketIds = proposalDetailInventory.Weeks
-                    .SelectMany(w => w.Markets.Where(mk => mk.Stations.SelectMany(s => s.Programs).Any(p => p != null && p.Spots > 0)).Select(m => m.MarketId))
-                    .Distinct()
-                    .ToList(),
-                InventoryMarkets = proposalDetailInventory.Markets.ToDictionary(m => m.MarketId, m => new ScxMarketDto {
-                    MarketCoverage = m.MarketCoverage,
-                    MarketId = m.MarketId,
-                    MarketName = m.MarketName,
-                    MarketRank = m.MarketRank,
-                    MarketSubscribers = m.MarketSubscribers,
-                    Stations = m.Stations.Select(x=> new ScxMarketDto.ScxStation
-                    {
-                        Affiliation = x.Affiliation,
-                        CallLetters = x.CallLetters,
-                        LegacyCallLetters = x.LegacyCallLetters,
-                        StationCode = x.StationCode,
-                        Programs = x.Programs.Select(y=> new ScxMarketDto.ScxProgram
-                        {
-                            Dayparts = y.Dayparts,
-                            FlightWeeks = y.FlightWeeks,
-                            StationCode = y.StationCode,
-                            Genres = y.Genres,
-                            ProgramId = y.ProgramId,
-                            ProgramNames = y.ProgramNames,
-                            ProvidedUnitImpressions = y.ProvidedUnitImpressions,
-                            TargetCpm = y.TargetCpm,
-                            TargetImpressions = y.TargetImpressions,
-                            UnitImpressions = y.UnitImpressions
-                        }).ToList()
-                    }).ToList()
-                }),
-                DmaMarketName = dmaMarketRepo.GetMarketMapFromMarketCodes(proposalDetailInventory.Markets.Select(m => m.MarketId).ToList())
-                                            .ToDictionary(k => (int)k.market_code, v => v.dma_mapped_value),
-                DaypartCode = proposalDetailDto.DaypartCode,
-                SpotLength = proposalDetailInventory.DetailSpotLength.ToString(),
-                AdvertisersName = advertisers.Display
-            };
-            
-            data.WeekData = _SetProgramWeeks(proposalDetailInventory);
-            _SetMarketSurveyData(data, proposalDetailDto);
-            _SetDemos(data, proposalDetailDto);
-            return data;
+                inventoryMarkets.Single(x => x.MarketId == id).DmaMarketName = dmaMarketNames[id];
+            }           
         }
 
         private void _SetMarketSurveyData(ScxData data, ProposalDetailDto proposalDetailDto)
@@ -118,9 +128,9 @@ namespace Services.Broadcast.Converters.Scx
         {
             var demos = new List<int>
             {
-                data.ProposalDto.GuaranteedDemoId
+                data.GuaranteedDemoId
             };
-            demos.AddRange(data.ProposalDto.SecondaryDemos);
+            demos.AddRange(data.SecondaryDemos);
 
             var audiencesMappings = _BroadcastDataRepositoryFactory.GetDataRepository<IBroadcastAudienceRepository>()
                         .GetRatingsAudiencesByMaestroAudience(demos).ToList();
@@ -192,19 +202,20 @@ namespace Services.Broadcast.Converters.Scx
                 .SelectMany(w => w.InventoryWeek.Markets)
                 .SelectMany(m => m.Stations)
                 .SelectMany(s => s.Programs)
-                .Where(p => p != null &&  p.Spots > 0)
+                .Where(p => p != null && p.Spots > 0)
                 .Select(dd => dd.ProgramId);
             var stations = data.InventoryMarkets
-                .SelectMany(pm => pm.Value.Stations)
+                .SelectMany(pm => pm.Stations)
                 .SelectMany(s => s.Programs
                     .Where(p => programIds.Contains(p.ProgramId))
                     .SelectMany(p =>
-                        p.Dayparts.Select(pdp => 
+                        p.Dayparts.Select(pdp =>
                         new ManifestDetailDaypart()
                         {
                             Id = p.ProgramId,
-                            LegacyCallLetters =s.LegacyCallLetters
-                            ,DisplayDaypart = _DaypartCache.GetDisplayDaypart(pdp.Id) 
+                            LegacyCallLetters = s.LegacyCallLetters
+                            ,
+                            DisplayDaypart = _DaypartCache.GetDisplayDaypart(pdp.Id)
                         }))).ToList();
 
             List<StationImpressions> stationImpressions;
@@ -217,9 +228,9 @@ namespace Services.Broadcast.Converters.Scx
                 if (isSingleBook)
                 {
                     stationImpressions = repo.GetImpressionsDaypart(proposalDetailDto.SingleProjectionBookId.Value
-                                               ,audienceIds
-                                               ,stations
-                                               ,playbackType, BroadcastComposerWebSystemParameter.UseDayByDayImpressions)
+                                               , audienceIds
+                                               , stations
+                                               , playbackType, BroadcastComposerWebSystemParameter.UseDayByDayImpressions)
                                                .Cast<StationImpressions>()
                                                .ToList();
                 }
@@ -248,12 +259,12 @@ namespace Services.Broadcast.Converters.Scx
                     .Where(p => p != null && p.Spots > 0)
                     .Select(dd => dd.ProgramId);
                 var manifestInfo = data.InventoryMarkets
-                    .SelectMany(pm => pm.Value.Stations)
+                    .SelectMany(pm => pm.Stations)
                     .SelectMany(s => s.Programs
                         .Where(p => programIds.Contains(p.ProgramId))
                         .SelectMany(p =>
-                            p.Dayparts.Select(dp => 
-                                new ManifestDetailDaypart() { Id = p.ProgramId,LegacyCallLetters = s.LegacyCallLetters,DisplayDaypart = _DaypartCache.GetDisplayDaypart(dp.Id)})));
+                            p.Dayparts.Select(dp =>
+                                new ManifestDetailDaypart() { Id = p.ProgramId, LegacyCallLetters = s.LegacyCallLetters, DisplayDaypart = _DaypartCache.GetDisplayDaypart(dp.Id) })));
 
                 demo.Ratings = new List<Ratingdata>();
                 foreach (var impressionData in demo.Impressions)
@@ -263,14 +274,14 @@ namespace Services.Broadcast.Converters.Scx
                     Ratingdata demoRating = new Ratingdata()
                     {
                         DaypartId = manifestDetail.DisplayDaypart.Id,
-                        Rating = impressionData.Rating  * 100,
-                        LegacyCallLetters= impressionData.Legacy_call_letters
+                        Rating = impressionData.Rating * 100,
+                        LegacyCallLetters = impressionData.Legacy_call_letters
                     };
                     demo.Ratings.Add(demoRating);
                 }
             }
         }
-        
+
         private List<ScxMarketStationProgramSpotWeek> _SetProgramWeeks(ProposalDetailOpenMarketInventoryDto detail)
         {
             var startDate = detail.DetailFlightStartDate;

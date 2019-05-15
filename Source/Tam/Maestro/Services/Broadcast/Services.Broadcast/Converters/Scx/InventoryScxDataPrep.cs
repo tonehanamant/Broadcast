@@ -97,10 +97,10 @@ namespace Services.Broadcast.Converters.Scx
                                   : null,
                             Stations = _LoadStations(groupedManifests)
                         };
-                    }).ToDictionary(k => k.MarketId ?? 0, v => v)
+                    }).ToList()
                 };
 
-                _SetMarketIds(scxData);
+                scxData.WeekData = _SetProgramWeeks(items, quarter.StartDate, quarter.EndDate);
 
                 ProprietaryInventoryHeader inventoryHeader = _InventoryRepository.GetInventoryFileHeader(inventoryFileId.Value);
                 var marketSubscribers = _NsiUniverseRepository.GetUniverseDataByAudience(inventoryHeader.ShareBookId.Value, new List<int> { inventoryHeader.Audience.Id });
@@ -108,9 +108,9 @@ namespace Services.Broadcast.Converters.Scx
                 var marketCoverages = _MarketCoverageRepository.GetLatestMarketCoverages(scxData.MarketIds).MarketCoveragesByMarketCode;
 
                 _SetMarketProperties(scxData, marketRankings, marketSubscribers, marketCoverages);
-                _SetMarketsDmaName(scxData);
+                _SetDmaMarketName(scxData.InventoryMarkets, scxData.MarketIds);
                 _SetMarketSurveyData(scxData, inventoryHeader);
-                scxData.WeekData = _SetProgramWeeks(items, quarter.StartDate, quarter.EndDate);
+                
                 result.Add(scxData);
             }
             return result;
@@ -158,22 +158,17 @@ namespace Services.Broadcast.Converters.Scx
                 k => k.MarketId,
                 v => mediaMonthInfo + " DMA Nielsen " + v.PlaybackType.ToString().Replace("Plus", "+"));
         }
-
-        private void _SetMarketsDmaName(ScxData inventoryForGoup)
+        
+        private void _SetDmaMarketName(List<ScxMarketDto> inventoryMarkets, List<int> marketIds)
         {
-            inventoryForGoup.DmaMarketName = _MarketDmaMapRepository.GetMarketMapFromMarketCodes(inventoryForGoup.MarketIds)
-                                            .ToDictionary(k => (int)k.market_code, v => v.dma_mapped_value);
+            var dmaMarketNames = _MarketDmaMapRepository.GetMarketMapFromMarketCodes(marketIds)
+                                           .ToDictionary(k => (int)k.market_code, v => v.dma_mapped_value);
+            foreach (var id in marketIds)
+            {
+                inventoryMarkets.Single(x => x.MarketId == id).DmaMarketName = dmaMarketNames[id];
+            }
         }
-
-        private void _SetMarketIds(ScxData inventoryForGoup)
-        {
-            inventoryForGoup.MarketIds = inventoryForGoup.InventoryMarkets
-                .Where(x => x.Value.MarketId != null)
-                .Select(x => x.Value.MarketId.Value)
-                .Distinct()
-                .ToList();
-        }
-
+        
         private List<ScxMarketStationProgramSpotWeek> _SetProgramWeeks(List<StationInventoryGroup> groups, DateTime startDate, DateTime endDate)
         {
             var mediaWeeks = _MediaMonthAndWeekCache.GetMediaWeeksIntersecting(startDate, endDate);
@@ -219,7 +214,7 @@ namespace Services.Broadcast.Converters.Scx
             , Dictionary<short, double> marketsSubscribers
             , Dictionary<int, double> marketsCoverage)
         {
-            InventoryScxData.InventoryMarkets.Values.Where(x => x.MarketId != null).ToList().ForEach(y =>
+            InventoryScxData.InventoryMarkets.Where(x => x.MarketId != null).ToList().ForEach(y =>
               {
                   marketRankings.TryGetValue(y.MarketId.Value, out var rank);
                   y.MarketRank = rank;

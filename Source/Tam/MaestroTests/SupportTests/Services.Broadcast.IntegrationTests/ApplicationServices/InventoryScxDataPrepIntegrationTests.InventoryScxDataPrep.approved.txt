@@ -3,10 +3,11 @@
     "AdvertisersName": null,
     "DaypartCode": "EMN",
     "Demos": null,
-    "DmaMarketName": {},
     "EndDate": "2019-02-17T00:00:00",
-    "InventoryMarkets": {
-      "0": {
+    "GuaranteedDemoId": 0,
+    "InventoryMarkets": [
+      {
+        "DmaMarketName": null,
         "MarketCoverage": null,
         "MarketId": null,
         "MarketName": null,
@@ -59,7 +60,7 @@
           }
         ]
       }
-    },
+    ],
     "InventorySource": {
       "Id": 7,
       "InventoryType": 2,
@@ -68,7 +69,7 @@
     },
     "MarketIds": [],
     "MarketPlaybackTypes": [],
-    "ProposalDto": null,
+    "SecondaryDemos": [],
     "SpotLength": "30",
     "StartDate": "2019-02-10T00:00:00",
     "SurveyData": {

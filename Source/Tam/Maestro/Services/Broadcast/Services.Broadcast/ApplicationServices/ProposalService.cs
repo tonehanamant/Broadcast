@@ -43,8 +43,7 @@ namespace Services.Broadcast.ApplicationServices
         ProposalDto GetProposalByIdWithVersion(int proposalId, int proposalVersion);
         ProposalDetailDto GetProposalDetail(ProposalDetailRequestDto proposalDetailRequestDto);
         ProposalDto CalculateProposalChanges(ProposalChangeRequest changeRequest);
-        ProposalDto UnorderProposal(int proposalId, string username);
-        Tuple<string, Stream> GenerateScxFileArchive(int proposalIds);
+        ProposalDto UnorderProposal(int proposalId, string username);        
         ValidationWarningDto DeleteProposal(int proposalId);
         Dictionary<int, ProposalDto> GetProposalsByQuarterWeeks(List<int> quarterWeekIds);
         List<LookupDto> FindGenres(string genreSearchString);
@@ -58,7 +57,11 @@ namespace Services.Broadcast.ApplicationServices
         List<LookupDto> FindShowType(string showTypeSearchString);
 
         List<string> SaveProposalBuy(ProposalBuySaveRequestDto proposalBuyRequest);
-        Tuple<string, Stream> GenerateScxFileDetail(int proposalDetailId);
+
+        //Feature not available
+        //Tuple<string, Stream> GenerateScxFileDetail(int proposalDetailId);
+        //Tuple<string, Stream> GenerateScxFileArchive(int proposalIds);
+
         string AlignProposalDaypartsToZeroSeconds();
     }
 
@@ -1367,46 +1370,47 @@ namespace Services.Broadcast.ApplicationServices
         }
 
         /// <summary>
+        /// Feature not available
         /// Generates one or more SCX files from the provided proposal Id, one file per proposal detail.
         /// </summary>
         /// <returns>Returns a list of proposal detail file names</returns>
-        public Tuple<string, Stream> GenerateScxFileArchive(int proposalId)
-        {
-            string fileNameTemplate = "{0}({1}) - {2} - Export.scx";
-            string fileArchiveTemplate = "{0}{1} Archive.zip";
-            string detailInfoTemplate = "Flt {2:00} From {0} to {1}";
+        //public Tuple<string, Stream> GenerateScxFileArchive(int proposalId)
+        //{
+        //    string fileNameTemplate = "{0}({1}) - {2} - Export.scx";
+        //    string fileArchiveTemplate = "{0}{1} Archive.zip";
+        //    string detailInfoTemplate = "Flt {2:00} From {0} to {1}";
 
-            var proposal = GetProposalById(proposalId);
-            var scxFiles = _ProposalScxConverter.ConvertProposal(proposal);
+        //    var proposal = GetProposalById(proposalId);
+        //    var scxFiles = _ProposalScxConverter.ConvertProposal(proposal);
 
-            _ProposalOpenMarketInventoryService.SaveInventorySnapshot(proposal.Id.Value, proposal.Details.Select(x => x.Id.Value).ToList());
+        //    _ProposalOpenMarketInventoryService.SaveInventorySnapshot(proposal.Id.Value, proposal.Details.Select(x => x.Id.Value).ToList());
 
-            MemoryStream archiveFile = new MemoryStream();
+        //    MemoryStream archiveFile = new MemoryStream();
 
-            string proposalName = proposal.ProposalName.PrepareForUsingInFileName();
+        //    string proposalName = proposal.ProposalName.PrepareForUsingInFileName();
 
-            using (var arch = new ZipArchive(archiveFile, ZipArchiveMode.Create, true))
-            {
-                int ctr = 1;
-                foreach (var scxFile in scxFiles)
-                {
-                    var detailName = string.Format(detailInfoTemplate,
-                        scxFile.ProposalDetailDto.FlightStartDate.ToFileDateFormat(),
-                        scxFile.ProposalDetailDto.FlightEndDate.ToFileDateFormat(),
-                        ctr++);
-                    string scxFileName = string.Format(fileNameTemplate, proposalName, proposal.Id, detailName);
+        //    using (var arch = new ZipArchive(archiveFile, ZipArchiveMode.Create, true))
+        //    {
+        //        int ctr = 1;
+        //        foreach (var scxFile in scxFiles)
+        //        {
+        //            var detailName = string.Format(detailInfoTemplate,
+        //                scxFile.ProposalDetailDto.FlightStartDate.ToFileDateFormat(),
+        //                scxFile.ProposalDetailDto.FlightEndDate.ToFileDateFormat(),
+        //                ctr++);
+        //            string scxFileName = string.Format(fileNameTemplate, proposalName, proposal.Id, detailName);
 
-                    var archiveEntry = arch.CreateEntry(scxFileName, CompressionLevel.Fastest);
-                    using (var zippedStreamEntry = archiveEntry.Open())
-                    {
-                        scxFile.ScxStream.CopyTo(zippedStreamEntry);
-                    }
-                }
-            }
-            archiveFile.Seek(0, SeekOrigin.Begin);
-            var archiveFileName = string.Format(fileArchiveTemplate, proposalName, proposal.Id);
-            return new Tuple<string, Stream>(archiveFileName, archiveFile);
-        }
+        //            var archiveEntry = arch.CreateEntry(scxFileName, CompressionLevel.Fastest);
+        //            using (var zippedStreamEntry = archiveEntry.Open())
+        //            {
+        //                scxFile.ScxStream.CopyTo(zippedStreamEntry);
+        //            }
+        //        }
+        //    }
+        //    archiveFile.Seek(0, SeekOrigin.Begin);
+        //    var archiveFileName = string.Format(fileArchiveTemplate, proposalName, proposal.Id);
+        //    return new Tuple<string, Stream>(archiveFileName, archiveFile);
+        //}
 
         public List<LookupDto> FindGenres(string genreSearchString)
         {
@@ -1477,31 +1481,35 @@ namespace Services.Broadcast.ApplicationServices
             return proposalBuy.Errors;
         }
 
-        public Tuple<string, Stream> GenerateScxFileDetail(int proposalDetailId)
-        {
-            string fileNameTemplate = "{0}({1}) - {2} - Export.scx";
-            string detailInfoTemplate = "Flt {2:00} From {0} to {1}";
+        /// <summary>
+        /// Feature not available
+        /// </summary>
+        /// <returns></returns>
+        //public Tuple<string, Stream> GenerateScxFileDetail(int proposalDetailId)
+        //{
+        //    string fileNameTemplate = "{0}({1}) - {2} - Export.scx";
+        //    string detailInfoTemplate = "Flt {2:00} From {0} to {1}";
 
-            var proposal = _ProposalRepository.GetProposalByDetailId(proposalDetailId);
-            var proposalDetail = proposal.Details.Single(d => d.Id == proposalDetailId);
-            ProposalScxFile scxFile = null;
-            _ProposalScxConverter.ConvertProposalDetail(proposal, proposalDetail, ref scxFile);
-            if (scxFile == null)
-                throw new InvalidOperationException("Could not generate SCX file.");
+        //    var proposal = _ProposalRepository.GetProposalByDetailId(proposalDetailId);
+        //    var proposalDetail = proposal.Details.Single(d => d.Id == proposalDetailId);
+        //    ProposalScxFile scxFile = null;
+        //    _ProposalScxConverter.ConvertProposalDetail(proposal, proposalDetail, ref scxFile);
+        //    if (scxFile == null)
+        //        throw new InvalidOperationException("Could not generate SCX file.");
 
-            _ProposalOpenMarketInventoryService.SaveInventorySnapshot(proposal.Id.Value, new List<int> { proposalDetailId });
+        //    _ProposalOpenMarketInventoryService.SaveInventorySnapshot(proposal.Id.Value, new List<int> { proposalDetailId });
 
-            string proposalName = proposal.ProposalName.PrepareForUsingInFileName();
+        //    string proposalName = proposal.ProposalName.PrepareForUsingInFileName();
 
-            var detailName = string.Format(detailInfoTemplate,
-                scxFile.ProposalDetailDto.FlightStartDate.ToFileDateFormat(),
-                scxFile.ProposalDetailDto.FlightEndDate.ToFileDateFormat(),
-                1);
+        //    var detailName = string.Format(detailInfoTemplate,
+        //        scxFile.ProposalDetailDto.FlightStartDate.ToFileDateFormat(),
+        //        scxFile.ProposalDetailDto.FlightEndDate.ToFileDateFormat(),
+        //        1);
 
-            var detailFileName = string.Format(fileNameTemplate, proposalName, proposal.Id, detailName);
+        //    var detailFileName = string.Format(fileNameTemplate, proposalName, proposal.Id, detailName);
 
-            return new Tuple<string, Stream>(detailFileName, scxFile.ScxStream);
-        }
+        //    return new Tuple<string, Stream>(detailFileName, scxFile.ScxStream);
+        //}
 
         public string AlignProposalDaypartsToZeroSeconds()
         {
