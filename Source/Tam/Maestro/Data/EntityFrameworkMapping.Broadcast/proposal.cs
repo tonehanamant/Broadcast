@@ -27,6 +27,7 @@ namespace EntityFrameworkMapping.Broadcast
         public string modified_by { get; set; }
         public System.DateTime modified_date { get; set; }
         public int primary_version_id { get; set; }
+        public Nullable<int> campaign_id { get; set; }
     
         public virtual ICollection<proposal_versions> proposal_versions { get; set; }
     }

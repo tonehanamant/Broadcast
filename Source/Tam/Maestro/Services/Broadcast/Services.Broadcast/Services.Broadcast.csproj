@@ -209,6 +209,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Aggregates\SchedulesAggregate.cs" />
+    <Compile Include="Entities\CampaignDto.cs" />
+    <Compile Include="ApplicationServices\CampaignService.cs" />
     <Compile Include="ApplicationServices\ProprietaryInventoryService.cs" />
     <Compile Include="ApplicationServices\DataLakeFileService.cs" />
     <Compile Include="Converters\AudienceHelper.cs" />
@@ -607,6 +609,7 @@
     <Compile Include="ProposalCache.cs" />
     <Compile Include="ReportGenerators\SpotTrackerReportGenerator.cs" />
     <Compile Include="Repositories\AudienceRepository.cs" />
+    <Compile Include="Repositories\CampaignRepository.cs" />
     <Compile Include="Repositories\ProprietaryInventoryRepository.cs" />
     <Compile Include="Repositories\BroadcastAudienceRepository.cs" />
     <Compile Include="Repositories\BroadcastForecastRepositoryBase.cs" />

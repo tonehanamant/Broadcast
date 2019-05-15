@@ -227,6 +227,22 @@
           <Property Name="delivery" Type="float" Nullable="false" />
           <Property Name="audience_rank" Type="int" />
         </EntityType>
+        <EntityType Name="campaigns">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="127" Nullable="false" />
+          <Property Name="advertiser_id" Type="int" Nullable="false" />
+          <Property Name="agency_id" Type="int" Nullable="false" />
+          <Property Name="start_date" Type="datetime" Nullable="false" />
+          <Property Name="end_date" Type="datetime" Nullable="false" />
+          <Property Name="budget" Type="money" />
+          <Property Name="created_date" Type="datetime" Nullable="false" />
+          <Property Name="created_by" Type="varchar" MaxLength="63" Nullable="false" />
+          <Property Name="modified_date" Type="datetime" />
+          <Property Name="modified_by" Type="varchar" MaxLength="63" />
+        </EntityType>
         <EntityType Name="daypart_codes">
           <Key>
             <PropertyRef Name="id" />
@@ -964,6 +980,7 @@
           <Property Name="modified_by" Type="varchar" MaxLength="63" Nullable="false" />
           <Property Name="modified_date" Type="datetime" Nullable="false" />
           <Property Name="primary_version_id" Type="int" Nullable="false" />
+          <Property Name="campaign_id" Type="int" />
         </EntityType>
         <EntityType Name="rating_adjustments">
           <Key>
@@ -3442,6 +3459,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySet Name="bvs_map_types" EntityType="Self.bvs_map_types" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="bvs_maps" EntityType="Self.bvs_maps" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="bvs_post_details" EntityType="Self.bvs_post_details" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="campaigns" EntityType="Self.campaigns" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="daypart_codes" EntityType="Self.daypart_codes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="daypart_days" EntityType="Self.daypart_days" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="dayparts" EntityType="Self.dayparts" Schema="dbo" store:Type="Tables" />
@@ -4918,6 +4936,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="media_months" EntitySet="media_months" />
             <End Role="inventory_file_proprietary_header" EntitySet="inventory_file_proprietary_header" />
           </AssociationSet>
+          <EntitySet Name="campaigns" EntityType="BroadcastModel.campaign" />
           </EntityContainer>
         <EntityType Name="audience_audiences">
           <Key>
@@ -5224,6 +5243,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="modified_date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="primary_version_id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="proposal_versions" Relationship="BroadcastModel.FK_proposal_versions_proposals" FromRole="proposal" ToRole="proposal_versions" />
+          <Property Name="campaign_id" Type="Int32" />
         </EntityType>
         <EntityType Name="rating_adjustments">
           <Key>
@@ -8607,6 +8627,22 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="is_active" Type="Boolean" Nullable="false" />
         </EntityType>
+        <EntityType Name="campaign">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="127" FixedLength="false" Unicode="false" />
+          <Property Name="advertiser_id" Type="Int32" Nullable="false" />
+          <Property Name="agency_id" Type="Int32" Nullable="false" />
+          <Property Name="start_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="end_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="budget" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="created_by" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
+          <Property Name="modified_date" Type="DateTime" Precision="3" />
+          <Property Name="modified_by" Type="String" MaxLength="63" FixedLength="false" Unicode="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -8849,6 +8885,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="proposals">
             <EntityTypeMapping TypeName="BroadcastModel.proposal">
               <MappingFragment StoreEntitySet="proposals">
+                <ScalarProperty Name="campaign_id" ColumnName="campaign_id" />
                 <ScalarProperty Name="primary_version_id" ColumnName="primary_version_id" />
                 <ScalarProperty Name="modified_date" ColumnName="modified_date" />
                 <ScalarProperty Name="modified_by" ColumnName="modified_by" />
@@ -10087,6 +10124,23 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
                 <ScalarProperty Name="effective_date" ColumnName="effective_date" />
                 <ScalarProperty Name="daypart_code" ColumnName="daypart_code" />
                 <ScalarProperty Name="inventory_file_id" ColumnName="inventory_file_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="campaigns">
+            <EntityTypeMapping TypeName="BroadcastModel.campaign">
+              <MappingFragment StoreEntitySet="campaigns">
+                <ScalarProperty Name="modified_by" ColumnName="modified_by" />
+                <ScalarProperty Name="modified_date" ColumnName="modified_date" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="created_date" ColumnName="created_date" />
+                <ScalarProperty Name="budget" ColumnName="budget" />
+                <ScalarProperty Name="end_date" ColumnName="end_date" />
+                <ScalarProperty Name="start_date" ColumnName="start_date" />
+                <ScalarProperty Name="agency_id" ColumnName="agency_id" />
+                <ScalarProperty Name="advertiser_id" ColumnName="advertiser_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

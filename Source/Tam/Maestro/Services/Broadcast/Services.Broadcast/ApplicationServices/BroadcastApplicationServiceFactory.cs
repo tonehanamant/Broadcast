@@ -163,6 +163,8 @@ namespace Services.Broadcast.ApplicationServices
 
             unityContainer.RegisterType<IInventorySummaryService, InventorySummaryService>();
 
+            unityContainer.RegisterType<ICampaignService, CampaignService>();
+
             //@todo This is temporary to control the daypart source for Broadcast
             var repoFactory = unityContainer.Resolve<IDataRepositoryFactory>();
             var daypartRepo = repoFactory.GetDataRepository<IDisplayDaypartRepository>();

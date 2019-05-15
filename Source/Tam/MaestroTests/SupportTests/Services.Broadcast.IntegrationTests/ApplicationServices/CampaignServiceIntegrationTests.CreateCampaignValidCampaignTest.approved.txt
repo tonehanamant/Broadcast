@@ -1,0 +1,12 @@
+﻿{
+  "AdvertiserId": 37674,
+  "AgencyId": 1,
+  "Budget": 543.12,
+  "CreatedBy": "IntegrationTestUser",
+  "CreatedDate": "2019-05-14T00:00:00",
+  "EndDate": "2019-05-18T00:00:00",
+  "ModifiedBy": null,
+  "ModifiedDate": null,
+  "Name": "Test Campaign",
+  "StartDate": "2019-05-14T00:00:00"
+}

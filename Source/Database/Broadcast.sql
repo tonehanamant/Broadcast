@@ -48,7 +48,7 @@ INSERT INTO #previous_version
 		WHERE parameter_key = 'SchemaVersion' 
 GO
 
-/*************************************** START UPDATE SCRIPT *****************************************************/
+/*************************************** START UPDATE SCRIPT ************************************************/
 
 
 /*************************************** START PRI-8007 *****************************************************/
@@ -116,7 +116,7 @@ BEGIN
 	EXEC sp_rename N'dbo.inventory_file_proprietary_header.IX_inventory_file_barter_header_share_projection_book_id', N'IX_inventory_file_proprietary_header_share_projection_book_id', N'INDEX'
 END
 
-/*************************************** END PRI-8007 *****************************************************/
+/*************************************** END PRI-8007 *******************************************************/
 
 /*************************************** START PRI-8453 *****************************************************/
 
@@ -163,7 +163,7 @@ BEGIN
 END
 GO
 
-/*************************************** END PRI-8453 *****************************************************/
+/*************************************** END PRI-8453 *******************************************************/
 
 /*************************************** START PRI-6134 *****************************************************/
 
@@ -175,7 +175,7 @@ BEGIN
 	ADD vpvh FLOAT NULL
 END
 
-/*************************************** END PRI-6134 *****************************************************/
+/*************************************** END PRI-6134 *******************************************************/
 
 /*************************************** START PRI-8858 *****************************************************/
 
@@ -187,9 +187,49 @@ BEGIN
 	WHERE name = 'OpenMarket'
 END
 
-/*************************************** END PRI-8858 *****************************************************/
+/*************************************** END PRI-8858 *******************************************************/
 
-/*************************************** END UPDATE SCRIPT *******************************************************/
+/*************************************** START PRI-8030 *****************************************************/
+
+IF NOT (EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES 
+				WHERE TABLE_SCHEMA = 'dbo' AND
+				TABLE_NAME = 'campaigns'))
+BEGIN
+	CREATE TABLE campaigns
+	(
+		id INT IDENTITY NOT NULL,
+		name VARCHAR(127) NOT NULL,
+		advertiser_id INT NOT NULL,
+		agency_id INT NOT NULL,
+		start_date DATETIME NOT NULL,
+		end_date DATETIME NOT NULL,
+		budget MONEY,
+		created_date DATETIME NOT NULL,
+		created_by VARCHAR(63) NOT NULL,
+		modified_date DATETIME,
+		modified_by VARCHAR(63)
+		CONSTRAINT PK_campaigns PRIMARY KEY CLUSTERED
+		(
+			id ASC
+		)
+	)
+END
+
+IF NOT EXISTS(SELECT 1 FROM sys.columns 
+			  WHERE Name = N'campaign_id'
+			  AND Object_ID = Object_ID(N'proposals'))
+BEGIN
+    ALTER TABLE proposals
+	ADD campaign_id INT
+
+	ALTER TABLE proposals ADD CONSTRAINT FK_proposals_campaigns
+	FOREIGN KEY (campaign_id) REFERENCES campaigns(id)
+END
+
+
+/*************************************** END PRI-8030 *******************************************************/
+
+/*************************************** END UPDATE SCRIPT **************************************************/
 
 -- Update the Schema Version of the database to the current release version
 UPDATE system_component_parameters 

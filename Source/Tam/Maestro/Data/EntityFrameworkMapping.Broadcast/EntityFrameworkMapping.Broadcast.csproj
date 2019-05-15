@@ -395,6 +395,9 @@
     <Compile Include="bvs_post_details.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="campaign.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="day.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>

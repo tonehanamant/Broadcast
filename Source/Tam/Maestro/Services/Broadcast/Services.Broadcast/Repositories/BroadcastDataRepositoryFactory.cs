@@ -80,6 +80,7 @@ namespace Services.Broadcast.Repositories
             instance.RegisterType<IDaypartCodeRepository, DaypartCodeRepository>();
             instance.RegisterType<IInventorySummaryRepository, InventorySummaryRepository>();
             instance.RegisterType<IProgramRepository, ProgramRepository>();
+            instance.RegisterType<ICampaignRepository, CampaignRepository>();
 
             WasRegistered = true;
         }

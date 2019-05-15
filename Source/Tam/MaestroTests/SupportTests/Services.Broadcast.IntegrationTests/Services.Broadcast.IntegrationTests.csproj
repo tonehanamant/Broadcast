@@ -222,6 +222,7 @@
     <Compile Include="ApplicationServices\AffidavitEmailProcessorTests.cs" />
     <Compile Include="ApplicationServices\AffPPServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\AffidavitValidationEngineTests.cs" />
+    <Compile Include="ApplicationServices\CampaignServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\ProprietaryFileImporterIntegrationTests.cs" />
     <Compile Include="ApplicationServices\ProprietaryInventoryServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\BaseProposalInventoryServiceIntegrationTests.cs" />

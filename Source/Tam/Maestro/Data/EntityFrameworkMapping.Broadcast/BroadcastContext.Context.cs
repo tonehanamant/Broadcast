@@ -132,5 +132,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<inventory_file_ratings_jobs> inventory_file_ratings_jobs { get; set; }
         public virtual DbSet<daypart_codes> daypart_codes { get; set; }
         public virtual DbSet<inventory_file_proprietary_header> inventory_file_proprietary_header { get; set; }
+        public virtual DbSet<campaign> campaigns { get; set; }
     }
 }
