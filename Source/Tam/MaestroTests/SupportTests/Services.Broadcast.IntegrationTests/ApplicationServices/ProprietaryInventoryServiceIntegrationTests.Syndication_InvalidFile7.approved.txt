@@ -1,7 +1,13 @@
 ﻿[
   {
     "AffectedProposals": null,
-    "ProblemDescription": "CPM header is expected. Row: 15, column: 5",
+    "ProblemDescription": "Line 16 contains an empty program cell",
+    "ProgramName": null,
+    "StationLetters": null
+  },
+  {
+    "AffectedProposals": null,
+    "ProblemDescription": "Line 16 contains an empty rate cell",
     "ProgramName": null,
     "StationLetters": null
   }

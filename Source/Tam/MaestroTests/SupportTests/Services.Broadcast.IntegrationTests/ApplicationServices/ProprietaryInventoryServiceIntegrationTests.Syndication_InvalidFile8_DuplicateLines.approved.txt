@@ -1,0 +1,8 @@
+﻿[
+  {
+    "AffectedProposals": null,
+    "ProblemDescription": "File contains a duplicate line on row 23 and 16, program name 'House'",
+    "ProgramName": null,
+    "StationLetters": null
+  }
+]

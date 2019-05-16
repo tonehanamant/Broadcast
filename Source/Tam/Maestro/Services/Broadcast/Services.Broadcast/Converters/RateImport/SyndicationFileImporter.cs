@@ -103,6 +103,11 @@ namespace Services.Broadcast.Converters.RateImport
 
                 var line = _ReadAndValidateDataLine(worksheet, rowIndex, columnIndex, audiences, daypartFoLines, out var lineProblems);
 
+                if (_IsDuplicateLine(line, proprietaryFile.DataLines, out int duplicateRowIndex))
+                {
+                    proprietaryFile.ValidationProblems.Add($"File contains a duplicate line on row {rowIndex} and {duplicateRowIndex}, program name '{line.Program}'");
+                }
+
                 if (lineProblems.Any())
                 {
                     proprietaryFile.ValidationProblems.AddRange(lineProblems);
@@ -118,6 +123,45 @@ namespace Services.Broadcast.Converters.RateImport
             }
         }
 
+        private bool _IsDuplicateLine(ProprietaryInventoryDataLine line, List<ProprietaryInventoryDataLine> dataLines, out int duplicateRowIndex)
+        {
+            var duplicateLines = dataLines.Where(x => x.Program == line.Program &&
+                                                      x.SpotCost == line.SpotCost);
+
+            foreach(var duplicateLine in duplicateLines)
+            {
+                var duplicateLineAudiences = duplicateLine.Audiences.OrderBy(x => x.Audience.Id).ToList();
+                var lineAudiences = line.Audiences.OrderBy(x => x.Audience.Id).ToList();
+
+                if (duplicateLineAudiences.Count() != lineAudiences.Count())
+                    continue;
+
+                var allAudiencesEqual = true;
+
+                for (var index = 0; index < duplicateLineAudiences.Count(); index++)
+                {
+                    if (duplicateLineAudiences[index].Audience.Id != lineAudiences[index].Audience.Id ||
+                        duplicateLineAudiences[index].Cpm != lineAudiences[index].Cpm ||
+                        duplicateLineAudiences[index].Impressions != lineAudiences[index].Impressions ||
+                        duplicateLineAudiences[index].Rating != lineAudiences[index].Rating ||
+                        duplicateLineAudiences[index].Vpvh != lineAudiences[index].Vpvh)
+                    {
+                        allAudiencesEqual = false;
+                        break;
+                    }
+                }
+
+                if (allAudiencesEqual)
+                {
+                    duplicateRowIndex = duplicateLine.RowIndex;
+                    return true;
+                }
+            }
+
+            duplicateRowIndex = 0;
+            return false;
+        }
+
         private ProprietaryInventoryDataLine _ReadAndValidateDataLine(
             ExcelWorksheet worksheet,
             int rowIndex,
@@ -127,7 +171,10 @@ namespace Services.Broadcast.Converters.RateImport
             out List<string> problems)
         {
             problems = new List<string>();
-            var line = new ProprietaryInventoryDataLine();
+            var line = new ProprietaryInventoryDataLine
+            {
+                RowIndex = rowIndex
+            };
 
             _ValidateAndSetProgramName(worksheet, rowIndex, columnIndex++, line, problems);
             _ValidateAndSetSpotCost(worksheet, rowIndex, columnIndex++, line, problems);
@@ -141,15 +188,15 @@ namespace Services.Broadcast.Converters.RateImport
             {
                 var lineAudience = new LineAudience { Audience = audience.ToDisplayAudience() };
 
-                lineAudience.Rating = _GetAndValidateCellValue(worksheet, rowIndex, columnIndex++, problems, "rating");
-                lineAudience.Impressions = _GetAndValidateCellValue(worksheet, rowIndex, columnIndex++, problems, "impressions");
+                lineAudience.Rating = _GetAndValidateDoubleCellValue(worksheet, rowIndex, columnIndex++, problems, "rating");
+                lineAudience.Impressions = _GetAndValidateDoubleCellValue(worksheet, rowIndex, columnIndex++, problems, "impressions");
 
                 if (audience.Code != BroadcastConstants.HOUSEHOLD_CODE)
                 {
-                    lineAudience.Vpvh = _GetAndValidateCellValue(worksheet, rowIndex, columnIndex++, problems, "VPVH");
+                    lineAudience.Vpvh = _GetAndValidateDoubleCellValue(worksheet, rowIndex, columnIndex++, problems, "VPVH");
                 }
 
-                lineAudience.Cpm = _GetAndValidateCellValue(worksheet, rowIndex, columnIndex++, problems, "CPM");
+                lineAudience.Cpm = _GetAndValidateDecimalCellValue(worksheet, rowIndex, columnIndex++, problems, "CPM");
 
                 var hasVpvhOrHousehold = (lineAudience.Vpvh.HasValue || audience.Code == BroadcastConstants.HOUSEHOLD_CODE);
 
@@ -201,7 +248,7 @@ namespace Services.Broadcast.Converters.RateImport
             }
         }
 
-        private double? _GetAndValidateCellValue(ExcelWorksheet worksheet, int rowIndex, int columnIndex, List<string> problems, string cellName)
+        private double? _GetAndValidateDoubleCellValue(ExcelWorksheet worksheet, int rowIndex, int columnIndex, List<string> problems, string cellName)
         {
             var cellText = worksheet.Cells[rowIndex, columnIndex].GetStringValue();
 
@@ -210,6 +257,30 @@ namespace Services.Broadcast.Converters.RateImport
                 problems.Add($"Line {rowIndex} contains an empty {cellName} cell in column {columnIndex}");
             }
             else if (!double.TryParse(cellText, out var cellValue))
+            {
+                problems.Add($"Line {rowIndex} contains an invalid {cellName} value in column {columnIndex}: {cellText}");
+            }
+            else if (cellValue < 0)
+            {
+                problems.Add($"Line {rowIndex} contains a negative {cellName} value in column {columnIndex}: {cellValue}");
+            }
+            else
+            {
+                return cellValue;
+            }
+
+            return null;
+        }
+
+        private decimal? _GetAndValidateDecimalCellValue(ExcelWorksheet worksheet, int rowIndex, int columnIndex, List<string> problems, string cellName)
+        {
+            var cellText = worksheet.Cells[rowIndex, columnIndex].GetStringValue();
+
+            if (string.IsNullOrEmpty(cellText))
+            {
+                problems.Add($"Line {rowIndex} contains an empty {cellName} cell in column {columnIndex}");
+            }
+            else if (!decimal.TryParse(cellText, out var cellValue))
             {
                 problems.Add($"Line {rowIndex} contains an invalid {cellName} value in column {columnIndex}: {cellText}");
             }
@@ -250,6 +321,7 @@ namespace Services.Broadcast.Converters.RateImport
                         IsReference = true,
                         Impressions = _ImpressionAdjustmentEngine.ConvertNtiImpressionsToNsi(a.Impressions.Value * 1000, ntiToNsiIncreaseInDecimals),
                         Rating = a.Rating,
+                        CPM = a.Cpm,
                         Vpvh = a.Vpvh
                     }).ToList(),
                     ManifestRates = new List<StationInventoryManifestRate>

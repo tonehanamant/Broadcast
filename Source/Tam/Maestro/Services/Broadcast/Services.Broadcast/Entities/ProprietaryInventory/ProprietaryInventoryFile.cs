@@ -36,6 +36,8 @@ namespace Services.Broadcast.Entities.ProprietaryInventory
 
             public List<LineAudience> Audiences { get; set; } = new List<LineAudience>();
 
+            public int RowIndex { get; set; }
+
             public class Unit
             {
                 public ProprietaryInventoryUnit ProprietaryInventoryUnit { get; set; }
@@ -55,7 +57,7 @@ namespace Services.Broadcast.Entities.ProprietaryInventory
                 public DisplayAudience Audience { get; set; }
                 public double? Impressions { get; set; }
                 public double? Rating { get; set; }
-                public double? Cpm { get; set; }
+                public decimal? Cpm { get; set; }
                 public double? Vpvh { get; set; }
             }
         }

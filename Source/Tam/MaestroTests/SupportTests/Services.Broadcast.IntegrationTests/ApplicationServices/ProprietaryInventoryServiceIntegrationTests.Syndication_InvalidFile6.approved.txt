@@ -1,7 +1,25 @@
 ﻿[
   {
     "AffectedProposals": null,
-    "ProblemDescription": "Rating header is expected. Row: 15, column: 6",
+    "ProblemDescription": "Unknown audience is specified: . Row: 15, column: 3",
+    "ProgramName": null,
+    "StationLetters": null
+  },
+  {
+    "AffectedProposals": null,
+    "ProblemDescription": "Impressions header is expected. Row: 15, column: 7",
+    "ProgramName": null,
+    "StationLetters": null
+  },
+  {
+    "AffectedProposals": null,
+    "ProblemDescription": "VPVH header is expected. Row: 15, column: 8",
+    "ProgramName": null,
+    "StationLetters": null
+  },
+  {
+    "AffectedProposals": null,
+    "ProblemDescription": "CPM header is expected. Row: 15, column: 9",
     "ProgramName": null,
     "StationLetters": null
   }

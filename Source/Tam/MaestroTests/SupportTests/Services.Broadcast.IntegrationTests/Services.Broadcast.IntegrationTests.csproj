@@ -519,6 +519,9 @@
     <None Include="Files\ProprietaryDataFiles\Syndication_InvalidFile7.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Files\ProprietaryDataFiles\Syndication_InvalidFile8.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Files\ProprietaryDataFiles\Syndication_ValidFile2.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

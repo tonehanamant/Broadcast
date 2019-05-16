@@ -12,7 +12,7 @@
           "AudienceString": "House Holds",
           "Id": 31
         },
-        "CPM": null,
+        "CPM": 5.2500,
         "Impressions": 5012531.3283208022,
         "IsReference": true,
         "Rating": 10.0,
@@ -23,7 +23,7 @@
           "AudienceString": "Adults 18-34",
           "Id": 32
         },
-        "CPM": null,
+        "CPM": 9.7500,
         "Impressions": 1002506.2656641604,
         "IsReference": true,
         "Rating": 50.0,
@@ -90,7 +90,7 @@
           "AudienceString": "House Holds",
           "Id": 31
         },
-        "CPM": null,
+        "CPM": 19.7700,
         "Impressions": 2757894.7368421052,
         "IsReference": true,
         "Rating": 2.29,
@@ -101,7 +101,7 @@
           "AudienceString": "Adults 18-34",
           "Id": 32
         },
-        "CPM": null,
+        "CPM": 33.4700,
         "Impressions": 1629072.6817042606,
         "IsReference": true,
         "Rating": 1.35,
@@ -168,7 +168,7 @@
           "AudienceString": "House Holds",
           "Id": 31
         },
-        "CPM": null,
+        "CPM": 7.7200,
         "Impressions": 855137.8446115288,
         "IsReference": true,
         "Rating": 0.71,
@@ -179,7 +179,7 @@
           "AudienceString": "Adults 18-34",
           "Id": 32
         },
-        "CPM": null,
+        "CPM": 15.2400,
         "Impressions": 433082.70676691725,
         "IsReference": true,
         "Rating": 0.36,
@@ -246,7 +246,7 @@
           "AudienceString": "House Holds",
           "Id": 31
         },
-        "CPM": null,
+        "CPM": 4.2700,
         "Impressions": 1201002.506265664,
         "IsReference": true,
         "Rating": 1.0,
@@ -257,7 +257,7 @@
           "AudienceString": "Adults 18-34",
           "Id": 32
         },
-        "CPM": null,
+        "CPM": 9.4800,
         "Impressions": 541353.3834586466,
         "IsReference": true,
         "Rating": 0.45,
@@ -324,7 +324,7 @@
           "AudienceString": "House Holds",
           "Id": 31
         },
-        "CPM": null,
+        "CPM": 8.8800,
         "Impressions": 1378446.1152882206,
         "IsReference": true,
         "Rating": 1.15,
@@ -335,7 +335,7 @@
           "AudienceString": "Adults 18-34",
           "Id": 32
         },
-        "CPM": null,
+        "CPM": 19.0600,
         "Impressions": 642606.51629072684,
         "IsReference": true,
         "Rating": 0.53,
@@ -402,7 +402,7 @@
           "AudienceString": "House Holds",
           "Id": 31
         },
-        "CPM": null,
+        "CPM": 14.3800,
         "Impressions": 556390.977443609,
         "IsReference": true,
         "Rating": 0.46,
@@ -413,7 +413,7 @@
           "AudienceString": "Adults 18-34",
           "Id": 32
         },
-        "CPM": null,
+        "CPM": 25.5900,
         "Impressions": 312781.954887218,
         "IsReference": true,
         "Rating": 0.26,

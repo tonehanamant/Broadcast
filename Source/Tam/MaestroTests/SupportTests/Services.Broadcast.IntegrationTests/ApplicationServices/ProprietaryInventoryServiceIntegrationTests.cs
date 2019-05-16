@@ -464,7 +464,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void Syndication_InvalidFile6()
         {
-            const string fileName = @"ProprietaryDataFiles\Syndication_InvalidFile4.xlsx";
+            const string fileName = @"ProprietaryDataFiles\Syndication_InvalidFile6.xlsx";
             _VerifyInventoryFileProblems(fileName);
         }
 
@@ -472,7 +472,15 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void Syndication_InvalidFile7()
         {
-            const string fileName = @"ProprietaryDataFiles\Syndication_InvalidFile5.xlsx";
+            const string fileName = @"ProprietaryDataFiles\Syndication_InvalidFile7.xlsx";
+            _VerifyInventoryFileProblems(fileName);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void Syndication_InvalidFile8_DuplicateLines()
+        {
+            const string fileName = @"ProprietaryDataFiles\Syndication_InvalidFile8.xlsx";
             _VerifyInventoryFileProblems(fileName);
         }
 
