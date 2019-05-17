@@ -26,6 +26,7 @@
       ],
       "Impressions": null,
       "Program": null,
+      "RowIndex": 0,
       "SpotCost": null,
       "Station": "WCBS",
       "Units": [
@@ -85,6 +86,7 @@
       ],
       "Impressions": null,
       "Program": null,
+      "RowIndex": 0,
       "SpotCost": null,
       "Station": "WNYW",
       "Units": [

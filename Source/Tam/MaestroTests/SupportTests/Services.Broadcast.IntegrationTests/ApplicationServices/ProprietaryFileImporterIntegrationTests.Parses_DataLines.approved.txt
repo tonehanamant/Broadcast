@@ -27,6 +27,7 @@
       ],
       "Impressions": null,
       "Program": null,
+      "RowIndex": 0,
       "SpotCost": null,
       "Station": "KOB+",
       "Units": [
@@ -86,6 +87,7 @@
       ],
       "Impressions": null,
       "Program": null,
+      "RowIndex": 0,
       "SpotCost": null,
       "Station": "KOLN",
       "Units": [
@@ -162,6 +164,7 @@
       ],
       "Impressions": null,
       "Program": null,
+      "RowIndex": 0,
       "SpotCost": null,
       "Station": "KRQE+",
       "Units": [
@@ -255,6 +258,7 @@
       ],
       "Impressions": null,
       "Program": null,
+      "RowIndex": 0,
       "SpotCost": null,
       "Station": "KUON-TV 12.1",
       "Units": [
@@ -314,6 +318,7 @@
       ],
       "Impressions": null,
       "Program": null,
+      "RowIndex": 0,
       "SpotCost": null,
       "Station": "KSWB-TV 69.2",
       "Units": [
