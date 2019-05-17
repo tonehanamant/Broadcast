@@ -1,0 +1,17 @@
+﻿{
+  "weeksHistoryAfterExpiring": [
+    {
+      "EndDate": "2018-10-14T00:00:00",
+      "MediaWeekId": 772,
+      "Spots": 1,
+      "StartDate": "2018-10-10T00:00:00"
+    },
+    {
+      "EndDate": "2018-10-17T00:00:00",
+      "MediaWeekId": 773,
+      "Spots": 1,
+      "StartDate": "2018-10-15T00:00:00"
+    }
+  ],
+  "weeksHistoryBeforeExpiring": []
+}

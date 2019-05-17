@@ -239,6 +239,22 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        public void OAndO_WeekIsOutOfValidDateInterval()
+        {
+            const string fileName = @"ProprietaryDataFiles\OAndO_WeekIsOutOfValidDateInterval.xlsx";
+            _VerifyInventoryFileProblems(fileName);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void OAndO_WeekIsSpecifiedSeveralTimes()
+        {
+            const string fileName = @"ProprietaryDataFiles\OAndO_WeekIsSpecifiedSeveralTimes.xlsx";
+            _VerifyInventoryFileProblems(fileName);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
         public void SavesOAndOInventoryFile()
         {
             const string fileName = @"ProprietaryDataFiles\OAndO_ValidFile1.xlsx";

@@ -2,8 +2,8 @@
   {
     "Comment": null,
     "DaypartCode": "LN",
-    "EffectiveDate": "2018-10-10T00:00:00",
-    "EndDate": "2018-11-10T00:00:00",
+    "EffectiveDate": null,
+    "EndDate": null,
     "InventorySourceId": 10,
     "ManifestAudiences": [
       {
@@ -45,6 +45,7 @@
     "ManifestRates": [],
     "ManifestWeeks": [
       {
+        "EndDate": "2019-02-10T00:00:00",
         "MediaWeek": {
           "_EndDate": "2019-02-10T00:00:00",
           "_MediaMonthId": 449,
@@ -52,7 +53,8 @@
           "_WeekNumber": 2,
           "IsDirty": true
         },
-        "Spots": 2
+        "Spots": 2,
+        "StartDate": "2019-02-04T00:00:00"
       }
     ],
     "ProjectedStationImpressions": [],
@@ -74,8 +76,8 @@
   {
     "Comment": null,
     "DaypartCode": "LN",
-    "EffectiveDate": "2018-10-10T00:00:00",
-    "EndDate": "2018-11-10T00:00:00",
+    "EffectiveDate": null,
+    "EndDate": null,
     "InventorySourceId": 10,
     "ManifestAudiences": [
       {
@@ -117,6 +119,7 @@
     "ManifestRates": [],
     "ManifestWeeks": [
       {
+        "EndDate": "2019-02-10T00:00:00",
         "MediaWeek": {
           "_EndDate": "2019-02-10T00:00:00",
           "_MediaMonthId": 449,
@@ -124,9 +127,11 @@
           "_WeekNumber": 2,
           "IsDirty": true
         },
-        "Spots": 5
+        "Spots": 5,
+        "StartDate": "2019-02-04T00:00:00"
       },
       {
+        "EndDate": "2019-02-24T00:00:00",
         "MediaWeek": {
           "_EndDate": "2019-02-24T00:00:00",
           "_MediaMonthId": 449,
@@ -134,9 +139,11 @@
           "_WeekNumber": 4,
           "IsDirty": true
         },
-        "Spots": 5
+        "Spots": 5,
+        "StartDate": "2019-02-18T00:00:00"
       },
       {
+        "EndDate": "2019-02-25T00:00:00",
         "MediaWeek": {
           "_EndDate": "2019-03-03T00:00:00",
           "_MediaMonthId": 450,
@@ -144,7 +151,8 @@
           "_WeekNumber": 1,
           "IsDirty": true
         },
-        "Spots": 5
+        "Spots": 5,
+        "StartDate": "2019-02-25T00:00:00"
       }
     ],
     "ProjectedStationImpressions": [],
@@ -166,8 +174,8 @@
   {
     "Comment": null,
     "DaypartCode": "LN",
-    "EffectiveDate": "2018-10-10T00:00:00",
-    "EndDate": "2018-11-10T00:00:00",
+    "EffectiveDate": null,
+    "EndDate": null,
     "InventorySourceId": 10,
     "ManifestAudiences": [
       {
@@ -209,6 +217,7 @@
     "ManifestRates": [],
     "ManifestWeeks": [
       {
+        "EndDate": "2019-02-10T00:00:00",
         "MediaWeek": {
           "_EndDate": "2019-02-10T00:00:00",
           "_MediaMonthId": 449,
@@ -216,9 +225,11 @@
           "_WeekNumber": 2,
           "IsDirty": true
         },
-        "Spots": 2
+        "Spots": 2,
+        "StartDate": "2019-02-04T00:00:00"
       },
       {
+        "EndDate": "2019-02-25T00:00:00",
         "MediaWeek": {
           "_EndDate": "2019-03-03T00:00:00",
           "_MediaMonthId": 450,
@@ -226,7 +237,8 @@
           "_WeekNumber": 1,
           "IsDirty": true
         },
-        "Spots": 2
+        "Spots": 2,
+        "StartDate": "2019-02-25T00:00:00"
       }
     ],
     "ProjectedStationImpressions": [],
@@ -248,8 +260,8 @@
   {
     "Comment": null,
     "DaypartCode": "LN",
-    "EffectiveDate": "2018-10-10T00:00:00",
-    "EndDate": "2018-11-10T00:00:00",
+    "EffectiveDate": null,
+    "EndDate": null,
     "InventorySourceId": 10,
     "ManifestAudiences": [
       {
@@ -291,6 +303,7 @@
     "ManifestRates": [],
     "ManifestWeeks": [
       {
+        "EndDate": "2019-02-25T00:00:00",
         "MediaWeek": {
           "_EndDate": "2019-03-03T00:00:00",
           "_MediaMonthId": 450,
@@ -298,7 +311,8 @@
           "_WeekNumber": 1,
           "IsDirty": true
         },
-        "Spots": 2
+        "Spots": 2,
+        "StartDate": "2019-02-25T00:00:00"
       }
     ],
     "ProjectedStationImpressions": [],
@@ -320,8 +334,8 @@
   {
     "Comment": null,
     "DaypartCode": "LN",
-    "EffectiveDate": "2018-10-10T00:00:00",
-    "EndDate": "2018-11-10T00:00:00",
+    "EffectiveDate": null,
+    "EndDate": null,
     "InventorySourceId": 10,
     "ManifestAudiences": [
       {
@@ -363,6 +377,7 @@
     "ManifestRates": [],
     "ManifestWeeks": [
       {
+        "EndDate": "2019-02-10T00:00:00",
         "MediaWeek": {
           "_EndDate": "2019-02-10T00:00:00",
           "_MediaMonthId": 449,
@@ -370,9 +385,11 @@
           "_WeekNumber": 2,
           "IsDirty": true
         },
-        "Spots": 5
+        "Spots": 5,
+        "StartDate": "2019-02-04T00:00:00"
       },
       {
+        "EndDate": "2019-02-17T00:00:00",
         "MediaWeek": {
           "_EndDate": "2019-02-17T00:00:00",
           "_MediaMonthId": 449,
@@ -380,9 +397,11 @@
           "_WeekNumber": 3,
           "IsDirty": true
         },
-        "Spots": 5
+        "Spots": 5,
+        "StartDate": "2019-02-11T00:00:00"
       },
       {
+        "EndDate": "2019-02-24T00:00:00",
         "MediaWeek": {
           "_EndDate": "2019-02-24T00:00:00",
           "_MediaMonthId": 449,
@@ -390,9 +409,11 @@
           "_WeekNumber": 4,
           "IsDirty": true
         },
-        "Spots": 5
+        "Spots": 5,
+        "StartDate": "2019-02-18T00:00:00"
       },
       {
+        "EndDate": "2019-02-25T00:00:00",
         "MediaWeek": {
           "_EndDate": "2019-03-03T00:00:00",
           "_MediaMonthId": 450,
@@ -400,7 +421,8 @@
           "_WeekNumber": 1,
           "IsDirty": true
         },
-        "Spots": 5
+        "Spots": 5,
+        "StartDate": "2019-02-25T00:00:00"
       }
     ],
     "ProjectedStationImpressions": [],
@@ -422,8 +444,8 @@
   {
     "Comment": null,
     "DaypartCode": "LN",
-    "EffectiveDate": "2018-10-10T00:00:00",
-    "EndDate": "2018-11-10T00:00:00",
+    "EffectiveDate": null,
+    "EndDate": null,
     "InventorySourceId": 10,
     "ManifestAudiences": [
       {
@@ -465,6 +487,7 @@
     "ManifestRates": [],
     "ManifestWeeks": [
       {
+        "EndDate": "2019-02-10T00:00:00",
         "MediaWeek": {
           "_EndDate": "2019-02-10T00:00:00",
           "_MediaMonthId": 449,
@@ -472,9 +495,11 @@
           "_WeekNumber": 2,
           "IsDirty": true
         },
-        "Spots": 2
+        "Spots": 2,
+        "StartDate": "2019-02-04T00:00:00"
       },
       {
+        "EndDate": "2019-02-17T00:00:00",
         "MediaWeek": {
           "_EndDate": "2019-02-17T00:00:00",
           "_MediaMonthId": 449,
@@ -482,9 +507,11 @@
           "_WeekNumber": 3,
           "IsDirty": true
         },
-        "Spots": 2
+        "Spots": 2,
+        "StartDate": "2019-02-11T00:00:00"
       },
       {
+        "EndDate": "2019-02-24T00:00:00",
         "MediaWeek": {
           "_EndDate": "2019-02-24T00:00:00",
           "_MediaMonthId": 449,
@@ -492,7 +519,8 @@
           "_WeekNumber": 4,
           "IsDirty": true
         },
-        "Spots": 1
+        "Spots": 1,
+        "StartDate": "2019-02-18T00:00:00"
       }
     ],
     "ProjectedStationImpressions": [],
@@ -514,8 +542,8 @@
   {
     "Comment": null,
     "DaypartCode": "LN",
-    "EffectiveDate": "2018-10-10T00:00:00",
-    "EndDate": "2018-11-10T00:00:00",
+    "EffectiveDate": null,
+    "EndDate": null,
     "InventorySourceId": 10,
     "ManifestAudiences": [
       {
@@ -557,6 +585,7 @@
     "ManifestRates": [],
     "ManifestWeeks": [
       {
+        "EndDate": "2019-02-10T00:00:00",
         "MediaWeek": {
           "_EndDate": "2019-02-10T00:00:00",
           "_MediaMonthId": 449,
@@ -564,9 +593,11 @@
           "_WeekNumber": 2,
           "IsDirty": true
         },
-        "Spots": 2
+        "Spots": 2,
+        "StartDate": "2019-02-04T00:00:00"
       },
       {
+        "EndDate": "2019-02-17T00:00:00",
         "MediaWeek": {
           "_EndDate": "2019-02-17T00:00:00",
           "_MediaMonthId": 449,
@@ -574,9 +605,11 @@
           "_WeekNumber": 3,
           "IsDirty": true
         },
-        "Spots": 2
+        "Spots": 2,
+        "StartDate": "2019-02-11T00:00:00"
       },
       {
+        "EndDate": "2019-02-24T00:00:00",
         "MediaWeek": {
           "_EndDate": "2019-02-24T00:00:00",
           "_MediaMonthId": 449,
@@ -584,9 +617,11 @@
           "_WeekNumber": 4,
           "IsDirty": true
         },
-        "Spots": 2
+        "Spots": 2,
+        "StartDate": "2019-02-18T00:00:00"
       },
       {
+        "EndDate": "2019-02-25T00:00:00",
         "MediaWeek": {
           "_EndDate": "2019-03-03T00:00:00",
           "_MediaMonthId": 450,
@@ -594,7 +629,8 @@
           "_WeekNumber": 1,
           "IsDirty": true
         },
-        "Spots": 2
+        "Spots": 2,
+        "StartDate": "2019-02-25T00:00:00"
       }
     ],
     "ProjectedStationImpressions": [],
@@ -616,8 +652,8 @@
   {
     "Comment": null,
     "DaypartCode": "LN",
-    "EffectiveDate": "2018-10-10T00:00:00",
-    "EndDate": "2018-11-10T00:00:00",
+    "EffectiveDate": null,
+    "EndDate": null,
     "InventorySourceId": 10,
     "ManifestAudiences": [
       {
@@ -659,6 +695,7 @@
     "ManifestRates": [],
     "ManifestWeeks": [
       {
+        "EndDate": "2019-02-10T00:00:00",
         "MediaWeek": {
           "_EndDate": "2019-02-10T00:00:00",
           "_MediaMonthId": 449,
@@ -666,9 +703,11 @@
           "_WeekNumber": 2,
           "IsDirty": true
         },
-        "Spots": 2
+        "Spots": 2,
+        "StartDate": "2019-02-04T00:00:00"
       },
       {
+        "EndDate": "2019-02-17T00:00:00",
         "MediaWeek": {
           "_EndDate": "2019-02-17T00:00:00",
           "_MediaMonthId": 449,
@@ -676,9 +715,11 @@
           "_WeekNumber": 3,
           "IsDirty": true
         },
-        "Spots": 2
+        "Spots": 2,
+        "StartDate": "2019-02-11T00:00:00"
       },
       {
+        "EndDate": "2019-02-24T00:00:00",
         "MediaWeek": {
           "_EndDate": "2019-02-24T00:00:00",
           "_MediaMonthId": 449,
@@ -686,9 +727,11 @@
           "_WeekNumber": 4,
           "IsDirty": true
         },
-        "Spots": 2
+        "Spots": 2,
+        "StartDate": "2019-02-18T00:00:00"
       },
       {
+        "EndDate": "2019-02-25T00:00:00",
         "MediaWeek": {
           "_EndDate": "2019-03-03T00:00:00",
           "_MediaMonthId": 450,
@@ -696,7 +739,8 @@
           "_WeekNumber": 1,
           "IsDirty": true
         },
-        "Spots": 2
+        "Spots": 2,
+        "StartDate": "2019-02-25T00:00:00"
       }
     ],
     "ProjectedStationImpressions": [],
@@ -718,8 +762,8 @@
   {
     "Comment": null,
     "DaypartCode": "LN",
-    "EffectiveDate": "2018-10-10T00:00:00",
-    "EndDate": "2018-11-10T00:00:00",
+    "EffectiveDate": null,
+    "EndDate": null,
     "InventorySourceId": 10,
     "ManifestAudiences": [
       {
@@ -761,6 +805,7 @@
     "ManifestRates": [],
     "ManifestWeeks": [
       {
+        "EndDate": "2019-02-10T00:00:00",
         "MediaWeek": {
           "_EndDate": "2019-02-10T00:00:00",
           "_MediaMonthId": 449,
@@ -768,7 +813,8 @@
           "_WeekNumber": 2,
           "IsDirty": true
         },
-        "Spots": 2
+        "Spots": 2,
+        "StartDate": "2019-02-04T00:00:00"
       }
     ],
     "ProjectedStationImpressions": [],
@@ -790,8 +836,8 @@
   {
     "Comment": null,
     "DaypartCode": "LN",
-    "EffectiveDate": "2018-10-10T00:00:00",
-    "EndDate": "2018-11-10T00:00:00",
+    "EffectiveDate": null,
+    "EndDate": null,
     "InventorySourceId": 10,
     "ManifestAudiences": [
       {
@@ -833,6 +879,7 @@
     "ManifestRates": [],
     "ManifestWeeks": [
       {
+        "EndDate": "2019-02-10T00:00:00",
         "MediaWeek": {
           "_EndDate": "2019-02-10T00:00:00",
           "_MediaMonthId": 449,
@@ -840,9 +887,11 @@
           "_WeekNumber": 2,
           "IsDirty": true
         },
-        "Spots": 5
+        "Spots": 5,
+        "StartDate": "2019-02-04T00:00:00"
       },
       {
+        "EndDate": "2019-02-24T00:00:00",
         "MediaWeek": {
           "_EndDate": "2019-02-24T00:00:00",
           "_MediaMonthId": 449,
@@ -850,9 +899,11 @@
           "_WeekNumber": 4,
           "IsDirty": true
         },
-        "Spots": 5
+        "Spots": 5,
+        "StartDate": "2019-02-18T00:00:00"
       },
       {
+        "EndDate": "2019-02-25T00:00:00",
         "MediaWeek": {
           "_EndDate": "2019-03-03T00:00:00",
           "_MediaMonthId": 450,
@@ -860,7 +911,8 @@
           "_WeekNumber": 1,
           "IsDirty": true
         },
-        "Spots": 5
+        "Spots": 5,
+        "StartDate": "2019-02-25T00:00:00"
       }
     ],
     "ProjectedStationImpressions": [],
@@ -882,8 +934,8 @@
   {
     "Comment": null,
     "DaypartCode": "LN",
-    "EffectiveDate": "2018-10-10T00:00:00",
-    "EndDate": "2018-11-10T00:00:00",
+    "EffectiveDate": null,
+    "EndDate": null,
     "InventorySourceId": 10,
     "ManifestAudiences": [
       {
@@ -925,6 +977,7 @@
     "ManifestRates": [],
     "ManifestWeeks": [
       {
+        "EndDate": "2019-02-10T00:00:00",
         "MediaWeek": {
           "_EndDate": "2019-02-10T00:00:00",
           "_MediaMonthId": 449,
@@ -932,9 +985,11 @@
           "_WeekNumber": 2,
           "IsDirty": true
         },
-        "Spots": 2
+        "Spots": 2,
+        "StartDate": "2019-02-04T00:00:00"
       },
       {
+        "EndDate": "2019-02-25T00:00:00",
         "MediaWeek": {
           "_EndDate": "2019-03-03T00:00:00",
           "_MediaMonthId": 450,
@@ -942,7 +997,8 @@
           "_WeekNumber": 1,
           "IsDirty": true
         },
-        "Spots": 2
+        "Spots": 2,
+        "StartDate": "2019-02-25T00:00:00"
       }
     ],
     "ProjectedStationImpressions": [],
@@ -964,8 +1020,8 @@
   {
     "Comment": null,
     "DaypartCode": "LN",
-    "EffectiveDate": "2018-10-10T00:00:00",
-    "EndDate": "2018-11-10T00:00:00",
+    "EffectiveDate": null,
+    "EndDate": null,
     "InventorySourceId": 10,
     "ManifestAudiences": [
       {
@@ -1007,6 +1063,7 @@
     "ManifestRates": [],
     "ManifestWeeks": [
       {
+        "EndDate": "2019-02-25T00:00:00",
         "MediaWeek": {
           "_EndDate": "2019-03-03T00:00:00",
           "_MediaMonthId": 450,
@@ -1014,7 +1071,8 @@
           "_WeekNumber": 1,
           "IsDirty": true
         },
-        "Spots": 2
+        "Spots": 2,
+        "StartDate": "2019-02-25T00:00:00"
       }
     ],
     "ProjectedStationImpressions": [],

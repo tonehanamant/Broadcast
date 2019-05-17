@@ -74,7 +74,7 @@ namespace Services.Broadcast.Repositories
                                     AudienceId = ma.audience_id,
                                     Impressions = ma.impressions
                                 }).ToList(),
-                                StartDate = m.effective_date,
+                                StartDate = m.effective_date.Value,//TODO: review in PRI-8712
                                 EndDate = m.end_date,
                                 SpotCost = m.station_inventory_manifest_rates.Where(r => r.spot_length_id == spotLengthId).Select(r => r.spot_cost).SingleOrDefault(),
                                 TotalSpots = m.spots_per_week ?? 0,
@@ -202,7 +202,7 @@ namespace Services.Broadcast.Repositories
                                     AudienceId = ma.audience_id,
                                     Impressions = ma.impressions
                                 }).ToList(),
-                                StartDate = m.effective_date,
+                                StartDate = m.effective_date.Value,//TODO: review in PRI-8712
                                 EndDate = m.end_date,
                                 TotalSpots = m.spots_per_week ?? 0,
                                 Station = new DisplayScheduleStation

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Services.ContractInterfaces.AudienceAndRatingsBusinessObjects;
 using Tam.Maestro.Services.ContractInterfaces.Common;
 
@@ -47,7 +48,7 @@ namespace Services.Broadcast.Entities.ProprietaryInventory
 
             public class Week
             {
-                public int MediaWeekId { get; set; }
+                public MediaWeek MediaWeek { get; set; }
 
                 public int? Spots { get; set; }
             }

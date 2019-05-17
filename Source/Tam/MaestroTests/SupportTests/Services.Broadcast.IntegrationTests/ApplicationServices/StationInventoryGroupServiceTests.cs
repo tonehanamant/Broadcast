@@ -15,6 +15,8 @@ using System.Linq;
 using Tam.Maestro.Common.DataLayer;
 using Microsoft.Practices.Unity;
 using IntegrationTests.Common;
+using Services.Broadcast.BusinessEngines;
+using Newtonsoft.Json;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
@@ -27,6 +29,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         private IInventoryFileRepository _InventoryFileRepository;
         private IInventoryDaypartParsingEngine _InventoryDaypartParsingEngine;
         private IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekAggregateCache;
+        private IInventoryWeekEngine _InventoryWeekEngine;
 
         [TestFixtureSetUp]
         public void SetUp()
@@ -39,102 +42,121 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             _InventoryRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
             _InventoryFileRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryFileRepository>();
             _InventoryDaypartParsingEngine = IntegrationTestApplicationServiceFactory.GetApplicationService<IInventoryDaypartParsingEngine>();
+            _InventoryWeekEngine = IntegrationTestApplicationServiceFactory.GetApplicationService<IInventoryWeekEngine>();
             _MediaMonthAndWeekAggregateCache = new MediaMonthAndWeekAggregateCache(IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory);
         }
-
+        
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void ExpiresGroups()
-        {
-            var effectiveDate = new DateTime(2019, 2, 7);
-            var endDate = new DateTime(2019, 2, 13);
-            _VerifyGroupsExpiringForDateInterval(effectiveDate, endDate);
-        }
-
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
-        public void ExpiresGroups_2()
-        {
-            var effectiveDate = new DateTime(2019, 2, 11);
-            var endDate = new DateTime(2019, 2, 16);
-            _VerifyGroupsExpiringForDateInterval(effectiveDate, endDate);
-        }
-
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
-        public void ExpiresGroups_3()
-        {
-            var effectiveDate = new DateTime(2019, 2, 10);
-            var endDate = new DateTime(2019, 2, 17);
-            _VerifyGroupsExpiringForDateInterval(effectiveDate, endDate);
-        }
-
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
-        public void ExpiresGroups_4()
-        {
-            var effectiveDate = new DateTime(2019, 2, 13);
-            var endDate = new DateTime(2019, 2, 24);
-            _VerifyGroupsExpiringForDateInterval(effectiveDate, endDate);
-        }
-
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
-        public void ExpiresGroups_5()
+        public void ExpiresInventory_OneContractedDaypart_1()
         {
             var effectiveDate = new DateTime(2019, 2, 5);
-            var endDate = new DateTime(2019, 2, 24);
-            _VerifyGroupsExpiringForDateInterval(effectiveDate, endDate);
+            var endDate = new DateTime(2019, 2, 9);
+            _VerifyInventoryExpiringForDateIntervalForOneDaypart(effectiveDate, endDate);
         }
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void ExpiresManifests()
-        {
-            var effectiveDate = new DateTime(2019, 2, 7);
-            var endDate = new DateTime(2019, 2, 13);
-            _VerifyManifestsExpiringForDateInterval(effectiveDate, endDate);
-        }
-
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
-        public void ExpiresManifests_2()
-        {
-            var effectiveDate = new DateTime(2019, 2, 11);
-            var endDate = new DateTime(2019, 2, 16);
-            _VerifyManifestsExpiringForDateInterval(effectiveDate, endDate);
-        }
-
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
-        public void ExpiresManifests_3()
-        {
-            var effectiveDate = new DateTime(2019, 2, 10);
-            var endDate = new DateTime(2019, 2, 17);
-            _VerifyManifestsExpiringForDateInterval(effectiveDate, endDate);
-        }
-
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
-        public void ExpiresManifests_4()
-        {
-            var effectiveDate = new DateTime(2019, 2, 13);
-            var endDate = new DateTime(2019, 2, 24);
-            _VerifyManifestsExpiringForDateInterval(effectiveDate, endDate);
-        }
-
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
-        public void ExpiresManifests_5()
+        public void ExpiresInventory_OneContractedDaypart_2()
         {
             var effectiveDate = new DateTime(2019, 2, 5);
-            var endDate = new DateTime(2019, 2, 24);
-            _VerifyManifestsExpiringForDateInterval(effectiveDate, endDate);
+            var endDate = new DateTime(2019, 2, 13);
+            _VerifyInventoryExpiringForDateIntervalForOneDaypart(effectiveDate, endDate);
         }
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void ExpiresManifests_WhenAllContractedDaypartsMatchInventory()
+        public void ExpiresInventory_OneContractedDaypart_3()
+        {
+            var effectiveDate = new DateTime(2019, 2, 5);
+            var endDate = new DateTime(2019, 2, 20);
+            _VerifyInventoryExpiringForDateIntervalForOneDaypart(effectiveDate, endDate);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void ExpiresInventory_OneContractedDaypart_4()
+        {
+            var effectiveDate = new DateTime(2019, 2, 13);
+            var endDate = new DateTime(2019, 2, 15);
+            _VerifyInventoryExpiringForDateIntervalForOneDaypart(effectiveDate, endDate);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void ExpiresInventory_OneContractedDaypart_5()
+        {
+            var effectiveDate = new DateTime(2019, 2, 15);
+            var endDate = new DateTime(2019, 2, 20);
+            _VerifyInventoryExpiringForDateIntervalForOneDaypart(effectiveDate, endDate);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void ExpiresInventory_OneContractedDaypart_6()
+        {
+            var effectiveDate = new DateTime(2019, 2, 20);
+            var endDate = new DateTime(2019, 2, 23);
+            _VerifyInventoryExpiringForDateIntervalForOneDaypart(effectiveDate, endDate);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void ExpiresInventory_SeveralContractedDayparts_1()
+        {
+            var effectiveDate = new DateTime(2018, 10, 5);
+            var endDate = new DateTime(2018, 10, 9);
+            _VerifyInventoryExpiringForSeveralDayparts(effectiveDate, endDate);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void ExpiresInventory_SeveralContractedDayparts_2()
+        {
+            var effectiveDate = new DateTime(2018, 10, 5);
+            var endDate = new DateTime(2018, 10, 13);
+            _VerifyInventoryExpiringForSeveralDayparts(effectiveDate, endDate);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void ExpiresInventory_SeveralContractedDayparts_3()
+        {
+            var effectiveDate = new DateTime(2018, 10, 5);
+            var endDate = new DateTime(2018, 10, 20);
+            _VerifyInventoryExpiringForSeveralDayparts(effectiveDate, endDate);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void ExpiresInventory_SeveralContractedDayparts_4()
+        {
+            var effectiveDate = new DateTime(2018, 10, 13);
+            var endDate = new DateTime(2018, 10, 15);
+            _VerifyInventoryExpiringForSeveralDayparts(effectiveDate, endDate);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void ExpiresInventory_SeveralContractedDayparts_5()
+        {
+            var effectiveDate = new DateTime(2018, 10, 15);
+            var endDate = new DateTime(2018, 10, 20);
+            _VerifyInventoryExpiringForSeveralDayparts(effectiveDate, endDate);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void ExpiresInventory_SeveralContractedDayparts_6()
+        {
+            var effectiveDate = new DateTime(2018, 10, 20);
+            var endDate = new DateTime(2018, 10, 23);
+            _VerifyInventoryExpiringForSeveralDayparts(effectiveDate, endDate);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void ExpiresInventory_WhenAllContractedDaypartsMatchInventory()
         {
             const string fileName = @"ProprietaryDataFiles\Diginet_ValidFile2.xlsx";
             const string inventorySourceName = "COZI";
@@ -142,12 +164,12 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var effectiveDate = new DateTime(2018, 10, 5);
             var endDate = new DateTime(2018, 10, 24);
 
-            _VerifyManifestsExpiringForManifestDayparts(fileName, inventorySourceName, daypartString, effectiveDate, endDate);
+            _VerifyInventoryExpiringForSeveralDayparts(fileName, inventorySourceName, daypartString, effectiveDate, endDate);
         }
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void DoesNotExpireManifests_WhenOnlyOneContractedDaypartMatchInventory()
+        public void DoesNotExpireInventory_WhenOnlyOneContractedDaypartMatchInventory()
         {
             const string fileName = @"ProprietaryDataFiles\Diginet_ValidFile2.xlsx";
             const string inventorySourceName = "COZI";
@@ -155,12 +177,12 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var effectiveDate = new DateTime(2018, 10, 5);
             var endDate = new DateTime(2018, 10, 24);
 
-            _VerifyManifestsExpiringForManifestDayparts(fileName, inventorySourceName, daypartString, effectiveDate, endDate);
+            _VerifyInventoryExpiringForSeveralDayparts(fileName, inventorySourceName, daypartString, effectiveDate, endDate);
         }
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void DoesNotExpireManifests_WhenAdditionalContractedDaypartSpecified()
+        public void DoesNotExpireInventory_WhenAdditionalContractedDaypartSpecified()
         {
             const string fileName = @"ProprietaryDataFiles\Diginet_ValidFile2.xlsx";
             const string inventorySourceName = "COZI";
@@ -168,10 +190,82 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var effectiveDate = new DateTime(2018, 10, 5);
             var endDate = new DateTime(2018, 10, 24);
 
-            _VerifyManifestsExpiringForManifestDayparts(fileName, inventorySourceName, daypartString, effectiveDate, endDate);
+            _VerifyInventoryExpiringForSeveralDayparts(fileName, inventorySourceName, daypartString, effectiveDate, endDate);
         }
 
-        private void _VerifyManifestsExpiringForManifestDayparts(string fileName, string inventorySourceName, string daypartString, DateTime start, DateTime end)
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void StoresHistory_WhenExpiresInventory()
+        {
+            const string fileName = @"ProprietaryDataFiles\Diginet_ValidFile2.xlsx";
+            const string inventorySourceName = "COZI";
+            const string daypartString = "M-F 9a-10a SA-SU 6a-7a";
+            var effectiveDate = new DateTime(2018, 10, 5);
+            var endDate = new DateTime(2018, 10, 24);
+
+            using (new TransactionScopeWrapper())
+            {
+                _InventoryDaypartParsingEngine.TryParse(daypartString, out var dayparts);
+                var fileId = _SaveInventoryFile(fileName);
+                var inventoruSource = _InventoryRepository.GetInventorySourceByName(inventorySourceName);
+
+                var inventoryFile = new InventoryFile
+                {
+                    Id = fileId,
+                    InventorySource = inventoruSource,
+                    InventoryManifests = new List<StationInventoryManifest>
+                    {
+                        new StationInventoryManifest
+                        {
+                            SpotLengthId = 1,
+                            InventoryFileId = fileId,
+                            InventorySourceId = inventoruSource.Id,
+                            ManifestDayparts = dayparts.Select(d => new StationInventoryManifestDaypart { Daypart = d }).ToList(),
+                            ManifestWeeks = _GetManifestWeeksInRange(effectiveDate, endDate, 1)
+                        }
+                    }
+                };
+
+                var fileManifests = _InventoryRepository.GetStationInventoryManifestsByFileId(inventoryFile.Id);
+
+                var weeksHistoryBeforeExpiring = _InventoryRepository.GetStationInventoryManifestWeeksHistory(fileManifests.Select(x => x.Id.Value));
+
+                _StationInventoryGroupService.AddNewStationInventory(inventoryFile);
+
+                var weeksHistoryAfterExpiring = _InventoryRepository.GetStationInventoryManifestWeeksHistory(fileManifests.Select(x => x.Id.Value));
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(StationInventoryManifestWeekHistory), "Id");
+                jsonResolver.Ignore(typeof(StationInventoryManifestWeekHistory), "SysStartDate");
+                jsonResolver.Ignore(typeof(StationInventoryManifestWeekHistory), "SysEndDate");
+
+                var jsonSettings = new JsonSerializerSettings
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                var result = new { weeksHistoryBeforeExpiring, weeksHistoryAfterExpiring };
+                var resultJson = IntegrationTestHelper.ConvertToJson(result, jsonSettings);
+
+                Approvals.Verify(resultJson);
+            }
+        }
+
+        private void _VerifyInventoryExpiringForSeveralDayparts(DateTime start, DateTime end)
+        {
+            // There should be a manifest with two weeks in DB
+            // Week 1: 2018/10/8  - 2018/10/14, inventory available 2018/10/10 - 2018/10/14
+            // Week 2: 2018/10/15 - 2018/10/21, inventory available 2018/10/15 - 2018/10/17
+
+            const string fileName = @"ProprietaryDataFiles\Diginet_ValidFile2.xlsx";
+            const string inventorySourceName = "COZI";
+            const string daypartString = "M-F 9a-10a SA-SU 6a-7a";
+
+            _VerifyInventoryExpiringForSeveralDayparts(fileName, inventorySourceName, daypartString, start, end);
+        }
+
+        private void _VerifyInventoryExpiringForSeveralDayparts(string fileName, string inventorySourceName, string daypartString, DateTime start, DateTime end)
         {
             using (new TransactionScopeWrapper())
             {
@@ -188,43 +282,41 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         new StationInventoryManifest
                         {
                             SpotLengthId = 1,
-                            EffectiveDate = start,
-                            EndDate = end,
                             InventoryFileId = fileId,
                             InventorySourceId = inventoruSource.Id,
                             ManifestDayparts = dayparts.Select(d => new StationInventoryManifestDaypart { Daypart = d }).ToList(),
-                            ManifestWeeks = _GetManifestWeeksInRange(start, end, 2)
+                            ManifestWeeks = _GetManifestWeeksInRange(start, end, 1)
                         }
                     }
                 };
 
                 var manifestsBeforeExpiring = _InventoryRepository.GetStationInventoryManifestsByFileId(inventoryFile.Id)
-                    .Select((x, index) => new
+                    .Select(x => new
                     {
-                        x.EffectiveDate,
-                        x.EndDate,
-                        Daypart = string.Join(" ", x.ManifestDayparts.Select(d => d.Daypart.ToLongString())),
+                        Dayparts = string.Join(" ", x.ManifestDayparts.Select(d => d.Daypart.ToLongString())),
                         Weeks = x.ManifestWeeks.Select(w => new
                         {
                             w.Spots,
-                            w.MediaWeek.StartDate,
-                            w.MediaWeek.EndDate,
+                            w.StartDate,
+                            w.EndDate,
+                            MediaWeek_StartDate = w.MediaWeek.StartDate,
+                            MediaWeek_EndDate = w.MediaWeek.EndDate,
                         })
                     });
 
-                _StationInventoryGroupService.AddNewStationInventory(inventoryFile, start, end);
+                _StationInventoryGroupService.AddNewStationInventory(inventoryFile);
 
                 var manifestsAfterExpiring = _InventoryRepository.GetStationInventoryManifestsByFileId(inventoryFile.Id)
-                    .Select((x, index) => new
+                    .Select(x => new
                     {
-                        x.EffectiveDate,
-                        x.EndDate,
-                        Daypart = string.Join(" ", x.ManifestDayparts.Select(d => d.Daypart.ToLongString())),
+                        Dayparts = string.Join(" ", x.ManifestDayparts.Select(d => d.Daypart.ToLongString())),
                         Weeks = x.ManifestWeeks.Select(w => new
                         {
                             w.Spots,
-                            w.MediaWeek.StartDate,
-                            w.MediaWeek.EndDate,
+                            w.StartDate,
+                            w.EndDate,
+                            MediaWeek_StartDate = w.MediaWeek.StartDate,
+                            MediaWeek_EndDate = w.MediaWeek.EndDate,
                         })
                     });
 
@@ -238,7 +330,16 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         private List<StationInventoryManifestWeek> _GetManifestWeeksInRange(DateTime startDate, DateTime endDate, int spots)
         {
             var mediaWeeks = _MediaMonthAndWeekAggregateCache.GetMediaWeeksIntersecting(startDate, endDate);
-            return mediaWeeks.Select(x => new StationInventoryManifestWeek { MediaWeek = x, Spots = spots }).ToList();
+            var manifestWeeks = mediaWeeks.Select(x => new StationInventoryManifestWeek { MediaWeek = x, Spots = spots }).ToList();
+
+            foreach (var manifestWeek in manifestWeeks)
+            {
+                var dateRange = _InventoryWeekEngine.GetDateRangeInventoryIsAvailableForForWeek(manifestWeek.MediaWeek, startDate, endDate);
+                manifestWeek.StartDate = dateRange.Start ?? default(DateTime);
+                manifestWeek.EndDate = dateRange.End ?? default(DateTime);
+            }
+
+            return manifestWeeks;
         }
 
         private int _SaveInventoryFile(string fileName)
@@ -253,70 +354,12 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             return _ProprietaryService.SaveProprietaryInventoryFile(request, "IntegrationTestUser", now).FileId;
         }
 
-        private void _VerifyGroupsExpiringForDateInterval(DateTime start, DateTime end)
+        private void _VerifyInventoryExpiringForDateIntervalForOneDaypart(DateTime start, DateTime end)
         {
-            using (new TransactionScopeWrapper())
-            {
-                var contractedDaypartId = 5;
-                var inventoryFile = new InventoryFile
-                {
-                    Id = _InventoryFileRepository.GetInventoryFileIdByHash("ExpiresGroupsTest"),
-                    InventorySource = new InventorySource
-                    {
-                        Id = 7,
-                        IsActive = true
-                    }
-                };
+            // There should be a manifest with two weeks in DB
+            // Week 1: 2019/02/04 - 2019/02/10, inventory available 2019/02/10
+            // Week 2: 2019/02/11 - 2019/02/17, inventory available 2019/02/11 - 2019/02/17
 
-                var groupsBeforeExpiring = _InventoryRepository.GetStationInventoryGroupsByFileId(inventoryFile.Id)
-                    .Select((x, index) => new
-                    {
-                        index,
-                        x.StartDate,
-                        x.EndDate,
-                        Manifests = x.Manifests.Select(m => new
-                        {
-                            m.EffectiveDate,
-                            m.EndDate,
-                            Weeks = m.ManifestWeeks.Select(w => new
-                            {
-                                w.Spots,
-                                w.MediaWeek.StartDate,
-                                w.MediaWeek.EndDate,
-                            })
-                        })
-                    });
-
-                _StationInventoryGroupService.AddNewStationInventory(inventoryFile, start, end, contractedDaypartId);
-
-                var groupsAfterExpiring = _InventoryRepository.GetStationInventoryGroupsByFileId(inventoryFile.Id)
-                    .Select((x, index) => new
-                    {
-                        index,
-                        x.StartDate,
-                        x.EndDate,
-                        Manifests = x.Manifests.Select(m => new
-                        {
-                            m.EffectiveDate,
-                            m.EndDate,
-                            Weeks = m.ManifestWeeks.Select(w => new
-                            {
-                                w.Spots,
-                                w.MediaWeek.StartDate,
-                                w.MediaWeek.EndDate,
-                            })
-                        })
-                    });
-
-                var result = new { groupsBeforeExpiring, groupsAfterExpiring };
-                var resultJson = IntegrationTestHelper.ConvertToJson(result);
-
-                Approvals.Verify(resultJson);
-            }
-        }
-
-        private void _VerifyManifestsExpiringForDateInterval(DateTime start, DateTime end)
-        {
             using (new TransactionScopeWrapper())
             {
                 var contractedDaypartId = 5;
@@ -325,38 +368,50 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     Id = _InventoryFileRepository.GetInventoryFileIdByHash("ExpiresManifestsTest"),
                     InventorySource = new InventorySource
                     {
-                        Id = 10,
+                        Id = 11,
                         IsActive = true
+                    },
+                    InventoryManifests = new List<StationInventoryManifest>
+                    {
+                        new StationInventoryManifest
+                        {
+                            SpotLengthId = 1,
+                            ManifestWeeks = _GetManifestWeeksInRange(start, end, 1)
+                        }
                     }
                 };
 
-                var manifestsBeforeExpiring = _InventoryRepository.GetStationInventoryManifestsByFileId(inventoryFile.Id)
-                    .Select((x, index) => new
+                var manifestsBeforeExpiring = _InventoryRepository
+                    .GetStationInventoryManifestsByFileId(inventoryFile.Id)
+                    .Where(x => x.InventorySourceId == 11)
+                    .Select((x, Index) => new
                     {
-                        index,
-                        x.EffectiveDate,
-                        x.EndDate,
+                        Index,
                         Weeks = x.ManifestWeeks.Select(w => new
                         {
                             w.Spots,
-                            w.MediaWeek.StartDate,
-                            w.MediaWeek.EndDate,
+                            w.StartDate,
+                            w.EndDate,
+                            MediaWeek_StartDate = w.MediaWeek.StartDate,
+                            MediaWeek_EndDate = w.MediaWeek.EndDate
                         })
                     });
 
-                _StationInventoryGroupService.AddNewStationInventory(inventoryFile, start, end, contractedDaypartId);
+                _StationInventoryGroupService.AddNewStationInventory(inventoryFile, contractedDaypartId);
 
-                var manifestsAfterExpiring = _InventoryRepository.GetStationInventoryManifestsByFileId(inventoryFile.Id)
-                    .Select((x, index) => new
+                var manifestsAfterExpiring = _InventoryRepository
+                    .GetStationInventoryManifestsByFileId(inventoryFile.Id)
+                    .Where(x => x.InventorySourceId == 11)
+                    .Select((x, Index) => new
                     {
-                        index,
-                        x.EffectiveDate,
-                        x.EndDate,
+                        Index,
                         Weeks = x.ManifestWeeks.Select(w => new
                         {
                             w.Spots,
-                            w.MediaWeek.StartDate,
-                            w.MediaWeek.EndDate,
+                            w.StartDate,
+                            w.EndDate,
+                            MediaWeek_StartDate = w.MediaWeek.StartDate,
+                            MediaWeek_EndDate = w.MediaWeek.EndDate
                         })
                     });
 

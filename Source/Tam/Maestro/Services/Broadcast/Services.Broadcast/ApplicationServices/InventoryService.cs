@@ -543,14 +543,14 @@ namespace Services.Broadcast.ApplicationServices
             if (manifest.EffectiveDate > previousManifest.EffectiveDate)
             {
                 manifest.EndDate = previousManifest.EndDate;
-                previousManifest.EndDate = manifest.EffectiveDate.AddDays(-1);
+                previousManifest.EndDate = manifest.EffectiveDate.Value.AddDays(-1);//TODO Review in PRI-8277
 
                 _inventoryRepository.SaveStationInventoryManifest(manifest);
                 _inventoryRepository.UpdateStationInventoryManifest(previousManifest);
             }
             else if (manifest.EffectiveDate < previousManifest.EffectiveDate)
             {
-                manifest.EndDate = previousManifest.EffectiveDate.AddDays(-1);
+                manifest.EndDate = previousManifest.EffectiveDate.Value.AddDays(-1);//TODO Review in PRI-8277
 
                 _inventoryRepository.SaveStationInventoryManifest(manifest);
                 _inventoryRepository.UpdateStationInventoryManifest(previousManifest);
@@ -818,7 +818,7 @@ namespace Services.Broadcast.ApplicationServices
                         ProgramNames = manifest.ManifestDayparts.Select(md => md.ProgramName).ToList(),
                         Airtimes = manifest.ManifestDayparts.Select(md => DaypartDto.ConvertDisplayDaypart(md.Daypart)).ToList(),
                         AirtimePreviews = manifest.ManifestDayparts.Select(md => md.Daypart.Preview).ToList(),
-                        EffectiveDate = manifest.EffectiveDate,
+                        EffectiveDate = manifest.EffectiveDate.Value,//TODO Review in PRI-8277
                         EndDate = manifest.EndDate,
                         StationCode = manifest.Station.Code.Value,
                         SpotLength = _SpotLengthMap.Single(a => a.Value == manifest.SpotLengthId).Key,
@@ -827,7 +827,7 @@ namespace Services.Broadcast.ApplicationServices
                         Rate30 = _GetSpotRateFromManifestRates(30, manifest.ManifestRates),
                         HouseHoldImpressions = _GetHouseHoldImpressionFromManifestAudiences(manifest.ManifestAudiencesReferences),
                         Rating = _GetHouseHoldRatingFromManifestAudiences(manifest.ManifestAudiencesReferences),
-                        FlightWeeks = _GetFlightWeeks(manifest.EffectiveDate, manifest.EndDate),
+                        FlightWeeks = _GetFlightWeeks(manifest.EffectiveDate.Value, manifest.EndDate),//TODO Review in PRI-8277
                         Genres = manifest.ManifestDayparts.SelectMany(d => d.Genres).Distinct().ToList()
                     }).ToList();
         }
@@ -1021,7 +1021,7 @@ namespace Services.Broadcast.ApplicationServices
             {
                 foreach (var manifestDaypart in program.ManifestDayparts)
                 {
-                    if (_DateRangesIntersect(program.EffectiveDate, program.EndDate ?? DateTime.MaxValue,
+                    if (_DateRangesIntersect(program.EffectiveDate.Value, program.EndDate ?? DateTime.MaxValue,//TODO Review in PRI-8277
                             conflict.StartDate, conflict.EndDate) &&
                         DisplayDaypart.Intersects(_daypartCache.GetDisplayDaypart(manifestDaypart.Daypart.Id), airtime))
                         filteredPrograms.Add(program);

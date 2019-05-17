@@ -29,7 +29,7 @@ namespace EntityFrameworkMapping.Broadcast
         public int id { get; set; }
         public int spot_length_id { get; set; }
         public Nullable<int> spots_per_week { get; set; }
-        public System.DateTime effective_date { get; set; }
+        public Nullable<System.DateTime> effective_date { get; set; }
         public int inventory_source_id { get; set; }
         public Nullable<int> station_inventory_group_id { get; set; }
         public Nullable<int> file_id { get; set; }

@@ -269,6 +269,7 @@
         <AssociationConnector Association="BroadcastModel.FK_inventory_file_proprietary_header_media_months" />
         <AssociationConnector Association="BroadcastModel.FK_inventory_file_proprietary_header_media_months_hut_book" />
         <EntityTypeShape EntityType="BroadcastModel.campaign" Width="1.5" PointX="28.375" PointY="0.75" />
+        <EntityTypeShape EntityType="BroadcastModel.station_inventory_manifest_weeks_history" Width="1.5" PointX="28.375" PointY="0.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

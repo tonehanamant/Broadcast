@@ -159,7 +159,7 @@ namespace Services.Broadcast.Converters.RateImport
             ExcelWorksheet worksheet, 
             int rowIndex, 
             int firstColumnIndex, 
-            List<int> mediaWeekIds, 
+            List<MediaWeek> mediaWeeks, 
             out string dayText, 
             out string timeText)
         {
@@ -184,11 +184,11 @@ namespace Services.Broadcast.Converters.RateImport
 
             line.Program = worksheet.Cells[rowIndex, columnIndex++].GetStringValue();
 
-            foreach (var weekId in mediaWeekIds)
+            foreach (var week in mediaWeeks)
             {
                 line.Weeks.Add(new ProprietaryInventoryDataLine.Week
                 {
-                    MediaWeekId = weekId,
+                    MediaWeek = week,
                     Spots = worksheet.Cells[rowIndex, columnIndex++].GetIntValue()
                 });
             }
@@ -219,14 +219,16 @@ namespace Services.Broadcast.Converters.RateImport
                 line.Weeks.All(x => !x.Spots.HasValue);
         }
 
-        private List<int> _ReadWeeks(ExcelWorksheet worksheet, ProprietaryInventoryFile proprietaryFile)
+        private List<MediaWeek> _ReadWeeks(ExcelWorksheet worksheet, ProprietaryInventoryFile proprietaryFile)
         {
             const int firstColumnIndex = 5;
             const int firstRowIndex = 14;
             const int lastRowIndex = 15;
-            var audienceCode = proprietaryFile.Header.Audience.Code;
+            var header = proprietaryFile.Header;
+            var audienceCode = header.Audience.Code;
+            var validMediaWeekIds = MediaMonthAndWeekAggregateCache.GetMediaWeeksIntersecting(header.EffectiveDate, header.EndDate).Select(x => x.Id);
             var dateFormats = new string[] { "d-MMM-yyyy", "M/d/yyyy" };
-            var result = new List<int>();
+            var result = new List<MediaWeek>();
             var lastColumnIndex = firstColumnIndex;
             var weeksStartHeaderRowIndex = _FindRowNumber("Start Week", firstColumnIndex, firstRowIndex, lastRowIndex, worksheet);
 
@@ -274,8 +276,19 @@ namespace Services.Broadcast.Converters.RateImport
                     throw new Exception($"Week date is not in the correct format ({(string.Join(", ", dateFormats))})");
                 }
 
-                var mediaWeekId = MediaMonthAndWeekAggregateCache.GetMediaWeekContainingDate(week).Id;
-                result.Add(mediaWeekId);
+                var mediaWeek = MediaMonthAndWeekAggregateCache.GetMediaWeekContainingDate(week);
+
+                if (result.Any(x => x.Id == mediaWeek.Id))
+                {
+                    throw new Exception($"Week that contains date: {weekString} has been specified several times");
+                }
+                
+                if (!validMediaWeekIds.Contains(mediaWeek.Id))
+                {
+                    throw new Exception($"Week: {weekString} should be inside or intersect with the date range specified in the header (effective and end dates). Row: {weeksRowIndex}, column: {i}");
+                }
+
+                result.Add(mediaWeek);
             }
 
             return result;
@@ -294,8 +307,6 @@ namespace Services.Broadcast.Converters.RateImport
             return proprietaryFile.DataLines
                 .Select(x => new StationInventoryManifest
                 {
-                    EffectiveDate = fileHeader.EffectiveDate,
-                    EndDate = fileHeader.EndDate,
                     InventorySourceId = proprietaryFile.InventorySource.Id,
                     InventoryFileId = proprietaryFile.Id,
                     Station = stationsDict[StationProcessingEngine.StripStationSuffix(x.Station)],
@@ -319,7 +330,7 @@ namespace Services.Broadcast.Converters.RateImport
                         .Where(w => w.Spots.HasValue) //exclude empty weeks
                         .Select(w => new StationInventoryManifestWeek
                     {
-                        MediaWeek = new MediaWeek { Id = w.MediaWeekId },
+                        MediaWeek = w.MediaWeek,
                         Spots = w.Spots.Value
                     }).ToList()
                 }).ToList();

@@ -1,5 +1,4 @@
-﻿using Services.Broadcast.Entities.StationInventory;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -22,13 +21,6 @@ namespace Services.Broadcast.Entities
                 return _stationContacts;
             }
             set { _stationContacts = value;  }
-        }
-
-        public IEnumerable<StationInventoryManifest> GetAllManifests()
-        {
-            return InventoryGroups
-                .SelectMany(g => g.Manifests)
-                .Union(InventoryManifests);
         }
 
         public bool HasManifests() => HasGroupManifests || HasInventoryManifests;

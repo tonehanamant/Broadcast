@@ -1,7 +1,7 @@
 ﻿[
   {
     "DaypartCode": "AM",
-    "EndDate": "2019-12-30T00:00:00",
+    "EndDate": null,
     "InventorySource": {
       "Id": 4,
       "InventoryType": 2,
@@ -12,8 +12,8 @@
       {
         "Comment": "Comment 1",
         "DaypartCode": "AM",
-        "EffectiveDate": "2019-12-10T00:00:00",
-        "EndDate": "2019-12-30T00:00:00",
+        "EffectiveDate": null,
+        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -55,6 +55,7 @@
         "ManifestRates": [],
         "ManifestWeeks": [
           {
+            "EndDate": "2019-12-15T00:00:00",
             "MediaWeek": {
               "_EndDate": "2019-12-15T00:00:00",
               "_MediaMonthId": 459,
@@ -62,9 +63,11 @@
               "_WeekNumber": 3,
               "IsDirty": true
             },
-            "Spots": 1
+            "Spots": 1,
+            "StartDate": "2019-12-10T00:00:00"
           },
           {
+            "EndDate": "2019-12-22T00:00:00",
             "MediaWeek": {
               "_EndDate": "2019-12-22T00:00:00",
               "_MediaMonthId": 459,
@@ -72,9 +75,11 @@
               "_WeekNumber": 4,
               "IsDirty": true
             },
-            "Spots": 1
+            "Spots": 1,
+            "StartDate": "2019-12-16T00:00:00"
           },
           {
+            "EndDate": "2019-12-29T00:00:00",
             "MediaWeek": {
               "_EndDate": "2019-12-29T00:00:00",
               "_MediaMonthId": 459,
@@ -82,9 +87,11 @@
               "_WeekNumber": 5,
               "IsDirty": true
             },
-            "Spots": 1
+            "Spots": 1,
+            "StartDate": "2019-12-23T00:00:00"
           },
           {
+            "EndDate": "2019-12-30T00:00:00",
             "MediaWeek": {
               "_EndDate": "2020-01-05T00:00:00",
               "_MediaMonthId": 460,
@@ -92,7 +99,8 @@
               "_WeekNumber": 1,
               "IsDirty": true
             },
-            "Spots": 1
+            "Spots": 1,
+            "StartDate": "2019-12-30T00:00:00"
           }
         ],
         "SpotLengthId": 1,
@@ -113,8 +121,8 @@
       {
         "Comment": "Comment 2",
         "DaypartCode": "AM",
-        "EffectiveDate": "2019-12-10T00:00:00",
-        "EndDate": "2019-12-30T00:00:00",
+        "EffectiveDate": null,
+        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -156,6 +164,7 @@
         "ManifestRates": [],
         "ManifestWeeks": [
           {
+            "EndDate": "2019-12-15T00:00:00",
             "MediaWeek": {
               "_EndDate": "2019-12-15T00:00:00",
               "_MediaMonthId": 459,
@@ -163,9 +172,11 @@
               "_WeekNumber": 3,
               "IsDirty": true
             },
-            "Spots": 2
+            "Spots": 2,
+            "StartDate": "2019-12-10T00:00:00"
           },
           {
+            "EndDate": "2019-12-22T00:00:00",
             "MediaWeek": {
               "_EndDate": "2019-12-22T00:00:00",
               "_MediaMonthId": 459,
@@ -173,9 +184,11 @@
               "_WeekNumber": 4,
               "IsDirty": true
             },
-            "Spots": 2
+            "Spots": 2,
+            "StartDate": "2019-12-16T00:00:00"
           },
           {
+            "EndDate": "2019-12-29T00:00:00",
             "MediaWeek": {
               "_EndDate": "2019-12-29T00:00:00",
               "_MediaMonthId": 459,
@@ -183,9 +196,11 @@
               "_WeekNumber": 5,
               "IsDirty": true
             },
-            "Spots": 2
+            "Spots": 2,
+            "StartDate": "2019-12-23T00:00:00"
           },
           {
+            "EndDate": "2019-12-30T00:00:00",
             "MediaWeek": {
               "_EndDate": "2020-01-05T00:00:00",
               "_MediaMonthId": 460,
@@ -193,7 +208,8 @@
               "_WeekNumber": 1,
               "IsDirty": true
             },
-            "Spots": 2
+            "Spots": 2,
+            "StartDate": "2019-12-30T00:00:00"
           }
         ],
         "SpotLengthId": 1,
@@ -214,8 +230,8 @@
       {
         "Comment": "Comment 3",
         "DaypartCode": "AM",
-        "EffectiveDate": "2019-12-10T00:00:00",
-        "EndDate": "2019-12-30T00:00:00",
+        "EffectiveDate": null,
+        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -257,6 +273,7 @@
         "ManifestRates": [],
         "ManifestWeeks": [
           {
+            "EndDate": "2019-12-15T00:00:00",
             "MediaWeek": {
               "_EndDate": "2019-12-15T00:00:00",
               "_MediaMonthId": 459,
@@ -264,9 +281,11 @@
               "_WeekNumber": 3,
               "IsDirty": true
             },
-            "Spots": 3
+            "Spots": 3,
+            "StartDate": "2019-12-10T00:00:00"
           },
           {
+            "EndDate": "2019-12-22T00:00:00",
             "MediaWeek": {
               "_EndDate": "2019-12-22T00:00:00",
               "_MediaMonthId": 459,
@@ -274,9 +293,11 @@
               "_WeekNumber": 4,
               "IsDirty": true
             },
-            "Spots": 3
+            "Spots": 3,
+            "StartDate": "2019-12-16T00:00:00"
           },
           {
+            "EndDate": "2019-12-29T00:00:00",
             "MediaWeek": {
               "_EndDate": "2019-12-29T00:00:00",
               "_MediaMonthId": 459,
@@ -284,9 +305,11 @@
               "_WeekNumber": 5,
               "IsDirty": true
             },
-            "Spots": 3
+            "Spots": 3,
+            "StartDate": "2019-12-23T00:00:00"
           },
           {
+            "EndDate": "2019-12-30T00:00:00",
             "MediaWeek": {
               "_EndDate": "2020-01-05T00:00:00",
               "_MediaMonthId": 460,
@@ -294,7 +317,8 @@
               "_WeekNumber": 1,
               "IsDirty": true
             },
-            "Spots": 3
+            "Spots": 3,
+            "StartDate": "2019-12-30T00:00:00"
           }
         ],
         "SpotLengthId": 1,
@@ -315,8 +339,8 @@
       {
         "Comment": "Comment 4",
         "DaypartCode": "AM",
-        "EffectiveDate": "2019-12-10T00:00:00",
-        "EndDate": "2019-12-30T00:00:00",
+        "EffectiveDate": null,
+        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -400,6 +424,7 @@
         "ManifestRates": [],
         "ManifestWeeks": [
           {
+            "EndDate": "2019-12-15T00:00:00",
             "MediaWeek": {
               "_EndDate": "2019-12-15T00:00:00",
               "_MediaMonthId": 459,
@@ -407,9 +432,11 @@
               "_WeekNumber": 3,
               "IsDirty": true
             },
-            "Spots": 2
+            "Spots": 2,
+            "StartDate": "2019-12-10T00:00:00"
           },
           {
+            "EndDate": "2019-12-22T00:00:00",
             "MediaWeek": {
               "_EndDate": "2019-12-22T00:00:00",
               "_MediaMonthId": 459,
@@ -417,9 +444,11 @@
               "_WeekNumber": 4,
               "IsDirty": true
             },
-            "Spots": 2
+            "Spots": 2,
+            "StartDate": "2019-12-16T00:00:00"
           },
           {
+            "EndDate": "2019-12-29T00:00:00",
             "MediaWeek": {
               "_EndDate": "2019-12-29T00:00:00",
               "_MediaMonthId": 459,
@@ -427,9 +456,11 @@
               "_WeekNumber": 5,
               "IsDirty": true
             },
-            "Spots": 2
+            "Spots": 2,
+            "StartDate": "2019-12-23T00:00:00"
           },
           {
+            "EndDate": "2019-12-30T00:00:00",
             "MediaWeek": {
               "_EndDate": "2020-01-05T00:00:00",
               "_MediaMonthId": 460,
@@ -437,7 +468,8 @@
               "_WeekNumber": 1,
               "IsDirty": true
             },
-            "Spots": 2
+            "Spots": 2,
+            "StartDate": "2019-12-30T00:00:00"
           }
         ],
         "SpotLengthId": 1,
@@ -458,8 +490,8 @@
       {
         "Comment": "Comment 5",
         "DaypartCode": "AM",
-        "EffectiveDate": "2019-12-10T00:00:00",
-        "EndDate": "2019-12-30T00:00:00",
+        "EffectiveDate": null,
+        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -501,6 +533,7 @@
         "ManifestRates": [],
         "ManifestWeeks": [
           {
+            "EndDate": "2019-12-15T00:00:00",
             "MediaWeek": {
               "_EndDate": "2019-12-15T00:00:00",
               "_MediaMonthId": 459,
@@ -508,9 +541,11 @@
               "_WeekNumber": 3,
               "IsDirty": true
             },
-            "Spots": 1
+            "Spots": 1,
+            "StartDate": "2019-12-10T00:00:00"
           },
           {
+            "EndDate": "2019-12-22T00:00:00",
             "MediaWeek": {
               "_EndDate": "2019-12-22T00:00:00",
               "_MediaMonthId": 459,
@@ -518,9 +553,11 @@
               "_WeekNumber": 4,
               "IsDirty": true
             },
-            "Spots": 1
+            "Spots": 1,
+            "StartDate": "2019-12-16T00:00:00"
           },
           {
+            "EndDate": "2019-12-29T00:00:00",
             "MediaWeek": {
               "_EndDate": "2019-12-29T00:00:00",
               "_MediaMonthId": 459,
@@ -528,9 +565,11 @@
               "_WeekNumber": 5,
               "IsDirty": true
             },
-            "Spots": 1
+            "Spots": 1,
+            "StartDate": "2019-12-23T00:00:00"
           },
           {
+            "EndDate": "2019-12-30T00:00:00",
             "MediaWeek": {
               "_EndDate": "2020-01-05T00:00:00",
               "_MediaMonthId": 460,
@@ -538,7 +577,8 @@
               "_WeekNumber": 1,
               "IsDirty": true
             },
-            "Spots": 1
+            "Spots": 1,
+            "StartDate": "2019-12-30T00:00:00"
           }
         ],
         "SpotLengthId": 1,
@@ -559,11 +599,11 @@
     ],
     "Name": "AM 1",
     "SlotNumber": 1,
-    "StartDate": "2019-12-10T00:00:00"
+    "StartDate": null
   },
   {
     "DaypartCode": "AM",
-    "EndDate": "2019-12-30T00:00:00",
+    "EndDate": null,
     "InventorySource": {
       "Id": 4,
       "InventoryType": 2,
@@ -574,8 +614,8 @@
       {
         "Comment": "Comment 1",
         "DaypartCode": "AM",
-        "EffectiveDate": "2019-12-10T00:00:00",
-        "EndDate": "2019-12-30T00:00:00",
+        "EffectiveDate": null,
+        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -617,6 +657,7 @@
         "ManifestRates": [],
         "ManifestWeeks": [
           {
+            "EndDate": "2019-12-15T00:00:00",
             "MediaWeek": {
               "_EndDate": "2019-12-15T00:00:00",
               "_MediaMonthId": 459,
@@ -624,9 +665,11 @@
               "_WeekNumber": 3,
               "IsDirty": true
             },
-            "Spots": 1
+            "Spots": 1,
+            "StartDate": "2019-12-10T00:00:00"
           },
           {
+            "EndDate": "2019-12-22T00:00:00",
             "MediaWeek": {
               "_EndDate": "2019-12-22T00:00:00",
               "_MediaMonthId": 459,
@@ -634,9 +677,11 @@
               "_WeekNumber": 4,
               "IsDirty": true
             },
-            "Spots": 1
+            "Spots": 1,
+            "StartDate": "2019-12-16T00:00:00"
           },
           {
+            "EndDate": "2019-12-29T00:00:00",
             "MediaWeek": {
               "_EndDate": "2019-12-29T00:00:00",
               "_MediaMonthId": 459,
@@ -644,9 +689,11 @@
               "_WeekNumber": 5,
               "IsDirty": true
             },
-            "Spots": 1
+            "Spots": 1,
+            "StartDate": "2019-12-23T00:00:00"
           },
           {
+            "EndDate": "2019-12-30T00:00:00",
             "MediaWeek": {
               "_EndDate": "2020-01-05T00:00:00",
               "_MediaMonthId": 460,
@@ -654,7 +701,8 @@
               "_WeekNumber": 1,
               "IsDirty": true
             },
-            "Spots": 1
+            "Spots": 1,
+            "StartDate": "2019-12-30T00:00:00"
           }
         ],
         "SpotLengthId": 1,
@@ -675,8 +723,8 @@
       {
         "Comment": "Comment 2",
         "DaypartCode": "AM",
-        "EffectiveDate": "2019-12-10T00:00:00",
-        "EndDate": "2019-12-30T00:00:00",
+        "EffectiveDate": null,
+        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -718,6 +766,7 @@
         "ManifestRates": [],
         "ManifestWeeks": [
           {
+            "EndDate": "2019-12-15T00:00:00",
             "MediaWeek": {
               "_EndDate": "2019-12-15T00:00:00",
               "_MediaMonthId": 459,
@@ -725,9 +774,11 @@
               "_WeekNumber": 3,
               "IsDirty": true
             },
-            "Spots": 2
+            "Spots": 2,
+            "StartDate": "2019-12-10T00:00:00"
           },
           {
+            "EndDate": "2019-12-22T00:00:00",
             "MediaWeek": {
               "_EndDate": "2019-12-22T00:00:00",
               "_MediaMonthId": 459,
@@ -735,9 +786,11 @@
               "_WeekNumber": 4,
               "IsDirty": true
             },
-            "Spots": 2
+            "Spots": 2,
+            "StartDate": "2019-12-16T00:00:00"
           },
           {
+            "EndDate": "2019-12-29T00:00:00",
             "MediaWeek": {
               "_EndDate": "2019-12-29T00:00:00",
               "_MediaMonthId": 459,
@@ -745,9 +798,11 @@
               "_WeekNumber": 5,
               "IsDirty": true
             },
-            "Spots": 2
+            "Spots": 2,
+            "StartDate": "2019-12-23T00:00:00"
           },
           {
+            "EndDate": "2019-12-30T00:00:00",
             "MediaWeek": {
               "_EndDate": "2020-01-05T00:00:00",
               "_MediaMonthId": 460,
@@ -755,7 +810,8 @@
               "_WeekNumber": 1,
               "IsDirty": true
             },
-            "Spots": 2
+            "Spots": 2,
+            "StartDate": "2019-12-30T00:00:00"
           }
         ],
         "SpotLengthId": 1,
@@ -776,8 +832,8 @@
       {
         "Comment": "Comment 3",
         "DaypartCode": "AM",
-        "EffectiveDate": "2019-12-10T00:00:00",
-        "EndDate": "2019-12-30T00:00:00",
+        "EffectiveDate": null,
+        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -819,6 +875,7 @@
         "ManifestRates": [],
         "ManifestWeeks": [
           {
+            "EndDate": "2019-12-15T00:00:00",
             "MediaWeek": {
               "_EndDate": "2019-12-15T00:00:00",
               "_MediaMonthId": 459,
@@ -826,9 +883,11 @@
               "_WeekNumber": 3,
               "IsDirty": true
             },
-            "Spots": 3
+            "Spots": 3,
+            "StartDate": "2019-12-10T00:00:00"
           },
           {
+            "EndDate": "2019-12-22T00:00:00",
             "MediaWeek": {
               "_EndDate": "2019-12-22T00:00:00",
               "_MediaMonthId": 459,
@@ -836,9 +895,11 @@
               "_WeekNumber": 4,
               "IsDirty": true
             },
-            "Spots": 3
+            "Spots": 3,
+            "StartDate": "2019-12-16T00:00:00"
           },
           {
+            "EndDate": "2019-12-29T00:00:00",
             "MediaWeek": {
               "_EndDate": "2019-12-29T00:00:00",
               "_MediaMonthId": 459,
@@ -846,9 +907,11 @@
               "_WeekNumber": 5,
               "IsDirty": true
             },
-            "Spots": 3
+            "Spots": 3,
+            "StartDate": "2019-12-23T00:00:00"
           },
           {
+            "EndDate": "2019-12-30T00:00:00",
             "MediaWeek": {
               "_EndDate": "2020-01-05T00:00:00",
               "_MediaMonthId": 460,
@@ -856,7 +919,8 @@
               "_WeekNumber": 1,
               "IsDirty": true
             },
-            "Spots": 3
+            "Spots": 3,
+            "StartDate": "2019-12-30T00:00:00"
           }
         ],
         "SpotLengthId": 1,
@@ -877,8 +941,8 @@
       {
         "Comment": "Comment 4",
         "DaypartCode": "AM",
-        "EffectiveDate": "2019-12-10T00:00:00",
-        "EndDate": "2019-12-30T00:00:00",
+        "EffectiveDate": null,
+        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -962,6 +1026,7 @@
         "ManifestRates": [],
         "ManifestWeeks": [
           {
+            "EndDate": "2019-12-15T00:00:00",
             "MediaWeek": {
               "_EndDate": "2019-12-15T00:00:00",
               "_MediaMonthId": 459,
@@ -969,9 +1034,11 @@
               "_WeekNumber": 3,
               "IsDirty": true
             },
-            "Spots": 2
+            "Spots": 2,
+            "StartDate": "2019-12-10T00:00:00"
           },
           {
+            "EndDate": "2019-12-22T00:00:00",
             "MediaWeek": {
               "_EndDate": "2019-12-22T00:00:00",
               "_MediaMonthId": 459,
@@ -979,9 +1046,11 @@
               "_WeekNumber": 4,
               "IsDirty": true
             },
-            "Spots": 2
+            "Spots": 2,
+            "StartDate": "2019-12-16T00:00:00"
           },
           {
+            "EndDate": "2019-12-29T00:00:00",
             "MediaWeek": {
               "_EndDate": "2019-12-29T00:00:00",
               "_MediaMonthId": 459,
@@ -989,9 +1058,11 @@
               "_WeekNumber": 5,
               "IsDirty": true
             },
-            "Spots": 2
+            "Spots": 2,
+            "StartDate": "2019-12-23T00:00:00"
           },
           {
+            "EndDate": "2019-12-30T00:00:00",
             "MediaWeek": {
               "_EndDate": "2020-01-05T00:00:00",
               "_MediaMonthId": 460,
@@ -999,7 +1070,8 @@
               "_WeekNumber": 1,
               "IsDirty": true
             },
-            "Spots": 2
+            "Spots": 2,
+            "StartDate": "2019-12-30T00:00:00"
           }
         ],
         "SpotLengthId": 1,
@@ -1020,8 +1092,8 @@
       {
         "Comment": "Comment 5",
         "DaypartCode": "AM",
-        "EffectiveDate": "2019-12-10T00:00:00",
-        "EndDate": "2019-12-30T00:00:00",
+        "EffectiveDate": null,
+        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -1063,6 +1135,7 @@
         "ManifestRates": [],
         "ManifestWeeks": [
           {
+            "EndDate": "2019-12-15T00:00:00",
             "MediaWeek": {
               "_EndDate": "2019-12-15T00:00:00",
               "_MediaMonthId": 459,
@@ -1070,9 +1143,11 @@
               "_WeekNumber": 3,
               "IsDirty": true
             },
-            "Spots": 1
+            "Spots": 1,
+            "StartDate": "2019-12-10T00:00:00"
           },
           {
+            "EndDate": "2019-12-22T00:00:00",
             "MediaWeek": {
               "_EndDate": "2019-12-22T00:00:00",
               "_MediaMonthId": 459,
@@ -1080,9 +1155,11 @@
               "_WeekNumber": 4,
               "IsDirty": true
             },
-            "Spots": 1
+            "Spots": 1,
+            "StartDate": "2019-12-16T00:00:00"
           },
           {
+            "EndDate": "2019-12-29T00:00:00",
             "MediaWeek": {
               "_EndDate": "2019-12-29T00:00:00",
               "_MediaMonthId": 459,
@@ -1090,9 +1167,11 @@
               "_WeekNumber": 5,
               "IsDirty": true
             },
-            "Spots": 1
+            "Spots": 1,
+            "StartDate": "2019-12-23T00:00:00"
           },
           {
+            "EndDate": "2019-12-30T00:00:00",
             "MediaWeek": {
               "_EndDate": "2020-01-05T00:00:00",
               "_MediaMonthId": 460,
@@ -1100,7 +1179,8 @@
               "_WeekNumber": 1,
               "IsDirty": true
             },
-            "Spots": 1
+            "Spots": 1,
+            "StartDate": "2019-12-30T00:00:00"
           }
         ],
         "SpotLengthId": 1,
@@ -1121,11 +1201,11 @@
     ],
     "Name": "AM 1",
     "SlotNumber": 1,
-    "StartDate": "2019-12-10T00:00:00"
+    "StartDate": null
   },
   {
     "DaypartCode": "AM",
-    "EndDate": "2019-12-30T00:00:00",
+    "EndDate": null,
     "InventorySource": {
       "Id": 4,
       "InventoryType": 2,
@@ -1136,8 +1216,8 @@
       {
         "Comment": "Comment 1",
         "DaypartCode": "AM",
-        "EffectiveDate": "2019-12-10T00:00:00",
-        "EndDate": "2019-12-30T00:00:00",
+        "EffectiveDate": null,
+        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -1179,6 +1259,7 @@
         "ManifestRates": [],
         "ManifestWeeks": [
           {
+            "EndDate": "2019-12-15T00:00:00",
             "MediaWeek": {
               "_EndDate": "2019-12-15T00:00:00",
               "_MediaMonthId": 459,
@@ -1186,9 +1267,11 @@
               "_WeekNumber": 3,
               "IsDirty": true
             },
-            "Spots": 1
+            "Spots": 1,
+            "StartDate": "2019-12-10T00:00:00"
           },
           {
+            "EndDate": "2019-12-22T00:00:00",
             "MediaWeek": {
               "_EndDate": "2019-12-22T00:00:00",
               "_MediaMonthId": 459,
@@ -1196,9 +1279,11 @@
               "_WeekNumber": 4,
               "IsDirty": true
             },
-            "Spots": 1
+            "Spots": 1,
+            "StartDate": "2019-12-16T00:00:00"
           },
           {
+            "EndDate": "2019-12-29T00:00:00",
             "MediaWeek": {
               "_EndDate": "2019-12-29T00:00:00",
               "_MediaMonthId": 459,
@@ -1206,9 +1291,11 @@
               "_WeekNumber": 5,
               "IsDirty": true
             },
-            "Spots": 1
+            "Spots": 1,
+            "StartDate": "2019-12-23T00:00:00"
           },
           {
+            "EndDate": "2019-12-30T00:00:00",
             "MediaWeek": {
               "_EndDate": "2020-01-05T00:00:00",
               "_MediaMonthId": 460,
@@ -1216,7 +1303,8 @@
               "_WeekNumber": 1,
               "IsDirty": true
             },
-            "Spots": 1
+            "Spots": 1,
+            "StartDate": "2019-12-30T00:00:00"
           }
         ],
         "SpotLengthId": 1,
@@ -1237,8 +1325,8 @@
       {
         "Comment": "Comment 2",
         "DaypartCode": "AM",
-        "EffectiveDate": "2019-12-10T00:00:00",
-        "EndDate": "2019-12-30T00:00:00",
+        "EffectiveDate": null,
+        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -1280,6 +1368,7 @@
         "ManifestRates": [],
         "ManifestWeeks": [
           {
+            "EndDate": "2019-12-15T00:00:00",
             "MediaWeek": {
               "_EndDate": "2019-12-15T00:00:00",
               "_MediaMonthId": 459,
@@ -1287,9 +1376,11 @@
               "_WeekNumber": 3,
               "IsDirty": true
             },
-            "Spots": 2
+            "Spots": 2,
+            "StartDate": "2019-12-10T00:00:00"
           },
           {
+            "EndDate": "2019-12-22T00:00:00",
             "MediaWeek": {
               "_EndDate": "2019-12-22T00:00:00",
               "_MediaMonthId": 459,
@@ -1297,9 +1388,11 @@
               "_WeekNumber": 4,
               "IsDirty": true
             },
-            "Spots": 2
+            "Spots": 2,
+            "StartDate": "2019-12-16T00:00:00"
           },
           {
+            "EndDate": "2019-12-29T00:00:00",
             "MediaWeek": {
               "_EndDate": "2019-12-29T00:00:00",
               "_MediaMonthId": 459,
@@ -1307,9 +1400,11 @@
               "_WeekNumber": 5,
               "IsDirty": true
             },
-            "Spots": 2
+            "Spots": 2,
+            "StartDate": "2019-12-23T00:00:00"
           },
           {
+            "EndDate": "2019-12-30T00:00:00",
             "MediaWeek": {
               "_EndDate": "2020-01-05T00:00:00",
               "_MediaMonthId": 460,
@@ -1317,7 +1412,8 @@
               "_WeekNumber": 1,
               "IsDirty": true
             },
-            "Spots": 2
+            "Spots": 2,
+            "StartDate": "2019-12-30T00:00:00"
           }
         ],
         "SpotLengthId": 1,
@@ -1338,8 +1434,8 @@
       {
         "Comment": "Comment 3",
         "DaypartCode": "AM",
-        "EffectiveDate": "2019-12-10T00:00:00",
-        "EndDate": "2019-12-30T00:00:00",
+        "EffectiveDate": null,
+        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -1381,6 +1477,7 @@
         "ManifestRates": [],
         "ManifestWeeks": [
           {
+            "EndDate": "2019-12-15T00:00:00",
             "MediaWeek": {
               "_EndDate": "2019-12-15T00:00:00",
               "_MediaMonthId": 459,
@@ -1388,9 +1485,11 @@
               "_WeekNumber": 3,
               "IsDirty": true
             },
-            "Spots": 3
+            "Spots": 3,
+            "StartDate": "2019-12-10T00:00:00"
           },
           {
+            "EndDate": "2019-12-22T00:00:00",
             "MediaWeek": {
               "_EndDate": "2019-12-22T00:00:00",
               "_MediaMonthId": 459,
@@ -1398,9 +1497,11 @@
               "_WeekNumber": 4,
               "IsDirty": true
             },
-            "Spots": 3
+            "Spots": 3,
+            "StartDate": "2019-12-16T00:00:00"
           },
           {
+            "EndDate": "2019-12-29T00:00:00",
             "MediaWeek": {
               "_EndDate": "2019-12-29T00:00:00",
               "_MediaMonthId": 459,
@@ -1408,9 +1509,11 @@
               "_WeekNumber": 5,
               "IsDirty": true
             },
-            "Spots": 3
+            "Spots": 3,
+            "StartDate": "2019-12-23T00:00:00"
           },
           {
+            "EndDate": "2019-12-30T00:00:00",
             "MediaWeek": {
               "_EndDate": "2020-01-05T00:00:00",
               "_MediaMonthId": 460,
@@ -1418,7 +1521,8 @@
               "_WeekNumber": 1,
               "IsDirty": true
             },
-            "Spots": 3
+            "Spots": 3,
+            "StartDate": "2019-12-30T00:00:00"
           }
         ],
         "SpotLengthId": 1,
@@ -1439,8 +1543,8 @@
       {
         "Comment": "Comment 4",
         "DaypartCode": "AM",
-        "EffectiveDate": "2019-12-10T00:00:00",
-        "EndDate": "2019-12-30T00:00:00",
+        "EffectiveDate": null,
+        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -1524,6 +1628,7 @@
         "ManifestRates": [],
         "ManifestWeeks": [
           {
+            "EndDate": "2019-12-15T00:00:00",
             "MediaWeek": {
               "_EndDate": "2019-12-15T00:00:00",
               "_MediaMonthId": 459,
@@ -1531,9 +1636,11 @@
               "_WeekNumber": 3,
               "IsDirty": true
             },
-            "Spots": 2
+            "Spots": 2,
+            "StartDate": "2019-12-10T00:00:00"
           },
           {
+            "EndDate": "2019-12-22T00:00:00",
             "MediaWeek": {
               "_EndDate": "2019-12-22T00:00:00",
               "_MediaMonthId": 459,
@@ -1541,9 +1648,11 @@
               "_WeekNumber": 4,
               "IsDirty": true
             },
-            "Spots": 2
+            "Spots": 2,
+            "StartDate": "2019-12-16T00:00:00"
           },
           {
+            "EndDate": "2019-12-29T00:00:00",
             "MediaWeek": {
               "_EndDate": "2019-12-29T00:00:00",
               "_MediaMonthId": 459,
@@ -1551,9 +1660,11 @@
               "_WeekNumber": 5,
               "IsDirty": true
             },
-            "Spots": 2
+            "Spots": 2,
+            "StartDate": "2019-12-23T00:00:00"
           },
           {
+            "EndDate": "2019-12-30T00:00:00",
             "MediaWeek": {
               "_EndDate": "2020-01-05T00:00:00",
               "_MediaMonthId": 460,
@@ -1561,7 +1672,8 @@
               "_WeekNumber": 1,
               "IsDirty": true
             },
-            "Spots": 2
+            "Spots": 2,
+            "StartDate": "2019-12-30T00:00:00"
           }
         ],
         "SpotLengthId": 1,
@@ -1582,8 +1694,8 @@
       {
         "Comment": "Comment 5",
         "DaypartCode": "AM",
-        "EffectiveDate": "2019-12-10T00:00:00",
-        "EndDate": "2019-12-30T00:00:00",
+        "EffectiveDate": null,
+        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -1625,6 +1737,7 @@
         "ManifestRates": [],
         "ManifestWeeks": [
           {
+            "EndDate": "2019-12-15T00:00:00",
             "MediaWeek": {
               "_EndDate": "2019-12-15T00:00:00",
               "_MediaMonthId": 459,
@@ -1632,9 +1745,11 @@
               "_WeekNumber": 3,
               "IsDirty": true
             },
-            "Spots": 1
+            "Spots": 1,
+            "StartDate": "2019-12-10T00:00:00"
           },
           {
+            "EndDate": "2019-12-22T00:00:00",
             "MediaWeek": {
               "_EndDate": "2019-12-22T00:00:00",
               "_MediaMonthId": 459,
@@ -1642,9 +1757,11 @@
               "_WeekNumber": 4,
               "IsDirty": true
             },
-            "Spots": 1
+            "Spots": 1,
+            "StartDate": "2019-12-16T00:00:00"
           },
           {
+            "EndDate": "2019-12-29T00:00:00",
             "MediaWeek": {
               "_EndDate": "2019-12-29T00:00:00",
               "_MediaMonthId": 459,
@@ -1652,9 +1769,11 @@
               "_WeekNumber": 5,
               "IsDirty": true
             },
-            "Spots": 1
+            "Spots": 1,
+            "StartDate": "2019-12-23T00:00:00"
           },
           {
+            "EndDate": "2019-12-30T00:00:00",
             "MediaWeek": {
               "_EndDate": "2020-01-05T00:00:00",
               "_MediaMonthId": 460,
@@ -1662,7 +1781,8 @@
               "_WeekNumber": 1,
               "IsDirty": true
             },
-            "Spots": 1
+            "Spots": 1,
+            "StartDate": "2019-12-30T00:00:00"
           }
         ],
         "SpotLengthId": 1,
@@ -1683,11 +1803,11 @@
     ],
     "Name": "AM 1",
     "SlotNumber": 1,
-    "StartDate": "2019-12-10T00:00:00"
+    "StartDate": null
   },
   {
     "DaypartCode": "AM",
-    "EndDate": "2019-12-30T00:00:00",
+    "EndDate": null,
     "InventorySource": {
       "Id": 4,
       "InventoryType": 2,
@@ -1698,8 +1818,8 @@
       {
         "Comment": "Comment 1",
         "DaypartCode": "AM",
-        "EffectiveDate": "2019-12-10T00:00:00",
-        "EndDate": "2019-12-30T00:00:00",
+        "EffectiveDate": null,
+        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -1741,6 +1861,7 @@
         "ManifestRates": [],
         "ManifestWeeks": [
           {
+            "EndDate": "2019-12-15T00:00:00",
             "MediaWeek": {
               "_EndDate": "2019-12-15T00:00:00",
               "_MediaMonthId": 459,
@@ -1748,9 +1869,11 @@
               "_WeekNumber": 3,
               "IsDirty": true
             },
-            "Spots": 1
+            "Spots": 1,
+            "StartDate": "2019-12-10T00:00:00"
           },
           {
+            "EndDate": "2019-12-22T00:00:00",
             "MediaWeek": {
               "_EndDate": "2019-12-22T00:00:00",
               "_MediaMonthId": 459,
@@ -1758,9 +1881,11 @@
               "_WeekNumber": 4,
               "IsDirty": true
             },
-            "Spots": 1
+            "Spots": 1,
+            "StartDate": "2019-12-16T00:00:00"
           },
           {
+            "EndDate": "2019-12-29T00:00:00",
             "MediaWeek": {
               "_EndDate": "2019-12-29T00:00:00",
               "_MediaMonthId": 459,
@@ -1768,9 +1893,11 @@
               "_WeekNumber": 5,
               "IsDirty": true
             },
-            "Spots": 1
+            "Spots": 1,
+            "StartDate": "2019-12-23T00:00:00"
           },
           {
+            "EndDate": "2019-12-30T00:00:00",
             "MediaWeek": {
               "_EndDate": "2020-01-05T00:00:00",
               "_MediaMonthId": 460,
@@ -1778,7 +1905,8 @@
               "_WeekNumber": 1,
               "IsDirty": true
             },
-            "Spots": 1
+            "Spots": 1,
+            "StartDate": "2019-12-30T00:00:00"
           }
         ],
         "SpotLengthId": 1,
@@ -1799,8 +1927,8 @@
       {
         "Comment": "Comment 2",
         "DaypartCode": "AM",
-        "EffectiveDate": "2019-12-10T00:00:00",
-        "EndDate": "2019-12-30T00:00:00",
+        "EffectiveDate": null,
+        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -1842,6 +1970,7 @@
         "ManifestRates": [],
         "ManifestWeeks": [
           {
+            "EndDate": "2019-12-15T00:00:00",
             "MediaWeek": {
               "_EndDate": "2019-12-15T00:00:00",
               "_MediaMonthId": 459,
@@ -1849,9 +1978,11 @@
               "_WeekNumber": 3,
               "IsDirty": true
             },
-            "Spots": 2
+            "Spots": 2,
+            "StartDate": "2019-12-10T00:00:00"
           },
           {
+            "EndDate": "2019-12-22T00:00:00",
             "MediaWeek": {
               "_EndDate": "2019-12-22T00:00:00",
               "_MediaMonthId": 459,
@@ -1859,9 +1990,11 @@
               "_WeekNumber": 4,
               "IsDirty": true
             },
-            "Spots": 2
+            "Spots": 2,
+            "StartDate": "2019-12-16T00:00:00"
           },
           {
+            "EndDate": "2019-12-29T00:00:00",
             "MediaWeek": {
               "_EndDate": "2019-12-29T00:00:00",
               "_MediaMonthId": 459,
@@ -1869,9 +2002,11 @@
               "_WeekNumber": 5,
               "IsDirty": true
             },
-            "Spots": 2
+            "Spots": 2,
+            "StartDate": "2019-12-23T00:00:00"
           },
           {
+            "EndDate": "2019-12-30T00:00:00",
             "MediaWeek": {
               "_EndDate": "2020-01-05T00:00:00",
               "_MediaMonthId": 460,
@@ -1879,7 +2014,8 @@
               "_WeekNumber": 1,
               "IsDirty": true
             },
-            "Spots": 2
+            "Spots": 2,
+            "StartDate": "2019-12-30T00:00:00"
           }
         ],
         "SpotLengthId": 1,
@@ -1900,8 +2036,8 @@
       {
         "Comment": "Comment 3",
         "DaypartCode": "AM",
-        "EffectiveDate": "2019-12-10T00:00:00",
-        "EndDate": "2019-12-30T00:00:00",
+        "EffectiveDate": null,
+        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -1943,6 +2079,7 @@
         "ManifestRates": [],
         "ManifestWeeks": [
           {
+            "EndDate": "2019-12-15T00:00:00",
             "MediaWeek": {
               "_EndDate": "2019-12-15T00:00:00",
               "_MediaMonthId": 459,
@@ -1950,9 +2087,11 @@
               "_WeekNumber": 3,
               "IsDirty": true
             },
-            "Spots": 3
+            "Spots": 3,
+            "StartDate": "2019-12-10T00:00:00"
           },
           {
+            "EndDate": "2019-12-22T00:00:00",
             "MediaWeek": {
               "_EndDate": "2019-12-22T00:00:00",
               "_MediaMonthId": 459,
@@ -1960,9 +2099,11 @@
               "_WeekNumber": 4,
               "IsDirty": true
             },
-            "Spots": 3
+            "Spots": 3,
+            "StartDate": "2019-12-16T00:00:00"
           },
           {
+            "EndDate": "2019-12-29T00:00:00",
             "MediaWeek": {
               "_EndDate": "2019-12-29T00:00:00",
               "_MediaMonthId": 459,
@@ -1970,9 +2111,11 @@
               "_WeekNumber": 5,
               "IsDirty": true
             },
-            "Spots": 3
+            "Spots": 3,
+            "StartDate": "2019-12-23T00:00:00"
           },
           {
+            "EndDate": "2019-12-30T00:00:00",
             "MediaWeek": {
               "_EndDate": "2020-01-05T00:00:00",
               "_MediaMonthId": 460,
@@ -1980,7 +2123,8 @@
               "_WeekNumber": 1,
               "IsDirty": true
             },
-            "Spots": 3
+            "Spots": 3,
+            "StartDate": "2019-12-30T00:00:00"
           }
         ],
         "SpotLengthId": 1,
@@ -2001,8 +2145,8 @@
       {
         "Comment": "Comment 4",
         "DaypartCode": "AM",
-        "EffectiveDate": "2019-12-10T00:00:00",
-        "EndDate": "2019-12-30T00:00:00",
+        "EffectiveDate": null,
+        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -2086,6 +2230,7 @@
         "ManifestRates": [],
         "ManifestWeeks": [
           {
+            "EndDate": "2019-12-15T00:00:00",
             "MediaWeek": {
               "_EndDate": "2019-12-15T00:00:00",
               "_MediaMonthId": 459,
@@ -2093,9 +2238,11 @@
               "_WeekNumber": 3,
               "IsDirty": true
             },
-            "Spots": 2
+            "Spots": 2,
+            "StartDate": "2019-12-10T00:00:00"
           },
           {
+            "EndDate": "2019-12-22T00:00:00",
             "MediaWeek": {
               "_EndDate": "2019-12-22T00:00:00",
               "_MediaMonthId": 459,
@@ -2103,9 +2250,11 @@
               "_WeekNumber": 4,
               "IsDirty": true
             },
-            "Spots": 2
+            "Spots": 2,
+            "StartDate": "2019-12-16T00:00:00"
           },
           {
+            "EndDate": "2019-12-29T00:00:00",
             "MediaWeek": {
               "_EndDate": "2019-12-29T00:00:00",
               "_MediaMonthId": 459,
@@ -2113,9 +2262,11 @@
               "_WeekNumber": 5,
               "IsDirty": true
             },
-            "Spots": 2
+            "Spots": 2,
+            "StartDate": "2019-12-23T00:00:00"
           },
           {
+            "EndDate": "2019-12-30T00:00:00",
             "MediaWeek": {
               "_EndDate": "2020-01-05T00:00:00",
               "_MediaMonthId": 460,
@@ -2123,7 +2274,8 @@
               "_WeekNumber": 1,
               "IsDirty": true
             },
-            "Spots": 2
+            "Spots": 2,
+            "StartDate": "2019-12-30T00:00:00"
           }
         ],
         "SpotLengthId": 1,
@@ -2144,8 +2296,8 @@
       {
         "Comment": "Comment 5",
         "DaypartCode": "AM",
-        "EffectiveDate": "2019-12-10T00:00:00",
-        "EndDate": "2019-12-30T00:00:00",
+        "EffectiveDate": null,
+        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -2187,6 +2339,7 @@
         "ManifestRates": [],
         "ManifestWeeks": [
           {
+            "EndDate": "2019-12-15T00:00:00",
             "MediaWeek": {
               "_EndDate": "2019-12-15T00:00:00",
               "_MediaMonthId": 459,
@@ -2194,9 +2347,11 @@
               "_WeekNumber": 3,
               "IsDirty": true
             },
-            "Spots": 1
+            "Spots": 1,
+            "StartDate": "2019-12-10T00:00:00"
           },
           {
+            "EndDate": "2019-12-22T00:00:00",
             "MediaWeek": {
               "_EndDate": "2019-12-22T00:00:00",
               "_MediaMonthId": 459,
@@ -2204,9 +2359,11 @@
               "_WeekNumber": 4,
               "IsDirty": true
             },
-            "Spots": 1
+            "Spots": 1,
+            "StartDate": "2019-12-16T00:00:00"
           },
           {
+            "EndDate": "2019-12-29T00:00:00",
             "MediaWeek": {
               "_EndDate": "2019-12-29T00:00:00",
               "_MediaMonthId": 459,
@@ -2214,9 +2371,11 @@
               "_WeekNumber": 5,
               "IsDirty": true
             },
-            "Spots": 1
+            "Spots": 1,
+            "StartDate": "2019-12-23T00:00:00"
           },
           {
+            "EndDate": "2019-12-30T00:00:00",
             "MediaWeek": {
               "_EndDate": "2020-01-05T00:00:00",
               "_MediaMonthId": 460,
@@ -2224,7 +2383,8 @@
               "_WeekNumber": 1,
               "IsDirty": true
             },
-            "Spots": 1
+            "Spots": 1,
+            "StartDate": "2019-12-30T00:00:00"
           }
         ],
         "SpotLengthId": 1,
@@ -2245,11 +2405,11 @@
     ],
     "Name": "AM 1",
     "SlotNumber": 1,
-    "StartDate": "2019-12-10T00:00:00"
+    "StartDate": null
   },
   {
     "DaypartCode": "AM",
-    "EndDate": "2019-12-30T00:00:00",
+    "EndDate": null,
     "InventorySource": {
       "Id": 4,
       "InventoryType": 2,
@@ -2260,8 +2420,8 @@
       {
         "Comment": "Comment 1",
         "DaypartCode": "AM",
-        "EffectiveDate": "2019-12-10T00:00:00",
-        "EndDate": "2019-12-30T00:00:00",
+        "EffectiveDate": null,
+        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -2303,6 +2463,7 @@
         "ManifestRates": [],
         "ManifestWeeks": [
           {
+            "EndDate": "2019-12-15T00:00:00",
             "MediaWeek": {
               "_EndDate": "2019-12-15T00:00:00",
               "_MediaMonthId": 459,
@@ -2310,9 +2471,11 @@
               "_WeekNumber": 3,
               "IsDirty": true
             },
-            "Spots": 1
+            "Spots": 1,
+            "StartDate": "2019-12-10T00:00:00"
           },
           {
+            "EndDate": "2019-12-22T00:00:00",
             "MediaWeek": {
               "_EndDate": "2019-12-22T00:00:00",
               "_MediaMonthId": 459,
@@ -2320,9 +2483,11 @@
               "_WeekNumber": 4,
               "IsDirty": true
             },
-            "Spots": 1
+            "Spots": 1,
+            "StartDate": "2019-12-16T00:00:00"
           },
           {
+            "EndDate": "2019-12-29T00:00:00",
             "MediaWeek": {
               "_EndDate": "2019-12-29T00:00:00",
               "_MediaMonthId": 459,
@@ -2330,9 +2495,11 @@
               "_WeekNumber": 5,
               "IsDirty": true
             },
-            "Spots": 1
+            "Spots": 1,
+            "StartDate": "2019-12-23T00:00:00"
           },
           {
+            "EndDate": "2019-12-30T00:00:00",
             "MediaWeek": {
               "_EndDate": "2020-01-05T00:00:00",
               "_MediaMonthId": 460,
@@ -2340,7 +2507,8 @@
               "_WeekNumber": 1,
               "IsDirty": true
             },
-            "Spots": 1
+            "Spots": 1,
+            "StartDate": "2019-12-30T00:00:00"
           }
         ],
         "SpotLengthId": 1,
@@ -2361,8 +2529,8 @@
       {
         "Comment": "Comment 2",
         "DaypartCode": "AM",
-        "EffectiveDate": "2019-12-10T00:00:00",
-        "EndDate": "2019-12-30T00:00:00",
+        "EffectiveDate": null,
+        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -2404,6 +2572,7 @@
         "ManifestRates": [],
         "ManifestWeeks": [
           {
+            "EndDate": "2019-12-15T00:00:00",
             "MediaWeek": {
               "_EndDate": "2019-12-15T00:00:00",
               "_MediaMonthId": 459,
@@ -2411,9 +2580,11 @@
               "_WeekNumber": 3,
               "IsDirty": true
             },
-            "Spots": 2
+            "Spots": 2,
+            "StartDate": "2019-12-10T00:00:00"
           },
           {
+            "EndDate": "2019-12-22T00:00:00",
             "MediaWeek": {
               "_EndDate": "2019-12-22T00:00:00",
               "_MediaMonthId": 459,
@@ -2421,9 +2592,11 @@
               "_WeekNumber": 4,
               "IsDirty": true
             },
-            "Spots": 2
+            "Spots": 2,
+            "StartDate": "2019-12-16T00:00:00"
           },
           {
+            "EndDate": "2019-12-29T00:00:00",
             "MediaWeek": {
               "_EndDate": "2019-12-29T00:00:00",
               "_MediaMonthId": 459,
@@ -2431,9 +2604,11 @@
               "_WeekNumber": 5,
               "IsDirty": true
             },
-            "Spots": 2
+            "Spots": 2,
+            "StartDate": "2019-12-23T00:00:00"
           },
           {
+            "EndDate": "2019-12-30T00:00:00",
             "MediaWeek": {
               "_EndDate": "2020-01-05T00:00:00",
               "_MediaMonthId": 460,
@@ -2441,7 +2616,8 @@
               "_WeekNumber": 1,
               "IsDirty": true
             },
-            "Spots": 2
+            "Spots": 2,
+            "StartDate": "2019-12-30T00:00:00"
           }
         ],
         "SpotLengthId": 1,
@@ -2462,8 +2638,8 @@
       {
         "Comment": "Comment 3",
         "DaypartCode": "AM",
-        "EffectiveDate": "2019-12-10T00:00:00",
-        "EndDate": "2019-12-30T00:00:00",
+        "EffectiveDate": null,
+        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -2505,6 +2681,7 @@
         "ManifestRates": [],
         "ManifestWeeks": [
           {
+            "EndDate": "2019-12-15T00:00:00",
             "MediaWeek": {
               "_EndDate": "2019-12-15T00:00:00",
               "_MediaMonthId": 459,
@@ -2512,9 +2689,11 @@
               "_WeekNumber": 3,
               "IsDirty": true
             },
-            "Spots": 3
+            "Spots": 3,
+            "StartDate": "2019-12-10T00:00:00"
           },
           {
+            "EndDate": "2019-12-22T00:00:00",
             "MediaWeek": {
               "_EndDate": "2019-12-22T00:00:00",
               "_MediaMonthId": 459,
@@ -2522,9 +2701,11 @@
               "_WeekNumber": 4,
               "IsDirty": true
             },
-            "Spots": 3
+            "Spots": 3,
+            "StartDate": "2019-12-16T00:00:00"
           },
           {
+            "EndDate": "2019-12-29T00:00:00",
             "MediaWeek": {
               "_EndDate": "2019-12-29T00:00:00",
               "_MediaMonthId": 459,
@@ -2532,9 +2713,11 @@
               "_WeekNumber": 5,
               "IsDirty": true
             },
-            "Spots": 3
+            "Spots": 3,
+            "StartDate": "2019-12-23T00:00:00"
           },
           {
+            "EndDate": "2019-12-30T00:00:00",
             "MediaWeek": {
               "_EndDate": "2020-01-05T00:00:00",
               "_MediaMonthId": 460,
@@ -2542,7 +2725,8 @@
               "_WeekNumber": 1,
               "IsDirty": true
             },
-            "Spots": 3
+            "Spots": 3,
+            "StartDate": "2019-12-30T00:00:00"
           }
         ],
         "SpotLengthId": 1,
@@ -2563,8 +2747,8 @@
       {
         "Comment": "Comment 4",
         "DaypartCode": "AM",
-        "EffectiveDate": "2019-12-10T00:00:00",
-        "EndDate": "2019-12-30T00:00:00",
+        "EffectiveDate": null,
+        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -2648,6 +2832,7 @@
         "ManifestRates": [],
         "ManifestWeeks": [
           {
+            "EndDate": "2019-12-15T00:00:00",
             "MediaWeek": {
               "_EndDate": "2019-12-15T00:00:00",
               "_MediaMonthId": 459,
@@ -2655,9 +2840,11 @@
               "_WeekNumber": 3,
               "IsDirty": true
             },
-            "Spots": 2
+            "Spots": 2,
+            "StartDate": "2019-12-10T00:00:00"
           },
           {
+            "EndDate": "2019-12-22T00:00:00",
             "MediaWeek": {
               "_EndDate": "2019-12-22T00:00:00",
               "_MediaMonthId": 459,
@@ -2665,9 +2852,11 @@
               "_WeekNumber": 4,
               "IsDirty": true
             },
-            "Spots": 2
+            "Spots": 2,
+            "StartDate": "2019-12-16T00:00:00"
           },
           {
+            "EndDate": "2019-12-29T00:00:00",
             "MediaWeek": {
               "_EndDate": "2019-12-29T00:00:00",
               "_MediaMonthId": 459,
@@ -2675,9 +2864,11 @@
               "_WeekNumber": 5,
               "IsDirty": true
             },
-            "Spots": 2
+            "Spots": 2,
+            "StartDate": "2019-12-23T00:00:00"
           },
           {
+            "EndDate": "2019-12-30T00:00:00",
             "MediaWeek": {
               "_EndDate": "2020-01-05T00:00:00",
               "_MediaMonthId": 460,
@@ -2685,7 +2876,8 @@
               "_WeekNumber": 1,
               "IsDirty": true
             },
-            "Spots": 2
+            "Spots": 2,
+            "StartDate": "2019-12-30T00:00:00"
           }
         ],
         "SpotLengthId": 1,
@@ -2706,8 +2898,8 @@
       {
         "Comment": "Comment 5",
         "DaypartCode": "AM",
-        "EffectiveDate": "2019-12-10T00:00:00",
-        "EndDate": "2019-12-30T00:00:00",
+        "EffectiveDate": null,
+        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -2749,6 +2941,7 @@
         "ManifestRates": [],
         "ManifestWeeks": [
           {
+            "EndDate": "2019-12-15T00:00:00",
             "MediaWeek": {
               "_EndDate": "2019-12-15T00:00:00",
               "_MediaMonthId": 459,
@@ -2756,9 +2949,11 @@
               "_WeekNumber": 3,
               "IsDirty": true
             },
-            "Spots": 1
+            "Spots": 1,
+            "StartDate": "2019-12-10T00:00:00"
           },
           {
+            "EndDate": "2019-12-22T00:00:00",
             "MediaWeek": {
               "_EndDate": "2019-12-22T00:00:00",
               "_MediaMonthId": 459,
@@ -2766,9 +2961,11 @@
               "_WeekNumber": 4,
               "IsDirty": true
             },
-            "Spots": 1
+            "Spots": 1,
+            "StartDate": "2019-12-16T00:00:00"
           },
           {
+            "EndDate": "2019-12-29T00:00:00",
             "MediaWeek": {
               "_EndDate": "2019-12-29T00:00:00",
               "_MediaMonthId": 459,
@@ -2776,9 +2973,11 @@
               "_WeekNumber": 5,
               "IsDirty": true
             },
-            "Spots": 1
+            "Spots": 1,
+            "StartDate": "2019-12-23T00:00:00"
           },
           {
+            "EndDate": "2019-12-30T00:00:00",
             "MediaWeek": {
               "_EndDate": "2020-01-05T00:00:00",
               "_MediaMonthId": 460,
@@ -2786,7 +2985,8 @@
               "_WeekNumber": 1,
               "IsDirty": true
             },
-            "Spots": 1
+            "Spots": 1,
+            "StartDate": "2019-12-30T00:00:00"
           }
         ],
         "SpotLengthId": 1,
@@ -2807,6 +3007,6 @@
     ],
     "Name": "AM 1",
     "SlotNumber": 1,
-    "StartDate": "2019-12-10T00:00:00"
+    "StartDate": null
   }
 ]

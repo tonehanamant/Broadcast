@@ -46,7 +46,7 @@ namespace Services.Broadcast.Validators
                      var exists = _inventoryRepository.CheckIfManifestByStationProgramFlightDaypartExists(
                         manifest.Station.Id,
                         manifestDaypart.ProgramName,
-                        manifest.EffectiveDate,
+                        manifest.EffectiveDate.Value,//TODO Review in PRI-8277
                         manifest.EndDate.Value,
                         manifestDaypart.Daypart.Id);
                     if (exists)

@@ -13,7 +13,7 @@ namespace Services.Broadcast.Entities.StationInventory
 
         public int SlotNumber { get; set; }
 
-        public DateTime StartDate { get; set; }
+        public DateTime? StartDate { get; set; }
 
         public DateTime? EndDate { get; set; }
 

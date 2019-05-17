@@ -2,8 +2,8 @@
   {
     "Comment": null,
     "DaypartCode": "DIGI",
-    "EffectiveDate": "2018-10-10T00:00:00",
-    "EndDate": "2018-10-17T00:00:00",
+    "EffectiveDate": null,
+    "EndDate": null,
     "InventorySourceId": 20,
     "ManifestAudiences": [],
     "ManifestAudiencesReferences": [
@@ -61,6 +61,7 @@
     ],
     "ManifestWeeks": [
       {
+        "EndDate": "2018-10-14T00:00:00",
         "MediaWeek": {
           "_EndDate": "2018-10-14T00:00:00",
           "_MediaMonthId": 445,
@@ -68,9 +69,11 @@
           "_WeekNumber": 2,
           "IsDirty": true
         },
-        "Spots": 1
+        "Spots": 1,
+        "StartDate": "2018-10-10T00:00:00"
       },
       {
+        "EndDate": "2018-10-17T00:00:00",
         "MediaWeek": {
           "_EndDate": "2018-10-21T00:00:00",
           "_MediaMonthId": 445,
@@ -78,7 +81,8 @@
           "_WeekNumber": 3,
           "IsDirty": true
         },
-        "Spots": 1
+        "Spots": 1,
+        "StartDate": "2018-10-15T00:00:00"
       }
     ],
     "ProjectedStationImpressions": [],
@@ -90,8 +94,8 @@
   {
     "Comment": null,
     "DaypartCode": "DIGI",
-    "EffectiveDate": "2018-10-10T00:00:00",
-    "EndDate": "2018-10-17T00:00:00",
+    "EffectiveDate": null,
+    "EndDate": null,
     "InventorySourceId": 20,
     "ManifestAudiences": [],
     "ManifestAudiencesReferences": [
@@ -170,6 +174,7 @@
     ],
     "ManifestWeeks": [
       {
+        "EndDate": "2018-10-14T00:00:00",
         "MediaWeek": {
           "_EndDate": "2018-10-14T00:00:00",
           "_MediaMonthId": 445,
@@ -177,9 +182,11 @@
           "_WeekNumber": 2,
           "IsDirty": true
         },
-        "Spots": 1
+        "Spots": 1,
+        "StartDate": "2018-10-10T00:00:00"
       },
       {
+        "EndDate": "2018-10-17T00:00:00",
         "MediaWeek": {
           "_EndDate": "2018-10-21T00:00:00",
           "_MediaMonthId": 445,
@@ -187,7 +194,8 @@
           "_WeekNumber": 3,
           "IsDirty": true
         },
-        "Spots": 1
+        "Spots": 1,
+        "StartDate": "2018-10-15T00:00:00"
       }
     ],
     "ProjectedStationImpressions": [],

@@ -27,14 +27,15 @@ namespace Services.Broadcast.Repositories
         int InventoryExists(string daypartCode, short stationCode, int spotLengthId, int spotsPerWeek, DateTime effectiveDate);
         void AddNewInventory(InventoryFileBase inventoryFile);
         void UpdateInventoryGroups(List<StationInventoryGroup> inventoryGroups);
-        void UpdateInventoryManifestsDateIntervals(List<StationInventoryManifest> inventoryManifests);
         void ExpireInventoryGroupsAndManifests(List<StationInventoryGroup> inventoryGroups, DateTime expireDate, DateTime newEffectiveDate);
         List<StationInventoryGroup> GetStationInventoryGroupsByFileId(int fileId);
         List<StationInventoryManifest> GetStationInventoryManifestsByFileId(int fileId);
         List<StationInventoryGroup> GetActiveInventoryByTypeAndDapartCodes(InventorySource inventorySource, List<string> daypartCodes);
         List<StationInventoryGroup> GetActiveInventoryBySourceAndName(InventorySource inventorySource, List<string> groupNames, DateTime newEffectiveDate);
-        List<StationInventoryManifest> GetActiveInventoryManifestsBySourceAndContractedDaypart(InventorySource source, int contractedDaypartId, DateTime effectiveDate, DateTime endDate);
-        List<StationInventoryManifest> GetActiveInventoryManifestsBySource(InventorySource source, DateTime effectiveDate, DateTime endDate);
+        List<StationInventoryManifestWeek> GetStationInventoryManifestWeeks(InventorySource inventorySource, int contractedDaypartId, IEnumerable<int> mediaWeekIds);
+        List<StationInventoryManifestWeekHistory> GetStationInventoryManifestWeeksHistory(IEnumerable<int> manifestIds);
+        List<StationInventoryManifest> GetInventoryManifestsBySource(InventorySource source);
+        void RemoveManifestWeeks(List<StationInventoryManifestWeek> weeks);
         List<StationInventoryGroup> GetInventoryBySourceAndName(InventorySource inventorySource, List<string> groupNames);
         List<StationInventoryManifest> GetStationManifestsBySourceAndStationCode(
                                             InventorySource rateSource, int stationCode);
@@ -49,10 +50,6 @@ namespace Services.Broadcast.Repositories
         bool CheckIfManifestByStationProgramFlightDaypartExists(int stationId, string programName, DateTime startDate, DateTime endDate, int daypartId);
         void ExpireManifest(int manifestId, DateTime endDate);
         bool HasSpotsAllocated(int manifestId);
-        List<StationInventoryGroup> GetActiveInventoryGroupsBySourceAndContractedDaypart(InventorySource source, int contractedDaypartId, DateTime effectiveDate, DateTime endDate);
-        void UpdateInventoryGroupsDateIntervals(List<StationInventoryGroup> inventoryGroups);
-        void AddInventoryGroups(List<StationInventoryGroup> groups, InventoryFileBase inventoryFile);
-        void AddInventoryManifests(List<StationInventoryManifest> manifests, InventoryFileBase inventoryFile);
  	InventorySource GetInventorySource(int inventorySourceId);
         DateRange GetInventorySourceDateRange(int inventorySourceId);
         DateRange GetAllInventoriesDateRange();
@@ -232,7 +229,9 @@ namespace Services.Broadcast.Repositories
                                         w => new station_inventory_manifest_weeks
                                         {
                                             media_week_id = w.MediaWeek.Id,
-                                            spots = w.Spots
+                                            spots = w.Spots,
+                                            start_date = w.StartDate,
+                                            end_date = w.EndDate
                                         }).ToList()
             };
         }
@@ -285,42 +284,6 @@ namespace Services.Broadcast.Repositories
                 });
         }
 
-        public void UpdateInventoryManifestsDateIntervals(List<StationInventoryManifest> inventoryManifests)
-        {
-            _InReadUncommitedTransaction(
-                context =>
-                {
-                    var manifestIds = inventoryManifests.Select(x => x.Id);
-                    var manifests = context.station_inventory_manifest
-                                            .Include(x => x.station_inventory_manifest_weeks)
-                                            .Where(x => manifestIds.Contains(x.id));
-
-                    foreach (var manifest in manifests)
-                    {
-                        var inventoryManifest = inventoryManifests.Single(x => x.Id == manifest.id);
-
-                        // no need to change weeks if date range hasn`t changed
-                        if (inventoryManifest.EffectiveDate != manifest.effective_date ||
-                            inventoryManifest.EndDate != manifest.end_date)
-                        {
-                            context.station_inventory_manifest_weeks.RemoveRange(manifest.station_inventory_manifest_weeks);
-                            manifest.station_inventory_manifest_weeks = inventoryManifest.ManifestWeeks
-                                .Select(x => new station_inventory_manifest_weeks
-                                {
-                                    media_week_id = x.MediaWeek.Id,
-                                    spots = x.Spots
-                                })
-                                .ToList();
-                        }
-
-                        manifest.effective_date = inventoryManifest.EffectiveDate;
-                        manifest.end_date = inventoryManifest.EndDate;
-                    }
-
-                    context.SaveChanges();
-                });
-        }
-
         public List<StationInventoryGroup> GetStationInventoryGroupsByFileId(int fileId)
         {
             return _InReadUncommitedTransaction(
@@ -363,6 +326,24 @@ namespace Services.Broadcast.Repositories
                     return manifests
                         .Select(manifest => _MapToInventoryManifest(manifest, manifest.inventory_files.inventory_file_proprietary_header.SingleOrDefault()?.daypart_code))
                         .ToList();
+                });
+        }
+
+        public List<StationInventoryManifest> GetInventoryManifestsBySource(InventorySource source)
+        {
+            return _InReadUncommitedTransaction(
+                c =>
+                {
+                    var query = c.station_inventory_manifest
+                        .Include(x => x.station)
+                        .Include(x => x.station_inventory_manifest_dayparts)
+                        .Include(x => x.station_inventory_manifest_audiences)
+                        .Include(x => x.station_inventory_manifest_rates)
+                        .Include(x => x.station_inventory_manifest_weeks)
+                        .Where(x => x.inventory_source_id == source.Id &&
+                                    x.inventory_files.status == (int)FileStatusEnum.Loaded);
+
+                    return query.ToList().Select(x => _MapToInventoryManifest(x)).ToList();
                 });
         }
 
@@ -446,19 +427,10 @@ namespace Services.Broadcast.Repositories
                                     SpotCost = r.spot_cost,
                                     SpotLengthId = r.spot_length_id
                                 }).ToList(),
-                ManifestWeeks = manifest.station_inventory_manifest_weeks.Select(x => new StationInventoryManifestWeek
-                {
-                    Id = x.id,
-                    Spots = x.spots,
-                    MediaWeek = new MediaWeek
-                    {
-                        Id = x.media_weeks.id,
-                        MediaMonthId = x.media_weeks.media_month_id,
-                        WeekNumber = x.media_weeks.week_number,
-                        StartDate = x.media_weeks.start_date,
-                        EndDate = x.media_weeks.end_date
-                    }
-                }).OrderBy(x => x.Id).ToList()
+                ManifestWeeks = manifest.station_inventory_manifest_weeks
+                                .Select(_MapToInventoryManifestWeek)
+                                .OrderBy(x => x.Id)
+                                .ToList()
             };
 
             if (manifest.station != null)
@@ -477,6 +449,39 @@ namespace Services.Broadcast.Repositories
             return result;
         }
 
+        private StationInventoryManifestWeek _MapToInventoryManifestWeek(station_inventory_manifest_weeks week)
+        {
+            return new StationInventoryManifestWeek
+            {
+                Id = week.id,
+                Spots = week.spots,
+                StartDate = week.start_date,
+                EndDate = week.end_date,
+                MediaWeek = new MediaWeek
+                {
+                    Id = week.media_weeks.id,
+                    MediaMonthId = week.media_weeks.media_month_id,
+                    WeekNumber = week.media_weeks.week_number,
+                    StartDate = week.media_weeks.start_date,
+                    EndDate = week.media_weeks.end_date
+                }
+            };
+        }
+
+        private StationInventoryManifestWeekHistory _MapToInventoryManifestWeekHistory(station_inventory_manifest_weeks_history week)
+        {
+            return new StationInventoryManifestWeekHistory
+            {
+                Id = week.id,
+                Spots = week.spots,
+                StartDate = week.start_date,
+                EndDate = week.end_date,
+                MediaWeekId = week.media_week_id,
+                SysStartDate = week.sys_start_date,
+                SysEndDate = week.sys_end_date
+            };
+        }
+
         public List<StationInventoryGroup> GetActiveInventoryBySourceAndName(
                                                 InventorySource inventorySource,
                                                 List<string> groupNames,
@@ -490,58 +495,6 @@ namespace Services.Broadcast.Repositories
                     var output = inventory.Where(i => i.end_date == null || i.end_date >= newEffectiveDate).ToList();
 
                     return output.Select(_MapToInventoryGroup).ToList();
-                });
-        }
-
-        public List<StationInventoryManifest> GetActiveInventoryManifestsBySourceAndContractedDaypart(
-            InventorySource source,
-            int contractedDaypartId,
-            DateTime effectiveDate,
-            DateTime endDate)
-        {
-            return _InReadUncommitedTransaction(
-                c =>
-                {
-                    var query = c.station_inventory_manifest
-                        .Include(x => x.station)
-                        .Include(x => x.station_inventory_manifest_dayparts)
-                        .Include(x => x.station_inventory_manifest_audiences)
-                        .Include(x => x.station_inventory_manifest_rates)
-                        .Include(x => x.station_inventory_manifest_weeks)
-                        .Where(x => x.inventory_source_id == source.Id &&
-                                    x.inventory_files.status == (int)FileStatusEnum.Loaded &&
-                                    x.inventory_files.inventory_file_proprietary_header.FirstOrDefault().contracted_daypart_id == contractedDaypartId);
-
-                    query = query.Where(x => endDate >= x.effective_date && endDate < x.end_date ||
-                                             endDate >= x.end_date && effectiveDate <= x.end_date);
-
-                    var output = query.ToList();
-
-                    return output.Select(x => _MapToInventoryManifest(x)).ToList();
-                });
-        }
-
-        public List<StationInventoryManifest> GetActiveInventoryManifestsBySource(
-            InventorySource source,
-            DateTime effectiveDate,
-            DateTime endDate)
-        {
-            return _InReadUncommitedTransaction(
-                c =>
-                {
-                    var query = c.station_inventory_manifest
-                        .Include(x => x.station)
-                        .Include(x => x.station_inventory_manifest_dayparts)
-                        .Include(x => x.station_inventory_manifest_audiences)
-                        .Include(x => x.station_inventory_manifest_rates)
-                        .Include(x => x.station_inventory_manifest_weeks)
-                        .Where(x => x.inventory_source_id == source.Id &&
-                                    x.inventory_files.status == (int)FileStatusEnum.Loaded);
-
-                    query = query.Where(x => endDate >= x.effective_date && endDate < x.end_date ||
-                                             endDate >= x.end_date && effectiveDate <= x.end_date);
-
-                    return query.ToList().Select(x => _MapToInventoryManifest(x)).ToList();
                 });
         }
 
@@ -1100,32 +1053,43 @@ namespace Services.Broadcast.Repositories
                 context => context.station_inventory_spots.Any(s => s.station_inventory_manifest_id == manifestId));
         }
 
-        public List<StationInventoryGroup> GetActiveInventoryGroupsBySourceAndContractedDaypart(InventorySource source, int contractedDaypartId, DateTime effectiveDate, DateTime endDate)
+        public List<StationInventoryManifestWeek> GetStationInventoryManifestWeeks(InventorySource inventorySource, int contractedDaypartId, IEnumerable<int> mediaWeekIds)
         {
             return _InReadUncommitedTransaction(
                 c =>
                 {
-                    // separation into 2 requests should work faster than looking at groups -> manifests -> inventory_files -> header.contracted_daypart_id
-                    var fileIds = c.inventory_files
-                        .Where(x =>
-                            x.status == (int)FileStatusEnum.Loaded &&
-                            x.inventory_file_proprietary_header.FirstOrDefault().contracted_daypart_id == contractedDaypartId)
-                        .Select(x => x.id)
+                    var query = c.station_inventory_manifest_weeks
+                        .Where(x => x.station_inventory_manifest.inventory_source_id == inventorySource.Id &&
+                                    x.station_inventory_manifest.inventory_files.status == (int)FileStatusEnum.Loaded &&
+                                    x.station_inventory_manifest.inventory_files.inventory_file_proprietary_header.FirstOrDefault().contracted_daypart_id == contractedDaypartId &&
+                                    mediaWeekIds.Contains(x.media_week_id));
+                        
+                    return query.ToList().Select(_MapToInventoryManifestWeek).ToList();
+                });
+        }
+
+        public List<StationInventoryManifestWeekHistory> GetStationInventoryManifestWeeksHistory(IEnumerable<int> manifestIds)
+        {
+            return _InReadUncommitedTransaction(
+                c =>
+                {
+                    return c.station_inventory_manifest_weeks_history
+                        .Where(x => manifestIds.Contains(x.station_inventory_manifest_id))
+                        .ToList()
+                        .Select(_MapToInventoryManifestWeekHistory)
                         .ToList();
+                });
+        }
 
-                    var query = c.station_inventory_group
-                                .Include(x => x.station_inventory_manifest)
-                                .Include(x => x.station_inventory_manifest.Select(m => m.station_inventory_manifest_audiences))
-                                .Include(x => x.station_inventory_manifest.Select(m => m.station_inventory_manifest_weeks))
-                                .Include(x => x.station_inventory_manifest.Select(m => m.station_inventory_manifest_rates))
-                                .Include(x => x.station_inventory_manifest.Select(m => m.station_inventory_manifest_dayparts))
-                                .Include(x => x.station_inventory_manifest.Select(m => m.station))
-                        .Where(x => x.inventory_source_id == source.Id && x.station_inventory_manifest.Any(m => fileIds.Contains(m.file_id.Value)));
-
-                    query = query.Where(x => endDate >= x.start_date && endDate < x.end_date ||
-                                             endDate >= x.end_date && effectiveDate <= x.end_date);
-
-                    return query.ToList().Select(x => _MapToInventoryGroup(x)).ToList();
+        public void RemoveManifestWeeks(List<StationInventoryManifestWeek> weeks)
+        {
+            _InReadUncommitedTransaction(
+                c =>
+                {
+                    var weekIds = weeks.Select(x => x.Id);
+                    var dbWeeks = c.station_inventory_manifest_weeks.Where(x => weekIds.Contains(x.id));
+                    c.station_inventory_manifest_weeks.RemoveRange(dbWeeks);
+                    c.SaveChanges();
                 });
         }
 
@@ -1182,80 +1146,6 @@ namespace Services.Broadcast.Repositories
                 });
         }
 
-        public void UpdateInventoryGroupsDateIntervals(List<StationInventoryGroup> inventoryGroups)
-        {
-            _InReadUncommitedTransaction(
-                context =>
-                {
-                    var groupIds = inventoryGroups.Select(x => x.Id);
-                    var groups = context.station_inventory_group
-                        .Include(x => x.station_inventory_manifest)
-                        .Include(x => x.station_inventory_manifest.Select(m => m.station_inventory_manifest_weeks))
-                        .Where(x => groupIds.Contains(x.id));
-
-                    foreach (var group in groups)
-                    {
-                        var inventoryGroup = inventoryGroups.Single(x => x.Id == group.id);
-                        group.start_date = inventoryGroup.StartDate;
-                        group.end_date = inventoryGroup.EndDate;
-
-                        foreach (var manifest in group.station_inventory_manifest)
-                        {
-                            var inventoryManifest = inventoryGroup.Manifests.SingleOrDefault(x => x.Id == manifest.id);
-
-                            if (inventoryManifest != null)
-                            {
-                                // no need to change weeks if date range hasn`t changed
-                                if (inventoryManifest.EffectiveDate != manifest.effective_date ||
-                                    inventoryManifest.EndDate != manifest.end_date)
-                                {
-                                    context.station_inventory_manifest_weeks.RemoveRange(manifest.station_inventory_manifest_weeks);
-                                    manifest.station_inventory_manifest_weeks = inventoryManifest.ManifestWeeks
-                                        .Select(x => new station_inventory_manifest_weeks
-                                        {
-                                            media_week_id = x.MediaWeek.Id,
-                                            spots = x.Spots
-                                        })
-                                        .ToList();
-                                }
-
-                                manifest.effective_date = inventoryManifest.EffectiveDate;
-                                manifest.end_date = inventoryManifest.EndDate;
-                            }
-                        }
-                    }
-
-                    context.SaveChanges();
-                });
-        }
-
-        public void AddInventoryGroups(List<StationInventoryGroup> groups, InventoryFileBase inventoryFile)
-        {
-            _InReadUncommitedTransaction(
-                context =>
-                {
-                    var newGroups = groups
-                        .Select(inventoryGroup => _MapToStationInventoryGroup(inventoryGroup, inventoryFile))
-                        .ToList();
-
-                    context.station_inventory_group.AddRange(newGroups);
-                    context.SaveChanges();
-                });
-        }
-
-        public void AddInventoryManifests(List<StationInventoryManifest> manifests, InventoryFileBase inventoryFile)
-        {
-            _InReadUncommitedTransaction(
-                context =>
-                {
-                    var newManifests = manifests
-                        .Select(manifest => _MapToStationInventoryManifest(manifest, inventoryFile))
-                        .ToList();
-
-                    context.station_inventory_manifest.AddRange(newManifests);
-                    context.SaveChanges();
-                });
-        }
 
         /// <summary>
         /// Update the rates and add the audiences for all the manifests in the list

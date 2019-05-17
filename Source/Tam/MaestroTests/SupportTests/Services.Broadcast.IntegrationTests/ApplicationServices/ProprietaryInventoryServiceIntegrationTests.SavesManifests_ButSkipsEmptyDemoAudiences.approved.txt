@@ -2,8 +2,8 @@
   {
     "Comment": null,
     "DaypartCode": "DIGI",
-    "EffectiveDate": "2019-07-01T00:00:00",
-    "EndDate": "2019-07-06T00:00:00",
+    "EffectiveDate": null,
+    "EndDate": null,
     "InventorySourceId": 25,
     "ManifestAudiences": [],
     "ManifestAudiencesReferences": [
@@ -50,6 +50,7 @@
     ],
     "ManifestWeeks": [
       {
+        "EndDate": "2019-07-06T00:00:00",
         "MediaWeek": {
           "_EndDate": "2019-07-07T00:00:00",
           "_MediaMonthId": 454,
@@ -57,7 +58,8 @@
           "_WeekNumber": 1,
           "IsDirty": true
         },
-        "Spots": 1
+        "Spots": 1,
+        "StartDate": "2019-07-01T00:00:00"
       }
     ],
     "ProjectedStationImpressions": [],
@@ -69,8 +71,8 @@
   {
     "Comment": null,
     "DaypartCode": "DIGI",
-    "EffectiveDate": "2019-07-01T00:00:00",
-    "EndDate": "2019-07-06T00:00:00",
+    "EffectiveDate": null,
+    "EndDate": null,
     "InventorySourceId": 25,
     "ManifestAudiences": [],
     "ManifestAudiencesReferences": [
@@ -128,6 +130,7 @@
     ],
     "ManifestWeeks": [
       {
+        "EndDate": "2019-07-06T00:00:00",
         "MediaWeek": {
           "_EndDate": "2019-07-07T00:00:00",
           "_MediaMonthId": 454,
@@ -135,7 +138,8 @@
           "_WeekNumber": 1,
           "IsDirty": true
         },
-        "Spots": 1
+        "Spots": 1,
+        "StartDate": "2019-07-01T00:00:00"
       }
     ],
     "ProjectedStationImpressions": [],

@@ -58,6 +58,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IInventoryScxDataPrep _InventoryScxDataPrep;
         private readonly IInventoryRatingsProcessingService _InventoryRatingsService;
         private readonly IQuarterCalculationEngine _QuarterCalculationEngine;
+        private readonly IInventoryWeekEngine _InventoryWeekEngine;
 
         public ProprietaryInventoryService(IDataRepositoryFactory broadcastDataRepositoryFactory
             , IProprietaryFileImporterFactory proprietaryFileImporterFactory
@@ -71,7 +72,8 @@ namespace Services.Broadcast.ApplicationServices
             , IDataLakeFileService dataLakeFileService
             , IInventoryRatingsProcessingService inventoryRatingsService
             , IInventoryScxDataPrep inventoryScxDataPrep
-            , IQuarterCalculationEngine quarterCalculationEngine)
+            , IQuarterCalculationEngine quarterCalculationEngine
+            , IInventoryWeekEngine inventoryWeekEngine)
         {
             _ProprietaryRepository = broadcastDataRepositoryFactory.GetDataRepository<IProprietaryRepository>();
             _InventoryRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
@@ -89,6 +91,7 @@ namespace Services.Broadcast.ApplicationServices
             _InventoryScxDataPrep = inventoryScxDataPrep;
             _InventoryRatingsService = inventoryRatingsService;
             _QuarterCalculationEngine = quarterCalculationEngine;
+            _InventoryWeekEngine = inventoryWeekEngine;
         }
 
         /// <summary>
@@ -138,11 +141,12 @@ namespace Services.Broadcast.ApplicationServices
                         var stations = _GetFileStationsOrCreate(proprietaryFile, userName, now);
                         var stationsDict = stations.ToDictionary(x => x.Id, x => x.LegacyCallLetters);
 
-                        fileImporter.PopulateManifests(proprietaryFile, stations);                     
+                        fileImporter.PopulateManifests(proprietaryFile, stations);
+                        _SetStartAndEndDatesForManifestWeeks(proprietaryFile, header.EffectiveDate, header.EndDate);
 
                         _LockingEngine.LockStations(stationsDict, lockedStationIds, stationLocks);
 
-                        _StationInventoryGroupService.AddNewStationInventory(proprietaryFile, header.EffectiveDate, header.EndDate, header.ContractedDaypartId);
+                        _StationInventoryGroupService.AddNewStationInventory(proprietaryFile, header.ContractedDaypartId);
 
                         _StationRepository.UpdateStationList(stationsDict.Keys.ToList(), userName, now, proprietaryFile.InventorySource.Id);
 
@@ -180,6 +184,18 @@ namespace Services.Broadcast.ApplicationServices
                 ValidationProblems = proprietaryFile.ValidationProblems,
                 Status = proprietaryFile.FileStatus
             };
+        }
+
+        private void _SetStartAndEndDatesForManifestWeeks(InventoryFileBase inventoryFile, DateTime effectiveDate, DateTime endDate)
+        {
+            var allManifestWeeks = inventoryFile.GetAllManifests().SelectMany(x => x.ManifestWeeks);
+
+            foreach (var manifestWeek in allManifestWeeks)
+            {
+                var dateRange = _InventoryWeekEngine.GetDateRangeInventoryIsAvailableForForWeek(manifestWeek.MediaWeek, effectiveDate, endDate);
+                manifestWeek.StartDate = dateRange.Start.Value;
+                manifestWeek.EndDate = dateRange.End.Value;
+            }
         }
 
         /// <summary>

@@ -31,7 +31,7 @@
   },
   {
     "AffectedProposals": null,
-    "ProblemDescription": "Line 20 contains an invalid daypart(s): M-F 12n-1p",
+    "ProblemDescription": "Week: 4-Feb-2019 should be inside or intersect with the date range specified in the header (effective and end dates). Row: 16, column: 5",
     "ProgramName": null,
     "StationLetters": null
   }

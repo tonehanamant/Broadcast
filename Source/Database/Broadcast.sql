@@ -229,7 +229,155 @@ END
 
 /*************************************** END PRI-8030 *******************************************************/
 
-/*************************************** END UPDATE SCRIPT **************************************************/
+/*************************************** START PRI-8277 *****************************************************/
+
+--Add start_date, end_date to the weeks table
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE name = N'start_date' AND OBJECT_ID = OBJECT_ID(N'station_inventory_manifest_weeks'))
+BEGIN
+    ALTER TABLE station_inventory_manifest_weeks ADD [start_date] date NULL
+END
+
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE name = N'end_date' AND OBJECT_ID = OBJECT_ID(N'station_inventory_manifest_weeks'))
+BEGIN
+    ALTER TABLE station_inventory_manifest_weeks ADD [end_date] date NULL
+END
+
+GO
+
+--make start_date and effective_date nullable in manifest and group tables
+IF EXISTS(SELECT 1 FROM sys.columns WHERE name = N'effective_date' AND OBJECT_ID = OBJECT_ID(N'station_inventory_manifest'))
+BEGIN
+    ALTER TABLE station_inventory_manifest ALTER COLUMN effective_date [date] NULL
+END
+
+IF EXISTS(SELECT 1 FROM sys.columns WHERE name = N'start_date' AND OBJECT_ID = OBJECT_ID(N'station_inventory_group'))
+BEGIN
+    ALTER TABLE station_inventory_group ALTER COLUMN [start_date] [date] NULL
+END
+
+GO
+
+--populate start_date, end_date in station_inventory_manifest_weeks
+SELECT *
+INTO #ManifestWeeks
+FROM (SELECT mw.id AS manifest_week_id,
+	  m.effective_date AS manifest_effective_date,
+	  m.end_date AS manifest_end_date,
+	  w.[start_date] AS media_week_start_date,
+	  w.end_date AS media_week_end_date
+	  FROM station_inventory_manifest_weeks AS mw
+	  JOIN station_inventory_manifest AS m ON m.id = mw.station_inventory_manifest_id
+	  JOIN media_weeks AS w ON w.id = mw.media_week_id
+	  WHERE inventory_source_id != 1 --skip OpenMarket, it will be processed in the OpenMarket expiration story
+	  AND CAST(m.end_date as datetime) >= CAST(m.effective_date as datetime) --take only valid manifests
+	  AND NOT CAST(m.end_date as datetime) < CAST(w.[start_date] as datetime) AND NOT CAST(m.effective_date as datetime) > CAST(w.end_date as datetime)--skip invalid cases
+	  ) DATA
+
+GO
+
+SELECT *
+INTO #ManifestWeekDateRanges
+FROM (SELECT w.id AS manifest_week_id,
+		[start_date] = CASE
+			WHEN manifest_effective_date <= media_week_start_date AND
+				 manifest_end_date >= media_week_end_date THEN media_week_start_date
+
+			WHEN manifest_effective_date <= media_week_start_date AND
+				 manifest_end_date >= media_week_start_date AND
+				 manifest_end_date <= media_week_end_date THEN media_week_start_date
+
+			WHEN manifest_effective_date >= media_week_start_date AND
+				 manifest_end_date <= media_week_end_date THEN manifest_effective_date
+
+			WHEN manifest_effective_date >= media_week_start_date AND
+				 manifest_effective_date <= media_week_end_date AND
+				 manifest_end_date >= media_week_end_date THEN manifest_effective_date
+		END,
+		end_date = CASE
+			WHEN manifest_effective_date <= media_week_start_date AND
+				 manifest_end_date >= media_week_end_date THEN media_week_end_date
+
+			WHEN manifest_effective_date <= media_week_start_date AND
+				 manifest_end_date >= media_week_start_date AND
+				 manifest_end_date <= media_week_end_date THEN manifest_end_date
+
+			WHEN manifest_effective_date >= media_week_start_date AND
+				 manifest_end_date <= media_week_end_date THEN manifest_end_date
+
+			WHEN manifest_effective_date >= media_week_start_date AND
+				 manifest_effective_date <= media_week_end_date AND
+				 manifest_end_date >= media_week_end_date THEN media_week_end_date
+		END
+	FROM station_inventory_manifest_weeks AS w
+	JOIN #ManifestWeeks AS join1 ON join1.manifest_week_id = w.id) DATA
+
+GO
+
+EXEC('UPDATE station_inventory_manifest_weeks
+SET station_inventory_manifest_weeks.[start_date] = join1.[start_date],
+	station_inventory_manifest_weeks.end_date = join1.end_date
+FROM station_inventory_manifest_weeks
+JOIN #ManifestWeekDateRanges AS join1 ON join1.manifest_week_id = station_inventory_manifest_weeks.id')
+
+GO
+
+DROP TABLE #ManifestWeekDateRanges
+DROP TABLE #ManifestWeeks
+
+GO
+
+--make start_date and end_date not nullable in station_inventory_manifest_weeks
+IF EXISTS(SELECT 1 FROM sys.columns WHERE name = N'start_date' AND OBJECT_ID = OBJECT_ID(N'station_inventory_manifest_weeks'))
+BEGIN
+    ALTER TABLE station_inventory_manifest_weeks ALTER COLUMN [start_date] date NOT NULL
+	EXEC('CREATE NONCLUSTERED INDEX [IX_station_inventory_manifest_weeks_start_date] ON [dbo].[station_inventory_manifest_weeks] ([start_date])')
+END
+
+IF EXISTS(SELECT 1 FROM sys.columns WHERE name = N'end_date' AND OBJECT_ID = OBJECT_ID(N'station_inventory_manifest_weeks'))
+BEGIN
+    ALTER TABLE station_inventory_manifest_weeks ALTER COLUMN [end_date] date NOT NULL
+	EXEC('CREATE NONCLUSTERED INDEX [IX_station_inventory_manifest_weeks_end_date] ON [dbo].[station_inventory_manifest_weeks] ([end_date])')
+END
+
+GO
+
+----adding history table to station_inventory_manifest_weeks
+IF EXISTS(SELECT 1 FROM sys.tables WHERE OBJECT_ID = OBJECT_ID('dbo.station_inventory_manifest_weeks_history'))
+BEGIN
+    SET NOEXEC ON;	
+END
+
+--Step 1 – Add start time and end time period columns in the table
+EXEC('ALTER TABLE dbo.station_inventory_manifest_weeks ADD sys_start_date DATETIME2')
+EXEC('ALTER TABLE dbo.station_inventory_manifest_weeks ADD sys_end_date DATETIME2')
+
+GO
+
+--Step 2 - set default min and max date value
+EXEC('UPDATE dbo.station_inventory_manifest_weeks SET sys_start_date = ''19000101 00:00:00.0000000''')
+EXEC('UPDATE dbo.station_inventory_manifest_weeks SET sys_end_date = ''99991231 23:59:59.9999999''')
+
+GO
+
+--Step 3 – Alter column to add NOT NULL constraint
+EXEC('ALTER TABLE dbo.station_inventory_manifest_weeks ALTER COLUMN sys_start_date DATETIME2 NOT NULL')
+EXEC('ALTER TABLE dbo.station_inventory_manifest_weeks ALTER COLUMN sys_end_date DATETIME2 NOT NULL')
+
+GO
+
+--Step 5 – Declare system period columns
+EXEC('ALTER TABLE dbo.station_inventory_manifest_weeks ADD PERIOD FOR SYSTEM_TIME (sys_start_date, sys_end_date)')
+
+GO
+
+--Step 6 – Enable system versioning on the table
+EXEC('ALTER TABLE dbo.station_inventory_manifest_weeks SET(SYSTEM_VERSIONING = ON (HISTORY_TABLE = dbo.station_inventory_manifest_weeks_history, DATA_CONSISTENCY_CHECK = ON))')
+
+SET NOEXEC OFF;
+
+/*************************************** END PRI-8277 *****************************************************/
+
+/*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version
 UPDATE system_component_parameters 

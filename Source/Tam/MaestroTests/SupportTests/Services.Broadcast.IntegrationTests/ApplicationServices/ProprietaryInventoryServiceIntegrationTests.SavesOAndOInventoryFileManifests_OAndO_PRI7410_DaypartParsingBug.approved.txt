@@ -2,8 +2,8 @@
   {
     "Comment": null,
     "DaypartCode": "LN",
-    "EffectiveDate": "2019-04-08T00:00:00",
-    "EndDate": "2019-04-14T00:00:00",
+    "EffectiveDate": null,
+    "EndDate": null,
     "InventorySourceId": 10,
     "ManifestAudiences": [
       {
@@ -45,6 +45,7 @@
     "ManifestRates": [],
     "ManifestWeeks": [
       {
+        "EndDate": "2019-04-14T00:00:00",
         "MediaWeek": {
           "_EndDate": "2019-04-14T00:00:00",
           "_MediaMonthId": 451,
@@ -52,7 +53,8 @@
           "_WeekNumber": 2,
           "IsDirty": true
         },
-        "Spots": 5
+        "Spots": 5,
+        "StartDate": "2019-04-08T00:00:00"
       }
     ],
     "ProjectedStationImpressions": [],

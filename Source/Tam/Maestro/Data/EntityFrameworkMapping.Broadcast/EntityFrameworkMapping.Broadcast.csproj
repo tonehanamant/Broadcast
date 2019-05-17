@@ -410,6 +410,7 @@
     <Compile Include="genre.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="Interceptors\TemporalTableCommandTreeInterceptor.cs" />
     <Compile Include="inventory_files.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
@@ -653,6 +654,9 @@
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
     <Compile Include="station_inventory_manifest_weeks.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="station_inventory_manifest_weeks_history.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
     <Compile Include="station_inventory_spots.cs">

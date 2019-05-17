@@ -3,7 +3,7 @@
   "DataLines": [],
   "FileName": "ProprietaryDataFiles\\OAndO_ValidFile1.xlsx",
   "FileStatus": 2,
-  "Hash": "4F-AD-D9-0B-B9-E7-A5-87-DD-07-22-C5-DE-7E-63-19-0F-2B-80-C2",
+  "Hash": "05-15-52-B5-96-DE-5B-0D-C8-A7-C9-AA-E3-4D-B5-7C-B9-42-9F-EF",
   "Header": {
     "Audience": {
       "_CategoryCode": 0,
@@ -19,8 +19,8 @@
     "ContractedDaypartId": 70591,
     "Cpm": null,
     "DaypartCode": "LN",
-    "EffectiveDate": "2018-10-10T00:00:00",
-    "EndDate": "2018-11-10T00:00:00",
+    "EffectiveDate": "2019-02-04T00:00:00",
+    "EndDate": "2019-03-03T00:00:00",
     "HutBookId": 443,
     "NtiToNsiIncrease": null,
     "PlaybackType": 3,

@@ -2,8 +2,8 @@
   {
     "Comment": null,
     "DaypartCode": "SYN",
-    "EffectiveDate": "2019-05-02T00:00:00",
-    "EndDate": "2019-05-05T00:00:00",
+    "EffectiveDate": null,
+    "EndDate": null,
     "InventorySourceId": 13,
     "ManifestAudiences": [],
     "ManifestAudiencesReferences": [
@@ -61,6 +61,7 @@
     ],
     "ManifestWeeks": [
       {
+        "EndDate": "2019-05-05T00:00:00",
         "MediaWeek": {
           "_EndDate": "2019-05-05T00:00:00",
           "_MediaMonthId": 452,
@@ -68,7 +69,8 @@
           "_WeekNumber": 1,
           "IsDirty": true
         },
-        "Spots": 1
+        "Spots": 1,
+        "StartDate": "2019-05-02T00:00:00"
       }
     ],
     "ProjectedStationImpressions": [],
@@ -80,8 +82,8 @@
   {
     "Comment": null,
     "DaypartCode": "SYN",
-    "EffectiveDate": "2019-05-02T00:00:00",
-    "EndDate": "2019-05-05T00:00:00",
+    "EffectiveDate": null,
+    "EndDate": null,
     "InventorySourceId": 13,
     "ManifestAudiences": [],
     "ManifestAudiencesReferences": [
@@ -139,6 +141,7 @@
     ],
     "ManifestWeeks": [
       {
+        "EndDate": "2019-05-05T00:00:00",
         "MediaWeek": {
           "_EndDate": "2019-05-05T00:00:00",
           "_MediaMonthId": 452,
@@ -146,7 +149,8 @@
           "_WeekNumber": 1,
           "IsDirty": true
         },
-        "Spots": 1
+        "Spots": 1,
+        "StartDate": "2019-05-02T00:00:00"
       }
     ],
     "ProjectedStationImpressions": [],
@@ -158,8 +162,8 @@
   {
     "Comment": null,
     "DaypartCode": "SYN",
-    "EffectiveDate": "2019-05-02T00:00:00",
-    "EndDate": "2019-05-05T00:00:00",
+    "EffectiveDate": null,
+    "EndDate": null,
     "InventorySourceId": 13,
     "ManifestAudiences": [],
     "ManifestAudiencesReferences": [
@@ -217,6 +221,7 @@
     ],
     "ManifestWeeks": [
       {
+        "EndDate": "2019-05-05T00:00:00",
         "MediaWeek": {
           "_EndDate": "2019-05-05T00:00:00",
           "_MediaMonthId": 452,
@@ -224,7 +229,8 @@
           "_WeekNumber": 1,
           "IsDirty": true
         },
-        "Spots": 1
+        "Spots": 1,
+        "StartDate": "2019-05-02T00:00:00"
       }
     ],
     "ProjectedStationImpressions": [],
@@ -236,8 +242,8 @@
   {
     "Comment": null,
     "DaypartCode": "SYN",
-    "EffectiveDate": "2019-05-02T00:00:00",
-    "EndDate": "2019-05-05T00:00:00",
+    "EffectiveDate": null,
+    "EndDate": null,
     "InventorySourceId": 13,
     "ManifestAudiences": [],
     "ManifestAudiencesReferences": [
@@ -295,6 +301,7 @@
     ],
     "ManifestWeeks": [
       {
+        "EndDate": "2019-05-05T00:00:00",
         "MediaWeek": {
           "_EndDate": "2019-05-05T00:00:00",
           "_MediaMonthId": 452,
@@ -302,7 +309,8 @@
           "_WeekNumber": 1,
           "IsDirty": true
         },
-        "Spots": 1
+        "Spots": 1,
+        "StartDate": "2019-05-02T00:00:00"
       }
     ],
     "ProjectedStationImpressions": [],
@@ -314,8 +322,8 @@
   {
     "Comment": null,
     "DaypartCode": "SYN",
-    "EffectiveDate": "2019-05-02T00:00:00",
-    "EndDate": "2019-05-05T00:00:00",
+    "EffectiveDate": null,
+    "EndDate": null,
     "InventorySourceId": 13,
     "ManifestAudiences": [],
     "ManifestAudiencesReferences": [
@@ -373,6 +381,7 @@
     ],
     "ManifestWeeks": [
       {
+        "EndDate": "2019-05-05T00:00:00",
         "MediaWeek": {
           "_EndDate": "2019-05-05T00:00:00",
           "_MediaMonthId": 452,
@@ -380,7 +389,8 @@
           "_WeekNumber": 1,
           "IsDirty": true
         },
-        "Spots": 1
+        "Spots": 1,
+        "StartDate": "2019-05-02T00:00:00"
       }
     ],
     "ProjectedStationImpressions": [],
@@ -392,8 +402,8 @@
   {
     "Comment": null,
     "DaypartCode": "SYN",
-    "EffectiveDate": "2019-05-02T00:00:00",
-    "EndDate": "2019-05-05T00:00:00",
+    "EffectiveDate": null,
+    "EndDate": null,
     "InventorySourceId": 13,
     "ManifestAudiences": [],
     "ManifestAudiencesReferences": [
@@ -451,6 +461,7 @@
     ],
     "ManifestWeeks": [
       {
+        "EndDate": "2019-05-05T00:00:00",
         "MediaWeek": {
           "_EndDate": "2019-05-05T00:00:00",
           "_MediaMonthId": 452,
@@ -458,7 +469,8 @@
           "_WeekNumber": 1,
           "IsDirty": true
         },
-        "Spots": 1
+        "Spots": 1,
+        "StartDate": "2019-05-02T00:00:00"
       }
     ],
     "ProjectedStationImpressions": [],

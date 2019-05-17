@@ -1,7 +1,7 @@
 ﻿[
   {
     "DaypartCode": "AM",
-    "EndDate": "2019-05-30T00:00:00",
+    "EndDate": null,
     "InventorySource": {
       "Id": 4,
       "InventoryType": 2,
@@ -12,8 +12,8 @@
       {
         "Comment": null,
         "DaypartCode": "AM",
-        "EffectiveDate": "2019-05-22T00:00:00",
-        "EndDate": "2019-05-30T00:00:00",
+        "EffectiveDate": null,
+        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -55,6 +55,7 @@
         "ManifestRates": [],
         "ManifestWeeks": [
           {
+            "EndDate": "2019-05-26T00:00:00",
             "MediaWeek": {
               "_EndDate": "2019-05-26T00:00:00",
               "_MediaMonthId": 452,
@@ -62,9 +63,11 @@
               "_WeekNumber": 4,
               "IsDirty": true
             },
-            "Spots": 1
+            "Spots": 1,
+            "StartDate": "2019-05-22T00:00:00"
           },
           {
+            "EndDate": "2019-05-30T00:00:00",
             "MediaWeek": {
               "_EndDate": "2019-06-02T00:00:00",
               "_MediaMonthId": 453,
@@ -72,7 +75,8 @@
               "_WeekNumber": 1,
               "IsDirty": true
             },
-            "Spots": 1
+            "Spots": 1,
+            "StartDate": "2019-05-27T00:00:00"
           }
         ],
         "SpotLengthId": 1,
@@ -93,11 +97,11 @@
     ],
     "Name": "AM 2",
     "SlotNumber": 2,
-    "StartDate": "2019-05-22T00:00:00"
+    "StartDate": null
   },
   {
     "DaypartCode": "AM",
-    "EndDate": "2019-05-30T00:00:00",
+    "EndDate": null,
     "InventorySource": {
       "Id": 4,
       "InventoryType": 2,
@@ -108,8 +112,8 @@
       {
         "Comment": "Test1",
         "DaypartCode": "AM",
-        "EffectiveDate": "2019-05-22T00:00:00",
-        "EndDate": "2019-05-30T00:00:00",
+        "EffectiveDate": null,
+        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -151,6 +155,7 @@
         "ManifestRates": [],
         "ManifestWeeks": [
           {
+            "EndDate": "2019-05-26T00:00:00",
             "MediaWeek": {
               "_EndDate": "2019-05-26T00:00:00",
               "_MediaMonthId": 452,
@@ -158,9 +163,11 @@
               "_WeekNumber": 4,
               "IsDirty": true
             },
-            "Spots": 1
+            "Spots": 1,
+            "StartDate": "2019-05-22T00:00:00"
           },
           {
+            "EndDate": "2019-05-30T00:00:00",
             "MediaWeek": {
               "_EndDate": "2019-06-02T00:00:00",
               "_MediaMonthId": 453,
@@ -168,7 +175,8 @@
               "_WeekNumber": 1,
               "IsDirty": true
             },
-            "Spots": 1
+            "Spots": 1,
+            "StartDate": "2019-05-27T00:00:00"
           }
         ],
         "SpotLengthId": 1,
@@ -189,6 +197,6 @@
     ],
     "Name": "AM 3",
     "SlotNumber": 3,
-    "StartDate": "2019-05-22T00:00:00"
+    "StartDate": null
   }
 ]

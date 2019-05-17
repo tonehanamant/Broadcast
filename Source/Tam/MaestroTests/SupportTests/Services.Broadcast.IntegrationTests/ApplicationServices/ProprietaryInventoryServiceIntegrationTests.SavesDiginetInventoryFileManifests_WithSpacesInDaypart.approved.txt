@@ -2,8 +2,8 @@
   {
     "Comment": null,
     "DaypartCode": "DIGI",
-    "EffectiveDate": "2019-03-01T00:00:00",
-    "EndDate": "2019-03-05T00:00:00",
+    "EffectiveDate": null,
+    "EndDate": null,
     "InventorySourceId": 21,
     "ManifestAudiences": [],
     "ManifestAudiencesReferences": [
@@ -61,6 +61,7 @@
     ],
     "ManifestWeeks": [
       {
+        "EndDate": "2019-03-03T00:00:00",
         "MediaWeek": {
           "_EndDate": "2019-03-03T00:00:00",
           "_MediaMonthId": 450,
@@ -68,9 +69,11 @@
           "_WeekNumber": 1,
           "IsDirty": true
         },
-        "Spots": 1
+        "Spots": 1,
+        "StartDate": "2019-03-01T00:00:00"
       },
       {
+        "EndDate": "2019-03-05T00:00:00",
         "MediaWeek": {
           "_EndDate": "2019-03-10T00:00:00",
           "_MediaMonthId": 450,
@@ -78,7 +81,8 @@
           "_WeekNumber": 2,
           "IsDirty": true
         },
-        "Spots": 1
+        "Spots": 1,
+        "StartDate": "2019-03-04T00:00:00"
       }
     ],
     "ProjectedStationImpressions": [],

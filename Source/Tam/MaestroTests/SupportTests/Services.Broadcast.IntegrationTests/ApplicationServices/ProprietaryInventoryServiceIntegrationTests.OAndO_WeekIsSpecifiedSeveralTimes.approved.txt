@@ -1,0 +1,8 @@
+﻿[
+  {
+    "AffectedProposals": null,
+    "ProblemDescription": "Week that contains date: 11-Feb-2019 has been specified several times",
+    "ProgramName": null,
+    "StationLetters": null
+  }
+]

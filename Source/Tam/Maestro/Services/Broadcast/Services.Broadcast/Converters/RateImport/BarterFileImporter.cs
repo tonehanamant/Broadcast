@@ -381,15 +381,11 @@ namespace Services.Broadcast.Converters.RateImport
                     Name = manifestGroup.UnitName,
                     DaypartCode = Regex.Match(manifestGroup.UnitName, @"[a-z]+", RegexOptions.IgnoreCase).Value,
                     InventorySource = proprietaryFile.InventorySource,
-                    StartDate = fileHeader.EffectiveDate,
-                    EndDate = fileHeader.EndDate,
                     SlotNumber = _ParseSlotNumber(manifestGroup.UnitName),
                     Manifests = manifestGroup.Manifests
                         .Where(x => x.Spots != null) // exclude empty manifests
                         .Select(manifest => new StationInventoryManifest
                         {
-                            EffectiveDate = fileHeader.EffectiveDate,
-                            EndDate = fileHeader.EndDate,
                             InventorySourceId = proprietaryFile.InventorySource.Id,
                             InventoryFileId = proprietaryFile.Id,
                             Station = stationsDict[StationProcessingEngine.StripStationSuffix(manifest.Station)],

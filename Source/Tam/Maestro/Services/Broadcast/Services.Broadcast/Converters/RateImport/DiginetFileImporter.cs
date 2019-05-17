@@ -228,8 +228,6 @@ namespace Services.Broadcast.Converters.RateImport
             proprietaryFile.InventoryManifests = proprietaryFile.DataLines
                 .Select(x => new StationInventoryManifest
                 {
-                    EffectiveDate = fileHeader.EffectiveDate,
-                    EndDate = fileHeader.EndDate,
                     InventorySourceId = proprietaryFile.InventorySource.Id,
                     InventoryFileId = proprietaryFile.Id,
                     SpotLengthId = defaultSpotLengthId,

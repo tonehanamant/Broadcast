@@ -17,7 +17,7 @@ namespace Services.Broadcast.ApplicationServices
     public interface IStationInventoryGroupService : IApplicationService
     {
         void AddNewStationInventoryGroups(InventoryFileBase inventoryFile, DateTime newEffectiveDate);
-        void AddNewStationInventory(InventoryFileBase inventoryFile, DateTime newEffectiveDate, DateTime newEndDate, int? contractedDaypartId = null);
+        void AddNewStationInventory(InventoryFileBase inventoryFile, int? contractedDaypartId = null);
         List<StationInventoryGroup> GetStationInventoryGroupsByFileId(int fileId);
     }
 
@@ -86,218 +86,62 @@ namespace Services.Broadcast.ApplicationServices
             dayparts.ForEach(d=> d = _daypartCache.GetDisplayDaypart(d.Id));
         }
 
-        public void AddNewStationInventory(InventoryFileBase inventoryFile, DateTime newEffectiveDate, DateTime newEndDate, int? contractedDaypartId)
+        public void AddNewStationInventory(InventoryFileBase inventoryFile, int? contractedDaypartId)
         {
             if (inventoryFile.InventorySource == null || !inventoryFile.InventorySource.IsActive)
-                throw new Exception(string.Format("The selected source type is invalid or inactive."));
+                throw new Exception("The selected source type is invalid or inactive.");
 
             if (contractedDaypartId.HasValue)
             {
-                _ExpireExistingInventoryGroups(inventoryFile, newEffectiveDate, newEndDate, contractedDaypartId.Value);
-                _ExpireExistingInventoryManifests(inventoryFile, newEffectiveDate, newEndDate, contractedDaypartId.Value);
+                _ExpireExistingInventoryManifestWeeks(inventoryFile, contractedDaypartId.Value);
             }
             else
             {
-                _ExpireExistingInventoryManifestsByManifestDayparts(inventoryFile, newEffectiveDate, newEndDate);
+                _ExpireExistingInventoryManifestWeeksByManifestDayparts(inventoryFile);
             }
 
             _inventoryRepository.AddNewInventory(inventoryFile);
         }
 
-        private void _ExpireExistingInventoryManifestsByManifestDayparts(InventoryFileBase inventoryFile, DateTime newEffectiveDate, DateTime newEndDate)
+        private void _ExpireExistingInventoryManifestWeeks(InventoryFileBase inventoryFile, int contractedDaypartId)
         {
-            var manifestsToCreate = new List<StationInventoryManifest>();
+            var allManifestMediaWeekIds = inventoryFile
+                .GetAllManifests()
+                .SelectMany(x => x.ManifestWeeks)
+                .Select(x => x.MediaWeek.Id)
+                .Distinct();
+
+            var weeksToExpire = _inventoryRepository.GetStationInventoryManifestWeeks(
+                inventoryFile.InventorySource,
+                contractedDaypartId,
+                allManifestMediaWeekIds);
+
+            _inventoryRepository.RemoveManifestWeeks(weeksToExpire);
+        }
+
+        private void _ExpireExistingInventoryManifestWeeksByManifestDayparts(InventoryFileBase inventoryFile)
+        {
             var manifestContractedDaypartSets = inventoryFile.InventoryManifests.Select(x => x.ManifestDayparts.Select(d => d.Daypart.Id).OrderBy(d => d)).ToList();
-            var existingInventoryManifests = _inventoryRepository.GetActiveInventoryManifestsBySource(inventoryFile.InventorySource, newEffectiveDate, newEndDate);
-            var manifestsToExpire = new List<StationInventoryManifest>();
-            
-            // match manifests by contracted dayparts
+            var existingInventoryManifests = _inventoryRepository.GetInventoryManifestsBySource(inventoryFile.InventorySource);
+            var weeksToExpire = new List<StationInventoryManifestWeek>();
+            var allManifestMediaWeekIds = inventoryFile.InventoryManifests
+                .SelectMany(x => x.ManifestWeeks)
+                .Select(x => x.MediaWeek.Id)
+                .Distinct();
+
+            // match manifest weeks by contracted dayparts and media weeks
             foreach (var manifest in existingInventoryManifests)
             {
                 var contractedDaypartIds = manifest.ManifestDayparts.Select(x => x.Daypart.Id).OrderBy(x => x);
 
                 if (manifestContractedDaypartSets.Any(x => contractedDaypartIds.SequenceEqual(x)))
                 {
-                    manifestsToExpire.Add(manifest);
+                    var manifestWeeksToExpire = manifest.ManifestWeeks.Where(w => allManifestMediaWeekIds.Contains(w.MediaWeek.Id));
+                    weeksToExpire.AddRange(manifestWeeksToExpire);
                 }
             }
 
-            manifestsToExpire.ForEach(manifest => _ExpireInventoryManifest(manifest, newEffectiveDate, newEndDate, manifestsToCreate));
-
-            _inventoryRepository.UpdateInventoryManifestsDateIntervals(manifestsToExpire);
-            _inventoryRepository.AddInventoryManifests(manifestsToCreate, inventoryFile);
-        }
-
-        private void _ExpireExistingInventoryGroups(InventoryFileBase inventoryFile, DateTime newEffectiveDate, DateTime newEndDate, int contractedDaypartId)
-        {
-            var groupsToCreate = new List<StationInventoryGroup>();
-            var existingInventoryGroups = _inventoryRepository.GetActiveInventoryGroupsBySourceAndContractedDaypart(inventoryFile.InventorySource, contractedDaypartId, newEffectiveDate, newEndDate);
-
-            existingInventoryGroups.ForEach(group => _ExpireInventoryGroup(group, newEffectiveDate, newEndDate, groupsToCreate));
-
-            _inventoryRepository.UpdateInventoryGroupsDateIntervals(existingInventoryGroups);
-            _inventoryRepository.AddInventoryGroups(groupsToCreate, inventoryFile);
-        }
-
-        private void _ExpireExistingInventoryManifests(InventoryFileBase inventoryFile, DateTime newEffectiveDate, DateTime newEndDate, int contractedDaypartId)
-        {
-            var manifestsToCreate = new List<StationInventoryManifest>();
-            var existingInventoryManifests = _inventoryRepository.GetActiveInventoryManifestsBySourceAndContractedDaypart(inventoryFile.InventorySource, contractedDaypartId, newEffectiveDate, newEndDate);
-
-            existingInventoryManifests.ForEach(manifest => _ExpireInventoryManifest(manifest, newEffectiveDate, newEndDate, manifestsToCreate));
-
-            _inventoryRepository.UpdateInventoryManifestsDateIntervals(existingInventoryManifests);
-            _inventoryRepository.AddInventoryManifests(manifestsToCreate, inventoryFile);
-        }
-
-        private void _ExpireInventoryGroup(StationInventoryGroup group, DateTime newEffectiveDate, DateTime newEndDate, List<StationInventoryGroup> groupsToCreate)
-        {
-            var dayAfterNewEndDate = newEndDate.AddDays(1);
-            var dayBeforeNewEffectiveDate = newEffectiveDate.AddDays(-1);
-
-            // covers case when existing inventory intersects with new inventory and 
-            // we can save part of existing inventory that goes after the new inventory date interval or before
-            if (newEndDate >= group.StartDate && newEndDate < group.EndDate)
-            {
-                if (newEffectiveDate > group.StartDate)
-                {
-                    // create new inventory which is before new effective date
-                    var newGroup = _CopyInventoryGroup(group);
-                    newGroup.EndDate = dayBeforeNewEffectiveDate;
-                    newGroup.Manifests.ForEach(manifest =>
-                    {
-                        manifest.EndDate = dayBeforeNewEffectiveDate;
-                        _FilterWeeksByRangeIntersecting(manifest);
-                    });
-
-                    groupsToCreate.Add(newGroup);
-                }
-
-                // now existing inventory manifest is part after new end date
-                group.StartDate = dayAfterNewEndDate;
-                group.Manifests.ForEach(manifest =>
-                {
-                    manifest.EffectiveDate = dayAfterNewEndDate;
-                    _FilterWeeksByRangeIntersecting(manifest);
-                });
-            }
-            else if (newEndDate >= group.EndDate && newEffectiveDate <= group.EndDate)
-            {
-                group.EndDate = dayBeforeNewEffectiveDate;
-                group.Manifests.ForEach(manifest =>
-                {
-                    manifest.EndDate = dayBeforeNewEffectiveDate;
-                    _FilterWeeksByRangeIntersecting(manifest);
-                });
-            }
-        }
-
-        private void _ExpireInventoryManifest(StationInventoryManifest manifest, DateTime newEffectiveDate, DateTime newEndDate, List<StationInventoryManifest> manifestsToCreate)
-        {
-            var dayAfterNewEndDate = newEndDate.AddDays(1);
-            var dayBeforeNewEffectiveDate = newEffectiveDate.AddDays(-1);
-
-            // covers case when existing inventory intersects with new inventory and 
-            // we can save part of existing inventory that goes after the new inventory date interval or before
-            if (newEndDate >= manifest.EffectiveDate && newEndDate < manifest.EndDate)
-            {
-                if (newEffectiveDate > manifest.EffectiveDate)
-                {
-                    // create new inventory which is before new effective date
-                    var newManifest = _CopyInventoryManifest(manifest);
-                    newManifest.EndDate = dayBeforeNewEffectiveDate;
-                    _FilterWeeksByRangeIntersecting(newManifest);
-                    manifestsToCreate.Add(newManifest);
-                }
-
-                // now existing inventory manifest is part after new end date
-                manifest.EffectiveDate = dayAfterNewEndDate;
-            }
-            else if (newEndDate >= manifest.EndDate && newEffectiveDate <= manifest.EndDate)
-            {
-                manifest.EndDate = dayBeforeNewEffectiveDate;
-            }
-
-            _FilterWeeksByRangeIntersecting(manifest);
-        }
-
-        private void _FilterWeeksByRangeIntersecting(StationInventoryManifest manifest)
-        {
-            if (manifest.EndDate >= manifest.EffectiveDate)
-            {
-                var mediaWeekIds = _MediaMonthAndWeekAggregateCache
-                    .GetMediaWeeksIntersecting(manifest.EffectiveDate, manifest.EndDate.Value)
-                    .Select(x => x.Id);
-
-                manifest.ManifestWeeks = manifest.ManifestWeeks.Where(x => mediaWeekIds.Contains(x.MediaWeek.Id)).ToList();
-            }
-            else
-            {
-                manifest.ManifestWeeks = new List<StationInventoryManifestWeek>();
-            }
-        }
-
-        private StationInventoryGroup _CopyInventoryGroup(StationInventoryGroup group)
-        {
-            return new StationInventoryGroup
-            {
-                Name = group.Name,
-                DaypartCode = group.DaypartCode,
-                SlotNumber = group.SlotNumber,
-                StartDate = group.StartDate,
-                EndDate = group.EndDate,
-                InventorySource = group.InventorySource,
-                Manifests = group.Manifests.Select(_CopyInventoryManifest).ToList()
-            };
-        }
-
-        private StationInventoryManifest _CopyInventoryManifest(StationInventoryManifest manifest)
-        {
-            return new StationInventoryManifest
-            {
-                DaypartCode = manifest.DaypartCode,
-                SpotLengthId = manifest.SpotLengthId,
-                SpotsPerWeek = manifest.SpotsPerWeek,
-                SpotsPerDay = manifest.SpotsPerDay,
-                InventoryFileId = manifest.InventoryFileId,
-                InventorySourceId = manifest.InventorySourceId,
-                EffectiveDate = manifest.EffectiveDate,
-                EndDate = manifest.EndDate,
-                Comment = manifest.Comment,
-                Station = manifest.Station,
-                ManifestDayparts = manifest.ManifestDayparts.Select(x => new StationInventoryManifestDaypart
-                {
-                    Daypart = x.Daypart,
-                    ProgramName = x.ProgramName,
-                    Genres = x.Genres
-                }).ToList(),
-                ManifestAudiences = manifest.ManifestAudiences.Select(x => new StationInventoryManifestAudience
-                {
-                    Audience = x.Audience,
-                    IsReference = x.IsReference,
-                    Impressions = x.Impressions,
-                    Rating = x.Rating,
-                    CPM = x.CPM
-                }).ToList(),
-                ManifestAudiencesReferences = manifest.ManifestAudiencesReferences.Select(x => new StationInventoryManifestAudience
-                {
-                    Audience = x.Audience,
-                    IsReference = x.IsReference,
-                    Impressions = x.Impressions,
-                    Rating = x.Rating,
-                    CPM = x.CPM
-                }).ToList(),
-                ManifestRates = manifest.ManifestRates.Select(x => new StationInventoryManifestRate
-                {
-                    SpotLengthId = x.SpotLengthId,
-                    SpotCost = x.SpotCost
-                }).ToList(),
-                ManifestWeeks = manifest.ManifestWeeks.Select(x => new StationInventoryManifestWeek
-                {
-                    MediaWeek = x.MediaWeek,
-                    Spots = x.Spots
-                }).ToList()
-            };
+            _inventoryRepository.RemoveManifestWeeks(weeksToExpire);
         }
     }
 }

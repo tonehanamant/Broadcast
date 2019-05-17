@@ -80,7 +80,7 @@ namespace Services.Broadcast.Converters.Scx
                 {
                     DaypartCode = firstGroup.DaypartCode,
                     EndDate = firstGroup.EndDate.Value,
-                    StartDate = firstGroup.StartDate,
+                    StartDate = firstGroup.StartDate.Value,//TODO: review in PRI-8713
                     SpotLength = _SpotLengthEngine.GetSpotLengthValueById(firstGroup.Manifests.First().SpotLengthId).ToString(),
                     InventorySource = firstGroup.InventorySource,
                     UnitName = group.Key.GroupName,
