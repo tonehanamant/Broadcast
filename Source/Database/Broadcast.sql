@@ -330,16 +330,24 @@ GO
 IF EXISTS(SELECT 1 FROM sys.columns WHERE name = N'start_date' AND OBJECT_ID = OBJECT_ID(N'station_inventory_manifest_weeks'))
 BEGIN
     ALTER TABLE station_inventory_manifest_weeks ALTER COLUMN [start_date] date NOT NULL
-	EXEC('CREATE NONCLUSTERED INDEX [IX_station_inventory_manifest_weeks_start_date] ON [dbo].[station_inventory_manifest_weeks] ([start_date])')
+	
 END
 
 IF EXISTS(SELECT 1 FROM sys.columns WHERE name = N'end_date' AND OBJECT_ID = OBJECT_ID(N'station_inventory_manifest_weeks'))
 BEGIN
-    ALTER TABLE station_inventory_manifest_weeks ALTER COLUMN [end_date] date NOT NULL
-	EXEC('CREATE NONCLUSTERED INDEX [IX_station_inventory_manifest_weeks_end_date] ON [dbo].[station_inventory_manifest_weeks] ([end_date])')
+    ALTER TABLE station_inventory_manifest_weeks ALTER COLUMN [end_date] date NOT NULL	
 END
 
-GO
+--add indexes
+IF NOT EXISTS(SELECT 1 FROM sys.indexes WHERE OBJECT_ID = OBJECT_ID('station_inventory_manifest_weeks') AND name = 'IX_station_inventory_manifest_weeks_start_date')
+BEGIN
+	EXEC('CREATE NONCLUSTERED INDEX [IX_station_inventory_manifest_weeks_start_date] ON [dbo].[station_inventory_manifest_weeks] ([start_date])')
+END
+
+IF NOT EXISTS(SELECT 1 FROM sys.indexes WHERE OBJECT_ID = OBJECT_ID('station_inventory_manifest_weeks') AND name = 'IX_station_inventory_manifest_weeks_end_date')
+BEGIN
+	EXEC('CREATE NONCLUSTERED INDEX [IX_station_inventory_manifest_weeks_end_date] ON [dbo].[station_inventory_manifest_weeks] ([end_date])')
+END
 
 ----adding history table to station_inventory_manifest_weeks
 IF EXISTS(SELECT 1 FROM sys.tables WHERE OBJECT_ID = OBJECT_ID('dbo.station_inventory_manifest_weeks_history'))
