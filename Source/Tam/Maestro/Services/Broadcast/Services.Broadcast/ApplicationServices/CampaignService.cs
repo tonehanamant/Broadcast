@@ -20,8 +20,9 @@ namespace Services.Broadcast.ApplicationServices
         private readonly ICampaignRepository _CampaginRepository;
         private readonly ISMSClient _SmsClient;
 
-        public const string InvalidDatesMessage = "The end date must be greater than the start date for the campaign";
-        public const string InvalidAdvertiserMessage = "Invalid advertiser id in campaign, please inform a valid and active id";
+        public const string InvalidDatesErrorMessage = "The end date must be greater than the start date for the campaign";
+        public const string InvalidAdvertiserErrorMessage = "The advertiser id is invalid, please provide a valid and active id";
+        public const string InvalidCampaignNameErrorMessage = "The campaign name is invalid, please provide a valid name";
 
         public CampaignService(IDataRepositoryFactory dataRepositoryFactory, ISMSClient smsClient)
         {
@@ -39,14 +40,21 @@ namespace Services.Broadcast.ApplicationServices
             _SetAuditFields(campaignDto, createdBy, createdDate);
             _ValidateAdvertiser(campaignDto);
             _ValidateDates(campaignDto);
+            _ValidateCampaignName(campaignDto);
 
             return _CampaginRepository.CreateCampaign(campaignDto);
+        }
+
+        private void _ValidateCampaignName(CampaignDto campaignDto)
+        {
+            if (string.IsNullOrWhiteSpace(campaignDto.Name))
+                throw new Exception(InvalidCampaignNameErrorMessage);
         }
 
         private void _ValidateDates(CampaignDto campaignDto)
         {
             if (campaignDto.StartDate >= campaignDto.EndDate)
-                throw new Exception(InvalidDatesMessage);
+                throw new Exception(InvalidDatesErrorMessage);
         }
 
         private void _ValidateAdvertiser(CampaignDto campaignDto)
@@ -57,7 +65,7 @@ namespace Services.Broadcast.ApplicationServices
             }
             catch
             {
-                throw new Exception(InvalidAdvertiserMessage);
+                throw new Exception(InvalidAdvertiserErrorMessage);
             }
         }
 

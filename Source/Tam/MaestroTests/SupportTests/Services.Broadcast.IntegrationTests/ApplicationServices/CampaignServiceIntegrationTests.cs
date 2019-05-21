@@ -55,7 +55,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var exception = Assert.Throws<Exception>(() => _CampaignService.CreateCampaign(campaign, IntegrationTestUser, CreatedDate));
 
-                Assert.That(exception.Message, Is.EqualTo(CampaignService.InvalidAdvertiserMessage));
+                Assert.That(exception.Message, Is.EqualTo(CampaignService.InvalidAdvertiserErrorMessage));
             }
         }
 
@@ -72,7 +72,27 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var exception = Assert.Throws<Exception>(() => _CampaignService.CreateCampaign(campaign, IntegrationTestUser, CreatedDate));
 
-                Assert.That(exception.Message, Is.EqualTo(CampaignService.InvalidDatesMessage));
+                Assert.That(exception.Message, Is.EqualTo(CampaignService.InvalidDatesErrorMessage));
+            }
+        }
+
+        [TestCase(null)]
+        [TestCase("")]
+        [TestCase(" ")]
+        [TestCase("      ")]
+        [TestCase("\t")]
+        [UseReporter(typeof(DiffReporter))]
+        public void CreateCampaignInvalidCampaignNameTest(string campaignName)
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var campaign = _GetValidCampaign();
+
+                campaign.Name = campaignName;
+
+                var exception = Assert.Throws<Exception>(() => _CampaignService.CreateCampaign(campaign, IntegrationTestUser, CreatedDate));
+
+                Assert.That(exception.Message, Is.EqualTo(CampaignService.InvalidCampaignNameErrorMessage));
             }
         }
 
