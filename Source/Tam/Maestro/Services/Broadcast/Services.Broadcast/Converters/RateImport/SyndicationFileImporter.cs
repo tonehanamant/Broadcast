@@ -186,6 +186,12 @@ namespace Services.Broadcast.Converters.RateImport
 
             foreach (var audience in audiences)
             {
+                if (audience == null)
+                {
+                    columnIndex += 4;
+                    continue;
+                }
+
                 var lineAudience = new LineAudience { Audience = audience.ToDisplayAudience() };
 
                 lineAudience.Rating = _GetAndValidateDoubleCellValue(worksheet, rowIndex, columnIndex++, problems, "rating");
@@ -437,10 +443,10 @@ namespace Services.Broadcast.Converters.RateImport
             const int audienceRowIndex = 15;
             var result = new List<BroadcastAudience>();
             var currentAudienceColumnIndex = 6;
-            var ratingRegex = new Regex(@"(?<Audience>[a-z0-9\s-]+)\sAvg\s*Rtg.*", RegexOptions.IgnoreCase);
-            var impressionsRegex = new Regex(@"(?<Audience>[a-z0-9\s-]+)\s*Avg\s*Imps\s*\(000\).*", RegexOptions.IgnoreCase);
-            var vpvhRegex = new Regex(@"(?<Audience>[a-z0-9\s-]+)\s*VPVH.*", RegexOptions.IgnoreCase);
-            var cpmRegex = new Regex(@"(?<Audience>[a-z0-9\s-]+)\s*CPM.*", RegexOptions.IgnoreCase);
+            var ratingRegex = new Regex(@"(?<Audience>[a-z0-9\s-\[\]]+)\sAvg\s*Rtg.*", RegexOptions.IgnoreCase);
+            var impressionsRegex = new Regex(@"(?<Audience>[a-z0-9\s-\[\]]+)\s*Avg\s*Imps\s*\(000\).*", RegexOptions.IgnoreCase);
+            var vpvhRegex = new Regex(@"(?<Audience>[a-z0-9\s-\[\]]+)\s*VPVH.*", RegexOptions.IgnoreCase);
+            var cpmRegex = new Regex(@"(?<Audience>[a-z0-9\s-\[\]]+)\s*CPM.*", RegexOptions.IgnoreCase);
 
             while (true)
             {
@@ -531,6 +537,14 @@ namespace Services.Broadcast.Converters.RateImport
                     break;
                 }
 
+                if (ratingAudience.Equals("[DEMO]", StringComparison.OrdinalIgnoreCase))
+                {
+                    // null is used later to skip [DEMO] columns.
+                    result.Add(null);
+                    currentAudienceColumnIndex = currentAudienceColumnIndex + 4;
+                    continue;
+                }
+
                 var audience = AudienceCache.GetBroadcastAudienceByCode(ratingAudience);
 
                 if (audience == null)
@@ -539,7 +553,7 @@ namespace Services.Broadcast.Converters.RateImport
                     break;
                 }
 
-                if (result.Any(x => x.Code == audience.Code))
+                if (result.Any(x => x != null && x.Code == audience.Code))
                 {
                     validationProblems.Add($"Data for audience '{audience.Code}' have been already read. Please specify unique audiences. Row: {audienceRowIndex}, column: {ratingColumnIndex}");
                     break;

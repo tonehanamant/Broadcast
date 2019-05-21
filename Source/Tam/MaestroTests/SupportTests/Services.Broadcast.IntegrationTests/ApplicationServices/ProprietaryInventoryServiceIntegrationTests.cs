@@ -438,6 +438,22 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        public void Syndication_ValidFile4_HasDemoColumns()
+        {
+            const string fileName = @"ProprietaryDataFiles\Syndication_ValidFile4.xlsx";
+            _VerifyFileInventoryManifests(fileName);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void Syndication_ValidFile5_HasDemoColumnsBeforeAudience()
+        {
+            const string fileName = @"ProprietaryDataFiles\Syndication_ValidFile5.xlsx";
+            _VerifyFileInventoryManifests(fileName);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
         public void Syndication_InvalidFile1()
         {
             const string fileName = @"ProprietaryDataFiles\Syndication_InvalidFile1.xlsx";

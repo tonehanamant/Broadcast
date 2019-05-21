@@ -1,0 +1,1522 @@
+﻿[
+  {
+    "Comment": null,
+    "DaypartCode": "SYN",
+    "EffectiveDate": null,
+    "EndDate": null,
+    "InventorySourceId": 13,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "House Holds",
+          "Id": 31
+        },
+        "CPM": 14.5000,
+        "Impressions": 985805.97546028451,
+        "IsReference": true,
+        "Rating": 0.62,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Adults 18-49",
+          "Id": 33
+        },
+        "CPM": 22.3700,
+        "Impressions": 639192.37713668181,
+        "IsReference": true,
+        "Rating": 0.4,
+        "Vpvh": 648.0
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 86399,
+          "_Friday": true,
+          "_Id": 38,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": true,
+          "_StartTime": 0,
+          "_Sunday": true,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "Genres": [],
+        "ProgramName": "American Dad@31231"
+      }
+    ],
+    "ManifestRates": [
+      {
+        "SpotCost": 4.0000,
+        "SpotLengthId": 1
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "EndDate": "2019-05-03T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2019-05-05T00:00:00",
+          "_MediaMonthId": 452,
+          "_StartDate": "2019-04-29T00:00:00",
+          "_WeekNumber": 1,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2019-05-01T00:00:00"
+      }
+    ],
+    "ProjectedStationImpressions": [],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": null
+  },
+  {
+    "Comment": null,
+    "DaypartCode": "SYN",
+    "EffectiveDate": null,
+    "EndDate": null,
+    "InventorySourceId": 13,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "House Holds",
+          "Id": 31
+        },
+        "CPM": 18.7200,
+        "Impressions": 1737021.7588992713,
+        "IsReference": true,
+        "Rating": 1.1,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Adults 18-49",
+          "Id": 33
+        },
+        "CPM": 29.2400,
+        "Impressions": 1112326.528460535,
+        "IsReference": true,
+        "Rating": 0.7,
+        "Vpvh": 640.0
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 86399,
+          "_Friday": true,
+          "_Id": 38,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": true,
+          "_StartTime": 0,
+          "_Sunday": true,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "Genres": [],
+        "ProgramName": "Bob's Burgers M-F"
+      }
+    ],
+    "ManifestRates": [
+      {
+        "SpotCost": 1.0000,
+        "SpotLengthId": 1
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "EndDate": "2019-05-03T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2019-05-05T00:00:00",
+          "_MediaMonthId": 452,
+          "_StartDate": "2019-04-29T00:00:00",
+          "_WeekNumber": 1,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2019-05-01T00:00:00"
+      }
+    ],
+    "ProjectedStationImpressions": [],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": null
+  },
+  {
+    "Comment": null,
+    "DaypartCode": "SYN",
+    "EffectiveDate": null,
+    "EndDate": null,
+    "InventorySourceId": 13,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "House Holds",
+          "Id": 31
+        },
+        "CPM": 18.5900,
+        "Impressions": 2505370.5338903754,
+        "IsReference": true,
+        "Rating": 1.58,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Adults 18-49",
+          "Id": 33
+        },
+        "CPM": 29.2300,
+        "Impressions": 1593368.2143469036,
+        "IsReference": true,
+        "Rating": 1.0,
+        "Vpvh": 636.0
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 86399,
+          "_Friday": true,
+          "_Id": 38,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": true,
+          "_StartTime": 0,
+          "_Sunday": true,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "Genres": [],
+        "ProgramName": "Bob's Burgers"
+      }
+    ],
+    "ManifestRates": [
+      {
+        "SpotCost": 4.0000,
+        "SpotLengthId": 1
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "EndDate": "2019-05-03T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2019-05-05T00:00:00",
+          "_MediaMonthId": 452,
+          "_StartDate": "2019-04-29T00:00:00",
+          "_WeekNumber": 1,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2019-05-01T00:00:00"
+      }
+    ],
+    "ProjectedStationImpressions": [],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": null
+  },
+  {
+    "Comment": null,
+    "DaypartCode": "SYN",
+    "EffectiveDate": null,
+    "EndDate": null,
+    "InventorySourceId": 13,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "House Holds",
+          "Id": 31
+        },
+        "CPM": 12.3100,
+        "Impressions": 894869.32799135451,
+        "IsReference": true,
+        "Rating": 0.57,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Adults 18-49",
+          "Id": 33
+        },
+        "CPM": 28.8800,
+        "Impressions": 382197.50385492312,
+        "IsReference": true,
+        "Rating": 0.24,
+        "Vpvh": 426.0
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 86399,
+          "_Friday": true,
+          "_Id": 38,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": true,
+          "_StartTime": 0,
+          "_Sunday": true,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "Genres": [],
+        "ProgramName": "Bones Weekend"
+      }
+    ],
+    "ManifestRates": [
+      {
+        "SpotCost": 4.0000,
+        "SpotLengthId": 1
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "EndDate": "2019-05-03T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2019-05-05T00:00:00",
+          "_MediaMonthId": 452,
+          "_StartDate": "2019-04-29T00:00:00",
+          "_WeekNumber": 1,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2019-05-01T00:00:00"
+      }
+    ],
+    "ProjectedStationImpressions": [],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": null
+  },
+  {
+    "Comment": null,
+    "DaypartCode": "SYN",
+    "EffectiveDate": null,
+    "EndDate": null,
+    "InventorySourceId": 13,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "House Holds",
+          "Id": 31
+        },
+        "CPM": 4.7800,
+        "Impressions": 1578871.0676489582,
+        "IsReference": true,
+        "Rating": 1.0,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Adults 18-49",
+          "Id": 33
+        },
+        "CPM": 12.0500,
+        "Impressions": 626013.15286582231,
+        "IsReference": true,
+        "Rating": 0.39,
+        "Vpvh": 396.0
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 86399,
+          "_Friday": true,
+          "_Id": 38,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": true,
+          "_StartTime": 0,
+          "_Sunday": true,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "Genres": [],
+        "ProgramName": "Caught in Providence"
+      }
+    ],
+    "ManifestRates": [
+      {
+        "SpotCost": 4.0000,
+        "SpotLengthId": 1
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "EndDate": "2019-05-03T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2019-05-05T00:00:00",
+          "_MediaMonthId": 452,
+          "_StartDate": "2019-04-29T00:00:00",
+          "_WeekNumber": 1,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2019-05-01T00:00:00"
+      }
+    ],
+    "ProjectedStationImpressions": [],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": null
+  },
+  {
+    "Comment": null,
+    "DaypartCode": "SYN",
+    "EffectiveDate": null,
+    "EndDate": null,
+    "InventorySourceId": 13,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "House Holds",
+          "Id": 31
+        },
+        "CPM": 3.4800,
+        "Impressions": 122566.78571899259,
+        "IsReference": true,
+        "Rating": 0.78,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Adults 18-49",
+          "Id": 33
+        },
+        "CPM": 6.5500,
+        "Impressions": 656325.368688799,
+        "IsReference": true,
+        "Rating": 0.41,
+        "Vpvh": 531.0
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 86399,
+          "_Friday": true,
+          "_Id": 38,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": true,
+          "_StartTime": 0,
+          "_Sunday": true,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "Genres": [],
+        "ProgramName": "Cops"
+      }
+    ],
+    "ManifestRates": [
+      {
+        "SpotCost": 4.0000,
+        "SpotLengthId": 1
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "EndDate": "2019-05-03T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2019-05-05T00:00:00",
+          "_MediaMonthId": 452,
+          "_StartDate": "2019-04-29T00:00:00",
+          "_WeekNumber": 1,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2019-05-01T00:00:00"
+      }
+    ],
+    "ProjectedStationImpressions": [],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": null
+  },
+  {
+    "Comment": null,
+    "DaypartCode": "SYN",
+    "EffectiveDate": null,
+    "EndDate": null,
+    "InventorySourceId": 13,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "House Holds",
+          "Id": 31
+        },
+        "CPM": 5.8000,
+        "Impressions": 1234893.3141795276,
+        "IsReference": true,
+        "Rating": 0.78,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Adults 18-49",
+          "Id": 33
+        },
+        "CPM": 14.4800,
+        "Impressions": 495538.83258431411,
+        "IsReference": true,
+        "Rating": 0.31,
+        "Vpvh": 401.0
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 86399,
+          "_Friday": true,
+          "_Id": 38,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": true,
+          "_StartTime": 0,
+          "_Sunday": true,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "Genres": [],
+        "ProgramName": "Divorce Court"
+      }
+    ],
+    "ManifestRates": [
+      {
+        "SpotCost": 4.0000,
+        "SpotLengthId": 1
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "EndDate": "2019-05-03T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2019-05-05T00:00:00",
+          "_MediaMonthId": 452,
+          "_StartDate": "2019-04-29T00:00:00",
+          "_WeekNumber": 1,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2019-05-01T00:00:00"
+      }
+    ],
+    "ProjectedStationImpressions": [],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": null
+  },
+  {
+    "Comment": null,
+    "DaypartCode": "SYN",
+    "EffectiveDate": null,
+    "EndDate": null,
+    "InventorySourceId": 13,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "House Holds",
+          "Id": 31
+        },
+        "CPM": 8.5000,
+        "Impressions": 9975354.8506134935,
+        "IsReference": true,
+        "Rating": 6.31,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Adults 18-49",
+          "Id": 33
+        },
+        "CPM": 24.6500,
+        "Impressions": 3441095.4571213941,
+        "IsReference": true,
+        "Rating": 2.16,
+        "Vpvh": 345.0
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 86399,
+          "_Friday": true,
+          "_Id": 38,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": true,
+          "_StartTime": 0,
+          "_Sunday": true,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "Genres": [],
+        "ProgramName": "FAMILY FEUD M-F"
+      }
+    ],
+    "ManifestRates": [
+      {
+        "SpotCost": 7.0000,
+        "SpotLengthId": 1
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "EndDate": "2019-05-03T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2019-05-05T00:00:00",
+          "_MediaMonthId": 452,
+          "_StartDate": "2019-04-29T00:00:00",
+          "_WeekNumber": 1,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2019-05-01T00:00:00"
+      }
+    ],
+    "ProjectedStationImpressions": [],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": null
+  },
+  {
+    "Comment": null,
+    "DaypartCode": "SYN",
+    "EffectiveDate": null,
+    "EndDate": null,
+    "InventorySourceId": 13,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "House Holds",
+          "Id": 31
+        },
+        "CPM": 8.4400,
+        "Impressions": 5282233.087760455,
+        "IsReference": true,
+        "Rating": 3.34,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Adults 18-49",
+          "Id": 33
+        },
+        "CPM": 25.5600,
+        "Impressions": 1744929.2934617871,
+        "IsReference": true,
+        "Rating": 1.1,
+        "Vpvh": 330.0
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 86399,
+          "_Friday": true,
+          "_Id": 38,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": true,
+          "_StartTime": 0,
+          "_Sunday": true,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "Genres": [],
+        "ProgramName": "FAMILY FEUD WKND"
+      }
+    ],
+    "ManifestRates": [
+      {
+        "SpotCost": 5.0000,
+        "SpotLengthId": 1
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "EndDate": "2019-05-03T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2019-05-05T00:00:00",
+          "_MediaMonthId": 452,
+          "_StartDate": "2019-04-29T00:00:00",
+          "_WeekNumber": 1,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2019-05-01T00:00:00"
+      }
+    ],
+    "ProjectedStationImpressions": [],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": null
+  },
+  {
+    "Comment": null,
+    "DaypartCode": "SYN",
+    "EffectiveDate": null,
+    "EndDate": null,
+    "InventorySourceId": 13,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "House Holds",
+          "Id": 31
+        },
+        "CPM": 16.5100,
+        "Impressions": 2278687.8764315932,
+        "IsReference": true,
+        "Rating": 1.44,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Adults 18-49",
+          "Id": 33
+        },
+        "CPM": 25.3100,
+        "Impressions": 1486616.4977529424,
+        "IsReference": true,
+        "Rating": 0.94,
+        "Vpvh": 652.0
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 86399,
+          "_Friday": true,
+          "_Id": 38,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": true,
+          "_StartTime": 0,
+          "_Sunday": true,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "Genres": [],
+        "ProgramName": "Family Guy"
+      }
+    ],
+    "ManifestRates": [
+      {
+        "SpotCost": 5.0000,
+        "SpotLengthId": 1
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "EndDate": "2019-05-03T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2019-05-05T00:00:00",
+          "_MediaMonthId": 452,
+          "_StartDate": "2019-04-29T00:00:00",
+          "_WeekNumber": 1,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2019-05-01T00:00:00"
+      }
+    ],
+    "ProjectedStationImpressions": [],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": null
+  },
+  {
+    "Comment": null,
+    "DaypartCode": "SYN",
+    "EffectiveDate": null,
+    "EndDate": null,
+    "InventorySourceId": 13,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "House Holds",
+          "Id": 31
+        },
+        "CPM": 15.5200,
+        "Impressions": 2249693.5830357028,
+        "IsReference": true,
+        "Rating": 1.42,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Adults 18-49",
+          "Id": 33
+        },
+        "CPM": 25.3000,
+        "Impressions": 1379864.7811589812,
+        "IsReference": true,
+        "Rating": 0.87,
+        "Vpvh": 614.0
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 86399,
+          "_Friday": true,
+          "_Id": 38,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": true,
+          "_StartTime": 0,
+          "_Sunday": true,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "Genres": [],
+        "ProgramName": "Family Guy Weekend"
+      }
+    ],
+    "ManifestRates": [
+      {
+        "SpotCost": 5.0000,
+        "SpotLengthId": 1
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "EndDate": "2019-05-03T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2019-05-05T00:00:00",
+          "_MediaMonthId": 452,
+          "_StartDate": "2019-04-29T00:00:00",
+          "_WeekNumber": 1,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2019-05-01T00:00:00"
+      }
+    ],
+    "ProjectedStationImpressions": [],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": null
+  },
+  {
+    "Comment": null,
+    "DaypartCode": "SYN",
+    "EffectiveDate": null,
+    "EndDate": null,
+    "InventorySourceId": 13,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "House Holds",
+          "Id": 31
+        },
+        "CPM": 17.2200,
+        "Impressions": 1208534.8656378086,
+        "IsReference": true,
+        "Rating": 0.76,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Adults 18-49",
+          "Id": 33
+        },
+        "CPM": 31.1900,
+        "Impressions": 666868.74810548651,
+        "IsReference": true,
+        "Rating": 0.42,
+        "Vpvh": 552.0
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 86399,
+          "_Friday": true,
+          "_Id": 38,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": true,
+          "_StartTime": 0,
+          "_Sunday": true,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "Genres": [],
+        "ProgramName": "How I Met Your Mother"
+      }
+    ],
+    "ManifestRates": [
+      {
+        "SpotCost": 5.0000,
+        "SpotLengthId": 1
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "EndDate": "2019-05-03T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2019-05-05T00:00:00",
+          "_MediaMonthId": 452,
+          "_StartDate": "2019-04-29T00:00:00",
+          "_WeekNumber": 1,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2019-05-01T00:00:00"
+      }
+    ],
+    "ProjectedStationImpressions": [],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": null
+  },
+  {
+    "Comment": null,
+    "DaypartCode": "SYN",
+    "EffectiveDate": null,
+    "EndDate": null,
+    "InventorySourceId": 13,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "House Holds",
+          "Id": 31
+        },
+        "CPM": 10.3000,
+        "Impressions": 3211776.95480844,
+        "IsReference": true,
+        "Rating": 2.03,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Adults 18-49",
+          "Id": 33
+        },
+        "CPM": 20.3100,
+        "Impressions": 1628952.1198782241,
+        "IsReference": true,
+        "Rating": 1.02,
+        "Vpvh": 507.0
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 86399,
+          "_Friday": true,
+          "_Id": 38,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": true,
+          "_StartTime": 0,
+          "_Sunday": true,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "Genres": [],
+        "ProgramName": "Last Man Standing"
+      }
+    ],
+    "ManifestRates": [
+      {
+        "SpotCost": 5.0000,
+        "SpotLengthId": 1
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "EndDate": "2019-05-03T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2019-05-05T00:00:00",
+          "_MediaMonthId": 452,
+          "_StartDate": "2019-04-29T00:00:00",
+          "_WeekNumber": 1,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2019-05-01T00:00:00"
+      }
+    ],
+    "ProjectedStationImpressions": [],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": null
+  },
+  {
+    "Comment": null,
+    "DaypartCode": "SYN",
+    "EffectiveDate": null,
+    "EndDate": null,
+    "InventorySourceId": 13,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "House Holds",
+          "Id": 31
+        },
+        "CPM": 10.1900,
+        "Impressions": 2189069.1513897493,
+        "IsReference": true,
+        "Rating": 1.39,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Adults 18-49",
+          "Id": 33
+        },
+        "CPM": 20.3100,
+        "Impressions": 1099147.3041896755,
+        "IsReference": true,
+        "Rating": 0.69,
+        "Vpvh": 502.0
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 86399,
+          "_Friday": true,
+          "_Id": 38,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": true,
+          "_StartTime": 0,
+          "_Sunday": true,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "Genres": [],
+        "ProgramName": "Last Man Standing Weekend"
+      }
+    ],
+    "ManifestRates": [
+      {
+        "SpotCost": 5.0000,
+        "SpotLengthId": 1
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "EndDate": "2019-05-03T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2019-05-05T00:00:00",
+          "_MediaMonthId": 452,
+          "_StartDate": "2019-04-29T00:00:00",
+          "_WeekNumber": 1,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2019-05-01T00:00:00"
+      }
+    ],
+    "ProjectedStationImpressions": [],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": null
+  },
+  {
+    "Comment": null,
+    "DaypartCode": "SYN",
+    "EffectiveDate": null,
+    "EndDate": null,
+    "InventorySourceId": 13,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "House Holds",
+          "Id": 31
+        },
+        "CPM": 19.8800,
+        "Impressions": 3356748.4217878939,
+        "IsReference": true,
+        "Rating": 2.12,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Adults 18-49",
+          "Id": 33
+        },
+        "CPM": 32.7400,
+        "Impressions": 2038825.994701952,
+        "IsReference": true,
+        "Rating": 1.28,
+        "Vpvh": 607.0
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 86399,
+          "_Friday": true,
+          "_Id": 38,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": true,
+          "_StartTime": 0,
+          "_Sunday": true,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "Genres": [],
+        "ProgramName": "Modern Family"
+      }
+    ],
+    "ManifestRates": [
+      {
+        "SpotCost": 6.0000,
+        "SpotLengthId": 1
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "EndDate": "2019-05-03T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2019-05-05T00:00:00",
+          "_MediaMonthId": 452,
+          "_StartDate": "2019-04-29T00:00:00",
+          "_WeekNumber": 1,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2019-05-01T00:00:00"
+      }
+    ],
+    "ProjectedStationImpressions": [],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": null
+  },
+  {
+    "Comment": null,
+    "DaypartCode": "SYN",
+    "EffectiveDate": null,
+    "EndDate": null,
+    "InventorySourceId": 13,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "House Holds",
+          "Id": 31
+        },
+        "CPM": 19.7700,
+        "Impressions": 3625604.5969134257,
+        "IsReference": true,
+        "Rating": 2.29,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Adults 18-49",
+          "Id": 33
+        },
+        "CPM": 33.4700,
+        "Impressions": 2141623.9440146554,
+        "IsReference": true,
+        "Rating": 1.35,
+        "Vpvh": 591.0
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 86399,
+          "_Friday": true,
+          "_Id": 38,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": true,
+          "_StartTime": 0,
+          "_Sunday": true,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "Genres": [],
+        "ProgramName": "Modern Family Weekend"
+      }
+    ],
+    "ManifestRates": [
+      {
+        "SpotCost": 5.0000,
+        "SpotLengthId": 1
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "EndDate": "2019-05-03T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2019-05-05T00:00:00",
+          "_MediaMonthId": 452,
+          "_StartDate": "2019-04-29T00:00:00",
+          "_WeekNumber": 1,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2019-05-01T00:00:00"
+      }
+    ],
+    "ProjectedStationImpressions": [],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": null
+  },
+  {
+    "Comment": null,
+    "DaypartCode": "SYN",
+    "EffectiveDate": null,
+    "EndDate": null,
+    "InventorySourceId": 13,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "House Holds",
+          "Id": 31
+        },
+        "CPM": 7.7200,
+        "Impressions": 1124187.8303043083,
+        "IsReference": true,
+        "Rating": 0.71,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Adults 18-49",
+          "Id": 33
+        },
+        "CPM": 15.2400,
+        "Impressions": 569342.48850112688,
+        "IsReference": true,
+        "Rating": 0.36,
+        "Vpvh": 506.0
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 86399,
+          "_Friday": true,
+          "_Id": 38,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": true,
+          "_StartTime": 0,
+          "_Sunday": true,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "Genres": [],
+        "ProgramName": "Page Six"
+      }
+    ],
+    "ManifestRates": [
+      {
+        "SpotCost": 4.0000,
+        "SpotLengthId": 1
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "EndDate": "2019-05-03T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2019-05-05T00:00:00",
+          "_MediaMonthId": 452,
+          "_StartDate": "2019-04-29T00:00:00",
+          "_WeekNumber": 1,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2019-05-01T00:00:00"
+      }
+    ],
+    "ProjectedStationImpressions": [],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": null
+  },
+  {
+    "Comment": null,
+    "DaypartCode": "SYN",
+    "EffectiveDate": null,
+    "EndDate": null,
+    "InventorySourceId": 13,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "House Holds",
+          "Id": 31
+        },
+        "CPM": 4.2700,
+        "Impressions": 1578871.0676489582,
+        "IsReference": true,
+        "Rating": 1.0,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Adults 18-49",
+          "Id": 33
+        },
+        "CPM": 9.4800,
+        "Impressions": 711678.1106264086,
+        "IsReference": true,
+        "Rating": 0.45,
+        "Vpvh": 451.0
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 86399,
+          "_Friday": true,
+          "_Id": 38,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": true,
+          "_StartTime": 0,
+          "_Sunday": true,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "Genres": [],
+        "ProgramName": "TRUE Crime Files"
+      }
+    ],
+    "ManifestRates": [
+      {
+        "SpotCost": 4.0000,
+        "SpotLengthId": 1
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "EndDate": "2019-05-03T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2019-05-05T00:00:00",
+          "_MediaMonthId": 452,
+          "_StartDate": "2019-04-29T00:00:00",
+          "_WeekNumber": 1,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2019-05-01T00:00:00"
+      }
+    ],
+    "ProjectedStationImpressions": [],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": null
+  },
+  {
+    "Comment": null,
+    "DaypartCode": "SYN",
+    "EffectiveDate": null,
+    "EndDate": null,
+    "InventorySourceId": 13,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "House Holds",
+          "Id": 31
+        },
+        "CPM": 8.8800,
+        "Impressions": 1812143.33724317,
+        "IsReference": true,
+        "Rating": 1.15,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Adults 18-49",
+          "Id": 33
+        },
+        "CPM": 19.0600,
+        "Impressions": 844788.27576208871,
+        "IsReference": true,
+        "Rating": 0.53,
+        "Vpvh": 466.0
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 86399,
+          "_Friday": true,
+          "_Id": 38,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": true,
+          "_StartTime": 0,
+          "_Sunday": true,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "Genres": [],
+        "ProgramName": "WENDY WILLIAMS"
+      }
+    ],
+    "ManifestRates": [
+      {
+        "SpotCost": 7.0000,
+        "SpotLengthId": 1
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "EndDate": "2019-05-03T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2019-05-05T00:00:00",
+          "_MediaMonthId": 452,
+          "_StartDate": "2019-04-29T00:00:00",
+          "_WeekNumber": 1,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2019-05-01T00:00:00"
+      }
+    ],
+    "ProjectedStationImpressions": [],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": null
+  }
+]
