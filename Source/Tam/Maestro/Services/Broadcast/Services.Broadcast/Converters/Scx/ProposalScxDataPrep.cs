@@ -230,7 +230,7 @@ namespace Services.Broadcast.Converters.Scx
                     stationImpressions = repo.GetImpressionsDaypart(proposalDetailDto.SingleProjectionBookId.Value
                                                , audienceIds
                                                , stations
-                                               , playbackType, BroadcastComposerWebSystemParameter.UseDayByDayImpressions)
+                                               , playbackType)
                                                .Cast<StationImpressions>()
                                                .ToList();
                 }
@@ -240,7 +240,7 @@ namespace Services.Broadcast.Converters.Scx
                                                 , (short)proposalDetailDto.ShareProjectionBookId.Value
                                                 , audienceIds
                                                 , stations
-                                                , playbackType, BroadcastComposerWebSystemParameter.UseDayByDayImpressions);
+                                                , playbackType);
                 }
                 demo.Impressions = stationImpressions;//.Where(si => data.MarketIds.Contains(si.market_code)).ToList();
             }

@@ -415,12 +415,6 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
             get { return SystemComponentHelper.GetPropertyValue<int>
 					(BroadcastComposerWebSystemParameterNames.ComponentID , BroadcastComposerWebSystemParameterNames.ImpressionStartOfDayForAdjustment); }
         }
-	 
-		public static bool UseDayByDayImpressions  
-		{
-            get { return SystemComponentHelper.GetPropertyValue<bool>
-					(BroadcastComposerWebSystemParameterNames.ComponentID , BroadcastComposerWebSystemParameterNames.UseDayByDayImpressions); }
-        }
 	}
 	 
 	public static class BroadcastServiceSystemParameter 
@@ -1328,10 +1322,22 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 					(PostLogServiceSystemParameterNames.ComponentID , PostLogServiceSystemParameterNames.EnableDatabaseOptimization); }
         }
 	 
+		public static bool EnableLegacyPostLogProcess  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<bool>
+					(PostLogServiceSystemParameterNames.ComponentID , PostLogServiceSystemParameterNames.EnableLegacyPostLogProcess); }
+        }
+	 
 		public static bool EnablePostLogFileLoader  
 		{
             get { return SystemComponentHelper.GetPropertyValue<bool>
 					(PostLogServiceSystemParameterNames.ComponentID , PostLogServiceSystemParameterNames.EnablePostLogFileLoader); }
+        }
+	 
+		public static bool EnableSparkPostLogProcess  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<bool>
+					(PostLogServiceSystemParameterNames.ComponentID , PostLogServiceSystemParameterNames.EnableSparkPostLogProcess); }
         }
 	 
 		public static bool EnableUniverseAndRatingsFileLoaders  
@@ -1884,6 +1890,15 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
         }
 	}
 	 
+	public static class ReportGenerationSystemParameter 
+	{ 
+		public static bool UseWebForInnovarXmlGeneration  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<bool>
+					(ReportGenerationSystemParameterNames.ComponentID , ReportGenerationSystemParameterNames.UseWebForInnovarXmlGeneration); }
+        }
+	}
+	 
 	public static class ReportingServiceSystemParameter 
 	{ 
 		public static string BroadcastPdfDirectory  
@@ -1979,6 +1994,12 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 	 
 	public static class SalesApiSystemParameter 
 	{ 
+		public static int HealthCheckServicesTimeout  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<int>
+					(SalesApiSystemParameterNames.ComponentID , SalesApiSystemParameterNames.HealthCheckServicesTimeout); }
+        }
+	 
 		public static string IdentityServerUri  
 		{
             get { return SystemComponentHelper.GetPropertyValue<string>

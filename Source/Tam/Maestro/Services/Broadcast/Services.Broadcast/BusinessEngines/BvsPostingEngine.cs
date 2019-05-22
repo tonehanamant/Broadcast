@@ -117,8 +117,7 @@ namespace Services.Broadcast.BusinessEngines
             var ratings = forecastRepo.GetImpressionsPointInTime(postingBook,
                                                                     uniqueRatingsAudiences,
                                                                     stationDetails,
-                                                                    DefaultPlaybackType,
-                                                                    BroadcastComposerWebSystemParameter.UseDayByDayImpressions);
+                                                                    DefaultPlaybackType);
 
             var postResults = _GetPostResults(ratings, bvsData, scheduleAudiences, ratingsAudienceMappings.GroupBy(g => g.custom_audience_id).ToDictionary(k => k.Key, v => v.Select(a => a.rating_audience_id).ToList())).ToList();
 

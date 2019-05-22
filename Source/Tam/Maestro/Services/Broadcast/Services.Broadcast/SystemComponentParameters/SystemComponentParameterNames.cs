@@ -378,11 +378,6 @@ namespace Tam.Maestro.Common.SystemComponentParameter
 		{
             get { return "ImpressionStartOfDayForAdjustment"; }
         }
-	 
-		public static string UseDayByDayImpressions  
-		{
-            get { return "UseDayByDayImpressions"; }
-        }
 	}
 	 
 	public static class BroadcastServiceSystemParameterNames
@@ -1216,9 +1211,19 @@ namespace Tam.Maestro.Common.SystemComponentParameter
             get { return "EnableDatabaseOptimization"; }
         }
 	 
+		public static string EnableLegacyPostLogProcess  
+		{
+            get { return "EnableLegacyPostLogProcess"; }
+        }
+	 
 		public static string EnablePostLogFileLoader  
 		{
             get { return "EnablePostLogFileLoader"; }
+        }
+	 
+		public static string EnableSparkPostLogProcess  
+		{
+            get { return "EnableSparkPostLogProcess"; }
         }
 	 
 		public static string EnableUniverseAndRatingsFileLoaders  
@@ -1707,6 +1712,19 @@ namespace Tam.Maestro.Common.SystemComponentParameter
         }
 	}
 	 
+	public static class ReportGenerationSystemParameterNames
+	{
+		public static string ComponentID
+        {
+            get { return "ReportGeneration" ; }
+        }
+	  
+		public static string UseWebForInnovarXmlGeneration  
+		{
+            get { return "UseWebForInnovarXmlGeneration"; }
+        }
+	}
+	 
 	public static class ReportingServiceSystemParameterNames
 	{
 		public static string ComponentID
@@ -1797,6 +1815,11 @@ namespace Tam.Maestro.Common.SystemComponentParameter
             get { return "SalesApi" ; }
         }
 	  
+		public static string HealthCheckServicesTimeout  
+		{
+            get { return "HealthCheckServicesTimeout"; }
+        }
+	 
 		public static string IdentityServerUri  
 		{
             get { return "IdentityServerUri"; }

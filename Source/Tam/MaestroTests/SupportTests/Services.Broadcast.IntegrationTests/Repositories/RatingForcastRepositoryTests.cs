@@ -98,7 +98,7 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                 DisplayDaypart = dp,
             });
 
-            var results = _Repo.GetImpressionsDaypart(posting_media_month_id, demos.Split(',').Select(i => Int32.Parse(i)).ToList(), details,ProposalEnums.ProposalPlaybackType.LivePlus3,false);
+            var results = _Repo.GetImpressionsDaypart(posting_media_month_id, demos.Split(',').Select(i => Int32.Parse(i)).ToList(), details,ProposalEnums.ProposalPlaybackType.LivePlus3);
 
             var jsonResolver = new IgnorableSerializerContractResolver();
             var jsonSettings = new JsonSerializerSettings()
@@ -184,7 +184,7 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                 DayOfWeek = DayOfWeek.Thursday
             });
 
-            var results = _Repo.GetImpressionsPointInTime(posting_media_month_id, demos.Split(',').Select(i => Int32.Parse(i)).ToList(), details, ProposalEnums.ProposalPlaybackType.LivePlus3, false);
+            var results = _Repo.GetImpressionsPointInTime(posting_media_month_id, demos.Split(',').Select(i => Int32.Parse(i)).ToList(), details, ProposalEnums.ProposalPlaybackType.LivePlus3);
 
             var jsonResolver = new IgnorableSerializerContractResolver();
             var jsonSettings = new JsonSerializerSettings()
@@ -349,7 +349,7 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                     LegacyCallLetters = "KRBC"
                 }
             };
-            _Repo.GetImpressionsDaypart(434, 437, uniqueRatingsAudiences, stationDetails, ProposalEnums.ProposalPlaybackType.LivePlus3, false);
+            _Repo.GetImpressionsDaypart(434, 437, uniqueRatingsAudiences, stationDetails, ProposalEnums.ProposalPlaybackType.LivePlus3);
         }
 
     }

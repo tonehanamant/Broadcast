@@ -45,11 +45,11 @@ namespace Services.Broadcast.ApplicationServices
 
             if (proposalDetailInventory.ShareProjectionBookId.HasValue && proposalDetailInventory.HutProjectionBookId.HasValue)
             {
-                impressions = BroadcastDataRepositoryFactory.GetDataRepository<IRatingForecastRepository>().GetImpressionsDaypart((short)proposalDetailInventory.HutProjectionBookId.Value, (short)proposalDetailInventory.ShareProjectionBookId.Value, ratingAudiences, impressionRequests, proposalDetailInventory.PlaybackType, BroadcastComposerWebSystemParameter.UseDayByDayImpressions);
+                impressions = BroadcastDataRepositoryFactory.GetDataRepository<IRatingForecastRepository>().GetImpressionsDaypart((short)proposalDetailInventory.HutProjectionBookId.Value, (short)proposalDetailInventory.ShareProjectionBookId.Value, ratingAudiences, impressionRequests, proposalDetailInventory.PlaybackType);
             }
             else if (proposalDetailInventory.SingleProjectionBookId.HasValue)
             {
-                impressions = new List<StationImpressions>(BroadcastDataRepositoryFactory.GetDataRepository<IRatingForecastRepository>().GetImpressionsDaypart(proposalDetailInventory.SingleProjectionBookId.Value, ratingAudiences, impressionRequests, proposalDetailInventory.PlaybackType, BroadcastComposerWebSystemParameter.UseDayByDayImpressions));
+                impressions = new List<StationImpressions>(BroadcastDataRepositoryFactory.GetDataRepository<IRatingForecastRepository>().GetImpressionsDaypart(proposalDetailInventory.SingleProjectionBookId.Value, ratingAudiences, impressionRequests, proposalDetailInventory.PlaybackType));
             }
 
             if (impressions != null)

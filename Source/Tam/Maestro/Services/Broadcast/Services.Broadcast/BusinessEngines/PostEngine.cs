@@ -49,7 +49,7 @@ namespace Services.Broadcast.BusinessEngines
 
             var uniqueRatingsAudiences = audiencemappings.Keys.Distinct().ToList();
 
-            var ratingsData = _DataRepositoryFactory.GetDataRepository<IRatingForecastRepository>().GetImpressionsPointInTime(postFile.posting_book_id, uniqueRatingsAudiences, postDetails, (ProposalEnums.ProposalPlaybackType)postFile.playback_type, BroadcastComposerWebSystemParameter.UseDayByDayImpressions);
+            var ratingsData = _DataRepositoryFactory.GetDataRepository<IRatingForecastRepository>().GetImpressionsPointInTime(postFile.posting_book_id, uniqueRatingsAudiences, postDetails, (ProposalEnums.ProposalPlaybackType)postFile.playback_type);
 
             var ratingsByStation = ratingsData.ToLookup(rd => rd.Id);
             var allImpressions = new List<post_file_detail_impressions>();

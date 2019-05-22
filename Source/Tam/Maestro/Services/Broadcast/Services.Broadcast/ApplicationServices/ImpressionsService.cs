@@ -108,7 +108,7 @@ namespace Services.Broadcast.ApplicationServices
                 var ratingForecastRepository = _BroadcastDataRepositoryFactory.GetDataRepository<IRatingForecastRepository>();
                 var impressionsPointInTime = ratingForecastRepository.GetImpressionsPointInTime(postingData.PostingBookId.Value, audiencesIds,
                     stationDetails,
-                    postingData.PostingPlaybackType.Value, BroadcastComposerWebSystemParameter.UseDayByDayImpressions);
+                    postingData.PostingPlaybackType.Value);
 
                 ctr = 1;
                 foreach (var affidavitFileDetail in affidavitDetailsForPostingBook)
@@ -179,7 +179,7 @@ namespace Services.Broadcast.ApplicationServices
                 {
                     //sw = Stopwatch.StartNew();
                     stationImpressions = _RatingsRepository
-                        .GetImpressionsDaypart((short)hutBook.Value, (short)shareBook, ratingAudiences, stationDetails, playbackType, BroadcastComposerWebSystemParameter.UseDayByDayImpressions);
+                        .GetImpressionsDaypart((short)hutBook.Value, (short)shareBook, ratingAudiences, stationDetails, playbackType);
                     //sw.Stop();
                     //Debug.WriteLine($"GetImpressionsDaypart for 2 books: {sw.ElapsedMilliseconds} ");
                 }
@@ -187,7 +187,7 @@ namespace Services.Broadcast.ApplicationServices
                 {
                     //sw = Stopwatch.StartNew();
                     stationImpressions = _RatingsRepository
-                        .GetImpressionsDaypart(shareBook, ratingAudiences, stationDetails, playbackType, BroadcastComposerWebSystemParameter.UseDayByDayImpressions)
+                        .GetImpressionsDaypart(shareBook, ratingAudiences, stationDetails, playbackType)
                         .Select(x => (StationImpressions)x)
                         .ToList();
                     //sw.Stop();
@@ -260,12 +260,12 @@ namespace Services.Broadcast.ApplicationServices
                 if (hutBook.HasValue)
                 {
                     stationImpressions.AddRange(_RatingsRepository.GetImpressionsDaypart((short)hutBook.Value, (short)shareBook,
-                        new List<int> { component.Id }, stationDetail, playbackType, BroadcastComposerWebSystemParameter.UseDayByDayImpressions));
+                        new List<int> { component.Id }, stationDetail, playbackType));
                 }
                 else
                 {
                     stationImpressions.AddRange(_RatingsRepository
-                        .GetImpressionsDaypart(shareBook, new List<int> { component.Id }, stationDetail, playbackType, BroadcastComposerWebSystemParameter.UseDayByDayImpressions)
+                        .GetImpressionsDaypart(shareBook, new List<int> { component.Id }, stationDetail, playbackType)
                         .Select(x => (StationImpressions)x)
                         .ToList());
                 }

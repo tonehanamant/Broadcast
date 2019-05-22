@@ -103,9 +103,6 @@ namespace Services.Broadcast.IntegrationTests
                 case "DaypartCacheSlidingExpirationSeconds":
                     result = "1800";
                     break;
-                case "UseDayByDayImpressions":
-                    result = "False";
-                    break;
                 case "WWTV_FtpUsername":
                     result = "broadcast";
                     break;
