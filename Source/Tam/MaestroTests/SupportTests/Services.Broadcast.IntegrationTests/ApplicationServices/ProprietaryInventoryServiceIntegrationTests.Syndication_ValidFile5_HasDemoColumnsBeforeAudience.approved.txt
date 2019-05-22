@@ -13,7 +13,7 @@
           "Id": 31
         },
         "CPM": 14.5000,
-        "Impressions": 985805.97546028451,
+        "Impressions": 831111.11111111112,
         "IsReference": true,
         "Rating": 0.62,
         "Vpvh": null
@@ -24,7 +24,7 @@
           "Id": 33
         },
         "CPM": 22.3700,
-        "Impressions": 639192.37713668181,
+        "Impressions": 538888.88888888888,
         "IsReference": true,
         "Rating": 0.4,
         "Vpvh": 648.0
@@ -93,7 +93,7 @@
           "Id": 31
         },
         "CPM": 18.7200,
-        "Impressions": 1737021.7588992713,
+        "Impressions": 1464444.4444444445,
         "IsReference": true,
         "Rating": 1.1,
         "Vpvh": null
@@ -104,7 +104,7 @@
           "Id": 33
         },
         "CPM": 29.2400,
-        "Impressions": 1112326.528460535,
+        "Impressions": 937777.77777777775,
         "IsReference": true,
         "Rating": 0.7,
         "Vpvh": 640.0
@@ -173,7 +173,7 @@
           "Id": 31
         },
         "CPM": 18.5900,
-        "Impressions": 2505370.5338903754,
+        "Impressions": 2112222.222222222,
         "IsReference": true,
         "Rating": 1.58,
         "Vpvh": null
@@ -184,7 +184,7 @@
           "Id": 33
         },
         "CPM": 29.2300,
-        "Impressions": 1593368.2143469036,
+        "Impressions": 1343333.3333333333,
         "IsReference": true,
         "Rating": 1.0,
         "Vpvh": 636.0
@@ -253,7 +253,7 @@
           "Id": 31
         },
         "CPM": 12.3100,
-        "Impressions": 894869.32799135451,
+        "Impressions": 754444.44444444438,
         "IsReference": true,
         "Rating": 0.57,
         "Vpvh": null
@@ -264,7 +264,7 @@
           "Id": 33
         },
         "CPM": 28.8800,
-        "Impressions": 382197.50385492312,
+        "Impressions": 322222.22222222219,
         "IsReference": true,
         "Rating": 0.24,
         "Vpvh": 426.0
@@ -333,7 +333,7 @@
           "Id": 31
         },
         "CPM": 4.7800,
-        "Impressions": 1578871.0676489582,
+        "Impressions": 1331111.111111111,
         "IsReference": true,
         "Rating": 1.0,
         "Vpvh": null
@@ -344,7 +344,7 @@
           "Id": 33
         },
         "CPM": 12.0500,
-        "Impressions": 626013.15286582231,
+        "Impressions": 527777.77777777775,
         "IsReference": true,
         "Rating": 0.39,
         "Vpvh": 396.0
@@ -413,7 +413,7 @@
           "Id": 31
         },
         "CPM": 3.4800,
-        "Impressions": 122566.78571899259,
+        "Impressions": 103333.33333333333,
         "IsReference": true,
         "Rating": 0.78,
         "Vpvh": null
@@ -424,7 +424,7 @@
           "Id": 33
         },
         "CPM": 6.5500,
-        "Impressions": 656325.368688799,
+        "Impressions": 553333.33333333337,
         "IsReference": true,
         "Rating": 0.41,
         "Vpvh": 531.0
@@ -493,7 +493,7 @@
           "Id": 31
         },
         "CPM": 5.8000,
-        "Impressions": 1234893.3141795276,
+        "Impressions": 1041111.1111111111,
         "IsReference": true,
         "Rating": 0.78,
         "Vpvh": null
@@ -504,7 +504,7 @@
           "Id": 33
         },
         "CPM": 14.4800,
-        "Impressions": 495538.83258431411,
+        "Impressions": 417777.77777777775,
         "IsReference": true,
         "Rating": 0.31,
         "Vpvh": 401.0
@@ -573,7 +573,7 @@
           "Id": 31
         },
         "CPM": 8.5000,
-        "Impressions": 9975354.8506134935,
+        "Impressions": 8410000.0,
         "IsReference": true,
         "Rating": 6.31,
         "Vpvh": null
@@ -584,7 +584,7 @@
           "Id": 33
         },
         "CPM": 24.6500,
-        "Impressions": 3441095.4571213941,
+        "Impressions": 2901111.111111111,
         "IsReference": true,
         "Rating": 2.16,
         "Vpvh": 345.0
@@ -653,7 +653,7 @@
           "Id": 31
         },
         "CPM": 8.4400,
-        "Impressions": 5282233.087760455,
+        "Impressions": 4453333.333333333,
         "IsReference": true,
         "Rating": 3.34,
         "Vpvh": null
@@ -664,7 +664,7 @@
           "Id": 33
         },
         "CPM": 25.5600,
-        "Impressions": 1744929.2934617871,
+        "Impressions": 1471111.111111111,
         "IsReference": true,
         "Rating": 1.1,
         "Vpvh": 330.0
@@ -733,7 +733,7 @@
           "Id": 31
         },
         "CPM": 16.5100,
-        "Impressions": 2278687.8764315932,
+        "Impressions": 1921111.111111111,
         "IsReference": true,
         "Rating": 1.44,
         "Vpvh": null
@@ -744,7 +744,7 @@
           "Id": 33
         },
         "CPM": 25.3100,
-        "Impressions": 1486616.4977529424,
+        "Impressions": 1253333.3333333333,
         "IsReference": true,
         "Rating": 0.94,
         "Vpvh": 652.0
@@ -813,7 +813,7 @@
           "Id": 31
         },
         "CPM": 15.5200,
-        "Impressions": 2249693.5830357028,
+        "Impressions": 1896666.6666666665,
         "IsReference": true,
         "Rating": 1.42,
         "Vpvh": null
@@ -824,7 +824,7 @@
           "Id": 33
         },
         "CPM": 25.3000,
-        "Impressions": 1379864.7811589812,
+        "Impressions": 1163333.3333333333,
         "IsReference": true,
         "Rating": 0.87,
         "Vpvh": 614.0
@@ -893,7 +893,7 @@
           "Id": 31
         },
         "CPM": 17.2200,
-        "Impressions": 1208534.8656378086,
+        "Impressions": 1018888.8888888889,
         "IsReference": true,
         "Rating": 0.76,
         "Vpvh": null
@@ -904,7 +904,7 @@
           "Id": 33
         },
         "CPM": 31.1900,
-        "Impressions": 666868.74810548651,
+        "Impressions": 562222.22222222225,
         "IsReference": true,
         "Rating": 0.42,
         "Vpvh": 552.0
@@ -973,7 +973,7 @@
           "Id": 31
         },
         "CPM": 10.3000,
-        "Impressions": 3211776.95480844,
+        "Impressions": 2707777.7777777775,
         "IsReference": true,
         "Rating": 2.03,
         "Vpvh": null
@@ -984,7 +984,7 @@
           "Id": 33
         },
         "CPM": 20.3100,
-        "Impressions": 1628952.1198782241,
+        "Impressions": 1373333.3333333333,
         "IsReference": true,
         "Rating": 1.02,
         "Vpvh": 507.0
@@ -1053,7 +1053,7 @@
           "Id": 31
         },
         "CPM": 10.1900,
-        "Impressions": 2189069.1513897493,
+        "Impressions": 1845555.5555555555,
         "IsReference": true,
         "Rating": 1.39,
         "Vpvh": null
@@ -1064,7 +1064,7 @@
           "Id": 33
         },
         "CPM": 20.3100,
-        "Impressions": 1099147.3041896755,
+        "Impressions": 926666.66666666663,
         "IsReference": true,
         "Rating": 0.69,
         "Vpvh": 502.0
@@ -1133,7 +1133,7 @@
           "Id": 31
         },
         "CPM": 19.8800,
-        "Impressions": 3356748.4217878939,
+        "Impressions": 2830000.0,
         "IsReference": true,
         "Rating": 2.12,
         "Vpvh": null
@@ -1144,7 +1144,7 @@
           "Id": 33
         },
         "CPM": 32.7400,
-        "Impressions": 2038825.994701952,
+        "Impressions": 1718888.8888888888,
         "IsReference": true,
         "Rating": 1.28,
         "Vpvh": 607.0
@@ -1213,7 +1213,7 @@
           "Id": 31
         },
         "CPM": 19.7700,
-        "Impressions": 3625604.5969134257,
+        "Impressions": 3056666.6666666665,
         "IsReference": true,
         "Rating": 2.29,
         "Vpvh": null
@@ -1224,7 +1224,7 @@
           "Id": 33
         },
         "CPM": 33.4700,
-        "Impressions": 2141623.9440146554,
+        "Impressions": 1805555.5555555555,
         "IsReference": true,
         "Rating": 1.35,
         "Vpvh": 591.0
@@ -1293,7 +1293,7 @@
           "Id": 31
         },
         "CPM": 7.7200,
-        "Impressions": 1124187.8303043083,
+        "Impressions": 947777.77777777775,
         "IsReference": true,
         "Rating": 0.71,
         "Vpvh": null
@@ -1304,7 +1304,7 @@
           "Id": 33
         },
         "CPM": 15.2400,
-        "Impressions": 569342.48850112688,
+        "Impressions": 480000.0,
         "IsReference": true,
         "Rating": 0.36,
         "Vpvh": 506.0
@@ -1373,7 +1373,7 @@
           "Id": 31
         },
         "CPM": 4.2700,
-        "Impressions": 1578871.0676489582,
+        "Impressions": 1331111.111111111,
         "IsReference": true,
         "Rating": 1.0,
         "Vpvh": null
@@ -1384,7 +1384,7 @@
           "Id": 33
         },
         "CPM": 9.4800,
-        "Impressions": 711678.1106264086,
+        "Impressions": 600000.0,
         "IsReference": true,
         "Rating": 0.45,
         "Vpvh": 451.0
@@ -1453,7 +1453,7 @@
           "Id": 31
         },
         "CPM": 8.8800,
-        "Impressions": 1812143.33724317,
+        "Impressions": 1527777.7777777778,
         "IsReference": true,
         "Rating": 1.15,
         "Vpvh": null
@@ -1464,7 +1464,7 @@
           "Id": 33
         },
         "CPM": 19.0600,
-        "Impressions": 844788.27576208871,
+        "Impressions": 712222.22222222225,
         "IsReference": true,
         "Rating": 0.53,
         "Vpvh": 466.0
