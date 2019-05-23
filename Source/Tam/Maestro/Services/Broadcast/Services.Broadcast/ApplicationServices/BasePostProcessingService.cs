@@ -14,6 +14,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using Tam.Maestro.Common;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
+using Tam.Maestro.Services.Clients;
 using Tam.Maestro.Services.ContractInterfaces;
 
 namespace Services.Broadcast.ApplicationServices
@@ -51,6 +52,8 @@ namespace Services.Broadcast.ApplicationServices
         /// <returns>List of ftp file paths</returns>
         public List<string> DownloadFilesToBeProcessed(string path)
         {
+            var environment = SMSClient.Handler.TamEnvironment.ToString();
+
             try
             {
                 return _WWTVFtpHelper.GetInboundFileList(path, (file) => file.EndsWith(VALID_INCOMING_FILE_EXTENSION));
@@ -58,8 +61,8 @@ namespace Services.Broadcast.ApplicationServices
             catch (Exception e)
             {
                 var emailBody =
-                "There was an error reading from or connecting to the FTP server. \n\nHere is some technical information: \n" + e;
-                _EmailHelper.SendEmail(emailBody, "WWTV FTP Error");
+                "There was an error reading from or connecting to the FTP server. \nHere is some technical information: \n\n" + e;
+                _EmailHelper.SendEmail(emailBody, "WWTV FTP Error - " + environment);
                 throw;
             }
         }
