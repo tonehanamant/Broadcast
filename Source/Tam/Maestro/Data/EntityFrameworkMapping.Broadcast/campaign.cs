@@ -14,6 +14,11 @@ namespace EntityFrameworkMapping.Broadcast
     
     public partial class campaign
     {
+        public campaign()
+        {
+            this.proposals = new HashSet<proposal>();
+        }
+    
         public int id { get; set; }
         public string name { get; set; }
         public int advertiser_id { get; set; }
@@ -25,5 +30,7 @@ namespace EntityFrameworkMapping.Broadcast
         public string created_by { get; set; }
         public Nullable<System.DateTime> modified_date { get; set; }
         public string modified_by { get; set; }
+    
+        public virtual ICollection<proposal> proposals { get; set; }
     }
 }

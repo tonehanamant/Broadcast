@@ -20,8 +20,6 @@ namespace Services.Broadcast.Entities
         public string RateSource { get; set; }
         public List<DaypartDto> Airtimes { get; set; }
         public List<string> AirtimePreviews { get; set; }
-        public DateTime EffectiveDate { get; set; }
-        public DateTime? EndDate { get; set; }
         public decimal? Rate15 { get; set; }
         public decimal? Rate30 { get; set; }
         public double? HouseHoldImpressions { get; set; }

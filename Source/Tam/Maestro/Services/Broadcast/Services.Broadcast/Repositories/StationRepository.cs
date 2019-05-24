@@ -5,26 +5,21 @@ using Services.Broadcast.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Data.Entity;
 using System.Transactions;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
 using Tam.Maestro.Services.Clients;
-using System.Linq.Expressions;
-using Services.Broadcast.Entities.Enums;
 
 namespace Services.Broadcast.Repositories
 {
     public interface IStationRepository : IDataRepository
     {
-        List<DisplayBroadcastStation> GetBroadcastStationsWithFlightWeeksForRateSource(InventorySource inventorySource);
         DisplayBroadcastStation GetBroadcastStationByCode(int code);
         List<DisplayBroadcastStation> GetBroadcastStationsByCodes(IEnumerable<int> codes);
         DisplayBroadcastStation GetBroadcastStationByLegacyCallLetters(string callLetters);
         DisplayBroadcastStation GetBroadcastStationByCallLetters(string stationCallLetters);
         List<DisplayBroadcastStation> GetBroadcastStationListByLegacyCallLetters(List<string> stationNameList);
         List<DisplayBroadcastStation> GetBroadcastStations();
-        List<DisplayBroadcastStation> GetBroadcastStationsByDate(int inventorySourceId, DateTime date, bool isIncluded);
         int GetBroadcastStationCodeByContactId(int stationContactId);
         void UpdateStation(int code, string user, DateTime timeStamp, int inventorySourceId);
         void UpdateStationList(List<int> stationIds, string user, DateTime timeStamp, int inventorySourceId);
@@ -38,102 +33,7 @@ namespace Services.Broadcast.Repositories
             : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper)
         {
         }
-
-        public List<DisplayBroadcastStation> GetBroadcastStationsWithFlightWeeksForRateSource(InventorySource inventorySource)
-        {
-            return _InReadUncommitedTransaction(
-                context =>
-                {
-                    var query = (from s in context.stations
-                            .Include(sa => sa.station_inventory_manifest)
-                            .Include(sl => sl.station_inventory_loaded)
-                                 select s);
-                    return query.Select(_MapToDisplayBroadcastStation(inventorySource.Id)).ToList();
-                });
-        }
-
-        public List<DisplayBroadcastStation> GetBroadcastStationsByDate(int inventorySourceId, DateTime date, bool isIncluded)
-        {
-
-            return _InReadUncommitedTransaction(
-                context =>
-                {
-                    var query =
-                        context.stations
-                        .Include(sa => sa.station_inventory_manifest)
-                        .Include(sl => sl.station_inventory_loaded)
-                        .Where(
-                            s =>
-                                s.station_inventory_manifest.Any(
-                                    m => (m.end_date == null || m.end_date > date)
-                                         && m.inventory_source_id == inventorySourceId &&
-                                         (m.file_id == null ||
-                                          m.inventory_files.status == (byte)FileStatusEnum.Loaded)
-                                          ) == isIncluded);
-
-                    return query.Select(_MapToDisplayBroadcastStation(inventorySourceId)).ToList();
-                });
-        }
-
-        private static Expression<Func<station, DisplayBroadcastStation>> _MapToDisplayBroadcastStation(int inventorySourceId)
-        {
-            return s => new DisplayBroadcastStation
-            {
-                Id = s.id,
-                Code = s.station_code,
-                Affiliation = s.affiliation,
-                CallLetters = s.station_call_letters,
-                LegacyCallLetters = s.legacy_call_letters,
-                OriginMarket = s.market == null ? null : s.market.geography_name,
-                ModifiedDate = (from m in s.station_inventory_loaded
-                                where m.inventory_source_id == inventorySourceId
-                                select m.last_loaded).OrderByDescending(x => x).FirstOrDefault(),
-                MarketCode = s.market_code,
-                ManifestMaxEndDate = (from m in s.station_inventory_manifest
-                                      select m.end_date).Max()
-            };
-        }
-
-        public List<DisplayBroadcastStation> GetBroadcastStationsByFlightWeek(InventorySource inventorySource, int mediaWeekId, bool isIncluded)
-        {
-            //TODO: Fixme or remove.
-            return new List<DisplayBroadcastStation>();
-            //return _InReadUncommitedTransaction(
-            //    context =>
-            //    {
-            //        var query =
-            //            context.stations.Where(
-            //                s =>
-            //                    s.station_programs.Any(
-            //                        p => (p.station_program_flights.Any(f => f.media_week_id == mediaWeekId))
-            //                             && p.rate_source == (byte) rateSource &&
-            //                             (p.rate_file_id == null ||
-            //                              p.rate_files.status == (byte)RatesFile.FileStatusEnum.Loaded)
-            //                              ) == isIncluded);
-
-            //        var result = query.Select(
-            //            s => new DisplayBroadcastStation
-            //            {
-            //                Code = s.station_code,
-            //                Affiliation = s.affiliation,
-            //                CallLetters = s.station_call_letters,
-            //                LegacyCallLetters = s.legacy_call_letters,
-            //                OriginMarket = s.market.geography_name,
-            //                ModifiedDate = s.modified_date,
-            //                FlightWeeks =
-            //                    (from pf in context.station_program_flights
-            //                     join sp in context.station_programs on pf.station_program_id equals sp.id
-            //                     where sp.station_code == s.station_code && sp.rate_source == (byte) rateSource
-            //                     select new FlightWeekDto
-            //                     {
-            //                         Id = pf.media_week_id,
-            //                         IsHiatus = !pf.active
-            //                     }).Distinct().OrderBy(fw => fw.Id)
-            //            }).ToList();
-            //        return result;
-            //    });
-        }
-
+        
         public DisplayBroadcastStation GetBroadcastStationByCode(int code)
         {
             return _InReadUncommitedTransaction(

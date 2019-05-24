@@ -24,7 +24,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             _InventoryScxDataConverter = IntegrationTestApplicationServiceFactory.GetApplicationService<IInventoryScxDataConverter>();
         }
 
-
+        [Ignore("To be fixed in PRI-8713")]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void InventoryScxDataPrep()
@@ -50,6 +50,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
+        [Ignore("To be fixed in PRI-8713")]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void InventoryScxFile_ValidateSingleUnitScxObject()

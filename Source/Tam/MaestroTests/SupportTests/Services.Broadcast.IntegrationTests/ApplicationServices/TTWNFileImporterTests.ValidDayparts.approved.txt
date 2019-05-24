@@ -9,13 +9,11 @@
     "InventoryGroups": [
       {
         "DaypartCode": "LN",
-        "EndDate": null,
         "Id": null,
         "Manifests": [
           {
             "Comment": null,
             "DaypartCode": "LN",
-            "EndDate": null,
             "Id": null,
             "InventorySourceId": 0,
             "ManifestAudiences": [],
@@ -128,7 +126,6 @@
           {
             "Comment": null,
             "DaypartCode": "LN",
-            "EndDate": null,
             "Id": null,
             "InventorySourceId": 0,
             "ManifestAudiences": [],
@@ -241,7 +238,6 @@
           {
             "Comment": null,
             "DaypartCode": "LN",
-            "EndDate": null,
             "Id": null,
             "InventorySourceId": 0,
             "ManifestAudiences": [],
@@ -374,7 +370,6 @@
           {
             "Comment": null,
             "DaypartCode": "LN",
-            "EndDate": null,
             "Id": null,
             "InventorySourceId": 0,
             "ManifestAudiences": [],
@@ -526,8 +521,7 @@
           }
         ],
         "Name": "LN1",
-        "SlotNumber": 1,
-        "StartDate": "2017-10-01T00:00:00"
+        "SlotNumber": 1
       }
     ],
     "InventoryManifests": [],

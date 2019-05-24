@@ -21,24 +21,23 @@ namespace Services.Broadcast.Repositories
         InventoryFile GetInventoryFileById(int fileId);
     }
 
-    public class InventoryFileRepository: BroadcastRepositoryBase, IInventoryFileRepository
+    public class InventoryFileRepository : BroadcastRepositoryBase, IInventoryFileRepository
     {
 
-        public InventoryFileRepository(ISMSClient pSmsClient, IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory, 
+        public InventoryFileRepository(ISMSClient pSmsClient, IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
             ITransactionHelper pTransactionHelper) : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper)
         {
         }
 
         public int GetInventoryFileIdByHash(string hash)
         {
-            var result = _InReadUncommitedTransaction(
+            return _InReadUncommitedTransaction(
                 context => (
                     from x in context.inventory_files
                     where x.file_hash == hash
-                    && (x.status == (short) FileStatusEnum.Loaded
-                        || x.status == (short) FileStatusEnum.Pending)
+                    && (x.status == (short)FileStatusEnum.Loaded
+                        || x.status == (short)FileStatusEnum.Pending)
                     select x.id).FirstOrDefault());
-            return result;
         }
 
         public int CreateInventoryFile(InventoryFileBase inventoryFile, string userName)
@@ -50,7 +49,7 @@ namespace Services.Broadcast.Repositories
                     {
                         identifier = inventoryFile.UniqueIdentifier,
                         name = inventoryFile.FileName,
-                        status = (byte) inventoryFile.FileStatus,
+                        status = (byte)inventoryFile.FileStatus,
                         file_hash = inventoryFile.Hash,
                         created_by = userName,
                         created_date = DateTime.Now,
@@ -59,10 +58,9 @@ namespace Services.Broadcast.Repositories
 
                     context.inventory_files.Add(file);
                     context.SaveChanges();
-                    
+
                     return file.id;
                 });
-
         }
 
         public void UpdateInventoryFile(InventoryFile inventoryFile, string userName)
@@ -79,7 +77,7 @@ namespace Services.Broadcast.Repositories
 
                     file.status = (byte)inventoryFile.FileStatus;
                     file.identifier = inventoryFile.UniqueIdentifier;
-                    
+
                     context.SaveChanges();
 
                 });
@@ -91,7 +89,7 @@ namespace Services.Broadcast.Repositories
                 context =>
                 {
                     var file = context.inventory_files.Find(inventoryFileId);
-                    if(file != null) context.inventory_files.Remove(file);
+                    if (file != null) context.inventory_files.Remove(file);
                     context.SaveChanges();
                 });
         }
@@ -102,7 +100,7 @@ namespace Services.Broadcast.Repositories
                 context =>
                 {
                     var ratesFile = context.inventory_files.Where(f => f.id == fileId).Single();
-                    ratesFile.status = (byte) status;
+                    ratesFile.status = (byte)status;
                     context.SaveChanges();
 
                 });
@@ -132,5 +130,5 @@ namespace Services.Broadcast.Repositories
                     };
                 });
         }
-    }    
+    }
 }

@@ -29,45 +29,7 @@ namespace Services.Broadcast.Validators
         {
             var results = new InventoryFileValidatorResult();
             results.InventoryFileProblems.AddRange(_CheckForDuplicateRecords(inventoryFile));
-            _CheckForExistingRecords(inventoryFile);
-
             return results;
-        }
-
-        //Only checks for ungrouped manifest records (Open Market Only)
-        private List<InventoryFileProblem> _CheckForExistingRecords(InventoryFile inventoryFile)
-        {
-            var result = new List<InventoryFileProblem>();
-
-            foreach (var manifest in inventoryFile.InventoryManifests.ToList())
-            {
-                foreach (var manifestDaypart in manifest.ManifestDayparts.ToList())
-                {
-                     var exists = _inventoryRepository.CheckIfManifestByStationProgramFlightDaypartExists(
-                        manifest.Station.Id,
-                        manifestDaypart.ProgramName,
-                        manifest.EffectiveDate.Value,//TODO Review in PRI-8277
-                        manifest.EndDate.Value,
-                        manifestDaypart.Daypart.Id);
-                    if (exists)
-                    {
-                        manifest.ManifestDayparts.Remove(manifestDaypart);
-                        if (!manifest.ManifestDayparts.Any())
-                        {
-                            inventoryFile.InventoryManifests.Remove(manifest);
-                        }
-                        result.Add(new InventoryFileProblem()
-                        {
-                            ProblemDescription = "There is already an existing program with the same flight and airtime.",
-                            ProgramName = manifestDaypart.ProgramName,
-                            StationLetters = manifest.Station.LegacyCallLetters
-                        });
-                    }
-                }
-                
-            }
-
-            return result;
         }
 
         private List<InventoryFileProblem> _CheckForDuplicateRecords(InventoryFile inventoryFile)
@@ -93,7 +55,6 @@ namespace Services.Broadcast.Validators
                     {
                         validationProblems.AddRange(duplicateProblems);
                     }
-
                 }
             }
             return validationProblems;

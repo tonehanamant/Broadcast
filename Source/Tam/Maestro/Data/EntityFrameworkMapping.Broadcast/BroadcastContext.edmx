@@ -1195,8 +1195,6 @@
           <Property Name="daypart_code" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="slot_number" Type="tinyint" Nullable="false" />
           <Property Name="inventory_source_id" Type="int" Nullable="false" />
-          <Property Name="start_date" Type="date" />
-          <Property Name="end_date" Type="date" />
         </EntityType>
         <EntityType Name="station_inventory_loaded">
           <Key>
@@ -1214,12 +1212,10 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="spot_length_id" Type="int" Nullable="false" />
           <Property Name="spots_per_week" Type="int" />
-          <Property Name="effective_date" Type="date" />
           <Property Name="inventory_source_id" Type="int" Nullable="false" />
           <Property Name="station_inventory_group_id" Type="int" />
           <Property Name="file_id" Type="int" />
           <Property Name="spots_per_day" Type="int" />
-          <Property Name="end_date" Type="date" />
           <Property Name="comment" Type="varchar" MaxLength="255" />
           <Property Name="station_id" Type="int" />
         </EntityType>
@@ -1315,6 +1311,8 @@
           <Property Name="sys_start_date" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="sys_end_date" Type="datetime2" Precision="7" Nullable="false" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'broadcast_integration_staging.dbo.station_inventory_manifest_weeks_history' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="station_inventory_manifest_weeks_history">
           <Key>
             <PropertyRef Name="id" />
@@ -2706,6 +2704,18 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_proposals_campaigns">
+          <End Role="campaigns" Type="Self.campaigns" Multiplicity="0..1" />
+          <End Role="proposals" Type="Self.proposals" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="campaigns">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="proposals">
+              <PropertyRef Name="campaign_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_rating_adjustments_media_months">
           <End Role="media_months" Type="Self.media_months" Multiplicity="1" />
           <End Role="rating_adjustments" Type="Self.rating_adjustments" Multiplicity="0..1" />
@@ -3995,6 +4005,10 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="proposals" EntitySet="proposals" />
             <End Role="proposal_versions" EntitySet="proposal_versions" />
           </AssociationSet>
+          <AssociationSet Name="FK_proposals_campaigns" Association="Self.FK_proposals_campaigns">
+            <End Role="campaigns" EntitySet="campaigns" />
+            <End Role="proposals" EntitySet="proposals" />
+          </AssociationSet>
           <AssociationSet Name="FK_rating_adjustments_media_months" Association="Self.FK_rating_adjustments_media_months">
             <End Role="media_months" EntitySet="media_months" />
             <End Role="rating_adjustments" EntitySet="rating_adjustments" />
@@ -4974,6 +4988,10 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           </AssociationSet>
           <EntitySet Name="campaigns" EntityType="BroadcastModel.campaign" />
           <EntitySet Name="station_inventory_manifest_weeks_history" EntityType="BroadcastModel.station_inventory_manifest_weeks_history" />
+          <AssociationSet Name="FK_proposals_campaigns" Association="BroadcastModel.FK_proposals_campaigns">
+            <End Role="campaign" EntitySet="campaigns" />
+            <End Role="proposal" EntitySet="proposals" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="audience_audiences">
           <Key>
@@ -5281,6 +5299,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="primary_version_id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="proposal_versions" Relationship="BroadcastModel.FK_proposal_versions_proposals" FromRole="proposal" ToRole="proposal_versions" />
           <Property Name="campaign_id" Type="Int32" />
+          <NavigationProperty Name="campaign" Relationship="BroadcastModel.FK_proposals_campaigns" FromRole="proposal" ToRole="campaign" />
         </EntityType>
         <EntityType Name="rating_adjustments">
           <Key>
@@ -5981,8 +6000,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="daypart_code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="slot_number" Type="Byte" Nullable="false" />
           <Property Name="inventory_source_id" Type="Int32" Nullable="false" />
-          <Property Name="start_date" Type="DateTime" Precision="0" />
-          <Property Name="end_date" Type="DateTime" Precision="0" />
           <NavigationProperty Name="inventory_sources" Relationship="BroadcastModel.FK_station_inventory_group_inventory_sources" FromRole="station_inventory_group" ToRole="inventory_sources" />
           <NavigationProperty Name="station_inventory_manifest" Relationship="BroadcastModel.FK_station_inventory_manifest_station_inventory_group" FromRole="station_inventory_group" ToRole="station_inventory_manifest" />
         </EntityType>
@@ -6163,12 +6180,10 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="spot_length_id" Type="Int32" Nullable="false" />
           <Property Name="spots_per_week" Type="Int32" />
-          <Property Name="effective_date" Type="DateTime" Precision="0" />
           <Property Name="inventory_source_id" Type="Int32" Nullable="false" />
           <Property Name="station_inventory_group_id" Type="Int32" />
           <Property Name="file_id" Type="Int32" />
           <Property Name="spots_per_day" Type="Int32" />
-          <Property Name="end_date" Type="DateTime" Precision="0" />
           <NavigationProperty Name="inventory_sources" Relationship="BroadcastModel.FK_station_inventory_manifest_inventory_sources" FromRole="station_inventory_manifest" ToRole="inventory_sources" />
           <NavigationProperty Name="spot_lengths" Relationship="BroadcastModel.FK_station_inventory_manifest_spot_lengths" FromRole="station_inventory_manifest" ToRole="spot_lengths" />
           <NavigationProperty Name="station_inventory_group" Relationship="BroadcastModel.FK_station_inventory_manifest_station_inventory_group" FromRole="station_inventory_manifest" ToRole="station_inventory_group" />
@@ -8683,6 +8698,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="created_by" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
           <Property Name="modified_date" Type="DateTime" Precision="3" />
           <Property Name="modified_by" Type="String" MaxLength="63" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="proposals" Relationship="BroadcastModel.FK_proposals_campaigns" FromRole="campaign" ToRole="proposal" />
         </EntityType>
         <EntityType Name="station_inventory_manifest_weeks_history">
           <Key>
@@ -8704,6 +8720,18 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="sys_start_date" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="sys_end_date" Type="DateTime" Nullable="false" Precision="7" />
         </EntityType>
+        <Association Name="FK_proposals_campaigns">
+          <End Type="BroadcastModel.campaign" Role="campaign" Multiplicity="0..1" />
+          <End Type="BroadcastModel.proposal" Role="proposal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="campaign">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="proposal">
+              <PropertyRef Name="campaign_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -9245,8 +9273,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="station_inventory_group">
             <EntityTypeMapping TypeName="BroadcastModel.station_inventory_group">
               <MappingFragment StoreEntitySet="station_inventory_group">
-                <ScalarProperty Name="end_date" ColumnName="end_date" />
-                <ScalarProperty Name="start_date" ColumnName="start_date" />
                 <ScalarProperty Name="inventory_source_id" ColumnName="inventory_source_id" />
                 <ScalarProperty Name="slot_number" ColumnName="slot_number" />
                 <ScalarProperty Name="daypart_code" ColumnName="daypart_code" />
@@ -9314,12 +9340,10 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
               <MappingFragment StoreEntitySet="station_inventory_manifest">
                 <ScalarProperty Name="station_id" ColumnName="station_id" />
                 <ScalarProperty Name="comment" ColumnName="comment" />
-                <ScalarProperty Name="end_date" ColumnName="end_date" />
                 <ScalarProperty Name="spots_per_day" ColumnName="spots_per_day" />
                 <ScalarProperty Name="file_id" ColumnName="file_id" />
                 <ScalarProperty Name="station_inventory_group_id" ColumnName="station_inventory_group_id" />
                 <ScalarProperty Name="inventory_source_id" ColumnName="inventory_source_id" />
-                <ScalarProperty Name="effective_date" ColumnName="effective_date" />
                 <ScalarProperty Name="spots_per_week" ColumnName="spots_per_week" />
                 <ScalarProperty Name="spot_length_id" ColumnName="spot_length_id" />
                 <ScalarProperty Name="id" ColumnName="id" />

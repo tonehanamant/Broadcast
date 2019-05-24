@@ -2,8 +2,6 @@
   {
     "Comment": null,
     "DaypartCode": "LN",
-    "EffectiveDate": null,
-    "EndDate": null,
     "InventorySourceId": 10,
     "ManifestAudiences": [
       {

@@ -2,8 +2,6 @@
   {
     "Comment": null,
     "DaypartCode": null,
-    "EffectiveDate": "2016-09-26T00:00:00",
-    "EndDate": "2016-12-25T00:00:00",
     "InventorySourceId": 1,
     "ManifestAudiences": [],
     "ManifestAudiencesReferences": [
@@ -24,7 +22,6 @@
           "_Code": "CUS",
           "_EndTime": 53999,
           "_Friday": true,
-          "_Id": 31193,
           "_Is24Hour": false,
           "_LastEndTime": 0,
           "_LastStartTime": 0,
@@ -75,7 +72,151 @@
         "SpotLengthId": 8
       }
     ],
-    "ManifestWeeks": [],
+    "ManifestWeeks": [
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-10-02T00:00:00",
+          "_Id": 666,
+          "_MediaMonthId": 421,
+          "_StartDate": "2016-09-26T00:00:00",
+          "_WeekNumber": 1,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-10-09T00:00:00",
+          "_Id": 667,
+          "_MediaMonthId": 421,
+          "_StartDate": "2016-10-03T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-10-16T00:00:00",
+          "_Id": 668,
+          "_MediaMonthId": 421,
+          "_StartDate": "2016-10-10T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-10-23T00:00:00",
+          "_Id": 669,
+          "_MediaMonthId": 421,
+          "_StartDate": "2016-10-17T00:00:00",
+          "_WeekNumber": 4,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-10-30T00:00:00",
+          "_Id": 670,
+          "_MediaMonthId": 421,
+          "_StartDate": "2016-10-24T00:00:00",
+          "_WeekNumber": 5,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-11-06T00:00:00",
+          "_Id": 671,
+          "_MediaMonthId": 422,
+          "_StartDate": "2016-10-31T00:00:00",
+          "_WeekNumber": 1,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-11-13T00:00:00",
+          "_Id": 672,
+          "_MediaMonthId": 422,
+          "_StartDate": "2016-11-07T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-11-20T00:00:00",
+          "_Id": 673,
+          "_MediaMonthId": 422,
+          "_StartDate": "2016-11-14T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-11-27T00:00:00",
+          "_Id": 674,
+          "_MediaMonthId": 422,
+          "_StartDate": "2016-11-21T00:00:00",
+          "_WeekNumber": 4,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-12-04T00:00:00",
+          "_Id": 675,
+          "_MediaMonthId": 423,
+          "_StartDate": "2016-11-28T00:00:00",
+          "_WeekNumber": 1,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-12-11T00:00:00",
+          "_Id": 676,
+          "_MediaMonthId": 423,
+          "_StartDate": "2016-12-05T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-12-18T00:00:00",
+          "_Id": 677,
+          "_MediaMonthId": 423,
+          "_StartDate": "2016-12-12T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-12-25T00:00:00",
+          "_Id": 678,
+          "_MediaMonthId": 423,
+          "_StartDate": "2016-12-19T00:00:00",
+          "_WeekNumber": 4,
+          "IsDirty": true
+        },
+        "Spots": 0
+      }
+    ],
     "ProjectedStationImpressions": [],
     "SpotLengthId": 1,
     "SpotsPerDay": null,
@@ -83,6 +224,7 @@
     "Station": {
       "Affiliation": null,
       "CallLetters": "WLS_UNKNOWN1-TV",
+      "Code": null,
       "LegacyCallLetters": "WLS_UNKNOWN1",
       "ManifestMaxEndDate": null,
       "MarketCode": null,
@@ -94,8 +236,6 @@
   {
     "Comment": null,
     "DaypartCode": null,
-    "EffectiveDate": "2016-09-26T00:00:00",
-    "EndDate": "2016-12-25T00:00:00",
     "InventorySourceId": 1,
     "ManifestAudiences": [],
     "ManifestAudiencesReferences": [
@@ -116,7 +256,6 @@
           "_Code": "CUS",
           "_EndTime": 35999,
           "_Friday": true,
-          "_Id": 6724,
           "_Is24Hour": false,
           "_LastEndTime": 0,
           "_LastStartTime": 0,
@@ -167,7 +306,151 @@
         "SpotLengthId": 8
       }
     ],
-    "ManifestWeeks": [],
+    "ManifestWeeks": [
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-10-02T00:00:00",
+          "_Id": 666,
+          "_MediaMonthId": 421,
+          "_StartDate": "2016-09-26T00:00:00",
+          "_WeekNumber": 1,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-10-09T00:00:00",
+          "_Id": 667,
+          "_MediaMonthId": 421,
+          "_StartDate": "2016-10-03T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-10-16T00:00:00",
+          "_Id": 668,
+          "_MediaMonthId": 421,
+          "_StartDate": "2016-10-10T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-10-23T00:00:00",
+          "_Id": 669,
+          "_MediaMonthId": 421,
+          "_StartDate": "2016-10-17T00:00:00",
+          "_WeekNumber": 4,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-10-30T00:00:00",
+          "_Id": 670,
+          "_MediaMonthId": 421,
+          "_StartDate": "2016-10-24T00:00:00",
+          "_WeekNumber": 5,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-11-06T00:00:00",
+          "_Id": 671,
+          "_MediaMonthId": 422,
+          "_StartDate": "2016-10-31T00:00:00",
+          "_WeekNumber": 1,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-11-13T00:00:00",
+          "_Id": 672,
+          "_MediaMonthId": 422,
+          "_StartDate": "2016-11-07T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-11-20T00:00:00",
+          "_Id": 673,
+          "_MediaMonthId": 422,
+          "_StartDate": "2016-11-14T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-11-27T00:00:00",
+          "_Id": 674,
+          "_MediaMonthId": 422,
+          "_StartDate": "2016-11-21T00:00:00",
+          "_WeekNumber": 4,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-12-04T00:00:00",
+          "_Id": 675,
+          "_MediaMonthId": 423,
+          "_StartDate": "2016-11-28T00:00:00",
+          "_WeekNumber": 1,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-12-11T00:00:00",
+          "_Id": 676,
+          "_MediaMonthId": 423,
+          "_StartDate": "2016-12-05T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-12-18T00:00:00",
+          "_Id": 677,
+          "_MediaMonthId": 423,
+          "_StartDate": "2016-12-12T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-12-25T00:00:00",
+          "_Id": 678,
+          "_MediaMonthId": 423,
+          "_StartDate": "2016-12-19T00:00:00",
+          "_WeekNumber": 4,
+          "IsDirty": true
+        },
+        "Spots": 0
+      }
+    ],
     "ProjectedStationImpressions": [],
     "SpotLengthId": 1,
     "SpotsPerDay": null,
@@ -175,6 +458,7 @@
     "Station": {
       "Affiliation": null,
       "CallLetters": "WLS_UNKNOWN1-TV",
+      "Code": null,
       "LegacyCallLetters": "WLS_UNKNOWN1",
       "ManifestMaxEndDate": null,
       "MarketCode": null,
@@ -186,8 +470,6 @@
   {
     "Comment": null,
     "DaypartCode": null,
-    "EffectiveDate": "2016-09-26T00:00:00",
-    "EndDate": "2016-12-25T00:00:00",
     "InventorySourceId": 1,
     "ManifestAudiences": [],
     "ManifestAudiencesReferences": [
@@ -208,7 +490,6 @@
           "_Code": "CUS",
           "_EndTime": 46799,
           "_Friday": true,
-          "_Id": 1617,
           "_Is24Hour": false,
           "_LastEndTime": 0,
           "_LastStartTime": 0,
@@ -259,7 +540,151 @@
         "SpotLengthId": 8
       }
     ],
-    "ManifestWeeks": [],
+    "ManifestWeeks": [
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-10-02T00:00:00",
+          "_Id": 666,
+          "_MediaMonthId": 421,
+          "_StartDate": "2016-09-26T00:00:00",
+          "_WeekNumber": 1,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-10-09T00:00:00",
+          "_Id": 667,
+          "_MediaMonthId": 421,
+          "_StartDate": "2016-10-03T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-10-16T00:00:00",
+          "_Id": 668,
+          "_MediaMonthId": 421,
+          "_StartDate": "2016-10-10T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-10-23T00:00:00",
+          "_Id": 669,
+          "_MediaMonthId": 421,
+          "_StartDate": "2016-10-17T00:00:00",
+          "_WeekNumber": 4,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-10-30T00:00:00",
+          "_Id": 670,
+          "_MediaMonthId": 421,
+          "_StartDate": "2016-10-24T00:00:00",
+          "_WeekNumber": 5,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-11-06T00:00:00",
+          "_Id": 671,
+          "_MediaMonthId": 422,
+          "_StartDate": "2016-10-31T00:00:00",
+          "_WeekNumber": 1,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-11-13T00:00:00",
+          "_Id": 672,
+          "_MediaMonthId": 422,
+          "_StartDate": "2016-11-07T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-11-20T00:00:00",
+          "_Id": 673,
+          "_MediaMonthId": 422,
+          "_StartDate": "2016-11-14T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-11-27T00:00:00",
+          "_Id": 674,
+          "_MediaMonthId": 422,
+          "_StartDate": "2016-11-21T00:00:00",
+          "_WeekNumber": 4,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-12-04T00:00:00",
+          "_Id": 675,
+          "_MediaMonthId": 423,
+          "_StartDate": "2016-11-28T00:00:00",
+          "_WeekNumber": 1,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-12-11T00:00:00",
+          "_Id": 676,
+          "_MediaMonthId": 423,
+          "_StartDate": "2016-12-05T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-12-18T00:00:00",
+          "_Id": 677,
+          "_MediaMonthId": 423,
+          "_StartDate": "2016-12-12T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-12-25T00:00:00",
+          "_Id": 678,
+          "_MediaMonthId": 423,
+          "_StartDate": "2016-12-19T00:00:00",
+          "_WeekNumber": 4,
+          "IsDirty": true
+        },
+        "Spots": 0
+      }
+    ],
     "ProjectedStationImpressions": [],
     "SpotLengthId": 1,
     "SpotsPerDay": null,
@@ -267,6 +692,7 @@
     "Station": {
       "Affiliation": null,
       "CallLetters": "WLS_UNKNOWN1-TV",
+      "Code": null,
       "LegacyCallLetters": "WLS_UNKNOWN1",
       "ManifestMaxEndDate": null,
       "MarketCode": null,
@@ -278,8 +704,6 @@
   {
     "Comment": null,
     "DaypartCode": null,
-    "EffectiveDate": "2016-09-26T00:00:00",
-    "EndDate": "2016-12-25T00:00:00",
     "InventorySourceId": 1,
     "ManifestAudiences": [],
     "ManifestAudiencesReferences": [
@@ -300,7 +724,6 @@
           "_Code": "CUS",
           "_EndTime": 39599,
           "_Friday": true,
-          "_Id": 6817,
           "_Is24Hour": false,
           "_LastEndTime": 0,
           "_LastStartTime": 0,
@@ -351,7 +774,151 @@
         "SpotLengthId": 8
       }
     ],
-    "ManifestWeeks": [],
+    "ManifestWeeks": [
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-10-02T00:00:00",
+          "_Id": 666,
+          "_MediaMonthId": 421,
+          "_StartDate": "2016-09-26T00:00:00",
+          "_WeekNumber": 1,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-10-09T00:00:00",
+          "_Id": 667,
+          "_MediaMonthId": 421,
+          "_StartDate": "2016-10-03T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-10-16T00:00:00",
+          "_Id": 668,
+          "_MediaMonthId": 421,
+          "_StartDate": "2016-10-10T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-10-23T00:00:00",
+          "_Id": 669,
+          "_MediaMonthId": 421,
+          "_StartDate": "2016-10-17T00:00:00",
+          "_WeekNumber": 4,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-10-30T00:00:00",
+          "_Id": 670,
+          "_MediaMonthId": 421,
+          "_StartDate": "2016-10-24T00:00:00",
+          "_WeekNumber": 5,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-11-06T00:00:00",
+          "_Id": 671,
+          "_MediaMonthId": 422,
+          "_StartDate": "2016-10-31T00:00:00",
+          "_WeekNumber": 1,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-11-13T00:00:00",
+          "_Id": 672,
+          "_MediaMonthId": 422,
+          "_StartDate": "2016-11-07T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-11-20T00:00:00",
+          "_Id": 673,
+          "_MediaMonthId": 422,
+          "_StartDate": "2016-11-14T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-11-27T00:00:00",
+          "_Id": 674,
+          "_MediaMonthId": 422,
+          "_StartDate": "2016-11-21T00:00:00",
+          "_WeekNumber": 4,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-12-04T00:00:00",
+          "_Id": 675,
+          "_MediaMonthId": 423,
+          "_StartDate": "2016-11-28T00:00:00",
+          "_WeekNumber": 1,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-12-11T00:00:00",
+          "_Id": 676,
+          "_MediaMonthId": 423,
+          "_StartDate": "2016-12-05T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-12-18T00:00:00",
+          "_Id": 677,
+          "_MediaMonthId": 423,
+          "_StartDate": "2016-12-12T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-12-25T00:00:00",
+          "_Id": 678,
+          "_MediaMonthId": 423,
+          "_StartDate": "2016-12-19T00:00:00",
+          "_WeekNumber": 4,
+          "IsDirty": true
+        },
+        "Spots": 0
+      }
+    ],
     "ProjectedStationImpressions": [],
     "SpotLengthId": 1,
     "SpotsPerDay": null,
@@ -359,6 +926,7 @@
     "Station": {
       "Affiliation": null,
       "CallLetters": "WLS_UNKNOWN1-TV",
+      "Code": null,
       "LegacyCallLetters": "WLS_UNKNOWN1",
       "ManifestMaxEndDate": null,
       "MarketCode": null,
@@ -370,8 +938,6 @@
   {
     "Comment": null,
     "DaypartCode": null,
-    "EffectiveDate": "2016-09-26T00:00:00",
-    "EndDate": "2016-12-25T00:00:00",
     "InventorySourceId": 1,
     "ManifestAudiences": [],
     "ManifestAudiencesReferences": [
@@ -392,7 +958,6 @@
           "_Code": "CUS",
           "_EndTime": 50399,
           "_Friday": true,
-          "_Id": 31065,
           "_Is24Hour": false,
           "_LastEndTime": 0,
           "_LastStartTime": 0,
@@ -443,7 +1008,151 @@
         "SpotLengthId": 8
       }
     ],
-    "ManifestWeeks": [],
+    "ManifestWeeks": [
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-10-02T00:00:00",
+          "_Id": 666,
+          "_MediaMonthId": 421,
+          "_StartDate": "2016-09-26T00:00:00",
+          "_WeekNumber": 1,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-10-09T00:00:00",
+          "_Id": 667,
+          "_MediaMonthId": 421,
+          "_StartDate": "2016-10-03T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-10-16T00:00:00",
+          "_Id": 668,
+          "_MediaMonthId": 421,
+          "_StartDate": "2016-10-10T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-10-23T00:00:00",
+          "_Id": 669,
+          "_MediaMonthId": 421,
+          "_StartDate": "2016-10-17T00:00:00",
+          "_WeekNumber": 4,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-10-30T00:00:00",
+          "_Id": 670,
+          "_MediaMonthId": 421,
+          "_StartDate": "2016-10-24T00:00:00",
+          "_WeekNumber": 5,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-11-06T00:00:00",
+          "_Id": 671,
+          "_MediaMonthId": 422,
+          "_StartDate": "2016-10-31T00:00:00",
+          "_WeekNumber": 1,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-11-13T00:00:00",
+          "_Id": 672,
+          "_MediaMonthId": 422,
+          "_StartDate": "2016-11-07T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-11-20T00:00:00",
+          "_Id": 673,
+          "_MediaMonthId": 422,
+          "_StartDate": "2016-11-14T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-11-27T00:00:00",
+          "_Id": 674,
+          "_MediaMonthId": 422,
+          "_StartDate": "2016-11-21T00:00:00",
+          "_WeekNumber": 4,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-12-04T00:00:00",
+          "_Id": 675,
+          "_MediaMonthId": 423,
+          "_StartDate": "2016-11-28T00:00:00",
+          "_WeekNumber": 1,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-12-11T00:00:00",
+          "_Id": 676,
+          "_MediaMonthId": 423,
+          "_StartDate": "2016-12-05T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-12-18T00:00:00",
+          "_Id": 677,
+          "_MediaMonthId": 423,
+          "_StartDate": "2016-12-12T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-12-25T00:00:00",
+          "_Id": 678,
+          "_MediaMonthId": 423,
+          "_StartDate": "2016-12-19T00:00:00",
+          "_WeekNumber": 4,
+          "IsDirty": true
+        },
+        "Spots": 0
+      }
+    ],
     "ProjectedStationImpressions": [],
     "SpotLengthId": 1,
     "SpotsPerDay": null,
@@ -451,6 +1160,7 @@
     "Station": {
       "Affiliation": null,
       "CallLetters": "WLS_UNKNOWN1-TV",
+      "Code": null,
       "LegacyCallLetters": "WLS_UNKNOWN1",
       "ManifestMaxEndDate": null,
       "MarketCode": null,
@@ -462,8 +1172,6 @@
   {
     "Comment": null,
     "DaypartCode": null,
-    "EffectiveDate": "2016-09-26T00:00:00",
-    "EndDate": "2016-12-25T00:00:00",
     "InventorySourceId": 1,
     "ManifestAudiences": [],
     "ManifestAudiencesReferences": [
@@ -484,7 +1192,6 @@
           "_Code": "CUS",
           "_EndTime": 55799,
           "_Friday": true,
-          "_Id": 31338,
           "_Is24Hour": false,
           "_LastEndTime": 0,
           "_LastStartTime": 0,
@@ -535,7 +1242,151 @@
         "SpotLengthId": 8
       }
     ],
-    "ManifestWeeks": [],
+    "ManifestWeeks": [
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-10-02T00:00:00",
+          "_Id": 666,
+          "_MediaMonthId": 421,
+          "_StartDate": "2016-09-26T00:00:00",
+          "_WeekNumber": 1,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-10-09T00:00:00",
+          "_Id": 667,
+          "_MediaMonthId": 421,
+          "_StartDate": "2016-10-03T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-10-16T00:00:00",
+          "_Id": 668,
+          "_MediaMonthId": 421,
+          "_StartDate": "2016-10-10T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-10-23T00:00:00",
+          "_Id": 669,
+          "_MediaMonthId": 421,
+          "_StartDate": "2016-10-17T00:00:00",
+          "_WeekNumber": 4,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-10-30T00:00:00",
+          "_Id": 670,
+          "_MediaMonthId": 421,
+          "_StartDate": "2016-10-24T00:00:00",
+          "_WeekNumber": 5,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-11-06T00:00:00",
+          "_Id": 671,
+          "_MediaMonthId": 422,
+          "_StartDate": "2016-10-31T00:00:00",
+          "_WeekNumber": 1,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-11-13T00:00:00",
+          "_Id": 672,
+          "_MediaMonthId": 422,
+          "_StartDate": "2016-11-07T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-11-20T00:00:00",
+          "_Id": 673,
+          "_MediaMonthId": 422,
+          "_StartDate": "2016-11-14T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-11-27T00:00:00",
+          "_Id": 674,
+          "_MediaMonthId": 422,
+          "_StartDate": "2016-11-21T00:00:00",
+          "_WeekNumber": 4,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-12-04T00:00:00",
+          "_Id": 675,
+          "_MediaMonthId": 423,
+          "_StartDate": "2016-11-28T00:00:00",
+          "_WeekNumber": 1,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-12-11T00:00:00",
+          "_Id": 676,
+          "_MediaMonthId": 423,
+          "_StartDate": "2016-12-05T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-12-18T00:00:00",
+          "_Id": 677,
+          "_MediaMonthId": 423,
+          "_StartDate": "2016-12-12T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-12-25T00:00:00",
+          "_Id": 678,
+          "_MediaMonthId": 423,
+          "_StartDate": "2016-12-19T00:00:00",
+          "_WeekNumber": 4,
+          "IsDirty": true
+        },
+        "Spots": 0
+      }
+    ],
     "ProjectedStationImpressions": [],
     "SpotLengthId": 1,
     "SpotsPerDay": null,
@@ -543,6 +1394,7 @@
     "Station": {
       "Affiliation": null,
       "CallLetters": "WLS_UNKNOWN1-TV",
+      "Code": null,
       "LegacyCallLetters": "WLS_UNKNOWN1",
       "ManifestMaxEndDate": null,
       "MarketCode": null,
@@ -554,8 +1406,6 @@
   {
     "Comment": null,
     "DaypartCode": null,
-    "EffectiveDate": "2016-09-26T00:00:00",
-    "EndDate": "2016-12-25T00:00:00",
     "InventorySourceId": 1,
     "ManifestAudiences": [],
     "ManifestAudiencesReferences": [
@@ -576,7 +1426,6 @@
           "_Code": "CUS",
           "_EndTime": 57599,
           "_Friday": true,
-          "_Id": 31474,
           "_Is24Hour": false,
           "_LastEndTime": 0,
           "_LastStartTime": 0,
@@ -627,7 +1476,151 @@
         "SpotLengthId": 8
       }
     ],
-    "ManifestWeeks": [],
+    "ManifestWeeks": [
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-10-02T00:00:00",
+          "_Id": 666,
+          "_MediaMonthId": 421,
+          "_StartDate": "2016-09-26T00:00:00",
+          "_WeekNumber": 1,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-10-09T00:00:00",
+          "_Id": 667,
+          "_MediaMonthId": 421,
+          "_StartDate": "2016-10-03T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-10-16T00:00:00",
+          "_Id": 668,
+          "_MediaMonthId": 421,
+          "_StartDate": "2016-10-10T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-10-23T00:00:00",
+          "_Id": 669,
+          "_MediaMonthId": 421,
+          "_StartDate": "2016-10-17T00:00:00",
+          "_WeekNumber": 4,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-10-30T00:00:00",
+          "_Id": 670,
+          "_MediaMonthId": 421,
+          "_StartDate": "2016-10-24T00:00:00",
+          "_WeekNumber": 5,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-11-06T00:00:00",
+          "_Id": 671,
+          "_MediaMonthId": 422,
+          "_StartDate": "2016-10-31T00:00:00",
+          "_WeekNumber": 1,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-11-13T00:00:00",
+          "_Id": 672,
+          "_MediaMonthId": 422,
+          "_StartDate": "2016-11-07T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-11-20T00:00:00",
+          "_Id": 673,
+          "_MediaMonthId": 422,
+          "_StartDate": "2016-11-14T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-11-27T00:00:00",
+          "_Id": 674,
+          "_MediaMonthId": 422,
+          "_StartDate": "2016-11-21T00:00:00",
+          "_WeekNumber": 4,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-12-04T00:00:00",
+          "_Id": 675,
+          "_MediaMonthId": 423,
+          "_StartDate": "2016-11-28T00:00:00",
+          "_WeekNumber": 1,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-12-11T00:00:00",
+          "_Id": 676,
+          "_MediaMonthId": 423,
+          "_StartDate": "2016-12-05T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-12-18T00:00:00",
+          "_Id": 677,
+          "_MediaMonthId": 423,
+          "_StartDate": "2016-12-12T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-12-25T00:00:00",
+          "_Id": 678,
+          "_MediaMonthId": 423,
+          "_StartDate": "2016-12-19T00:00:00",
+          "_WeekNumber": 4,
+          "IsDirty": true
+        },
+        "Spots": 0
+      }
+    ],
     "ProjectedStationImpressions": [],
     "SpotLengthId": 1,
     "SpotsPerDay": null,
@@ -635,6 +1628,7 @@
     "Station": {
       "Affiliation": null,
       "CallLetters": "WLS_UNKNOWN1-TV",
+      "Code": null,
       "LegacyCallLetters": "WLS_UNKNOWN1",
       "ManifestMaxEndDate": null,
       "MarketCode": null,
@@ -646,8 +1640,6 @@
   {
     "Comment": null,
     "DaypartCode": null,
-    "EffectiveDate": "2016-12-10T00:00:00",
-    "EndDate": "2016-12-25T00:00:00",
     "InventorySourceId": 1,
     "ManifestAudiences": [],
     "ManifestAudiencesReferences": [
@@ -668,7 +1660,6 @@
           "_Code": "CUS",
           "_EndTime": 7199,
           "_Friday": false,
-          "_Id": 29705,
           "_Is24Hour": false,
           "_LastEndTime": 0,
           "_LastStartTime": 0,
@@ -719,7 +1710,41 @@
         "SpotLengthId": 8
       }
     ],
-    "ManifestWeeks": [],
+    "ManifestWeeks": [
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-12-11T00:00:00",
+          "_Id": 676,
+          "_MediaMonthId": 423,
+          "_StartDate": "2016-12-05T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-12-18T00:00:00",
+          "_Id": 677,
+          "_MediaMonthId": 423,
+          "_StartDate": "2016-12-12T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-12-25T00:00:00",
+          "_Id": 678,
+          "_MediaMonthId": 423,
+          "_StartDate": "2016-12-19T00:00:00",
+          "_WeekNumber": 4,
+          "IsDirty": true
+        },
+        "Spots": 0
+      }
+    ],
     "ProjectedStationImpressions": [],
     "SpotLengthId": 1,
     "SpotsPerDay": null,
@@ -727,6 +1752,7 @@
     "Station": {
       "Affiliation": null,
       "CallLetters": "WLS_UNKNOWN1-TV",
+      "Code": null,
       "LegacyCallLetters": "WLS_UNKNOWN1",
       "ManifestMaxEndDate": null,
       "MarketCode": null,
@@ -738,8 +1764,6 @@
   {
     "Comment": null,
     "DaypartCode": null,
-    "EffectiveDate": "2016-09-26T00:00:00",
-    "EndDate": "2016-12-25T00:00:00",
     "InventorySourceId": 1,
     "ManifestAudiences": [],
     "ManifestAudiencesReferences": [
@@ -760,7 +1784,6 @@
           "_Code": "",
           "_EndTime": 5699,
           "_Friday": true,
-          "_Id": 62739,
           "_Is24Hour": false,
           "_LastEndTime": 0,
           "_LastStartTime": 0,
@@ -811,7 +1834,151 @@
         "SpotLengthId": 8
       }
     ],
-    "ManifestWeeks": [],
+    "ManifestWeeks": [
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-10-02T00:00:00",
+          "_Id": 666,
+          "_MediaMonthId": 421,
+          "_StartDate": "2016-09-26T00:00:00",
+          "_WeekNumber": 1,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-10-09T00:00:00",
+          "_Id": 667,
+          "_MediaMonthId": 421,
+          "_StartDate": "2016-10-03T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-10-16T00:00:00",
+          "_Id": 668,
+          "_MediaMonthId": 421,
+          "_StartDate": "2016-10-10T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-10-23T00:00:00",
+          "_Id": 669,
+          "_MediaMonthId": 421,
+          "_StartDate": "2016-10-17T00:00:00",
+          "_WeekNumber": 4,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-10-30T00:00:00",
+          "_Id": 670,
+          "_MediaMonthId": 421,
+          "_StartDate": "2016-10-24T00:00:00",
+          "_WeekNumber": 5,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-11-06T00:00:00",
+          "_Id": 671,
+          "_MediaMonthId": 422,
+          "_StartDate": "2016-10-31T00:00:00",
+          "_WeekNumber": 1,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-11-13T00:00:00",
+          "_Id": 672,
+          "_MediaMonthId": 422,
+          "_StartDate": "2016-11-07T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-11-20T00:00:00",
+          "_Id": 673,
+          "_MediaMonthId": 422,
+          "_StartDate": "2016-11-14T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-11-27T00:00:00",
+          "_Id": 674,
+          "_MediaMonthId": 422,
+          "_StartDate": "2016-11-21T00:00:00",
+          "_WeekNumber": 4,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-12-04T00:00:00",
+          "_Id": 675,
+          "_MediaMonthId": 423,
+          "_StartDate": "2016-11-28T00:00:00",
+          "_WeekNumber": 1,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-12-11T00:00:00",
+          "_Id": 676,
+          "_MediaMonthId": 423,
+          "_StartDate": "2016-12-05T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-12-18T00:00:00",
+          "_Id": 677,
+          "_MediaMonthId": 423,
+          "_StartDate": "2016-12-12T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-12-25T00:00:00",
+          "_Id": 678,
+          "_MediaMonthId": 423,
+          "_StartDate": "2016-12-19T00:00:00",
+          "_WeekNumber": 4,
+          "IsDirty": true
+        },
+        "Spots": 0
+      }
+    ],
     "ProjectedStationImpressions": [],
     "SpotLengthId": 1,
     "SpotsPerDay": null,
@@ -819,6 +1986,7 @@
     "Station": {
       "Affiliation": null,
       "CallLetters": "WLS_UNKNOWN1-TV",
+      "Code": null,
       "LegacyCallLetters": "WLS_UNKNOWN1",
       "ManifestMaxEndDate": null,
       "MarketCode": null,
@@ -830,8 +1998,6 @@
   {
     "Comment": null,
     "DaypartCode": null,
-    "EffectiveDate": "2016-09-26T00:00:00",
-    "EndDate": "2016-12-03T00:00:00",
     "InventorySourceId": 1,
     "ManifestAudiences": [],
     "ManifestAudiencesReferences": [
@@ -852,7 +2018,6 @@
           "_Code": "CUS",
           "_EndTime": 1799,
           "_Friday": false,
-          "_Id": 36211,
           "_Is24Hour": false,
           "_LastEndTime": 0,
           "_LastStartTime": 0,
@@ -903,7 +2068,118 @@
         "SpotLengthId": 8
       }
     ],
-    "ManifestWeeks": [],
+    "ManifestWeeks": [
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-10-02T00:00:00",
+          "_Id": 666,
+          "_MediaMonthId": 421,
+          "_StartDate": "2016-09-26T00:00:00",
+          "_WeekNumber": 1,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-10-09T00:00:00",
+          "_Id": 667,
+          "_MediaMonthId": 421,
+          "_StartDate": "2016-10-03T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-10-16T00:00:00",
+          "_Id": 668,
+          "_MediaMonthId": 421,
+          "_StartDate": "2016-10-10T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-10-23T00:00:00",
+          "_Id": 669,
+          "_MediaMonthId": 421,
+          "_StartDate": "2016-10-17T00:00:00",
+          "_WeekNumber": 4,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-10-30T00:00:00",
+          "_Id": 670,
+          "_MediaMonthId": 421,
+          "_StartDate": "2016-10-24T00:00:00",
+          "_WeekNumber": 5,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-11-06T00:00:00",
+          "_Id": 671,
+          "_MediaMonthId": 422,
+          "_StartDate": "2016-10-31T00:00:00",
+          "_WeekNumber": 1,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-11-13T00:00:00",
+          "_Id": 672,
+          "_MediaMonthId": 422,
+          "_StartDate": "2016-11-07T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-11-20T00:00:00",
+          "_Id": 673,
+          "_MediaMonthId": 422,
+          "_StartDate": "2016-11-14T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-11-27T00:00:00",
+          "_Id": 674,
+          "_MediaMonthId": 422,
+          "_StartDate": "2016-11-21T00:00:00",
+          "_WeekNumber": 4,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-12-04T00:00:00",
+          "_Id": 675,
+          "_MediaMonthId": 423,
+          "_StartDate": "2016-11-28T00:00:00",
+          "_WeekNumber": 1,
+          "IsDirty": true
+        },
+        "Spots": 0
+      }
+    ],
     "ProjectedStationImpressions": [],
     "SpotLengthId": 1,
     "SpotsPerDay": null,
@@ -911,6 +2187,7 @@
     "Station": {
       "Affiliation": null,
       "CallLetters": "WLS_UNKNOWN1-TV",
+      "Code": null,
       "LegacyCallLetters": "WLS_UNKNOWN1",
       "ManifestMaxEndDate": null,
       "MarketCode": null,
@@ -922,8 +2199,6 @@
   {
     "Comment": null,
     "DaypartCode": null,
-    "EffectiveDate": "2016-09-26T00:00:00",
-    "EndDate": "2016-12-03T00:00:00",
     "InventorySourceId": 1,
     "ManifestAudiences": [],
     "ManifestAudiencesReferences": [
@@ -944,7 +2219,6 @@
           "_Code": "CUS",
           "_EndTime": 5399,
           "_Friday": false,
-          "_Id": 32413,
           "_Is24Hour": false,
           "_LastEndTime": 0,
           "_LastStartTime": 0,
@@ -995,7 +2269,118 @@
         "SpotLengthId": 8
       }
     ],
-    "ManifestWeeks": [],
+    "ManifestWeeks": [
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-10-02T00:00:00",
+          "_Id": 666,
+          "_MediaMonthId": 421,
+          "_StartDate": "2016-09-26T00:00:00",
+          "_WeekNumber": 1,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-10-09T00:00:00",
+          "_Id": 667,
+          "_MediaMonthId": 421,
+          "_StartDate": "2016-10-03T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-10-16T00:00:00",
+          "_Id": 668,
+          "_MediaMonthId": 421,
+          "_StartDate": "2016-10-10T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-10-23T00:00:00",
+          "_Id": 669,
+          "_MediaMonthId": 421,
+          "_StartDate": "2016-10-17T00:00:00",
+          "_WeekNumber": 4,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-10-30T00:00:00",
+          "_Id": 670,
+          "_MediaMonthId": 421,
+          "_StartDate": "2016-10-24T00:00:00",
+          "_WeekNumber": 5,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-11-06T00:00:00",
+          "_Id": 671,
+          "_MediaMonthId": 422,
+          "_StartDate": "2016-10-31T00:00:00",
+          "_WeekNumber": 1,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-11-13T00:00:00",
+          "_Id": 672,
+          "_MediaMonthId": 422,
+          "_StartDate": "2016-11-07T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-11-20T00:00:00",
+          "_Id": 673,
+          "_MediaMonthId": 422,
+          "_StartDate": "2016-11-14T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-11-27T00:00:00",
+          "_Id": 674,
+          "_MediaMonthId": 422,
+          "_StartDate": "2016-11-21T00:00:00",
+          "_WeekNumber": 4,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-12-04T00:00:00",
+          "_Id": 675,
+          "_MediaMonthId": 423,
+          "_StartDate": "2016-11-28T00:00:00",
+          "_WeekNumber": 1,
+          "IsDirty": true
+        },
+        "Spots": 0
+      }
+    ],
     "ProjectedStationImpressions": [],
     "SpotLengthId": 1,
     "SpotsPerDay": null,
@@ -1003,6 +2388,7 @@
     "Station": {
       "Affiliation": null,
       "CallLetters": "WLS_UNKNOWN1-TV",
+      "Code": null,
       "LegacyCallLetters": "WLS_UNKNOWN1",
       "ManifestMaxEndDate": null,
       "MarketCode": null,
@@ -1014,8 +2400,6 @@
   {
     "Comment": null,
     "DaypartCode": null,
-    "EffectiveDate": "2016-12-10T00:00:00",
-    "EndDate": "2016-12-25T00:00:00",
     "InventorySourceId": 1,
     "ManifestAudiences": [],
     "ManifestAudiencesReferences": [
@@ -1036,7 +2420,6 @@
           "_Code": "CUS",
           "_EndTime": 86399,
           "_Friday": false,
-          "_Id": 14849,
           "_Is24Hour": false,
           "_LastEndTime": 0,
           "_LastStartTime": 0,
@@ -1087,7 +2470,41 @@
         "SpotLengthId": 8
       }
     ],
-    "ManifestWeeks": [],
+    "ManifestWeeks": [
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-12-11T00:00:00",
+          "_Id": 676,
+          "_MediaMonthId": 423,
+          "_StartDate": "2016-12-05T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-12-18T00:00:00",
+          "_Id": 677,
+          "_MediaMonthId": 423,
+          "_StartDate": "2016-12-12T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-12-25T00:00:00",
+          "_Id": 678,
+          "_MediaMonthId": 423,
+          "_StartDate": "2016-12-19T00:00:00",
+          "_WeekNumber": 4,
+          "IsDirty": true
+        },
+        "Spots": 0
+      }
+    ],
     "ProjectedStationImpressions": [],
     "SpotLengthId": 1,
     "SpotsPerDay": null,
@@ -1095,6 +2512,7 @@
     "Station": {
       "Affiliation": null,
       "CallLetters": "WLS_UNKNOWN1-TV",
+      "Code": null,
       "LegacyCallLetters": "WLS_UNKNOWN1",
       "ManifestMaxEndDate": null,
       "MarketCode": null,
@@ -1106,8 +2524,6 @@
   {
     "Comment": null,
     "DaypartCode": null,
-    "EffectiveDate": "2016-12-10T00:00:00",
-    "EndDate": "2016-12-25T00:00:00",
     "InventorySourceId": 1,
     "ManifestAudiences": [],
     "ManifestAudiencesReferences": [
@@ -1128,7 +2544,6 @@
           "_Code": "CUS",
           "_EndTime": 3599,
           "_Friday": false,
-          "_Id": 29555,
           "_Is24Hour": false,
           "_LastEndTime": 0,
           "_LastStartTime": 0,
@@ -1179,7 +2594,41 @@
         "SpotLengthId": 8
       }
     ],
-    "ManifestWeeks": [],
+    "ManifestWeeks": [
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-12-11T00:00:00",
+          "_Id": 676,
+          "_MediaMonthId": 423,
+          "_StartDate": "2016-12-05T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-12-18T00:00:00",
+          "_Id": 677,
+          "_MediaMonthId": 423,
+          "_StartDate": "2016-12-12T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-12-25T00:00:00",
+          "_Id": 678,
+          "_MediaMonthId": 423,
+          "_StartDate": "2016-12-19T00:00:00",
+          "_WeekNumber": 4,
+          "IsDirty": true
+        },
+        "Spots": 0
+      }
+    ],
     "ProjectedStationImpressions": [],
     "SpotLengthId": 1,
     "SpotsPerDay": null,
@@ -1187,6 +2636,7 @@
     "Station": {
       "Affiliation": null,
       "CallLetters": "WLS_UNKNOWN1-TV",
+      "Code": null,
       "LegacyCallLetters": "WLS_UNKNOWN1",
       "ManifestMaxEndDate": null,
       "MarketCode": null,
@@ -1198,8 +2648,6 @@
   {
     "Comment": null,
     "DaypartCode": null,
-    "EffectiveDate": "2016-09-26T00:00:00",
-    "EndDate": "2016-12-25T00:00:00",
     "InventorySourceId": 1,
     "ManifestAudiences": [],
     "ManifestAudiencesReferences": [
@@ -1220,7 +2668,6 @@
           "_Code": "CUS",
           "_EndTime": 84599,
           "_Friday": false,
-          "_Id": 37529,
           "_Is24Hour": false,
           "_LastEndTime": 0,
           "_LastStartTime": 0,
@@ -1271,7 +2718,151 @@
         "SpotLengthId": 8
       }
     ],
-    "ManifestWeeks": [],
+    "ManifestWeeks": [
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-10-02T00:00:00",
+          "_Id": 666,
+          "_MediaMonthId": 421,
+          "_StartDate": "2016-09-26T00:00:00",
+          "_WeekNumber": 1,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-10-09T00:00:00",
+          "_Id": 667,
+          "_MediaMonthId": 421,
+          "_StartDate": "2016-10-03T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-10-16T00:00:00",
+          "_Id": 668,
+          "_MediaMonthId": 421,
+          "_StartDate": "2016-10-10T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-10-23T00:00:00",
+          "_Id": 669,
+          "_MediaMonthId": 421,
+          "_StartDate": "2016-10-17T00:00:00",
+          "_WeekNumber": 4,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-10-30T00:00:00",
+          "_Id": 670,
+          "_MediaMonthId": 421,
+          "_StartDate": "2016-10-24T00:00:00",
+          "_WeekNumber": 5,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-11-06T00:00:00",
+          "_Id": 671,
+          "_MediaMonthId": 422,
+          "_StartDate": "2016-10-31T00:00:00",
+          "_WeekNumber": 1,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-11-13T00:00:00",
+          "_Id": 672,
+          "_MediaMonthId": 422,
+          "_StartDate": "2016-11-07T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-11-20T00:00:00",
+          "_Id": 673,
+          "_MediaMonthId": 422,
+          "_StartDate": "2016-11-14T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-11-27T00:00:00",
+          "_Id": 674,
+          "_MediaMonthId": 422,
+          "_StartDate": "2016-11-21T00:00:00",
+          "_WeekNumber": 4,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-12-04T00:00:00",
+          "_Id": 675,
+          "_MediaMonthId": 423,
+          "_StartDate": "2016-11-28T00:00:00",
+          "_WeekNumber": 1,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-12-11T00:00:00",
+          "_Id": 676,
+          "_MediaMonthId": 423,
+          "_StartDate": "2016-12-05T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-12-18T00:00:00",
+          "_Id": 677,
+          "_MediaMonthId": 423,
+          "_StartDate": "2016-12-12T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-12-25T00:00:00",
+          "_Id": 678,
+          "_MediaMonthId": 423,
+          "_StartDate": "2016-12-19T00:00:00",
+          "_WeekNumber": 4,
+          "IsDirty": true
+        },
+        "Spots": 0
+      }
+    ],
     "ProjectedStationImpressions": [],
     "SpotLengthId": 1,
     "SpotsPerDay": null,
@@ -1279,6 +2870,7 @@
     "Station": {
       "Affiliation": null,
       "CallLetters": "WLS_UNKNOWN1-TV",
+      "Code": null,
       "LegacyCallLetters": "WLS_UNKNOWN1",
       "ManifestMaxEndDate": null,
       "MarketCode": null,
@@ -1290,8 +2882,6 @@
   {
     "Comment": null,
     "DaypartCode": null,
-    "EffectiveDate": "2016-09-26T00:00:00",
-    "EndDate": "2016-12-25T00:00:00",
     "InventorySourceId": 1,
     "ManifestAudiences": [],
     "ManifestAudiencesReferences": [
@@ -1312,7 +2902,6 @@
           "_Code": "",
           "_EndTime": 85019,
           "_Friday": true,
-          "_Id": 62674,
           "_Is24Hour": false,
           "_LastEndTime": 0,
           "_LastStartTime": 0,
@@ -1363,7 +2952,151 @@
         "SpotLengthId": 8
       }
     ],
-    "ManifestWeeks": [],
+    "ManifestWeeks": [
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-10-02T00:00:00",
+          "_Id": 666,
+          "_MediaMonthId": 421,
+          "_StartDate": "2016-09-26T00:00:00",
+          "_WeekNumber": 1,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-10-09T00:00:00",
+          "_Id": 667,
+          "_MediaMonthId": 421,
+          "_StartDate": "2016-10-03T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-10-16T00:00:00",
+          "_Id": 668,
+          "_MediaMonthId": 421,
+          "_StartDate": "2016-10-10T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-10-23T00:00:00",
+          "_Id": 669,
+          "_MediaMonthId": 421,
+          "_StartDate": "2016-10-17T00:00:00",
+          "_WeekNumber": 4,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-10-30T00:00:00",
+          "_Id": 670,
+          "_MediaMonthId": 421,
+          "_StartDate": "2016-10-24T00:00:00",
+          "_WeekNumber": 5,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-11-06T00:00:00",
+          "_Id": 671,
+          "_MediaMonthId": 422,
+          "_StartDate": "2016-10-31T00:00:00",
+          "_WeekNumber": 1,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-11-13T00:00:00",
+          "_Id": 672,
+          "_MediaMonthId": 422,
+          "_StartDate": "2016-11-07T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-11-20T00:00:00",
+          "_Id": 673,
+          "_MediaMonthId": 422,
+          "_StartDate": "2016-11-14T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-11-27T00:00:00",
+          "_Id": 674,
+          "_MediaMonthId": 422,
+          "_StartDate": "2016-11-21T00:00:00",
+          "_WeekNumber": 4,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-12-04T00:00:00",
+          "_Id": 675,
+          "_MediaMonthId": 423,
+          "_StartDate": "2016-11-28T00:00:00",
+          "_WeekNumber": 1,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-12-11T00:00:00",
+          "_Id": 676,
+          "_MediaMonthId": 423,
+          "_StartDate": "2016-12-05T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-12-18T00:00:00",
+          "_Id": 677,
+          "_MediaMonthId": 423,
+          "_StartDate": "2016-12-12T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-12-25T00:00:00",
+          "_Id": 678,
+          "_MediaMonthId": 423,
+          "_StartDate": "2016-12-19T00:00:00",
+          "_WeekNumber": 4,
+          "IsDirty": true
+        },
+        "Spots": 0
+      }
+    ],
     "ProjectedStationImpressions": [],
     "SpotLengthId": 1,
     "SpotsPerDay": null,
@@ -1371,6 +3104,7 @@
     "Station": {
       "Affiliation": null,
       "CallLetters": "WLS_UNKNOWN1-TV",
+      "Code": null,
       "LegacyCallLetters": "WLS_UNKNOWN1",
       "ManifestMaxEndDate": null,
       "MarketCode": null,
@@ -1382,8 +3116,6 @@
   {
     "Comment": null,
     "DaypartCode": null,
-    "EffectiveDate": "2016-09-26T00:00:00",
-    "EndDate": "2016-12-25T00:00:00",
     "InventorySourceId": 1,
     "ManifestAudiences": [],
     "ManifestAudiencesReferences": [
@@ -1404,7 +3136,6 @@
           "_Code": "",
           "_EndTime": 419,
           "_Friday": true,
-          "_Id": 62719,
           "_Is24Hour": false,
           "_LastEndTime": 0,
           "_LastStartTime": 0,
@@ -1455,7 +3186,151 @@
         "SpotLengthId": 8
       }
     ],
-    "ManifestWeeks": [],
+    "ManifestWeeks": [
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-10-02T00:00:00",
+          "_Id": 666,
+          "_MediaMonthId": 421,
+          "_StartDate": "2016-09-26T00:00:00",
+          "_WeekNumber": 1,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-10-09T00:00:00",
+          "_Id": 667,
+          "_MediaMonthId": 421,
+          "_StartDate": "2016-10-03T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-10-16T00:00:00",
+          "_Id": 668,
+          "_MediaMonthId": 421,
+          "_StartDate": "2016-10-10T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-10-23T00:00:00",
+          "_Id": 669,
+          "_MediaMonthId": 421,
+          "_StartDate": "2016-10-17T00:00:00",
+          "_WeekNumber": 4,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-10-30T00:00:00",
+          "_Id": 670,
+          "_MediaMonthId": 421,
+          "_StartDate": "2016-10-24T00:00:00",
+          "_WeekNumber": 5,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-11-06T00:00:00",
+          "_Id": 671,
+          "_MediaMonthId": 422,
+          "_StartDate": "2016-10-31T00:00:00",
+          "_WeekNumber": 1,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-11-13T00:00:00",
+          "_Id": 672,
+          "_MediaMonthId": 422,
+          "_StartDate": "2016-11-07T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-11-20T00:00:00",
+          "_Id": 673,
+          "_MediaMonthId": 422,
+          "_StartDate": "2016-11-14T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-11-27T00:00:00",
+          "_Id": 674,
+          "_MediaMonthId": 422,
+          "_StartDate": "2016-11-21T00:00:00",
+          "_WeekNumber": 4,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-12-04T00:00:00",
+          "_Id": 675,
+          "_MediaMonthId": 423,
+          "_StartDate": "2016-11-28T00:00:00",
+          "_WeekNumber": 1,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-12-11T00:00:00",
+          "_Id": 676,
+          "_MediaMonthId": 423,
+          "_StartDate": "2016-12-05T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-12-18T00:00:00",
+          "_Id": 677,
+          "_MediaMonthId": 423,
+          "_StartDate": "2016-12-12T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-12-25T00:00:00",
+          "_Id": 678,
+          "_MediaMonthId": 423,
+          "_StartDate": "2016-12-19T00:00:00",
+          "_WeekNumber": 4,
+          "IsDirty": true
+        },
+        "Spots": 0
+      }
+    ],
     "ProjectedStationImpressions": [],
     "SpotLengthId": 1,
     "SpotsPerDay": null,
@@ -1463,6 +3338,7 @@
     "Station": {
       "Affiliation": null,
       "CallLetters": "WLS_UNKNOWN1-TV",
+      "Code": null,
       "LegacyCallLetters": "WLS_UNKNOWN1",
       "ManifestMaxEndDate": null,
       "MarketCode": null,
@@ -1474,8 +3350,6 @@
   {
     "Comment": null,
     "DaypartCode": null,
-    "EffectiveDate": "2016-09-26T00:00:00",
-    "EndDate": "2016-12-25T00:00:00",
     "InventorySourceId": 1,
     "ManifestAudiences": [],
     "ManifestAudiencesReferences": [
@@ -1496,7 +3370,6 @@
           "_Code": "",
           "_EndTime": 3899,
           "_Friday": false,
-          "_Id": 62681,
           "_Is24Hour": false,
           "_LastEndTime": 0,
           "_LastStartTime": 0,
@@ -1547,7 +3420,151 @@
         "SpotLengthId": 8
       }
     ],
-    "ManifestWeeks": [],
+    "ManifestWeeks": [
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-10-02T00:00:00",
+          "_Id": 666,
+          "_MediaMonthId": 421,
+          "_StartDate": "2016-09-26T00:00:00",
+          "_WeekNumber": 1,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-10-09T00:00:00",
+          "_Id": 667,
+          "_MediaMonthId": 421,
+          "_StartDate": "2016-10-03T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-10-16T00:00:00",
+          "_Id": 668,
+          "_MediaMonthId": 421,
+          "_StartDate": "2016-10-10T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-10-23T00:00:00",
+          "_Id": 669,
+          "_MediaMonthId": 421,
+          "_StartDate": "2016-10-17T00:00:00",
+          "_WeekNumber": 4,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-10-30T00:00:00",
+          "_Id": 670,
+          "_MediaMonthId": 421,
+          "_StartDate": "2016-10-24T00:00:00",
+          "_WeekNumber": 5,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-11-06T00:00:00",
+          "_Id": 671,
+          "_MediaMonthId": 422,
+          "_StartDate": "2016-10-31T00:00:00",
+          "_WeekNumber": 1,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-11-13T00:00:00",
+          "_Id": 672,
+          "_MediaMonthId": 422,
+          "_StartDate": "2016-11-07T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-11-20T00:00:00",
+          "_Id": 673,
+          "_MediaMonthId": 422,
+          "_StartDate": "2016-11-14T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-11-27T00:00:00",
+          "_Id": 674,
+          "_MediaMonthId": 422,
+          "_StartDate": "2016-11-21T00:00:00",
+          "_WeekNumber": 4,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-12-04T00:00:00",
+          "_Id": 675,
+          "_MediaMonthId": 423,
+          "_StartDate": "2016-11-28T00:00:00",
+          "_WeekNumber": 1,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-12-11T00:00:00",
+          "_Id": 676,
+          "_MediaMonthId": 423,
+          "_StartDate": "2016-12-05T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-12-18T00:00:00",
+          "_Id": 677,
+          "_MediaMonthId": 423,
+          "_StartDate": "2016-12-12T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-12-25T00:00:00",
+          "_Id": 678,
+          "_MediaMonthId": 423,
+          "_StartDate": "2016-12-19T00:00:00",
+          "_WeekNumber": 4,
+          "IsDirty": true
+        },
+        "Spots": 0
+      }
+    ],
     "ProjectedStationImpressions": [],
     "SpotLengthId": 1,
     "SpotsPerDay": null,
@@ -1555,6 +3572,7 @@
     "Station": {
       "Affiliation": null,
       "CallLetters": "WLS_UNKNOWN1-TV",
+      "Code": null,
       "LegacyCallLetters": "WLS_UNKNOWN1",
       "ManifestMaxEndDate": null,
       "MarketCode": null,
@@ -1566,8 +3584,6 @@
   {
     "Comment": null,
     "DaypartCode": null,
-    "EffectiveDate": "2016-09-26T00:00:00",
-    "EndDate": "2016-12-25T00:00:00",
     "InventorySourceId": 1,
     "ManifestAudiences": [],
     "ManifestAudiencesReferences": [
@@ -1588,7 +3604,6 @@
           "_Code": "",
           "_EndTime": 7499,
           "_Friday": false,
-          "_Id": 62733,
           "_Is24Hour": false,
           "_LastEndTime": 0,
           "_LastStartTime": 0,
@@ -1639,7 +3654,151 @@
         "SpotLengthId": 8
       }
     ],
-    "ManifestWeeks": [],
+    "ManifestWeeks": [
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-10-02T00:00:00",
+          "_Id": 666,
+          "_MediaMonthId": 421,
+          "_StartDate": "2016-09-26T00:00:00",
+          "_WeekNumber": 1,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-10-09T00:00:00",
+          "_Id": 667,
+          "_MediaMonthId": 421,
+          "_StartDate": "2016-10-03T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-10-16T00:00:00",
+          "_Id": 668,
+          "_MediaMonthId": 421,
+          "_StartDate": "2016-10-10T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-10-23T00:00:00",
+          "_Id": 669,
+          "_MediaMonthId": 421,
+          "_StartDate": "2016-10-17T00:00:00",
+          "_WeekNumber": 4,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-10-30T00:00:00",
+          "_Id": 670,
+          "_MediaMonthId": 421,
+          "_StartDate": "2016-10-24T00:00:00",
+          "_WeekNumber": 5,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-11-06T00:00:00",
+          "_Id": 671,
+          "_MediaMonthId": 422,
+          "_StartDate": "2016-10-31T00:00:00",
+          "_WeekNumber": 1,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-11-13T00:00:00",
+          "_Id": 672,
+          "_MediaMonthId": 422,
+          "_StartDate": "2016-11-07T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-11-20T00:00:00",
+          "_Id": 673,
+          "_MediaMonthId": 422,
+          "_StartDate": "2016-11-14T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-11-27T00:00:00",
+          "_Id": 674,
+          "_MediaMonthId": 422,
+          "_StartDate": "2016-11-21T00:00:00",
+          "_WeekNumber": 4,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-12-04T00:00:00",
+          "_Id": 675,
+          "_MediaMonthId": 423,
+          "_StartDate": "2016-11-28T00:00:00",
+          "_WeekNumber": 1,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-12-11T00:00:00",
+          "_Id": 676,
+          "_MediaMonthId": 423,
+          "_StartDate": "2016-12-05T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-12-18T00:00:00",
+          "_Id": 677,
+          "_MediaMonthId": 423,
+          "_StartDate": "2016-12-12T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-12-25T00:00:00",
+          "_Id": 678,
+          "_MediaMonthId": 423,
+          "_StartDate": "2016-12-19T00:00:00",
+          "_WeekNumber": 4,
+          "IsDirty": true
+        },
+        "Spots": 0
+      }
+    ],
     "ProjectedStationImpressions": [],
     "SpotLengthId": 1,
     "SpotsPerDay": null,
@@ -1647,6 +3806,7 @@
     "Station": {
       "Affiliation": null,
       "CallLetters": "WLS_UNKNOWN1-TV",
+      "Code": null,
       "LegacyCallLetters": "WLS_UNKNOWN1",
       "ManifestMaxEndDate": null,
       "MarketCode": null,
@@ -1658,8 +3818,6 @@
   {
     "Comment": null,
     "DaypartCode": null,
-    "EffectiveDate": "2016-09-26T00:00:00",
-    "EndDate": "2016-12-25T00:00:00",
     "InventorySourceId": 1,
     "ManifestAudiences": [],
     "ManifestAudiencesReferences": [
@@ -1680,7 +3838,6 @@
           "_Code": "",
           "_EndTime": 4199,
           "_Friday": true,
-          "_Id": 67442,
           "_Is24Hour": false,
           "_LastEndTime": 0,
           "_LastStartTime": 0,
@@ -1731,7 +3888,151 @@
         "SpotLengthId": 8
       }
     ],
-    "ManifestWeeks": [],
+    "ManifestWeeks": [
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-10-02T00:00:00",
+          "_Id": 666,
+          "_MediaMonthId": 421,
+          "_StartDate": "2016-09-26T00:00:00",
+          "_WeekNumber": 1,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-10-09T00:00:00",
+          "_Id": 667,
+          "_MediaMonthId": 421,
+          "_StartDate": "2016-10-03T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-10-16T00:00:00",
+          "_Id": 668,
+          "_MediaMonthId": 421,
+          "_StartDate": "2016-10-10T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-10-23T00:00:00",
+          "_Id": 669,
+          "_MediaMonthId": 421,
+          "_StartDate": "2016-10-17T00:00:00",
+          "_WeekNumber": 4,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-10-30T00:00:00",
+          "_Id": 670,
+          "_MediaMonthId": 421,
+          "_StartDate": "2016-10-24T00:00:00",
+          "_WeekNumber": 5,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-11-06T00:00:00",
+          "_Id": 671,
+          "_MediaMonthId": 422,
+          "_StartDate": "2016-10-31T00:00:00",
+          "_WeekNumber": 1,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-11-13T00:00:00",
+          "_Id": 672,
+          "_MediaMonthId": 422,
+          "_StartDate": "2016-11-07T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-11-20T00:00:00",
+          "_Id": 673,
+          "_MediaMonthId": 422,
+          "_StartDate": "2016-11-14T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-11-27T00:00:00",
+          "_Id": 674,
+          "_MediaMonthId": 422,
+          "_StartDate": "2016-11-21T00:00:00",
+          "_WeekNumber": 4,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-12-04T00:00:00",
+          "_Id": 675,
+          "_MediaMonthId": 423,
+          "_StartDate": "2016-11-28T00:00:00",
+          "_WeekNumber": 1,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-12-11T00:00:00",
+          "_Id": 676,
+          "_MediaMonthId": 423,
+          "_StartDate": "2016-12-05T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-12-18T00:00:00",
+          "_Id": 677,
+          "_MediaMonthId": 423,
+          "_StartDate": "2016-12-12T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-12-25T00:00:00",
+          "_Id": 678,
+          "_MediaMonthId": 423,
+          "_StartDate": "2016-12-19T00:00:00",
+          "_WeekNumber": 4,
+          "IsDirty": true
+        },
+        "Spots": 0
+      }
+    ],
     "ProjectedStationImpressions": [],
     "SpotLengthId": 1,
     "SpotsPerDay": null,
@@ -1739,6 +4040,7 @@
     "Station": {
       "Affiliation": null,
       "CallLetters": "WLS_UNKNOWN1-TV",
+      "Code": null,
       "LegacyCallLetters": "WLS_UNKNOWN1",
       "ManifestMaxEndDate": null,
       "MarketCode": null,
@@ -1750,8 +4052,6 @@
   {
     "Comment": null,
     "DaypartCode": null,
-    "EffectiveDate": "2016-09-26T00:00:00",
-    "EndDate": "2016-12-25T00:00:00",
     "InventorySourceId": 1,
     "ManifestAudiences": [],
     "ManifestAudiencesReferences": [
@@ -1772,7 +4072,6 @@
           "_Code": "CUS",
           "_EndTime": 86399,
           "_Friday": false,
-          "_Id": 36143,
           "_Is24Hour": false,
           "_LastEndTime": 0,
           "_LastStartTime": 0,
@@ -1823,7 +4122,151 @@
         "SpotLengthId": 8
       }
     ],
-    "ManifestWeeks": [],
+    "ManifestWeeks": [
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-10-02T00:00:00",
+          "_Id": 666,
+          "_MediaMonthId": 421,
+          "_StartDate": "2016-09-26T00:00:00",
+          "_WeekNumber": 1,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-10-09T00:00:00",
+          "_Id": 667,
+          "_MediaMonthId": 421,
+          "_StartDate": "2016-10-03T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-10-16T00:00:00",
+          "_Id": 668,
+          "_MediaMonthId": 421,
+          "_StartDate": "2016-10-10T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-10-23T00:00:00",
+          "_Id": 669,
+          "_MediaMonthId": 421,
+          "_StartDate": "2016-10-17T00:00:00",
+          "_WeekNumber": 4,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-10-30T00:00:00",
+          "_Id": 670,
+          "_MediaMonthId": 421,
+          "_StartDate": "2016-10-24T00:00:00",
+          "_WeekNumber": 5,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-11-06T00:00:00",
+          "_Id": 671,
+          "_MediaMonthId": 422,
+          "_StartDate": "2016-10-31T00:00:00",
+          "_WeekNumber": 1,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-11-13T00:00:00",
+          "_Id": 672,
+          "_MediaMonthId": 422,
+          "_StartDate": "2016-11-07T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-11-20T00:00:00",
+          "_Id": 673,
+          "_MediaMonthId": 422,
+          "_StartDate": "2016-11-14T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-11-27T00:00:00",
+          "_Id": 674,
+          "_MediaMonthId": 422,
+          "_StartDate": "2016-11-21T00:00:00",
+          "_WeekNumber": 4,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-12-04T00:00:00",
+          "_Id": 675,
+          "_MediaMonthId": 423,
+          "_StartDate": "2016-11-28T00:00:00",
+          "_WeekNumber": 1,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-12-11T00:00:00",
+          "_Id": 676,
+          "_MediaMonthId": 423,
+          "_StartDate": "2016-12-05T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-12-18T00:00:00",
+          "_Id": 677,
+          "_MediaMonthId": 423,
+          "_StartDate": "2016-12-12T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 0
+      },
+      {
+        "MediaWeek": {
+          "_EndDate": "2016-12-25T00:00:00",
+          "_Id": 678,
+          "_MediaMonthId": 423,
+          "_StartDate": "2016-12-19T00:00:00",
+          "_WeekNumber": 4,
+          "IsDirty": true
+        },
+        "Spots": 0
+      }
+    ],
     "ProjectedStationImpressions": [],
     "SpotLengthId": 1,
     "SpotsPerDay": null,
@@ -1831,6 +4274,7 @@
     "Station": {
       "Affiliation": null,
       "CallLetters": "WLS_UNKNOWN1-TV",
+      "Code": null,
       "LegacyCallLetters": "WLS_UNKNOWN1",
       "ManifestMaxEndDate": null,
       "MarketCode": null,

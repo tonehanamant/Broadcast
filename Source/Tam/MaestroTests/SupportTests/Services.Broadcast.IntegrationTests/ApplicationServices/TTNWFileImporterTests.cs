@@ -44,7 +44,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var effectiveDate = DateTime.Parse("10/1/2017");
                 var fileProblems = new List<InventoryFileProblem>();
-                _ttwnFileImporter.ExtractFileData(fileStream, inventoryFile, effectiveDate );
+                _ttwnFileImporter.ExtractFileData(fileStream, inventoryFile);
                 fileProblems = _ttwnFileImporter.FileProblems;
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
@@ -86,7 +86,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var  effectiveDate = DateTime.Parse("10/1/2017");
                 var fileProblems = new List<InventoryFileProblem>();
 
-                _ttwnFileImporter.ExtractFileData(fileStream, inventoryFile, effectiveDate);
+                _ttwnFileImporter.ExtractFileData(fileStream, inventoryFile);
                 fileProblems = _ttwnFileImporter.FileProblems;
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
@@ -129,7 +129,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var effectiveDate = DateTime.Parse("10/1/2017");
                 var fileProblems = new List<InventoryFileProblem>();
 
-                _ttwnFileImporter.ExtractFileData(fileStream, inventoryFile, effectiveDate);
+                _ttwnFileImporter.ExtractFileData(fileStream, inventoryFile);
                 fileProblems = _ttwnFileImporter.FileProblems;
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
@@ -168,7 +168,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var effectiveDate = DateTime.Parse("10/1/2017");
                 var fileProblems = new List<InventoryFileProblem>();
-                _ttwnFileImporter.ExtractFileData(fileStream, inventoryFile, effectiveDate);
+                _ttwnFileImporter.ExtractFileData(fileStream, inventoryFile);
                 fileProblems = _ttwnFileImporter.FileProblems;
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
@@ -202,7 +202,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var effectiveDate = DateTime.Parse("10/1/2017");
                 var fileProblems = new List<InventoryFileProblem>();
-                _ttwnFileImporter.ExtractFileData(fileStream, inventoryFile, effectiveDate);
+                _ttwnFileImporter.ExtractFileData(fileStream, inventoryFile);
                 fileProblems = _ttwnFileImporter.FileProblems;
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
@@ -234,7 +234,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var effectiveDate = DateTime.Parse("10/1/2017");
                 var fileProblems = new List<InventoryFileProblem>();
-                _ttwnFileImporter.ExtractFileData(fileStream, inventoryFile, effectiveDate);
+                _ttwnFileImporter.ExtractFileData(fileStream, inventoryFile);
                 fileProblems = _ttwnFileImporter.FileProblems;
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
@@ -266,11 +266,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     InventorySource = GetTtwnInventorySource()
                 };
-
-                var effectiveDate = DateTime.Parse("10/1/2017");
+                
                 var fileProblems = new List<InventoryFileProblem>();
 
-                _ttwnFileImporter.ExtractFileData(fileStream, inventoryFile, effectiveDate);
+                _ttwnFileImporter.ExtractFileData(fileStream, inventoryFile);
                 fileProblems = _ttwnFileImporter.FileProblems;
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
@@ -310,7 +309,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var effectiveDate = DateTime.Parse("10/1/2017");
                 var fileProblems = new List<InventoryFileProblem>();
-                _ttwnFileImporter.ExtractFileData(fileStream, inventoryFile, effectiveDate);
+                _ttwnFileImporter.ExtractFileData(fileStream, inventoryFile);
                 fileProblems = _ttwnFileImporter.FileProblems;
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
@@ -342,7 +341,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var effectiveDate = DateTime.Parse("10/1/2017");
                 var fileProblems = new List<InventoryFileProblem>();
 
-                _ttwnFileImporter.ExtractFileData(fileStream, inventoryFile, effectiveDate);
+                _ttwnFileImporter.ExtractFileData(fileStream, inventoryFile);
                 fileProblems = _ttwnFileImporter.FileProblems;
 
                 var jsonResolver = new IgnorableSerializerContractResolver();

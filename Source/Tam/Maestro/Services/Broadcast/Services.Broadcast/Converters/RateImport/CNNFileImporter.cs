@@ -4,9 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text.RegularExpressions;
 using Common.Services.Extensions;
-using Microsoft.Practices.ObjectBuilder2;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Validators;
 using Tam.Maestro.Services.ContractInterfaces.Common;
@@ -21,7 +19,6 @@ namespace Services.Broadcast.Converters.RateImport
         {
             public int RowNumber { get; set; }
             public DisplayBroadcastStation Station { get; set; }
-            public DateTime EffectiveDate { get; set; }
             public string DaypartCode { get; set; }
             public int SpotLengthId { get; set; }
             public int SpotsPerWeek { get; set; }
@@ -49,7 +46,6 @@ namespace Services.Broadcast.Converters.RateImport
             "Comments"
         };
 
-        private DateTime _EffectiveDate;
         private ICNNStationInventoryGroupService _CNNStationInventoryGroupService;
         private readonly IInventoryFileValidator _InventoryFileValidator;
 
@@ -77,9 +73,8 @@ namespace Services.Broadcast.Converters.RateImport
         
         private bool _FoundGoodDaypart;
 
-        public override void ExtractFileData(Stream stream, InventoryFile inventoryFile, DateTime effectiveDate)
+        public override void ExtractFileData(Stream stream, InventoryFile inventoryFile)
         {
-            _EffectiveDate = effectiveDate;
             try
             {
                 _ValidateInputFileParams();
@@ -124,7 +119,6 @@ namespace Services.Broadcast.Converters.RateImport
                         {
                             RowNumber = row,
                             Station = station,
-                            EffectiveDate = _EffectiveDate,
                             DaypartCode = daypartCode,
                             SpotLengthId = spotLengthId,
                             SpotsPerWeek = spots,
@@ -186,8 +180,9 @@ namespace Services.Broadcast.Converters.RateImport
             for (int c = 1; c <= dto.SpotsPerWeek; c++)
             {
                 var group = groups.Single(g => g.SlotNumber == slotToUse);
-                var manifest = group.Manifests.FirstOrDefault(m => m.EndDate == null
-                                    && m.ManifestDayparts.All(dp => dto.Dayparts.Any(mdp => mdp == dp.Daypart))
+                var manifest = group.Manifests.FirstOrDefault(m =>
+                                   // m.EndDate == null &&
+                                    m.ManifestDayparts.All(dp => dto.Dayparts.Any(mdp => mdp == dp.Daypart))
                                     && m.Station.Code == dto.Station.Code
                                     && m.SpotLengthId == dto.SpotLengthId);
 
@@ -204,7 +199,6 @@ namespace Services.Broadcast.Converters.RateImport
                         SpotLengthId = dto.SpotLengthId,
                         ManifestDayparts = manifestDayparts,
                         SpotsPerDay = dto.SpotsPerDay,
-                        EffectiveDate = dto.EffectiveDate,
                         Station = dto.Station,
                         SpotsPerWeek = 0
                     };
@@ -236,8 +230,7 @@ namespace Services.Broadcast.Converters.RateImport
                         DaypartCode = dpCode,
                         SlotNumber = slotNumber,
                         Name = _CNNStationInventoryGroupService.GenerateGroupName(dpCode, slotNumber),
-                        InventorySource = this.InventorySource,
-                        StartDate = _EffectiveDate
+                        InventorySource = InventorySource
                     });
                 }
                 _InventoryGroups.Add(dpCode, groups);

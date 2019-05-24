@@ -39,65 +39,6 @@ namespace BroadcastComposerWeb.Controllers
         }
 
         [HttpGet]
-        [Route("{inventorySource}/Stations")]
-        public BaseResponse<List<DisplayBroadcastStation>> GetAllStations(string inventorySource)
-        {
-            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IInventoryService>().GetStations(inventorySource, DateTime.Now));
-        }
-
-        [HttpGet]
-        [Route("{inventorySource}/Stations")]
-        public BaseResponse<List<DisplayBroadcastStation>> GetAllStationsWithFilter(string inventorySource, [FromUri] string filter)
-        {
-            return
-                _ConvertToBaseResponse(
-                    () =>
-                        _ApplicationServiceFactory.GetApplicationService<IInventoryService>()
-                            .GetStationsWithFilter(inventorySource, filter, DateTime.Now));
-        }
-
-        [HttpGet]
-        [Route("{inventorySource}/Stations/{stationCode}")]
-        public BaseResponse<StationDetailDto> GetStationPrograms(string inventorySource, int stationCode)
-        {
-            return
-                _ConvertToBaseResponse(
-                    () =>
-                        _ApplicationServiceFactory.GetApplicationService<IInventoryService>()
-                            .GetStationDetailByCode(inventorySource, stationCode));
-        }
-
-        [HttpGet]
-        [Route("{rateSource}/Stations/{stationCode}/Rates")]
-        public BaseResponse<List<StationProgram>> GetStationProgramsByDateRange(string rateSource, int stationCode, [FromUri] DateTime startDate, [FromUri] DateTime endDate)
-        {
-            return
-                _ConvertToBaseResponse(
-                    () => _ApplicationServiceFactory.GetApplicationService<IInventoryService>().GetStationPrograms(rateSource, stationCode, startDate, endDate));
-
-        }
-
-        [HttpGet]
-        [Route("{rateSource}/Stations/{stationCode}/Rates")]
-        public BaseResponse<List<StationProgram>> GetAllStationPrograms(string rateSource, int stationCode)
-        {
-            return
-                _ConvertToBaseResponse(
-                    () =>
-                        _ApplicationServiceFactory.GetApplicationService<IInventoryService>()
-                            .GetAllStationPrograms(rateSource, stationCode));
-        }
-
-        [HttpGet]
-        [Route("{rateSource}/Stations/{stationCode}/Rates/{timeFrame}")]
-        public BaseResponse<List<StationProgram>> GetStationPrograms(string rateSource, int stationCode, string timeFrame)
-        {
-            return
-                _ConvertToBaseResponse(
-                    () => _ApplicationServiceFactory.GetApplicationService<IInventoryService>().GetStationPrograms(rateSource, stationCode, timeFrame, DateTime.Now));
-        }
-
-        [HttpGet]
         [Route("{inventorySource}/Stations/{stationCode}/Contacts")]
         public BaseResponse<List<StationContact>> GetStationContacts(string inventorySource, int stationCode)
         {
@@ -206,14 +147,7 @@ namespace BroadcastComposerWeb.Controllers
             return _ConvertToBaseResponse(
                 () => _ApplicationServiceFactory.GetApplicationService<IInventoryService>().UnlockStation(stationCode));
         }
-
-        [HttpPost]
-        [Route("Programs")]
-        public BaseResponse<bool> SaveProgram(StationProgram stationProgram)
-        {
-            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IInventoryService>().SaveProgram(stationProgram, Identity.Name));
-        }
-
+        
         [HttpPost]
         [Route("ConvertRate")]
         public BaseResponse<Decimal> ConvertRate(RateConversionRequest request)
@@ -223,14 +157,6 @@ namespace BroadcastComposerWeb.Controllers
                     () =>
                         _ApplicationServiceFactory.GetApplicationService<IInventoryService>()
                             .ConvertRateForSpotLength(request.Rate30, request.SpotLength));
-        }
-
-        [HttpPost]
-        [Route("Conflicts")]
-        public BaseResponse<List<StationProgram>> GetStationConflicts(StationProgramConflictRequest conflict)
-        {
-            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IInventoryService>()
-                .GetStationProgramConflicts(conflict));
         }
 
         [HttpPost]
@@ -249,17 +175,6 @@ namespace BroadcastComposerWeb.Controllers
                 _ConvertToBaseResponse(
                     () => _ApplicationServiceFactory.GetApplicationService<IInventoryService>()
                         .DeleteProgram(programId, inventorySourceString, stationCode, Identity.Name));
-        }
-
-        [HttpPost]
-        [Route("{inventorySourceString}/{stationCode}/Programs/{ProgramId}/Flight")]
-        public BaseResponse<bool> TrimProgramFlight(string inventorySourceString, int stationCode, int programId, [FromUri] DateTime endDate)
-        {
-            return
-                _ConvertToBaseResponse(
-                    () =>
-                        _ApplicationServiceFactory.GetApplicationService<IInventoryService>()
-                            .ExpireManifest(programId, endDate, inventorySourceString, stationCode, Identity.Name));
         }
 
         [HttpGet]

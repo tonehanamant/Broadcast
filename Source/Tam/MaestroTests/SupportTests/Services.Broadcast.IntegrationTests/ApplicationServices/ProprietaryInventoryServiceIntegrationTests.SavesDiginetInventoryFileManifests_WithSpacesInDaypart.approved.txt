@@ -2,8 +2,6 @@
   {
     "Comment": null,
     "DaypartCode": "DIGI",
-    "EffectiveDate": null,
-    "EndDate": null,
     "InventorySourceId": 21,
     "ManifestAudiences": [],
     "ManifestAudiencesReferences": [

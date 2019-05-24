@@ -127,7 +127,7 @@ namespace Services.Broadcast.Converters.RateImport
 
         protected InventoryFile HydrateInventoryFile(InventoryFile inventoryFileToHydrate)
         {
-            inventoryFileToHydrate.FileName = Request.FileName == null ? "unknown" : Request.FileName;
+            inventoryFileToHydrate.FileName = Request.FileName ?? "unknown";
             inventoryFileToHydrate.FileStatus = FileStatusEnum.Pending;
             inventoryFileToHydrate.Hash = FileHash;
             inventoryFileToHydrate.InventorySource = InventorySource;
@@ -136,8 +136,7 @@ namespace Services.Broadcast.Converters.RateImport
 
         public abstract void ExtractFileData(
             System.IO.Stream stream,
-            InventoryFile inventoryFile,
-            DateTime effectiveDate);
+            InventoryFile inventoryFile);
 
         private Dictionary<int, double> _GetSpotLengthAndMultipliers()
         {

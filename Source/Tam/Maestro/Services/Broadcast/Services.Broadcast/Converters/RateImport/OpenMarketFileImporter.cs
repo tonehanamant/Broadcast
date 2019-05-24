@@ -22,7 +22,7 @@ namespace Services.Broadcast.Converters.RateImport
     {
         private const int SecondsPerMinute = 60;
 
-        public override void ExtractFileData(Stream rawStream, InventoryFile inventoryFile, DateTime effecitveDate)
+        public override void ExtractFileData(Stream rawStream, InventoryFile inventoryFile)
         {
             try
             {
@@ -176,6 +176,7 @@ namespace Services.Broadcast.Converters.RateImport
                     {
                         var manifestAudiences = _GetManifestAudienceListForAvailLine(availList, audienceMap, _ToDemoValueDict(availLinePeriod.DemoValues));
                         var manifestRates = _GetManifestRatesforAvailLineWithDetailedPeriods(spotLengthId, spotLength, availLinePeriod.Rate, programName, callLetters, fileProblems);
+                        var manifestWeeks = _GetManifestWeeksForAvailLine(availLinePeriod.StartDate, availLinePeriod.EndDate);
 
                         if (station == null)
                         {
@@ -188,8 +189,7 @@ namespace Services.Broadcast.Converters.RateImport
                                 ManifestDayparts = _GetDaypartsListForAvailLineWithPeriods(availLine),
                                 ManifestAudiencesReferences = manifestAudiences,
                                 ManifestRates = manifestRates,
-                                EffectiveDate = availLinePeriod.StartDate,
-                                EndDate = availLinePeriod.EndDate
+                                ManifestWeeks = manifestWeeks
                             });
                         }
                         else
@@ -203,8 +203,7 @@ namespace Services.Broadcast.Converters.RateImport
                                 ManifestDayparts = _GetDaypartsListForAvailLineWithPeriods(availLine),
                                 ManifestAudiencesReferences = manifestAudiences,
                                 ManifestRates = manifestRates,
-                                EffectiveDate = availLinePeriod.StartDate,
-                                EndDate = availLinePeriod.EndDate
+                                ManifestWeeks = manifestWeeks
                             });
                         }
                     }
@@ -214,6 +213,17 @@ namespace Services.Broadcast.Converters.RateImport
                     fileProblems.Add(new InventoryFileProblem($"Error while processing {availLine.AvailName} on {availList.Name}: {e.Message}"));
                 }
             }
+        }
+
+        private List<StationInventoryManifestWeek> _GetManifestWeeksForAvailLine(DateTime startDate, DateTime endDate)
+        {
+            var mediaWeeks = _MediaMonthAndWeekAggregateCache.GetMediaWeeksIntersecting(startDate, endDate);
+            return mediaWeeks.Select(week => new StationInventoryManifestWeek
+            {
+                MediaWeek = week,
+                StartDate = startDate >= week.StartDate ? startDate : week.StartDate,
+                EndDate = endDate <= week.EndDate ? endDate : week.EndDate
+            }).ToList();
         }
 
         private List<StationInventoryManifestAudience> _GetManifestAudienceListForAvailLine(
@@ -407,7 +417,7 @@ namespace Services.Broadcast.Converters.RateImport
                 stationContact.Fax = (message.Proposal.Seller.Salesperson != null && message.Proposal.Seller.Salesperson.Phone != null) ?
                     message.Proposal.Seller.Salesperson.Phone.Where(p => p.type == "fax")
                         .Select(p => p.Value)
-                        .FirstOrDefault() : null;               
+                        .FirstOrDefault() : null;
 
                 if (proposalStation == null)
                 {

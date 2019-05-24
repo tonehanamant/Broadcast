@@ -42,7 +42,7 @@ namespace Services.Broadcast.Converters.RateImport
 
         }
 
-        public override void ExtractFileData(System.IO.Stream stream, InventoryFile inventoryFile, DateTime effectiveDate)
+        public override void ExtractFileData(System.IO.Stream stream, InventoryFile inventoryFile)
         {
             var spotLengthId = _BroadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthAndIds()[_TTWNStandardSpotLength];
 
@@ -114,7 +114,6 @@ namespace Services.Broadcast.Converters.RateImport
                                 Manifests = new List<StationInventoryManifest>(),
                                 SlotNumber = slotNumber,
                                 InventorySource = this.InventorySource,
-                                StartDate = effectiveDate
                             };
 
                             inventoryGroups.Add(daypartCode + slotNumber, inventoryGroup);
@@ -128,7 +127,6 @@ namespace Services.Broadcast.Converters.RateImport
                             SpotLengthId = spotLengthId,
                             ManifestDayparts = manifestDayparts,
                             ManifestAudiencesReferences = manifestAudiences,
-                            EffectiveDate = effectiveDate,
                         });
                     }
                 }

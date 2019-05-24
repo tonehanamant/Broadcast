@@ -1,7 +1,6 @@
 ﻿[
   {
     "DaypartCode": "AM",
-    "EndDate": null,
     "InventorySource": {
       "Id": 4,
       "InventoryType": 2,
@@ -12,8 +11,6 @@
       {
         "Comment": "Comment 1",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -661,8 +658,6 @@
       {
         "Comment": "Comment 2",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -1310,8 +1305,6 @@
       {
         "Comment": "Comment 3",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -1959,8 +1952,6 @@
       {
         "Comment": "Comment 4",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -2650,8 +2641,6 @@
       {
         "Comment": "Comment 5",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -3298,12 +3287,10 @@
       }
     ],
     "Name": "AM 1",
-    "SlotNumber": 1,
-    "StartDate": null
+    "SlotNumber": 1
   },
   {
     "DaypartCode": "AM",
-    "EndDate": null,
     "InventorySource": {
       "Id": 4,
       "InventoryType": 2,
@@ -3314,8 +3301,6 @@
       {
         "Comment": "Comment 1",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -3963,8 +3948,6 @@
       {
         "Comment": "Comment 2",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -4612,8 +4595,6 @@
       {
         "Comment": "Comment 3",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -5261,8 +5242,6 @@
       {
         "Comment": "Comment 4",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -5952,8 +5931,6 @@
       {
         "Comment": "Comment 5",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -6600,12 +6577,10 @@
       }
     ],
     "Name": "AM 1",
-    "SlotNumber": 1,
-    "StartDate": null
+    "SlotNumber": 1
   },
   {
     "DaypartCode": "AM",
-    "EndDate": null,
     "InventorySource": {
       "Id": 4,
       "InventoryType": 2,
@@ -6616,8 +6591,6 @@
       {
         "Comment": "Comment 1",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -7265,8 +7238,6 @@
       {
         "Comment": "Comment 2",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -7914,8 +7885,6 @@
       {
         "Comment": "Comment 3",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -8563,8 +8532,6 @@
       {
         "Comment": "Comment 4",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -9254,8 +9221,6 @@
       {
         "Comment": "Comment 5",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -9902,12 +9867,10 @@
       }
     ],
     "Name": "AM 1",
-    "SlotNumber": 1,
-    "StartDate": null
+    "SlotNumber": 1
   },
   {
     "DaypartCode": "AM",
-    "EndDate": null,
     "InventorySource": {
       "Id": 4,
       "InventoryType": 2,
@@ -9918,8 +9881,6 @@
       {
         "Comment": "Comment 1",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -10567,8 +10528,6 @@
       {
         "Comment": "Comment 2",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -11216,8 +11175,6 @@
       {
         "Comment": "Comment 3",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -11865,8 +11822,6 @@
       {
         "Comment": "Comment 4",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -12556,8 +12511,6 @@
       {
         "Comment": "Comment 5",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -13204,12 +13157,10 @@
       }
     ],
     "Name": "AM 1",
-    "SlotNumber": 1,
-    "StartDate": null
+    "SlotNumber": 1
   },
   {
     "DaypartCode": "AM",
-    "EndDate": null,
     "InventorySource": {
       "Id": 4,
       "InventoryType": 2,
@@ -13220,8 +13171,6 @@
       {
         "Comment": "Comment 1",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -13869,8 +13818,6 @@
       {
         "Comment": "Comment 2",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -14518,8 +14465,6 @@
       {
         "Comment": "Comment 3",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -15167,8 +15112,6 @@
       {
         "Comment": "Comment 4",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -15858,8 +15801,6 @@
       {
         "Comment": "Comment 5",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -16506,12 +16447,10 @@
       }
     ],
     "Name": "AM 1",
-    "SlotNumber": 1,
-    "StartDate": null
+    "SlotNumber": 1
   },
   {
     "DaypartCode": "AM",
-    "EndDate": null,
     "InventorySource": {
       "Id": 4,
       "InventoryType": 2,
@@ -16522,8 +16461,6 @@
       {
         "Comment": "Comment 1",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -17171,8 +17108,6 @@
       {
         "Comment": "Comment 2",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -17820,8 +17755,6 @@
       {
         "Comment": "Comment 3",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -18469,8 +18402,6 @@
       {
         "Comment": "Comment 4",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -19160,8 +19091,6 @@
       {
         "Comment": "Comment 5",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -19808,12 +19737,10 @@
       }
     ],
     "Name": "AM 2",
-    "SlotNumber": 2,
-    "StartDate": null
+    "SlotNumber": 2
   },
   {
     "DaypartCode": "AM",
-    "EndDate": null,
     "InventorySource": {
       "Id": 4,
       "InventoryType": 2,
@@ -19824,8 +19751,6 @@
       {
         "Comment": "Comment 1",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -20473,8 +20398,6 @@
       {
         "Comment": "Comment 2",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -21122,8 +21045,6 @@
       {
         "Comment": "Comment 3",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -21771,8 +21692,6 @@
       {
         "Comment": "Comment 4",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -22462,8 +22381,6 @@
       {
         "Comment": "Comment 5",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -23110,12 +23027,10 @@
       }
     ],
     "Name": "AM 2",
-    "SlotNumber": 2,
-    "StartDate": null
+    "SlotNumber": 2
   },
   {
     "DaypartCode": "AM",
-    "EndDate": null,
     "InventorySource": {
       "Id": 4,
       "InventoryType": 2,
@@ -23126,8 +23041,6 @@
       {
         "Comment": "Comment 1",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -23775,8 +23688,6 @@
       {
         "Comment": "Comment 2",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -24424,8 +24335,6 @@
       {
         "Comment": "Comment 3",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -25073,8 +24982,6 @@
       {
         "Comment": "Comment 4",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -25764,8 +25671,6 @@
       {
         "Comment": "Comment 5",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -26412,12 +26317,10 @@
       }
     ],
     "Name": "AM 2",
-    "SlotNumber": 2,
-    "StartDate": null
+    "SlotNumber": 2
   },
   {
     "DaypartCode": "AM",
-    "EndDate": null,
     "InventorySource": {
       "Id": 4,
       "InventoryType": 2,
@@ -26428,8 +26331,6 @@
       {
         "Comment": "Comment 1",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -27077,8 +26978,6 @@
       {
         "Comment": "Comment 2",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -27726,8 +27625,6 @@
       {
         "Comment": "Comment 3",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -28375,8 +28272,6 @@
       {
         "Comment": "Comment 4",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -29066,8 +28961,6 @@
       {
         "Comment": "Comment 5",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -29714,12 +29607,10 @@
       }
     ],
     "Name": "AM 2",
-    "SlotNumber": 2,
-    "StartDate": null
+    "SlotNumber": 2
   },
   {
     "DaypartCode": "AM",
-    "EndDate": null,
     "InventorySource": {
       "Id": 4,
       "InventoryType": 2,
@@ -29730,8 +29621,6 @@
       {
         "Comment": "Comment 1",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -30379,8 +30268,6 @@
       {
         "Comment": "Comment 2",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -31028,8 +30915,6 @@
       {
         "Comment": "Comment 3",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -31677,8 +31562,6 @@
       {
         "Comment": "Comment 4",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -32368,8 +32251,6 @@
       {
         "Comment": "Comment 5",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -33016,12 +32897,10 @@
       }
     ],
     "Name": "AM 2",
-    "SlotNumber": 2,
-    "StartDate": null
+    "SlotNumber": 2
   },
   {
     "DaypartCode": "AM",
-    "EndDate": null,
     "InventorySource": {
       "Id": 4,
       "InventoryType": 2,
@@ -33032,8 +32911,6 @@
       {
         "Comment": "Comment 1",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -33681,8 +33558,6 @@
       {
         "Comment": "Comment 2",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -34330,8 +34205,6 @@
       {
         "Comment": "Comment 3",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -34979,8 +34852,6 @@
       {
         "Comment": "Comment 4",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -35670,8 +35541,6 @@
       {
         "Comment": "Comment 5",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -36318,12 +36187,10 @@
       }
     ],
     "Name": "AM 34",
-    "SlotNumber": 34,
-    "StartDate": null
+    "SlotNumber": 34
   },
   {
     "DaypartCode": "AM",
-    "EndDate": null,
     "InventorySource": {
       "Id": 4,
       "InventoryType": 2,
@@ -36334,8 +36201,6 @@
       {
         "Comment": "Comment 1",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -36983,8 +36848,6 @@
       {
         "Comment": "Comment 2",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -37632,8 +37495,6 @@
       {
         "Comment": "Comment 3",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -38281,8 +38142,6 @@
       {
         "Comment": "Comment 4",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -38972,8 +38831,6 @@
       {
         "Comment": "Comment 5",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -39620,12 +39477,10 @@
       }
     ],
     "Name": "AM 34",
-    "SlotNumber": 34,
-    "StartDate": null
+    "SlotNumber": 34
   },
   {
     "DaypartCode": "AM",
-    "EndDate": null,
     "InventorySource": {
       "Id": 4,
       "InventoryType": 2,
@@ -39636,8 +39491,6 @@
       {
         "Comment": "Comment 1",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -40285,8 +40138,6 @@
       {
         "Comment": "Comment 2",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -40934,8 +40785,6 @@
       {
         "Comment": "Comment 3",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -41583,8 +41432,6 @@
       {
         "Comment": "Comment 4",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -42274,8 +42121,6 @@
       {
         "Comment": "Comment 5",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -42922,12 +42767,10 @@
       }
     ],
     "Name": "AM 34",
-    "SlotNumber": 34,
-    "StartDate": null
+    "SlotNumber": 34
   },
   {
     "DaypartCode": "AM",
-    "EndDate": null,
     "InventorySource": {
       "Id": 4,
       "InventoryType": 2,
@@ -42938,8 +42781,6 @@
       {
         "Comment": "Comment 1",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -43587,8 +43428,6 @@
       {
         "Comment": "Comment 2",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -44236,8 +44075,6 @@
       {
         "Comment": "Comment 3",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -44885,8 +44722,6 @@
       {
         "Comment": "Comment 4",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -45576,8 +45411,6 @@
       {
         "Comment": "Comment 5",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -46224,12 +46057,10 @@
       }
     ],
     "Name": "AM 34",
-    "SlotNumber": 34,
-    "StartDate": null
+    "SlotNumber": 34
   },
   {
     "DaypartCode": "AM",
-    "EndDate": null,
     "InventorySource": {
       "Id": 4,
       "InventoryType": 2,
@@ -46240,8 +46071,6 @@
       {
         "Comment": "Comment 1",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -46889,8 +46718,6 @@
       {
         "Comment": "Comment 2",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -47538,8 +47365,6 @@
       {
         "Comment": "Comment 3",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -48187,8 +48012,6 @@
       {
         "Comment": "Comment 4",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -48878,8 +48701,6 @@
       {
         "Comment": "Comment 5",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -49526,12 +49347,10 @@
       }
     ],
     "Name": "AM 34",
-    "SlotNumber": 34,
-    "StartDate": null
+    "SlotNumber": 34
   },
   {
     "DaypartCode": "AM",
-    "EndDate": null,
     "InventorySource": {
       "Id": 4,
       "InventoryType": 2,
@@ -49542,8 +49361,6 @@
       {
         "Comment": "Comment 1",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -50191,8 +50008,6 @@
       {
         "Comment": "Comment 2",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -50840,8 +50655,6 @@
       {
         "Comment": "Comment 3",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -51489,8 +51302,6 @@
       {
         "Comment": "Comment 4",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -52180,8 +51991,6 @@
       {
         "Comment": "Comment 5",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -52828,12 +52637,10 @@
       }
     ],
     "Name": "AM 5",
-    "SlotNumber": 5,
-    "StartDate": null
+    "SlotNumber": 5
   },
   {
     "DaypartCode": "AM",
-    "EndDate": null,
     "InventorySource": {
       "Id": 4,
       "InventoryType": 2,
@@ -52844,8 +52651,6 @@
       {
         "Comment": "Comment 1",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -53493,8 +53298,6 @@
       {
         "Comment": "Comment 2",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -54142,8 +53945,6 @@
       {
         "Comment": "Comment 3",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -54791,8 +54592,6 @@
       {
         "Comment": "Comment 4",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -55482,8 +55281,6 @@
       {
         "Comment": "Comment 5",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -56130,12 +55927,10 @@
       }
     ],
     "Name": "AM 5",
-    "SlotNumber": 5,
-    "StartDate": null
+    "SlotNumber": 5
   },
   {
     "DaypartCode": "AM",
-    "EndDate": null,
     "InventorySource": {
       "Id": 4,
       "InventoryType": 2,
@@ -56146,8 +55941,6 @@
       {
         "Comment": "Comment 1",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -56795,8 +56588,6 @@
       {
         "Comment": "Comment 2",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -57444,8 +57235,6 @@
       {
         "Comment": "Comment 3",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -58093,8 +57882,6 @@
       {
         "Comment": "Comment 4",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -58784,8 +58571,6 @@
       {
         "Comment": "Comment 5",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -59432,12 +59217,10 @@
       }
     ],
     "Name": "AM 5",
-    "SlotNumber": 5,
-    "StartDate": null
+    "SlotNumber": 5
   },
   {
     "DaypartCode": "AM",
-    "EndDate": null,
     "InventorySource": {
       "Id": 4,
       "InventoryType": 2,
@@ -59448,8 +59231,6 @@
       {
         "Comment": "Comment 1",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -60097,8 +59878,6 @@
       {
         "Comment": "Comment 2",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -60746,8 +60525,6 @@
       {
         "Comment": "Comment 3",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -61395,8 +61172,6 @@
       {
         "Comment": "Comment 4",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -62086,8 +61861,6 @@
       {
         "Comment": "Comment 5",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -62734,12 +62507,10 @@
       }
     ],
     "Name": "AM 5",
-    "SlotNumber": 5,
-    "StartDate": null
+    "SlotNumber": 5
   },
   {
     "DaypartCode": "AM",
-    "EndDate": null,
     "InventorySource": {
       "Id": 4,
       "InventoryType": 2,
@@ -62750,8 +62521,6 @@
       {
         "Comment": "Comment 1",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -63399,8 +63168,6 @@
       {
         "Comment": "Comment 2",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -64048,8 +63815,6 @@
       {
         "Comment": "Comment 3",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -64697,8 +64462,6 @@
       {
         "Comment": "Comment 4",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -65388,8 +65151,6 @@
       {
         "Comment": "Comment 5",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -66036,12 +65797,10 @@
       }
     ],
     "Name": "AM 5",
-    "SlotNumber": 5,
-    "StartDate": null
+    "SlotNumber": 5
   },
   {
     "DaypartCode": "AM",
-    "EndDate": null,
     "InventorySource": {
       "Id": 4,
       "InventoryType": 2,
@@ -66052,8 +65811,6 @@
       {
         "Comment": "Comment 1",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -66701,8 +66458,6 @@
       {
         "Comment": "Comment 2",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -67350,8 +67105,6 @@
       {
         "Comment": "Comment 3",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -67999,8 +67752,6 @@
       {
         "Comment": "Comment 4",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -68690,8 +68441,6 @@
       {
         "Comment": "Comment 5",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -69338,12 +69087,10 @@
       }
     ],
     "Name": "AM 6",
-    "SlotNumber": 6,
-    "StartDate": null
+    "SlotNumber": 6
   },
   {
     "DaypartCode": "AM",
-    "EndDate": null,
     "InventorySource": {
       "Id": 4,
       "InventoryType": 2,
@@ -69354,8 +69101,6 @@
       {
         "Comment": "Comment 1",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -70003,8 +69748,6 @@
       {
         "Comment": "Comment 2",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -70652,8 +70395,6 @@
       {
         "Comment": "Comment 3",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -71301,8 +71042,6 @@
       {
         "Comment": "Comment 4",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -71992,8 +71731,6 @@
       {
         "Comment": "Comment 5",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -72640,12 +72377,10 @@
       }
     ],
     "Name": "AM 6",
-    "SlotNumber": 6,
-    "StartDate": null
+    "SlotNumber": 6
   },
   {
     "DaypartCode": "AM",
-    "EndDate": null,
     "InventorySource": {
       "Id": 4,
       "InventoryType": 2,
@@ -72656,8 +72391,6 @@
       {
         "Comment": "Comment 1",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -73305,8 +73038,6 @@
       {
         "Comment": "Comment 2",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -73954,8 +73685,6 @@
       {
         "Comment": "Comment 3",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -74603,8 +74332,6 @@
       {
         "Comment": "Comment 4",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -75294,8 +75021,6 @@
       {
         "Comment": "Comment 5",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -75942,12 +75667,10 @@
       }
     ],
     "Name": "AM 6",
-    "SlotNumber": 6,
-    "StartDate": null
+    "SlotNumber": 6
   },
   {
     "DaypartCode": "AM",
-    "EndDate": null,
     "InventorySource": {
       "Id": 4,
       "InventoryType": 2,
@@ -75958,8 +75681,6 @@
       {
         "Comment": "Comment 1",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -76607,8 +76328,6 @@
       {
         "Comment": "Comment 2",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -77256,8 +76975,6 @@
       {
         "Comment": "Comment 3",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -77905,8 +77622,6 @@
       {
         "Comment": "Comment 4",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -78596,8 +78311,6 @@
       {
         "Comment": "Comment 5",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -79244,12 +78957,10 @@
       }
     ],
     "Name": "AM 6",
-    "SlotNumber": 6,
-    "StartDate": null
+    "SlotNumber": 6
   },
   {
     "DaypartCode": "AM",
-    "EndDate": null,
     "InventorySource": {
       "Id": 4,
       "InventoryType": 2,
@@ -79260,8 +78971,6 @@
       {
         "Comment": "Comment 1",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -79909,8 +79618,6 @@
       {
         "Comment": "Comment 2",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -80558,8 +80265,6 @@
       {
         "Comment": "Comment 3",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -81207,8 +80912,6 @@
       {
         "Comment": "Comment 4",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -81898,8 +81601,6 @@
       {
         "Comment": "Comment 5",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -82546,12 +82247,10 @@
       }
     ],
     "Name": "AM 6",
-    "SlotNumber": 6,
-    "StartDate": null
+    "SlotNumber": 6
   },
   {
     "DaypartCode": "AM",
-    "EndDate": null,
     "InventorySource": {
       "Id": 4,
       "InventoryType": 2,
@@ -82562,8 +82261,6 @@
       {
         "Comment": "Comment 1",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -83211,8 +82908,6 @@
       {
         "Comment": "Comment 2",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -83860,8 +83555,6 @@
       {
         "Comment": "Comment 3",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -84509,8 +84202,6 @@
       {
         "Comment": "Comment 4",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -85200,8 +84891,6 @@
       {
         "Comment": "Comment 5",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -85848,12 +85537,10 @@
       }
     ],
     "Name": "AM 7",
-    "SlotNumber": 7,
-    "StartDate": null
+    "SlotNumber": 7
   },
   {
     "DaypartCode": "AM",
-    "EndDate": null,
     "InventorySource": {
       "Id": 4,
       "InventoryType": 2,
@@ -85864,8 +85551,6 @@
       {
         "Comment": "Comment 1",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -86513,8 +86198,6 @@
       {
         "Comment": "Comment 2",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -87162,8 +86845,6 @@
       {
         "Comment": "Comment 3",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -87811,8 +87492,6 @@
       {
         "Comment": "Comment 4",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -88502,8 +88181,6 @@
       {
         "Comment": "Comment 5",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -89150,12 +88827,10 @@
       }
     ],
     "Name": "AM 7",
-    "SlotNumber": 7,
-    "StartDate": null
+    "SlotNumber": 7
   },
   {
     "DaypartCode": "AM",
-    "EndDate": null,
     "InventorySource": {
       "Id": 4,
       "InventoryType": 2,
@@ -89166,8 +88841,6 @@
       {
         "Comment": "Comment 1",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -89815,8 +89488,6 @@
       {
         "Comment": "Comment 2",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -90464,8 +90135,6 @@
       {
         "Comment": "Comment 3",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -91113,8 +90782,6 @@
       {
         "Comment": "Comment 4",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -91804,8 +91471,6 @@
       {
         "Comment": "Comment 5",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -92452,12 +92117,10 @@
       }
     ],
     "Name": "AM 7",
-    "SlotNumber": 7,
-    "StartDate": null
+    "SlotNumber": 7
   },
   {
     "DaypartCode": "AM",
-    "EndDate": null,
     "InventorySource": {
       "Id": 4,
       "InventoryType": 2,
@@ -92468,8 +92131,6 @@
       {
         "Comment": "Comment 1",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -93117,8 +92778,6 @@
       {
         "Comment": "Comment 2",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -93766,8 +93425,6 @@
       {
         "Comment": "Comment 3",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -94415,8 +94072,6 @@
       {
         "Comment": "Comment 4",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -95106,8 +94761,6 @@
       {
         "Comment": "Comment 5",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -95754,12 +95407,10 @@
       }
     ],
     "Name": "AM 7",
-    "SlotNumber": 7,
-    "StartDate": null
+    "SlotNumber": 7
   },
   {
     "DaypartCode": "AM",
-    "EndDate": null,
     "InventorySource": {
       "Id": 4,
       "InventoryType": 2,
@@ -95770,8 +95421,6 @@
       {
         "Comment": "Comment 1",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -96419,8 +96068,6 @@
       {
         "Comment": "Comment 2",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -97068,8 +96715,6 @@
       {
         "Comment": "Comment 3",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -97717,8 +97362,6 @@
       {
         "Comment": "Comment 4",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -98408,8 +98051,6 @@
       {
         "Comment": "Comment 5",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -99056,12 +98697,10 @@
       }
     ],
     "Name": "AM 7",
-    "SlotNumber": 7,
-    "StartDate": null
+    "SlotNumber": 7
   },
   {
     "DaypartCode": "AM",
-    "EndDate": null,
     "InventorySource": {
       "Id": 4,
       "InventoryType": 2,
@@ -99072,8 +98711,6 @@
       {
         "Comment": "Comment 1",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -99721,8 +99358,6 @@
       {
         "Comment": "Comment 2",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -100370,8 +100005,6 @@
       {
         "Comment": "Comment 3",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -101019,8 +100652,6 @@
       {
         "Comment": "Comment 4",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -101710,8 +101341,6 @@
       {
         "Comment": "Comment 5",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -102358,12 +101987,10 @@
       }
     ],
     "Name": "AM 8",
-    "SlotNumber": 8,
-    "StartDate": null
+    "SlotNumber": 8
   },
   {
     "DaypartCode": "AM",
-    "EndDate": null,
     "InventorySource": {
       "Id": 4,
       "InventoryType": 2,
@@ -102374,8 +102001,6 @@
       {
         "Comment": "Comment 1",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -103023,8 +102648,6 @@
       {
         "Comment": "Comment 2",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -103672,8 +103295,6 @@
       {
         "Comment": "Comment 3",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -104321,8 +103942,6 @@
       {
         "Comment": "Comment 4",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -105012,8 +104631,6 @@
       {
         "Comment": "Comment 5",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -105660,12 +105277,10 @@
       }
     ],
     "Name": "AM 8",
-    "SlotNumber": 8,
-    "StartDate": null
+    "SlotNumber": 8
   },
   {
     "DaypartCode": "AM",
-    "EndDate": null,
     "InventorySource": {
       "Id": 4,
       "InventoryType": 2,
@@ -105676,8 +105291,6 @@
       {
         "Comment": "Comment 1",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -106325,8 +105938,6 @@
       {
         "Comment": "Comment 2",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -106974,8 +106585,6 @@
       {
         "Comment": "Comment 3",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -107623,8 +107232,6 @@
       {
         "Comment": "Comment 4",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -108314,8 +107921,6 @@
       {
         "Comment": "Comment 5",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -108962,12 +108567,10 @@
       }
     ],
     "Name": "AM 8",
-    "SlotNumber": 8,
-    "StartDate": null
+    "SlotNumber": 8
   },
   {
     "DaypartCode": "AM",
-    "EndDate": null,
     "InventorySource": {
       "Id": 4,
       "InventoryType": 2,
@@ -108978,8 +108581,6 @@
       {
         "Comment": "Comment 1",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -109627,8 +109228,6 @@
       {
         "Comment": "Comment 2",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -110276,8 +109875,6 @@
       {
         "Comment": "Comment 3",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -110925,8 +110522,6 @@
       {
         "Comment": "Comment 4",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -111616,8 +111211,6 @@
       {
         "Comment": "Comment 5",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -112264,12 +111857,10 @@
       }
     ],
     "Name": "AM 8",
-    "SlotNumber": 8,
-    "StartDate": null
+    "SlotNumber": 8
   },
   {
     "DaypartCode": "AM",
-    "EndDate": null,
     "InventorySource": {
       "Id": 4,
       "InventoryType": 2,
@@ -112280,8 +111871,6 @@
       {
         "Comment": "Comment 1",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -112929,8 +112518,6 @@
       {
         "Comment": "Comment 2",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -113578,8 +113165,6 @@
       {
         "Comment": "Comment 3",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -114227,8 +113812,6 @@
       {
         "Comment": "Comment 4",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -114918,8 +114501,6 @@
       {
         "Comment": "Comment 5",
         "DaypartCode": "AM",
-        "EffectiveDate": null,
-        "EndDate": null,
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -115566,7 +115147,6 @@
       }
     ],
     "Name": "AM 8",
-    "SlotNumber": 8,
-    "StartDate": null
+    "SlotNumber": 8
   }
 ]

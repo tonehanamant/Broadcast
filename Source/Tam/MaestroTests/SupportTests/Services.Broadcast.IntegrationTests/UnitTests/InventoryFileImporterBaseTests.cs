@@ -16,7 +16,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
             InventoryDaypartParsingEngine = IntegrationTestApplicationServiceFactory.GetApplicationService<IInventoryDaypartParsingEngine>();
         }
 
-        public override void ExtractFileData(Stream stream, InventoryFile inventoryFile, DateTime effectiveDate)
+        public override void ExtractFileData(Stream stream, InventoryFile inventoryFile)
         {
         }
 

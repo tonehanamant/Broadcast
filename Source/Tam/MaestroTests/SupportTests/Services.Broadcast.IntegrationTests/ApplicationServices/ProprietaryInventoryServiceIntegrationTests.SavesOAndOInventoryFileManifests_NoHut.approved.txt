@@ -2,8 +2,6 @@
   {
     "Comment": null,
     "DaypartCode": "EMN",
-    "EffectiveDate": null,
-    "EndDate": null,
     "InventorySourceId": 10,
     "ManifestAudiences": [
       {
@@ -100,8 +98,6 @@
   {
     "Comment": null,
     "DaypartCode": "EMN",
-    "EffectiveDate": null,
-    "EndDate": null,
     "InventorySourceId": 10,
     "ManifestAudiences": [
       {
@@ -186,8 +182,6 @@
   {
     "Comment": null,
     "DaypartCode": "EMN",
-    "EffectiveDate": null,
-    "EndDate": null,
     "InventorySourceId": 10,
     "ManifestAudiences": [
       {

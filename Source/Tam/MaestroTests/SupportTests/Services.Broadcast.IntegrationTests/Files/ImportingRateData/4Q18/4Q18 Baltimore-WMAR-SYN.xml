@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AAAA-Message xmlns:tvb="http://www.AAAA.org/schemas/spotTV" xmlns:tvb-tp="http://www.AAAA.org/schemas/TVBGeneralTypes" xmlns="http://www.AAAA.org/schemas/spotTVCableProposal">
+  <AAAA-Values>
+    <SchemaName>SpotTVCableProposal</SchemaName>
+    <SchemaVersion>0.3.0.5A</SchemaVersion>
+    <Media>SpotTV</Media>
+    <BusinessObject>Proposal</BusinessObject>
+    <Action>New</Action>
+    <UniqueMessageID>IDA1ACHE</UniqueMessageID>
+  </AAAA-Values>
+  <Proposal uniqueIdentifier="13128121" version="1" sendDateTime="2018-08-15T20:28:39" weekStartDay="Mo" startDate="2018-10-01" endDate="2018-12-30">
+    <Seller companyName="N/A">
+      <Salesperson name="N/A"/>
+    </Seller>
+    <Buyer buyingCompanyName="N/A"/>
+    <Advertiser name="Cadent Network">
+      <Product name="4Q18 Cadent Network"/>
+    </Advertiser>
+    <Name>4Q18 Cadent Network-WMAR</Name>
+    <SellerReference>13128121</SellerReference>
+    <Outlets>
+      <TelevisionStation callLetters="WMAR" parentPlus="N" outletId="OUT0"/>
+    </Outlets>
+    <AvailList startDate="2018-10-15" endDate="2018-10-30" identifier="AL001" isPackage="N">
+      <Name>Television Schedule - Baltimore Apr18 DMA LPM OV Live+SD</Name>
+      <OutletReferences>
+        <OutletReference outletFromProposalRef="OUT0" outletForListId="OUL0"/>
+      </OutletReferences>
+      <DemoCategories>
+        <DemoCategory DemoId="DM0">
+          <tvb:DemoType>Rating</tvb:DemoType>
+          <tvb:Group>Homes</tvb:Group>
+          <tvb:AgeFrom>0</tvb:AgeFrom>
+          <tvb:AgeTo>99</tvb:AgeTo>
+        </DemoCategory>
+      </DemoCategories>
+      <TargetDemo demoRef="DM0"/>
+      <AvailLineWithDetailedPeriods>
+        <OutletReference outletFromListRef="OUL0"/>
+        <DayTimes>
+          <DayTime>
+            <StartTime>09:00</StartTime>
+            <EndTime>10:00</EndTime>
+            <Days>
+              <tvb-tp:Monday>Y</tvb-tp:Monday>
+              <tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+              <tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+              <tvb-tp:Thursday>Y</tvb-tp:Thursday>
+              <tvb-tp:Friday>Y</tvb-tp:Friday>
+              <tvb-tp:Saturday>N</tvb-tp:Saturday>
+              <tvb-tp:Sunday>N</tvb-tp:Sunday>
+            </Days>
+            <ProgramName>The Doctors</ProgramName>
+          </DayTime>
+        </DayTimes>
+        <DaypartName>DY</DaypartName>
+        <AvailName>The Doctors</AvailName>
+        <SpotLength>00:00:30</SpotLength>
+        <Periods>
+          <DetailedPeriod startDate="2018-10-15" endDate="2018-10-30">
+            <Rate>65.00</Rate>
+            <DemoValues>
+              <DemoValue demoRef="DM0">0.7</DemoValue>
+            </DemoValues>
+          </DetailedPeriod>
+        </Periods>
+      </AvailLineWithDetailedPeriods>
+    </AvailList>
+  </Proposal>
+</AAAA-Message>

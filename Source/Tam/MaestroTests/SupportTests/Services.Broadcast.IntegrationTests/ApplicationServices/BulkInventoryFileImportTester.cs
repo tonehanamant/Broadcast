@@ -24,7 +24,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             using (StreamWriter output = new StreamWriter(@"C:\Users\mtrzcianowski\Documents\broadcast\SYN.txt"))
             {
-
                 foreach (var filePath in files)
                 {
                     using (new TransactionScopeWrapper())
@@ -56,9 +55,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         }
                     }
                 }
-
             }
-
         }
     }
 }

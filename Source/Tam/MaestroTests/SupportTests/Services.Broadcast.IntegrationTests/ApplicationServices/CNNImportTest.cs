@@ -54,11 +54,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var request = new InventoryFileSaveRequest()
             {
                 FileName = filename,
-                StreamData = stream,
-                EffectiveDate = new DateTime(2016, 10, 31)
+                StreamData = stream
             };
             importer.LoadFromSaveRequest(request);
-            importer.ExtractFileData(stream, ratesFile, request.EffectiveDate);
+            importer.ExtractFileData(stream, ratesFile);
             fileProblems = importer.FileProblems;
 
             if (fileProblems.Any())
@@ -112,11 +111,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var request = new InventoryFileSaveRequest()
             {
                 FileName = filename,
-                StreamData = stream,                
-                EffectiveDate = new DateTime(2016, 10, 31)
+                StreamData = stream
             };
             importer.LoadFromSaveRequest(request);
-            importer.ExtractFileData(stream, ratesFile, request.EffectiveDate);
+            importer.ExtractFileData(stream, ratesFile);
             fileProblems = importer.FileProblems;
 
             var jsonResolver = new IgnorableSerializerContractResolver();
@@ -155,11 +153,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var request = new InventoryFileSaveRequest()
             {
                 FileName = filename,
-                StreamData = stream,
-                EffectiveDate = new DateTime(2016, 10, 31)
+                StreamData = stream
             };
             importer.LoadFromSaveRequest(request);
-            importer.ExtractFileData(stream, ratesFile, request.EffectiveDate);
+            importer.ExtractFileData(stream, ratesFile);
             fileProblems = importer.FileProblems;
 
             if (!fileProblems.Any())
@@ -201,12 +198,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var request = new InventoryFileSaveRequest()
             {
                 FileName = filename,
-                StreamData = stream,
-                EffectiveDate = new DateTime(2016, 10, 31)
+                StreamData = stream
             };
             importer.LoadFromSaveRequest(request);
 
-            Assert.Catch(() => importer.ExtractFileData(stream, ratesFile, request.EffectiveDate),
+            Assert.Catch(() => importer.ExtractFileData(stream, ratesFile),
                 CNNFileImporter.NoGoodDaypartsFound);
         }
 
@@ -224,12 +220,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var request = new InventoryFileSaveRequest()
             {
                 FileName = filename,
-                StreamData = stream,
-                EffectiveDate = new DateTime(2016, 10, 31)
+                StreamData = stream
             };
 
             importer.LoadFromSaveRequest(request);
-            importer.ExtractFileData(stream, ratesFile, request.EffectiveDate);
+            importer.ExtractFileData(stream, ratesFile);
             fileProblems = importer.FileProblems;
 
             var jsonResolver = new IgnorableSerializerContractResolver();
@@ -270,11 +265,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var request = new InventoryFileSaveRequest()
                 {
                     FileName = filename,
-                    StreamData = stream,
-                    EffectiveDate = new DateTime(2016, 10, 31)
+                    StreamData = stream
                 };
                 importer.LoadFromSaveRequest(request);
-                importer.ExtractFileData(stream, ratesFile, request.EffectiveDate);
+                importer.ExtractFileData(stream, ratesFile);
                 fileProblems = importer.FileProblems;
 
                 if (!fileProblems.Any())

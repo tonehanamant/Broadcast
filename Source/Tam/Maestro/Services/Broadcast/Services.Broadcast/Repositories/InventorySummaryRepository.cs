@@ -40,17 +40,17 @@ namespace Services.Broadcast.Repositories
                                                                     Include(x => x.station_inventory_group).
                                                                     Include(x => x.inventory_files).
                                                                     Include(x => x.inventory_files.inventory_file_proprietary_header)
-                            where manifest.inventory_source_id == inventorySource.Id &&
-                                  manifest.effective_date <= endDate &&
-                                  manifest.end_date >= startDate
+                            where manifest.inventory_source_id == inventorySource.Id 
+                                // && manifest.effective_date <= endDate &&   PRI-8713
+                                //  manifest.end_date >= startDate
                             select new
                             {
                                 manifest.id,
                                 manifest.station_id,
                                 manifest.station.market_code,
                                 manifest.station_inventory_group.daypart_code,
-                                manifest.effective_date,
-                                manifest.end_date,
+                              //  manifest.effective_date,
+                              //  manifest.end_date,
                                 manifest.file_id,
                             }).Select(m => new InventorySummaryManifestDto
                             {
@@ -58,8 +58,8 @@ namespace Services.Broadcast.Repositories
                                 StationId = m.station_id,
                                 MarketCode = m.market_code,
                                 DaypartCode = m.daypart_code,
-                                EffectiveDate = m.effective_date,
-                                EndDate = m.end_date,
+                              //  EffectiveDate = m.effective_date,
+                               // EndDate = m.end_date,
                                 FileId = m.file_id
                             }).ToList();
                 });

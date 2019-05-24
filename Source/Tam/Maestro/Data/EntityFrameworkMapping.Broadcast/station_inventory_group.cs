@@ -24,8 +24,6 @@ namespace EntityFrameworkMapping.Broadcast
         public string daypart_code { get; set; }
         public byte slot_number { get; set; }
         public int inventory_source_id { get; set; }
-        public Nullable<System.DateTime> start_date { get; set; }
-        public Nullable<System.DateTime> end_date { get; set; }
     
         public virtual inventory_sources inventory_sources { get; set; }
         public virtual ICollection<station_inventory_manifest> station_inventory_manifest { get; set; }

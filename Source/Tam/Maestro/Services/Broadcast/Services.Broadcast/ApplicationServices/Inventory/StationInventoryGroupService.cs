@@ -16,7 +16,7 @@ namespace Services.Broadcast.ApplicationServices
 
     public interface IStationInventoryGroupService : IApplicationService
     {
-        void AddNewStationInventoryGroups(InventoryFileBase inventoryFile, DateTime newEffectiveDate);
+        void AddNewStationInventoryGroups(InventoryFileBase inventoryFile);
         void AddNewStationInventory(InventoryFileBase inventoryFile, int? contractedDaypartId = null);
         List<StationInventoryGroup> GetStationInventoryGroupsByFileId(int fileId);
     }
@@ -30,7 +30,7 @@ namespace Services.Broadcast.ApplicationServices
 
         public StationInventoryGroupService(
             IDataRepositoryFactory broadcastDataRepositoryFactory,
-            IDaypartCache daypartCache, 
+            IDaypartCache daypartCache,
             IBroadcastAudiencesCache audiencesCache,
             IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache)
         {
@@ -40,27 +40,15 @@ namespace Services.Broadcast.ApplicationServices
             _MediaMonthAndWeekAggregateCache = mediaMonthAndWeekAggregateCache;
         }
 
-        public void AddNewStationInventoryGroups(InventoryFileBase inventoryFile, DateTime newEffectiveDate)
+        public void AddNewStationInventoryGroups(InventoryFileBase inventoryFile)
         {
             if (inventoryFile.InventorySource == null || !inventoryFile.InventorySource.IsActive)
                 throw new Exception(string.Format("The selected source type is invalid or inactive."));
-
-            _ExpireExistingInventoryGroups(inventoryFile.InventoryGroups, inventoryFile.InventorySource, newEffectiveDate);
+            
+            _ExpireExistingInventoryManifestWeeks(inventoryFile);
             _inventoryRepository.AddNewInventory(inventoryFile);
         }
-
-        private void _ExpireExistingInventoryGroups(IEnumerable<StationInventoryGroup> groups, InventorySource source, DateTime newEffectiveDate)
-        {
-            var expireDate = newEffectiveDate.AddDays(-1);
-            var groupNames = groups.Select(g => g.Name).Distinct().ToList();
-            var existingInventory = _inventoryRepository.GetActiveInventoryBySourceAndName(source, groupNames, newEffectiveDate);
-
-            if (!existingInventory.Any())
-                return;
-
-            _inventoryRepository.ExpireInventoryGroupsAndManifests(existingInventory, expireDate, newEffectiveDate);
-        }
-
+        
         public List<StationInventoryGroup> GetStationInventoryGroupsByFileId(int fileId)
         {
             using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
@@ -76,14 +64,14 @@ namespace Services.Broadcast.ApplicationServices
         {
             var audiences = stationInventoryGroups.SelectMany(m => m.Manifests.SelectMany(d => d.ManifestAudiences));
 
-            audiences.ForEach(a=> a.Audience = _audiencesCache.GetDisplayAudienceById(a.Audience.Id));
+            audiences.ForEach(a => a.Audience = _audiencesCache.GetDisplayAudienceById(a.Audience.Id));
         }
 
         private void _SetInventoryGroupsDayparts(List<StationInventoryGroup> stationInventoryGroups)
         {
             var dayparts = stationInventoryGroups.SelectMany(ig => ig.Manifests.SelectMany(m => m.ManifestDayparts.Select(md => md.Daypart)));
 
-            dayparts.ForEach(d=> d = _daypartCache.GetDisplayDaypart(d.Id));
+            dayparts.ForEach(d => d = _daypartCache.GetDisplayDaypart(d.Id));
         }
 
         public void AddNewStationInventory(InventoryFileBase inventoryFile, int? contractedDaypartId)
@@ -142,6 +130,22 @@ namespace Services.Broadcast.ApplicationServices
             }
 
             _inventoryRepository.RemoveManifestWeeks(weeksToExpire);
+        }
+
+        private void _ExpireExistingInventoryManifestWeeks(InventoryFileBase inventoryFile)
+        {            
+            List<StationInventoryManifestWeek> weeksToExpire = new List<StationInventoryManifestWeek>();
+
+            foreach (var manifest in inventoryFile.GetAllManifests().ToList())
+            {
+                var allManifestMediaWeekIds = manifest.ManifestWeeks.Select(x => x.MediaWeek.Id).Distinct();
+                var daypart = manifest.ManifestDayparts.SingleOrDefault();  //open market has only 1 daypart
+
+                var weeks = _inventoryRepository.GetStationInventoryManifestWeeksForOpenMarket(manifest.Station.Id, daypart.ProgramName, daypart.Daypart.Id);
+                weeksToExpire.AddRange(weeks.Where(w => allManifestMediaWeekIds.Contains(w.MediaWeek.Id)));                
+            }
+            
+            _inventoryRepository.RemoveManifestWeeks(weeksToExpire.Distinct().ToList());
         }
     }
 }

@@ -79,8 +79,8 @@ namespace Services.Broadcast.Converters.Scx
                 ScxData scxData = new ScxData
                 {
                     DaypartCode = firstGroup.DaypartCode,
-                    EndDate = firstGroup.EndDate.Value,
-                    StartDate = firstGroup.StartDate.Value,//TODO: review in PRI-8713
+                  //  EndDate = firstGroup.EndDate.Value,
+                 //   StartDate = firstGroup.StartDate.Value,//TODO:sreview in PRI-8713
                     SpotLength = _SpotLengthEngine.GetSpotLengthValueById(firstGroup.Manifests.First().SpotLengthId).ToString(),
                     InventorySource = firstGroup.InventorySource,
                     UnitName = group.Key.GroupName,

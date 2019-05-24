@@ -9,7 +9,6 @@ namespace Services.Broadcast.Entities
     {
         public string UserName { get; set; }
         public string InventorySource { get; set; }
-        public DateTime EffectiveDate { get; set; }
         public DaypartDto Daypart { get; set; }
         public int? RatingBook { get; set; }
         public ProposalEnums.ProposalPlaybackType? PlaybackType { get; set; }

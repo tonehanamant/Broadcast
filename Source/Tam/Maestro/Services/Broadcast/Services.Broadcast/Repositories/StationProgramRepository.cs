@@ -48,10 +48,10 @@ namespace Services.Broadcast.Repositories
                             .Include(s => s.station)
                             .Include(i => i.inventory_sources)
                             .Where(s => s.station.market_code != null)
-                            .Where(p => p.inventory_source_id == rateSource)
-                            .Where(a => (a.effective_date >= flightStart.Date && a.effective_date <= flightEnd.Date)
-                                        || (a.end_date >= flightStart.Date && a.end_date <= flightEnd.Date)
-                                        || (a.effective_date < flightStart.Date && a.end_date > flightEnd.Date))
+                            .Where(p => p.inventory_source_id == rateSource)    //PRI-8712
+                            //.Where(a => (a.effective_date >= flightStart.Date && a.effective_date <= flightEnd.Date)
+                            //            || (a.end_date >= flightStart.Date && a.end_date <= flightEnd.Date)
+                            //            || (a.effective_date < flightStart.Date && a.end_date > flightEnd.Date))
                             .ToList();
 
                         if (proposalMarketIds != null && proposalMarketIds.Count > 0)
@@ -74,8 +74,8 @@ namespace Services.Broadcast.Repositories
                                     AudienceId = ma.audience_id,
                                     Impressions = ma.impressions
                                 }).ToList(),
-                                StartDate = m.effective_date.Value,//TODO: review in PRI-8712
-                                EndDate = m.end_date,
+                                //StartDate = m.effective_date.Value,//TODO: review in PRI-8712
+                                //EndDate = m.end_date,
                                 SpotCost = m.station_inventory_manifest_rates.Where(r => r.spot_length_id == spotLengthId).Select(r => r.spot_cost).SingleOrDefault(),
                                 TotalSpots = m.spots_per_week ?? 0,
                                 Station = new DisplayScheduleStation
@@ -202,8 +202,8 @@ namespace Services.Broadcast.Repositories
                                     AudienceId = ma.audience_id,
                                     Impressions = ma.impressions
                                 }).ToList(),
-                                StartDate = m.effective_date.Value,//TODO: review in PRI-8712
-                                EndDate = m.end_date,
+                               // StartDate = m.effective_date.Value,//TODO: review in PRI-8712
+                               // EndDate = m.end_date,
                                 TotalSpots = m.spots_per_week ?? 0,
                                 Station = new DisplayScheduleStation
                                 {

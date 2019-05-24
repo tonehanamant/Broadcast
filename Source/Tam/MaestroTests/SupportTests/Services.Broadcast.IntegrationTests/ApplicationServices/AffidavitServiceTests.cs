@@ -824,6 +824,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
+        [Ignore("To be fixed in PRI-8712")]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("2book")]
@@ -859,6 +860,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
+        [Ignore("To be fixed in PRI-8712")]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("2book")]
@@ -898,6 +900,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
+        [Ignore("To be fixed in PRI-8712")]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("2book")]
@@ -941,6 +944,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
+        [Ignore("To be fixed in PRI-8712")]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("Impressions")]

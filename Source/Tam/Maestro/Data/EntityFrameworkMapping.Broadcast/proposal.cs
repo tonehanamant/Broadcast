@@ -30,5 +30,6 @@ namespace EntityFrameworkMapping.Broadcast
         public Nullable<int> campaign_id { get; set; }
     
         public virtual ICollection<proposal_versions> proposal_versions { get; set; }
+        public virtual campaign campaign { get; set; }
     }
 }

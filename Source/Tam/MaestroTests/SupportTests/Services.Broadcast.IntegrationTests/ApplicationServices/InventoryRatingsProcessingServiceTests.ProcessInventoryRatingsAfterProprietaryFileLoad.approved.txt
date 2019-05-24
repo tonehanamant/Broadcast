@@ -2,8 +2,6 @@
   {
     "Comment": "Comment 1",
     "DaypartCode": "EMN",
-    "EffectiveDate": null,
-    "EndDate": null,
     "InventorySourceId": 4,
     "ManifestAudiences": [
       {
@@ -883,8 +881,6 @@
   {
     "Comment": "Comment 2",
     "DaypartCode": "EMN",
-    "EffectiveDate": null,
-    "EndDate": null,
     "InventorySourceId": 4,
     "ManifestAudiences": [
       {
@@ -1769,8 +1765,6 @@
   {
     "Comment": "Comment 3",
     "DaypartCode": "EMN",
-    "EffectiveDate": null,
-    "EndDate": null,
     "InventorySourceId": 4,
     "ManifestAudiences": [
       {
@@ -2655,8 +2649,6 @@
   {
     "Comment": "Comment 4",
     "DaypartCode": "EMN",
-    "EffectiveDate": null,
-    "EndDate": null,
     "InventorySourceId": 4,
     "ManifestAudiences": [
       {
@@ -3583,8 +3575,6 @@
   {
     "Comment": "Comment 5",
     "DaypartCode": "EMN",
-    "EffectiveDate": null,
-    "EndDate": null,
     "InventorySourceId": 4,
     "ManifestAudiences": [
       {
@@ -4464,8 +4454,6 @@
   {
     "Comment": "Comment 1",
     "DaypartCode": "EMN",
-    "EffectiveDate": null,
-    "EndDate": null,
     "InventorySourceId": 4,
     "ManifestAudiences": [
       {
@@ -5345,8 +5333,6 @@
   {
     "Comment": "Comment 2",
     "DaypartCode": "EMN",
-    "EffectiveDate": null,
-    "EndDate": null,
     "InventorySourceId": 4,
     "ManifestAudiences": [
       {
@@ -6231,8 +6217,6 @@
   {
     "Comment": "Comment 3",
     "DaypartCode": "EMN",
-    "EffectiveDate": null,
-    "EndDate": null,
     "InventorySourceId": 4,
     "ManifestAudiences": [
       {
@@ -7117,8 +7101,6 @@
   {
     "Comment": "Comment 4",
     "DaypartCode": "EMN",
-    "EffectiveDate": null,
-    "EndDate": null,
     "InventorySourceId": 4,
     "ManifestAudiences": [
       {
@@ -8045,8 +8027,6 @@
   {
     "Comment": "Comment 5",
     "DaypartCode": "EMN",
-    "EffectiveDate": null,
-    "EndDate": null,
     "InventorySourceId": 4,
     "ManifestAudiences": [
       {
@@ -8926,8 +8906,6 @@
   {
     "Comment": "Comment 1",
     "DaypartCode": "EMN",
-    "EffectiveDate": null,
-    "EndDate": null,
     "InventorySourceId": 4,
     "ManifestAudiences": [
       {
@@ -9807,8 +9785,6 @@
   {
     "Comment": "Comment 2",
     "DaypartCode": "EMN",
-    "EffectiveDate": null,
-    "EndDate": null,
     "InventorySourceId": 4,
     "ManifestAudiences": [
       {
@@ -10693,8 +10669,6 @@
   {
     "Comment": "Comment 3",
     "DaypartCode": "EMN",
-    "EffectiveDate": null,
-    "EndDate": null,
     "InventorySourceId": 4,
     "ManifestAudiences": [
       {
@@ -11579,8 +11553,6 @@
   {
     "Comment": "Comment 4",
     "DaypartCode": "EMN",
-    "EffectiveDate": null,
-    "EndDate": null,
     "InventorySourceId": 4,
     "ManifestAudiences": [
       {
@@ -12507,8 +12479,6 @@
   {
     "Comment": "Comment 5",
     "DaypartCode": "EMN",
-    "EffectiveDate": null,
-    "EndDate": null,
     "InventorySourceId": 4,
     "ManifestAudiences": [
       {
@@ -13388,8 +13358,6 @@
   {
     "Comment": "Comment 1",
     "DaypartCode": "EMN",
-    "EffectiveDate": null,
-    "EndDate": null,
     "InventorySourceId": 4,
     "ManifestAudiences": [
       {
@@ -14269,8 +14237,6 @@
   {
     "Comment": "Comment 2",
     "DaypartCode": "EMN",
-    "EffectiveDate": null,
-    "EndDate": null,
     "InventorySourceId": 4,
     "ManifestAudiences": [
       {
@@ -15155,8 +15121,6 @@
   {
     "Comment": "Comment 3",
     "DaypartCode": "EMN",
-    "EffectiveDate": null,
-    "EndDate": null,
     "InventorySourceId": 4,
     "ManifestAudiences": [
       {
@@ -16041,8 +16005,6 @@
   {
     "Comment": "Comment 4",
     "DaypartCode": "EMN",
-    "EffectiveDate": null,
-    "EndDate": null,
     "InventorySourceId": 4,
     "ManifestAudiences": [
       {
@@ -16969,8 +16931,6 @@
   {
     "Comment": "Comment 5",
     "DaypartCode": "EMN",
-    "EffectiveDate": null,
-    "EndDate": null,
     "InventorySourceId": 4,
     "ManifestAudiences": [
       {
@@ -17850,8 +17810,6 @@
   {
     "Comment": "Comment 1",
     "DaypartCode": "EMN",
-    "EffectiveDate": null,
-    "EndDate": null,
     "InventorySourceId": 4,
     "ManifestAudiences": [
       {
@@ -18731,8 +18689,6 @@
   {
     "Comment": "Comment 2",
     "DaypartCode": "EMN",
-    "EffectiveDate": null,
-    "EndDate": null,
     "InventorySourceId": 4,
     "ManifestAudiences": [
       {
@@ -19617,8 +19573,6 @@
   {
     "Comment": "Comment 3",
     "DaypartCode": "EMN",
-    "EffectiveDate": null,
-    "EndDate": null,
     "InventorySourceId": 4,
     "ManifestAudiences": [
       {
@@ -20503,8 +20457,6 @@
   {
     "Comment": "Comment 4",
     "DaypartCode": "EMN",
-    "EffectiveDate": null,
-    "EndDate": null,
     "InventorySourceId": 4,
     "ManifestAudiences": [
       {
@@ -21431,8 +21383,6 @@
   {
     "Comment": "Comment 5",
     "DaypartCode": "EMN",
-    "EffectiveDate": null,
-    "EndDate": null,
     "InventorySourceId": 4,
     "ManifestAudiences": [
       {
@@ -22312,8 +22262,6 @@
   {
     "Comment": "Comment 1",
     "DaypartCode": "EMN",
-    "EffectiveDate": null,
-    "EndDate": null,
     "InventorySourceId": 4,
     "ManifestAudiences": [
       {
@@ -23193,8 +23141,6 @@
   {
     "Comment": "Comment 2",
     "DaypartCode": "EMN",
-    "EffectiveDate": null,
-    "EndDate": null,
     "InventorySourceId": 4,
     "ManifestAudiences": [
       {
@@ -24079,8 +24025,6 @@
   {
     "Comment": "Comment 3",
     "DaypartCode": "EMN",
-    "EffectiveDate": null,
-    "EndDate": null,
     "InventorySourceId": 4,
     "ManifestAudiences": [
       {
@@ -24965,8 +24909,6 @@
   {
     "Comment": "Comment 4",
     "DaypartCode": "EMN",
-    "EffectiveDate": null,
-    "EndDate": null,
     "InventorySourceId": 4,
     "ManifestAudiences": [
       {
@@ -25893,8 +25835,6 @@
   {
     "Comment": "Comment 5",
     "DaypartCode": "EMN",
-    "EffectiveDate": null,
-    "EndDate": null,
     "InventorySourceId": 4,
     "ManifestAudiences": [
       {
@@ -26774,8 +26714,6 @@
   {
     "Comment": "Comment 1",
     "DaypartCode": "EMN",
-    "EffectiveDate": null,
-    "EndDate": null,
     "InventorySourceId": 4,
     "ManifestAudiences": [
       {
@@ -27655,8 +27593,6 @@
   {
     "Comment": "Comment 2",
     "DaypartCode": "EMN",
-    "EffectiveDate": null,
-    "EndDate": null,
     "InventorySourceId": 4,
     "ManifestAudiences": [
       {
@@ -28541,8 +28477,6 @@
   {
     "Comment": "Comment 3",
     "DaypartCode": "EMN",
-    "EffectiveDate": null,
-    "EndDate": null,
     "InventorySourceId": 4,
     "ManifestAudiences": [
       {
@@ -29427,8 +29361,6 @@
   {
     "Comment": "Comment 4",
     "DaypartCode": "EMN",
-    "EffectiveDate": null,
-    "EndDate": null,
     "InventorySourceId": 4,
     "ManifestAudiences": [
       {
@@ -30355,8 +30287,6 @@
   {
     "Comment": "Comment 5",
     "DaypartCode": "EMN",
-    "EffectiveDate": null,
-    "EndDate": null,
     "InventorySourceId": 4,
     "ManifestAudiences": [
       {
