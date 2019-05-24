@@ -15,7 +15,8 @@ namespace Services.Broadcast.ApplicationServices
     public interface IInventorySummaryService : IApplicationService
     {
         List<InventorySource> GetInventorySources();
-        InventorySummaryQuarterFilterDto GetInventoryQuarters(DateTime currentDate);
+        InventoryQuartersDto GetInventoryQuarters(int inventorySourceId, int daypartCodeId);
+        InventoryQuartersDto GetInventoryQuarters(DateTime currentDate);
         List<InventorySummaryDto> GetInventorySummaries(InventorySummaryFilterDto inventorySummaryFilterDto, DateTime currentDate);
     }
 
@@ -46,13 +47,19 @@ namespace Services.Broadcast.ApplicationServices
                                                x.InventoryType == InventorySourceTypeEnum.OpenMarket).ToList();
         }
 
-        public InventorySummaryQuarterFilterDto GetInventoryQuarters(DateTime currentDate)
+        public InventoryQuartersDto GetInventoryQuarters(DateTime currentDate)
         {
-            return new InventorySummaryQuarterFilterDto
+            return new InventoryQuartersDto
             {
                 Quarters = GetInventorySummaryQuarters(currentDate),
                 DefaultQuarter = _QuarterCalculationEngine.GetQuarterRangeByDate(currentDate)
             };
+        }
+
+        public InventoryQuartersDto GetInventoryQuarters(int inventorySourceId, int daypartCodeId)
+        {
+            var dateRange = _InventoryRepository.GetInventoryStartAndEndDates(inventorySourceId, daypartCodeId);
+            return new InventoryQuartersDto { Quarters = _QuarterCalculationEngine.GetAllQuartersForDateRange(dateRange) };
         }
 
         public List<InventorySummaryDto> GetInventorySummaries(InventorySummaryFilterDto inventorySummaryFilterDto, DateTime currentDate)
@@ -124,17 +131,10 @@ namespace Services.Broadcast.ApplicationServices
             return inventorySummaryFactory.CreateInventorySummary(inventorySource, householdAudienceId, quarterDetail);
         }
 
-        private List<InventorySummaryQuarter> GetInventorySummaryQuarters(DateTime currentDate)
+        private List<QuarterDetailDto> GetInventorySummaryQuarters(DateTime currentDate)
         {
-            var inventoriesDateRange = GetAllInventoriesDateRange() ??
-                                       GetCurrentQuarterDateRange(currentDate);
-            var allQuartersBetweenDates = _QuarterCalculationEngine.GetAllQuartersBetweenDates(inventoriesDateRange.Start.Value, 
-                                                                                               inventoriesDateRange.End.Value);
-            return allQuartersBetweenDates.Select(x => new InventorySummaryQuarter
-            {
-                Quarter = x.Quarter,
-                Year = x.Year
-            }).ToList();
+            var inventoriesDateRange = GetAllInventoriesDateRange() ?? GetCurrentQuarterDateRange(currentDate);
+            return _QuarterCalculationEngine.GetAllQuartersBetweenDates(inventoriesDateRange.Start.Value, inventoriesDateRange.End.Value);
         }
 
         private DateRange GetInventorySourceOrCurrentQuarterDateRange(int inventorySourceId, DateTime currentDate)

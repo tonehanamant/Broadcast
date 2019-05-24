@@ -1,0 +1,11 @@
+﻿{
+  "DefaultQuarter": null,
+  "Quarters": [
+    {
+      "EndDate": "2019-03-31T23:59:59",
+      "Quarter": 1,
+      "StartDate": "2018-12-31T00:00:00",
+      "Year": 2019
+    }
+  ]
+}

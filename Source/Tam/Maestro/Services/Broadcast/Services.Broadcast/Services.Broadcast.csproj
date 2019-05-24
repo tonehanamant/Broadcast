@@ -232,7 +232,7 @@
     <Compile Include="Entities\InventorySummary\InventorySummaryDto.cs" />
     <Compile Include="Converters\InventorySummary\InventorySummaryFactory.cs" />
     <Compile Include="Entities\InventorySummary\InventorySummaryFilterDto.cs" />
-    <Compile Include="Entities\InventorySummary\InventorySummaryQuarterFilterDto.cs" />
+    <Compile Include="Entities\InventorySummary\InventoryQuartersDto.cs" />
     <Compile Include="Entities\InventorySummary\InventorySummaryManifestFileDto.cs" />
     <Compile Include="Entities\InventorySummary\InventorySummaryQuarterDto.cs" />
     <Compile Include="Converters\InventorySummary\OpenMarketSummaryFactory.cs" />

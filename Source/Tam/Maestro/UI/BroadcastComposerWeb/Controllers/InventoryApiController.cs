@@ -41,11 +41,32 @@ namespace BroadcastComposerWeb.Controllers
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IInventorySummaryService>().GetInventorySources());
         }
 
+        /// <summary>
+        /// Get all quarters for inventory
+        /// </summary>
+        /// <remarks>
+        /// Get a list of quarters for which there is available inventory
+        /// 
+        /// Make a request without parameters or only with one of the parameters specified 
+        /// in order to get a list of quarters for all sources
+        /// 
+        /// Make a request with both inventorySourceId and daypartCodeId specified in order to get 
+        /// a list of quarters for specific inventory source and daypart
+        /// </remarks>
+        /// <param name="inventorySourceId">Unique identifier of inventory source which is used to filter inventory out</param>
+        /// <param name="daypartCodeId">Unique identifier of daypart code which is used to filter inventory out</param>
         [HttpGet]
         [Route("Quarters")]
-        public BaseResponse<InventorySummaryQuarterFilterDto> GetInventoryQuarters()
+        public BaseResponse<InventoryQuartersDto> GetInventoryQuarters(int? inventorySourceId = null, int? daypartCodeId = null)
         {
-            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IInventorySummaryService>().GetInventoryQuarters(DateTime.Now));
+            return _ConvertToBaseResponse(() =>
+            {
+                var service = _ApplicationServiceFactory.GetApplicationService<IInventorySummaryService>();
+
+                return inventorySourceId.HasValue && daypartCodeId.HasValue ?
+                    service.GetInventoryQuarters(inventorySourceId.Value, daypartCodeId.Value) :
+                    service.GetInventoryQuarters(DateTime.Now);
+            });
         }
 
         [HttpPost]

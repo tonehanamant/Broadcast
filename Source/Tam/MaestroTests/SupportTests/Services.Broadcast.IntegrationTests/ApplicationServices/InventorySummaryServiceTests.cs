@@ -16,6 +16,31 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
     {
         private IInventorySummaryService _InventoryCardService = IntegrationTestApplicationServiceFactory.GetApplicationService<IInventorySummaryService>();
         private IInventoryRepository _InventoryRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
+        private IDaypartCodeRepository _DaypartCodeRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IDaypartCodeRepository>();
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetInventoryQuartersBySourceAndDaypartCodeTest()
+        {
+            var inventorySourceId = _InventoryRepository.GetInventorySourceByName("NBC O&O").Id;
+            var daypartCodeId = _DaypartCodeRepository.GetDaypartCodeByCode("EMN").Id;
+
+            var quarters = _InventoryCardService.GetInventoryQuarters(inventorySourceId, daypartCodeId);
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(quarters));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetInventoryQuartersBySourceAndDaypartCodeTest_NoData()
+        {
+            var inventorySourceId = _InventoryRepository.GetInventorySourceByName("NBC O&O").Id;
+            var daypartCodeId = _DaypartCodeRepository.GetDaypartCodeByCode("DIGI").Id;
+
+            var quarters = _InventoryCardService.GetInventoryQuarters(inventorySourceId, daypartCodeId);
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(quarters));
+        }
 
         [Test]
         [UseReporter(typeof(DiffReporter))]

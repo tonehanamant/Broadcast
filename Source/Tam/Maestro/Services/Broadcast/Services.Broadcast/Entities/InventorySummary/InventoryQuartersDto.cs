@@ -2,9 +2,9 @@
 
 namespace Services.Broadcast.Entities.InventorySummary
 {
-    public class InventorySummaryQuarterFilterDto
+    public class InventoryQuartersDto
     {
-        public List<InventorySummaryQuarter> Quarters { get; set; }
+        public List<QuarterDetailDto> Quarters { get; set; }
         public QuarterDetailDto DefaultQuarter { get; set; }
     }
 }

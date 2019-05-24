@@ -80,6 +80,8 @@ namespace Services.Broadcast.Repositories
         /// </summary>
         /// <param name="manifests">List of manifests containing audiences</param>
         void AddInventoryAudiencesForManifests(List<StationInventoryManifest> manifests);
+
+        DateRange GetInventoryStartAndEndDates(int inventorySourceId, int daypartCodeId);
     }
 
     public class InventoryRepository : BroadcastRepositoryBase, IInventoryRepository
@@ -1288,6 +1290,30 @@ namespace Services.Broadcast.Repositories
                 audience.id = nextSequence;
                 nextSequence++;
             });
+        }
+
+        public DateRange GetInventoryStartAndEndDates(int inventorySourceId, int daypartCodeId)
+        {
+            return _InReadUncommitedTransaction(
+               context =>
+               {
+                   var weeks = (from week in context.station_inventory_manifest_weeks
+                                join manifest in context.station_inventory_manifest on week.station_inventory_manifest_id equals manifest.id
+                                join inventoryFile in context.inventory_files on manifest.file_id equals inventoryFile.id
+                                join inventoryFileHeader in context.inventory_file_proprietary_header on inventoryFile.id equals inventoryFileHeader.inventory_file_id
+                                join daypartCode in context.daypart_codes on inventoryFileHeader.daypart_code equals daypartCode.name
+                                where manifest.inventory_source_id == inventorySourceId && daypartCode.id == daypartCodeId
+                                group week by week.id into weekGroup
+                                select weekGroup.FirstOrDefault()).ToList();
+                   
+                   if (!weeks.Any())
+                       return new DateRange(null, null);
+                   
+                   var start = weeks.Min(x => x.start_date);
+                   var end = weeks.Max(x => x.end_date);
+
+                   return new DateRange(start, end);
+               });
         }
     }
 }
