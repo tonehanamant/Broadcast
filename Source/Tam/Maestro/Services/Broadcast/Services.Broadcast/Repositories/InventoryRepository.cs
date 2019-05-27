@@ -76,6 +76,7 @@ namespace Services.Broadcast.Repositories
         void AddInventoryAudiencesForManifests(List<StationInventoryManifest> manifests);
 
         DateRange GetInventoryStartAndEndDates(int inventorySourceId, int daypartCodeId);
+
         /// <summary>
         /// Returns all the weeks for a station, program name and daypart that need to be expired
         /// </summary>
@@ -712,17 +713,31 @@ namespace Services.Broadcast.Repositories
             return _InReadUncommitedTransaction(
                 context =>
                 {
-                    var query = (from inventory_group in context.station_inventory_group
-                                    .Include(x => x.station_inventory_manifest)
-                                    .Include(x => x.station_inventory_manifest.Select(m => m.station_inventory_manifest_audiences))
-                                    .Include(x => x.station_inventory_manifest.Select(m => m.station_inventory_manifest_weeks))
-                                    .Include(x => x.station_inventory_manifest.Select(m => m.station_inventory_manifest_rates))
-                                    .Include(x => x.station_inventory_manifest.Select(m => m.station_inventory_manifest_dayparts))
-                                    .Include(x => x.station_inventory_manifest.Select(m => m.station))
-                                     //   where inventory_group.start_date >= startDate && inventory_group.end_date <= endDate   PRI-8713
-                                 select inventory_group);
+                    var groups = context.station_inventory_group
+                        .SelectMany(x => x.station_inventory_manifest)
+                        .SelectMany(x => x.station_inventory_manifest_weeks)
+                        .Where(x => x.start_date <= endDate && x.end_date >= startDate)
+                        .GroupBy(x => x.station_inventory_manifest.station_inventory_group_id)
+                        .Select(x => x.FirstOrDefault().station_inventory_manifest.station_inventory_group)
+                        .Include(x => x.station_inventory_manifest)
+                        .Include(x => x.station_inventory_manifest.Select(m => m.station_inventory_manifest_audiences))
+                        .Include(x => x.station_inventory_manifest.Select(m => m.station_inventory_manifest_weeks))
+                        .Include(x => x.station_inventory_manifest.Select(m => m.station_inventory_manifest_weeks.Select(w => w.media_weeks)))
+                        .Include(x => x.station_inventory_manifest.Select(m => m.station_inventory_manifest_rates))
+                        .Include(x => x.station_inventory_manifest.Select(m => m.station_inventory_manifest_dayparts))
+                        .Include(x => x.station_inventory_manifest.Select(m => m.station))
+                        .Include(x => x.inventory_sources)
+                        .ToList()
+                        .Select(_MapToInventoryGroup)
+                        .ToList();
 
-                    return query.ToList().Select(_MapToInventoryGroup).ToList();
+                    // filter out manifests which are out of the date range
+                    foreach (var group in groups)
+                    {
+                        group.Manifests = group.Manifests.Where(m => m.ManifestWeeks.Any(w => w.StartDate <= endDate && w.EndDate >= startDate)).ToList();
+                    }
+
+                    return groups;
                 });
         }
 
@@ -825,44 +840,31 @@ namespace Services.Broadcast.Repositories
             return _InReadUncommitedTransaction(
                context =>
                {
-                   //var manifestDates = (from manifest in context.station_inventory_manifest.
-                   //                                                Include(x => x.station).
-                   //                                                Include(x => x.station_inventory_group)
-                   //                     where manifest.inventory_source_id == inventorySourceId
-                   //                     select new
-                   //                     {
-                   //                         manifest.effective_date,
-                   //                         manifest.end_date,
-                   //                     });
+                   var weeks = context.station_inventory_manifest
+                        .Where(x => x.inventory_source_id == inventorySourceId)
+                        .SelectMany(x => x.station_inventory_manifest_weeks)
+                        .ToList();
 
-                   //var minDate = manifestDates.Min(x => (DateTime?)x.effective_date);
-                   //var maxDate = manifestDates.Max(x => x.end_date);
-
-                   //return new DateRange(minDate, maxDate);
-                   return new DateRange(null, null);    //PRI-8713
+                   return _GetMinMaxDateRange(weeks);
                });
         }
 
         public DateRange GetAllInventoriesDateRange()
         {
-            return _InReadUncommitedTransaction(
-               context =>
-               { //PRI-8713
-                   //var manifestDates = (from manifest in context.station_inventory_manifest.
-                   //                                                Include(x => x.station).
-                   //                                                Include(x => x.station_inventory_group)
-                   //                     select new
-                   //                     {
-                   //                         manifest.effective_date,
-                   //                         manifest.end_date,
-                   //                     });
+            return _InReadUncommitedTransaction(context => _GetMinMaxDateRange(context.station_inventory_manifest_weeks.ToList()));
+        }
 
-                   //var minDate = manifestDates.Min(x => (DateTime?)x.effective_date);
-                   //var maxDate = manifestDates.Max(x => x.end_date);
+        private DateRange _GetMinMaxDateRange(List<station_inventory_manifest_weeks> weeks)
+        {
+            if (weeks.Any())
+            {
+                var minDate = weeks.Min(x => x.start_date);
+                var maxDate = weeks.Max(x => x.end_date);
 
-                   //return new DateRange(minDate, maxDate);
-                   return new DateRange(null, null);
-               });
+                return new DateRange(minDate, maxDate);
+            }
+
+            return new DateRange(null, null);
         }
 
         /// <summary>

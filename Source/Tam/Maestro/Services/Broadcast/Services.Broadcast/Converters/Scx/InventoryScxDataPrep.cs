@@ -75,16 +75,18 @@ namespace Services.Broadcast.Converters.Scx
             {
                 var values = group;
                 List<StationInventoryGroup> items = group.ToList(); //all the manifests for this group and inventory source
+                var manifests = items.SelectMany(w => w.Manifests);
+                var weeks = manifests.SelectMany(x => x.ManifestWeeks);
                 var firstGroup = items.First();
                 ScxData scxData = new ScxData
                 {
                     DaypartCode = firstGroup.DaypartCode,
-                  //  EndDate = firstGroup.EndDate.Value,
-                 //   StartDate = firstGroup.StartDate.Value,//TODO:sreview in PRI-8713
+                    StartDate = weeks.Min(x => x.StartDate),
+                    EndDate = weeks.Max(x => x.EndDate),
                     SpotLength = _SpotLengthEngine.GetSpotLengthValueById(firstGroup.Manifests.First().SpotLengthId).ToString(),
                     InventorySource = firstGroup.InventorySource,
                     UnitName = group.Key.GroupName,
-                    InventoryMarkets = items.SelectMany(w => w.Manifests).GroupBy(y => y.Station.MarketCode).Select(y =>
+                    InventoryMarkets = manifests.GroupBy(y => y.Station.MarketCode).Select(y =>
                     {
                         var groupedManifests = y.ToList();
                         var firstManifest = groupedManifests.First();

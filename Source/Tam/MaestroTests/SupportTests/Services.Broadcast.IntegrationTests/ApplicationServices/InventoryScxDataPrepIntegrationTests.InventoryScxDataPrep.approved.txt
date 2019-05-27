@@ -30,30 +30,6 @@
                 "TargetCpm": 0.0,
                 "TargetImpressions": 0.0,
                 "UnitImpressions": 0.0
-              },
-              {
-                "Dayparts": [],
-                "FlightWeeks": [],
-                "Genres": [],
-                "ProgramId": 331847,
-                "ProgramNames": [],
-                "ProvidedUnitImpressions": null,
-                "StationCode": null,
-                "TargetCpm": 0.0,
-                "TargetImpressions": 0.0,
-                "UnitImpressions": 0.0
-              },
-              {
-                "Dayparts": [],
-                "FlightWeeks": [],
-                "Genres": [],
-                "ProgramId": 331848,
-                "ProgramNames": [],
-                "ProvidedUnitImpressions": null,
-                "StationCode": null,
-                "TargetCpm": 0.0,
-                "TargetImpressions": 0.0,
-                "UnitImpressions": 0.0
               }
             ],
             "StationCode": null

@@ -232,8 +232,8 @@
     "TotalStations": 1
   },
   {
-    "HasRatesAvailableForQuarter": true,
-    "HouseholdImpressions": 48600.0,
+    "HasRatesAvailableForQuarter": false,
+    "HouseholdImpressions": null,
     "InventoryPostingBooks": [],
     "InventorySourceName": "Open Market",
     "IsUpdating": false,
@@ -256,13 +256,13 @@
       "StartDate": "2019-09-30T00:00:00",
       "Year": 2019
     },
-    "TotalMarkets": 1,
-    "TotalPrograms": 1,
-    "TotalStations": 1
+    "TotalMarkets": 0,
+    "TotalPrograms": 0,
+    "TotalStations": 0
   },
   {
     "HasRatesAvailableForQuarter": true,
-    "HouseholdImpressions": 190600.0,
+    "HouseholdImpressions": 83300.0,
     "InventoryPostingBooks": [],
     "InventorySourceName": "Open Market",
     "IsUpdating": false,
@@ -285,13 +285,13 @@
       "StartDate": "2019-09-30T00:00:00",
       "Year": 2019
     },
-    "TotalMarkets": 5,
-    "TotalPrograms": 9,
-    "TotalStations": 5
+    "TotalMarkets": 2,
+    "TotalPrograms": 6,
+    "TotalStations": 2
   },
   {
     "HasRatesAvailableForQuarter": true,
-    "HouseholdImpressions": 143499070.0,
+    "HouseholdImpressions": 140877420.0,
     "InventoryPostingBooks": [],
     "InventorySourceName": "Open Market",
     "IsUpdating": false,
@@ -315,7 +315,7 @@
       "Year": 2019
     },
     "TotalMarkets": 91,
-    "TotalPrograms": 2747,
+    "TotalPrograms": 2622,
     "TotalStations": 192
   },
   {

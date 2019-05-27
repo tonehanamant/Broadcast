@@ -1,6 +1,6 @@
 ﻿[
   {
-    "HasRatesAvailableForQuarter": false,
+    "HasRatesAvailableForQuarter": true,
     "HouseholdImpressions": null,
     "InventoryPostingBooks": [],
     "InventorySourceId": 3,
@@ -13,11 +13,21 @@
       "StartDate": "2019-04-01T00:00:00",
       "Year": 2019
     },
-    "RatesAvailableFromQuarter": null,
-    "RatesAvailableToQuarter": null,
+    "RatesAvailableFromQuarter": {
+      "EndDate": "2019-06-30T23:59:59",
+      "Quarter": 2,
+      "StartDate": "2019-04-01T00:00:00",
+      "Year": 2019
+    },
+    "RatesAvailableToQuarter": {
+      "EndDate": "2019-06-30T23:59:59",
+      "Quarter": 2,
+      "StartDate": "2019-04-01T00:00:00",
+      "Year": 2019
+    },
     "TotalDaypartCodes": 0,
-    "TotalMarkets": 0,
-    "TotalStations": 0,
-    "TotalUnits": 0
+    "TotalMarkets": 1,
+    "TotalStations": 1,
+    "TotalUnits": 1
   }
 ]

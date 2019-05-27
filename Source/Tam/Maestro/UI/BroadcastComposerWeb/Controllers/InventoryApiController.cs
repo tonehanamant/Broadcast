@@ -10,7 +10,6 @@ using Tam.Maestro.Services.Cable.Entities;
 using System.Collections.Generic;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.InventorySummary;
-using Newtonsoft.Json;
 using Services.Broadcast.Exceptions;
 
 namespace BroadcastComposerWeb.Controllers

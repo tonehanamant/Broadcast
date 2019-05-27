@@ -63,8 +63,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 _VerifyFileInventoryManifests(result.FileId);
             }
         }
-
-        [Ignore("To be fixed in PRI-8713")]
+        
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void ProcessInventoryRatingsAfterProprietaryFileLoad_OAndO()

@@ -23,7 +23,7 @@ namespace Services.Broadcast.Converters.InventorySummary
             var ratesAvailableTuple = _GetRatesAvailableFromAndTo(inventorySource);
             var inventorySummaryManifests = GetInventorySummaryManifests(inventorySource, quarterDetail);
             var inventorySummaryManifestFiles = GetInventorySummaryManifestFiles(inventorySummaryManifests);
-            var totalDaypartsCodes = inventorySummaryManifests.GroupBy(x => x.DaypartCode).Count();
+            var totalDaypartsCodes = inventorySummaryManifests.Where(x => !string.IsNullOrWhiteSpace(x.DaypartCode)).GroupBy(x => x.DaypartCode).Count();
             var totalUnits = inventorySummaryManifests.Count();
 
             return new ProprietaryInventorySummaryDto
