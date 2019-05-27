@@ -4,6 +4,7 @@ using IntegrationTests.Common;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
+using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.InventorySummary;
 using Services.Broadcast.Repositories;
 using System;
@@ -40,6 +41,24 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var quarters = _InventoryCardService.GetInventoryQuarters(inventorySourceId, daypartCodeId);
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(quarters));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetDaypartCodesTest()
+        {
+            var inventorySource = _InventoryRepository.GetInventorySourceByName("NBC O&O");
+            var daypartCodes = _InventoryCardService.GetDaypartCodes(inventorySource.Id);
+
+            var jsonResolver = new IgnorableSerializerContractResolver();
+            jsonResolver.Ignore(typeof(DaypartCodeDto), "Id");
+            var jsonSettings = new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                ContractResolver = jsonResolver
+            };
+            
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(daypartCodes, jsonSettings));
         }
 
         [Test]

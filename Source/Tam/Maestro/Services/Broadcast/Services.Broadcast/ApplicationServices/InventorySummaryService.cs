@@ -18,6 +18,7 @@ namespace Services.Broadcast.ApplicationServices
         InventoryQuartersDto GetInventoryQuarters(int inventorySourceId, int daypartCodeId);
         InventoryQuartersDto GetInventoryQuarters(DateTime currentDate);
         List<InventorySummaryDto> GetInventorySummaries(InventorySummaryFilterDto inventorySummaryFilterDto, DateTime currentDate);
+        List<DaypartCodeDto> GetDaypartCodes(int inventorySourceId);
     }
 
     public class InventorySummaryService : IInventorySummaryService
@@ -27,6 +28,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IInventoryRepository _InventoryRepository;
         private readonly IInventorySummaryRepository _InventorySummaryRepository;
         private readonly IProgramRepository _ProgramRepository;
+        private readonly IDaypartCodeRepository _DaypartCodeRepository;
 
         public InventorySummaryService(IDataRepositoryFactory broadcastDataRepositoryFactory,
                                        IQuarterCalculationEngine quarterCalculationEngine,
@@ -37,6 +39,7 @@ namespace Services.Broadcast.ApplicationServices
             _InventoryRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>(); ;
             _InventorySummaryRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventorySummaryRepository>();
             _ProgramRepository = broadcastDataRepositoryFactory.GetDataRepository<IProgramRepository>();
+            _DaypartCodeRepository = broadcastDataRepositoryFactory.GetDataRepository<IDaypartCodeRepository>();
         }
 
         public List<InventorySource> GetInventorySources()
@@ -174,6 +177,11 @@ namespace Services.Broadcast.ApplicationServices
         {
             var datesTuple = _QuarterCalculationEngine.GetDatesForTimeframe(RatesTimeframe.THISQUARTER, currentDate);
             return new DateRange(datesTuple.Item1, datesTuple.Item2);
+        }
+
+        public List<DaypartCodeDto> GetDaypartCodes(int inventorySourceId)
+        {
+            return _DaypartCodeRepository.GetDaypartCodesByInventorySource(inventorySourceId);
         }
     }
 }

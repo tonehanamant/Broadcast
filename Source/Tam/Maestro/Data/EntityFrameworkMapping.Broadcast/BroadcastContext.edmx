@@ -248,8 +248,9 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="code" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="is_active" Type="bit" Nullable="false" />
+          <Property Name="full_name" Type="varchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="daypart_days">
           <Key>
@@ -4964,7 +4965,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="inventory_files" EntitySet="inventory_files" />
             <End Role="inventory_file_ratings_jobs" EntitySet="inventory_file_ratings_jobs" />
           </AssociationSet>
-          <EntitySet Name="daypart_codes" EntityType="BroadcastModel.daypart_codes" />
+		            <EntitySet Name="daypart_codes" EntityType="BroadcastModel.daypart_codes" />
           <EntitySet Name="inventory_file_proprietary_header" EntityType="BroadcastModel.inventory_file_proprietary_header" />
           <AssociationSet Name="FK_inventory_file_proprietary_header_audiences" Association="BroadcastModel.FK_inventory_file_proprietary_header_audiences">
             <End Role="audience" EntitySet="audiences" />
@@ -8675,14 +8676,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="daypart_codes">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="is_active" Type="Boolean" Nullable="false" />
-        </EntityType>
         <EntityType Name="campaign">
           <Key>
             <PropertyRef Name="id" />
@@ -8732,6 +8725,15 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="daypart_codes">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="is_active" Type="Boolean" Nullable="false" />
+          <Property Name="full_name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -10190,15 +10192,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="daypart_codes">
-            <EntityTypeMapping TypeName="BroadcastModel.daypart_codes">
-              <MappingFragment StoreEntitySet="daypart_codes">
-                <ScalarProperty Name="is_active" ColumnName="is_active" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="inventory_file_proprietary_header">
             <EntityTypeMapping TypeName="BroadcastModel.inventory_file_proprietary_header">
               <MappingFragment StoreEntitySet="inventory_file_proprietary_header">
@@ -10244,6 +10237,16 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
                 <ScalarProperty Name="spots" ColumnName="spots" />
                 <ScalarProperty Name="media_week_id" ColumnName="media_week_id" />
                 <ScalarProperty Name="station_inventory_manifest_id" ColumnName="station_inventory_manifest_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="daypart_codes">
+            <EntityTypeMapping TypeName="BroadcastModel.daypart_codes">
+              <MappingFragment StoreEntitySet="daypart_codes">
+                <ScalarProperty Name="full_name" ColumnName="full_name" />
+                <ScalarProperty Name="is_active" ColumnName="is_active" />
+                <ScalarProperty Name="code" ColumnName="code" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

@@ -127,5 +127,19 @@ namespace BroadcastComposerWeb.Controllers
                 };
             }
         }
+
+        /// <summary>
+        /// Get all daypart codes for inventory
+        /// </summary>
+        /// <remarks>
+        /// Get a list of all available daypart codes for specific inventory
+        /// </remarks>
+        /// <param name="inventorySourceId">Unique identifier of inventory source</param>
+        [HttpGet]
+        [Route("DaypartCodes")]
+        public BaseResponse<List<DaypartCodeDto>> GetDaypartCodes(int inventorySourceId)
+        {
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IInventorySummaryService>().GetDaypartCodes(inventorySourceId));
+        }
     }
 }

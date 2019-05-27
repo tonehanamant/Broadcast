@@ -909,7 +909,7 @@ namespace Services.Broadcast.Repositories
                                 join manifest in context.station_inventory_manifest on week.station_inventory_manifest_id equals manifest.id
                                 join inventoryFile in context.inventory_files on manifest.file_id equals inventoryFile.id
                                 join inventoryFileHeader in context.inventory_file_proprietary_header on inventoryFile.id equals inventoryFileHeader.inventory_file_id
-                                join daypartCode in context.daypart_codes on inventoryFileHeader.daypart_code equals daypartCode.name
+                                join daypartCode in context.daypart_codes on inventoryFileHeader.daypart_code equals daypartCode.code
                                 where manifest.inventory_source_id == inventorySourceId && daypartCode.id == daypartCodeId
                                 group week by week.id into weekGroup
                                 select weekGroup.FirstOrDefault()).ToList();

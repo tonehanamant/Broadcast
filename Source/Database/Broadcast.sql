@@ -50,6 +50,37 @@ GO
 
 /*************************************** START UPDATE SCRIPT *****************************************************/
 
+/*************************************** START PRI-7486 *****************************************************/
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE name = N'full_name' AND OBJECT_ID = OBJECT_ID(N'daypart_codes'))
+BEGIN
+    ALTER TABLE daypart_codes
+	ADD full_name [varchar](255) NULL
+END
+
+IF EXISTS(SELECT 1 FROM sys.columns WHERE name = N'name' AND OBJECT_ID = OBJECT_ID(N'daypart_codes'))
+BEGIN
+	EXEC sp_RENAME 'daypart_codes.name', 'code', 'COLUMN'
+END
+
+GO
+
+IF EXISTS(SELECT 1 FROM sys.columns WHERE name = N'full_name' AND OBJECT_ID = OBJECT_ID(N'daypart_codes'))
+BEGIN
+    update daypart_codes set full_name = 'Early Morning News' where code = 'EMN'
+	update daypart_codes set full_name = 'Midday News' where code = 'MDN'
+	update daypart_codes set full_name = 'Evening News' where code = 'EN'
+	update daypart_codes set full_name = 'Late News' where code = 'LN'
+	update daypart_codes set full_name = 'Evening News/Late News' where code = 'ENLN'
+	update daypart_codes set full_name = 'Early Fringe' where code = 'EF'
+	update daypart_codes set full_name = 'Prime Access' where code = 'PA'
+	update daypart_codes set full_name = 'Prime' where code = 'PT'
+	update daypart_codes set full_name = 'Late Fringe' where code = 'LF'
+	update daypart_codes set full_name = 'Total Day Syndication' where code = 'SYN'
+	update daypart_codes set full_name = 'Overnights' where code = 'OVN'
+	update daypart_codes set full_name = 'Daytime' where code = 'DAY'
+	update daypart_codes set full_name = 'Diginet' where code = 'DIGI'
+END
+/*************************************** END PRI-7486 *****************************************************/
 
 /*************************************** START PRI-8714 *****************************************************/
 --insert missing data into station_inventory_manifest_weeks for all the open market manifests
