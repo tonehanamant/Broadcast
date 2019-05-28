@@ -85,6 +85,8 @@ namespace Services.Broadcast.Repositories
         /// <param name="daypartId">Daypart id to filter dayparts</param>
         /// <returns>List of StationInventoryManifestWeek objects</returns>
         List<StationInventoryManifestWeek> GetStationInventoryManifestWeeksForOpenMarket(int stationId, string programName, int daypartId);
+
+        List<StationInventoryGroup> GetInventoryGroups(int inventorySourceId, int daypartCodeId, DateTime startDate, DateTime endDate);
     }
 
     public class InventoryRepository : BroadcastRepositoryBase, IInventoryRepository
@@ -923,6 +925,33 @@ namespace Services.Broadcast.Repositories
                    var end = weeks.Max(x => x.end_date);
 
                    return new DateRange(start, end);
+               });
+        }
+
+        public List<StationInventoryGroup> GetInventoryGroups(int inventorySourceId, int daypartCodeId, DateTime startDate, DateTime endDate)
+        {
+            return _InReadUncommitedTransaction(
+               context =>
+               {
+                   var queryResult = (from week in context.station_inventory_manifest_weeks
+                                      join manifest in context.station_inventory_manifest on week.station_inventory_manifest_id equals manifest.id
+                                      join manifestGroup in context.station_inventory_group on manifest.station_inventory_group_id equals manifestGroup.id
+                                      join inventoryFile in context.inventory_files on manifest.file_id equals inventoryFile.id
+                                      join inventoryFileHeader in context.inventory_file_proprietary_header on inventoryFile.id equals inventoryFileHeader.inventory_file_id
+                                      join daypartCode in context.daypart_codes on inventoryFileHeader.daypart_code equals daypartCode.code
+                                      where manifest.inventory_source_id == inventorySourceId &&
+                                            daypartCode.id == daypartCodeId &&
+                                            week.start_date <= endDate && week.end_date >= startDate
+                                      group manifestGroup by manifestGroup.id into manifestGroupGrouping
+                                      select manifestGroupGrouping.FirstOrDefault()).ToList();
+
+                   return queryResult.Select(x => new StationInventoryGroup
+                   {
+                       Id = x.id,
+                       Name = x.name,
+                       DaypartCode = x.daypart_code,
+                       SlotNumber = x.slot_number
+                   }).ToList();
                });
         }
     }

@@ -19,6 +19,7 @@ namespace Services.Broadcast.ApplicationServices
         InventoryQuartersDto GetInventoryQuarters(DateTime currentDate);
         List<InventorySummaryDto> GetInventorySummaries(InventorySummaryFilterDto inventorySummaryFilterDto, DateTime currentDate);
         List<DaypartCodeDto> GetDaypartCodes(int inventorySourceId);
+        List<string> GetInventoryUnits(int inventorySourceId, int daypartCodeId, DateTime startDate, DateTime endDate);
     }
 
     public class InventorySummaryService : IInventorySummaryService
@@ -182,6 +183,18 @@ namespace Services.Broadcast.ApplicationServices
         public List<DaypartCodeDto> GetDaypartCodes(int inventorySourceId)
         {
             return _DaypartCodeRepository.GetDaypartCodesByInventorySource(inventorySourceId);
+        }
+
+        public List<string> GetInventoryUnits(int inventorySourceId, int daypartCodeId, DateTime startDate, DateTime endDate)
+        {
+            if (startDate > endDate)
+            {
+                return new List<string>();
+            }
+
+            var groups = _InventoryRepository.GetInventoryGroups(inventorySourceId, daypartCodeId, startDate, endDate);
+
+            return groups.Select(x => x.Name).Distinct(StringComparer.OrdinalIgnoreCase).ToList();
         }
     }
 }

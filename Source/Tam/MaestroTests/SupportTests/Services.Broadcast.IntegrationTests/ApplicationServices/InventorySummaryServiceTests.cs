@@ -15,9 +15,23 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
     [TestFixture]
     public class InventorySummaryServiceTests
     {
-        private IInventorySummaryService _InventoryCardService = IntegrationTestApplicationServiceFactory.GetApplicationService<IInventorySummaryService>();
-        private IInventoryRepository _InventoryRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
-        private IDaypartCodeRepository _DaypartCodeRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IDaypartCodeRepository>();
+        private readonly IInventorySummaryService _InventoryCardService = IntegrationTestApplicationServiceFactory.GetApplicationService<IInventorySummaryService>();
+        private readonly IInventoryRepository _InventoryRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
+        private readonly IDaypartCodeRepository _DaypartCodeRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IDaypartCodeRepository>();
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetInventoryUnitsTest()
+        {
+            var inventorySourceId = 4; // TTWN
+            var daypartCodeId = 1; // EMN
+            var startDate = new DateTime(2019, 4, 1);
+            var endDate = new DateTime(2019, 6, 30, 23, 59, 59);
+
+            var units = _InventoryCardService.GetInventoryUnits(inventorySourceId, daypartCodeId, startDate, endDate);
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(units));
+        }
 
         [Test]
         [UseReporter(typeof(DiffReporter))]

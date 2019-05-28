@@ -140,5 +140,24 @@ namespace BroadcastComposerWeb.Controllers
         {
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IInventorySummaryService>().GetDaypartCodes(inventorySourceId));
         }
+
+        /// <summary>
+        /// Get all units for inventory
+        /// </summary>
+        /// <remarks>
+        /// Get a list of units for which there is available inventory that match inventory source, daypart code, start date, end date
+        /// </remarks>
+        /// <param name="inventorySourceId">Unique identifier of inventory source which is used to filter inventory out</param>
+        /// <param name="daypartCodeId">Unique identifier of daypart code which is used to filter inventory out</param>
+        /// <param name="startDate">Start date of the period for which inventory needs to be found</param>
+        /// <param name="endDate">End date of the period for which inventory needs to be found</param>
+        [HttpGet]
+        [Route("Units")]
+        public BaseResponse<List<string>> GetUnits(int inventorySourceId, int daypartCodeId, DateTime startDate, DateTime endDate)
+        {
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory
+                .GetApplicationService<IInventorySummaryService>()
+                .GetInventoryUnits(inventorySourceId, daypartCodeId, startDate, endDate));
+        }
     }
 }
