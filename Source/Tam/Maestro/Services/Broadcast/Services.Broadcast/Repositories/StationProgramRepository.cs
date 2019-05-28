@@ -44,14 +44,14 @@ namespace Services.Broadcast.Repositories
                             .Include(a => a.station_inventory_manifest_dayparts.Select(d => d.station_inventory_manifest_daypart_genres))
                             .Include(b => b.station_inventory_manifest_audiences)
                             .Include(m => m.station_inventory_manifest_rates)
+                            .Include(w => w.station_inventory_manifest_weeks)
                             .Include(m => m.station_inventory_spots)
-                            .Include(s => s.station)
                             .Include(i => i.inventory_sources)
+                            .Include(s => s.station)
                             .Where(s => s.station.market_code != null)
-                            .Where(p => p.inventory_source_id == rateSource)    //PRI-8712
-                            //.Where(a => (a.effective_date >= flightStart.Date && a.effective_date <= flightEnd.Date)
-                            //            || (a.end_date >= flightStart.Date && a.end_date <= flightEnd.Date)
-                            //            || (a.effective_date < flightStart.Date && a.end_date > flightEnd.Date))
+                            .Where(p => p.inventory_source_id == rateSource)
+                            .Where(x => x.station_inventory_manifest_weeks.Min(y => y.start_date) <= flightEnd.Date)
+                            .Where(x => x.station_inventory_manifest_weeks.Max(y => y.end_date) >= flightStart.Date)
                             .ToList();
 
                         if (proposalMarketIds != null && proposalMarketIds.Count > 0)
@@ -60,7 +60,7 @@ namespace Services.Broadcast.Repositories
                         }
 
                         return (manifests.Select(m =>
-                            new ProposalProgramDto()
+                            new ProposalProgramDto
                             {
                                 ManifestId = m.id,
                                 ManifestDayparts = m.station_inventory_manifest_dayparts.Select(md => new ProposalProgramDto.ManifestDaypartDto
@@ -74,8 +74,8 @@ namespace Services.Broadcast.Repositories
                                     AudienceId = ma.audience_id,
                                     Impressions = ma.impressions
                                 }).ToList(),
-                                //StartDate = m.effective_date.Value,//TODO: review in PRI-8712
-                                //EndDate = m.end_date,
+                                StartDate = m.station_inventory_manifest_weeks.Min(w => w.start_date),
+                                EndDate = m.station_inventory_manifest_weeks.Max(w => w.end_date),
                                 SpotCost = m.station_inventory_manifest_rates.Where(r => r.spot_length_id == spotLengthId).Select(r => r.spot_cost).SingleOrDefault(),
                                 TotalSpots = m.spots_per_week ?? 0,
                                 Station = new DisplayScheduleStation
@@ -182,6 +182,7 @@ namespace Services.Broadcast.Repositories
                             .Include(b => b.station_inventory_manifest_audiences)
                             .Include(m => m.station_inventory_manifest_rates)
                             .Include(m => m.station_inventory_spots)
+                            .Include(m => m.station_inventory_manifest_weeks)
                             .Include(s => s.station)
                             .Include(i => i.inventory_sources)
                             .Where(p => manifestIds.Contains(p.id))
@@ -202,8 +203,8 @@ namespace Services.Broadcast.Repositories
                                     AudienceId = ma.audience_id,
                                     Impressions = ma.impressions
                                 }).ToList(),
-                               // StartDate = m.effective_date.Value,//TODO: review in PRI-8712
-                               // EndDate = m.end_date,
+                                StartDate = m.station_inventory_manifest_weeks.Min(w => w.start_date),
+                                EndDate = m.station_inventory_manifest_weeks.Max(w => w.end_date),
                                 TotalSpots = m.spots_per_week ?? 0,
                                 Station = new DisplayScheduleStation
                                 {

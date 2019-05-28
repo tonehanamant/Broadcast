@@ -246,7 +246,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore("To be fixed in PRI-8712")]
         [Test]
         public void CanFilterOpenMarketProposalInventoryByAffiliation()
         {
@@ -312,7 +311,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore("To be fixed in PRI-8712")]
         [Test]
         public void CanFilterOpenMarketProposalInventoryByDaypart()
         {
@@ -361,7 +359,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore("To be fixed in PRI-8712")]
         [Test]
         public void CanFilterOpenMarketProposalProgramsWithSpotsAllocated()
         {
@@ -392,7 +389,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore("To be fixed in PRI-8712")]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void GetInventory_Refined()
@@ -418,7 +414,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore("To be fixed in PRI-8712")]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void GetInventory_RefineOnlyIncludeGenre()
@@ -482,7 +477,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             _ProposalOpenMarketInventoryService.SaveInventoryAllocations(request);
         }
 
-        [Ignore("To be fixed in PRI-8712")]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void CanLoadOpenMarketProposalInventoryWithHutAndShareBooks()
@@ -512,7 +506,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore("To be fixed in PRI-8712")]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void CanLoadOpenMarketProposalInventoryWithSingleBookOnly()
@@ -1543,7 +1536,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore("To be fixed in PRI-8712")]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void CanGetInventory()
@@ -1563,7 +1555,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             Approvals.Verify(inventoryJson);
         }
 
-        [Ignore("To be fixed in PRI-8712")]
         [Test]
         public void SetsProvidedUnitImpressions()
         {
@@ -1589,7 +1580,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             Assert.IsTrue(programWithProvidedUnitImpressionsExists);
         }
 
-        [Ignore("To be fixed in PRI-8712")]
         [Test]
         public void CalculatesTotalImpressions_ForInventoryWeeks()
         {
@@ -1698,7 +1688,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             _ProposalService.SaveProposal(proposal, "IntegrationTestUser", DateTime.Now);
         }
 
-        [Ignore("To be fixed in PRI-8712")]
         [Test]
         public void SetsCanEditSpotsPropertyTrue_ForProgramsThatHaveImpressions()
         {
@@ -1714,7 +1703,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             Assert.True(programsWithImpressionsHavePropertySetTrue);
         }
 
-        [Ignore("To be fixed in PRI-8712")]
         [Test]
         public void SetsCanEditSpotsPropertyFalse_ForProgramsThatDoNotHaveImpressions()
         {
@@ -1730,7 +1718,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             Assert.True(programsWithoutImpressionsHavePropertySetFalse);
         }
 
-        [Ignore("To be fixed in PRI-8712")]
         [Test]
         public void ChecksForAllocatedSpots()
         {
@@ -1794,7 +1781,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore("To be fixed in PRI-8712")]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void CalculateCpmWhenStationImpressionsIsNullOrZero()
@@ -1814,7 +1800,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             Approvals.Verify(inventoryJson);
         }
 
-        [Ignore("To be fixed in PRI-8712")]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void SequenceContainsNoElementsErrorFix_BCOP4322()
@@ -1840,7 +1825,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             Approvals.Verify(json);
         }
 
-        [Ignore("To be fixed in PRI-8712")]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void GetOpenMarketInventoryWithoutNonRatedStations()

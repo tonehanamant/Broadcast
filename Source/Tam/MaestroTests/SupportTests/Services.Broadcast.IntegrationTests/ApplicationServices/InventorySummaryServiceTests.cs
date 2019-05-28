@@ -83,7 +83,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(inventoryCards));
         }
-        
+
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void GetInventoryQuartersTest()

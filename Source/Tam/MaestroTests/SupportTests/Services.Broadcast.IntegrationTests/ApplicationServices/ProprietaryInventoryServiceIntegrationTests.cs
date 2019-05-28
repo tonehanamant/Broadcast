@@ -396,7 +396,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore("To be fixed in PRI-8712")]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void SaveBarterInventoryFile_DuplicateDataError_ForecastDb_TwoBooks()
@@ -405,7 +404,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             _VerifyFileInventoryGroups(fileName);
         }
 
-        [Ignore("To be fixed in PRI-8712")]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void SaveBarterInventoryFile_DuplicateDataError_ForecastDb_SingleBook()

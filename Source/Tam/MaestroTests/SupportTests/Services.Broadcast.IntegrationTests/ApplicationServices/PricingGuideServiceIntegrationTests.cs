@@ -58,7 +58,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore("To be fixed in PRI-8712")]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void GetPricingGuideForProposalDetail_PRI612()
@@ -77,8 +76,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 _VerifyPricingGuideModel(proposalInventory);
             }
         }
-
-        [Ignore("To be fixed in PRI-8712")]
+        
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void GetPricingGuideForProposalDetail_PRI7148()
@@ -94,8 +92,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 _VerifyPricingGuideModel(proposalInventory);
             }
         }
-
-        [Ignore("To be fixed in PRI-8712")]
+        
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void GetOpenMarketInventory_WithEnteredManuallySpots_WithoutGoals()
@@ -121,8 +118,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 _VerifyPricingGuideModel(result);
             }
         }
-
-        [Ignore("To be fixed in PRI-8712")]
+        
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void GetOpenMarketInventory_WithEnteredManuallySpots_WithGoals()
@@ -151,8 +147,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 _VerifyPricingGuideModel(result);
             }
         }
-
-        [Ignore("To be fixed in PRI-8712")]
+        
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void GetOpenMarketInventory_WithEnteredManuallySpots_WithoutMaintainOfThem()
@@ -181,8 +176,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 _VerifyPricingGuideModel(result);
             }
         }
-
-        [Ignore("To be fixed in PRI-8712")]
+        
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void SavePricingGuide()
@@ -198,8 +192,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 _VerifyPricingGuideModel(proposalInventory);
             }
         }
-
-        [Ignore("To be fixed in PRI-8712")]
+        
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("Impressions")]
@@ -217,8 +210,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 _VerifyPricingGuideModel(pricingGuideOpenMarketDto);
             }
         }
-
-        [Ignore("To be fixed in PRI-8712")]
+        
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("Impressions")]
@@ -236,7 +228,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore("To be fixed in PRI-8712")]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("Impressions")]
@@ -254,8 +245,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 _VerifyPricingGuideModel(pricingGuideOpenMarketDto);
             }
         }
-
-        [Ignore("To be fixed in PRI-8712")]
+        
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("Impressions")]
@@ -274,7 +264,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore("To be fixed in PRI-8712")]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("Impressions")]
@@ -293,7 +282,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore("To be fixed in PRI-8712")]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("Impressions")]
@@ -311,8 +299,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 _VerifyPricingGuideModel(pricingGuideOpenMarketDto);
             }
         }
-
-        [Ignore("To be fixed in PRI-8712")]
+        
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("Impressions")]
@@ -333,7 +320,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore("To be fixed in PRI-8712")]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("Impressions")]
@@ -536,7 +522,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             Assert.IsTrue(resultDoesNotHavePrograms);
         }
 
-        [Ignore("To be fixed in PRI-8712")]
         [Test]
         [Category("Impressions")]
         public void TotalsAreUpdatedWhenApplyingFilter()
@@ -604,7 +589,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             Assert.IsTrue(resultHasProgramsOnlyWhichHasAirtimeThatIntersectsWithOneOfExpectedOnes);
         }
 
-        [Ignore("To be fixed in PRI-8712")]
         [Test]
         public void DoesNotMatchProgramsUsingAirtimesFilter()
         {
@@ -884,7 +868,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             Assert.True(programsWithImpressionsHavePropertySetFalse);
         }
 
-        [Ignore("To be fixed in PRI-8712")]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("Impressions")]
@@ -944,7 +927,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var result = _PricingGuideService.SaveAllocations(allocationRequest);
         }
 
-        [Ignore("To be fixed in PRI-8712")]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("Impressions")]
@@ -967,7 +949,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore("To be fixed in PRI-8712")]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("Impressions")]
@@ -989,7 +970,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             _VerifyPricingGuideModel(result);
         }
 
-        [Ignore("To be fixed in PRI-8712")]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("Impressions")]
@@ -1012,7 +992,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore("To be fixed in PRI-8712")]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void GetPricingGuideExcludeAllMarkets()
@@ -1041,7 +1020,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore("To be fixed in PRI-8712")]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("Impressions")]
@@ -1085,7 +1063,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore("To be fixed in PRI-8712")]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("Impressions")]
@@ -1129,7 +1106,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore("To be fixed in PRI-8712")]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("Impressions")]
@@ -1187,7 +1163,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             Assert.IsTrue(lastMarketIsInResultList);
         }
 
-        [Ignore("To be fixed in PRI-8712")]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("Impressions")]
@@ -1210,7 +1185,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             _VerifyPricingGuideModel(result);
         }
 
-        [Ignore("To be fixed in PRI-8712")]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("Impressions")]
@@ -1239,7 +1213,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             _VerifyPricingGuideModel(result);
         }
 
-        [Ignore("To be fixed in PRI-8712")]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("Impressions")]
@@ -1272,7 +1245,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore("To be fixed in PRI-8712")]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("Impressions")]
@@ -1303,7 +1275,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore("To be fixed in PRI-8712")]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("Impressions")]
@@ -1334,7 +1305,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore("To be fixed in PRI-8712")]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("Impressions")]
@@ -1366,7 +1336,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore("To be fixed in PRI-8712")]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("Impressions")]
@@ -1397,7 +1366,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             _VerifyPricingGuideModel(result);
         }
 
-        [Ignore("To be fixed in PRI-8712")]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void GetPricingGuideWithEquivalizedImpressions()
@@ -1417,7 +1385,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             _VerifyPricingGuideModel(pricingGuideOpenMarketDto);
         }
 
-        [Ignore("To be fixed in PRI-8712")]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void GetPricingGuideWithIndexing()
@@ -1440,7 +1407,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             _VerifyPricingGuideModel(pricingGuideOpenMarketDto);
         }
 
-        [Ignore("To be fixed in PRI-8712")]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void GetPricingGuideWithLatestCoverage()
@@ -1467,7 +1433,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore("To be fixed in PRI-8712")]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void GetPricingGuideWithLatestCoverageUpdatesMarketRank()
@@ -1494,7 +1459,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore("To be fixed in PRI-8712")]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void GetPricingGuideWithInflationIndexingUpdatesToCpm()
@@ -1516,7 +1480,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             _VerifyPricingGuideModel(pricingGuideOpenMarketDto);
         }
 
-        [Ignore("To be fixed in PRI-8712")]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void GetPricingGuideWithMarginIndexingUpdatesToCpm()
@@ -1538,7 +1501,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             _VerifyPricingGuideModel(pricingGuideOpenMarketDto);
         }
 
-        [Ignore("To be fixed in PRI-8712")]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void GetPricingGuideWithMarginAndInflationIndexingUpdatesToCpm()
@@ -1561,7 +1523,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             _VerifyPricingGuideModel(pricingGuideOpenMarketDto);
         }
 
-        [Ignore("To be fixed in PRI-8712")]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void CopyToBuyTest()
@@ -1593,7 +1554,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore("To be fixed in PRI-8712")]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void GetPricingGuideWithIndexingOnlyProjectedImpressionsAreAdjusted()
@@ -1615,7 +1575,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             _VerifyPricingGuideModel(pricingGuideOpenMarketDto);
         }
 
-        [Ignore("To be fixed in PRI-8712")]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void CopyToBuyNoProjectedImpressionsTest()
@@ -1635,7 +1594,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore("To be fixed in PRI-8712")]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void SavePricingGuideWithExtensiveProgramName()
@@ -1690,7 +1648,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore("To be fixed in PRI-8712")]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void GetPricingGuideWithIndexingProjectedImpressionsAndCpmAdjusted()
@@ -1712,7 +1669,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             _VerifyPricingGuideModel(pricingGuideOpenMarketDto);
         }
 
-        [Ignore("To be fixed in PRI-8712")]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void GetPricingGuideNoStationsWithoutMarketData()

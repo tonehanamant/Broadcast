@@ -89,24 +89,24 @@
       "Stations": 3
     },
     {
-      "AvgCpm": 16.186522572735222441813824147,
+      "AvgCpm": 15.400852621532960780773590286,
       "Coverage": 0.529,
       "Id": 114,
       "MaxCpm": 240.18253872943437012129218206,
       "MinCpm": 3.0389363722697056030389363723,
       "Name": "Buffalo",
-      "Programs": 218,
+      "Programs": 208,
       "Selected": false,
       "Stations": 5
     },
     {
-      "AvgCpm": 15.207960471155004529423953992,
+      "AvgCpm": 14.794473360122987046041908033,
       "Coverage": 0.29,
       "Id": 237,
       "MaxCpm": 105.32591414944356120826709062,
       "MinCpm": 2.5000,
       "Name": "Cedar Rapids-Wtrlo-IWC&Dub",
-      "Programs": 105,
+      "Programs": 103,
       "Selected": false,
       "Stations": 3
     },
@@ -375,13 +375,13 @@
       "Stations": 1
     },
     {
-      "AvgCpm": 9.624495061556537133598365773,
+      "AvgCpm": 8.759787530328984797064572293,
       "Coverage": 0.609,
       "Id": 166,
-      "MaxCpm": 107.33644609026995116191702893,
+      "MaxCpm": 38.815167026515610974988476747,
       "MinCpm": 1.9841269841269841269841269841,
       "Name": "Harrisburg-Lncstr-Leb-York",
-      "Programs": 116,
+      "Programs": 115,
       "Selected": false,
       "Stations": 4
     },
@@ -573,13 +573,13 @@
       "Stations": 2
     },
     {
-      "AvgCpm": 9.998356041866248730480900812,
+      "AvgCpm": 10.000992385264922144906907996,
       "Coverage": 0.919,
       "Id": 259,
       "MaxCpm": 58.736539654239349797185398417,
       "MinCpm": 1.4705882352941176470588235294,
       "Name": "Nashville",
-      "Programs": 116,
+      "Programs": 115,
       "Selected": false,
       "Stations": 3
     },
@@ -650,24 +650,24 @@
       "Stations": 3
     },
     {
-      "AvgCpm": 6.3476575690579947846046486694,
+      "AvgCpm": 6.3317100607578861869090066256,
       "Coverage": 0.316,
       "Id": 232,
       "MaxCpm": 37.500,
       "MinCpm": 1.0000,
       "Name": "Paducah-Cape Girard-Harsbg",
-      "Programs": 136,
+      "Programs": 131,
       "Selected": false,
       "Stations": 3
     },
     {
-      "AvgCpm": 21.506575067564355553611567935,
+      "AvgCpm": 21.071388923713575061450421463,
       "Coverage": 0.198,
       "Id": 275,
       "MaxCpm": 50.163029847002758966641585152,
       "MinCpm": 8.472930751443046018605143775,
       "Name": "Peoria-Bloomington",
-      "Programs": 68,
+      "Programs": 66,
       "Selected": false,
       "Stations": 2
     },
@@ -771,13 +771,13 @@
       "Stations": 1
     },
     {
-      "AvgCpm": 22.49058640307712661843260916,
+      "AvgCpm": 22.410581235847162751811676538,
       "Coverage": 0.343,
       "Id": 138,
       "MaxCpm": 200.50125313283208020050125313,
       "MinCpm": 0.7633587786259541984732824427,
       "Name": "Rochester, NY",
-      "Programs": 128,
+      "Programs": 127,
       "Selected": false,
       "Stations": 3
     },
@@ -991,13 +991,13 @@
       "Stations": 2
     },
     {
-      "AvgCpm": 29.850431307140709418297975538,
+      "AvgCpm": 22.105744984274631720791613659,
       "Coverage": 0.467,
       "Id": 177,
-      "MaxCpm": 144.23076923076923076923076923,
+      "MaxCpm": 108.10810810810810810810810811,
       "MinCpm": 3.0060120240480961923847695391,
       "Name": "Wilkes Barre-Scranton-Hztn",
-      "Programs": 182,
+      "Programs": 146,
       "Selected": false,
       "Stations": 3
     }
