@@ -187,5 +187,22 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             Approvals.Verify(openMarketCardJson);
         }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetInventorySummaryFilterByDaypartCodeIdTest()
+        {
+            var inventoryCards = _InventoryCardService.GetInventorySummaries(new InventorySummaryFilterDto
+            {
+                Quarter = new InventorySummaryQuarter
+                {
+                    Quarter = 1,
+                    Year = 2019
+                },
+                DaypartCodeId = 1
+            }, new DateTime(2019, 04, 01));
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(inventoryCards));
+        }
     }
 }

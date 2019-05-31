@@ -209,6 +209,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Aggregates\SchedulesAggregate.cs" />
+    <Compile Include="ApplicationServices\DaypartCodeService.cs" />
     <Compile Include="Entities\CampaignDto.cs" />
     <Compile Include="ApplicationServices\CampaignService.cs" />
     <Compile Include="ApplicationServices\ProprietaryInventoryService.cs" />

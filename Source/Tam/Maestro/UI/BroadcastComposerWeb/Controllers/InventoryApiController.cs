@@ -68,6 +68,16 @@ namespace BroadcastComposerWeb.Controllers
             });
         }
 
+        /// <summary>
+        /// Lists the inventory summaries
+        /// </summary>
+        /// <remarks>
+        /// The filter object works by either receiving a inventory source, or a quarter.
+        /// Additional filters apply on the set that is returned based on what was available
+        /// from the sources or quarters.
+        /// </remarks>
+        /// <param name="inventorySourceCardFilter">Filter object for filtering the summaries</param>
+        /// <returns>A list of inventory summaries</returns>
         [HttpPost]
         [Route("Summaries")]
         public BaseResponse<List<InventorySummaryDto>> GetInventorySummaries(InventorySummaryFilterDto inventorySourceCardFilter)

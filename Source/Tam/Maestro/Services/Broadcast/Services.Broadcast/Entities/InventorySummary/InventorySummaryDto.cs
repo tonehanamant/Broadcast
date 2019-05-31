@@ -12,7 +12,7 @@ namespace Services.Broadcast.Entities.InventorySummary
         public int TotalMarkets { get; set; }
         public int TotalStations { get; set; }        
         public double? HouseholdImpressions { get; set; }
-        public List<InventorySummaryBookDto> InventoryPostingBooks { get; set; }
+        public List<InventorySummaryBookDto> InventoryPostingBooks { get; set; } = new List<InventorySummaryBookDto>();
         public DateTime? LastUpdatedDate { get; set; }
         public bool IsUpdating { get; set; }
         public QuarterDetailDto RatesAvailableFromQuarter { get; set; }

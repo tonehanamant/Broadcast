@@ -2,6 +2,7 @@
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.InventorySummary;
 using Services.Broadcast.Repositories;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Services.Broadcast.Converters.InventorySummary
@@ -18,25 +19,25 @@ namespace Services.Broadcast.Converters.InventorySummary
 
         public override InventorySummaryDto CreateInventorySummary(InventorySource inventorySource,
                                                                    int householdAudienceId,
-                                                                   QuarterDetailDto quarterDetail)
+                                                                   QuarterDetailDto quarterDetail,
+                                                                   List<InventorySummaryManifestDto> manifests)
         {
             var ratesAvailableTuple = _GetRatesAvailableFromAndTo(inventorySource);
-            var inventorySummaryManifests = GetInventorySummaryManifests(inventorySource, quarterDetail);
-            var inventorySummaryManifestFiles = GetInventorySummaryManifestFiles(inventorySummaryManifests);
-            var totalDaypartsCodes = inventorySummaryManifests.Where(x => !string.IsNullOrWhiteSpace(x.DaypartCode)).GroupBy(x => x.DaypartCode).Count();
-            var totalUnits = inventorySummaryManifests.Count();
+            var inventorySummaryManifestFiles = GetInventorySummaryManifestFiles(manifests);
+            var totalDaypartsCodes = manifests.Where(x => !string.IsNullOrWhiteSpace(x.DaypartCode)).GroupBy(x => x.DaypartCode).Count();
+            var totalUnits = manifests.Count();
 
             return new ProprietaryInventorySummaryDto
             {
                 InventorySourceId = inventorySource.Id,
                 InventorySourceName = inventorySource.Name,
-                HasRatesAvailableForQuarter = GetHasRatesAvailable(inventorySummaryManifests),
+                HasRatesAvailableForQuarter = GetHasRatesAvailable(manifests),
                 Quarter = quarterDetail,
-                TotalMarkets = GetTotalMarkets(inventorySummaryManifests),
-                TotalStations = GetTotalStations(inventorySummaryManifests),
+                TotalMarkets = GetTotalMarkets(manifests),
+                TotalStations = GetTotalStations(manifests),
                 TotalDaypartCodes = totalDaypartsCodes,
                 TotalUnits = totalUnits,
-                HouseholdImpressions = GetHouseholdImpressions(inventorySummaryManifests, householdAudienceId),
+                HouseholdImpressions = GetHouseholdImpressions(manifests, householdAudienceId),
                 InventoryPostingBooks = GetInventoryPostingBooks(inventorySummaryManifestFiles),
                 LastUpdatedDate = GetLastUpdatedDate(inventorySummaryManifestFiles),
                 IsUpdating = GetIsInventoryUpdating(inventorySummaryManifestFiles),

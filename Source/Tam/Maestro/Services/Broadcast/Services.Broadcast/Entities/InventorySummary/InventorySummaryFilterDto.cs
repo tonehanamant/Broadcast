@@ -4,5 +4,6 @@
     {
         public int? InventorySourceId { get; set; }
         public InventorySummaryQuarter Quarter { get; set; }
+        public int? DaypartCodeId { get; set; }
     }
 }

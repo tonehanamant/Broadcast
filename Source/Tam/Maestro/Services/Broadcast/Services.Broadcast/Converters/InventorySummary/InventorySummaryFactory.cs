@@ -26,7 +26,8 @@ namespace Services.Broadcast.Converters.InventorySummary
 
         public abstract InventorySummaryDto CreateInventorySummary(InventorySource inventorySource,
                                                                    int householdAudienceId,
-                                                                   QuarterDetailDto quarterDetail);
+                                                                   QuarterDetailDto quarterDetail,
+                                                                   List<InventorySummaryManifestDto> manifests);
 
         protected Tuple<QuarterDetailDto, QuarterDetailDto> _GetRatesAvailableFromAndTo(InventorySource inventorySource)
         {
@@ -38,13 +39,7 @@ namespace Services.Broadcast.Converters.InventorySummary
 
             return new Tuple<QuarterDetailDto, QuarterDetailDto>(ratesAvailableFromQuarterDetail,
                                                                  ratesAvailableToQuarterDetail);
-        }
-
-        protected List<InventorySummaryManifestDto> GetInventorySummaryManifests(InventorySource inventorySource,
-                                                                                 QuarterDetailDto quarterDetail)
-        {
-            return _InventorySummaryRepository.GetInventorySummaryManifests(inventorySource, quarterDetail.StartDate, quarterDetail.EndDate);
-        }
+        }      
 
         protected double? GetHouseholdImpressions(List<InventorySummaryManifestDto> inventorySummaryManifests, int householdAudienceId)
         {

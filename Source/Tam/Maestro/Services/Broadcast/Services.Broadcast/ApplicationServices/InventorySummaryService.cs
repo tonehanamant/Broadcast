@@ -84,6 +84,15 @@ namespace Services.Broadcast.ApplicationServices
             return inventorySummaryDtos;
         }
 
+        private bool _FilterByDaypartCode(List<string> daypartCodes, int? daypartCodeId)
+        {
+            if (!daypartCodeId.HasValue)
+                return false;
+            var daypartCodeDto = _DaypartCodeRepository.GetDaypartCodeById(daypartCodeId.Value);
+            var daypartCode = daypartCodeDto.Code;
+            return !daypartCodes.Contains(daypartCode);
+        }
+
         private IEnumerable<InventorySummaryDto> _CreateInventorySummariesForSource(InventorySummaryFilterDto inventorySummaryFilterDto, int householdAudienceId, DateTime currentDate)
         {
             var inventorySourceId = inventorySummaryFilterDto.InventorySourceId.Value;
@@ -93,9 +102,15 @@ namespace Services.Broadcast.ApplicationServices
                 _QuarterCalculationEngine.GetAllQuartersBetweenDates(inventorySourceDateRange.Start.Value, 
                                                                      inventorySourceDateRange.End.Value);
 
-            foreach (var quarter in allQuartersBetweenDates)
+            foreach (var quarterDetail in allQuartersBetweenDates)
             {
-                yield return _CreateInventorySummary(inventorySource, householdAudienceId, quarter);
+                var manifests = GetInventorySummaryManifests(inventorySource, quarterDetail);
+                var daypartCodes = manifests.Select(m => m.DaypartCode).ToList();
+
+                if (_FilterByDaypartCode(daypartCodes, inventorySummaryFilterDto.DaypartCodeId))
+                    continue;
+
+                yield return _CreateInventorySummary(inventorySource, householdAudienceId, quarterDetail, manifests);
             }
         }
 
@@ -108,13 +123,26 @@ namespace Services.Broadcast.ApplicationServices
 
             foreach (var inventorySource in inventorySources)
             {
-                yield return _CreateInventorySummary(inventorySource, householdAudienceId, quarterDetail);
+                var manifests = GetInventorySummaryManifests(inventorySource, quarterDetail);
+                var daypartCodes = manifests.Select(m => m.DaypartCode).ToList();
+
+                if (_FilterByDaypartCode(daypartCodes, inventorySummaryFilterDto.DaypartCodeId))
+                    continue;
+
+                yield return _CreateInventorySummary(inventorySource, householdAudienceId, quarterDetail, manifests);
             }
         }
 
+        private List<InventorySummaryManifestDto> GetInventorySummaryManifests(InventorySource inventorySource,
+                                                                               QuarterDetailDto quarterDetail)
+        {
+            return _InventorySummaryRepository.GetInventorySummaryManifests(inventorySource, quarterDetail.StartDate, quarterDetail.EndDate);
+        }
+
         private InventorySummaryDto _CreateInventorySummary(InventorySource inventorySource,
-                                                         int householdAudienceId,
-                                                         QuarterDetailDto quarterDetail)
+                                                            int householdAudienceId,
+                                                            QuarterDetailDto quarterDetail,
+                                                            List<InventorySummaryManifestDto> manifests)
         {
             BaseInventorySummaryAbstractFactory inventorySummaryFactory = null;
 
@@ -132,7 +160,7 @@ namespace Services.Broadcast.ApplicationServices
                                                                        _ProgramRepository);               
             }
 
-            return inventorySummaryFactory.CreateInventorySummary(inventorySource, householdAudienceId, quarterDetail);
+            return inventorySummaryFactory.CreateInventorySummary(inventorySource, householdAudienceId, quarterDetail, manifests);
         }
 
         private List<QuarterDetailDto> GetInventorySummaryQuarters(DateTime currentDate)

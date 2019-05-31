@@ -1,4 +1,5 @@
-﻿using Common.Services.Repositories;
+﻿using Common.Services.Extensions;
+using Common.Services.Repositories;
 using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast.Entities;
 using System.Collections.Generic;
@@ -14,10 +15,14 @@ namespace Services.Broadcast.Repositories
         bool ActiveDaypartCodeExists(string daypartCode);
         DaypartCodeDto GetDaypartCodeByCode(string daypartCode);
         List<DaypartCodeDto> GetDaypartCodesByInventorySource(int inventorySourceId);
+        List<DaypartCodeDto> GetAllActiveDaypartCodes();
+        DaypartCodeDto GetDaypartCodeById(int daypartCodeId);
     }
 
     public class DaypartCodeRepository : BroadcastRepositoryBase, IDaypartCodeRepository
     {
+        private const string DaypartCodeNotFoundMessage = "Unable to find daypart code";
+
         public DaypartCodeRepository(
             ISMSClient pSmsClient,
             IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory, 
@@ -48,24 +53,41 @@ namespace Services.Broadcast.Repositories
             });
         }
 
+        public DaypartCodeDto GetDaypartCodeByCode(string daypartCode)
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                return _MapToDaypartCode(context.daypart_codes.Single(x => x.is_active && x.code == daypartCode, DaypartCodeNotFoundMessage));
+            });
+        }
+
+        public DaypartCodeDto GetDaypartCodeById(int daypartCodeId)
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                return _MapToDaypartCode(context.daypart_codes.Single(x => x.is_active && x.id == daypartCodeId, DaypartCodeNotFoundMessage));
+            });
+        }
+
+        public List<DaypartCodeDto> GetAllActiveDaypartCodes()
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                return context.daypart_codes.Where(d => d.is_active).Select(_MapToDaypartCode).ToList();
+            });
+        }
+
         private DaypartCodeDto _MapToDaypartCode(daypart_codes daypartCode)
         {
+            if (daypartCode == null)
+                return null;
+
             return new DaypartCodeDto
             {
                 Id = daypartCode.id,
                 Code = daypartCode.code,
                 FullName = daypartCode.full_name
             };
-        }
-
-        public DaypartCodeDto GetDaypartCodeByCode(string daypartCode)
-        {
-            return _InReadUncommitedTransaction(context =>
-            {
-                var queryResult = context.daypart_codes.FirstOrDefault(x => x.is_active && x.code == daypartCode);
-
-                return queryResult == null ? null : _MapToDaypartCode(queryResult);
-            });
         }
     }
 }

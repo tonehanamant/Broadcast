@@ -229,6 +229,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Views\BroadcastControllerBase\" />
     <Folder Include="Views\Campaign\" />
+    <Folder Include="Views\DaypartCode\" />
     <Folder Include="Views\InventoryCard\" />
     <Folder Include="Views\PricingGuide\" />
   </ItemGroup>
@@ -241,6 +242,7 @@
     <Compile Include="Controllers\AffidavitUploadApiController.cs" />
     <Compile Include="Controllers\BroadcastControllerBase.cs" />
     <Compile Include="Controllers\CampaignApiController.cs" />
+    <Compile Include="Controllers\DaypartCodeApiController.cs" />
     <Compile Include="Controllers\EnvironmentController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ImageApiController.cs" />
