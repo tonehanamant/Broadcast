@@ -27,8 +27,8 @@ namespace Services.Broadcast.Repositories
         void AddNewInventory(InventoryFileBase inventoryFile);
         List<StationInventoryGroup> GetStationInventoryGroupsByFileId(int fileId);
         List<StationInventoryManifest> GetStationInventoryManifestsByFileId(int fileId);
+        List<StationInventoryGroup> GetActiveInventoryByTypeAndUnitName(InventorySource inventorySource, List<string> daypartCodes);
         List<StationInventoryManifest> GetStationInventoryManifestsByIds(IEnumerable<int> manifestIds);
-        List<StationInventoryGroup> GetActiveInventoryByTypeAndDapartCodes(InventorySource inventorySource, List<string> daypartCodes);
         List<StationInventoryManifestWeek> GetStationInventoryManifestWeeks(InventorySource inventorySource, int contractedDaypartId, IEnumerable<int> mediaWeekIds);
         List<StationInventoryManifestWeekHistory> GetStationInventoryManifestWeeksHistory(IEnumerable<int> manifestIds);
         List<StationInventoryManifest> GetInventoryManifestsBySource(InventorySource source);
@@ -61,7 +61,7 @@ namespace Services.Broadcast.Repositories
         /// <param name="startDate">Start date of the quarter</param>
         /// <param name="endDate">End date of the quarter</param>
         /// <returns>List of StationInventoryGroup objects containing the data</returns>
-        List<StationInventoryGroup> GetInventoryScxData(DateTime startDate, DateTime endDate);
+        List<StationInventoryGroup> GetInventoryScxData(int inventorySourceId, int daypartCodeId, DateTime startDate, DateTime endDate, List<string> unitNames);
 
         /// <summary>
         /// Gets the header information for an inventory file id
@@ -258,7 +258,7 @@ namespace Services.Broadcast.Repositories
                          select m).ToList();
 
                     return manifests
-                        .Select(manifest => _MapToInventoryManifest(manifest, manifest.inventory_files.inventory_file_proprietary_header.SingleOrDefault()?.daypart_code))
+                        .Select(manifest => _MapToInventoryManifest(manifest, manifest.inventory_files.inventory_file_proprietary_header.SingleOrDefault()?.daypart_codes.code))
                         .ToList();
                 });
         }
@@ -439,7 +439,7 @@ namespace Services.Broadcast.Repositories
             return inventory;
         }
 
-        public List<StationInventoryGroup> GetActiveInventoryByTypeAndDapartCodes(InventorySource inventorySource, List<string> daypartCodes)
+        public List<StationInventoryGroup> GetActiveInventoryByTypeAndUnitName(InventorySource inventorySource, List<string> unitNames)
         {
             return _InReadUncommitedTransaction(
                 c =>
@@ -450,7 +450,7 @@ namespace Services.Broadcast.Repositories
                                     .Include(ig => ig.station_inventory_manifest.Select(m => m.station_inventory_manifest_audiences))
                                     .Include(ig => ig.station_inventory_manifest.Select(m => m.station_inventory_manifest_rates))
                                      where g.inventory_source_id == inventorySource.Id
-                                    && daypartCodes.Contains(g.daypart_code)
+                                    && unitNames.Contains(g.name, StringComparer.InvariantCultureIgnoreCase)
                                     && g.station_inventory_manifest.Any(x => x.station_inventory_manifest_weeks.Any())
                                      select g).ToList();
 
@@ -708,10 +708,11 @@ namespace Services.Broadcast.Repositories
         /// <summary>
         /// Get inventory data for the sxc file
         /// </summary>
+        /// <remarks>The commented code is there because BE is done but FE not and we need to use the old logic</remarks>
         /// <param name="startDate">Start date of the quarter</param>
         /// <param name="endDate">End date of the quarter</param>
         /// <returns>List of StationInventoryGroup objects containing the data</returns>
-        public List<StationInventoryGroup> GetInventoryScxData(DateTime startDate, DateTime endDate)
+        public List<StationInventoryGroup> GetInventoryScxData(int inventorySourceId, int daypartCodeId, DateTime startDate, DateTime endDate, List<string> unitNames)
         {
             return _InReadUncommitedTransaction(
                 context =>
@@ -719,7 +720,10 @@ namespace Services.Broadcast.Repositories
                     var groups = context.station_inventory_group
                         .SelectMany(x => x.station_inventory_manifest)
                         .SelectMany(x => x.station_inventory_manifest_weeks)
-                        .Where(x => x.start_date <= endDate && x.end_date >= startDate)
+                        .Where(x => x.start_date <= endDate && x.end_date >= startDate) //filter by start/end date
+                        .Where(x=> unitNames.Contains(x.station_inventory_manifest.station_inventory_group.name))   //filter by units name
+                        .Where(x => x.station_inventory_manifest.inventory_files.inventory_source_id == inventorySourceId)   //filter by source
+                        .Where(x => x.station_inventory_manifest.inventory_files.inventory_file_proprietary_header.FirstOrDefault().daypart_code_id == daypartCodeId) //filter by daypart code
                         .GroupBy(x => x.station_inventory_manifest.station_inventory_group_id)
                         .Select(x => x.FirstOrDefault().station_inventory_manifest.station_inventory_group)
                         .Include(x => x.station_inventory_manifest)
@@ -737,7 +741,7 @@ namespace Services.Broadcast.Repositories
                     // filter out manifests which are out of the date range
                     foreach (var group in groups)
                     {
-                        group.Manifests = group.Manifests.Where(m => m.ManifestWeeks.Any(w => w.StartDate <= endDate && w.EndDate >= startDate)).ToList();
+                        group.Manifests = group.Manifests.Where(m => m.ManifestWeeks.Any(w => w.StartDate <= endDate && w.EndDate >= startDate)).ToList();                        
                     }
 
                     return groups;
@@ -762,7 +766,7 @@ namespace Services.Broadcast.Repositories
                         Audience = new BroadcastAudience { Id = x.audience_id.Value },
                         ContractedDaypartId = x.contracted_daypart_id,
                         Cpm = x.cpm,
-                        DaypartCode = x.daypart_code,
+                        DaypartCode = x.daypart_codes.code,
                         EffectiveDate = x.effective_date,
                         EndDate = x.end_date,
                         HutBookId = x.hut_projection_book_id,
@@ -914,8 +918,7 @@ namespace Services.Broadcast.Repositories
                                 join manifest in context.station_inventory_manifest on week.station_inventory_manifest_id equals manifest.id
                                 join inventoryFile in context.inventory_files on manifest.file_id equals inventoryFile.id
                                 join inventoryFileHeader in context.inventory_file_proprietary_header on inventoryFile.id equals inventoryFileHeader.inventory_file_id
-                                join daypartCode in context.daypart_codes on inventoryFileHeader.daypart_code equals daypartCode.code
-                                where manifest.inventory_source_id == inventorySourceId && daypartCode.id == daypartCodeId
+                                where manifest.inventory_source_id == inventorySourceId && inventoryFileHeader.daypart_code_id == daypartCodeId
                                 group week by week.id into weekGroup
                                 select weekGroup.FirstOrDefault()).ToList();
                    
@@ -939,9 +942,8 @@ namespace Services.Broadcast.Repositories
                                       join manifestGroup in context.station_inventory_group on manifest.station_inventory_group_id equals manifestGroup.id
                                       join inventoryFile in context.inventory_files on manifest.file_id equals inventoryFile.id
                                       join inventoryFileHeader in context.inventory_file_proprietary_header on inventoryFile.id equals inventoryFileHeader.inventory_file_id
-                                      join daypartCode in context.daypart_codes on inventoryFileHeader.daypart_code equals daypartCode.code
                                       where manifest.inventory_source_id == inventorySourceId &&
-                                            daypartCode.id == daypartCodeId &&
+                                            inventoryFileHeader.daypart_code_id== daypartCodeId &&
                                             week.start_date <= endDate && week.end_date >= startDate
                                       group manifestGroup by manifestGroup.id into manifestGroupGrouping
                                       select manifestGroupGrouping.FirstOrDefault()).ToList();

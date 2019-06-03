@@ -86,7 +86,7 @@ namespace Services.Broadcast.Repositories
                     {
                         ContractedDaypartId = header.contracted_daypart_id,
                         Cpm = header.cpm,
-                        DaypartCode = header.daypart_code,
+                        DaypartCode = header.daypart_codes.code,
                         EffectiveDate = header.effective_date,
                         EndDate = header.end_date,
                         HutBookId = header.hut_projection_book_id,
@@ -132,7 +132,7 @@ namespace Services.Broadcast.Repositories
                                 audience_id = proprietaryFile.Header.Audience?.Id,
                                 contracted_daypart_id = proprietaryFile.Header.ContractedDaypartId,
                                 cpm = proprietaryFile.Header.Cpm,
-                                daypart_code = proprietaryFile.Header.DaypartCode,
+                                daypart_code_id = context.daypart_codes.Single(x=>x.code.Equals(proprietaryFile.Header.DaypartCode, System.StringComparison.InvariantCultureIgnoreCase)).id,
                                 effective_date = proprietaryFile.Header.EffectiveDate,
                                 end_date = proprietaryFile.Header.EndDate,
                                 hut_projection_book_id = proprietaryFile.Header.HutBookId,

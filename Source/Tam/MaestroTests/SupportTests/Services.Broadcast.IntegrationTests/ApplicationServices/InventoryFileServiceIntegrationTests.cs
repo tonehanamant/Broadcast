@@ -280,9 +280,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        private void VerifyInventory(InventorySource source, List<string> daypartCodes)
+        private void VerifyInventory(InventorySource source, List<string> unitNames)
         {
-            var inventory = _InventoryRepository.GetActiveInventoryByTypeAndDapartCodes(source, daypartCodes);
+            var inventory = _InventoryRepository.GetActiveInventoryByTypeAndUnitName(source, unitNames);
 
             VerifyInventoryRaw(inventory);
         }

@@ -246,6 +246,7 @@
     <Compile Include="Entities\Scx\ScxData.cs" />
     <Compile Include="Entities\Scx\ProposalScxFile.cs" />
     <Compile Include="Entities\Scx\ScxMarketStationProgramSpotWeek.cs" />
+    <Compile Include="Entities\Scx\InventoryScxDownloadRequest.cs" />
     <Compile Include="Entities\StationInventory\StationInventoryManifestWeekHistory.cs" />
     <Compile Include="Extensions\AudienceExtensions.cs" />
     <Compile Include="Helpers\DataLakeSystemParameters.cs" />

@@ -14,9 +14,16 @@ namespace EntityFrameworkMapping.Broadcast
     
     public partial class daypart_codes
     {
+        public daypart_codes()
+        {
+            this.inventory_file_proprietary_header = new HashSet<inventory_file_proprietary_header>();
+        }
+    
         public int id { get; set; }
-        public bool is_active { get; set; }
         public string code { get; set; }
+        public bool is_active { get; set; }
         public string full_name { get; set; }
+    
+        public virtual ICollection<inventory_file_proprietary_header> inventory_file_proprietary_header { get; set; }
     }
 }

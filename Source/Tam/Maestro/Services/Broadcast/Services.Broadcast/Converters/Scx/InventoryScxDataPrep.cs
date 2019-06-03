@@ -22,7 +22,7 @@ namespace Services.Broadcast.Converters.Scx
         /// </summary>
         /// <param name="quarter">QuarterDetailDto object to filter the data by</param>
         /// <returns>List of ScxData objects containing the data required</returns>
-        List<ScxData> GetInventoryScxData(QuarterDetailDto currentQuarter);
+        List<ScxData> GetInventoryScxData(int inventorySourceId, int daypartCodeId, DateTime startDate, DateTime endDate, List<string> unitNames);
     }
 
     public class InventoryScxDataPrep : IInventoryScxDataPrep
@@ -59,9 +59,9 @@ namespace Services.Broadcast.Converters.Scx
         /// </summary>
         /// <param name="quarter">QuarterDetailDto object to filter the data by</param>
         /// <returns>List of ScxData objects containing the data required</returns>
-        public List<ScxData> GetInventoryScxData(QuarterDetailDto quarter)
+        public List<ScxData> GetInventoryScxData(int inventorySourceId, int daypartCodeId, DateTime startDate, DateTime endDate, List<string> unitNames)
         {
-            var inventory = _InventoryRepository.GetInventoryScxData(quarter.StartDate, quarter.EndDate);
+            var inventory = _InventoryRepository.GetInventoryScxData(inventorySourceId, daypartCodeId, startDate, endDate, unitNames);
             var markets = _MarketRepository.GetMarketsByMarketCodes(inventory
                                                 .SelectMany(x => x.Manifests
                                                 .Where(y => y.Station.MarketCode != null)
@@ -102,7 +102,7 @@ namespace Services.Broadcast.Converters.Scx
                     }).ToList()
                 };
 
-                scxData.WeekData = _SetProgramWeeks(items, quarter.StartDate, quarter.EndDate);
+                scxData.WeekData = _SetProgramWeeks(items, startDate, endDate);
 
                 ProprietaryInventoryHeader inventoryHeader = _InventoryRepository.GetInventoryFileHeader(inventoryFileId.Value);
                 var marketSubscribers = _NsiUniverseRepository.GetUniverseDataByAudience(inventoryHeader.ShareBookId.Value, new List<int> { inventoryHeader.Audience.Id });

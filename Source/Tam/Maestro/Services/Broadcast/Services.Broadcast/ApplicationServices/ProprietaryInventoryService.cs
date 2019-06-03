@@ -35,7 +35,7 @@ namespace Services.Broadcast.ApplicationServices
         /// Generates one SCX archive for the current quarter
         /// </summary>
         /// <returns>Returnsa zip archive as stream and the zip name</returns>
-        Tuple<string, Stream> GenerateScxFileArchive(DateTime nowDate);
+        Tuple<string, Stream> GenerateScxFileArchive(InventoryScxDownloadRequest request);
     }
 
     public class ProprietaryInventoryService : IProprietaryInventoryService
@@ -202,13 +202,12 @@ namespace Services.Broadcast.ApplicationServices
         /// Generates one SCX archive for the current quarter
         /// </summary>
         /// <returns>Returnsa zip archive as stream and the zip name</returns>
-        public Tuple<string, Stream> GenerateScxFileArchive(DateTime nowDate)
+        public Tuple<string, Stream> GenerateScxFileArchive(InventoryScxDownloadRequest request)
         {
             string fileNameTemplate = "Barter{0}{1}.scx";
-            string archiveFileName = $"InventoryUnits_{DateTime.Now.ToString("yyyyMMddhhmmss")}.zip"; //Sebastian add some timestamp to the name
-
-            QuarterDetailDto currentQuarter = _QuarterCalculationEngine.GetQuarterRangeByDate(nowDate, 0);
-            var inventoryData = _InventoryScxDataPrep.GetInventoryScxData(currentQuarter);
+            string archiveFileName = $"InventoryUnits_{DateTime.Now.ToString("yyyyMMddhhmmss")}.zip";
+            
+            var inventoryData = _InventoryScxDataPrep.GetInventoryScxData(request.InventorySourceId, request.DaypartCodeId, request.StartDate, request.EndDate, request.UnitNames);
 
             List<InventoryScxFile> scxFiles = _InventoryScxDataConverter.ConvertInventoryData(inventoryData);
 

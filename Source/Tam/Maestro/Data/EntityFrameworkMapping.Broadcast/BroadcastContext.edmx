@@ -308,7 +308,6 @@
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="inventory_file_id" Type="int" Nullable="false" />
-          <Property Name="daypart_code" Type="varchar" MaxLength="8" Nullable="false" />
           <Property Name="effective_date" Type="datetime" Nullable="false" />
           <Property Name="end_date" Type="datetime" Nullable="false" />
           <Property Name="cpm" Type="money" />
@@ -318,6 +317,7 @@
           <Property Name="hut_projection_book_id" Type="int" />
           <Property Name="playback_type" Type="int" />
           <Property Name="nti_to_nsi_increase" Type="decimal" Precision="18" Scale="10" />
+          <Property Name="daypart_code_id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="inventory_file_ratings_jobs">
           <Key>
@@ -1313,7 +1313,7 @@
           <Property Name="sys_end_date" Type="datetime2" Precision="7" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'broadcast_integration.dbo.station_inventory_manifest_weeks_history' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'broadcast_integration_staging.dbo.station_inventory_manifest_weeks_history' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="station_inventory_manifest_weeks_history">
           <Key>
             <PropertyRef Name="id" />
@@ -1409,7 +1409,7 @@ warning 6002: The table/view 'broadcast_integration.dbo.station_inventory_manife
           <Property Name="end_time" Type="int" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'broadcast_integration.dbo.vw_ccc_daypart' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vw_ccc_daypart">
           <Key>
             <PropertyRef Name="id" />
@@ -1694,6 +1694,18 @@ warning 6002: The table/view 'broadcast_integration.dbo.vw_ccc_daypart' does not
             </Principal>
             <Dependent Role="inventory_file_proprietary_header">
               <PropertyRef Name="audience_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_inventory_file_proprietary_header_daypart_codes">
+          <End Role="daypart_codes" Type="Self.daypart_codes" Multiplicity="1" />
+          <End Role="inventory_file_proprietary_header" Type="Self.inventory_file_proprietary_header" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="daypart_codes">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="inventory_file_proprietary_header">
+              <PropertyRef Name="daypart_code_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3698,6 +3710,10 @@ warning 6002: The table/view 'broadcast_integration.dbo.vw_ccc_daypart' does not
             <End Role="audiences" EntitySet="audiences" />
             <End Role="inventory_file_proprietary_header" EntitySet="inventory_file_proprietary_header" />
           </AssociationSet>
+          <AssociationSet Name="FK_inventory_file_proprietary_header_daypart_codes" Association="Self.FK_inventory_file_proprietary_header_daypart_codes">
+            <End Role="daypart_codes" EntitySet="daypart_codes" />
+            <End Role="inventory_file_proprietary_header" EntitySet="inventory_file_proprietary_header" />
+          </AssociationSet>
           <AssociationSet Name="FK_inventory_file_proprietary_header_dayparts" Association="Self.FK_inventory_file_proprietary_header_dayparts">
             <End Role="dayparts" EntitySet="dayparts" />
             <End Role="inventory_file_proprietary_header" EntitySet="inventory_file_proprietary_header" />
@@ -4965,7 +4981,7 @@ warning 6002: The table/view 'broadcast_integration.dbo.vw_ccc_daypart' does not
             <End Role="inventory_files" EntitySet="inventory_files" />
             <End Role="inventory_file_ratings_jobs" EntitySet="inventory_file_ratings_jobs" />
           </AssociationSet>
-          <EntitySet Name="daypart_codes" EntityType="BroadcastModel.daypart_codes" />
+		            <EntitySet Name="daypart_codes" EntityType="BroadcastModel.daypart_codes" />
           <EntitySet Name="inventory_file_proprietary_header" EntityType="BroadcastModel.inventory_file_proprietary_header" />
           <AssociationSet Name="FK_inventory_file_proprietary_header_audiences" Association="BroadcastModel.FK_inventory_file_proprietary_header_audiences">
             <End Role="audience" EntitySet="audiences" />
@@ -4992,6 +5008,10 @@ warning 6002: The table/view 'broadcast_integration.dbo.vw_ccc_daypart' does not
           <AssociationSet Name="FK_proposals_campaigns" Association="BroadcastModel.FK_proposals_campaigns">
             <End Role="campaign" EntitySet="campaigns" />
             <End Role="proposal" EntitySet="proposals" />
+          </AssociationSet>
+          <AssociationSet Name="FK_inventory_file_proprietary_header_daypart_codes" Association="BroadcastModel.FK_inventory_file_proprietary_header_daypart_codes">
+            <End Role="daypart_codes" EntitySet="daypart_codes" />
+            <End Role="inventory_file_proprietary_header" EntitySet="inventory_file_proprietary_header" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="audience_audiences">
@@ -8577,7 +8597,6 @@ warning 6002: The table/view 'broadcast_integration.dbo.vw_ccc_daypart' does not
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="inventory_file_id" Type="Int32" Nullable="false" />
-          <Property Name="daypart_code" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
           <Property Name="effective_date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="end_date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="cpm" Type="Decimal" Precision="19" Scale="4" />
@@ -8592,6 +8611,8 @@ warning 6002: The table/view 'broadcast_integration.dbo.vw_ccc_daypart' does not
           <NavigationProperty Name="inventory_files" Relationship="BroadcastModel.FK_inventory_file_proprietary_header_inventory_files" FromRole="inventory_file_proprietary_header" ToRole="inventory_files" />
           <NavigationProperty Name="media_months" Relationship="BroadcastModel.FK_inventory_file_proprietary_header_media_months" FromRole="inventory_file_proprietary_header" ToRole="media_months" />
           <NavigationProperty Name="media_months1" Relationship="BroadcastModel.FK_inventory_file_proprietary_header_media_months_hut_book" FromRole="inventory_file_proprietary_header" ToRole="media_months" />
+          <Property Name="daypart_code_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="daypart_codes" Relationship="BroadcastModel.FK_inventory_file_proprietary_header_daypart_codes" FromRole="inventory_file_proprietary_header" ToRole="daypart_codes" />
         </EntityType>
         <Association Name="FK_inventory_file_proprietary_header_audiences">
           <End Type="BroadcastModel.audience" Role="audience" Multiplicity="0..1" />
@@ -8676,15 +8697,6 @@ warning 6002: The table/view 'broadcast_integration.dbo.vw_ccc_daypart' does not
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="daypart_codes">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="is_active" Type="Boolean" Nullable="false" />
-          <Property Name="code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="full_name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-        </EntityType>
         <EntityType Name="campaign">
           <Key>
             <PropertyRef Name="id" />
@@ -8731,6 +8743,28 @@ warning 6002: The table/view 'broadcast_integration.dbo.vw_ccc_daypart' does not
             </Principal>
             <Dependent Role="proposal">
               <PropertyRef Name="campaign_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="daypart_codes">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="is_active" Type="Boolean" Nullable="false" />
+          <Property Name="full_name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="inventory_file_proprietary_header" Relationship="BroadcastModel.FK_inventory_file_proprietary_header_daypart_codes" FromRole="daypart_codes" ToRole="inventory_file_proprietary_header" />
+        </EntityType>
+        <Association Name="FK_inventory_file_proprietary_header_daypart_codes">
+          <End Type="BroadcastModel.daypart_codes" Role="daypart_codes" Multiplicity="1" />
+          <End Type="BroadcastModel.inventory_file_proprietary_header" Role="inventory_file_proprietary_header" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="daypart_codes">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="inventory_file_proprietary_header">
+              <PropertyRef Name="daypart_code_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -10192,19 +10226,10 @@ warning 6002: The table/view 'broadcast_integration.dbo.vw_ccc_daypart' does not
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="daypart_codes">
-            <EntityTypeMapping TypeName="BroadcastModel.daypart_codes">
-              <MappingFragment StoreEntitySet="daypart_codes">
-                <ScalarProperty Name="full_name" ColumnName="full_name" />
-                <ScalarProperty Name="code" ColumnName="code" />
-                <ScalarProperty Name="is_active" ColumnName="is_active" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="inventory_file_proprietary_header">
             <EntityTypeMapping TypeName="BroadcastModel.inventory_file_proprietary_header">
               <MappingFragment StoreEntitySet="inventory_file_proprietary_header">
+                <ScalarProperty Name="daypart_code_id" ColumnName="daypart_code_id" />
                 <ScalarProperty Name="nti_to_nsi_increase" ColumnName="nti_to_nsi_increase" />
                 <ScalarProperty Name="playback_type" ColumnName="playback_type" />
                 <ScalarProperty Name="hut_projection_book_id" ColumnName="hut_projection_book_id" />
@@ -10214,7 +10239,6 @@ warning 6002: The table/view 'broadcast_integration.dbo.vw_ccc_daypart' does not
                 <ScalarProperty Name="cpm" ColumnName="cpm" />
                 <ScalarProperty Name="end_date" ColumnName="end_date" />
                 <ScalarProperty Name="effective_date" ColumnName="effective_date" />
-                <ScalarProperty Name="daypart_code" ColumnName="daypart_code" />
                 <ScalarProperty Name="inventory_file_id" ColumnName="inventory_file_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
@@ -10247,6 +10271,16 @@ warning 6002: The table/view 'broadcast_integration.dbo.vw_ccc_daypart' does not
                 <ScalarProperty Name="spots" ColumnName="spots" />
                 <ScalarProperty Name="media_week_id" ColumnName="media_week_id" />
                 <ScalarProperty Name="station_inventory_manifest_id" ColumnName="station_inventory_manifest_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="daypart_codes">
+            <EntityTypeMapping TypeName="BroadcastModel.daypart_codes">
+              <MappingFragment StoreEntitySet="daypart_codes">
+                <ScalarProperty Name="full_name" ColumnName="full_name" />
+                <ScalarProperty Name="is_active" ColumnName="is_active" />
+                <ScalarProperty Name="code" ColumnName="code" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

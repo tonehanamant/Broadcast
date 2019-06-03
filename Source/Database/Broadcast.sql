@@ -144,6 +144,34 @@ BEGIN
 END
 /*************************************** END PRI-8714 *****************************************************/
 
+/*************************************** START PRI-9375 *****************************************************/
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE name = N'daypart_code_id' AND OBJECT_ID = OBJECT_ID(N'inventory_file_proprietary_header'))
+BEGIN
+	ALTER TABLE inventory_file_proprietary_header ADD daypart_code_id INT
+	
+	-- Necessary to avoid errors with the parser due to missing column.
+	EXEC('UPDATE inventory_file_proprietary_header SET daypart_code_id = (SELECT id FROM daypart_codes WHERE daypart_codes.code = daypart_code)')
+
+	ALTER TABLE inventory_file_proprietary_header ALTER COLUMN daypart_code_id INT NOT NULL
+	
+	ALTER TABLE [dbo].[inventory_file_proprietary_header] WITH CHECK ADD CONSTRAINT [FK_inventory_file_proprietary_header_daypart_codes] FOREIGN KEY([daypart_code_id])
+	REFERENCES [dbo].[daypart_codes] ([id])
+	ALTER TABLE [dbo].[inventory_file_proprietary_header] CHECK CONSTRAINT [FK_inventory_file_proprietary_header_daypart_codes]
+	CREATE NONCLUSTERED INDEX [IX_inventory_file_proprietary_header_daypart_code_id]  ON [dbo].[inventory_file_proprietary_header] ([daypart_code_id] ASC)
+	INCLUDE ([id], [inventory_file_id]) 
+	WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+
+	ALTER TABLE inventory_file_proprietary_header DROP COLUMN daypart_code
+END
+
+IF NOT EXISTS(SELECT 1 FROM sys.indexes WHERE name = N'IX_station_inventory_group_name' AND OBJECT_ID = OBJECT_ID(N'station_inventory_group'))
+BEGIN
+	CREATE NONCLUSTERED INDEX [IX_station_inventory_group_name]  ON [dbo].[station_inventory_group] ([name] ASC)
+	INCLUDE ([id], [inventory_source_id]) 
+	WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+END
+/*************************************** END PRI-9375 *****************************************************/
+
 -- Update the Schema Version of the database to the current release version
 UPDATE system_component_parameters 
 SET parameter_value = '19.07.1' -- Current release version

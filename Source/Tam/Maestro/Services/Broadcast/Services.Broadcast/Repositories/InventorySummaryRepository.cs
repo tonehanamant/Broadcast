@@ -47,7 +47,7 @@ namespace Services.Broadcast.Repositories
                                 ManifestId = manifest.id,
                                 StationId = station.id,
                                 MarketCode = station.market_code,
-                                DaypartCode = header.daypart_code,
+                                DaypartCode = header.daypart_codes.code,
                                 UnitName = manifestGroup.name,
                                 FileId = file.id
                             })
