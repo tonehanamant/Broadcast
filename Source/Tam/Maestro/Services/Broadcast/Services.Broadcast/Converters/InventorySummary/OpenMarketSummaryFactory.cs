@@ -27,7 +27,7 @@ namespace Services.Broadcast.Converters.InventorySummary
                                                                    QuarterDetailDto quarterDetail,
                                                                    List<InventorySummaryManifestDto> manifests)
         {
-            var ratesAvailableTuple = _GetRatesAvailableFromAndTo(inventorySource);
+            var quartersForInventoryAvailable = GetQuartersForInventoryAvailable(inventorySource);          
             var inventorySummaryManifestFiles = GetInventorySummaryManifestFiles(manifests);
             var manifestIds = manifests.Select(x => x.ManifestId).ToList();
             var totalPrograms = _ProgramRepository.GetUniqueProgramNamesByManifests(manifestIds)
@@ -38,7 +38,7 @@ namespace Services.Broadcast.Converters.InventorySummary
             {
                 InventorySourceId = inventorySource.Id,
                 InventorySourceName = inventorySource.Name,
-                HasRatesAvailableForQuarter = GetHasRatesAvailable(manifests),
+                HasRatesAvailableForQuarter = manifests.Any(),
                 Quarter = quarterDetail,
                 TotalMarkets = GetTotalMarkets(manifests),
                 TotalStations = GetTotalStations(manifests),
@@ -47,8 +47,8 @@ namespace Services.Broadcast.Converters.InventorySummary
                 InventoryPostingBooks = GetInventoryPostingBooks(inventorySummaryManifestFiles),
                 LastUpdatedDate = GetLastUpdatedDate(inventorySummaryManifestFiles),
                 IsUpdating = GetIsInventoryUpdating(inventorySummaryManifestFiles),
-                RatesAvailableFromQuarter = ratesAvailableTuple.Item1,
-                RatesAvailableToQuarter = ratesAvailableTuple.Item2
+                RatesAvailableFromQuarter = quartersForInventoryAvailable.Item1,
+                RatesAvailableToQuarter = quartersForInventoryAvailable.Item2
             };
         }
     }

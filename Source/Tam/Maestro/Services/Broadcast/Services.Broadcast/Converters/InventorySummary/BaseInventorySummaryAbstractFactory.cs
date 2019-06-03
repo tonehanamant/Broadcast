@@ -11,16 +11,17 @@ namespace Services.Broadcast.Converters.InventorySummary
 {
     public abstract class BaseInventorySummaryAbstractFactory
     {
-        private readonly IInventoryRepository _InventoryRepository;
-        private readonly IInventorySummaryRepository _InventorySummaryRepository;
+        protected readonly IInventoryRepository InventoryRepository;
+        protected readonly IInventorySummaryRepository InventorySummaryRepository;
+
         private readonly IQuarterCalculationEngine _QuarterCalculationEngine;
 
         public BaseInventorySummaryAbstractFactory(IInventoryRepository inventoryRepository,
                                                    IInventorySummaryRepository inventorySummaryRepository,
                                                    IQuarterCalculationEngine quarterCalculationEngine)
         {
-            _InventoryRepository = inventoryRepository;
-            _InventorySummaryRepository = inventorySummaryRepository;
+            InventoryRepository = inventoryRepository;
+            InventorySummaryRepository = inventorySummaryRepository;
             _QuarterCalculationEngine = quarterCalculationEngine;
         }
 
@@ -29,9 +30,9 @@ namespace Services.Broadcast.Converters.InventorySummary
                                                                    QuarterDetailDto quarterDetail,
                                                                    List<InventorySummaryManifestDto> manifests);
 
-        protected Tuple<QuarterDetailDto, QuarterDetailDto> _GetRatesAvailableFromAndTo(InventorySource inventorySource)
+        protected Tuple<QuarterDetailDto, QuarterDetailDto> GetQuartersForInventoryAvailable(InventorySource inventorySource)
         {
-            var inventorySourceDateRange = _InventoryRepository.GetInventorySourceDateRange(inventorySource.Id);
+            var inventorySourceDateRange = InventoryRepository.GetInventorySourceDateRange(inventorySource.Id);
             var ratesAvailableFrom = inventorySourceDateRange.Start;
             var ratesAvailableTo = inventorySourceDateRange.End;
             var ratesAvailableFromQuarterDetail = _QuarterCalculationEngine.GetQuarterRangeByDate(ratesAvailableFrom);
@@ -45,7 +46,7 @@ namespace Services.Broadcast.Converters.InventorySummary
         {
             var manifestIds = inventorySummaryManifests.Select(x => x.ManifestId).ToList();
 
-            return _InventorySummaryRepository.GetInventorySummaryHouseholdImpressions(manifestIds, householdAudienceId);
+            return InventorySummaryRepository.GetInventorySummaryHouseholdImpressions(manifestIds, householdAudienceId);
         }
 
         protected List<InventorySummaryBookDto> GetInventoryPostingBooks(List<InventorySummaryManifestFileDto> inventorySummaryManifestFileDtos)
@@ -64,12 +65,12 @@ namespace Services.Broadcast.Converters.InventorySummary
         {
             var fileIds = inventorySummaryManifests.Where(x => x.FileId != null).Select(x => (int)x.FileId).ToList();
 
-            return _InventorySummaryRepository.GetInventorySummaryManifestFileDtos(fileIds);
+            return InventorySummaryRepository.GetInventorySummaryManifestFileDtos(fileIds);
         }
 
         protected int GetTotalMarkets(List<InventorySummaryManifestDto> inventorySummaryManifests)
         {
-            return inventorySummaryManifests.GroupBy(x => x.MarketCode).Count();
+            return inventorySummaryManifests.Where(x => x.MarketCode.HasValue).GroupBy(x => x.MarketCode).Count();
         }
 
         protected int GetTotalStations(List<InventorySummaryManifestDto> inventorySummaryManifests)
@@ -86,11 +87,6 @@ namespace Services.Broadcast.Converters.InventorySummary
         protected DateTime? GetLastUpdatedDate(List<InventorySummaryManifestFileDto> inventorySummaryManifestFiles)
         {
             return inventorySummaryManifestFiles.Max(x => x.LastCompletedDate);
-        }
-
-        protected bool GetHasRatesAvailable(List<InventorySummaryManifestDto> inventorySummaryManifests)
-        {
-            return inventorySummaryManifests.Count() > 0;
         }
     }
 }

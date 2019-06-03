@@ -15,7 +15,8 @@ namespace Services.Broadcast.Repositories
 {
     public interface IInventorySummaryRepository : IDataRepository
     {
-        List<InventorySummaryManifestDto> GetInventorySummaryManifests(InventorySource inventorySource, DateTime startDate, DateTime endDate);
+        List<InventorySummaryManifestDto> GetInventorySummaryManifestsForBarterSources(InventorySource inventorySource, DateTime startDate, DateTime endDate);
+        List<InventorySummaryManifestDto> GetInventorySummaryManifestsForOpenMarketSources(InventorySource inventorySource, DateTime startDate, DateTime endDate);
         double? GetInventorySummaryHouseholdImpressions(List<int> manifestIds, int householdAudienceId);
         List<InventorySummaryManifestFileDto> GetInventorySummaryManifestFileDtos(List<int> inventoryFileIds);
     }
@@ -29,7 +30,34 @@ namespace Services.Broadcast.Repositories
         {
         }
 
-        public List<InventorySummaryManifestDto> GetInventorySummaryManifests(InventorySource inventorySource, DateTime startDate, DateTime endDate)
+        public List<InventorySummaryManifestDto> GetInventorySummaryManifestsForBarterSources(InventorySource inventorySource, DateTime startDate, DateTime endDate)
+        {
+            return _InReadUncommitedTransaction(
+                context =>
+                {
+                    return (from week in context.station_inventory_manifest_weeks
+                            join manifest in context.station_inventory_manifest on week.station_inventory_manifest_id equals manifest.id
+                            join manifestGroup in context.station_inventory_group on manifest.station_inventory_group_id equals manifestGroup.id
+                            join station in context.stations on manifest.station_id equals station.id
+                            join file in context.inventory_files on manifest.file_id equals file.id
+                            join header in context.inventory_file_proprietary_header on file.id equals header.inventory_file_id
+                            where week.start_date <= endDate && week.end_date >= startDate && manifest.inventory_source_id == inventorySource.Id
+                            select new InventorySummaryManifestDto
+                            {
+                                ManifestId = manifest.id,
+                                StationId = station.id,
+                                MarketCode = station.market_code,
+                                DaypartCode = header.daypart_code,
+                                UnitName = manifestGroup.name,
+                                FileId = file.id
+                            })
+                            .GroupBy(x => x.ManifestId)
+                            .Select(x => x.FirstOrDefault())
+                            .ToList();
+                });
+        }
+
+        public List<InventorySummaryManifestDto> GetInventorySummaryManifestsForOpenMarketSources(InventorySource inventorySource, DateTime startDate, DateTime endDate)
         {
             return _InReadUncommitedTransaction(
                 context =>
@@ -44,7 +72,6 @@ namespace Services.Broadcast.Repositories
                             ManifestId = x.id,
                             StationId = x.station_id,
                             MarketCode = x.station.market_code,
-                            DaypartCode = x.station_inventory_group.daypart_code,
                             FileId = x.file_id
                         })
                         .ToList();

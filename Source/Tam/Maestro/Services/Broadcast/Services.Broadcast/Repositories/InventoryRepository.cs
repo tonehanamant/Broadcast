@@ -27,6 +27,7 @@ namespace Services.Broadcast.Repositories
         void AddNewInventory(InventoryFileBase inventoryFile);
         List<StationInventoryGroup> GetStationInventoryGroupsByFileId(int fileId);
         List<StationInventoryManifest> GetStationInventoryManifestsByFileId(int fileId);
+        List<StationInventoryManifest> GetStationInventoryManifestsByIds(IEnumerable<int> manifestIds);
         List<StationInventoryGroup> GetActiveInventoryByTypeAndDapartCodes(InventorySource inventorySource, List<string> daypartCodes);
         List<StationInventoryManifestWeek> GetStationInventoryManifestWeeks(InventorySource inventorySource, int contractedDaypartId, IEnumerable<int> mediaWeekIds);
         List<StationInventoryManifestWeekHistory> GetStationInventoryManifestWeeksHistory(IEnumerable<int> manifestIds);
@@ -953,6 +954,24 @@ namespace Services.Broadcast.Repositories
                        SlotNumber = x.slot_number
                    }).ToList();
                });
+        }
+
+        public List<StationInventoryManifest> GetStationInventoryManifestsByIds(IEnumerable<int> manifestIds)
+        {
+            return _InReadUncommitedTransaction(
+                context =>
+                {
+                    return context.station_inventory_manifest
+                        .Include(x => x.station_inventory_manifest_audiences)
+                        .Include(x => x.station_inventory_manifest_weeks)
+                        .Include(x => x.station_inventory_manifest_rates)
+                        .Include(x => x.station_inventory_manifest_dayparts)
+                        .Include(x => x.station)
+                        .Where(x => manifestIds.Contains(x.id))
+                        .ToList()
+                        .Select(x => _MapToInventoryManifest(x))
+                        .ToList();
+                });
         }
     }
 }

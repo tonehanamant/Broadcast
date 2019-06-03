@@ -21,6 +21,7 @@ using Services.Broadcast.ApplicationServices.Helpers;
 using Services.Broadcast.Helpers;
 using Services.Broadcast.BusinessEngines.InventoryDaypartParsing;
 using Services.Broadcast.Converters.Scx;
+using Services.Broadcast.Cache;
 
 namespace Services.Broadcast.ApplicationServices
 {
@@ -68,6 +69,7 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IDefaultScheduleConverter, DefaultScheduleConverter>();
             unityContainer.RegisterType<IAssemblyScheduleConverter, AssemblyScheduleConverter>();
             unityContainer.RegisterType<IBroadcastAudiencesCache, BroadcastAudiencesCache>();
+            unityContainer.RegisterType<IMarketCoverageCache, MarketCoverageCache>();
             unityContainer.RegisterType<IInventoryService, InventoryService>();
             unityContainer.RegisterType<IProprietaryInventoryService, ProprietaryInventoryService>();
             unityContainer.RegisterType<IInventoryFileValidator, InventoryFileValidator>();

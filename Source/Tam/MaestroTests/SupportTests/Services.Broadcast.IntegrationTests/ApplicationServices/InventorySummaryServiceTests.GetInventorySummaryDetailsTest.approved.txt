@@ -2,20 +2,25 @@
   {
     "Details": [
       {
-        "CPM": 12.155591572123176661264181524,
-        "Daypart": "LN",
-        "HouseholdImpressions": 2468.0,
-        "TotalCoverage": 0.894,
-        "TotalMarkets": 1,
-        "TotalUnits": 1
+        "CPM": null,
+        "Daypart": "EMN",
+        "HouseholdImpressions": null,
+        "TotalCoverage": 45.39,
+        "TotalMarkets": 36,
+        "TotalUnits": 7
       }
     ],
     "HasRatesAvailableForQuarter": true,
-    "HouseholdImpressions": 2468.0,
-    "InventoryPostingBooks": [],
-    "InventorySourceId": 3,
-    "InventorySourceName": "TVB",
-    "IsUpdating": false,
+    "HouseholdImpressions": null,
+    "InventoryPostingBooks": [
+      {
+        "HutProjectBookId": null,
+        "ShareProjectionBookId": 425
+      }
+    ],
+    "InventorySourceId": 4,
+    "InventorySourceName": "TTWN",
+    "IsUpdating": true,
     "LastUpdatedDate": null,
     "Quarter": {
       "EndDate": "2019-06-30T23:59:59",
@@ -36,8 +41,8 @@
       "Year": 2019
     },
     "TotalDaypartCodes": 1,
-    "TotalMarkets": 1,
-    "TotalStations": 1,
-    "TotalUnits": 1
+    "TotalMarkets": 36,
+    "TotalStations": 67,
+    "TotalUnits": 7
   }
 ]

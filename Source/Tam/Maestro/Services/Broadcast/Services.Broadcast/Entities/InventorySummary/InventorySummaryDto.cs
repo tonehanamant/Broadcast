@@ -19,10 +19,21 @@ namespace Services.Broadcast.Entities.InventorySummary
         public QuarterDetailDto RatesAvailableToQuarter { get; set; }
     }
 
-    public class ProprietaryInventorySummaryDto : InventorySummaryDto
+    public class BarterInventorySummaryDto : InventorySummaryDto
     {
         public int TotalUnits { get; set; }
         public int TotalDaypartCodes { get; set; }
+        public List<Detail> Details { get; set; }
+
+        public class Detail
+        {
+            public string Daypart { get; set; }
+            public int TotalMarkets { get; set; }
+            public double TotalCoverage { get; set; }
+            public double? HouseholdImpressions { get; set; }
+            public int TotalUnits { get; set; }
+            public decimal? CPM { get; set; }
+        }
     }
 
     public class OpenMarketInventorySummaryDto : InventorySummaryDto

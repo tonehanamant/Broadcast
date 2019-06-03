@@ -26,9 +26,9 @@ namespace Services.Broadcast.Repositories
         /// <summary>
         /// Returns a dictionary of market code and percentage coverage based on the market ids sent.
         /// </summary>
-        /// <param name="marketIds">Market id list.</param>
+        /// <param name="marketCodes">Market codes list.</param>
         /// <returns>Dictionary of market code and percentage coverage</returns>
-        MarketCoverageDto GetLatestMarketCoverages(IEnumerable<int> marketIds);
+        MarketCoverageDto GetLatestMarketCoverages(IEnumerable<int> marketCodes = null);
         MarketCoverageDto GetMarketCoveragesForFile(IEnumerable<int> marketIds, int marketCoverageFileId);
         MarketCoverageByStation GetLatestMarketCoveragesWithStations();
         List<MarketCoverageFile> GetMarketCoverageFiles();
@@ -80,18 +80,26 @@ namespace Services.Broadcast.Repositories
         /// <summary>
         /// Returns a dictionary of market code and percentage coverage based on the market ids sent.
         /// </summary>
-        /// <param name="marketIds">Market id list.</param>
+        /// <param name="marketCodes">Market codes list.</param>
         /// <returns>Dictionary of market code and percentage coverage</returns>
-        public MarketCoverageDto GetLatestMarketCoverages(IEnumerable<int> marketIds)
+        public MarketCoverageDto GetLatestMarketCoverages(IEnumerable<int> marketCodes = null)
         {
             return _InReadUncommitedTransaction(
                 context =>
                 {
-                    var lastMarketCoverageFile = context.market_coverage_files.OrderByDescending(x => x.created_date).First();
+                    var lastMarketCoverageFile = context.market_coverage_files
+                        .Include(x => x.market_coverages)
+                        .OrderByDescending(x => x.created_date)
+                        .First();
 
-                    var marketCoveragesByMarketCode = (from m in lastMarketCoverageFile.market_coverages
-                                                       where marketIds.Contains(m.market_code)
-                                                       select m).ToDictionary(m => Convert.ToInt32(m.market_code), m => m.percentage_of_us);
+                    var marketCoverages = lastMarketCoverageFile.market_coverages;
+
+                    if (marketCodes != null)
+                    {
+                        marketCoverages = marketCoverages.Where(x => marketCodes.Contains(x.market_code)).ToList();
+                    }
+
+                    var marketCoveragesByMarketCode = marketCoverages.ToDictionary(m => Convert.ToInt32(m.market_code), m => m.percentage_of_us);
 
                     return new MarketCoverageDto
                     {
@@ -210,11 +218,6 @@ namespace Services.Broadcast.Repositories
             }
 
             return marketCoverageFileDb;
-        }
-
-        public Dictionary<int, int> GetMarketRanksForFile()
-        {
-            throw new NotImplementedException();
-        }       
+        }      
     }
 }

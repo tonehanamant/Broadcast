@@ -430,7 +430,7 @@
       "StartDate": "2019-09-30T00:00:00",
       "Year": 2019
     },
-    "TotalMarkets": 2,
+    "TotalMarkets": 1,
     "TotalPrograms": 2,
     "TotalStations": 2
   }

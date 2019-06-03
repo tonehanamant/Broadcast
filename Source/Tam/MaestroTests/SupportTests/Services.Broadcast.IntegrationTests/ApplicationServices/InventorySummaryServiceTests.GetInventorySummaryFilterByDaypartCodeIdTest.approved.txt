@@ -1,5 +1,15 @@
 ﻿[
   {
+    "Details": [
+      {
+        "CPM": null,
+        "Daypart": "EMN",
+        "HouseholdImpressions": null,
+        "TotalCoverage": 0.0,
+        "TotalMarkets": 0,
+        "TotalUnits": 1
+      }
+    ],
     "HasRatesAvailableForQuarter": true,
     "HouseholdImpressions": null,
     "InventoryPostingBooks": [],
@@ -26,7 +36,7 @@
       "Year": 2019
     },
     "TotalDaypartCodes": 1,
-    "TotalMarkets": 1,
+    "TotalMarkets": 0,
     "TotalStations": 1,
     "TotalUnits": 1
   }

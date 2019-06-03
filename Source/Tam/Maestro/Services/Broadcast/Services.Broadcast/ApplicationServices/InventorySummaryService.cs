@@ -1,6 +1,7 @@
 ﻿using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
 using Services.Broadcast.BusinessEngines;
+using Services.Broadcast.Cache;
 using Services.Broadcast.Converters.InventorySummary;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
@@ -30,10 +31,12 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IInventorySummaryRepository _InventorySummaryRepository;
         private readonly IProgramRepository _ProgramRepository;
         private readonly IDaypartCodeRepository _DaypartCodeRepository;
+        private readonly IMarketCoverageCache _MarketCoverageCache;
 
         public InventorySummaryService(IDataRepositoryFactory broadcastDataRepositoryFactory,
                                        IQuarterCalculationEngine quarterCalculationEngine,
-                                       IBroadcastAudiencesCache audiencesCache)
+                                       IBroadcastAudiencesCache audiencesCache,
+                                       IMarketCoverageCache marketCoverageCache)
         {
             _QuarterCalculationEngine = quarterCalculationEngine;
             _AudiencesCache = audiencesCache;
@@ -41,6 +44,7 @@ namespace Services.Broadcast.ApplicationServices
             _InventorySummaryRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventorySummaryRepository>();
             _ProgramRepository = broadcastDataRepositoryFactory.GetDataRepository<IProgramRepository>();
             _DaypartCodeRepository = broadcastDataRepositoryFactory.GetDataRepository<IDaypartCodeRepository>();
+            _MarketCoverageCache = marketCoverageCache;
         }
 
         public List<InventorySource> GetInventorySources()
@@ -136,7 +140,16 @@ namespace Services.Broadcast.ApplicationServices
         private List<InventorySummaryManifestDto> GetInventorySummaryManifests(InventorySource inventorySource,
                                                                                QuarterDetailDto quarterDetail)
         {
-            return _InventorySummaryRepository.GetInventorySummaryManifests(inventorySource, quarterDetail.StartDate, quarterDetail.EndDate);
+            if (inventorySource.InventoryType == InventorySourceTypeEnum.Barter)
+            {
+                return _InventorySummaryRepository.GetInventorySummaryManifestsForBarterSources(inventorySource, quarterDetail.StartDate, quarterDetail.EndDate);
+            }
+            else if (inventorySource.InventoryType == InventorySourceTypeEnum.OpenMarket)
+            {
+                return _InventorySummaryRepository.GetInventorySummaryManifestsForOpenMarketSources(inventorySource, quarterDetail.StartDate, quarterDetail.EndDate);
+            }
+
+            return new List<InventorySummaryManifestDto>();
         }
 
         private InventorySummaryDto _CreateInventorySummary(InventorySource inventorySource,
@@ -148,9 +161,10 @@ namespace Services.Broadcast.ApplicationServices
 
             if (inventorySource.InventoryType == InventorySourceTypeEnum.Barter)
             {
-                inventorySummaryFactory = new ProprietaryInventorySummaryFactory(_InventoryRepository, 
-                                                                                 _InventorySummaryRepository, 
-                                                                                 _QuarterCalculationEngine);
+                inventorySummaryFactory = new BarterInventorySummaryFactory(_InventoryRepository, 
+                                                                            _InventorySummaryRepository, 
+                                                                            _QuarterCalculationEngine,
+                                                                            _MarketCoverageCache);
             }
             else if (inventorySource.InventoryType == InventorySourceTypeEnum.OpenMarket)
             {

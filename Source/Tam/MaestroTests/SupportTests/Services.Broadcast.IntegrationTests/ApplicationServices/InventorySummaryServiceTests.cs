@@ -18,6 +18,18 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         private readonly IInventorySummaryService _InventoryCardService = IntegrationTestApplicationServiceFactory.GetApplicationService<IInventorySummaryService>();
         private readonly IInventoryRepository _InventoryRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
         private readonly IDaypartCodeRepository _DaypartCodeRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IDaypartCodeRepository>();
+        
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetInventorySummaryDetailsTest()
+        {
+            var inventoryCards = _InventoryCardService.GetInventorySummaries(new InventorySummaryFilterDto
+            {
+                InventorySourceId = 4,
+            }, new DateTime(2019, 04, 01));
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(inventoryCards));
+        }
 
         [Test]
         [UseReporter(typeof(DiffReporter))]

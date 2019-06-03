@@ -210,6 +210,7 @@
   <ItemGroup>
     <Compile Include="Aggregates\SchedulesAggregate.cs" />
     <Compile Include="ApplicationServices\DaypartCodeService.cs" />
+    <Compile Include="Cache\MarketCoverageCache.cs" />
     <Compile Include="Entities\CampaignDto.cs" />
     <Compile Include="ApplicationServices\CampaignService.cs" />
     <Compile Include="ApplicationServices\ProprietaryInventoryService.cs" />
@@ -231,13 +232,13 @@
     <Compile Include="Entities\DaypartCodeDto.cs" />
     <Compile Include="Entities\InventorySummary\InventorySummaryBookDto.cs" />
     <Compile Include="Entities\InventorySummary\InventorySummaryDto.cs" />
-    <Compile Include="Converters\InventorySummary\InventorySummaryFactory.cs" />
+    <Compile Include="Converters\InventorySummary\BaseInventorySummaryAbstractFactory.cs" />
     <Compile Include="Entities\InventorySummary\InventorySummaryFilterDto.cs" />
     <Compile Include="Entities\InventorySummary\InventoryQuartersDto.cs" />
     <Compile Include="Entities\InventorySummary\InventorySummaryManifestFileDto.cs" />
     <Compile Include="Entities\InventorySummary\InventorySummaryQuarterDto.cs" />
     <Compile Include="Converters\InventorySummary\OpenMarketSummaryFactory.cs" />
-    <Compile Include="Converters\InventorySummary\ProprietaryInventorySummaryFactory.cs" />
+    <Compile Include="Converters\InventorySummary\BarterInventorySummaryFactory.cs" />
     <Compile Include="Entities\PostPrePostingFileSettings.cs" />
     <Compile Include="Entities\ProposalDetailPricingGuideSave.cs" />
     <Compile Include="Entities\Scx\InventoryMarketDto.cs" />
@@ -365,7 +366,7 @@
     <Compile Include="Helpers\TransactionScopeHelper.cs" />
     <Compile Include="Helpers\WWTVFtpHelper.cs" />
     <Compile Include="Helpers\WWTVNetworkHelper.cs" />
-    <Compile Include="MediaMonthCrunchCache.cs" />
+    <Compile Include="Cache\MediaMonthCrunchCache.cs" />
     <Compile Include="Converters\SigmaConverter.cs" />
     <Compile Include="Entities\TrackerFile.cs" />
     <Compile Include="Entities\BvsFileDetail.cs" />
@@ -393,7 +394,7 @@
     <Compile Include="Converters\Scx\ProposalScxDataPrep.cs" />
     <Compile Include="Converters\Scx\ProposalScxConverter.cs" />
     <Compile Include="Converters\TextFileLineReader.cs" />
-    <Compile Include="DaypartCache.cs" />
+    <Compile Include="Cache\DaypartCache.cs" />
     <Compile Include="EmailService.cs" />
     <Compile Include="Entities\ClientScrub.cs" />
     <Compile Include="Entities\ScrubIsciRequest.cs" />
@@ -547,7 +548,7 @@
     <Compile Include="ApplicationServices\SchedulesReportService.cs" />
     <Compile Include="ApplicationServices\TrackerService.cs" />
     <Compile Include="ApplicationServices\BroadcastApplicationServiceFactory.cs" />
-    <Compile Include="BroadcastAudiencesCache.cs" />
+    <Compile Include="Cache\BroadcastAudiencesCache.cs" />
     <Compile Include="BroadcastConstants.cs" />
     <Compile Include="BusinessEngines\BvsPostingEngine.cs" />
     <Compile Include="BusinessEngines\ProposalProgramsCalculationEngine.cs" />
@@ -607,7 +608,7 @@
     <Compile Include="Exceptions\BroadcastInventoryDataException.cs" />
     <Compile Include="Exceptions\BroadcastInventoryFileValidationException.cs" />
     <Compile Include="MediaMonthAndWeekAggregate.cs" />
-    <Compile Include="MediaMonthAndWeekAggregateCache.cs" />
+    <Compile Include="Cache\MediaMonthAndWeekAggregateCache.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ProposalCache.cs" />
     <Compile Include="ReportGenerators\SpotTrackerReportGenerator.cs" />
