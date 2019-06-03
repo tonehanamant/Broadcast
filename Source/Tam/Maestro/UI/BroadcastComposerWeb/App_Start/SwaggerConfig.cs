@@ -20,6 +20,7 @@ namespace BroadcastComposerWeb
                         c.SingleApiVersion("v1", "BroadcastComposerWeb");
                         c.UseFullTypeNameInSchemaIds();
                         c.IncludeXmlComments($@"{AppDomain.CurrentDomain.BaseDirectory}\bin\BroadcastComposerWeb.xml");
+                        c.IncludeXmlComments($@"{AppDomain.CurrentDomain.BaseDirectory}\bin\Services.Broadcast.xml");
                     })
                 .EnableSwaggerUi(c => {});
         }
