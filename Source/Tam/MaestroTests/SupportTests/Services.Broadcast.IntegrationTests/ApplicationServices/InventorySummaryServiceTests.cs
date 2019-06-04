@@ -1,4 +1,5 @@
 ﻿using ApprovalTests;
+using ApprovalTests.Namers;
 using ApprovalTests.Reporters;
 using IntegrationTests.Common;
 using Newtonsoft.Json;
@@ -6,6 +7,7 @@ using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.InventorySummary;
 using Services.Broadcast.Repositories;
 using System;
@@ -216,6 +218,40 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }, new DateTime(2019, 04, 01));
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(inventoryCards));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetInventorySummarySourceTypes()
+        {
+            var sourceTypes = _InventoryCardService.GetInventorySourceTypes();
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(sourceTypes));
+        }
+
+        [Test]
+        [TestCase(InventorySourceTypeEnum.Barter)]
+        [TestCase(InventorySourceTypeEnum.Diginet)]
+        [TestCase(InventorySourceTypeEnum.OpenMarket)]
+        [TestCase(InventorySourceTypeEnum.ProprietaryOAndO)]
+        [TestCase(InventorySourceTypeEnum.Syndication)]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetInventorySummariesFilterBySourceTypeTest(InventorySourceTypeEnum inventorySourceType)
+        {
+            using (ApprovalResults.ForScenario(inventorySourceType))
+            {
+                var inventoryCards = _InventoryCardService.GetInventorySummaries(new InventorySummaryFilterDto
+                {
+                    Quarter = new InventorySummaryQuarter
+                    {
+                        Quarter = 1,
+                        Year = 2018
+                    },
+                    InventorySourceType = inventorySourceType
+                }, new DateTime(2019, 04, 01));
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(inventoryCards));
+            }
         }
     }
 }

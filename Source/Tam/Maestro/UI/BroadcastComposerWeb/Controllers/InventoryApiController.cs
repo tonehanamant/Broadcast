@@ -12,6 +12,7 @@ using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.InventorySummary;
 using Services.Broadcast.Exceptions;
 using Services.Broadcast.Entities.Scx;
+using Tam.Maestro.Data.Entities.DataTransferObjects;
 
 namespace BroadcastComposerWeb.Controllers
 {
@@ -29,16 +30,29 @@ namespace BroadcastComposerWeb.Controllers
         }
 
         /// <summary>
-        /// Get all inventory sources
+        /// Get inventory sources for summaries
         /// </summary>
         /// <remarks>
-        /// Get a list of all available inventory sources
+        /// Get a list of inventory sources available for summary
         /// </remarks>
         [HttpGet]
-        [Route("SourceTypes")]
+        [Route("Sources")]
         public BaseResponse<List<InventorySource>> GetInventorySources()
         {
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IInventorySummaryService>().GetInventorySources());
+        }
+
+        /// <summary>
+        /// Get all inventory source types
+        /// </summary>
+        /// <remarks>
+        /// Returns a list of inventory source types
+        /// </remarks>
+        [HttpGet]
+        [Route("SourceTypes")]
+        public BaseResponse<List<LookupDto>> GetInventorySourceTypes()
+        {
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IInventorySummaryService>().GetInventorySourceTypes());
         }
 
         /// <summary>

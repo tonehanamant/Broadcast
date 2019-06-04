@@ -1,0 +1,179 @@
+﻿[
+  {
+    "HasRatesAvailableForQuarter": false,
+    "HouseholdImpressions": null,
+    "InventoryPostingBooks": [],
+    "InventorySourceId": 3,
+    "InventorySourceName": "TVB",
+    "IsUpdating": false,
+    "LastUpdatedDate": null,
+    "Quarter": {
+      "EndDate": "2018-03-25T23:59:59",
+      "Quarter": 1,
+      "StartDate": "2018-01-01T00:00:00",
+      "Year": 2018
+    },
+    "RatesAvailableFromQuarter": {
+      "EndDate": "2019-06-30T23:59:59",
+      "Quarter": 2,
+      "StartDate": "2019-04-01T00:00:00",
+      "Year": 2019
+    },
+    "RatesAvailableToQuarter": {
+      "EndDate": "2019-06-30T23:59:59",
+      "Quarter": 2,
+      "StartDate": "2019-04-01T00:00:00",
+      "Year": 2019
+    },
+    "TotalDaypartCodes": 0,
+    "TotalMarkets": 0,
+    "TotalStations": 0,
+    "TotalUnits": 0
+  },
+  {
+    "HasRatesAvailableForQuarter": false,
+    "HouseholdImpressions": null,
+    "InventoryPostingBooks": [],
+    "InventorySourceId": 4,
+    "InventorySourceName": "TTWN",
+    "IsUpdating": false,
+    "LastUpdatedDate": null,
+    "Quarter": {
+      "EndDate": "2018-03-25T23:59:59",
+      "Quarter": 1,
+      "StartDate": "2018-01-01T00:00:00",
+      "Year": 2018
+    },
+    "RatesAvailableFromQuarter": {
+      "EndDate": "2019-06-30T23:59:59",
+      "Quarter": 2,
+      "StartDate": "2019-04-01T00:00:00",
+      "Year": 2019
+    },
+    "RatesAvailableToQuarter": {
+      "EndDate": "2019-06-30T23:59:59",
+      "Quarter": 2,
+      "StartDate": "2019-04-01T00:00:00",
+      "Year": 2019
+    },
+    "TotalDaypartCodes": 0,
+    "TotalMarkets": 0,
+    "TotalStations": 0,
+    "TotalUnits": 0
+  },
+  {
+    "HasRatesAvailableForQuarter": false,
+    "HouseholdImpressions": null,
+    "InventoryPostingBooks": [],
+    "InventorySourceId": 5,
+    "InventorySourceName": "CNN",
+    "IsUpdating": false,
+    "LastUpdatedDate": null,
+    "Quarter": {
+      "EndDate": "2018-03-25T23:59:59",
+      "Quarter": 1,
+      "StartDate": "2018-01-01T00:00:00",
+      "Year": 2018
+    },
+    "RatesAvailableFromQuarter": null,
+    "RatesAvailableToQuarter": null,
+    "TotalDaypartCodes": 0,
+    "TotalMarkets": 0,
+    "TotalStations": 0,
+    "TotalUnits": 0
+  },
+  {
+    "HasRatesAvailableForQuarter": false,
+    "HouseholdImpressions": null,
+    "InventoryPostingBooks": [],
+    "InventorySourceId": 6,
+    "InventorySourceName": "Sinclair",
+    "IsUpdating": false,
+    "LastUpdatedDate": null,
+    "Quarter": {
+      "EndDate": "2018-03-25T23:59:59",
+      "Quarter": 1,
+      "StartDate": "2018-01-01T00:00:00",
+      "Year": 2018
+    },
+    "RatesAvailableFromQuarter": null,
+    "RatesAvailableToQuarter": null,
+    "TotalDaypartCodes": 0,
+    "TotalMarkets": 0,
+    "TotalStations": 0,
+    "TotalUnits": 0
+  },
+  {
+    "HasRatesAvailableForQuarter": false,
+    "HouseholdImpressions": null,
+    "InventoryPostingBooks": [],
+    "InventorySourceId": 7,
+    "InventorySourceName": "LilaMax",
+    "IsUpdating": false,
+    "LastUpdatedDate": null,
+    "Quarter": {
+      "EndDate": "2018-03-25T23:59:59",
+      "Quarter": 1,
+      "StartDate": "2018-01-01T00:00:00",
+      "Year": 2018
+    },
+    "RatesAvailableFromQuarter": {
+      "EndDate": "2019-03-31T23:59:59",
+      "Quarter": 1,
+      "StartDate": "2018-12-31T00:00:00",
+      "Year": 2019
+    },
+    "RatesAvailableToQuarter": {
+      "EndDate": "2019-03-31T23:59:59",
+      "Quarter": 1,
+      "StartDate": "2018-12-31T00:00:00",
+      "Year": 2019
+    },
+    "TotalDaypartCodes": 0,
+    "TotalMarkets": 0,
+    "TotalStations": 0,
+    "TotalUnits": 0
+  },
+  {
+    "HasRatesAvailableForQuarter": false,
+    "HouseholdImpressions": null,
+    "InventoryPostingBooks": [],
+    "InventorySourceId": 8,
+    "InventorySourceName": "MLB",
+    "IsUpdating": false,
+    "LastUpdatedDate": null,
+    "Quarter": {
+      "EndDate": "2018-03-25T23:59:59",
+      "Quarter": 1,
+      "StartDate": "2018-01-01T00:00:00",
+      "Year": 2018
+    },
+    "RatesAvailableFromQuarter": null,
+    "RatesAvailableToQuarter": null,
+    "TotalDaypartCodes": 0,
+    "TotalMarkets": 0,
+    "TotalStations": 0,
+    "TotalUnits": 0
+  },
+  {
+    "HasRatesAvailableForQuarter": false,
+    "HouseholdImpressions": null,
+    "InventoryPostingBooks": [],
+    "InventorySourceId": 9,
+    "InventorySourceName": "Ference Media",
+    "IsUpdating": false,
+    "LastUpdatedDate": null,
+    "Quarter": {
+      "EndDate": "2018-03-25T23:59:59",
+      "Quarter": 1,
+      "StartDate": "2018-01-01T00:00:00",
+      "Year": 2018
+    },
+    "RatesAvailableFromQuarter": null,
+    "RatesAvailableToQuarter": null,
+    "TotalDaypartCodes": 0,
+    "TotalMarkets": 0,
+    "TotalStations": 0,
+    "TotalUnits": 0
+  }
+]
