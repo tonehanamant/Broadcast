@@ -150,7 +150,12 @@
     ],
     "HasRatesAvailableForQuarter": true,
     "HouseholdImpressions": null,
-    "InventoryPostingBooks": [],
+    "InventoryPostingBooks": [
+      {
+        "HutProjectionBookId": 437,
+        "ShareProjectionBookId": 438
+      }
+    ],
     "InventorySourceId": 7,
     "InventorySourceName": "LilaMax",
     "IsUpdating": false,

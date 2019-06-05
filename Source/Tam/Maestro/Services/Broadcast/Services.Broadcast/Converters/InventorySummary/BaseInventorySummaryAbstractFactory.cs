@@ -1,5 +1,4 @@
-﻿using Services.Broadcast.ApplicationServices;
-using Services.Broadcast.BusinessEngines;
+﻿using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.InventorySummary;
 using Services.Broadcast.Repositories;
@@ -52,11 +51,12 @@ namespace Services.Broadcast.Converters.InventorySummary
         protected List<InventorySummaryBookDto> GetInventoryPostingBooks(List<InventorySummaryManifestFileDto> inventorySummaryManifestFileDtos)
         {
             return inventorySummaryManifestFileDtos.
-                        GroupBy(x => new { x.HutProjectionBookId, x.ShareProjectionBookId }).
+                        Where(x => x.ShareProjectionBookId.HasValue).
+                        GroupBy(x => new { x.ShareProjectionBookId, x.HutProjectionBookId }).
                         Select(x => new InventorySummaryBookDto
                         {
-                            HutProjectBookId = x.Key.HutProjectionBookId,
-                            ShareProjectionBookId = x.Key.ShareProjectionBookId
+                            ShareProjectionBookId = x.Key.ShareProjectionBookId,
+                            HutProjectionBookId = x.Key.HutProjectionBookId
                         }).
                         ToList();
         }
@@ -76,17 +76,6 @@ namespace Services.Broadcast.Converters.InventorySummary
         protected int GetTotalStations(List<InventorySummaryManifestDto> inventorySummaryManifests)
         {
             return inventorySummaryManifests.Where(x => x.StationId.HasValue).GroupBy(x => x.StationId).Count();
-        }
-
-        protected bool GetIsInventoryUpdating(List<InventorySummaryManifestFileDto> inventorySummaryManifestFiles)
-        {
-            return inventorySummaryManifestFiles.Any(x => x.JobStatus == InventoryFileRatingsProcessingStatus.Queued ||
-                                                          x.JobStatus == InventoryFileRatingsProcessingStatus.Processing);
-        }
-
-        protected DateTime? GetLastUpdatedDate(List<InventorySummaryManifestFileDto> inventorySummaryManifestFiles)
-        {
-            return inventorySummaryManifestFiles.Max(x => x.LastCompletedDate);
         }
     }
 }

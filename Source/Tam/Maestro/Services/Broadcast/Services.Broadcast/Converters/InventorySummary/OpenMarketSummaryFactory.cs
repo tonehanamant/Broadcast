@@ -22,6 +22,11 @@ namespace Services.Broadcast.Converters.InventorySummary
             _ProgramRepository = programRepository;
         }
 
+        private DateTime? GetFileLastCreatedDate(List<InventorySummaryManifestFileDto> inventorySummaryManifestFiles)
+        {
+            return inventorySummaryManifestFiles.Max(x => (DateTime?)x.CreatedDate);
+        }
+
         public override InventorySummaryDto CreateInventorySummary(InventorySource inventorySource,
                                                                    int householdAudienceId,
                                                                    QuarterDetailDto quarterDetail,
@@ -45,8 +50,7 @@ namespace Services.Broadcast.Converters.InventorySummary
                 TotalPrograms = totalPrograms,
                 HouseholdImpressions = GetHouseholdImpressions(manifests, householdAudienceId),
                 InventoryPostingBooks = GetInventoryPostingBooks(inventorySummaryManifestFiles),
-                LastUpdatedDate = GetLastUpdatedDate(inventorySummaryManifestFiles),
-                IsUpdating = GetIsInventoryUpdating(inventorySummaryManifestFiles),
+                LastUpdatedDate = GetFileLastCreatedDate(inventorySummaryManifestFiles),
                 RatesAvailableFromQuarter = quartersForInventoryAvailable.Item1,
                 RatesAvailableToQuarter = quartersForInventoryAvailable.Item2
             };

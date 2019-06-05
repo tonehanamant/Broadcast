@@ -1,4 +1,5 @@
-﻿using Services.Broadcast.BusinessEngines;
+﻿using Services.Broadcast.ApplicationServices;
+using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Cache;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.InventorySummary;
@@ -24,6 +25,17 @@ namespace Services.Broadcast.Converters.InventorySummary
             _MarketCoverageCache = marketCoverageCache;
         }
 
+        private bool GetIsInventoryUpdating(List<InventorySummaryManifestFileDto> inventorySummaryManifestFiles)
+        {
+            return inventorySummaryManifestFiles.Any(x => x.JobStatus == InventoryFileRatingsProcessingStatus.Queued ||
+                                                          x.JobStatus == InventoryFileRatingsProcessingStatus.Processing);
+        }
+
+        private DateTime? GetLastJobCompletedDate(List<InventorySummaryManifestFileDto> inventorySummaryManifestFiles)
+        {
+            return inventorySummaryManifestFiles.Max(x => x.JobCompletedDate);
+        }
+
         public override InventorySummaryDto CreateInventorySummary(InventorySource inventorySource,
                                                                    int householdAudienceId,
                                                                    QuarterDetailDto quarterDetail,
@@ -44,7 +56,7 @@ namespace Services.Broadcast.Converters.InventorySummary
                 TotalDaypartCodes = totalDaypartsCodes,
                 TotalUnits = _GetTotalUnits(inventorySummaryManifests),
                 InventoryPostingBooks = GetInventoryPostingBooks(inventorySummaryManifestFiles),
-                LastUpdatedDate = GetLastUpdatedDate(inventorySummaryManifestFiles),
+                LastUpdatedDate = GetLastJobCompletedDate(inventorySummaryManifestFiles),
                 IsUpdating = GetIsInventoryUpdating(inventorySummaryManifestFiles),
                 RatesAvailableFromQuarter = quartersForInventoryAvailable.Item1,
                 RatesAvailableToQuarter = quartersForInventoryAvailable.Item2

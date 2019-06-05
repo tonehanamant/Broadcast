@@ -1,10 +1,15 @@
 ﻿{
   "HasRatesAvailableForQuarter": true,
   "HouseholdImpressions": 1000.0,
-  "InventoryPostingBooks": [],
+  "InventoryPostingBooks": [
+    {
+      "HutProjectionBookId": 437,
+      "ShareProjectionBookId": 438
+    }
+  ],
   "InventorySourceName": "Open Market",
   "IsUpdating": false,
-  "LastUpdatedDate": null,
+  "LastUpdatedDate": "2017-12-01T16:39:12.403",
   "Quarter": {
     "EndDate": "2018-03-25T23:59:59",
     "Quarter": 1,

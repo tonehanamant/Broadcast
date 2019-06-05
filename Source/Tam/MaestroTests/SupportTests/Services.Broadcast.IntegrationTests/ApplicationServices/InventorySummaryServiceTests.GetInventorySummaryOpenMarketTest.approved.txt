@@ -2,10 +2,15 @@
   {
     "HasRatesAvailableForQuarter": true,
     "HouseholdImpressions": 1357.0,
-    "InventoryPostingBooks": [],
+    "InventoryPostingBooks": [
+      {
+        "HutProjectionBookId": 437,
+        "ShareProjectionBookId": 438
+      }
+    ],
     "InventorySourceName": "Open Market",
     "IsUpdating": false,
-    "LastUpdatedDate": null,
+    "LastUpdatedDate": "2017-12-01T16:39:12.403",
     "Quarter": {
       "EndDate": "2016-06-26T23:59:59",
       "Quarter": 2,
@@ -89,10 +94,15 @@
   {
     "HasRatesAvailableForQuarter": true,
     "HouseholdImpressions": 5000.0,
-    "InventoryPostingBooks": [],
+    "InventoryPostingBooks": [
+      {
+        "HutProjectionBookId": 437,
+        "ShareProjectionBookId": 438
+      }
+    ],
     "InventorySourceName": "Open Market",
     "IsUpdating": false,
-    "LastUpdatedDate": null,
+    "LastUpdatedDate": "2017-12-01T16:39:12.403",
     "Quarter": {
       "EndDate": "2017-03-26T23:59:59",
       "Quarter": 1,
@@ -121,7 +131,7 @@
     "InventoryPostingBooks": [],
     "InventorySourceName": "Open Market",
     "IsUpdating": false,
-    "LastUpdatedDate": null,
+    "LastUpdatedDate": "2017-12-01T16:39:12.397",
     "Quarter": {
       "EndDate": "2017-06-25T23:59:59",
       "Quarter": 2,
@@ -147,10 +157,15 @@
   {
     "HasRatesAvailableForQuarter": true,
     "HouseholdImpressions": 77450.0,
-    "InventoryPostingBooks": [],
+    "InventoryPostingBooks": [
+      {
+        "HutProjectionBookId": 437,
+        "ShareProjectionBookId": 438
+      }
+    ],
     "InventorySourceName": "Open Market",
     "IsUpdating": false,
-    "LastUpdatedDate": null,
+    "LastUpdatedDate": "2017-12-01T16:39:14.46",
     "Quarter": {
       "EndDate": "2017-09-24T23:59:59",
       "Quarter": 3,
@@ -176,10 +191,15 @@
   {
     "HasRatesAvailableForQuarter": true,
     "HouseholdImpressions": 1000.0,
-    "InventoryPostingBooks": [],
+    "InventoryPostingBooks": [
+      {
+        "HutProjectionBookId": 437,
+        "ShareProjectionBookId": 438
+      }
+    ],
     "InventorySourceName": "Open Market",
     "IsUpdating": false,
-    "LastUpdatedDate": null,
+    "LastUpdatedDate": "2017-12-01T16:39:12.403",
     "Quarter": {
       "EndDate": "2017-12-31T23:59:59",
       "Quarter": 4,
@@ -205,10 +225,15 @@
   {
     "HasRatesAvailableForQuarter": true,
     "HouseholdImpressions": 1000.0,
-    "InventoryPostingBooks": [],
+    "InventoryPostingBooks": [
+      {
+        "HutProjectionBookId": 437,
+        "ShareProjectionBookId": 438
+      }
+    ],
     "InventorySourceName": "Open Market",
     "IsUpdating": false,
-    "LastUpdatedDate": null,
+    "LastUpdatedDate": "2017-12-01T16:39:12.403",
     "Quarter": {
       "EndDate": "2018-03-25T23:59:59",
       "Quarter": 1,
@@ -266,7 +291,7 @@
     "InventoryPostingBooks": [],
     "InventorySourceName": "Open Market",
     "IsUpdating": false,
-    "LastUpdatedDate": null,
+    "LastUpdatedDate": "2019-02-06T12:30:09.647",
     "Quarter": {
       "EndDate": "2018-09-30T23:59:59",
       "Quarter": 3,
@@ -295,7 +320,7 @@
     "InventoryPostingBooks": [],
     "InventorySourceName": "Open Market",
     "IsUpdating": false,
-    "LastUpdatedDate": null,
+    "LastUpdatedDate": "2019-02-06T12:31:24.423",
     "Quarter": {
       "EndDate": "2018-12-30T23:59:59",
       "Quarter": 4,
@@ -411,7 +436,7 @@
     "InventoryPostingBooks": [],
     "InventorySourceName": "Open Market",
     "IsUpdating": false,
-    "LastUpdatedDate": null,
+    "LastUpdatedDate": "2017-12-01T16:39:12.397",
     "Quarter": {
       "EndDate": "2019-12-29T23:59:59",
       "Quarter": 4,

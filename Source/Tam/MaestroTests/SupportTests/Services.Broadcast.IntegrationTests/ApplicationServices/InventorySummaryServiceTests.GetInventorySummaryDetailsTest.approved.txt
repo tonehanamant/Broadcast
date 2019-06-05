@@ -14,7 +14,7 @@
     "HouseholdImpressions": null,
     "InventoryPostingBooks": [
       {
-        "HutProjectBookId": null,
+        "HutProjectionBookId": null,
         "ShareProjectionBookId": 425
       }
     ],

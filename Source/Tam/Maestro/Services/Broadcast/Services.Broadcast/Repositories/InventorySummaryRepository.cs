@@ -97,21 +97,23 @@ namespace Services.Broadcast.Repositories
                 context =>
                 {
                     return (from file in context.inventory_files
-                            from header in file.inventory_file_proprietary_header
-                            from job in file.inventory_file_ratings_jobs
+                            from header in file.inventory_file_proprietary_header.DefaultIfEmpty()
+                            from job in file.inventory_file_ratings_jobs.DefaultIfEmpty()
                             where inventoryFileIds.Contains(file.id)
                             select new
                             {
                                 job.completed_at,
                                 job.status,
                                 header.hut_projection_book_id,
-                                header.share_projection_book_id
+                                header.share_projection_book_id,
+                                file.created_date
                             }).Select(f => new InventorySummaryManifestFileDto
                             {
-                                LastCompletedDate = f.completed_at,
-                                JobStatus = (InventoryFileRatingsProcessingStatus)f.status,
+                                JobCompletedDate = f.completed_at,
+                                JobStatus = (InventoryFileRatingsProcessingStatus?)f.status,
                                 HutProjectionBookId = f.hut_projection_book_id,
-                                ShareProjectionBookId = f.share_projection_book_id
+                                ShareProjectionBookId = f.share_projection_book_id,
+                                CreatedDate = f.created_date
                             }).ToList();
                 });
         }
