@@ -12,6 +12,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Tam.Maestro.Common;
+using Common.Services;
+using System.IO;
 
 namespace Services.Broadcast.Converters.RateImport
 {
@@ -19,7 +21,14 @@ namespace Services.Broadcast.Converters.RateImport
     {
         void CheckFileHash();
         ProprietaryInventoryFile GetPendingProprietaryInventoryFile(string userName, InventorySource inventorySource);
-        void ExtractData(ProprietaryInventoryFile proprietaryFile);
+
+        /// <summary>
+        /// Extracts the data in the request stream and loads the proprietary inventory file
+        /// </summary>
+        /// <param name="proprietaryFile">Proprietary inventory file object to load</param>
+        /// <returns>Stream containing the file and the validation errors if there are any</returns>
+        Stream ExtractData(ProprietaryInventoryFile proprietaryFile);
+
         void LoadFromSaveRequest(FileRequest request);
         void LoadAndValidateDataLines(ExcelWorksheet worksheet, ProprietaryInventoryFile proprietaryFile);
         void PopulateManifests(ProprietaryInventoryFile proprietaryFile, List<DisplayBroadcastStation> stations);
@@ -30,6 +39,7 @@ namespace Services.Broadcast.Converters.RateImport
         protected const string CPM_FORMAT = "##.##";
         protected readonly string[] BOOK_DATE_FORMATS = new string[] { "MMM yy", "MMM-yy", "MMM/yy", "yy-MMM", "yy/MMM", "MMM yyyy" };
         protected readonly string[] DATE_FORMATS = new string[] { "MM/dd/yyyy", "M/dd/yyyy", "M/d/yyyy" };
+        protected const string HEADER_ERROR_COLUMN = "E";
 
         private string _FileHash { get; set; }
 
@@ -44,6 +54,7 @@ namespace Services.Broadcast.Converters.RateImport
         protected readonly IStationProcessingEngine StationProcessingEngine;
         protected readonly ISpotLengthEngine SpotLengthEngine;
         protected readonly IDaypartCodeRepository DaypartCodeRepository;
+        private readonly IFileService _FileService;
 
         public ProprietaryFileImporterBase(
             IDataRepositoryFactory broadcastDataRepositoryFactory,
@@ -51,7 +62,8 @@ namespace Services.Broadcast.Converters.RateImport
             IInventoryDaypartParsingEngine inventoryDaypartParsingEngine,
             IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
             IStationProcessingEngine stationProcessingEngine,
-            ISpotLengthEngine spotLengthEngine)
+            ISpotLengthEngine spotLengthEngine,
+            IFileService fileService)
         {
             _InventoryFileRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryFileRepository>();
             _InventoryRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
@@ -61,6 +73,7 @@ namespace Services.Broadcast.Converters.RateImport
             MediaMonthAndWeekAggregateCache = mediaMonthAndWeekAggregateCache;
             StationProcessingEngine = stationProcessingEngine;
             SpotLengthEngine = spotLengthEngine;
+            _FileService = fileService;
         }
 
         public void CheckFileHash()
@@ -92,14 +105,24 @@ namespace Services.Broadcast.Converters.RateImport
             };
         }
 
-        public void ExtractData(ProprietaryInventoryFile proprietaryFile)
+        /// <summary>
+        /// Extracts the data in the request stream and loads the proprietary inventory file
+        /// </summary>
+        /// <param name="proprietaryFile">Proprietary inventory file object to load</param>
+        /// <returns>Stream containing the file and the validation errors if there are any</returns>
+        public Stream ExtractData(ProprietaryInventoryFile proprietaryFile)
         {
+            var result = new MemoryStream();
             using (var package = new ExcelPackage(Request.StreamData))
             {
                 var worksheet = package.Workbook.Worksheets.First();
                 LoadAndValidateHeaderData(worksheet, proprietaryFile);
                 LoadAndValidateDataLines(worksheet, proprietaryFile);
+
+                package.SaveAs(result);
+                result.Position = 0;
             }
+            return result;
         }
 
         protected List<StationInventoryManifestWeek> GetManifestWeeksInRange(DateTime startDate, DateTime endDate, int spots)

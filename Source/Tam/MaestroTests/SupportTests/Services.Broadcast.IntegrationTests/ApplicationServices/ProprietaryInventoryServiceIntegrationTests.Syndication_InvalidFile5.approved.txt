@@ -1,7 +1,7 @@
 ﻿[
   {
     "AffectedProposals": null,
-    "ProblemDescription": "CPM header is expected. Row: 15, column: 5",
+    "ProblemDescription": "CPM header is expected. Row: 15, column: E",
     "ProgramName": null,
     "StationLetters": null
   }

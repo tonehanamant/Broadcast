@@ -43,7 +43,7 @@
   },
   {
     "AffectedProposals": null,
-    "ProblemDescription": "Week: 4-Feb-2019 should be inside or intersect with the date range specified in the header (effective and end dates). Row: 15, column: 5",
+    "ProblemDescription": "Week: 4-Feb-2019 should be inside or intersect with the date range specified in the header (effective and end dates). Row: 15, column: E",
     "ProgramName": null,
     "StationLetters": null
   }

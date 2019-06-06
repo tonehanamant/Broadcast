@@ -242,6 +242,7 @@
     <Compile Include="Converters\InventorySummary\BarterInventorySummaryFactory.cs" />
     <Compile Include="Entities\PostPrePostingFileSettings.cs" />
     <Compile Include="Entities\ProposalDetailPricingGuideSave.cs" />
+    <Compile Include="Entities\ProprietaryInventory\FileCell.cs" />
     <Compile Include="Entities\Scx\InventoryMarketDto.cs" />
     <Compile Include="Entities\Scx\InventoryScxFile.cs" />
     <Compile Include="Entities\Scx\ScxData.cs" />

@@ -1,0 +1,23 @@
+﻿{
+  "headerErrors": {
+    "E3": "",
+    "E4": "",
+    "E5": "",
+    "E6": "",
+    "E7": "CPM is not in the correct format (##.##)",
+    "E8": "Invalid demo",
+    "E9": "",
+    "E10": "",
+    "E11": "HUT Book must be prior to the Share book",
+    "E12": ""
+  },
+  "lineErrors": {
+    "I16": "Invalid spot length was found on column D",
+    "I17": "",
+    "I18": "",
+    "I19": "",
+    "I20": "",
+    "I21": "",
+    "I22": ""
+  }
+}

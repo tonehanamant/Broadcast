@@ -19,13 +19,15 @@ namespace Services.Broadcast.Converters.RateImport
 {
     public class DiginetFileImporter : ProprietaryFileImporterBase
     {
-        private const string EFFECTIVE_DATE_CELL = "B4";
-        private const string END_DATE_CELL = "B5";
-        private const string NTI_TO_NSI_INCREASE_CELL = "B6";
+        private readonly FileCell EFFECTIVE_DATE_CELL = new FileCell { ColumnLetter = "B", RowIndex = 4 };
+        private readonly FileCell END_DATE_CELL = new FileCell { ColumnLetter = "B", RowIndex = 5 };
+        private readonly FileCell NTI_TO_NSI_INCREASE_CELL = new FileCell { ColumnLetter = "B", RowIndex = 6 };
         private const string DEFAULT_DAYPART_CODE = "DIGI";
 
         private readonly IDaypartCache _DaypartCache;
         private readonly IImpressionAdjustmentEngine _ImpressionAdjustmentEngine;
+        private int _ErrorColumnIndex = 0;
+        private const int audienceRowIndex = 11;
 
         public DiginetFileImporter(
             IDataRepositoryFactory broadcastDataRepositoryFactory,
@@ -35,35 +37,147 @@ namespace Services.Broadcast.Converters.RateImport
             IStationProcessingEngine stationProcessingEngine,
             ISpotLengthEngine spotLengthEngine,
             IDaypartCache daypartCache,
-            IImpressionAdjustmentEngine impressionAdjustmentEngine) : base(
+            IImpressionAdjustmentEngine impressionAdjustmentEngine,
+            IFileService fileService) : base(
                 broadcastDataRepositoryFactory,
                 broadcastAudiencesCache,
                 inventoryDaypartParsingEngine,
                 mediaMonthAndWeekAggregateCache,
                 stationProcessingEngine,
-                spotLengthEngine)
+                spotLengthEngine,
+                fileService)
         {
             _DaypartCache = daypartCache;
             _ImpressionAdjustmentEngine = impressionAdjustmentEngine;
+        }
+
+        protected override void LoadAndValidateHeaderData(ExcelWorksheet worksheet, ProprietaryInventoryFile proprietaryFile)
+        {
+            var header = new ProprietaryInventoryHeader { DaypartCode = DEFAULT_DAYPART_CODE };
+            var validationProblems = new List<string>();
+
+            _ValidateAndSetEffectiveAndEndDates(worksheet, validationProblems, header);
+            _ValidateAndSetNTIToNSIIncrease(worksheet, validationProblems, header);
+
+            proprietaryFile.Header = header;
+            proprietaryFile.ValidationProblems.AddRange(validationProblems);
+        }
+
+        private void _ValidateAndSetEffectiveAndEndDates(ExcelWorksheet worksheet, List<string> validationProblems, ProprietaryInventoryHeader header)
+        {
+            var effectiveDateText = worksheet.Cells[EFFECTIVE_DATE_CELL.ToString()].GetTextValue();
+            var endDateText = worksheet.Cells[END_DATE_CELL.ToString()].GetTextValue();
+            var validDate = true;
+
+            if (string.IsNullOrWhiteSpace(effectiveDateText))
+            {
+                var errorMessage = "Effective date is missing";
+                validationProblems.Add(errorMessage);
+                worksheet.Cells[$"{HEADER_ERROR_COLUMN}{EFFECTIVE_DATE_CELL.RowIndex}"].Value = errorMessage;
+                validDate = false;
+            }
+            else
+            {
+                effectiveDateText = effectiveDateText.Split(' ')[0]; //split is removing time section
+            }
+
+            if (string.IsNullOrWhiteSpace(endDateText))
+            {
+                var errorMessage = "End date is missing";
+                validationProblems.Add(errorMessage);
+                worksheet.Cells[$"{HEADER_ERROR_COLUMN}{END_DATE_CELL.RowIndex}"].Value = errorMessage;
+                validDate = false;
+            }
+            else
+            {
+                endDateText = endDateText.Split(' ')[0];
+            }
+
+            if (!validDate) return;
+
+            if (!DateTime.TryParseExact(effectiveDateText, DATE_FORMATS, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime effectiveDate))
+            {
+                var errorMessage = $"Effective date is not in the correct format ({(string.Join(", ", DATE_FORMATS))})";
+                validationProblems.Add(errorMessage);
+                worksheet.Cells[$"{HEADER_ERROR_COLUMN}{EFFECTIVE_DATE_CELL.RowIndex}"].Value = errorMessage;
+                validDate = false;
+            }
+
+            if (!DateTime.TryParseExact(endDateText, DATE_FORMATS, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime endDate))
+            {
+                var errorMessage = $"End date is not in the correct format ({(string.Join(", ", DATE_FORMATS))})";
+                validationProblems.Add(errorMessage);
+                worksheet.Cells[$"{HEADER_ERROR_COLUMN}{END_DATE_CELL.RowIndex}"].Value = errorMessage;
+                validDate = false;
+            }
+
+            if (!validDate) return;
+
+            if (endDate <= effectiveDate)
+            {
+                var errorMessage = $"End date ({endDateText}) should be greater than effective date ({effectiveDateText})";
+                validationProblems.Add(errorMessage);
+                worksheet.Cells[$"{HEADER_ERROR_COLUMN}{END_DATE_CELL.RowIndex}"].Value = errorMessage;
+                validDate = false;
+            }
+
+            if (validDate)
+            {
+                header.EffectiveDate = effectiveDate;
+                header.EndDate = endDate;
+            }
+        }
+
+        private void _ValidateAndSetNTIToNSIIncrease(ExcelWorksheet worksheet, List<string> validationProblems, ProprietaryInventoryHeader header)
+        {
+            var ntiToNsiIncreaseText = worksheet.Cells[NTI_TO_NSI_INCREASE_CELL.ToString()].GetTextValue();
+            if (string.IsNullOrWhiteSpace(ntiToNsiIncreaseText))
+            {
+                var errorMessage = "NTI to NSI Increase is missing";
+                validationProblems.Add(errorMessage);
+                worksheet.Cells[$"{HEADER_ERROR_COLUMN}{NTI_TO_NSI_INCREASE_CELL.RowIndex}"].Value = errorMessage;
+                return;
+            }
+
+            ntiToNsiIncreaseText = ntiToNsiIncreaseText.Replace("%", string.Empty);
+
+            if (!decimal.TryParse(ntiToNsiIncreaseText, out var ntiToNsiIncrease))
+            {
+                var errorMessage = "Invalid NTI to NSI increase is specified";
+                validationProblems.Add(errorMessage);
+                worksheet.Cells[$"{HEADER_ERROR_COLUMN}{NTI_TO_NSI_INCREASE_CELL.RowIndex}"].Value = errorMessage;
+            }
+            else
+            {
+                header.NtiToNsiIncrease = ntiToNsiIncrease;
+            }
         }
 
         public override void LoadAndValidateDataLines(ExcelWorksheet worksheet, ProprietaryInventoryFile proprietaryFile)
         {
             const int firstColumnIndex = 1;
             const int firstDataLineRowIndex = 12;
+            const int audienceRowIndex = 11;
             var rowIndex = firstDataLineRowIndex;
             var columnIndex = firstColumnIndex;
             var lastRowIndex = worksheet.Dimension.End.Row;
+
+            //the errors column is the second one after all the data columns (that's why I am doing +1 on the last column)
+            _ErrorColumnIndex = _GetLastColumnWithValue(worksheet, audienceRowIndex) + 1;
+
             var audiences = _ReadAudiences(worksheet, out var audienceProblems);
             
             if (audienceProblems.Any())
             {
                 proprietaryFile.ValidationProblems.AddRange(audienceProblems);
+                worksheet.Cells[audienceRowIndex, _ErrorColumnIndex].Value = string.Join("\r\n", audienceProblems);
                 return;
             }
             else if (!audiences.Where(x => x != null).Any(x => x.Code.Equals(BroadcastConstants.HOUSEHOLD_CODE, StringComparison.OrdinalIgnoreCase)))
             {
-                proprietaryFile.ValidationProblems.Add("File must contain data for House Holds(HH)");
+                var errorMessage = "File must contain data for HouseHolds(HH)";
+                proprietaryFile.ValidationProblems.Add(errorMessage);
+                worksheet.Cells[audienceRowIndex, _ErrorColumnIndex].Value = errorMessage;
                 return;
             }
 
@@ -80,6 +194,7 @@ namespace Services.Broadcast.Converters.RateImport
                 if (lineProblems.Any())
                 {
                     proprietaryFile.ValidationProblems.AddRange(lineProblems);
+                    worksheet.Cells[rowIndex, _ErrorColumnIndex].Value = string.Join("\r\n", lineProblems);
                 }
                 else
                 {
@@ -92,11 +207,11 @@ namespace Services.Broadcast.Converters.RateImport
         }
 
         private ProprietaryInventoryDataLine _ReadAndValidateDataLine(
-            ExcelWorksheet worksheet, 
-            int rowIndex, 
-            int columnIndex, 
-            List<BroadcastAudience> audiences,
-            out List<string> problems)
+            ExcelWorksheet worksheet
+            , int rowIndex
+            , int columnIndex
+            , List<BroadcastAudience> audiences
+            ,out List<string> problems)
         {
             problems = new List<string>();
             var line = new ProprietaryInventoryDataLine();
@@ -134,7 +249,6 @@ namespace Services.Broadcast.Converters.RateImport
                     line.Audiences.Add(lineAudience);
                 }
             }
-
             return line;
         }
 
@@ -144,11 +258,11 @@ namespace Services.Broadcast.Converters.RateImport
 
             if (string.IsNullOrEmpty(daypartText))
             {
-                problems.Add($"Line {rowIndex} contains an empty daypart cell");
+                problems.Add($"Line {rowIndex} contains an empty daypart cell in column {columnIndex.GetColumnAdress()}");
             }
             else if (!DaypartParsingEngine.TryParse(daypartText, out var dayparts))
             {
-                problems.Add($"Line {rowIndex} contains an invalid daypart(s): {daypartText}");
+                problems.Add($"Line {rowIndex} contains an invalid daypart(s): {daypartText} in column {columnIndex.GetColumnAdress()}");
             }
             else
             {
@@ -162,15 +276,15 @@ namespace Services.Broadcast.Converters.RateImport
 
             if (string.IsNullOrEmpty(spotCostText))
             {
-                problems.Add($"Line {rowIndex} contains an empty rate cell");
+                problems.Add($"Line {rowIndex} contains an empty rate cell in column {columnIndex.GetColumnAdress()}");
             }
             else if (!decimal.TryParse(spotCostText, out var spotCost))
             {
-                problems.Add($"Line {rowIndex} contains an invalid rate value: {spotCostText}");
+                problems.Add($"Line {rowIndex} contains an invalid rate value: ({spotCostText}) in column {columnIndex.GetColumnAdress()}");
             }
             else if (spotCost < 0)
             {
-                problems.Add($"Line {rowIndex} contains a negative rate value: {spotCost}");
+                problems.Add($"Line {rowIndex} contains a negative rate value: ({spotCost}) in column {columnIndex.GetColumnAdress()}");
             }
             else
             {
@@ -182,15 +296,15 @@ namespace Services.Broadcast.Converters.RateImport
         {
             if (string.IsNullOrEmpty(cellText))
             {
-                problems.Add($"Line {rowIndex} contains an empty {cellName} cell in column {columnIndex}");
+                problems.Add($"Line {rowIndex} contains an empty ({cellName}) cell in column {columnIndex.GetColumnAdress()}");
             }
             else if (!double.TryParse(cellText, out var cellValue))
             {
-                problems.Add($"Line {rowIndex} contains an invalid {cellName} value in column {columnIndex}: {cellText}");
+                problems.Add($"Line {rowIndex} contains an invalid ({cellName}) value in column {columnIndex.GetColumnAdress()}: {cellText}");
             }
             else if (cellValue < 0)
             {
-                problems.Add($"Line {rowIndex} contains a negative {cellName} value in column {columnIndex}: {cellValue}");
+                problems.Add($"Line {rowIndex} contains a negative ({cellName}) value in column {columnIndex.GetColumnAdress()}: {cellValue}");
             }
             else
             {
@@ -251,110 +365,17 @@ namespace Services.Broadcast.Converters.RateImport
                     }
                 }).ToList();
         }
-
-        protected override void LoadAndValidateHeaderData(ExcelWorksheet worksheet, ProprietaryInventoryFile proprietaryFile)
-        {
-            var header = new ProprietaryInventoryHeader { DaypartCode = DEFAULT_DAYPART_CODE };
-            var validationProblems = new List<string>();
-
-            _ValidateAndSetEffectiveAndEndDates(worksheet, validationProblems, header);
-            _ValidateAndSetNTIToNSIIncrease(worksheet, validationProblems, header);
-
-            proprietaryFile.Header = header;
-            proprietaryFile.ValidationProblems.AddRange(validationProblems);
-        }
-
-        private void _ValidateAndSetEffectiveAndEndDates(ExcelWorksheet worksheet, List<string> validationProblems, ProprietaryInventoryHeader header)
-        {
-            var effectiveDateText = worksheet.Cells[EFFECTIVE_DATE_CELL].GetTextValue();
-            var endDateText = worksheet.Cells[END_DATE_CELL].GetTextValue();
-            var validDate = true;
-
-            if (string.IsNullOrWhiteSpace(effectiveDateText))
-            {
-                validationProblems.Add($"Effective date is missing");
-                validDate = false;
-            }
-            else
-            {
-                effectiveDateText = effectiveDateText.Split(' ')[0]; //split is removing time section
-            }
-
-            if (string.IsNullOrWhiteSpace(endDateText))
-            {
-                validationProblems.Add($"End date is missing");
-                validDate = false;
-            }
-            else
-            {
-                endDateText = endDateText.Split(' ')[0];
-            }
-
-            if (!validDate) return;
-
-            if (!DateTime.TryParseExact(effectiveDateText, DATE_FORMATS, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime effectiveDate))
-            {
-                validationProblems.Add($"Effective date is not in the correct format ({(string.Join(", ", DATE_FORMATS))})");
-                validDate = false;
-            }
-
-            if (!DateTime.TryParseExact(endDateText, DATE_FORMATS, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime endDate))
-            {
-                validationProblems.Add($"End date is not in the correct format ({(string.Join(", ", DATE_FORMATS))})");
-                validDate = false;
-            }
-
-            if (!validDate) return;
-
-            if (endDate <= effectiveDate)
-            {
-                validationProblems.Add($"End date ({endDateText}) should be greater than effective date ({effectiveDateText})");
-                validDate = false;
-            }
-
-            if (validDate)
-            {
-                header.EffectiveDate = effectiveDate;
-                header.EndDate = endDate;
-            }
-        }
-
-        private void _ValidateAndSetNTIToNSIIncrease(ExcelWorksheet worksheet, List<string> validationProblems, ProprietaryInventoryHeader header)
-        {
-            var ntiToNsiIncreaseText = worksheet.Cells[NTI_TO_NSI_INCREASE_CELL].GetTextValue();
-
-            if (string.IsNullOrWhiteSpace(ntiToNsiIncreaseText))
-            {
-                validationProblems.Add("NTI to NSI Increase is missing");
-                return;
-            }
-
-            ntiToNsiIncreaseText = ntiToNsiIncreaseText.Replace("%", string.Empty);
-
-            if (!decimal.TryParse(ntiToNsiIncreaseText, out var ntiToNsiIncrease))
-            {
-                validationProblems.Add("Invalid NTI to NSI increase is specified");
-            }
-            else
-            {
-                header.NtiToNsiIncrease = ntiToNsiIncrease;
-            }
-        }
-
+                
         private List<BroadcastAudience> _ReadAudiences(ExcelWorksheet worksheet, out List<string> validationProblems)
         {
-            validationProblems = new List<string>();
-            const int audienceRowIndex = 11;
+            validationProblems = new List<string>();            
             var result = new List<BroadcastAudience>();
             var currentAudienceColumnIndex = 3;
             var ratingRegex = new Regex(@"(?<Audience>[a-z0-9\s-\[\]]+)\sRtg.*", RegexOptions.IgnoreCase);
             var impressionsRegex = new Regex(@"(?<Audience>[a-z0-9\s-\[\]]+)\sImps\s*\(000\).*", RegexOptions.IgnoreCase);
 
-            while (true)
-            {
-                if (_ShouldStopReadingAudiences(worksheet, audienceRowIndex, currentAudienceColumnIndex))
-                    break;
-
+            while (currentAudienceColumnIndex < _ErrorColumnIndex - 1)
+            {                
                 var ratingColumnIndex = currentAudienceColumnIndex;
                 var impressionsColumnIndex = currentAudienceColumnIndex + 1;
 
@@ -365,31 +386,31 @@ namespace Services.Broadcast.Converters.RateImport
 
                 if (string.IsNullOrWhiteSpace(ratingText))
                 {
-                    validationProblems.Add($"Rating header is expected. Row: {audienceRowIndex}, column: {ratingColumnIndex}");
+                    validationProblems.Add($"Rating header is expected. Row: {audienceRowIndex}, column: {ratingColumnIndex.GetColumnAdress()}");
                     invalidAudience = true;
                 }
 
                 if (string.IsNullOrWhiteSpace(impressionsText))
                 {
-                    validationProblems.Add($"Impressions header is expected. Row: {audienceRowIndex}, column: {impressionsColumnIndex}");
+                    validationProblems.Add($"Impressions header is expected. Row: {audienceRowIndex}, column: {impressionsColumnIndex.GetColumnAdress()}");
                     invalidAudience = true;
                 }
 
                 if (invalidAudience)
-                    break;
+                    break;      
 
                 var ratingMatch = ratingRegex.Match(ratingText);
                 var impressionsMatch = impressionsRegex.Match(impressionsText);
 
                 if (!ratingMatch.Success)
                 {
-                    validationProblems.Add($"Rating header is incorrect: {ratingText}. Row: {audienceRowIndex}, column: {ratingColumnIndex}. Correct format: '[DEMO] Rtg'");
+                    validationProblems.Add($"Rating header is incorrect: {ratingText}. Row: {audienceRowIndex}, column: {ratingColumnIndex.GetColumnAdress()}. Correct format: '[DEMO] Rtg'");
                     invalidAudience = true;
                 }
 
                 if (!impressionsMatch.Success)
                 {
-                    validationProblems.Add($"Impressions header is incorrect: {impressionsText}. Row: {audienceRowIndex}, column: {impressionsColumnIndex}. Correct format: '[DEMO] Imps (000)'");
+                    validationProblems.Add($"Impressions header is incorrect: {impressionsText}. Row: {audienceRowIndex}, column: {impressionsColumnIndex.GetColumnAdress()}. Correct format: '[DEMO] Imps (000)'");
                     invalidAudience = true;
                 }
 
@@ -401,7 +422,7 @@ namespace Services.Broadcast.Converters.RateImport
 
                 if (ratingAudience != impressionsAudience)
                 {
-                    validationProblems.Add($"Audience '{impressionsAudience}' from cell(row: {audienceRowIndex}, column: {impressionsColumnIndex}) should be the same as audience '{ratingAudience}' from cell(row: {audienceRowIndex}, column: {ratingColumnIndex})");
+                    validationProblems.Add($"Audience '{impressionsAudience}' from cell(row: {audienceRowIndex}, column: {impressionsColumnIndex.GetColumnAdress()}) should be the same as audience '{ratingAudience}' from cell(row: {audienceRowIndex}, column: {ratingColumnIndex.GetColumnAdress()})");
                     break;
                 }
 
@@ -416,13 +437,13 @@ namespace Services.Broadcast.Converters.RateImport
 
                     if (audience == null)
                     {
-                        validationProblems.Add($"Unknown audience is specified: {ratingAudience}. Row: {audienceRowIndex}, column: {ratingColumnIndex}");
+                        validationProblems.Add($"Unknown audience is specified: {ratingAudience}. Row: {audienceRowIndex}, column: {ratingColumnIndex.GetColumnAdress()}");
                         break;
                     }
 
                     if (result.Where(x => x != null).Any(x => x.Code == audience.Code))
                     {
-                        validationProblems.Add($"Data for audience '{audience.Code}' have been already read. Please specify unique audiences. Row: {audienceRowIndex}, column: {ratingColumnIndex}");
+                        validationProblems.Add($"Data for audience '{audience.Code}' have been already read. Please specify unique audiences. Row: {audienceRowIndex}, column: {ratingColumnIndex.GetColumnAdress()}");
                         break;
                     }
 
@@ -455,6 +476,23 @@ namespace Services.Broadcast.Converters.RateImport
             }
 
             return true;  
+        }
+
+        private int _GetLastColumnWithValue(ExcelWorksheet worksheet, int rowindex)
+        {
+            int currentColumnIndex = 1;
+            while (currentColumnIndex <= worksheet.Dimension.Columns)
+            {
+                if (_ShouldStopReadingAudiences(worksheet, rowindex, currentColumnIndex))
+                {
+                    return currentColumnIndex;
+                }
+                else
+                {
+                    currentColumnIndex++;
+                }
+            }
+            return currentColumnIndex;
         }
     }
 }

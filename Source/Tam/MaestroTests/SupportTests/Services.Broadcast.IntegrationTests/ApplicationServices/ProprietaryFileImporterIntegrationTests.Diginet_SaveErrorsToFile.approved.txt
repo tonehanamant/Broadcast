@@ -1,0 +1,15 @@
+﻿{
+  "headerErrors": {
+    "E3": "",
+    "E4": "Effective date is missing",
+    "E5": "End date is missing",
+    "E6": "NTI to NSI Increase is missing"
+  },
+  "lineErrors": {
+    "J11": "Rating header is expected. Row: 11, column: C\nImpressions header is expected. Row: 11, column: D",
+    "J12": "",
+    "J13": "",
+    "J14": "",
+    "J15": ""
+  }
+}

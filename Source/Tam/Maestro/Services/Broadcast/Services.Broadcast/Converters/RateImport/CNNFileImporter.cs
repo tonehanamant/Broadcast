@@ -12,7 +12,10 @@ using Services.Broadcast.Entities.StationInventory;
 
 namespace Services.Broadcast.Converters.RateImport
 {
-
+    /// <summary>
+    /// This is the old importer for CNN files
+    /// Should be deleted
+    /// </summary>
     public class CNNFileImporter : InventoryFileImporterBase
     {
         private class CNNFileDto

@@ -129,5 +129,22 @@ namespace Services.Broadcast.Extensions
         {
             return decimal.TryParse(GetStringValue(cell), out var result) ? result : (decimal?)null;
         }
+
+        /// <summary>
+        /// Gets the column letter based on column index
+        /// </summary>
+        /// <param name="columnIndex">Column index</param>
+        /// <returns>Column letter</returns>
+        public static string GetColumnAdress(this int columnIndex)
+        {
+            if (columnIndex <= 26)
+            {
+                return Convert.ToChar(columnIndex + 64).ToString();
+            }
+            int div = columnIndex / 26;
+            int mod = columnIndex % 26;
+            if (mod == 0) { mod = 26; div--; }
+            return GetColumnAdress(div) + GetColumnAdress(mod);
+        }
     }
 }

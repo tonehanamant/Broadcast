@@ -1,4 +1,5 @@
-﻿using Common.Services.Repositories;
+﻿using Common.Services;
+using Common.Services.Repositories;
 using Microsoft.Practices.ObjectBuilder2;
 using OfficeOpenXml;
 using Services.Broadcast.ApplicationServices;
@@ -21,19 +22,25 @@ namespace Services.Broadcast.Converters.RateImport
 {
     public class BarterFileImporter : ProprietaryFileImporterBase
     {
-        private const string INVENTORY_SOURCE_CELL = "B3";
-        private const string DAYPART_CODE_CELL = "B4";
-        private const string EFFECTIVE_DATE_CELL = "B5";
-        private const string END_DATE_CELL = "B6";
-        private const string CPM_CELL = "B7";
-        private const string DEMO_CELL = "B8";
-        private const string CONTRACTED_DAYPART_CELL = "B9";
-        private const string SHARE_BOOK_CELL = "B10";
-        private const string HUT_BOOK_CELL = "B11";
-        private const string PLAYBACK_TYPE_CELL = "B12";
+        private readonly FileCell INVENTORY_SOURCE_CELL = new FileCell { ColumnLetter = "B", RowIndex = 3 };
+        private readonly FileCell DAYPART_CODE_CELL = new FileCell { ColumnLetter = "B", RowIndex = 4 };
+        private readonly FileCell EFFECTIVE_DATE_CELL = new FileCell { ColumnLetter = "B", RowIndex = 5 };
+        private readonly FileCell END_DATE_CELL = new FileCell { ColumnLetter = "B", RowIndex = 6 };
+        private readonly FileCell CPM_CELL = new FileCell { ColumnLetter = "B", RowIndex = 7 };
+        private readonly FileCell DEMO_CELL = new FileCell { ColumnLetter = "B", RowIndex = 8 };
+        private readonly FileCell CONTRACTED_DAYPART_CELL = new FileCell { ColumnLetter = "B", RowIndex = 9 };
+        private readonly FileCell SHARE_BOOK_CELL = new FileCell { ColumnLetter = "B", RowIndex = 10 };
+        private readonly FileCell HUT_BOOK_CELL = new FileCell { ColumnLetter = "B", RowIndex = 11 };
+        private readonly FileCell PLAYBACK_TYPE_CELL = new FileCell { ColumnLetter = "B", RowIndex = 12 };
 
         private readonly IProprietarySpotCostCalculationEngine _ProprietarySpotCostCalculationEngine;
         private readonly IImpressionsService _ImpressionsService;
+
+        const string commentsHeader = "COMMENTS";
+        const int unitNameRowIndex = 16;
+        const int spotLengthRowIndex = 17;
+        const int firstUnitColumnIndex = 3;
+        private int _ErrorColumnIndex = 0;
 
         public BarterFileImporter(
             IDataRepositoryFactory broadcastDataRepositoryFactory,
@@ -43,13 +50,15 @@ namespace Services.Broadcast.Converters.RateImport
             IStationProcessingEngine stationProcessingEngine,
             ISpotLengthEngine spotLengthEngine,
             IProprietarySpotCostCalculationEngine proprietarySpotCostCalculationEngine,
-            IImpressionsService impressionsService) : base(
-                broadcastDataRepositoryFactory, 
-                broadcastAudiencesCache, 
-                inventoryDaypartParsingEngine, 
+            IImpressionsService impressionsService,
+            IFileService fileService) : base(
+                broadcastDataRepositoryFactory,
+                broadcastAudiencesCache,
+                inventoryDaypartParsingEngine,
                 mediaMonthAndWeekAggregateCache,
                 stationProcessingEngine,
-                spotLengthEngine)
+                spotLengthEngine,
+                fileService)
         {
             _ProprietarySpotCostCalculationEngine = proprietarySpotCostCalculationEngine;
             _ImpressionsService = impressionsService;
@@ -59,15 +68,20 @@ namespace Services.Broadcast.Converters.RateImport
         {
             var header = new ProprietaryInventoryHeader();
             var validationProblems = new List<string>();
-            Dictionary<string, string> requiredProperties = new Dictionary<string, string>
+            Dictionary<string, FileCell> requiredProperties = new Dictionary<string, FileCell>
                 { {"Inv Source", INVENTORY_SOURCE_CELL }, {"Daypart Code",DAYPART_CODE_CELL }, {"Effective Date", EFFECTIVE_DATE_CELL }
-                , {"End Date" , END_DATE_CELL}, {"CPM", CPM_CELL} , {"Demo", DEMO_CELL }, {"Contracted Daypart", CONTRACTED_DAYPART_CELL }
+                , {"End Date" , END_DATE_CELL}, {"CPM", CPM_CELL} , {"Demo", DEMO_CELL}, {"Contracted Daypart", CONTRACTED_DAYPART_CELL }
                 , {"Share Book", SHARE_BOOK_CELL }, {"Playback type", PLAYBACK_TYPE_CELL } };
 
             requiredProperties
                 .AsEnumerable()
-                .Where(x => string.IsNullOrWhiteSpace(worksheet.Cells[x.Value].GetStringValue()))
-                .ForEach(x => validationProblems.Add($"Required value for {x.Key} is missing"));
+                .Where(x => string.IsNullOrWhiteSpace(worksheet.Cells[x.Value.ToString()].GetStringValue()))
+                .ForEach(x =>
+                {
+                    var errorMessage = $"Required value for {x.Key} is missing";
+                    validationProblems.Add(errorMessage);
+                    worksheet.Cells[$"{HEADER_ERROR_COLUMN}{x.Value.RowIndex}"].Value = errorMessage;
+                });
 
             if (validationProblems.Any())
             {
@@ -75,11 +89,13 @@ namespace Services.Broadcast.Converters.RateImport
                 return;
             }
 
-            var daypartCode = worksheet.Cells[DAYPART_CODE_CELL].GetStringValue();
+            var daypartCode = worksheet.Cells[DAYPART_CODE_CELL.ToString()].GetStringValue();
 
             if (!DaypartCodeRepository.ActiveDaypartCodeExists(daypartCode))
             {
-                validationProblems.Add("Not acceptable daypart code is specified");
+                var errorMessage = "Not acceptable daypart code is specified";
+                validationProblems.Add(errorMessage);
+                worksheet.Cells[$"{HEADER_ERROR_COLUMN}{DAYPART_CODE_CELL.RowIndex}"].Value = errorMessage;
             }
             else
             {
@@ -87,22 +103,28 @@ namespace Services.Broadcast.Converters.RateImport
             }
 
             //Format mm/dd/yyyy and end date must be after start date
-            string effectiveDateText = worksheet.Cells[EFFECTIVE_DATE_CELL].GetTextValue().Split(' ')[0]; //split is removing time section
-            string endDateText = worksheet.Cells[END_DATE_CELL].GetTextValue().Split(' ')[0];
+            string effectiveDateText = worksheet.Cells[EFFECTIVE_DATE_CELL.ToString()].GetTextValue().Split(' ')[0]; //split is removing time section
+            string endDateText = worksheet.Cells[END_DATE_CELL.ToString()].GetTextValue().Split(' ')[0];
             bool validDate = true;
             if (!DateTime.TryParseExact(effectiveDateText, DATE_FORMATS, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime effectiveDate))
             {
-                validationProblems.Add($"Effective date is not in the correct format ({(string.Join(", ", DATE_FORMATS))})");
+                var errorMessage = $"Effective date is not in the correct format ({(string.Join(", ", DATE_FORMATS))})";
+                validationProblems.Add(errorMessage);
+                worksheet.Cells[$"{HEADER_ERROR_COLUMN}{EFFECTIVE_DATE_CELL.RowIndex}"].Value = errorMessage;
                 validDate = false;
             }
             if (!DateTime.TryParseExact(endDateText, DATE_FORMATS, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime endDate))
             {
-                validationProblems.Add($"End date is not in the correct format ({(string.Join(", ", DATE_FORMATS))})");
+                var errorMessage = $"End date is not in the correct format ({(string.Join(", ", DATE_FORMATS))})";
+                validationProblems.Add(errorMessage);
+                worksheet.Cells[$"{HEADER_ERROR_COLUMN}{END_DATE_CELL.RowIndex}"].Value = errorMessage;
                 validDate = false;
             }
             if (validDate && endDate <= effectiveDate)
             {
-                validationProblems.Add($"End date ({endDateText}) should be greater then effective date ({effectiveDateText})");
+                var errorMessage = $"End date ({endDateText}) should be greater then effective date ({effectiveDateText})";
+                validationProblems.Add(errorMessage);
+                worksheet.Cells[$"{HEADER_ERROR_COLUMN}{END_DATE_CELL.RowIndex}"].Value = errorMessage;
                 validDate = false;
             }
 
@@ -114,15 +136,19 @@ namespace Services.Broadcast.Converters.RateImport
 
             //Format ##.##, no dollar sign in data
             var r = new Regex(@"^\d+(\.\d)?\d*$");
-            var cpm = worksheet.Cells[CPM_CELL].GetStringValue();
+            var cpm = worksheet.Cells[CPM_CELL.ToString()].GetStringValue();
             if (!r.IsMatch(cpm))
             {
-                validationProblems.Add($"CPM is not in the correct format ({CPM_FORMAT})");
+                var errorMessage = $"CPM is not in the correct format ({CPM_FORMAT})";
+                validationProblems.Add(errorMessage);
+                worksheet.Cells[$"{HEADER_ERROR_COLUMN}{CPM_CELL.RowIndex}"].Value = errorMessage;
             }
             else
             if (!Decimal.TryParse(cpm, out decimal cpmValue))
             {
-                validationProblems.Add($"Invalid value for CPM ({cpm})");
+                var errorMessage = $"Invalid value for CPM ({cpm})";
+                validationProblems.Add(errorMessage);
+                worksheet.Cells[$"{HEADER_ERROR_COLUMN}{CPM_CELL.RowIndex}"].Value = errorMessage;
             }
             else
             {
@@ -130,10 +156,12 @@ namespace Services.Broadcast.Converters.RateImport
             }
 
             //Must be valid nelson demo.
-            var demo = worksheet.Cells[DEMO_CELL].GetStringValue();
+            var demo = worksheet.Cells[DEMO_CELL.ToString()].GetStringValue();
             if (!AudienceCache.IsValidAudienceCode(demo))
             {
-                validationProblems.Add($"Invalid demo ({demo})");
+                var errorMessage = $"Invalid demo ({demo})";
+                validationProblems.Add(errorMessage);
+                worksheet.Cells[$"{HEADER_ERROR_COLUMN}{DEMO_CELL.RowIndex}"].Value = errorMessage;
             }
             else
             {
@@ -141,12 +169,14 @@ namespace Services.Broadcast.Converters.RateImport
             }
 
             //Format: M-F 6:30PM-11PM and Standard Cadent Daypart rules
-            string daypartString = worksheet.Cells[CONTRACTED_DAYPART_CELL].GetStringValue();
+            string daypartString = worksheet.Cells[CONTRACTED_DAYPART_CELL.ToString()].GetStringValue();
             if (DaypartParsingEngine.TryParse(daypartString, out var displayDayparts))
             {
                 if (displayDayparts.Count > 1)
                 {
-                    validationProblems.Add($"Only one contracted daypart should be specified ({daypartString})");
+                    var errorMessage = $"Only one contracted daypart should be specified ({daypartString})";
+                    validationProblems.Add(errorMessage);
+                    worksheet.Cells[$"{HEADER_ERROR_COLUMN}{CONTRACTED_DAYPART_CELL.RowIndex}"].Value = errorMessage;
                 }
                 else
                 {
@@ -155,14 +185,18 @@ namespace Services.Broadcast.Converters.RateImport
             }
             else
             {
-                validationProblems.Add($"Invalid contracted daypart ({daypartString})");
+                var errorMessage = $"Invalid contracted daypart ({daypartString})";
+                validationProblems.Add(errorMessage);
+                worksheet.Cells[$"{HEADER_ERROR_COLUMN}{CONTRACTED_DAYPART_CELL.RowIndex}"].Value = errorMessage;
             }
 
-            string shareBookText = worksheet.Cells[SHARE_BOOK_CELL].GetTextValue();
+            string shareBookText = worksheet.Cells[SHARE_BOOK_CELL.ToString()].GetTextValue();
             var shareBookParsedCorrectly = false;
             if (!DateTime.TryParseExact(shareBookText, BOOK_DATE_FORMATS, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime shareBook))
             {
-                validationProblems.Add($"Share book ({shareBookText}) is not in the correct format ({(string.Join(", ", BOOK_DATE_FORMATS))})");
+                var errorMessage = $"Share book ({shareBookText}) is not in the correct format ({(string.Join(", ", BOOK_DATE_FORMATS))})";
+                validationProblems.Add(errorMessage);
+                worksheet.Cells[$"{HEADER_ERROR_COLUMN}{SHARE_BOOK_CELL.RowIndex}"].Value = errorMessage;
             }
             else
             {
@@ -172,16 +206,20 @@ namespace Services.Broadcast.Converters.RateImport
 
             //formats MMM yy, MMM-yy, MMM/yy, yy-MMM, yy/MMM 
             //Hut book must be a media month prior to the Share book media month if value entered
-            string hutBookText = worksheet.Cells[HUT_BOOK_CELL].GetTextValue();
+            string hutBookText = worksheet.Cells[HUT_BOOK_CELL.ToString()].GetTextValue();
             if (!string.IsNullOrWhiteSpace(hutBookText))
             {
                 if (!DateTime.TryParseExact(hutBookText, BOOK_DATE_FORMATS, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime hutBook))
                 {
-                    validationProblems.Add($"Hut book ({hutBookText}) is not in the correct format ({(string.Join(", ", BOOK_DATE_FORMATS))})");
+                    var errorMessage = $"Hut book ({hutBookText}) is not in the correct format ({(string.Join(", ", BOOK_DATE_FORMATS))})";
+                    validationProblems.Add(errorMessage);
+                    worksheet.Cells[$"{HEADER_ERROR_COLUMN}{HUT_BOOK_CELL.RowIndex}"].Value = errorMessage;
                 }
                 else if (shareBookParsedCorrectly && hutBook >= shareBook)
                 {
-                    validationProblems.Add("HUT Book must be prior to the Share book");
+                    var errorMessage = "HUT Book must be prior to the Share book";
+                    validationProblems.Add(errorMessage);
+                    worksheet.Cells[$"{HEADER_ERROR_COLUMN}{HUT_BOOK_CELL.RowIndex}"].Value = errorMessage;
                 }
                 else
                 {
@@ -189,11 +227,13 @@ namespace Services.Broadcast.Converters.RateImport
                 }
             }
 
-            var playbackString = worksheet.Cells[PLAYBACK_TYPE_CELL].GetStringValue().RemoveWhiteSpaces();
+            var playbackString = worksheet.Cells[PLAYBACK_TYPE_CELL.ToString()].GetStringValue().RemoveWhiteSpaces();
             ProposalEnums.ProposalPlaybackType playback = EnumHelper.GetEnumValueFromDescription<ProposalEnums.ProposalPlaybackType>(playbackString);
             if (playback == 0)
             {
-                validationProblems.Add($"Invalid playback type ({playbackString})");
+                var errorMessage = $"Invalid playback type ({playbackString})";
+                validationProblems.Add(errorMessage);
+                worksheet.Cells[$"{HEADER_ERROR_COLUMN}{PLAYBACK_TYPE_CELL.RowIndex}"].Value = errorMessage;
             }
             else
             {
@@ -210,8 +250,19 @@ namespace Services.Broadcast.Converters.RateImport
             const int firstDataLineRowIndex = 18;
             var rowIndex = firstDataLineRowIndex;
             var columnIndex = firstColumnIndex;
-            var units = _ReadBarterInventoryUnits(worksheet);
+            var lineProblems = new List<string>();
 
+            var commentsColumnIndex = _GetCommentsColumnIndex(worksheet, commentsHeader, firstUnitColumnIndex, spotLengthRowIndex);
+
+            _ErrorColumnIndex = commentsColumnIndex + 2;    //errors column is the second empty column after comments column
+
+            var units = _ReadBarterInventoryUnits(worksheet, commentsColumnIndex, lineProblems);
+            if (units == null)
+            {
+                proprietaryFile.ValidationProblems.AddRange(lineProblems);
+                worksheet.Cells[unitNameRowIndex, _ErrorColumnIndex].Value = string.Join("\r\n", lineProblems);
+                return;
+            }
             while (true)
             {
                 // don`t simplify object initialization because line columns should be read with the current order 
@@ -240,12 +291,10 @@ namespace Services.Broadcast.Converters.RateImport
                     break;
                 }
 
-                var hasValidationProblems = false;
-
+                List<string> validationProblems = new List<string>();
                 if (string.IsNullOrWhiteSpace(line.Station))
                 {
-                    proprietaryFile.ValidationProblems.Add($"Line {rowIndex} contains an empty station cell");
-                    hasValidationProblems = true;
+                    validationProblems.Add($"Line {rowIndex} contains an empty station cell");
                 }
 
                 if (line.Dayparts == null)
@@ -254,11 +303,15 @@ namespace Services.Broadcast.Converters.RateImport
                        $"Line {rowIndex} contains an empty daypart cell" :
                        $"Line {rowIndex} contains an invalid daypart(s): {daypartText}";
 
-                    proprietaryFile.ValidationProblems.Add(message);
-                    hasValidationProblems = true;
+                    validationProblems.Add(message);
                 }
 
-                if (!hasValidationProblems)
+                if (validationProblems.Any())
+                {
+                    proprietaryFile.ValidationProblems.AddRange(validationProblems);
+                    worksheet.Cells[rowIndex, _ErrorColumnIndex].Value = string.Join("\r\n", validationProblems);
+                }
+                else
                 {
                     proprietaryFile.DataLines.Add(line);
                 }
@@ -268,24 +321,62 @@ namespace Services.Broadcast.Converters.RateImport
             }
         }
 
-        private List<ProprietaryInventoryUnit> _ReadBarterInventoryUnits(ExcelWorksheet worksheet)
+        private List<ProprietaryInventoryUnit> _ReadBarterInventoryUnits(ExcelWorksheet worksheet, int commentsColumnIndex, List<string> lineProblems)
         {
-            const string commentsHeader = "COMMENTS";
-            const int unitNameRowIndex = 16;
-            const int spotLengthRowIndex = 17;
-            const int firstUnitColumnIndex = 3;
             var result = new List<ProprietaryInventoryUnit>();
-            var lastColumnIndex = firstUnitColumnIndex;
 
+            for (var i = firstUnitColumnIndex; i < commentsColumnIndex; i++)
+            {
+                var name = worksheet.Cells[unitNameRowIndex, i].GetStringValue();
+                if (string.IsNullOrWhiteSpace(name))
+                {
+                    lineProblems.Add($"Unit name missing in column {i.GetColumnAdress()}");
+                    return null;
+                }
+                Regex r = new Regex("^[a-zA-Z 0-9]*$");
+                name = name.Trim();
+
+                if (!r.IsMatch(name))
+                {
+                    lineProblems.Add($"Invalid unit was found in column {i.GetColumnAdress()}");
+                }
+
+                var spotLengthString = worksheet.Cells[spotLengthRowIndex, i].GetStringValue();
+                if (string.IsNullOrWhiteSpace(spotLengthString))
+                {
+                    lineProblems.Add($"Spot length is missing in column {i.GetColumnAdress()}");
+                    return null;
+                }
+
+                spotLengthString = spotLengthString.Replace(":", string.Empty);
+                if (!int.TryParse(spotLengthString, out var spotLength) || !SpotLengthEngine.SpotLengthExists(spotLength))
+                {
+                    lineProblems.Add($"Invalid spot length was found in column {i.GetColumnAdress()}");
+                }
+                if (lineProblems.Any()) return null;
+
+                result.Add(new ProprietaryInventoryUnit
+                {
+                    Name = name,
+                    SpotLength = spotLength
+                });
+            }
+
+            return result;
+        }
+
+        private int _GetCommentsColumnIndex(ExcelWorksheet worksheet, string commentsHeader, int firstUnitColumnIndex, int spotLengthRowIndex)
+        {
+            int lastColumnIndex = firstUnitColumnIndex;
             // let's find lastColumnIndex by looking for "COMMENTS" cell
             while (true)
             {
                 try
                 {
                     // comments header cell should be on the same row with spot lengths and 1 cell after last unit column
-                    var commentsHeaderCell = worksheet.Cells[spotLengthRowIndex, lastColumnIndex + 1].GetStringValue();
+                    var commentsHeaderCell = worksheet.Cells[spotLengthRowIndex, lastColumnIndex].GetStringValue();
                     var isCommentsHeaderCell = !string.IsNullOrWhiteSpace(commentsHeaderCell) && commentsHeaderCell.Equals(commentsHeader, StringComparison.OrdinalIgnoreCase);
-                    
+
                     if (isCommentsHeaderCell)
                     {
                         break;
@@ -298,44 +389,7 @@ namespace Services.Broadcast.Converters.RateImport
                     throw new Exception("Couldn't find last unit column");
                 }
             }
-
-            for (var i = firstUnitColumnIndex; i <= lastColumnIndex; i++)
-            {
-                var name = worksheet.Cells[unitNameRowIndex, i].GetStringValue();
-                if (string.IsNullOrWhiteSpace(name))
-                {
-                    throw new Exception("Unit name missing");
-                }
-                Regex r = new Regex("^[a-zA-Z 0-9]*$");
-                name = name.Trim();
-
-                if (!r.IsMatch(name))
-                {
-                    throw new Exception("Invalid unit was found");
-                }
-
-                var spotLengthString = worksheet.Cells[spotLengthRowIndex, i].GetStringValue(); 
-                
-                if (string.IsNullOrWhiteSpace(spotLengthString))
-                {
-                    throw new Exception("Spot length is missing");
-                }
-
-                spotLengthString = spotLengthString.Replace(":", string.Empty);
-
-                if (!int.TryParse(spotLengthString, out var spotLength) || !SpotLengthEngine.SpotLengthExists(spotLength))
-                {
-                    throw new Exception("Invalid spot length was found");
-                }
-
-                result.Add(new ProprietaryInventoryUnit
-                {
-                    Name = name,
-                    SpotLength = spotLength
-                });
-            }
-
-            return result;
+            return lastColumnIndex;
         }
 
         private bool _IsLineEmpty(ProprietaryInventoryDataLine line)

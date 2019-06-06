@@ -1,7 +1,7 @@
 ﻿[
   {
     "AffectedProposals": null,
-    "ProblemDescription": "Week is missing. Row: 16, column: 7",
+    "ProblemDescription": "Week is missing. Row: 16, column: G",
     "ProgramName": null,
     "StationLetters": null
   }

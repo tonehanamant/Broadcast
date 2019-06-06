@@ -4,12 +4,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Services.Broadcast.Repositories;
-using Tam.Maestro.Services.ContractInterfaces.Common;
-using System.Text.RegularExpressions;
 using Services.Broadcast.Entities.StationInventory;
 
 namespace Services.Broadcast.Converters.RateImport
 {
+    /// <summary>
+    /// This is the old file importer for TTWN files
+    /// Should be deleted
+    /// </summary>
     public class TTWNFileImporter : InventoryFileImporterBase
     {
         private Dictionary<string, int> standardColumnOffsets = new Dictionary<string, int>()

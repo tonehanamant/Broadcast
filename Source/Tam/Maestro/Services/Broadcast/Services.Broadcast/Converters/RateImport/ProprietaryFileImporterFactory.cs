@@ -27,6 +27,7 @@ namespace Services.Broadcast.Converters.RateImport
         private readonly IImpressionsService _ImpressionsService;
         private readonly IDaypartCache _DaypartCache;
         private readonly IImpressionAdjustmentEngine _ImpressionAdjustmentEngine;
+        private readonly IFileService _FileService;
 
         public ProprietaryFileImporterFactory(
             IDataRepositoryFactory broadcastDataRepositoryFactory,
@@ -38,7 +39,8 @@ namespace Services.Broadcast.Converters.RateImport
             IProprietarySpotCostCalculationEngine proprietarySpotCostCalculationEngine,
             IImpressionsService impressionsService,
             IDaypartCache daypartCache,
-            IImpressionAdjustmentEngine impressionAdjustmentEngine)
+            IImpressionAdjustmentEngine impressionAdjustmentEngine,
+            IFileService fileService)
         {
             _BroadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
             _BroadcastAudiencesCache = broadcastAudiencesCache;
@@ -50,6 +52,7 @@ namespace Services.Broadcast.Converters.RateImport
             _ImpressionsService = impressionsService;
             _DaypartCache = daypartCache;
             _ImpressionAdjustmentEngine = impressionAdjustmentEngine;
+            _FileService = fileService;
         }
 
         public ProprietaryFileImporterBase GetFileImporterInstance(InventorySource inventorySource)
@@ -65,7 +68,8 @@ namespace Services.Broadcast.Converters.RateImport
                         _InventoryDaypartParsingEngine,
                         _MediaMonthAndWeekAggregateCache,
                         _StationProcessingEngine,
-                        _SpotLengthEngine);
+                        _SpotLengthEngine,
+                        _FileService);
                     break;
 
                 case InventorySourceTypeEnum.Barter:
@@ -77,7 +81,8 @@ namespace Services.Broadcast.Converters.RateImport
                         _StationProcessingEngine,
                         _SpotLengthEngine,
                         _ProprietarySpotCostCalculationEngine,
-                        _ImpressionsService);
+                        _ImpressionsService,
+                        _FileService);
                     break;
 
                 case InventorySourceTypeEnum.Syndication:
@@ -89,7 +94,8 @@ namespace Services.Broadcast.Converters.RateImport
                         _StationProcessingEngine,
                         _SpotLengthEngine,
                         _DaypartCache,
-                        _ImpressionAdjustmentEngine);
+                        _ImpressionAdjustmentEngine,
+                        _FileService);
                     break;
 
                 case InventorySourceTypeEnum.Diginet:
@@ -101,7 +107,8 @@ namespace Services.Broadcast.Converters.RateImport
                         _StationProcessingEngine,
                         _SpotLengthEngine,
                         _DaypartCache,
-                        _ImpressionAdjustmentEngine);
+                        _ImpressionAdjustmentEngine,
+                        _FileService);
                     break;
 
                 default:

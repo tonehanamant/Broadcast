@@ -1,0 +1,19 @@
+﻿{
+  "headerErrors": {
+    "E3": "",
+    "E4": "Spot length is missing",
+    "E5": "",
+    "E6": "End date is missing",
+    "E7": "",
+    "E8": "Contracted daypart is missing",
+    "E9": "",
+    "E10": "HUT Book must be prior to the Share book",
+    "E11": "Playback type is missing",
+    "E12": ""
+  },
+  "lineErrors": {
+    "L16": "Week: 4-Feb-2019 should be inside or intersect with the date range specified in the header (effective and end dates). Row: 16, column: E",
+    "L17": "",
+    "L18": ""
+  }
+}

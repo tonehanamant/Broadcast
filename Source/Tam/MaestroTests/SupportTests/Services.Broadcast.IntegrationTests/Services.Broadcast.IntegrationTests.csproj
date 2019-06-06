@@ -376,6 +376,9 @@
     <None Include="Files\ProprietaryDataFiles\Barter_GetPendingBarterInventoryFile.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Files\ProprietaryDataFiles\Barter_invalid1.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Files\ProprietaryDataFiles\Barter_SingleDataColumn.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -401,6 +404,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Files\ProprietaryDataFiles\Diginet_InvalidFile11.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\ProprietaryDataFiles\Diginet_invalidFile12.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Files\ProprietaryDataFiles\Diginet_InvalidFile2.xlsx">
@@ -459,6 +465,9 @@
     </None>
     <None Include="Files\ProprietaryDataFiles\Barter_WrongCommentsColumn.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\ProprietaryDataFiles\OAndO_InvalidFile5.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Files\ProprietaryDataFiles\OAndO_PRI7393.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -530,6 +539,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Files\ProprietaryDataFiles\Syndication_InvalidFile8.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\ProprietaryDataFiles\Syndication_InvalidFile9.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Files\ProprietaryDataFiles\Syndication_ValidFile2.xlsx">

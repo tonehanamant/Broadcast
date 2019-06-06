@@ -1,0 +1,15 @@
+﻿{
+  "CreatedBy": null,
+  "DataLines": [],
+  "FileName": null,
+  "FileStatus": 0,
+  "Hash": null,
+  "Header": null,
+  "InventoryGroups": [],
+  "InventoryManifests": [],
+  "InventorySource": null,
+  "UniqueIdentifier": null,
+  "ValidationProblems": [
+    "Unit name missing on column D"
+  ]
+}

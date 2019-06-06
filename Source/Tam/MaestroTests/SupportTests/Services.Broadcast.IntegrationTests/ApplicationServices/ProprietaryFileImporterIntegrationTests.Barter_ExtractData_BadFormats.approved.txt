@@ -3,7 +3,7 @@
   "DataLines": [],
   "FileName": "ProprietaryDataFiles\\Barter_BadFormats.xlsx",
   "FileStatus": 1,
-  "Hash": "64-D2-7C-19-DA-A9-95-8B-7B-6E-16-18-22-FB-CA-47-E6-1F-9D-08",
+  "Hash": "DC-B9-48-FB-C5-D0-8C-BA-87-2B-DC-BA-12-9C-0B-74-A6-71-56-B2",
   "Header": {
     "Audience": null,
     "Cpm": null,
@@ -28,6 +28,7 @@
     "Invalid contracted daypart (M-SU 4:00AM - 10:00 AM)",
     "Share book (1-Feb-17) is not in the correct format (MMM yy, MMM-yy, MMM/yy, yy-MMM, yy/MMM, MMM yyyy)",
     "Hut book (02-17) is not in the correct format (MMM yy, MMM-yy, MMM/yy, yy-MMM, yy/MMM, MMM yyyy)",
-    "Invalid playback type (LIVE+31)"
+    "Invalid playback type (LIVE+31)",
+    "Invalid spot length was found on column C"
   ]
 }

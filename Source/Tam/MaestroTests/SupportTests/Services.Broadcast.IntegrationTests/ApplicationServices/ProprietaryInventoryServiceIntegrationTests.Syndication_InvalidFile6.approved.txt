@@ -1,25 +1,19 @@
 ﻿[
   {
     "AffectedProposals": null,
-    "ProblemDescription": "Unknown audience is specified: . Row: 15, column: 3",
+    "ProblemDescription": "CPM header is incorrect: A18-34 VPVH. Row: 15, column: E. Correct format: 'Avg HH CPM'",
     "ProgramName": null,
     "StationLetters": null
   },
   {
     "AffectedProposals": null,
-    "ProblemDescription": "Impressions header is expected. Row: 15, column: 7",
+    "ProblemDescription": "Impressions header is expected. Row: 15, column: G",
     "ProgramName": null,
     "StationLetters": null
   },
   {
     "AffectedProposals": null,
-    "ProblemDescription": "VPVH header is expected. Row: 15, column: 8",
-    "ProgramName": null,
-    "StationLetters": null
-  },
-  {
-    "AffectedProposals": null,
-    "ProblemDescription": "CPM header is expected. Row: 15, column: 9",
+    "ProblemDescription": "CPM header is expected. Row: 15, column: I",
     "ProgramName": null,
     "StationLetters": null
   }

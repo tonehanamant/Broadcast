@@ -126,12 +126,12 @@ namespace Services.Broadcast.ApplicationServices
             proprietaryFile.Id = _InventoryFileRepository.CreateInventoryFile(proprietaryFile, userName);
             try
             {
-                fileImporter.ExtractData(proprietaryFile);
+                var fileStreamWithErrors = fileImporter.ExtractData(proprietaryFile);
                 proprietaryFile.FileStatus = proprietaryFile.ValidationProblems.Any() ? FileStatusEnum.Failed : FileStatusEnum.Loaded;
 
                 if (proprietaryFile.ValidationProblems.Any())
                 {
-                    _ProprietaryRepository.AddValidationProblems(proprietaryFile);
+                    _ProprietaryRepository.AddValidationProblems(proprietaryFile);                    
                 }
                 else
                 {

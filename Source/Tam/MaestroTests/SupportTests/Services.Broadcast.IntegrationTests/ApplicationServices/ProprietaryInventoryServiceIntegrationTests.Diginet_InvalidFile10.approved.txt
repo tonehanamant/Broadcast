@@ -1,67 +1,67 @@
 ﻿[
   {
     "AffectedProposals": null,
-    "ProblemDescription": "Line 12 contains an empty daypart cell",
+    "ProblemDescription": "Line 12 contains an empty daypart cell in column A",
     "ProgramName": null,
     "StationLetters": null
   },
   {
     "AffectedProposals": null,
-    "ProblemDescription": "Line 14 contains an invalid daypart(s): QWE",
+    "ProblemDescription": "Line 14 contains an invalid daypart(s): QWE in column A",
     "ProgramName": null,
     "StationLetters": null
   },
   {
     "AffectedProposals": null,
-    "ProblemDescription": "Line 14 contains an empty rate cell",
+    "ProblemDescription": "Line 14 contains an empty rate cell in column B",
     "ProgramName": null,
     "StationLetters": null
   },
   {
     "AffectedProposals": null,
-    "ProblemDescription": "Line 15 contains an invalid rate value: ASD",
+    "ProblemDescription": "Line 15 contains an invalid rate value: (ASD) in column B",
     "ProgramName": null,
     "StationLetters": null
   },
   {
     "AffectedProposals": null,
-    "ProblemDescription": "Line 15 contains an empty rating cell in column 3",
+    "ProblemDescription": "Line 15 contains an empty (rating) cell in column C",
     "ProgramName": null,
     "StationLetters": null
   },
   {
     "AffectedProposals": null,
-    "ProblemDescription": "Line 16 contains a negative rate value: -5",
+    "ProblemDescription": "Line 16 contains a negative rate value: (-5) in column B",
     "ProgramName": null,
     "StationLetters": null
   },
   {
     "AffectedProposals": null,
-    "ProblemDescription": "Line 16 contains an invalid rating value in column 3: ZXC",
+    "ProblemDescription": "Line 16 contains an invalid (rating) value in column C: ZXC",
     "ProgramName": null,
     "StationLetters": null
   },
   {
     "AffectedProposals": null,
-    "ProblemDescription": "Line 16 contains an empty impressions cell in column 4",
+    "ProblemDescription": "Line 16 contains an empty (impressions) cell in column D",
     "ProgramName": null,
     "StationLetters": null
   },
   {
     "AffectedProposals": null,
-    "ProblemDescription": "Line 17 contains a negative rating value in column 3: -5",
+    "ProblemDescription": "Line 17 contains a negative (rating) value in column C: -5",
     "ProgramName": null,
     "StationLetters": null
   },
   {
     "AffectedProposals": null,
-    "ProblemDescription": "Line 17 contains an invalid impressions value in column 4: RTY",
+    "ProblemDescription": "Line 17 contains an invalid (impressions) value in column D: RTY",
     "ProgramName": null,
     "StationLetters": null
   },
   {
     "AffectedProposals": null,
-    "ProblemDescription": "Line 18 contains a negative impressions value in column 4: -10",
+    "ProblemDescription": "Line 18 contains a negative (impressions) value in column D: -10",
     "ProgramName": null,
     "StationLetters": null
   }

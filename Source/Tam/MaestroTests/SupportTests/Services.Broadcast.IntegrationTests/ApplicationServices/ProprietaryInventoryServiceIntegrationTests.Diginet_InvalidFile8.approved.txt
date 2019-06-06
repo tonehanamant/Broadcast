@@ -1,7 +1,7 @@
 ﻿[
   {
     "AffectedProposals": null,
-    "ProblemDescription": "Data for audience 'HH' have been already read. Please specify unique audiences. Row: 11, column: 5",
+    "ProblemDescription": "Data for audience 'HH' have been already read. Please specify unique audiences. Row: 11, column: E",
     "ProgramName": null,
     "StationLetters": null
   }

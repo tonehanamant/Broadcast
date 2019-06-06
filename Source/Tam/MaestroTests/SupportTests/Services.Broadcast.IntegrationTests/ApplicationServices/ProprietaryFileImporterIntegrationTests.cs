@@ -11,12 +11,23 @@ using Services.Broadcast.Entities.Enums;
 using System;
 using System.IO;
 using Tam.Maestro.Common.DataLayer;
+using Microsoft.Practices.Unity;
+using Common.Services;
+using System.Linq;
+
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
     [TestFixture]
     public class ProprietaryFileImporterIntegrationTests
     {
-        private IProprietaryFileImporterFactory _ProprietaryFileImporterFactory = IntegrationTestApplicationServiceFactory.GetApplicationService<IProprietaryFileImporterFactory>();
+        private IProprietaryFileImporterFactory _ProprietaryFileImporterFactory;
+
+        [TestFixtureSetUp]
+        public void SetUp()
+        {
+            IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<IFileService>(new FileService());
+            _ProprietaryFileImporterFactory = IntegrationTestApplicationServiceFactory.GetApplicationService<IProprietaryFileImporterFactory>();
+        }
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
@@ -153,8 +164,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [ExpectedException(typeof(Exception), ExpectedMessage = "Unit name missing")]
-        public void ThrowsException_WhenFileHasMissingUnit()
+        [UseReporter(typeof(DiffReporter))]
+        public void Barter_MissingUnit()
         {
             const string fileName = @".\Files\ProprietaryDataFiles\Barter_DataLines file with invalid unit.xlsx";
 
@@ -162,13 +173,15 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 var inventorySource = new InventorySource { InventoryType = InventorySourceTypeEnum.Barter };
                 var fileImporter = _ProprietaryFileImporterFactory.GetFileImporterInstance(inventorySource);
-                fileImporter.LoadAndValidateDataLines(package.Workbook.Worksheets[1], new ProprietaryInventoryFile());
+                var proprietaryFile = new ProprietaryInventoryFile();
+                fileImporter.LoadAndValidateDataLines(package.Workbook.Worksheets[1], proprietaryFile);
+                _VerifyProprietaryInventoryFile(proprietaryFile);
             }
         }
 
         [Test]
-        [ExpectedException(typeof(Exception), ExpectedMessage = "Spot length is missing")]
-        public void ThrowsException_WhenFileHasMissingSpotLength()
+        [UseReporter(typeof(DiffReporter))]
+        public void Barter_MissingSpotLength()
         {
             const string fileName = @".\Files\ProprietaryDataFiles\Barter_DataLines file with invalid spot length.xlsx";
 
@@ -176,13 +189,15 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 var inventorySource = new InventorySource { InventoryType = InventorySourceTypeEnum.Barter };
                 var fileImporter = _ProprietaryFileImporterFactory.GetFileImporterInstance(inventorySource);
-                fileImporter.LoadAndValidateDataLines(package.Workbook.Worksheets[1], new ProprietaryInventoryFile());
+                var proprietaryFile = new ProprietaryInventoryFile();
+                fileImporter.LoadAndValidateDataLines(package.Workbook.Worksheets[1], proprietaryFile);
+                _VerifyProprietaryInventoryFile(proprietaryFile);
             }
         }
 
         [Test]
-        [ExpectedException(typeof(Exception), ExpectedMessage = "Invalid unit was found")]
-        public void ThrowsException_WhenFileHasInvalidUnit()
+        [UseReporter(typeof(DiffReporter))]
+        public void Barter_InvalidUnit()
         {
             const string fileName = @".\Files\ProprietaryDataFiles\Barter_DataLines file with invalid unit PRI-5676.xlsx";
 
@@ -190,13 +205,15 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 var inventorySource = new InventorySource { InventoryType = InventorySourceTypeEnum.Barter };
                 var fileImporter = _ProprietaryFileImporterFactory.GetFileImporterInstance(inventorySource);
-                fileImporter.LoadAndValidateDataLines(package.Workbook.Worksheets[1], new ProprietaryInventoryFile());
+                var proprietaryFile = new ProprietaryInventoryFile();
+                fileImporter.LoadAndValidateDataLines(package.Workbook.Worksheets[1], proprietaryFile);
+                _VerifyProprietaryInventoryFile(proprietaryFile);
             }
         }
 
         [Test]
-        [ExpectedException(typeof(Exception), ExpectedMessage = "Invalid spot length was found")]
-        public void ThrowsException_WhenFileHasInvalidSpotLength()
+        [UseReporter(typeof(DiffReporter))]
+        public void Barter_InvalidSpotLength()
         {
             const string fileName = @".\Files\ProprietaryDataFiles\Barter_DataLines file with invalid spot length PRI-5676.xlsx";
 
@@ -204,30 +221,31 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 var inventorySource = new InventorySource { InventoryType = InventorySourceTypeEnum.Barter };
                 var fileImporter = _ProprietaryFileImporterFactory.GetFileImporterInstance(inventorySource);
-                fileImporter.LoadAndValidateDataLines(package.Workbook.Worksheets[1], new ProprietaryInventoryFile());
+                var proprietaryFile = new ProprietaryInventoryFile();
+                fileImporter.LoadAndValidateDataLines(package.Workbook.Worksheets[1], proprietaryFile);
+                _VerifyProprietaryInventoryFile(proprietaryFile);
             }
         }
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void ReturnsFileProblems_WhenFileHasMissedValues()
+        public void Barter_ReturnsFileProblems_WhenFileHasMissedValues()
         {
             const string fileName = @".\Files\ProprietaryDataFiles\Barter_DataLines file with missed values.xlsx";
-            var proprietaryFile = new ProprietaryInventoryFile();
 
             using (var package = new ExcelPackage(new FileInfo(fileName)))
             {
                 var inventorySource = new InventorySource { InventoryType = InventorySourceTypeEnum.Barter };
                 var fileImporter = _ProprietaryFileImporterFactory.GetFileImporterInstance(inventorySource);
+                var proprietaryFile = new ProprietaryInventoryFile();
                 fileImporter.LoadAndValidateDataLines(package.Workbook.Worksheets[1], proprietaryFile);
+                _VerifyProprietaryInventoryFile(proprietaryFile);
             }
-
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(proprietaryFile));
         }
 
         [Test]
         [ExpectedException(typeof(Exception), ExpectedMessage = "Couldn't find last unit column")]
-        public void ThrowsException_WhenFileDoesNotHaveValidUnitsEndColumn()
+        public void Barter_DoesNotHaveValidUnitsEndColumn()
         {
             const string fileName = @".\Files\ProprietaryDataFiles\Barter_WrongCommentsColumn.xlsx";
 
@@ -300,6 +318,130 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var fileJson = IntegrationTestHelper.ConvertToJson(file, jsonSettings);
 
             Approvals.Verify(fileJson);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void Barter_SaveErrorsToFile()
+        {
+            var inventorySource = new InventorySource { InventoryType = InventorySourceTypeEnum.Barter };
+            var fileImporter = _ProprietaryFileImporterFactory.GetFileImporterInstance(inventorySource);
+            const string fileName = @"ProprietaryDataFiles\Barter_invalid1.xlsx";
+
+            using (new TransactionScopeWrapper())
+            {
+                var request = new FileRequest
+                {
+                    StreamData = new FileStream($@".\Files\{fileName}", FileMode.Open, FileAccess.Read),
+                    FileName = fileName
+                };
+
+                fileImporter.LoadFromSaveRequest(request);
+                ProprietaryInventoryFile file = fileImporter.GetPendingProprietaryInventoryFile("integration test", inventorySource);
+                var result = fileImporter.ExtractData(file);
+                Assert.AreNotEqual(request.StreamData, result);
+
+                using (var package = new ExcelPackage(result))
+                {
+                    var worksheet = package.Workbook.Worksheets.First();
+                    var headerErrors = worksheet.Cells["E3:E12"].ToDictionary(x=>x.Address, x=>x.Text);
+                    var lineErrors = worksheet.Cells["I16:I22"].ToDictionary(x => x.Address, x => x.Text);
+                    Approvals.Verify(IntegrationTestHelper.ConvertToJson(new { headerErrors, lineErrors}));
+                }
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void Diginet_SaveErrorsToFile()
+        {
+            var inventorySource = new InventorySource { InventoryType = InventorySourceTypeEnum.Diginet };
+            var fileImporter = _ProprietaryFileImporterFactory.GetFileImporterInstance(inventorySource);
+            const string fileName = @"ProprietaryDataFiles\Diginet_invalidFile12.xlsx";
+
+            using (new TransactionScopeWrapper())
+            {
+                var request = new FileRequest
+                {
+                    StreamData = new FileStream($@".\Files\{fileName}", FileMode.Open, FileAccess.Read),
+                    FileName = fileName
+                };
+
+                fileImporter.LoadFromSaveRequest(request);
+                ProprietaryInventoryFile file = fileImporter.GetPendingProprietaryInventoryFile("integration test", inventorySource);
+                var result = fileImporter.ExtractData(file);
+                Assert.AreNotEqual(request.StreamData, result);
+
+                using (var package = new ExcelPackage(result))
+                {
+                    var worksheet = package.Workbook.Worksheets.First();
+                    var headerErrors = worksheet.Cells["E3:E6"].ToDictionary(x => x.Address, x => x.Text);
+                    var lineErrors = worksheet.Cells["J11:J15"].ToDictionary(x => x.Address, x => x.Text);
+                    Approvals.Verify(IntegrationTestHelper.ConvertToJson(new { headerErrors, lineErrors }));
+                }
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void OAndO_SaveErrorsToFile()
+        {
+            var inventorySource = new InventorySource { InventoryType = InventorySourceTypeEnum.ProprietaryOAndO };
+            var fileImporter = _ProprietaryFileImporterFactory.GetFileImporterInstance(inventorySource);
+            const string fileName = @"ProprietaryDataFiles\OAndO_InvalidFile5.xlsx";
+
+            using (new TransactionScopeWrapper())
+            {
+                var request = new FileRequest
+                {
+                    StreamData = new FileStream($@".\Files\{fileName}", FileMode.Open, FileAccess.Read),
+                    FileName = fileName
+                };
+
+                fileImporter.LoadFromSaveRequest(request);
+                ProprietaryInventoryFile file = fileImporter.GetPendingProprietaryInventoryFile("integration test", inventorySource);
+                var result = fileImporter.ExtractData(file);
+                Assert.AreNotEqual(request.StreamData, result);
+
+                using (var package = new ExcelPackage(result))
+                {
+                    var worksheet = package.Workbook.Worksheets.First();
+                    var headerErrors = worksheet.Cells["E3:E12"].ToDictionary(x => x.Address, x => x.Text);
+                    var lineErrors = worksheet.Cells["L16:L18"].ToDictionary(x => x.Address, x => x.Text);
+                    Approvals.Verify(IntegrationTestHelper.ConvertToJson(new { headerErrors, lineErrors }));
+                }
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void Syndicator_SaveErrorsToFile()
+        {
+            var inventorySource = new InventorySource { InventoryType = InventorySourceTypeEnum.Syndication };
+            var fileImporter = _ProprietaryFileImporterFactory.GetFileImporterInstance(inventorySource);
+            const string fileName = @"ProprietaryDataFiles\Syndication_InvalidFile9.xlsx";
+
+            using (new TransactionScopeWrapper())
+            {
+                var request = new FileRequest
+                {
+                    StreamData = new FileStream($@".\Files\{fileName}", FileMode.Open, FileAccess.Read),
+                    FileName = fileName
+                };
+
+                fileImporter.LoadFromSaveRequest(request);
+                ProprietaryInventoryFile file = fileImporter.GetPendingProprietaryInventoryFile("integration test", inventorySource);
+                var result = fileImporter.ExtractData(file);
+                Assert.AreNotEqual(request.StreamData, result);
+
+                using (var package = new ExcelPackage(result))
+                {
+                    var worksheet = package.Workbook.Worksheets.First();
+                    var headerErrors = worksheet.Cells["E3:E10"].ToDictionary(x => x.Address, x => x.Text);
+                    var lineErrors = worksheet.Cells["K15:K20"].ToDictionary(x => x.Address, x => x.Text);
+                    Approvals.Verify(IntegrationTestHelper.ConvertToJson(new { headerErrors, lineErrors }));
+                }
+            }
         }
     }
 }

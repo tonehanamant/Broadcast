@@ -1,7 +1,7 @@
 ﻿[
   {
     "AffectedProposals": null,
-    "ProblemDescription": "Audience 'HH1' from cell(row: 11, column: 4) should be the same as audience 'HH' from cell(row: 11, column: 3)",
+    "ProblemDescription": "Audience 'HH1' from cell(row: 11, column: D) should be the same as audience 'HH' from cell(row: 11, column: C)",
     "ProgramName": null,
     "StationLetters": null
   }

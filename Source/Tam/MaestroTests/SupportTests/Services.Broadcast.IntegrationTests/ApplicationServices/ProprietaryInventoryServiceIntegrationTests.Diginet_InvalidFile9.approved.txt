@@ -1,7 +1,7 @@
 ﻿[
   {
     "AffectedProposals": null,
-    "ProblemDescription": "File must contain data for House Holds(HH)",
+    "ProblemDescription": "File must contain data for HouseHolds(HH)",
     "ProgramName": null,
     "StationLetters": null
   }

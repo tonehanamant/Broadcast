@@ -1,0 +1,20 @@
+﻿{
+  "headerErrors": {
+    "E3": "",
+    "E4": "Effective date is missing",
+    "E5": "End date is missing",
+    "E6": "",
+    "E7": "NTI to NSI Increase is missing",
+    "E8": "",
+    "E9": "HUT Book must be prior to the Share book",
+    "E10": "Playback type is missing"
+  },
+  "lineErrors": {
+    "K15": "Rating header is expected. Row: 15, column: C\nImpressions header is expected. Row: 15, column: G",
+    "K16": "",
+    "K17": "",
+    "K18": "",
+    "K19": "",
+    "K20": ""
+  }
+}

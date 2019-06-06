@@ -1,7 +1,7 @@
 ﻿[
   {
     "AffectedProposals": null,
-    "ProblemDescription": "Line 13 contains an empty impressions cell in column 8",
+    "ProblemDescription": "Line 13 contains an empty (impressions) cell in column H",
     "ProgramName": null,
     "StationLetters": null
   }
