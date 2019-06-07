@@ -1,38 +1,11 @@
-﻿[
-  {
-    "AffectedProposals": null,
-    "ProblemDescription": "End date (10/10/2018) should be greater then effective date (10/10/2018)",
-    "ProgramName": null,
-    "StationLetters": null
-  },
-  {
-    "AffectedProposals": null,
-    "ProblemDescription": "Not acceptable daypart code is specified",
-    "ProgramName": null,
-    "StationLetters": null
-  },
-  {
-    "AffectedProposals": null,
-    "ProblemDescription": "Only one contracted daypart should be specified (M-F 6:30PM-11PM + M-F 1PM-2PM)",
-    "ProgramName": null,
-    "StationLetters": null
-  },
-  {
-    "AffectedProposals": null,
-    "ProblemDescription": "HUT Book must be prior to the Share book",
-    "ProgramName": null,
-    "StationLetters": null
-  },
-  {
-    "AffectedProposals": null,
-    "ProblemDescription": "Invalid playback type (WrongPlaybackType)",
-    "ProgramName": null,
-    "StationLetters": null
-  },
-  {
-    "AffectedProposals": null,
-    "ProblemDescription": "Week: 4-Feb-2019 should be inside or intersect with the date range specified in the header (effective and end dates). Row: 16, column: E",
-    "ProgramName": null,
-    "StationLetters": null
-  }
-]
+﻿{
+  "Status": 3,
+  "ValidationProblems": [
+    "End date (10/10/2018) should be greater then effective date (10/10/2018)",
+    "Not acceptable daypart code is specified",
+    "Only one contracted daypart should be specified (M-F 6:30PM-11PM + M-F 1PM-2PM)",
+    "HUT Book must be prior to the Share book",
+    "Invalid playback type (WrongPlaybackType)",
+    "Week: 4-Feb-2019 should be inside or intersect with the date range specified in the header (effective and end dates). Row: 16, column: E"
+  ]
+}

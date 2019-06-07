@@ -1,14 +1,7 @@
-﻿[
-  {
-    "AffectedProposals": null,
-    "ProblemDescription": "Line 18 contains an empty station cell",
-    "ProgramName": null,
-    "StationLetters": null
-  },
-  {
-    "AffectedProposals": null,
-    "ProblemDescription": "Line 21 contains an empty daypart cell",
-    "ProgramName": null,
-    "StationLetters": null
-  }
-]
+﻿{
+  "Status": 3,
+  "ValidationProblems": [
+    "Line 18 contains an empty station cell",
+    "Line 21 contains an empty daypart cell"
+  ]
+}

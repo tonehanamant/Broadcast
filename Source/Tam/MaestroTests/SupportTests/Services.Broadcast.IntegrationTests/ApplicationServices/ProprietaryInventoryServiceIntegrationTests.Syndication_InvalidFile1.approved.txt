@@ -1,38 +1,11 @@
-﻿[
-  {
-    "AffectedProposals": null,
-    "ProblemDescription": "Effective date is missing",
-    "ProgramName": null,
-    "StationLetters": null
-  },
-  {
-    "AffectedProposals": null,
-    "ProblemDescription": "End date is missing",
-    "ProgramName": null,
-    "StationLetters": null
-  },
-  {
-    "AffectedProposals": null,
-    "ProblemDescription": "Daypart code is missing",
-    "ProgramName": null,
-    "StationLetters": null
-  },
-  {
-    "AffectedProposals": null,
-    "ProblemDescription": "NTI to NSI Increase is missing",
-    "ProgramName": null,
-    "StationLetters": null
-  },
-  {
-    "AffectedProposals": null,
-    "ProblemDescription": "Share book is missing",
-    "ProgramName": null,
-    "StationLetters": null
-  },
-  {
-    "AffectedProposals": null,
-    "ProblemDescription": "Playback type is missing",
-    "ProgramName": null,
-    "StationLetters": null
-  }
-]
+﻿{
+  "Status": 3,
+  "ValidationProblems": [
+    "Effective date is missing",
+    "End date is missing",
+    "Daypart code is missing",
+    "NTI to NSI Increase is missing",
+    "Share book is missing",
+    "Playback type is missing"
+  ]
+}

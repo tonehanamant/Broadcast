@@ -1,20 +1,8 @@
-﻿[
-  {
-    "AffectedProposals": null,
-    "ProblemDescription": "End date (09/30/2019) should be greater then effective date (10/31/2019)",
-    "ProgramName": null,
-    "StationLetters": null
-  },
-  {
-    "AffectedProposals": null,
-    "ProblemDescription": "HUT Book must be prior to the Share book",
-    "ProgramName": null,
-    "StationLetters": null
-  },
-  {
-    "AffectedProposals": null,
-    "ProblemDescription": "Unknown audience is specified: P25-25. Row: 15, column: F",
-    "ProgramName": null,
-    "StationLetters": null
-  }
-]
+﻿{
+  "Status": 3,
+  "ValidationProblems": [
+    "End date (09/30/2019) should be greater then effective date (10/31/2019)",
+    "HUT Book must be prior to the Share book",
+    "Unknown audience is specified: P25-25. Row: 15, column: F"
+  ]
+}

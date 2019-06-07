@@ -1,14 +1,7 @@
-﻿[
-  {
-    "AffectedProposals": null,
-    "ProblemDescription": "Line 16 contains an empty program cell in column A",
-    "ProgramName": null,
-    "StationLetters": null
-  },
-  {
-    "AffectedProposals": null,
-    "ProblemDescription": "Line 16 contains an empty rate cell in column B",
-    "ProgramName": null,
-    "StationLetters": null
-  }
-]
+﻿{
+  "Status": 3,
+  "ValidationProblems": [
+    "Line 16 contains an empty program cell in column A",
+    "Line 16 contains an empty rate cell in column B"
+  ]
+}

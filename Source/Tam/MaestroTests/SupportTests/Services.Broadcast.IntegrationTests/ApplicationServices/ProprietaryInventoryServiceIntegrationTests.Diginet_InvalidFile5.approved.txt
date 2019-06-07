@@ -1,14 +1,7 @@
-﻿[
-  {
-    "AffectedProposals": null,
-    "ProblemDescription": "Rating header is incorrect: HH R1tg. Row: 11, column: C. Correct format: '[DEMO] Rtg'",
-    "ProgramName": null,
-    "StationLetters": null
-  },
-  {
-    "AffectedProposals": null,
-    "ProblemDescription": "Impressions header is incorrect: HH I1mps (000). Row: 11, column: D. Correct format: '[DEMO] Imps (000)'",
-    "ProgramName": null,
-    "StationLetters": null
-  }
-]
+﻿{
+  "Status": 3,
+  "ValidationProblems": [
+    "Rating header is incorrect: HH R1tg. Row: 11, column: C. Correct format: '[DEMO] Rtg'",
+    "Impressions header is incorrect: HH I1mps (000). Row: 11, column: D. Correct format: '[DEMO] Imps (000)'"
+  ]
+}

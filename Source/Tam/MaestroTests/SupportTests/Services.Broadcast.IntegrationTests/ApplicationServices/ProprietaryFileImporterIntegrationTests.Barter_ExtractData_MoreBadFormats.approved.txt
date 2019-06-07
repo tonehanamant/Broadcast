@@ -29,6 +29,7 @@
   "InventoryGroups": [],
   "InventoryManifests": [],
   "InventorySource": null,
+  "RowsProcessed": null,
   "UniqueIdentifier": null,
   "ValidationProblems": [
     "CPM is not in the correct format (##.##)",

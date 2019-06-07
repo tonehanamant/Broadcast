@@ -1,8 +1,6 @@
-﻿[
-  {
-    "AffectedProposals": null,
-    "ProblemDescription": "Couldn't find first week column",
-    "ProgramName": null,
-    "StationLetters": null
-  }
-]
+﻿{
+  "Status": 3,
+  "ValidationProblems": [
+    "Couldn't find first week column"
+  ]
+}

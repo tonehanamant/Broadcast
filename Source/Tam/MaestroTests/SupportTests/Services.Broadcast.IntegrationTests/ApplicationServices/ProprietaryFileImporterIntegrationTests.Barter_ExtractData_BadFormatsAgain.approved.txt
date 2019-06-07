@@ -29,6 +29,7 @@
   "InventoryGroups": [],
   "InventoryManifests": [],
   "InventorySource": null,
+  "RowsProcessed": null,
   "UniqueIdentifier": null,
   "ValidationProblems": [
     "End date (01/30/2019) should be greater then effective date (01/31/2019)",

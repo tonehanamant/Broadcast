@@ -1,8 +1,6 @@
-﻿[
-  {
-    "AffectedProposals": null,
-    "ProblemDescription": "Audience 'M18-20' from cell(row: 11, column: F) should be the same as audience '[DEMO]' from cell(row: 11, column: E)",
-    "ProgramName": null,
-    "StationLetters": null
-  }
-]
+﻿{
+  "Status": 3,
+  "ValidationProblems": [
+    "Audience 'M18-20' from cell(row: 11, column: F) should be the same as audience '[DEMO]' from cell(row: 11, column: E)"
+  ]
+}

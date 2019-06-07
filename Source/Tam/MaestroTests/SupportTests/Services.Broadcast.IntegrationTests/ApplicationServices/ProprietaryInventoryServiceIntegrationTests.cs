@@ -37,7 +37,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<IFileService>(new FileServiceDataLakeStubb());
             IntegrationTestApplicationServiceFactory.Instance.RegisterType<IEmailerService, EmailerServiceStubb>();
             _ProprietaryService = IntegrationTestApplicationServiceFactory.GetApplicationService<IProprietaryInventoryService>();
-            _InventoryFileRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryFileRepository>();
             _IInventoryRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
             _ProprietaryRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IProprietaryRepository>();
             _InventoryRatingsProcessingService = IntegrationTestApplicationServiceFactory.GetApplicationService<IInventoryRatingsProcessingService>();
@@ -59,16 +58,18 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var now = new DateTime(2019, 02, 02);
                 var result = _ProprietaryService.SaveProprietaryInventoryFile(request, "IntegrationTestUser", now);
+                var file = _ProprietaryRepository.GetInventoryFileWithHeaderById(result.FileId);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(InventoryFileBase), "Id");
+                jsonResolver.Ignore(typeof(ProprietaryInventoryHeader), "Id");
+                jsonResolver.Ignore(typeof(ProprietaryInventoryFile), "CreatedDate");
                 var jsonSettings = new JsonSerializerSettings()
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                     ContractResolver = jsonResolver
                 };
-
-                var file = _InventoryFileRepository.GetInventoryFileById(result.FileId);
+                                
                 var fileJson = IntegrationTestHelper.ConvertToJson(file, jsonSettings);
 
                 Approvals.Verify(fileJson);
@@ -668,6 +669,28 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             _VerifyInventoryFileProblems(fileName);
         }
 
+        [Test]
+        public void Barter_SaveErrorFileToDisk()
+        {
+            const string fileName = @"ProprietaryDataFiles\Barter_BadFormats.xlsx";
+            
+            using (new TransactionScopeWrapper())
+            {
+                var request = new FileRequest
+                {
+                    StreamData = new FileStream($@".\Files\{fileName}", FileMode.Open, FileAccess.Read),
+                    FileName = fileName
+                };
+
+                var now = new DateTime(2019, 02, 02);
+                var result = _ProprietaryService.SaveProprietaryInventoryFile(request, "IntegrationTestUser", now);
+                string errorsFilePath = $@"{BroadcastServiceSystemParameter.InventoryUploadErrorsFolder}\{result.FileId}_{fileName}";
+
+                var fileService = IntegrationTestApplicationServiceFactory.Instance.Resolve<IFileService>();
+                Assert.IsTrue(fileService.Exists(errorsFilePath));
+            }
+        }
+
         private void _VerifyInventoryFileProblems(string fileName)
         {
             using (new TransactionScopeWrapper())
@@ -678,37 +701,17 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     FileName = fileName
                 };
 
-                var problems = new List<InventoryFileProblem>();
-                try
-                {
-                    var now = new DateTime(2019, 02, 02);
-                    var result = _ProprietaryService.SaveProprietaryInventoryFile(request, "IntegrationTestUser", now);
-                }
-                catch (FileUploadException<InventoryFileProblem> e)
-                {
-                    problems = e.Problems;
-                }
+                var now = new DateTime(2019, 02, 02);
+                var result = _ProprietaryService.SaveProprietaryInventoryFile(request, "IntegrationTestUser", now);
 
-                _VerifyInventoryFileProblems(problems);
+                _VerifyInventoryFileSaveResult(result);
             }
-        }
-
-        private static void _VerifyInventoryFileProblems(List<InventoryFileProblem> problems)
-        {
-            var jsonResolver = new IgnorableSerializerContractResolver();
-            var jsonSettings = new JsonSerializerSettings()
-            {
-                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                ContractResolver = jsonResolver
-            };
-            var problemsJson = IntegrationTestHelper.ConvertToJson(problems, jsonSettings);
-
-            Approvals.Verify(problemsJson);
         }
 
         private static void _VerifyInventoryFileSaveResult(InventoryFileSaveResult result)
         {
             var jsonResolver = new IgnorableSerializerContractResolver();
+            jsonResolver.Ignore(typeof(InventoryFileSaveResult), "FileId");
             var jsonSettings = new JsonSerializerSettings()
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
@@ -829,5 +832,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Approvals.Verify(fileJson);
             }
         }
+
+        
     }
 }

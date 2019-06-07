@@ -1,14 +1,7 @@
-﻿[
-  {
-    "AffectedProposals": null,
-    "ProblemDescription": "Rating header is expected. Row: 11, column: C",
-    "ProgramName": null,
-    "StationLetters": null
-  },
-  {
-    "AffectedProposals": null,
-    "ProblemDescription": "Impressions header is expected. Row: 11, column: D",
-    "ProgramName": null,
-    "StationLetters": null
-  }
-]
+﻿{
+  "Status": 3,
+  "ValidationProblems": [
+    "Rating header is expected. Row: 11, column: C",
+    "Impressions header is expected. Row: 11, column: D"
+  ]
+}

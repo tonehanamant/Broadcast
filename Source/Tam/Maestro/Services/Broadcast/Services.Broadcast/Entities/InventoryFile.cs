@@ -8,8 +8,7 @@ namespace Services.Broadcast.Entities
     {                    
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        private List<StationContact> _stationContacts; 
-
+        private List<StationContact> _stationContacts;
         public List<StationContact> StationContacts
         {
             get

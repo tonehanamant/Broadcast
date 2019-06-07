@@ -1,8 +1,6 @@
-﻿[
-  {
-    "AffectedProposals": null,
-    "ProblemDescription": "Unable to find media week containing date 2/25/1500",
-    "ProgramName": null,
-    "StationLetters": null
-  }
-]
+﻿{
+  "Status": 3,
+  "ValidationProblems": [
+    "Unable to find media week containing date 2/25/1500"
+  ]
+}

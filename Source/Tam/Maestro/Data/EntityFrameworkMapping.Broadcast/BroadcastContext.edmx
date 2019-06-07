@@ -341,6 +341,7 @@
           <Property Name="created_date" Type="datetime" Nullable="false" />
           <Property Name="status" Type="tinyint" Nullable="false" />
           <Property Name="inventory_source_id" Type="int" Nullable="false" />
+          <Property Name="rows_processed" Type="int" />
         </EntityType>
         <EntityType Name="inventory_sources">
           <Key>
@@ -8232,6 +8233,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="inventory_file_problems" Relationship="BroadcastModel.FK_inventory_file_problems_inventory_files" FromRole="inventory_files" ToRole="inventory_file_problems" />
           <NavigationProperty Name="inventory_file_ratings_jobs" Relationship="BroadcastModel.FK_inventory_file_ratings_jobs_inventory_files" FromRole="inventory_files" ToRole="inventory_file_ratings_jobs" />
           <NavigationProperty Name="inventory_file_proprietary_header" Relationship="BroadcastModel.FK_inventory_file_proprietary_header_inventory_files" FromRole="inventory_files" ToRole="inventory_file_proprietary_header" />
+          <Property Name="rows_processed" Type="Int32" />
         </EntityType>
         <Association Name="FK_inventory_files_inventory_source">
           <End Type="BroadcastModel.inventory_sources" Role="inventory_sources" Multiplicity="1" />
@@ -10151,6 +10153,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="inventory_files">
             <EntityTypeMapping TypeName="BroadcastModel.inventory_files">
               <MappingFragment StoreEntitySet="inventory_files">
+                <ScalarProperty Name="rows_processed" ColumnName="rows_processed" />
                 <ScalarProperty Name="inventory_source_id" ColumnName="inventory_source_id" />
                 <ScalarProperty Name="status" ColumnName="status" />
                 <ScalarProperty Name="created_date" ColumnName="created_date" />

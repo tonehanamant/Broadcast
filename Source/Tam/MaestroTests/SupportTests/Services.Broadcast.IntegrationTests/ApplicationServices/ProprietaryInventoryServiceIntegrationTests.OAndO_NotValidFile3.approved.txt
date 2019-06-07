@@ -1,50 +1,13 @@
-﻿[
-  {
-    "AffectedProposals": null,
-    "ProblemDescription": "Invalid spot length is specified",
-    "ProgramName": null,
-    "StationLetters": null
-  },
-  {
-    "AffectedProposals": null,
-    "ProblemDescription": "Effective date is not in the correct format (MM/dd/yyyy, M/dd/yyyy, M/d/yyyy)",
-    "ProgramName": null,
-    "StationLetters": null
-  },
-  {
-    "AffectedProposals": null,
-    "ProblemDescription": "End date is not in the correct format (MM/dd/yyyy, M/dd/yyyy, M/d/yyyy)",
-    "ProgramName": null,
-    "StationLetters": null
-  },
-  {
-    "AffectedProposals": null,
-    "ProblemDescription": "Invalid contracted daypart (Mond-Frid 6:30PM-11PM)",
-    "ProgramName": null,
-    "StationLetters": null
-  },
-  {
-    "AffectedProposals": null,
-    "ProblemDescription": "Share book (SEP;19) is not in the correct format (MMM yy, MMM-yy, MMM/yy, yy-MMM, yy/MMM, MMM yyyy)",
-    "ProgramName": null,
-    "StationLetters": null
-  },
-  {
-    "AffectedProposals": null,
-    "ProblemDescription": "Hut book (SEP;19) is not in the correct format (MMM yy, MMM-yy, MMM/yy, yy-MMM, yy/MMM, MMM yyyy)",
-    "ProgramName": null,
-    "StationLetters": null
-  },
-  {
-    "AffectedProposals": null,
-    "ProblemDescription": "Playback type is missing",
-    "ProgramName": null,
-    "StationLetters": null
-  },
-  {
-    "AffectedProposals": null,
-    "ProblemDescription": "Week: 4-Feb-2019 should be inside or intersect with the date range specified in the header (effective and end dates). Row: 16, column: E",
-    "ProgramName": null,
-    "StationLetters": null
-  }
-]
+﻿{
+  "Status": 3,
+  "ValidationProblems": [
+    "Invalid spot length is specified",
+    "Effective date is not in the correct format (MM/dd/yyyy, M/dd/yyyy, M/d/yyyy)",
+    "End date is not in the correct format (MM/dd/yyyy, M/dd/yyyy, M/d/yyyy)",
+    "Invalid contracted daypart (Mond-Frid 6:30PM-11PM)",
+    "Share book (SEP;19) is not in the correct format (MMM yy, MMM-yy, MMM/yy, yy-MMM, yy/MMM, MMM yyyy)",
+    "Hut book (SEP;19) is not in the correct format (MMM yy, MMM-yy, MMM/yy, yy-MMM, yy/MMM, MMM yyyy)",
+    "Playback type is missing",
+    "Week: 4-Feb-2019 should be inside or intersect with the date range specified in the header (effective and end dates). Row: 16, column: E"
+  ]
+}

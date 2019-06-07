@@ -18,7 +18,6 @@ namespace Services.Broadcast.Repositories
         void UpdateInventoryFile(InventoryFile inventoryFile, string userName);
         void DeleteInventoryFileById(int inventoryFileId);
         void UpdateInventoryFileStatus(int fileId, FileStatusEnum status);
-        InventoryFile GetInventoryFileById(int fileId);
     }
 
     public class InventoryFileRepository : BroadcastRepositoryBase, IInventoryFileRepository
@@ -70,7 +69,6 @@ namespace Services.Broadcast.Repositories
             _InReadUncommitedTransaction(
                 context =>
                 {
-
                     file =
                         context.inventory_files.Where(rf => rf.id == inventoryFile.Id)
                             .Single(string.Format("Could not find existing rates file with id={0}", inventoryFile.Id));
@@ -103,31 +101,6 @@ namespace Services.Broadcast.Repositories
                     ratesFile.status = (byte)status;
                     context.SaveChanges();
 
-                });
-        }
-
-        public InventoryFile GetInventoryFileById(int fileId)
-        {
-            return _InReadUncommitedTransaction(
-                context =>
-                {
-                    var file = context.inventory_files.Single(x => x.id == fileId, $"Could not find existing file with id={fileId}");
-
-                    return new InventoryFile
-                    {
-                        Id = file.id,
-                        FileName = file.name,
-                        FileStatus = (FileStatusEnum)file.status,
-                        Hash = file.file_hash,
-                        UniqueIdentifier = file.identifier,
-                        InventorySource = new InventorySource
-                        {
-                            Id = file.inventory_sources.id,
-                            InventoryType = (InventorySourceTypeEnum)file.inventory_sources.inventory_source_type,
-                            IsActive = file.inventory_sources.is_active,
-                            Name = file.inventory_sources.name
-                        }
-                    };
                 });
         }
     }

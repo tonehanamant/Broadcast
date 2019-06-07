@@ -1,8 +1,6 @@
-﻿[
-  {
-    "AffectedProposals": null,
-    "ProblemDescription": "Can not find first data line",
-    "ProgramName": null,
-    "StationLetters": null
-  }
-]
+﻿{
+  "Status": 3,
+  "ValidationProblems": [
+    "Can not find first data line"
+  ]
+}

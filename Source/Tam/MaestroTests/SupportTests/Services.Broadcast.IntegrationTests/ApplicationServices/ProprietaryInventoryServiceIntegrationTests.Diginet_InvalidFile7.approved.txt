@@ -1,8 +1,6 @@
-﻿[
-  {
-    "AffectedProposals": null,
-    "ProblemDescription": "Unknown audience is specified: HH1. Row: 11, column: C",
-    "ProgramName": null,
-    "StationLetters": null
-  }
-]
+﻿{
+  "Status": 3,
+  "ValidationProblems": [
+    "Unknown audience is specified: HH1. Row: 11, column: C"
+  ]
+}

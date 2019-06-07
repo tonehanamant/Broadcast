@@ -14,12 +14,17 @@ using System.Linq;
 using Tam.Maestro.Common;
 using Common.Services;
 using System.IO;
+using Tam.Maestro.Services.Cable.SystemComponentParameters;
 
 namespace Services.Broadcast.Converters.RateImport
 {
     public interface IProprietaryFileImporter
     {
+        /// <summary>
+        /// Check if the file was already processed by using file hash
+        /// </summary>
         void CheckFileHash();
+
         ProprietaryInventoryFile GetPendingProprietaryInventoryFile(string userName, InventorySource inventorySource);
 
         /// <summary>
@@ -30,8 +35,23 @@ namespace Services.Broadcast.Converters.RateImport
         Stream ExtractData(ProprietaryInventoryFile proprietaryFile);
 
         void LoadFromSaveRequest(FileRequest request);
+
+        /// <summary>
+        /// Load and validate data lines
+        /// </summary>
+        /// <param name="worksheet">Excel worksheet to process</param>
+        /// <param name="proprietaryFile">ProprietaryInventoryFile to be loaded</param>
         void LoadAndValidateDataLines(ExcelWorksheet worksheet, ProprietaryInventoryFile proprietaryFile);
+
         void PopulateManifests(ProprietaryInventoryFile proprietaryFile, List<DisplayBroadcastStation> stations);
+
+        /// <summary>
+        /// Writes a stream to a specific error folder
+        /// </summary>
+        /// <param name="stream"></param>
+        /// <param name="fileId"></param>
+        /// <param name="fileName"></param>
+        void WriteFileToDisk(Stream stream, int fileId, string fileName);
     }
 
     public abstract class ProprietaryFileImporterBase : IProprietaryFileImporter
@@ -56,6 +76,9 @@ namespace Services.Broadcast.Converters.RateImport
         protected readonly IDaypartCodeRepository DaypartCodeRepository;
         private readonly IFileService _FileService;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>        
         public ProprietaryFileImporterBase(
             IDataRepositoryFactory broadcastDataRepositoryFactory,
             IBroadcastAudiencesCache broadcastAudiencesCache,
@@ -76,6 +99,9 @@ namespace Services.Broadcast.Converters.RateImport
             _FileService = fileService;
         }
 
+        /// <summary>
+        /// Check if the file was already processed by using file hash
+        /// </summary>
         public void CheckFileHash()
         {
             //check if file has already been loaded
@@ -131,10 +157,33 @@ namespace Services.Broadcast.Converters.RateImport
             return mediaWeeks.Select(x => new StationInventoryManifestWeek { MediaWeek = x, Spots = spots }).ToList();
         }
 
+        /// <summary>
+        /// Load and validate header data
+        /// </summary>
+        /// <param name="worksheet">Excel worksheet to process</param>
+        /// <param name="proprietaryFile">ProprietaryInventoryFile object to be loaded</param>
         protected abstract void LoadAndValidateHeaderData(ExcelWorksheet worksheet, ProprietaryInventoryFile proprietaryFile);
 
+        /// <summary>
+        /// Load and validate data lines
+        /// </summary>
+        /// <param name="worksheet">Excel worksheet to process</param>
+        /// <param name="proprietaryFile">ProprietaryInventoryFile to be loaded</param>
         public abstract void LoadAndValidateDataLines(ExcelWorksheet worksheet, ProprietaryInventoryFile proprietaryFile);
 
         public abstract void PopulateManifests(ProprietaryInventoryFile proprietaryFile, List<DisplayBroadcastStation> stations);
+
+        /// <summary>
+        /// Writes a stream to a specific error folder
+        /// </summary>
+        /// <param name="stream"></param>
+        /// <param name="fileId"></param>
+        /// <param name="fileName"></param>
+        public void WriteFileToDisk(Stream stream, int fileId, string fileName)
+        {
+            string path = $@"{BroadcastServiceSystemParameter.InventoryUploadErrorsFolder}\{fileId}_{fileName}";
+            stream.Position = 0;
+            _FileService.Copy(stream, path, true);
+        }
     }
 }

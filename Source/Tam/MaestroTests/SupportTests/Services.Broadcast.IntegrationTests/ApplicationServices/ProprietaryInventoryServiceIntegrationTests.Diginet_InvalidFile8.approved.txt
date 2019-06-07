@@ -1,8 +1,6 @@
-﻿[
-  {
-    "AffectedProposals": null,
-    "ProblemDescription": "Data for audience 'HH' have been already read. Please specify unique audiences. Row: 11, column: E",
-    "ProgramName": null,
-    "StationLetters": null
-  }
-]
+﻿{
+  "Status": 3,
+  "ValidationProblems": [
+    "Data for audience 'HH' have been already read. Please specify unique audiences. Row: 11, column: E"
+  ]
+}

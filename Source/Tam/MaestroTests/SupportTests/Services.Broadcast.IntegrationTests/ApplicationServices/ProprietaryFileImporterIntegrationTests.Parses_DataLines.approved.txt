@@ -362,6 +362,7 @@
   "InventoryGroups": [],
   "InventoryManifests": [],
   "InventorySource": null,
+  "RowsProcessed": null,
   "UniqueIdentifier": null,
   "ValidationProblems": []
 }

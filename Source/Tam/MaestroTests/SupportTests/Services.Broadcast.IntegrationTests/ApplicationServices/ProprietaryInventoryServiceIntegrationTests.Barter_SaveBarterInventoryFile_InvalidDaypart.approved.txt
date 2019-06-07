@@ -1,14 +1,7 @@
-﻿[
-  {
-    "AffectedProposals": null,
-    "ProblemDescription": "Line 18 contains an invalid daypart(s): M-F 630AM11AM",
-    "ProgramName": null,
-    "StationLetters": null
-  },
-  {
-    "AffectedProposals": null,
-    "ProblemDescription": "Line 19 contains an invalid daypart(s): M-F 630AMM-11AM",
-    "ProgramName": null,
-    "StationLetters": null
-  }
-]
+﻿{
+  "Status": 3,
+  "ValidationProblems": [
+    "Line 18 contains an invalid daypart(s): M-F 630AM11AM",
+    "Line 19 contains an invalid daypart(s): M-F 630AMM-11AM"
+  ]
+}

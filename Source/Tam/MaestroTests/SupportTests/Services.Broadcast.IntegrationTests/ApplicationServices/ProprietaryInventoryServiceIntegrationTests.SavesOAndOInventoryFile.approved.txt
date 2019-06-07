@@ -34,6 +34,7 @@
     "IsActive": true,
     "Name": "ABC O&O"
   },
+  "RowsProcessed": 12,
   "UniqueIdentifier": null,
   "ValidationProblems": []
 }

@@ -1,8 +1,32 @@
 ﻿{
-  "EndDate": "0001-01-01T00:00:00",
+  "CreatedBy": "IntegrationTestUser",
+  "DataLines": [],
   "FileName": "ProprietaryDataFiles\\Barter_ValidFormat.xlsx",
   "FileStatus": 2,
   "Hash": "71-81-B1-20-E0-9B-97-17-F4-A0-FE-98-E9-9E-63-FF-38-C9-73-8F",
+  "Header": {
+    "Audience": {
+      "_CategoryCode": 0,
+      "_Code": "F25-34",
+      "_Custom": true,
+      "_Id": 348,
+      "_Name": "Females 25-34",
+      "_RangeEnd": 34,
+      "_RangeStart": 25,
+      "_SubCategoryCode": "F",
+      "IsDirty": true
+    },
+    "ContractedDaypartId": 5,
+    "Cpm": 99.8800,
+    "DaypartCode": "EMN",
+    "EffectiveDate": "2019-01-31T00:00:00",
+    "EndDate": "2019-12-30T00:00:00",
+    "HutBookId": 437,
+    "NtiToNsiIncrease": null,
+    "PlaybackType": 1,
+    "ShareBookId": 438,
+    "SpotLengthId": null
+  },
   "InventoryGroups": [],
   "InventoryManifests": [],
   "InventorySource": {
@@ -11,7 +35,7 @@
     "IsActive": true,
     "Name": "TTWN"
   },
-  "StartDate": "0001-01-01T00:00:00",
-  "StationContacts": [],
-  "UniqueIdentifier": null
+  "RowsProcessed": 5,
+  "UniqueIdentifier": null,
+  "ValidationProblems": []
 }

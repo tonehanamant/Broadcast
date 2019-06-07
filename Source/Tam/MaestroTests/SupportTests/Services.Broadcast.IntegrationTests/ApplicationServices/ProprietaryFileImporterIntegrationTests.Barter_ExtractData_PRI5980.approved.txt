@@ -155,6 +155,7 @@
     "IsActive": false,
     "Name": null
   },
+  "RowsProcessed": null,
   "UniqueIdentifier": null,
   "ValidationProblems": [
     "Not acceptable daypart code is specified"

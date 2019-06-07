@@ -1,20 +1,8 @@
-﻿[
-  {
-    "AffectedProposals": null,
-    "ProblemDescription": "CPM header is incorrect: A18-34 VPVH. Row: 15, column: E. Correct format: 'Avg HH CPM'",
-    "ProgramName": null,
-    "StationLetters": null
-  },
-  {
-    "AffectedProposals": null,
-    "ProblemDescription": "Impressions header is expected. Row: 15, column: G",
-    "ProgramName": null,
-    "StationLetters": null
-  },
-  {
-    "AffectedProposals": null,
-    "ProblemDescription": "CPM header is expected. Row: 15, column: I",
-    "ProgramName": null,
-    "StationLetters": null
-  }
-]
+﻿{
+  "Status": 3,
+  "ValidationProblems": [
+    "CPM header is incorrect: A18-34 VPVH. Row: 15, column: E. Correct format: 'Avg HH CPM'",
+    "Impressions header is expected. Row: 15, column: G",
+    "CPM header is expected. Row: 15, column: I"
+  ]
+}

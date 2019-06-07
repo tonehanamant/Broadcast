@@ -172,6 +172,19 @@ BEGIN
 END
 /*************************************** END PRI-9375 *****************************************************/
 
+/*************************************** START PRI-7621 *****************************************************/
+IF NOT EXISTS (SELECT 1 FROM system_component_parameters WHERE component_id = 'BroadcastService' and parameter_key = 'InventoryUploadErrorsFolder')
+BEGIN
+        INSERT system_component_parameters (component_id, parameter_key, parameter_value, parameter_type, description, last_modified_time)
+        Values('BroadcastService', 'InventoryUploadErrorsFolder', 'D:\\temp', 'string', 'Folder used to store inventory files with validation errors', GETDATE())
+END
+
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE name = N'rows_processed' AND OBJECT_ID = OBJECT_ID(N'inventory_files'))
+BEGIN
+	ALTER TABLE [inventory_files] ADD rows_processed INT NULL	
+END
+/*************************************** END PRI-7621 *****************************************************/
+
 -- Update the Schema Version of the database to the current release version
 UPDATE system_component_parameters 
 SET parameter_value = '19.07.1' -- Current release version

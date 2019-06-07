@@ -24,6 +24,7 @@
     "IsActive": true,
     "Name": "COZI"
   },
+  "RowsProcessed": 0,
   "UniqueIdentifier": null,
   "ValidationProblems": []
 }

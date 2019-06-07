@@ -75,6 +75,7 @@ namespace Services.Broadcast.Repositories
                     UniqueIdentifier = file.identifier,
                     CreatedBy = file.created_by,
                     CreatedDate = file.created_date,
+                    RowsProcessed = file.rows_processed,
                     InventorySource = new InventorySource
                     {
                         Id = file.inventory_sources.id,
@@ -126,6 +127,7 @@ namespace Services.Broadcast.Repositories
                 var inventoryFile = context.inventory_files.Single(x => x.id == proprietaryFile.Id);
 
                 inventoryFile.status = (byte)proprietaryFile.FileStatus;
+                inventoryFile.rows_processed = proprietaryFile.RowsProcessed;
                 inventoryFile.inventory_file_proprietary_header = new List<inventory_file_proprietary_header>{
                             new inventory_file_proprietary_header
                             {

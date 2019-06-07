@@ -206,6 +206,7 @@
   "InventoryGroups": [],
   "InventoryManifests": [],
   "InventorySource": null,
+  "RowsProcessed": null,
   "UniqueIdentifier": null,
   "ValidationProblems": [
     "Line 18 contains an empty station cell",

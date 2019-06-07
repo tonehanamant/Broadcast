@@ -527,6 +527,12 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.InventoryRatingsParallelJobs); }
         }
 	 
+		public static string InventoryUploadErrorsFolder  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.InventoryUploadErrorsFolder); }
+        }
+	 
 		public static string MediaMonthCruchCacheSlidingExpirationSeconds  
 		{
             get { return SystemComponentHelper.GetPropertyValue<string>
@@ -1172,6 +1178,36 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 					(PostLogServiceSystemParameterNames.ComponentID , PostLogServiceSystemParameterNames.AutoValidationAlarmThresholdSeconds); }
         }
 	 
+		public static string AwsAccessKeyId  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(PostLogServiceSystemParameterNames.ComponentID , PostLogServiceSystemParameterNames.AwsAccessKeyId); }
+        }
+	 
+		public static string AwsRegion  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(PostLogServiceSystemParameterNames.ComponentID , PostLogServiceSystemParameterNames.AwsRegion); }
+        }
+	 
+		public static string AwsS3Bucket  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(PostLogServiceSystemParameterNames.ComponentID , PostLogServiceSystemParameterNames.AwsS3Bucket); }
+        }
+	 
+		public static string AwsS3RootPostLogProcessingKey  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(PostLogServiceSystemParameterNames.ComponentID , PostLogServiceSystemParameterNames.AwsS3RootPostLogProcessingKey); }
+        }
+	 
+		public static string AwsSecretAccessKey  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(PostLogServiceSystemParameterNames.ComponentID , PostLogServiceSystemParameterNames.AwsSecretAccessKey); }
+        }
+	 
 		public static int CableVisionBusinessId  
 		{
             get { return SystemComponentHelper.GetPropertyValue<int>
@@ -1254,6 +1290,30 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 		{
             get { return SystemComponentHelper.GetPropertyValue<string>
 					(PostLogServiceSystemParameterNames.ComponentID , PostLogServiceSystemParameterNames.DailyReportRecipients); }
+        }
+	 
+		public static int DatabricksJobId  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<int>
+					(PostLogServiceSystemParameterNames.ComponentID , PostLogServiceSystemParameterNames.DatabricksJobId); }
+        }
+	 
+		public static int DatabricksJobStatusCheckInterval  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<int>
+					(PostLogServiceSystemParameterNames.ComponentID , PostLogServiceSystemParameterNames.DatabricksJobStatusCheckInterval); }
+        }
+	 
+		public static string DatabricksToken  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(PostLogServiceSystemParameterNames.ComponentID , PostLogServiceSystemParameterNames.DatabricksToken); }
+        }
+	 
+		public static string DatabricksURL  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(PostLogServiceSystemParameterNames.ComponentID , PostLogServiceSystemParameterNames.DatabricksURL); }
         }
 	 
 		public static int DeliveryCalculationsAlarmThresholdSeconds  
@@ -1482,6 +1542,30 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 		{
             get { return SystemComponentHelper.GetPropertyValue<string>
 					(PostLogServiceSystemParameterNames.ComponentID , PostLogServiceSystemParameterNames.RootOperationsDirectory); }
+        }
+	 
+		public static string SparkJobPassword  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(PostLogServiceSystemParameterNames.ComponentID , PostLogServiceSystemParameterNames.SparkJobPassword); }
+        }
+	 
+		public static string SparkJobRootUrl  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(PostLogServiceSystemParameterNames.ComponentID , PostLogServiceSystemParameterNames.SparkJobRootUrl); }
+        }
+	 
+		public static string SparkJobUser  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(PostLogServiceSystemParameterNames.ComponentID , PostLogServiceSystemParameterNames.SparkJobUser); }
+        }
+	 
+		public static int SparkPostLogProcessingJobId  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<int>
+					(PostLogServiceSystemParameterNames.ComponentID , PostLogServiceSystemParameterNames.SparkPostLogProcessingJobId); }
         }
 	 
 		public static int SpectrumBusinessId  
@@ -1892,10 +1976,22 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 	 
 	public static class ReportGenerationSystemParameter 
 	{ 
+		public static bool UseWebEXCELReportGeneration  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<bool>
+					(ReportGenerationSystemParameterNames.ComponentID , ReportGenerationSystemParameterNames.UseWebEXCELReportGeneration); }
+        }
+	 
 		public static bool UseWebForInnovarXmlGeneration  
 		{
             get { return SystemComponentHelper.GetPropertyValue<bool>
 					(ReportGenerationSystemParameterNames.ComponentID , ReportGenerationSystemParameterNames.UseWebForInnovarXmlGeneration); }
+        }
+	 
+		public static bool UseWebPDFReportGeneration  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<bool>
+					(ReportGenerationSystemParameterNames.ComponentID , ReportGenerationSystemParameterNames.UseWebPDFReportGeneration); }
         }
 	}
 	 

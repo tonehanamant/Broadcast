@@ -132,6 +132,7 @@ namespace Services.Broadcast.ApplicationServices
                 if (proprietaryFile.ValidationProblems.Any())
                 {
                     _ProprietaryRepository.AddValidationProblems(proprietaryFile);                    
+                    fileImporter.WriteFileToDisk(fileStreamWithErrors, proprietaryFile.Id, request.FileName);
                 }
                 else
                 {
@@ -140,7 +141,7 @@ namespace Services.Broadcast.ApplicationServices
                         var header = proprietaryFile.Header;
                         var stations = _GetFileStationsOrCreate(proprietaryFile, userName, now);
                         var stationsDict = stations.ToDictionary(x => x.Id, x => x.LegacyCallLetters);
-
+                        
                         fileImporter.PopulateManifests(proprietaryFile, stations);
                         _SetStartAndEndDatesForManifestWeeks(proprietaryFile, header.EffectiveDate, header.EndDate);
 
@@ -149,6 +150,8 @@ namespace Services.Broadcast.ApplicationServices
                         _StationInventoryGroupService.AddNewStationInventory(proprietaryFile, header.ContractedDaypartId);
 
                         _StationRepository.UpdateStationList(stationsDict.Keys.ToList(), userName, now, proprietaryFile.InventorySource.Id);
+
+                        proprietaryFile.RowsProcessed = proprietaryFile.DataLines.Count();
 
                         _ProprietaryRepository.SaveProprietaryInventoryFile(proprietaryFile);
                         transaction.Complete();
@@ -165,18 +168,19 @@ namespace Services.Broadcast.ApplicationServices
                 _ProprietaryRepository.AddValidationProblems(proprietaryFile);
             }
 
-            _CheckValidationProblems(proprietaryFile);
-
-            _InventoryRatingsService.QueueInventoryFileRatingsJob(proprietaryFile.Id);
-
-            try
+            if (!proprietaryFile.ValidationProblems.Any())
             {
-                _DataLakeFileService.Save(request);
-            }
-            catch (Exception ex)
-            {
-                throw new ApplicationException("Unable to send file to Data Lake shared folder and e-mail reporting the error:" + ex);
-            }
+                _InventoryRatingsService.QueueInventoryFileRatingsJob(proprietaryFile.Id);
+
+                try
+                {
+                    _DataLakeFileService.Save(request);
+                }
+                catch (Exception ex)
+                {
+                    throw new ApplicationException("Unable to send file to Data Lake shared folder and e-mail reporting the error:" + ex);
+                }
+            }            
 
             return new InventoryFileSaveResult
             {

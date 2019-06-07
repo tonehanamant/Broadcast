@@ -1,50 +1,13 @@
-﻿[
-  {
-    "AffectedProposals": null,
-    "ProblemDescription": "Spot length is missing",
-    "ProgramName": null,
-    "StationLetters": null
-  },
-  {
-    "AffectedProposals": null,
-    "ProblemDescription": "Effective date is missing",
-    "ProgramName": null,
-    "StationLetters": null
-  },
-  {
-    "AffectedProposals": null,
-    "ProblemDescription": "End date is missing",
-    "ProgramName": null,
-    "StationLetters": null
-  },
-  {
-    "AffectedProposals": null,
-    "ProblemDescription": "Daypart code is missing",
-    "ProgramName": null,
-    "StationLetters": null
-  },
-  {
-    "AffectedProposals": null,
-    "ProblemDescription": "Contracted daypart is missing",
-    "ProgramName": null,
-    "StationLetters": null
-  },
-  {
-    "AffectedProposals": null,
-    "ProblemDescription": "Share book is missing",
-    "ProgramName": null,
-    "StationLetters": null
-  },
-  {
-    "AffectedProposals": null,
-    "ProblemDescription": "Playback type is missing",
-    "ProgramName": null,
-    "StationLetters": null
-  },
-  {
-    "AffectedProposals": null,
-    "ProblemDescription": "Week: 4-Feb-2019 should be inside or intersect with the date range specified in the header (effective and end dates). Row: 15, column: E",
-    "ProgramName": null,
-    "StationLetters": null
-  }
-]
+﻿{
+  "Status": 3,
+  "ValidationProblems": [
+    "Spot length is missing",
+    "Effective date is missing",
+    "End date is missing",
+    "Daypart code is missing",
+    "Contracted daypart is missing",
+    "Share book is missing",
+    "Playback type is missing",
+    "Week: 4-Feb-2019 should be inside or intersect with the date range specified in the header (effective and end dates). Row: 15, column: E"
+  ]
+}

@@ -12,7 +12,7 @@ namespace Services.Broadcast.Entities.ProprietaryInventory
         public string CreatedBy { get; set; }
         public DateTime CreatedDate { get; set; }
         public List<string> ValidationProblems { get; set; } = new List<string>();
-
+        public int? RowsProcessed { get; set; }
         public List<ProprietaryInventoryDataLine> DataLines { get; set; } = new List<ProprietaryInventoryDataLine>();
 
         public class ProprietaryInventoryDataLine

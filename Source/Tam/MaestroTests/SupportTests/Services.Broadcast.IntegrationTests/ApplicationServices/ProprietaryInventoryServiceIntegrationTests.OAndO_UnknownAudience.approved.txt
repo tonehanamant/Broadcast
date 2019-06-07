@@ -1,8 +1,6 @@
-﻿[
-  {
-    "AffectedProposals": null,
-    "ProblemDescription": "Unknown audience was found. Please specify '{audience} IMPS' cell with valid audience",
-    "ProgramName": null,
-    "StationLetters": null
-  }
-]
+﻿{
+  "Status": 3,
+  "ValidationProblems": [
+    "Unknown audience was found. Please specify '{audience} IMPS' cell with valid audience"
+  ]
+}

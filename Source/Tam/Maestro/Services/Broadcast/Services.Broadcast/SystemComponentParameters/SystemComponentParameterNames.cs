@@ -477,6 +477,11 @@ namespace Tam.Maestro.Common.SystemComponentParameter
             get { return "InventoryRatingsParallelJobs"; }
         }
 	 
+		public static string InventoryUploadErrorsFolder  
+		{
+            get { return "InventoryUploadErrorsFolder"; }
+        }
+	 
 		public static string MediaMonthCruchCacheSlidingExpirationSeconds  
 		{
             get { return "MediaMonthCruchCacheSlidingExpirationSeconds"; }
@@ -1086,6 +1091,31 @@ namespace Tam.Maestro.Common.SystemComponentParameter
             get { return "AutoValidationAlarmThresholdSeconds"; }
         }
 	 
+		public static string AwsAccessKeyId  
+		{
+            get { return "AwsAccessKeyId"; }
+        }
+	 
+		public static string AwsRegion  
+		{
+            get { return "AwsRegion"; }
+        }
+	 
+		public static string AwsS3Bucket  
+		{
+            get { return "AwsS3Bucket"; }
+        }
+	 
+		public static string AwsS3RootPostLogProcessingKey  
+		{
+            get { return "AwsS3RootPostLogProcessingKey"; }
+        }
+	 
+		public static string AwsSecretAccessKey  
+		{
+            get { return "AwsSecretAccessKey"; }
+        }
+	 
 		public static string CableVisionBusinessId  
 		{
             get { return "CableVisionBusinessId"; }
@@ -1154,6 +1184,26 @@ namespace Tam.Maestro.Common.SystemComponentParameter
 		public static string DailyReportRecipients  
 		{
             get { return "DailyReportRecipients"; }
+        }
+	 
+		public static string DatabricksJobId  
+		{
+            get { return "DatabricksJobId"; }
+        }
+	 
+		public static string DatabricksJobStatusCheckInterval  
+		{
+            get { return "DatabricksJobStatusCheckInterval"; }
+        }
+	 
+		public static string DatabricksToken  
+		{
+            get { return "DatabricksToken"; }
+        }
+	 
+		public static string DatabricksURL  
+		{
+            get { return "DatabricksURL"; }
         }
 	 
 		public static string DeliveryCalculationsAlarmThresholdSeconds  
@@ -1344,6 +1394,26 @@ namespace Tam.Maestro.Common.SystemComponentParameter
 		public static string RootOperationsDirectory  
 		{
             get { return "RootOperationsDirectory"; }
+        }
+	 
+		public static string SparkJobPassword  
+		{
+            get { return "SparkJobPassword"; }
+        }
+	 
+		public static string SparkJobRootUrl  
+		{
+            get { return "SparkJobRootUrl"; }
+        }
+	 
+		public static string SparkJobUser  
+		{
+            get { return "SparkJobUser"; }
+        }
+	 
+		public static string SparkPostLogProcessingJobId  
+		{
+            get { return "SparkPostLogProcessingJobId"; }
         }
 	 
 		public static string SpectrumBusinessId  
@@ -1719,9 +1789,19 @@ namespace Tam.Maestro.Common.SystemComponentParameter
             get { return "ReportGeneration" ; }
         }
 	  
+		public static string UseWebEXCELReportGeneration  
+		{
+            get { return "UseWebEXCELReportGeneration"; }
+        }
+	 
 		public static string UseWebForInnovarXmlGeneration  
 		{
             get { return "UseWebForInnovarXmlGeneration"; }
+        }
+	 
+		public static string UseWebPDFReportGeneration  
+		{
+            get { return "UseWebPDFReportGeneration"; }
         }
 	}
 	 

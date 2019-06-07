@@ -1,62 +1,15 @@
-﻿[
-  {
-    "AffectedProposals": null,
-    "ProblemDescription": "Line 17 contains an empty station cell",
-    "ProgramName": null,
-    "StationLetters": null
-  },
-  {
-    "AffectedProposals": null,
-    "ProblemDescription": "Line 18 contains an empty program name cell",
-    "ProgramName": null,
-    "StationLetters": null
-  },
-  {
-    "AffectedProposals": null,
-    "ProblemDescription": "Line 19 contains an empty day cell",
-    "ProgramName": null,
-    "StationLetters": null
-  },
-  {
-    "AffectedProposals": null,
-    "ProblemDescription": "Line 20 contains an empty time cell",
-    "ProgramName": null,
-    "StationLetters": null
-  },
-  {
-    "AffectedProposals": null,
-    "ProblemDescription": "Line 21 contains an empty day cell",
-    "ProgramName": null,
-    "StationLetters": null
-  },
-  {
-    "AffectedProposals": null,
-    "ProblemDescription": "Line 21 contains an empty time cell",
-    "ProgramName": null,
-    "StationLetters": null
-  },
-  {
-    "AffectedProposals": null,
-    "ProblemDescription": "Line 22 contains an invalid daypart(s): Invalid Day 5-6p",
-    "ProgramName": null,
-    "StationLetters": null
-  },
-  {
-    "AffectedProposals": null,
-    "ProblemDescription": "Line 23 contains an invalid daypart(s): M-Su Invalid Time",
-    "ProgramName": null,
-    "StationLetters": null
-  },
-  {
-    "AffectedProposals": null,
-    "ProblemDescription": "Line 24 contains an empty impressions cell",
-    "ProgramName": null,
-    "StationLetters": null
-  },
-  {
-    "AffectedProposals": null,
-    "ProblemDescription": "Line 25 contains an empty CPM cell",
-    "ProgramName": null,
-    "StationLetters": null
-  }
-]
+﻿{
+  "Status": 3,
+  "ValidationProblems": [
+    "Line 17 contains an empty station cell",
+    "Line 18 contains an empty program name cell",
+    "Line 19 contains an empty day cell",
+    "Line 20 contains an empty time cell",
+    "Line 21 contains an empty day cell",
+    "Line 21 contains an empty time cell",
+    "Line 22 contains an invalid daypart(s): Invalid Day 5-6p",
+    "Line 23 contains an invalid daypart(s): M-Su Invalid Time",
+    "Line 24 contains an empty impressions cell",
+    "Line 25 contains an empty CPM cell"
+  ]
+}
