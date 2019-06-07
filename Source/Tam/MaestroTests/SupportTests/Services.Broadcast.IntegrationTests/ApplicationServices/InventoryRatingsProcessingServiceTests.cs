@@ -22,6 +22,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         private IProprietaryInventoryService _ProprietaryService;
         private IInventoryRepository _IInventoryRepository;
         private IInventoryRatingsProcessingService _InventoryRatingsProcessingService;
+        private IInventoryFileRatingsJobsRepository _InventoryFileRatingsJobsRepository;
 
         [TestFixtureSetUp]
         public void init()
@@ -32,6 +33,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 _ProprietaryService = IntegrationTestApplicationServiceFactory.GetApplicationService<IProprietaryInventoryService>();
                 _IInventoryRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
                 _InventoryRatingsProcessingService = IntegrationTestApplicationServiceFactory.GetApplicationService<IInventoryRatingsProcessingService>();
+                _InventoryFileRatingsJobsRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryFileRatingsJobsRepository>();
             }
             catch (Exception e)
             {
@@ -57,7 +59,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var now = new DateTime(2019, 02, 02);
                 var result = _ProprietaryService.SaveProprietaryInventoryFile(request, "IntegrationTestUser", now);
-                var job = _InventoryRatingsProcessingService.GetJobByFileId(result.FileId);
+                var job = _InventoryFileRatingsJobsRepository.GetLatestJob();
                 _InventoryRatingsProcessingService.ProcessInventoryRatingsJob(job.id.Value);
 
                 _VerifyFileInventoryManifests(result.FileId);
@@ -80,8 +82,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var now = new DateTime(2019, 02, 02);
                 var result = _ProprietaryService.SaveProprietaryInventoryFile(request, "IntegrationTestUser", now);
-                var jobs = _InventoryRatingsProcessingService.GetQueuedJobs(1);
-                _InventoryRatingsProcessingService.ProcessInventoryRatingsJob(jobs[0].id.Value);
+                var job = _InventoryFileRatingsJobsRepository.GetLatestJob();
+                _InventoryRatingsProcessingService.ProcessInventoryRatingsJob(job.id.Value);
 
                 _VerifyFileInventoryManifests(result.FileId);
             }

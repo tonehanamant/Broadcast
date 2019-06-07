@@ -650,7 +650,8 @@ namespace Services.Broadcast.Converters.RateImport
                         {
                             Audience = fileHeader.Audience.ToDisplayAudience(),
                             CPM = x.CPM.Value,
-                            Impressions = x.Impressions.Value * 1000
+                            Impressions = x.Impressions.Value * 1000,
+                            IsReference = true
                         }
                     },
                     ManifestDayparts = x.Dayparts.Select(d => new StationInventoryManifestDaypart

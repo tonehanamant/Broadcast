@@ -46,5 +46,23 @@
     "InventoryType": 2,
     "IsActive": true,
     "Name": "Ference Media"
+  },
+  {
+    "Id": 10,
+    "InventoryType": 3,
+    "IsActive": true,
+    "Name": "ABC O&O"
+  },
+  {
+    "Id": 11,
+    "InventoryType": 3,
+    "IsActive": true,
+    "Name": "NBC O&O"
+  },
+  {
+    "Id": 12,
+    "InventoryType": 3,
+    "IsActive": true,
+    "Name": "KATZ"
   }
 ]

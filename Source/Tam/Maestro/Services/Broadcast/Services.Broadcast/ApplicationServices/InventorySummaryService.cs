@@ -37,14 +37,17 @@ namespace Services.Broadcast.ApplicationServices
         private readonly List<InventorySourceTypeEnum> SummariesSourceTypes = new List<InventorySourceTypeEnum>
         {
             InventorySourceTypeEnum.Barter,
-            InventorySourceTypeEnum.OpenMarket
+            InventorySourceTypeEnum.OpenMarket,
+            InventorySourceTypeEnum.ProprietaryOAndO
         };
         private readonly IMarketCoverageCache _MarketCoverageCache;
+        private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekAggregateCache;
 
         public InventorySummaryService(IDataRepositoryFactory broadcastDataRepositoryFactory,
                                        IQuarterCalculationEngine quarterCalculationEngine,
                                        IBroadcastAudiencesCache audiencesCache,
-                                       IMarketCoverageCache marketCoverageCache)
+                                       IMarketCoverageCache marketCoverageCache,
+                                       IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache)
         {
             _QuarterCalculationEngine = quarterCalculationEngine;
             _AudiencesCache = audiencesCache;
@@ -53,6 +56,7 @@ namespace Services.Broadcast.ApplicationServices
             _ProgramRepository = broadcastDataRepositoryFactory.GetDataRepository<IProgramRepository>();
             _DaypartCodeRepository = broadcastDataRepositoryFactory.GetDataRepository<IDaypartCodeRepository>();
             _MarketCoverageCache = marketCoverageCache;
+            _MediaMonthAndWeekAggregateCache = mediaMonthAndWeekAggregateCache;
         }
 
         public List<InventorySource> GetInventorySources()
@@ -153,7 +157,7 @@ namespace Services.Broadcast.ApplicationServices
                     continue;
 
                 var manifests = _GetInventorySummaryManifests(inventorySource, quarterDetail);
-                var daypartCodes = manifests.Select(m => m.DaypartCode).ToList();
+                var daypartCodes = manifests.Select(m => m.DaypartCode).Distinct().ToList();
 
                 if (_FilterByDaypartCode(daypartCodes, inventorySummaryFilterDto.DaypartCodeId))
                     continue;
@@ -173,6 +177,10 @@ namespace Services.Broadcast.ApplicationServices
             {
                 return _InventorySummaryRepository.GetInventorySummaryManifestsForOpenMarketSources(inventorySource, quarterDetail.StartDate, quarterDetail.EndDate);
             }
+            else if (inventorySource.InventoryType == InventorySourceTypeEnum.ProprietaryOAndO)
+            {
+                return _InventorySummaryRepository.GetInventorySummaryManifestsForProprietaryOAndOSources(inventorySource, quarterDetail.StartDate, quarterDetail.EndDate);
+            }
 
             return new List<InventorySummaryManifestDto>();
         }
@@ -189,14 +197,25 @@ namespace Services.Broadcast.ApplicationServices
                 inventorySummaryFactory = new BarterInventorySummaryFactory(_InventoryRepository, 
                                                                             _InventorySummaryRepository, 
                                                                             _QuarterCalculationEngine,
+                                                                            _ProgramRepository,
+                                                                            _MediaMonthAndWeekAggregateCache,
                                                                             _MarketCoverageCache);
             }
             else if (inventorySource.InventoryType == InventorySourceTypeEnum.OpenMarket)
             {
                 inventorySummaryFactory = new OpenMarketSummaryFactory(_InventoryRepository, 
                                                                        _InventorySummaryRepository, 
-                                                                       _QuarterCalculationEngine, 
-                                                                       _ProgramRepository);               
+                                                                       _QuarterCalculationEngine,
+                                                                       _ProgramRepository,
+                                                                       _MediaMonthAndWeekAggregateCache);               
+            }
+            else if (inventorySource.InventoryType == InventorySourceTypeEnum.ProprietaryOAndO)
+            {
+                inventorySummaryFactory = new ProprietaryOAndOSummaryFactory(_InventoryRepository,
+                                                                             _InventorySummaryRepository,
+                                                                             _QuarterCalculationEngine,
+                                                                             _ProgramRepository,
+                                                                             _MediaMonthAndWeekAggregateCache);
             }
 
             return inventorySummaryFactory.CreateInventorySummary(inventorySource, householdAudienceId, quarterDetail, manifests);

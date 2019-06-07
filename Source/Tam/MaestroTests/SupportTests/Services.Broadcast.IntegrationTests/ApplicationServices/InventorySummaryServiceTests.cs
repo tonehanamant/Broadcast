@@ -5,7 +5,6 @@ using IntegrationTests.Common;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
-using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.InventorySummary;
@@ -21,7 +20,19 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         private readonly IInventorySummaryService _InventoryCardService = IntegrationTestApplicationServiceFactory.GetApplicationService<IInventorySummaryService>();
         private readonly IInventoryRepository _InventoryRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
         private readonly IDaypartCodeRepository _DaypartCodeRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IDaypartCodeRepository>();
-        
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetInventorySummaries_ProprietaryOAndO()
+        {
+            var inventoryCards = _InventoryCardService.GetInventorySummaries(new InventorySummaryFilterDto
+            {
+                InventorySourceId = 11,
+            }, new DateTime(2019, 04, 01));
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(inventoryCards));
+        }
+
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void GetInventorySummaryDetailsTest()

@@ -6,17 +6,249 @@
     "ManifestAudiences": [
       {
         "Audience": {
+          "AudienceString": "Females 12-14",
+          "Id": 4
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Females 15-17",
+          "Id": 5
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Females 18-20",
+          "Id": 6
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Females 21-24",
+          "Id": 7
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Females 50-54",
+          "Id": 13
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Females 55-64",
+          "Id": 14
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Females 65+",
+          "Id": 15
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 12-14",
+          "Id": 19
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 15-17",
+          "Id": 20
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 18-20",
+          "Id": 21
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 21-24",
+          "Id": 22
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 50-54",
+          "Id": 28
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 55-64",
+          "Id": 29
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 65+",
+          "Id": 30
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
           "AudienceString": "House Holds",
           "Id": 31
         },
-        "CPM": 6.8181,
-        "Impressions": 88000.0,
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Kids 6-11",
+          "Id": 46
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 25-34",
+          "Id": 284
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 35-49",
+          "Id": 290
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Kids 2-5",
+          "Id": 339
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Females 35-49",
+          "Id": 347
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Females 25-34",
+          "Id": 348
+        },
+        "CPM": null,
+        "Impressions": 0.0,
         "IsReference": false,
         "Rating": null,
         "Vpvh": null
       }
     ],
-    "ManifestAudiencesReferences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "House Holds",
+          "Id": 31
+        },
+        "CPM": 6.8181,
+        "Impressions": 88000.0,
+        "IsReference": true,
+        "Rating": null,
+        "Vpvh": null
+      }
+    ],
     "ManifestDayparts": [
       {
         "Daypart": {
@@ -40,7 +272,12 @@
         "ProgramName": "Eyewitness News at 430a"
       }
     ],
-    "ManifestRates": [],
+    "ManifestRates": [
+      {
+        "SpotCost": 599.9928,
+        "SpotLengthId": 1
+      }
+    ],
     "ManifestWeeks": [
       {
         "EndDate": "2019-02-10T00:00:00",
@@ -78,17 +315,249 @@
     "ManifestAudiences": [
       {
         "Audience": {
+          "AudienceString": "Females 12-14",
+          "Id": 4
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Females 15-17",
+          "Id": 5
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Females 18-20",
+          "Id": 6
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Females 21-24",
+          "Id": 7
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Females 50-54",
+          "Id": 13
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Females 55-64",
+          "Id": 14
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Females 65+",
+          "Id": 15
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 12-14",
+          "Id": 19
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 15-17",
+          "Id": 20
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 18-20",
+          "Id": 21
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 21-24",
+          "Id": 22
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 50-54",
+          "Id": 28
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 55-64",
+          "Id": 29
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 65+",
+          "Id": 30
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
           "AudienceString": "House Holds",
           "Id": 31
         },
-        "CPM": 6.2500,
-        "Impressions": 160000.0,
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Kids 6-11",
+          "Id": 46
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 25-34",
+          "Id": 284
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 35-49",
+          "Id": 290
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Kids 2-5",
+          "Id": 339
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Females 35-49",
+          "Id": 347
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Females 25-34",
+          "Id": 348
+        },
+        "CPM": null,
+        "Impressions": 0.0,
         "IsReference": false,
         "Rating": null,
         "Vpvh": null
       }
     ],
-    "ManifestAudiencesReferences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "House Holds",
+          "Id": 31
+        },
+        "CPM": 6.2500,
+        "Impressions": 160000.0,
+        "IsReference": true,
+        "Rating": null,
+        "Vpvh": null
+      }
+    ],
     "ManifestDayparts": [
       {
         "Daypart": {
@@ -112,7 +581,12 @@
         "ProgramName": "Eyewitness News/GMA Weekend"
       }
     ],
-    "ManifestRates": [],
+    "ManifestRates": [
+      {
+        "SpotCost": 1000.0000,
+        "SpotLengthId": 1
+      }
+    ],
     "ManifestWeeks": [
       {
         "EndDate": "2019-02-10T00:00:00",
@@ -174,17 +648,249 @@
     "ManifestAudiences": [
       {
         "Audience": {
+          "AudienceString": "Females 12-14",
+          "Id": 4
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Females 15-17",
+          "Id": 5
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Females 18-20",
+          "Id": 6
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Females 21-24",
+          "Id": 7
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Females 50-54",
+          "Id": 13
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Females 55-64",
+          "Id": 14
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Females 65+",
+          "Id": 15
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 12-14",
+          "Id": 19
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 15-17",
+          "Id": 20
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 18-20",
+          "Id": 21
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 21-24",
+          "Id": 22
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 50-54",
+          "Id": 28
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 55-64",
+          "Id": 29
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 65+",
+          "Id": 30
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
           "AudienceString": "House Holds",
           "Id": 31
         },
-        "CPM": 5.6250,
-        "Impressions": 160000.0,
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Kids 6-11",
+          "Id": 46
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 25-34",
+          "Id": 284
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 35-49",
+          "Id": 290
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Kids 2-5",
+          "Id": 339
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Females 35-49",
+          "Id": 347
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Females 25-34",
+          "Id": 348
+        },
+        "CPM": null,
+        "Impressions": 0.0,
         "IsReference": false,
         "Rating": null,
         "Vpvh": null
       }
     ],
-    "ManifestAudiencesReferences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "House Holds",
+          "Id": 31
+        },
+        "CPM": 5.6250,
+        "Impressions": 160000.0,
+        "IsReference": true,
+        "Rating": null,
+        "Vpvh": null
+      }
+    ],
     "ManifestDayparts": [
       {
         "Daypart": {
@@ -208,7 +914,12 @@
         "ProgramName": "Eyewitness News/GMA Weekend"
       }
     ],
-    "ManifestRates": [],
+    "ManifestRates": [
+      {
+        "SpotCost": 900.0000,
+        "SpotLengthId": 1
+      }
+    ],
     "ManifestWeeks": [
       {
         "EndDate": "2019-02-10T00:00:00",
@@ -258,17 +969,249 @@
     "ManifestAudiences": [
       {
         "Audience": {
+          "AudienceString": "Females 12-14",
+          "Id": 4
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Females 15-17",
+          "Id": 5
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Females 18-20",
+          "Id": 6
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Females 21-24",
+          "Id": 7
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Females 50-54",
+          "Id": 13
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Females 55-64",
+          "Id": 14
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Females 65+",
+          "Id": 15
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 12-14",
+          "Id": 19
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 15-17",
+          "Id": 20
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 18-20",
+          "Id": 21
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 21-24",
+          "Id": 22
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 50-54",
+          "Id": 28
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 55-64",
+          "Id": 29
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 65+",
+          "Id": 30
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
           "AudienceString": "House Holds",
           "Id": 31
         },
-        "CPM": 6.2500,
-        "Impressions": 160000.0,
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Kids 6-11",
+          "Id": 46
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 25-34",
+          "Id": 284
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 35-49",
+          "Id": 290
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Kids 2-5",
+          "Id": 339
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Females 35-49",
+          "Id": 347
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Females 25-34",
+          "Id": 348
+        },
+        "CPM": null,
+        "Impressions": 0.0,
         "IsReference": false,
         "Rating": null,
         "Vpvh": null
       }
     ],
-    "ManifestAudiencesReferences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "House Holds",
+          "Id": 31
+        },
+        "CPM": 6.2500,
+        "Impressions": 160000.0,
+        "IsReference": true,
+        "Rating": null,
+        "Vpvh": null
+      }
+    ],
     "ManifestDayparts": [
       {
         "Daypart": {
@@ -292,7 +1235,12 @@
         "ProgramName": "Eyewitness News at Noon"
       }
     ],
-    "ManifestRates": [],
+    "ManifestRates": [
+      {
+        "SpotCost": 1000.0000,
+        "SpotLengthId": 1
+      }
+    ],
     "ManifestWeeks": [
       {
         "EndDate": "2019-03-03T00:00:00",
@@ -330,17 +1278,249 @@
     "ManifestAudiences": [
       {
         "Audience": {
+          "AudienceString": "Females 12-14",
+          "Id": 4
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Females 15-17",
+          "Id": 5
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Females 18-20",
+          "Id": 6
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Females 21-24",
+          "Id": 7
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Females 50-54",
+          "Id": 13
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Females 55-64",
+          "Id": 14
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Females 65+",
+          "Id": 15
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 12-14",
+          "Id": 19
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 15-17",
+          "Id": 20
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 18-20",
+          "Id": 21
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 21-24",
+          "Id": 22
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 50-54",
+          "Id": 28
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 55-64",
+          "Id": 29
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 65+",
+          "Id": 30
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
           "AudienceString": "House Holds",
           "Id": 31
         },
-        "CPM": 6.1538,
-        "Impressions": 260000.0,
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Kids 6-11",
+          "Id": 46
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 25-34",
+          "Id": 284
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 35-49",
+          "Id": 290
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Kids 2-5",
+          "Id": 339
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Females 35-49",
+          "Id": 347
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Females 25-34",
+          "Id": 348
+        },
+        "CPM": null,
+        "Impressions": 0.0,
         "IsReference": false,
         "Rating": null,
         "Vpvh": null
       }
     ],
-    "ManifestAudiencesReferences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "House Holds",
+          "Id": 31
+        },
+        "CPM": 6.1538,
+        "Impressions": 260000.0,
+        "IsReference": true,
+        "Rating": null,
+        "Vpvh": null
+      }
+    ],
     "ManifestDayparts": [
       {
         "Daypart": {
@@ -364,7 +1544,12 @@
         "ProgramName": "Eyewitness News at 4p"
       }
     ],
-    "ManifestRates": [],
+    "ManifestRates": [
+      {
+        "SpotCost": 1599.9880,
+        "SpotLengthId": 1
+      }
+    ],
     "ManifestWeeks": [
       {
         "EndDate": "2019-02-10T00:00:00",
@@ -438,17 +1623,249 @@
     "ManifestAudiences": [
       {
         "Audience": {
+          "AudienceString": "Females 12-14",
+          "Id": 4
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Females 15-17",
+          "Id": 5
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Females 18-20",
+          "Id": 6
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Females 21-24",
+          "Id": 7
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Females 50-54",
+          "Id": 13
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Females 55-64",
+          "Id": 14
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Females 65+",
+          "Id": 15
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 12-14",
+          "Id": 19
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 15-17",
+          "Id": 20
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 18-20",
+          "Id": 21
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 21-24",
+          "Id": 22
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 50-54",
+          "Id": 28
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 55-64",
+          "Id": 29
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 65+",
+          "Id": 30
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
           "AudienceString": "House Holds",
           "Id": 31
         },
-        "CPM": 5.3846,
-        "Impressions": 260000.0,
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Kids 6-11",
+          "Id": 46
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 25-34",
+          "Id": 284
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 35-49",
+          "Id": 290
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Kids 2-5",
+          "Id": 339
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Females 35-49",
+          "Id": 347
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Females 25-34",
+          "Id": 348
+        },
+        "CPM": null,
+        "Impressions": 0.0,
         "IsReference": false,
         "Rating": null,
         "Vpvh": null
       }
     ],
-    "ManifestAudiencesReferences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "House Holds",
+          "Id": 31
+        },
+        "CPM": 5.3846,
+        "Impressions": 260000.0,
+        "IsReference": true,
+        "Rating": null,
+        "Vpvh": null
+      }
+    ],
     "ManifestDayparts": [
       {
         "Daypart": {
@@ -472,7 +1889,12 @@
         "ProgramName": "Eyewitness News at 5p"
       }
     ],
-    "ManifestRates": [],
+    "ManifestRates": [
+      {
+        "SpotCost": 1399.9960,
+        "SpotLengthId": 1
+      }
+    ],
     "ManifestWeeks": [
       {
         "EndDate": "2019-02-10T00:00:00",
@@ -534,17 +1956,249 @@
     "ManifestAudiences": [
       {
         "Audience": {
+          "AudienceString": "Females 12-14",
+          "Id": 4
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Females 15-17",
+          "Id": 5
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Females 18-20",
+          "Id": 6
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Females 21-24",
+          "Id": 7
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Females 50-54",
+          "Id": 13
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Females 55-64",
+          "Id": 14
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Females 65+",
+          "Id": 15
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 12-14",
+          "Id": 19
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 15-17",
+          "Id": 20
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 18-20",
+          "Id": 21
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 21-24",
+          "Id": 22
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 50-54",
+          "Id": 28
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 55-64",
+          "Id": 29
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 65+",
+          "Id": 30
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
           "AudienceString": "House Holds",
           "Id": 31
         },
-        "CPM": 7.8717,
-        "Impressions": 343000.0,
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Kids 6-11",
+          "Id": 46
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 25-34",
+          "Id": 284
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 35-49",
+          "Id": 290
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Kids 2-5",
+          "Id": 339
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Females 35-49",
+          "Id": 347
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Females 25-34",
+          "Id": 348
+        },
+        "CPM": null,
+        "Impressions": 0.0,
         "IsReference": false,
         "Rating": null,
         "Vpvh": null
       }
     ],
-    "ManifestAudiencesReferences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "House Holds",
+          "Id": 31
+        },
+        "CPM": 7.8717,
+        "Impressions": 343000.0,
+        "IsReference": true,
+        "Rating": null,
+        "Vpvh": null
+      }
+    ],
     "ManifestDayparts": [
       {
         "Daypart": {
@@ -568,7 +2222,12 @@
         "ProgramName": "Eyewitness News at 11p"
       }
     ],
-    "ManifestRates": [],
+    "ManifestRates": [
+      {
+        "SpotCost": 2699.9931,
+        "SpotLengthId": 1
+      }
+    ],
     "ManifestWeeks": [
       {
         "EndDate": "2019-02-10T00:00:00",
@@ -642,17 +2301,249 @@
     "ManifestAudiences": [
       {
         "Audience": {
+          "AudienceString": "Females 12-14",
+          "Id": 4
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Females 15-17",
+          "Id": 5
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Females 18-20",
+          "Id": 6
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Females 21-24",
+          "Id": 7
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Females 50-54",
+          "Id": 13
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Females 55-64",
+          "Id": 14
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Females 65+",
+          "Id": 15
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 12-14",
+          "Id": 19
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 15-17",
+          "Id": 20
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 18-20",
+          "Id": 21
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 21-24",
+          "Id": 22
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 50-54",
+          "Id": 28
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 55-64",
+          "Id": 29
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 65+",
+          "Id": 30
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
           "AudienceString": "House Holds",
           "Id": 31
         },
-        "CPM": 7.3606,
-        "Impressions": 95100.0,
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Kids 6-11",
+          "Id": 46
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 25-34",
+          "Id": 284
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 35-49",
+          "Id": 290
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Kids 2-5",
+          "Id": 339
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Females 35-49",
+          "Id": 347
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Females 25-34",
+          "Id": 348
+        },
+        "CPM": null,
+        "Impressions": 0.0,
         "IsReference": false,
         "Rating": null,
         "Vpvh": null
       }
     ],
-    "ManifestAudiencesReferences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "House Holds",
+          "Id": 31
+        },
+        "CPM": 7.3606,
+        "Impressions": 95100.0,
+        "IsReference": true,
+        "Rating": null,
+        "Vpvh": null
+      }
+    ],
     "ManifestDayparts": [
       {
         "Daypart": {
@@ -676,7 +2567,12 @@
         "ProgramName": "Eyewitness 11p News Encore"
       }
     ],
-    "ManifestRates": [],
+    "ManifestRates": [
+      {
+        "SpotCost": 699.9930,
+        "SpotLengthId": 1
+      }
+    ],
     "ManifestWeeks": [
       {
         "EndDate": "2019-02-10T00:00:00",
@@ -750,17 +2646,249 @@
     "ManifestAudiences": [
       {
         "Audience": {
+          "AudienceString": "Females 12-14",
+          "Id": 4
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Females 15-17",
+          "Id": 5
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Females 18-20",
+          "Id": 6
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Females 21-24",
+          "Id": 7
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Females 50-54",
+          "Id": 13
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Females 55-64",
+          "Id": 14
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Females 65+",
+          "Id": 15
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 12-14",
+          "Id": 19
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 15-17",
+          "Id": 20
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 18-20",
+          "Id": 21
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 21-24",
+          "Id": 22
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 50-54",
+          "Id": 28
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 55-64",
+          "Id": 29
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 65+",
+          "Id": 30
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
           "AudienceString": "House Holds",
           "Id": 31
         },
-        "CPM": 6.8181,
-        "Impressions": 88000.0,
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Kids 6-11",
+          "Id": 46
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 25-34",
+          "Id": 284
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 35-49",
+          "Id": 290
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Kids 2-5",
+          "Id": 339
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Females 35-49",
+          "Id": 347
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Females 25-34",
+          "Id": 348
+        },
+        "CPM": null,
+        "Impressions": 0.0,
         "IsReference": false,
         "Rating": null,
         "Vpvh": null
       }
     ],
-    "ManifestAudiencesReferences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "House Holds",
+          "Id": 31
+        },
+        "CPM": 6.8181,
+        "Impressions": 88000.0,
+        "IsReference": true,
+        "Rating": null,
+        "Vpvh": null
+      }
+    ],
     "ManifestDayparts": [
       {
         "Daypart": {
@@ -784,7 +2912,12 @@
         "ProgramName": "Eyewitness News at 430a"
       }
     ],
-    "ManifestRates": [],
+    "ManifestRates": [
+      {
+        "SpotCost": 599.9928,
+        "SpotLengthId": 1
+      }
+    ],
     "ManifestWeeks": [
       {
         "EndDate": "2019-02-10T00:00:00",
@@ -822,17 +2955,249 @@
     "ManifestAudiences": [
       {
         "Audience": {
+          "AudienceString": "Females 12-14",
+          "Id": 4
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Females 15-17",
+          "Id": 5
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Females 18-20",
+          "Id": 6
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Females 21-24",
+          "Id": 7
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Females 50-54",
+          "Id": 13
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Females 55-64",
+          "Id": 14
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Females 65+",
+          "Id": 15
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 12-14",
+          "Id": 19
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 15-17",
+          "Id": 20
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 18-20",
+          "Id": 21
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 21-24",
+          "Id": 22
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 50-54",
+          "Id": 28
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 55-64",
+          "Id": 29
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 65+",
+          "Id": 30
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
           "AudienceString": "House Holds",
           "Id": 31
         },
-        "CPM": 6.2500,
-        "Impressions": 160000.0,
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Kids 6-11",
+          "Id": 46
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 25-34",
+          "Id": 284
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 35-49",
+          "Id": 290
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Kids 2-5",
+          "Id": 339
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Females 35-49",
+          "Id": 347
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Females 25-34",
+          "Id": 348
+        },
+        "CPM": null,
+        "Impressions": 0.0,
         "IsReference": false,
         "Rating": null,
         "Vpvh": null
       }
     ],
-    "ManifestAudiencesReferences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "House Holds",
+          "Id": 31
+        },
+        "CPM": 6.2500,
+        "Impressions": 160000.0,
+        "IsReference": true,
+        "Rating": null,
+        "Vpvh": null
+      }
+    ],
     "ManifestDayparts": [
       {
         "Daypart": {
@@ -856,7 +3221,12 @@
         "ProgramName": "Eyewitness News/GMA Weekend"
       }
     ],
-    "ManifestRates": [],
+    "ManifestRates": [
+      {
+        "SpotCost": 1000.0000,
+        "SpotLengthId": 1
+      }
+    ],
     "ManifestWeeks": [
       {
         "EndDate": "2019-02-10T00:00:00",
@@ -918,17 +3288,249 @@
     "ManifestAudiences": [
       {
         "Audience": {
+          "AudienceString": "Females 12-14",
+          "Id": 4
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Females 15-17",
+          "Id": 5
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Females 18-20",
+          "Id": 6
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Females 21-24",
+          "Id": 7
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Females 50-54",
+          "Id": 13
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Females 55-64",
+          "Id": 14
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Females 65+",
+          "Id": 15
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 12-14",
+          "Id": 19
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 15-17",
+          "Id": 20
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 18-20",
+          "Id": 21
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 21-24",
+          "Id": 22
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 50-54",
+          "Id": 28
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 55-64",
+          "Id": 29
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 65+",
+          "Id": 30
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
           "AudienceString": "House Holds",
           "Id": 31
         },
-        "CPM": 5.6250,
-        "Impressions": 160000.0,
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Kids 6-11",
+          "Id": 46
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 25-34",
+          "Id": 284
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 35-49",
+          "Id": 290
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Kids 2-5",
+          "Id": 339
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Females 35-49",
+          "Id": 347
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Females 25-34",
+          "Id": 348
+        },
+        "CPM": null,
+        "Impressions": 0.0,
         "IsReference": false,
         "Rating": null,
         "Vpvh": null
       }
     ],
-    "ManifestAudiencesReferences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "House Holds",
+          "Id": 31
+        },
+        "CPM": 5.6250,
+        "Impressions": 160000.0,
+        "IsReference": true,
+        "Rating": null,
+        "Vpvh": null
+      }
+    ],
     "ManifestDayparts": [
       {
         "Daypart": {
@@ -952,7 +3554,12 @@
         "ProgramName": "Eyewitness News/GMA Weekend"
       }
     ],
-    "ManifestRates": [],
+    "ManifestRates": [
+      {
+        "SpotCost": 900.0000,
+        "SpotLengthId": 1
+      }
+    ],
     "ManifestWeeks": [
       {
         "EndDate": "2019-02-10T00:00:00",
@@ -1002,17 +3609,249 @@
     "ManifestAudiences": [
       {
         "Audience": {
+          "AudienceString": "Females 12-14",
+          "Id": 4
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Females 15-17",
+          "Id": 5
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Females 18-20",
+          "Id": 6
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Females 21-24",
+          "Id": 7
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Females 50-54",
+          "Id": 13
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Females 55-64",
+          "Id": 14
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Females 65+",
+          "Id": 15
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 12-14",
+          "Id": 19
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 15-17",
+          "Id": 20
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 18-20",
+          "Id": 21
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 21-24",
+          "Id": 22
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 50-54",
+          "Id": 28
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 55-64",
+          "Id": 29
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 65+",
+          "Id": 30
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
           "AudienceString": "House Holds",
           "Id": 31
         },
-        "CPM": 6.2500,
-        "Impressions": 160000.0,
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Kids 6-11",
+          "Id": 46
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 25-34",
+          "Id": 284
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Males 35-49",
+          "Id": 290
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Kids 2-5",
+          "Id": 339
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Females 35-49",
+          "Id": 347
+        },
+        "CPM": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Females 25-34",
+          "Id": 348
+        },
+        "CPM": null,
+        "Impressions": 0.0,
         "IsReference": false,
         "Rating": null,
         "Vpvh": null
       }
     ],
-    "ManifestAudiencesReferences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "House Holds",
+          "Id": 31
+        },
+        "CPM": 6.2500,
+        "Impressions": 160000.0,
+        "IsReference": true,
+        "Rating": null,
+        "Vpvh": null
+      }
+    ],
     "ManifestDayparts": [
       {
         "Daypart": {
@@ -1036,7 +3875,12 @@
         "ProgramName": "Eyewitness News/GMA Weekend"
       }
     ],
-    "ManifestRates": [],
+    "ManifestRates": [
+      {
+        "SpotCost": 1000.0000,
+        "SpotLengthId": 1
+      }
+    ],
     "ManifestWeeks": [
       {
         "EndDate": "2019-03-03T00:00:00",

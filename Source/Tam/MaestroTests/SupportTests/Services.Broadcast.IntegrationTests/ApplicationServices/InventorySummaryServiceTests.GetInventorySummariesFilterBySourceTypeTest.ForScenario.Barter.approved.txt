@@ -1,6 +1,7 @@
 ﻿[
   {
     "Details": [],
+    "HasInventoryGaps": null,
     "HasRatesAvailableForQuarter": false,
     "HouseholdImpressions": null,
     "InventoryPostingBooks": [],
@@ -33,6 +34,7 @@
   },
   {
     "Details": [],
+    "HasInventoryGaps": null,
     "HasRatesAvailableForQuarter": false,
     "HouseholdImpressions": null,
     "InventoryPostingBooks": [],
@@ -65,6 +67,7 @@
   },
   {
     "Details": [],
+    "HasInventoryGaps": null,
     "HasRatesAvailableForQuarter": false,
     "HouseholdImpressions": null,
     "InventoryPostingBooks": [],
@@ -87,6 +90,7 @@
   },
   {
     "Details": [],
+    "HasInventoryGaps": null,
     "HasRatesAvailableForQuarter": false,
     "HouseholdImpressions": null,
     "InventoryPostingBooks": [],
@@ -109,6 +113,7 @@
   },
   {
     "Details": [],
+    "HasInventoryGaps": null,
     "HasRatesAvailableForQuarter": false,
     "HouseholdImpressions": null,
     "InventoryPostingBooks": [],
@@ -141,6 +146,7 @@
   },
   {
     "Details": [],
+    "HasInventoryGaps": null,
     "HasRatesAvailableForQuarter": false,
     "HouseholdImpressions": null,
     "InventoryPostingBooks": [],
@@ -163,6 +169,7 @@
   },
   {
     "Details": [],
+    "HasInventoryGaps": null,
     "HasRatesAvailableForQuarter": false,
     "HouseholdImpressions": null,
     "InventoryPostingBooks": [],

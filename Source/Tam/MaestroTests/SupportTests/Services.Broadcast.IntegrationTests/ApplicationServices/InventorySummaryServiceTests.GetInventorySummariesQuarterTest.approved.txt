@@ -1,5 +1,6 @@
 ﻿[
   {
+    "HasInventoryGaps": null,
     "HasRatesAvailableForQuarter": false,
     "HouseholdImpressions": null,
     "InventoryPostingBooks": [],
@@ -31,6 +32,7 @@
   },
   {
     "Details": [],
+    "HasInventoryGaps": null,
     "HasRatesAvailableForQuarter": false,
     "HouseholdImpressions": null,
     "InventoryPostingBooks": [],
@@ -63,6 +65,7 @@
   },
   {
     "Details": [],
+    "HasInventoryGaps": null,
     "HasRatesAvailableForQuarter": false,
     "HouseholdImpressions": null,
     "InventoryPostingBooks": [],
@@ -95,6 +98,7 @@
   },
   {
     "Details": [],
+    "HasInventoryGaps": null,
     "HasRatesAvailableForQuarter": false,
     "HouseholdImpressions": null,
     "InventoryPostingBooks": [],
@@ -117,6 +121,7 @@
   },
   {
     "Details": [],
+    "HasInventoryGaps": null,
     "HasRatesAvailableForQuarter": false,
     "HouseholdImpressions": null,
     "InventoryPostingBooks": [],
@@ -148,6 +153,7 @@
         "TotalUnits": 1
       }
     ],
+    "HasInventoryGaps": null,
     "HasRatesAvailableForQuarter": true,
     "HouseholdImpressions": null,
     "InventoryPostingBooks": [
@@ -185,6 +191,7 @@
   },
   {
     "Details": [],
+    "HasInventoryGaps": null,
     "HasRatesAvailableForQuarter": false,
     "HouseholdImpressions": null,
     "InventoryPostingBooks": [],
@@ -207,6 +214,7 @@
   },
   {
     "Details": [],
+    "HasInventoryGaps": null,
     "HasRatesAvailableForQuarter": false,
     "HouseholdImpressions": null,
     "InventoryPostingBooks": [],
@@ -226,5 +234,86 @@
     "TotalMarkets": 0,
     "TotalStations": 0,
     "TotalUnits": 0
+  },
+  {
+    "HasInventoryGaps": false,
+    "HasRatesAvailableForQuarter": false,
+    "HouseholdImpressions": null,
+    "InventoryPostingBooks": [],
+    "InventorySourceId": 10,
+    "InventorySourceName": "ABC O&O",
+    "IsUpdating": false,
+    "LastUpdatedDate": null,
+    "Quarter": {
+      "EndDate": "2019-03-31T23:59:59",
+      "Quarter": 1,
+      "StartDate": "2018-12-31T00:00:00",
+      "Year": 2019
+    },
+    "RatesAvailableFromQuarter": null,
+    "RatesAvailableToQuarter": null,
+    "TotalDaypartCodes": 0,
+    "TotalMarkets": 0,
+    "TotalPrograms": 0,
+    "TotalStations": 0
+  },
+  {
+    "HasInventoryGaps": true,
+    "HasRatesAvailableForQuarter": true,
+    "HouseholdImpressions": 2500.0,
+    "InventoryPostingBooks": [
+      {
+        "HutProjectionBookId": 437,
+        "ShareProjectionBookId": 438
+      }
+    ],
+    "InventorySourceId": 11,
+    "InventorySourceName": "NBC O&O",
+    "IsUpdating": false,
+    "LastUpdatedDate": "2019-04-12T16:56:05.02",
+    "Quarter": {
+      "EndDate": "2019-03-31T23:59:59",
+      "Quarter": 1,
+      "StartDate": "2018-12-31T00:00:00",
+      "Year": 2019
+    },
+    "RatesAvailableFromQuarter": {
+      "EndDate": "2019-03-31T23:59:59",
+      "Quarter": 1,
+      "StartDate": "2018-12-31T00:00:00",
+      "Year": 2019
+    },
+    "RatesAvailableToQuarter": {
+      "EndDate": "2019-03-31T23:59:59",
+      "Quarter": 1,
+      "StartDate": "2018-12-31T00:00:00",
+      "Year": 2019
+    },
+    "TotalDaypartCodes": 1,
+    "TotalMarkets": 1,
+    "TotalPrograms": 3,
+    "TotalStations": 2
+  },
+  {
+    "HasInventoryGaps": false,
+    "HasRatesAvailableForQuarter": false,
+    "HouseholdImpressions": null,
+    "InventoryPostingBooks": [],
+    "InventorySourceId": 12,
+    "InventorySourceName": "KATZ",
+    "IsUpdating": false,
+    "LastUpdatedDate": null,
+    "Quarter": {
+      "EndDate": "2019-03-31T23:59:59",
+      "Quarter": 1,
+      "StartDate": "2018-12-31T00:00:00",
+      "Year": 2019
+    },
+    "RatesAvailableFromQuarter": null,
+    "RatesAvailableToQuarter": null,
+    "TotalDaypartCodes": 0,
+    "TotalMarkets": 0,
+    "TotalPrograms": 0,
+    "TotalStations": 0
   }
 ]

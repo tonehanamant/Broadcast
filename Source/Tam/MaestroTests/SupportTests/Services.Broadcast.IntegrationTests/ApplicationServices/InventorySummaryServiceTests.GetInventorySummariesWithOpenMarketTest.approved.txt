@@ -1,4 +1,5 @@
 ﻿{
+  "HasInventoryGaps": null,
   "HasRatesAvailableForQuarter": true,
   "HouseholdImpressions": 1000.0,
   "InventoryPostingBooks": [

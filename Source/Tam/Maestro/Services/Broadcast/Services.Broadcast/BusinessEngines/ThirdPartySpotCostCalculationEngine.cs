@@ -16,7 +16,9 @@ namespace Services.Broadcast.BusinessEngines
         {
             foreach (var manifest in manifests)
             {
-                var firstAudience = manifest.ManifestAudiences.FirstOrDefault();
+                var firstAudience = useProvidedImpressions ?
+                    manifest.ManifestAudiencesReferences.FirstOrDefault() :
+                    manifest.ManifestAudiences.FirstOrDefault();
 
                 if (firstAudience == null)
                     continue;

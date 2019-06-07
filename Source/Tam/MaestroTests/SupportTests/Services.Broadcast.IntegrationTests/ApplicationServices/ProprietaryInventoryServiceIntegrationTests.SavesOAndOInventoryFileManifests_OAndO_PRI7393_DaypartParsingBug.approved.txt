@@ -3,7 +3,8 @@
     "Comment": null,
     "DaypartCode": "LN",
     "InventorySourceId": 10,
-    "ManifestAudiences": [
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
       {
         "Audience": {
           "AudienceString": "House Holds",
@@ -11,12 +12,11 @@
         },
         "CPM": 920.0000,
         "Impressions": 95000.0,
-        "IsReference": false,
+        "IsReference": true,
         "Rating": null,
         "Vpvh": null
       }
     ],
-    "ManifestAudiencesReferences": [],
     "ManifestDayparts": [
       {
         "Daypart": {

@@ -88,6 +88,8 @@ namespace Services.Broadcast.Repositories
         List<StationInventoryManifestWeek> GetStationInventoryManifestWeeksForOpenMarket(int stationId, string programName, int daypartId);
 
         List<StationInventoryGroup> GetInventoryGroups(int inventorySourceId, int daypartCodeId, DateTime startDate, DateTime endDate);
+
+        List<StationInventoryManifestWeek> GetStationInventoryManifestWeeksForInventorySource(int inventorySourceId);
     }
 
     public class InventoryRepository : BroadcastRepositoryBase, IInventoryRepository
@@ -973,6 +975,21 @@ namespace Services.Broadcast.Repositories
                         .ToList()
                         .Select(x => _MapToInventoryManifest(x))
                         .ToList();
+                });
+        }
+
+        public List<StationInventoryManifestWeek> GetStationInventoryManifestWeeksForInventorySource(int inventorySourceId)
+        {
+            return _InReadUncommitedTransaction(
+                context =>
+                {
+                    return context.station_inventory_manifest
+                             .Where(x => x.inventory_source_id == inventorySourceId)
+                             .SelectMany(x => x.station_inventory_manifest_weeks)
+                             .Include(x => x.media_weeks)
+                             .ToList()
+                             .Select(_MapToInventoryManifestWeek)
+                             .ToList();
                 });
         }
     }

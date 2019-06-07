@@ -10,16 +10,14 @@ namespace Services.Broadcast.Converters.InventorySummary
 {
     public class OpenMarketSummaryFactory : BaseInventorySummaryAbstractFactory
     {
-        private readonly IProgramRepository _ProgramRepository;
-
         public OpenMarketSummaryFactory(IInventoryRepository inventoryRepository,
                                         IInventorySummaryRepository inventorySummaryRepository,
                                         IQuarterCalculationEngine quarterCalculationEngine,
-                                        IProgramRepository programRepository)
+                                        IProgramRepository programRepository,
+                                        IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache)
 
-            : base(inventoryRepository, inventorySummaryRepository, quarterCalculationEngine)
+            : base(inventoryRepository, inventorySummaryRepository, quarterCalculationEngine, programRepository, mediaMonthAndWeekAggregateCache)
         {
-            _ProgramRepository = programRepository;
         }
 
         private DateTime? GetFileLastCreatedDate(List<InventorySummaryManifestFileDto> inventorySummaryManifestFiles)
@@ -32,12 +30,9 @@ namespace Services.Broadcast.Converters.InventorySummary
                                                                    QuarterDetailDto quarterDetail,
                                                                    List<InventorySummaryManifestDto> manifests)
         {
-            var quartersForInventoryAvailable = GetQuartersForInventoryAvailable(inventorySource);          
+            var allInventorySourceManifestWeeks = InventoryRepository.GetStationInventoryManifestWeeksForInventorySource(inventorySource.Id);
+            var quartersForInventoryAvailable = GetQuartersForInventoryAvailable(allInventorySourceManifestWeeks);
             var inventorySummaryManifestFiles = GetInventorySummaryManifestFiles(manifests);
-            var manifestIds = manifests.Select(x => x.ManifestId).ToList();
-            var totalPrograms = _ProgramRepository.GetUniqueProgramNamesByManifests(manifestIds)
-                                    .Distinct(StringComparer.OrdinalIgnoreCase)
-                                    .Count();
 
             return new OpenMarketInventorySummaryDto
             {
@@ -47,7 +42,7 @@ namespace Services.Broadcast.Converters.InventorySummary
                 Quarter = quarterDetail,
                 TotalMarkets = GetTotalMarkets(manifests),
                 TotalStations = GetTotalStations(manifests),
-                TotalPrograms = totalPrograms,
+                TotalPrograms = GetTotalPrograms(manifests),
                 HouseholdImpressions = GetHouseholdImpressions(manifests, householdAudienceId),
                 InventoryPostingBooks = GetInventoryPostingBooks(inventorySummaryManifestFiles),
                 LastUpdatedDate = GetFileLastCreatedDate(inventorySummaryManifestFiles),

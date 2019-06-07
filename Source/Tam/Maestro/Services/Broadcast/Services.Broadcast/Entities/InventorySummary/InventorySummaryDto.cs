@@ -17,6 +17,7 @@ namespace Services.Broadcast.Entities.InventorySummary
         public bool IsUpdating { get; set; }
         public QuarterDetailDto RatesAvailableFromQuarter { get; set; }
         public QuarterDetailDto RatesAvailableToQuarter { get; set; }
+        public bool? HasInventoryGaps { get; set; }
     }
 
     public class BarterInventorySummaryDto : InventorySummaryDto
@@ -39,5 +40,11 @@ namespace Services.Broadcast.Entities.InventorySummary
     public class OpenMarketInventorySummaryDto : InventorySummaryDto
     {
         public int TotalPrograms { get; set; }
+    }
+
+    public class ProprietaryOAndOInventorySummaryDto : InventorySummaryDto
+    {
+        public int TotalPrograms { get; set; }
+        public int TotalDaypartCodes { get; set; }
     }
 }

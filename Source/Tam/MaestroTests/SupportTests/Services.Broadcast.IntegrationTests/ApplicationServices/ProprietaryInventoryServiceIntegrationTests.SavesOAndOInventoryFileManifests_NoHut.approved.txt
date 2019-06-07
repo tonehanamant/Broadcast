@@ -3,7 +3,8 @@
     "Comment": null,
     "DaypartCode": "EMN",
     "InventorySourceId": 10,
-    "ManifestAudiences": [
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
       {
         "Audience": {
           "AudienceString": "House Holds",
@@ -11,12 +12,11 @@
         },
         "CPM": 6.2500,
         "Impressions": 160000.0,
-        "IsReference": false,
+        "IsReference": true,
         "Rating": null,
         "Vpvh": null
       }
     ],
-    "ManifestAudiencesReferences": [],
     "ManifestDayparts": [
       {
         "Daypart": {
@@ -99,7 +99,8 @@
     "Comment": null,
     "DaypartCode": "EMN",
     "InventorySourceId": 10,
-    "ManifestAudiences": [
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
       {
         "Audience": {
           "AudienceString": "House Holds",
@@ -107,12 +108,11 @@
         },
         "CPM": 5.6250,
         "Impressions": 160000.0,
-        "IsReference": false,
+        "IsReference": true,
         "Rating": null,
         "Vpvh": null
       }
     ],
-    "ManifestAudiencesReferences": [],
     "ManifestDayparts": [
       {
         "Daypart": {
@@ -183,7 +183,8 @@
     "Comment": null,
     "DaypartCode": "EMN",
     "InventorySourceId": 10,
-    "ManifestAudiences": [
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
       {
         "Audience": {
           "AudienceString": "House Holds",
@@ -191,12 +192,11 @@
         },
         "CPM": 6.2500,
         "Impressions": 160000.0,
-        "IsReference": false,
+        "IsReference": true,
         "Rating": null,
         "Vpvh": null
       }
     ],
-    "ManifestAudiencesReferences": [],
     "ManifestDayparts": [
       {
         "Daypart": {

@@ -10,6 +10,7 @@
         "TotalUnits": 1
       }
     ],
+    "HasInventoryGaps": null,
     "HasRatesAvailableForQuarter": true,
     "HouseholdImpressions": 2468.0,
     "InventoryPostingBooks": [

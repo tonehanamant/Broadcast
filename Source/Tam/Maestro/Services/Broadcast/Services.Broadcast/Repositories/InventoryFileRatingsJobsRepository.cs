@@ -16,6 +16,7 @@ namespace Services.Broadcast.Repositories
     {
         int AddJob(InventoryFileRatingsProcessingJob job);
         List<InventoryFileRatingsProcessingJob> GetJobsBatch(int limit);
+        InventoryFileRatingsProcessingJob GetLatestJob();
         InventoryFileRatingsProcessingJob GetJobById(int jobId);
         void UpdateJob(InventoryFileRatingsProcessingJob job);
         InventoryFileRatingsProcessingJob GetJobByFileId(int fileId);
@@ -118,6 +119,27 @@ namespace Services.Broadcast.Repositories
                     fileJob.completed_at = job.CompletedAt;
 
                     context.SaveChanges();
+                });
+        }
+
+        public InventoryFileRatingsProcessingJob GetLatestJob()
+        {
+            return _InReadUncommitedTransaction(
+                context =>
+                {
+                    var job = context.inventory_file_ratings_jobs
+                        .Where(j => j.status == (int)InventoryFileRatingsProcessingStatus.Queued)
+                        .OrderByDescending(j => j.queued_at)
+                        .FirstOrDefault();
+                    
+                    return job == null ? null : new InventoryFileRatingsProcessingJob
+                    {
+                        id = job.id,
+                        InventoryFileId = job.inventory_file_id,
+                        Status = (InventoryFileRatingsProcessingStatus)job.status,
+                        QueuedAt = job.queued_at,
+                        CompletedAt = job.completed_at
+                    };
                 });
         }
     }

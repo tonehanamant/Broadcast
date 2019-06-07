@@ -1,6 +1,7 @@
 ﻿[
   {
     "Details": [],
+    "HasInventoryGaps": null,
     "HasRatesAvailableForQuarter": false,
     "HouseholdImpressions": null,
     "InventoryPostingBooks": [],
