@@ -29,6 +29,6 @@
     "Share book (1-Feb-17) is not in the correct format (MMM yy, MMM-yy, MMM/yy, yy-MMM, yy/MMM, MMM yyyy)",
     "Hut book (02-17) is not in the correct format (MMM yy, MMM-yy, MMM/yy, yy-MMM, yy/MMM, MMM yyyy)",
     "Invalid playback type (LIVE+31)",
-    "Invalid spot length was found on column C"
+    "Invalid spot length was found in column C"
   ]
 }

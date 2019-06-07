@@ -10,6 +10,6 @@
   "InventorySource": null,
   "UniqueIdentifier": null,
   "ValidationProblems": [
-    "Spot length is missing on column D"
+    "Spot length is missing in column D"
   ]
 }
