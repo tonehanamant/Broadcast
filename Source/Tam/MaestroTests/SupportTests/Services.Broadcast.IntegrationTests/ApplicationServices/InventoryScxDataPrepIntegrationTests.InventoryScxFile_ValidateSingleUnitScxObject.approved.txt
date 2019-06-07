@@ -243,7 +243,7 @@
                   "Tuesday": "N",
                   "Wednesday": "N"
                 },
-                "daypartCode": "AM",
+                "daypartCode": "EMN",
                 "demoValue": [],
                 "detailLineID": 0,
                 "length": "PT30S",
@@ -463,7 +463,7 @@
                   "Tuesday": "Y",
                   "Wednesday": "Y"
                 },
-                "daypartCode": "AM",
+                "daypartCode": "EMN",
                 "demoValue": [],
                 "detailLineID": 0,
                 "length": "PT30S",
@@ -683,7 +683,7 @@
                   "Tuesday": "Y",
                   "Wednesday": "Y"
                 },
-                "daypartCode": "AM",
+                "daypartCode": "EMN",
                 "demoValue": [],
                 "detailLineID": 0,
                 "length": "PT30S",
@@ -966,7 +966,7 @@
                   "Tuesday": "N",
                   "Wednesday": "N"
                 },
-                "daypartCode": "AM",
+                "daypartCode": "EMN",
                 "demoValue": [],
                 "detailLineID": 0,
                 "length": "PT30S",
@@ -1249,7 +1249,7 @@
                   "Tuesday": "Y",
                   "Wednesday": "Y"
                 },
-                "daypartCode": "AM",
+                "daypartCode": "EMN",
                 "demoValue": [],
                 "detailLineID": 0,
                 "length": "PT30S",
@@ -1469,7 +1469,7 @@
                   "Tuesday": "Y",
                   "Wednesday": "Y"
                 },
-                "daypartCode": "AM",
+                "daypartCode": "EMN",
                 "demoValue": [],
                 "detailLineID": 0,
                 "length": "PT30S",
@@ -1752,7 +1752,7 @@
                   "Tuesday": "N",
                   "Wednesday": "N"
                 },
-                "daypartCode": "AM",
+                "daypartCode": "EMN",
                 "demoValue": [],
                 "detailLineID": 0,
                 "length": "PT30S",
@@ -1879,7 +1879,7 @@
                   "Tuesday": "N",
                   "Wednesday": "N"
                 },
-                "daypartCode": "AM",
+                "daypartCode": "EMN",
                 "demoValue": [],
                 "detailLineID": 0,
                 "length": "PT30S",
@@ -2099,7 +2099,7 @@
                   "Tuesday": "Y",
                   "Wednesday": "Y"
                 },
-                "daypartCode": "AM",
+                "daypartCode": "EMN",
                 "demoValue": [],
                 "detailLineID": 0,
                 "length": "PT30S",
@@ -2319,7 +2319,7 @@
                   "Tuesday": "Y",
                   "Wednesday": "Y"
                 },
-                "daypartCode": "AM",
+                "daypartCode": "EMN",
                 "demoValue": [],
                 "detailLineID": 0,
                 "length": "PT30S",
@@ -2446,7 +2446,7 @@
                   "Tuesday": "N",
                   "Wednesday": "N"
                 },
-                "daypartCode": "AM",
+                "daypartCode": "EMN",
                 "demoValue": [],
                 "detailLineID": 0,
                 "length": "PT30S",
@@ -2729,7 +2729,7 @@
                   "Tuesday": "Y",
                   "Wednesday": "Y"
                 },
-                "daypartCode": "AM",
+                "daypartCode": "EMN",
                 "demoValue": [],
                 "detailLineID": 0,
                 "length": "PT30S",
@@ -3012,7 +3012,7 @@
                   "Tuesday": "Y",
                   "Wednesday": "Y"
                 },
-                "daypartCode": "AM",
+                "daypartCode": "EMN",
                 "demoValue": [],
                 "detailLineID": 0,
                 "length": "PT30S",
@@ -3295,7 +3295,7 @@
                   "Tuesday": "Y",
                   "Wednesday": "Y"
                 },
-                "daypartCode": "AM",
+                "daypartCode": "EMN",
                 "demoValue": [],
                 "detailLineID": 0,
                 "length": "PT30S",
@@ -3578,7 +3578,7 @@
                   "Tuesday": "Y",
                   "Wednesday": "Y"
                 },
-                "daypartCode": "AM",
+                "daypartCode": "EMN",
                 "demoValue": [],
                 "detailLineID": 0,
                 "length": "PT30S",
@@ -3705,7 +3705,7 @@
                   "Tuesday": "N",
                   "Wednesday": "N"
                 },
-                "daypartCode": "AM",
+                "daypartCode": "EMN",
                 "demoValue": [],
                 "detailLineID": 0,
                 "length": "PT30S",
@@ -3988,7 +3988,7 @@
                   "Tuesday": "Y",
                   "Wednesday": "Y"
                 },
-                "daypartCode": "AM",
+                "daypartCode": "EMN",
                 "demoValue": [],
                 "detailLineID": 0,
                 "length": "PT30S",
@@ -4208,7 +4208,7 @@
                   "Tuesday": "Y",
                   "Wednesday": "Y"
                 },
-                "daypartCode": "AM",
+                "daypartCode": "EMN",
                 "demoValue": [],
                 "detailLineID": 0,
                 "length": "PT30S",
@@ -4335,7 +4335,7 @@
                   "Tuesday": "N",
                   "Wednesday": "N"
                 },
-                "daypartCode": "AM",
+                "daypartCode": "EMN",
                 "demoValue": [],
                 "detailLineID": 0,
                 "length": "PT30S",
@@ -4555,7 +4555,7 @@
                   "Tuesday": "N",
                   "Wednesday": "N"
                 },
-                "daypartCode": "AM",
+                "daypartCode": "EMN",
                 "demoValue": [],
                 "detailLineID": 0,
                 "length": "PT30S",
@@ -4682,7 +4682,7 @@
                   "Tuesday": "N",
                   "Wednesday": "N"
                 },
-                "daypartCode": "AM",
+                "daypartCode": "EMN",
                 "demoValue": [],
                 "detailLineID": 0,
                 "length": "PT30S",
@@ -4965,7 +4965,7 @@
                   "Tuesday": "Y",
                   "Wednesday": "Y"
                 },
-                "daypartCode": "AM",
+                "daypartCode": "EMN",
                 "demoValue": [],
                 "detailLineID": 0,
                 "length": "PT30S",
@@ -5185,7 +5185,7 @@
                   "Tuesday": "Y",
                   "Wednesday": "Y"
                 },
-                "daypartCode": "AM",
+                "daypartCode": "EMN",
                 "demoValue": [],
                 "detailLineID": 0,
                 "length": "PT30S",
@@ -5405,7 +5405,7 @@
                   "Tuesday": "Y",
                   "Wednesday": "Y"
                 },
-                "daypartCode": "AM",
+                "daypartCode": "EMN",
                 "demoValue": [],
                 "detailLineID": 0,
                 "length": "PT30S",
@@ -5688,7 +5688,7 @@
                   "Tuesday": "Y",
                   "Wednesday": "Y"
                 },
-                "daypartCode": "AM",
+                "daypartCode": "EMN",
                 "demoValue": [],
                 "detailLineID": 0,
                 "length": "PT30S",
@@ -5971,7 +5971,7 @@
                   "Tuesday": "Y",
                   "Wednesday": "Y"
                 },
-                "daypartCode": "AM",
+                "daypartCode": "EMN",
                 "demoValue": [],
                 "detailLineID": 0,
                 "length": "PT30S",
@@ -6254,7 +6254,7 @@
                   "Tuesday": "Y",
                   "Wednesday": "Y"
                 },
-                "daypartCode": "AM",
+                "daypartCode": "EMN",
                 "demoValue": [],
                 "detailLineID": 0,
                 "length": "PT30S",
@@ -6381,7 +6381,7 @@
                   "Tuesday": "N",
                   "Wednesday": "N"
                 },
-                "daypartCode": "AM",
+                "daypartCode": "EMN",
                 "demoValue": [],
                 "detailLineID": 0,
                 "length": "PT30S",
@@ -6664,7 +6664,7 @@
                   "Tuesday": "Y",
                   "Wednesday": "Y"
                 },
-                "daypartCode": "AM",
+                "daypartCode": "EMN",
                 "demoValue": [],
                 "detailLineID": 0,
                 "length": "PT30S",
@@ -6791,7 +6791,7 @@
                   "Tuesday": "N",
                   "Wednesday": "N"
                 },
-                "daypartCode": "AM",
+                "daypartCode": "EMN",
                 "demoValue": [],
                 "detailLineID": 0,
                 "length": "PT30S",
@@ -7074,7 +7074,7 @@
                   "Tuesday": "Y",
                   "Wednesday": "Y"
                 },
-                "daypartCode": "AM",
+                "daypartCode": "EMN",
                 "demoValue": [],
                 "detailLineID": 0,
                 "length": "PT30S",
@@ -7357,7 +7357,7 @@
                   "Tuesday": "N",
                   "Wednesday": "N"
                 },
-                "daypartCode": "AM",
+                "daypartCode": "EMN",
                 "demoValue": [],
                 "detailLineID": 0,
                 "length": "PT30S",
@@ -7640,7 +7640,7 @@
                   "Tuesday": "Y",
                   "Wednesday": "Y"
                 },
-                "daypartCode": "AM",
+                "daypartCode": "EMN",
                 "demoValue": [],
                 "detailLineID": 0,
                 "length": "PT30S",
@@ -7767,7 +7767,7 @@
                   "Tuesday": "Y",
                   "Wednesday": "Y"
                 },
-                "daypartCode": "AM",
+                "daypartCode": "EMN",
                 "demoValue": [],
                 "detailLineID": 0,
                 "length": "PT30S",
@@ -8050,7 +8050,7 @@
                   "Tuesday": "Y",
                   "Wednesday": "Y"
                 },
-                "daypartCode": "AM",
+                "daypartCode": "EMN",
                 "demoValue": [],
                 "detailLineID": 0,
                 "length": "PT30S",
@@ -8333,7 +8333,7 @@
                   "Tuesday": "Y",
                   "Wednesday": "Y"
                 },
-                "daypartCode": "AM",
+                "daypartCode": "EMN",
                 "demoValue": [],
                 "detailLineID": 0,
                 "length": "PT30S",
@@ -8616,7 +8616,7 @@
                   "Tuesday": "Y",
                   "Wednesday": "Y"
                 },
-                "daypartCode": "AM",
+                "daypartCode": "EMN",
                 "demoValue": [],
                 "detailLineID": 0,
                 "length": "PT30S",
@@ -8743,7 +8743,7 @@
                   "Tuesday": "Y",
                   "Wednesday": "Y"
                 },
-                "daypartCode": "AM",
+                "daypartCode": "EMN",
                 "demoValue": [],
                 "detailLineID": 0,
                 "length": "PT30S",
@@ -9026,7 +9026,7 @@
                   "Tuesday": "Y",
                   "Wednesday": "Y"
                 },
-                "daypartCode": "AM",
+                "daypartCode": "EMN",
                 "demoValue": [],
                 "detailLineID": 0,
                 "length": "PT30S",
@@ -9309,7 +9309,7 @@
                   "Tuesday": "Y",
                   "Wednesday": "Y"
                 },
-                "daypartCode": "AM",
+                "daypartCode": "EMN",
                 "demoValue": [],
                 "detailLineID": 0,
                 "length": "PT30S",
@@ -9529,7 +9529,7 @@
                   "Tuesday": "Y",
                   "Wednesday": "Y"
                 },
-                "daypartCode": "AM",
+                "daypartCode": "EMN",
                 "demoValue": [],
                 "detailLineID": 0,
                 "length": "PT30S",
@@ -9812,7 +9812,7 @@
                   "Tuesday": "Y",
                   "Wednesday": "Y"
                 },
-                "daypartCode": "AM",
+                "daypartCode": "EMN",
                 "demoValue": [],
                 "detailLineID": 0,
                 "length": "PT30S",
@@ -10032,7 +10032,7 @@
                   "Tuesday": "Y",
                   "Wednesday": "Y"
                 },
-                "daypartCode": "AM",
+                "daypartCode": "EMN",
                 "demoValue": [],
                 "detailLineID": 0,
                 "length": "PT30S",
@@ -10315,7 +10315,7 @@
                   "Tuesday": "N",
                   "Wednesday": "N"
                 },
-                "daypartCode": "AM",
+                "daypartCode": "EMN",
                 "demoValue": [],
                 "detailLineID": 0,
                 "length": "PT30S",
@@ -10535,7 +10535,7 @@
                   "Tuesday": "Y",
                   "Wednesday": "Y"
                 },
-                "daypartCode": "AM",
+                "daypartCode": "EMN",
                 "demoValue": [],
                 "detailLineID": 0,
                 "length": "PT30S",
@@ -10818,7 +10818,7 @@
                   "Tuesday": "Y",
                   "Wednesday": "Y"
                 },
-                "daypartCode": "AM",
+                "daypartCode": "EMN",
                 "demoValue": [],
                 "detailLineID": 0,
                 "length": "PT30S",
@@ -11101,7 +11101,7 @@
                   "Tuesday": "Y",
                   "Wednesday": "Y"
                 },
-                "daypartCode": "AM",
+                "daypartCode": "EMN",
                 "demoValue": [],
                 "detailLineID": 0,
                 "length": "PT30S",
@@ -11384,7 +11384,7 @@
                   "Tuesday": "Y",
                   "Wednesday": "Y"
                 },
-                "daypartCode": "AM",
+                "daypartCode": "EMN",
                 "demoValue": [],
                 "detailLineID": 0,
                 "length": "PT30S",
@@ -11604,7 +11604,7 @@
                   "Tuesday": "Y",
                   "Wednesday": "Y"
                 },
-                "daypartCode": "AM",
+                "daypartCode": "EMN",
                 "demoValue": [],
                 "detailLineID": 0,
                 "length": "PT30S",
@@ -11887,7 +11887,7 @@
                   "Tuesday": "Y",
                   "Wednesday": "Y"
                 },
-                "daypartCode": "AM",
+                "daypartCode": "EMN",
                 "demoValue": [],
                 "detailLineID": 0,
                 "length": "PT30S",
@@ -12170,7 +12170,7 @@
                   "Tuesday": "Y",
                   "Wednesday": "Y"
                 },
-                "daypartCode": "AM",
+                "daypartCode": "EMN",
                 "demoValue": [],
                 "detailLineID": 0,
                 "length": "PT30S",
@@ -12453,7 +12453,7 @@
                   "Tuesday": "Y",
                   "Wednesday": "Y"
                 },
-                "daypartCode": "AM",
+                "daypartCode": "EMN",
                 "demoValue": [],
                 "detailLineID": 0,
                 "length": "PT30S",
@@ -12736,7 +12736,7 @@
                   "Tuesday": "Y",
                   "Wednesday": "Y"
                 },
-                "daypartCode": "AM",
+                "daypartCode": "EMN",
                 "demoValue": [],
                 "detailLineID": 0,
                 "length": "PT30S",
@@ -12863,7 +12863,7 @@
                   "Tuesday": "Y",
                   "Wednesday": "Y"
                 },
-                "daypartCode": "AM",
+                "daypartCode": "EMN",
                 "demoValue": [],
                 "detailLineID": 0,
                 "length": "PT30S",
@@ -13146,7 +13146,7 @@
                   "Tuesday": "N",
                   "Wednesday": "N"
                 },
-                "daypartCode": "AM",
+                "daypartCode": "EMN",
                 "demoValue": [],
                 "detailLineID": 0,
                 "length": "PT30S",

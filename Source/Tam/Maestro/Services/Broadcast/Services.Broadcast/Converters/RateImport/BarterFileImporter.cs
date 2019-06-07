@@ -433,7 +433,6 @@ namespace Services.Broadcast.Converters.RateImport
                 .Select(manifestGroup => new StationInventoryGroup
                 {
                     Name = manifestGroup.UnitName,
-                    DaypartCode = Regex.Match(manifestGroup.UnitName, @"[a-z]+", RegexOptions.IgnoreCase).Value,
                     InventorySource = proprietaryFile.InventorySource,
                     SlotNumber = _ParseSlotNumber(manifestGroup.UnitName),
                     Manifests = manifestGroup.Manifests

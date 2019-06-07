@@ -198,7 +198,6 @@ namespace Services.Broadcast.Converters.RateImport
                         }).ToList();
                     manifest = new StationInventoryManifest()
                     {
-                        DaypartCode = dto.DaypartCode,
                         SpotLengthId = dto.SpotLengthId,
                         ManifestDayparts = manifestDayparts,
                         SpotsPerDay = dto.SpotsPerDay,
@@ -230,7 +229,6 @@ namespace Services.Broadcast.Converters.RateImport
                 {
                     groups.Add(new StationInventoryGroup()
                     {
-                        DaypartCode = dpCode,
                         SlotNumber = slotNumber,
                         Name = _CNNStationInventoryGroupService.GenerateGroupName(dpCode, slotNumber),
                         InventorySource = InventorySource

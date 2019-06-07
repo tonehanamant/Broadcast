@@ -6,7 +6,6 @@
   "Id": 0,
   "InventoryGroups": [
     {
-      "DaypartCode": "PM News",
       "InventorySource": {
         "InventoryType": 2,
         "IsActive": true,
@@ -15,7 +14,7 @@
       "Manifests": [
         {
           "Comment": null,
-          "DaypartCode": "PM News",
+          "DaypartCode": null,
           "ManifestAudiences": [],
           "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
@@ -59,7 +58,7 @@
         },
         {
           "Comment": null,
-          "DaypartCode": "PM News",
+          "DaypartCode": null,
           "ManifestAudiences": [],
           "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
@@ -103,7 +102,7 @@
         },
         {
           "Comment": null,
-          "DaypartCode": "PM News",
+          "DaypartCode": null,
           "ManifestAudiences": [],
           "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
@@ -168,7 +167,7 @@
         },
         {
           "Comment": null,
-          "DaypartCode": "PM News",
+          "DaypartCode": null,
           "ManifestAudiences": [],
           "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
@@ -212,7 +211,7 @@
         },
         {
           "Comment": null,
-          "DaypartCode": "PM News",
+          "DaypartCode": null,
           "ManifestAudiences": [],
           "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
@@ -259,7 +258,6 @@
       "SlotNumber": 1
     },
     {
-      "DaypartCode": "PM News",
       "InventorySource": {
         "InventoryType": 2,
         "IsActive": true,
@@ -268,7 +266,7 @@
       "Manifests": [
         {
           "Comment": null,
-          "DaypartCode": "PM News",
+          "DaypartCode": null,
           "ManifestAudiences": [],
           "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
@@ -312,7 +310,7 @@
         },
         {
           "Comment": null,
-          "DaypartCode": "PM News",
+          "DaypartCode": null,
           "ManifestAudiences": [],
           "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
@@ -356,7 +354,7 @@
         },
         {
           "Comment": null,
-          "DaypartCode": "PM News",
+          "DaypartCode": null,
           "ManifestAudiences": [],
           "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
@@ -421,7 +419,7 @@
         },
         {
           "Comment": null,
-          "DaypartCode": "PM News",
+          "DaypartCode": null,
           "ManifestAudiences": [],
           "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
@@ -465,7 +463,7 @@
         },
         {
           "Comment": null,
-          "DaypartCode": "PM News",
+          "DaypartCode": null,
           "ManifestAudiences": [],
           "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
@@ -512,7 +510,6 @@
       "SlotNumber": 2
     },
     {
-      "DaypartCode": "PM News",
       "InventorySource": {
         "InventoryType": 2,
         "IsActive": true,
@@ -521,7 +518,7 @@
       "Manifests": [
         {
           "Comment": null,
-          "DaypartCode": "PM News",
+          "DaypartCode": null,
           "ManifestAudiences": [],
           "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
@@ -565,7 +562,7 @@
         },
         {
           "Comment": null,
-          "DaypartCode": "PM News",
+          "DaypartCode": null,
           "ManifestAudiences": [],
           "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
@@ -609,7 +606,7 @@
         },
         {
           "Comment": null,
-          "DaypartCode": "PM News",
+          "DaypartCode": null,
           "ManifestAudiences": [],
           "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
@@ -674,7 +671,7 @@
         },
         {
           "Comment": null,
-          "DaypartCode": "PM News",
+          "DaypartCode": null,
           "ManifestAudiences": [],
           "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
@@ -721,7 +718,6 @@
       "SlotNumber": 3
     },
     {
-      "DaypartCode": "PM News",
       "InventorySource": {
         "InventoryType": 2,
         "IsActive": true,
@@ -730,7 +726,7 @@
       "Manifests": [
         {
           "Comment": null,
-          "DaypartCode": "PM News",
+          "DaypartCode": null,
           "ManifestAudiences": [],
           "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
@@ -774,7 +770,7 @@
         },
         {
           "Comment": null,
-          "DaypartCode": "PM News",
+          "DaypartCode": null,
           "ManifestAudiences": [],
           "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
@@ -818,7 +814,7 @@
         },
         {
           "Comment": null,
-          "DaypartCode": "PM News",
+          "DaypartCode": null,
           "ManifestAudiences": [],
           "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
@@ -883,7 +879,7 @@
         },
         {
           "Comment": null,
-          "DaypartCode": "PM News",
+          "DaypartCode": null,
           "ManifestAudiences": [],
           "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
@@ -930,7 +926,6 @@
       "SlotNumber": 4
     },
     {
-      "DaypartCode": "PM News",
       "InventorySource": {
         "InventoryType": 2,
         "IsActive": true,
@@ -939,7 +934,7 @@
       "Manifests": [
         {
           "Comment": null,
-          "DaypartCode": "PM News",
+          "DaypartCode": null,
           "ManifestAudiences": [],
           "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
@@ -983,7 +978,7 @@
         },
         {
           "Comment": null,
-          "DaypartCode": "PM News",
+          "DaypartCode": null,
           "ManifestAudiences": [],
           "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
@@ -1027,7 +1022,7 @@
         },
         {
           "Comment": null,
-          "DaypartCode": "PM News",
+          "DaypartCode": null,
           "ManifestAudiences": [],
           "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
@@ -1095,7 +1090,6 @@
       "SlotNumber": 5
     },
     {
-      "DaypartCode": "AM News",
       "InventorySource": {
         "InventoryType": 2,
         "IsActive": true,
@@ -1104,7 +1098,7 @@
       "Manifests": [
         {
           "Comment": null,
-          "DaypartCode": "AM News",
+          "DaypartCode": null,
           "ManifestAudiences": [],
           "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
@@ -1169,7 +1163,7 @@
         },
         {
           "Comment": null,
-          "DaypartCode": "AM News",
+          "DaypartCode": null,
           "ManifestAudiences": [],
           "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
@@ -1234,7 +1228,7 @@
         },
         {
           "Comment": null,
-          "DaypartCode": "AM News",
+          "DaypartCode": null,
           "ManifestAudiences": [],
           "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
@@ -1299,7 +1293,7 @@
         },
         {
           "Comment": null,
-          "DaypartCode": "AM News",
+          "DaypartCode": null,
           "ManifestAudiences": [],
           "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
@@ -1406,7 +1400,7 @@
         },
         {
           "Comment": null,
-          "DaypartCode": "AM News",
+          "DaypartCode": null,
           "ManifestAudiences": [],
           "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
@@ -1450,7 +1444,7 @@
         },
         {
           "Comment": null,
-          "DaypartCode": "AM News",
+          "DaypartCode": null,
           "ManifestAudiences": [],
           "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
@@ -1560,7 +1554,6 @@
       "SlotNumber": 1
     },
     {
-      "DaypartCode": "AM News",
       "InventorySource": {
         "InventoryType": 2,
         "IsActive": true,
@@ -1569,7 +1562,7 @@
       "Manifests": [
         {
           "Comment": null,
-          "DaypartCode": "AM News",
+          "DaypartCode": null,
           "ManifestAudiences": [],
           "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
@@ -1634,7 +1627,7 @@
         },
         {
           "Comment": null,
-          "DaypartCode": "AM News",
+          "DaypartCode": null,
           "ManifestAudiences": [],
           "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
@@ -1699,7 +1692,7 @@
         },
         {
           "Comment": null,
-          "DaypartCode": "AM News",
+          "DaypartCode": null,
           "ManifestAudiences": [],
           "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
@@ -1764,7 +1757,7 @@
         },
         {
           "Comment": null,
-          "DaypartCode": "AM News",
+          "DaypartCode": null,
           "ManifestAudiences": [],
           "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
@@ -1871,7 +1864,7 @@
         },
         {
           "Comment": null,
-          "DaypartCode": "AM News",
+          "DaypartCode": null,
           "ManifestAudiences": [],
           "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
@@ -1915,7 +1908,7 @@
         },
         {
           "Comment": null,
-          "DaypartCode": "AM News",
+          "DaypartCode": null,
           "ManifestAudiences": [],
           "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
@@ -2025,7 +2018,6 @@
       "SlotNumber": 2
     },
     {
-      "DaypartCode": "AM News",
       "InventorySource": {
         "InventoryType": 2,
         "IsActive": true,
@@ -2034,7 +2026,7 @@
       "Manifests": [
         {
           "Comment": null,
-          "DaypartCode": "AM News",
+          "DaypartCode": null,
           "ManifestAudiences": [],
           "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
@@ -2099,7 +2091,7 @@
         },
         {
           "Comment": null,
-          "DaypartCode": "AM News",
+          "DaypartCode": null,
           "ManifestAudiences": [],
           "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
@@ -2164,7 +2156,7 @@
         },
         {
           "Comment": null,
-          "DaypartCode": "AM News",
+          "DaypartCode": null,
           "ManifestAudiences": [],
           "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
@@ -2229,7 +2221,7 @@
         },
         {
           "Comment": null,
-          "DaypartCode": "AM News",
+          "DaypartCode": null,
           "ManifestAudiences": [],
           "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
@@ -2336,7 +2328,7 @@
         },
         {
           "Comment": null,
-          "DaypartCode": "AM News",
+          "DaypartCode": null,
           "ManifestAudiences": [],
           "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
@@ -2380,7 +2372,7 @@
         },
         {
           "Comment": null,
-          "DaypartCode": "AM News",
+          "DaypartCode": null,
           "ManifestAudiences": [],
           "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
@@ -2490,7 +2482,6 @@
       "SlotNumber": 3
     },
     {
-      "DaypartCode": "AM News",
       "InventorySource": {
         "InventoryType": 2,
         "IsActive": true,
@@ -2499,7 +2490,7 @@
       "Manifests": [
         {
           "Comment": null,
-          "DaypartCode": "AM News",
+          "DaypartCode": null,
           "ManifestAudiences": [],
           "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
@@ -2564,7 +2555,7 @@
         },
         {
           "Comment": null,
-          "DaypartCode": "AM News",
+          "DaypartCode": null,
           "ManifestAudiences": [],
           "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
@@ -2629,7 +2620,7 @@
         },
         {
           "Comment": null,
-          "DaypartCode": "AM News",
+          "DaypartCode": null,
           "ManifestAudiences": [],
           "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
@@ -2736,7 +2727,7 @@
         },
         {
           "Comment": null,
-          "DaypartCode": "AM News",
+          "DaypartCode": null,
           "ManifestAudiences": [],
           "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
@@ -2780,7 +2771,7 @@
         },
         {
           "Comment": null,
-          "DaypartCode": "AM News",
+          "DaypartCode": null,
           "ManifestAudiences": [],
           "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
@@ -2890,7 +2881,6 @@
       "SlotNumber": 4
     },
     {
-      "DaypartCode": "AM News",
       "InventorySource": {
         "InventoryType": 2,
         "IsActive": true,
@@ -2899,7 +2889,7 @@
       "Manifests": [
         {
           "Comment": null,
-          "DaypartCode": "AM News",
+          "DaypartCode": null,
           "ManifestAudiences": [],
           "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
@@ -2964,7 +2954,7 @@
         },
         {
           "Comment": null,
-          "DaypartCode": "AM News",
+          "DaypartCode": null,
           "ManifestAudiences": [],
           "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
@@ -3029,7 +3019,7 @@
         },
         {
           "Comment": null,
-          "DaypartCode": "AM News",
+          "DaypartCode": null,
           "ManifestAudiences": [],
           "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
@@ -3136,7 +3126,7 @@
         },
         {
           "Comment": null,
-          "DaypartCode": "AM News",
+          "DaypartCode": null,
           "ManifestAudiences": [],
           "ManifestAudiencesReferences": [],
           "ManifestDayparts": [
@@ -3180,7 +3170,7 @@
         },
         {
           "Comment": null,
-          "DaypartCode": "AM News",
+          "DaypartCode": null,
           "ManifestAudiences": [],
           "ManifestAudiencesReferences": [],
           "ManifestDayparts": [

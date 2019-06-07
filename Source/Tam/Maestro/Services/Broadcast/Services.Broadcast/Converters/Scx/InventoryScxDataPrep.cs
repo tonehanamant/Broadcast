@@ -80,7 +80,7 @@ namespace Services.Broadcast.Converters.Scx
                 var firstGroup = items.First();
                 ScxData scxData = new ScxData
                 {
-                    DaypartCode = firstGroup.DaypartCode,
+                    DaypartCode = firstGroup.Manifests.First().DaypartCode,
                     StartDate = weeks.Min(x => x.StartDate),
                     EndDate = weeks.Max(x => x.EndDate),
                     SpotLength = _SpotLengthEngine.GetSpotLengthValueById(firstGroup.Manifests.First().SpotLengthId).ToString(),

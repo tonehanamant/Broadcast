@@ -1,6 +1,5 @@
 ﻿[
   {
-    "DaypartCode": "AM",
     "InventorySource": {
       "Id": 4,
       "InventoryType": 2,
@@ -10,7 +9,7 @@
     "Manifests": [
       {
         "Comment": "Comment 1",
-        "DaypartCode": "AM",
+        "DaypartCode": "EMN",
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -660,7 +659,6 @@
     "SlotNumber": 1
   },
   {
-    "DaypartCode": "AM",
     "InventorySource": {
       "Id": 4,
       "InventoryType": 2,
@@ -670,7 +668,7 @@
     "Manifests": [
       {
         "Comment": "Comment 1",
-        "DaypartCode": "AM",
+        "DaypartCode": "EMN",
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -1320,7 +1318,6 @@
     "SlotNumber": 2
   },
   {
-    "DaypartCode": "AM",
     "InventorySource": {
       "Id": 4,
       "InventoryType": 2,
@@ -1330,7 +1327,7 @@
     "Manifests": [
       {
         "Comment": "Comment 1",
-        "DaypartCode": "AM",
+        "DaypartCode": "EMN",
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -1980,7 +1977,6 @@
     "SlotNumber": 34
   },
   {
-    "DaypartCode": "AM",
     "InventorySource": {
       "Id": 4,
       "InventoryType": 2,
@@ -1990,7 +1986,7 @@
     "Manifests": [
       {
         "Comment": "Comment 1",
-        "DaypartCode": "AM",
+        "DaypartCode": "EMN",
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -2640,7 +2636,6 @@
     "SlotNumber": 44
   },
   {
-    "DaypartCode": "AM",
     "InventorySource": {
       "Id": 4,
       "InventoryType": 2,
@@ -2650,7 +2645,7 @@
     "Manifests": [
       {
         "Comment": "Comment 1",
-        "DaypartCode": "AM",
+        "DaypartCode": "EMN",
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -3300,7 +3295,6 @@
     "SlotNumber": 6
   },
   {
-    "DaypartCode": "AM",
     "InventorySource": {
       "Id": 4,
       "InventoryType": 2,
@@ -3310,7 +3304,7 @@
     "Manifests": [
       {
         "Comment": "Comment 1",
-        "DaypartCode": "AM",
+        "DaypartCode": "EMN",
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -3960,7 +3954,6 @@
     "SlotNumber": 7
   },
   {
-    "DaypartCode": "AM",
     "InventorySource": {
       "Id": 4,
       "InventoryType": 2,
@@ -3970,7 +3963,7 @@
     "Manifests": [
       {
         "Comment": "Comment 1",
-        "DaypartCode": "AM",
+        "DaypartCode": "EMN",
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {

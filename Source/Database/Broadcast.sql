@@ -185,6 +185,13 @@ BEGIN
 END
 /*************************************** END PRI-7621 *****************************************************/
 
+/*************************************** START PRI-9931 *****************************************************/
+IF EXISTS(SELECT 1 FROM sys.columns WHERE name = N'daypart_code' AND OBJECT_ID = OBJECT_ID(N'station_inventory_group'))
+BEGIN
+	ALTER TABLE [station_inventory_group] DROP COLUMN daypart_code
+END
+/*************************************** END PRI-9931 *****************************************************/
+
 -- Update the Schema Version of the database to the current release version
 UPDATE system_component_parameters 
 SET parameter_value = '19.07.1' -- Current release version

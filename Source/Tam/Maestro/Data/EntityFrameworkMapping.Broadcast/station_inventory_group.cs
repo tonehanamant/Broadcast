@@ -21,7 +21,6 @@ namespace EntityFrameworkMapping.Broadcast
     
         public int id { get; set; }
         public string name { get; set; }
-        public string daypart_code { get; set; }
         public byte slot_number { get; set; }
         public int inventory_source_id { get; set; }
     

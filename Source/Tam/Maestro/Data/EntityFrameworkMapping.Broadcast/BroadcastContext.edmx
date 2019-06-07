@@ -1194,7 +1194,6 @@
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="daypart_code" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="slot_number" Type="tinyint" Nullable="false" />
           <Property Name="inventory_source_id" Type="int" Nullable="false" />
         </EntityType>
@@ -6019,7 +6018,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="daypart_code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="slot_number" Type="Byte" Nullable="false" />
           <Property Name="inventory_source_id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="inventory_sources" Relationship="BroadcastModel.FK_station_inventory_group_inventory_sources" FromRole="station_inventory_group" ToRole="inventory_sources" />
@@ -9313,7 +9311,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
               <MappingFragment StoreEntitySet="station_inventory_group">
                 <ScalarProperty Name="inventory_source_id" ColumnName="inventory_source_id" />
                 <ScalarProperty Name="slot_number" ColumnName="slot_number" />
-                <ScalarProperty Name="daypart_code" ColumnName="daypart_code" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>

@@ -1,6 +1,5 @@
 ﻿[
   {
-    "DaypartCode": "AM",
     "InventorySource": {
       "Id": 4,
       "InventoryType": 2,
@@ -10,7 +9,7 @@
     "Manifests": [
       {
         "Comment": "Comment 1",
-        "DaypartCode": "AM",
+        "DaypartCode": "EMN",
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -117,7 +116,7 @@
       },
       {
         "Comment": "Comment 2",
-        "DaypartCode": "AM",
+        "DaypartCode": "EMN",
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -224,7 +223,7 @@
       },
       {
         "Comment": "Comment 3",
-        "DaypartCode": "AM",
+        "DaypartCode": "EMN",
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -331,7 +330,7 @@
       },
       {
         "Comment": "Comment 4",
-        "DaypartCode": "AM",
+        "DaypartCode": "EMN",
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -480,7 +479,7 @@
       },
       {
         "Comment": "Comment 5",
-        "DaypartCode": "AM",
+        "DaypartCode": "EMN",
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -590,7 +589,6 @@
     "SlotNumber": 1
   },
   {
-    "DaypartCode": "AM",
     "InventorySource": {
       "Id": 4,
       "InventoryType": 2,
@@ -600,7 +598,7 @@
     "Manifests": [
       {
         "Comment": "Comment 1",
-        "DaypartCode": "AM",
+        "DaypartCode": "EMN",
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -707,7 +705,7 @@
       },
       {
         "Comment": "Comment 2",
-        "DaypartCode": "AM",
+        "DaypartCode": "EMN",
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -814,7 +812,7 @@
       },
       {
         "Comment": "Comment 3",
-        "DaypartCode": "AM",
+        "DaypartCode": "EMN",
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -921,7 +919,7 @@
       },
       {
         "Comment": "Comment 4",
-        "DaypartCode": "AM",
+        "DaypartCode": "EMN",
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -1070,7 +1068,7 @@
       },
       {
         "Comment": "Comment 5",
-        "DaypartCode": "AM",
+        "DaypartCode": "EMN",
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -1180,7 +1178,6 @@
     "SlotNumber": 1
   },
   {
-    "DaypartCode": "AM",
     "InventorySource": {
       "Id": 4,
       "InventoryType": 2,
@@ -1190,7 +1187,7 @@
     "Manifests": [
       {
         "Comment": "Comment 1",
-        "DaypartCode": "AM",
+        "DaypartCode": "EMN",
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -1297,7 +1294,7 @@
       },
       {
         "Comment": "Comment 2",
-        "DaypartCode": "AM",
+        "DaypartCode": "EMN",
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -1404,7 +1401,7 @@
       },
       {
         "Comment": "Comment 3",
-        "DaypartCode": "AM",
+        "DaypartCode": "EMN",
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -1511,7 +1508,7 @@
       },
       {
         "Comment": "Comment 4",
-        "DaypartCode": "AM",
+        "DaypartCode": "EMN",
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -1660,7 +1657,7 @@
       },
       {
         "Comment": "Comment 5",
-        "DaypartCode": "AM",
+        "DaypartCode": "EMN",
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -1770,7 +1767,6 @@
     "SlotNumber": 1
   },
   {
-    "DaypartCode": "AM",
     "InventorySource": {
       "Id": 4,
       "InventoryType": 2,
@@ -1780,7 +1776,7 @@
     "Manifests": [
       {
         "Comment": "Comment 1",
-        "DaypartCode": "AM",
+        "DaypartCode": "EMN",
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -1887,7 +1883,7 @@
       },
       {
         "Comment": "Comment 2",
-        "DaypartCode": "AM",
+        "DaypartCode": "EMN",
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -1994,7 +1990,7 @@
       },
       {
         "Comment": "Comment 3",
-        "DaypartCode": "AM",
+        "DaypartCode": "EMN",
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -2101,7 +2097,7 @@
       },
       {
         "Comment": "Comment 4",
-        "DaypartCode": "AM",
+        "DaypartCode": "EMN",
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -2250,7 +2246,7 @@
       },
       {
         "Comment": "Comment 5",
-        "DaypartCode": "AM",
+        "DaypartCode": "EMN",
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -2360,7 +2356,6 @@
     "SlotNumber": 1
   },
   {
-    "DaypartCode": "AM",
     "InventorySource": {
       "Id": 4,
       "InventoryType": 2,
@@ -2370,7 +2365,7 @@
     "Manifests": [
       {
         "Comment": "Comment 1",
-        "DaypartCode": "AM",
+        "DaypartCode": "EMN",
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -2477,7 +2472,7 @@
       },
       {
         "Comment": "Comment 2",
-        "DaypartCode": "AM",
+        "DaypartCode": "EMN",
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -2584,7 +2579,7 @@
       },
       {
         "Comment": "Comment 3",
-        "DaypartCode": "AM",
+        "DaypartCode": "EMN",
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -2691,7 +2686,7 @@
       },
       {
         "Comment": "Comment 4",
-        "DaypartCode": "AM",
+        "DaypartCode": "EMN",
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -2840,7 +2835,7 @@
       },
       {
         "Comment": "Comment 5",
-        "DaypartCode": "AM",
+        "DaypartCode": "EMN",
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {

@@ -1,6 +1,5 @@
 ﻿[
   {
-    "DaypartCode": "AM",
     "InventorySource": {
       "Id": 4,
       "InventoryType": 2,
@@ -10,7 +9,7 @@
     "Manifests": [
       {
         "Comment": null,
-        "DaypartCode": "AM",
+        "DaypartCode": "LN",
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {
@@ -96,7 +95,6 @@
     "SlotNumber": 2
   },
   {
-    "DaypartCode": "AM",
     "InventorySource": {
       "Id": 4,
       "InventoryType": 2,
@@ -106,7 +104,7 @@
     "Manifests": [
       {
         "Comment": "Test1",
-        "DaypartCode": "AM",
+        "DaypartCode": "LN",
         "InventorySourceId": 4,
         "ManifestAudiences": [
           {

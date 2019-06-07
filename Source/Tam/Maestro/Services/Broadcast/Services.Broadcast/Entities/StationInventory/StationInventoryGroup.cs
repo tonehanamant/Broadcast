@@ -7,7 +7,6 @@ namespace Services.Broadcast.Entities.StationInventory
     {
         public int? Id { get; set; }
         public string Name { get; set; }
-        public string DaypartCode { get; set; }
         public int SlotNumber { get; set; }
         public InventorySource InventorySource { get; set; }
         public List<StationInventoryManifest> Manifests { get; set; } = new List<StationInventoryManifest>();

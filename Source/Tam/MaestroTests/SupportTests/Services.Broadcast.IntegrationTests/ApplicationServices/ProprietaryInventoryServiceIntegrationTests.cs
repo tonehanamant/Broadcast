@@ -261,7 +261,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             const string fileName = @"ProprietaryDataFiles\OAndO_ValidFile1.xlsx";
             _VerifyInventoryFileMetadataAndHeaderData(fileName);
         }
-        
+
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void SavesOAndOInventoryFileManifests()
@@ -269,7 +269,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             const string fileName = @"ProprietaryDataFiles\OAndO_ValidFile1.xlsx";
             _VerifyFileInventoryManifests(fileName);
         }
-        
+
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void SavesOAndOInventoryFileManifests_EmptyAndSummaryRows()
@@ -277,7 +277,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             const string fileName = @"ProprietaryDataFiles\OAndO_ValidFile2.xlsx";
             _VerifyFileInventoryManifests(fileName);
         }
-        
+
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void SavesOAndOInventoryFileManifests_NoHut()
@@ -285,7 +285,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             const string fileName = @"ProprietaryDataFiles\OAndO_ValidFile3_NoHut.xlsx";
             _VerifyFileInventoryManifests(fileName);
         }
-        
+
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void SavesOAndOInventoryFileManifests_OAndO_PRI7393_DaypartParsingBug()
@@ -293,7 +293,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             const string fileName = @"ProprietaryDataFiles\OAndO_PRI7393.xlsx";
             _VerifyFileInventoryManifests(fileName);
         }
-        
+
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void SavesOAndOInventoryFileManifests_OAndO_PRI7410_DaypartParsingBug()
@@ -324,7 +324,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             const string fileName = @"ProprietaryDataFiles\OAndO_UnknownAudience.xlsx";
             _VerifyInventoryFileProblems(fileName);
-        }      
+        }
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
@@ -428,7 +428,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             const string fileName = @"ProprietaryDataFiles\Syndication_ValidFile2.xlsx";
             _VerifyInventoryFileMetadataAndHeaderData(fileName);
         }
-        
+
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void Syndication_ValidFile3()
@@ -524,7 +524,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             const string fileName = @"ProprietaryDataFiles\Diginet_ValidFile1.xlsx";
             _VerifyInventoryFileMetadataAndHeaderData(fileName);
         }
-        
+
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void SavesDiginetInventoryFileManifests()
@@ -532,7 +532,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             const string fileName = @"ProprietaryDataFiles\Diginet_ValidFile2.xlsx";
             _VerifyFileInventoryManifests(fileName);
         }
-        
+
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void SavesDiginetInventoryFileManifests_WithSpacesInAudience()
@@ -540,7 +540,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             const string fileName = @"ProprietaryDataFiles\Diginet_ValidFile3.xlsx";
             _VerifyFileInventoryManifests(fileName);
         }
-        
+
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void SavesDiginetInventoryFileManifests_WithSpacesInDaypart()
@@ -548,7 +548,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             const string fileName = @"ProprietaryDataFiles\Diginet_PRI8845.xlsx";
             _VerifyFileInventoryManifests(fileName);
         }
-        
+
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void SavesManifests_WhenAudienceThatCanBeMappedIsSpecified()
@@ -556,7 +556,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             const string fileName = @"ProprietaryDataFiles\Diginet_ValidFile4.xlsx";
             _VerifyFileInventoryManifests(fileName);
         }
-        
+
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void SavesManifests_ButSkipsDefaultDemoAudiences()
@@ -564,7 +564,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             const string fileName = @"ProprietaryDataFiles\Diginet_ValidFile5.xlsx";
             _VerifyFileInventoryManifests(fileName);
         }
-        
+
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void SavesManifests_ButSkipsEmptyDemoAudiences()
@@ -700,7 +700,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     StreamData = new FileStream($@".\Files\{fileName}", FileMode.Open, FileAccess.Read),
                     FileName = fileName
                 };
-
+                
                 var now = new DateTime(2019, 02, 02);
                 var result = _ProprietaryService.SaveProprietaryInventoryFile(request, "IntegrationTestUser", now);
 

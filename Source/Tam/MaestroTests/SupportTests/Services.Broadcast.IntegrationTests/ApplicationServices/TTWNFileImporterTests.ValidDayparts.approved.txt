@@ -8,12 +8,11 @@
     "Id": 0,
     "InventoryGroups": [
       {
-        "DaypartCode": "LN",
         "Id": null,
         "Manifests": [
           {
             "Comment": null,
-            "DaypartCode": "LN",
+            "DaypartCode": null,
             "Id": null,
             "InventorySourceId": 0,
             "ManifestAudiences": [],
@@ -125,7 +124,7 @@
           },
           {
             "Comment": null,
-            "DaypartCode": "LN",
+            "DaypartCode": null,
             "Id": null,
             "InventorySourceId": 0,
             "ManifestAudiences": [],
@@ -237,7 +236,7 @@
           },
           {
             "Comment": null,
-            "DaypartCode": "LN",
+            "DaypartCode": null,
             "Id": null,
             "InventorySourceId": 0,
             "ManifestAudiences": [],
@@ -369,7 +368,7 @@
           },
           {
             "Comment": null,
-            "DaypartCode": "LN",
+            "DaypartCode": null,
             "Id": null,
             "InventorySourceId": 0,
             "ManifestAudiences": [],

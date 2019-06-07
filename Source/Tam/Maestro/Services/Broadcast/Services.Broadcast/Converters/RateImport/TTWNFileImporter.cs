@@ -111,7 +111,6 @@ namespace Services.Broadcast.Converters.RateImport
                         {
                             inventoryGroup = new StationInventoryGroup()
                             {
-                                DaypartCode = daypartCode,
                                 Name = daypartCode + slotNumber,
                                 Manifests = new List<StationInventoryManifest>(),
                                 SlotNumber = slotNumber,
@@ -124,7 +123,6 @@ namespace Services.Broadcast.Converters.RateImport
                         inventoryGroup.Manifests.Add(new StationInventoryManifest()
                         {
                             Station = station,
-                            DaypartCode = daypartCode,
                             SpotsPerWeek = daypartCodeSpots.Value,
                             SpotLengthId = spotLengthId,
                             ManifestDayparts = manifestDayparts,

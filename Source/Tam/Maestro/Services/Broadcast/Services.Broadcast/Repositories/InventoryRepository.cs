@@ -155,7 +155,6 @@ namespace Services.Broadcast.Repositories
         {
             return new station_inventory_group()
             {
-                daypart_code = inventoryGroup.DaypartCode,
                 inventory_source_id = inventoryFile.InventorySource.Id,
                 name = inventoryGroup.Name,
                 slot_number = (byte)inventoryGroup.SlotNumber,
@@ -225,7 +224,7 @@ namespace Services.Broadcast.Repositories
             return _InReadUncommitedTransaction(
                 context =>
                 {
-                    var manifests =
+                    var groups =
                         (from m in
                             context.station_inventory_manifest
                                 .Include(l => l.station_inventory_manifest_audiences)
@@ -237,7 +236,7 @@ namespace Services.Broadcast.Repositories
                          where m.file_id == fileId
                          select g).ToList();
 
-                    return manifests.Select(_MapToInventoryGroup).ToList();
+                    return groups.Select(_MapToInventoryGroup).ToList();
                 });
         }
 
@@ -285,11 +284,11 @@ namespace Services.Broadcast.Repositories
 
         private StationInventoryGroup _MapToInventoryGroup(station_inventory_group stationInventoryGroup)
         {
+            var headerDaypartCode = stationInventoryGroup.station_inventory_manifest.FirstOrDefault().inventory_files.inventory_file_proprietary_header.FirstOrDefault().daypart_codes.code;
             var sig = new StationInventoryGroup()
             {
                 Id = stationInventoryGroup.id,
                 Name = stationInventoryGroup.name,
-                DaypartCode = stationInventoryGroup.daypart_code,
                 SlotNumber = stationInventoryGroup.slot_number,
                 InventorySource = new InventorySource()
                 {
@@ -299,7 +298,7 @@ namespace Services.Broadcast.Repositories
                     IsActive = stationInventoryGroup.inventory_sources.is_active
                 },
                 Manifests = stationInventoryGroup.station_inventory_manifest
-                    .Select(manifest => _MapToInventoryManifest(manifest, stationInventoryGroup.daypart_code))
+                    .Select(manifest => _MapToInventoryManifest(manifest, headerDaypartCode))
                     .ToList()
             };
 
@@ -491,7 +490,6 @@ namespace Services.Broadcast.Repositories
                                              MarketCode = sp.station.market_code,
                                              OriginMarket = sp.station.market.geography_name
                                          },
-                                         DaypartCode = sp.station_inventory_group.daypart_code,
                                          SpotLengthId = sp.spot_length_id,
                                          SpotsPerWeek = sp.spots_per_week,
                                          SpotsPerDay = sp.spots_per_day,
@@ -569,7 +567,6 @@ namespace Services.Broadcast.Repositories
                                                  MarketCode = sp.station.market_code,
                                                  OriginMarket = sp.station.market.geography_name
                                              },
-                                         DaypartCode = sp.station_inventory_group.daypart_code,
                                          SpotLengthId = sp.spot_length_id,
                                          SpotsPerWeek = sp.spots_per_week,
                                          SpotsPerDay = sp.spots_per_day,
@@ -954,7 +951,6 @@ namespace Services.Broadcast.Repositories
                    {
                        Id = x.id,
                        Name = x.name,
-                       DaypartCode = x.daypart_code,
                        SlotNumber = x.slot_number
                    }).ToList();
                });
