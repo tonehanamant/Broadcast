@@ -1,5 +1,4 @@
 ﻿{
-  "FileId": 0,
   "Status": 3,
   "ValidationProblems": [
     "Invalid file format. Please, provide a .xlsx File"

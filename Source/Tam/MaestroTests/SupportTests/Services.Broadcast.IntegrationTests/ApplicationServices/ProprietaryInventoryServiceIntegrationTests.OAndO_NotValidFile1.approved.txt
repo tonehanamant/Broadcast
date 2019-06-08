@@ -1,8 +1,0 @@
-﻿[
-  {
-    "AffectedProposals": null,
-    "ProblemDescription": "Could not find inventory source",
-    "ProgramName": null,
-    "StationLetters": null
-  }
-]

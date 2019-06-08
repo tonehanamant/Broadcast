@@ -167,11 +167,28 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [UseReporter(typeof(DiffReporter))]
         public void Barter_ExtractData_PRI5390()
         {
             const string fileName = @"ProprietaryDataFiles\Barter_BadFormats_PRI5390.xlsx";
-            _VerifyInventoryFileProblems(fileName);
+            using (new TransactionScopeWrapper())
+            {
+                var request = new FileRequest
+                {
+                    StreamData = new FileStream($@".\Files\{fileName}", FileMode.Open, FileAccess.Read),
+                    FileName = fileName
+                };
+
+                var now = new DateTime(2019, 02, 02);
+                try
+                {
+                    var result = _ProprietaryService.SaveProprietaryInventoryFile(request, "IntegrationTestUser", now);
+                    _VerifyInventoryFileSaveResult(result);
+                }
+                catch(FileUploadException<InventoryFileProblem> ex)
+                {
+                    Assert.AreEqual("Could not find inventory source", ex.Problems[0].ProblemDescription);
+                }                
+            }
         }
 
         [Test]
@@ -211,7 +228,25 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         public void OAndO_NotValidFile1()
         {
             const string fileName = @"ProprietaryDataFiles\OAndO_InvalidFile1.xlsx";
-            _VerifyInventoryFileProblems(fileName);
+            using (new TransactionScopeWrapper())
+            {
+                var request = new FileRequest
+                {
+                    StreamData = new FileStream($@".\Files\{fileName}", FileMode.Open, FileAccess.Read),
+                    FileName = fileName
+                };
+
+                var now = new DateTime(2019, 02, 02);
+                try
+                {
+                    var result = _ProprietaryService.SaveProprietaryInventoryFile(request, "IntegrationTestUser", now);
+                    _VerifyInventoryFileSaveResult(result);
+                }
+                catch (FileUploadException<InventoryFileProblem> ex)
+                {
+                    Assert.AreEqual("Could not find inventory source", ex.Problems[0].ProblemDescription);
+                }
+            }
         }
 
         [Test]
