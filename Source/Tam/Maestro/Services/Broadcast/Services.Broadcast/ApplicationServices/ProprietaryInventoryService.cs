@@ -192,7 +192,7 @@ namespace Services.Broadcast.ApplicationServices
                 {
                     throw new ApplicationException("Unable to send file to Data Lake shared folder and e-mail reporting the error:" + ex);
                 }
-            }
+            }            
 
             return new InventoryFileSaveResult
             {

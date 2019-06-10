@@ -192,6 +192,15 @@ BEGIN
 END
 /*************************************** END PRI-9931 *****************************************************/
 
+/*************************************** START PRI-7621 PART 2 *****************************************************/
+IF EXISTS (SELECT 1 FROM system_component_parameters WHERE component_id = 'BroadcastService' and parameter_key = 'InventoryUploadErrorsFolder')
+BEGIN
+	UPDATE system_component_parameters SET parameter_value = '\\cadfs11\Inventory Management UI'
+	WHERE component_id = 'BroadcastService' AND parameter_key = 'InventoryUploadErrorsFolder'
+END
+/*************************************** END PRI-7621 *****************************************************/
+
+
 -- Update the Schema Version of the database to the current release version
 UPDATE system_component_parameters 
 SET parameter_value = '19.07.1' -- Current release version

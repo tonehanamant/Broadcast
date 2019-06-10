@@ -709,7 +709,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         public void Barter_SaveErrorFileToDisk()
         {
             const string fileName = @"ProprietaryDataFiles\Barter_BadFormats.xlsx";
-
+            
             using (new TransactionScopeWrapper())
             {
                 var request = new FileRequest
