@@ -203,7 +203,8 @@ namespace Services.Broadcast.IntegrationTests
                     result = "mhohenshilt@crossmw.com";
                     break;
                 case "InventoryUploadErrorsFolder":
-                    return @"D:\temp";
+                    result = @"\\cadfs11\Inventory Management UI\Continuous Deployment";
+                    break;
                 default:
                     throw new Exception("Unknown SystemComponentParameter: " + pSystemParameterID);
             }
