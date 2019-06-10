@@ -13,6 +13,7 @@ using Services.Broadcast.Entities.InventorySummary;
 using Services.Broadcast.Exceptions;
 using Services.Broadcast.Entities.Scx;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
+using System.Linq;
 
 namespace BroadcastComposerWeb.Controllers
 {
@@ -218,6 +219,26 @@ namespace BroadcastComposerWeb.Controllers
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory
                 .GetApplicationService<IInventorySummaryService>()
                 .GetInventoryUnits(inventorySourceId, daypartCodeId, startDate, endDate));
+        }
+
+        
+        [HttpGet]
+        [Route("DownloadErrorFiles")]
+        public HttpResponseMessage DownloadErrorFiles([FromUri(Name = "")]List<int> fileIds)
+        {
+            if (!fileIds.Any())
+                return new HttpResponseMessage { StatusCode = HttpStatusCode.NoContent, ReasonPhrase = "No file ids were supplied" };
+
+            var archive = _ApplicationServiceFactory.GetApplicationService<IProprietaryInventoryService>().DownloadErrorFiles(fileIds);
+
+            var result = Request.CreateResponse(HttpStatusCode.OK);
+            result.Content = new StreamContent(archive.Item2);
+            result.Content.Headers.ContentType = new MediaTypeHeaderValue("application/zip");
+            result.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
+            {
+                FileName = archive.Item1
+            };
+            return result;
         }
     }
 }

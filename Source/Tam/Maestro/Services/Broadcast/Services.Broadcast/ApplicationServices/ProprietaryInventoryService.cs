@@ -18,6 +18,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
+using Tam.Maestro.Services.Cable.SystemComponentParameters;
+using Common.Services;
 
 namespace Services.Broadcast.ApplicationServices
 {
@@ -34,8 +36,15 @@ namespace Services.Broadcast.ApplicationServices
         /// <summary>
         /// Generates one SCX archive for the current quarter
         /// </summary>
-        /// <returns>Returnsa zip archive as stream and the zip name</returns>
+        /// <returns>Returns a zip archive as stream and the zip name</returns>
         Tuple<string, Stream> GenerateScxFileArchive(InventoryScxDownloadRequest request);
+
+        /// <summary>
+        /// Generates an archive with inventory files that contained errors filtered by the list of ids passed
+        /// </summary>
+        /// <param name="fileIds">List of file ids to filter the files by</param>
+        /// <returns>Returns a zip archive as stream and the zip name</returns>
+        Tuple<string, Stream> DownloadErrorFiles(List<int> fileIds);
     }
 
     public class ProprietaryInventoryService : IProprietaryInventoryService
@@ -59,6 +68,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IInventoryRatingsProcessingService _InventoryRatingsService;
         private readonly IQuarterCalculationEngine _QuarterCalculationEngine;
         private readonly IInventoryWeekEngine _InventoryWeekEngine;
+        private readonly IFileService _FileService;
 
         public ProprietaryInventoryService(IDataRepositoryFactory broadcastDataRepositoryFactory
             , IProprietaryFileImporterFactory proprietaryFileImporterFactory
@@ -73,7 +83,8 @@ namespace Services.Broadcast.ApplicationServices
             , IInventoryRatingsProcessingService inventoryRatingsService
             , IInventoryScxDataPrep inventoryScxDataPrep
             , IQuarterCalculationEngine quarterCalculationEngine
-            , IInventoryWeekEngine inventoryWeekEngine)
+            , IInventoryWeekEngine inventoryWeekEngine
+            , IFileService fileService)
         {
             _ProprietaryRepository = broadcastDataRepositoryFactory.GetDataRepository<IProprietaryRepository>();
             _InventoryRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
@@ -92,6 +103,7 @@ namespace Services.Broadcast.ApplicationServices
             _InventoryRatingsService = inventoryRatingsService;
             _QuarterCalculationEngine = quarterCalculationEngine;
             _InventoryWeekEngine = inventoryWeekEngine;
+            _FileService = fileService;
         }
 
         /// <summary>
@@ -131,7 +143,7 @@ namespace Services.Broadcast.ApplicationServices
 
                 if (proprietaryFile.ValidationProblems.Any())
                 {
-                    _ProprietaryRepository.AddValidationProblems(proprietaryFile);                    
+                    _ProprietaryRepository.AddValidationProblems(proprietaryFile);
                     fileImporter.WriteFileToDisk(fileStreamWithErrors, proprietaryFile.Id, request.FileName);
                 }
                 else
@@ -180,7 +192,7 @@ namespace Services.Broadcast.ApplicationServices
                 {
                     throw new ApplicationException("Unable to send file to Data Lake shared folder and e-mail reporting the error:" + ex);
                 }
-            }            
+            }
 
             return new InventoryFileSaveResult
             {
@@ -210,7 +222,7 @@ namespace Services.Broadcast.ApplicationServices
         {
             string fileNameTemplate = "Barter{0}{1}.scx";
             string archiveFileName = $"InventoryUnits_{DateTime.Now.ToString("yyyyMMddhhmmss")}.zip";
-            
+
             var inventoryData = _InventoryScxDataPrep.GetInventoryScxData(request.InventorySourceId, request.DaypartCodeId, request.StartDate, request.EndDate, request.UnitNames);
 
             List<InventoryScxFile> scxFiles = _InventoryScxDataConverter.ConvertInventoryData(inventoryData);
@@ -220,7 +232,7 @@ namespace Services.Broadcast.ApplicationServices
             using (var archive = new ZipArchive(archiveFile, ZipArchiveMode.Create, true))
             {
                 foreach (var scxFile in scxFiles)
-                {                    
+                {
                     string scxFileName = string.Format(fileNameTemplate, scxFile.InventorySourceName, scxFile.UnitName);
 
                     var archiveEntry = archive.CreateEntry(scxFileName, System.IO.Compression.CompressionLevel.Fastest);
@@ -231,6 +243,32 @@ namespace Services.Broadcast.ApplicationServices
                 }
             }
             archiveFile.Seek(0, SeekOrigin.Begin);
+            return new Tuple<string, Stream>(archiveFileName, archiveFile);
+        }
+
+        /// <summary>
+        /// Generates an archive with inventory files that contained errors filtered by the list of ids passed
+        /// </summary>
+        /// <param name="fileIds">List of file ids to filter the files by</param>
+        /// <returns>Returns a zip archive as stream and the zip name</returns>
+        public Tuple<string, Stream> DownloadErrorFiles(List<int> fileIds)
+        {
+            string archiveFileName = $"InventoryErrorFiles_{DateTime.Now.ToString("MMddyyyyhhmmss")}.zip";
+            var errorFiles = _FileService.GetFiles(BroadcastServiceSystemParameter.InventoryUploadErrorsFolder);
+            Dictionary<string, string> errorsFilesToProcess = new Dictionary<string, string>();
+
+            foreach (var id in fileIds)
+            {
+                //get the file by looking in the errors folder for a file with the name starting with the current id
+                string filePath = errorFiles.Where(x => Path.GetFileName(x).StartsWith($"{id}_")).SingleOrDefault();
+                if (filePath != null)
+                {
+                    string fileName = Path.GetFileName(filePath).Replace($"{id}_", string.Empty);   //remove the added id from the filename
+                    errorsFilesToProcess.Add(filePath, fileName);
+                }
+            }
+
+            Stream archiveFile = _FileService.CreateZipArchive(errorsFilesToProcess);
             return new Tuple<string, Stream>(archiveFileName, archiveFile);
         }
 
@@ -260,7 +298,7 @@ namespace Services.Broadcast.ApplicationServices
                         inventorySource = _InventoryRepository.GetInventorySourceByName(inventorySourceString);
                         break;
                     }
-                }   
+                }
             }
 
             if (inventorySource == null)
@@ -282,9 +320,9 @@ namespace Services.Broadcast.ApplicationServices
                 throw new FileUploadException<InventoryFileProblem>(fileProblems);
             }
         }
-        
+
         private List<DisplayBroadcastStation> _GetFileStationsOrCreate(ProprietaryInventoryFile proprietaryFile, string userName, DateTime now)
-        { 
+        {
             var allStationNames = proprietaryFile.DataLines.Select(x => x.Station).Where(x => !string.IsNullOrWhiteSpace(x)).Distinct();
             var allLegacyStationNames = allStationNames.Select(_StationProcessingEngine.StripStationSuffix).Distinct().ToList();
             var existingStations = _StationRepository.GetBroadcastStationListByLegacyCallLetters(allLegacyStationNames);

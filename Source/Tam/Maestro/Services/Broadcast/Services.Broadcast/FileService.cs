@@ -58,11 +58,18 @@ namespace Common.Services
         /// <summary>
         /// Creates a zip archive file from the file paths
         /// </summary>
-        /// <param name="filePaths">List of file paths to add to the archive</param>
+        /// <param name="filePaths">File paths to add to the archive</param>
         /// <param name="zipFileName">Zip archive file name</param>
         void CreateZipArchive(List<string> filePaths, string zipFileName);
         bool DirectoryExists(string filePath);
         void CreateDirectory(string filePath);
+
+        /// <summary>
+        /// Creates a stream containing a zip file from the file paths
+        /// </summary>
+        /// <param name="filePaths">Dictionary of path and name file pairs</param>
+        /// <returns>Stream containing the zip archive</returns>
+        Stream CreateZipArchive(IDictionary<string, string> filePaths);
     }
 
     public class FileService : IFileService
@@ -103,10 +110,10 @@ namespace Common.Services
         /// <param name="filePaths">List of file paths to be deleted</param>
         public void Delete(params string[] filePaths)
         {
-            foreach(string path in filePaths)
+            foreach (string path in filePaths)
             {
                 File.Delete(path);
-            }            
+            }
         }
 
         /// <summary>
@@ -148,7 +155,7 @@ namespace Common.Services
                 }
             }
 
-            File.Copy(filePath, destinationPath, overwriteExisting);            
+            File.Copy(filePath, destinationPath, overwriteExisting);
 
             return destinationPath;
         }
@@ -192,6 +199,25 @@ namespace Common.Services
                     zip.CreateEntryFromFile(filePath, Path.GetFileName(filePath), CompressionLevel.Fastest);
                 }
             }
+        }
+
+        /// <summary>
+        /// Creates a stream containing a zip file from the file paths
+        /// </summary>
+        /// <param name="filePaths">Dictionary of path and name file pairs</param>
+        /// <returns>Stream containing the zip archive</returns>
+        public Stream CreateZipArchive(IDictionary<string, string> filePaths)
+        {
+            MemoryStream archiveFile = new MemoryStream();
+            using (var archive = new ZipArchive(archiveFile, ZipArchiveMode.Create, true))
+            {
+                foreach (var pair in filePaths)
+                {
+                    archive.CreateEntryFromFile(pair.Key, pair.Value, CompressionLevel.Fastest);
+                }
+            }
+            archiveFile.Seek(0, SeekOrigin.Begin);
+            return archiveFile;
         }
 
         public bool DirectoryExists(string filePath)

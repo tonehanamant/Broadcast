@@ -15,6 +15,7 @@ using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Compression;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
@@ -708,7 +709,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         public void Barter_SaveErrorFileToDisk()
         {
             const string fileName = @"ProprietaryDataFiles\Barter_BadFormats.xlsx";
-            
+
             using (new TransactionScopeWrapper())
             {
                 var request = new FileRequest
@@ -865,6 +866,33 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var fileJson = IntegrationTestHelper.ConvertToJson(file, jsonSettings);
 
                 Approvals.Verify(fileJson);
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void DownloadErrorFiles()
+        {
+            const string fileName = @"Diginet_InvalidFile1.xlsx";
+            using (new TransactionScopeWrapper())
+            {
+                var request = new FileRequest
+                {
+                    StreamData = new FileStream($@".\Files\ProprietaryDataFiles\{fileName}", FileMode.Open, FileAccess.Read),
+                    FileName = fileName
+                };
+
+                var now = new DateTime(2019, 02, 02);
+                var result = _ProprietaryService.SaveProprietaryInventoryFile(request, "IntegrationTestUser", now);
+
+                var errors = _ProprietaryService.DownloadErrorFiles(new List<int> { result.FileId });
+                Assert.IsTrue(errors.Item2.Length > 0);
+                Assert.IsTrue(errors.Item1.StartsWith($"InventoryErrorFiles_{DateTime.Now.ToString("MMddyyyy")}"));
+
+                using (var archive = new ZipArchive(errors.Item2, ZipArchiveMode.Read))
+                {
+                    Assert.AreEqual(fileName, archive.Entries[0].FullName);
+                }
             }
         }
 

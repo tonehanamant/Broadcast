@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using Common.Services;
 
@@ -50,6 +51,11 @@ namespace Services.Broadcast.IntegrationTests
         }
 
         public void CreateDirectory(string filePath)
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual Stream CreateZipArchive(IDictionary<string, string> filePaths)
         {
             throw new NotImplementedException();
         }
@@ -116,6 +122,25 @@ namespace Services.Broadcast.IntegrationTests
                 Debug.WriteLine(file);
             }
             Debug.WriteLine("<===");
+        }
+
+        public override List<string> GetFiles(string path)
+        {
+            return _Files;
+        }
+
+        public override Stream CreateZipArchive(IDictionary<string, string> filePaths)
+        {
+            MemoryStream archiveFile = new MemoryStream();
+            using (var archive = new ZipArchive(archiveFile, ZipArchiveMode.Create, true))
+            {
+                foreach (var pair in filePaths)
+                {
+                    archive.CreateEntry(pair.Value);
+                }
+            }
+            archiveFile.Seek(0, SeekOrigin.Begin);
+            return archiveFile;
         }
     }
 }
