@@ -15,6 +15,7 @@ using Tam.Maestro.Services.Cable.Entities;
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
     [TestFixture]
+    [Ignore]
     [UseReporter(typeof(DiffReporter))]
     public class NtiTransmittalsServiceIntegrationTests
     {

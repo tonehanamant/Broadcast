@@ -13,6 +13,7 @@ using System;
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
     [TestFixture]
+    [Ignore]
     public class SpotTrackerServiceIntegrationTests
     {
         private readonly ISpotTrackerService _SpotTrackerService;

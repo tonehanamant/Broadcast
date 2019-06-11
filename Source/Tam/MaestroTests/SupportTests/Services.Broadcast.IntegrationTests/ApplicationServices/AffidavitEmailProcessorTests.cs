@@ -14,6 +14,7 @@ using Services.Broadcast.Entities.Enums;
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
     [TestFixture]
+    [Ignore]
     public class AffidavitEmailProcessorTests
     {
         private readonly IWWTVEmailProcessorService _AffidavitEmailProcessorService;

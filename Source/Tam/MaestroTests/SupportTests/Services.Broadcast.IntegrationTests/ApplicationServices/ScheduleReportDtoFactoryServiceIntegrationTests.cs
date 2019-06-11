@@ -18,6 +18,7 @@ using Tam.Maestro.Services.ContractInterfaces.Common;
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
     [TestFixture]
+    [Ignore]
     public class ScheduleReportDtoFactoryServiceIntegrationTests
     {
         private readonly IScheduleAggregateFactoryService _scheduleAggregateFactoryService =

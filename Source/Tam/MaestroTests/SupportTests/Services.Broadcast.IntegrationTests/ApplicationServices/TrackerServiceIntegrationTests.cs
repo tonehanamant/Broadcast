@@ -24,6 +24,7 @@ using Services.Broadcast.Entities.Enums;
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
     [TestFixture]
+    [Ignore]
     public class TrackerServiceIntegrationTests
     {
         private ITrackerService _TrackerService;

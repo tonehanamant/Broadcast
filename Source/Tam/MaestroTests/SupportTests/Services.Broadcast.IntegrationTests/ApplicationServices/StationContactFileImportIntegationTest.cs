@@ -6,6 +6,7 @@ using Tam.Maestro.Common.DataLayer;
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
     [TestFixture]
+    [Ignore]
     public class StationContactFileImportIntegationTest
     {
         private IStationContactMasterFileImporter _stationContactMasterFileImporter = IntegrationTestApplicationServiceFactory.GetApplicationService<IStationContactMasterFileImporter>();

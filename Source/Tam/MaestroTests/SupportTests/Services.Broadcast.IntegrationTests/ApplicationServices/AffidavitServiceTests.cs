@@ -21,6 +21,7 @@ using Services.Broadcast.Entities.Enums;
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
     [TestFixture]
+    [Ignore]
     public class AffidavitServiceTests
     {
         private const string ISCI1 = "DDDDDDDD";

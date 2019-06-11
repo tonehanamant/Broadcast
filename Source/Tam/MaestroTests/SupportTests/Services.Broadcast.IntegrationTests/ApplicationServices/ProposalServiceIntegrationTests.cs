@@ -21,6 +21,7 @@ using Services.Broadcast.Entities.DTO.PricingGuide;
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
     [TestFixture]
+    [Ignore]
     public class ProposalServiceIntegrationTests
     {
         private readonly IProposalService _ProposalService = IntegrationTestApplicationServiceFactory.GetApplicationService<IProposalService>();

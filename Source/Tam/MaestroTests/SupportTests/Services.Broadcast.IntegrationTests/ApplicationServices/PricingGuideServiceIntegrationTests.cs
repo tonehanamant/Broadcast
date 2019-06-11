@@ -21,6 +21,7 @@ using System.IO;
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
     [TestFixture]
+    [Ignore]
     public class PricingGuideServiceIntegrationTests
     {
         private readonly IPricingGuideService _PricingGuideService = IntegrationTestApplicationServiceFactory.GetApplicationService<IPricingGuideService>();

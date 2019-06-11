@@ -28,6 +28,7 @@ using static Services.Broadcast.Entities.OpenMarketInventory.ProposalVersionSnap
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
     [TestFixture]
+    [Ignore]
     public class 
         ProposalOpenMarketInventoryServiceIntegrationTests
     {
