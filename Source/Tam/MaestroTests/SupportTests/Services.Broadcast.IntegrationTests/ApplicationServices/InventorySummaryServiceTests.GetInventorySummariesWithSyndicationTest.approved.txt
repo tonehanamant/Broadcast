@@ -1,18 +1,23 @@
 ﻿[
   {
     "HasInventoryGaps": null,
-    "HasRatesAvailableForQuarter": false,
-    "HouseholdImpressions": null,
-    "InventoryPostingBooks": [],
+    "HasRatesAvailableForQuarter": true,
+    "HouseholdImpressions": 1000.0,
+    "InventoryPostingBooks": [
+      {
+        "HutProjectionBookId": 437,
+        "ShareProjectionBookId": 438
+      }
+    ],
     "InventorySourceId": 1,
     "InventorySourceName": "Open Market",
     "IsUpdating": false,
-    "LastUpdatedDate": null,
+    "LastUpdatedDate": "2017-12-01T16:39:12.403",
     "Quarter": {
-      "EndDate": "2019-03-31T23:59:59",
+      "EndDate": "2018-03-25T23:59:59",
       "Quarter": 1,
-      "StartDate": "2018-12-31T00:00:00",
-      "Year": 2019
+      "StartDate": "2018-01-01T00:00:00",
+      "Year": 2018
     },
     "RatesAvailableFromQuarter": {
       "EndDate": "2016-06-26T23:59:59",
@@ -26,9 +31,9 @@
       "StartDate": "2019-09-30T00:00:00",
       "Year": 2019
     },
-    "TotalMarkets": 0,
-    "TotalPrograms": 0,
-    "TotalStations": 0
+    "TotalMarkets": 1,
+    "TotalPrograms": 1,
+    "TotalStations": 1
   },
   {
     "Details": [],
@@ -41,10 +46,10 @@
     "IsUpdating": false,
     "LastUpdatedDate": null,
     "Quarter": {
-      "EndDate": "2019-03-31T23:59:59",
+      "EndDate": "2018-03-25T23:59:59",
       "Quarter": 1,
-      "StartDate": "2018-12-31T00:00:00",
-      "Year": 2019
+      "StartDate": "2018-01-01T00:00:00",
+      "Year": 2018
     },
     "RatesAvailableFromQuarter": {
       "EndDate": "2019-06-30T23:59:59",
@@ -74,10 +79,10 @@
     "IsUpdating": false,
     "LastUpdatedDate": null,
     "Quarter": {
-      "EndDate": "2019-03-31T23:59:59",
+      "EndDate": "2018-03-25T23:59:59",
       "Quarter": 1,
-      "StartDate": "2018-12-31T00:00:00",
-      "Year": 2019
+      "StartDate": "2018-01-01T00:00:00",
+      "Year": 2018
     },
     "RatesAvailableFromQuarter": {
       "EndDate": "2019-06-30T23:59:59",
@@ -107,10 +112,10 @@
     "IsUpdating": false,
     "LastUpdatedDate": null,
     "Quarter": {
-      "EndDate": "2019-03-31T23:59:59",
+      "EndDate": "2018-03-25T23:59:59",
       "Quarter": 1,
-      "StartDate": "2018-12-31T00:00:00",
-      "Year": 2019
+      "StartDate": "2018-01-01T00:00:00",
+      "Year": 2018
     },
     "RatesAvailableFromQuarter": null,
     "RatesAvailableToQuarter": null,
@@ -130,10 +135,10 @@
     "IsUpdating": false,
     "LastUpdatedDate": null,
     "Quarter": {
-      "EndDate": "2019-03-31T23:59:59",
+      "EndDate": "2018-03-25T23:59:59",
       "Quarter": 1,
-      "StartDate": "2018-12-31T00:00:00",
-      "Year": 2019
+      "StartDate": "2018-01-01T00:00:00",
+      "Year": 2018
     },
     "RatesAvailableFromQuarter": null,
     "RatesAvailableToQuarter": null,
@@ -143,34 +148,20 @@
     "TotalUnits": 0
   },
   {
-    "Details": [
-      {
-        "CPM": null,
-        "Daypart": "EMN",
-        "HouseholdImpressions": null,
-        "TotalCoverage": 0.0,
-        "TotalMarkets": 0,
-        "TotalUnits": 1
-      }
-    ],
+    "Details": [],
     "HasInventoryGaps": null,
-    "HasRatesAvailableForQuarter": true,
+    "HasRatesAvailableForQuarter": false,
     "HouseholdImpressions": null,
-    "InventoryPostingBooks": [
-      {
-        "HutProjectionBookId": 437,
-        "ShareProjectionBookId": 438
-      }
-    ],
+    "InventoryPostingBooks": [],
     "InventorySourceId": 7,
     "InventorySourceName": "LilaMax",
     "IsUpdating": false,
     "LastUpdatedDate": null,
     "Quarter": {
-      "EndDate": "2019-03-31T23:59:59",
+      "EndDate": "2018-03-25T23:59:59",
       "Quarter": 1,
-      "StartDate": "2018-12-31T00:00:00",
-      "Year": 2019
+      "StartDate": "2018-01-01T00:00:00",
+      "Year": 2018
     },
     "RatesAvailableFromQuarter": {
       "EndDate": "2019-03-31T23:59:59",
@@ -184,10 +175,10 @@
       "StartDate": "2018-12-31T00:00:00",
       "Year": 2019
     },
-    "TotalDaypartCodes": 1,
+    "TotalDaypartCodes": 0,
     "TotalMarkets": 0,
-    "TotalStations": 1,
-    "TotalUnits": 1
+    "TotalStations": 0,
+    "TotalUnits": 0
   },
   {
     "Details": [],
@@ -200,10 +191,10 @@
     "IsUpdating": false,
     "LastUpdatedDate": null,
     "Quarter": {
-      "EndDate": "2019-03-31T23:59:59",
+      "EndDate": "2018-03-25T23:59:59",
       "Quarter": 1,
-      "StartDate": "2018-12-31T00:00:00",
-      "Year": 2019
+      "StartDate": "2018-01-01T00:00:00",
+      "Year": 2018
     },
     "RatesAvailableFromQuarter": null,
     "RatesAvailableToQuarter": null,
@@ -223,10 +214,10 @@
     "IsUpdating": false,
     "LastUpdatedDate": null,
     "Quarter": {
-      "EndDate": "2019-03-31T23:59:59",
+      "EndDate": "2018-03-25T23:59:59",
       "Quarter": 1,
-      "StartDate": "2018-12-31T00:00:00",
-      "Year": 2019
+      "StartDate": "2018-01-01T00:00:00",
+      "Year": 2018
     },
     "RatesAvailableFromQuarter": null,
     "RatesAvailableToQuarter": null,
@@ -245,10 +236,10 @@
     "IsUpdating": false,
     "LastUpdatedDate": null,
     "Quarter": {
-      "EndDate": "2019-03-31T23:59:59",
+      "EndDate": "2018-03-25T23:59:59",
       "Quarter": 1,
-      "StartDate": "2018-12-31T00:00:00",
-      "Year": 2019
+      "StartDate": "2018-01-01T00:00:00",
+      "Year": 2018
     },
     "RatesAvailableFromQuarter": null,
     "RatesAvailableToQuarter": null,
@@ -259,23 +250,18 @@
   },
   {
     "HasInventoryGaps": true,
-    "HasRatesAvailableForQuarter": true,
-    "HouseholdImpressions": 2500.0,
-    "InventoryPostingBooks": [
-      {
-        "HutProjectionBookId": 437,
-        "ShareProjectionBookId": 438
-      }
-    ],
+    "HasRatesAvailableForQuarter": false,
+    "HouseholdImpressions": null,
+    "InventoryPostingBooks": [],
     "InventorySourceId": 11,
     "InventorySourceName": "NBC O&O",
     "IsUpdating": false,
-    "LastUpdatedDate": "2019-04-12T16:56:05.02",
+    "LastUpdatedDate": null,
     "Quarter": {
-      "EndDate": "2019-03-31T23:59:59",
+      "EndDate": "2018-03-25T23:59:59",
       "Quarter": 1,
-      "StartDate": "2018-12-31T00:00:00",
-      "Year": 2019
+      "StartDate": "2018-01-01T00:00:00",
+      "Year": 2018
     },
     "RatesAvailableFromQuarter": {
       "EndDate": "2019-03-31T23:59:59",
@@ -289,10 +275,10 @@
       "StartDate": "2018-12-31T00:00:00",
       "Year": 2019
     },
-    "TotalDaypartCodes": 1,
-    "TotalMarkets": 1,
-    "TotalPrograms": 3,
-    "TotalStations": 2
+    "TotalDaypartCodes": 0,
+    "TotalMarkets": 0,
+    "TotalPrograms": 0,
+    "TotalStations": 0
   },
   {
     "HasInventoryGaps": false,
@@ -304,10 +290,10 @@
     "IsUpdating": false,
     "LastUpdatedDate": null,
     "Quarter": {
-      "EndDate": "2019-03-31T23:59:59",
+      "EndDate": "2018-03-25T23:59:59",
       "Quarter": 1,
-      "StartDate": "2018-12-31T00:00:00",
-      "Year": 2019
+      "StartDate": "2018-01-01T00:00:00",
+      "Year": 2018
     },
     "RatesAvailableFromQuarter": null,
     "RatesAvailableToQuarter": null,
@@ -319,18 +305,18 @@
   {
     "DaypartCode": "SYN",
     "HasInventoryGaps": true,
-    "HasRatesAvailableForQuarter": false,
+    "HasRatesAvailableForQuarter": true,
     "HouseholdImpressions": null,
     "InventoryPostingBooks": [],
     "InventorySourceId": 13,
     "InventorySourceName": "20th Century Fox (Twentieth Century)",
     "IsUpdating": false,
-    "LastUpdatedDate": null,
+    "LastUpdatedDate": "2019-06-07T08:28:09.48",
     "Quarter": {
-      "EndDate": "2019-03-31T23:59:59",
+      "EndDate": "2018-03-25T23:59:59",
       "Quarter": 1,
-      "StartDate": "2018-12-31T00:00:00",
-      "Year": 2019
+      "StartDate": "2018-01-01T00:00:00",
+      "Year": 2018
     },
     "RatesAvailableFromQuarter": {
       "EndDate": "2018-03-25T23:59:59",
@@ -345,24 +331,24 @@
       "Year": 2018
     },
     "TotalMarkets": 0,
-    "TotalPrograms": 0,
+    "TotalPrograms": 3,
     "TotalStations": 0
   },
   {
     "DaypartCode": "SYN",
     "HasInventoryGaps": true,
-    "HasRatesAvailableForQuarter": false,
+    "HasRatesAvailableForQuarter": true,
     "HouseholdImpressions": null,
     "InventoryPostingBooks": [],
     "InventorySourceId": 14,
     "InventorySourceName": "CBS Synd",
     "IsUpdating": false,
-    "LastUpdatedDate": null,
+    "LastUpdatedDate": "2019-06-07T08:28:09.48",
     "Quarter": {
-      "EndDate": "2019-03-31T23:59:59",
+      "EndDate": "2018-03-25T23:59:59",
       "Quarter": 1,
-      "StartDate": "2018-12-31T00:00:00",
-      "Year": 2019
+      "StartDate": "2018-01-01T00:00:00",
+      "Year": 2018
     },
     "RatesAvailableFromQuarter": {
       "EndDate": "2018-03-25T23:59:59",
@@ -377,24 +363,24 @@
       "Year": 2018
     },
     "TotalMarkets": 0,
-    "TotalPrograms": 0,
+    "TotalPrograms": 3,
     "TotalStations": 0
   },
   {
     "DaypartCode": "SYN",
     "HasInventoryGaps": true,
-    "HasRatesAvailableForQuarter": false,
+    "HasRatesAvailableForQuarter": true,
     "HouseholdImpressions": null,
     "InventoryPostingBooks": [],
     "InventorySourceId": 15,
     "InventorySourceName": "NBCU Syn",
     "IsUpdating": false,
-    "LastUpdatedDate": null,
+    "LastUpdatedDate": "2019-06-07T08:28:09.48",
     "Quarter": {
-      "EndDate": "2019-03-31T23:59:59",
+      "EndDate": "2018-03-25T23:59:59",
       "Quarter": 1,
-      "StartDate": "2018-12-31T00:00:00",
-      "Year": 2019
+      "StartDate": "2018-01-01T00:00:00",
+      "Year": 2018
     },
     "RatesAvailableFromQuarter": {
       "EndDate": "2018-03-25T23:59:59",
@@ -409,24 +395,24 @@
       "Year": 2018
     },
     "TotalMarkets": 0,
-    "TotalPrograms": 0,
+    "TotalPrograms": 3,
     "TotalStations": 0
   },
   {
     "DaypartCode": "SYN",
     "HasInventoryGaps": true,
-    "HasRatesAvailableForQuarter": false,
+    "HasRatesAvailableForQuarter": true,
     "HouseholdImpressions": null,
     "InventoryPostingBooks": [],
     "InventorySourceId": 16,
     "InventorySourceName": "WB Syn",
     "IsUpdating": false,
-    "LastUpdatedDate": null,
+    "LastUpdatedDate": "2019-06-07T08:28:09.48",
     "Quarter": {
-      "EndDate": "2019-03-31T23:59:59",
+      "EndDate": "2018-03-25T23:59:59",
       "Quarter": 1,
-      "StartDate": "2018-12-31T00:00:00",
-      "Year": 2019
+      "StartDate": "2018-01-01T00:00:00",
+      "Year": 2018
     },
     "RatesAvailableFromQuarter": {
       "EndDate": "2018-03-25T23:59:59",
@@ -441,7 +427,7 @@
       "Year": 2018
     },
     "TotalMarkets": 0,
-    "TotalPrograms": 0,
+    "TotalPrograms": 1,
     "TotalStations": 0
   }
 ]

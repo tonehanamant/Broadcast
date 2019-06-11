@@ -18,6 +18,7 @@ namespace Services.Broadcast.Repositories
         List<InventorySummaryManifestDto> GetInventorySummaryManifestsForBarterSources(InventorySource inventorySource, DateTime startDate, DateTime endDate);
         List<InventorySummaryManifestDto> GetInventorySummaryManifestsForOpenMarketSources(InventorySource inventorySource, DateTime startDate, DateTime endDate);
         List<InventorySummaryManifestDto> GetInventorySummaryManifestsForProprietaryOAndOSources(InventorySource inventorySource, DateTime startDate, DateTime endDate);
+        List<InventorySummaryManifestDto> GetInventorySummaryManifestsForSyndication(InventorySource inventorySource, DateTime startDate, DateTime endDate);
         double? GetInventorySummaryHouseholdImpressions(List<int> manifestIds, int householdAudienceId);
         List<InventorySummaryManifestFileDto> GetInventorySummaryManifestFileDtos(List<int> inventoryFileIds);
     }
@@ -96,6 +97,27 @@ namespace Services.Broadcast.Repositories
                                 StationId = station.id,
                                 MarketCode = station.market_code,
                                 DaypartCode = header.daypart_codes.code,
+                                FileId = file.id
+                            })
+                            .GroupBy(x => x.ManifestId)
+                            .Select(x => x.FirstOrDefault())
+                            .ToList();
+                });
+        }
+
+        public List<InventorySummaryManifestDto> GetInventorySummaryManifestsForSyndication(InventorySource inventorySource, DateTime startDate, DateTime endDate)
+        {
+            return _InReadUncommitedTransaction(
+                context =>
+                {
+                    return (from week in context.station_inventory_manifest_weeks
+                            join manifest in context.station_inventory_manifest on week.station_inventory_manifest_id equals manifest.id
+                            join file in context.inventory_files on manifest.file_id equals file.id
+                            join header in context.inventory_file_proprietary_header on file.id equals header.inventory_file_id
+                            where week.start_date <= endDate && week.end_date >= startDate && manifest.inventory_source_id == inventorySource.Id
+                            select new InventorySummaryManifestDto
+                            {
+                                ManifestId = manifest.id,
                                 FileId = file.id
                             })
                             .GroupBy(x => x.ManifestId)

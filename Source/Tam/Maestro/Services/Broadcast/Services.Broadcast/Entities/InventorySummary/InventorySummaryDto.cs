@@ -47,4 +47,10 @@ namespace Services.Broadcast.Entities.InventorySummary
         public int TotalPrograms { get; set; }
         public int TotalDaypartCodes { get; set; }
     }
+
+    public class SyndicationInventorySummaryDto : InventorySummaryDto
+    {
+        public int TotalPrograms { get; set; }
+        public string DaypartCode { get { return "SYN"; } }
+    }
 }

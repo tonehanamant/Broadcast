@@ -17,15 +17,15 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
     [TestFixture]
     public class InventorySummaryServiceTests
     {
-        private readonly IInventorySummaryService _InventoryCardService = IntegrationTestApplicationServiceFactory.GetApplicationService<IInventorySummaryService>();
+        private readonly IInventorySummaryService _InventorySummaryService = IntegrationTestApplicationServiceFactory.GetApplicationService<IInventorySummaryService>();
         private readonly IInventoryRepository _InventoryRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
         private readonly IDaypartCodeRepository _DaypartCodeRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IDaypartCodeRepository>();
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void GetInventorySummaries_ProprietaryOAndO()
+        public void GetInventorySummariesProprietaryOAndO()
         {
-            var inventoryCards = _InventoryCardService.GetInventorySummaries(new InventorySummaryFilterDto
+            var inventoryCards = _InventorySummaryService.GetInventorySummaries(new InventorySummaryFilterDto
             {
                 InventorySourceId = 11,
             }, new DateTime(2019, 04, 01));
@@ -37,7 +37,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void GetInventorySummaryDetailsTest()
         {
-            var inventoryCards = _InventoryCardService.GetInventorySummaries(new InventorySummaryFilterDto
+            var inventoryCards = _InventorySummaryService.GetInventorySummaries(new InventorySummaryFilterDto
             {
                 InventorySourceId = 4,
             }, new DateTime(2019, 04, 01));
@@ -54,7 +54,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var startDate = new DateTime(2019, 4, 1);
             var endDate = new DateTime(2019, 6, 30, 23, 59, 59);
 
-            var units = _InventoryCardService.GetInventoryUnits(inventorySourceId, daypartCodeId, startDate, endDate);
+            var units = _InventorySummaryService.GetInventoryUnits(inventorySourceId, daypartCodeId, startDate, endDate);
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(units));
         }
@@ -66,7 +66,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var inventorySourceId = _InventoryRepository.GetInventorySourceByName("NBC O&O").Id;
             var daypartCodeId = _DaypartCodeRepository.GetDaypartCodeByCode("EMN").Id;
 
-            var quarters = _InventoryCardService.GetInventoryQuarters(inventorySourceId, daypartCodeId);
+            var quarters = _InventorySummaryService.GetInventoryQuarters(inventorySourceId, daypartCodeId);
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(quarters));
         }
@@ -78,7 +78,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var inventorySourceId = _InventoryRepository.GetInventorySourceByName("NBC O&O").Id;
             var daypartCodeId = _DaypartCodeRepository.GetDaypartCodeByCode("DIGI").Id;
 
-            var quarters = _InventoryCardService.GetInventoryQuarters(inventorySourceId, daypartCodeId);
+            var quarters = _InventorySummaryService.GetInventoryQuarters(inventorySourceId, daypartCodeId);
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(quarters));
         }
@@ -88,7 +88,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         public void GetDaypartCodesTest()
         {
             var inventorySource = _InventoryRepository.GetInventorySourceByName("NBC O&O");
-            var daypartCodes = _InventoryCardService.GetDaypartCodes(inventorySource.Id);
+            var daypartCodes = _InventorySummaryService.GetDaypartCodes(inventorySource.Id);
 
             var jsonResolver = new IgnorableSerializerContractResolver();
             jsonResolver.Ignore(typeof(DaypartCodeDto), "Id");
@@ -105,7 +105,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void GetInventorySourcesTest()
         {
-            var inventoryCards = _InventoryCardService.GetInventorySources();
+            var inventoryCards = _InventorySummaryService.GetInventorySources();
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(inventoryCards));
         }
@@ -114,7 +114,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void GetInventoryQuartersTest()
         {
-            var inventoryCards = _InventoryCardService.GetInventoryQuarters(new DateTime(2019, 04, 01));
+            var inventoryCards = _InventorySummaryService.GetInventoryQuarters(new DateTime(2019, 04, 01));
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(inventoryCards));
         }
@@ -123,7 +123,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void GetInventorySummariesInventorySourceTest()
         {
-            var inventoryCards = _InventoryCardService.GetInventorySummaries(new InventorySummaryFilterDto
+            var inventoryCards = _InventorySummaryService.GetInventorySummaries(new InventorySummaryFilterDto
             {
                 InventorySourceId = 3,
             }, new DateTime(2019, 04, 01));
@@ -135,7 +135,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void GetInventorySummariesInventorySourceNoDataTest()
         {
-            var inventoryCards = _InventoryCardService.GetInventorySummaries(new InventorySummaryFilterDto
+            var inventoryCards = _InventorySummaryService.GetInventorySummaries(new InventorySummaryFilterDto
             {
                 InventorySourceId = 8
             }, new DateTime(2019, 04, 01));
@@ -147,7 +147,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void GetInventorySummariesQuarterTest()
         {
-            var inventoryCards = _InventoryCardService.GetInventorySummaries(new InventorySummaryFilterDto
+            var inventoryCards = _InventorySummaryService.GetInventorySummaries(new InventorySummaryFilterDto
             {
                 Quarter = new InventorySummaryQuarter
                 {
@@ -172,16 +172,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 }
             };
 
-            var jsonResolver = new IgnorableSerializerContractResolver();
-            jsonResolver.Ignore(typeof(InventorySummaryDto), "InventorySourceId");
-            var jsonSettings = new JsonSerializerSettings()
-            {
-                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                ContractResolver = jsonResolver
-            };
-
-            var openMarketCard = _InventoryCardService.GetInventorySummaries(request, new DateTime(2019, 04, 01)).Single(x => x.InventorySourceName == "Open Market");
-            var openMarketCardJson = IntegrationTestHelper.ConvertToJson(openMarketCard, jsonSettings);
+            var openMarketCard = _InventorySummaryService.GetInventorySummaries(request, new DateTime(2019, 04, 01)).Single(x => x.InventorySourceName == "Open Market");
+            var openMarketCardJson = IntegrationTestHelper.ConvertToJson(openMarketCard);
 
             Approvals.Verify(openMarketCardJson);
         }
@@ -200,25 +192,63 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 }
             };
 
-            var jsonResolver = new IgnorableSerializerContractResolver();
-            jsonResolver.Ignore(typeof(InventorySummaryDto), "InventorySourceId");
-            var jsonSettings = new JsonSerializerSettings()
-            {
-                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                ContractResolver = jsonResolver
-            };
-
-            var openMarketCard = _InventoryCardService.GetInventorySummaries(request, new DateTime(2019, 04, 01));
-            var openMarketCardJson = IntegrationTestHelper.ConvertToJson(openMarketCard, jsonSettings);
+            var openMarketCard = _InventorySummaryService.GetInventorySummaries(request, new DateTime(2019, 04, 01));
+            var openMarketCardJson = IntegrationTestHelper.ConvertToJson(openMarketCard);
 
             Approvals.Verify(openMarketCardJson);
         }
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        public void GetInventorySummariesWithSyndicationTest()
+        {
+            var request = new InventorySummaryFilterDto
+            {
+                Quarter = new InventorySummaryQuarter
+                {
+                    Quarter = 1,
+                    Year = 2018
+                }
+            };
+
+            var cards = _InventorySummaryService.GetInventorySummaries(request, new DateTime(2019, 04, 01));
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(cards));
+        }
+
+        [Test]
+        [TestCase("20th Century Fox (Twentieth Century)")]
+        [TestCase("CBS Synd")]
+        [TestCase("NBCU Syn")]
+        [TestCase("WB Syn")]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetInventorySummaryOnlySyndicationTest(string inventorySourceName)
+        {
+            using (ApprovalResults.ForScenario(inventorySourceName))
+            {
+                var inventorySource = _InventoryRepository.GetInventorySourceByName(inventorySourceName);
+                var request = new InventorySummaryFilterDto
+                {
+                    InventorySourceId = inventorySource.Id,
+                    Quarter = new InventorySummaryQuarter
+                    {
+                        Quarter = 1,
+                        Year = 2018
+                    }
+                };
+
+                var card = _InventorySummaryService.GetInventorySummaries(request, new DateTime(2019, 04, 01));
+                var cardJson = IntegrationTestHelper.ConvertToJson(card);
+
+                Approvals.Verify(cardJson);
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
         public void GetInventorySummaryFilterByDaypartCodeIdTest()
         {
-            var inventoryCards = _InventoryCardService.GetInventorySummaries(new InventorySummaryFilterDto
+            var inventoryCards = _InventorySummaryService.GetInventorySummaries(new InventorySummaryFilterDto
             {
                 Quarter = new InventorySummaryQuarter
                 {
@@ -235,7 +265,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void GetInventorySummarySourceTypes()
         {
-            var sourceTypes = _InventoryCardService.GetInventorySourceTypes();
+            var sourceTypes = _InventorySummaryService.GetInventorySourceTypes();
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(sourceTypes));
         }
@@ -251,7 +281,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (ApprovalResults.ForScenario(inventorySourceType))
             {
-                var inventoryCards = _InventoryCardService.GetInventorySummaries(new InventorySummaryFilterDto
+                var inventoryCards = _InventorySummaryService.GetInventorySummaries(new InventorySummaryFilterDto
                 {
                     Quarter = new InventorySummaryQuarter
                     {

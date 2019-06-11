@@ -8,6 +8,7 @@
       "ShareProjectionBookId": 438
     }
   ],
+  "InventorySourceId": 1,
   "InventorySourceName": "Open Market",
   "IsUpdating": false,
   "LastUpdatedDate": "2017-12-01T16:39:12.403",
