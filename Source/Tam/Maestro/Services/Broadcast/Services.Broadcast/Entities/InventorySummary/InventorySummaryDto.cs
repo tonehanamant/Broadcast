@@ -40,6 +40,7 @@ namespace Services.Broadcast.Entities.InventorySummary
     public class OpenMarketInventorySummaryDto : InventorySummaryDto
     {
         public int TotalPrograms { get; set; }
+        public object Details { get; set; }
     }
 
     public class ProprietaryOAndOInventorySummaryDto : InventorySummaryDto
@@ -52,5 +53,6 @@ namespace Services.Broadcast.Entities.InventorySummary
     {
         public int TotalPrograms { get; set; }
         public string DaypartCode { get { return "SYN"; } }
+        public object Details { get; set; }
     }
 }

@@ -38,7 +38,8 @@ namespace Services.Broadcast.Converters.InventorySummary
                 IsUpdating = GetIsInventoryUpdating(inventorySummaryManifestFiles),
                 RatesAvailableFromQuarter = quartersForInventoryAvailable.Item1,
                 RatesAvailableToQuarter = quartersForInventoryAvailable.Item2,
-                HasInventoryGaps = HasInventoryGapsForDateRange(allInventorySourceManifestWeeks, quartersForInventoryAvailable)
+                HasInventoryGaps = HasInventoryGapsForDateRange(allInventorySourceManifestWeeks, quartersForInventoryAvailable),
+                Details = null //Syndication does not have details
             };
         }
     }

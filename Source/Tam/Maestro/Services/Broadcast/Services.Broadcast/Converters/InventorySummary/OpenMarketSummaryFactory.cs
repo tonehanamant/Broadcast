@@ -47,7 +47,8 @@ namespace Services.Broadcast.Converters.InventorySummary
                 InventoryPostingBooks = GetInventoryPostingBooks(inventorySummaryManifestFiles),
                 LastUpdatedDate = GetFileLastCreatedDate(inventorySummaryManifestFiles),
                 RatesAvailableFromQuarter = quartersForInventoryAvailable.Item1,
-                RatesAvailableToQuarter = quartersForInventoryAvailable.Item2
+                RatesAvailableToQuarter = quartersForInventoryAvailable.Item2,
+                Details = null //open market does not have details
             };
         }
     }

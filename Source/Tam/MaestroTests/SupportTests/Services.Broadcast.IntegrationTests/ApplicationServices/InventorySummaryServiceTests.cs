@@ -222,7 +222,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [TestCase("NBCU Syn")]
         [TestCase("WB Syn")]
         [UseReporter(typeof(DiffReporter))]
-        public void GetInventorySummaryOnlySyndicationTest(string inventorySourceName)
+        public void GetInventorySummary_Syndication(string inventorySourceName)
         {
             using (ApprovalResults.ForScenario(inventorySourceName))
             {

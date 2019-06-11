@@ -1,5 +1,6 @@
 ﻿[
   {
+    "Details": null,
     "HasInventoryGaps": null,
     "HasRatesAvailableForQuarter": false,
     "HouseholdImpressions": null,
@@ -318,6 +319,7 @@
   },
   {
     "DaypartCode": "SYN",
+    "Details": null,
     "HasInventoryGaps": true,
     "HasRatesAvailableForQuarter": false,
     "HouseholdImpressions": null,
@@ -350,6 +352,7 @@
   },
   {
     "DaypartCode": "SYN",
+    "Details": null,
     "HasInventoryGaps": true,
     "HasRatesAvailableForQuarter": false,
     "HouseholdImpressions": null,
@@ -382,6 +385,7 @@
   },
   {
     "DaypartCode": "SYN",
+    "Details": null,
     "HasInventoryGaps": true,
     "HasRatesAvailableForQuarter": false,
     "HouseholdImpressions": null,
@@ -414,6 +418,7 @@
   },
   {
     "DaypartCode": "SYN",
+    "Details": null,
     "HasInventoryGaps": true,
     "HasRatesAvailableForQuarter": false,
     "HouseholdImpressions": null,

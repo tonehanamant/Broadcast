@@ -1,0 +1,35 @@
+﻿[
+  {
+    "DaypartCode": "SYN",
+    "Details": null,
+    "HasInventoryGaps": true,
+    "HasRatesAvailableForQuarter": true,
+    "HouseholdImpressions": null,
+    "InventoryPostingBooks": [],
+    "InventorySourceId": 13,
+    "InventorySourceName": "20th Century Fox (Twentieth Century)",
+    "IsUpdating": false,
+    "LastUpdatedDate": "2019-06-07T08:28:09.48",
+    "Quarter": {
+      "EndDate": "2018-03-25T23:59:59",
+      "Quarter": 1,
+      "StartDate": "2018-01-01T00:00:00",
+      "Year": 2018
+    },
+    "RatesAvailableFromQuarter": {
+      "EndDate": "2018-03-25T23:59:59",
+      "Quarter": 1,
+      "StartDate": "2018-01-01T00:00:00",
+      "Year": 2018
+    },
+    "RatesAvailableToQuarter": {
+      "EndDate": "2018-03-25T23:59:59",
+      "Quarter": 1,
+      "StartDate": "2018-01-01T00:00:00",
+      "Year": 2018
+    },
+    "TotalMarkets": 0,
+    "TotalPrograms": 3,
+    "TotalStations": 0
+  }
+]
