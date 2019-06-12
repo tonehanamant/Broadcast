@@ -68,4 +68,10 @@ namespace Services.Broadcast.Entities.InventorySummary
         public string DaypartCode { get { return "SYN"; } }
         public object Details { get; set; }
     }
+
+    public class DiginetInventorySummaryDto : InventorySummaryDto
+    {
+        public decimal? CPM { get; set; }
+        public int TotalDaypartCodes { get; set; }
+    }
 }

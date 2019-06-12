@@ -50,7 +50,19 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void GetInventorySummariesProprietaryOAndO()
+        public void GetInventorySummaries_Diginet()
+        {
+            var inventoryCards = _InventorySummaryService.GetInventorySummaries(new InventorySummaryFilterDto
+            {
+                InventorySourceId = 18,
+            }, new DateTime(2019, 04, 01));
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(inventoryCards));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetInventorySummaries_ProprietaryOAndO()
         {
             var inventoryCards = _InventorySummaryService.GetInventorySummaries(new InventorySummaryFilterDto
             {

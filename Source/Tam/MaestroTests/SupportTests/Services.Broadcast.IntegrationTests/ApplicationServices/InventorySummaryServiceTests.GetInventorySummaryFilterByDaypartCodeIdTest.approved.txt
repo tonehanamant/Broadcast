@@ -49,9 +49,9 @@
   {
     "Details": [
       {
-        "CPM": 13.5000,
+        "CPM": 27.0000,
         "Daypart": "EMN",
-        "HouseholdImpressions": 2000.0,
+        "HouseholdImpressions": 1000.0,
         "MaxSpotsPerWeek": 10,
         "MinSpotsPerWeek": 5,
         "TotalCoverage": 0.139,
@@ -61,7 +61,7 @@
     ],
     "HasInventoryGaps": true,
     "HasRatesAvailableForQuarter": true,
-    "HouseholdImpressions": 2000.0,
+    "HouseholdImpressions": 1000.0,
     "InventoryPostingBooks": [
       {
         "HutProjectionBookId": 437,

@@ -88,5 +88,59 @@
     "InventoryType": 4,
     "IsActive": true,
     "Name": "WB Syn"
+  },
+  {
+    "Id": 17,
+    "InventoryType": 5,
+    "IsActive": true,
+    "Name": "Antenna TV"
+  },
+  {
+    "Id": 18,
+    "InventoryType": 5,
+    "IsActive": true,
+    "Name": "Bounce"
+  },
+  {
+    "Id": 19,
+    "InventoryType": 5,
+    "IsActive": true,
+    "Name": "BUZZR"
+  },
+  {
+    "Id": 20,
+    "InventoryType": 5,
+    "IsActive": true,
+    "Name": "COZI"
+  },
+  {
+    "Id": 21,
+    "InventoryType": 5,
+    "IsActive": true,
+    "Name": "Escape"
+  },
+  {
+    "Id": 22,
+    "InventoryType": 5,
+    "IsActive": true,
+    "Name": "Grit"
+  },
+  {
+    "Id": 23,
+    "InventoryType": 5,
+    "IsActive": true,
+    "Name": "HITV"
+  },
+  {
+    "Id": 24,
+    "InventoryType": 5,
+    "IsActive": true,
+    "Name": "Laff"
+  },
+  {
+    "Id": 25,
+    "InventoryType": 5,
+    "IsActive": true,
+    "Name": "Me TV"
   }
 ]

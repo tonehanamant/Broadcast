@@ -5,7 +5,6 @@ using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.InventorySummary;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
@@ -18,7 +17,7 @@ namespace Services.Broadcast.Repositories
         List<InventorySummaryManifestDto> GetInventorySummaryManifestsForBarterSources(InventorySource inventorySource, DateTime startDate, DateTime endDate);
         List<InventorySummaryManifestDto> GetInventorySummaryManifestsForOpenMarketSources(InventorySource inventorySource, DateTime startDate, DateTime endDate);
         List<InventorySummaryManifestDto> GetInventorySummaryManifestsForProprietaryOAndOSources(InventorySource inventorySource, DateTime startDate, DateTime endDate);
-        List<InventorySummaryManifestDto> GetInventorySummaryManifestsForSyndication(InventorySource inventorySource, DateTime startDate, DateTime endDate);
+        List<InventorySummaryManifestDto> GetInventorySummaryManifestsForSyndicationOrDiginetSources(InventorySource inventorySource, DateTime startDate, DateTime endDate);
         double? GetInventorySummaryHouseholdImpressions(List<int> manifestIds, int householdAudienceId);
         List<InventorySummaryManifestFileDto> GetInventorySummaryManifestFileDtos(List<int> inventoryFileIds);
     }
@@ -105,7 +104,7 @@ namespace Services.Broadcast.Repositories
                 });
         }
 
-        public List<InventorySummaryManifestDto> GetInventorySummaryManifestsForSyndication(InventorySource inventorySource, DateTime startDate, DateTime endDate)
+        public List<InventorySummaryManifestDto> GetInventorySummaryManifestsForSyndicationOrDiginetSources(InventorySource inventorySource, DateTime startDate, DateTime endDate)
         {
             return _InReadUncommitedTransaction(
                 context =>
@@ -118,6 +117,7 @@ namespace Services.Broadcast.Repositories
                             select new InventorySummaryManifestDto
                             {
                                 ManifestId = manifest.id,
+                                DaypartCode = header.daypart_codes.code,
                                 FileId = file.id
                             })
                             .GroupBy(x => x.ManifestId)

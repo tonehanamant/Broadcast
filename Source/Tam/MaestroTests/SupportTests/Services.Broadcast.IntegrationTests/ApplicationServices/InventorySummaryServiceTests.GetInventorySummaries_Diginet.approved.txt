@@ -1,0 +1,34 @@
+﻿[
+  {
+    "CPM": 10.0000,
+    "HasInventoryGaps": true,
+    "HasRatesAvailableForQuarter": true,
+    "HouseholdImpressions": null,
+    "InventoryPostingBooks": [],
+    "InventorySourceId": 18,
+    "InventorySourceName": "Bounce",
+    "IsUpdating": false,
+    "LastUpdatedDate": "2019-06-06T08:15:36.56",
+    "Quarter": {
+      "EndDate": "2019-06-30T23:59:59",
+      "Quarter": 2,
+      "StartDate": "2019-04-01T00:00:00",
+      "Year": 2019
+    },
+    "RatesAvailableFromQuarter": {
+      "EndDate": "2019-06-30T23:59:59",
+      "Quarter": 2,
+      "StartDate": "2019-04-01T00:00:00",
+      "Year": 2019
+    },
+    "RatesAvailableToQuarter": {
+      "EndDate": "2019-06-30T23:59:59",
+      "Quarter": 2,
+      "StartDate": "2019-04-01T00:00:00",
+      "Year": 2019
+    },
+    "TotalDaypartCodes": 1,
+    "TotalMarkets": 0,
+    "TotalStations": 0
+  }
+]

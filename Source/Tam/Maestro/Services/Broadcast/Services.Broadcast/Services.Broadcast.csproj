@@ -223,6 +223,7 @@
     <Compile Include="Aggregates\SchedulesAggregate.cs" />
     <Compile Include="ApplicationServices\DaypartCodeService.cs" />
     <Compile Include="Cache\MarketCoverageCache.cs" />
+    <Compile Include="Converters\InventorySummary\DiginetSummaryFactory.cs" />
     <Compile Include="Converters\InventorySummary\ProprietaryOAndOSummaryFactory.cs" />
 	<Compile Include="Converters\InventorySummary\SyndicationSummaryFactory.cs" />
     <Compile Include="Entities\CampaignDto.cs" />

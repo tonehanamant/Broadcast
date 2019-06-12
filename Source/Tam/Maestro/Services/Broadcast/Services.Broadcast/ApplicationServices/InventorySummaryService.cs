@@ -39,7 +39,8 @@ namespace Services.Broadcast.ApplicationServices
             InventorySourceTypeEnum.Barter,
             InventorySourceTypeEnum.OpenMarket,
             InventorySourceTypeEnum.ProprietaryOAndO,
-            InventorySourceTypeEnum.Syndication
+            InventorySourceTypeEnum.Syndication,
+            InventorySourceTypeEnum.Diginet
         };
         private readonly IMarketCoverageCache _MarketCoverageCache;
         private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekAggregateCache;
@@ -168,7 +169,7 @@ namespace Services.Broadcast.ApplicationServices
         }
 
         private List<InventorySummaryManifestDto> _GetInventorySummaryManifests(InventorySource inventorySource,
-                                                                               QuarterDetailDto quarterDetail)
+                                                                                QuarterDetailDto quarterDetail)
         {
             if (inventorySource.InventoryType == InventorySourceTypeEnum.Barter)
             {
@@ -182,9 +183,10 @@ namespace Services.Broadcast.ApplicationServices
             {
                 return _InventorySummaryRepository.GetInventorySummaryManifestsForProprietaryOAndOSources(inventorySource, quarterDetail.StartDate, quarterDetail.EndDate);
             }
-            else if (inventorySource.InventoryType == InventorySourceTypeEnum.Syndication)
+            else if (inventorySource.InventoryType == InventorySourceTypeEnum.Syndication ||
+                     inventorySource.InventoryType == InventorySourceTypeEnum.Diginet)
             {
-                return _InventorySummaryRepository.GetInventorySummaryManifestsForSyndication(inventorySource, quarterDetail.StartDate, quarterDetail.EndDate);
+                return _InventorySummaryRepository.GetInventorySummaryManifestsForSyndicationOrDiginetSources(inventorySource, quarterDetail.StartDate, quarterDetail.EndDate);
             }
 
             return new List<InventorySummaryManifestDto>();
@@ -232,6 +234,15 @@ namespace Services.Broadcast.ApplicationServices
                                                                        _ProgramRepository,
                                                                        _MediaMonthAndWeekAggregateCache,
                                                                        _MarketCoverageCache);
+            }
+            else if (inventorySource.InventoryType == InventorySourceTypeEnum.Diginet)
+            {
+                inventorySummaryFactory = new DiginetSummaryFactory(_InventoryRepository,
+                                                                    _InventorySummaryRepository,
+                                                                    _QuarterCalculationEngine,
+                                                                    _ProgramRepository,
+                                                                    _MediaMonthAndWeekAggregateCache,
+                                                                    _MarketCoverageCache);
             }
 
             return inventorySummaryFactory.CreateInventorySummary(inventorySource, householdAudienceId, quarterDetail, manifests);
