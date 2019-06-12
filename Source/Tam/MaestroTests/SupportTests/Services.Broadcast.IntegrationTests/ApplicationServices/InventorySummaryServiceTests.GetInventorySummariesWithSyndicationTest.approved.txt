@@ -228,6 +228,7 @@
     "TotalUnits": 0
   },
   {
+    "Details": [],
     "HasInventoryGaps": false,
     "HasRatesAvailableForQuarter": false,
     "HouseholdImpressions": null,
@@ -250,6 +251,7 @@
     "TotalStations": 0
   },
   {
+    "Details": [],
     "HasInventoryGaps": true,
     "HasRatesAvailableForQuarter": false,
     "HouseholdImpressions": null,
@@ -282,6 +284,7 @@
     "TotalStations": 0
   },
   {
+    "Details": [],
     "HasInventoryGaps": false,
     "HasRatesAvailableForQuarter": false,
     "HouseholdImpressions": null,

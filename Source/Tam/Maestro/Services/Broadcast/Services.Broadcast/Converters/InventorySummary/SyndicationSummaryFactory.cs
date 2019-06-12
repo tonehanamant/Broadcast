@@ -1,4 +1,5 @@
 ﻿using Services.Broadcast.BusinessEngines;
+using Services.Broadcast.Cache;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.InventorySummary;
 using Services.Broadcast.Repositories;
@@ -13,8 +14,14 @@ namespace Services.Broadcast.Converters.InventorySummary
                                          IInventorySummaryRepository inventorySummaryRepository,
                                          IQuarterCalculationEngine quarterCalculationEngine,
                                          IProgramRepository programRepository,
-                                         IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache)
-            : base(inventoryRepository, inventorySummaryRepository, quarterCalculationEngine, programRepository, mediaMonthAndWeekAggregateCache)
+                                         IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
+                                         IMarketCoverageCache marketCoverageCache)
+            : base(inventoryRepository, 
+                   inventorySummaryRepository, 
+                   quarterCalculationEngine, 
+                   programRepository, 
+                   mediaMonthAndWeekAggregateCache,
+                   marketCoverageCache)
         {
         }
 

@@ -212,7 +212,8 @@ namespace Services.Broadcast.ApplicationServices
                                                                        _InventorySummaryRepository, 
                                                                        _QuarterCalculationEngine,
                                                                        _ProgramRepository,
-                                                                       _MediaMonthAndWeekAggregateCache);               
+                                                                       _MediaMonthAndWeekAggregateCache,
+                                                                       _MarketCoverageCache);               
             }
             else if (inventorySource.InventoryType == InventorySourceTypeEnum.ProprietaryOAndO)
             {
@@ -220,7 +221,8 @@ namespace Services.Broadcast.ApplicationServices
                                                                              _InventorySummaryRepository,
                                                                              _QuarterCalculationEngine,
                                                                              _ProgramRepository,
-                                                                             _MediaMonthAndWeekAggregateCache);
+                                                                             _MediaMonthAndWeekAggregateCache,
+                                                                             _MarketCoverageCache);
             }
             else if (inventorySource.InventoryType == InventorySourceTypeEnum.Syndication)
             {
@@ -228,7 +230,8 @@ namespace Services.Broadcast.ApplicationServices
                                                                        _InventorySummaryRepository,
                                                                        _QuarterCalculationEngine,
                                                                        _ProgramRepository,
-                                                                       _MediaMonthAndWeekAggregateCache);
+                                                                       _MediaMonthAndWeekAggregateCache,
+                                                                       _MarketCoverageCache);
             }
 
             return inventorySummaryFactory.CreateInventorySummary(inventorySource, householdAudienceId, quarterDetail, manifests);

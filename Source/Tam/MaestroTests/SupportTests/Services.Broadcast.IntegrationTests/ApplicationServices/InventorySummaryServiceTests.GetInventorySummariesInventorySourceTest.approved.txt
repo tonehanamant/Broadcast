@@ -4,7 +4,7 @@
       {
         "CPM": 12.155591572123176661264181524,
         "Daypart": "LN",
-        "HouseholdImpressions": 2468.0,
+        "HouseholdImpressions": 1234.0,
         "TotalCoverage": 0.894,
         "TotalMarkets": 1,
         "TotalUnits": 1
@@ -12,7 +12,7 @@
     ],
     "HasInventoryGaps": null,
     "HasRatesAvailableForQuarter": true,
-    "HouseholdImpressions": 2468.0,
+    "HouseholdImpressions": 1234.0,
     "InventoryPostingBooks": [
       {
         "HutProjectionBookId": 437,

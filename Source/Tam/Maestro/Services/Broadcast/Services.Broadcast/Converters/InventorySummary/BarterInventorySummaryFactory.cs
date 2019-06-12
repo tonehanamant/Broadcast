@@ -1,5 +1,4 @@
-﻿using Services.Broadcast.ApplicationServices;
-using Services.Broadcast.BusinessEngines;
+﻿using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Cache;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.InventorySummary;
@@ -13,7 +12,6 @@ namespace Services.Broadcast.Converters.InventorySummary
 {
     public class BarterInventorySummaryFactory : BaseInventorySummaryAbstractFactory
     {
-        private readonly IMarketCoverageCache _MarketCoverageCache;
 
         public BarterInventorySummaryFactory(IInventoryRepository inventoryRepository,
                                              IInventorySummaryRepository inventorySummaryRepository,
@@ -22,9 +20,13 @@ namespace Services.Broadcast.Converters.InventorySummary
                                              IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
                                              IMarketCoverageCache marketCoverageCache)
 
-            : base(inventoryRepository, inventorySummaryRepository, quarterCalculationEngine, programRepository, mediaMonthAndWeekAggregateCache)
+            : base(inventoryRepository, 
+                   inventorySummaryRepository, 
+                   quarterCalculationEngine, 
+                   programRepository, 
+                   mediaMonthAndWeekAggregateCache, 
+                   marketCoverageCache)
         {
-            _MarketCoverageCache = marketCoverageCache;
         }
 
         public override InventorySummaryDto CreateInventorySummary(InventorySource inventorySource,
@@ -36,6 +38,9 @@ namespace Services.Broadcast.Converters.InventorySummary
             var quartersForInventoryAvailable = GetQuartersForInventoryAvailable(allInventorySourceManifestWeeks);
             var inventorySummaryManifestFiles = GetInventorySummaryManifestFiles(inventorySummaryManifests);
             var totalDaypartsCodes = inventorySummaryManifests.GroupBy(x => x.DaypartCode).Count();
+            var manifests = InventoryRepository.GetStationInventoryManifestsByIds(inventorySummaryManifests.Select(x => x.ManifestId));
+
+            RemoveWeeksNotInQuarter(manifests, quarterDetail);
 
             var result = new BarterInventorySummaryDto
             {
@@ -51,13 +56,10 @@ namespace Services.Broadcast.Converters.InventorySummary
                 LastUpdatedDate = GetLastJobCompletedDate(inventorySummaryManifestFiles),
                 IsUpdating = GetIsInventoryUpdating(inventorySummaryManifestFiles),
                 RatesAvailableFromQuarter = quartersForInventoryAvailable.Item1,
-                RatesAvailableToQuarter = quartersForInventoryAvailable.Item2
+                RatesAvailableToQuarter = quartersForInventoryAvailable.Item2,
+                Details = _GetDetails(inventorySummaryManifests, manifests, householdAudienceId)
             };
-
-            var manifests = InventoryRepository.GetStationInventoryManifestsByIds(inventorySummaryManifests.Select(x => x.ManifestId));
-            RemoveWeeksNotInQuarter(manifests, quarterDetail);
-            result.Details = _GetDetails(inventorySummaryManifests, manifests, householdAudienceId);
-
+            
             var detailsWithHHImpressions = result.Details.Where(x => x.HouseholdImpressions.HasValue);
 
             if (detailsWithHHImpressions.Any())
@@ -80,13 +82,13 @@ namespace Services.Broadcast.Converters.InventorySummary
                 var manifests = allManifests.Where(x => summaryManifestIds.Contains(x.Id.Value));
                 var marketCodes = summaryManifests.Where(x => x.MarketCode.HasValue).Select(x => Convert.ToInt32(x.MarketCode.Value)).Distinct();
 
-                CalculateHouseHoldImpressionsAndCPM(manifests, householdAudienceId, out var householdImpressions, out var cpm);
+                _CalculateHouseHoldImpressionsAndCPM(manifests, householdAudienceId, out var householdImpressions, out var cpm);
 
                 result.Add(new BarterInventorySummaryDto.Detail
                 {
                     Daypart = manifestsGrouping.Key,
                     TotalMarkets = marketCodes.Count(),
-                    TotalCoverage = _MarketCoverageCache.GetMarketCoverages(marketCodes).Sum(x => x.Value),
+                    TotalCoverage = MarketCoverageCache.GetMarketCoverages(marketCodes).Sum(x => x.Value),
                     HouseholdImpressions = householdImpressions,
                     CPM = cpm,
                     TotalUnits = _GetTotalUnits(summaryManifests)
@@ -99,6 +101,42 @@ namespace Services.Broadcast.Converters.InventorySummary
         private int _GetTotalUnits(List<InventorySummaryManifestDto> manifests)
         {
             return manifests.GroupBy(x => x.UnitName).Count();
+        }
+
+        private void _CalculateHouseHoldImpressionsAndCPM(
+            IEnumerable<StationInventoryManifest> manifests,
+            int householdAudienceId,
+            out double? impressionsResult,
+            out decimal? cpmResult)
+        {
+            impressionsResult = null;
+            cpmResult = null;
+
+            manifests = manifests.Where(x => _ManifestHasCalculatedHHImpressionsAndSpotCast(x, householdAudienceId));
+
+            if (!manifests.Any())
+                return;
+
+            double impressionsTotal = 0;
+            decimal spotCostTotal = 0;
+
+            foreach (var manifest in manifests)
+            {
+                var hhImpressions = manifest.ManifestAudiences.Single(x => x.Audience.Id == householdAudienceId).Impressions.Value;
+                var spotCost = manifest.ManifestRates.First(r => r.SpotLengthId == manifest.SpotLengthId).SpotCost;
+
+                impressionsTotal += hhImpressions;
+                spotCostTotal += spotCost;
+            }
+
+            impressionsResult = impressionsTotal;
+            cpmResult = ProposalMath.CalculateCpm(spotCostTotal, impressionsTotal);
+        }
+
+        private bool _ManifestHasCalculatedHHImpressionsAndSpotCast(StationInventoryManifest manifest, int householdAudienceId)
+        {
+            return manifest.ManifestAudiences.Any(x => x.Audience.Id == householdAudienceId && x.Impressions.HasValue) &&
+                   manifest.ManifestRates.Any(x => x.SpotLengthId == manifest.SpotLengthId);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using ApprovalTests;
 using ApprovalTests.Namers;
 using ApprovalTests.Reporters;
+using Common.Services;
 using IntegrationTests.Common;
 using Newtonsoft.Json;
 using NUnit.Framework;
@@ -10,7 +11,10 @@ using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.InventorySummary;
 using Services.Broadcast.Repositories;
 using System;
+using System.IO;
 using System.Linq;
+using Tam.Maestro.Common.DataLayer;
+using Microsoft.Practices.Unity;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
@@ -19,7 +23,30 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
     {
         private readonly IInventorySummaryService _InventorySummaryService = IntegrationTestApplicationServiceFactory.GetApplicationService<IInventorySummaryService>();
         private readonly IInventoryRepository _InventoryRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
-        private readonly IDaypartCodeRepository _DaypartCodeRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IDaypartCodeRepository>();
+        private readonly IDaypartCodeRepository _DaypartCodeRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IDaypartCodeRepository>();       
+        private IProprietaryInventoryService _ProprietaryService;
+        private IInventoryRepository _IInventoryRepository;
+        private IInventoryRatingsProcessingService _InventoryRatingsProcessingService;
+        private IInventoryFileRatingsJobsRepository _InventoryFileRatingsJobsRepository;
+
+        [TestFixtureSetUp]
+        public void init()
+        {
+            try
+            {
+                IntegrationTestApplicationServiceFactory.Instance.RegisterType<IFileService, FileServiceDataLakeStubb>();
+                _ProprietaryService = IntegrationTestApplicationServiceFactory.GetApplicationService<IProprietaryInventoryService>();
+                _IInventoryRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
+                _InventoryRatingsProcessingService = IntegrationTestApplicationServiceFactory.GetApplicationService<IInventoryRatingsProcessingService>();
+                _InventoryFileRatingsJobsRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryFileRatingsJobsRepository>();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+
+        }
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
@@ -37,12 +64,35 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void GetInventorySummaryDetailsTest()
         {
-            var inventoryCards = _InventorySummaryService.GetInventorySummaries(new InventorySummaryFilterDto
-            {
-                InventorySourceId = 4,
-            }, new DateTime(2019, 04, 01));
+            const string fileName = @"ProprietaryDataFiles\Barter_ValidFormat_SingleBook_ShortDateRange.xlsx";
 
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(inventoryCards));
+            using (new TransactionScopeWrapper())
+            {
+                var request = new InventoryFileSaveRequest
+                {
+                    StreamData = new FileStream($@".\Files\{fileName}", FileMode.Open, FileAccess.Read),
+                    FileName = fileName
+                };
+
+                var result = _ProprietaryService.SaveProprietaryInventoryFile(request, "IntegrationTestUser", new DateTime(2019, 02, 02));
+                var job = _InventoryFileRatingsJobsRepository.GetLatestJob();
+                _InventoryRatingsProcessingService.ProcessInventoryRatingsJob(job.id.Value);
+
+                var inventoryCards = _InventorySummaryService.GetInventorySummaries(new InventorySummaryFilterDto
+                {
+                    InventorySourceId = 4,
+                }, new DateTime(2019, 04, 01));
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(InventorySummaryDto), "LastUpdatedDate");
+                var jsonSerializerSettings = new JsonSerializerSettings
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(inventoryCards, jsonSerializerSettings));
+            }
         }
 
         [Test]

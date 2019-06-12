@@ -47,6 +47,19 @@ namespace Services.Broadcast.Entities.InventorySummary
     {
         public int TotalPrograms { get; set; }
         public int TotalDaypartCodes { get; set; }
+        public List<Detail> Details { get; set; }
+
+        public class Detail
+        {
+            public string Daypart { get; set; }
+            public int TotalMarkets { get; set; }
+            public double TotalCoverage { get; set; }
+            public int TotalPrograms { get; set; }
+            public double? HouseholdImpressions { get; set; }
+            public int MinSpotsPerWeek { get; set; }
+            public int MaxSpotsPerWeek { get; set; }
+            public decimal? CPM { get; set; }
+        }
     }
 
     public class SyndicationInventorySummaryDto : InventorySummaryDto

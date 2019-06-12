@@ -1,5 +1,6 @@
 ﻿using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.BusinessEngines;
+using Services.Broadcast.Cache;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.InventorySummary;
 using Services.Broadcast.Entities.StationInventory;
@@ -14,6 +15,7 @@ namespace Services.Broadcast.Converters.InventorySummary
     {
         protected readonly IInventoryRepository InventoryRepository;
         protected readonly IInventorySummaryRepository InventorySummaryRepository;
+        protected readonly IMarketCoverageCache MarketCoverageCache;
 
         private readonly IQuarterCalculationEngine _QuarterCalculationEngine;
         private readonly IProgramRepository _ProgramRepository;
@@ -23,10 +25,12 @@ namespace Services.Broadcast.Converters.InventorySummary
                                                    IInventorySummaryRepository inventorySummaryRepository,
                                                    IQuarterCalculationEngine quarterCalculationEngine,
                                                    IProgramRepository programRepository,
-                                                   IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache)
+                                                   IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
+                                                   IMarketCoverageCache marketCoverageCache)
         {
             InventoryRepository = inventoryRepository;
             InventorySummaryRepository = inventorySummaryRepository;
+            MarketCoverageCache = marketCoverageCache;
             _QuarterCalculationEngine = quarterCalculationEngine;
             _ProgramRepository = programRepository;
             _MediaMonthAndWeekAggregateCache = mediaMonthAndWeekAggregateCache;
@@ -108,7 +112,7 @@ namespace Services.Broadcast.Converters.InventorySummary
             }
         }
 
-        protected int GetTotalPrograms(List<InventorySummaryManifestDto> manifests)
+        protected int GetTotalPrograms(IEnumerable<InventorySummaryManifestDto> manifests)
         {
             var manifestIds = manifests.Select(x => x.ManifestId).ToList();
             return _ProgramRepository.GetUniqueProgramNamesByManifests(manifestIds)
@@ -116,79 +120,13 @@ namespace Services.Broadcast.Converters.InventorySummary
                                      .Count();
         }
 
-        protected void CalculateHouseHoldImpressionsAndCPM(
-            IEnumerable<StationInventoryManifest> manifests, 
-            int householdAudienceId, 
-            out double? impressionsResult, 
-            out decimal? cpmResult)
+        protected int GetTotalPrograms(IEnumerable<StationInventoryManifest> manifests)
         {
-            impressionsResult = null;
-            cpmResult = null;
-
-            manifests = manifests.Where(x => _ManifestHasProvidedHHImpressionsAndCpm(x, householdAudienceId) ||
-                                             _ManifestHasCalculatedHHImpressionsAndSpotCast(x, householdAudienceId));
-
-            if (!manifests.Any())
-                return;
-
-            double impressionsTotal = 0;
-            decimal cpmTotal = 0;
-
-            var manifestsGroupedByMediaWeek = manifests
-                .SelectMany(x => x.ManifestWeeks, (manifest, week) => new { manifest, mediaWeekId = week.MediaWeek.Id })
-                .GroupBy(x => x.mediaWeekId);
-
-            foreach (var grouping in manifestsGroupedByMediaWeek)
-            {
-                var weekManifests = grouping.Select(x => x.manifest).ToList();
-                double weekImpressionsTotal = 0;
-                decimal weekCpmTotal = 0;
-
-                foreach (var manifest in weekManifests)
-                {
-                    double hhImpressions;
-                    decimal hhCPM;
-                    var hhAudience = manifest.ManifestAudiencesReferences.SingleOrDefault(x => x.Audience.Id == householdAudienceId && x.Impressions.HasValue);
-
-                    if (hhAudience == null)
-                    {
-                        // Use calculated data if it isn`t provided. 
-                        hhAudience = manifest.ManifestAudiences.Single(x => x.Audience.Id == householdAudienceId);
-                        hhImpressions = hhAudience.Impressions.Value;
-                        var spotCost = manifest.ManifestRates.First(r => r.SpotLengthId == manifest.SpotLengthId).SpotCost;
-                        hhCPM = ProposalMath.CalculateCpm(spotCost, hhImpressions);
-                    }
-                    else
-                    {
-                        // Use provided data
-                        hhImpressions = hhAudience.Impressions.Value;
-                        hhCPM = hhAudience.CPM.Value;
-                    }
-
-                    weekImpressionsTotal += hhImpressions;
-                    weekCpmTotal += hhCPM;
-                }
-
-                var weekImpressionsAverage = weekImpressionsTotal / weekManifests.Count;
-                var weekCPMAverage = weekCpmTotal / weekManifests.Count;
-
-                impressionsTotal += weekImpressionsAverage;
-                cpmTotal += weekCPMAverage;
-            }
-
-            impressionsResult = impressionsTotal;
-            cpmResult = cpmTotal / manifestsGroupedByMediaWeek.Count();
-        }
-
-        private bool _ManifestHasProvidedHHImpressionsAndCpm(StationInventoryManifest manifest, int householdAudienceId)
-        {
-            return manifest.ManifestAudiencesReferences.Any(x => x.Audience.Id == householdAudienceId && x.Impressions.HasValue && x.CPM.HasValue);
-        }
-
-        private bool _ManifestHasCalculatedHHImpressionsAndSpotCast(StationInventoryManifest manifest, int householdAudienceId)
-        {
-            return manifest.ManifestAudiences.Any(x => x.Audience.Id == householdAudienceId && x.Impressions.HasValue) &&
-                   manifest.ManifestRates.Any(x => x.SpotLengthId == manifest.SpotLengthId);
+            return manifests.SelectMany(x => x.ManifestDayparts)
+                            .Select(x => x.ProgramName)
+                            .Where(x => !string.IsNullOrWhiteSpace(x))
+                            .Distinct(StringComparer.OrdinalIgnoreCase)
+                            .Count();
         }
 
         protected bool HasInventoryGapsForDateRange(IEnumerable<StationInventoryManifestWeek> manifestWeeks, Tuple<QuarterDetailDto, QuarterDetailDto> inventoryDateRangeTuple)

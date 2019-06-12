@@ -1,8 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Services.Broadcast.BusinessEngines;
+using Services.Broadcast.Cache;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.InventorySummary;
+using Services.Broadcast.Entities.StationInventory;
 using Services.Broadcast.Repositories;
 
 namespace Services.Broadcast.Converters.InventorySummary
@@ -13,8 +16,14 @@ namespace Services.Broadcast.Converters.InventorySummary
                                               IInventorySummaryRepository inventorySummaryRepository,
                                               IQuarterCalculationEngine quarterCalculationEngine,
                                               IProgramRepository programRepository,
-                                              IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache) 
-            : base(inventoryRepository, inventorySummaryRepository, quarterCalculationEngine, programRepository, mediaMonthAndWeekAggregateCache)
+                                              IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
+                                              IMarketCoverageCache marketCoverageCache) 
+            : base(inventoryRepository, 
+                   inventorySummaryRepository, 
+                   quarterCalculationEngine, 
+                   programRepository, 
+                   mediaMonthAndWeekAggregateCache,
+                   marketCoverageCache)
         {
         }
 
@@ -23,6 +32,9 @@ namespace Services.Broadcast.Converters.InventorySummary
             var allInventorySourceManifestWeeks = InventoryRepository.GetStationInventoryManifestWeeksForInventorySource(inventorySource.Id);
             var quartersForInventoryAvailable = GetQuartersForInventoryAvailable(allInventorySourceManifestWeeks);
             var inventorySummaryManifestFiles = GetInventorySummaryManifestFiles(inventorySummaryManifests);
+            var manifests = InventoryRepository.GetStationInventoryManifestsByIds(inventorySummaryManifests.Select(x => x.ManifestId));
+
+            RemoveWeeksNotInQuarter(manifests, quarterDetail);
 
             var result = new ProprietaryOAndOInventorySummaryDto
             {
@@ -32,26 +44,92 @@ namespace Services.Broadcast.Converters.InventorySummary
                 Quarter = quarterDetail,
                 TotalMarkets = GetTotalMarkets(inventorySummaryManifests),
                 TotalStations = GetTotalStations(inventorySummaryManifests),
-                TotalPrograms = GetTotalPrograms(inventorySummaryManifests),
+                TotalPrograms = GetTotalPrograms(manifests),
                 TotalDaypartCodes = inventorySummaryManifests.GroupBy(x => x.DaypartCode).Count(),
                 InventoryPostingBooks = GetInventoryPostingBooks(inventorySummaryManifestFiles),
                 LastUpdatedDate = GetLastJobCompletedDate(inventorySummaryManifestFiles),
                 IsUpdating = GetIsInventoryUpdating(inventorySummaryManifestFiles),
                 RatesAvailableFromQuarter = quartersForInventoryAvailable.Item1,
                 RatesAvailableToQuarter = quartersForInventoryAvailable.Item2,
-                HasInventoryGaps = HasInventoryGapsForDateRange(allInventorySourceManifestWeeks, quartersForInventoryAvailable)
+                HasInventoryGaps = HasInventoryGapsForDateRange(allInventorySourceManifestWeeks, quartersForInventoryAvailable),
+                Details = _GetDetails(inventorySummaryManifests, manifests, householdAudienceId)
             };
 
-            var manifests = InventoryRepository.GetStationInventoryManifestsByIds(inventorySummaryManifests.Select(x => x.ManifestId));
-            RemoveWeeksNotInQuarter(manifests, quarterDetail);
+            var detailsWithHHImpressions = result.Details.Where(x => x.HouseholdImpressions.HasValue);
 
-            // This method should be used in the same way as for Barter in the O&O details story: PRI-7631
-            // CPM is not used for now, it will be used in PRI-7631
-            CalculateHouseHoldImpressionsAndCPM(manifests, householdAudienceId, out var hhImpressions, out var CPM);
-
-            result.HouseholdImpressions = hhImpressions;
+            if (detailsWithHHImpressions.Any())
+            {
+                result.HouseholdImpressions = detailsWithHHImpressions.Sum(x => x.HouseholdImpressions);
+            }
 
             return result;
+        }
+
+        private List<ProprietaryOAndOInventorySummaryDto.Detail> _GetDetails(List<InventorySummaryManifestDto> allSummaryManifests, List<StationInventoryManifest> allManifests, int householdAudienceId)
+        {
+            var result = new List<ProprietaryOAndOInventorySummaryDto.Detail>();
+            var allManifestsGroupedByDaypart = allSummaryManifests.GroupBy(x => x.DaypartCode);
+
+            foreach (var manifestsGrouping in allManifestsGroupedByDaypart)
+            {
+                var summaryManifests = manifestsGrouping.ToList();
+                var summaryManifestIds = summaryManifests.Select(m => m.ManifestId);
+                var manifests = allManifests.Where(x => summaryManifestIds.Contains(x.Id.Value));
+                var marketCodes = summaryManifests.Where(x => x.MarketCode.HasValue).Select(x => Convert.ToInt32(x.MarketCode.Value)).Distinct();
+                var manifestSpots = manifests.SelectMany(x => x.ManifestWeeks).Select(x => x.Spots);
+
+                _CalculateHouseHoldImpressionsAndCPM(manifests, householdAudienceId, out var householdImpressions, out var cpm);
+                
+                result.Add(new ProprietaryOAndOInventorySummaryDto.Detail
+                {
+                    Daypart = manifestsGrouping.Key,
+                    TotalMarkets = marketCodes.Count(),
+                    TotalCoverage = MarketCoverageCache.GetMarketCoverages(marketCodes).Sum(x => x.Value),
+                    TotalPrograms = GetTotalPrograms(manifests),
+                    HouseholdImpressions = householdImpressions,
+                    CPM = cpm,
+                    MinSpotsPerWeek = manifestSpots.Min(),
+                    MaxSpotsPerWeek = manifestSpots.Max()
+                });
+            }
+
+            return result;
+        }
+
+        private void _CalculateHouseHoldImpressionsAndCPM(
+            IEnumerable<StationInventoryManifest> manifests,
+            int householdAudienceId,
+            out double? impressionsResult,
+            out decimal? cpmResult)
+        {
+            impressionsResult = null;
+            cpmResult = null;
+
+            manifests = manifests.Where(x => _ManifestHasProvidedHHImpressionsAndSpotCast(x, householdAudienceId));
+
+            if (!manifests.Any())
+                return;
+
+            double impressionsTotal = 0;
+            decimal spotCostTotal = 0;
+
+            foreach (var manifest in manifests)
+            {
+                var hhImpressions = manifest.ManifestAudiences.Single(x => x.Audience.Id == householdAudienceId).Impressions.Value;
+                var spotCost = manifest.ManifestRates.First(r => r.SpotLengthId == manifest.SpotLengthId).SpotCost;
+
+                impressionsTotal += hhImpressions;
+                spotCostTotal += spotCost;
+            }
+
+            impressionsResult = impressionsTotal;
+            cpmResult = ProposalMath.CalculateCpm(spotCostTotal, impressionsTotal);
+        }
+
+        private bool _ManifestHasProvidedHHImpressionsAndSpotCast(StationInventoryManifest manifest, int householdAudienceId)
+        {
+            return manifest.ManifestAudiencesReferences.Any(x => x.Audience.Id == householdAudienceId && x.Impressions.HasValue) &&
+                   manifest.ManifestRates.Any(x => x.SpotLengthId == manifest.SpotLengthId);
         }
     }
 }
