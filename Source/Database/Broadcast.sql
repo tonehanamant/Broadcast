@@ -173,12 +173,6 @@ END
 /*************************************** END PRI-9375 *****************************************************/
 
 /*************************************** START PRI-7621 *****************************************************/
-IF NOT EXISTS (SELECT 1 FROM system_component_parameters WHERE component_id = 'BroadcastService' and parameter_key = 'InventoryUploadErrorsFolder')
-BEGIN
-        INSERT system_component_parameters (component_id, parameter_key, parameter_value, parameter_type, description, last_modified_time)
-        Values('BroadcastService', 'InventoryUploadErrorsFolder', 'D:\\temp', 'string', 'Folder used to store inventory files with validation errors', GETDATE())
-END
-
 IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE name = N'rows_processed' AND OBJECT_ID = OBJECT_ID(N'inventory_files'))
 BEGIN
 	ALTER TABLE [inventory_files] ADD rows_processed INT NULL	
@@ -192,13 +186,12 @@ BEGIN
 END
 /*************************************** END PRI-9931 *****************************************************/
 
-/*************************************** START PRI-7621 PART 2 *****************************************************/
+/*************************************** START PRI-7621 Cleanup *****************************************************/
 IF EXISTS (SELECT 1 FROM system_component_parameters WHERE component_id = 'BroadcastService' and parameter_key = 'InventoryUploadErrorsFolder')
 BEGIN
-	UPDATE system_component_parameters SET parameter_value = '\\cadfs11\Inventory Management UI\Continuous Deployment'
-	WHERE component_id = 'BroadcastService' AND parameter_key = 'InventoryUploadErrorsFolder'
+	DELETE FROM system_component_parameters WHERE component_id = 'BroadcastService' and parameter_key = 'InventoryUploadErrorsFolder'
 END
-/*************************************** END PRI-7621 *****************************************************/
+/*************************************** END PRI-7621 Cleanup *****************************************************/
 
 /*************************************** START PRI-10155 *****************************************************/
 --Syndication, remove 1 audience in each manifest
@@ -258,7 +251,6 @@ where id = s.source_id
 DROP TABLE #source_data
 DROP TABLE #manifests_with_duplicate_audiences
 /*************************************** END PRI-10155 *****************************************************/
-
 -- Update the Schema Version of the database to the current release version
 UPDATE system_component_parameters 
 SET parameter_value = '19.07.1' -- Current release version
