@@ -131,8 +131,10 @@ namespace Services.Broadcast.ApplicationServices
 
         public void AddProjectedImpressionsToManifests(IEnumerable<StationInventoryManifest> manifests, ProposalEnums.ProposalPlaybackType? playbackType, int shareBook, int? hutBook)
         {
-            var manifestsByContractedAudienceList = manifests.Where(m => m.ManifestAudiences.Any())
-                .GroupBy(m => m.ManifestAudiences.Where(ma => ma.IsReference == false).Single().Audience.Id).ToList();
+            var manifestsByContractedAudienceList = manifests
+                .Where(m => m.ManifestAudiencesReferences.Any())
+                .GroupBy(m => m.ManifestAudiencesReferences.Single().Audience.Id)
+                .ToList();
 
             foreach (var manifestsByContractedAudience in manifestsByContractedAudienceList)
             {
@@ -241,7 +243,7 @@ namespace Services.Broadcast.ApplicationServices
 
                 //get the impressions for this station detail and all the nsi components
                 var stationInventoryManifestAudiences = _LoadImpressionsForComponents(componentAudiences, new List<ManifestDetailDaypart>() { stationDetail }, hutBook, shareBook, playbackType);
-
+                
                 //each manifest in this group has the same impressions for the nsi componentns
                 foreach (var manifest in msd.Select(x => x.manifest).ToList())
                 {

@@ -790,6 +790,7 @@ namespace Services.Broadcast.Repositories
                        var dbManifest = context.station_inventory_manifest
                             .Include(m => m.station_inventory_manifest_rates)
                             .SingleOrDefault(m => m.id == manifest.Id);
+
                        if (dbManifest == null) continue;
 
                        foreach (var rate in manifest.ManifestRates)
@@ -818,8 +819,7 @@ namespace Services.Broadcast.Repositories
                            cpm = x.CPM,
                            station_inventory_manifest_id = dbManifest.id
                        }).ToList();
-                       context.station_inventory_manifest_audiences
-                                .AddRange(manifestAudiences);
+                       context.station_inventory_manifest_audiences.AddRange(manifestAudiences);
                    }
                    context.SaveChanges();
                });

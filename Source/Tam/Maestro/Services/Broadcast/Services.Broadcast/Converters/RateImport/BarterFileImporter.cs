@@ -451,7 +451,8 @@ namespace Services.Broadcast.Converters.RateImport
                                 new StationInventoryManifestAudience
                                 {
                                     Audience = fileHeader.Audience.ToDisplayAudience(),
-                                    CPM = fileHeader.Cpm.Value
+                                    CPM = fileHeader.Cpm.Value,
+                                    IsReference = true
                                 }
                             }
                         }).ToList()

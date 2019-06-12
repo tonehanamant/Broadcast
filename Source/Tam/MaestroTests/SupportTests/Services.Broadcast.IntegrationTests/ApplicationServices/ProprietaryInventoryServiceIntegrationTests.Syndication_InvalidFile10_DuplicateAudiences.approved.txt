@@ -1,0 +1,6 @@
+﻿{
+  "Status": 3,
+  "ValidationProblems": [
+    "Data for audience 'HH' have been already read. Please specify unique audiences. Row: 15, column: F"
+  ]
+}

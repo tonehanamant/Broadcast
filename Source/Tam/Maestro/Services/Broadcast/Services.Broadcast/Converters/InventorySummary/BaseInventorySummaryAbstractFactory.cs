@@ -148,7 +148,7 @@ namespace Services.Broadcast.Converters.InventorySummary
                 {
                     double hhImpressions;
                     decimal hhCPM;
-                    var hhAudience = manifest.ManifestAudiencesReferences.SingleOrDefault(x => x.Audience.Id == householdAudienceId);
+                    var hhAudience = manifest.ManifestAudiencesReferences.SingleOrDefault(x => x.Audience.Id == householdAudienceId && x.Impressions.HasValue);
 
                     if (hhAudience == null)
                     {

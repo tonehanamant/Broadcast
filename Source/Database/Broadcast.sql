@@ -200,6 +200,64 @@ BEGIN
 END
 /*************************************** END PRI-7621 *****************************************************/
 
+/*************************************** START PRI-10155 *****************************************************/
+--Syndication, remove 1 audience in each manifest
+delete from station_inventory_manifest_audiences 
+where id in (select max(a.id)
+			 from station_inventory_manifest_audiences as a
+			 where station_inventory_manifest_id in 
+			 	(select m.id
+			 	 from station_inventory_manifest as m
+			 	 join station_inventory_manifest_audiences as a on a.station_inventory_manifest_id = m.id
+			 	 join inventory_sources as s on m.inventory_source_id = s.id
+			 	 where a.is_reference = 1 and inventory_source_type = 4
+			 	 group by m.id, a.audience_id, s.inventory_source_type
+			 	 having count(a.id) > 1)
+			 group by station_inventory_manifest_id)
+
+
+--O&O, set is_reference = true for audience with CPM != null
+update station_inventory_manifest_audiences
+set is_reference = 1
+from (select a.id as audience_id_to_update
+	  from station_inventory_manifest_audiences as a
+	  where cpm is not null and audience_id = 31 and station_inventory_manifest_id in
+	  	(select m.id
+	  	 from station_inventory_manifest as m
+	  	 join station_inventory_manifest_audiences as a on a.station_inventory_manifest_id = m.id
+	  	 join inventory_sources as s on m.inventory_source_id = s.id
+	  	 where a.is_reference = 0 and inventory_source_type = 3
+	  	 group by m.id, a.audience_id, s.inventory_source_type
+	  	 having count(a.id) > 1)) as data1
+where id = data1.audience_id_to_update
+
+
+--Barter, set is_reference = true for audience with CPM != null
+select *
+into #manifests_with_duplicate_audiences
+from (select m.id as manifest_id, a.audience_id, count(a.id) as num
+	  from station_inventory_manifest as m
+	  join station_inventory_manifest_audiences as a on a.station_inventory_manifest_id = m.id
+	  join inventory_sources as s on m.inventory_source_id = s.id
+	  where a.is_reference = 0 and inventory_source_type = 2
+	  group by m.id, a.audience_id, s.inventory_source_type
+	  having count(a.id) > 1) data
+
+SELECT *
+INTO #source_data
+FROM (select a.id as source_id, a.station_inventory_manifest_id, a.audience_id
+	  from station_inventory_manifest_audiences as a
+	  join #manifests_with_duplicate_audiences as join1 on a.station_inventory_manifest_id = join1.manifest_id and a.audience_id = join1.audience_id
+	  where a.cpm is not null) DATA
+
+update station_inventory_manifest_audiences
+set is_reference = 1
+from #source_data as s
+where id = s.source_id
+
+DROP TABLE #source_data
+DROP TABLE #manifests_with_duplicate_audiences
+/*************************************** END PRI-10155 *****************************************************/
 
 -- Update the Schema Version of the database to the current release version
 UPDATE system_component_parameters 

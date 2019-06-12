@@ -11,7 +11,8 @@
         "Comment": null,
         "DaypartCode": "LN",
         "InventorySourceId": 4,
-        "ManifestAudiences": [
+        "ManifestAudiences": [],
+        "ManifestAudiencesReferences": [
           {
             "Audience": {
               "AudienceString": "Adults 25-54",
@@ -19,12 +20,11 @@
             },
             "CPM": 222.2200,
             "Impressions": null,
-            "IsReference": false,
+            "IsReference": true,
             "Rating": null,
             "Vpvh": null
           }
         ],
-        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -106,7 +106,8 @@
         "Comment": "Test1",
         "DaypartCode": "LN",
         "InventorySourceId": 4,
-        "ManifestAudiences": [
+        "ManifestAudiences": [],
+        "ManifestAudiencesReferences": [
           {
             "Audience": {
               "AudienceString": "Adults 25-54",
@@ -114,12 +115,11 @@
             },
             "CPM": 222.2200,
             "Impressions": null,
-            "IsReference": false,
+            "IsReference": true,
             "Rating": null,
             "Vpvh": null
           }
         ],
-        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {

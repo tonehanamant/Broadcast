@@ -555,6 +555,14 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        public void Syndication_InvalidFile10_DuplicateAudiences()
+        {
+            const string fileName = @"ProprietaryDataFiles\Syndication_InvalidFile10.xlsx";
+            _VerifyInventoryFileProblems(fileName);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
         public void SavesDiginetInventoryFile()
         {
             const string fileName = @"ProprietaryDataFiles\Diginet_ValidFile1.xlsx";

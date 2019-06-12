@@ -11,7 +11,8 @@
         "Comment": "Comment 1",
         "DaypartCode": "EMN",
         "InventorySourceId": 4,
-        "ManifestAudiences": [
+        "ManifestAudiences": [],
+        "ManifestAudiencesReferences": [
           {
             "Audience": {
               "AudienceString": "Females 25-34",
@@ -19,12 +20,11 @@
             },
             "CPM": 99.8800,
             "Impressions": null,
-            "IsReference": false,
+            "IsReference": true,
             "Rating": null,
             "Vpvh": null
           }
         ],
-        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -670,7 +670,8 @@
         "Comment": "Comment 1",
         "DaypartCode": "EMN",
         "InventorySourceId": 4,
-        "ManifestAudiences": [
+        "ManifestAudiences": [],
+        "ManifestAudiencesReferences": [
           {
             "Audience": {
               "AudienceString": "Females 25-34",
@@ -678,12 +679,11 @@
             },
             "CPM": 99.8800,
             "Impressions": null,
-            "IsReference": false,
+            "IsReference": true,
             "Rating": null,
             "Vpvh": null
           }
         ],
-        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -1329,7 +1329,8 @@
         "Comment": "Comment 1",
         "DaypartCode": "EMN",
         "InventorySourceId": 4,
-        "ManifestAudiences": [
+        "ManifestAudiences": [],
+        "ManifestAudiencesReferences": [
           {
             "Audience": {
               "AudienceString": "Females 25-34",
@@ -1337,12 +1338,11 @@
             },
             "CPM": 99.8800,
             "Impressions": null,
-            "IsReference": false,
+            "IsReference": true,
             "Rating": null,
             "Vpvh": null
           }
         ],
-        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -1988,7 +1988,8 @@
         "Comment": "Comment 1",
         "DaypartCode": "EMN",
         "InventorySourceId": 4,
-        "ManifestAudiences": [
+        "ManifestAudiences": [],
+        "ManifestAudiencesReferences": [
           {
             "Audience": {
               "AudienceString": "Females 25-34",
@@ -1996,12 +1997,11 @@
             },
             "CPM": 99.8800,
             "Impressions": null,
-            "IsReference": false,
+            "IsReference": true,
             "Rating": null,
             "Vpvh": null
           }
         ],
-        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -2647,7 +2647,8 @@
         "Comment": "Comment 1",
         "DaypartCode": "EMN",
         "InventorySourceId": 4,
-        "ManifestAudiences": [
+        "ManifestAudiences": [],
+        "ManifestAudiencesReferences": [
           {
             "Audience": {
               "AudienceString": "Females 25-34",
@@ -2655,12 +2656,11 @@
             },
             "CPM": 99.8800,
             "Impressions": null,
-            "IsReference": false,
+            "IsReference": true,
             "Rating": null,
             "Vpvh": null
           }
         ],
-        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -3306,7 +3306,8 @@
         "Comment": "Comment 1",
         "DaypartCode": "EMN",
         "InventorySourceId": 4,
-        "ManifestAudiences": [
+        "ManifestAudiences": [],
+        "ManifestAudiencesReferences": [
           {
             "Audience": {
               "AudienceString": "Females 25-34",
@@ -3314,12 +3315,11 @@
             },
             "CPM": 99.8800,
             "Impressions": null,
-            "IsReference": false,
+            "IsReference": true,
             "Rating": null,
             "Vpvh": null
           }
         ],
-        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {
@@ -3965,7 +3965,8 @@
         "Comment": "Comment 1",
         "DaypartCode": "EMN",
         "InventorySourceId": 4,
-        "ManifestAudiences": [
+        "ManifestAudiences": [],
+        "ManifestAudiencesReferences": [
           {
             "Audience": {
               "AudienceString": "Females 25-34",
@@ -3973,12 +3974,11 @@
             },
             "CPM": 99.8800,
             "Impressions": null,
-            "IsReference": false,
+            "IsReference": true,
             "Rating": null,
             "Vpvh": null
           }
         ],
-        "ManifestAudiencesReferences": [],
         "ManifestDayparts": [
           {
             "Daypart": {

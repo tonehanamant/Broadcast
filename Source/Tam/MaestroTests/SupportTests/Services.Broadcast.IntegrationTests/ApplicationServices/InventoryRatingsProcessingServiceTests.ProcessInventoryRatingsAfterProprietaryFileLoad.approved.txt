@@ -6,17 +6,6 @@
     "ManifestAudiences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
-          "Id": 348
-        },
-        "CPM": 99.8800,
-        "Impressions": null,
-        "IsReference": false,
-        "Rating": null,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
           "AudienceString": "Females 12-14",
           "Id": 4
         },
@@ -247,7 +236,19 @@
         "Vpvh": null
       }
     ],
-    "ManifestAudiencesReferences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "Females 25-34",
+          "Id": 348
+        },
+        "CPM": 99.8800,
+        "Impressions": null,
+        "IsReference": true,
+        "Rating": null,
+        "Vpvh": null
+      }
+    ],
     "ManifestDayparts": [
       {
         "Daypart": {
@@ -885,17 +886,6 @@
     "ManifestAudiences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
-          "Id": 348
-        },
-        "CPM": 99.8800,
-        "Impressions": null,
-        "IsReference": false,
-        "Rating": null,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
           "AudienceString": "Females 12-14",
           "Id": 4
         },
@@ -1126,7 +1116,19 @@
         "Vpvh": null
       }
     ],
-    "ManifestAudiencesReferences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "Females 25-34",
+          "Id": 348
+        },
+        "CPM": 99.8800,
+        "Impressions": null,
+        "IsReference": true,
+        "Rating": null,
+        "Vpvh": null
+      }
+    ],
     "ManifestDayparts": [
       {
         "Daypart": {
@@ -1769,17 +1771,6 @@
     "ManifestAudiences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
-          "Id": 348
-        },
-        "CPM": 99.8800,
-        "Impressions": null,
-        "IsReference": false,
-        "Rating": null,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
           "AudienceString": "Females 12-14",
           "Id": 4
         },
@@ -2010,7 +2001,19 @@
         "Vpvh": null
       }
     ],
-    "ManifestAudiencesReferences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "Females 25-34",
+          "Id": 348
+        },
+        "CPM": 99.8800,
+        "Impressions": null,
+        "IsReference": true,
+        "Rating": null,
+        "Vpvh": null
+      }
+    ],
     "ManifestDayparts": [
       {
         "Daypart": {
@@ -2653,17 +2656,6 @@
     "ManifestAudiences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
-          "Id": 348
-        },
-        "CPM": 99.8800,
-        "Impressions": null,
-        "IsReference": false,
-        "Rating": null,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
           "AudienceString": "Females 12-14",
           "Id": 4
         },
@@ -2894,7 +2886,19 @@
         "Vpvh": null
       }
     ],
-    "ManifestAudiencesReferences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "Females 25-34",
+          "Id": 348
+        },
+        "CPM": 99.8800,
+        "Impressions": null,
+        "IsReference": true,
+        "Rating": null,
+        "Vpvh": null
+      }
+    ],
     "ManifestDayparts": [
       {
         "Daypart": {
@@ -3579,17 +3583,6 @@
     "ManifestAudiences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
-          "Id": 348
-        },
-        "CPM": 99.8800,
-        "Impressions": null,
-        "IsReference": false,
-        "Rating": null,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
           "AudienceString": "Females 12-14",
           "Id": 4
         },
@@ -3820,7 +3813,19 @@
         "Vpvh": null
       }
     ],
-    "ManifestAudiencesReferences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "Females 25-34",
+          "Id": 348
+        },
+        "CPM": 99.8800,
+        "Impressions": null,
+        "IsReference": true,
+        "Rating": null,
+        "Vpvh": null
+      }
+    ],
     "ManifestDayparts": [
       {
         "Daypart": {
@@ -4458,17 +4463,6 @@
     "ManifestAudiences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
-          "Id": 348
-        },
-        "CPM": 99.8800,
-        "Impressions": null,
-        "IsReference": false,
-        "Rating": null,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
           "AudienceString": "Females 12-14",
           "Id": 4
         },
@@ -4699,7 +4693,19 @@
         "Vpvh": null
       }
     ],
-    "ManifestAudiencesReferences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "Females 25-34",
+          "Id": 348
+        },
+        "CPM": 99.8800,
+        "Impressions": null,
+        "IsReference": true,
+        "Rating": null,
+        "Vpvh": null
+      }
+    ],
     "ManifestDayparts": [
       {
         "Daypart": {
@@ -5337,17 +5343,6 @@
     "ManifestAudiences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
-          "Id": 348
-        },
-        "CPM": 99.8800,
-        "Impressions": null,
-        "IsReference": false,
-        "Rating": null,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
           "AudienceString": "Females 12-14",
           "Id": 4
         },
@@ -5578,7 +5573,19 @@
         "Vpvh": null
       }
     ],
-    "ManifestAudiencesReferences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "Females 25-34",
+          "Id": 348
+        },
+        "CPM": 99.8800,
+        "Impressions": null,
+        "IsReference": true,
+        "Rating": null,
+        "Vpvh": null
+      }
+    ],
     "ManifestDayparts": [
       {
         "Daypart": {
@@ -6221,17 +6228,6 @@
     "ManifestAudiences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
-          "Id": 348
-        },
-        "CPM": 99.8800,
-        "Impressions": null,
-        "IsReference": false,
-        "Rating": null,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
           "AudienceString": "Females 12-14",
           "Id": 4
         },
@@ -6462,7 +6458,19 @@
         "Vpvh": null
       }
     ],
-    "ManifestAudiencesReferences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "Females 25-34",
+          "Id": 348
+        },
+        "CPM": 99.8800,
+        "Impressions": null,
+        "IsReference": true,
+        "Rating": null,
+        "Vpvh": null
+      }
+    ],
     "ManifestDayparts": [
       {
         "Daypart": {
@@ -7105,17 +7113,6 @@
     "ManifestAudiences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
-          "Id": 348
-        },
-        "CPM": 99.8800,
-        "Impressions": null,
-        "IsReference": false,
-        "Rating": null,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
           "AudienceString": "Females 12-14",
           "Id": 4
         },
@@ -7346,7 +7343,19 @@
         "Vpvh": null
       }
     ],
-    "ManifestAudiencesReferences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "Females 25-34",
+          "Id": 348
+        },
+        "CPM": 99.8800,
+        "Impressions": null,
+        "IsReference": true,
+        "Rating": null,
+        "Vpvh": null
+      }
+    ],
     "ManifestDayparts": [
       {
         "Daypart": {
@@ -8031,17 +8040,6 @@
     "ManifestAudiences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
-          "Id": 348
-        },
-        "CPM": 99.8800,
-        "Impressions": null,
-        "IsReference": false,
-        "Rating": null,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
           "AudienceString": "Females 12-14",
           "Id": 4
         },
@@ -8272,7 +8270,19 @@
         "Vpvh": null
       }
     ],
-    "ManifestAudiencesReferences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "Females 25-34",
+          "Id": 348
+        },
+        "CPM": 99.8800,
+        "Impressions": null,
+        "IsReference": true,
+        "Rating": null,
+        "Vpvh": null
+      }
+    ],
     "ManifestDayparts": [
       {
         "Daypart": {
@@ -8910,17 +8920,6 @@
     "ManifestAudiences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
-          "Id": 348
-        },
-        "CPM": 99.8800,
-        "Impressions": null,
-        "IsReference": false,
-        "Rating": null,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
           "AudienceString": "Females 12-14",
           "Id": 4
         },
@@ -9151,7 +9150,19 @@
         "Vpvh": null
       }
     ],
-    "ManifestAudiencesReferences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "Females 25-34",
+          "Id": 348
+        },
+        "CPM": 99.8800,
+        "Impressions": null,
+        "IsReference": true,
+        "Rating": null,
+        "Vpvh": null
+      }
+    ],
     "ManifestDayparts": [
       {
         "Daypart": {
@@ -9789,17 +9800,6 @@
     "ManifestAudiences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
-          "Id": 348
-        },
-        "CPM": 99.8800,
-        "Impressions": null,
-        "IsReference": false,
-        "Rating": null,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
           "AudienceString": "Females 12-14",
           "Id": 4
         },
@@ -10030,7 +10030,19 @@
         "Vpvh": null
       }
     ],
-    "ManifestAudiencesReferences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "Females 25-34",
+          "Id": 348
+        },
+        "CPM": 99.8800,
+        "Impressions": null,
+        "IsReference": true,
+        "Rating": null,
+        "Vpvh": null
+      }
+    ],
     "ManifestDayparts": [
       {
         "Daypart": {
@@ -10673,17 +10685,6 @@
     "ManifestAudiences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
-          "Id": 348
-        },
-        "CPM": 99.8800,
-        "Impressions": null,
-        "IsReference": false,
-        "Rating": null,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
           "AudienceString": "Females 12-14",
           "Id": 4
         },
@@ -10914,7 +10915,19 @@
         "Vpvh": null
       }
     ],
-    "ManifestAudiencesReferences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "Females 25-34",
+          "Id": 348
+        },
+        "CPM": 99.8800,
+        "Impressions": null,
+        "IsReference": true,
+        "Rating": null,
+        "Vpvh": null
+      }
+    ],
     "ManifestDayparts": [
       {
         "Daypart": {
@@ -11557,17 +11570,6 @@
     "ManifestAudiences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
-          "Id": 348
-        },
-        "CPM": 99.8800,
-        "Impressions": null,
-        "IsReference": false,
-        "Rating": null,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
           "AudienceString": "Females 12-14",
           "Id": 4
         },
@@ -11798,7 +11800,19 @@
         "Vpvh": null
       }
     ],
-    "ManifestAudiencesReferences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "Females 25-34",
+          "Id": 348
+        },
+        "CPM": 99.8800,
+        "Impressions": null,
+        "IsReference": true,
+        "Rating": null,
+        "Vpvh": null
+      }
+    ],
     "ManifestDayparts": [
       {
         "Daypart": {
@@ -12483,17 +12497,6 @@
     "ManifestAudiences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
-          "Id": 348
-        },
-        "CPM": 99.8800,
-        "Impressions": null,
-        "IsReference": false,
-        "Rating": null,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
           "AudienceString": "Females 12-14",
           "Id": 4
         },
@@ -12724,7 +12727,19 @@
         "Vpvh": null
       }
     ],
-    "ManifestAudiencesReferences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "Females 25-34",
+          "Id": 348
+        },
+        "CPM": 99.8800,
+        "Impressions": null,
+        "IsReference": true,
+        "Rating": null,
+        "Vpvh": null
+      }
+    ],
     "ManifestDayparts": [
       {
         "Daypart": {
@@ -13362,17 +13377,6 @@
     "ManifestAudiences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
-          "Id": 348
-        },
-        "CPM": 99.8800,
-        "Impressions": null,
-        "IsReference": false,
-        "Rating": null,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
           "AudienceString": "Females 12-14",
           "Id": 4
         },
@@ -13603,7 +13607,19 @@
         "Vpvh": null
       }
     ],
-    "ManifestAudiencesReferences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "Females 25-34",
+          "Id": 348
+        },
+        "CPM": 99.8800,
+        "Impressions": null,
+        "IsReference": true,
+        "Rating": null,
+        "Vpvh": null
+      }
+    ],
     "ManifestDayparts": [
       {
         "Daypart": {
@@ -14241,17 +14257,6 @@
     "ManifestAudiences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
-          "Id": 348
-        },
-        "CPM": 99.8800,
-        "Impressions": null,
-        "IsReference": false,
-        "Rating": null,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
           "AudienceString": "Females 12-14",
           "Id": 4
         },
@@ -14482,7 +14487,19 @@
         "Vpvh": null
       }
     ],
-    "ManifestAudiencesReferences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "Females 25-34",
+          "Id": 348
+        },
+        "CPM": 99.8800,
+        "Impressions": null,
+        "IsReference": true,
+        "Rating": null,
+        "Vpvh": null
+      }
+    ],
     "ManifestDayparts": [
       {
         "Daypart": {
@@ -15125,17 +15142,6 @@
     "ManifestAudiences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
-          "Id": 348
-        },
-        "CPM": 99.8800,
-        "Impressions": null,
-        "IsReference": false,
-        "Rating": null,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
           "AudienceString": "Females 12-14",
           "Id": 4
         },
@@ -15366,7 +15372,19 @@
         "Vpvh": null
       }
     ],
-    "ManifestAudiencesReferences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "Females 25-34",
+          "Id": 348
+        },
+        "CPM": 99.8800,
+        "Impressions": null,
+        "IsReference": true,
+        "Rating": null,
+        "Vpvh": null
+      }
+    ],
     "ManifestDayparts": [
       {
         "Daypart": {
@@ -16009,17 +16027,6 @@
     "ManifestAudiences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
-          "Id": 348
-        },
-        "CPM": 99.8800,
-        "Impressions": null,
-        "IsReference": false,
-        "Rating": null,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
           "AudienceString": "Females 12-14",
           "Id": 4
         },
@@ -16250,7 +16257,19 @@
         "Vpvh": null
       }
     ],
-    "ManifestAudiencesReferences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "Females 25-34",
+          "Id": 348
+        },
+        "CPM": 99.8800,
+        "Impressions": null,
+        "IsReference": true,
+        "Rating": null,
+        "Vpvh": null
+      }
+    ],
     "ManifestDayparts": [
       {
         "Daypart": {
@@ -16935,17 +16954,6 @@
     "ManifestAudiences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
-          "Id": 348
-        },
-        "CPM": 99.8800,
-        "Impressions": null,
-        "IsReference": false,
-        "Rating": null,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
           "AudienceString": "Females 12-14",
           "Id": 4
         },
@@ -17176,7 +17184,19 @@
         "Vpvh": null
       }
     ],
-    "ManifestAudiencesReferences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "Females 25-34",
+          "Id": 348
+        },
+        "CPM": 99.8800,
+        "Impressions": null,
+        "IsReference": true,
+        "Rating": null,
+        "Vpvh": null
+      }
+    ],
     "ManifestDayparts": [
       {
         "Daypart": {
@@ -17814,17 +17834,6 @@
     "ManifestAudiences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
-          "Id": 348
-        },
-        "CPM": 99.8800,
-        "Impressions": null,
-        "IsReference": false,
-        "Rating": null,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
           "AudienceString": "Females 12-14",
           "Id": 4
         },
@@ -18055,7 +18064,19 @@
         "Vpvh": null
       }
     ],
-    "ManifestAudiencesReferences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "Females 25-34",
+          "Id": 348
+        },
+        "CPM": 99.8800,
+        "Impressions": null,
+        "IsReference": true,
+        "Rating": null,
+        "Vpvh": null
+      }
+    ],
     "ManifestDayparts": [
       {
         "Daypart": {
@@ -18693,17 +18714,6 @@
     "ManifestAudiences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
-          "Id": 348
-        },
-        "CPM": 99.8800,
-        "Impressions": null,
-        "IsReference": false,
-        "Rating": null,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
           "AudienceString": "Females 12-14",
           "Id": 4
         },
@@ -18934,7 +18944,19 @@
         "Vpvh": null
       }
     ],
-    "ManifestAudiencesReferences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "Females 25-34",
+          "Id": 348
+        },
+        "CPM": 99.8800,
+        "Impressions": null,
+        "IsReference": true,
+        "Rating": null,
+        "Vpvh": null
+      }
+    ],
     "ManifestDayparts": [
       {
         "Daypart": {
@@ -19577,17 +19599,6 @@
     "ManifestAudiences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
-          "Id": 348
-        },
-        "CPM": 99.8800,
-        "Impressions": null,
-        "IsReference": false,
-        "Rating": null,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
           "AudienceString": "Females 12-14",
           "Id": 4
         },
@@ -19818,7 +19829,19 @@
         "Vpvh": null
       }
     ],
-    "ManifestAudiencesReferences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "Females 25-34",
+          "Id": 348
+        },
+        "CPM": 99.8800,
+        "Impressions": null,
+        "IsReference": true,
+        "Rating": null,
+        "Vpvh": null
+      }
+    ],
     "ManifestDayparts": [
       {
         "Daypart": {
@@ -20461,17 +20484,6 @@
     "ManifestAudiences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
-          "Id": 348
-        },
-        "CPM": 99.8800,
-        "Impressions": null,
-        "IsReference": false,
-        "Rating": null,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
           "AudienceString": "Females 12-14",
           "Id": 4
         },
@@ -20702,7 +20714,19 @@
         "Vpvh": null
       }
     ],
-    "ManifestAudiencesReferences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "Females 25-34",
+          "Id": 348
+        },
+        "CPM": 99.8800,
+        "Impressions": null,
+        "IsReference": true,
+        "Rating": null,
+        "Vpvh": null
+      }
+    ],
     "ManifestDayparts": [
       {
         "Daypart": {
@@ -21387,17 +21411,6 @@
     "ManifestAudiences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
-          "Id": 348
-        },
-        "CPM": 99.8800,
-        "Impressions": null,
-        "IsReference": false,
-        "Rating": null,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
           "AudienceString": "Females 12-14",
           "Id": 4
         },
@@ -21628,7 +21641,19 @@
         "Vpvh": null
       }
     ],
-    "ManifestAudiencesReferences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "Females 25-34",
+          "Id": 348
+        },
+        "CPM": 99.8800,
+        "Impressions": null,
+        "IsReference": true,
+        "Rating": null,
+        "Vpvh": null
+      }
+    ],
     "ManifestDayparts": [
       {
         "Daypart": {
@@ -22266,17 +22291,6 @@
     "ManifestAudiences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
-          "Id": 348
-        },
-        "CPM": 99.8800,
-        "Impressions": null,
-        "IsReference": false,
-        "Rating": null,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
           "AudienceString": "Females 12-14",
           "Id": 4
         },
@@ -22507,7 +22521,19 @@
         "Vpvh": null
       }
     ],
-    "ManifestAudiencesReferences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "Females 25-34",
+          "Id": 348
+        },
+        "CPM": 99.8800,
+        "Impressions": null,
+        "IsReference": true,
+        "Rating": null,
+        "Vpvh": null
+      }
+    ],
     "ManifestDayparts": [
       {
         "Daypart": {
@@ -23145,17 +23171,6 @@
     "ManifestAudiences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
-          "Id": 348
-        },
-        "CPM": 99.8800,
-        "Impressions": null,
-        "IsReference": false,
-        "Rating": null,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
           "AudienceString": "Females 12-14",
           "Id": 4
         },
@@ -23386,7 +23401,19 @@
         "Vpvh": null
       }
     ],
-    "ManifestAudiencesReferences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "Females 25-34",
+          "Id": 348
+        },
+        "CPM": 99.8800,
+        "Impressions": null,
+        "IsReference": true,
+        "Rating": null,
+        "Vpvh": null
+      }
+    ],
     "ManifestDayparts": [
       {
         "Daypart": {
@@ -24029,17 +24056,6 @@
     "ManifestAudiences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
-          "Id": 348
-        },
-        "CPM": 99.8800,
-        "Impressions": null,
-        "IsReference": false,
-        "Rating": null,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
           "AudienceString": "Females 12-14",
           "Id": 4
         },
@@ -24270,7 +24286,19 @@
         "Vpvh": null
       }
     ],
-    "ManifestAudiencesReferences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "Females 25-34",
+          "Id": 348
+        },
+        "CPM": 99.8800,
+        "Impressions": null,
+        "IsReference": true,
+        "Rating": null,
+        "Vpvh": null
+      }
+    ],
     "ManifestDayparts": [
       {
         "Daypart": {
@@ -24913,17 +24941,6 @@
     "ManifestAudiences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
-          "Id": 348
-        },
-        "CPM": 99.8800,
-        "Impressions": null,
-        "IsReference": false,
-        "Rating": null,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
           "AudienceString": "Females 12-14",
           "Id": 4
         },
@@ -25154,7 +25171,19 @@
         "Vpvh": null
       }
     ],
-    "ManifestAudiencesReferences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "Females 25-34",
+          "Id": 348
+        },
+        "CPM": 99.8800,
+        "Impressions": null,
+        "IsReference": true,
+        "Rating": null,
+        "Vpvh": null
+      }
+    ],
     "ManifestDayparts": [
       {
         "Daypart": {
@@ -25839,17 +25868,6 @@
     "ManifestAudiences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
-          "Id": 348
-        },
-        "CPM": 99.8800,
-        "Impressions": null,
-        "IsReference": false,
-        "Rating": null,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
           "AudienceString": "Females 12-14",
           "Id": 4
         },
@@ -26080,7 +26098,19 @@
         "Vpvh": null
       }
     ],
-    "ManifestAudiencesReferences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "Females 25-34",
+          "Id": 348
+        },
+        "CPM": 99.8800,
+        "Impressions": null,
+        "IsReference": true,
+        "Rating": null,
+        "Vpvh": null
+      }
+    ],
     "ManifestDayparts": [
       {
         "Daypart": {
@@ -26718,17 +26748,6 @@
     "ManifestAudiences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
-          "Id": 348
-        },
-        "CPM": 99.8800,
-        "Impressions": null,
-        "IsReference": false,
-        "Rating": null,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
           "AudienceString": "Females 12-14",
           "Id": 4
         },
@@ -26959,7 +26978,19 @@
         "Vpvh": null
       }
     ],
-    "ManifestAudiencesReferences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "Females 25-34",
+          "Id": 348
+        },
+        "CPM": 99.8800,
+        "Impressions": null,
+        "IsReference": true,
+        "Rating": null,
+        "Vpvh": null
+      }
+    ],
     "ManifestDayparts": [
       {
         "Daypart": {
@@ -27597,17 +27628,6 @@
     "ManifestAudiences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
-          "Id": 348
-        },
-        "CPM": 99.8800,
-        "Impressions": null,
-        "IsReference": false,
-        "Rating": null,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
           "AudienceString": "Females 12-14",
           "Id": 4
         },
@@ -27838,7 +27858,19 @@
         "Vpvh": null
       }
     ],
-    "ManifestAudiencesReferences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "Females 25-34",
+          "Id": 348
+        },
+        "CPM": 99.8800,
+        "Impressions": null,
+        "IsReference": true,
+        "Rating": null,
+        "Vpvh": null
+      }
+    ],
     "ManifestDayparts": [
       {
         "Daypart": {
@@ -28481,17 +28513,6 @@
     "ManifestAudiences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
-          "Id": 348
-        },
-        "CPM": 99.8800,
-        "Impressions": null,
-        "IsReference": false,
-        "Rating": null,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
           "AudienceString": "Females 12-14",
           "Id": 4
         },
@@ -28722,7 +28743,19 @@
         "Vpvh": null
       }
     ],
-    "ManifestAudiencesReferences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "Females 25-34",
+          "Id": 348
+        },
+        "CPM": 99.8800,
+        "Impressions": null,
+        "IsReference": true,
+        "Rating": null,
+        "Vpvh": null
+      }
+    ],
     "ManifestDayparts": [
       {
         "Daypart": {
@@ -29365,17 +29398,6 @@
     "ManifestAudiences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
-          "Id": 348
-        },
-        "CPM": 99.8800,
-        "Impressions": null,
-        "IsReference": false,
-        "Rating": null,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
           "AudienceString": "Females 12-14",
           "Id": 4
         },
@@ -29606,7 +29628,19 @@
         "Vpvh": null
       }
     ],
-    "ManifestAudiencesReferences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "Females 25-34",
+          "Id": 348
+        },
+        "CPM": 99.8800,
+        "Impressions": null,
+        "IsReference": true,
+        "Rating": null,
+        "Vpvh": null
+      }
+    ],
     "ManifestDayparts": [
       {
         "Daypart": {
@@ -30291,17 +30325,6 @@
     "ManifestAudiences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
-          "Id": 348
-        },
-        "CPM": 99.8800,
-        "Impressions": null,
-        "IsReference": false,
-        "Rating": null,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
           "AudienceString": "Females 12-14",
           "Id": 4
         },
@@ -30532,7 +30555,19 @@
         "Vpvh": null
       }
     ],
-    "ManifestAudiencesReferences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "Females 25-34",
+          "Id": 348
+        },
+        "CPM": 99.8800,
+        "Impressions": null,
+        "IsReference": true,
+        "Rating": null,
+        "Vpvh": null
+      }
+    ],
     "ManifestDayparts": [
       {
         "Daypart": {

@@ -122,7 +122,7 @@ namespace Services.Broadcast.Converters.RateImport
             if (householdAudience != null)
                 audiences.Add(householdAudience);
 
-            audiences.AddRange(_ReadAudiences(worksheet, audienceProblems));
+            _ReadAudiences(worksheet, audienceProblems, audiences);
 
             if (audienceProblems.Any())
             {
@@ -451,10 +451,9 @@ namespace Services.Broadcast.Converters.RateImport
             return audience;
         }
 
-        private List<BroadcastAudience> _ReadAudiences(ExcelWorksheet worksheet, List<string> validationProblems)
+        private void _ReadAudiences(ExcelWorksheet worksheet, List<string> validationProblems, List<BroadcastAudience> audiences)
         {
             int currentAudienceColumnIndex = 6;
-            var result = new List<BroadcastAudience>();
             var ratingRegex = new Regex(@"(?<Audience>[a-z0-9\s-\[\]]+)\sAvg\s*Rtg.*", RegexOptions.IgnoreCase);
             var impressionsRegex = new Regex(@"(?<Audience>[a-z0-9\s-\[\]]+)\s*Avg\s*Imps\s*\(000\).*", RegexOptions.IgnoreCase);
             var vpvhRegex = new Regex(@"(?<Audience>[a-z0-9\s-\[\]]+)\s*VPVH.*", RegexOptions.IgnoreCase);
@@ -549,7 +548,7 @@ namespace Services.Broadcast.Converters.RateImport
                 if (ratingAudience.Equals("[DEMO]", StringComparison.OrdinalIgnoreCase))
                 {
                     // null is used later to skip [DEMO] columns.
-                    result.Add(null);
+                    audiences.Add(null);
                     currentAudienceColumnIndex = currentAudienceColumnIndex + 4;
                     continue;
                 }
@@ -562,17 +561,15 @@ namespace Services.Broadcast.Converters.RateImport
                     break;
                 }
 
-                if (result.Any(x => x != null && x.Code == audience.Code))
+                if (audiences.Any(x => x != null && x.Code == audience.Code))
                 {
                     validationProblems.Add($"Data for audience '{audience.Code}' have been already read. Please specify unique audiences. Row: {audienceRowIndex}, column: {ratingColumnIndex.GetColumnAdress()}");
                     break;
                 }
 
-                result.Add(audience);
+                audiences.Add(audience);
                 currentAudienceColumnIndex = currentAudienceColumnIndex + 4;
             }
-
-            return result;
         }
 
         private void _ProcessEffectiveAndEndDates(ExcelWorksheet worksheet, List<string> validationProblems, ProprietaryInventoryHeader header)

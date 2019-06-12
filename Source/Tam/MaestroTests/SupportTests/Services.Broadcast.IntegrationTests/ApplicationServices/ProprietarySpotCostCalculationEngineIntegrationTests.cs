@@ -37,7 +37,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     {
                         LegacyCallLetters = "EESH"
                     },
-                    ManifestAudiences = new List<StationInventoryManifestAudience>
+                    ManifestAudiencesReferences = new List<StationInventoryManifestAudience>
                     {
                         new StationInventoryManifestAudience
                         {
@@ -81,7 +81,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     {
                         LegacyCallLetters = "EESH"
                     },
-                    ManifestAudiences = new List<StationInventoryManifestAudience>
+                    ManifestAudiencesReferences = new List<StationInventoryManifestAudience>
                     {
                         new StationInventoryManifestAudience
                         {
