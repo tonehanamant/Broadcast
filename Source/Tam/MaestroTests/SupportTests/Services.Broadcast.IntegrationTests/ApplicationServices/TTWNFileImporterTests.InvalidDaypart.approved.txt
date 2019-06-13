@@ -1,6 +1,5 @@
 ﻿[
   {
-    "AffectedProposals": null,
     "ProblemDescription": "Invalid daypart 'SA-DO 9-25P' for station: KDFW",
     "ProgramName": null,
     "StationLetters": null

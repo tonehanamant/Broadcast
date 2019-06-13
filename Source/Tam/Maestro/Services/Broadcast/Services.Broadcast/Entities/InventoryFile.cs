@@ -5,7 +5,7 @@ using System.Linq;
 namespace Services.Broadcast.Entities
 {
     public class InventoryFile : InventoryFileBase
-    {                    
+    {        
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         private List<StationContact> _stationContacts;

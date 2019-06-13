@@ -1,7 +1,6 @@
-﻿[
-  {
-    "ProblemDescription": "Unknown spot length found: 10",
-    "ProgramName": "CADENT NEWS AT 11:30AM",
-    "StationLetters": "WVTM"
-  }
-]
+﻿{
+  "Status": 3,
+  "ValidationProblems": [
+    "Station: WVTM; Program: CADENT NEWS AT 11:30AM; Problem: Unknown spot length found: 10"
+  ]
+}

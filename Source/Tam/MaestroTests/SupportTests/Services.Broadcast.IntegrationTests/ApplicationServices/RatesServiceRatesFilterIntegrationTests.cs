@@ -33,12 +33,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 @".\Files\multi-quarter_program_rate_file_wvtm.xml",
                 FileMode.Open,
                 FileAccess.Read),
-                UserName = "IntegrationTestUser",
                 FileName = testName,
                 RatingBook = 416
             };
 
-            var result = _inventoryService.SaveInventoryFile(request);
+            var result = _inventoryService.SaveInventoryFile(request, "IntegrationTestUser", new DateTime(2016, 09, 26));
             return result.FileId;
         }        
     }

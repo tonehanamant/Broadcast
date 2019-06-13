@@ -37,8 +37,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                                 FileMode.Open,
                                 FileAccess.Read))
                             {
-                                request.UserName = "IntegrationTestUser";
-                                _inventoryService.SaveInventoryFile(request);
+                                _inventoryService.SaveInventoryFile(request, "IntegrationTestUser", new DateTime(2016, 09, 26));
                             }
 
                             var message = string.Format("{0} loaded successfully", filePath);

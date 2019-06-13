@@ -1,0 +1,8 @@
+﻿{
+  "failures": [
+    "M-T-A 10AM-11AM",
+    "5:30A-6P:Monday-Friday",
+    "MON-SEX 9P-10:11PM"
+  ],
+  "success": {}
+}

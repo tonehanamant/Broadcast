@@ -111,8 +111,9 @@ namespace Services.Broadcast.ApplicationServices
         /// </summary>
         /// <param name="request">InventoryFileSaveRequest object containing a proprietary inventory file</param>
         /// <param name="userName">Username requesting the operation</param>
+        /// <param name="nowDate">Now date</param>
         /// <returns>InventoryFileSaveResult object</returns>
-        public InventoryFileSaveResult SaveProprietaryInventoryFile(FileRequest request, string userName, DateTime now)
+        public InventoryFileSaveResult SaveProprietaryInventoryFile(FileRequest request, string userName, DateTime nowDate)
         {
             if (!request.FileName.EndsWith(".xlsx"))
             {
@@ -121,7 +122,7 @@ namespace Services.Broadcast.ApplicationServices
                     Status = FileStatusEnum.Failed,
                     ValidationProblems = new List<string> { "Invalid file format. Please, provide a .xlsx File" }
                 };
-            }
+            } 
 
             var stationLocks = new List<IDisposable>();
             var lockedStationIds = new List<int>();
@@ -132,10 +133,8 @@ namespace Services.Broadcast.ApplicationServices
             fileImporter.CheckFileHash();
 
             ProprietaryInventoryFile proprietaryFile = fileImporter.GetPendingProprietaryInventoryFile(userName, inventorySource);
-
-            _CheckValidationProblems(proprietaryFile);
-
-            proprietaryFile.Id = _InventoryFileRepository.CreateInventoryFile(proprietaryFile, userName);
+            
+            proprietaryFile.Id = _InventoryFileRepository.CreateInventoryFile(proprietaryFile, userName, nowDate);
             try
             {
                 var fileStreamWithErrors = fileImporter.ExtractData(proprietaryFile);
@@ -143,7 +142,7 @@ namespace Services.Broadcast.ApplicationServices
 
                 if (proprietaryFile.ValidationProblems.Any())
                 {
-                    _ProprietaryRepository.AddValidationProblems(proprietaryFile);
+                    _InventoryRepository.AddValidationProblems(proprietaryFile);
                     fileImporter.WriteFileToDisk(fileStreamWithErrors, proprietaryFile.Id, request.FileName);
                 }
                 else
@@ -151,7 +150,7 @@ namespace Services.Broadcast.ApplicationServices
                     using (var transaction = TransactionScopeHelper.CreateTransactionScopeWrapper(TimeSpan.FromMinutes(20)))
                     {
                         var header = proprietaryFile.Header;
-                        var stations = _GetFileStationsOrCreate(proprietaryFile, userName, now);
+                        var stations = _GetFileStationsOrCreate(proprietaryFile, userName, nowDate);
                         var stationsDict = stations.ToDictionary(x => x.Id, x => x.LegacyCallLetters);
                         
                         fileImporter.PopulateManifests(proprietaryFile, stations);
@@ -161,7 +160,7 @@ namespace Services.Broadcast.ApplicationServices
 
                         _StationInventoryGroupService.AddNewStationInventory(proprietaryFile, header.ContractedDaypartId);
 
-                        _StationRepository.UpdateStationList(stationsDict.Keys.ToList(), userName, now, proprietaryFile.InventorySource.Id);
+                        _StationRepository.UpdateStationList(stationsDict.Keys.ToList(), userName, nowDate, proprietaryFile.InventorySource.Id);
 
                         proprietaryFile.RowsProcessed = proprietaryFile.DataLines.Count();
 
@@ -177,7 +176,7 @@ namespace Services.Broadcast.ApplicationServices
                 _LockingEngine.UnlockStations(lockedStationIds, stationLocks);
                 proprietaryFile.ValidationProblems.Add(ex.Message);
                 proprietaryFile.FileStatus = FileStatusEnum.Failed;
-                _ProprietaryRepository.AddValidationProblems(proprietaryFile);
+                _InventoryRepository.AddValidationProblems(proprietaryFile);
             }
 
             if (!proprietaryFile.ValidationProblems.Any())
@@ -310,15 +309,6 @@ namespace Services.Broadcast.ApplicationServices
             }
 
             return inventorySource;
-        }
-
-        private static void _CheckValidationProblems(ProprietaryInventoryFile proprietaryFile)
-        {
-            if (proprietaryFile.ValidationProblems.Any())
-            {
-                var fileProblems = proprietaryFile.ValidationProblems.Select(x => new InventoryFileProblem(x)).ToList();
-                throw new FileUploadException<InventoryFileProblem>(fileProblems);
-            }
         }
 
         private List<DisplayBroadcastStation> _GetFileStationsOrCreate(ProprietaryInventoryFile proprietaryFile, string userName, DateTime now)

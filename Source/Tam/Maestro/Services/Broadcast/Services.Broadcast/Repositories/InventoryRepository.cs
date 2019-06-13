@@ -90,6 +90,12 @@ namespace Services.Broadcast.Repositories
         List<StationInventoryGroup> GetInventoryGroups(int inventorySourceId, int daypartCodeId, DateTime startDate, DateTime endDate);
 
         List<StationInventoryManifestWeek> GetStationInventoryManifestWeeksForInventorySource(int inventorySourceId);
+
+        /// <summary>
+        /// Adds validation problems for an inventory file to DB
+        /// </summary>
+        /// <param name="file">File containing validation problems</param>
+        void AddValidationProblems(InventoryFileBase file);
     }
 
     public class InventoryRepository : BroadcastRepositoryBase, IInventoryRepository
@@ -99,6 +105,25 @@ namespace Services.Broadcast.Repositories
             , ITransactionHelper pTransactionHelper)
             : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper)
         {
+        }
+
+        /// <summary>
+        /// Adds validation problems for an inventory file to DB
+        /// </summary>
+        /// <param name="file">File containing validation problems</param>
+        public void AddValidationProblems(InventoryFileBase file)
+        {
+            _InReadUncommitedTransaction(context =>
+            {
+                var inventoryFile = context.inventory_files.Single(x => x.id == file.Id);
+                inventoryFile.status = (byte)file.FileStatus;
+                inventoryFile.inventory_file_problems = file.ValidationProblems.Select(
+                            x => new inventory_file_problems
+                            {
+                                problem_description = x
+                            }).ToList();
+                context.SaveChanges();
+            });
         }
 
         public List<InventorySource> GetInventorySources()

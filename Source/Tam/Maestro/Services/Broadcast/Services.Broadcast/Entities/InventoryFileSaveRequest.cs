@@ -7,7 +7,6 @@ namespace Services.Broadcast.Entities
     [Serializable]
     public class InventoryFileSaveRequest : FileRequest
     {
-        public string UserName { get; set; }
         public string InventorySource { get; set; }
         public DaypartDto Daypart { get; set; }
         public int? RatingBook { get; set; }

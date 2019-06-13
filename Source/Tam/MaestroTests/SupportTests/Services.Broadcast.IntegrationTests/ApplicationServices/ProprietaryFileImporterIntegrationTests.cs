@@ -307,7 +307,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             var jsonResolver = new IgnorableSerializerContractResolver();
             jsonResolver.Ignore(typeof(InventoryFileBase), "Id");
-            jsonResolver.Ignore(typeof(ProprietaryInventoryFile), "CreatedDate");
+            jsonResolver.Ignore(typeof(InventoryFileBase), "CreatedDate");
             jsonResolver.Ignore(typeof(ProprietaryInventoryHeader), "ContractedDaypartId");
             var jsonSettings = new JsonSerializerSettings()
             {

@@ -8,10 +8,7 @@ namespace Services.Broadcast.Entities.ProprietaryInventory
 {
     public class ProprietaryInventoryFile : InventoryFileBase
     {
-        public ProprietaryInventoryHeader Header { get; set; } 
-        public string CreatedBy { get; set; }
-        public DateTime CreatedDate { get; set; }
-        public List<string> ValidationProblems { get; set; } = new List<string>();
+        public ProprietaryInventoryHeader Header { get; set; }
         public int? RowsProcessed { get; set; }
         public List<ProprietaryInventoryDataLine> DataLines { get; set; } = new List<ProprietaryInventoryDataLine>();
 

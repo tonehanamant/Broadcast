@@ -15,14 +15,72 @@ using static Services.Broadcast.Converters.RateImport.OpenMarketFileImporter.Ava
 using static Services.Broadcast.Converters.RateImport.OpenMarketFileImporter.AvailLineWithPeriods.AvailLineWithPeriodsDayTimes.AvailLineWithPeriodsDayTimesDayTime;
 using Services.Broadcast.Entities.StationInventory;
 using System.Diagnostics;
+using Tam.Maestro.Common;
+using Common.Services.ApplicationServices;
+using Services.Broadcast.Entities.Enums;
+using Common.Services.Repositories;
+using Common.Services;
+using Services.Broadcast.Exceptions;
+using Services.Broadcast.BusinessEngines.InventoryDaypartParsing;
 
 namespace Services.Broadcast.Converters.RateImport
 {
-    public class OpenMarketFileImporter : InventoryFileImporterBase
+    public interface IOpenMarketFileImporter : IApplicationService
+    {
+        void ExtractFileData(Stream rawStream, InventoryFile inventoryFile);
+        void CheckFileHash();
+        void LoadFromSaveRequest(InventoryFileSaveRequest request);
+        InventoryFile GetPendingInventoryFile(InventorySource InventorySource, string userName, DateTime nowDate);
+
+        //Access to FileProblems list
+        List<InventoryFileProblem> FileProblems { get; set; }
+    }
+
+    public class OpenMarketFileImporter : IOpenMarketFileImporter
     {
         private const int SecondsPerMinute = 60;
 
-        public override void ExtractFileData(Stream rawStream, InventoryFile inventoryFile)
+        public List<InventoryFileProblem> FileProblems { get; set; } = new List<InventoryFileProblem>();
+        private InventoryFileSaveRequest _Request { get; set; }
+        private string _FileHash { get; set; }
+        private readonly string _validTimeExpression =
+            @"(^([0-9]|[0-1][0-9]|[2][0-3])(:)?([0-5][0-9])(\s{0,1})(A|AM|P|PM|a|am|p|pm|aM|Am|pM|Pm{2,2})$)|(^([0-9]|[1][0-9]|[2][0-3])(\s{0,1})(A|AM|P|PM|a|am|p|pm|aM|Am|pM|Pm{2,2})$)";
+
+        private readonly IDataRepositoryFactory _BroadcastDataRepositoryFactory;
+        private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekAggregateCache;
+        private readonly IDaypartCache _DaypartCache;
+        private readonly IInventoryDaypartParsingEngine _InventoryDaypartParsingEngine;
+
+        public OpenMarketFileImporter(IDataRepositoryFactory dataRepositoryFactory
+            , IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache
+            , IDaypartCache daypartCache
+            , IInventoryDaypartParsingEngine inventoryDaypartParsingEngine)
+        {
+            _BroadcastDataRepositoryFactory = dataRepositoryFactory;
+            _MediaMonthAndWeekAggregateCache = mediaMonthAndWeekAggregateCache;
+            _DaypartCache = daypartCache;
+            _InventoryDaypartParsingEngine = inventoryDaypartParsingEngine;
+        }
+
+        /// <summary>
+        /// Spot lengths dictionary where key is the length and value is the id
+        /// </summary>
+        private Dictionary<int, int> SpotLengths
+        {
+            get
+            {
+                if (_SpotLengths == null)
+                {
+                    _SpotLengths = _BroadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthAndIds();
+                }
+                return _SpotLengths;
+            }
+        }
+        private Dictionary<int, int> _SpotLengths { get; set; }
+
+        protected Dictionary<int, double> _SpotLengthMultipliers;
+
+        public void ExtractFileData(Stream rawStream, InventoryFile inventoryFile)
         {
             try
             {
@@ -47,6 +105,7 @@ namespace Services.Broadcast.Converters.RateImport
             inventoryFile.EndDate = proposal.endDate;
 
             _PopulateStationProgramList(message.Proposal, inventoryFile);
+            if (inventoryFile.ValidationProblems.Any()) return;
 
             inventoryFile.StationContacts = _ExtractContactData(message);
         }
@@ -55,7 +114,8 @@ namespace Services.Broadcast.Converters.RateImport
         {
             if (!IsValid(proposal.AvailList))
             {
-                throw new Exception("Can't find XML elements in order to build station programs from.");
+                inventoryFile.ValidationProblems.Add("Can't find XML elements in order to build station programs from.");
+                return;
             }
 
             foreach (var availList in proposal.AvailList)
@@ -269,6 +329,115 @@ namespace Services.Broadcast.Converters.RateImport
             return manifestAudiences;
         }
 
+        public void CheckFileHash()
+        {
+            //check if file has already been loaded
+            if (_BroadcastDataRepositoryFactory.GetDataRepository<IInventoryFileRepository>()
+                    .GetInventoryFileIdByHash(_FileHash) > 0)
+            {
+                throw new BroadcastDuplicateInventoryFileException(
+                    "Unable to load rate file. The selected rate file has already been loaded or is already loading.");
+            }
+        }
+
+        public void LoadFromSaveRequest(InventoryFileSaveRequest request)
+        {
+            _Request = request;
+            _FileHash = HashGenerator.ComputeHash(StreamHelper.ReadToEnd(request.StreamData));
+            _SpotLengthMultipliers = _GetSpotLengthAndMultipliers();
+        }
+
+        public InventoryFile GetPendingInventoryFile(InventorySource InventorySource, string userName, DateTime nowDate)
+        {
+            return new InventoryFile
+            {
+                FileName = _Request.FileName ?? "unknown",
+                FileStatus = FileStatusEnum.Pending,
+                Hash = _FileHash,
+                InventorySource =  InventorySource,
+                CreatedBy = userName,
+                CreatedDate = nowDate
+            };
+        }
+
+        private DisplayBroadcastStation _GetDisplayBroadcastStation(string stationName)
+        {
+            var _stationRepository = _BroadcastDataRepositoryFactory.GetDataRepository<IStationRepository>();
+            return _stationRepository.GetBroadcastStationByLegacyCallLetters(stationName) ??
+                   _stationRepository.GetBroadcastStationByCallLetters(stationName);
+        }
+
+        protected virtual DisplayBroadcastStation ParseStationCallLetters(string stationName)
+        {
+            stationName = stationName.Replace("-TV", "").Trim();
+            return _GetDisplayBroadcastStation(stationName);
+        }
+
+        protected Dictionary<string, DisplayBroadcastStation> FindStations(List<string> stationNameList)
+        {
+            var foundStations = new Dictionary<string, DisplayBroadcastStation>(StringComparer.OrdinalIgnoreCase);
+
+            foreach (var stationName in stationNameList)
+            {
+                var station = ParseStationCallLetters(stationName);
+
+                if (station != null)
+                {
+                    foundStations.Add(stationName, station);
+                }
+            }
+
+            return foundStations;
+        }
+        
+        private Dictionary<int, double> _GetSpotLengthAndMultipliers()
+        {
+            // load spot lenght ids and multipliers
+            var spotMultipliers = _BroadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthIdsAndCostMultipliers();
+
+            return (from c in SpotLengths
+                    join d in spotMultipliers on c.Value equals d.Key
+                    select new { c.Key, d.Value }).ToDictionary(x => x.Key, y => y.Value);
+
+        }
+
+        protected List<StationInventoryManifestRate> _GetManifestRatesFromMultipliers(decimal periodRate)
+        {
+            var manifestRates = new List<StationInventoryManifestRate>();
+
+            foreach (var spotLength in SpotLengths)
+            {
+                var manifestRate = new StationInventoryManifestRate
+                {
+                    SpotLengthId = spotLength.Value,
+                    SpotCost = periodRate * (decimal)_SpotLengthMultipliers[spotLength.Key]
+                };
+                manifestRates.Add(manifestRate);
+            }
+
+            return manifestRates;
+        }
+
+        protected List<DisplayDaypart> ParseDayparts(string daypartText, string station)
+        {
+            if (_InventoryDaypartParsingEngine.TryParse(daypartText, out var displayDayparts) && displayDayparts.Any() && displayDayparts.All(x => x.IsValid))
+            {
+                return displayDayparts;
+            }
+
+            AddProblem($"Invalid daypart '{daypartText}' for station: {station}");
+            return new List<DisplayDaypart>();
+        }
+
+        protected void AddProblem(string description, string stationLetters = null)
+        {
+            FileProblems.Add(new InventoryFileProblem()
+            {
+                ProblemDescription = description,
+                StationLetters = stationLetters
+            });
+        }
+
         private List<StationInventoryManifestDaypart> _GetDaypartsListForAvailLineWithPeriods(AvailLineWithPeriods availLine)
         {
             var programName = availLine.AvailName;
@@ -463,7 +632,7 @@ namespace Services.Broadcast.Converters.RateImport
                 return null;
             }
 
-            var result = new AvailLineWithPeriods
+            return new AvailLineWithPeriods
             {
                 AvailName = model.AvailName,
                 DaypartName = model.DaypartName,
@@ -471,9 +640,7 @@ namespace Services.Broadcast.Converters.RateImport
                 OutletReference = _Map(model.OutletReference),
                 Periods = _Map(model.Periods),
                 DayTimes = _Map(model.DayTimes)
-            };
-
-            return result;
+            };            
         }
 
         private AvailLineWithPeriodsDayTimes _Map(AAAAMessageProposalAvailListAvailLineWithDetailedPeriodsDayTimes model)
@@ -590,7 +757,7 @@ namespace Services.Broadcast.Converters.RateImport
                 return null;
             }
 
-            var result = new AvailLineWithPeriods
+            return new AvailLineWithPeriods
             {
                 AvailName = model.AvailName,
                 DaypartName = model.DaypartName,
@@ -598,9 +765,7 @@ namespace Services.Broadcast.Converters.RateImport
                 OutletReference = _Map(model.OutletReference),
                 Periods = model.Periods == null ? new List<Period>() : model.Periods.Select(x => _Map(x, model.Rate, model.DemoValues)).ToList(),
                 DayTimes = _Map(model.DayTimes)
-            };
-
-            return result;
+            };            
         }
 
         private Period _Map(AAAAMessageProposalAvailListAvailLineWithPeriodsPeriod model, string rate, AAAAMessageProposalAvailListAvailLineWithPeriodsDemoValue[] demoValues)

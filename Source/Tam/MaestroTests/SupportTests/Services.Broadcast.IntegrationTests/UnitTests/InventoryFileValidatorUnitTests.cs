@@ -150,7 +150,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
             };
             var fileProblems = new List<InventoryFileProblem>();
             var validationResult = _ratesFileValidator.ValidateInventoryFile(incomingInventoryFile);
-            fileProblems.AddRange(validationResult.InventoryFileProblems);
+            fileProblems.AddRange(validationResult);
 
         }
 

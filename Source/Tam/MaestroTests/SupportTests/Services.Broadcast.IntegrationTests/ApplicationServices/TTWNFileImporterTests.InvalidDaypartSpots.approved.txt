@@ -1,6 +1,5 @@
 ﻿[
   {
-    "AffectedProposals": null,
     "ProblemDescription": "Invalid number of spots for station KDFW",
     "ProgramName": null,
     "StationLetters": null

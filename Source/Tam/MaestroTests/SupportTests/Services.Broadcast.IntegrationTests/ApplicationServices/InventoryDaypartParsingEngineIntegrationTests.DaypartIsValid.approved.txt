@@ -1,0 +1,14 @@
+﻿{
+  "failures": [],
+  "success": {
+    "M-T 10AM-11AM": [
+      "M-TU 10AM-11AM"
+    ],
+    "MON 10AM-11AM": [
+      "M 10AM-11AM"
+    ],
+    "MO-FR 12AM-12PM": [
+      "M-F 12AM-12PM"
+    ]
+  }
+}

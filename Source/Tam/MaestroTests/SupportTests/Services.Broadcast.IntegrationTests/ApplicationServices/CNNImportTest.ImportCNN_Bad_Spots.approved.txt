@@ -1,30 +1,25 @@
 ﻿[
   {
-    "AffectedProposals": null,
     "ProblemDescription": "Invalid Spots Per Week \"0\"",
     "ProgramName": null,
     "StationLetters": null
   },
   {
-    "AffectedProposals": null,
     "ProblemDescription": "Invalid Spots Per Day \"0\"",
     "ProgramName": null,
     "StationLetters": null
   },
   {
-    "AffectedProposals": null,
     "ProblemDescription": "Invalid Spots Per Week \"0\"",
     "ProgramName": null,
     "StationLetters": null
   },
   {
-    "AffectedProposals": null,
     "ProblemDescription": "Invalid Spots Per Day \"0\"",
     "ProgramName": null,
     "StationLetters": null
   },
   {
-    "AffectedProposals": null,
     "ProblemDescription": "Invalid Spots Per Day \"0\"",
     "ProgramName": null,
     "StationLetters": null

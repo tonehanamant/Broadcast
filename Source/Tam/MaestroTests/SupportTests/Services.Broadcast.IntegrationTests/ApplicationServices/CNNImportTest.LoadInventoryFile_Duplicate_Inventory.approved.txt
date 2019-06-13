@@ -1,12 +1,10 @@
 ﻿[
   {
-    "AffectedProposals": null,
     "ProblemDescription": "Invalid data for Station KABY, duplicate entry for same spot length",
     "ProgramName": null,
     "StationLetters": null
   },
   {
-    "AffectedProposals": null,
     "ProblemDescription": "Invalid data for Station KALB, duplicate entry for same spot length",
     "ProgramName": null,
     "StationLetters": null

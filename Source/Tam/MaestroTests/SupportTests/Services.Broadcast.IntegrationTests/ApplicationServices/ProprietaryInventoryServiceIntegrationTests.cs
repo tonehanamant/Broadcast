@@ -862,7 +862,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(InventoryFileBase), "Id");
-                jsonResolver.Ignore(typeof(ProprietaryInventoryFile), "CreatedDate");
+                jsonResolver.Ignore(typeof(InventoryFileBase), "CreatedDate");
                 jsonResolver.Ignore(typeof(InventorySource), "Id");
                 var jsonSettings = new JsonSerializerSettings()
                 {

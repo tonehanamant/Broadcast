@@ -1,6 +1,8 @@
 ﻿{
   "fileProblems": [],
   "inventoryFile": {
+    "CreatedBy": null,
+    "CreatedDate": "0001-01-01T00:00:00",
     "EndDate": "0001-01-01T00:00:00",
     "FileName": null,
     "FileStatus": 0,
@@ -532,6 +534,7 @@
     },
     "StartDate": "0001-01-01T00:00:00",
     "StationContacts": [],
-    "UniqueIdentifier": null
+    "UniqueIdentifier": null,
+    "ValidationProblems": []
   }
 }

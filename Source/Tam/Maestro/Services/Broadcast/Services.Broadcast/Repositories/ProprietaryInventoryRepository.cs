@@ -21,12 +21,6 @@ namespace Services.Broadcast.Repositories
         /// <param name="proprietaryFile">Proprietary file object</param>
         void SaveProprietaryInventoryFile(ProprietaryInventoryFile proprietaryFile);
 
-        /// <summary>
-        /// Adds validation problems for a proprietary inventory file to DB
-        /// </summary>
-        /// <param name="proprietaryFile">Proprietary inventory file</param>
-        void AddValidationProblems(ProprietaryInventoryFile proprietaryFile);
-
         ProprietaryInventoryFile GetInventoryFileWithHeaderById(int fileId);
     }
 
@@ -37,25 +31,6 @@ namespace Services.Broadcast.Repositories
            , ITransactionHelper pTransactionHelper)
            : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper)
         {
-        }
-
-        /// <summary>
-        /// Adds validation problems for a proprietary inventory file to DB
-        /// </summary>
-        /// <param name="proprietaryFile">Proprietary inventory file</param>
-        public void AddValidationProblems(ProprietaryInventoryFile proprietaryFile)
-        {
-            _InReadUncommitedTransaction(context =>
-            {
-                var inventoryFile = context.inventory_files.Single(x => x.id == proprietaryFile.Id);
-                inventoryFile.status = (byte)proprietaryFile.FileStatus;
-                inventoryFile.inventory_file_problems = proprietaryFile.ValidationProblems.Select(
-                            x => new inventory_file_problems
-                            {
-                                problem_description = x
-                            }).ToList();
-                context.SaveChanges();
-            });
         }
 
         public ProprietaryInventoryFile GetInventoryFileWithHeaderById(int fileId)

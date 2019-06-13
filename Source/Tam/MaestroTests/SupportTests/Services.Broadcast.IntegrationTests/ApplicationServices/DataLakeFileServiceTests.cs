@@ -26,12 +26,12 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var fileService = IntegrationTestApplicationServiceFactory.Instance.Resolve<IFileService>();
 
             var dataLakeFolder = BroadcastServiceSystemParameter.DataLake_SharedFolder;
-            var fileName = "CNNAMPMBarterObligations_Clean.xlsx";
+            var fileName = "Assembly Schedule For Mapping.csv";
 
             var request = new FileRequest
             {
                 StreamData = new FileStream(
-                        @".\Files\CNNAMPMBarterObligations_Clean.xlsx",
+                        @".\Files\Assembly Schedule For Mapping.csv",
                         FileMode.Open,
                         FileAccess.Read),
                 FileName = fileName
@@ -76,12 +76,12 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             dataLakeSystemParamteres.Setup(r => r.GetUserName()).Returns(string.Empty);
             dataLakeSystemParamteres.Setup(r => r.GetPassword()).Returns(string.Empty);
             var dataLakeFileService = new DataLakeFileService(dataLakeSystemParamteres.Object, emailService, impersonateUser, fileService);
-            var fileName = "CNNAMPMBarterObligations_Clean.xlsx";
+            var fileName = "KeepingTrac_MissingData.xlsx";
 
             var request = new FileRequest
             {
                 StreamData = new FileStream(
-                        @".\Files\CNNAMPMBarterObligations_Clean.xlsx",
+                        @".\Files\KeepingTrac_MissingData.xlsx",
                         FileMode.Open,
                         FileAccess.Read),
                 FileName = fileName

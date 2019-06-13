@@ -1,6 +1,5 @@
 ﻿[
   {
-    "AffectedProposals": null,
     "ProblemDescription": "Invalid station: XYZ1",
     "ProgramName": null,
     "StationLetters": null

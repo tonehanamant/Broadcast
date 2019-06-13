@@ -41,9 +41,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void CanParseTTWNDayparts()
+        public void DoesNotReturnDaypartsWhenDaypartIsInvalid()
         {
-            const string fileName = @".\Files\InventoryDaypartParsing\TTWN_dayparts.xlsx";
+            const string fileName = @".\Files\InventoryDaypartParsing\CNN_dayparts_invalid.xlsx";
 
             var daypartStrings = _LoadDaypartsFromFile(fileName);
             var result = _ParseDayparts(daypartStrings);
@@ -53,9 +53,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void CanParseTTWNDayparts_2()
+        public void DaypartIsValid()
         {
-            const string fileName = @".\Files\InventoryDaypartParsing\TTWN_dayparts_2.xlsx";
+            const string fileName = @".\Files\InventoryDaypartParsing\CNN_dayparts_valid.xlsx";
 
             var daypartStrings = _LoadDaypartsFromFile(fileName);
             var result = _ParseDayparts(daypartStrings);

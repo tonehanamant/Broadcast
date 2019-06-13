@@ -88,7 +88,8 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IProposalScxDataPrep, ProposalScxDataPrep>();
             unityContainer.RegisterType<IInventoryScxDataConverter, InventoryScxDataConverter>();
             unityContainer.RegisterType<IInventoryScxDataPrep, InventoryScxDataPrep>();
-            
+            unityContainer.RegisterType<IOpenMarketFileImporter, OpenMarketFileImporter>();
+
             unityContainer.RegisterType<IProposalCalculationEngine, ProposalCalculationEngine>();
             unityContainer.RegisterType<IQuarterCalculationEngine, QuarterCalculationEngine>();
             unityContainer.RegisterType<INsiUniverseService, NsiUniverseService>();
@@ -120,7 +121,6 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IPostLogValidationEngine, PostLogValidationEngine>();
             unityContainer.RegisterType<IPricingGuideDistributionEngine, PricingGuideDistributionEngine>();
             unityContainer.RegisterType<IProprietaryFileImporterFactory, ProprietaryFileImporterFactory>();
-            unityContainer.RegisterType<IInventoryFileImporterFactory, InventoryFileImporterFactory>();
             unityContainer.RegisterType<ICNNStationInventoryGroupService, CNNStationInventoryGroupService>();
             unityContainer.RegisterType<IStationInventoryManifestService, StationInventoryManifestService>();
 

@@ -1,0 +1,1506 @@
+﻿[
+  {
+    "SpotCost": 75.0000,
+    "SpotLengthId": 1
+  },
+  {
+    "SpotCost": 150.0000,
+    "SpotLengthId": 2
+  },
+  {
+    "SpotCost": 48.7500,
+    "SpotLengthId": 3
+  },
+  {
+    "SpotCost": 300.0000,
+    "SpotLengthId": 4
+  },
+  {
+    "SpotCost": 450.0000,
+    "SpotLengthId": 5
+  },
+  {
+    "SpotCost": 750.0000,
+    "SpotLengthId": 6
+  },
+  {
+    "SpotCost": 225.0000,
+    "SpotLengthId": 7
+  },
+  {
+    "SpotCost": 112.5000,
+    "SpotLengthId": 8
+  },
+  {
+    "SpotCost": 65.0000,
+    "SpotLengthId": 1
+  },
+  {
+    "SpotCost": 130.0000,
+    "SpotLengthId": 2
+  },
+  {
+    "SpotCost": 42.2500,
+    "SpotLengthId": 3
+  },
+  {
+    "SpotCost": 260.0000,
+    "SpotLengthId": 4
+  },
+  {
+    "SpotCost": 390.0000,
+    "SpotLengthId": 5
+  },
+  {
+    "SpotCost": 650.0000,
+    "SpotLengthId": 6
+  },
+  {
+    "SpotCost": 195.0000,
+    "SpotLengthId": 7
+  },
+  {
+    "SpotCost": 97.5000,
+    "SpotLengthId": 8
+  },
+  {
+    "SpotCost": 40.0000,
+    "SpotLengthId": 1
+  },
+  {
+    "SpotCost": 80.0000,
+    "SpotLengthId": 2
+  },
+  {
+    "SpotCost": 26.0000,
+    "SpotLengthId": 3
+  },
+  {
+    "SpotCost": 160.0000,
+    "SpotLengthId": 4
+  },
+  {
+    "SpotCost": 240.0000,
+    "SpotLengthId": 5
+  },
+  {
+    "SpotCost": 400.0000,
+    "SpotLengthId": 6
+  },
+  {
+    "SpotCost": 120.0000,
+    "SpotLengthId": 7
+  },
+  {
+    "SpotCost": 60.0000,
+    "SpotLengthId": 8
+  },
+  {
+    "SpotCost": 100.0000,
+    "SpotLengthId": 1
+  },
+  {
+    "SpotCost": 200.0000,
+    "SpotLengthId": 2
+  },
+  {
+    "SpotCost": 65.0000,
+    "SpotLengthId": 3
+  },
+  {
+    "SpotCost": 400.0000,
+    "SpotLengthId": 4
+  },
+  {
+    "SpotCost": 600.0000,
+    "SpotLengthId": 5
+  },
+  {
+    "SpotCost": 1000.0000,
+    "SpotLengthId": 6
+  },
+  {
+    "SpotCost": 300.0000,
+    "SpotLengthId": 7
+  },
+  {
+    "SpotCost": 150.0000,
+    "SpotLengthId": 8
+  },
+  {
+    "SpotCost": 65.0000,
+    "SpotLengthId": 1
+  },
+  {
+    "SpotCost": 130.0000,
+    "SpotLengthId": 2
+  },
+  {
+    "SpotCost": 42.2500,
+    "SpotLengthId": 3
+  },
+  {
+    "SpotCost": 260.0000,
+    "SpotLengthId": 4
+  },
+  {
+    "SpotCost": 390.0000,
+    "SpotLengthId": 5
+  },
+  {
+    "SpotCost": 650.0000,
+    "SpotLengthId": 6
+  },
+  {
+    "SpotCost": 195.0000,
+    "SpotLengthId": 7
+  },
+  {
+    "SpotCost": 97.5000,
+    "SpotLengthId": 8
+  },
+  {
+    "SpotCost": 60.0000,
+    "SpotLengthId": 1
+  },
+  {
+    "SpotCost": 120.0000,
+    "SpotLengthId": 2
+  },
+  {
+    "SpotCost": 39.0000,
+    "SpotLengthId": 3
+  },
+  {
+    "SpotCost": 240.0000,
+    "SpotLengthId": 4
+  },
+  {
+    "SpotCost": 360.0000,
+    "SpotLengthId": 5
+  },
+  {
+    "SpotCost": 600.0000,
+    "SpotLengthId": 6
+  },
+  {
+    "SpotCost": 180.0000,
+    "SpotLengthId": 7
+  },
+  {
+    "SpotCost": 90.0000,
+    "SpotLengthId": 8
+  },
+  {
+    "SpotCost": 70.0000,
+    "SpotLengthId": 1
+  },
+  {
+    "SpotCost": 140.0000,
+    "SpotLengthId": 2
+  },
+  {
+    "SpotCost": 45.5000,
+    "SpotLengthId": 3
+  },
+  {
+    "SpotCost": 280.0000,
+    "SpotLengthId": 4
+  },
+  {
+    "SpotCost": 420.0000,
+    "SpotLengthId": 5
+  },
+  {
+    "SpotCost": 700.0000,
+    "SpotLengthId": 6
+  },
+  {
+    "SpotCost": 210.0000,
+    "SpotLengthId": 7
+  },
+  {
+    "SpotCost": 105.0000,
+    "SpotLengthId": 8
+  },
+  {
+    "SpotCost": 40.0000,
+    "SpotLengthId": 1
+  },
+  {
+    "SpotCost": 80.0000,
+    "SpotLengthId": 2
+  },
+  {
+    "SpotCost": 26.0000,
+    "SpotLengthId": 3
+  },
+  {
+    "SpotCost": 160.0000,
+    "SpotLengthId": 4
+  },
+  {
+    "SpotCost": 240.0000,
+    "SpotLengthId": 5
+  },
+  {
+    "SpotCost": 400.0000,
+    "SpotLengthId": 6
+  },
+  {
+    "SpotCost": 120.0000,
+    "SpotLengthId": 7
+  },
+  {
+    "SpotCost": 60.0000,
+    "SpotLengthId": 8
+  },
+  {
+    "SpotCost": 30.0000,
+    "SpotLengthId": 1
+  },
+  {
+    "SpotCost": 60.0000,
+    "SpotLengthId": 2
+  },
+  {
+    "SpotCost": 19.5000,
+    "SpotLengthId": 3
+  },
+  {
+    "SpotCost": 120.0000,
+    "SpotLengthId": 4
+  },
+  {
+    "SpotCost": 180.0000,
+    "SpotLengthId": 5
+  },
+  {
+    "SpotCost": 300.0000,
+    "SpotLengthId": 6
+  },
+  {
+    "SpotCost": 90.0000,
+    "SpotLengthId": 7
+  },
+  {
+    "SpotCost": 45.0000,
+    "SpotLengthId": 8
+  },
+  {
+    "SpotCost": 20.0000,
+    "SpotLengthId": 1
+  },
+  {
+    "SpotCost": 40.0000,
+    "SpotLengthId": 2
+  },
+  {
+    "SpotCost": 13.0000,
+    "SpotLengthId": 3
+  },
+  {
+    "SpotCost": 80.0000,
+    "SpotLengthId": 4
+  },
+  {
+    "SpotCost": 120.0000,
+    "SpotLengthId": 5
+  },
+  {
+    "SpotCost": 200.0000,
+    "SpotLengthId": 6
+  },
+  {
+    "SpotCost": 60.0000,
+    "SpotLengthId": 7
+  },
+  {
+    "SpotCost": 30.0000,
+    "SpotLengthId": 8
+  },
+  {
+    "SpotCost": 55.0000,
+    "SpotLengthId": 1
+  },
+  {
+    "SpotCost": 110.0000,
+    "SpotLengthId": 2
+  },
+  {
+    "SpotCost": 35.7500,
+    "SpotLengthId": 3
+  },
+  {
+    "SpotCost": 220.0000,
+    "SpotLengthId": 4
+  },
+  {
+    "SpotCost": 330.0000,
+    "SpotLengthId": 5
+  },
+  {
+    "SpotCost": 550.0000,
+    "SpotLengthId": 6
+  },
+  {
+    "SpotCost": 165.0000,
+    "SpotLengthId": 7
+  },
+  {
+    "SpotCost": 82.5000,
+    "SpotLengthId": 8
+  },
+  {
+    "SpotCost": 75.0000,
+    "SpotLengthId": 1
+  },
+  {
+    "SpotCost": 150.0000,
+    "SpotLengthId": 2
+  },
+  {
+    "SpotCost": 48.7500,
+    "SpotLengthId": 3
+  },
+  {
+    "SpotCost": 300.0000,
+    "SpotLengthId": 4
+  },
+  {
+    "SpotCost": 450.0000,
+    "SpotLengthId": 5
+  },
+  {
+    "SpotCost": 750.0000,
+    "SpotLengthId": 6
+  },
+  {
+    "SpotCost": 225.0000,
+    "SpotLengthId": 7
+  },
+  {
+    "SpotCost": 112.5000,
+    "SpotLengthId": 8
+  },
+  {
+    "SpotCost": 135.0000,
+    "SpotLengthId": 1
+  },
+  {
+    "SpotCost": 270.0000,
+    "SpotLengthId": 2
+  },
+  {
+    "SpotCost": 87.7500,
+    "SpotLengthId": 3
+  },
+  {
+    "SpotCost": 540.0000,
+    "SpotLengthId": 4
+  },
+  {
+    "SpotCost": 810.0000,
+    "SpotLengthId": 5
+  },
+  {
+    "SpotCost": 1350.0000,
+    "SpotLengthId": 6
+  },
+  {
+    "SpotCost": 405.0000,
+    "SpotLengthId": 7
+  },
+  {
+    "SpotCost": 202.5000,
+    "SpotLengthId": 8
+  },
+  {
+    "SpotCost": 50.0000,
+    "SpotLengthId": 1
+  },
+  {
+    "SpotCost": 100.0000,
+    "SpotLengthId": 2
+  },
+  {
+    "SpotCost": 32.5000,
+    "SpotLengthId": 3
+  },
+  {
+    "SpotCost": 200.0000,
+    "SpotLengthId": 4
+  },
+  {
+    "SpotCost": 300.0000,
+    "SpotLengthId": 5
+  },
+  {
+    "SpotCost": 500.0000,
+    "SpotLengthId": 6
+  },
+  {
+    "SpotCost": 150.0000,
+    "SpotLengthId": 7
+  },
+  {
+    "SpotCost": 75.0000,
+    "SpotLengthId": 8
+  },
+  {
+    "SpotCost": 55.0000,
+    "SpotLengthId": 1
+  },
+  {
+    "SpotCost": 110.0000,
+    "SpotLengthId": 2
+  },
+  {
+    "SpotCost": 35.7500,
+    "SpotLengthId": 3
+  },
+  {
+    "SpotCost": 220.0000,
+    "SpotLengthId": 4
+  },
+  {
+    "SpotCost": 330.0000,
+    "SpotLengthId": 5
+  },
+  {
+    "SpotCost": 550.0000,
+    "SpotLengthId": 6
+  },
+  {
+    "SpotCost": 165.0000,
+    "SpotLengthId": 7
+  },
+  {
+    "SpotCost": 82.5000,
+    "SpotLengthId": 8
+  },
+  {
+    "SpotCost": 75.0000,
+    "SpotLengthId": 1
+  },
+  {
+    "SpotCost": 150.0000,
+    "SpotLengthId": 2
+  },
+  {
+    "SpotCost": 48.7500,
+    "SpotLengthId": 3
+  },
+  {
+    "SpotCost": 300.0000,
+    "SpotLengthId": 4
+  },
+  {
+    "SpotCost": 450.0000,
+    "SpotLengthId": 5
+  },
+  {
+    "SpotCost": 750.0000,
+    "SpotLengthId": 6
+  },
+  {
+    "SpotCost": 225.0000,
+    "SpotLengthId": 7
+  },
+  {
+    "SpotCost": 112.5000,
+    "SpotLengthId": 8
+  },
+  {
+    "SpotCost": 60.0000,
+    "SpotLengthId": 1
+  },
+  {
+    "SpotCost": 120.0000,
+    "SpotLengthId": 2
+  },
+  {
+    "SpotCost": 39.0000,
+    "SpotLengthId": 3
+  },
+  {
+    "SpotCost": 240.0000,
+    "SpotLengthId": 4
+  },
+  {
+    "SpotCost": 360.0000,
+    "SpotLengthId": 5
+  },
+  {
+    "SpotCost": 600.0000,
+    "SpotLengthId": 6
+  },
+  {
+    "SpotCost": 180.0000,
+    "SpotLengthId": 7
+  },
+  {
+    "SpotCost": 90.0000,
+    "SpotLengthId": 8
+  },
+  {
+    "SpotCost": 50.0000,
+    "SpotLengthId": 1
+  },
+  {
+    "SpotCost": 100.0000,
+    "SpotLengthId": 2
+  },
+  {
+    "SpotCost": 32.5000,
+    "SpotLengthId": 3
+  },
+  {
+    "SpotCost": 200.0000,
+    "SpotLengthId": 4
+  },
+  {
+    "SpotCost": 300.0000,
+    "SpotLengthId": 5
+  },
+  {
+    "SpotCost": 500.0000,
+    "SpotLengthId": 6
+  },
+  {
+    "SpotCost": 150.0000,
+    "SpotLengthId": 7
+  },
+  {
+    "SpotCost": 75.0000,
+    "SpotLengthId": 8
+  },
+  {
+    "SpotCost": 40.0000,
+    "SpotLengthId": 1
+  },
+  {
+    "SpotCost": 80.0000,
+    "SpotLengthId": 2
+  },
+  {
+    "SpotCost": 26.0000,
+    "SpotLengthId": 3
+  },
+  {
+    "SpotCost": 160.0000,
+    "SpotLengthId": 4
+  },
+  {
+    "SpotCost": 240.0000,
+    "SpotLengthId": 5
+  },
+  {
+    "SpotCost": 400.0000,
+    "SpotLengthId": 6
+  },
+  {
+    "SpotCost": 120.0000,
+    "SpotLengthId": 7
+  },
+  {
+    "SpotCost": 60.0000,
+    "SpotLengthId": 8
+  },
+  {
+    "SpotCost": 100.0000,
+    "SpotLengthId": 1
+  },
+  {
+    "SpotCost": 200.0000,
+    "SpotLengthId": 2
+  },
+  {
+    "SpotCost": 65.0000,
+    "SpotLengthId": 3
+  },
+  {
+    "SpotCost": 400.0000,
+    "SpotLengthId": 4
+  },
+  {
+    "SpotCost": 600.0000,
+    "SpotLengthId": 5
+  },
+  {
+    "SpotCost": 1000.0000,
+    "SpotLengthId": 6
+  },
+  {
+    "SpotCost": 300.0000,
+    "SpotLengthId": 7
+  },
+  {
+    "SpotCost": 150.0000,
+    "SpotLengthId": 8
+  },
+  {
+    "SpotCost": 60.0000,
+    "SpotLengthId": 1
+  },
+  {
+    "SpotCost": 120.0000,
+    "SpotLengthId": 2
+  },
+  {
+    "SpotCost": 39.0000,
+    "SpotLengthId": 3
+  },
+  {
+    "SpotCost": 240.0000,
+    "SpotLengthId": 4
+  },
+  {
+    "SpotCost": 360.0000,
+    "SpotLengthId": 5
+  },
+  {
+    "SpotCost": 600.0000,
+    "SpotLengthId": 6
+  },
+  {
+    "SpotCost": 180.0000,
+    "SpotLengthId": 7
+  },
+  {
+    "SpotCost": 90.0000,
+    "SpotLengthId": 8
+  },
+  {
+    "SpotCost": 50.0000,
+    "SpotLengthId": 1
+  },
+  {
+    "SpotCost": 100.0000,
+    "SpotLengthId": 2
+  },
+  {
+    "SpotCost": 32.5000,
+    "SpotLengthId": 3
+  },
+  {
+    "SpotCost": 200.0000,
+    "SpotLengthId": 4
+  },
+  {
+    "SpotCost": 300.0000,
+    "SpotLengthId": 5
+  },
+  {
+    "SpotCost": 500.0000,
+    "SpotLengthId": 6
+  },
+  {
+    "SpotCost": 150.0000,
+    "SpotLengthId": 7
+  },
+  {
+    "SpotCost": 75.0000,
+    "SpotLengthId": 8
+  },
+  {
+    "SpotCost": 60.0000,
+    "SpotLengthId": 1
+  },
+  {
+    "SpotCost": 120.0000,
+    "SpotLengthId": 2
+  },
+  {
+    "SpotCost": 39.0000,
+    "SpotLengthId": 3
+  },
+  {
+    "SpotCost": 240.0000,
+    "SpotLengthId": 4
+  },
+  {
+    "SpotCost": 360.0000,
+    "SpotLengthId": 5
+  },
+  {
+    "SpotCost": 600.0000,
+    "SpotLengthId": 6
+  },
+  {
+    "SpotCost": 180.0000,
+    "SpotLengthId": 7
+  },
+  {
+    "SpotCost": 90.0000,
+    "SpotLengthId": 8
+  },
+  {
+    "SpotCost": 30.0000,
+    "SpotLengthId": 1
+  },
+  {
+    "SpotCost": 60.0000,
+    "SpotLengthId": 2
+  },
+  {
+    "SpotCost": 19.5000,
+    "SpotLengthId": 3
+  },
+  {
+    "SpotCost": 120.0000,
+    "SpotLengthId": 4
+  },
+  {
+    "SpotCost": 180.0000,
+    "SpotLengthId": 5
+  },
+  {
+    "SpotCost": 300.0000,
+    "SpotLengthId": 6
+  },
+  {
+    "SpotCost": 90.0000,
+    "SpotLengthId": 7
+  },
+  {
+    "SpotCost": 45.0000,
+    "SpotLengthId": 8
+  },
+  {
+    "SpotCost": 30.0000,
+    "SpotLengthId": 1
+  },
+  {
+    "SpotCost": 60.0000,
+    "SpotLengthId": 2
+  },
+  {
+    "SpotCost": 19.5000,
+    "SpotLengthId": 3
+  },
+  {
+    "SpotCost": 120.0000,
+    "SpotLengthId": 4
+  },
+  {
+    "SpotCost": 180.0000,
+    "SpotLengthId": 5
+  },
+  {
+    "SpotCost": 300.0000,
+    "SpotLengthId": 6
+  },
+  {
+    "SpotCost": 90.0000,
+    "SpotLengthId": 7
+  },
+  {
+    "SpotCost": 45.0000,
+    "SpotLengthId": 8
+  },
+  {
+    "SpotCost": 10.0000,
+    "SpotLengthId": 1
+  },
+  {
+    "SpotCost": 20.0000,
+    "SpotLengthId": 2
+  },
+  {
+    "SpotCost": 6.5000,
+    "SpotLengthId": 3
+  },
+  {
+    "SpotCost": 40.0000,
+    "SpotLengthId": 4
+  },
+  {
+    "SpotCost": 60.0000,
+    "SpotLengthId": 5
+  },
+  {
+    "SpotCost": 100.0000,
+    "SpotLengthId": 6
+  },
+  {
+    "SpotCost": 30.0000,
+    "SpotLengthId": 7
+  },
+  {
+    "SpotCost": 15.0000,
+    "SpotLengthId": 8
+  },
+  {
+    "SpotCost": 55.0000,
+    "SpotLengthId": 1
+  },
+  {
+    "SpotCost": 110.0000,
+    "SpotLengthId": 2
+  },
+  {
+    "SpotCost": 35.7500,
+    "SpotLengthId": 3
+  },
+  {
+    "SpotCost": 220.0000,
+    "SpotLengthId": 4
+  },
+  {
+    "SpotCost": 330.0000,
+    "SpotLengthId": 5
+  },
+  {
+    "SpotCost": 550.0000,
+    "SpotLengthId": 6
+  },
+  {
+    "SpotCost": 165.0000,
+    "SpotLengthId": 7
+  },
+  {
+    "SpotCost": 82.5000,
+    "SpotLengthId": 8
+  },
+  {
+    "SpotCost": 60.0000,
+    "SpotLengthId": 1
+  },
+  {
+    "SpotCost": 120.0000,
+    "SpotLengthId": 2
+  },
+  {
+    "SpotCost": 39.0000,
+    "SpotLengthId": 3
+  },
+  {
+    "SpotCost": 240.0000,
+    "SpotLengthId": 4
+  },
+  {
+    "SpotCost": 360.0000,
+    "SpotLengthId": 5
+  },
+  {
+    "SpotCost": 600.0000,
+    "SpotLengthId": 6
+  },
+  {
+    "SpotCost": 180.0000,
+    "SpotLengthId": 7
+  },
+  {
+    "SpotCost": 90.0000,
+    "SpotLengthId": 8
+  },
+  {
+    "SpotCost": 100.0000,
+    "SpotLengthId": 1
+  },
+  {
+    "SpotCost": 200.0000,
+    "SpotLengthId": 2
+  },
+  {
+    "SpotCost": 65.0000,
+    "SpotLengthId": 3
+  },
+  {
+    "SpotCost": 400.0000,
+    "SpotLengthId": 4
+  },
+  {
+    "SpotCost": 600.0000,
+    "SpotLengthId": 5
+  },
+  {
+    "SpotCost": 1000.0000,
+    "SpotLengthId": 6
+  },
+  {
+    "SpotCost": 300.0000,
+    "SpotLengthId": 7
+  },
+  {
+    "SpotCost": 150.0000,
+    "SpotLengthId": 8
+  },
+  {
+    "SpotCost": 30.0000,
+    "SpotLengthId": 1
+  },
+  {
+    "SpotCost": 60.0000,
+    "SpotLengthId": 2
+  },
+  {
+    "SpotCost": 19.5000,
+    "SpotLengthId": 3
+  },
+  {
+    "SpotCost": 120.0000,
+    "SpotLengthId": 4
+  },
+  {
+    "SpotCost": 180.0000,
+    "SpotLengthId": 5
+  },
+  {
+    "SpotCost": 300.0000,
+    "SpotLengthId": 6
+  },
+  {
+    "SpotCost": 90.0000,
+    "SpotLengthId": 7
+  },
+  {
+    "SpotCost": 45.0000,
+    "SpotLengthId": 8
+  },
+  {
+    "SpotCost": 55.0000,
+    "SpotLengthId": 1
+  },
+  {
+    "SpotCost": 110.0000,
+    "SpotLengthId": 2
+  },
+  {
+    "SpotCost": 35.7500,
+    "SpotLengthId": 3
+  },
+  {
+    "SpotCost": 220.0000,
+    "SpotLengthId": 4
+  },
+  {
+    "SpotCost": 330.0000,
+    "SpotLengthId": 5
+  },
+  {
+    "SpotCost": 550.0000,
+    "SpotLengthId": 6
+  },
+  {
+    "SpotCost": 165.0000,
+    "SpotLengthId": 7
+  },
+  {
+    "SpotCost": 82.5000,
+    "SpotLengthId": 8
+  },
+  {
+    "SpotCost": 50.0000,
+    "SpotLengthId": 1
+  },
+  {
+    "SpotCost": 100.0000,
+    "SpotLengthId": 2
+  },
+  {
+    "SpotCost": 32.5000,
+    "SpotLengthId": 3
+  },
+  {
+    "SpotCost": 200.0000,
+    "SpotLengthId": 4
+  },
+  {
+    "SpotCost": 300.0000,
+    "SpotLengthId": 5
+  },
+  {
+    "SpotCost": 500.0000,
+    "SpotLengthId": 6
+  },
+  {
+    "SpotCost": 150.0000,
+    "SpotLengthId": 7
+  },
+  {
+    "SpotCost": 75.0000,
+    "SpotLengthId": 8
+  },
+  {
+    "SpotCost": 55.0000,
+    "SpotLengthId": 1
+  },
+  {
+    "SpotCost": 110.0000,
+    "SpotLengthId": 2
+  },
+  {
+    "SpotCost": 35.7500,
+    "SpotLengthId": 3
+  },
+  {
+    "SpotCost": 220.0000,
+    "SpotLengthId": 4
+  },
+  {
+    "SpotCost": 330.0000,
+    "SpotLengthId": 5
+  },
+  {
+    "SpotCost": 550.0000,
+    "SpotLengthId": 6
+  },
+  {
+    "SpotCost": 165.0000,
+    "SpotLengthId": 7
+  },
+  {
+    "SpotCost": 82.5000,
+    "SpotLengthId": 8
+  },
+  {
+    "SpotCost": 15.0000,
+    "SpotLengthId": 1
+  },
+  {
+    "SpotCost": 30.0000,
+    "SpotLengthId": 2
+  },
+  {
+    "SpotCost": 9.7500,
+    "SpotLengthId": 3
+  },
+  {
+    "SpotCost": 60.0000,
+    "SpotLengthId": 4
+  },
+  {
+    "SpotCost": 90.0000,
+    "SpotLengthId": 5
+  },
+  {
+    "SpotCost": 150.0000,
+    "SpotLengthId": 6
+  },
+  {
+    "SpotCost": 45.0000,
+    "SpotLengthId": 7
+  },
+  {
+    "SpotCost": 22.5000,
+    "SpotLengthId": 8
+  },
+  {
+    "SpotCost": 50.0000,
+    "SpotLengthId": 1
+  },
+  {
+    "SpotCost": 100.0000,
+    "SpotLengthId": 2
+  },
+  {
+    "SpotCost": 32.5000,
+    "SpotLengthId": 3
+  },
+  {
+    "SpotCost": 200.0000,
+    "SpotLengthId": 4
+  },
+  {
+    "SpotCost": 300.0000,
+    "SpotLengthId": 5
+  },
+  {
+    "SpotCost": 500.0000,
+    "SpotLengthId": 6
+  },
+  {
+    "SpotCost": 150.0000,
+    "SpotLengthId": 7
+  },
+  {
+    "SpotCost": 75.0000,
+    "SpotLengthId": 8
+  },
+  {
+    "SpotCost": 20.0000,
+    "SpotLengthId": 1
+  },
+  {
+    "SpotCost": 40.0000,
+    "SpotLengthId": 2
+  },
+  {
+    "SpotCost": 13.0000,
+    "SpotLengthId": 3
+  },
+  {
+    "SpotCost": 80.0000,
+    "SpotLengthId": 4
+  },
+  {
+    "SpotCost": 120.0000,
+    "SpotLengthId": 5
+  },
+  {
+    "SpotCost": 200.0000,
+    "SpotLengthId": 6
+  },
+  {
+    "SpotCost": 60.0000,
+    "SpotLengthId": 7
+  },
+  {
+    "SpotCost": 30.0000,
+    "SpotLengthId": 8
+  },
+  {
+    "SpotCost": 20.0000,
+    "SpotLengthId": 1
+  },
+  {
+    "SpotCost": 40.0000,
+    "SpotLengthId": 2
+  },
+  {
+    "SpotCost": 13.0000,
+    "SpotLengthId": 3
+  },
+  {
+    "SpotCost": 80.0000,
+    "SpotLengthId": 4
+  },
+  {
+    "SpotCost": 120.0000,
+    "SpotLengthId": 5
+  },
+  {
+    "SpotCost": 200.0000,
+    "SpotLengthId": 6
+  },
+  {
+    "SpotCost": 60.0000,
+    "SpotLengthId": 7
+  },
+  {
+    "SpotCost": 30.0000,
+    "SpotLengthId": 8
+  },
+  {
+    "SpotCost": 100.0000,
+    "SpotLengthId": 1
+  },
+  {
+    "SpotCost": 200.0000,
+    "SpotLengthId": 2
+  },
+  {
+    "SpotCost": 65.0000,
+    "SpotLengthId": 3
+  },
+  {
+    "SpotCost": 400.0000,
+    "SpotLengthId": 4
+  },
+  {
+    "SpotCost": 600.0000,
+    "SpotLengthId": 5
+  },
+  {
+    "SpotCost": 1000.0000,
+    "SpotLengthId": 6
+  },
+  {
+    "SpotCost": 300.0000,
+    "SpotLengthId": 7
+  },
+  {
+    "SpotCost": 150.0000,
+    "SpotLengthId": 8
+  },
+  {
+    "SpotCost": 40.0000,
+    "SpotLengthId": 1
+  },
+  {
+    "SpotCost": 80.0000,
+    "SpotLengthId": 2
+  },
+  {
+    "SpotCost": 26.0000,
+    "SpotLengthId": 3
+  },
+  {
+    "SpotCost": 160.0000,
+    "SpotLengthId": 4
+  },
+  {
+    "SpotCost": 240.0000,
+    "SpotLengthId": 5
+  },
+  {
+    "SpotCost": 400.0000,
+    "SpotLengthId": 6
+  },
+  {
+    "SpotCost": 120.0000,
+    "SpotLengthId": 7
+  },
+  {
+    "SpotCost": 60.0000,
+    "SpotLengthId": 8
+  },
+  {
+    "SpotCost": 75.0000,
+    "SpotLengthId": 1
+  },
+  {
+    "SpotCost": 150.0000,
+    "SpotLengthId": 2
+  },
+  {
+    "SpotCost": 48.7500,
+    "SpotLengthId": 3
+  },
+  {
+    "SpotCost": 300.0000,
+    "SpotLengthId": 4
+  },
+  {
+    "SpotCost": 450.0000,
+    "SpotLengthId": 5
+  },
+  {
+    "SpotCost": 750.0000,
+    "SpotLengthId": 6
+  },
+  {
+    "SpotCost": 225.0000,
+    "SpotLengthId": 7
+  },
+  {
+    "SpotCost": 112.5000,
+    "SpotLengthId": 8
+  },
+  {
+    "SpotCost": 100.0000,
+    "SpotLengthId": 1
+  },
+  {
+    "SpotCost": 200.0000,
+    "SpotLengthId": 2
+  },
+  {
+    "SpotCost": 65.0000,
+    "SpotLengthId": 3
+  },
+  {
+    "SpotCost": 400.0000,
+    "SpotLengthId": 4
+  },
+  {
+    "SpotCost": 600.0000,
+    "SpotLengthId": 5
+  },
+  {
+    "SpotCost": 1000.0000,
+    "SpotLengthId": 6
+  },
+  {
+    "SpotCost": 300.0000,
+    "SpotLengthId": 7
+  },
+  {
+    "SpotCost": 150.0000,
+    "SpotLengthId": 8
+  },
+  {
+    "SpotCost": 100.0000,
+    "SpotLengthId": 1
+  },
+  {
+    "SpotCost": 200.0000,
+    "SpotLengthId": 2
+  },
+  {
+    "SpotCost": 65.0000,
+    "SpotLengthId": 3
+  },
+  {
+    "SpotCost": 400.0000,
+    "SpotLengthId": 4
+  },
+  {
+    "SpotCost": 600.0000,
+    "SpotLengthId": 5
+  },
+  {
+    "SpotCost": 1000.0000,
+    "SpotLengthId": 6
+  },
+  {
+    "SpotCost": 300.0000,
+    "SpotLengthId": 7
+  },
+  {
+    "SpotCost": 150.0000,
+    "SpotLengthId": 8
+  },
+  {
+    "SpotCost": 90.0000,
+    "SpotLengthId": 1
+  },
+  {
+    "SpotCost": 180.0000,
+    "SpotLengthId": 2
+  },
+  {
+    "SpotCost": 58.5000,
+    "SpotLengthId": 3
+  },
+  {
+    "SpotCost": 360.0000,
+    "SpotLengthId": 4
+  },
+  {
+    "SpotCost": 540.0000,
+    "SpotLengthId": 5
+  },
+  {
+    "SpotCost": 900.0000,
+    "SpotLengthId": 6
+  },
+  {
+    "SpotCost": 270.0000,
+    "SpotLengthId": 7
+  },
+  {
+    "SpotCost": 135.0000,
+    "SpotLengthId": 8
+  },
+  {
+    "SpotCost": 60.0000,
+    "SpotLengthId": 1
+  },
+  {
+    "SpotCost": 120.0000,
+    "SpotLengthId": 2
+  },
+  {
+    "SpotCost": 39.0000,
+    "SpotLengthId": 3
+  },
+  {
+    "SpotCost": 240.0000,
+    "SpotLengthId": 4
+  },
+  {
+    "SpotCost": 360.0000,
+    "SpotLengthId": 5
+  },
+  {
+    "SpotCost": 600.0000,
+    "SpotLengthId": 6
+  },
+  {
+    "SpotCost": 180.0000,
+    "SpotLengthId": 7
+  },
+  {
+    "SpotCost": 90.0000,
+    "SpotLengthId": 8
+  },
+  {
+    "SpotCost": 75.0000,
+    "SpotLengthId": 1
+  },
+  {
+    "SpotCost": 150.0000,
+    "SpotLengthId": 2
+  },
+  {
+    "SpotCost": 48.7500,
+    "SpotLengthId": 3
+  },
+  {
+    "SpotCost": 300.0000,
+    "SpotLengthId": 4
+  },
+  {
+    "SpotCost": 450.0000,
+    "SpotLengthId": 5
+  },
+  {
+    "SpotCost": 750.0000,
+    "SpotLengthId": 6
+  },
+  {
+    "SpotCost": 225.0000,
+    "SpotLengthId": 7
+  },
+  {
+    "SpotCost": 112.5000,
+    "SpotLengthId": 8
+  },
+  {
+    "SpotCost": 75.0000,
+    "SpotLengthId": 1
+  },
+  {
+    "SpotCost": 150.0000,
+    "SpotLengthId": 2
+  },
+  {
+    "SpotCost": 48.7500,
+    "SpotLengthId": 3
+  },
+  {
+    "SpotCost": 300.0000,
+    "SpotLengthId": 4
+  },
+  {
+    "SpotCost": 450.0000,
+    "SpotLengthId": 5
+  },
+  {
+    "SpotCost": 750.0000,
+    "SpotLengthId": 6
+  },
+  {
+    "SpotCost": 225.0000,
+    "SpotLengthId": 7
+  },
+  {
+    "SpotCost": 112.5000,
+    "SpotLengthId": 8
+  },
+  {
+    "SpotCost": 125.0000,
+    "SpotLengthId": 1
+  },
+  {
+    "SpotCost": 250.0000,
+    "SpotLengthId": 2
+  },
+  {
+    "SpotCost": 81.2500,
+    "SpotLengthId": 3
+  },
+  {
+    "SpotCost": 500.0000,
+    "SpotLengthId": 4
+  },
+  {
+    "SpotCost": 750.0000,
+    "SpotLengthId": 5
+  },
+  {
+    "SpotCost": 1250.0000,
+    "SpotLengthId": 6
+  },
+  {
+    "SpotCost": 375.0000,
+    "SpotLengthId": 7
+  },
+  {
+    "SpotCost": 187.5000,
+    "SpotLengthId": 8
+  }
+]

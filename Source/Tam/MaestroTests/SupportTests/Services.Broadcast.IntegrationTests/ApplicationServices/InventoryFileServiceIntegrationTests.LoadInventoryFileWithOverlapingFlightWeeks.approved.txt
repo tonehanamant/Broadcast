@@ -1,4 +1,4 @@
 ﻿{
-  "Status": 0,
-  "ValidationProblems": null
+  "Status": 2,
+  "ValidationProblems": []
 }

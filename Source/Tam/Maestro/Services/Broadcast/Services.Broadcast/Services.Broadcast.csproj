@@ -225,7 +225,7 @@
     <Compile Include="Cache\MarketCoverageCache.cs" />
     <Compile Include="Converters\InventorySummary\DiginetSummaryFactory.cs" />
     <Compile Include="Converters\InventorySummary\ProprietaryOAndOSummaryFactory.cs" />
-	<Compile Include="Converters\InventorySummary\SyndicationSummaryFactory.cs" />
+    <Compile Include="Converters\InventorySummary\SyndicationSummaryFactory.cs" />
     <Compile Include="Entities\CampaignDto.cs" />
     <Compile Include="ApplicationServices\CampaignService.cs" />
     <Compile Include="ApplicationServices\ProprietaryInventoryService.cs" />
@@ -245,6 +245,7 @@
     <Compile Include="Converters\RateImport\SyndicationFileImporter.cs" />
     <Compile Include="Entities\DateRange.cs" />
     <Compile Include="Entities\DaypartCodeDto.cs" />
+    <Compile Include="Entities\Enums\RatesTimeframe.cs" />
     <Compile Include="Entities\InventorySummary\InventorySummaryBookDto.cs" />
     <Compile Include="Entities\InventorySummary\InventorySummaryDto.cs" />
     <Compile Include="Converters\InventorySummary\BaseInventorySummaryAbstractFactory.cs" />
@@ -513,11 +514,7 @@
     <Compile Include="Converters\AssemblyImportHelper.cs" />
     <Compile Include="ReportGenerators\BvsExcelReportGenerator.cs" />
     <Compile Include="Converters\Post\PostFileParser.cs" />
-    <Compile Include="Converters\RateImport\CNNFileImporter.cs" />
     <Compile Include="Converters\RateImport\OpenMarketFileImporter.cs" />
-    <Compile Include="Converters\RateImport\InventoryFileImporterBase.cs" />
-    <Compile Include="Converters\RateImport\InventoryFileImporterFactory.cs" />
-    <Compile Include="Converters\RateImport\TTWNFileImporter.cs" />
     <Compile Include="Converters\ScheduleConverterBase.cs" />
     <Compile Include="Converters\DefaultScheduleConverter.cs" />
     <Compile Include="Converters\StationContactMasterFileImporter.cs" />

@@ -1,5 +1,6 @@
 ﻿using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.StationInventory;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -13,6 +14,9 @@ namespace Services.Broadcast.Entities
         public string Hash { get; set; }
         public InventorySource InventorySource { get; set; }
         public string UniqueIdentifier { get; set; }
+        public string CreatedBy { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public List<string> ValidationProblems { get; set; } = new List<string>();
 
         public List<StationInventoryGroup> InventoryGroups { get; set; } = new List<StationInventoryGroup>();
         public List<StationInventoryManifest> InventoryManifests { get; set; } = new List<StationInventoryManifest>();

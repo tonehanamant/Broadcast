@@ -14,6 +14,7 @@ using Services.Broadcast.Repositories;
 using Services.Broadcast.Validators;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Transactions;
 using Tam.Maestro.Common;
@@ -26,17 +27,17 @@ using Tam.Maestro.Services.ContractInterfaces.Common;
 
 namespace Services.Broadcast.ApplicationServices
 {
-    public enum RatesTimeframe
-    {
-        TODAY,
-        LASTQUARTER,
-        THISQUARTER,
-        NEXTQUARTER
-    }
-
     public interface IInventoryService : IApplicationService
     {
-        InventoryFileSaveResult SaveInventoryFile(InventoryFileSaveRequest request);
+        /// <summary>
+        /// Saves an open market inventory file
+        /// </summary>
+        /// <param name="request">InventoryFileSaveRequest object containing an open market inventory file</param>
+        /// <param name="userName">Username requesting the operation</param>
+        /// <param name="nowDate">Now date</param>
+        /// <returns>InventoryFileSaveResult object</returns>
+        InventoryFileSaveResult SaveInventoryFile(InventoryFileSaveRequest request, string userName, DateTime nowDate);
+
         List<StationContact> GetStationContacts(string inventorySource, int stationCode);
         bool SaveStationContact(StationContact stationContacts, string userName);
         bool DeleteStationContact(string inventorySourceString, int stationContactId, string userName);
@@ -55,34 +56,31 @@ namespace Services.Broadcast.ApplicationServices
     {
         private readonly IStationRepository _StationRepository;
         private readonly IDataRepositoryFactory _broadcastDataRepositoryFactory;
-        private readonly IDaypartCache _daypartCache;
+        private readonly IDaypartCache _DaypartCache;
         private readonly IBroadcastAudiencesCache _AudiencesCache;
-        private readonly IInventoryFileValidator _inventoryFileValidator;
-        private readonly IStationContactsRepository _stationContactsRepository;
-        private readonly IGenreRepository _genreRepository;
+        private readonly IInventoryFileValidator _InventoryFileValidator;
+        private readonly IStationContactsRepository _StationContactsRepository;
+        private readonly IGenreRepository _GenreRepository;
         private readonly IQuarterCalculationEngine _QuarterCalculationEngine;
-        private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekAggregateCache;
-        private readonly IInventoryFileImporterFactory _inventoryFileImporterFactory;
         private readonly ISMSClient _SmsClient;
-        private readonly IInventoryFileRepository _inventoryFileRepository;
+        private readonly IInventoryFileRepository _InventoryFileRepository;
         private readonly Dictionary<int, int> _SpotLengthMap;
         private readonly Dictionary<int, double> _SpotLengthCostMultipliers;
         private readonly IProprietarySpotCostCalculationEngine _ProprietarySpotCostCalculationEngine;
-        private readonly IStationInventoryGroupService _stationInventoryGroupService;
-        private readonly IInventoryRepository _inventoryRepository;
-        private readonly IRatingForecastService _RatingForecastService;
+        private readonly IStationInventoryGroupService _StationInventoryGroupService;
+        private readonly IInventoryRepository _InventoryRepository;
         private readonly INsiPostingBookService _NsiPostingBookService;
         private readonly ILockingEngine _LockingEngine;
         private readonly IDataLakeFileService _DataLakeFileService;
         private readonly IStationProcessingEngine _StationProcessingEngine;
         private readonly IImpressionsService _ImpressionsService;
+        private readonly IOpenMarketFileImporter _OpenMarketFileImporter;
+        private readonly IAudienceRepository _AudienceRepository;
 
         public InventoryService(IDataRepositoryFactory broadcastDataRepositoryFactory,
             IInventoryFileValidator inventoryFileValidator,
             IDaypartCache daypartCache,
             IQuarterCalculationEngine quarterCalculationEngine,
-            IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
-            IInventoryFileImporterFactory inventoryFileImporterFactory,
             ISMSClient smsClient,
             IProprietarySpotCostCalculationEngine proprietarySpotCostCalculationEngine,
             IStationInventoryGroupService stationInventoryGroupService,
@@ -92,33 +90,31 @@ namespace Services.Broadcast.ApplicationServices
             IDataLakeFileService dataLakeFileService,
             ILockingEngine lockingEngine,
             IStationProcessingEngine stationProcessingEngine,
-            IImpressionsService impressionsService)
+            IImpressionsService impressionsService,
+            IOpenMarketFileImporter openMarketFileImporter)
         {
             _broadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
             _StationRepository = broadcastDataRepositoryFactory.GetDataRepository<IStationRepository>();
-            _daypartCache = daypartCache;
+            _DaypartCache = daypartCache;
             _AudiencesCache = audiencesCache;
             _QuarterCalculationEngine = quarterCalculationEngine;
-            _MediaMonthAndWeekAggregateCache = mediaMonthAndWeekAggregateCache;
-            _inventoryFileValidator = inventoryFileValidator;
-            _stationContactsRepository = broadcastDataRepositoryFactory.GetDataRepository<IStationContactsRepository>();
-            _genreRepository = _broadcastDataRepositoryFactory.GetDataRepository<IGenreRepository>();
-            _inventoryFileImporterFactory = inventoryFileImporterFactory;
+            _InventoryFileValidator = inventoryFileValidator;
+            _StationContactsRepository = broadcastDataRepositoryFactory.GetDataRepository<IStationContactsRepository>();
+            _GenreRepository = _broadcastDataRepositoryFactory.GetDataRepository<IGenreRepository>();
             _SmsClient = smsClient;
-            _inventoryFileRepository = _broadcastDataRepositoryFactory.GetDataRepository<IInventoryFileRepository>();
-            _SpotLengthMap =
-                broadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthAndIds();
-            _SpotLengthCostMultipliers =
-                broadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthIdsAndCostMultipliers();
+            _InventoryFileRepository = _broadcastDataRepositoryFactory.GetDataRepository<IInventoryFileRepository>();
+            _SpotLengthMap = broadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthAndIds();
+            _SpotLengthCostMultipliers = broadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthIdsAndCostMultipliers();
             _ProprietarySpotCostCalculationEngine = proprietarySpotCostCalculationEngine;
-            _stationInventoryGroupService = stationInventoryGroupService;
-            _inventoryRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
-            _RatingForecastService = ratingForecastService;
+            _StationInventoryGroupService = stationInventoryGroupService;
+            _InventoryRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
             _NsiPostingBookService = nsiPostingBookService;
             _LockingEngine = lockingEngine;
             _DataLakeFileService = dataLakeFileService;
             _StationProcessingEngine = stationProcessingEngine;
             _ImpressionsService = impressionsService;
+            _OpenMarketFileImporter = openMarketFileImporter;
+            _AudienceRepository = broadcastDataRepositoryFactory.GetDataRepository<IAudienceRepository>();
         }
       
         public bool GetStationProgramConflicted(StationProgramConflictRequest conflict, int manifestId)
@@ -133,16 +129,16 @@ namespace Services.Broadcast.ApplicationServices
             if (conflict.Airtime == null)
                 return hasDateRangeConflict;
 
-            var program = _inventoryRepository.GetStationManifest(manifestId);
+            var program = _InventoryRepository.GetStationManifest(manifestId);
             var daypart = DaypartDto.ConvertDaypartDto(conflict.Airtime);
 
-            daypart.Id = _daypartCache.GetIdByDaypart(daypart);
+            daypart.Id = _DaypartCache.GetIdByDaypart(daypart);
 
             var hasDaypartConflict = false;
 
             foreach (var manifestDaypart in program.ManifestDayparts)
             {
-                hasDaypartConflict = hasDaypartConflict || DisplayDaypart.Intersects(_daypartCache.GetDisplayDaypart(manifestDaypart.Daypart.Id), daypart);
+                hasDaypartConflict = hasDaypartConflict || DisplayDaypart.Intersects(_DaypartCache.GetDisplayDaypart(manifestDaypart.Daypart.Id), daypart);
             }
 
             var hasConflict = hasDateRangeConflict && hasDaypartConflict;
@@ -150,106 +146,102 @@ namespace Services.Broadcast.ApplicationServices
             return hasConflict;
         }
 
-        private InventoryFileSaveResult _SetFileProblemWarnings(int fileId, List<InventoryFileProblem> fileProblems)
+        /// <summary>
+        /// Saves an open market inventory file
+        /// </summary>
+        /// <param name="request">InventoryFileSaveRequest object containing an open market inventory file</param>
+        /// <param name="userName">Username requesting the operation</param>
+        /// <param name="nowDate">Now date</param>
+        /// <returns>InventoryFileSaveResult object</returns>
+        public InventoryFileSaveResult SaveInventoryFile(InventoryFileSaveRequest request, string userName, DateTime nowDate)
         {
-            if (fileProblems.Any())
+            if (!Path.GetExtension(request.FileName).Equals(".xml", StringComparison.InvariantCultureIgnoreCase))
             {
-                throw new FileUploadException<InventoryFileProblem>(fileProblems);
+                return new InventoryFileSaveResult
+                {
+                    Status = FileStatusEnum.Failed,
+                    ValidationProblems = new List<string> { "Invalid file format. Please, provide a .xml File" }
+                };
             }
-
-            var ret = new InventoryFileSaveResult()
-            {
-                FileId = fileId
-            };
-            return ret;
-        }
-
-        public InventoryFileSaveResult SaveInventoryFile(InventoryFileSaveRequest request)
-        {           
-            var inventorySource = _ParseInventorySourceOrDefault(request.InventorySource);
-            var fileImporter = _inventoryFileImporterFactory.GetFileImporterInstance(inventorySource);
-
-            fileImporter.LoadFromSaveRequest(request);
-            fileImporter.CheckFileHash();
-
-            try
-            {
-                _DataLakeFileService.Save(request);
-            }
-            catch
-            {
-                throw new ApplicationException("Unable to send file to Data Lake shared folder and e-mail reporting the error.");
-            }
-
-            var inventoryFile = fileImporter.GetPendingInventoryFile();
-
-            inventoryFile.Id = _inventoryFileRepository.CreateInventoryFile(inventoryFile, request.UserName);
 
             var stationLocks = new List<IDisposable>();
             var lockedStationIds = new List<int>();
+            var inventorySource = _ParseInventorySourceOrDefault(request.InventorySource);
+                        
+            _OpenMarketFileImporter.LoadFromSaveRequest(request);
+            _OpenMarketFileImporter.CheckFileHash();
+            
+            InventoryFile inventoryFile = _OpenMarketFileImporter.GetPendingInventoryFile(_ParseInventorySourceOrDefault(request.InventorySource), userName, nowDate);
 
+            inventoryFile.Id = _InventoryFileRepository.CreateInventoryFile(inventoryFile, userName, nowDate);
+            
             try
             {
-                fileImporter.ExtractFileData(request.StreamData, inventoryFile);
+                _OpenMarketFileImporter.ExtractFileData(request.StreamData, inventoryFile);
+                inventoryFile.FileStatus = _OpenMarketFileImporter.FileProblems.Any() ? FileStatusEnum.Failed : FileStatusEnum.Loaded;
 
-                if (fileImporter.FileProblems.Any())
+                if (_OpenMarketFileImporter.FileProblems.Any())
                 {
-                    return _SetFileProblemWarnings(inventoryFile.Id, fileImporter.FileProblems);
+                    inventoryFile.ValidationProblems.AddRange(_LoadValidationProblemsFromFileProblems(_OpenMarketFileImporter.FileProblems));
+                    _InventoryRepository.AddValidationProblems(inventoryFile);
                 }
-
-                if (!inventoryFile.HasManifests())
+                else
                 {
-                    throw new ApplicationException("Unable to parse any file records.");
-                }
-
-                _CreateUnknownStationsAndPopulate(inventoryFile, request.UserName);
-
-                var validationProblems = _inventoryFileValidator.ValidateInventoryFile(inventoryFile);
-
-                fileImporter.FileProblems.AddRange(validationProblems.InventoryFileProblems);
-
-                if (fileImporter.FileProblems.Any())
-                {
-                    return _SetFileProblemWarnings(inventoryFile.Id, fileImporter.FileProblems);
-                }
-
-                var fileStationsDict = inventoryFile
-                   .GetAllManifests()
-                   .Select(x => x.Station)
-                   .GroupBy(s => s.Id)
-                   .ToDictionary(g => g.First().Id, g => g.First().LegacyCallLetters);
-
-                using (var transaction = TransactionScopeHelper.CreateTransactionScopeWrapper(TimeSpan.FromMinutes(20)))
-                {
-                    _LockingEngine.LockStations(fileStationsDict, lockedStationIds, stationLocks);
-
-                    var isProprietary = inventorySource.Name == "CNN" ||
-                                        inventorySource.Name == "TTWN";
-
-                    _AddRequestAudienceInfo(request, inventoryFile);
-
-                    if (isProprietary)
+                    if (!inventoryFile.HasManifests())
                     {
-                        _EnsureInventoryDaypartIds(inventoryFile);
-                        var manifests = inventoryFile.InventoryGroups.SelectMany(x => x.Manifests);
-                        _ImpressionsService.AddProjectedImpressionsToManifests(manifests, request.PlaybackType, request.RatingBook.Value);
-                        _ProprietarySpotCostCalculationEngine.CalculateSpotCost(manifests);
+                        inventoryFile.ValidationProblems.Add("Unable to parse any file records.");
+                        _InventoryRepository.AddValidationProblems(inventoryFile);
+                        return _SetInventoryFileSaveResult(inventoryFile);
                     }
+
+                    _CreateUnknownStationsAndPopulate(inventoryFile, userName);
+
+                    _OpenMarketFileImporter.FileProblems.AddRange(_InventoryFileValidator.ValidateInventoryFile(inventoryFile));
                     
-                    _EnsureInventoryDaypartIds(inventoryFile);
-                    _stationInventoryGroupService.AddNewStationInventoryGroups(inventoryFile);
+                    if (_OpenMarketFileImporter.FileProblems.Any())
+                    {
+                        inventoryFile.ValidationProblems.AddRange(_LoadValidationProblemsFromFileProblems(_OpenMarketFileImporter.FileProblems));
+                        _InventoryRepository.AddValidationProblems(inventoryFile);
+                        return _SetInventoryFileSaveResult(inventoryFile);
+                    }
 
-                    _SaveInventoryFileContacts(request, inventoryFile);
-                    _StationRepository.UpdateStationList(fileStationsDict.Keys.ToList(), request.UserName, DateTime.Now, inventorySource.Id);
-                    inventoryFile.FileStatus = FileStatusEnum.Loaded;
-                    _inventoryFileRepository.UpdateInventoryFile(inventoryFile, request.UserName);
+                    var fileStationsDict = inventoryFile
+                       .GetAllManifests()
+                       .Select(x => x.Station)
+                       .GroupBy(s => s.Id)
+                       .ToDictionary(g => g.First().Id, g => g.First().LegacyCallLetters);
 
-                    transaction.Complete();
+                    using (var transaction = TransactionScopeHelper.CreateTransactionScopeWrapper(TimeSpan.FromMinutes(20)))
+                    {
+                        _LockingEngine.LockStations(fileStationsDict, lockedStationIds, stationLocks);
 
-                    _LockingEngine.UnlockStations(lockedStationIds, stationLocks);
+                        var isProprietary = inventorySource.Name == "CNN" || inventorySource.Name == "TTWN";
+
+                        _AddRequestAudienceInfo(request, inventoryFile);
+
+                        if (isProprietary)
+                        {
+                            _EnsureInventoryDaypartIds(inventoryFile);
+                            var manifests = inventoryFile.InventoryGroups.SelectMany(x => x.Manifests);
+                            _ImpressionsService.AddProjectedImpressionsToManifests(manifests, request.PlaybackType, request.RatingBook.Value);
+                            _ProprietarySpotCostCalculationEngine.CalculateSpotCost(manifests);
+                        }
+
+                        _EnsureInventoryDaypartIds(inventoryFile);
+                        _StationInventoryGroupService.AddNewStationInventoryGroups(inventoryFile);
+
+                        _SaveInventoryFileContacts(userName, inventoryFile);
+                        _StationRepository.UpdateStationList(fileStationsDict.Keys.ToList(), userName, nowDate, inventorySource.Id);
+                        inventoryFile.FileStatus = FileStatusEnum.Loaded;
+                        _InventoryFileRepository.UpdateInventoryFile(inventoryFile);
+
+                        transaction.Complete();
+
+                        _LockingEngine.UnlockStations(lockedStationIds, stationLocks);
+                    }
                 }
             }
-            catch (FileUploadException<InventoryFileProblem> e)
+            catch (FileUploadException<InventoryFileProblem>)
             {
                 throw;
             }
@@ -263,18 +255,50 @@ namespace Services.Broadcast.ApplicationServices
                 try
                 {
                     _LockingEngine.UnlockStations(lockedStationIds, stationLocks);
-                    _inventoryFileRepository.UpdateInventoryFileStatus(inventoryFile.Id, FileStatusEnum.Failed);
+                    _InventoryFileRepository.UpdateInventoryFileStatus(inventoryFile.Id, FileStatusEnum.Failed);
                 }
-                catch
-                {
-                }
+                catch { }
 
                 throw new BroadcastInventoryDataException($"Error loading new inventory file: {e.Message}", inventoryFile.Id, e);
             }
 
-            return _SetFileProblemWarnings(inventoryFile.Id, new List<InventoryFileProblem>());
+            //send valid files to data lake
+            if (!_OpenMarketFileImporter.FileProblems.Any())
+            {
+                try
+                {
+                    _DataLakeFileService.Save(request);
+                }
+                catch
+                {
+                    throw new ApplicationException("Unable to send file to Data Lake shared folder and e-mail reporting the error.");
+                }
+            }
+
+            return _SetInventoryFileSaveResult(inventoryFile);
         }
 
+        private InventoryFileSaveResult _SetInventoryFileSaveResult(InventoryFile file)
+        {
+            return new InventoryFileSaveResult()
+            {
+                FileId = file.Id,
+                ValidationProblems = file.ValidationProblems,
+                Status = file.FileStatus
+            };
+        }
+
+        private List<string> _LoadValidationProblemsFromFileProblems(List<InventoryFileProblem> fileProblems)
+        {
+            string problemFormat = "Station: {0}; Program: {1}; Problem: {2}";
+            return fileProblems
+                .Select(x => string.Format(problemFormat
+                    , string.IsNullOrWhiteSpace(x.StationLetters) ? "unknown" : x.StationLetters
+                    , string.IsNullOrWhiteSpace(x.ProgramName) ? "unknown" : x.ProgramName
+                    , x.ProblemDescription))
+                .ToList();
+        }
+        
         private void _CreateUnknownStationsAndPopulate(InventoryFile inventoryFile, string userName)
         {
             var now = DateTime.Now;
@@ -330,13 +354,13 @@ namespace Services.Broadcast.ApplicationServices
                 ig =>
                     ig.Manifests.SelectMany(
                         m => m.ManifestDayparts.Where(md => md.Daypart.Id == -1).Select(md => md.Daypart)))
-                .ForEach(dd => { dd.Id = _daypartCache.GetIdByDaypart(dd); });
+                .ForEach(dd => { dd.Id = _DaypartCache.GetIdByDaypart(dd); });
         }
 
-        private void _SaveInventoryFileContacts(InventoryFileSaveRequest request, InventoryFile inventoryFile)
+        private void _SaveInventoryFileContacts(string userName, InventoryFile inventoryFile)
         {
             var fileStationIds = inventoryFile.StationContacts.Select(m => m.StationId).Distinct().ToList();
-            List<StationContact> existingStationContacts = _stationContactsRepository.GetStationContactsByStationIds(fileStationIds);
+            List<StationContact> existingStationContacts = _StationContactsRepository.GetStationContactsByStationIds(fileStationIds);
 
             var contactsUpdateList = inventoryFile.StationContacts.Intersect(existingStationContacts, StationContact.StationContactComparer).ToList();
 
@@ -346,33 +370,32 @@ namespace Services.Broadcast.ApplicationServices
                 updateContact.Id = existingStationContacts.Single(c => StationContact.StationContactComparer.Equals(c, updateContact)).Id;
             }
 
-            _stationContactsRepository.UpdateExistingStationContacts(contactsUpdateList, request.UserName, inventoryFile.Id);
+            _StationContactsRepository.UpdateExistingStationContacts(contactsUpdateList, userName, inventoryFile.Id);
 
             var contactsCreateList =
                 inventoryFile.StationContacts.Except(existingStationContacts, StationContact.StationContactComparer)
                     .ToList();
-            _stationContactsRepository.CreateNewStationContacts(contactsCreateList, request.UserName, inventoryFile.Id);
+            _StationContactsRepository.CreateNewStationContacts(contactsCreateList, userName, inventoryFile.Id);
 
             // update modified date for each station
             var timeStamp = DateTime.Now;
-            _StationRepository.UpdateStationList(fileStationIds, request.UserName, timeStamp, inventoryFile.InventorySource.Id);
+            _StationRepository.UpdateStationList(fileStationIds, userName, timeStamp, inventoryFile.InventorySource.Id);
         }
 
         public List<StationContact> GetStationContacts(string inventorySource, int stationCode)
         {
-            return _stationContactsRepository.GetStationContactsByStationCode(stationCode);
+            return _StationContactsRepository.GetStationContactsByStationCode(stationCode);
         }
 
         public List<StationContact> FindStationContactsByName(string query)
         {
-            return _stationContactsRepository.GetLatestContactsByName(query);
+            return _StationContactsRepository.GetLatestContactsByName(query);
         }
 
         private StationInventoryManifest _MapToStationInventoryManifest(StationProgram stationProgram)
         {
             const string householdAudienceCode = "HH";
-            var audienceRepository = _broadcastDataRepositoryFactory.GetDataRepository<IAudienceRepository>();
-            var householdeAudience = audienceRepository.GetDisplayAudienceByCode(householdAudienceCode);
+            var householdeAudience = _AudienceRepository.GetDisplayAudienceByCode(householdAudienceCode);
             var inventorySource = _ParseInventorySource(stationProgram.RateSource);
             var manifestRates = _MapManifestRates(stationProgram);
             var spotLengthId = _GetSpotLengthIdForManifest(stationProgram);
@@ -412,7 +435,7 @@ namespace Services.Broadcast.ApplicationServices
                 }
             };
 
-            _daypartCache.SyncDaypartsToIds(displayDayparts);
+            _DaypartCache.SyncDaypartsToIds(displayDayparts);
 
             return manifest;
         }
@@ -532,7 +555,7 @@ namespace Services.Broadcast.ApplicationServices
 
         public List<LookupDto> GetAllGenres()
         {
-            return _genreRepository.GetAllGenres();
+            return _GenreRepository.GetAllGenres();
         }
 
         private void _SetRateDataThrough(List<DisplayBroadcastStation> stations, DateTime currentDate)
@@ -564,7 +587,7 @@ namespace Services.Broadcast.ApplicationServices
 
         private InventorySource _ParseInventorySource(string sourceString)
         {
-            var inventorySource = _inventoryRepository.GetInventorySourceByName(sourceString);
+            var inventorySource = _InventoryRepository.GetInventorySourceByName(sourceString);
 
             if (inventorySource == null)
             {
@@ -580,10 +603,10 @@ namespace Services.Broadcast.ApplicationServices
 
             if (string.IsNullOrWhiteSpace(sourceString))
             {
-                return _inventoryRepository.GetInventorySourceByName(defaultInventorySource);
+                return _InventoryRepository.GetInventorySourceByName(defaultInventorySource);
             }
 
-            return _inventoryRepository.GetInventorySourceByName(sourceString);
+            return _InventoryRepository.GetInventorySourceByName(sourceString);
         }
 
         public RatesInitialDataDto GetInitialRatesData()
@@ -644,14 +667,14 @@ namespace Services.Broadcast.ApplicationServices
         
         public bool DeleteProgram(int programId, string inventorySource, int stationCode, string user)
         {
-            _inventoryRepository.RemoveManifest(programId);
+            _InventoryRepository.RemoveManifest(programId);
             _StationRepository.UpdateStation(stationCode, user, DateTime.Now, _ParseInventorySourceOrDefault(inventorySource).Id);
             return true;
         }
 
         public bool HasSpotsAllocated(int programId)
         {
-            return _inventoryRepository.HasSpotsAllocated(programId);
+            return _InventoryRepository.HasSpotsAllocated(programId);
         }
 
         private static bool _DateRangesIntersect(DateTime startDate1, DateTime endDate1, DateTime startDate2, DateTime endDate2)

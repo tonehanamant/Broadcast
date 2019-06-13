@@ -1,9 +1,6 @@
-﻿using System.Text.RegularExpressions;
-using Common.Services.Repositories;
+﻿using Common.Services.Repositories;
 using Services.Broadcast.Entities;
-using Services.Broadcast.Exceptions;
 using Services.Broadcast.Repositories;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -11,7 +8,7 @@ namespace Services.Broadcast.Validators
 {
     public interface IInventoryFileValidator
     {
-        InventoryFileValidatorResult ValidateInventoryFile(InventoryFile inventoryFile);
+        List<InventoryFileProblem> ValidateInventoryFile(InventoryFile inventoryFile);
 
         InventoryFileProblem DuplicateRecordValidation(string station);
     }
@@ -25,10 +22,10 @@ namespace Services.Broadcast.Validators
             _inventoryRepository = dataRepositoryFactory.GetDataRepository<IInventoryRepository>();
         }
 
-        public InventoryFileValidatorResult ValidateInventoryFile(InventoryFile inventoryFile)
+        public List<InventoryFileProblem> ValidateInventoryFile(InventoryFile inventoryFile)
         {
-            var results = new InventoryFileValidatorResult();
-            results.InventoryFileProblems.AddRange(_CheckForDuplicateRecords(inventoryFile));
+            var results = new List<InventoryFileProblem>();
+            results.AddRange(_CheckForDuplicateRecords(inventoryFile));
             return results;
         }
 

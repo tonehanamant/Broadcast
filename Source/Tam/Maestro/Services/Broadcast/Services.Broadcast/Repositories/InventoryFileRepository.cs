@@ -14,8 +14,8 @@ namespace Services.Broadcast.Repositories
     public interface IInventoryFileRepository : IDataRepository
     {
         int GetInventoryFileIdByHash(string hash);
-        int CreateInventoryFile(InventoryFileBase file, string userName);
-        void UpdateInventoryFile(InventoryFile inventoryFile, string userName);
+        int CreateInventoryFile(InventoryFileBase file, string userName, DateTime nowDate);
+        void UpdateInventoryFile(InventoryFile inventoryFile);
         void DeleteInventoryFileById(int inventoryFileId);
         void UpdateInventoryFileStatus(int fileId, FileStatusEnum status);
     }
@@ -39,7 +39,7 @@ namespace Services.Broadcast.Repositories
                     select x.id).FirstOrDefault());
         }
 
-        public int CreateInventoryFile(InventoryFileBase inventoryFile, string userName)
+        public int CreateInventoryFile(InventoryFileBase inventoryFile, string userName, DateTime nowDate)
         {
             return _InReadUncommitedTransaction(
                 context =>
@@ -51,7 +51,7 @@ namespace Services.Broadcast.Repositories
                         status = (byte)inventoryFile.FileStatus,
                         file_hash = inventoryFile.Hash,
                         created_by = userName,
-                        created_date = DateTime.Now,
+                        created_date = nowDate,
                         inventory_source_id = inventoryFile.InventorySource.Id,
                     };
 
@@ -62,7 +62,7 @@ namespace Services.Broadcast.Repositories
                 });
         }
 
-        public void UpdateInventoryFile(InventoryFile inventoryFile, string userName)
+        public void UpdateInventoryFile(InventoryFile inventoryFile)
         {
             inventory_files file = null;
 

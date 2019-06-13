@@ -1,19 +1,18 @@
 ﻿{
   "fileProblems": [
     {
-      "AffectedProposals": null,
       "ProblemDescription": "Invalid daypart 'M-F 5-6P / 630-7P / SA-SU 5-6P' for station: KKTV",
       "ProgramName": null,
       "StationLetters": null
     },
     {
-      "AffectedProposals": null,
       "ProblemDescription": "Invalid station: WCIV-DT",
       "ProgramName": null,
       "StationLetters": null
     }
   ],
   "inventoryFile": {
+    "CreatedBy": null,
     "EndDate": "0001-01-01T00:00:00",
     "FileName": null,
     "FileStatus": 0,
@@ -5423,6 +5422,7 @@
     },
     "StartDate": "0001-01-01T00:00:00",
     "StationContacts": [],
-    "UniqueIdentifier": null
+    "UniqueIdentifier": null,
+    "ValidationProblems": []
   }
 }

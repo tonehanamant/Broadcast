@@ -32,45 +32,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         private IStationInventoryGroupService _StationInventoryGroupService = IntegrationTestApplicationServiceFactory.GetApplicationService<IStationInventoryGroupService>();
         private IInventoryRepository _InventoryRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
         private IInventoryFileRepository _InventoryFileRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryFileRepository>();
-        private static InventorySource _ttwnInventorySource;
-        private static InventorySource _cnnInventorySource;
         private static InventorySource _openMarketInventorySource;
 
         public InventoryFileServiceIntegrationTests()
         {
-            _ttwnInventorySource = _InventoryRepository.GetInventorySourceByName("TTWN");
-            _cnnInventorySource = _InventoryRepository.GetInventorySourceByName("CNN");
             _openMarketInventorySource = _InventoryRepository.GetInventorySourceByName("Open Market");
             IntegrationTestApplicationServiceFactory.Instance.RegisterType<IDataLakeFileService, DataLakeFileServiceStub>();
             _InventoryFileService = IntegrationTestApplicationServiceFactory.GetApplicationService<IInventoryService>();
-        }
-
-        [Ignore]
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
-        public void InventoryFileLoadCNN()
-        {
-            using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
-            {
-                var request = new InventoryFileSaveRequest
-                {
-                    StreamData = new FileStream(
-                        @".\Files\CNNAMPMBarterObligations_Clean.xlsx",
-                        FileMode.Open,
-                        FileAccess.Read),
-                    FileName = "CNNAMPMBarterObligations_Clean.xlsx",
-                    InventorySource = "CNN",
-                    UserName = "IntegrationTestUser",
-                    RatingBook = 416,
-                    AudiencePricing = new List<AudiencePricingDto>() { new AudiencePricingDto() { AudienceId = 13, Price = 210 }, new AudiencePricingDto() { AudienceId = 14, Price = 131 } }
-                };
-                var result = _InventoryFileService.SaveInventoryFile(request);
-
-                Assert.IsNotNull(result.FileId);
-                // for this we are only concern with "AM New"
-                var daypartCodes = new List<string>() { "AM News", "PM News" };
-                VerifyInventory(_cnnInventorySource, daypartCodes);
-            }
         }
 
         [Test]
@@ -89,11 +57,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         FileAccess.Read),
                     FileName = "4Q18 Baltimore-WMAR-SYN.xml",
                     InventorySource = "Open Market",
-                    UserName = "IntegrationTestUser",
                     RatingBook = 416,
                     AudiencePricing = new List<AudiencePricingDto>() { new AudiencePricingDto() { AudienceId = 13, Price = 210 }, new AudiencePricingDto() { AudienceId = 14, Price = 131 } }
                 };
-                var result = _InventoryFileService.SaveInventoryFile(request);
+                var result = _InventoryFileService.SaveInventoryFile(request, "IntegrationTestUser", new DateTime(2016, 09, 26));
                 Assert.IsNotNull(result.FileId);
                 Assert.AreNotEqual(232995, result.FileId);
 
@@ -123,7 +90,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var request = _GetInventoryFileSaveRequest(@".\Files\1Chicago WLS Syn 4Q16.xml");
                 int stationCode = 5060; // for station WLS
 
-               _InventoryFileService.SaveInventoryFile(request);
+               _InventoryFileService.SaveInventoryFile(request, "IntegrationTestUser", new DateTime(2016, 09, 26));
 
                 var results = _InventoryRepository.GetStationManifestsBySourceAndStationCode(new InventorySource { Name = "Open Market"}, stationCode);
 
@@ -154,7 +121,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var request = _GetInventoryFileSaveRequest(@".\Files\ImportingRateData\1Q18 EMN Rates\Albany - WNYT - EM-NN - 1q18.xml");
                 int stationCode = 5491; // for station WNYT
 
-                _InventoryFileService.SaveInventoryFile(request);
+                _InventoryFileService.SaveInventoryFile(request, "IntegrationTestUser", new DateTime(2016, 09, 26));
 
                 var results = _InventoryRepository.GetStationManifestsBySourceAndStationCode(new InventorySource { Name = "Open Market" }, stationCode);
                 var jsonResolver = new IgnorableSerializerContractResolver();
@@ -184,7 +151,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var request = _GetInventoryFileSaveRequest(@".\Files\ImportingRateData\1Q18 ENLN Rates\OKC.KOKH-KOCB.EN-LN.xml");
                 int stationCode = 6820; // for station KOCB
 
-                _InventoryFileService.SaveInventoryFile(request);
+                _InventoryFileService.SaveInventoryFile(request, "IntegrationTestUser", new DateTime(2016, 09, 26));
 
                 var results = _InventoryRepository.GetStationManifestsBySourceAndStationCode(new InventorySource { Name = "Open Market" }, stationCode);
                 var resultsHaveProgramWithNameLengthLongerThan63Symbols = results.SelectMany(x=>x.ManifestDayparts).Any(x => x.ProgramName.Length > 63);
@@ -205,81 +172,15 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     StreamData = new FileStream(filePath, FileMode.Open, FileAccess.Read),
                     FileName = Path.GetFileName(filePath),
                     InventorySource = "Open Market",
-                    UserName = "IntegrationTestUser"
                 };
                 try
                 {
-                    _InventoryFileService.SaveInventoryFile(request);
+                    _InventoryFileService.SaveInventoryFile(request, "IntegrationTestUser", new DateTime(2016, 09, 26));
                 }
                 catch { }
             }
         }
-
-        [Ignore]
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
-        public void InventoryFileUpdateCNN()
-        {
-            using (new TransactionScopeWrapper())
-            {
-                var request = new InventoryFileSaveRequest();
-                var flightWeeks = new List<FlightWeekDto>();
-                flightWeeks.Add(new FlightWeekDto()
-                {
-                    StartDate = new DateTime(2016, 10, 31),
-                    EndDate = new DateTime(2016, 11, 06),
-                    IsHiatus = false
-                });
-
-                request.StreamData = new FileStream(
-                    @".\Files\CNNAMPMBarterObligations_Clean.xlsx",
-                    FileMode.Open,
-                    FileAccess.Read);
-                request.FileName = "CNNAMPMBarterObligations_Clean.xlsx";
-                request.InventorySource = "CNN";
-                request.UserName = "IntegrationTestUser";
-                request.RatingBook = 416;
-                request.AudiencePricing = new List<AudiencePricingDto>()
-                {
-                    new AudiencePricingDto() { AudienceId = 13, Price = 210 },
-                    new AudiencePricingDto() { AudienceId = 14, Price = 131 }
-                };
-
-                var results = _InventoryFileService.SaveInventoryFile(request);
-
-                request = new InventoryFileSaveRequest();
-                flightWeeks = new List<FlightWeekDto>
-                {
-                    new FlightWeekDto()
-                    {
-                        StartDate = new DateTime(2016, 10, 31),
-                        EndDate = new DateTime(2016, 11, 06),
-                        IsHiatus = false
-                    }
-                };
-
-                request.StreamData = new FileStream(
-                    @".\Files\CNNAMPMBarterObligations_ForUpdate.xlsx",
-                    FileMode.Open,
-                    FileAccess.Read);
-                request.FileName = "CNNAMPMBarterObligations_ForUpdate.xlsx";
-                request.InventorySource = "CNN";
-                request.UserName = "IntegrationTestUser";
-                request.RatingBook = 416;
-
-                request.AudiencePricing = new List<AudiencePricingDto>()
-                {
-                    new AudiencePricingDto() { AudienceId = 13, Price = 210 },
-                    new AudiencePricingDto() { AudienceId = 14, Price = 131 }
-                };
-
-                var result = _InventoryFileService.SaveInventoryFile(request);
-
-                var daypartCodes = new List<string>() { "AM News", "PM News" };
-                VerifyInventory(_cnnInventorySource, daypartCodes);
-            }
-        }
-
+        
         private void VerifyInventory(InventorySource source, List<string> unitNames)
         {
             var inventory = _InventoryRepository.GetActiveInventoryByTypeAndUnitName(source, unitNames);
@@ -294,7 +195,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             jsonResolver.Ignore(typeof(DisplayDaypart), "_Id");
             jsonResolver.Ignore(typeof(StationInventoryManifestRate), "Id");
             jsonResolver.Ignore(typeof(StationInventoryManifestDaypart), "Id");
-            //jsonResolver.Ignore(typeof(DisplayAudience), "Id");
 
             var jsonSettings = new JsonSerializerSettings
             {
@@ -304,105 +204,16 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var json = IntegrationTestHelper.ConvertToJson(inventory, jsonSettings);
             Approvals.Verify(json);
         }
-
-        [Ignore]
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
-        public void TTWNCanLoadFile()
-        {
-            using (var tran = new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
-            {
-                var filename = @".\Files\TTWN_06.09.17.xlsx";
-                var request = new InventoryFileSaveRequest
-                {
-                    StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
-                    FileName = filename,
-                    UserName = "IntegrationTestUser",
-                    InventorySource = "TTWN",
-                    AudiencePricing = new List<AudiencePricingDto>()
-                {
-                    new AudiencePricingDto() { AudienceId = 13, Price = 210 },
-                    new AudiencePricingDto() { AudienceId = 14, Price = 131 }
-                },
-
-                    RatingBook = 416
-                };
-
-                var result = _InventoryFileService.SaveInventoryFile(request);
-
-                var daypartCodes = new List<string>() { "LN" };
-                VerifyInventory(_ttwnInventorySource, daypartCodes);
-            }
-        }
-
-        [Ignore]
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
-        public void TTWNCanUpdateInventory()
-        {
-            using (var tran = new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
-            {
-                // first do initial load
-                var filename = @".\Files\TTWN_06.09.17.xlsx";
-                var request = new InventoryFileSaveRequest
-                {
-                    StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
-                    FileName = filename,
-                    UserName = "IntegrationTestUser",
-                    InventorySource = "TTWN",
-
-                    RatingBook = 416,
-                    AudiencePricing = new List<AudiencePricingDto>()
-                {
-                    new AudiencePricingDto() { AudienceId = 13, Price = 210 },
-                    new AudiencePricingDto() { AudienceId = 14, Price = 131 }
-                }
-                };
-
-                var result = _InventoryFileService.SaveInventoryFile(request);
-
-                filename = @".\Files\TTWN_UPDATE_06.09.17.xlsx";
-                request = new InventoryFileSaveRequest
-                {
-                    StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
-                    FileName = filename,
-                    UserName = "IntegrationTestUser",
-                    InventorySource = "TTWN",
-                    AudiencePricing = new List<AudiencePricingDto>()
-                {
-                    new AudiencePricingDto() { AudienceId = 13, Price = 210 },
-                    new AudiencePricingDto() { AudienceId = 14, Price = 131 }
-                },
-
-                    RatingBook = 416
-                };
-
-                result = _InventoryFileService.SaveInventoryFile(request);
-
-                var daypartCodes = new List<string>() { "LN" };
-                VerifyInventory(_ttwnInventorySource, daypartCodes);
-            }
-        }
-
+        
         [Test]
         [ExpectedException(typeof(BroadcastDuplicateInventoryFileException))]
         public void ThrowsExceptionWhenLoadingSameInventoryFileAgain()
         {
             using (new TransactionScopeWrapper())
             {
-                var request = new InventoryFileSaveRequest();
-                var request2 = new InventoryFileSaveRequest();
-
-                request.StreamData = new FileStream(
-                    @".\Files\simple_period_rate_file_wvtm.xml",
-                    FileMode.Open,
-                    FileAccess.Read);
-                request.FileName = "simple_period_rate_file_wvtm.xml";
-                request.InventorySource = "Open Market";
-                request.UserName = "IntegrationTestUser";
-                request.RatingBook = 416;
-                _InventoryFileService.SaveInventoryFile(request);
-                _InventoryFileService.SaveInventoryFile(request);
+                var request = _GetInventoryFileSaveRequest(@".\Files\simple_period_rate_file_wvtm.xml");
+                _InventoryFileService.SaveInventoryFile(request, "IntegrationTestUser", new DateTime(2016, 09, 26));
+                _InventoryFileService.SaveInventoryFile(request, "IntegrationTestUser", new DateTime(2016, 09, 26));
             }
         }
 
@@ -413,40 +224,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 var genres = _InventoryFileService.GetAllGenres();
                 Assert.IsTrue(genres.Any());
-            }
-        }
-
-        [Test]
-        [Ignore] //Locking does not work in an integration test.
-        //todo: someone figure out if this test is needed since it was alway ignored.
-        public void CantLoadInventoryFileWhileStationLocked()
-        {
-            using (new TransactionScopeWrapper())
-            {
-                var stationCode = 5044; //WVTM
-                var request = new InventoryFileSaveRequest();
-
-                request.StreamData = new FileStream(
-                    @".\Files\single_program_rate_file_wvtm.xml",
-                    FileMode.Open,
-                    FileAccess.Read);
-                request.UserName = "IntegrationTestUser";
-
-                _InventoryFileService.LockStation(stationCode);
-                try
-                {
-                    _InventoryFileService.SaveInventoryFile(request);
-                    Assert.Fail("Should have thrown a lock exception.");
-                }
-                catch (Exception e)
-                {
-                    Assert.AreEqual("Some error", e.Message);
-                }
-                finally
-                {
-                    _InventoryFileService.UnlockStation(stationCode);
-                }
-
             }
         }
 
@@ -475,10 +252,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         public void ImportNewStationContact()
         {
             using (new TransactionScopeWrapper())
-            {
-                var request = new InventoryFileSaveRequest();
+            {                
                 int stationCodeWVTM = 5044;
-
+                string filename = @".\Files\station_contact_new_rate_file_wvtm.xml";
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(StationContact), "Id");
                 jsonResolver.Ignore(typeof(StationContact), "ModifiedDate");
@@ -493,14 +269,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var stationContacts = _InventoryFileService.GetStationContacts("Open Market", stationCodeWVTM);
                 Assert.AreEqual(1, stationContacts.Count);
 
-                request.StreamData = new FileStream(
-                    @".\Files\station_contact_new_rate_file_wvtm.xml",
-                    FileMode.Open,
-                    FileAccess.Read);
-                request.UserName = "IntegrationTestUser";
-                request.RatingBook = 416;
-
-                _InventoryFileService.SaveInventoryFile(request);
+                var request = _GetInventoryFileSaveRequest(filename);
+                _InventoryFileService.SaveInventoryFile(request, "IntegrationTestUser", new DateTime(2016, 09, 26));
 
                 //then confirm the contacts are added
                 stationContacts = _InventoryFileService.GetStationContacts("Open Market", stationCodeWVTM);
@@ -513,9 +283,18 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         public void UpdateExistingStationContactDuringImport()
         {
             using (new TransactionScopeWrapper())
-            {
-                var request = new InventoryFileSaveRequest();
+            {                
                 int stationCodeWVTM = 5044;
+                string filename = @".\Files\station_contact_new_rate_file_wvtm.xml";
+                string anotherFileName = @".\Files\station_contact_update_rate_file_wvtm.xml";
+
+                var request = _GetInventoryFileSaveRequest(filename);                                
+                _InventoryFileService.SaveInventoryFile(request, "IntegrationTestUser", new DateTime(2016, 09, 26));
+
+                var request2 = _GetInventoryFileSaveRequest(anotherFileName);
+                _InventoryFileService.SaveInventoryFile(request2, "IntegrationTestUser", new DateTime(2016, 09, 26));
+
+                var stationContacts = _InventoryFileService.GetStationContacts("Open Market", stationCodeWVTM);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(StationContact), "Id");
@@ -527,22 +306,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     ContractResolver = jsonResolver
                 };
 
-                request.StreamData = new FileStream(
-                    @".\Files\station_contact_new_rate_file_wvtm.xml",
-                    FileMode.Open,
-                    FileAccess.Read);
-                request.UserName = "IntegrationTestUser";
-                request.RatingBook = 416;
-
-                _InventoryFileService.SaveInventoryFile(request);
-                request.StreamData = new FileStream(
-                    @".\Files\station_contact_update_rate_file_wvtm.xml",
-                    FileMode.Open,
-                    FileAccess.Read);
-                request.UserName = "IntegrationTestUser";
-                _InventoryFileService.SaveInventoryFile(request);
-
-                var stationContacts = _InventoryFileService.GetStationContacts("Open Market", stationCodeWVTM);
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(stationContacts, jsonSettings));
             }
         }
@@ -553,54 +316,43 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var request = new InventoryFileSaveRequest();
+                string fileName = @".\Files\unknown_spot_length_rate_file_wvtm.xml";
+                var request = _GetInventoryFileSaveRequest(fileName);
 
-                request.StreamData = new FileStream(
-                    @".\Files\unknown_spot_length_rate_file_wvtm.xml",
-                    FileMode.Open,
-                    FileAccess.Read);
-                request.UserName = "IntegrationTestUser";
-                request.FileName = "unknown_spot_length_rate_file_wvtm.xml";
-                request.RatingBook = 416;
+                var result = _InventoryFileService.SaveInventoryFile(request, "IntegrationTestUser", new DateTime(2016, 09, 26));
+                
 
-                List<InventoryFileProblem> problems = new List<InventoryFileProblem>();
-                try
-                {
-                    var result = _InventoryFileService.SaveInventoryFile(request);
-                }
-                catch (FileUploadException<InventoryFileProblem> e)
-                {
-                    problems = e.Problems;
-                }
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(InventoryFileSaveResult), "FileId");
-                jsonResolver.Ignore(typeof(InventoryFileProblem), "AffectedProposals");
                 var jsonSettings = new JsonSerializerSettings()
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                     ContractResolver = jsonResolver
                 };
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(problems, jsonSettings));
+                Assert.IsTrue(result.FileId > 0);
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
             }
         }
 
         [Test]
-        [ExpectedException(typeof(BroadcastInventoryDataException), ExpectedMessage = "file may be invalid", MatchType = MessageMatch.Contains)]
-        public void ThrowsExceptionWhenLoadingBadXmlFile()
+        [UseReporter(typeof(DiffReporter))]
+        public void OpenMarket_InvalidFile()
         {
             using (new TransactionScopeWrapper())
             {
-                var request = new InventoryFileSaveRequest();
+                string filename = @".\Files\rate-file-invalid-schema.xml";
+                var request = _GetInventoryFileSaveRequest(filename);
 
-                request.StreamData = new FileStream(
-                    @".\Files\rate-file-invalid-schema.xml",
-                    FileMode.Open,
-                    FileAccess.Read);
-                request.UserName = "ThrowsExceptionWhenLoadingBadXmlFile";
-                request.FileName = "rate-file-invalid-schema.xml";
-                request.RatingBook = 416;
-
-                _InventoryFileService.SaveInventoryFile(request);
+                var result = _InventoryFileService.SaveInventoryFile(request, "IntegrationTestUser", new DateTime(2016, 09, 26));
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(InventoryFileSaveResult), "FileId");
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+                Assert.IsTrue(result.FileId > 0);
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
             }
         }
 
@@ -611,17 +363,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             int stationCodeWVTM = 5044;
             using (new TransactionScopeWrapper())
             {
-                var request = new InventoryFileSaveRequest
-                {
-                    StreamData = new FileStream(
-                        @".\Files\simple_period_rate_file_wvtm.xml",
-                        FileMode.Open,
-                        FileAccess.Read),
-                    UserName = "IntegrationTestUser",
-                    FileName = "simple_period_rate_file_wvtm.xml"
-                };
-
-                _InventoryFileService.SaveInventoryFile(request);
+                var request = _GetInventoryFileSaveRequest(@".\Files\simple_period_rate_file_wvtm.xml");
+                _InventoryFileService.SaveInventoryFile(request, "IntegrationTestUser", new DateTime(2016, 09, 26));
                 //var result = _ratesService.GetStationDetailByCode("Open Market", stationCodeWVTM).Rates.Where(p => p.Program == "Simple Period News").ToList();
 
                 //var jsonResolver = new IgnorableSerializerContractResolver();
@@ -644,32 +387,16 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             //Should report no errors anymore since we are skipping existing records. 
             using (new TransactionScopeWrapper())
             {
-                var request1 = new InventoryFileSaveRequest
-                {
-                    StreamData = new FileStream(
-                        @".\Files\Open Market Duplicate Program File1.xml",
-                        FileMode.Open,
-                        FileAccess.Read),
-                    UserName = "IntegrationTestUser",
-                    FileName = "Open Market Duplicate Program File1.xml"
-                };
+                var request1 = _GetInventoryFileSaveRequest(@".\Files\Open Market Duplicate Program File1.xml");
 
-                var request2 = new InventoryFileSaveRequest
-                {
-                    StreamData = new FileStream(
-                        @".\Files\Open Market Duplicate Program File2.xml",
-                        FileMode.Open,
-                        FileAccess.Read),
-                    UserName = "IntegrationTestUser",
-                    FileName = "Open Market Duplicate Program File2.xml"
-                };
-
-                _InventoryFileService.SaveInventoryFile(request1);
+                var request2 = _GetInventoryFileSaveRequest(@".\Files\Open Market Duplicate Program File2.xml");
+                
+                _InventoryFileService.SaveInventoryFile(request1, "IntegrationTestUser", new DateTime(2016, 09, 26));
 
                 List<InventoryFileProblem> problems = new List<InventoryFileProblem>();
                 try
                 {
-                    _InventoryFileService.SaveInventoryFile(request2);
+                    _InventoryFileService.SaveInventoryFile(request2, "IntegrationTestUser", new DateTime(2016, 09, 26));
                 }
                 catch (FileUploadException<InventoryFileProblem> e)
                 {
@@ -687,60 +414,43 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var request = new InventoryFileSaveRequest
-                {
-                    StreamData = new FileStream(
-                        @".\Files\station_program_overlapping_flights_wvtm.xml",
-                        FileMode.Open,
-                        FileAccess.Read),
-                    UserName = "IntegrationTestUser",
-                    RatingBook = 416
-                };
+                string filename = @".\Files\station_program_overlapping_flights_wvtm.xml";
+                var request = _GetInventoryFileSaveRequest(filename);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(InventoryFileSaveResult), "FileId");
-                jsonResolver.Ignore(typeof(InventoryFileProblem), "AffectedProposals");
                 var jsonSettings = new JsonSerializerSettings()
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                     ContractResolver = jsonResolver
                 };
 
-                var result = _InventoryFileService.SaveInventoryFile(request);
+                var result = _InventoryFileService.SaveInventoryFile(request, "IntegrationTestUser", new DateTime(2016, 09, 26));
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
             }
         }
 
         [Test]
-        [UseReporter(typeof(DiffReporter))]
         public void CanLoadOpenMarketInventoryFileWithDifferentSpotLengths()
         {
             using (new TransactionScopeWrapper())
             {
-                var request = new InventoryFileSaveRequest
-                {
-                    StreamData = new FileStream(
-                        @".\Files\multi-quarter_program_rate_file_wvtm.xml",
-                        FileMode.Open,
-                        FileAccess.Read),
-                    UserName = "IntegrationTestUser",
-                    RatingBook = 416
-                };
+                string fileName = @".\Files\multi-quarter_program_rate_file_wvtm.xml";
+                var request = _GetInventoryFileSaveRequest(fileName);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(InventoryFileSaveResult), "FileId");
-                jsonResolver.Ignore(typeof(InventoryFileProblem), "AffectedProposals");
                 var jsonSettings = new JsonSerializerSettings()
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                     ContractResolver = jsonResolver
                 };
 
-                var result = _InventoryFileService.SaveInventoryFile(request);
-
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
-
+                var result = _InventoryFileService.SaveInventoryFile(request, "IntegrationTestUser", new DateTime(2016, 09, 26));
+                Assert.IsTrue(result.ValidationProblems.Count == 0);
+                Assert.IsTrue(result.FileId > 0);
+                Assert.IsTrue(result.Status == Entities.Enums.FileStatusEnum.Loaded);
             }
         }
 
@@ -753,7 +463,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var request = _GetInventoryFileSaveRequest(@".\Files\ImportingRateData\1Q18 ENT-SYN Rates\Buffalo WBBZ SYN.xml");
                 var stationCode = 7397; // for station WBBZ
 
-                _InventoryFileService.SaveInventoryFile(request);
+                _InventoryFileService.SaveInventoryFile(request, "IntegrationTestUser", new DateTime(2016, 09, 26));
 
                 var stationManifests = _InventoryRepository.GetStationManifestsBySourceAndStationCode(_openMarketInventorySource, stationCode);
                 var stationManifestsDoNotHaveManifestAudiencesReferences = stationManifests.All(x => x.ManifestAudiencesReferences.Count == 0);
@@ -817,7 +527,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                             var request = _GetInventoryFileSaveRequest(file);
 
-                            _InventoryFileService.SaveInventoryFile(request);
+                            _InventoryFileService.SaveInventoryFile(request, "IntegrationTestUser", new DateTime(2016, 09, 26));
 
                             Console.WriteLine($"File: {file} was checked");
                         }
@@ -836,31 +546,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Console.WriteLine(file);
             }
         }
-
-        private InventoryFileSaveRequest _GetInventoryFileSaveRequest(string filePath)
-        {
-            return new InventoryFileSaveRequest
-            {
-                StreamData = new FileStream(filePath, FileMode.Open, FileAccess.Read),
-                UserName = "IntegrationTestUser",
-                RatingBook = 416,
-                FileName = Path.GetFileName(filePath)
-            };
-        }
-
-        private JsonSerializerSettings _GetJsonSerializerSettingsForConvertingAllStationProgramsToJson()
-        {
-            var jsonResolver = new IgnorableSerializerContractResolver();
-            jsonResolver.Ignore(typeof(StationProgram), "Id");
-            jsonResolver.Ignore(typeof(FlightWeekDto), "Id");
-
-            return new JsonSerializerSettings()
-            {
-                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                ContractResolver = jsonResolver
-            };
-        }
-
+        
         [Test]
         [Ignore]
         public void CanLoadTVBFile()
@@ -873,7 +559,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
-                    UserName = "IntegrationTestUser",
                     InventorySource = "TVB",
                     RatingBook = 416
                 };
@@ -881,7 +566,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 List<InventoryFileProblem> problems = new List<InventoryFileProblem>();
                 try
                 {
-                    var result = _InventoryFileService.SaveInventoryFile(request);
+                    var result = _InventoryFileService.SaveInventoryFile(request, "IntegrationTestUser", new DateTime(2016, 09, 26));
                 }
                 catch (FileUploadException<InventoryFileProblem> e)
                 {
@@ -905,7 +590,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
-                    UserName = "IntegrationTestUser",
                     InventorySource = "TVB",
                     RatingBook = 416
                 };
@@ -913,7 +597,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 List<InventoryFileProblem> problems = new List<InventoryFileProblem>();
                 try
                 {
-                    var result = _InventoryFileService.SaveInventoryFile(request);
+                    var result = _InventoryFileService.SaveInventoryFile(request, "IntegrationTestUser", new DateTime(2016, 09, 26));
                 }
                 catch (FileUploadException<InventoryFileProblem> e)
                 {
@@ -921,7 +605,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 }
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(InventoryFileProblem), "AffectedProposals");
                 var jsonSettings = new JsonSerializerSettings()
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
@@ -944,12 +627,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
-                    UserName = "IntegrationTestUser",
                     InventorySource = "TVB",
                     RatingBook = 416
                 };
 
-                _InventoryFileService.SaveInventoryFile(request);
+                _InventoryFileService.SaveInventoryFile(request, "IntegrationTestUser", new DateTime(2016, 09, 26));
 
                 // there is no method that brings all stations with audiences. this test will bring only one valid audience
                 //var wwupStation = _ratesService.GetAllStationRates("TVB", 5667).SelectMany(a => a.Audiences);
@@ -978,7 +660,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
-                    UserName = "IntegrationTestUser",
                     InventorySource = "TVB",
                     RatingBook = 416
                 };
@@ -986,7 +667,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 List<InventoryFileProblem> problems = new List<InventoryFileProblem>();
                 try
                 {
-                    var result = _InventoryFileService.SaveInventoryFile(request);
+                    var result = _InventoryFileService.SaveInventoryFile(request, "IntegrationTestUser", new DateTime(2016, 09, 26));
                 }
                 catch (FileUploadException<InventoryFileProblem> e)
                 {
@@ -994,7 +675,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 }
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(InventoryFileProblem), "AffectedProposals");
 
                 var jsonSettings = new JsonSerializerSettings()
                 {
@@ -1019,7 +699,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
-                    UserName = "IntegrationTestUser",
                     InventorySource = "TVB",
                     RatingBook = 416
                 };
@@ -1027,14 +706,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 List<InventoryFileProblem> problems = new List<InventoryFileProblem>();
                 try
                 {
-                    var result = _InventoryFileService.SaveInventoryFile(request);
+                    var result = _InventoryFileService.SaveInventoryFile(request, "IntegrationTestUser", new DateTime(2016, 09, 26));
                 }
                 catch (FileUploadException<InventoryFileProblem> e)
                 {
                     problems = e.Problems;
                 }
                 var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(InventoryFileProblem), "AffectedProposals");
                 var jsonSettings = new JsonSerializerSettings()
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
@@ -1043,86 +721,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(problems, jsonSettings));
             }
         }
-
-
-        [Ignore]
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
-        public void TTWNFileHasInvalidStationProgramCPM()
-        {
-            using (new TransactionScopeWrapper())
-            {
-                const string filename = @".\Files\TTWNFileLoadTestInvalidCPM.csv";
-
-                var request = new InventoryFileSaveRequest
-                {
-                    StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
-                    FileName = filename,
-                    UserName = "IntegrationTestUser",
-                    InventorySource = "TTWN",
-                    RatingBook = 416
-                };
-
-                List<InventoryFileProblem> problems = new List<InventoryFileProblem>();
-                try
-                {
-                    var result = _InventoryFileService.SaveInventoryFile(request);
-                }
-                catch (FileUploadException<InventoryFileProblem> e)
-                {
-                    problems = e.Problems;
-                }
-                var jsonResolver = new IgnorableSerializerContractResolver();
-
-                jsonResolver.Ignore(typeof(InventoryFileProblem), "AffectedProposals");
-
-                var jsonSettings = new JsonSerializerSettings()
-                {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                    ContractResolver = jsonResolver
-                };
-
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(problems, jsonSettings));
-            }
-        }
-
-        [Test]
-        [Ignore]
-        [UseReporter(typeof(DiffReporter))]
-        public void CNNFileHasInvalidStationProgramCPM()
-        {
-            using (new TransactionScopeWrapper())
-            {
-                const string filename = @".\Files\CNNFileLoadTestInvalidCPM.csv";
-                var request = new InventoryFileSaveRequest
-                {
-                    StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
-                    FileName = filename,
-                    UserName = "IntegrationTestUser",
-                    InventorySource = "CNN",
-                    RatingBook = 416
-                };
-
-                List<InventoryFileProblem> problems = new List<InventoryFileProblem>();
-                try
-                {
-                    var result = _InventoryFileService.SaveInventoryFile(request);
-                }
-                catch (FileUploadException<InventoryFileProblem> e)
-                {
-                    problems = e.Problems;
-                }
-                var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(InventoryFileProblem), "AffectedProposals");
-                var jsonSettings = new JsonSerializerSettings
-                {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                    ContractResolver = jsonResolver
-                };
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(problems, jsonSettings));
-            }
-        }
-
+        
         [Ignore]
         [Test]
         [UseReporter(typeof(DiffReporter))]
@@ -1136,7 +735,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
-                    UserName = "IntegrationTestUser",
                     InventorySource = "TVB",
                     RatingBook = 416
                 };
@@ -1144,302 +742,19 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 List<InventoryFileProblem> problems = new List<InventoryFileProblem>();
                 try
                 {
-                    var result = _InventoryFileService.SaveInventoryFile(request);
+                    var result = _InventoryFileService.SaveInventoryFile(request, "IntegrationTestUser", new DateTime(2016, 09, 26));
                 }
                 catch (FileUploadException<InventoryFileProblem> e)
                 {
                     problems = e.Problems;
                 }
                 var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(InventoryFileProblem), "AffectedProposals");
                 var jsonSettings = new JsonSerializerSettings()
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                     ContractResolver = jsonResolver
                 };
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(problems, jsonSettings));
-            }
-        }
-
-        [Test]
-        [Ignore]
-        [UseReporter(typeof(DiffReporter))]
-        public void CNNFileHasDuplicateStationProgram()
-        {
-            using (new TransactionScopeWrapper())
-            {
-                const string filename = @".\Files\CNNFileLoadTestDuplicateStation.csv";
-                var request = new InventoryFileSaveRequest
-                {
-                    StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
-                    FileName = filename,
-                    UserName = "IntegrationTestUser",
-                    InventorySource = "CNN",
-                    RatingBook = 416
-                };
-
-                List<InventoryFileProblem> problems = new List<InventoryFileProblem>();
-                try
-                {
-                    var result = _InventoryFileService.SaveInventoryFile(request);
-                }
-                catch (FileUploadException<InventoryFileProblem> e)
-                {
-                    problems = e.Problems;
-                }
-                var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(InventoryFileProblem), "AffectedProposals");
-
-                var jsonSettings = new JsonSerializerSettings
-                {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                    ContractResolver = jsonResolver
-                };
-
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(problems, jsonSettings));
-            }
-        }
-
-        [Test]
-        [Ignore]
-        [UseReporter(typeof(DiffReporter))]
-        public void CNNFileHasStationProgramWithInvalidSpotLength()
-        {
-            using (new TransactionScopeWrapper())
-            {
-                const string filename = @".\Files\CNNFileLoadTestInvalidSpothLenght.csv";
-
-                var request = new InventoryFileSaveRequest
-                {
-                    StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
-                    FileName = filename,
-                    UserName = "IntegrationTestUser",
-                    InventorySource = "CNN",
-                    RatingBook = 416
-                };
-
-                List<InventoryFileProblem> problems = new List<InventoryFileProblem>();
-                try
-                {
-                    var result = _InventoryFileService.SaveInventoryFile(request);
-                }
-                catch (FileUploadException<InventoryFileProblem> e)
-                {
-                    problems = e.Problems;
-                }
-                var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(InventoryFileProblem), "AffectedProposals");
-
-                var jsonSettings = new JsonSerializerSettings
-                {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                    ContractResolver = jsonResolver
-                };
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(problems, jsonSettings));
-            }
-        }
-
-        [Test]
-        [Ignore]
-        [UseReporter(typeof(DiffReporter))]
-        public void CNNFileHasInvalidStationName()
-        {
-            using (new TransactionScopeWrapper())
-            {
-                const string filename = @".\Files\CNNFileLoadTestInvalidStation.csv";
-                var request = new InventoryFileSaveRequest
-                {
-                    StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
-                    FileName = filename,
-                    UserName = "IntegrationTestUser",
-                    InventorySource = "CNN",
-                    RatingBook = 416
-                };
-
-                List<InventoryFileProblem> problems = new List<InventoryFileProblem>();
-                try
-                {
-                    var result = _InventoryFileService.SaveInventoryFile(request);
-                }
-                catch (FileUploadException<InventoryFileProblem> e)
-                {
-                    problems = e.Problems;
-                }
-                var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(InventoryFileProblem), "AffectedProposals");
-
-                var jsonSettings = new JsonSerializerSettings
-                {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                    ContractResolver = jsonResolver
-                };
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(problems, jsonSettings));
-            }
-        }
-
-        [Test]
-        [Ignore]
-        public void LoadTTWNExcelFile()
-        {
-            using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
-            {
-                const string filename = @".\Files\TTWN_06.09.17.xlsx";
-
-                var request = new InventoryFileSaveRequest
-                {
-                    StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
-                    FileName = filename,
-                    UserName = "IntegrationTestUser",
-                    InventorySource = "TTWN",
-                    RatingBook = 416
-                };
-
-                List<InventoryFileProblem> problems = new List<InventoryFileProblem>();
-                try
-                {
-                    var result = _InventoryFileService.SaveInventoryFile(request);
-                }
-                catch (FileUploadException<InventoryFileProblem> e)
-                {
-                    problems = e.Problems;
-                }
-                Assert.IsEmpty(problems);
-            }
-        }
-
-        [Test]
-        [Ignore]
-        [UseReporter(typeof(DiffReporter))]
-        public void TTWNFileHasDuplicateStationProgram()
-        {
-            using (new TransactionScopeWrapper())
-            {
-                const string filename = @".\Files\TTWNFileLoadTestDuplicateStation.csv";
-
-                var request = new InventoryFileSaveRequest
-                {
-                    StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
-                    FileName = filename,
-                    UserName = "IntegrationTestUser",
-                    InventorySource = "TTWN",
-                    RatingBook = 416
-                };
-
-                List<InventoryFileProblem> problems = new List<InventoryFileProblem>();
-                try
-                {
-                    var result = _InventoryFileService.SaveInventoryFile(request);
-                }
-                catch (FileUploadException<InventoryFileProblem> e)
-                {
-                    problems = e.Problems;
-                }
-
-                var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(InventoryFileProblem), "AffectedProposals");
-                var jsonSettings = new JsonSerializerSettings()
-                {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                    ContractResolver = jsonResolver
-                };
-
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(problems, jsonSettings));
-            }
-        }
-
-        [Ignore]
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
-        public void TTWNFileHasStationProgramWithInvalidSpotLength()
-        {
-            using (new TransactionScopeWrapper())
-            {
-                const string filename = @".\Files\TTWNBFileLoadTestInvalidSpothLenght.csv";
-                var request = new InventoryFileSaveRequest
-                {
-                    StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
-                    FileName = filename,
-                    UserName = "IntegrationTestUser",
-                    InventorySource = "TTWN",
-                    RatingBook = 416
-                };
-
-                List<InventoryFileProblem> problems = new List<InventoryFileProblem>();
-                try
-                {
-                    var result = _InventoryFileService.SaveInventoryFile(request);
-                }
-                catch (FileUploadException<InventoryFileProblem> e)
-                {
-                    problems = e.Problems;
-                }
-                var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(InventoryFileProblem), "AffectedProposals");
-                var jsonSettings = new JsonSerializerSettings()
-                {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                    ContractResolver = jsonResolver
-                };
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(problems, jsonSettings));
-            }
-        }
-
-        [Ignore]
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
-        public void TTWNFileHasInvalidStationName()
-        {
-            using (new TransactionScopeWrapper())
-            {
-                const string filename = @".\Files\TTWNFileLoadTestInvalidStation.csv";
-                var request = new InventoryFileSaveRequest
-                {
-                    StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
-                    FileName = filename,
-                    UserName = "IntegrationTestUser",
-                    InventorySource = "TTWN",
-                    RatingBook = 416
-                };
-
-                List<InventoryFileProblem> problems = new List<InventoryFileProblem>();
-                try
-                {
-                    var result = _InventoryFileService.SaveInventoryFile(request);
-                }
-                catch (FileUploadException<InventoryFileProblem> e)
-                {
-                    problems = e.Problems;
-                }
-                var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(InventoryFileProblem), "AffectedProposals");
-                var jsonSettings = new JsonSerializerSettings()
-                {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                    ContractResolver = jsonResolver
-                };
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(problems, jsonSettings));
-            }
-        }
-
-        [Test]
-        [Ignore]
-        [ExpectedException(typeof(BroadcastInventoryDataException), ExpectedMessage = "There are no known stations in the file", MatchType = MessageMatch.Contains)]
-        public void TTWNFileHasAllStationsUnknown()
-        {
-            using (new TransactionScopeWrapper())
-            {
-                const string filename = @".\Files\TTWNFileHasInvalidStations.csv";
-
-                var request = new InventoryFileSaveRequest
-                {
-                    StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
-                    FileName = filename,
-                    UserName = "IntegrationTestUser",
-                    InventorySource = "TTWN",
-                    RatingBook = 416
-                };
-
-                var result = _InventoryFileService.SaveInventoryFile(request);
             }
         }
 
@@ -1456,75 +771,14 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
-                    UserName = "IntegrationTestUser",
                     InventorySource = "TVB",
                     RatingBook = 416
                 };
 
-                var result = _InventoryFileService.SaveInventoryFile(request);
+                var result = _InventoryFileService.SaveInventoryFile(request, "IntegrationTestUser", new DateTime(2016, 09, 26));
             }
         }
-        [Ignore]
-        [Test]
-        [ExpectedException(typeof(BroadcastInventoryDataException), ExpectedMessage = "There are no known stations in the file", MatchType = MessageMatch.Contains)]
-        public void CNNFileHasAllStationsUnknown()
-        {
-            using (new TransactionScopeWrapper())
-            {
-                const string filename = @".\Files\";
-
-                var request = new InventoryFileSaveRequest
-                {
-                    StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
-                    FileName = filename,
-                    UserName = "IntegrationTestUser",
-                    InventorySource = "CNN",
-                    RatingBook = 416
-                };
-
-                var result = _InventoryFileService.SaveInventoryFile(request);
-            }
-        }
-
-        [Ignore]
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
-        public void TTWNFileHasInvalidDaypart()
-        {
-            using (new TransactionScopeWrapper())
-            {
-                const string filename = @".\Files\TTWNFileHasInvalidDayPart.csv";
-
-                var request = new InventoryFileSaveRequest
-                {
-                    StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
-                    FileName = filename,
-                    UserName = "IntegrationTestUser",
-                    InventorySource = "TTWN",
-                    RatingBook = 416
-                };
-
-                List<InventoryFileProblem> problems = new List<InventoryFileProblem>();
-                try
-                {
-                    var result = _InventoryFileService.SaveInventoryFile(request);
-                }
-                catch (FileUploadException<InventoryFileProblem> e)
-                {
-                    problems = e.Problems;
-                }
-                var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(InventoryFileProblem), "AffectedProposals");
-                var jsonSettings = new JsonSerializerSettings()
-                {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                    ContractResolver = jsonResolver
-                };
-
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(problems, jsonSettings));
-            }
-        }
-
+        
         [Ignore]
         [Test]
         [UseReporter(typeof(DiffReporter))]
@@ -1538,7 +792,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
-                    UserName = "IntegrationTestUser",
                     InventorySource = "TVB",
                     RatingBook = 416
                 };
@@ -1546,14 +799,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 List<InventoryFileProblem> problems = new List<InventoryFileProblem>();
                 try
                 {
-                    var result = _InventoryFileService.SaveInventoryFile(request);
+                    var result = _InventoryFileService.SaveInventoryFile(request, "IntegrationTestUser", new DateTime(2016, 09, 26));
                 }
                 catch (FileUploadException<InventoryFileProblem> e)
                 {
                     problems = e.Problems;
                 }
                 var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(InventoryFileProblem), "AffectedProposals");
                 var jsonSettings = new JsonSerializerSettings()
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
@@ -1562,69 +814,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(problems, jsonSettings));
             }
         }
-
-        [Test]
-        [Ignore]
-        [UseReporter(typeof(DiffReporter))]
-        public void CNNFileHasInvalidDaypart()
-        {
-            using (new TransactionScopeWrapper())
-            {
-                const string filename = @".\Files\CNNFileHasInvalidDayPart.csv";
-
-                var request = new InventoryFileSaveRequest
-                {
-                    StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
-                    FileName = filename,
-                    UserName = "IntegrationTestUser",
-                    InventorySource = "CNN",
-                    RatingBook = 416
-                };
-
-                List<InventoryFileProblem> problems = new List<InventoryFileProblem>();
-                try
-                {
-                    var result = _InventoryFileService.SaveInventoryFile(request);
-                }
-                catch (FileUploadException<InventoryFileProblem> e)
-                {
-                    problems = e.Problems;
-                }
-                var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(InventoryFileProblem), "AffectedProposals");
-
-                var jsonSettings = new JsonSerializerSettings
-                {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                    ContractResolver = jsonResolver
-                };
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(problems, jsonSettings));
-            }
-        }
-
-        [Ignore]
-        [Test]
-        [ExpectedException(typeof(BroadcastInventoryDataException), ExpectedMessage = "There are no valid dayparts in the file ", MatchType = MessageMatch.Contains)]
-        public void TTWNFileHasAllDaypartInvalid()
-        {
-            using (new TransactionScopeWrapper())
-            {
-                const string filename = @".\Files\TTWNFileHasAllDaypartsInvalid.csv";
-
-                var request = new InventoryFileSaveRequest
-                {
-                    StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
-                    FileName = filename,
-                    UserName = "IntegrationTestUser",
-                    InventorySource = "TTWN",
-                    RatingBook = 416
-                };
-
-                var result = _InventoryFileService.SaveInventoryFile(request);
-            }
-        }
-
-
+        
         [Ignore]
         [Test]
         [ExpectedException(typeof(BroadcastInventoryDataException), ExpectedMessage = "There are no valid dayparts in the file ", MatchType = MessageMatch.Contains)]
@@ -1638,38 +828,14 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
-                    UserName = "IntegrationTestUser",
                     InventorySource = "TVB",
                     RatingBook = 416
                 };
 
-                var result = _InventoryFileService.SaveInventoryFile(request);
+                var result = _InventoryFileService.SaveInventoryFile(request, "IntegrationTestUser", new DateTime(2016, 09, 26));
             }
         }
-
-
-        [Ignore]
-        [Test]
-        [ExpectedException(typeof(BroadcastInventoryDataException), ExpectedMessage = "There are no valid spot length in the file", MatchType = MessageMatch.Contains)]
-        public void TTWNFileHasAllSpotLengthInvalid()
-        {
-            using (new TransactionScopeWrapper())
-            {
-                const string filename = @".\Files\TTWNFileHasAllSpotLengthInvalid.csv";
-
-                var request = new InventoryFileSaveRequest
-                {
-                    StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
-                    FileName = filename,
-                    UserName = "IntegrationTestUser",
-                    InventorySource = "TTWN",
-                    RatingBook = 416
-                };
-
-                var result = _InventoryFileService.SaveInventoryFile(request);
-            }
-        }
-
+        
         [Test]
         [Ignore]
         [ExpectedException(typeof(BroadcastInventoryDataException), ExpectedMessage = "There are no valid spot length in the file", MatchType = MessageMatch.Contains)]
@@ -1683,59 +849,14 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
-                    UserName = "IntegrationTestUser",
                     InventorySource = "TVB",
                     RatingBook = 416
                 };
 
-                var result = _InventoryFileService.SaveInventoryFile(request);
+                var result = _InventoryFileService.SaveInventoryFile(request, "IntegrationTestUser", new DateTime(2016, 09, 26));
             }
         }
-
-        [Ignore]
-        [Test]
-        [ExpectedException(typeof(BroadcastInventoryDataException), ExpectedMessage = "There are no valid spot length in the file", MatchType = MessageMatch.Contains)]
-        public void CNNFileHasAllSpotLengthInvalid()
-        {
-            using (new TransactionScopeWrapper())
-            {
-                const string filename = @".\Files\CNNFileHasAllSpotLengthInvalid.csv";
-
-                var request = new InventoryFileSaveRequest
-                {
-                    StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
-                    FileName = filename,
-                    UserName = "IntegrationTestUser",
-                    InventorySource = "CNN",
-                    RatingBook = 416
-                };
-
-                var result = _InventoryFileService.SaveInventoryFile(request);
-            }
-        }
-
-        [Ignore]
-        [Test]
-        [ExpectedException(typeof(BroadcastInventoryDataException), ExpectedMessage = "Unable to parse any file records", MatchType = MessageMatch.Contains)]
-        public void CNNFileHasAllEntriesInvalid()
-        {
-            using (new TransactionScopeWrapper())
-            {
-                const string filename = @".\Files\CNNFileHasAllEntriesInvalid.csv";
-
-                var request = new InventoryFileSaveRequest
-                {
-                    StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
-                    FileName = filename,
-                    UserName = "IntegrationTestUser",
-                    InventorySource = "CNN",
-                    RatingBook = 416
-                };
-
-                var result = _InventoryFileService.SaveInventoryFile(request);
-            }
-        }
-
+        
         [Ignore]
         [Test]
         [ExpectedException(typeof(BroadcastInventoryDataException), ExpectedMessage = "Unable to parse any file records", MatchType = MessageMatch.Contains)]
@@ -1749,115 +870,14 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
-                    UserName = "IntegrationTestUser",
                     InventorySource = "CNN",
                     RatingBook = 416
                 };
 
-                var result = _InventoryFileService.SaveInventoryFile(request);
+                var result = _InventoryFileService.SaveInventoryFile(request, "IntegrationTestUser", new DateTime(2016, 09, 26));
             }
         }
-
-        [Ignore]
-        [Test]
-        [ExpectedException(typeof(BroadcastInventoryDataException), ExpectedMessage = "Unable to parse any file records", MatchType = MessageMatch.Contains)]
-        public void TTWNFileHasAllEntriesInvalid()
-        {
-            using (new TransactionScopeWrapper())
-            {
-                const string filename = @".\Files\TTWNFileHasAllEntriesInvalid.csv";
-
-                var request = new InventoryFileSaveRequest
-                {
-                    StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
-                    FileName = filename,
-                    UserName = "IntegrationTestUser",
-                    InventorySource = "CNN",
-                    RatingBook = 416
-                };
-
-                var result = _InventoryFileService.SaveInventoryFile(request);
-            }
-        }
-
-        [Test]
-        [Ignore]
-        [UseReporter(typeof(DiffReporter))]
-        public void TTWNFileHasInvalidAudience()
-        {
-            using (new TransactionScopeWrapper())
-            {
-                const string filename = @".\Files\TTWNFileHasInvalidAudience.csv";
-
-                var request = new InventoryFileSaveRequest
-                {
-                    StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
-                    FileName = filename,
-                    UserName = "IntegrationTestUser",
-                    InventorySource = "TTWN",
-                    RatingBook = 416
-                };
-
-                List<InventoryFileProblem> problems = new List<InventoryFileProblem>();
-                try
-                {
-                    var result = _InventoryFileService.SaveInventoryFile(request);
-                }
-                catch (FileUploadException<InventoryFileProblem> e)
-                {
-                    problems = e.Problems;
-                }
-                var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(InventoryFileProblem), "AffectedProposals");
-                var jsonSettings = new JsonSerializerSettings()
-                {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                    ContractResolver = jsonResolver
-                };
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(problems, jsonSettings));
-            }
-        }
-
-        [Test]
-        [Ignore]
-        [UseReporter(typeof(DiffReporter))]
-        public void CNNFileHasInvalidAudience()
-        {
-            using (new TransactionScopeWrapper())
-            {
-                const string filename = @".\Files\CNNFileHasInvalidAudience.csv";
-
-                var request = new InventoryFileSaveRequest
-                {
-                    StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
-                    FileName = filename,
-                    UserName = "IntegrationTestUser",
-                    InventorySource = "CNN",
-                    RatingBook = 416
-                };
-
-                List<InventoryFileProblem> problems = new List<InventoryFileProblem>();
-                try
-                {
-                    var result = _InventoryFileService.SaveInventoryFile(request);
-                }
-                catch (FileUploadException<InventoryFileProblem> e)
-                {
-                    problems = e.Problems;
-                }
-                var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(InventoryFileProblem), "AffectedProposals");
-
-                var jsonSettings = new JsonSerializerSettings
-                {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                    ContractResolver = jsonResolver
-                };
-
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(problems, jsonSettings));
-            }
-        }
-
+        
         [Test]
         [Ignore]
         [UseReporter(typeof(DiffReporter))]
@@ -1871,7 +891,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
-                    UserName = "IntegrationTestUser",
                     InventorySource = "TVB",
                     RatingBook = 416
                 };
@@ -1879,14 +898,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 List<InventoryFileProblem> problems = new List<InventoryFileProblem>();
                 try
                 {
-                    var result = _InventoryFileService.SaveInventoryFile(request);
+                    var result = _InventoryFileService.SaveInventoryFile(request, "IntegrationTestUser", new DateTime(2016, 09, 26));
                 }
                 catch (FileUploadException<InventoryFileProblem> e)
                 {
                     problems = e.Problems;
                 }
                 var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(InventoryFileProblem), "AffectedProposals");
                 var jsonSettings = new JsonSerializerSettings()
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
@@ -1909,7 +927,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
-                    UserName = "IntegrationTestUser",
                     InventorySource = "TVB",
                     RatingBook = 416
                 };
@@ -1917,14 +934,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 List<InventoryFileProblem> problems = new List<InventoryFileProblem>();
                 try
                 {
-                    var result = _InventoryFileService.SaveInventoryFile(request);
+                    var result = _InventoryFileService.SaveInventoryFile(request, "IntegrationTestUser", new DateTime(2016, 09, 26));
                 }
                 catch (FileUploadException<InventoryFileProblem> e)
                 {
                     problems = e.Problems;
                 }
                 var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(InventoryFileProblem), "AffectedProposals");
                 var jsonSettings = new JsonSerializerSettings()
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
@@ -1933,202 +949,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(problems, jsonSettings));
             }
         }
-
-        [Ignore]
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
-        public void TTWNFileHasInvalidAudienceAndStation()
-        {
-            using (new TransactionScopeWrapper())
-            {
-                const string filename = @".\Files\TTWNFileHasInvalidAudienceAndStation.csv";
-
-                var request = new InventoryFileSaveRequest
-                {
-                    StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
-                    FileName = filename,
-                    UserName = "IntegrationTestUser",
-                    InventorySource = "TTWN",
-                    RatingBook = 416
-                };
-
-                List<InventoryFileProblem> problems = new List<InventoryFileProblem>();
-                try
-                {
-                    var result = _InventoryFileService.SaveInventoryFile(request);
-                }
-                catch (FileUploadException<InventoryFileProblem> e)
-                {
-                    problems = e.Problems;
-                }
-                var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(InventoryFileProblem), "AffectedProposals");
-                var jsonSettings = new JsonSerializerSettings()
-                {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                    ContractResolver = jsonResolver
-                };
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(problems, jsonSettings));
-            }
-        }
-
-        [Test]
-        [Ignore]
-        [UseReporter(typeof(DiffReporter))]
-        public void CNNFileHasInvalidAudienceAndStation()
-        {
-            using (new TransactionScopeWrapper())
-            {
-                const string filename = @".\Files\CNNFileHasInvalidAudienceAndStation.csv";
-
-                var request = new InventoryFileSaveRequest
-                {
-                    StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
-                    FileName = filename,
-                    UserName = "IntegrationTestUser",
-                    InventorySource = "CNN",
-                    RatingBook = 416
-                };
-
-                List<InventoryFileProblem> problems = new List<InventoryFileProblem>();
-                try
-                {
-                    var result = _InventoryFileService.SaveInventoryFile(request);
-                }
-                catch (FileUploadException<InventoryFileProblem> e)
-                {
-                    problems = e.Problems;
-                }
-                var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(InventoryFileProblem), "AffectedProposals");
-
-                var jsonSettings = new JsonSerializerSettings
-                {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                    ContractResolver = jsonResolver
-                };
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(problems, jsonSettings));
-            }
-        }
-
-        [Test]
-        [Ignore]
-        [UseReporter(typeof(DiffReporter))]
-        public void CNNFileHasBlankCpm()
-        {
-            using (new TransactionScopeWrapper())
-            {
-                const string filename = @".\Files\CNNFileHasBlankCpm.csv";
-
-                var request = new InventoryFileSaveRequest
-                {
-                    StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
-                    FileName = filename,
-                    UserName = "IntegrationTestUser",
-                    InventorySource = "CNN",
-                    RatingBook = 416
-                };
-
-                List<InventoryFileProblem> problems = new List<InventoryFileProblem>();
-                try
-                {
-                    var result = _InventoryFileService.SaveInventoryFile(request);
-                }
-                catch (FileUploadException<InventoryFileProblem> e)
-                {
-                    problems = e.Problems;
-                }
-                var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(InventoryFileProblem), "AffectedProposals");
-
-                var jsonSettings = new JsonSerializerSettings
-                {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                    ContractResolver = jsonResolver
-                };
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(problems, jsonSettings));
-            }
-        }
-
-        [Ignore]
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
-        public void CNNFileHasInvalidDaypartCode()
-        {
-            using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
-            {
-                const string filename = @".\Files\CNNFileHasInvalidDaypartCode.csv";
-
-                var request = new InventoryFileSaveRequest
-                {
-                    StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
-                    FileName = filename,
-                    UserName = "IntegrationTestUser",
-                    InventorySource = "CNN",
-                    RatingBook = 416
-                };
-
-                List<InventoryFileProblem> problems = new List<InventoryFileProblem>();
-                try
-                {
-                    var result = _InventoryFileService.SaveInventoryFile(request);
-                }
-                catch (FileUploadException<InventoryFileProblem> e)
-                {
-                    problems = e.Problems;
-                }
-                var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(InventoryFileProblem), "AffectedProposals");
-
-                var jsonSettings = new JsonSerializerSettings
-                {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                    ContractResolver = jsonResolver
-                };
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(problems, jsonSettings));
-            }
-
-        }
-
-        [Test]
-        [Ignore]
-        [UseReporter(typeof(DiffReporter))]
-        public void TTWNFileHasInvalidDaypartCode()
-        {
-            using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
-            {
-                const string filename = @".\Files\TTWNFileHasInvalidDaypartCode.csv";
-
-                var request = new InventoryFileSaveRequest
-                {
-                    StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
-                    FileName = filename,
-                    UserName = "IntegrationTestUser",
-                    InventorySource = "TVB",
-                    RatingBook = 416
-                };
-
-                List<InventoryFileProblem> problems = new List<InventoryFileProblem>();
-                try
-                {
-                    var result = _InventoryFileService.SaveInventoryFile(request);
-                }
-                catch (FileUploadException<InventoryFileProblem> e)
-                {
-                    problems = e.Problems;
-                }
-                var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(InventoryFileProblem), "AffectedProposals");
-                var jsonSettings = new JsonSerializerSettings()
-                {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                    ContractResolver = jsonResolver
-                };
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(problems, jsonSettings));
-            }
-
-        }
-
+        
         [Ignore]
         [Test]
         [UseReporter(typeof(DiffReporter))]
@@ -2142,7 +963,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
-                    UserName = "IntegrationTestUser",
                     InventorySource = "TTWN",
                     RatingBook = 416
                 };
@@ -2150,14 +970,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 List<InventoryFileProblem> problems = new List<InventoryFileProblem>();
                 try
                 {
-                    var result = _InventoryFileService.SaveInventoryFile(request);
+                    var result = _InventoryFileService.SaveInventoryFile(request, "IntegrationTestUser", new DateTime(2016, 09, 26));
                 }
                 catch (FileUploadException<InventoryFileProblem> e)
                 {
                     problems = e.Problems;
                 }
                 var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(InventoryFileProblem), "AffectedProposals");
                 var jsonSettings = new JsonSerializerSettings()
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
@@ -2166,101 +985,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(problems, jsonSettings));
             }
         }
-
-        [Test]
-        [Ignore]
-        public void TTWNCanLoadFileWithDaypartCodeWithSpaces()
-        {
-            using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
-            {
-                const string filename = @".\Files\ThirdPartyFileWithDaypartCodeWithSpace.csv";
-
-                var request = new InventoryFileSaveRequest
-                {
-                    StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
-                    FileName = filename,
-                    UserName = "IntegrationTestUser",
-                    InventorySource = "TTWN",
-                    RatingBook = 416
-                };
-
-                List<InventoryFileProblem> problems = new List<InventoryFileProblem>();
-                try
-                {
-                    var result = _InventoryFileService.SaveInventoryFile(request);
-                }
-                catch (FileUploadException<InventoryFileProblem> e)
-                {
-                    problems = e.Problems;
-                }
-                Assert.IsEmpty(problems);
-            }
-
-        }
-
-        [Test]
-        [Ignore]
-        public void CNNCanLoadFileWithDaypartCodeWithSpaces()
-        {
-            using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
-            {
-                const string filename = @".\Files\ThirdPartyFileWithDaypartCodeWithSpace.csv";
-
-                var request = new InventoryFileSaveRequest
-                {
-                    StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
-                    FileName = filename,
-                    UserName = "IntegrationTestUser",
-                    InventorySource = "CNN",
-                    RatingBook = 416
-                };
-
-                List<InventoryFileProblem> problems = new List<InventoryFileProblem>();
-                try
-                {
-                    var result = _InventoryFileService.SaveInventoryFile(request);
-                }
-                catch (FileUploadException<InventoryFileProblem> e)
-                {
-                    problems = e.Problems;
-                }
-
-                Assert.IsEmpty(problems);
-            }
-
-        }
-
-        [Ignore]
-        [Test]
-        public void TVBCanLoadFileWithDaypartCodeWithSpaces()
-        {
-            using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
-            {
-                const string filename = @".\Files\ThirdPartyFileWithDaypartCodeWithSpace.csv";
-                var request = new InventoryFileSaveRequest
-                {
-                    StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
-                    FileName = filename,
-                    UserName = "IntegrationTestUser",
-                    InventorySource = "TVB",
-                    RatingBook = 416
-                };
-
-                List<InventoryFileProblem> problems = new List<InventoryFileProblem>();
-                try
-                {
-                    var result = _InventoryFileService.SaveInventoryFile(request);
-                }
-                catch (FileUploadException<InventoryFileProblem> e)
-                {
-                    problems = e.Problems;
-                }
-                Assert.IsEmpty(problems);
-            }
-
-        }
-
-        [Ignore]
+        
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void CanLoadInitialRatesData()
@@ -2285,112 +1010,18 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
-                    UserName = "IntegrationTestUser",
                     InventorySource = "TTWN",
                     RatingBook = 413
                 };
 
-                _InventoryFileService.SaveInventoryFile(request);
+                _InventoryFileService.SaveInventoryFile(request, "IntegrationTestUser", new DateTime(2016, 09, 26));
 
                 //var rates = _ratesService.GetAllStationRates("TTWN", 1003);
 
                 //Approvals.Verify(IntegrationTestHelper.ConvertToJson(rates));
             }
         }
-
-        [Test]
-        [Ignore]
-        public void TTWNCanLoadFileWithFixedPriceColumn()
-        {
-            using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
-            {
-                const string filename = @".\Files\ThirdPartyFileWithFixedPriceColumn.csv";
-
-                var request = new InventoryFileSaveRequest
-                {
-                    StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
-                    FileName = filename,
-                    UserName = "IntegrationTestUser",
-                    InventorySource = "TTWN",
-                    RatingBook = 416
-                };
-
-                List<InventoryFileProblem> problems = new List<InventoryFileProblem>();
-                try
-                {
-                    var result = _InventoryFileService.SaveInventoryFile(request);
-                }
-                catch (FileUploadException<InventoryFileProblem> e)
-                {
-                    problems = e.Problems;
-                }
-
-                Assert.IsEmpty(problems);
-            }
-        }
-
-        [Test]
-        [Ignore]
-        public void CNNCanLoadFileWithFixedPriceColumn()
-        {
-            using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
-            {
-                const string filename = @".\Files\ThirdPartyFileWithFixedPriceColumn.csv";
-
-                var request = new InventoryFileSaveRequest
-                {
-                    StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
-                    FileName = filename,
-                    UserName = "IntegrationTestUser",
-                    InventorySource = "CNN",
-                    RatingBook = 416
-                };
-
-                List<InventoryFileProblem> problems = new List<InventoryFileProblem>();
-                try
-                {
-                    var result = _InventoryFileService.SaveInventoryFile(request);
-                }
-                catch (FileUploadException<InventoryFileProblem> e)
-                {
-                    problems = e.Problems;
-                }
-
-                Assert.IsEmpty(problems);
-            }
-        }
-
-        [Ignore]
-        [Test]
-        public void TVBCanLoadFileWithFixedPriceColumn()
-        {
-            using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
-            {
-                const string filename = @".\Files\ThirdPartyFileWithFixedPriceColumn.csv";
-
-                var request = new InventoryFileSaveRequest
-                {
-                    StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
-                    FileName = filename,
-                    UserName = "IntegrationTestUser",
-                    InventorySource = "TVB",
-                    RatingBook = 416
-                };
-
-                List<InventoryFileProblem> problems = new List<InventoryFileProblem>();
-                try
-                {
-                    var result = _InventoryFileService.SaveInventoryFile(request);
-                }
-                catch (FileUploadException<InventoryFileProblem> e)
-                {
-                    problems = e.Problems;
-                }
-
-                Assert.IsEmpty(problems);
-            }
-        }
-
+        
         [Ignore]
         [Test]
         [ExpectedException(typeof(BroadcastInventoryDataException), ExpectedMessage = "Daypart code", MatchType = MessageMatch.Contains)]
@@ -2404,7 +1035,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
-                    UserName = "IntegrationTestUser",
                     InventorySource = "TTWN",
                     RatingBook = 416
                 };
@@ -2412,7 +1042,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 List<InventoryFileProblem> problems = new List<InventoryFileProblem>();
                 try
                 {
-                    var result = _InventoryFileService.SaveInventoryFile(request);
+                    var result = _InventoryFileService.SaveInventoryFile(request, "IntegrationTestUser", new DateTime(2016, 09, 26));
                 }
                 catch (FileUploadException<InventoryFileProblem> e)
                 {
@@ -2435,7 +1065,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
-                    UserName = "IntegrationTestUser",
                     InventorySource = "CNN",
                     RatingBook = 416
                 };
@@ -2443,7 +1072,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 List<InventoryFileProblem> problems = new List<InventoryFileProblem>();
                 try
                 {
-                    var result = _InventoryFileService.SaveInventoryFile(request);
+                    var result = _InventoryFileService.SaveInventoryFile(request, "IntegrationTestUser", new DateTime(2016, 09, 26));
                 }
                 catch (FileUploadException<InventoryFileProblem> e)
                 {
@@ -2466,7 +1095,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
-                    UserName = "IntegrationTestUser",
                     InventorySource = "TVB",
                     RatingBook = 416
                 };
@@ -2474,7 +1102,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 List<InventoryFileProblem> problems = new List<InventoryFileProblem>();
                 try
                 {
-                    var result = _InventoryFileService.SaveInventoryFile(request);
+                    var result = _InventoryFileService.SaveInventoryFile(request, "IntegrationTestUser", new DateTime(2016, 09, 26));
                 }
                 catch (FileUploadException<InventoryFileProblem> e)
                 {
@@ -2496,7 +1124,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
-                    UserName = "IntegrationTestUser",
                     InventorySource = "TVB",
                     RatingBook = 416
                 };
@@ -2504,7 +1131,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 List<InventoryFileProblem> problems = new List<InventoryFileProblem>();
                 try
                 {
-                    var result = _InventoryFileService.SaveInventoryFile(request);
+                    var result = _InventoryFileService.SaveInventoryFile(request, "IntegrationTestUser", new DateTime(2016, 09, 26));
                 }
                 catch (FileUploadException<InventoryFileProblem> e)
                 {
@@ -2526,7 +1153,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
-                    UserName = "IntegrationTestUser",
                     InventorySource = "TTWN",
                     RatingBook = 416
                 };
@@ -2534,7 +1160,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 List<InventoryFileProblem> problems = new List<InventoryFileProblem>();
                 try
                 {
-                    var result = _InventoryFileService.SaveInventoryFile(request);
+                    var result = _InventoryFileService.SaveInventoryFile(request, "IntegrationTestUser", new DateTime(2016, 09, 26));
                 }
                 catch (FileUploadException<InventoryFileProblem> e)
                 {
@@ -2557,7 +1183,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
-                    UserName = "IntegrationTestUser",
                     InventorySource = "CNN",
                     RatingBook = 416
                 };
@@ -2565,42 +1190,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 List<InventoryFileProblem> problems = new List<InventoryFileProblem>();
                 try
                 {
-                    var result = _InventoryFileService.SaveInventoryFile(request);
+                    var result = _InventoryFileService.SaveInventoryFile(request, "IntegrationTestUser", new DateTime(2016, 09, 26));
                 }
                 catch (FileUploadException<InventoryFileProblem> e)
                 {
                     problems = e.Problems;
                 }
                 Assert.IsEmpty(problems);
-            }
-        }
-
-        [Ignore]
-        [Test]
-        public void CanUpdateFixedPriceForThirdParty()
-        {
-            using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
-            {
-                const string path = @".\Files\ThirdPartyFileWithFixedPriceColumnUpdate.csv";
-
-                var request = new InventoryFileSaveRequest
-                {
-                    StreamData = new FileStream(path, FileMode.Open, FileAccess.Read),
-                    FileName = path,
-                    UserName = "IntegrationTestUser",
-                    InventorySource = "TVB",
-                    RatingBook = 416
-                };
-
-                //TODO: get rate info for comparison
-                //var stationBeforeUpdate = _stationProgramRepository.GetStationProgramById(320136);
-
-                _InventoryFileService.SaveInventoryFile(request);
-
-                //var stationAfterUpdate = _stationProgramRepository.GetStationProgramById(320136);
-
-                //Assert.AreEqual(7000m, stationBeforeUpdate.fixed_price);
-                //Assert.AreEqual(7500m, stationAfterUpdate.fixed_price);
             }
         }
 
@@ -2641,8 +1237,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Assert.IsTrue(hasSpotAllocated);
             }
         }
-
-
+        
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void CanLoadOpenMarketInventoryFileWithUnknownStation()
@@ -2651,7 +1246,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 var request = _GetInventoryFileSaveRequest(@".\Files\1Chicago WLS Syn 4Q16 UNKNOWN.xml");
 
-                var result = _InventoryFileService.SaveInventoryFile(request);
+                var result = _InventoryFileService.SaveInventoryFile(request, "IntegrationTestUser", new DateTime(2016, 09, 26));
 
                 var manifests = _InventoryRepository.GetStationInventoryManifestsByFileId(result.FileId);
 
@@ -2696,7 +1291,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 var request = _GetInventoryFileSaveRequest(@".\Files\1Chicago WLS Syn 4Q16 UNKNOWN.xml");
-                _InventoryFileService.SaveInventoryFile(request);
+                _InventoryFileService.SaveInventoryFile(request, "IntegrationTestUser", new DateTime(2016, 09, 26));
 
                 var result = _InventoryFileService.FindStationContactsByName(contactQueryString);
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
@@ -2715,7 +1310,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 try
                 {
-                    var result = _InventoryFileService.SaveInventoryFile(request);
+                    var result = _InventoryFileService.SaveInventoryFile(request, "IntegrationTestUser", new DateTime(2016, 09, 26));
                 }
                 catch (FileUploadException<InventoryFileProblem> e)
                 {
@@ -2738,7 +1333,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 try
                 {
-                    var result = _InventoryFileService.SaveInventoryFile(request);
+                    var result = _InventoryFileService.SaveInventoryFile(request, "IntegrationTestUser", new DateTime(2016, 09, 26));
                 }
                 catch (FileUploadException<InventoryFileProblem> e)
                 {
@@ -2753,32 +1348,29 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore("This test needs to be reviewed")]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void CanLoadInventoryFileAndFillAllSpotLegnthsWhenSpotLengthIs30()
         {
             using (new TransactionScopeWrapper())
-            {
-                var request = new InventoryFileSaveRequest();
+            {                
                 int stationCodeWVTM = 5044;
+                string filename = @".\Files\single_program_rate_file_wvtm.xml";
+                var request = new InventoryFileSaveRequest
+                {
+                    StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    RatingBook = 416,
+                    FileName = filename
+                };
 
-                request.StreamData = new FileStream(
-                    @".\Files\single_program_rate_file_wvtm.xml",
-                    FileMode.Open,
-                    FileAccess.Read);
-                request.UserName = "IntegrationTestUser";
-                request.RatingBook = 416;
-
-                _InventoryFileService.SaveInventoryFile(request);
+                _InventoryFileService.SaveInventoryFile(request, "IntegrationTestUser", new DateTime(2016, 09, 26));
 
                 var manifests = _InventoryRepository.GetStationManifestsBySourceAndStationCode(new InventorySource { Name = "Open Market" }, stationCodeWVTM);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
-                //jsonResolver.Ignore(typeof(StationProgramAudienceRateDto), "Id");
-                //jsonResolver.Ignore(typeof(StationProgramAudienceRateDto), "Audiences");
                 jsonResolver.Ignore(typeof(LookupDto), "Id");
                 jsonResolver.Ignore(typeof(FlightWeekDto), "Id");
+                jsonResolver.Ignore(typeof(StationInventoryManifestRate), "Id");
                 var jsonSettings = new JsonSerializerSettings()
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
@@ -2789,32 +1381,23 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore("This test needs to be reviewed")]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void CanLoadInventoryFileAndFillOnlyOneSpotLegnth()
         {
             using (new TransactionScopeWrapper())
             {
-                var request = new InventoryFileSaveRequest();
                 int stationCodeWVTM = 5044;
 
-                request.StreamData = new FileStream(
-                    @".\Files\single_program_rate_file_spot_length_15_wvtm.xml",
-                    FileMode.Open,
-                    FileAccess.Read);
-                request.UserName = "IntegrationTestUser";
-                request.RatingBook = 416;
-
-                _InventoryFileService.SaveInventoryFile(request);
+                string filename = @".\Files\single_program_rate_file_spot_length_15_wvtm.xml";
+                var request = _GetInventoryFileSaveRequest(filename);
+                _InventoryFileService.SaveInventoryFile(request, "IntegrationTestUser", new DateTime(2016, 09, 26));
 
                 var manifests = _InventoryRepository.GetStationManifestsBySourceAndStationCode(new InventorySource { Name = "Open Market" }, stationCodeWVTM);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
-                //jsonResolver.Ignore(typeof(StationProgramAudienceRateDto), "Id");
-                //jsonResolver.Ignore(typeof(StationProgramAudienceRateDto), "Audiences");
                 jsonResolver.Ignore(typeof(LookupDto), "Id");
-                jsonResolver.Ignore(typeof(FlightWeekDto), "Id");
+                jsonResolver.Ignore(typeof(StationInventoryManifestRate), "Id");
                 var jsonSettings = new JsonSerializerSettings()
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
@@ -2825,54 +1408,42 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore("This test needs to be reviewed")]
+        [Ignore("The test is not throwing any errors")]
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        //[ExpectedException(typeof(System.Exception), ExpectedMessage = "Unable to find media week containing date 1/24/1988", MatchType = MessageMatch.Contains)]
         public void ThrowExceptionWhenEndDateIsInvalid()
         {
             using (new TransactionScopeWrapper())
             {
-                var request = new InventoryFileSaveRequest
-                {
-                    StreamData = new FileStream(
-                        @".\Files\end_program_flight_file_wvtm.xml",
-                        FileMode.Open,
-                        FileAccess.Read),
-                    UserName = "IntegrationTestUser",
-                    RatingBook = 416
-                };
+                var request = _GetInventoryFileSaveRequest(@".\Files\end_program_flight_file_wvtm.xml");
 
-                _InventoryFileService.SaveInventoryFile(request);
+                _InventoryFileService.SaveInventoryFile(request, "IntegrationTestUser", new DateTime(2016, 09, 26));
                 var stationCodeWVTM = 1027;
                 var endDate = DateFormatter.AdjustEndDate(new DateTime(1988, 01, 20));
                 var manifests = _InventoryRepository.GetStationManifestsBySourceAndStationCode(new InventorySource { Name = "Open Market" }, stationCodeWVTM);
                 var program = manifests.SelectMany(x=>x.ManifestDayparts).Single(q => q.ProgramName == "TR_WVTM-TV_TEST_1 11:30AM");
 
-                //this method is no longer in the codebase
-                //_ratesService.TrimProgramFlight(program.Id, endDate, endDate, "IntegrationTestUser");
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(program));
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(StationInventoryManifestDaypart), "Id");
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(program, jsonSettings));
             }
         }
         
-        [Ignore("This test needs to be reviewed")]
+        [Ignore("This test needs to be reviewed because the last assert is testing for something not in the approval file")]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void CanLoadProgramRateWithAirtimeStartOver24h()
         {
             using (new TransactionScopeWrapper())
             {
-                var request = new InventoryFileSaveRequest
-                {
-                    StreamData = new FileStream(
-                        @".\Files\program_rate_over24h_wvtm.xml",
-                        FileMode.Open,
-                        FileAccess.Read),
-                    UserName = "IntegrationTestUser",
-                    RatingBook = 416
-                };
+                var request = _GetInventoryFileSaveRequest(@".\Files\program_rate_over24h_wvtm.xml");
 
-                _InventoryFileService.SaveInventoryFile(request);
+                _InventoryFileService.SaveInventoryFile(request, "IntegrationTestUser", new DateTime(2016,09,26));
                 var stationCodeWVTM = 5044;
                 var startDate = new DateTime(2016, 9, 26);
                 var endDate = new DateTime(2016, 10, 09);
@@ -2881,6 +1452,30 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(daypart));
                 //Assert.AreEqual("M-F 2AM-4AM", rate.Daypart.a.Airtime);
             }
+        }
+
+        private InventoryFileSaveRequest _GetInventoryFileSaveRequest(string filePath)
+        {
+            return new InventoryFileSaveRequest
+            {
+                StreamData = new FileStream(filePath, FileMode.Open, FileAccess.Read),
+                RatingBook = 416,
+                FileName = Path.GetFileName(filePath),
+                InventorySource = "Open Market"
+            };
+        }
+
+        private JsonSerializerSettings _GetJsonSerializerSettingsForConvertingAllStationProgramsToJson()
+        {
+            var jsonResolver = new IgnorableSerializerContractResolver();
+            jsonResolver.Ignore(typeof(StationProgram), "Id");
+            jsonResolver.Ignore(typeof(FlightWeekDto), "Id");
+
+            return new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                ContractResolver = jsonResolver
+            };
         }
     }
 }

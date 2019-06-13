@@ -243,7 +243,6 @@
     <Compile Include="ApplicationServices\PricingGuideServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\ProprietarySpotCostCalculationEngineIntegrationTests.cs" />
     <Compile Include="ApplicationServices\SigmaConverterTests.cs" />
-    <Compile Include="ApplicationServices\CNNImportTest.cs" />
     <Compile Include="ApplicationServices\BvsRepositoryIntegrationTests.cs" />
     <Compile Include="ApplicationServices\ImpressionAdjustmentEngineIntegrationTests.cs" />
     <Compile Include="ApplicationServices\MarketServiceIntegrationTests.cs" />
@@ -261,7 +260,6 @@
     <Compile Include="ApplicationServices\SpotTrackerServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\StationInventoryGroupServiceTests.cs" />
     <Compile Include="ApplicationServices\TrafficServiceIntegrationTests.cs" />
-    <Compile Include="ApplicationServices\TTNWFileImporterTests.cs" />
     <Compile Include="ApplicationServices\WhosWatchingTvServiceTests.cs" />
     <Compile Include="AttributeIgnorer.cs" />
     <Compile Include="ApplicationServices\AffidavitMatchingEngineTests.cs" />
@@ -281,7 +279,6 @@
     <Compile Include="ApplicationServices\EmailerServiceTests.cs" />
     <Compile Include="ApplicationServices\ProgramScrubbingEngineTests.cs" />
     <Compile Include="UnitTests\FtpServiceTester.cs" />
-    <Compile Include="UnitTests\InventoryFileImporterBaseTests.cs" />
     <Compile Include="UnitTests\Post\BvsPostFileParserTests.cs" />
     <Compile Include="UnitTests\Post\BvsPostFileRow.cs" />
     <Compile Include="UnitTests\Post\PostFileParserFactoryTests.cs" />
@@ -321,6 +318,12 @@
     </None>
     <None Include="EnvironmentSpecificSettings.config.release">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\InventoryDaypartParsing\CNN_dayparts_valid.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\InventoryDaypartParsing\CNN_dayparts_invalid.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Files\Market_Coverages_Pricing_Guide_Updated_Rank.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -610,13 +613,7 @@
     <None Include="Files\CNNAMPMBarterObligations_BadStations.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Files\CNNAMPMBarterObligations_ForUpdate.xlsx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="Files\CNNAMPMBarterObligations_Duplicate_Inventory.xlsx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Files\CNNAMPMBarterObligations_Clean.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Files\Assembly Schedule For Mapping.csv">
@@ -745,12 +742,6 @@
     <None Include="Files\InventoryDaypartParsing\CNN_dayparts_2.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Files\InventoryDaypartParsing\TTWN_dayparts.xlsx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Files\InventoryDaypartParsing\TTWN_dayparts_2.xlsx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="Files\KeepingTrac_MissingData.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -854,9 +845,6 @@
     <None Include="Files\ThirdPartyFileMultipleDaypartsWithFixedPriceColumn.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Files\ThirdPartyFileWithDaypartCodeWithSpace.csv">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="Files\ThirdPartyFileWithFixedPriceColumn.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -869,52 +857,7 @@
     <None Include="Files\ThirdPartyFileWithSameStationDaypartSpotLength.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Files\TTWN_UPDATE_06.09.17.xlsx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Files\TTWN_AMNews-06.09.17.xlsx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Files\TTWNBFileLoadTestInvalidSpothLenght.csv">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Files\TTWNFileHasAllDaypartsInvalid.csv">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Files\TTWNFileHasAllEntriesInvalid.csv">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Files\TTWNFileHasAllSpotLengthInvalid.csv">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Files\TTWNFileHasInvalidAudience.csv">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Files\TTWNFileHasInvalidAudienceAndStation.csv">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Files\TTWNFileHasInvalidDayPart.csv">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Files\TTWNFileHasInvalidDaypartCode.csv">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Files\TTWNFileHasInvalidStations.csv">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="Files\TTWNFileLoadTest.csv">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Files\TTWNFileLoadTestDuplicateStation.csv">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Files\TTWNFileLoadTestInvalidCPM.csv">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Files\TTWNFileLoadTestInvalidStation.csv">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Files\TTWN_06.09.17.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Files\TTWN_EN_06.09.17.xlsx">

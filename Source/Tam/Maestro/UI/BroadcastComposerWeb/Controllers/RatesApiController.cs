@@ -80,12 +80,11 @@ namespace BroadcastComposerWeb.Controllers
             }
 
             var ratesSaveRequest = JsonConvert.DeserializeObject<InventoryFileSaveRequest>(saveRequest.Content.ReadAsStringAsync().Result);
-            ratesSaveRequest.UserName = Identity.Name;
             try
             {
                 var result = string.Equals(ratesSaveRequest.InventorySource, "Barter", StringComparison.InvariantCultureIgnoreCase)
-                    ? _ApplicationServiceFactory.GetApplicationService<IProprietaryInventoryService>().SaveProprietaryInventoryFile(ratesSaveRequest, ratesSaveRequest.UserName, DateTime.Now)
-                    : _ApplicationServiceFactory.GetApplicationService<IInventoryService>().SaveInventoryFile(ratesSaveRequest);
+                    ? _ApplicationServiceFactory.GetApplicationService<IProprietaryInventoryService>().SaveProprietaryInventoryFile(ratesSaveRequest, Identity.Name, DateTime.Now)
+                    : _ApplicationServiceFactory.GetApplicationService<IInventoryService>().SaveInventoryFile(ratesSaveRequest, Identity.Name, DateTime.Now);
 
                 return new BaseResponse<InventoryFileSaveResult>()
                 {

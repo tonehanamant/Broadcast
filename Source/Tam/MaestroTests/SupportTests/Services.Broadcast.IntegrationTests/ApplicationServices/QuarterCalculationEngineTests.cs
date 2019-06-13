@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.BusinessEngines;
+using Services.Broadcast.Entities.Enums;
 using System;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
