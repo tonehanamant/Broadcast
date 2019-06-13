@@ -213,6 +213,23 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        public void Barter_Invalid6_PRI10292()
+        {
+            const string fileName = @".\Files\ProprietaryDataFiles\Barter_invalid6.xlsx";
+
+            using (var package = new ExcelPackage(new FileInfo(fileName)))
+            {
+                var inventorySource = new InventorySource { InventoryType = InventorySourceTypeEnum.Barter };
+                var fileImporter = _ProprietaryFileImporterFactory.GetFileImporterInstance(inventorySource);
+                var proprietaryFile = new ProprietaryInventoryFile();
+                fileImporter.LoadAndValidateDataLines(package.Workbook.Worksheets[1], proprietaryFile);
+                
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(proprietaryFile.ValidationProblems));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
         public void Barter_InvalidSpotLength()
         {
             const string fileName = @".\Files\ProprietaryDataFiles\Barter_DataLines file with invalid spot length PRI-5676.xlsx";

@@ -382,6 +382,9 @@
     <None Include="Files\ProprietaryDataFiles\Barter_invalid1.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Files\ProprietaryDataFiles\Barter_invalid6.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Files\ProprietaryDataFiles\Barter_SingleDataColumn.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

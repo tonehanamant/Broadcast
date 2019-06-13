@@ -1,0 +1,3 @@
+﻿[
+  "Line 20 contains an invalid number of spots in column C"
+]

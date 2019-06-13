@@ -265,6 +265,7 @@ namespace Services.Broadcast.Converters.RateImport
             }
             while (true)
             {
+                List<string> validationProblems = new List<string>();
                 // don`t simplify object initialization because line columns should be read with the current order 
                 var line = new ProprietaryInventoryDataLine();
                 line.Station = worksheet.Cells[rowIndex, columnIndex++].GetStringValue();
@@ -277,11 +278,17 @@ namespace Services.Broadcast.Converters.RateImport
 
                 foreach (var unit in units)
                 {
-                    line.Units.Add(new ProprietaryInventoryDataLine.Unit
+                    var lineUnit = new ProprietaryInventoryDataLine.Unit
                     {
                         ProprietaryInventoryUnit = unit,
-                        Spots = worksheet.Cells[rowIndex, columnIndex++].GetIntValue()
-                    });
+                        Spots = worksheet.Cells[rowIndex, columnIndex].GetIntValue()
+                    };
+                    line.Units.Add(lineUnit);
+                    if(lineUnit.Spots == null)
+                    {
+                        validationProblems.Add($"Line {rowIndex} contains an invalid number of spots in column {columnIndex.GetColumnAdress()}");
+                    }
+                    columnIndex++;
                 }
 
                 line.Comment = worksheet.Cells[rowIndex, columnIndex].GetStringValue();
@@ -290,8 +297,7 @@ namespace Services.Broadcast.Converters.RateImport
                 {
                     break;
                 }
-
-                List<string> validationProblems = new List<string>();
+                                
                 if (string.IsNullOrWhiteSpace(line.Station))
                 {
                     validationProblems.Add($"Line {rowIndex} contains an empty station cell");
@@ -305,7 +311,7 @@ namespace Services.Broadcast.Converters.RateImport
 
                     validationProblems.Add(message);
                 }
-
+                
                 if (validationProblems.Any())
                 {
                     proprietaryFile.ValidationProblems.AddRange(validationProblems);
