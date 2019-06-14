@@ -17,6 +17,7 @@ namespace Services.Broadcast.Entities
         public string CreatedBy { get; set; }
         public DateTime CreatedDate { get; set; }
         public List<string> ValidationProblems { get; set; } = new List<string>();
+        public int? RowsProcessed { get; set; }
 
         public List<StationInventoryGroup> InventoryGroups { get; set; } = new List<StationInventoryGroup>();
         public List<StationInventoryManifest> InventoryManifests { get; set; } = new List<StationInventoryManifest>();

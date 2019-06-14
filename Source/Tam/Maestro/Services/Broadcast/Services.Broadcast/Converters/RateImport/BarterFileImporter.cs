@@ -278,16 +278,21 @@ namespace Services.Broadcast.Converters.RateImport
 
                 foreach (var unit in units)
                 {
-                    var lineUnit = new ProprietaryInventoryDataLine.Unit
+                    string spots = worksheet.Cells[rowIndex, columnIndex].GetStringValue();
+                    if (!string.IsNullOrWhiteSpace(spots))
                     {
-                        ProprietaryInventoryUnit = unit,
-                        Spots = worksheet.Cells[rowIndex, columnIndex].GetIntValue()
-                    };
-                    line.Units.Add(lineUnit);
-                    if(lineUnit.Spots == null)
-                    {
-                        validationProblems.Add($"Line {rowIndex} contains an invalid number of spots in column {columnIndex.GetColumnAdress()}");
+                        var lineUnit = new ProprietaryInventoryDataLine.Unit
+                        {
+                            ProprietaryInventoryUnit = unit,
+                            Spots = worksheet.Cells[rowIndex, columnIndex].GetIntValue()
+                        };
+                        line.Units.Add(lineUnit);
+                        if (lineUnit.Spots == null)
+                        {
+                            validationProblems.Add($"Line {rowIndex} contains an invalid number of spots in column {columnIndex.GetColumnAdress()}");
+                        }
                     }
+                    
                     columnIndex++;
                 }
 

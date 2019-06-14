@@ -1,0 +1,1497 @@
+<?xml version="1.0"?>
+<AAAA-Message xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tvb-tp="http://www.AAAA.org/schemas/TVBGeneralTypes" xmlns:tvb="http://www.AAAA.org/schemas/spotTV" xmlns="http://www.AAAA.org/schemas/spotTVCableProposal">
+  <AAAA-Values>
+    <SchemaName>SpotTVCableProposal</SchemaName>
+    <SchemaVersion>0.3.0.5A</SchemaVersion>
+    <Media>SpotTV</Media>
+    <BusinessObject>Proposal</BusinessObject>
+    <Action>New</Action>
+    <UniqueMessageID>COXREPS77</UniqueMessageID>
+  </AAAA-Values>
+  <Proposal startDate="2018-11-07" endDate="2018-12-30" uniqueIdentifier="c3d87419-f5f2-4eb3-abc6-dfa20bdac54e" version="1" sendDateTime="2018-09-10T13:18:24" weekStartDay="Mo">
+    <Seller companyName="KMPH">
+      <Salesperson name="Darah Wright " />
+    </Seller>
+    <Buyer buyingCompanyName="Agency" />
+    <Advertiser name="Any advertiser">
+      <Product name="Political Spot Rates" />
+    </Advertiser>
+    <Name>KMPH</Name>
+    <Outlets>
+      <TelevisionStation callLetters="KMPH" parentPlus="N" outletId="OUT0" />
+    </Outlets>
+    <AvailList startDate="2018-11-07" endDate="2018-12-30" identifier="AL1" isPackage="N">
+      <Name>General List</Name>
+      <OutletReferences>
+        <OutletReference outletFromProposalRef="OUT0" outletForListId="OUL0" />
+      </OutletReferences>
+      <DemoCategories>
+        <DemoCategory DemoId="DM0">
+          <tvb:DemoType>Impression</tvb:DemoType>
+          <tvb:Group>Homes</tvb:Group>
+          <tvb:AgeFrom>0</tvb:AgeFrom>
+          <tvb:AgeTo>99</tvb:AgeTo>
+        </DemoCategory>
+        <DemoCategory DemoId="DM1">
+          <tvb:DemoType>Impression</tvb:DemoType>
+          <tvb:Group>Adults</tvb:Group>
+          <tvb:AgeFrom>18</tvb:AgeFrom>
+          <tvb:AgeTo>49</tvb:AgeTo>
+        </DemoCategory>
+        <DemoCategory DemoId="DM2">
+          <tvb:DemoType>Impression</tvb:DemoType>
+          <tvb:Group>Adults</tvb:Group>
+          <tvb:AgeFrom>25</tvb:AgeFrom>
+          <tvb:AgeTo>54</tvb:AgeTo>
+        </DemoCategory>
+        <DemoCategory DemoId="DM3">
+          <tvb:DemoType>Impression</tvb:DemoType>
+          <tvb:Group>Adults</tvb:Group>
+          <tvb:AgeFrom>35</tvb:AgeFrom>
+          <tvb:AgeTo>54</tvb:AgeTo>
+        </DemoCategory>
+        <DemoCategory DemoId="DM4">
+          <tvb:DemoType>Impression</tvb:DemoType>
+          <tvb:Group>Adults</tvb:Group>
+          <tvb:AgeFrom>35</tvb:AgeFrom>
+          <tvb:AgeTo>64</tvb:AgeTo>
+        </DemoCategory>
+        <DemoCategory DemoId="DM5">
+          <tvb:DemoType>Impression</tvb:DemoType>
+          <tvb:Group>Adults</tvb:Group>
+          <tvb:AgeFrom>50</tvb:AgeFrom>
+          <tvb:AgeTo>99</tvb:AgeTo>
+        </DemoCategory>
+      </DemoCategories>
+      <TargetDemo demoRef="DM0" />
+      <AvailLineWithDetailedPeriods>
+        <OutletReference outletFromListRef="OUL0" />
+        <DayTimes>
+          <DayTime>
+            <StartTime>10:00</StartTime>
+            <EndTime>11:00</EndTime>
+            <Days>
+              <tvb-tp:Monday>Y</tvb-tp:Monday>
+              <tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+              <tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+              <tvb-tp:Thursday>Y</tvb-tp:Thursday>
+              <tvb-tp:Friday>Y</tvb-tp:Friday>
+              <tvb-tp:Saturday>N</tvb-tp:Saturday>
+              <tvb-tp:Sunday>N</tvb-tp:Sunday>
+            </Days>
+          </DayTime>
+        </DayTimes>
+        <DaypartName>DAY/TIME</DaypartName>
+        <AvailName>WENDY WILLIAMS</AvailName>
+        <SpotLength>00:00:30</SpotLength>
+        <Periods>
+          <DayDetailedPeriod startDate="2018-11-07" endDate="2018-12-28">
+            <Rate>50.00</Rate>
+            <DemoValues>
+              <DemoValue demoRef="DM0">6.8</DemoValue>
+              <DemoValue demoRef="DM1">4.4</DemoValue>
+              <DemoValue demoRef="DM2">5.1</DemoValue>
+              <DemoValue demoRef="DM3">2.2</DemoValue>
+              <DemoValue demoRef="DM4">3.2</DemoValue>
+              <DemoValue demoRef="DM5">3.5</DemoValue>
+            </DemoValues>
+          </DayDetailedPeriod>
+        </Periods>
+      </AvailLineWithDetailedPeriods>
+      <AvailLineWithDetailedPeriods>
+        <OutletReference outletFromListRef="OUL0" />
+        <DayTimes>
+          <DayTime>
+            <StartTime>11:00</StartTime>
+            <EndTime>11:30</EndTime>
+            <Days>
+              <tvb-tp:Monday>Y</tvb-tp:Monday>
+              <tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+              <tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+              <tvb-tp:Thursday>Y</tvb-tp:Thursday>
+              <tvb-tp:Friday>Y</tvb-tp:Friday>
+              <tvb-tp:Saturday>N</tvb-tp:Saturday>
+              <tvb-tp:Sunday>N</tvb-tp:Sunday>
+            </Days>
+          </DayTime>
+        </DayTimes>
+        <DaypartName>DAY/TIME</DaypartName>
+        <AvailName>LIFESTYLE MATTERS</AvailName>
+        <SpotLength>00:00:30</SpotLength>
+        <Periods>
+          <DayDetailedPeriod startDate="2018-11-07" endDate="2018-12-28">
+            <Rate>40.00</Rate>
+            <DemoValues>
+              <DemoValue demoRef="DM0">3.9</DemoValue>
+              <DemoValue demoRef="DM1">2.2</DemoValue>
+              <DemoValue demoRef="DM2">2.6</DemoValue>
+              <DemoValue demoRef="DM3">1.1</DemoValue>
+              <DemoValue demoRef="DM4">1.7</DemoValue>
+              <DemoValue demoRef="DM5">2</DemoValue>
+            </DemoValues>
+          </DayDetailedPeriod>
+        </Periods>
+      </AvailLineWithDetailedPeriods>
+      <AvailLineWithDetailedPeriods>
+        <OutletReference outletFromListRef="OUL0" />
+        <DayTimes>
+          <DayTime>
+            <StartTime>10:00</StartTime>
+            <EndTime>11:30</EndTime>
+            <Days>
+              <tvb-tp:Monday>Y</tvb-tp:Monday>
+              <tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+              <tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+              <tvb-tp:Thursday>Y</tvb-tp:Thursday>
+              <tvb-tp:Friday>Y</tvb-tp:Friday>
+              <tvb-tp:Saturday>N</tvb-tp:Saturday>
+              <tvb-tp:Sunday>N</tvb-tp:Sunday>
+            </Days>
+          </DayTime>
+        </DayTimes>
+        <DaypartName>DAY/TIME</DaypartName>
+        <AvailName>AM ROTATION</AvailName>
+        <SpotLength>00:00:30</SpotLength>
+        <Periods>
+          <DayDetailedPeriod startDate="2018-11-07" endDate="2018-12-28">
+            <Rate>40.00</Rate>
+            <DemoValues>
+              <DemoValue demoRef="DM0">5.8</DemoValue>
+              <DemoValue demoRef="DM1">3.6</DemoValue>
+              <DemoValue demoRef="DM2">4.3</DemoValue>
+              <DemoValue demoRef="DM3">1.9</DemoValue>
+              <DemoValue demoRef="DM4">2.7</DemoValue>
+              <DemoValue demoRef="DM5">3</DemoValue>
+            </DemoValues>
+          </DayDetailedPeriod>
+        </Periods>
+      </AvailLineWithDetailedPeriods>
+      <AvailLineWithDetailedPeriods>
+        <OutletReference outletFromListRef="OUL0" />
+        <DayTimes>
+          <DayTime>
+            <StartTime>12:00</StartTime>
+            <EndTime>13:00</EndTime>
+            <Days>
+              <tvb-tp:Monday>Y</tvb-tp:Monday>
+              <tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+              <tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+              <tvb-tp:Thursday>Y</tvb-tp:Thursday>
+              <tvb-tp:Friday>Y</tvb-tp:Friday>
+              <tvb-tp:Saturday>N</tvb-tp:Saturday>
+              <tvb-tp:Sunday>N</tvb-tp:Sunday>
+            </Days>
+          </DayTime>
+        </DayTimes>
+        <DaypartName>DAY/TIME</DaypartName>
+        <AvailName>COPS</AvailName>
+        <SpotLength>00:00:30</SpotLength>
+        <Periods>
+          <DayDetailedPeriod startDate="2018-11-07" endDate="2018-12-28">
+            <Rate>50.00</Rate>
+            <DemoValues>
+              <DemoValue demoRef="DM0">7.7</DemoValue>
+              <DemoValue demoRef="DM1">4.0</DemoValue>
+              <DemoValue demoRef="DM2">4.0</DemoValue>
+              <DemoValue demoRef="DM3">2.5</DemoValue>
+              <DemoValue demoRef="DM4">3.7</DemoValue>
+              <DemoValue demoRef="DM5">4.3</DemoValue>
+            </DemoValues>
+          </DayDetailedPeriod>
+        </Periods>
+      </AvailLineWithDetailedPeriods>
+      <AvailLineWithDetailedPeriods>
+        <OutletReference outletFromListRef="OUL0" />
+        <DayTimes>
+          <DayTime>
+            <StartTime>13:00</StartTime>
+            <EndTime>14:00</EndTime>
+            <Days>
+              <tvb-tp:Monday>Y</tvb-tp:Monday>
+              <tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+              <tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+              <tvb-tp:Thursday>Y</tvb-tp:Thursday>
+              <tvb-tp:Friday>Y</tvb-tp:Friday>
+              <tvb-tp:Saturday>N</tvb-tp:Saturday>
+              <tvb-tp:Sunday>N</tvb-tp:Sunday>
+            </Days>
+          </DayTime>
+        </DayTimes>
+        <DaypartName>DAY/TIME</DaypartName>
+        <AvailName>PEOPLE'S COURT</AvailName>
+        <SpotLength>00:00:30</SpotLength>
+        <Periods>
+          <DayDetailedPeriod startDate="2018-11-07" endDate="2018-12-28">
+            <Rate>50.00</Rate>
+            <DemoValues>
+              <DemoValue demoRef="DM0">9.5</DemoValue>
+              <DemoValue demoRef="DM1">3.7</DemoValue>
+              <DemoValue demoRef="DM2">4.6</DemoValue>
+              <DemoValue demoRef="DM3">3.3</DemoValue>
+              <DemoValue demoRef="DM4">5.1</DemoValue>
+              <DemoValue demoRef="DM5">6.7</DemoValue>
+            </DemoValues>
+          </DayDetailedPeriod>
+        </Periods>
+      </AvailLineWithDetailedPeriods>
+      <AvailLineWithDetailedPeriods>
+        <OutletReference outletFromListRef="OUL0" />
+        <DayTimes>
+          <DayTime>
+            <StartTime>14:00</StartTime>
+            <EndTime>15:00</EndTime>
+            <Days>
+              <tvb-tp:Monday>Y</tvb-tp:Monday>
+              <tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+              <tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+              <tvb-tp:Thursday>Y</tvb-tp:Thursday>
+              <tvb-tp:Friday>Y</tvb-tp:Friday>
+              <tvb-tp:Saturday>N</tvb-tp:Saturday>
+              <tvb-tp:Sunday>N</tvb-tp:Sunday>
+            </Days>
+          </DayTime>
+        </DayTimes>
+        <DaypartName>DAY/TIME</DaypartName>
+        <AvailName>HOT BENCH X2</AvailName>
+        <SpotLength>00:00:30</SpotLength>
+        <Periods>
+          <DayDetailedPeriod startDate="2018-11-07" endDate="2018-12-28">
+            <Rate>50.00</Rate>
+            <DemoValues>
+              <DemoValue demoRef="DM0">6.2</DemoValue>
+              <DemoValue demoRef="DM1">2.7</DemoValue>
+              <DemoValue demoRef="DM2">2.8</DemoValue>
+              <DemoValue demoRef="DM3">1.6</DemoValue>
+              <DemoValue demoRef="DM4">2.8</DemoValue>
+              <DemoValue demoRef="DM5">3.8</DemoValue>
+            </DemoValues>
+          </DayDetailedPeriod>
+        </Periods>
+      </AvailLineWithDetailedPeriods>
+      <AvailLineWithDetailedPeriods>
+        <OutletReference outletFromListRef="OUL0" />
+        <DayTimes>
+          <DayTime>
+            <StartTime>15:00</StartTime>
+            <EndTime>16:00</EndTime>
+            <Days>
+              <tvb-tp:Monday>Y</tvb-tp:Monday>
+              <tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+              <tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+              <tvb-tp:Thursday>Y</tvb-tp:Thursday>
+              <tvb-tp:Friday>Y</tvb-tp:Friday>
+              <tvb-tp:Saturday>N</tvb-tp:Saturday>
+              <tvb-tp:Sunday>N</tvb-tp:Sunday>
+            </Days>
+          </DayTime>
+        </DayTimes>
+        <DaypartName>DAY/TIME</DaypartName>
+        <AvailName>JUDGE JUDY X2</AvailName>
+        <SpotLength>00:00:30</SpotLength>
+        <Periods>
+          <DayDetailedPeriod startDate="2018-11-07" endDate="2018-12-28">
+            <Rate>50.00</Rate>
+            <DemoValues>
+              <DemoValue demoRef="DM0">10.0</DemoValue>
+              <DemoValue demoRef="DM1">3.8</DemoValue>
+              <DemoValue demoRef="DM2">4.8</DemoValue>
+              <DemoValue demoRef="DM3">3.8</DemoValue>
+              <DemoValue demoRef="DM4">5.1</DemoValue>
+              <DemoValue demoRef="DM5">7.5</DemoValue>
+            </DemoValues>
+          </DayDetailedPeriod>
+        </Periods>
+      </AvailLineWithDetailedPeriods>
+      <AvailLineWithDetailedPeriods>
+        <OutletReference outletFromListRef="OUL0" />
+        <DayTimes>
+          <DayTime>
+            <StartTime>16:00</StartTime>
+            <EndTime>17:00</EndTime>
+            <Days>
+              <tvb-tp:Monday>Y</tvb-tp:Monday>
+              <tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+              <tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+              <tvb-tp:Thursday>Y</tvb-tp:Thursday>
+              <tvb-tp:Friday>Y</tvb-tp:Friday>
+              <tvb-tp:Saturday>N</tvb-tp:Saturday>
+              <tvb-tp:Sunday>N</tvb-tp:Sunday>
+            </Days>
+          </DayTime>
+        </DayTimes>
+        <DaypartName>DAY/TIME</DaypartName>
+        <AvailName>FAMILY FEUD</AvailName>
+        <SpotLength>00:00:30</SpotLength>
+        <Periods>
+          <DayDetailedPeriod startDate="2018-11-07" endDate="2018-12-28">
+            <Rate>80.00</Rate>
+            <DemoValues>
+              <DemoValue demoRef="DM0">12.0</DemoValue>
+              <DemoValue demoRef="DM1">6.4</DemoValue>
+              <DemoValue demoRef="DM2">6.4</DemoValue>
+              <DemoValue demoRef="DM3">3.9</DemoValue>
+              <DemoValue demoRef="DM4">6.4</DemoValue>
+              <DemoValue demoRef="DM5">6.5</DemoValue>
+            </DemoValues>
+          </DayDetailedPeriod>
+        </Periods>
+      </AvailLineWithDetailedPeriods>
+      <AvailLineWithDetailedPeriods>
+        <OutletReference outletFromListRef="OUL0" />
+        <DayTimes>
+          <DayTime>
+            <StartTime>17:00</StartTime>
+            <EndTime>17:30</EndTime>
+            <Days>
+              <tvb-tp:Monday>Y</tvb-tp:Monday>
+              <tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+              <tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+              <tvb-tp:Thursday>Y</tvb-tp:Thursday>
+              <tvb-tp:Friday>Y</tvb-tp:Friday>
+              <tvb-tp:Saturday>N</tvb-tp:Saturday>
+              <tvb-tp:Sunday>N</tvb-tp:Sunday>
+            </Days>
+          </DayTime>
+        </DayTimes>
+        <DaypartName>DAY/TIME</DaypartName>
+        <AvailName>SIMPSONS</AvailName>
+        <SpotLength>00:00:30</SpotLength>
+        <Periods>
+          <DayDetailedPeriod startDate="2018-11-07" endDate="2018-12-28">
+            <Rate>90.00</Rate>
+            <DemoValues>
+              <DemoValue demoRef="DM0">10.3</DemoValue>
+              <DemoValue demoRef="DM1">7.2</DemoValue>
+              <DemoValue demoRef="DM2">7.1</DemoValue>
+              <DemoValue demoRef="DM3">3.2</DemoValue>
+              <DemoValue demoRef="DM4">5.1</DemoValue>
+              <DemoValue demoRef="DM5">3.8</DemoValue>
+            </DemoValues>
+          </DayDetailedPeriod>
+        </Periods>
+      </AvailLineWithDetailedPeriods>
+      <AvailLineWithDetailedPeriods>
+        <OutletReference outletFromListRef="OUL0" />
+        <DayTimes>
+          <DayTime>
+            <StartTime>17:30</StartTime>
+            <EndTime>18:00</EndTime>
+            <Days>
+              <tvb-tp:Monday>Y</tvb-tp:Monday>
+              <tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+              <tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+              <tvb-tp:Thursday>Y</tvb-tp:Thursday>
+              <tvb-tp:Friday>Y</tvb-tp:Friday>
+              <tvb-tp:Saturday>N</tvb-tp:Saturday>
+              <tvb-tp:Sunday>N</tvb-tp:Sunday>
+            </Days>
+          </DayTime>
+        </DayTimes>
+        <DaypartName>DAY/TIME</DaypartName>
+        <AvailName>SIMPSONS</AvailName>
+        <SpotLength>00:00:30</SpotLength>
+        <Periods>
+          <DayDetailedPeriod startDate="2018-11-07" endDate="2018-12-28">
+            <Rate>90.00</Rate>
+            <DemoValues>
+              <DemoValue demoRef="DM0">10.7</DemoValue>
+              <DemoValue demoRef="DM1">8.2</DemoValue>
+              <DemoValue demoRef="DM2">8.3</DemoValue>
+              <DemoValue demoRef="DM3">4.0</DemoValue>
+              <DemoValue demoRef="DM4">5.8</DemoValue>
+              <DemoValue demoRef="DM5">3.7</DemoValue>
+            </DemoValues>
+          </DayDetailedPeriod>
+        </Periods>
+      </AvailLineWithDetailedPeriods>
+      <AvailLineWithDetailedPeriods>
+        <OutletReference outletFromListRef="OUL0" />
+        <DayTimes>
+          <DayTime>
+            <StartTime>17:00</StartTime>
+            <EndTime>19:00</EndTime>
+            <Days>
+              <tvb-tp:Monday>Y</tvb-tp:Monday>
+              <tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+              <tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+              <tvb-tp:Thursday>Y</tvb-tp:Thursday>
+              <tvb-tp:Friday>Y</tvb-tp:Friday>
+              <tvb-tp:Saturday>N</tvb-tp:Saturday>
+              <tvb-tp:Sunday>N</tvb-tp:Sunday>
+            </Days>
+          </DayTime>
+        </DayTimes>
+        <DaypartName>DAY/TIME</DaypartName>
+        <AvailName>FRINGE ROTATOR</AvailName>
+        <SpotLength>00:00:30</SpotLength>
+        <Periods>
+          <DayDetailedPeriod startDate="2018-11-07" endDate="2018-12-28">
+            <Rate>125.00</Rate>
+            <DemoValues>
+              <DemoValue demoRef="DM0">26.3</DemoValue>
+              <DemoValue demoRef="DM1">16.9</DemoValue>
+              <DemoValue demoRef="DM2">16.6</DemoValue>
+              <DemoValue demoRef="DM3">10.4</DemoValue>
+              <DemoValue demoRef="DM4">16.8</DemoValue>
+              <DemoValue demoRef="DM5">15.8</DemoValue>
+            </DemoValues>
+          </DayDetailedPeriod>
+        </Periods>
+      </AvailLineWithDetailedPeriods>
+      <AvailLineWithDetailedPeriods>
+        <OutletReference outletFromListRef="OUL0" />
+        <DayTimes>
+          <DayTime>
+            <StartTime>18:00</StartTime>
+            <EndTime>20:00</EndTime>
+            <Days>
+              <tvb-tp:Monday>Y</tvb-tp:Monday>
+              <tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+              <tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+              <tvb-tp:Thursday>Y</tvb-tp:Thursday>
+              <tvb-tp:Friday>Y</tvb-tp:Friday>
+              <tvb-tp:Saturday>N</tvb-tp:Saturday>
+              <tvb-tp:Sunday>N</tvb-tp:Sunday>
+            </Days>
+          </DayTime>
+        </DayTimes>
+        <DaypartName>DAY/TIME</DaypartName>
+        <AvailName>FRINGE/ACCESS ROTATOR</AvailName>
+        <SpotLength>00:00:30</SpotLength>
+        <Periods>
+          <DayDetailedPeriod startDate="2018-11-07" endDate="2018-12-28">
+            <Rate>150.00</Rate>
+            <DemoValues>
+              <DemoValue demoRef="DM0">31.7</DemoValue>
+              <DemoValue demoRef="DM1">20.1</DemoValue>
+              <DemoValue demoRef="DM2">20.5</DemoValue>
+              <DemoValue demoRef="DM3">13.3</DemoValue>
+              <DemoValue demoRef="DM4">22.4</DemoValue>
+              <DemoValue demoRef="DM5">22.3</DemoValue>
+            </DemoValues>
+          </DayDetailedPeriod>
+        </Periods>
+      </AvailLineWithDetailedPeriods>
+      <AvailLineWithDetailedPeriods>
+        <OutletReference outletFromListRef="OUL0" />
+        <DayTimes>
+          <DayTime>
+            <StartTime>18:00</StartTime>
+            <EndTime>18:30</EndTime>
+            <Days>
+              <tvb-tp:Monday>Y</tvb-tp:Monday>
+              <tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+              <tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+              <tvb-tp:Thursday>Y</tvb-tp:Thursday>
+              <tvb-tp:Friday>Y</tvb-tp:Friday>
+              <tvb-tp:Saturday>N</tvb-tp:Saturday>
+              <tvb-tp:Sunday>N</tvb-tp:Sunday>
+            </Days>
+          </DayTime>
+        </DayTimes>
+        <DaypartName>DAY/TIME</DaypartName>
+        <AvailName>BIG BANG THEORY</AvailName>
+        <SpotLength>00:00:30</SpotLength>
+        <Periods>
+          <DayDetailedPeriod startDate="2018-11-07" endDate="2018-12-28">
+            <Rate>175.00</Rate>
+            <DemoValues>
+              <DemoValue demoRef="DM0">16.2</DemoValue>
+              <DemoValue demoRef="DM1">10.3</DemoValue>
+              <DemoValue demoRef="DM2">11.1</DemoValue>
+              <DemoValue demoRef="DM3">6.0</DemoValue>
+              <DemoValue demoRef="DM4">10.5</DemoValue>
+              <DemoValue demoRef="DM5">8.7</DemoValue>
+            </DemoValues>
+          </DayDetailedPeriod>
+        </Periods>
+      </AvailLineWithDetailedPeriods>
+      <AvailLineWithDetailedPeriods>
+        <OutletReference outletFromListRef="OUL0" />
+        <DayTimes>
+          <DayTime>
+            <StartTime>18:30</StartTime>
+            <EndTime>19:00</EndTime>
+            <Days>
+              <tvb-tp:Monday>Y</tvb-tp:Monday>
+              <tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+              <tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+              <tvb-tp:Thursday>Y</tvb-tp:Thursday>
+              <tvb-tp:Friday>Y</tvb-tp:Friday>
+              <tvb-tp:Saturday>N</tvb-tp:Saturday>
+              <tvb-tp:Sunday>N</tvb-tp:Sunday>
+            </Days>
+          </DayTime>
+        </DayTimes>
+        <DaypartName>DAY/TIME</DaypartName>
+        <AvailName>BIG BANG THEORY</AvailName>
+        <SpotLength>00:00:30</SpotLength>
+        <Periods>
+          <DayDetailedPeriod startDate="2018-11-07" endDate="2018-12-28">
+            <Rate>175.00</Rate>
+            <DemoValues>
+              <DemoValue demoRef="DM0">18.8</DemoValue>
+              <DemoValue demoRef="DM1">10.3</DemoValue>
+              <DemoValue demoRef="DM2">11.7</DemoValue>
+              <DemoValue demoRef="DM3">6.3</DemoValue>
+              <DemoValue demoRef="DM4">12.3</DemoValue>
+              <DemoValue demoRef="DM5">11.9</DemoValue>
+            </DemoValues>
+          </DayDetailedPeriod>
+        </Periods>
+      </AvailLineWithDetailedPeriods>
+      <AvailLineWithDetailedPeriods>
+        <OutletReference outletFromListRef="OUL0" />
+        <DayTimes>
+          <DayTime>
+            <StartTime>16:00</StartTime>
+            <EndTime>17:00</EndTime>
+            <Days>
+              <tvb-tp:Monday>Y</tvb-tp:Monday>
+              <tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+              <tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+              <tvb-tp:Thursday>N</tvb-tp:Thursday>
+              <tvb-tp:Friday>N</tvb-tp:Friday>
+              <tvb-tp:Saturday>N</tvb-tp:Saturday>
+              <tvb-tp:Sunday>N</tvb-tp:Sunday>
+            </Days>
+          </DayTime>
+        </DayTimes>
+        <DaypartName>DAY/TIME</DaypartName>
+        <AvailName>FAMILY FEUD</AvailName>
+        <SpotLength>00:00:30</SpotLength>
+        <Periods>
+          <DayDetailedPeriod startDate="2018-11-07" endDate="2018-12-28">
+            <Rate>80.00</Rate>
+            <DemoValues>
+              <DemoValue demoRef="DM0">12.0</DemoValue>
+              <DemoValue demoRef="DM1">6.4</DemoValue>
+              <DemoValue demoRef="DM2">6.4</DemoValue>
+              <DemoValue demoRef="DM3">3.9</DemoValue>
+              <DemoValue demoRef="DM4">6.4</DemoValue>
+              <DemoValue demoRef="DM5">6.5</DemoValue>
+            </DemoValues>
+          </DayDetailedPeriod>
+        </Periods>
+      </AvailLineWithDetailedPeriods>
+      <AvailLineWithDetailedPeriods>
+        <OutletReference outletFromListRef="OUL0" />
+        <DayTimes>
+          <DayTime>
+            <StartTime>17:00</StartTime>
+            <EndTime>17:30</EndTime>
+            <Days>
+              <tvb-tp:Monday>Y</tvb-tp:Monday>
+              <tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+              <tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+              <tvb-tp:Thursday>N</tvb-tp:Thursday>
+              <tvb-tp:Friday>N</tvb-tp:Friday>
+              <tvb-tp:Saturday>N</tvb-tp:Saturday>
+              <tvb-tp:Sunday>N</tvb-tp:Sunday>
+            </Days>
+          </DayTime>
+        </DayTimes>
+        <DaypartName>DAY/TIME</DaypartName>
+        <AvailName>SIMPSONS</AvailName>
+        <SpotLength>00:00:30</SpotLength>
+        <Periods>
+          <DayDetailedPeriod startDate="2018-11-07" endDate="2018-12-28">
+            <Rate>90.00</Rate>
+            <DemoValues>
+              <DemoValue demoRef="DM0">12.0</DemoValue>
+              <DemoValue demoRef="DM1">7.2</DemoValue>
+              <DemoValue demoRef="DM2">7.1</DemoValue>
+              <DemoValue demoRef="DM3">3.2</DemoValue>
+              <DemoValue demoRef="DM4">5.1</DemoValue>
+              <DemoValue demoRef="DM5">3.8</DemoValue>
+            </DemoValues>
+          </DayDetailedPeriod>
+        </Periods>
+      </AvailLineWithDetailedPeriods>
+      <AvailLineWithDetailedPeriods>
+        <OutletReference outletFromListRef="OUL0" />
+        <DayTimes>
+          <DayTime>
+            <StartTime>17:30</StartTime>
+            <EndTime>18:00</EndTime>
+            <Days>
+              <tvb-tp:Monday>Y</tvb-tp:Monday>
+              <tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+              <tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+              <tvb-tp:Thursday>N</tvb-tp:Thursday>
+              <tvb-tp:Friday>N</tvb-tp:Friday>
+              <tvb-tp:Saturday>N</tvb-tp:Saturday>
+              <tvb-tp:Sunday>N</tvb-tp:Sunday>
+            </Days>
+          </DayTime>
+        </DayTimes>
+        <DaypartName>DAY/TIME</DaypartName>
+        <AvailName>SIMPSONS</AvailName>
+        <SpotLength>00:00:30</SpotLength>
+        <Periods>
+          <DayDetailedPeriod startDate="2018-11-07" endDate="2018-12-28">
+            <Rate>90.00</Rate>
+            <DemoValues>
+              <DemoValue demoRef="DM0">10.7</DemoValue>
+              <DemoValue demoRef="DM1">8.2</DemoValue>
+              <DemoValue demoRef="DM2">8.3</DemoValue>
+              <DemoValue demoRef="DM3">4.0</DemoValue>
+              <DemoValue demoRef="DM4">5.8</DemoValue>
+              <DemoValue demoRef="DM5">3.7</DemoValue>
+            </DemoValues>
+          </DayDetailedPeriod>
+        </Periods>
+      </AvailLineWithDetailedPeriods>
+      <AvailLineWithDetailedPeriods>
+        <OutletReference outletFromListRef="OUL0" />
+        <DayTimes>
+          <DayTime>
+            <StartTime>18:00</StartTime>
+            <EndTime>18:30</EndTime>
+            <Days>
+              <tvb-tp:Monday>Y</tvb-tp:Monday>
+              <tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+              <tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+              <tvb-tp:Thursday>N</tvb-tp:Thursday>
+              <tvb-tp:Friday>N</tvb-tp:Friday>
+              <tvb-tp:Saturday>N</tvb-tp:Saturday>
+              <tvb-tp:Sunday>N</tvb-tp:Sunday>
+            </Days>
+          </DayTime>
+        </DayTimes>
+        <DaypartName>DAY/TIME</DaypartName>
+        <AvailName>BIG BANG THEORY</AvailName>
+        <SpotLength>00:00:30</SpotLength>
+        <Periods>
+          <DayDetailedPeriod startDate="2018-11-07" endDate="2018-12-28">
+            <Rate>175.00</Rate>
+            <DemoValues>
+              <DemoValue demoRef="DM0">16.2</DemoValue>
+              <DemoValue demoRef="DM1">10.3</DemoValue>
+              <DemoValue demoRef="DM2">11.1</DemoValue>
+              <DemoValue demoRef="DM3">6.0</DemoValue>
+              <DemoValue demoRef="DM4">10.5</DemoValue>
+              <DemoValue demoRef="DM5">8.7</DemoValue>
+            </DemoValues>
+          </DayDetailedPeriod>
+        </Periods>
+      </AvailLineWithDetailedPeriods>
+      <AvailLineWithDetailedPeriods>
+        <OutletReference outletFromListRef="OUL0" />
+        <DayTimes>
+          <DayTime>
+            <StartTime>18:30</StartTime>
+            <EndTime>19:00</EndTime>
+            <Days>
+              <tvb-tp:Monday>Y</tvb-tp:Monday>
+              <tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+              <tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+              <tvb-tp:Thursday>N</tvb-tp:Thursday>
+              <tvb-tp:Friday>N</tvb-tp:Friday>
+              <tvb-tp:Saturday>N</tvb-tp:Saturday>
+              <tvb-tp:Sunday>N</tvb-tp:Sunday>
+            </Days>
+          </DayTime>
+        </DayTimes>
+        <DaypartName>DAY/TIME</DaypartName>
+        <AvailName>BIG BANG THEORY</AvailName>
+        <SpotLength>00:00:30</SpotLength>
+        <Periods>
+          <DayDetailedPeriod startDate="2018-11-07" endDate="2018-12-28">
+            <Rate>175.00</Rate>
+            <DemoValues>
+              <DemoValue demoRef="DM0">18.8</DemoValue>
+              <DemoValue demoRef="DM1">10.3</DemoValue>
+              <DemoValue demoRef="DM2">11.7</DemoValue>
+              <DemoValue demoRef="DM3">6.3</DemoValue>
+              <DemoValue demoRef="DM4">12.3</DemoValue>
+              <DemoValue demoRef="DM5">11.9</DemoValue>
+            </DemoValues>
+          </DayDetailedPeriod>
+        </Periods>
+      </AvailLineWithDetailedPeriods>
+      <AvailLineWithDetailedPeriods>
+        <OutletReference outletFromListRef="OUL0" />
+        <DayTimes>
+          <DayTime>
+            <StartTime>19:00</StartTime>
+            <EndTime>19:30</EndTime>
+            <Days>
+              <tvb-tp:Monday>Y</tvb-tp:Monday>
+              <tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+              <tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+              <tvb-tp:Thursday>Y</tvb-tp:Thursday>
+              <tvb-tp:Friday>Y</tvb-tp:Friday>
+              <tvb-tp:Saturday>N</tvb-tp:Saturday>
+              <tvb-tp:Sunday>N</tvb-tp:Sunday>
+            </Days>
+          </DayTime>
+        </DayTimes>
+        <DaypartName>DAY/TIME</DaypartName>
+        <AvailName>MODERN FAMILY</AvailName>
+        <SpotLength>00:00:30</SpotLength>
+        <Periods>
+          <DayDetailedPeriod startDate="2018-11-07" endDate="2018-12-28">
+            <Rate>275.00</Rate>
+            <DemoValues>
+              <DemoValue demoRef="DM0">16.1</DemoValue>
+              <DemoValue demoRef="DM1">8.4</DemoValue>
+              <DemoValue demoRef="DM2">9.5</DemoValue>
+              <DemoValue demoRef="DM3">5.0</DemoValue>
+              <DemoValue demoRef="DM4">11.6</DemoValue>
+              <DemoValue demoRef="DM5">12</DemoValue>
+            </DemoValues>
+          </DayDetailedPeriod>
+        </Periods>
+      </AvailLineWithDetailedPeriods>
+      <AvailLineWithDetailedPeriods>
+        <OutletReference outletFromListRef="OUL0" />
+        <DayTimes>
+          <DayTime>
+            <StartTime>19:30</StartTime>
+            <EndTime>20:00</EndTime>
+            <Days>
+              <tvb-tp:Monday>Y</tvb-tp:Monday>
+              <tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+              <tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+              <tvb-tp:Thursday>Y</tvb-tp:Thursday>
+              <tvb-tp:Friday>Y</tvb-tp:Friday>
+              <tvb-tp:Saturday>N</tvb-tp:Saturday>
+              <tvb-tp:Sunday>N</tvb-tp:Sunday>
+            </Days>
+          </DayTime>
+        </DayTimes>
+        <DaypartName>DAY/TIME</DaypartName>
+        <AvailName>MODERN FAMILY</AvailName>
+        <SpotLength>00:00:30</SpotLength>
+        <Periods>
+          <DayDetailedPeriod startDate="2018-11-07" endDate="2018-12-28">
+            <Rate>275.00</Rate>
+            <DemoValues>
+              <DemoValue demoRef="DM0">14.9</DemoValue>
+              <DemoValue demoRef="DM1">6.8</DemoValue>
+              <DemoValue demoRef="DM2">8.1</DemoValue>
+              <DemoValue demoRef="DM3">4.5</DemoValue>
+              <DemoValue demoRef="DM4">10.7</DemoValue>
+              <DemoValue demoRef="DM5">11.5</DemoValue>
+            </DemoValues>
+          </DayDetailedPeriod>
+        </Periods>
+      </AvailLineWithDetailedPeriods>
+      <AvailLineWithDetailedPeriods>
+        <OutletReference outletFromListRef="OUL0" />
+        <DayTimes>
+          <DayTime>
+            <StartTime>19:00</StartTime>
+            <EndTime>19:30</EndTime>
+            <Days>
+              <tvb-tp:Monday>Y</tvb-tp:Monday>
+              <tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+              <tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+              <tvb-tp:Thursday>N</tvb-tp:Thursday>
+              <tvb-tp:Friday>N</tvb-tp:Friday>
+              <tvb-tp:Saturday>N</tvb-tp:Saturday>
+              <tvb-tp:Sunday>N</tvb-tp:Sunday>
+            </Days>
+          </DayTime>
+        </DayTimes>
+        <DaypartName>DAY/TIME</DaypartName>
+        <AvailName>MODERN FAMILY</AvailName>
+        <SpotLength>00:00:30</SpotLength>
+        <Periods>
+          <DayDetailedPeriod startDate="2018-11-07" endDate="2018-12-28">
+            <Rate>275.00</Rate>
+            <DemoValues>
+              <DemoValue demoRef="DM0">16.1</DemoValue>
+              <DemoValue demoRef="DM1">8.4</DemoValue>
+              <DemoValue demoRef="DM2">9.5</DemoValue>
+              <DemoValue demoRef="DM3">5.0</DemoValue>
+              <DemoValue demoRef="DM4">11.6</DemoValue>
+              <DemoValue demoRef="DM5">12</DemoValue>
+            </DemoValues>
+          </DayDetailedPeriod>
+        </Periods>
+      </AvailLineWithDetailedPeriods>
+      <AvailLineWithDetailedPeriods>
+        <OutletReference outletFromListRef="OUL0" />
+        <DayTimes>
+          <DayTime>
+            <StartTime>19:30</StartTime>
+            <EndTime>20:00</EndTime>
+            <Days>
+              <tvb-tp:Monday>Y</tvb-tp:Monday>
+              <tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+              <tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+              <tvb-tp:Thursday>N</tvb-tp:Thursday>
+              <tvb-tp:Friday>N</tvb-tp:Friday>
+              <tvb-tp:Saturday>N</tvb-tp:Saturday>
+              <tvb-tp:Sunday>N</tvb-tp:Sunday>
+            </Days>
+          </DayTime>
+        </DayTimes>
+        <DaypartName>DAY/TIME</DaypartName>
+        <AvailName>MODERN FAMILY</AvailName>
+        <SpotLength>00:00:30</SpotLength>
+        <Periods>
+          <DayDetailedPeriod startDate="2018-11-07" endDate="2018-12-28">
+            <Rate>275.00</Rate>
+            <DemoValues>
+              <DemoValue demoRef="DM0">14.9</DemoValue>
+              <DemoValue demoRef="DM1">6.8</DemoValue>
+              <DemoValue demoRef="DM2">8.1</DemoValue>
+              <DemoValue demoRef="DM3">4.5</DemoValue>
+              <DemoValue demoRef="DM4">10.7</DemoValue>
+              <DemoValue demoRef="DM5">11.5</DemoValue>
+            </DemoValues>
+          </DayDetailedPeriod>
+        </Periods>
+      </AvailLineWithDetailedPeriods>
+      <AvailLineWithDetailedPeriods>
+        <OutletReference outletFromListRef="OUL0" />
+        <DayTimes>
+          <DayTime>
+            <StartTime>19:00</StartTime>
+            <EndTime>20:00</EndTime>
+            <Days>
+              <tvb-tp:Monday>Y</tvb-tp:Monday>
+              <tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+              <tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+              <tvb-tp:Thursday>N</tvb-tp:Thursday>
+              <tvb-tp:Friday>N</tvb-tp:Friday>
+              <tvb-tp:Saturday>N</tvb-tp:Saturday>
+              <tvb-tp:Sunday>N</tvb-tp:Sunday>
+            </Days>
+          </DayTime>
+        </DayTimes>
+        <DaypartName>DAY/TIME</DaypartName>
+        <AvailName>MODERN FAMILY ROTATOR</AvailName>
+        <SpotLength>00:00:30</SpotLength>
+        <Periods>
+          <DayDetailedPeriod startDate="2018-11-07" endDate="2018-12-28">
+            <Rate>250.00</Rate>
+            <DemoValues>
+              <DemoValue demoRef="DM0">14.9</DemoValue>
+              <DemoValue demoRef="DM1">6.8</DemoValue>
+              <DemoValue demoRef="DM2">8.1</DemoValue>
+              <DemoValue demoRef="DM3">4.5</DemoValue>
+              <DemoValue demoRef="DM4">10.7</DemoValue>
+              <DemoValue demoRef="DM5">11.5</DemoValue>
+            </DemoValues>
+          </DayDetailedPeriod>
+        </Periods>
+      </AvailLineWithDetailedPeriods>
+      <AvailLineWithDetailedPeriods>
+        <OutletReference outletFromListRef="OUL0" />
+        <DayTimes>
+          <DayTime>
+            <StartTime>23:00</StartTime>
+            <EndTime>23:30</EndTime>
+            <Days>
+              <tvb-tp:Monday>Y</tvb-tp:Monday>
+              <tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+              <tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+              <tvb-tp:Thursday>Y</tvb-tp:Thursday>
+              <tvb-tp:Friday>Y</tvb-tp:Friday>
+              <tvb-tp:Saturday>N</tvb-tp:Saturday>
+              <tvb-tp:Sunday>N</tvb-tp:Sunday>
+            </Days>
+          </DayTime>
+        </DayTimes>
+        <DaypartName>DAY/TIME</DaypartName>
+        <AvailName>SEINFELD</AvailName>
+        <SpotLength>00:00:30</SpotLength>
+        <Periods>
+          <DayDetailedPeriod startDate="2018-11-07" endDate="2018-12-28">
+            <Rate>90.00</Rate>
+            <DemoValues>
+              <DemoValue demoRef="DM0">9.7</DemoValue>
+              <DemoValue demoRef="DM1">4.7</DemoValue>
+              <DemoValue demoRef="DM2">4.8</DemoValue>
+              <DemoValue demoRef="DM3">3.3</DemoValue>
+              <DemoValue demoRef="DM4">6.5</DemoValue>
+              <DemoValue demoRef="DM5">5.7</DemoValue>
+            </DemoValues>
+          </DayDetailedPeriod>
+        </Periods>
+      </AvailLineWithDetailedPeriods>
+      <AvailLineWithDetailedPeriods>
+        <OutletReference outletFromListRef="OUL0" />
+        <DayTimes>
+          <DayTime>
+            <StartTime>23:30</StartTime>
+            <EndTime>24:00</EndTime>
+            <Days>
+              <tvb-tp:Monday>Y</tvb-tp:Monday>
+              <tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+              <tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+              <tvb-tp:Thursday>Y</tvb-tp:Thursday>
+              <tvb-tp:Friday>Y</tvb-tp:Friday>
+              <tvb-tp:Saturday>N</tvb-tp:Saturday>
+              <tvb-tp:Sunday>N</tvb-tp:Sunday>
+            </Days>
+          </DayTime>
+        </DayTimes>
+        <DaypartName>DAY/TIME</DaypartName>
+        <AvailName>SEINFELD</AvailName>
+        <SpotLength>00:00:30</SpotLength>
+        <Periods>
+          <DayDetailedPeriod startDate="2018-11-07" endDate="2018-12-28">
+            <Rate>90.00</Rate>
+            <DemoValues>
+              <DemoValue demoRef="DM0">8.6</DemoValue>
+              <DemoValue demoRef="DM1">4.8</DemoValue>
+              <DemoValue demoRef="DM2">4.7</DemoValue>
+              <DemoValue demoRef="DM3">3.0</DemoValue>
+              <DemoValue demoRef="DM4">5.9</DemoValue>
+              <DemoValue demoRef="DM5">4.6</DemoValue>
+            </DemoValues>
+          </DayDetailedPeriod>
+        </Periods>
+      </AvailLineWithDetailedPeriods>
+      <AvailLineWithDetailedPeriods>
+        <OutletReference outletFromListRef="OUL0" />
+        <DayTimes>
+          <DayTime>
+            <StartTime>24:00</StartTime>
+            <EndTime>24:30</EndTime>
+            <Days>
+              <tvb-tp:Monday>Y</tvb-tp:Monday>
+              <tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+              <tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+              <tvb-tp:Thursday>Y</tvb-tp:Thursday>
+              <tvb-tp:Friday>Y</tvb-tp:Friday>
+              <tvb-tp:Saturday>N</tvb-tp:Saturday>
+              <tvb-tp:Sunday>N</tvb-tp:Sunday>
+            </Days>
+          </DayTime>
+        </DayTimes>
+        <DaypartName>DAY/TIME</DaypartName>
+        <AvailName>MIKE &amp; MOLLY</AvailName>
+        <SpotLength>00:00:30</SpotLength>
+        <Periods>
+          <DayDetailedPeriod startDate="2018-11-07" endDate="2018-12-28">
+            <Rate>70.00</Rate>
+            <DemoValues>
+              <DemoValue demoRef="DM0">7.9</DemoValue>
+              <DemoValue demoRef="DM1">4.4</DemoValue>
+              <DemoValue demoRef="DM2">4.1</DemoValue>
+              <DemoValue demoRef="DM3">2.7</DemoValue>
+              <DemoValue demoRef="DM4">5.5</DemoValue>
+              <DemoValue demoRef="DM5">4.5</DemoValue>
+            </DemoValues>
+          </DayDetailedPeriod>
+        </Periods>
+      </AvailLineWithDetailedPeriods>
+      <AvailLineWithDetailedPeriods>
+        <OutletReference outletFromListRef="OUL0" />
+        <DayTimes>
+          <DayTime>
+            <StartTime>24:30</StartTime>
+            <EndTime>25:00</EndTime>
+            <Days>
+              <tvb-tp:Monday>Y</tvb-tp:Monday>
+              <tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+              <tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+              <tvb-tp:Thursday>Y</tvb-tp:Thursday>
+              <tvb-tp:Friday>Y</tvb-tp:Friday>
+              <tvb-tp:Saturday>N</tvb-tp:Saturday>
+              <tvb-tp:Sunday>N</tvb-tp:Sunday>
+            </Days>
+          </DayTime>
+        </DayTimes>
+        <DaypartName>DAY/TIME</DaypartName>
+        <AvailName>MIKE &amp; MOLLY</AvailName>
+        <SpotLength>00:00:30</SpotLength>
+        <Periods>
+          <DayDetailedPeriod startDate="2018-11-07" endDate="2018-12-28">
+            <Rate>70.00</Rate>
+            <DemoValues>
+              <DemoValue demoRef="DM0">6.9</DemoValue>
+              <DemoValue demoRef="DM1">4.1</DemoValue>
+              <DemoValue demoRef="DM2">3.8</DemoValue>
+              <DemoValue demoRef="DM3">2.5</DemoValue>
+              <DemoValue demoRef="DM4">5.3</DemoValue>
+              <DemoValue demoRef="DM5">3.8</DemoValue>
+            </DemoValues>
+          </DayDetailedPeriod>
+        </Periods>
+      </AvailLineWithDetailedPeriods>
+      <AvailLineWithDetailedPeriods>
+        <OutletReference outletFromListRef="OUL0" />
+        <DayTimes>
+          <DayTime>
+            <StartTime>25:00</StartTime>
+            <EndTime>25:30</EndTime>
+            <Days>
+              <tvb-tp:Monday>Y</tvb-tp:Monday>
+              <tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+              <tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+              <tvb-tp:Thursday>Y</tvb-tp:Thursday>
+              <tvb-tp:Friday>Y</tvb-tp:Friday>
+              <tvb-tp:Saturday>N</tvb-tp:Saturday>
+              <tvb-tp:Sunday>N</tvb-tp:Sunday>
+            </Days>
+          </DayTime>
+        </DayTimes>
+        <DaypartName>DAY/TIME</DaypartName>
+        <AvailName>2 BROKE GIRLS</AvailName>
+        <SpotLength>00:00:30</SpotLength>
+        <Periods>
+          <DayDetailedPeriod startDate="2018-11-07" endDate="2018-12-28">
+            <Rate>40.00</Rate>
+            <DemoValues>
+              <DemoValue demoRef="DM0">5.2</DemoValue>
+              <DemoValue demoRef="DM1">3.0</DemoValue>
+              <DemoValue demoRef="DM2">2.8</DemoValue>
+              <DemoValue demoRef="DM3">1.6</DemoValue>
+              <DemoValue demoRef="DM4">3.4</DemoValue>
+              <DemoValue demoRef="DM5">2.8</DemoValue>
+            </DemoValues>
+          </DayDetailedPeriod>
+        </Periods>
+      </AvailLineWithDetailedPeriods>
+      <AvailLineWithDetailedPeriods>
+        <OutletReference outletFromListRef="OUL0" />
+        <DayTimes>
+          <DayTime>
+            <StartTime>12:00</StartTime>
+            <EndTime>14:00</EndTime>
+            <Days>
+              <tvb-tp:Monday>N</tvb-tp:Monday>
+              <tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+              <tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+              <tvb-tp:Thursday>N</tvb-tp:Thursday>
+              <tvb-tp:Friday>N</tvb-tp:Friday>
+              <tvb-tp:Saturday>Y</tvb-tp:Saturday>
+              <tvb-tp:Sunday>N</tvb-tp:Sunday>
+            </Days>
+          </DayTime>
+        </DayTimes>
+        <DaypartName>DAY/TIME</DaypartName>
+        <AvailName>KMPH 12N MOVIE</AvailName>
+        <SpotLength>00:00:30</SpotLength>
+        <Periods>
+          <DayDetailedPeriod startDate="2018-11-07" endDate="2018-12-29">
+            <Rate>50.00</Rate>
+            <DemoValues>
+              <DemoValue demoRef="DM0">12.0</DemoValue>
+              <DemoValue demoRef="DM1">5.6</DemoValue>
+              <DemoValue demoRef="DM2">7.0</DemoValue>
+              <DemoValue demoRef="DM3">4.6</DemoValue>
+              <DemoValue demoRef="DM4">6.6</DemoValue>
+              <DemoValue demoRef="DM5">9</DemoValue>
+            </DemoValues>
+          </DayDetailedPeriod>
+        </Periods>
+      </AvailLineWithDetailedPeriods>
+      <AvailLineWithDetailedPeriods>
+        <OutletReference outletFromListRef="OUL0" />
+        <DayTimes>
+          <DayTime>
+            <StartTime>14:00</StartTime>
+            <EndTime>16:00</EndTime>
+            <Days>
+              <tvb-tp:Monday>N</tvb-tp:Monday>
+              <tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+              <tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+              <tvb-tp:Thursday>N</tvb-tp:Thursday>
+              <tvb-tp:Friday>N</tvb-tp:Friday>
+              <tvb-tp:Saturday>Y</tvb-tp:Saturday>
+              <tvb-tp:Sunday>N</tvb-tp:Sunday>
+            </Days>
+          </DayTime>
+        </DayTimes>
+        <DaypartName>DAY/TIME</DaypartName>
+        <AvailName>KMPH 2P MOVIE</AvailName>
+        <SpotLength>00:00:30</SpotLength>
+        <Periods>
+          <DayDetailedPeriod startDate="2018-11-07" endDate="2018-12-29">
+            <Rate>50.00</Rate>
+            <DemoValues>
+              <DemoValue demoRef="DM0">14.5</DemoValue>
+              <DemoValue demoRef="DM1">9.3</DemoValue>
+              <DemoValue demoRef="DM2">9.0</DemoValue>
+              <DemoValue demoRef="DM3">5.2</DemoValue>
+              <DemoValue demoRef="DM4">7.9</DemoValue>
+              <DemoValue demoRef="DM5">10.6</DemoValue>
+            </DemoValues>
+          </DayDetailedPeriod>
+        </Periods>
+      </AvailLineWithDetailedPeriods>
+      <AvailLineWithDetailedPeriods>
+        <OutletReference outletFromListRef="OUL0" />
+        <DayTimes>
+          <DayTime>
+            <StartTime>17:00</StartTime>
+            <EndTime>18:00</EndTime>
+            <Days>
+              <tvb-tp:Monday>N</tvb-tp:Monday>
+              <tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+              <tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+              <tvb-tp:Thursday>N</tvb-tp:Thursday>
+              <tvb-tp:Friday>N</tvb-tp:Friday>
+              <tvb-tp:Saturday>Y</tvb-tp:Saturday>
+              <tvb-tp:Sunday>N</tvb-tp:Sunday>
+            </Days>
+          </DayTime>
+        </DayTimes>
+        <DaypartName>DAY/TIME</DaypartName>
+        <AvailName>FAMILY FEUD X2</AvailName>
+        <SpotLength>00:00:30</SpotLength>
+        <Periods>
+          <DayDetailedPeriod startDate="2018-11-07" endDate="2018-12-29">
+            <Rate>50.00</Rate>
+            <DemoValues>
+              <DemoValue demoRef="DM0">29.2</DemoValue>
+              <DemoValue demoRef="DM1">18.0</DemoValue>
+              <DemoValue demoRef="DM2">17.1</DemoValue>
+              <DemoValue demoRef="DM3">13.0</DemoValue>
+              <DemoValue demoRef="DM4">18.6</DemoValue>
+              <DemoValue demoRef="DM5">20.4</DemoValue>
+            </DemoValues>
+          </DayDetailedPeriod>
+        </Periods>
+      </AvailLineWithDetailedPeriods>
+      <AvailLineWithDetailedPeriods>
+        <OutletReference outletFromListRef="OUL0" />
+        <DayTimes>
+          <DayTime>
+            <StartTime>18:00</StartTime>
+            <EndTime>20:00</EndTime>
+            <Days>
+              <tvb-tp:Monday>N</tvb-tp:Monday>
+              <tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+              <tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+              <tvb-tp:Thursday>N</tvb-tp:Thursday>
+              <tvb-tp:Friday>N</tvb-tp:Friday>
+              <tvb-tp:Saturday>Y</tvb-tp:Saturday>
+              <tvb-tp:Sunday>N</tvb-tp:Sunday>
+            </Days>
+          </DayTime>
+        </DayTimes>
+        <DaypartName>DAY/TIME</DaypartName>
+        <AvailName>SAT FRINGE/ACCESS ROS</AvailName>
+        <SpotLength>00:00:30</SpotLength>
+        <Periods>
+          <DayDetailedPeriod startDate="2018-11-07" endDate="2018-12-29">
+            <Rate>125.00</Rate>
+            <DemoValues>
+              <DemoValue demoRef="DM0">34.7</DemoValue>
+              <DemoValue demoRef="DM1">23.3</DemoValue>
+              <DemoValue demoRef="DM2">21.8</DemoValue>
+              <DemoValue demoRef="DM3">15.9</DemoValue>
+              <DemoValue demoRef="DM4">25.0</DemoValue>
+              <DemoValue demoRef="DM5">28.3</DemoValue>
+            </DemoValues>
+          </DayDetailedPeriod>
+        </Periods>
+      </AvailLineWithDetailedPeriods>
+      <AvailLineWithDetailedPeriods>
+        <OutletReference outletFromListRef="OUL0" />
+        <DayTimes>
+          <DayTime>
+            <StartTime>19:00</StartTime>
+            <EndTime>19:30</EndTime>
+            <Days>
+              <tvb-tp:Monday>N</tvb-tp:Monday>
+              <tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+              <tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+              <tvb-tp:Thursday>N</tvb-tp:Thursday>
+              <tvb-tp:Friday>N</tvb-tp:Friday>
+              <tvb-tp:Saturday>Y</tvb-tp:Saturday>
+              <tvb-tp:Sunday>N</tvb-tp:Sunday>
+            </Days>
+          </DayTime>
+        </DayTimes>
+        <DaypartName>DAY/TIME</DaypartName>
+        <AvailName>MODERN FAMILY</AvailName>
+        <SpotLength>00:00:30</SpotLength>
+        <Periods>
+          <DayDetailedPeriod startDate="2018-11-07" endDate="2018-12-29">
+            <Rate>150.00</Rate>
+            <DemoValues>
+              <DemoValue demoRef="DM0">35.9</DemoValue>
+              <DemoValue demoRef="DM1">24.2</DemoValue>
+              <DemoValue demoRef="DM2">22.0</DemoValue>
+              <DemoValue demoRef="DM3">15.6</DemoValue>
+              <DemoValue demoRef="DM4">25.1</DemoValue>
+              <DemoValue demoRef="DM5">29.7</DemoValue>
+            </DemoValues>
+          </DayDetailedPeriod>
+        </Periods>
+      </AvailLineWithDetailedPeriods>
+      <AvailLineWithDetailedPeriods>
+        <OutletReference outletFromListRef="OUL0" />
+        <DayTimes>
+          <DayTime>
+            <StartTime>19:30</StartTime>
+            <EndTime>20:00</EndTime>
+            <Days>
+              <tvb-tp:Monday>N</tvb-tp:Monday>
+              <tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+              <tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+              <tvb-tp:Thursday>N</tvb-tp:Thursday>
+              <tvb-tp:Friday>N</tvb-tp:Friday>
+              <tvb-tp:Saturday>Y</tvb-tp:Saturday>
+              <tvb-tp:Sunday>N</tvb-tp:Sunday>
+            </Days>
+          </DayTime>
+        </DayTimes>
+        <DaypartName>DAY/TIME</DaypartName>
+        <AvailName>MODERN FAMILY</AvailName>
+        <SpotLength>00:00:30</SpotLength>
+        <Periods>
+          <DayDetailedPeriod startDate="2018-11-07" endDate="2018-12-29">
+            <Rate>150.00</Rate>
+            <DemoValues>
+              <DemoValue demoRef="DM0">37.6</DemoValue>
+              <DemoValue demoRef="DM1">27.1</DemoValue>
+              <DemoValue demoRef="DM2">24.4</DemoValue>
+              <DemoValue demoRef="DM3">18.9</DemoValue>
+              <DemoValue demoRef="DM4">30.6</DemoValue>
+              <DemoValue demoRef="DM5">32.1</DemoValue>
+            </DemoValues>
+          </DayDetailedPeriod>
+        </Periods>
+      </AvailLineWithDetailedPeriods>
+      <AvailLineWithDetailedPeriods>
+        <OutletReference outletFromListRef="OUL0" />
+        <DayTimes>
+          <DayTime>
+            <StartTime>19:00</StartTime>
+            <EndTime>20:00</EndTime>
+            <Days>
+              <tvb-tp:Monday>N</tvb-tp:Monday>
+              <tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+              <tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+              <tvb-tp:Thursday>N</tvb-tp:Thursday>
+              <tvb-tp:Friday>N</tvb-tp:Friday>
+              <tvb-tp:Saturday>Y</tvb-tp:Saturday>
+              <tvb-tp:Sunday>N</tvb-tp:Sunday>
+            </Days>
+          </DayTime>
+        </DayTimes>
+        <DaypartName>DAY/TIME</DaypartName>
+        <AvailName>SATURDAY ACCESS ROS</AvailName>
+        <SpotLength>00:00:30</SpotLength>
+        <Periods>
+          <DayDetailedPeriod startDate="2018-11-07" endDate="2018-12-29">
+            <Rate>125.00</Rate>
+            <DemoValues>
+              <DemoValue demoRef="DM0">36.8</DemoValue>
+              <DemoValue demoRef="DM1">25.7</DemoValue>
+              <DemoValue demoRef="DM2">23.2</DemoValue>
+              <DemoValue demoRef="DM3">17.2</DemoValue>
+              <DemoValue demoRef="DM4">27.9</DemoValue>
+              <DemoValue demoRef="DM5">30.9</DemoValue>
+            </DemoValues>
+          </DayDetailedPeriod>
+        </Periods>
+      </AvailLineWithDetailedPeriods>
+      <AvailLineWithDetailedPeriods>
+        <OutletReference outletFromListRef="OUL0" />
+        <DayTimes>
+          <DayTime>
+            <StartTime>23:00</StartTime>
+            <EndTime>24:00</EndTime>
+            <Days>
+              <tvb-tp:Monday>N</tvb-tp:Monday>
+              <tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+              <tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+              <tvb-tp:Thursday>N</tvb-tp:Thursday>
+              <tvb-tp:Friday>N</tvb-tp:Friday>
+              <tvb-tp:Saturday>Y</tvb-tp:Saturday>
+              <tvb-tp:Sunday>N</tvb-tp:Sunday>
+            </Days>
+          </DayTime>
+        </DayTimes>
+        <DaypartName>DAY/TIME</DaypartName>
+        <AvailName>FOX NETWORK</AvailName>
+        <SpotLength>00:00:30</SpotLength>
+        <Periods>
+          <DayDetailedPeriod startDate="2018-11-07" endDate="2018-12-29">
+            <Rate>40.00</Rate>
+            <DemoValues>
+              <DemoValue demoRef="DM0">8.2</DemoValue>
+              <DemoValue demoRef="DM1">3.6</DemoValue>
+              <DemoValue demoRef="DM2">4.0</DemoValue>
+              <DemoValue demoRef="DM3">2.9</DemoValue>
+              <DemoValue demoRef="DM4">5.0</DemoValue>
+              <DemoValue demoRef="DM5">5.4</DemoValue>
+            </DemoValues>
+          </DayDetailedPeriod>
+        </Periods>
+      </AvailLineWithDetailedPeriods>
+      <AvailLineWithDetailedPeriods>
+        <OutletReference outletFromListRef="OUL0" />
+        <DayTimes>
+          <DayTime>
+            <StartTime>24:00</StartTime>
+            <EndTime>25:00</EndTime>
+            <Days>
+              <tvb-tp:Monday>N</tvb-tp:Monday>
+              <tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+              <tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+              <tvb-tp:Thursday>N</tvb-tp:Thursday>
+              <tvb-tp:Friday>N</tvb-tp:Friday>
+              <tvb-tp:Saturday>Y</tvb-tp:Saturday>
+              <tvb-tp:Sunday>N</tvb-tp:Sunday>
+            </Days>
+          </DayTime>
+        </DayTimes>
+        <DaypartName>DAY/TIME</DaypartName>
+        <AvailName>SEINFELD 2X</AvailName>
+        <SpotLength>00:00:30</SpotLength>
+        <Periods>
+          <DayDetailedPeriod startDate="2018-11-07" endDate="2018-12-29">
+            <Rate>35.00</Rate>
+            <DemoValues>
+              <DemoValue demoRef="DM0">5.5</DemoValue>
+              <DemoValue demoRef="DM1">2.0</DemoValue>
+              <DemoValue demoRef="DM2">2.2</DemoValue>
+              <DemoValue demoRef="DM3">1.8</DemoValue>
+              <DemoValue demoRef="DM4">3.7</DemoValue>
+              <DemoValue demoRef="DM5">3.5</DemoValue>
+            </DemoValues>
+          </DayDetailedPeriod>
+        </Periods>
+      </AvailLineWithDetailedPeriods>
+      <AvailLineWithDetailedPeriods>
+        <OutletReference outletFromListRef="OUL0" />
+        <DayTimes>
+          <DayTime>
+            <StartTime>17:30</StartTime>
+            <EndTime>18:00</EndTime>
+            <Days>
+              <tvb-tp:Monday>N</tvb-tp:Monday>
+              <tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+              <tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+              <tvb-tp:Thursday>N</tvb-tp:Thursday>
+              <tvb-tp:Friday>N</tvb-tp:Friday>
+              <tvb-tp:Saturday>N</tvb-tp:Saturday>
+              <tvb-tp:Sunday>Y</tvb-tp:Sunday>
+            </Days>
+          </DayTime>
+        </DayTimes>
+        <DaypartName>DAY/TIME</DaypartName>
+        <AvailName>FULL MEASURE</AvailName>
+        <SpotLength>00:00:30</SpotLength>
+        <Periods>
+          <DayDetailedPeriod startDate="2018-11-07" endDate="2018-12-30">
+            <Rate>50.00</Rate>
+            <DemoValues>
+              <DemoValue demoRef="DM0">2.9</DemoValue>
+              <DemoValue demoRef="DM1">2.3</DemoValue>
+              <DemoValue demoRef="DM2">2.3</DemoValue>
+              <DemoValue demoRef="DM3">2.3</DemoValue>
+              <DemoValue demoRef="DM4">3.4</DemoValue>
+              <DemoValue demoRef="DM5">2.5</DemoValue>
+            </DemoValues>
+          </DayDetailedPeriod>
+        </Periods>
+      </AvailLineWithDetailedPeriods>
+      <AvailLineWithDetailedPeriods>
+        <OutletReference outletFromListRef="OUL0" />
+        <DayTimes>
+          <DayTime>
+            <StartTime>18:00</StartTime>
+            <EndTime>19:00</EndTime>
+            <Days>
+              <tvb-tp:Monday>N</tvb-tp:Monday>
+              <tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+              <tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+              <tvb-tp:Thursday>N</tvb-tp:Thursday>
+              <tvb-tp:Friday>N</tvb-tp:Friday>
+              <tvb-tp:Saturday>N</tvb-tp:Saturday>
+              <tvb-tp:Sunday>Y</tvb-tp:Sunday>
+            </Days>
+          </DayTime>
+        </DayTimes>
+        <DaypartName>DAY/TIME</DaypartName>
+        <AvailName>THE BIG BANG THEORY 2X</AvailName>
+        <SpotLength>00:00:30</SpotLength>
+        <Periods>
+          <DayDetailedPeriod startDate="2018-11-07" endDate="2018-12-30">
+            <Rate>70.00</Rate>
+            <DemoValues>
+              <DemoValue demoRef="DM0">7.6</DemoValue>
+              <DemoValue demoRef="DM1">3.9</DemoValue>
+              <DemoValue demoRef="DM2">3.4</DemoValue>
+              <DemoValue demoRef="DM3">0.7</DemoValue>
+              <DemoValue demoRef="DM4">3.0</DemoValue>
+              <DemoValue demoRef="DM5">5.7</DemoValue>
+            </DemoValues>
+          </DayDetailedPeriod>
+        </Periods>
+      </AvailLineWithDetailedPeriods>
+      <AvailLineWithDetailedPeriods>
+        <OutletReference outletFromListRef="OUL0" />
+        <DayTimes>
+          <DayTime>
+            <StartTime>23:00</StartTime>
+            <EndTime>23:30</EndTime>
+            <Days>
+              <tvb-tp:Monday>N</tvb-tp:Monday>
+              <tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+              <tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+              <tvb-tp:Thursday>N</tvb-tp:Thursday>
+              <tvb-tp:Friday>N</tvb-tp:Friday>
+              <tvb-tp:Saturday>N</tvb-tp:Saturday>
+              <tvb-tp:Sunday>Y</tvb-tp:Sunday>
+            </Days>
+          </DayTime>
+        </DayTimes>
+        <DaypartName>DAY/TIME</DaypartName>
+        <AvailName>IN DEPTH WITH GRAHAM B</AvailName>
+        <SpotLength>00:00:30</SpotLength>
+        <Periods>
+          <DayDetailedPeriod startDate="2018-11-07" endDate="2018-12-30">
+            <Rate>50.00</Rate>
+            <DemoValues>
+              <DemoValue demoRef="DM0">4.6</DemoValue>
+              <DemoValue demoRef="DM1">1.3</DemoValue>
+              <DemoValue demoRef="DM2">1.8</DemoValue>
+              <DemoValue demoRef="DM3">1.5</DemoValue>
+              <DemoValue demoRef="DM4">3.0</DemoValue>
+              <DemoValue demoRef="DM5">4</DemoValue>
+            </DemoValues>
+          </DayDetailedPeriod>
+        </Periods>
+      </AvailLineWithDetailedPeriods>
+      <AvailLineWithDetailedPeriods>
+        <OutletReference outletFromListRef="OUL0" />
+        <DayTimes>
+          <DayTime>
+            <StartTime>23:30</StartTime>
+            <EndTime>24:30</EndTime>
+            <Days>
+              <tvb-tp:Monday>N</tvb-tp:Monday>
+              <tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+              <tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+              <tvb-tp:Thursday>N</tvb-tp:Thursday>
+              <tvb-tp:Friday>N</tvb-tp:Friday>
+              <tvb-tp:Saturday>N</tvb-tp:Saturday>
+              <tvb-tp:Sunday>Y</tvb-tp:Sunday>
+            </Days>
+          </DayTime>
+        </DayTimes>
+        <DaypartName>DAY/TIME</DaypartName>
+        <AvailName>FOX NFL SUNDAY WRAP-UP</AvailName>
+        <SpotLength>00:00:30</SpotLength>
+        <Periods>
+          <DayDetailedPeriod startDate="2018-11-07" endDate="2018-12-30">
+            <Rate>65.00</Rate>
+            <DemoValues>
+              <DemoValue demoRef="DM0">4.2</DemoValue>
+              <DemoValue demoRef="DM1">2.3</DemoValue>
+              <DemoValue demoRef="DM2">2.3</DemoValue>
+              <DemoValue demoRef="DM3">1.6</DemoValue>
+              <DemoValue demoRef="DM4">2.6</DemoValue>
+              <DemoValue demoRef="DM5">2.3</DemoValue>
+            </DemoValues>
+          </DayDetailedPeriod>
+        </Periods>
+      </AvailLineWithDetailedPeriods>
+    </AvailList>
+  </Proposal>
+</AAAA-Message>

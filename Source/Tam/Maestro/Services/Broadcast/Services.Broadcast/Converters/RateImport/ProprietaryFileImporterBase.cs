@@ -44,14 +44,6 @@ namespace Services.Broadcast.Converters.RateImport
         void LoadAndValidateDataLines(ExcelWorksheet worksheet, ProprietaryInventoryFile proprietaryFile);
 
         void PopulateManifests(ProprietaryInventoryFile proprietaryFile, List<DisplayBroadcastStation> stations);
-
-        /// <summary>
-        /// Writes a stream to a specific error folder
-        /// </summary>
-        /// <param name="stream"></param>
-        /// <param name="fileId"></param>
-        /// <param name="fileName"></param>
-        void WriteFileToDisk(Stream stream, int fileId, string fileName);
     }
 
     public abstract class ProprietaryFileImporterBase : IProprietaryFileImporter
@@ -171,19 +163,6 @@ namespace Services.Broadcast.Converters.RateImport
         /// <param name="proprietaryFile">ProprietaryInventoryFile to be loaded</param>
         public abstract void LoadAndValidateDataLines(ExcelWorksheet worksheet, ProprietaryInventoryFile proprietaryFile);
 
-        public abstract void PopulateManifests(ProprietaryInventoryFile proprietaryFile, List<DisplayBroadcastStation> stations);
-
-        /// <summary>
-        /// Writes a stream to a specific error folder
-        /// </summary>
-        /// <param name="stream"></param>
-        /// <param name="fileId"></param>
-        /// <param name="fileName"></param>
-        public void WriteFileToDisk(Stream stream, int fileId, string fileName)
-        {
-            string path = $@"{BroadcastServiceSystemParameter.InventoryUploadErrorsFolder}\{fileId}_{fileName}";
-            stream.Position = 0;
-            _FileService.Copy(stream, path, true);
-        }
+        public abstract void PopulateManifests(ProprietaryInventoryFile proprietaryFile, List<DisplayBroadcastStation> stations);                
     }
 }

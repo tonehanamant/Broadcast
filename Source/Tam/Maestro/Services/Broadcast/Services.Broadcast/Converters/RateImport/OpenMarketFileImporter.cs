@@ -89,6 +89,11 @@ namespace Services.Broadcast.Converters.RateImport
                 Debug.WriteLine(message.Proposal.uniqueIdentifier + " parsed successfully !");
 
                 BuildRatesFile(message, inventoryFile);
+
+                if (!FileProblems.Any())
+                {
+                    inventoryFile.RowsProcessed = inventoryFile.InventoryManifests.Count();
+                }
             }
             catch (Exception e)
             {

@@ -38,13 +38,6 @@ namespace Services.Broadcast.ApplicationServices
         /// </summary>
         /// <returns>Returns a zip archive as stream and the zip name</returns>
         Tuple<string, Stream> GenerateScxFileArchive(InventoryScxDownloadRequest request);
-
-        /// <summary>
-        /// Generates an archive with inventory files that contained errors filtered by the list of ids passed
-        /// </summary>
-        /// <param name="fileIds">List of file ids to filter the files by</param>
-        /// <returns>Returns a zip archive as stream and the zip name</returns>
-        Tuple<string, Stream> DownloadErrorFiles(List<int> fileIds);
     }
 
     public class ProprietaryInventoryService : IProprietaryInventoryService
@@ -143,7 +136,7 @@ namespace Services.Broadcast.ApplicationServices
                 if (proprietaryFile.ValidationProblems.Any())
                 {
                     _InventoryRepository.AddValidationProblems(proprietaryFile);
-                    fileImporter.WriteFileToDisk(fileStreamWithErrors, proprietaryFile.Id, request.FileName);
+                    WriteErrorFileToDisk(fileStreamWithErrors, proprietaryFile.Id, request.FileName);
                 }
                 else
                 {
@@ -244,33 +237,7 @@ namespace Services.Broadcast.ApplicationServices
             archiveFile.Seek(0, SeekOrigin.Begin);
             return new Tuple<string, Stream>(archiveFileName, archiveFile);
         }
-
-        /// <summary>
-        /// Generates an archive with inventory files that contained errors filtered by the list of ids passed
-        /// </summary>
-        /// <param name="fileIds">List of file ids to filter the files by</param>
-        /// <returns>Returns a zip archive as stream and the zip name</returns>
-        public Tuple<string, Stream> DownloadErrorFiles(List<int> fileIds)
-        {
-            string archiveFileName = $"InventoryErrorFiles_{DateTime.Now.ToString("MMddyyyyhhmmss")}.zip";
-            var errorFiles = _FileService.GetFiles(BroadcastServiceSystemParameter.InventoryUploadErrorsFolder);
-            Dictionary<string, string> errorsFilesToProcess = new Dictionary<string, string>();
-
-            foreach (var id in fileIds)
-            {
-                //get the file by looking in the errors folder for a file with the name starting with the current id
-                string filePath = errorFiles.Where(x => Path.GetFileName(x).StartsWith($"{id}_")).SingleOrDefault();
-                if (filePath != null)
-                {
-                    string fileName = Path.GetFileName(filePath).Replace($"{id}_", string.Empty);   //remove the added id from the filename
-                    errorsFilesToProcess.Add(filePath, fileName);
-                }
-            }
-
-            Stream archiveFile = _FileService.CreateZipArchive(errorsFilesToProcess);
-            return new Tuple<string, Stream>(archiveFileName, archiveFile);
-        }
-
+                
         private InventorySource _ReadInventorySourceFromFile(Stream streamData)
         {
             const int searchInventorySourceHeaderCellRowIndexStart = 2;
@@ -339,6 +306,19 @@ namespace Services.Broadcast.ApplicationServices
             existingStations.AddRange(newStations);
 
             return existingStations;
+        }
+
+        /// <summary>
+        /// Writes a stream to a specific error folder
+        /// </summary>
+        /// <param name="stream"></param>
+        /// <param name="fileId"></param>
+        /// <param name="fileName"></param>
+        private void WriteErrorFileToDisk(Stream stream, int fileId, string fileName)
+        {
+            string path = $@"{BroadcastServiceSystemParameter.InventoryUploadErrorsFolder}\{fileId}_{fileName}";
+            stream.Position = 0;
+            _FileService.Copy(stream, path, true);
         }
     }
 }

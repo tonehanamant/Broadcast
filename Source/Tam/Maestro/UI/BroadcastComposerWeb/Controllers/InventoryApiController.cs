@@ -237,7 +237,7 @@ namespace BroadcastComposerWeb.Controllers
             if (!fileIds.Any())
                 return new HttpResponseMessage { StatusCode = HttpStatusCode.NoContent, ReasonPhrase = "No file ids were supplied" };
 
-            var archive = _ApplicationServiceFactory.GetApplicationService<IProprietaryInventoryService>().DownloadErrorFiles(fileIds);
+            var archive = _ApplicationServiceFactory.GetApplicationService<IInventoryService>().DownloadErrorFiles(fileIds);
 
             var result = Request.CreateResponse(HttpStatusCode.OK);
             result.Content = new StreamContent(archive.Item2);

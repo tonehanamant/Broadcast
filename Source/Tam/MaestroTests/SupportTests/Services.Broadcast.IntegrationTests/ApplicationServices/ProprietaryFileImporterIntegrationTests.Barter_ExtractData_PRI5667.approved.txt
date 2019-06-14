@@ -32,31 +32,10 @@
       "Units": [
         {
           "ProprietaryInventoryUnit": {
-            "Name": "AM 1",
-            "SpotLength": 60
-          },
-          "Spots": null
-        },
-        {
-          "ProprietaryInventoryUnit": {
-            "Name": "AM 2",
-            "SpotLength": 30
-          },
-          "Spots": null
-        },
-        {
-          "ProprietaryInventoryUnit": {
             "Name": "AM 3",
             "SpotLength": 30
           },
           "Spots": 1
-        },
-        {
-          "ProprietaryInventoryUnit": {
-            "Name": "AM 4",
-            "SpotLength": 15
-          },
-          "Spots": null
         }
       ],
       "Weeks": []
@@ -92,31 +71,10 @@
       "Units": [
         {
           "ProprietaryInventoryUnit": {
-            "Name": "AM 1",
-            "SpotLength": 60
-          },
-          "Spots": null
-        },
-        {
-          "ProprietaryInventoryUnit": {
             "Name": "AM 2",
             "SpotLength": 30
           },
           "Spots": 1
-        },
-        {
-          "ProprietaryInventoryUnit": {
-            "Name": "AM 3",
-            "SpotLength": 30
-          },
-          "Spots": null
-        },
-        {
-          "ProprietaryInventoryUnit": {
-            "Name": "AM 4",
-            "SpotLength": 15
-          },
-          "Spots": null
         }
       ],
       "Weeks": []

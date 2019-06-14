@@ -893,7 +893,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var now = new DateTime(2019, 02, 02);
                 var result = _ProprietaryService.SaveProprietaryInventoryFile(request, "IntegrationTestUser", now);
 
-                var errors = _ProprietaryService.DownloadErrorFiles(new List<int> { result.FileId });
+                var errors = IntegrationTestApplicationServiceFactory.GetApplicationService<IInventoryService>().DownloadErrorFiles(new List<int> { result.FileId });
                 Assert.IsTrue(errors.Item2.Length > 0);
                 Assert.IsTrue(errors.Item1.StartsWith($"InventoryErrorFiles_{DateTime.Now.ToString("MMddyyyy")}"));
 

@@ -39,13 +39,6 @@
         },
         {
           "ProprietaryInventoryUnit": {
-            "Name": "AM 2",
-            "SpotLength": 30
-          },
-          "Spots": null
-        },
-        {
-          "ProprietaryInventoryUnit": {
             "Name": "AM 3",
             "SpotLength": 30
           },

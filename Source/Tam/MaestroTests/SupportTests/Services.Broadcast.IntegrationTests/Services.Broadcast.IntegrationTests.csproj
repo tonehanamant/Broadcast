@@ -1004,6 +1004,12 @@
     <Content Include="Files\Open Market Duplicate Program File2.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Files\ImportingRateData\Fresno_4Q18_ValidFile.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Files\ImportingRateData\WilkesBarre_4Q18_InvalidFile.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Files\rate-file-invalid-schema.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

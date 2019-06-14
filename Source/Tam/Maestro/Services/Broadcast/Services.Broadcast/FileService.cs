@@ -42,7 +42,7 @@ namespace Common.Services
         /// </summary>
         /// <param name="filePath">Current file path</param>
         /// <param name="destinationPath">Destination directory</param>
-        /// <param name="deleteExisting">Optional: Flag to delete the existing file if there is one at the same location</param>
+        /// <param name="overwriteExisting">Optional: Flag to overwrite the existing file if there is one at the same location</param>
         /// <returns>New file path</returns>
         string Copy(string filePath, string destinationPath, bool overwriteExisting = false);
 
@@ -51,7 +51,7 @@ namespace Common.Services
         /// </summary>
         /// <param name="inputStream">Input stream</param>
         /// <param name="destinationPath">Destination directory</param>
-        /// <param name="deleteExisting">Optional: Flag to delete the existing file if there is one at the same location</param>
+        /// <param name="overwriteExisting">Optional: Flag to overwrite the existing file if there is one at the same location</param>
         /// <returns>New file path</returns>
         string Copy(Stream inputStream, string destinationPath, bool overwriteExisting = false);
 
@@ -70,6 +70,13 @@ namespace Common.Services
         /// <param name="filePaths">Dictionary of path and name file pairs</param>
         /// <returns>Stream containing the zip archive</returns>
         Stream CreateZipArchive(IDictionary<string, string> filePaths);
+
+        /// <summary>
+        /// Creates a txt file with the content passed
+        /// </summary>
+        /// <param name="filePath">File path where to create the file</param>
+        /// <param name="lines">New file content</param>
+        void CreateTextFile(string filePath, List<string> lines);
     }
 
     public class FileService : IFileService
@@ -139,7 +146,7 @@ namespace Common.Services
         /// </summary>
         /// <param name="filePath">Current file path</param>
         /// <param name="destinationPath">Destination directory</param>
-        /// <param name="deleteExisting">Optional: Flag to delete the existing file if there is one at the same location</param>
+        /// <param name="overwriteExisting">Optional: Flag to overwrite the existing file if there is one at the same location</param>
         /// <returns>New file path</returns>
         public string Copy(string filePath, string destinationPath, bool overwriteExisting = false)
         {
@@ -165,7 +172,7 @@ namespace Common.Services
         /// </summary>
         /// <param name="inputStream">Input stream</param>
         /// <param name="destinationPath">Destination directory</param>
-        /// <param name="deleteExisting">Optional: Flag to delete the existing file if there is one at the same location</param>
+        /// <param name="overwriteExisting">Optional: Flag to overwrite the existing file if there is one at the same location</param>
         /// <returns>New file path</returns>
         public string Copy(Stream inputStream, string destinationPath, bool overwriteExisting = false)
         {
@@ -228,6 +235,16 @@ namespace Common.Services
         public void CreateDirectory(string filePath)
         {
             Directory.CreateDirectory(filePath);
+        }
+
+        /// <summary>
+        /// Creates a txt file with the content passed
+        /// </summary>
+        /// <param name="filePath">File path where to create the file</param>
+        /// <param name="lines">New file content</param>
+        public void CreateTextFile(string filePath, List<string> lines)
+        {
+            File.WriteAllLines(filePath, lines);
         }
     }
 }

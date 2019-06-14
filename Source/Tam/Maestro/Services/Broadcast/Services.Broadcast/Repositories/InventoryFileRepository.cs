@@ -75,7 +75,7 @@ namespace Services.Broadcast.Repositories
 
                     file.status = (byte)inventoryFile.FileStatus;
                     file.identifier = inventoryFile.UniqueIdentifier;
-
+                    file.rows_processed = inventoryFile.RowsProcessed;
                     context.SaveChanges();
 
                 });

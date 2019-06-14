@@ -59,6 +59,11 @@ namespace Services.Broadcast.IntegrationTests
         {
             throw new NotImplementedException();
         }
+
+        public virtual void CreateTextFile(string filePath, List<string> lines)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public class FileServiceSingleFileStubb : FileServiceStubb
@@ -141,6 +146,11 @@ namespace Services.Broadcast.IntegrationTests
             }
             archiveFile.Seek(0, SeekOrigin.Begin);
             return archiveFile;
+        }
+
+        public override void CreateTextFile(string filePath, List<string> lines)
+        {
+            _Files.Add(filePath);
         }
     }
 }

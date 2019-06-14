@@ -8,101 +8,6 @@
     },
     "Manifests": [
       {
-        "Comment": null,
-        "DaypartCode": "LN",
-        "InventorySourceId": 4,
-        "ManifestAudiences": [],
-        "ManifestAudiencesReferences": [
-          {
-            "Audience": {
-              "AudienceString": "Adults 25-54",
-              "Id": 37
-            },
-            "CPM": 222.2200,
-            "Impressions": null,
-            "IsReference": true,
-            "Rating": null,
-            "Vpvh": null
-          }
-        ],
-        "ManifestDayparts": [
-          {
-            "Daypart": {
-              "_Code": "CUS",
-              "_EndTime": 23399,
-              "_Friday": false,
-              "_Id": 30028,
-              "_Is24Hour": false,
-              "_LastEndTime": 0,
-              "_LastStartTime": 0,
-              "_Monday": false,
-              "_Name": "BRDCST DP362",
-              "_Saturday": true,
-              "_StartTime": 21600,
-              "_Sunday": true,
-              "_Thursday": false,
-              "_Tuesday": false,
-              "_Wednesday": false
-            },
-            "Genres": [],
-            "ProgramName": null
-          }
-        ],
-        "ManifestRates": [],
-        "ManifestWeeks": [
-          {
-            "EndDate": "2019-05-26T00:00:00",
-            "MediaWeek": {
-              "_EndDate": "2019-05-26T00:00:00",
-              "_MediaMonthId": 452,
-              "_StartDate": "2019-05-20T00:00:00",
-              "_WeekNumber": 4,
-              "IsDirty": true
-            },
-            "Spots": 1,
-            "StartDate": "2019-05-22T00:00:00"
-          },
-          {
-            "EndDate": "2019-05-30T00:00:00",
-            "MediaWeek": {
-              "_EndDate": "2019-06-02T00:00:00",
-              "_MediaMonthId": 453,
-              "_StartDate": "2019-05-27T00:00:00",
-              "_WeekNumber": 1,
-              "IsDirty": true
-            },
-            "Spots": 1,
-            "StartDate": "2019-05-27T00:00:00"
-          }
-        ],
-        "SpotLengthId": 1,
-        "SpotsPerDay": null,
-        "SpotsPerWeek": null,
-        "Station": {
-          "Affiliation": "FOX",
-          "CallLetters": "WNYW 5.1",
-          "Code": 5010,
-          "LegacyCallLetters": "WNYW",
-          "ManifestMaxEndDate": null,
-          "MarketCode": 101,
-          "ModifiedDate": null,
-          "OriginMarket": null,
-          "RateDataThrough": null
-        }
-      }
-    ],
-    "Name": "AM 2",
-    "SlotNumber": 2
-  },
-  {
-    "InventorySource": {
-      "Id": 4,
-      "InventoryType": 2,
-      "IsActive": true,
-      "Name": "TTWN"
-    },
-    "Manifests": [
-      {
         "Comment": "Test1",
         "DaypartCode": "LN",
         "InventorySourceId": 4,
@@ -188,5 +93,100 @@
     ],
     "Name": "AM 3",
     "SlotNumber": 3
+  },
+  {
+    "InventorySource": {
+      "Id": 4,
+      "InventoryType": 2,
+      "IsActive": true,
+      "Name": "TTWN"
+    },
+    "Manifests": [
+      {
+        "Comment": null,
+        "DaypartCode": "LN",
+        "InventorySourceId": 4,
+        "ManifestAudiences": [],
+        "ManifestAudiencesReferences": [
+          {
+            "Audience": {
+              "AudienceString": "Adults 25-54",
+              "Id": 37
+            },
+            "CPM": 222.2200,
+            "Impressions": null,
+            "IsReference": true,
+            "Rating": null,
+            "Vpvh": null
+          }
+        ],
+        "ManifestDayparts": [
+          {
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 23399,
+              "_Friday": false,
+              "_Id": 30028,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": false,
+              "_Name": "BRDCST DP362",
+              "_Saturday": true,
+              "_StartTime": 21600,
+              "_Sunday": true,
+              "_Thursday": false,
+              "_Tuesday": false,
+              "_Wednesday": false
+            },
+            "Genres": [],
+            "ProgramName": null
+          }
+        ],
+        "ManifestRates": [],
+        "ManifestWeeks": [
+          {
+            "EndDate": "2019-05-26T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2019-05-26T00:00:00",
+              "_MediaMonthId": 452,
+              "_StartDate": "2019-05-20T00:00:00",
+              "_WeekNumber": 4,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2019-05-22T00:00:00"
+          },
+          {
+            "EndDate": "2019-05-30T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2019-06-02T00:00:00",
+              "_MediaMonthId": 453,
+              "_StartDate": "2019-05-27T00:00:00",
+              "_WeekNumber": 1,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2019-05-27T00:00:00"
+          }
+        ],
+        "SpotLengthId": 1,
+        "SpotsPerDay": null,
+        "SpotsPerWeek": null,
+        "Station": {
+          "Affiliation": "FOX",
+          "CallLetters": "WNYW 5.1",
+          "Code": 5010,
+          "LegacyCallLetters": "WNYW",
+          "ManifestMaxEndDate": null,
+          "MarketCode": 101,
+          "ModifiedDate": null,
+          "OriginMarket": null,
+          "RateDataThrough": null
+        }
+      }
+    ],
+    "Name": "AM 2",
+    "SlotNumber": 2
   }
 ]

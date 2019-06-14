@@ -16,10 +16,10 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Transactions;
 using Tam.Maestro.Common;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
+using Tam.Maestro.Services.Cable.SystemComponentParameters;
 using Tam.Maestro.Services.Clients;
 using Tam.Maestro.Services.ContractInterfaces;
 using Tam.Maestro.Services.ContractInterfaces.AudienceAndRatingsBusinessObjects;
@@ -49,6 +49,7 @@ namespace Services.Broadcast.ApplicationServices
         List<StationContact> FindStationContactsByName(string query);
         bool GetStationProgramConflicted(StationProgramConflictRequest conflict, int manifestId);
         bool DeleteProgram(int programId, string inventorySource, int stationCode, string user);
+
         bool HasSpotsAllocated(int programId);
 
         /// <summary>
@@ -57,6 +58,13 @@ namespace Services.Broadcast.ApplicationServices
         /// <param name="filepath">File path to check</param>
         /// <returns>True or false</returns>
         bool IsProprietaryFile(string filepath);
+        
+        /// <summary>
+        /// Generates an archive with inventory files that contained errors filtered by the list of ids passed
+        /// </summary>
+        /// <param name="fileIds">List of file ids to filter the files by</param>
+        /// <returns>Returns a zip archive as stream and the zip name</returns>
+        Tuple<string, Stream> DownloadErrorFiles(List<int> fileIds);
     }
 
     public class InventoryService : IInventoryService
@@ -77,12 +85,14 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IStationInventoryGroupService _StationInventoryGroupService;
         private readonly IInventoryRepository _InventoryRepository;
         private readonly INsiPostingBookService _NsiPostingBookService;
+
         private readonly ILockingEngine _LockingEngine;
         private readonly IDataLakeFileService _DataLakeFileService;
         private readonly IStationProcessingEngine _StationProcessingEngine;
         private readonly IImpressionsService _ImpressionsService;
         private readonly IOpenMarketFileImporter _OpenMarketFileImporter;
         private readonly IAudienceRepository _AudienceRepository;
+        private readonly IFileService _FileService;
 
         public InventoryService(IDataRepositoryFactory broadcastDataRepositoryFactory,
             IInventoryFileValidator inventoryFileValidator,
@@ -98,7 +108,8 @@ namespace Services.Broadcast.ApplicationServices
             ILockingEngine lockingEngine,
             IStationProcessingEngine stationProcessingEngine,
             IImpressionsService impressionsService,
-            IOpenMarketFileImporter openMarketFileImporter)
+            IOpenMarketFileImporter openMarketFileImporter,
+            IFileService fileService)
         {
             _broadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
             _StationRepository = broadcastDataRepositoryFactory.GetDataRepository<IStationRepository>();
@@ -115,6 +126,7 @@ namespace Services.Broadcast.ApplicationServices
             _ProprietarySpotCostCalculationEngine = proprietarySpotCostCalculationEngine;
             _StationInventoryGroupService = stationInventoryGroupService;
             _InventoryRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
+
             _NsiPostingBookService = nsiPostingBookService;
             _LockingEngine = lockingEngine;
             _DataLakeFileService = dataLakeFileService;
@@ -122,6 +134,7 @@ namespace Services.Broadcast.ApplicationServices
             _ImpressionsService = impressionsService;
             _OpenMarketFileImporter = openMarketFileImporter;
             _AudienceRepository = broadcastDataRepositoryFactory.GetDataRepository<IAudienceRepository>();
+            _FileService = fileService;
         }
 
         public bool GetStationProgramConflicted(StationProgramConflictRequest conflict, int manifestId)
@@ -189,15 +202,26 @@ namespace Services.Broadcast.ApplicationServices
 
                 if (_OpenMarketFileImporter.FileProblems.Any())
                 {
+                    inventoryFile.FileStatus = FileStatusEnum.Failed;
                     inventoryFile.ValidationProblems.AddRange(_LoadValidationProblemsFromFileProblems(_OpenMarketFileImporter.FileProblems));
+
                     _InventoryRepository.AddValidationProblems(inventoryFile);
+                    _InventoryFileRepository.UpdateInventoryFile(inventoryFile);
+
+                    WriteErrorFileToDisk(inventoryFile.Id, request.FileName, inventoryFile.ValidationProblems);
                 }
                 else
                 {
                     if (!inventoryFile.HasManifests())
                     {
+                        inventoryFile.FileStatus = FileStatusEnum.Failed;
                         inventoryFile.ValidationProblems.Add("Unable to parse any file records.");
+
                         _InventoryRepository.AddValidationProblems(inventoryFile);
+                        _InventoryFileRepository.UpdateInventoryFile(inventoryFile);
+
+                        WriteErrorFileToDisk(inventoryFile.Id, request.FileName, inventoryFile.ValidationProblems);
+
                         return _SetInventoryFileSaveResult(inventoryFile);
                     }
 
@@ -207,8 +231,14 @@ namespace Services.Broadcast.ApplicationServices
 
                     if (_OpenMarketFileImporter.FileProblems.Any())
                     {
+                        inventoryFile.FileStatus = FileStatusEnum.Failed;
                         inventoryFile.ValidationProblems.AddRange(_LoadValidationProblemsFromFileProblems(_OpenMarketFileImporter.FileProblems));
+
                         _InventoryRepository.AddValidationProblems(inventoryFile);
+                        _InventoryFileRepository.UpdateInventoryFile(inventoryFile);
+
+                        WriteErrorFileToDisk(inventoryFile.Id, request.FileName, inventoryFile.ValidationProblems);
+
                         return _SetInventoryFileSaveResult(inventoryFile);
                     }
 
@@ -221,18 +251,6 @@ namespace Services.Broadcast.ApplicationServices
                     using (var transaction = TransactionScopeHelper.CreateTransactionScopeWrapper(TimeSpan.FromMinutes(20)))
                     {
                         _LockingEngine.LockStations(fileStationsDict, lockedStationIds, stationLocks);
-
-                        var isProprietary = inventorySource.Name == "CNN" || inventorySource.Name == "TTWN";
-
-                        _AddRequestAudienceInfo(request, inventoryFile);
-
-                        if (isProprietary)
-                        {
-                            _EnsureInventoryDaypartIds(inventoryFile);
-                            var manifests = inventoryFile.InventoryGroups.SelectMany(x => x.Manifests);
-                            _ImpressionsService.AddProjectedImpressionsToManifests(manifests, request.PlaybackType, request.RatingBook.Value);
-                            _ProprietarySpotCostCalculationEngine.CalculateSpotCost(manifests);
-                        }
 
                         _EnsureInventoryDaypartIds(inventoryFile);
                         _StationInventoryGroupService.AddNewStationInventoryGroups(inventoryFile);
@@ -258,6 +276,7 @@ namespace Services.Broadcast.ApplicationServices
             }
             catch (Exception e)
             {
+
                 // Try to update the status of the file if possible.
                 try
                 {
@@ -270,7 +289,7 @@ namespace Services.Broadcast.ApplicationServices
             }
 
             //send valid files to data lake
-            if (!_OpenMarketFileImporter.FileProblems.Any())
+            if (!inventoryFile.ValidationProblems.Any())
             {
                 try
                 {
@@ -283,6 +302,13 @@ namespace Services.Broadcast.ApplicationServices
             }
 
             return _SetInventoryFileSaveResult(inventoryFile);
+        }
+
+        private void WriteErrorFileToDisk(int fileId, string fileName, List<string> validationErrors)
+        {
+            string path = $@"{BroadcastServiceSystemParameter.InventoryUploadErrorsFolder}\{fileId}_{fileName}.txt";
+
+            _FileService.CreateTextFile(path, validationErrors);
         }
 
         private InventoryFileSaveResult _SetInventoryFileSaveResult(InventoryFile file)
@@ -704,6 +730,32 @@ namespace Services.Broadcast.ApplicationServices
         }
 
         /// <summary>
+        /// Generates an archive with inventory files that contained errors filtered by the list of ids passed
+        /// </summary>
+        /// <param name="fileIds">List of file ids to filter the files by</param>
+        /// <returns>Returns a zip archive as stream and the zip name</returns>
+        public Tuple<string, Stream> DownloadErrorFiles(List<int> fileIds)
+        {
+            string archiveFileName = $"InventoryErrorFiles_{DateTime.Now.ToString("MMddyyyyhhmmss")}.zip";
+            var errorFiles = _FileService.GetFiles(BroadcastServiceSystemParameter.InventoryUploadErrorsFolder);
+            Dictionary<string, string> errorsFilesToProcess = new Dictionary<string, string>();
+
+            foreach (var id in fileIds)
+            {
+                //get the file by looking in the errors folder for a file with the name starting with the current id
+                string filePath = errorFiles.Where(x => Path.GetFileName(x).StartsWith($"{id}_")).SingleOrDefault();
+                if (filePath != null)
+                {
+                    string fileName = Path.GetFileName(filePath).Replace($"{id}_", string.Empty);   //remove the added id from the filename
+                    errorsFilesToProcess.Add(filePath, fileName);
+                }
+            }
+
+            Stream archiveFile = _FileService.CreateZipArchive(errorsFilesToProcess);
+            return new Tuple<string, Stream>(archiveFileName, archiveFile);
+        }
+        
+        /// <summary>
         /// Checks if the filepath is an excel file or not
         /// </summary>
         /// <param name="filepath">File path to check</param>
@@ -712,5 +764,7 @@ namespace Services.Broadcast.ApplicationServices
         {
             return Path.GetExtension(filepath).Equals(".xlsx", StringComparison.InvariantCultureIgnoreCase);
         }
+
+
     }
 }
