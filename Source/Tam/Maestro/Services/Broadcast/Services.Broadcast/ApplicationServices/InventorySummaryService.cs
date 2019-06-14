@@ -244,6 +244,15 @@ namespace Services.Broadcast.ApplicationServices
                                                                     _MediaMonthAndWeekAggregateCache,
                                                                     _MarketCoverageCache);
             }
+            else if (inventorySource.InventoryType == InventorySourceTypeEnum.Diginet)
+            {
+                inventorySummaryFactory = new DiginetSummaryFactory(_InventoryRepository,
+                                                                            _InventorySummaryRepository,
+                                                                            _QuarterCalculationEngine,
+                                                                            _ProgramRepository,
+                                                                            _MediaMonthAndWeekAggregateCache,
+                                                                            _MarketCoverageCache);
+            }
 
             return inventorySummaryFactory.CreateInventorySummary(inventorySource, householdAudienceId, quarterDetail, manifests);
         }

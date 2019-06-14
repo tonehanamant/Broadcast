@@ -1,6 +1,7 @@
 ﻿[
   {
     "CPM": null,
+    "Details": [],
     "HasInventoryGaps": false,
     "HasRatesAvailableForQuarter": false,
     "HouseholdImpressions": null,
@@ -23,6 +24,7 @@
   },
   {
     "CPM": null,
+    "Details": [],
     "HasInventoryGaps": true,
     "HasRatesAvailableForQuarter": false,
     "HouseholdImpressions": null,
@@ -55,6 +57,7 @@
   },
   {
     "CPM": null,
+    "Details": [],
     "HasInventoryGaps": false,
     "HasRatesAvailableForQuarter": false,
     "HouseholdImpressions": null,
@@ -77,6 +80,7 @@
   },
   {
     "CPM": null,
+    "Details": [],
     "HasInventoryGaps": false,
     "HasRatesAvailableForQuarter": false,
     "HouseholdImpressions": null,
@@ -99,6 +103,7 @@
   },
   {
     "CPM": null,
+    "Details": [],
     "HasInventoryGaps": false,
     "HasRatesAvailableForQuarter": false,
     "HouseholdImpressions": null,
@@ -121,6 +126,7 @@
   },
   {
     "CPM": null,
+    "Details": [],
     "HasInventoryGaps": false,
     "HasRatesAvailableForQuarter": false,
     "HouseholdImpressions": null,
@@ -143,6 +149,7 @@
   },
   {
     "CPM": null,
+    "Details": [],
     "HasInventoryGaps": false,
     "HasRatesAvailableForQuarter": false,
     "HouseholdImpressions": null,
@@ -165,6 +172,7 @@
   },
   {
     "CPM": null,
+    "Details": [],
     "HasInventoryGaps": false,
     "HasRatesAvailableForQuarter": false,
     "HouseholdImpressions": null,
@@ -187,6 +195,7 @@
   },
   {
     "CPM": null,
+    "Details": [],
     "HasInventoryGaps": false,
     "HasRatesAvailableForQuarter": false,
     "HouseholdImpressions": null,

@@ -73,5 +73,12 @@ namespace Services.Broadcast.Entities.InventorySummary
     {
         public decimal? CPM { get; set; }
         public int TotalDaypartCodes { get; set; }
+        public List<Detail> Details { get; set; }
+        public class Detail
+        {
+            public string Daypart { get; set; }
+            public double? HouseholdImpressions { get; set; }
+            public decimal? CPM { get; set; }
+        }
     }
 }

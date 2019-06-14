@@ -32,12 +32,11 @@ namespace Services.Broadcast.Converters.InventorySummary
             var allInventorySourceManifestWeeks = InventoryRepository.GetStationInventoryManifestWeeksForInventorySource(inventorySource.Id);
             var quartersForInventoryAvailable = GetQuartersForInventoryAvailable(allInventorySourceManifestWeeks);
             var inventorySummaryManifestFiles = GetInventorySummaryManifestFiles(inventorySummaryManifests);
-            var manifests = InventoryRepository.GetStationInventoryManifestsByIds(inventorySummaryManifests.Select(x => x.ManifestId));
+            var stationInventoryManifest = InventoryRepository.GetStationInventoryManifestsByIds(inventorySummaryManifests.Select(x => x.ManifestId));
 
-            RemoveWeeksNotInQuarter(manifests, quarterDetail);
+            RemoveWeeksNotInQuarter(stationInventoryManifest, quarterDetail);
 
-            // HH Impressions are not used for now, they will be used in PRI-7633
-            _CalculateHouseHoldImpressionsAndCPM(manifests, householdAudienceId, out var hhImpressions, out var CPM);
+            _CalculateHouseHoldImpressionsAndCPM(stationInventoryManifest, householdAudienceId, out var hhImpressions, out var CPM);
 
             return new DiginetInventorySummaryDto
             {
@@ -51,8 +50,33 @@ namespace Services.Broadcast.Converters.InventorySummary
                 RatesAvailableFromQuarter = quartersForInventoryAvailable.Item1,
                 RatesAvailableToQuarter = quartersForInventoryAvailable.Item2,
                 HasInventoryGaps = HasInventoryGapsForDateRange(allInventorySourceManifestWeeks, quartersForInventoryAvailable),
-                CPM = CPM
+                CPM = CPM,
+                Details = _GetDetails(inventorySummaryManifests, stationInventoryManifest, householdAudienceId, inventorySummaryManifestFiles)
             };
+        }
+
+        private List<DiginetInventorySummaryDto.Detail> _GetDetails(List<InventorySummaryManifestDto> allSummaryManifests, List<StationInventoryManifest> stationInventoryManifest, int householdAudienceId, List<InventorySummaryManifestFileDto> inventorySummaryManifestFiles)
+        {
+            var result = new List<DiginetInventorySummaryDto.Detail>();
+            var allFilesGroupedByDaypart = inventorySummaryManifestFiles.GroupBy(x => x.DaypartCode);
+
+            foreach (var fileGrouping in allFilesGroupedByDaypart)
+            {
+                var files = fileGrouping.ToList();
+                var fileIds = files.Select(m => m.FileId);
+                var manifests = stationInventoryManifest.Where(x => fileIds.Contains(x.InventoryFileId.Value));
+
+                _CalculateHouseHoldImpressionsAndCPM(manifests, householdAudienceId, out var householdImpressions, out var cpm);
+
+                result.Add(new DiginetInventorySummaryDto.Detail
+                {
+                    Daypart = fileGrouping.Key,
+                    HouseholdImpressions = householdImpressions,
+                    CPM = cpm,
+                });
+            }
+
+            return result;
         }
 
         private void _CalculateHouseHoldImpressionsAndCPM(

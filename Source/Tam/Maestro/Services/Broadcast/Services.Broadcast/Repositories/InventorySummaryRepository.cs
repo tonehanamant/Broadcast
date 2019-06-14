@@ -150,18 +150,24 @@ namespace Services.Broadcast.Repositories
                             where inventoryFileIds.Contains(file.id)
                             select new
                             {
+                                file_id = file.id,
                                 job.completed_at,
                                 job.status,
                                 header.hut_projection_book_id,
                                 header.share_projection_book_id,
-                                file.created_date
+                                file.created_date,
+                                daypart_code_id = header.daypart_codes.id,
+                                daypart_code = header.daypart_codes.code
                             }).Select(f => new InventorySummaryManifestFileDto
                             {
+                                FileId = f.file_id,
                                 JobCompletedDate = f.completed_at,
                                 JobStatus = (InventoryFileRatingsProcessingStatus?)f.status,
                                 HutProjectionBookId = f.hut_projection_book_id,
                                 ShareProjectionBookId = f.share_projection_book_id,
-                                CreatedDate = f.created_date
+                                CreatedDate = f.created_date,
+                                DaypartId = f.daypart_code_id,
+                                DaypartCode = f.daypart_code
                             }).ToList();
                 });
         }

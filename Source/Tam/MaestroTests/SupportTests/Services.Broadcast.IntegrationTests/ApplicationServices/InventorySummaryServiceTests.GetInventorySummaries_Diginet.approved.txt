@@ -1,6 +1,13 @@
 ﻿[
   {
     "CPM": 10.0000,
+    "Details": [
+      {
+        "CPM": 10.0000,
+        "Daypart": "DIGI",
+        "HouseholdImpressions": 6000.0
+      }
+    ],
     "HasInventoryGaps": true,
     "HasRatesAvailableForQuarter": true,
     "HouseholdImpressions": null,
