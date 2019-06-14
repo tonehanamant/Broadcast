@@ -989,6 +989,9 @@
     <Content Include="Files\ImportingRateData\4Q18\4Q18 Baltimore-WMAR-SYN.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Files\ImportingRateData\San Francisco_InvalidFile.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Files\Keeping Trac BCOP-3771.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

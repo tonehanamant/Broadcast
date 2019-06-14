@@ -127,7 +127,7 @@ namespace Services.Broadcast.Converters.RateImport
             if (audienceProblems.Any())
             {
                 proprietaryFile.ValidationProblems.AddRange(audienceProblems);
-                worksheet.Cells[audienceRowIndex, _ErrorColumnIndex].Value = string.Join("\r\n", audienceProblems);
+                worksheet.Cells[audienceRowIndex, _ErrorColumnIndex].Value = string.Join(FILE_MULTIPLE_ERRORS_SEPARATOR, audienceProblems);
                 return;
             }
             else if (!audiences.Any(x => x.Code.Equals(BroadcastConstants.HOUSEHOLD_CODE, StringComparison.OrdinalIgnoreCase)))
@@ -169,7 +169,7 @@ namespace Services.Broadcast.Converters.RateImport
                 if (lineProblems.Any())
                 {
                     proprietaryFile.ValidationProblems.AddRange(lineProblems);
-                    worksheet.Cells[rowIndex, _ErrorColumnIndex].Value = string.Join("\r\n", lineProblems);
+                    worksheet.Cells[rowIndex, _ErrorColumnIndex].Value = string.Join(FILE_MULTIPLE_ERRORS_SEPARATOR, lineProblems);
                 }
                 else
                 {
@@ -396,7 +396,7 @@ namespace Services.Broadcast.Converters.RateImport
 
             if (invalidAudience)
             {
-                worksheet.Cells[audienceRowIndex, _ErrorColumnIndex].Value = string.Join("\r\n", validationProblems);
+                worksheet.Cells[audienceRowIndex, _ErrorColumnIndex].Value = string.Join(FILE_MULTIPLE_ERRORS_SEPARATOR, validationProblems);
                 return null;
             }
 
@@ -424,7 +424,7 @@ namespace Services.Broadcast.Converters.RateImport
 
             if (invalidAudience)
             {
-                worksheet.Cells[audienceRowIndex, _ErrorColumnIndex].Value = string.Join("\r\n", validationProblems);
+                worksheet.Cells[audienceRowIndex, _ErrorColumnIndex].Value = string.Join(FILE_MULTIPLE_ERRORS_SEPARATOR, validationProblems);
                 return null;
             }
 
@@ -436,7 +436,7 @@ namespace Services.Broadcast.Converters.RateImport
                 ratingAudience != cpmAudience)
             {
                 validationProblems.Add($"Audience '{ratingAudience}' from cell(row: {audienceRowIndex}, column: {ratingColumnIndex.GetColumnAdress()}) should be the same as the audience found in the next two columns (Impressions and CPM)");
-                worksheet.Cells[audienceRowIndex, _ErrorColumnIndex].Value = string.Join("\r\n", validationProblems);
+                worksheet.Cells[audienceRowIndex, _ErrorColumnIndex].Value = string.Join(FILE_MULTIPLE_ERRORS_SEPARATOR, validationProblems);
                 return null;
             }
 
@@ -445,7 +445,7 @@ namespace Services.Broadcast.Converters.RateImport
             if (audience == null)
             {
                 validationProblems.Add($"Unknown audience is specified: {ratingAudience}. Row: {audienceRowIndex}, column: {ratingColumnIndex}");
-                worksheet.Cells[audienceRowIndex, _ErrorColumnIndex].Value = string.Join("\r\n", validationProblems);
+                worksheet.Cells[audienceRowIndex, _ErrorColumnIndex].Value = string.Join(FILE_MULTIPLE_ERRORS_SEPARATOR, validationProblems);
             }
 
             return audience;

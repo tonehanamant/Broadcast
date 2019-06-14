@@ -260,7 +260,7 @@ namespace Services.Broadcast.Converters.RateImport
             if (units == null)
             {
                 proprietaryFile.ValidationProblems.AddRange(lineProblems);
-                worksheet.Cells[unitNameRowIndex, _ErrorColumnIndex].Value = string.Join("\r\n", lineProblems);
+                worksheet.Cells[unitNameRowIndex, _ErrorColumnIndex].Value = string.Join(FILE_MULTIPLE_ERRORS_SEPARATOR, lineProblems);
                 return;
             }
             while (true)
@@ -320,7 +320,7 @@ namespace Services.Broadcast.Converters.RateImport
                 if (validationProblems.Any())
                 {
                     proprietaryFile.ValidationProblems.AddRange(validationProblems);
-                    worksheet.Cells[rowIndex, _ErrorColumnIndex].Value = string.Join("\r\n", validationProblems);
+                    worksheet.Cells[rowIndex, _ErrorColumnIndex].Value = string.Join(FILE_MULTIPLE_ERRORS_SEPARATOR, validationProblems);
                 }
                 else
                 {

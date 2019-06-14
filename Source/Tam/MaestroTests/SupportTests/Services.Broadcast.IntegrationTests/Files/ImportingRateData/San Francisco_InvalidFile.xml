@@ -1,0 +1,1090 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AAAA-Message xmlns:tvb="http://www.AAAA.org/schemas/spotTV" xmlns:tvb-tp="http://www.AAAA.org/schemas/TVBGeneralTypes" xmlns="http://www.AAAA.org/schemas/spotTVCableProposal">
+	<AAAA-Values>
+		<SchemaName>SpotTVCableProposal</SchemaName>
+		<SchemaVersion>0.3.0.5A</SchemaVersion>
+		<Media>SpotTV</Media>
+		<BusinessObject>Proposal</BusinessObject>
+		<Action>New</Action>
+		<UniqueMessageID>IDAAUBTD</UniqueMessageID>
+	</AAAA-Values>
+	<Proposal uniqueIdentifier="17238263" version="1" sendDateTime="2018-09-20T23:53:24" weekStartDay="Mo" startDate="2018-10-01" endDate="2018-12-30">
+		<Seller companyName="MILLENNIUM SALES &amp; MARKETING">
+			<Salesperson name="SHARON KILON HAN"/>
+		</Seller>
+		<Buyer buyingCompanyName="N/A"/>
+		<Advertiser name="Cadent Network">
+			<Product name="KOFY 4Q18 Cadent Network"/>
+		</Advertiser>
+		<Name>KOFY 4Q18 Cadent Network -KOFY</Name>
+		<SellerReference>17238263</SellerReference>
+		<Outlets>
+			<TelevisionStation callLetters="KOFY" parentPlus="N" outletId="OUT0"/>
+		</Outlets>
+		<AvailList startDate="2018-10-01" endDate="2018-12-30" identifier="AL001" isPackage="N">
+			<Name>Television Schedule - San Francisco Dec17 DMA Nielsen Live+SD</Name>
+			<OutletReferences>
+				<OutletReference outletFromProposalRef="OUT0" outletForListId="OUL0"/>
+			</OutletReferences>
+			<DemoCategories>
+				<DemoCategory DemoId="DM0">
+					<tvb:DemoType>Impression</tvb:DemoType>
+					<tvb:Group>Homes</tvb:Group>
+					<tvb:AgeFrom>0</tvb:AgeFrom>
+					<tvb:AgeTo>99</tvb:AgeTo>
+				</DemoCategory>
+			</DemoCategories>
+			<TargetDemo demoRef="DM0"/>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>09:00</StartTime>
+						<EndTime>10:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>Y</tvb-tp:Monday>
+							<tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>Y</tvb-tp:Thursday>
+							<tvb-tp:Friday>Y</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+						<ProgramName>Cityline</ProgramName>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>DY</DaypartName>
+				<AvailName>Cityline</AvailName>
+				<SpotLength>00:00:31</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2018-10-01" endDate="2018-12-30">
+						<Rate>30.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">0.0</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>10:00</StartTime>
+						<EndTime>10:30</EndTime>
+						<Days>
+							<tvb-tp:Monday>Y</tvb-tp:Monday>
+							<tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>Y</tvb-tp:Thursday>
+							<tvb-tp:Friday>Y</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+						<ProgramName>Supreme Justice With Judge Karen</ProgramName>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>DY</DaypartName>
+				<AvailName>Supreme Justice With Judge Karen</AvailName>
+				<SpotLength>00:00:31</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2018-10-01" endDate="2018-12-30">
+						<Rate>30.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">0.0</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>10:30</StartTime>
+						<EndTime>11:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>Y</tvb-tp:Monday>
+							<tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>Y</tvb-tp:Thursday>
+							<tvb-tp:Friday>Y</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+						<ProgramName>Justice For All With Cristina Perez</ProgramName>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>DY</DaypartName>
+				<AvailName>Justice For All With Cristina Perez</AvailName>
+				<SpotLength>00:00:31</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2018-10-01" endDate="2018-12-30">
+						<Rate>30.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">0.0</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>11:00</StartTime>
+						<EndTime>11:30</EndTime>
+						<Days>
+							<tvb-tp:Monday>Y</tvb-tp:Monday>
+							<tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>Y</tvb-tp:Thursday>
+							<tvb-tp:Friday>Y</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+						<ProgramName>Justice With Judge Mablean</ProgramName>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>DY</DaypartName>
+				<AvailName>Justice With Judge Mablean</AvailName>
+				<SpotLength>00:00:31</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2018-10-01" endDate="2018-12-30">
+						<Rate>30.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">0.0</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>11:30</StartTime>
+						<EndTime>12:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>Y</tvb-tp:Monday>
+							<tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>Y</tvb-tp:Thursday>
+							<tvb-tp:Friday>Y</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+						<ProgramName>The Verdict with Judge Hatchet</ProgramName>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>DY</DaypartName>
+				<AvailName>The Verdict with Judge Hatchet</AvailName>
+				<SpotLength>00:00:31</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2018-10-01" endDate="2018-12-30">
+						<Rate>30.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">0.0</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>12:00</StartTime>
+						<EndTime>12:30</EndTime>
+						<Days>
+							<tvb-tp:Monday>Y</tvb-tp:Monday>
+							<tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>Y</tvb-tp:Thursday>
+							<tvb-tp:Friday>Y</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+						<ProgramName>America's Court With Judge Ross</ProgramName>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>DY</DaypartName>
+				<AvailName>America's Court With Judge Ross</AvailName>
+				<SpotLength>00:00:31</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2018-10-01" endDate="2018-12-30">
+						<Rate>30.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">0.0</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>13:00</StartTime>
+						<EndTime>14:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>Y</tvb-tp:Monday>
+							<tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>Y</tvb-tp:Thursday>
+							<tvb-tp:Friday>Y</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+						<ProgramName>True Crime Files</ProgramName>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>DY</DaypartName>
+				<AvailName>True Crime Files</AvailName>
+				<SpotLength>00:00:31</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2018-10-01" endDate="2018-12-30">
+						<Rate>30.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">0.0</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>14:00</StartTime>
+						<EndTime>14:30</EndTime>
+						<Days>
+							<tvb-tp:Monday>Y</tvb-tp:Monday>
+							<tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>Y</tvb-tp:Thursday>
+							<tvb-tp:Friday>Y</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+						<ProgramName>Police Patrol</ProgramName>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>DY</DaypartName>
+				<AvailName>Police Patrol</AvailName>
+				<SpotLength>00:00:31</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2018-10-01" endDate="2018-12-30">
+						<Rate>30.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">0.0</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>14:30</StartTime>
+						<EndTime>15:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>Y</tvb-tp:Monday>
+							<tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>Y</tvb-tp:Thursday>
+							<tvb-tp:Friday>Y</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+						<ProgramName>Cops</ProgramName>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>DY</DaypartName>
+				<AvailName>Cops</AvailName>
+				<SpotLength>00:00:31</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2018-10-01" endDate="2018-12-30">
+						<Rate>30.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">0.0</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>15:00</StartTime>
+						<EndTime>16:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>Y</tvb-tp:Monday>
+							<tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>Y</tvb-tp:Thursday>
+							<tvb-tp:Friday>Y</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+						<ProgramName>Steve Wilkos</ProgramName>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>DY</DaypartName>
+				<AvailName>Steve Wilkos</AvailName>
+				<SpotLength>00:00:31</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2018-10-01" endDate="2018-12-30">
+						<Rate>35.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">0.0</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>24:30</StartTime>
+						<EndTime>13:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>Y</tvb-tp:Monday>
+							<tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>Y</tvb-tp:Thursday>
+							<tvb-tp:Friday>Y</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+						<ProgramName>America's Court With Judge Ross</ProgramName>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>DY</DaypartName>
+				<AvailName>America's Court With Judge Ross</AvailName>
+				<SpotLength>00:00:31</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2018-10-01" endDate="2018-12-30">
+						<Rate>35.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">0.0</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>16:00</StartTime>
+						<EndTime>16:30</EndTime>
+						<Days>
+							<tvb-tp:Monday>Y</tvb-tp:Monday>
+							<tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>Y</tvb-tp:Thursday>
+							<tvb-tp:Friday>Y</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+						<ProgramName>Pawn Stars</ProgramName>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>EF</DaypartName>
+				<AvailName>Pawn Stars</AvailName>
+				<SpotLength>00:00:31</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2018-10-01" endDate="2018-12-30">
+						<Rate>35.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">0.0</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>16:30</StartTime>
+						<EndTime>17:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>Y</tvb-tp:Monday>
+							<tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>Y</tvb-tp:Thursday>
+							<tvb-tp:Friday>Y</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+						<ProgramName>Pawn Stars</ProgramName>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>EF</DaypartName>
+				<AvailName>Pawn Stars</AvailName>
+				<SpotLength>00:00:31</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2018-10-01" endDate="2018-12-30">
+						<Rate>35.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">0.0</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>17:00</StartTime>
+						<EndTime>17:30</EndTime>
+						<Days>
+							<tvb-tp:Monday>Y</tvb-tp:Monday>
+							<tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>Y</tvb-tp:Thursday>
+							<tvb-tp:Friday>Y</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+						<ProgramName>Impractical Jokers</ProgramName>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>EF</DaypartName>
+				<AvailName>Impractical Jokers</AvailName>
+				<SpotLength>00:00:31</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2018-10-01" endDate="2018-12-30">
+						<Rate>40.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">0.0</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>17:30</StartTime>
+						<EndTime>18:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>Y</tvb-tp:Monday>
+							<tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>Y</tvb-tp:Thursday>
+							<tvb-tp:Friday>Y</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+						<ProgramName>Funny You Should Ask</ProgramName>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>EF</DaypartName>
+				<AvailName>Funny You Should Ask</AvailName>
+				<SpotLength>00:00:31</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2018-10-01" endDate="2018-12-30">
+						<Rate>40.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">0.0</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>18:00</StartTime>
+						<EndTime>18:30</EndTime>
+						<Days>
+							<tvb-tp:Monday>Y</tvb-tp:Monday>
+							<tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>Y</tvb-tp:Thursday>
+							<tvb-tp:Friday>Y</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+						<ProgramName>Last Man Standing</ProgramName>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>EF</DaypartName>
+				<AvailName>Last Man Standing</AvailName>
+				<SpotLength>00:00:31</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2018-10-01" endDate="2018-12-30">
+						<Rate>40.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">0.0</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>18:30</StartTime>
+						<EndTime>19:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>Y</tvb-tp:Monday>
+							<tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>Y</tvb-tp:Thursday>
+							<tvb-tp:Friday>Y</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+						<ProgramName>Last Man Standing</ProgramName>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>EF</DaypartName>
+				<AvailName>Last Man Standing</AvailName>
+				<SpotLength>00:00:31</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2018-10-01" endDate="2018-12-30">
+						<Rate>40.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">0.0</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>12:00</StartTime>
+						<EndTime>12:30</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>Y</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+						<ProgramName>Street Magic</ProgramName>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>EF</DaypartName>
+				<AvailName>Street Magic</AvailName>
+				<SpotLength>00:00:31</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2018-10-01" endDate="2018-12-30">
+						<Rate>25.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">0.0</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>14:00</StartTime>
+						<EndTime>16:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>Y</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+						<ProgramName>KOFY Movie</ProgramName>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>EF</DaypartName>
+				<AvailName>KOFY Movie</AvailName>
+				<SpotLength>00:00:31</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2018-10-06" endDate="2018-12-30">
+						<Rate>25.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">0.0</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>17:00</StartTime>
+						<EndTime>18:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>Y</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+						<ProgramName>Dance Party</ProgramName>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>EF</DaypartName>
+				<AvailName>Dance Party</AvailName>
+				<SpotLength>00:00:31</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2018-10-01" endDate="2018-12-30">
+						<Rate>30.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">0.0</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>18:00</StartTime>
+						<EndTime>19:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>Y</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+						<ProgramName>The Listener</ProgramName>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>EF</DaypartName>
+				<AvailName>The Listener</AvailName>
+				<SpotLength>00:00:31</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2018-10-01" endDate="2018-12-30">
+						<Rate>30.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">0.0</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>16:00</StartTime>
+						<EndTime>16:30</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>Y</tvb-tp:Sunday>
+						</Days>
+						<ProgramName>RV With Me</ProgramName>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>EF</DaypartName>
+				<AvailName>RV With Me</AvailName>
+				<SpotLength>00:00:31</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2018-10-01" endDate="2018-12-30">
+						<Rate>25.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">0.0</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>16:30</StartTime>
+						<EndTime>17:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>Y</tvb-tp:Sunday>
+						</Days>
+						<ProgramName>Cars.TV</ProgramName>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>EF</DaypartName>
+				<AvailName>Cars.TV</AvailName>
+				<SpotLength>00:00:31</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2018-10-01" endDate="2018-12-30">
+						<Rate>25.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">0.0</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>17:00</StartTime>
+						<EndTime>18:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>Y</tvb-tp:Sunday>
+						</Days>
+						<ProgramName>Entertainers</ProgramName>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>EF</DaypartName>
+				<AvailName>Entertainers</AvailName>
+				<SpotLength>00:00:31</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2018-10-01" endDate="2018-12-30">
+						<Rate>30.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">0.0</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>23:00</StartTime>
+						<EndTime>23:30</EndTime>
+						<Days>
+							<tvb-tp:Monday>Y</tvb-tp:Monday>
+							<tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>Y</tvb-tp:Thursday>
+							<tvb-tp:Friday>Y</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+						<ProgramName>Celebrity Page</ProgramName>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>LF</DaypartName>
+				<AvailName>Celebrity Page</AvailName>
+				<SpotLength>00:00:31</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2018-10-01" endDate="2018-12-30">
+						<Rate>30.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">0.0</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>23:30</StartTime>
+						<EndTime>24:05</EndTime>
+						<Days>
+							<tvb-tp:Monday>Y</tvb-tp:Monday>
+							<tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>Y</tvb-tp:Thursday>
+							<tvb-tp:Friday>Y</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+						<ProgramName>ABC7 News on KOFY 11:30PM</ProgramName>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>LF</DaypartName>
+				<AvailName>ABC7 News on KOFY 11:30PM</AvailName>
+				<SpotLength>00:00:31</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2018-10-01" endDate="2018-12-30">
+						<Rate>30.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">0.0</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>24:05</StartTime>
+						<EndTime>24:35</EndTime>
+						<Days>
+							<tvb-tp:Monday>Y</tvb-tp:Monday>
+							<tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>Y</tvb-tp:Thursday>
+							<tvb-tp:Friday>Y</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+						<ProgramName>Funny You Should Ask</ProgramName>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>LF</DaypartName>
+				<AvailName>Funny You Should Ask</AvailName>
+				<SpotLength>00:00:31</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2018-10-01" endDate="2018-12-30">
+						<Rate>25.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">0.0</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>24:35</StartTime>
+						<EndTime>25:05</EndTime>
+						<Days>
+							<tvb-tp:Monday>Y</tvb-tp:Monday>
+							<tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>Y</tvb-tp:Thursday>
+							<tvb-tp:Friday>Y</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+						<ProgramName>Rules of Engagement</ProgramName>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>LF</DaypartName>
+				<AvailName>Rules of Engagement</AvailName>
+				<SpotLength>00:00:31</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2018-10-01" endDate="2018-12-30">
+						<Rate>25.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">0.0</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>25:05</StartTime>
+						<EndTime>25:35</EndTime>
+						<Days>
+							<tvb-tp:Monday>Y</tvb-tp:Monday>
+							<tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>Y</tvb-tp:Thursday>
+							<tvb-tp:Friday>Y</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+						<ProgramName>Police Patrol</ProgramName>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>LF</DaypartName>
+				<AvailName>Police Patrol</AvailName>
+				<SpotLength>00:00:31</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2018-10-01" endDate="2018-12-30">
+						<Rate>25.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">0.0</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>25:35</StartTime>
+						<EndTime>26:05</EndTime>
+						<Days>
+							<tvb-tp:Monday>Y</tvb-tp:Monday>
+							<tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>Y</tvb-tp:Thursday>
+							<tvb-tp:Friday>Y</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+						<ProgramName>Cops</ProgramName>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>LF</DaypartName>
+				<AvailName>Cops</AvailName>
+				<SpotLength>00:00:31</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2018-10-01" endDate="2018-12-30">
+						<Rate>25.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">0.0</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>21:00</StartTime>
+						<EndTime>21:30</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>Y</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+						<ProgramName>Last Man Standing</ProgramName>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>LF</DaypartName>
+				<AvailName>Last Man Standing</AvailName>
+				<SpotLength>00:00:31</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2018-10-01" endDate="2018-12-30">
+						<Rate>45.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">0.0</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>21:30</StartTime>
+						<EndTime>22:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>Y</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+						<ProgramName>Last Man Standing</ProgramName>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>LF</DaypartName>
+				<AvailName>Last Man Standing</AvailName>
+				<SpotLength>00:00:31</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2018-10-01" endDate="2018-12-30">
+						<Rate>45.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">0.0</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>22:00</StartTime>
+						<EndTime>24:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>Y</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+						<ProgramName>Creature Features</ProgramName>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>LF</DaypartName>
+				<AvailName>Creature Features</AvailName>
+				<SpotLength>00:00:31</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2018-10-01" endDate="2018-12-30">
+						<Rate>30.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">0.0</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>24:00</StartTime>
+						<EndTime>24:30</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>Y</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+						<ProgramName>Circus of Chaos</ProgramName>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>LF</DaypartName>
+				<AvailName>Circus of Chaos</AvailName>
+				<SpotLength>00:00:31</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2018-10-01" endDate="2018-12-30">
+						<Rate>25.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">0.0</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>22:00</StartTime>
+						<EndTime>23:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>Y</tvb-tp:Sunday>
+						</Days>
+						<ProgramName>Dance Party</ProgramName>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>LF</DaypartName>
+				<AvailName>Dance Party</AvailName>
+				<SpotLength>00:00:31</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2018-10-01" endDate="2018-12-30">
+						<Rate>30.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">0.0</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+		</AvailList>
+	</Proposal>
+</AAAA-Message>

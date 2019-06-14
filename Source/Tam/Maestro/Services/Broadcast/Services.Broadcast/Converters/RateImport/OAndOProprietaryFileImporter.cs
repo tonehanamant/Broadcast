@@ -352,7 +352,7 @@ namespace Services.Broadcast.Converters.RateImport
             if (weeks == null)
             {
                 proprietaryFile.ValidationProblems.AddRange(problems);
-                worksheet.Cells[stationHeaderRowIndex.Value, _ErrorColumnIndex].Value = string.Join("\r\n", problems);
+                worksheet.Cells[stationHeaderRowIndex.Value, _ErrorColumnIndex].Value = string.Join(FILE_MULTIPLE_ERRORS_SEPARATOR, problems);
                 return;
             }
 
@@ -390,7 +390,7 @@ namespace Services.Broadcast.Converters.RateImport
                 if (validationProblems.Any())
                 {
                     proprietaryFile.ValidationProblems.AddRange(validationProblems);
-                    worksheet.Cells[rowIndex, _ErrorColumnIndex].Value = string.Join("\r\n", validationProblems);
+                    worksheet.Cells[rowIndex, _ErrorColumnIndex].Value = string.Join(FILE_MULTIPLE_ERRORS_SEPARATOR, validationProblems);
                 }
                 else
                 {

@@ -31,18 +31,21 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
     public class InventoryFileServiceIntegrationTests
     {
         private IInventoryService _InventoryService;
-        private IStationInventoryGroupService _StationInventoryGroupService = IntegrationTestApplicationServiceFactory.GetApplicationService<IStationInventoryGroupService>();
-        private IInventoryRepository _InventoryRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
-        private IInventoryFileRepository _InventoryFileRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryFileRepository>();
+        private IStationInventoryGroupService _StationInventoryGroupService;
+        private IInventoryRepository _InventoryRepository;
+        private IInventoryFileRepository _InventoryFileRepository;
         private static InventorySource _openMarketInventorySource;
 
         [TestFixtureSetUp]
         public void SetUp()
         {
             IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<IFileService>(new FileServiceDataLakeStubb());
-            _openMarketInventorySource = _InventoryRepository.GetInventorySourceByName("Open Market");
             IntegrationTestApplicationServiceFactory.Instance.RegisterType<IDataLakeFileService, DataLakeFileServiceStub>();
             _InventoryService = IntegrationTestApplicationServiceFactory.GetApplicationService<IInventoryService>();
+            _InventoryRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
+            _StationInventoryGroupService = IntegrationTestApplicationServiceFactory.GetApplicationService<IStationInventoryGroupService>();
+            _InventoryFileRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryFileRepository>();
+            _openMarketInventorySource = _InventoryRepository.GetInventorySourceByName("Open Market");
         }
 
         [Test]
@@ -223,13 +226,12 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [ExpectedException(typeof(BroadcastDuplicateInventoryFileException))]
+        [ExpectedException(typeof(BroadcastDuplicateInventoryFileException), ExpectedMessage = "The selected rate file has already been loaded or is already loading", MatchType = MessageMatch.Contains)]
         public void ThrowsExceptionWhenLoadingSameInventoryFileAgain()
         {
             using (new TransactionScopeWrapper())
             {
-                var request = _GetInventoryFileSaveRequest(@".\Files\simple_period_rate_file_wvtm.xml");
-                _InventoryService.SaveInventoryFile(request, "IntegrationTestUser", new DateTime(2016, 09, 26));
+                var request = _GetInventoryFileSaveRequest(@".\Files\ImportingRateData\Fresno_4Q18_ValidFile.xml");
                 _InventoryService.SaveInventoryFile(request, "IntegrationTestUser", new DateTime(2016, 09, 26));
             }
         }
@@ -337,7 +339,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 string fileName = @".\Files\unknown_spot_length_rate_file_wvtm.xml";
                 var request = _GetInventoryFileSaveRequest(fileName);
 
-                var result = _InventoryService.SaveInventoryFile(request, "IntegrationTestUser", new DateTime(2016, 09, 26));
+                var result = IntegrationTestApplicationServiceFactory.GetApplicationService<IInventoryService>().SaveInventoryFile(request, "IntegrationTestUser", new DateTime(2016, 09, 26));
 
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
@@ -358,10 +360,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                string filename = @".\Files\ImportingRateData\WilkesBarre_4Q18_InvalidFile.xml";
+                string filename = @".\Files\ImportingRateData\San Francisco_InvalidFile.xml";
                 var request = _GetInventoryFileSaveRequest(filename);
 
-                var result = _InventoryService.SaveInventoryFile(request, "IntegrationTestUser", new DateTime(2016, 09, 26));
+                var result = IntegrationTestApplicationServiceFactory.GetApplicationService<IInventoryService>().SaveInventoryFile(request, "IntegrationTestUser", new DateTime(2016, 09, 26));
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(InventoryFileSaveResult), "FileId");
                 var jsonSettings = new JsonSerializerSettings()

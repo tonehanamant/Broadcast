@@ -10,7 +10,7 @@
     "E10": "Playback type is missing"
   },
   "lineErrors": {
-    "K15": "Rating header is expected. Row: 15, column: C\nImpressions header is expected. Row: 15, column: G",
+    "K15": "Rating header is expected. Row: 15, column: C; Impressions header is expected. Row: 15, column: G",
     "K16": "",
     "K17": "",
     "K18": "",

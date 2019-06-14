@@ -52,7 +52,7 @@ namespace Services.Broadcast.Converters.RateImport
         protected readonly string[] BOOK_DATE_FORMATS = new string[] { "MMM yy", "MMM-yy", "MMM/yy", "yy-MMM", "yy/MMM", "MMM yyyy" };
         protected readonly string[] DATE_FORMATS = new string[] { "MM/dd/yyyy", "M/dd/yyyy", "M/d/yyyy" };
         protected const string HEADER_ERROR_COLUMN = "E";
-
+        protected const string FILE_MULTIPLE_ERRORS_SEPARATOR = "; ";
         private string _FileHash { get; set; }
 
         private readonly IInventoryFileRepository _InventoryFileRepository;
