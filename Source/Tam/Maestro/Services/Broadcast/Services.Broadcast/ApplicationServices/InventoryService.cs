@@ -49,7 +49,14 @@ namespace Services.Broadcast.ApplicationServices
         List<StationContact> FindStationContactsByName(string query);
         bool GetStationProgramConflicted(StationProgramConflictRequest conflict, int manifestId);
         bool DeleteProgram(int programId, string inventorySource, int stationCode, string user);
-        bool HasSpotsAllocated(int programId);        
+        bool HasSpotsAllocated(int programId);
+
+        /// <summary>
+        /// Checks if the filepath is an excel file or not
+        /// </summary>
+        /// <param name="filepath">File path to check</param>
+        /// <returns>True or false</returns>
+        bool IsProprietaryFile(string filepath);
     }
 
     public class InventoryService : IInventoryService
@@ -116,7 +123,7 @@ namespace Services.Broadcast.ApplicationServices
             _OpenMarketFileImporter = openMarketFileImporter;
             _AudienceRepository = broadcastDataRepositoryFactory.GetDataRepository<IAudienceRepository>();
         }
-      
+
         public bool GetStationProgramConflicted(StationProgramConflictRequest conflict, int manifestId)
         {
             if (conflict.StartDate == DateTime.MinValue || conflict.EndDate == DateTime.MinValue || conflict.ConflictedProgramNewStartDate == DateTime.MinValue || conflict.ConflictedProgramNewEndDate == DateTime.MinValue)
@@ -164,17 +171,17 @@ namespace Services.Broadcast.ApplicationServices
                 };
             }
 
-            var stationLocks = new List<IDisposable>();
-            var lockedStationIds = new List<int>();
             var inventorySource = _ParseInventorySourceOrDefault(request.InventorySource);
-                        
+
             _OpenMarketFileImporter.LoadFromSaveRequest(request);
             _OpenMarketFileImporter.CheckFileHash();
-            
+
             InventoryFile inventoryFile = _OpenMarketFileImporter.GetPendingInventoryFile(_ParseInventorySourceOrDefault(request.InventorySource), userName, nowDate);
 
             inventoryFile.Id = _InventoryFileRepository.CreateInventoryFile(inventoryFile, userName, nowDate);
-            
+
+            var stationLocks = new List<IDisposable>();
+            var lockedStationIds = new List<int>();
             try
             {
                 _OpenMarketFileImporter.ExtractFileData(request.StreamData, inventoryFile);
@@ -197,7 +204,7 @@ namespace Services.Broadcast.ApplicationServices
                     _CreateUnknownStationsAndPopulate(inventoryFile, userName);
 
                     _OpenMarketFileImporter.FileProblems.AddRange(_InventoryFileValidator.ValidateInventoryFile(inventoryFile));
-                    
+
                     if (_OpenMarketFileImporter.FileProblems.Any())
                     {
                         inventoryFile.ValidationProblems.AddRange(_LoadValidationProblemsFromFileProblems(_OpenMarketFileImporter.FileProblems));
@@ -298,7 +305,7 @@ namespace Services.Broadcast.ApplicationServices
                     , x.ProblemDescription))
                 .ToList();
         }
-        
+
         private void _CreateUnknownStationsAndPopulate(InventoryFile inventoryFile, string userName)
         {
             var now = DateTime.Now;
@@ -346,7 +353,7 @@ namespace Services.Broadcast.ApplicationServices
                             CPM = ap.Price
                         })));
         }
-        
+
         private void _EnsureInventoryDaypartIds(InventoryFile inventoryFile)
         {
             // set daypart id
@@ -406,7 +413,7 @@ namespace Services.Broadcast.ApplicationServices
 
             var manifest = new StationInventoryManifest
             {
-                Id = stationProgram.Id,                
+                Id = stationProgram.Id,
                 Station = new DisplayBroadcastStation
                 {
                     Code = stationProgram.StationCode,
@@ -621,7 +628,7 @@ namespace Services.Broadcast.ApplicationServices
 
             return ratesInitialDataDto;
         }
-        
+
         public Decimal ConvertRateForSpotLength(decimal rateFor30s, int outputRateSpotLength)
         {
             if (!_SpotLengthMap.ContainsKey(outputRateSpotLength))
@@ -664,7 +671,7 @@ namespace Services.Broadcast.ApplicationServices
 
             return manifestRates;
         }
-        
+
         public bool DeleteProgram(int programId, string inventorySource, int stationCode, string user)
         {
             _InventoryRepository.RemoveManifest(programId);
@@ -683,7 +690,7 @@ namespace Services.Broadcast.ApplicationServices
                    || (endDate1 >= startDate2 && endDate1 <= endDate2)
                    || (startDate1 < startDate2 && endDate1 > endDate2);
         }
-        
+
         public LockResponse LockStation(int stationCode)
         {
             var station = _StationRepository.GetBroadcastStationByCode(stationCode);
@@ -694,6 +701,16 @@ namespace Services.Broadcast.ApplicationServices
         {
             var station = _StationRepository.GetBroadcastStationByCode(stationCode);
             return _LockingEngine.UnlockStation(station.Id);
+        }
+
+        /// <summary>
+        /// Checks if the filepath is an excel file or not
+        /// </summary>
+        /// <param name="filepath">File path to check</param>
+        /// <returns>True or false</returns>
+        public bool IsProprietaryFile(string filepath)
+        {
+            return Path.GetExtension(filepath).Equals(".xlsx", StringComparison.InvariantCultureIgnoreCase);
         }
     }
 }

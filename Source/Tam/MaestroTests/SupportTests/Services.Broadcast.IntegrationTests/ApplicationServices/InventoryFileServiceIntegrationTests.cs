@@ -82,6 +82,19 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        public void InventoryFileLoad_IsProprietaryFIle()
+        {
+            using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
+            {
+                var openMarketFile = @".\Files\ImportingRateData\4Q18\4Q18 Baltimore-WMAR-SYN.xml";
+                Assert.IsFalse(_InventoryFileService.IsProprietaryFile(openMarketFile));
+
+                var barterFile = @".\Files\ProprietaryDataFiles\Barter_BadFormats_PRI5379.xlsx";
+                Assert.IsTrue(_InventoryFileService.IsProprietaryFile(barterFile));
+            }
+        }
+
+        [Test]
         [UseReporter(typeof(DiffReporter))]
         public void CanLoadOpenMarketInventoryFileWithAvailLineWithPeriods()
         {

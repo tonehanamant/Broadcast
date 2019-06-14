@@ -8,11 +8,9 @@ namespace Services.Broadcast.Entities
     public class InventoryFileSaveRequest : FileRequest
     {
         public string InventorySource { get; set; }
-        public DaypartDto Daypart { get; set; }
         public int? RatingBook { get; set; }
         public ProposalEnums.ProposalPlaybackType? PlaybackType { get; set; }
         public List<AudiencePricingDto> AudiencePricing { get; set; }
-        public decimal? FixedPrice { get; set; }
     }
 
     public class AudiencePricingDto

@@ -14,6 +14,7 @@ using Services.Broadcast.Exceptions;
 using Services.Broadcast.Entities.Scx;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using System.Linq;
+using System.IO;
 
 namespace BroadcastComposerWeb.Controllers
 {
@@ -138,7 +139,7 @@ namespace BroadcastComposerWeb.Controllers
         /// <returns>A zip archive containing multiple .scx files</returns>
         [HttpGet]
         [Route("ScxDownload")]
-        public HttpResponseMessage GenerateScxArchive([FromUri(Name ="")]InventoryScxDownloadRequest request)
+        public HttpResponseMessage GenerateScxArchive([FromUri(Name = "")]InventoryScxDownloadRequest request)
         {
             var archive = _ApplicationServiceFactory.GetApplicationService<IProprietaryInventoryService>().GenerateScxFileArchive(request);
 
@@ -159,9 +160,16 @@ namespace BroadcastComposerWeb.Controllers
         {
             try
             {
-                var result = _ApplicationServiceFactory
-                    .GetApplicationService<IProprietaryInventoryService>()
-                    .SaveProprietaryInventoryFile(saveRequest, Identity.Name, DateTime.Now);
+                var result = _ApplicationServiceFactory.GetApplicationService<IInventoryService>().IsProprietaryFile(saveRequest.FileName)
+                    ? _ApplicationServiceFactory.GetApplicationService<IProprietaryInventoryService>().SaveProprietaryInventoryFile(saveRequest, Identity.Name, DateTime.Now)
+                    : _ApplicationServiceFactory.GetApplicationService<IInventoryService>().SaveInventoryFile(
+                        new InventoryFileSaveRequest
+                        {
+                            FileName = saveRequest.FileName,
+                            StreamData = saveRequest.StreamData,
+                            InventorySource = "Open Market"
+                        },
+                        Identity.Name, DateTime.Now);
 
                 return new BaseResponse<InventoryFileSaveResult>()
                 {
@@ -221,7 +229,7 @@ namespace BroadcastComposerWeb.Controllers
                 .GetInventoryUnits(inventorySourceId, daypartCodeId, startDate, endDate));
         }
 
-        
+
         [HttpGet]
         [Route("DownloadErrorFiles")]
         public HttpResponseMessage DownloadErrorFiles([FromUri(Name = "")]List<int> fileIds)
