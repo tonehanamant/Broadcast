@@ -248,5 +248,33 @@ namespace BroadcastComposerWeb.Controllers
             };
             return result;
         }
+
+        [HttpGet]
+        [Route("DownloadErrorFile")]
+        public HttpResponseMessage DownloadErrorFile(int fileId = 0)
+        {
+            if (fileId == 0)
+                return new HttpResponseMessage { StatusCode = HttpStatusCode.NoContent, ReasonPhrase = "No file id was supplied" };
+
+            var file = _ApplicationServiceFactory.GetApplicationService<IInventoryService>().DownloadErrorFile(fileId);
+
+            var result = Request.CreateResponse(HttpStatusCode.OK);
+            result.Content = new StreamContent(file.Item2);
+            result.Content.Headers.ContentType = new MediaTypeHeaderValue(file.Item3);
+            result.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
+            {
+                FileName = file.Item1
+            };
+            return result;
+        }
+
+        [HttpGet]
+        [Route("UploadHistory")]
+        public BaseResponse<List<InventoryUploadHistoryDto>> GetInventoryUploadHistory(int inventorySourceId)
+        {
+            return _ConvertToBaseResponse(() => 
+                _ApplicationServiceFactory.GetApplicationService<IInventoryService>()
+                    .GetInventoryUploadHistory(inventorySourceId));
+        }
     }
 }

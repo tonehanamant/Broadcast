@@ -1424,6 +1424,23 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void CanGetOpenMarketUploadHistory()
+        {
+            var source = 1; //OpenMarket
+            var result = _InventoryFileService.GetInventoryUploadHistory(source);
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void CanGetProprietaryUploadHistory()
+        {
+            var source = 4; 
+            var result = _InventoryFileService.GetInventoryUploadHistory(source);
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
         private InventoryFileSaveRequest _GetInventoryFileSaveRequest(string filePath)
         {
             return new InventoryFileSaveRequest

@@ -70,6 +70,7 @@ namespace Common.Services
         /// <param name="filePaths">Dictionary of path and name file pairs</param>
         /// <returns>Stream containing the zip archive</returns>
         Stream CreateZipArchive(IDictionary<string, string> filePaths);
+        Stream GetFileStream(string filePath);
 
         /// <summary>
         /// Creates a txt file with the content passed
@@ -235,6 +236,16 @@ namespace Common.Services
         public void CreateDirectory(string filePath)
         {
             Directory.CreateDirectory(filePath);
+        }
+
+        public Stream GetFileStream(string filePath)
+        {
+            if (File.Exists(filePath))
+            {
+                var stream = File.OpenRead(filePath);
+                return stream;
+            }
+            throw new ApplicationException($"File not found: {filePath}");
         }
 
         /// <summary>

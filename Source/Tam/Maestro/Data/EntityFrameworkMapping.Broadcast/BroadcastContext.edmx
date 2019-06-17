@@ -8609,8 +8609,8 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="audience" Relationship="BroadcastModel.FK_inventory_file_proprietary_header_audiences" FromRole="inventory_file_proprietary_header" ToRole="audience" />
           <NavigationProperty Name="daypart" Relationship="BroadcastModel.FK_inventory_file_proprietary_header_dayparts" FromRole="inventory_file_proprietary_header" ToRole="daypart" />
           <NavigationProperty Name="inventory_files" Relationship="BroadcastModel.FK_inventory_file_proprietary_header_inventory_files" FromRole="inventory_file_proprietary_header" ToRole="inventory_files" />
-          <NavigationProperty Name="media_months" Relationship="BroadcastModel.FK_inventory_file_proprietary_header_media_months" FromRole="inventory_file_proprietary_header" ToRole="media_months" />
-          <NavigationProperty Name="media_months1" Relationship="BroadcastModel.FK_inventory_file_proprietary_header_media_months_hut_book" FromRole="inventory_file_proprietary_header" ToRole="media_months" />
+          <NavigationProperty Name="share_media_months" Relationship="BroadcastModel.FK_inventory_file_proprietary_header_media_months" FromRole="inventory_file_proprietary_header" ToRole="media_months" />
+          <NavigationProperty Name="hut_media_months" Relationship="BroadcastModel.FK_inventory_file_proprietary_header_media_months_hut_book" FromRole="inventory_file_proprietary_header" ToRole="media_months" />
           <Property Name="daypart_code_id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="daypart_codes" Relationship="BroadcastModel.FK_inventory_file_proprietary_header_daypart_codes" FromRole="inventory_file_proprietary_header" ToRole="daypart_codes" />
         </EntityType>

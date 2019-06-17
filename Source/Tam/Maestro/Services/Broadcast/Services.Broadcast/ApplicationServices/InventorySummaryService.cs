@@ -318,5 +318,6 @@ namespace Services.Broadcast.ApplicationServices
 
             return groups.Select(x => x.Name).Distinct(StringComparer.OrdinalIgnoreCase).ToList();
         }
+
     }
 }

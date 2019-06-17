@@ -30,8 +30,8 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual audience audience { get; set; }
         public virtual daypart daypart { get; set; }
         public virtual inventory_files inventory_files { get; set; }
-        public virtual media_months media_months { get; set; }
-        public virtual media_months media_months1 { get; set; }
+        public virtual media_months share_media_months { get; set; }
+        public virtual media_months hut_media_months { get; set; }
         public virtual daypart_codes daypart_codes { get; set; }
     }
 }

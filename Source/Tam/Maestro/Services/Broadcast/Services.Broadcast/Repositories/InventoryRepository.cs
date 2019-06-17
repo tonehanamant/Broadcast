@@ -17,6 +17,8 @@ using Services.Broadcast.Entities.StationInventory;
 using Tam.Maestro.Data.Entities;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.ProprietaryInventory;
+using Services.Broadcast.Entities.InventorySummary;
+using Services.Broadcast.ApplicationServices;
 
 namespace Services.Broadcast.Repositories
 {
@@ -90,6 +92,7 @@ namespace Services.Broadcast.Repositories
         List<StationInventoryGroup> GetInventoryGroups(int inventorySourceId, int daypartCodeId, DateTime startDate, DateTime endDate);
 
         List<StationInventoryManifestWeek> GetStationInventoryManifestWeeksForInventorySource(int inventorySourceId);
+        List<InventoryUploadHistoryDto> GetInventoryUploadHistoryForInventorySource(int inventorySourceId);
 
         /// <summary>
         /// Adds validation problems for an inventory file to DB
@@ -1013,5 +1016,83 @@ namespace Services.Broadcast.Repositories
                              .ToList();
                 });
         }
+
+        public List<InventoryUploadHistoryDto> GetInventoryUploadHistoryForInventorySource(int inventorySourceId)
+        {
+            return _InReadUncommitedTransaction(
+                context =>
+                {
+                    var files = context.inventory_files
+                             .Include("inventory_file_proprietary_header.daypart_codes")
+                             .Include("inventory_file_proprietary_header.share_media_months")
+                             .Include("inventory_file_proprietary_header.hut_media_months")
+                             .Include("station_inventory_manifest.station_inventory_manifest_weeks")
+                             .Include(f => f.inventory_file_ratings_jobs)
+                             .Where(x => x.inventory_source_id == inventorySourceId);
+
+                    var result = new List<InventoryUploadHistoryDto>();
+
+                    foreach(var file in files)
+                    {
+                        var fileHistory = new InventoryUploadHistoryDto()
+                        {
+                            FileId = file.id,
+                            UploadDateTime = file.created_date,
+                            Username = file.created_by,
+                            Filename = file.name,
+                            Rows = file.rows_processed ?? 0
+                        };
+
+                        if(file.inventory_file_proprietary_header.Any()) //Proprietary Inventory file
+                        {
+                            var header = file.inventory_file_proprietary_header.SingleOrDefault();
+                            fileHistory.DaypartCode = header.daypart_codes.code;
+                            fileHistory.EffectiveDate = header.effective_date;
+                            fileHistory.EndDate = header.end_date;
+
+                            if(header.hut_media_months != null)
+                            {
+                                fileHistory.HutBook = new MediaMonthDto
+                                {
+                                    Id = header.hut_media_months.id,
+                                    Year = header.hut_media_months.year,
+                                    Month = header.hut_media_months.month
+                                };
+                            }
+
+                            if (header.share_media_months != null)
+                            {
+                                fileHistory.ShareBook = new MediaMonthDto
+                                {
+                                    Id = header.share_media_months.id,
+                                    Year = header.share_media_months.year,
+                                    Month = header.share_media_months.month
+                                };
+                            }
+
+                        } else if (file.station_inventory_manifest.Any(m => m.station_inventory_manifest_weeks.Any())) //Open Market Inventory file
+                        {
+                            fileHistory.EffectiveDate = file.station_inventory_manifest.SelectMany(m => m.station_inventory_manifest_weeks.Select(w => w.start_date)).Min();
+                            fileHistory.EndDate = file.station_inventory_manifest.SelectMany(m => m.station_inventory_manifest_weeks.Select(w => w.end_date)).Max();
+                        }
+
+                        if(file.status == (byte) FileStatusEnum.Loaded && file.inventory_file_ratings_jobs.Any())
+                        {
+                            var fileJob = file.inventory_file_ratings_jobs.OrderBy(j => j.id).Last();
+                            fileHistory.Status = ((InventoryFileRatingsProcessingStatus) fileJob.status).ToString();
+                        } else
+                        {
+                            fileHistory.Status = ((FileStatusEnum)file.status).ToString();
+                        }
+
+                        result.Add(fileHistory);
+
+                    }
+
+                    return result; 
+
+                });
+        }
+
     }
 }

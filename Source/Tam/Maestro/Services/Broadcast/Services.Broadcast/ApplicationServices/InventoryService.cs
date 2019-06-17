@@ -7,6 +7,7 @@ using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Converters.RateImport;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
+using Services.Broadcast.Entities.InventorySummary;
 using Services.Broadcast.Entities.StationInventory;
 using Services.Broadcast.Exceptions;
 using Services.Broadcast.Helpers;
@@ -16,6 +17,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Web;
 using Tam.Maestro.Common;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
@@ -51,6 +53,8 @@ namespace Services.Broadcast.ApplicationServices
         bool DeleteProgram(int programId, string inventorySource, int stationCode, string user);
 
         bool HasSpotsAllocated(int programId);
+        List<InventoryUploadHistoryDto> GetInventoryUploadHistory(int inventorySourceId);
+        Tuple<string, Stream, string> DownloadErrorFile(int fileId);
 
         /// <summary>
         /// Checks if the filepath is an excel file or not
@@ -727,6 +731,30 @@ namespace Services.Broadcast.ApplicationServices
         {
             var station = _StationRepository.GetBroadcastStationByCode(stationCode);
             return _LockingEngine.UnlockStation(station.Id);
+        }
+
+        public List<InventoryUploadHistoryDto> GetInventoryUploadHistory(int inventorySourceId)
+        {
+            var result = _inventoryRepository.GetInventoryUploadHistoryForInventorySource(inventorySourceId);
+            return result;
+        }
+
+        public Tuple<string, Stream, string> DownloadErrorFile(int fileId)
+        {
+            var errorFiles = _FileService.GetFiles(BroadcastServiceSystemParameter.InventoryUploadErrorsFolder);
+
+            //get the file by looking in the errors folder for a file with the name starting with the current id
+            var filePath = errorFiles.Where(x => Path.GetFileName(x).StartsWith($"{fileId}_")).SingleOrDefault();
+            if (filePath != null)
+            {
+                var fileName = Path.GetFileName(filePath).Replace($"{fileId}_", string.Empty);   //remove the added id from the filename
+                Stream fileStream = _FileService.GetFileStream(filePath);
+                var fileMimeType = MimeMapping.GetMimeMapping(fileName);
+                return new Tuple<string, Stream, string>(fileName, fileStream, fileMimeType);
+            }
+
+            throw new ApplicationException($"Error file {fileId} not found!");
+
         }
 
         /// <summary>
