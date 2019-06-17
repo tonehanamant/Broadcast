@@ -251,6 +251,18 @@ where id = s.source_id
 DROP TABLE #source_data
 DROP TABLE #manifests_with_duplicate_audiences
 /*************************************** END PRI-10155 *****************************************************/
+
+
+/*************************************** START PRI-10398 ****************************************************/
+
+UPDATE inventory_sources
+SET inventory_source_type = 3
+WHERE name = 'Sinclair'
+
+/*************************************** END PRI-10398 *****************************************************/
+
+
+/*************************************** END UPDATE SCRIPT *****************************************************/
 -- Update the Schema Version of the database to the current release version
 UPDATE system_component_parameters 
 SET parameter_value = '19.07.1' -- Current release version
