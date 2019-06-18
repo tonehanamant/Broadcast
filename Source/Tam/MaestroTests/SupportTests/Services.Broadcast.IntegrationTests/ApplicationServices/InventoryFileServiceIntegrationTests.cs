@@ -1429,7 +1429,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         public void CanGetOpenMarketUploadHistory()
         {
             var source = 1; //OpenMarket
-            var result = _InventoryFileService.GetInventoryUploadHistory(source);
+            var result = _InventoryService.GetInventoryUploadHistory(source);
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
 
@@ -1438,7 +1438,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         public void CanGetProprietaryUploadHistory()
         {
             var source = 4; 
-            var result = _InventoryFileService.GetInventoryUploadHistory(source);
+            var result = _InventoryService.GetInventoryUploadHistory(source);
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
         private InventoryFileSaveRequest _GetInventoryFileSaveRequest(string filePath)

@@ -735,7 +735,7 @@ namespace Services.Broadcast.ApplicationServices
 
         public List<InventoryUploadHistoryDto> GetInventoryUploadHistory(int inventorySourceId)
         {
-            var result = _inventoryRepository.GetInventoryUploadHistoryForInventorySource(inventorySourceId);
+            var result = _InventoryRepository.GetInventoryUploadHistoryForInventorySource(inventorySourceId);
             return result;
         }
 

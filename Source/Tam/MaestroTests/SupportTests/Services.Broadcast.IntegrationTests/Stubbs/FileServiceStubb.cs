@@ -64,6 +64,10 @@ namespace Services.Broadcast.IntegrationTests
         {
             throw new NotImplementedException();
         }
+        public Stream GetFileStream(string filePath)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public class FileServiceSingleFileStubb : FileServiceStubb
