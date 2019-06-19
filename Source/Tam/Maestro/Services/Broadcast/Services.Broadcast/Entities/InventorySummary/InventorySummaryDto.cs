@@ -12,12 +12,13 @@ namespace Services.Broadcast.Entities.InventorySummary
         public int TotalMarkets { get; set; }
         public int TotalStations { get; set; }        
         public double? HouseholdImpressions { get; set; }
-        public List<InventorySummaryBookDto> InventoryPostingBooks { get; set; } = new List<InventorySummaryBookDto>();
         public DateTime? LastUpdatedDate { get; set; }
         public bool IsUpdating { get; set; }
         public QuarterDetailDto RatesAvailableFromQuarter { get; set; }
         public QuarterDetailDto RatesAvailableToQuarter { get; set; }
         public bool? HasInventoryGaps { get; set; }
+        public MediaMonthDto ShareBook { get; set; }
+        public MediaMonthDto HutBook { get; set; }
     }
 
     public class BarterInventorySummaryDto : InventorySummaryDto

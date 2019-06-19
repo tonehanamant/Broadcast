@@ -13,16 +13,7 @@
     "HasInventoryGaps": null,
     "HasRatesAvailableForQuarter": true,
     "HouseholdImpressions": 474770.95166666672,
-    "InventoryPostingBooks": [
-      {
-        "HutProjectionBookId": null,
-        "ShareProjectionBookId": 425
-      },
-      {
-        "HutProjectionBookId": null,
-        "ShareProjectionBookId": 437
-      }
-    ],
+    "HutBook": null,
     "InventorySourceId": 4,
     "InventorySourceName": "TTWN",
     "IsUpdating": true,
@@ -43,6 +34,11 @@
       "Quarter": 2,
       "StartDate": "2019-04-01T00:00:00",
       "Year": 2019
+    },
+    "ShareBook": {
+      "Id": 425,
+      "Month": 2,
+      "Year": 2017
     },
     "TotalDaypartCodes": 1,
     "TotalMarkets": 38,

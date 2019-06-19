@@ -5,7 +5,7 @@
     "HasInventoryGaps": true,
     "HasRatesAvailableForQuarter": true,
     "HouseholdImpressions": null,
-    "InventoryPostingBooks": [],
+    "HutBook": null,
     "InventorySourceId": 13,
     "InventorySourceName": "20th Century Fox (Twentieth Century)",
     "IsUpdating": false,
@@ -28,6 +28,7 @@
       "StartDate": "2018-01-01T00:00:00",
       "Year": 2018
     },
+    "ShareBook": null,
     "TotalMarkets": 0,
     "TotalPrograms": 3,
     "TotalStations": 0

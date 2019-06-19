@@ -34,6 +34,8 @@ namespace Services.Broadcast.Converters.InventorySummary
             var inventorySummaryManifestFiles = GetInventorySummaryManifestFiles(inventorySummaryManifests);
             var manifests = InventoryRepository.GetStationInventoryManifestsByIds(inventorySummaryManifests.Select(x => x.ManifestId));
 
+            GetLatestInventoryPostingBook(inventorySummaryManifestFiles, out var shareBook, out var hutBook);
+
             RemoveWeeksNotInQuarter(manifests, quarterDetail);
 
             var result = new ProprietaryOAndOInventorySummaryDto
@@ -46,13 +48,14 @@ namespace Services.Broadcast.Converters.InventorySummary
                 TotalStations = GetTotalStations(inventorySummaryManifests),
                 TotalPrograms = GetTotalPrograms(manifests),
                 TotalDaypartCodes = inventorySummaryManifests.GroupBy(x => x.DaypartCode).Count(),
-                InventoryPostingBooks = GetInventoryPostingBooks(inventorySummaryManifestFiles),
                 LastUpdatedDate = GetLastJobCompletedDate(inventorySummaryManifestFiles),
                 IsUpdating = GetIsInventoryUpdating(inventorySummaryManifestFiles),
                 RatesAvailableFromQuarter = quartersForInventoryAvailable.Item1,
                 RatesAvailableToQuarter = quartersForInventoryAvailable.Item2,
                 HasInventoryGaps = HasInventoryGapsForDateRange(allInventorySourceManifestWeeks, quartersForInventoryAvailable),
-                Details = _GetDetails(inventorySummaryManifests, manifests, householdAudienceId)
+                Details = _GetDetails(inventorySummaryManifests, manifests, householdAudienceId),
+                ShareBook = shareBook,
+                HutBook = hutBook
             };
 
             var detailsWithHHImpressions = result.Details.Where(x => x.HouseholdImpressions.HasValue);

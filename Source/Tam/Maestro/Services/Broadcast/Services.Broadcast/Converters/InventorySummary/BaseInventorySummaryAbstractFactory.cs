@@ -8,6 +8,7 @@ using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Tam.Maestro.Data.Entities;
 
 namespace Services.Broadcast.Converters.InventorySummary
 {
@@ -63,17 +64,35 @@ namespace Services.Broadcast.Converters.InventorySummary
             return InventorySummaryRepository.GetInventorySummaryHouseholdImpressions(manifestIds, householdAudienceId);
         }
 
-        protected List<InventorySummaryBookDto> GetInventoryPostingBooks(List<InventorySummaryManifestFileDto> inventorySummaryManifestFileDtos)
+        protected void GetLatestInventoryPostingBook(List<InventorySummaryManifestFileDto> inventorySummaryManifestFileDtos, out MediaMonthDto shareBook, out MediaMonthDto hutBook)
         {
-            return inventorySummaryManifestFileDtos.
-                        Where(x => x.ShareProjectionBookId.HasValue).
-                        GroupBy(x => new { x.ShareProjectionBookId, x.HutProjectionBookId }).
-                        Select(x => new InventorySummaryBookDto
-                        {
-                            ShareProjectionBookId = x.Key.ShareProjectionBookId,
-                            HutProjectionBookId = x.Key.HutProjectionBookId
-                        }).
-                        ToList();
+            shareBook = null;
+            hutBook = null;
+
+            var latestUploadedFile = inventorySummaryManifestFileDtos
+                .Where(x => x.ShareProjectionBookId.HasValue)
+                .OrderByDescending(x => x.CreatedDate)
+                .FirstOrDefault();
+
+            if (latestUploadedFile != null)
+            {
+                shareBook = _ToMediaMonthDto(_MediaMonthAndWeekAggregateCache.GetMediaMonthById(latestUploadedFile.ShareProjectionBookId.Value));
+
+                if (latestUploadedFile.HutProjectionBookId.HasValue)
+                {
+                    hutBook = _ToMediaMonthDto(_MediaMonthAndWeekAggregateCache.GetMediaMonthById(latestUploadedFile.HutProjectionBookId.Value));
+                }
+            }
+        }
+
+        private MediaMonthDto _ToMediaMonthDto(MediaMonth mediaMonth)
+        {
+            return new MediaMonthDto
+            {
+                Id = mediaMonth.Id,
+                Year = mediaMonth.Year,
+                Month = mediaMonth.Month
+            };
         }
 
         protected List<InventorySummaryManifestFileDto> GetInventorySummaryManifestFiles(List<InventorySummaryManifestDto> inventorySummaryManifests)

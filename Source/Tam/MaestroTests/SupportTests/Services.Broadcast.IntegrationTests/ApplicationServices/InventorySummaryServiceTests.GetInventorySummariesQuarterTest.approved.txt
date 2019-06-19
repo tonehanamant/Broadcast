@@ -4,7 +4,7 @@
     "HasInventoryGaps": null,
     "HasRatesAvailableForQuarter": false,
     "HouseholdImpressions": null,
-    "InventoryPostingBooks": [],
+    "HutBook": null,
     "InventorySourceId": 1,
     "InventorySourceName": "Open Market",
     "IsUpdating": false,
@@ -27,6 +27,7 @@
       "StartDate": "2019-09-30T00:00:00",
       "Year": 2019
     },
+    "ShareBook": null,
     "TotalMarkets": 0,
     "TotalPrograms": 0,
     "TotalStations": 0
@@ -36,7 +37,7 @@
     "HasInventoryGaps": null,
     "HasRatesAvailableForQuarter": false,
     "HouseholdImpressions": null,
-    "InventoryPostingBooks": [],
+    "HutBook": null,
     "InventorySourceId": 3,
     "InventorySourceName": "TVB",
     "IsUpdating": false,
@@ -59,6 +60,7 @@
       "StartDate": "2019-04-01T00:00:00",
       "Year": 2019
     },
+    "ShareBook": null,
     "TotalDaypartCodes": 0,
     "TotalMarkets": 0,
     "TotalStations": 0,
@@ -69,7 +71,7 @@
     "HasInventoryGaps": null,
     "HasRatesAvailableForQuarter": false,
     "HouseholdImpressions": null,
-    "InventoryPostingBooks": [],
+    "HutBook": null,
     "InventorySourceId": 4,
     "InventorySourceName": "TTWN",
     "IsUpdating": false,
@@ -92,6 +94,7 @@
       "StartDate": "2019-04-01T00:00:00",
       "Year": 2019
     },
+    "ShareBook": null,
     "TotalDaypartCodes": 0,
     "TotalMarkets": 0,
     "TotalStations": 0,
@@ -102,7 +105,7 @@
     "HasInventoryGaps": null,
     "HasRatesAvailableForQuarter": false,
     "HouseholdImpressions": null,
-    "InventoryPostingBooks": [],
+    "HutBook": null,
     "InventorySourceId": 5,
     "InventorySourceName": "CNN",
     "IsUpdating": false,
@@ -115,6 +118,7 @@
     },
     "RatesAvailableFromQuarter": null,
     "RatesAvailableToQuarter": null,
+    "ShareBook": null,
     "TotalDaypartCodes": 0,
     "TotalMarkets": 0,
     "TotalStations": 0,
@@ -122,10 +126,10 @@
   },
   {
     "Details": [],
-    "HasInventoryGaps": null,
+    "HasInventoryGaps": false,
     "HasRatesAvailableForQuarter": false,
     "HouseholdImpressions": null,
-    "InventoryPostingBooks": [],
+    "HutBook": null,
     "InventorySourceId": 6,
     "InventorySourceName": "Sinclair",
     "IsUpdating": false,
@@ -138,10 +142,11 @@
     },
     "RatesAvailableFromQuarter": null,
     "RatesAvailableToQuarter": null,
+    "ShareBook": null,
     "TotalDaypartCodes": 0,
     "TotalMarkets": 0,
-    "TotalStations": 0,
-    "TotalUnits": 0
+    "TotalPrograms": 0,
+    "TotalStations": 0
   },
   {
     "Details": [
@@ -157,12 +162,11 @@
     "HasInventoryGaps": null,
     "HasRatesAvailableForQuarter": true,
     "HouseholdImpressions": null,
-    "InventoryPostingBooks": [
-      {
-        "HutProjectionBookId": 437,
-        "ShareProjectionBookId": 438
-      }
-    ],
+    "HutBook": {
+      "Id": 437,
+      "Month": 2,
+      "Year": 2018
+    },
     "InventorySourceId": 7,
     "InventorySourceName": "LilaMax",
     "IsUpdating": false,
@@ -185,6 +189,11 @@
       "StartDate": "2018-12-31T00:00:00",
       "Year": 2019
     },
+    "ShareBook": {
+      "Id": 438,
+      "Month": 3,
+      "Year": 2018
+    },
     "TotalDaypartCodes": 1,
     "TotalMarkets": 0,
     "TotalStations": 1,
@@ -195,7 +204,7 @@
     "HasInventoryGaps": null,
     "HasRatesAvailableForQuarter": false,
     "HouseholdImpressions": null,
-    "InventoryPostingBooks": [],
+    "HutBook": null,
     "InventorySourceId": 8,
     "InventorySourceName": "MLB",
     "IsUpdating": false,
@@ -208,6 +217,7 @@
     },
     "RatesAvailableFromQuarter": null,
     "RatesAvailableToQuarter": null,
+    "ShareBook": null,
     "TotalDaypartCodes": 0,
     "TotalMarkets": 0,
     "TotalStations": 0,
@@ -218,7 +228,7 @@
     "HasInventoryGaps": null,
     "HasRatesAvailableForQuarter": false,
     "HouseholdImpressions": null,
-    "InventoryPostingBooks": [],
+    "HutBook": null,
     "InventorySourceId": 9,
     "InventorySourceName": "Ference Media",
     "IsUpdating": false,
@@ -231,6 +241,7 @@
     },
     "RatesAvailableFromQuarter": null,
     "RatesAvailableToQuarter": null,
+    "ShareBook": null,
     "TotalDaypartCodes": 0,
     "TotalMarkets": 0,
     "TotalStations": 0,
@@ -241,7 +252,7 @@
     "HasInventoryGaps": false,
     "HasRatesAvailableForQuarter": false,
     "HouseholdImpressions": null,
-    "InventoryPostingBooks": [],
+    "HutBook": null,
     "InventorySourceId": 10,
     "InventorySourceName": "ABC O&O",
     "IsUpdating": false,
@@ -254,6 +265,7 @@
     },
     "RatesAvailableFromQuarter": null,
     "RatesAvailableToQuarter": null,
+    "ShareBook": null,
     "TotalDaypartCodes": 0,
     "TotalMarkets": 0,
     "TotalPrograms": 0,
@@ -275,12 +287,11 @@
     "HasInventoryGaps": true,
     "HasRatesAvailableForQuarter": true,
     "HouseholdImpressions": 1000.0,
-    "InventoryPostingBooks": [
-      {
-        "HutProjectionBookId": 437,
-        "ShareProjectionBookId": 438
-      }
-    ],
+    "HutBook": {
+      "Id": 437,
+      "Month": 2,
+      "Year": 2018
+    },
     "InventorySourceId": 11,
     "InventorySourceName": "NBC O&O",
     "IsUpdating": false,
@@ -303,6 +314,11 @@
       "StartDate": "2018-12-31T00:00:00",
       "Year": 2019
     },
+    "ShareBook": {
+      "Id": 438,
+      "Month": 3,
+      "Year": 2018
+    },
     "TotalDaypartCodes": 1,
     "TotalMarkets": 1,
     "TotalPrograms": 3,
@@ -313,7 +329,7 @@
     "HasInventoryGaps": false,
     "HasRatesAvailableForQuarter": false,
     "HouseholdImpressions": null,
-    "InventoryPostingBooks": [],
+    "HutBook": null,
     "InventorySourceId": 12,
     "InventorySourceName": "KATZ",
     "IsUpdating": false,
@@ -326,6 +342,7 @@
     },
     "RatesAvailableFromQuarter": null,
     "RatesAvailableToQuarter": null,
+    "ShareBook": null,
     "TotalDaypartCodes": 0,
     "TotalMarkets": 0,
     "TotalPrograms": 0,
@@ -337,7 +354,7 @@
     "HasInventoryGaps": true,
     "HasRatesAvailableForQuarter": false,
     "HouseholdImpressions": null,
-    "InventoryPostingBooks": [],
+    "HutBook": null,
     "InventorySourceId": 13,
     "InventorySourceName": "20th Century Fox (Twentieth Century)",
     "IsUpdating": false,
@@ -360,6 +377,7 @@
       "StartDate": "2018-01-01T00:00:00",
       "Year": 2018
     },
+    "ShareBook": null,
     "TotalMarkets": 0,
     "TotalPrograms": 0,
     "TotalStations": 0
@@ -370,7 +388,7 @@
     "HasInventoryGaps": true,
     "HasRatesAvailableForQuarter": false,
     "HouseholdImpressions": null,
-    "InventoryPostingBooks": [],
+    "HutBook": null,
     "InventorySourceId": 14,
     "InventorySourceName": "CBS Synd",
     "IsUpdating": false,
@@ -393,6 +411,7 @@
       "StartDate": "2018-01-01T00:00:00",
       "Year": 2018
     },
+    "ShareBook": null,
     "TotalMarkets": 0,
     "TotalPrograms": 0,
     "TotalStations": 0
@@ -403,7 +422,7 @@
     "HasInventoryGaps": true,
     "HasRatesAvailableForQuarter": false,
     "HouseholdImpressions": null,
-    "InventoryPostingBooks": [],
+    "HutBook": null,
     "InventorySourceId": 15,
     "InventorySourceName": "NBCU Syn",
     "IsUpdating": false,
@@ -426,6 +445,7 @@
       "StartDate": "2018-01-01T00:00:00",
       "Year": 2018
     },
+    "ShareBook": null,
     "TotalMarkets": 0,
     "TotalPrograms": 0,
     "TotalStations": 0
@@ -436,7 +456,7 @@
     "HasInventoryGaps": true,
     "HasRatesAvailableForQuarter": false,
     "HouseholdImpressions": null,
-    "InventoryPostingBooks": [],
+    "HutBook": null,
     "InventorySourceId": 16,
     "InventorySourceName": "WB Syn",
     "IsUpdating": false,
@@ -459,6 +479,7 @@
       "StartDate": "2018-01-01T00:00:00",
       "Year": 2018
     },
+    "ShareBook": null,
     "TotalMarkets": 0,
     "TotalPrograms": 0,
     "TotalStations": 0
@@ -469,7 +490,7 @@
     "HasInventoryGaps": false,
     "HasRatesAvailableForQuarter": false,
     "HouseholdImpressions": null,
-    "InventoryPostingBooks": [],
+    "HutBook": null,
     "InventorySourceId": 17,
     "InventorySourceName": "Antenna TV",
     "IsUpdating": false,
@@ -482,6 +503,7 @@
     },
     "RatesAvailableFromQuarter": null,
     "RatesAvailableToQuarter": null,
+    "ShareBook": null,
     "TotalDaypartCodes": 0,
     "TotalMarkets": 0,
     "TotalStations": 0
@@ -492,7 +514,7 @@
     "HasInventoryGaps": true,
     "HasRatesAvailableForQuarter": false,
     "HouseholdImpressions": null,
-    "InventoryPostingBooks": [],
+    "HutBook": null,
     "InventorySourceId": 18,
     "InventorySourceName": "Bounce",
     "IsUpdating": false,
@@ -515,6 +537,7 @@
       "StartDate": "2019-04-01T00:00:00",
       "Year": 2019
     },
+    "ShareBook": null,
     "TotalDaypartCodes": 0,
     "TotalMarkets": 0,
     "TotalStations": 0
@@ -525,7 +548,7 @@
     "HasInventoryGaps": false,
     "HasRatesAvailableForQuarter": false,
     "HouseholdImpressions": null,
-    "InventoryPostingBooks": [],
+    "HutBook": null,
     "InventorySourceId": 19,
     "InventorySourceName": "BUZZR",
     "IsUpdating": false,
@@ -538,6 +561,7 @@
     },
     "RatesAvailableFromQuarter": null,
     "RatesAvailableToQuarter": null,
+    "ShareBook": null,
     "TotalDaypartCodes": 0,
     "TotalMarkets": 0,
     "TotalStations": 0
@@ -548,7 +572,7 @@
     "HasInventoryGaps": false,
     "HasRatesAvailableForQuarter": false,
     "HouseholdImpressions": null,
-    "InventoryPostingBooks": [],
+    "HutBook": null,
     "InventorySourceId": 20,
     "InventorySourceName": "COZI",
     "IsUpdating": false,
@@ -561,6 +585,7 @@
     },
     "RatesAvailableFromQuarter": null,
     "RatesAvailableToQuarter": null,
+    "ShareBook": null,
     "TotalDaypartCodes": 0,
     "TotalMarkets": 0,
     "TotalStations": 0
@@ -571,7 +596,7 @@
     "HasInventoryGaps": false,
     "HasRatesAvailableForQuarter": false,
     "HouseholdImpressions": null,
-    "InventoryPostingBooks": [],
+    "HutBook": null,
     "InventorySourceId": 21,
     "InventorySourceName": "Escape",
     "IsUpdating": false,
@@ -584,6 +609,7 @@
     },
     "RatesAvailableFromQuarter": null,
     "RatesAvailableToQuarter": null,
+    "ShareBook": null,
     "TotalDaypartCodes": 0,
     "TotalMarkets": 0,
     "TotalStations": 0
@@ -594,7 +620,7 @@
     "HasInventoryGaps": false,
     "HasRatesAvailableForQuarter": false,
     "HouseholdImpressions": null,
-    "InventoryPostingBooks": [],
+    "HutBook": null,
     "InventorySourceId": 22,
     "InventorySourceName": "Grit",
     "IsUpdating": false,
@@ -607,6 +633,7 @@
     },
     "RatesAvailableFromQuarter": null,
     "RatesAvailableToQuarter": null,
+    "ShareBook": null,
     "TotalDaypartCodes": 0,
     "TotalMarkets": 0,
     "TotalStations": 0
@@ -617,7 +644,7 @@
     "HasInventoryGaps": false,
     "HasRatesAvailableForQuarter": false,
     "HouseholdImpressions": null,
-    "InventoryPostingBooks": [],
+    "HutBook": null,
     "InventorySourceId": 23,
     "InventorySourceName": "HITV",
     "IsUpdating": false,
@@ -630,6 +657,7 @@
     },
     "RatesAvailableFromQuarter": null,
     "RatesAvailableToQuarter": null,
+    "ShareBook": null,
     "TotalDaypartCodes": 0,
     "TotalMarkets": 0,
     "TotalStations": 0
@@ -640,7 +668,7 @@
     "HasInventoryGaps": false,
     "HasRatesAvailableForQuarter": false,
     "HouseholdImpressions": null,
-    "InventoryPostingBooks": [],
+    "HutBook": null,
     "InventorySourceId": 24,
     "InventorySourceName": "Laff",
     "IsUpdating": false,
@@ -653,6 +681,7 @@
     },
     "RatesAvailableFromQuarter": null,
     "RatesAvailableToQuarter": null,
+    "ShareBook": null,
     "TotalDaypartCodes": 0,
     "TotalMarkets": 0,
     "TotalStations": 0
@@ -663,7 +692,7 @@
     "HasInventoryGaps": false,
     "HasRatesAvailableForQuarter": false,
     "HouseholdImpressions": null,
-    "InventoryPostingBooks": [],
+    "HutBook": null,
     "InventorySourceId": 25,
     "InventorySourceName": "Me TV",
     "IsUpdating": false,
@@ -676,6 +705,7 @@
     },
     "RatesAvailableFromQuarter": null,
     "RatesAvailableToQuarter": null,
+    "ShareBook": null,
     "TotalDaypartCodes": 0,
     "TotalMarkets": 0,
     "TotalStations": 0

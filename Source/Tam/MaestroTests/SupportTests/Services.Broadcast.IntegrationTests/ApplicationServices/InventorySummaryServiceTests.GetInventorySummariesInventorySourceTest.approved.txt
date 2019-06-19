@@ -13,12 +13,11 @@
     "HasInventoryGaps": null,
     "HasRatesAvailableForQuarter": true,
     "HouseholdImpressions": 1234.0,
-    "InventoryPostingBooks": [
-      {
-        "HutProjectionBookId": 437,
-        "ShareProjectionBookId": 438
-      }
-    ],
+    "HutBook": {
+      "Id": 437,
+      "Month": 2,
+      "Year": 2018
+    },
     "InventorySourceId": 3,
     "InventorySourceName": "TVB",
     "IsUpdating": false,
@@ -40,6 +39,11 @@
       "Quarter": 2,
       "StartDate": "2019-04-01T00:00:00",
       "Year": 2019
+    },
+    "ShareBook": {
+      "Id": 438,
+      "Month": 3,
+      "Year": 2018
     },
     "TotalDaypartCodes": 1,
     "TotalMarkets": 1,

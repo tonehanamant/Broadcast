@@ -3,12 +3,11 @@
   "HasInventoryGaps": null,
   "HasRatesAvailableForQuarter": true,
   "HouseholdImpressions": 1000.0,
-  "InventoryPostingBooks": [
-    {
-      "HutProjectionBookId": 437,
-      "ShareProjectionBookId": 438
-    }
-  ],
+  "HutBook": {
+    "Id": 437,
+    "Month": 2,
+    "Year": 2018
+  },
   "InventorySourceId": 1,
   "InventorySourceName": "Open Market",
   "IsUpdating": false,
@@ -30,6 +29,11 @@
     "Quarter": 4,
     "StartDate": "2019-09-30T00:00:00",
     "Year": 2019
+  },
+  "ShareBook": {
+    "Id": 438,
+    "Month": 3,
+    "Year": 2018
   },
   "TotalMarkets": 1,
   "TotalPrograms": 1,

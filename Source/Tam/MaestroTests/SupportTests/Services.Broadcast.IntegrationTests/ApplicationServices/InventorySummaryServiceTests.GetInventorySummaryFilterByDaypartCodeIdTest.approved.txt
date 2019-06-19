@@ -13,12 +13,11 @@
     "HasInventoryGaps": null,
     "HasRatesAvailableForQuarter": true,
     "HouseholdImpressions": null,
-    "InventoryPostingBooks": [
-      {
-        "HutProjectionBookId": 437,
-        "ShareProjectionBookId": 438
-      }
-    ],
+    "HutBook": {
+      "Id": 437,
+      "Month": 2,
+      "Year": 2018
+    },
     "InventorySourceId": 7,
     "InventorySourceName": "LilaMax",
     "IsUpdating": false,
@@ -41,6 +40,11 @@
       "StartDate": "2018-12-31T00:00:00",
       "Year": 2019
     },
+    "ShareBook": {
+      "Id": 438,
+      "Month": 3,
+      "Year": 2018
+    },
     "TotalDaypartCodes": 1,
     "TotalMarkets": 0,
     "TotalStations": 1,
@@ -62,12 +66,11 @@
     "HasInventoryGaps": true,
     "HasRatesAvailableForQuarter": true,
     "HouseholdImpressions": 1000.0,
-    "InventoryPostingBooks": [
-      {
-        "HutProjectionBookId": 437,
-        "ShareProjectionBookId": 438
-      }
-    ],
+    "HutBook": {
+      "Id": 437,
+      "Month": 2,
+      "Year": 2018
+    },
     "InventorySourceId": 11,
     "InventorySourceName": "NBC O&O",
     "IsUpdating": false,
@@ -89,6 +92,11 @@
       "Quarter": 1,
       "StartDate": "2018-12-31T00:00:00",
       "Year": 2019
+    },
+    "ShareBook": {
+      "Id": 438,
+      "Month": 3,
+      "Year": 2018
     },
     "TotalDaypartCodes": 1,
     "TotalMarkets": 1,

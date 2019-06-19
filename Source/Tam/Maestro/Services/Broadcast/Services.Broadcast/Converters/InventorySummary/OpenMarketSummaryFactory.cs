@@ -41,6 +41,8 @@ namespace Services.Broadcast.Converters.InventorySummary
             var quartersForInventoryAvailable = GetQuartersForInventoryAvailable(allInventorySourceManifestWeeks);
             var inventorySummaryManifestFiles = GetInventorySummaryManifestFiles(manifests);
 
+            GetLatestInventoryPostingBook(inventorySummaryManifestFiles, out var shareBook, out var hutBook);
+
             return new OpenMarketInventorySummaryDto
             {
                 InventorySourceId = inventorySource.Id,
@@ -51,11 +53,12 @@ namespace Services.Broadcast.Converters.InventorySummary
                 TotalStations = GetTotalStations(manifests),
                 TotalPrograms = GetTotalPrograms(manifests),
                 HouseholdImpressions = GetHouseholdImpressions(manifests, householdAudienceId),
-                InventoryPostingBooks = GetInventoryPostingBooks(inventorySummaryManifestFiles),
                 LastUpdatedDate = GetFileLastCreatedDate(inventorySummaryManifestFiles),
                 RatesAvailableFromQuarter = quartersForInventoryAvailable.Item1,
                 RatesAvailableToQuarter = quartersForInventoryAvailable.Item2,
-                Details = null //open market does not have details
+                Details = null, //open market does not have details
+                ShareBook = shareBook,
+                HutBook = hutBook
             };
         }
     }

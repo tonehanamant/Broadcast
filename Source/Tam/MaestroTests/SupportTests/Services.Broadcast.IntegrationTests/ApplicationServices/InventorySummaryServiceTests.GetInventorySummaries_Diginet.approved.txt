@@ -11,7 +11,7 @@
     "HasInventoryGaps": true,
     "HasRatesAvailableForQuarter": true,
     "HouseholdImpressions": null,
-    "InventoryPostingBooks": [],
+    "HutBook": null,
     "InventorySourceId": 18,
     "InventorySourceName": "Bounce",
     "IsUpdating": false,
@@ -34,6 +34,7 @@
       "StartDate": "2019-04-01T00:00:00",
       "Year": 2019
     },
+    "ShareBook": null,
     "TotalDaypartCodes": 1,
     "TotalMarkets": 0,
     "TotalStations": 0
