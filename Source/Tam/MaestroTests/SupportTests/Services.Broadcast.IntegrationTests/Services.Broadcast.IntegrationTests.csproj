@@ -394,6 +394,9 @@
     <None Include="Files\ProprietaryDataFiles\Barter_ValidFormat_SingleBook.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Files\ProprietaryDataFiles\Barter_ValidFormat_SingleBook_HH.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Files\ProprietaryDataFiles\Barter_ValidFormat_SingleBook_ShortDateRange.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

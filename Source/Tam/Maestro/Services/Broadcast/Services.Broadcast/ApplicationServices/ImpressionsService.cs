@@ -247,8 +247,22 @@ namespace Services.Broadcast.ApplicationServices
                 //each manifest in this group has the same impressions for the nsi componentns
                 foreach (var manifest in msd.Select(x => x.manifest).ToList())
                 {
-                    manifest.ManifestAudiences = stationInventoryManifestAudiences;
+                    manifest.ManifestAudiences.AddRange(stationInventoryManifestAudiences);
                 }
+            }
+
+            // let`s take an avarage when manifest has several dayparts
+            foreach (var manifest in manifests)
+            {
+                manifest.ManifestAudiences = manifest.ManifestAudiences
+                    .GroupBy(x => x.Audience.Id)
+                    .Select(x => new StationInventoryManifestAudience
+                    {
+                        Audience = new DisplayAudience { Id = x.Key },
+                        Impressions = x.Average(a => a.Impressions),
+                        IsReference = false
+                    })
+                    .ToList();
             }
         }
 
@@ -256,21 +270,31 @@ namespace Services.Broadcast.ApplicationServices
             , int? hutBook, int shareBook, ProposalEnums.ProposalPlaybackType? playbackType)
         {
             List<StationInventoryManifestAudience> result = new List<StationInventoryManifestAudience>();
-            List<StationImpressions> stationImpressions = new List<StationImpressions>();
+
             foreach (var component in componentAudiences)
             {
+                List<StationImpressions> stationImpressions;
+
                 if (hutBook.HasValue)
                 {
-                    stationImpressions.AddRange(_RatingsRepository.GetImpressionsDaypart((short)hutBook.Value, (short)shareBook,
-                        new List<int> { component.Id }, stationDetail, playbackType));
+                    stationImpressions = _RatingsRepository.GetImpressionsDaypart(
+                            (short)hutBook.Value, 
+                            (short)shareBook,
+                            new List<int> { component.Id }, 
+                            stationDetail, 
+                            playbackType);
                 }
                 else
                 {
-                    stationImpressions.AddRange(_RatingsRepository
-                        .GetImpressionsDaypart(shareBook, new List<int> { component.Id }, stationDetail, playbackType)
+                    stationImpressions = _RatingsRepository.GetImpressionsDaypart(
+                            shareBook,
+                            new List<int> { component.Id },
+                            stationDetail,
+                            playbackType)
                         .Select(x => (StationImpressions)x)
-                        .ToList());
+                        .ToList();
                 }
+
                 result.Add(new StationInventoryManifestAudience
                 {
                     Audience = new DisplayAudience { Id = component.Id },
@@ -278,6 +302,7 @@ namespace Services.Broadcast.ApplicationServices
                     IsReference = false
                 });
             }
+
             return result;
         }
     }

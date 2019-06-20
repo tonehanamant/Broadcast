@@ -239,8 +239,8 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
-          "Id": 348
+          "AudienceString": "House Holds",
+          "Id": 31
         },
         "CPM": 99.8800,
         "Impressions": null,
@@ -272,7 +272,12 @@
         "ProgramName": null
       }
     ],
-    "ManifestRates": [],
+    "ManifestRates": [
+      {
+        "SpotCost": 204.8613,
+        "SpotLengthId": 1
+      }
+    ],
     "ManifestWeeks": [
       {
         "EndDate": "2019-02-03T00:00:00",
@@ -1119,8 +1124,8 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
-          "Id": 348
+          "AudienceString": "House Holds",
+          "Id": 31
         },
         "CPM": 99.8800,
         "Impressions": null,
@@ -1154,7 +1159,7 @@
     ],
     "ManifestRates": [
       {
-        "SpotCost": 38.9074,
+        "SpotCost": 2335.2380,
         "SpotLengthId": 1
       }
     ],
@@ -2004,8 +2009,8 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
-          "Id": 348
+          "AudienceString": "House Holds",
+          "Id": 31
         },
         "CPM": 99.8800,
         "Impressions": null,
@@ -2039,7 +2044,7 @@
     ],
     "ManifestRates": [
       {
-        "SpotCost": 13.3784,
+        "SpotCost": 802.6164,
         "SpotLengthId": 1
       }
     ],
@@ -2889,8 +2894,8 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
-          "Id": 348
+          "AudienceString": "House Holds",
+          "Id": 31
         },
         "CPM": 99.8800,
         "Impressions": null,
@@ -2966,7 +2971,7 @@
     ],
     "ManifestRates": [
       {
-        "SpotCost": 15.1199,
+        "SpotCost": 239.9843,
         "SpotLengthId": 1
       }
     ],
@@ -3816,8 +3821,8 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
-          "Id": 348
+          "AudienceString": "House Holds",
+          "Id": 31
         },
         "CPM": 99.8800,
         "Impressions": null,
@@ -3849,7 +3854,12 @@
         "ProgramName": null
       }
     ],
-    "ManifestRates": [],
+    "ManifestRates": [
+      {
+        "SpotCost": 173.8432,
+        "SpotLengthId": 1
+      }
+    ],
     "ManifestWeeks": [
       {
         "EndDate": "2019-02-03T00:00:00",
@@ -4696,8 +4706,8 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
-          "Id": 348
+          "AudienceString": "House Holds",
+          "Id": 31
         },
         "CPM": 99.8800,
         "Impressions": null,
@@ -4729,7 +4739,12 @@
         "ProgramName": null
       }
     ],
-    "ManifestRates": [],
+    "ManifestRates": [
+      {
+        "SpotCost": 204.8613,
+        "SpotLengthId": 1
+      }
+    ],
     "ManifestWeeks": [
       {
         "EndDate": "2019-02-03T00:00:00",
@@ -5576,8 +5591,8 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
-          "Id": 348
+          "AudienceString": "House Holds",
+          "Id": 31
         },
         "CPM": 99.8800,
         "Impressions": null,
@@ -5611,7 +5626,7 @@
     ],
     "ManifestRates": [
       {
-        "SpotCost": 38.9074,
+        "SpotCost": 2335.2380,
         "SpotLengthId": 1
       }
     ],
@@ -6461,8 +6476,8 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
-          "Id": 348
+          "AudienceString": "House Holds",
+          "Id": 31
         },
         "CPM": 99.8800,
         "Impressions": null,
@@ -6496,7 +6511,7 @@
     ],
     "ManifestRates": [
       {
-        "SpotCost": 13.3784,
+        "SpotCost": 802.6164,
         "SpotLengthId": 1
       }
     ],
@@ -7346,8 +7361,8 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
-          "Id": 348
+          "AudienceString": "House Holds",
+          "Id": 31
         },
         "CPM": 99.8800,
         "Impressions": null,
@@ -7423,7 +7438,7 @@
     ],
     "ManifestRates": [
       {
-        "SpotCost": 15.1199,
+        "SpotCost": 239.9843,
         "SpotLengthId": 1
       }
     ],
@@ -8273,8 +8288,8 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
-          "Id": 348
+          "AudienceString": "House Holds",
+          "Id": 31
         },
         "CPM": 99.8800,
         "Impressions": null,
@@ -8306,7 +8321,12 @@
         "ProgramName": null
       }
     ],
-    "ManifestRates": [],
+    "ManifestRates": [
+      {
+        "SpotCost": 173.8432,
+        "SpotLengthId": 1
+      }
+    ],
     "ManifestWeeks": [
       {
         "EndDate": "2019-02-03T00:00:00",
@@ -9153,8 +9173,8 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
-          "Id": 348
+          "AudienceString": "House Holds",
+          "Id": 31
         },
         "CPM": 99.8800,
         "Impressions": null,
@@ -9186,7 +9206,12 @@
         "ProgramName": null
       }
     ],
-    "ManifestRates": [],
+    "ManifestRates": [
+      {
+        "SpotCost": 204.8613,
+        "SpotLengthId": 2
+      }
+    ],
     "ManifestWeeks": [
       {
         "EndDate": "2019-02-03T00:00:00",
@@ -10033,8 +10058,8 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
-          "Id": 348
+          "AudienceString": "House Holds",
+          "Id": 31
         },
         "CPM": 99.8800,
         "Impressions": null,
@@ -10068,7 +10093,7 @@
     ],
     "ManifestRates": [
       {
-        "SpotCost": 38.9074,
+        "SpotCost": 2335.2380,
         "SpotLengthId": 2
       }
     ],
@@ -10918,8 +10943,8 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
-          "Id": 348
+          "AudienceString": "House Holds",
+          "Id": 31
         },
         "CPM": 99.8800,
         "Impressions": null,
@@ -10953,7 +10978,7 @@
     ],
     "ManifestRates": [
       {
-        "SpotCost": 13.3784,
+        "SpotCost": 802.6164,
         "SpotLengthId": 2
       }
     ],
@@ -11803,8 +11828,8 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
-          "Id": 348
+          "AudienceString": "House Holds",
+          "Id": 31
         },
         "CPM": 99.8800,
         "Impressions": null,
@@ -11880,7 +11905,7 @@
     ],
     "ManifestRates": [
       {
-        "SpotCost": 15.1199,
+        "SpotCost": 239.9843,
         "SpotLengthId": 2
       }
     ],
@@ -12730,8 +12755,8 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
-          "Id": 348
+          "AudienceString": "House Holds",
+          "Id": 31
         },
         "CPM": 99.8800,
         "Impressions": null,
@@ -12763,7 +12788,12 @@
         "ProgramName": null
       }
     ],
-    "ManifestRates": [],
+    "ManifestRates": [
+      {
+        "SpotCost": 173.8432,
+        "SpotLengthId": 2
+      }
+    ],
     "ManifestWeeks": [
       {
         "EndDate": "2019-02-03T00:00:00",
@@ -13610,8 +13640,8 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
-          "Id": 348
+          "AudienceString": "House Holds",
+          "Id": 31
         },
         "CPM": 99.8800,
         "Impressions": null,
@@ -13643,7 +13673,12 @@
         "ProgramName": null
       }
     ],
-    "ManifestRates": [],
+    "ManifestRates": [
+      {
+        "SpotCost": 204.8613,
+        "SpotLengthId": 1
+      }
+    ],
     "ManifestWeeks": [
       {
         "EndDate": "2019-02-03T00:00:00",
@@ -14490,8 +14525,8 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
-          "Id": 348
+          "AudienceString": "House Holds",
+          "Id": 31
         },
         "CPM": 99.8800,
         "Impressions": null,
@@ -14525,7 +14560,7 @@
     ],
     "ManifestRates": [
       {
-        "SpotCost": 38.9074,
+        "SpotCost": 2335.2380,
         "SpotLengthId": 1
       }
     ],
@@ -15375,8 +15410,8 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
-          "Id": 348
+          "AudienceString": "House Holds",
+          "Id": 31
         },
         "CPM": 99.8800,
         "Impressions": null,
@@ -15410,7 +15445,7 @@
     ],
     "ManifestRates": [
       {
-        "SpotCost": 13.3784,
+        "SpotCost": 802.6164,
         "SpotLengthId": 1
       }
     ],
@@ -16260,8 +16295,8 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
-          "Id": 348
+          "AudienceString": "House Holds",
+          "Id": 31
         },
         "CPM": 99.8800,
         "Impressions": null,
@@ -16337,7 +16372,7 @@
     ],
     "ManifestRates": [
       {
-        "SpotCost": 15.1199,
+        "SpotCost": 239.9843,
         "SpotLengthId": 1
       }
     ],
@@ -17187,8 +17222,8 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
-          "Id": 348
+          "AudienceString": "House Holds",
+          "Id": 31
         },
         "CPM": 99.8800,
         "Impressions": null,
@@ -17220,7 +17255,12 @@
         "ProgramName": null
       }
     ],
-    "ManifestRates": [],
+    "ManifestRates": [
+      {
+        "SpotCost": 173.8432,
+        "SpotLengthId": 1
+      }
+    ],
     "ManifestWeeks": [
       {
         "EndDate": "2019-02-03T00:00:00",
@@ -18067,8 +18107,8 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
-          "Id": 348
+          "AudienceString": "House Holds",
+          "Id": 31
         },
         "CPM": 99.8800,
         "Impressions": null,
@@ -18100,7 +18140,12 @@
         "ProgramName": null
       }
     ],
-    "ManifestRates": [],
+    "ManifestRates": [
+      {
+        "SpotCost": 204.8613,
+        "SpotLengthId": 1
+      }
+    ],
     "ManifestWeeks": [
       {
         "EndDate": "2019-02-03T00:00:00",
@@ -18947,8 +18992,8 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
-          "Id": 348
+          "AudienceString": "House Holds",
+          "Id": 31
         },
         "CPM": 99.8800,
         "Impressions": null,
@@ -18982,7 +19027,7 @@
     ],
     "ManifestRates": [
       {
-        "SpotCost": 38.9074,
+        "SpotCost": 2335.2380,
         "SpotLengthId": 1
       }
     ],
@@ -19832,8 +19877,8 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
-          "Id": 348
+          "AudienceString": "House Holds",
+          "Id": 31
         },
         "CPM": 99.8800,
         "Impressions": null,
@@ -19867,7 +19912,7 @@
     ],
     "ManifestRates": [
       {
-        "SpotCost": 13.3784,
+        "SpotCost": 802.6164,
         "SpotLengthId": 1
       }
     ],
@@ -20717,8 +20762,8 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
-          "Id": 348
+          "AudienceString": "House Holds",
+          "Id": 31
         },
         "CPM": 99.8800,
         "Impressions": null,
@@ -20794,7 +20839,7 @@
     ],
     "ManifestRates": [
       {
-        "SpotCost": 15.1199,
+        "SpotCost": 239.9843,
         "SpotLengthId": 1
       }
     ],
@@ -21644,8 +21689,8 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
-          "Id": 348
+          "AudienceString": "House Holds",
+          "Id": 31
         },
         "CPM": 99.8800,
         "Impressions": null,
@@ -21677,7 +21722,12 @@
         "ProgramName": null
       }
     ],
-    "ManifestRates": [],
+    "ManifestRates": [
+      {
+        "SpotCost": 173.8432,
+        "SpotLengthId": 1
+      }
+    ],
     "ManifestWeeks": [
       {
         "EndDate": "2019-02-03T00:00:00",
@@ -22524,8 +22574,8 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
-          "Id": 348
+          "AudienceString": "House Holds",
+          "Id": 31
         },
         "CPM": 99.8800,
         "Impressions": null,
@@ -22557,7 +22607,12 @@
         "ProgramName": null
       }
     ],
-    "ManifestRates": [],
+    "ManifestRates": [
+      {
+        "SpotCost": 204.8613,
+        "SpotLengthId": 1
+      }
+    ],
     "ManifestWeeks": [
       {
         "EndDate": "2019-02-03T00:00:00",
@@ -23404,8 +23459,8 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
-          "Id": 348
+          "AudienceString": "House Holds",
+          "Id": 31
         },
         "CPM": 99.8800,
         "Impressions": null,
@@ -23439,7 +23494,7 @@
     ],
     "ManifestRates": [
       {
-        "SpotCost": 38.9074,
+        "SpotCost": 2335.2380,
         "SpotLengthId": 1
       }
     ],
@@ -24289,8 +24344,8 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
-          "Id": 348
+          "AudienceString": "House Holds",
+          "Id": 31
         },
         "CPM": 99.8800,
         "Impressions": null,
@@ -24324,7 +24379,7 @@
     ],
     "ManifestRates": [
       {
-        "SpotCost": 13.3784,
+        "SpotCost": 802.6164,
         "SpotLengthId": 1
       }
     ],
@@ -25174,8 +25229,8 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
-          "Id": 348
+          "AudienceString": "House Holds",
+          "Id": 31
         },
         "CPM": 99.8800,
         "Impressions": null,
@@ -25251,7 +25306,7 @@
     ],
     "ManifestRates": [
       {
-        "SpotCost": 15.1199,
+        "SpotCost": 239.9843,
         "SpotLengthId": 1
       }
     ],
@@ -26101,8 +26156,8 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
-          "Id": 348
+          "AudienceString": "House Holds",
+          "Id": 31
         },
         "CPM": 99.8800,
         "Impressions": null,
@@ -26134,7 +26189,12 @@
         "ProgramName": null
       }
     ],
-    "ManifestRates": [],
+    "ManifestRates": [
+      {
+        "SpotCost": 173.8432,
+        "SpotLengthId": 1
+      }
+    ],
     "ManifestWeeks": [
       {
         "EndDate": "2019-02-03T00:00:00",
@@ -26981,8 +27041,8 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
-          "Id": 348
+          "AudienceString": "House Holds",
+          "Id": 31
         },
         "CPM": 99.8800,
         "Impressions": null,
@@ -27014,7 +27074,12 @@
         "ProgramName": null
       }
     ],
-    "ManifestRates": [],
+    "ManifestRates": [
+      {
+        "SpotCost": 204.8613,
+        "SpotLengthId": 3
+      }
+    ],
     "ManifestWeeks": [
       {
         "EndDate": "2019-02-03T00:00:00",
@@ -27861,8 +27926,8 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
-          "Id": 348
+          "AudienceString": "House Holds",
+          "Id": 31
         },
         "CPM": 99.8800,
         "Impressions": null,
@@ -27896,7 +27961,7 @@
     ],
     "ManifestRates": [
       {
-        "SpotCost": 38.9074,
+        "SpotCost": 2335.2380,
         "SpotLengthId": 3
       }
     ],
@@ -28746,8 +28811,8 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
-          "Id": 348
+          "AudienceString": "House Holds",
+          "Id": 31
         },
         "CPM": 99.8800,
         "Impressions": null,
@@ -28781,7 +28846,7 @@
     ],
     "ManifestRates": [
       {
-        "SpotCost": 13.3784,
+        "SpotCost": 802.6164,
         "SpotLengthId": 3
       }
     ],
@@ -29631,8 +29696,8 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
-          "Id": 348
+          "AudienceString": "House Holds",
+          "Id": 31
         },
         "CPM": 99.8800,
         "Impressions": null,
@@ -29708,7 +29773,7 @@
     ],
     "ManifestRates": [
       {
-        "SpotCost": 15.1199,
+        "SpotCost": 239.9843,
         "SpotLengthId": 3
       }
     ],
@@ -30558,8 +30623,8 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
-          "Id": 348
+          "AudienceString": "House Holds",
+          "Id": 31
         },
         "CPM": 99.8800,
         "Impressions": null,
@@ -30591,7 +30656,12 @@
         "ProgramName": null
       }
     ],
-    "ManifestRates": [],
+    "ManifestRates": [
+      {
+        "SpotCost": 173.8432,
+        "SpotLengthId": 3
+      }
+    ],
     "ManifestWeeks": [
       {
         "EndDate": "2019-02-03T00:00:00",

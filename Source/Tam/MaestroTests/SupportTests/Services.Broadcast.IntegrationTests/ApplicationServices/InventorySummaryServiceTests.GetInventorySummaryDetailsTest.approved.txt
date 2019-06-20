@@ -2,9 +2,9 @@
   {
     "Details": [
       {
-        "CPM": 0.9938263879532274573015856455,
+        "CPM": 1.9931327254390139689786450738,
         "Daypart": "EMN",
-        "HouseholdImpressions": 474770.95166666672,
+        "HouseholdImpressions": 236732.80458333332,
         "TotalCoverage": 46.686,
         "TotalMarkets": 38,
         "TotalUnits": 8
@@ -12,7 +12,7 @@
     ],
     "HasInventoryGaps": null,
     "HasRatesAvailableForQuarter": true,
-    "HouseholdImpressions": 474770.95166666672,
+    "HouseholdImpressions": 236732.80458333332,
     "HutBook": null,
     "InventorySourceId": 4,
     "InventorySourceName": "TTWN",
