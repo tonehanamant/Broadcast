@@ -1,1 +1,1 @@
-﻿build info
+﻿This file is populated with build information during deployment. Do not remove.

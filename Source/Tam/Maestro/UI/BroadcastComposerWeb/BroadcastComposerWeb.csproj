@@ -654,8 +654,17 @@
   <PropertyGroup>
     <PostBuildEvent>Copy /Y "$(TargetDir)ServiceCommonAppSettings.config" "$(TargetDir)..\ServiceCommonAppSettings.config"</PostBuildEvent>
   </PropertyGroup>
-  <PropertyGroup>
-    <PreBuildEvent>set &gt; $(ProjectDir)api_build.txt</PreBuildEvent>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <PreBuildEvent>echo DATE: %25date%25 &gt; $(ProjectDir)api_build.txt
+echo TIME: %25time%25 &gt;&gt; $(ProjectDir)api_build.txt
+echo AGENT_MACHINENAME: %25AGENT_MACHINENAME%25 &gt;&gt; $(ProjectDir)api_build.txt
+echo AGENT_NAME: %25AGENT_NAME%25 &gt;&gt; $(ProjectDir)api_build.txt
+echo BUILDCONFIGURATION: %25BUILDCONFIGURATION%25 &gt;&gt; $(ProjectDir)api_build.txt
+echo BUILDPLATFORM: %25BUILDPLATFORM%25 &gt;&gt; $(ProjectDir)api_build.txt
+echo BUILD_BUILDNUMBER: %25BUILD_BUILDNUMBER%25 &gt;&gt; $(ProjectDir)api_build.txt
+echo BUILD_REPOSITORY_NAME: %25BUILD_REPOSITORY_NAME%25 &gt;&gt; $(ProjectDir)api_build.txt
+echo BUILD_SOURCEBRANCHNAME: %25BUILD_SOURCEBRANCHNAME%25 &gt;&gt; $(ProjectDir)api_build.txt
+echo BUILD_SOURCEVERSION: %25BUILD_SOURCEVERSION%25 &gt;&gt; $(ProjectDir)api_build.txt</PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
