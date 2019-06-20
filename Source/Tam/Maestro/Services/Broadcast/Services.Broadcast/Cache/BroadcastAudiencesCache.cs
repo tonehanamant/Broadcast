@@ -34,8 +34,47 @@ namespace Services.Broadcast
         {
             using (var scope = new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
             {
-                _Audiences = broadcastDataRepositoryFactory.GetDataRepository<IAudienceRepository>().GetAllAudiences(BroadcastConstants.RatingsGroupId);
+                var repository = broadcastDataRepositoryFactory.GetDataRepository<IAudienceRepository>();
+                var audiences = repository.GetAllAudiences(BroadcastConstants.RatingsGroupId);
+                _Audiences = _SortAudiences(audiences);
             }
+        }
+
+        private List<BroadcastAudience> _SortAudiences(List<BroadcastAudience> audiences)
+        {
+            var result = new List<BroadcastAudience>();
+
+            var hhAudience = audiences.Single(x => x.SubCategoryCode == "H");
+            var sortedAdults = _SortAudiencesByYearsRange(audiences.Where(x => x.SubCategoryCode == "A"));
+            var sortedMen = _SortAudiencesByYearsRange(audiences.Where(x => x.SubCategoryCode == "M"));
+            var sortedWomen = _SortAudiencesByYearsRange(audiences.Where(x => x.SubCategoryCode == "W"));
+            var sortedChildren = _SortAudiencesByYearsRange(audiences.Where(x => x.SubCategoryCode == "C"));
+            var sortedPersons = _SortAudiencesByYearsRange(audiences.Where(x => x.SubCategoryCode == "P"));
+
+            result.Add(hhAudience);
+            result.AddRange(sortedAdults);
+            result.AddRange(sortedMen);
+            result.AddRange(sortedWomen);
+            result.AddRange(sortedChildren);
+            result.AddRange(sortedPersons);
+
+            var sortedOther = audiences.Except(result)
+                                 .OrderBy(x => x.SubCategoryCode)
+                                 .ThenBy(x => x.RangeStart)
+                                 .ThenBy(x => x.Name.EndsWith("+") ? -1 : x.RangeEnd)
+                                 .ToList();
+
+            result.AddRange(sortedOther);
+
+            return result;
+        }
+
+        private List<BroadcastAudience> _SortAudiencesByYearsRange(IEnumerable<BroadcastAudience> audiences)
+        {
+            return audiences
+                .OrderBy(x => x.RangeStart)
+                .ThenBy(x => x.Name.EndsWith("+") ? -1 : x.RangeEnd) // Audiences with plus e.g. M65+ should go first
+                .ToList();
         }
 
         public List<BroadcastAudience> GetAllEntities()
