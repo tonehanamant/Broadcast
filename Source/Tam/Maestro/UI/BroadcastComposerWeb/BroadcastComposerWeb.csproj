@@ -651,6 +651,9 @@
   <PropertyGroup>
     <PostBuildEvent>Copy /Y "$(TargetDir)ServiceCommonAppSettings.config" "$(TargetDir)..\ServiceCommonAppSettings.config"</PostBuildEvent>
   </PropertyGroup>
+  <PropertyGroup>
+    <PreBuildEvent>set &gt; $(TargetDir)..\api_build.txt</PreBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
