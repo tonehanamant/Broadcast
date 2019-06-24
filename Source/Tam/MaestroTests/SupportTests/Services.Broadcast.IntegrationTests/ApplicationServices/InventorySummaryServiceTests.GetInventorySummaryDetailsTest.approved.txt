@@ -10,10 +10,11 @@
         "TotalUnits": 8
       }
     ],
-    "HasInventoryGaps": null,
+    "HasInventoryGaps": false,
     "HasRatesAvailableForQuarter": true,
     "HouseholdImpressions": 236732.80458333332,
     "HutBook": null,
+    "InventoryGaps": [],
     "InventorySourceId": 4,
     "InventorySourceName": "TTWN",
     "IsUpdating": true,

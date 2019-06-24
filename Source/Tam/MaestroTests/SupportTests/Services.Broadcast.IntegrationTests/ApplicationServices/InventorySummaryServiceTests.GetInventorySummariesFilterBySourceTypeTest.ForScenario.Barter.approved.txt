@@ -1,10 +1,77 @@
 ﻿[
   {
     "Details": [],
-    "HasInventoryGaps": null,
+    "HasInventoryGaps": true,
     "HasRatesAvailableForQuarter": false,
     "HouseholdImpressions": null,
     "HutBook": null,
+    "InventoryGaps": [
+      {
+        "AllQuarterMissing": true,
+        "DateGaps": null,
+        "Quarter": {
+          "EndDate": "2018-03-25T23:59:59",
+          "Quarter": 1,
+          "StartDate": "2018-01-01T00:00:00",
+          "Year": 2018
+        }
+      },
+      {
+        "AllQuarterMissing": true,
+        "DateGaps": null,
+        "Quarter": {
+          "EndDate": "2018-06-24T23:59:59",
+          "Quarter": 2,
+          "StartDate": "2018-03-26T00:00:00",
+          "Year": 2018
+        }
+      },
+      {
+        "AllQuarterMissing": true,
+        "DateGaps": null,
+        "Quarter": {
+          "EndDate": "2018-09-30T23:59:59",
+          "Quarter": 3,
+          "StartDate": "2018-06-25T00:00:00",
+          "Year": 2018
+        }
+      },
+      {
+        "AllQuarterMissing": true,
+        "DateGaps": null,
+        "Quarter": {
+          "EndDate": "2018-12-30T23:59:59",
+          "Quarter": 4,
+          "StartDate": "2018-10-01T00:00:00",
+          "Year": 2018
+        }
+      },
+      {
+        "AllQuarterMissing": true,
+        "DateGaps": null,
+        "Quarter": {
+          "EndDate": "2019-03-31T23:59:59",
+          "Quarter": 1,
+          "StartDate": "2018-12-31T00:00:00",
+          "Year": 2019
+        }
+      },
+      {
+        "AllQuarterMissing": false,
+        "DateGaps": [
+          {
+            "End": "2019-06-30T00:00:00",
+            "Start": "2019-04-15T00:00:00"
+          }
+        ],
+        "Quarter": {
+          "EndDate": "2019-06-30T23:59:59",
+          "Quarter": 2,
+          "StartDate": "2019-04-01T00:00:00",
+          "Year": 2019
+        }
+      }
+    ],
     "InventorySourceId": 3,
     "InventorySourceName": "TVB",
     "IsUpdating": false,
@@ -35,10 +102,62 @@
   },
   {
     "Details": [],
-    "HasInventoryGaps": null,
+    "HasInventoryGaps": false,
     "HasRatesAvailableForQuarter": false,
     "HouseholdImpressions": null,
     "HutBook": null,
+    "InventoryGaps": [
+      {
+        "AllQuarterMissing": true,
+        "DateGaps": null,
+        "Quarter": {
+          "EndDate": "2018-03-25T23:59:59",
+          "Quarter": 1,
+          "StartDate": "2018-01-01T00:00:00",
+          "Year": 2018
+        }
+      },
+      {
+        "AllQuarterMissing": true,
+        "DateGaps": null,
+        "Quarter": {
+          "EndDate": "2018-06-24T23:59:59",
+          "Quarter": 2,
+          "StartDate": "2018-03-26T00:00:00",
+          "Year": 2018
+        }
+      },
+      {
+        "AllQuarterMissing": true,
+        "DateGaps": null,
+        "Quarter": {
+          "EndDate": "2018-09-30T23:59:59",
+          "Quarter": 3,
+          "StartDate": "2018-06-25T00:00:00",
+          "Year": 2018
+        }
+      },
+      {
+        "AllQuarterMissing": true,
+        "DateGaps": null,
+        "Quarter": {
+          "EndDate": "2018-12-30T23:59:59",
+          "Quarter": 4,
+          "StartDate": "2018-10-01T00:00:00",
+          "Year": 2018
+        }
+      },
+      {
+        "AllQuarterMissing": true,
+        "DateGaps": null,
+        "Quarter": {
+          "EndDate": "2019-03-31T23:59:59",
+          "Quarter": 1,
+          "StartDate": "2018-12-31T00:00:00",
+          "Year": 2019
+        }
+      }
+    ],
     "InventorySourceId": 4,
     "InventorySourceName": "TTWN",
     "IsUpdating": false,
@@ -69,10 +188,11 @@
   },
   {
     "Details": [],
-    "HasInventoryGaps": null,
+    "HasInventoryGaps": false,
     "HasRatesAvailableForQuarter": false,
     "HouseholdImpressions": null,
     "HutBook": null,
+    "InventoryGaps": [],
     "InventorySourceId": 5,
     "InventorySourceName": "CNN",
     "IsUpdating": false,
@@ -93,10 +213,71 @@
   },
   {
     "Details": [],
-    "HasInventoryGaps": null,
+    "HasInventoryGaps": true,
     "HasRatesAvailableForQuarter": false,
     "HouseholdImpressions": null,
     "HutBook": null,
+    "InventoryGaps": [
+      {
+        "AllQuarterMissing": true,
+        "DateGaps": null,
+        "Quarter": {
+          "EndDate": "2018-03-25T23:59:59",
+          "Quarter": 1,
+          "StartDate": "2018-01-01T00:00:00",
+          "Year": 2018
+        }
+      },
+      {
+        "AllQuarterMissing": true,
+        "DateGaps": null,
+        "Quarter": {
+          "EndDate": "2018-06-24T23:59:59",
+          "Quarter": 2,
+          "StartDate": "2018-03-26T00:00:00",
+          "Year": 2018
+        }
+      },
+      {
+        "AllQuarterMissing": true,
+        "DateGaps": null,
+        "Quarter": {
+          "EndDate": "2018-09-30T23:59:59",
+          "Quarter": 3,
+          "StartDate": "2018-06-25T00:00:00",
+          "Year": 2018
+        }
+      },
+      {
+        "AllQuarterMissing": true,
+        "DateGaps": null,
+        "Quarter": {
+          "EndDate": "2018-12-30T23:59:59",
+          "Quarter": 4,
+          "StartDate": "2018-10-01T00:00:00",
+          "Year": 2018
+        }
+      },
+      {
+        "AllQuarterMissing": false,
+        "DateGaps": [
+          {
+            "End": "2019-02-03T00:00:00",
+            "Start": "2018-12-31T00:00:00"
+          },
+          {
+            "End": "2019-03-31T00:00:00",
+            "Start": "2019-02-18T00:00:00"
+          }
+        ],
+        "Quarter": {
+          "EndDate": "2019-03-31T23:59:59",
+          "Quarter": 1,
+          "StartDate": "2018-12-31T00:00:00",
+          "Year": 2019
+        }
+      }
+    ],
     "InventorySourceId": 7,
     "InventorySourceName": "LilaMax",
     "IsUpdating": false,
@@ -127,10 +308,11 @@
   },
   {
     "Details": [],
-    "HasInventoryGaps": null,
+    "HasInventoryGaps": false,
     "HasRatesAvailableForQuarter": false,
     "HouseholdImpressions": null,
     "HutBook": null,
+    "InventoryGaps": [],
     "InventorySourceId": 8,
     "InventorySourceName": "MLB",
     "IsUpdating": false,
@@ -151,10 +333,11 @@
   },
   {
     "Details": [],
-    "HasInventoryGaps": null,
+    "HasInventoryGaps": false,
     "HasRatesAvailableForQuarter": false,
     "HouseholdImpressions": null,
     "HutBook": null,
+    "InventoryGaps": [],
     "InventorySourceId": 9,
     "InventorySourceName": "Ference Media",
     "IsUpdating": false,

@@ -16,14 +16,16 @@ namespace Services.Broadcast.Converters.InventorySummary
                                      IQuarterCalculationEngine quarterCalculationEngine,
                                      IProgramRepository programRepository,
                                      IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
-                                     IMarketCoverageCache marketCoverageCache)
+                                     IMarketCoverageCache marketCoverageCache,
+                                     IInventoryGapCalculationEngine inventoryGapCalculationEngine)
 
             : base(inventoryRepository, 
                    inventorySummaryRepository, 
                    quarterCalculationEngine, 
                    programRepository, 
                    mediaMonthAndWeekAggregateCache,
-                   marketCoverageCache)
+                   marketCoverageCache,
+                   inventoryGapCalculationEngine)
         {
         }
 
@@ -33,10 +35,12 @@ namespace Services.Broadcast.Converters.InventorySummary
             var quartersForInventoryAvailable = GetQuartersForInventoryAvailable(allInventorySourceManifestWeeks);
             var inventorySummaryManifestFiles = GetInventorySummaryManifestFiles(inventorySummaryManifests);
             var stationInventoryManifest = InventoryRepository.GetStationInventoryManifestsByIds(inventorySummaryManifests.Select(x => x.ManifestId));
-
+            
             RemoveWeeksNotInQuarter(stationInventoryManifest, quarterDetail);
 
             _CalculateHouseHoldImpressionsAndCPM(stationInventoryManifest, householdAudienceId, out var hhImpressions, out var CPM);
+
+            var inventoryGaps = InventoryGapCalculationEngine.GetInventoryGaps(allInventorySourceManifestWeeks, quartersForInventoryAvailable, quarterDetail);
 
             return new DiginetInventorySummaryDto
             {
@@ -49,7 +53,8 @@ namespace Services.Broadcast.Converters.InventorySummary
                 IsUpdating = GetIsInventoryUpdating(inventorySummaryManifestFiles),
                 RatesAvailableFromQuarter = quartersForInventoryAvailable.Item1,
                 RatesAvailableToQuarter = quartersForInventoryAvailable.Item2,
-                HasInventoryGaps = HasInventoryGapsForDateRange(allInventorySourceManifestWeeks, quartersForInventoryAvailable),
+                InventoryGaps = inventoryGaps,
+                HasInventoryGaps = inventoryGaps.Any(),
                 CPM = CPM,
                 Details = _GetDetails(inventorySummaryManifests, stationInventoryManifest, householdAudienceId, inventorySummaryManifestFiles)
             };

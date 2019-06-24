@@ -6,6 +6,23 @@
     "HasRatesAvailableForQuarter": true,
     "HouseholdImpressions": null,
     "HutBook": null,
+    "InventoryGaps": [
+      {
+        "AllQuarterMissing": false,
+        "DateGaps": [
+          {
+            "End": "2018-03-25T00:00:00",
+            "Start": "2018-02-19T00:00:00"
+          }
+        ],
+        "Quarter": {
+          "EndDate": "2018-03-25T23:59:59",
+          "Quarter": 1,
+          "StartDate": "2018-01-01T00:00:00",
+          "Year": 2018
+        }
+      }
+    ],
     "InventorySourceId": 13,
     "InventorySourceName": "20th Century Fox (Twentieth Century)",
     "IsUpdating": false,
@@ -40,6 +57,23 @@
     "HasRatesAvailableForQuarter": true,
     "HouseholdImpressions": null,
     "HutBook": null,
+    "InventoryGaps": [
+      {
+        "AllQuarterMissing": false,
+        "DateGaps": [
+          {
+            "End": "2018-03-25T00:00:00",
+            "Start": "2018-01-15T00:00:00"
+          }
+        ],
+        "Quarter": {
+          "EndDate": "2018-03-25T23:59:59",
+          "Quarter": 1,
+          "StartDate": "2018-01-01T00:00:00",
+          "Year": 2018
+        }
+      }
+    ],
     "InventorySourceId": 14,
     "InventorySourceName": "CBS Synd",
     "IsUpdating": false,
@@ -74,6 +108,23 @@
     "HasRatesAvailableForQuarter": true,
     "HouseholdImpressions": null,
     "HutBook": null,
+    "InventoryGaps": [
+      {
+        "AllQuarterMissing": false,
+        "DateGaps": [
+          {
+            "End": "2018-03-25T00:00:00",
+            "Start": "2018-01-15T00:00:00"
+          }
+        ],
+        "Quarter": {
+          "EndDate": "2018-03-25T23:59:59",
+          "Quarter": 1,
+          "StartDate": "2018-01-01T00:00:00",
+          "Year": 2018
+        }
+      }
+    ],
     "InventorySourceId": 15,
     "InventorySourceName": "NBCU Syn",
     "IsUpdating": false,
@@ -108,6 +159,23 @@
     "HasRatesAvailableForQuarter": true,
     "HouseholdImpressions": null,
     "HutBook": null,
+    "InventoryGaps": [
+      {
+        "AllQuarterMissing": false,
+        "DateGaps": [
+          {
+            "End": "2018-03-25T00:00:00",
+            "Start": "2018-01-15T00:00:00"
+          }
+        ],
+        "Quarter": {
+          "EndDate": "2018-03-25T23:59:59",
+          "Quarter": 1,
+          "StartDate": "2018-01-01T00:00:00",
+          "Year": 2018
+        }
+      }
+    ],
     "InventorySourceId": 16,
     "InventorySourceName": "WB Syn",
     "IsUpdating": false,

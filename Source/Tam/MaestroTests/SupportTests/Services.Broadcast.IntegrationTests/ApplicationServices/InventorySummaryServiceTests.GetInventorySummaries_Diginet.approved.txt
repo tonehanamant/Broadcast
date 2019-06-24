@@ -12,6 +12,27 @@
     "HasRatesAvailableForQuarter": true,
     "HouseholdImpressions": null,
     "HutBook": null,
+    "InventoryGaps": [
+      {
+        "AllQuarterMissing": false,
+        "DateGaps": [
+          {
+            "End": "2019-05-19T00:00:00",
+            "Start": "2019-04-01T00:00:00"
+          },
+          {
+            "End": "2019-06-30T00:00:00",
+            "Start": "2019-06-03T00:00:00"
+          }
+        ],
+        "Quarter": {
+          "EndDate": "2019-06-30T23:59:59",
+          "Quarter": 2,
+          "StartDate": "2019-04-01T00:00:00",
+          "Year": 2019
+        }
+      }
+    ],
     "InventorySourceId": 18,
     "InventorySourceName": "Bounce",
     "IsUpdating": false,

@@ -222,6 +222,7 @@
   <ItemGroup>
     <Compile Include="Aggregates\SchedulesAggregate.cs" />
     <Compile Include="ApplicationServices\DaypartCodeService.cs" />
+    <Compile Include="BusinessEngines\InventorySummaryRatesGapEngine.cs" />
     <Compile Include="Cache\MarketCoverageCache.cs" />
     <Compile Include="Converters\InventorySummary\DiginetSummaryFactory.cs" />
     <Compile Include="Converters\InventorySummary\ProprietaryOAndOSummaryFactory.cs" />
@@ -252,6 +253,7 @@
     <Compile Include="Entities\InventorySummary\InventorySummaryFilterDto.cs" />
     <Compile Include="Entities\InventorySummary\InventoryQuartersDto.cs" />
     <Compile Include="Entities\InventorySummary\InventorySummaryManifestFileDto.cs" />
+    <Compile Include="Entities\InventorySummary\InventorySummaryMissingWeeks.cs" />
     <Compile Include="Entities\InventorySummary\InventorySummaryQuarterDto.cs" />
     <Compile Include="Converters\InventorySummary\OpenMarketSummaryFactory.cs" />
     <Compile Include="Converters\InventorySummary\BarterInventorySummaryFactory.cs" />

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using static Services.Broadcast.Converters.InventorySummary.BaseInventorySummaryAbstractFactory;
 
 namespace Services.Broadcast.Entities.InventorySummary
 {
@@ -19,6 +20,7 @@ namespace Services.Broadcast.Entities.InventorySummary
         public bool? HasInventoryGaps { get; set; }
         public MediaMonthDto ShareBook { get; set; }
         public MediaMonthDto HutBook { get; set; }
+        public List<InventoryGapDetail> InventoryGaps { get; set; }
     }
 
     public class BarterInventorySummaryDto : InventorySummaryDto

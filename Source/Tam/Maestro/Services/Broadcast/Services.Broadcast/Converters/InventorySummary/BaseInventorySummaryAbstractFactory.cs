@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Tam.Maestro.Data.Entities;
+using Tam.Maestro.Services.ContractInterfaces.Common;
 
 namespace Services.Broadcast.Converters.InventorySummary
 {
@@ -17,6 +18,7 @@ namespace Services.Broadcast.Converters.InventorySummary
         protected readonly IInventoryRepository InventoryRepository;
         protected readonly IInventorySummaryRepository InventorySummaryRepository;
         protected readonly IMarketCoverageCache MarketCoverageCache;
+        protected readonly IInventoryGapCalculationEngine InventoryGapCalculationEngine;
 
         private readonly IQuarterCalculationEngine _QuarterCalculationEngine;
         private readonly IProgramRepository _ProgramRepository;
@@ -27,11 +29,13 @@ namespace Services.Broadcast.Converters.InventorySummary
                                                    IQuarterCalculationEngine quarterCalculationEngine,
                                                    IProgramRepository programRepository,
                                                    IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
-                                                   IMarketCoverageCache marketCoverageCache)
+                                                   IMarketCoverageCache marketCoverageCache,
+                                                   IInventoryGapCalculationEngine inventoryGapCalculationEngine)
         {
             InventoryRepository = inventoryRepository;
             InventorySummaryRepository = inventorySummaryRepository;
             MarketCoverageCache = marketCoverageCache;
+            InventoryGapCalculationEngine = inventoryGapCalculationEngine;
             _QuarterCalculationEngine = quarterCalculationEngine;
             _ProgramRepository = programRepository;
             _MediaMonthAndWeekAggregateCache = mediaMonthAndWeekAggregateCache;
@@ -146,22 +150,6 @@ namespace Services.Broadcast.Converters.InventorySummary
                             .Where(x => !string.IsNullOrWhiteSpace(x))
                             .Distinct(StringComparer.OrdinalIgnoreCase)
                             .Count();
-        }
-
-        protected bool HasInventoryGapsForDateRange(IEnumerable<StationInventoryManifestWeek> manifestWeeks, Tuple<QuarterDetailDto, QuarterDetailDto> inventoryDateRangeTuple)
-        {
-            var dateRange = DateRange.ConvertToDateRange(inventoryDateRangeTuple);
-
-            // no inventory - no gaps
-            if (dateRange.IsEmpty())
-            {
-                return false;
-            }
-
-            var manifestMediaWeeks = manifestWeeks.Select(x => x.MediaWeek.Id).Distinct();
-            var mediaWeeksForDateRange = _MediaMonthAndWeekAggregateCache.GetMediaWeeksIntersecting(dateRange.Start.Value, dateRange.End.Value).Select(x => x.Id);
-
-            return mediaWeeksForDateRange.Except(manifestMediaWeeks).Any();
         }
     }
 }

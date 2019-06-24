@@ -10,7 +10,7 @@
         "TotalUnits": 1
       }
     ],
-    "HasInventoryGaps": null,
+    "HasInventoryGaps": true,
     "HasRatesAvailableForQuarter": true,
     "HouseholdImpressions": 1234.0,
     "HutBook": {
@@ -18,6 +18,23 @@
       "Month": 2,
       "Year": 2018
     },
+    "InventoryGaps": [
+      {
+        "AllQuarterMissing": false,
+        "DateGaps": [
+          {
+            "End": "2019-06-30T00:00:00",
+            "Start": "2019-04-15T00:00:00"
+          }
+        ],
+        "Quarter": {
+          "EndDate": "2019-06-30T23:59:59",
+          "Quarter": 2,
+          "StartDate": "2019-04-01T00:00:00",
+          "Year": 2019
+        }
+      }
+    ],
     "InventorySourceId": 3,
     "InventorySourceName": "TVB",
     "IsUpdating": false,

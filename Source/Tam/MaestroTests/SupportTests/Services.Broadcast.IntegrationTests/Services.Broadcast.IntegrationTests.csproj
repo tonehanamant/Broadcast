@@ -225,6 +225,7 @@
     <Compile Include="ApplicationServices\CampaignServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\DaypartCodeServiceTests.cs" />
     <Compile Include="ApplicationServices\LogoServiceTests.cs" />
+	<Compile Include="ApplicationServices\InventoryGapCalculationEngineTests.cs" />
     <Compile Include="ApplicationServices\ProprietaryFileImporterIntegrationTests.cs" />
     <Compile Include="ApplicationServices\ProprietaryInventoryServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\BaseProposalInventoryServiceIntegrationTests.cs" />

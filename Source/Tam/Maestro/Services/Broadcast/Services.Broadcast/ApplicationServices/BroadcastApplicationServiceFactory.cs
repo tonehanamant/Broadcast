@@ -165,6 +165,7 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IDataLakeSystemParameters, DataLakeSystemParameters>();
 
             unityContainer.RegisterType<IInventorySummaryService, InventorySummaryService>();
+            unityContainer.RegisterType<IInventoryGapCalculationEngine, InventoryGapCalculationEngine>();
 
             unityContainer.RegisterType<ICampaignService, CampaignService>();
 

@@ -44,12 +44,14 @@ namespace Services.Broadcast.ApplicationServices
         };
         private readonly IMarketCoverageCache _MarketCoverageCache;
         private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekAggregateCache;
+        private readonly IInventoryGapCalculationEngine _InventoryGapCalculationEngine;
 
         public InventorySummaryService(IDataRepositoryFactory broadcastDataRepositoryFactory,
                                        IQuarterCalculationEngine quarterCalculationEngine,
                                        IBroadcastAudiencesCache audiencesCache,
                                        IMarketCoverageCache marketCoverageCache,
-                                       IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache)
+                                       IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
+                                       IInventoryGapCalculationEngine inventoryGapCalculationEngine)
         {
             _QuarterCalculationEngine = quarterCalculationEngine;
             _AudiencesCache = audiencesCache;
@@ -59,6 +61,7 @@ namespace Services.Broadcast.ApplicationServices
             _DaypartCodeRepository = broadcastDataRepositoryFactory.GetDataRepository<IDaypartCodeRepository>();
             _MarketCoverageCache = marketCoverageCache;
             _MediaMonthAndWeekAggregateCache = mediaMonthAndWeekAggregateCache;
+            _InventoryGapCalculationEngine = inventoryGapCalculationEngine;
         }
 
         public List<InventorySource> GetInventorySources()
@@ -206,7 +209,8 @@ namespace Services.Broadcast.ApplicationServices
                                                                             _QuarterCalculationEngine,
                                                                             _ProgramRepository,
                                                                             _MediaMonthAndWeekAggregateCache,
-                                                                            _MarketCoverageCache);
+                                                                            _MarketCoverageCache,
+                                                                            _InventoryGapCalculationEngine);
             }
             else if (inventorySource.InventoryType == InventorySourceTypeEnum.OpenMarket)
             {
@@ -215,7 +219,8 @@ namespace Services.Broadcast.ApplicationServices
                                                                        _QuarterCalculationEngine,
                                                                        _ProgramRepository,
                                                                        _MediaMonthAndWeekAggregateCache,
-                                                                       _MarketCoverageCache);               
+                                                                       _MarketCoverageCache,
+                                                                       _InventoryGapCalculationEngine);               
             }
             else if (inventorySource.InventoryType == InventorySourceTypeEnum.ProprietaryOAndO)
             {
@@ -224,16 +229,18 @@ namespace Services.Broadcast.ApplicationServices
                                                                              _QuarterCalculationEngine,
                                                                              _ProgramRepository,
                                                                              _MediaMonthAndWeekAggregateCache,
-                                                                             _MarketCoverageCache);
+                                                                             _MarketCoverageCache,
+                                                                             _InventoryGapCalculationEngine);
             }
             else if (inventorySource.InventoryType == InventorySourceTypeEnum.Syndication)
             {
                 inventorySummaryFactory = new SyndicationSummaryFactory(_InventoryRepository,
-                                                                       _InventorySummaryRepository,
-                                                                       _QuarterCalculationEngine,
-                                                                       _ProgramRepository,
-                                                                       _MediaMonthAndWeekAggregateCache,
-                                                                       _MarketCoverageCache);
+                                                                        _InventorySummaryRepository,
+                                                                        _QuarterCalculationEngine,
+                                                                        _ProgramRepository,
+                                                                        _MediaMonthAndWeekAggregateCache,
+                                                                        _MarketCoverageCache,
+                                                                        _InventoryGapCalculationEngine);
             }
             else if (inventorySource.InventoryType == InventorySourceTypeEnum.Diginet)
             {
@@ -242,16 +249,18 @@ namespace Services.Broadcast.ApplicationServices
                                                                     _QuarterCalculationEngine,
                                                                     _ProgramRepository,
                                                                     _MediaMonthAndWeekAggregateCache,
-                                                                    _MarketCoverageCache);
+                                                                    _MarketCoverageCache,
+                                                                    _InventoryGapCalculationEngine);
             }
             else if (inventorySource.InventoryType == InventorySourceTypeEnum.Diginet)
             {
                 inventorySummaryFactory = new DiginetSummaryFactory(_InventoryRepository,
-                                                                            _InventorySummaryRepository,
-                                                                            _QuarterCalculationEngine,
-                                                                            _ProgramRepository,
-                                                                            _MediaMonthAndWeekAggregateCache,
-                                                                            _MarketCoverageCache);
+                                                                    _InventorySummaryRepository,
+                                                                    _QuarterCalculationEngine,
+                                                                    _ProgramRepository,
+                                                                    _MediaMonthAndWeekAggregateCache,
+                                                                    _MarketCoverageCache,
+                                                                    _InventoryGapCalculationEngine);
             }
 
             return inventorySummaryFactory.CreateInventorySummary(inventorySource, householdAudienceId, quarterDetail, manifests);

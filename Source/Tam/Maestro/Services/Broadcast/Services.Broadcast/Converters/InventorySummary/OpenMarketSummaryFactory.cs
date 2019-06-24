@@ -16,14 +16,16 @@ namespace Services.Broadcast.Converters.InventorySummary
                                         IQuarterCalculationEngine quarterCalculationEngine,
                                         IProgramRepository programRepository,
                                         IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
-                                        IMarketCoverageCache marketCoverageCache)
+                                        IMarketCoverageCache marketCoverageCache,
+                                        IInventoryGapCalculationEngine inventoryGapCalculationEngine)
 
             : base(inventoryRepository, 
                    inventorySummaryRepository, 
                    quarterCalculationEngine, 
                    programRepository, 
                    mediaMonthAndWeekAggregateCache,
-                   marketCoverageCache)
+                   marketCoverageCache,
+                   inventoryGapCalculationEngine)
         {
         }
 
@@ -43,6 +45,8 @@ namespace Services.Broadcast.Converters.InventorySummary
 
             GetLatestInventoryPostingBook(inventorySummaryManifestFiles, out var shareBook, out var hutBook);
 
+            var inventoryGaps = InventoryGapCalculationEngine.GetInventoryGaps(allInventorySourceManifestWeeks, quartersForInventoryAvailable, quarterDetail);
+
             return new OpenMarketInventorySummaryDto
             {
                 InventorySourceId = inventorySource.Id,
@@ -56,6 +60,8 @@ namespace Services.Broadcast.Converters.InventorySummary
                 LastUpdatedDate = GetFileLastCreatedDate(inventorySummaryManifestFiles),
                 RatesAvailableFromQuarter = quartersForInventoryAvailable.Item1,
                 RatesAvailableToQuarter = quartersForInventoryAvailable.Item2,
+                HasInventoryGaps = inventoryGaps.Any(),
+                InventoryGaps = inventoryGaps,
                 Details = null, //open market does not have details
                 ShareBook = shareBook,
                 HutBook = hutBook

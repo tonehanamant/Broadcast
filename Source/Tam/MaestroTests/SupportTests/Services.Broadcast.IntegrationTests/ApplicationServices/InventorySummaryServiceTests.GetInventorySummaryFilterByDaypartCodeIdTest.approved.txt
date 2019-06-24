@@ -10,7 +10,7 @@
         "TotalUnits": 1
       }
     ],
-    "HasInventoryGaps": null,
+    "HasInventoryGaps": true,
     "HasRatesAvailableForQuarter": true,
     "HouseholdImpressions": null,
     "HutBook": {
@@ -18,6 +18,27 @@
       "Month": 2,
       "Year": 2018
     },
+    "InventoryGaps": [
+      {
+        "AllQuarterMissing": false,
+        "DateGaps": [
+          {
+            "End": "2019-02-03T00:00:00",
+            "Start": "2018-12-31T00:00:00"
+          },
+          {
+            "End": "2019-03-31T00:00:00",
+            "Start": "2019-02-18T00:00:00"
+          }
+        ],
+        "Quarter": {
+          "EndDate": "2019-03-31T23:59:59",
+          "Quarter": 1,
+          "StartDate": "2018-12-31T00:00:00",
+          "Year": 2019
+        }
+      }
+    ],
     "InventorySourceId": 7,
     "InventorySourceName": "LilaMax",
     "IsUpdating": false,
@@ -71,6 +92,27 @@
       "Month": 2,
       "Year": 2018
     },
+    "InventoryGaps": [
+      {
+        "AllQuarterMissing": false,
+        "DateGaps": [
+          {
+            "End": "2019-02-03T00:00:00",
+            "Start": "2018-12-31T00:00:00"
+          },
+          {
+            "End": "2019-03-31T00:00:00",
+            "Start": "2019-02-18T00:00:00"
+          }
+        ],
+        "Quarter": {
+          "EndDate": "2019-03-31T23:59:59",
+          "Quarter": 1,
+          "StartDate": "2018-12-31T00:00:00",
+          "Year": 2019
+        }
+      }
+    ],
     "InventorySourceId": 11,
     "InventorySourceName": "NBC O&O",
     "IsUpdating": false,

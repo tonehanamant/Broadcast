@@ -1,0 +1,31 @@
+﻿[
+  {
+    "AllQuarterMissing": false,
+    "DateGaps": [
+      {
+        "End": "2018-01-21T00:00:00",
+        "Start": "2018-01-15T00:00:00"
+      },
+      {
+        "End": "2018-03-11T00:00:00",
+        "Start": "2018-03-05T00:00:00"
+      }
+    ],
+    "Quarter": {
+      "EndDate": "2018-03-25T23:59:59",
+      "Quarter": 1,
+      "StartDate": "2018-01-01T00:00:00",
+      "Year": 2018
+    }
+  },
+  {
+    "AllQuarterMissing": true,
+    "DateGaps": null,
+    "Quarter": {
+      "EndDate": "2018-06-24T23:59:59",
+      "Quarter": 2,
+      "StartDate": "2018-03-26T00:00:00",
+      "Year": 2018
+    }
+  }
+]

@@ -1,10 +1,11 @@
 ﻿[
   {
     "Details": [],
-    "HasInventoryGaps": null,
+    "HasInventoryGaps": false,
     "HasRatesAvailableForQuarter": false,
     "HouseholdImpressions": null,
     "HutBook": null,
+    "InventoryGaps": [],
     "InventorySourceId": 8,
     "InventorySourceName": "MLB",
     "IsUpdating": false,
