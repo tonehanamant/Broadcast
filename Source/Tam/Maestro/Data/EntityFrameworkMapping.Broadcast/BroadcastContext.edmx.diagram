@@ -272,6 +272,8 @@
         <EntityTypeShape EntityType="BroadcastModel.station_inventory_manifest_weeks_history" Width="1.5" PointX="30.375" PointY="0.75" />
         <AssociationConnector Association="BroadcastModel.FK_proposals_campaigns" />
         <AssociationConnector Association="BroadcastModel.FK_inventory_file_proprietary_header_daypart_codes" />
+        <EntityTypeShape EntityType="BroadcastModel.inventory_source_logos" Width="1.5" PointX="2.75" PointY="37.125" />
+        <AssociationConnector Association="BroadcastModel.FK_inventory_source_logos_inventory_sources" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

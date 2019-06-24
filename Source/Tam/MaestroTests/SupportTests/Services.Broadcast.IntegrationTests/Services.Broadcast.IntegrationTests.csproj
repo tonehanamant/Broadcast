@@ -224,6 +224,7 @@
     <Compile Include="ApplicationServices\AffidavitValidationEngineTests.cs" />
     <Compile Include="ApplicationServices\CampaignServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\DaypartCodeServiceTests.cs" />
+    <Compile Include="ApplicationServices\LogoServiceTests.cs" />
     <Compile Include="ApplicationServices\ProprietaryFileImporterIntegrationTests.cs" />
     <Compile Include="ApplicationServices\ProprietaryInventoryServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\BaseProposalInventoryServiceIntegrationTests.cs" />
@@ -974,6 +975,12 @@
     <None Include="Files\CTV-Broadcast-2.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Content Include="Files\CNN.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Files\CNN.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Files\ImportingRateData\1Q18 EMN Rates\Albany - WNYT - EM-NN - 1q18.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

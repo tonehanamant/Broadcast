@@ -50,6 +50,31 @@ GO
 
 /*************************************** START UPDATE SCRIPT *****************************************************/
 
+/*************************************** START PRI-5664 *****************************************************/
+IF OBJECT_ID('inventory_source_logos', 'U') IS NULL
+BEGIN
+	CREATE TABLE dbo.inventory_source_logos
+	(  
+		[id] int IDENTITY(1,1) NOT NULL,
+		[inventory_source_id] int NOT NULL,
+		[created_by] varchar(63) NOT NULL,
+		[created_date] datetime NOT NULL,
+		[file_name] varchar(127) NOT NULL,
+		[file_content] varbinary(MAX) NOT NULL
+
+		CONSTRAINT [PK_inventory_source_logos] PRIMARY KEY CLUSTERED 
+		(
+			[id] ASC
+		)
+	)
+
+	ALTER TABLE [dbo].[inventory_source_logos]  WITH CHECK ADD  CONSTRAINT [FK_inventory_source_logos_inventory_sources] FOREIGN KEY([inventory_source_id])
+	REFERENCES [dbo].[inventory_sources] ([id])
+	ALTER TABLE [dbo].[inventory_source_logos] CHECK CONSTRAINT [FK_inventory_source_logos_inventory_sources]
+
+	CREATE NONCLUSTERED INDEX [IX_inventory_source_logos_inventory_source_id] ON [dbo].[inventory_source_logos] ([inventory_source_id])
+END
+/*************************************** END PRI-5664 *****************************************************/
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 

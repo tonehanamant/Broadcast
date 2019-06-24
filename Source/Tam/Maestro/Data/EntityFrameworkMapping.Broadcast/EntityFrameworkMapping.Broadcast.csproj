@@ -426,6 +426,9 @@
     <Compile Include="inventory_sources.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="inventory_source_logos.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="isci_blacklist.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>

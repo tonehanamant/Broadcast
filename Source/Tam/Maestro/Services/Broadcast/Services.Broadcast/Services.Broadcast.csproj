@@ -246,6 +246,7 @@
     <Compile Include="Entities\DateRange.cs" />
     <Compile Include="Entities\DaypartCodeDto.cs" />
     <Compile Include="Entities\Enums\RatesTimeframe.cs" />
+    <Compile Include="Entities\InventoryLogo.cs" />
     <Compile Include="Entities\InventorySummary\InventorySummaryDto.cs" />
     <Compile Include="Converters\InventorySummary\BaseInventorySummaryAbstractFactory.cs" />
     <Compile Include="Entities\InventorySummary\InventorySummaryFilterDto.cs" />
@@ -629,6 +630,7 @@
     <Compile Include="ReportGenerators\SpotTrackerReportGenerator.cs" />
     <Compile Include="Repositories\AudienceRepository.cs" />
     <Compile Include="Repositories\CampaignRepository.cs" />
+    <Compile Include="Repositories\InventoryLogoRepository.cs" />
     <Compile Include="Repositories\ProprietaryInventoryRepository.cs" />
     <Compile Include="Repositories\BroadcastAudienceRepository.cs" />
     <Compile Include="Repositories\BroadcastForecastRepositoryBase.cs" />

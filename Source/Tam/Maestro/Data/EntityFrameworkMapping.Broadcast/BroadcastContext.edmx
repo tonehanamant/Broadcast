@@ -343,6 +343,17 @@
           <Property Name="inventory_source_id" Type="int" Nullable="false" />
           <Property Name="rows_processed" Type="int" />
         </EntityType>
+        <EntityType Name="inventory_source_logos">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="inventory_source_id" Type="int" Nullable="false" />
+          <Property Name="created_by" Type="varchar" MaxLength="63" Nullable="false" />
+          <Property Name="created_date" Type="datetime" Nullable="false" />
+          <Property Name="file_name" Type="varchar" MaxLength="127" Nullable="false" />
+          <Property Name="file_content" Type="varbinary(max)" Nullable="false" />
+        </EntityType>
         <EntityType Name="inventory_sources">
           <Key>
             <PropertyRef Name="id" />
@@ -1777,6 +1788,18 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="inventory_files">
+              <PropertyRef Name="inventory_source_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_inventory_source_logos_inventory_sources">
+          <End Role="inventory_sources" Type="Self.inventory_sources" Multiplicity="1" />
+          <End Role="inventory_source_logos" Type="Self.inventory_source_logos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="inventory_sources">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="inventory_source_logos">
               <PropertyRef Name="inventory_source_id" />
             </Dependent>
           </ReferentialConstraint>
@@ -3516,6 +3539,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySet Name="inventory_file_proprietary_header" EntityType="Self.inventory_file_proprietary_header" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="inventory_file_ratings_jobs" EntityType="Self.inventory_file_ratings_jobs" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="inventory_files" EntityType="Self.inventory_files" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="inventory_source_logos" EntityType="Self.inventory_source_logos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="inventory_sources" EntityType="Self.inventory_sources" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="isci_blacklist" EntityType="Self.isci_blacklist" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="isci_mapping" EntityType="Self.isci_mapping" Schema="dbo" store:Type="Tables" />
@@ -3737,6 +3761,10 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <AssociationSet Name="FK_inventory_files_inventory_source" Association="Self.FK_inventory_files_inventory_source">
             <End Role="inventory_sources" EntitySet="inventory_sources" />
             <End Role="inventory_files" EntitySet="inventory_files" />
+          </AssociationSet>
+          <AssociationSet Name="FK_inventory_source_logos_inventory_sources" Association="Self.FK_inventory_source_logos_inventory_sources">
+            <End Role="inventory_sources" EntitySet="inventory_sources" />
+            <End Role="inventory_source_logos" EntitySet="inventory_source_logos" />
           </AssociationSet>
           <AssociationSet Name="FK_market_coverages_market_coverage_files" Association="Self.FK_market_coverages_market_coverage_files">
             <End Role="market_coverage_files" EntitySet="market_coverage_files" />
@@ -5013,6 +5041,11 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="daypart_codes" EntitySet="daypart_codes" />
             <End Role="inventory_file_proprietary_header" EntitySet="inventory_file_proprietary_header" />
           </AssociationSet>
+          <EntitySet Name="inventory_source_logos" EntityType="BroadcastModel.inventory_source_logos" />
+          <AssociationSet Name="FK_inventory_source_logos_inventory_sources" Association="BroadcastModel.FK_inventory_source_logos_inventory_sources">
+            <End Role="inventory_sources" EntitySet="inventory_sources" />
+            <End Role="inventory_source_logos" EntitySet="inventory_source_logos" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="audience_audiences">
           <Key>
@@ -6011,6 +6044,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="station_inventory_manifest_staging" Relationship="BroadcastModel.FK_station_inventory_manifest_staging_inventory_sources" FromRole="inventory_sources" ToRole="station_inventory_manifest_staging" />
           <NavigationProperty Name="station_inventory_loaded" Relationship="BroadcastModel.FK_station_inventory_loaded_inventory_sources" FromRole="inventory_sources" ToRole="station_inventory_loaded" />
           <NavigationProperty Name="inventory_files" Relationship="BroadcastModel.FK_inventory_files_inventory_source" FromRole="inventory_sources" ToRole="inventory_files" />
+          <NavigationProperty Name="inventory_source_logos" Relationship="BroadcastModel.FK_inventory_source_logos_inventory_sources" FromRole="inventory_sources" ToRole="inventory_source_logos" />
         </EntityType>
         <EntityType Name="station_inventory_group">
           <Key>
@@ -8768,6 +8802,30 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="inventory_source_logos">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="inventory_source_id" Type="Int32" Nullable="false" />
+          <Property Name="created_by" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
+          <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="file_name" Type="String" Nullable="false" MaxLength="127" FixedLength="false" Unicode="false" />
+          <Property Name="file_content" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <NavigationProperty Name="inventory_sources" Relationship="BroadcastModel.FK_inventory_source_logos_inventory_sources" FromRole="inventory_source_logos" ToRole="inventory_sources" />
+        </EntityType>
+        <Association Name="FK_inventory_source_logos_inventory_sources">
+          <End Type="BroadcastModel.inventory_sources" Role="inventory_sources" Multiplicity="1" />
+          <End Type="BroadcastModel.inventory_source_logos" Role="inventory_source_logos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="inventory_sources">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="inventory_source_logos">
+              <PropertyRef Name="inventory_source_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -10281,6 +10339,18 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
                 <ScalarProperty Name="full_name" ColumnName="full_name" />
                 <ScalarProperty Name="is_active" ColumnName="is_active" />
                 <ScalarProperty Name="code" ColumnName="code" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="inventory_source_logos">
+            <EntityTypeMapping TypeName="BroadcastModel.inventory_source_logos">
+              <MappingFragment StoreEntitySet="inventory_source_logos">
+                <ScalarProperty Name="file_content" ColumnName="file_content" />
+                <ScalarProperty Name="file_name" ColumnName="file_name" />
+                <ScalarProperty Name="created_date" ColumnName="created_date" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="inventory_source_id" ColumnName="inventory_source_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

@@ -21,6 +21,7 @@ namespace EntityFrameworkMapping.Broadcast
             this.station_inventory_manifest_staging = new HashSet<station_inventory_manifest_staging>();
             this.station_inventory_loaded = new HashSet<station_inventory_loaded>();
             this.inventory_files = new HashSet<inventory_files>();
+            this.inventory_source_logos = new HashSet<inventory_source_logos>();
         }
     
         public int id { get; set; }
@@ -33,5 +34,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<station_inventory_manifest_staging> station_inventory_manifest_staging { get; set; }
         public virtual ICollection<station_inventory_loaded> station_inventory_loaded { get; set; }
         public virtual ICollection<inventory_files> inventory_files { get; set; }
+        public virtual ICollection<inventory_source_logos> inventory_source_logos { get; set; }
     }
 }
