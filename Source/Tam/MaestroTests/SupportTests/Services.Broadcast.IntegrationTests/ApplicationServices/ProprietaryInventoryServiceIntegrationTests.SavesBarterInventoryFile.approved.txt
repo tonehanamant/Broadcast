@@ -8,13 +8,13 @@
   "Header": {
     "Audience": {
       "_CategoryCode": 0,
-      "_Code": "F25-34",
-      "_Custom": true,
+      "_Code": "W25-34",
+      "_Custom": false,
       "_Id": 348,
-      "_Name": "Females 25-34",
+      "_Name": "Women 25-34",
       "_RangeEnd": 34,
       "_RangeStart": 25,
-      "_SubCategoryCode": "F",
+      "_SubCategoryCode": "W",
       "IsDirty": true
     },
     "ContractedDaypartId": 5,

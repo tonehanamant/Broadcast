@@ -146,7 +146,7 @@
   },
   {
     "Details": [],
-    "HasInventoryGaps": false,
+    "HasInventoryGaps": true,
     "HasRatesAvailableForQuarter": false,
     "HouseholdImpressions": null,
     "HutBook": null,
@@ -489,7 +489,7 @@
   {
     "DaypartCode": "SYN",
     "Details": null,
-    "HasInventoryGaps": true,
+    "HasInventoryGaps": false,
     "HasRatesAvailableForQuarter": false,
     "HouseholdImpressions": null,
     "HutBook": null,
@@ -524,7 +524,7 @@
   {
     "DaypartCode": "SYN",
     "Details": null,
-    "HasInventoryGaps": true,
+    "HasInventoryGaps": false,
     "HasRatesAvailableForQuarter": false,
     "HouseholdImpressions": null,
     "HutBook": null,
@@ -559,7 +559,7 @@
   {
     "DaypartCode": "SYN",
     "Details": null,
-    "HasInventoryGaps": true,
+    "HasInventoryGaps": false,
     "HasRatesAvailableForQuarter": false,
     "HouseholdImpressions": null,
     "HutBook": null,
@@ -594,7 +594,7 @@
   {
     "DaypartCode": "SYN",
     "Details": null,
-    "HasInventoryGaps": true,
+    "HasInventoryGaps": false,
     "HasRatesAvailableForQuarter": false,
     "HouseholdImpressions": null,
     "HutBook": null,

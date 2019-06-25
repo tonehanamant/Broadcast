@@ -20,11 +20,11 @@
       "Id": 31
     },
     {
-      "Display": "F15-17",
+      "Display": "W15-17",
       "Id": 5
     },
     {
-      "Display": "F18-20",
+      "Display": "W18-20",
       "Id": 6
     }
   ],

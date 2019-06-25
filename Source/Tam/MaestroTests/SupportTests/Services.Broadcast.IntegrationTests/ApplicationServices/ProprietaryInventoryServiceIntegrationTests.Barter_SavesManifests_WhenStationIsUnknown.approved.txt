@@ -15,7 +15,7 @@
         "ManifestAudiencesReferences": [
           {
             "Audience": {
-              "AudienceString": "Females 25-34",
+              "AudienceString": "Women 25-34",
               "Id": 348
             },
             "CPM": 99.8800,
@@ -674,7 +674,7 @@
         "ManifestAudiencesReferences": [
           {
             "Audience": {
-              "AudienceString": "Females 25-34",
+              "AudienceString": "Women 25-34",
               "Id": 348
             },
             "CPM": 99.8800,
@@ -1333,7 +1333,7 @@
         "ManifestAudiencesReferences": [
           {
             "Audience": {
-              "AudienceString": "Females 25-34",
+              "AudienceString": "Women 25-34",
               "Id": 348
             },
             "CPM": 99.8800,
@@ -1992,7 +1992,7 @@
         "ManifestAudiencesReferences": [
           {
             "Audience": {
-              "AudienceString": "Females 25-34",
+              "AudienceString": "Women 25-34",
               "Id": 348
             },
             "CPM": 99.8800,
@@ -2651,7 +2651,7 @@
         "ManifestAudiencesReferences": [
           {
             "Audience": {
-              "AudienceString": "Females 25-34",
+              "AudienceString": "Women 25-34",
               "Id": 348
             },
             "CPM": 99.8800,
@@ -3310,7 +3310,7 @@
         "ManifestAudiencesReferences": [
           {
             "Audience": {
-              "AudienceString": "Females 25-34",
+              "AudienceString": "Women 25-34",
               "Id": 348
             },
             "CPM": 99.8800,
@@ -3969,7 +3969,7 @@
         "ManifestAudiencesReferences": [
           {
             "Audience": {
-              "AudienceString": "Females 25-34",
+              "AudienceString": "Women 25-34",
               "Id": 348
             },
             "CPM": 99.8800,

@@ -18,7 +18,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 18-20",
+          "AudienceString": "Men 18-20",
           "Id": 21
         },
         "CPM": null,
@@ -108,7 +108,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 18-20",
+          "AudienceString": "Men 18-20",
           "Id": 21
         },
         "CPM": null,

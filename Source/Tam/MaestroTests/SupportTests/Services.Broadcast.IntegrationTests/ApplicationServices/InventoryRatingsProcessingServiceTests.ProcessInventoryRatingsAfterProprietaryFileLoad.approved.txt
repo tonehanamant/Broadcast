@@ -6,7 +6,7 @@
     "ManifestAudiences": [
       {
         "Audience": {
-          "AudienceString": "Females 12-14",
+          "AudienceString": "Women 12-14",
           "Id": 4
         },
         "CPM": null,
@@ -17,7 +17,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 15-17",
+          "AudienceString": "Women 15-17",
           "Id": 5
         },
         "CPM": null,
@@ -28,7 +28,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 18-20",
+          "AudienceString": "Women 18-20",
           "Id": 6
         },
         "CPM": null,
@@ -39,7 +39,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 21-24",
+          "AudienceString": "Women 21-24",
           "Id": 7
         },
         "CPM": null,
@@ -50,7 +50,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 50-54",
+          "AudienceString": "Women 50-54",
           "Id": 13
         },
         "CPM": null,
@@ -61,7 +61,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 55-64",
+          "AudienceString": "Women 55-64",
           "Id": 14
         },
         "CPM": null,
@@ -72,7 +72,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 65+",
+          "AudienceString": "Women 65+",
           "Id": 15
         },
         "CPM": null,
@@ -83,7 +83,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 12-14",
+          "AudienceString": "Men 12-14",
           "Id": 19
         },
         "CPM": null,
@@ -94,7 +94,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 15-17",
+          "AudienceString": "Men 15-17",
           "Id": 20
         },
         "CPM": null,
@@ -105,7 +105,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 18-20",
+          "AudienceString": "Men 18-20",
           "Id": 21
         },
         "CPM": null,
@@ -116,7 +116,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 21-24",
+          "AudienceString": "Men 21-24",
           "Id": 22
         },
         "CPM": null,
@@ -127,7 +127,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 50-54",
+          "AudienceString": "Men 50-54",
           "Id": 28
         },
         "CPM": null,
@@ -138,7 +138,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 55-64",
+          "AudienceString": "Men 55-64",
           "Id": 29
         },
         "CPM": null,
@@ -149,7 +149,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 65+",
+          "AudienceString": "Men 65+",
           "Id": 30
         },
         "CPM": null,
@@ -171,7 +171,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Kids 6-11",
+          "AudienceString": "Children 6-11",
           "Id": 46
         },
         "CPM": null,
@@ -182,7 +182,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 25-34",
+          "AudienceString": "Men 25-34",
           "Id": 284
         },
         "CPM": null,
@@ -193,7 +193,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 35-49",
+          "AudienceString": "Men 35-49",
           "Id": 290
         },
         "CPM": null,
@@ -204,7 +204,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Kids 2-5",
+          "AudienceString": "Children 2-5",
           "Id": 339
         },
         "CPM": null,
@@ -215,7 +215,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 35-49",
+          "AudienceString": "Women 35-49",
           "Id": 347
         },
         "CPM": null,
@@ -226,7 +226,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
+          "AudienceString": "Women 25-34",
           "Id": 348
         },
         "CPM": null,
@@ -239,7 +239,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
+          "AudienceString": "Women 25-34",
           "Id": 348
         },
         "CPM": 99.8800,
@@ -886,7 +886,7 @@
     "ManifestAudiences": [
       {
         "Audience": {
-          "AudienceString": "Females 12-14",
+          "AudienceString": "Women 12-14",
           "Id": 4
         },
         "CPM": null,
@@ -897,7 +897,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 15-17",
+          "AudienceString": "Women 15-17",
           "Id": 5
         },
         "CPM": null,
@@ -908,7 +908,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 18-20",
+          "AudienceString": "Women 18-20",
           "Id": 6
         },
         "CPM": null,
@@ -919,7 +919,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 21-24",
+          "AudienceString": "Women 21-24",
           "Id": 7
         },
         "CPM": null,
@@ -930,7 +930,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 50-54",
+          "AudienceString": "Women 50-54",
           "Id": 13
         },
         "CPM": null,
@@ -941,7 +941,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 55-64",
+          "AudienceString": "Women 55-64",
           "Id": 14
         },
         "CPM": null,
@@ -952,7 +952,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 65+",
+          "AudienceString": "Women 65+",
           "Id": 15
         },
         "CPM": null,
@@ -963,7 +963,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 12-14",
+          "AudienceString": "Men 12-14",
           "Id": 19
         },
         "CPM": null,
@@ -974,7 +974,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 15-17",
+          "AudienceString": "Men 15-17",
           "Id": 20
         },
         "CPM": null,
@@ -985,7 +985,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 18-20",
+          "AudienceString": "Men 18-20",
           "Id": 21
         },
         "CPM": null,
@@ -996,7 +996,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 21-24",
+          "AudienceString": "Men 21-24",
           "Id": 22
         },
         "CPM": null,
@@ -1007,7 +1007,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 50-54",
+          "AudienceString": "Men 50-54",
           "Id": 28
         },
         "CPM": null,
@@ -1018,7 +1018,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 55-64",
+          "AudienceString": "Men 55-64",
           "Id": 29
         },
         "CPM": null,
@@ -1029,7 +1029,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 65+",
+          "AudienceString": "Men 65+",
           "Id": 30
         },
         "CPM": null,
@@ -1051,7 +1051,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Kids 6-11",
+          "AudienceString": "Children 6-11",
           "Id": 46
         },
         "CPM": null,
@@ -1062,7 +1062,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 25-34",
+          "AudienceString": "Men 25-34",
           "Id": 284
         },
         "CPM": null,
@@ -1073,7 +1073,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 35-49",
+          "AudienceString": "Men 35-49",
           "Id": 290
         },
         "CPM": null,
@@ -1084,7 +1084,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Kids 2-5",
+          "AudienceString": "Children 2-5",
           "Id": 339
         },
         "CPM": null,
@@ -1095,7 +1095,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 35-49",
+          "AudienceString": "Women 35-49",
           "Id": 347
         },
         "CPM": null,
@@ -1106,7 +1106,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
+          "AudienceString": "Women 25-34",
           "Id": 348
         },
         "CPM": null,
@@ -1119,7 +1119,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
+          "AudienceString": "Women 25-34",
           "Id": 348
         },
         "CPM": 99.8800,
@@ -1771,7 +1771,7 @@
     "ManifestAudiences": [
       {
         "Audience": {
-          "AudienceString": "Females 12-14",
+          "AudienceString": "Women 12-14",
           "Id": 4
         },
         "CPM": null,
@@ -1782,7 +1782,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 15-17",
+          "AudienceString": "Women 15-17",
           "Id": 5
         },
         "CPM": null,
@@ -1793,7 +1793,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 18-20",
+          "AudienceString": "Women 18-20",
           "Id": 6
         },
         "CPM": null,
@@ -1804,7 +1804,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 21-24",
+          "AudienceString": "Women 21-24",
           "Id": 7
         },
         "CPM": null,
@@ -1815,7 +1815,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 50-54",
+          "AudienceString": "Women 50-54",
           "Id": 13
         },
         "CPM": null,
@@ -1826,7 +1826,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 55-64",
+          "AudienceString": "Women 55-64",
           "Id": 14
         },
         "CPM": null,
@@ -1837,7 +1837,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 65+",
+          "AudienceString": "Women 65+",
           "Id": 15
         },
         "CPM": null,
@@ -1848,7 +1848,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 12-14",
+          "AudienceString": "Men 12-14",
           "Id": 19
         },
         "CPM": null,
@@ -1859,7 +1859,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 15-17",
+          "AudienceString": "Men 15-17",
           "Id": 20
         },
         "CPM": null,
@@ -1870,7 +1870,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 18-20",
+          "AudienceString": "Men 18-20",
           "Id": 21
         },
         "CPM": null,
@@ -1881,7 +1881,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 21-24",
+          "AudienceString": "Men 21-24",
           "Id": 22
         },
         "CPM": null,
@@ -1892,7 +1892,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 50-54",
+          "AudienceString": "Men 50-54",
           "Id": 28
         },
         "CPM": null,
@@ -1903,7 +1903,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 55-64",
+          "AudienceString": "Men 55-64",
           "Id": 29
         },
         "CPM": null,
@@ -1914,7 +1914,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 65+",
+          "AudienceString": "Men 65+",
           "Id": 30
         },
         "CPM": null,
@@ -1936,7 +1936,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Kids 6-11",
+          "AudienceString": "Children 6-11",
           "Id": 46
         },
         "CPM": null,
@@ -1947,7 +1947,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 25-34",
+          "AudienceString": "Men 25-34",
           "Id": 284
         },
         "CPM": null,
@@ -1958,7 +1958,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 35-49",
+          "AudienceString": "Men 35-49",
           "Id": 290
         },
         "CPM": null,
@@ -1969,7 +1969,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Kids 2-5",
+          "AudienceString": "Children 2-5",
           "Id": 339
         },
         "CPM": null,
@@ -1980,7 +1980,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 35-49",
+          "AudienceString": "Women 35-49",
           "Id": 347
         },
         "CPM": null,
@@ -1991,7 +1991,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
+          "AudienceString": "Women 25-34",
           "Id": 348
         },
         "CPM": null,
@@ -2004,7 +2004,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
+          "AudienceString": "Women 25-34",
           "Id": 348
         },
         "CPM": 99.8800,
@@ -2656,7 +2656,7 @@
     "ManifestAudiences": [
       {
         "Audience": {
-          "AudienceString": "Females 12-14",
+          "AudienceString": "Women 12-14",
           "Id": 4
         },
         "CPM": null,
@@ -2667,7 +2667,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 15-17",
+          "AudienceString": "Women 15-17",
           "Id": 5
         },
         "CPM": null,
@@ -2678,7 +2678,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 18-20",
+          "AudienceString": "Women 18-20",
           "Id": 6
         },
         "CPM": null,
@@ -2689,7 +2689,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 21-24",
+          "AudienceString": "Women 21-24",
           "Id": 7
         },
         "CPM": null,
@@ -2700,7 +2700,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 50-54",
+          "AudienceString": "Women 50-54",
           "Id": 13
         },
         "CPM": null,
@@ -2711,7 +2711,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 55-64",
+          "AudienceString": "Women 55-64",
           "Id": 14
         },
         "CPM": null,
@@ -2722,7 +2722,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 65+",
+          "AudienceString": "Women 65+",
           "Id": 15
         },
         "CPM": null,
@@ -2733,7 +2733,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 12-14",
+          "AudienceString": "Men 12-14",
           "Id": 19
         },
         "CPM": null,
@@ -2744,7 +2744,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 15-17",
+          "AudienceString": "Men 15-17",
           "Id": 20
         },
         "CPM": null,
@@ -2755,7 +2755,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 18-20",
+          "AudienceString": "Men 18-20",
           "Id": 21
         },
         "CPM": null,
@@ -2766,7 +2766,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 21-24",
+          "AudienceString": "Men 21-24",
           "Id": 22
         },
         "CPM": null,
@@ -2777,7 +2777,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 50-54",
+          "AudienceString": "Men 50-54",
           "Id": 28
         },
         "CPM": null,
@@ -2788,7 +2788,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 55-64",
+          "AudienceString": "Men 55-64",
           "Id": 29
         },
         "CPM": null,
@@ -2799,7 +2799,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 65+",
+          "AudienceString": "Men 65+",
           "Id": 30
         },
         "CPM": null,
@@ -2821,7 +2821,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Kids 6-11",
+          "AudienceString": "Children 6-11",
           "Id": 46
         },
         "CPM": null,
@@ -2832,7 +2832,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 25-34",
+          "AudienceString": "Men 25-34",
           "Id": 284
         },
         "CPM": null,
@@ -2843,7 +2843,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 35-49",
+          "AudienceString": "Men 35-49",
           "Id": 290
         },
         "CPM": null,
@@ -2854,7 +2854,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Kids 2-5",
+          "AudienceString": "Children 2-5",
           "Id": 339
         },
         "CPM": null,
@@ -2865,7 +2865,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 35-49",
+          "AudienceString": "Women 35-49",
           "Id": 347
         },
         "CPM": null,
@@ -2876,7 +2876,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
+          "AudienceString": "Women 25-34",
           "Id": 348
         },
         "CPM": null,
@@ -2889,7 +2889,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
+          "AudienceString": "Women 25-34",
           "Id": 348
         },
         "CPM": 99.8800,
@@ -3583,7 +3583,7 @@
     "ManifestAudiences": [
       {
         "Audience": {
-          "AudienceString": "Females 12-14",
+          "AudienceString": "Women 12-14",
           "Id": 4
         },
         "CPM": null,
@@ -3594,7 +3594,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 15-17",
+          "AudienceString": "Women 15-17",
           "Id": 5
         },
         "CPM": null,
@@ -3605,7 +3605,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 18-20",
+          "AudienceString": "Women 18-20",
           "Id": 6
         },
         "CPM": null,
@@ -3616,7 +3616,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 21-24",
+          "AudienceString": "Women 21-24",
           "Id": 7
         },
         "CPM": null,
@@ -3627,7 +3627,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 50-54",
+          "AudienceString": "Women 50-54",
           "Id": 13
         },
         "CPM": null,
@@ -3638,7 +3638,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 55-64",
+          "AudienceString": "Women 55-64",
           "Id": 14
         },
         "CPM": null,
@@ -3649,7 +3649,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 65+",
+          "AudienceString": "Women 65+",
           "Id": 15
         },
         "CPM": null,
@@ -3660,7 +3660,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 12-14",
+          "AudienceString": "Men 12-14",
           "Id": 19
         },
         "CPM": null,
@@ -3671,7 +3671,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 15-17",
+          "AudienceString": "Men 15-17",
           "Id": 20
         },
         "CPM": null,
@@ -3682,7 +3682,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 18-20",
+          "AudienceString": "Men 18-20",
           "Id": 21
         },
         "CPM": null,
@@ -3693,7 +3693,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 21-24",
+          "AudienceString": "Men 21-24",
           "Id": 22
         },
         "CPM": null,
@@ -3704,7 +3704,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 50-54",
+          "AudienceString": "Men 50-54",
           "Id": 28
         },
         "CPM": null,
@@ -3715,7 +3715,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 55-64",
+          "AudienceString": "Men 55-64",
           "Id": 29
         },
         "CPM": null,
@@ -3726,7 +3726,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 65+",
+          "AudienceString": "Men 65+",
           "Id": 30
         },
         "CPM": null,
@@ -3748,7 +3748,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Kids 6-11",
+          "AudienceString": "Children 6-11",
           "Id": 46
         },
         "CPM": null,
@@ -3759,7 +3759,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 25-34",
+          "AudienceString": "Men 25-34",
           "Id": 284
         },
         "CPM": null,
@@ -3770,7 +3770,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 35-49",
+          "AudienceString": "Men 35-49",
           "Id": 290
         },
         "CPM": null,
@@ -3781,7 +3781,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Kids 2-5",
+          "AudienceString": "Children 2-5",
           "Id": 339
         },
         "CPM": null,
@@ -3792,7 +3792,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 35-49",
+          "AudienceString": "Women 35-49",
           "Id": 347
         },
         "CPM": null,
@@ -3803,7 +3803,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
+          "AudienceString": "Women 25-34",
           "Id": 348
         },
         "CPM": null,
@@ -3816,7 +3816,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
+          "AudienceString": "Women 25-34",
           "Id": 348
         },
         "CPM": 99.8800,
@@ -4463,7 +4463,7 @@
     "ManifestAudiences": [
       {
         "Audience": {
-          "AudienceString": "Females 12-14",
+          "AudienceString": "Women 12-14",
           "Id": 4
         },
         "CPM": null,
@@ -4474,7 +4474,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 15-17",
+          "AudienceString": "Women 15-17",
           "Id": 5
         },
         "CPM": null,
@@ -4485,7 +4485,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 18-20",
+          "AudienceString": "Women 18-20",
           "Id": 6
         },
         "CPM": null,
@@ -4496,7 +4496,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 21-24",
+          "AudienceString": "Women 21-24",
           "Id": 7
         },
         "CPM": null,
@@ -4507,7 +4507,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 50-54",
+          "AudienceString": "Women 50-54",
           "Id": 13
         },
         "CPM": null,
@@ -4518,7 +4518,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 55-64",
+          "AudienceString": "Women 55-64",
           "Id": 14
         },
         "CPM": null,
@@ -4529,7 +4529,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 65+",
+          "AudienceString": "Women 65+",
           "Id": 15
         },
         "CPM": null,
@@ -4540,7 +4540,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 12-14",
+          "AudienceString": "Men 12-14",
           "Id": 19
         },
         "CPM": null,
@@ -4551,7 +4551,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 15-17",
+          "AudienceString": "Men 15-17",
           "Id": 20
         },
         "CPM": null,
@@ -4562,7 +4562,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 18-20",
+          "AudienceString": "Men 18-20",
           "Id": 21
         },
         "CPM": null,
@@ -4573,7 +4573,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 21-24",
+          "AudienceString": "Men 21-24",
           "Id": 22
         },
         "CPM": null,
@@ -4584,7 +4584,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 50-54",
+          "AudienceString": "Men 50-54",
           "Id": 28
         },
         "CPM": null,
@@ -4595,7 +4595,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 55-64",
+          "AudienceString": "Men 55-64",
           "Id": 29
         },
         "CPM": null,
@@ -4606,7 +4606,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 65+",
+          "AudienceString": "Men 65+",
           "Id": 30
         },
         "CPM": null,
@@ -4628,7 +4628,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Kids 6-11",
+          "AudienceString": "Children 6-11",
           "Id": 46
         },
         "CPM": null,
@@ -4639,7 +4639,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 25-34",
+          "AudienceString": "Men 25-34",
           "Id": 284
         },
         "CPM": null,
@@ -4650,7 +4650,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 35-49",
+          "AudienceString": "Men 35-49",
           "Id": 290
         },
         "CPM": null,
@@ -4661,7 +4661,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Kids 2-5",
+          "AudienceString": "Children 2-5",
           "Id": 339
         },
         "CPM": null,
@@ -4672,7 +4672,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 35-49",
+          "AudienceString": "Women 35-49",
           "Id": 347
         },
         "CPM": null,
@@ -4683,7 +4683,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
+          "AudienceString": "Women 25-34",
           "Id": 348
         },
         "CPM": null,
@@ -4696,7 +4696,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
+          "AudienceString": "Women 25-34",
           "Id": 348
         },
         "CPM": 99.8800,
@@ -5343,7 +5343,7 @@
     "ManifestAudiences": [
       {
         "Audience": {
-          "AudienceString": "Females 12-14",
+          "AudienceString": "Women 12-14",
           "Id": 4
         },
         "CPM": null,
@@ -5354,7 +5354,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 15-17",
+          "AudienceString": "Women 15-17",
           "Id": 5
         },
         "CPM": null,
@@ -5365,7 +5365,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 18-20",
+          "AudienceString": "Women 18-20",
           "Id": 6
         },
         "CPM": null,
@@ -5376,7 +5376,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 21-24",
+          "AudienceString": "Women 21-24",
           "Id": 7
         },
         "CPM": null,
@@ -5387,7 +5387,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 50-54",
+          "AudienceString": "Women 50-54",
           "Id": 13
         },
         "CPM": null,
@@ -5398,7 +5398,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 55-64",
+          "AudienceString": "Women 55-64",
           "Id": 14
         },
         "CPM": null,
@@ -5409,7 +5409,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 65+",
+          "AudienceString": "Women 65+",
           "Id": 15
         },
         "CPM": null,
@@ -5420,7 +5420,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 12-14",
+          "AudienceString": "Men 12-14",
           "Id": 19
         },
         "CPM": null,
@@ -5431,7 +5431,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 15-17",
+          "AudienceString": "Men 15-17",
           "Id": 20
         },
         "CPM": null,
@@ -5442,7 +5442,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 18-20",
+          "AudienceString": "Men 18-20",
           "Id": 21
         },
         "CPM": null,
@@ -5453,7 +5453,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 21-24",
+          "AudienceString": "Men 21-24",
           "Id": 22
         },
         "CPM": null,
@@ -5464,7 +5464,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 50-54",
+          "AudienceString": "Men 50-54",
           "Id": 28
         },
         "CPM": null,
@@ -5475,7 +5475,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 55-64",
+          "AudienceString": "Men 55-64",
           "Id": 29
         },
         "CPM": null,
@@ -5486,7 +5486,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 65+",
+          "AudienceString": "Men 65+",
           "Id": 30
         },
         "CPM": null,
@@ -5508,7 +5508,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Kids 6-11",
+          "AudienceString": "Children 6-11",
           "Id": 46
         },
         "CPM": null,
@@ -5519,7 +5519,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 25-34",
+          "AudienceString": "Men 25-34",
           "Id": 284
         },
         "CPM": null,
@@ -5530,7 +5530,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 35-49",
+          "AudienceString": "Men 35-49",
           "Id": 290
         },
         "CPM": null,
@@ -5541,7 +5541,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Kids 2-5",
+          "AudienceString": "Children 2-5",
           "Id": 339
         },
         "CPM": null,
@@ -5552,7 +5552,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 35-49",
+          "AudienceString": "Women 35-49",
           "Id": 347
         },
         "CPM": null,
@@ -5563,7 +5563,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
+          "AudienceString": "Women 25-34",
           "Id": 348
         },
         "CPM": null,
@@ -5576,7 +5576,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
+          "AudienceString": "Women 25-34",
           "Id": 348
         },
         "CPM": 99.8800,
@@ -6228,7 +6228,7 @@
     "ManifestAudiences": [
       {
         "Audience": {
-          "AudienceString": "Females 12-14",
+          "AudienceString": "Women 12-14",
           "Id": 4
         },
         "CPM": null,
@@ -6239,7 +6239,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 15-17",
+          "AudienceString": "Women 15-17",
           "Id": 5
         },
         "CPM": null,
@@ -6250,7 +6250,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 18-20",
+          "AudienceString": "Women 18-20",
           "Id": 6
         },
         "CPM": null,
@@ -6261,7 +6261,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 21-24",
+          "AudienceString": "Women 21-24",
           "Id": 7
         },
         "CPM": null,
@@ -6272,7 +6272,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 50-54",
+          "AudienceString": "Women 50-54",
           "Id": 13
         },
         "CPM": null,
@@ -6283,7 +6283,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 55-64",
+          "AudienceString": "Women 55-64",
           "Id": 14
         },
         "CPM": null,
@@ -6294,7 +6294,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 65+",
+          "AudienceString": "Women 65+",
           "Id": 15
         },
         "CPM": null,
@@ -6305,7 +6305,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 12-14",
+          "AudienceString": "Men 12-14",
           "Id": 19
         },
         "CPM": null,
@@ -6316,7 +6316,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 15-17",
+          "AudienceString": "Men 15-17",
           "Id": 20
         },
         "CPM": null,
@@ -6327,7 +6327,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 18-20",
+          "AudienceString": "Men 18-20",
           "Id": 21
         },
         "CPM": null,
@@ -6338,7 +6338,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 21-24",
+          "AudienceString": "Men 21-24",
           "Id": 22
         },
         "CPM": null,
@@ -6349,7 +6349,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 50-54",
+          "AudienceString": "Men 50-54",
           "Id": 28
         },
         "CPM": null,
@@ -6360,7 +6360,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 55-64",
+          "AudienceString": "Men 55-64",
           "Id": 29
         },
         "CPM": null,
@@ -6371,7 +6371,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 65+",
+          "AudienceString": "Men 65+",
           "Id": 30
         },
         "CPM": null,
@@ -6393,7 +6393,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Kids 6-11",
+          "AudienceString": "Children 6-11",
           "Id": 46
         },
         "CPM": null,
@@ -6404,7 +6404,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 25-34",
+          "AudienceString": "Men 25-34",
           "Id": 284
         },
         "CPM": null,
@@ -6415,7 +6415,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 35-49",
+          "AudienceString": "Men 35-49",
           "Id": 290
         },
         "CPM": null,
@@ -6426,7 +6426,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Kids 2-5",
+          "AudienceString": "Children 2-5",
           "Id": 339
         },
         "CPM": null,
@@ -6437,7 +6437,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 35-49",
+          "AudienceString": "Women 35-49",
           "Id": 347
         },
         "CPM": null,
@@ -6448,7 +6448,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
+          "AudienceString": "Women 25-34",
           "Id": 348
         },
         "CPM": null,
@@ -6461,7 +6461,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
+          "AudienceString": "Women 25-34",
           "Id": 348
         },
         "CPM": 99.8800,
@@ -7113,7 +7113,7 @@
     "ManifestAudiences": [
       {
         "Audience": {
-          "AudienceString": "Females 12-14",
+          "AudienceString": "Women 12-14",
           "Id": 4
         },
         "CPM": null,
@@ -7124,7 +7124,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 15-17",
+          "AudienceString": "Women 15-17",
           "Id": 5
         },
         "CPM": null,
@@ -7135,7 +7135,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 18-20",
+          "AudienceString": "Women 18-20",
           "Id": 6
         },
         "CPM": null,
@@ -7146,7 +7146,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 21-24",
+          "AudienceString": "Women 21-24",
           "Id": 7
         },
         "CPM": null,
@@ -7157,7 +7157,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 50-54",
+          "AudienceString": "Women 50-54",
           "Id": 13
         },
         "CPM": null,
@@ -7168,7 +7168,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 55-64",
+          "AudienceString": "Women 55-64",
           "Id": 14
         },
         "CPM": null,
@@ -7179,7 +7179,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 65+",
+          "AudienceString": "Women 65+",
           "Id": 15
         },
         "CPM": null,
@@ -7190,7 +7190,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 12-14",
+          "AudienceString": "Men 12-14",
           "Id": 19
         },
         "CPM": null,
@@ -7201,7 +7201,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 15-17",
+          "AudienceString": "Men 15-17",
           "Id": 20
         },
         "CPM": null,
@@ -7212,7 +7212,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 18-20",
+          "AudienceString": "Men 18-20",
           "Id": 21
         },
         "CPM": null,
@@ -7223,7 +7223,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 21-24",
+          "AudienceString": "Men 21-24",
           "Id": 22
         },
         "CPM": null,
@@ -7234,7 +7234,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 50-54",
+          "AudienceString": "Men 50-54",
           "Id": 28
         },
         "CPM": null,
@@ -7245,7 +7245,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 55-64",
+          "AudienceString": "Men 55-64",
           "Id": 29
         },
         "CPM": null,
@@ -7256,7 +7256,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 65+",
+          "AudienceString": "Men 65+",
           "Id": 30
         },
         "CPM": null,
@@ -7278,7 +7278,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Kids 6-11",
+          "AudienceString": "Children 6-11",
           "Id": 46
         },
         "CPM": null,
@@ -7289,7 +7289,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 25-34",
+          "AudienceString": "Men 25-34",
           "Id": 284
         },
         "CPM": null,
@@ -7300,7 +7300,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 35-49",
+          "AudienceString": "Men 35-49",
           "Id": 290
         },
         "CPM": null,
@@ -7311,7 +7311,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Kids 2-5",
+          "AudienceString": "Children 2-5",
           "Id": 339
         },
         "CPM": null,
@@ -7322,7 +7322,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 35-49",
+          "AudienceString": "Women 35-49",
           "Id": 347
         },
         "CPM": null,
@@ -7333,7 +7333,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
+          "AudienceString": "Women 25-34",
           "Id": 348
         },
         "CPM": null,
@@ -7346,7 +7346,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
+          "AudienceString": "Women 25-34",
           "Id": 348
         },
         "CPM": 99.8800,
@@ -8040,7 +8040,7 @@
     "ManifestAudiences": [
       {
         "Audience": {
-          "AudienceString": "Females 12-14",
+          "AudienceString": "Women 12-14",
           "Id": 4
         },
         "CPM": null,
@@ -8051,7 +8051,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 15-17",
+          "AudienceString": "Women 15-17",
           "Id": 5
         },
         "CPM": null,
@@ -8062,7 +8062,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 18-20",
+          "AudienceString": "Women 18-20",
           "Id": 6
         },
         "CPM": null,
@@ -8073,7 +8073,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 21-24",
+          "AudienceString": "Women 21-24",
           "Id": 7
         },
         "CPM": null,
@@ -8084,7 +8084,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 50-54",
+          "AudienceString": "Women 50-54",
           "Id": 13
         },
         "CPM": null,
@@ -8095,7 +8095,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 55-64",
+          "AudienceString": "Women 55-64",
           "Id": 14
         },
         "CPM": null,
@@ -8106,7 +8106,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 65+",
+          "AudienceString": "Women 65+",
           "Id": 15
         },
         "CPM": null,
@@ -8117,7 +8117,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 12-14",
+          "AudienceString": "Men 12-14",
           "Id": 19
         },
         "CPM": null,
@@ -8128,7 +8128,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 15-17",
+          "AudienceString": "Men 15-17",
           "Id": 20
         },
         "CPM": null,
@@ -8139,7 +8139,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 18-20",
+          "AudienceString": "Men 18-20",
           "Id": 21
         },
         "CPM": null,
@@ -8150,7 +8150,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 21-24",
+          "AudienceString": "Men 21-24",
           "Id": 22
         },
         "CPM": null,
@@ -8161,7 +8161,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 50-54",
+          "AudienceString": "Men 50-54",
           "Id": 28
         },
         "CPM": null,
@@ -8172,7 +8172,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 55-64",
+          "AudienceString": "Men 55-64",
           "Id": 29
         },
         "CPM": null,
@@ -8183,7 +8183,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 65+",
+          "AudienceString": "Men 65+",
           "Id": 30
         },
         "CPM": null,
@@ -8205,7 +8205,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Kids 6-11",
+          "AudienceString": "Children 6-11",
           "Id": 46
         },
         "CPM": null,
@@ -8216,7 +8216,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 25-34",
+          "AudienceString": "Men 25-34",
           "Id": 284
         },
         "CPM": null,
@@ -8227,7 +8227,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 35-49",
+          "AudienceString": "Men 35-49",
           "Id": 290
         },
         "CPM": null,
@@ -8238,7 +8238,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Kids 2-5",
+          "AudienceString": "Children 2-5",
           "Id": 339
         },
         "CPM": null,
@@ -8249,7 +8249,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 35-49",
+          "AudienceString": "Women 35-49",
           "Id": 347
         },
         "CPM": null,
@@ -8260,7 +8260,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
+          "AudienceString": "Women 25-34",
           "Id": 348
         },
         "CPM": null,
@@ -8273,7 +8273,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
+          "AudienceString": "Women 25-34",
           "Id": 348
         },
         "CPM": 99.8800,
@@ -8920,7 +8920,7 @@
     "ManifestAudiences": [
       {
         "Audience": {
-          "AudienceString": "Females 12-14",
+          "AudienceString": "Women 12-14",
           "Id": 4
         },
         "CPM": null,
@@ -8931,7 +8931,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 15-17",
+          "AudienceString": "Women 15-17",
           "Id": 5
         },
         "CPM": null,
@@ -8942,7 +8942,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 18-20",
+          "AudienceString": "Women 18-20",
           "Id": 6
         },
         "CPM": null,
@@ -8953,7 +8953,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 21-24",
+          "AudienceString": "Women 21-24",
           "Id": 7
         },
         "CPM": null,
@@ -8964,7 +8964,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 50-54",
+          "AudienceString": "Women 50-54",
           "Id": 13
         },
         "CPM": null,
@@ -8975,7 +8975,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 55-64",
+          "AudienceString": "Women 55-64",
           "Id": 14
         },
         "CPM": null,
@@ -8986,7 +8986,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 65+",
+          "AudienceString": "Women 65+",
           "Id": 15
         },
         "CPM": null,
@@ -8997,7 +8997,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 12-14",
+          "AudienceString": "Men 12-14",
           "Id": 19
         },
         "CPM": null,
@@ -9008,7 +9008,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 15-17",
+          "AudienceString": "Men 15-17",
           "Id": 20
         },
         "CPM": null,
@@ -9019,7 +9019,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 18-20",
+          "AudienceString": "Men 18-20",
           "Id": 21
         },
         "CPM": null,
@@ -9030,7 +9030,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 21-24",
+          "AudienceString": "Men 21-24",
           "Id": 22
         },
         "CPM": null,
@@ -9041,7 +9041,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 50-54",
+          "AudienceString": "Men 50-54",
           "Id": 28
         },
         "CPM": null,
@@ -9052,7 +9052,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 55-64",
+          "AudienceString": "Men 55-64",
           "Id": 29
         },
         "CPM": null,
@@ -9063,7 +9063,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 65+",
+          "AudienceString": "Men 65+",
           "Id": 30
         },
         "CPM": null,
@@ -9085,7 +9085,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Kids 6-11",
+          "AudienceString": "Children 6-11",
           "Id": 46
         },
         "CPM": null,
@@ -9096,7 +9096,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 25-34",
+          "AudienceString": "Men 25-34",
           "Id": 284
         },
         "CPM": null,
@@ -9107,7 +9107,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 35-49",
+          "AudienceString": "Men 35-49",
           "Id": 290
         },
         "CPM": null,
@@ -9118,7 +9118,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Kids 2-5",
+          "AudienceString": "Children 2-5",
           "Id": 339
         },
         "CPM": null,
@@ -9129,7 +9129,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 35-49",
+          "AudienceString": "Women 35-49",
           "Id": 347
         },
         "CPM": null,
@@ -9140,7 +9140,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
+          "AudienceString": "Women 25-34",
           "Id": 348
         },
         "CPM": null,
@@ -9153,7 +9153,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
+          "AudienceString": "Women 25-34",
           "Id": 348
         },
         "CPM": 99.8800,
@@ -9800,7 +9800,7 @@
     "ManifestAudiences": [
       {
         "Audience": {
-          "AudienceString": "Females 12-14",
+          "AudienceString": "Women 12-14",
           "Id": 4
         },
         "CPM": null,
@@ -9811,7 +9811,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 15-17",
+          "AudienceString": "Women 15-17",
           "Id": 5
         },
         "CPM": null,
@@ -9822,7 +9822,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 18-20",
+          "AudienceString": "Women 18-20",
           "Id": 6
         },
         "CPM": null,
@@ -9833,7 +9833,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 21-24",
+          "AudienceString": "Women 21-24",
           "Id": 7
         },
         "CPM": null,
@@ -9844,7 +9844,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 50-54",
+          "AudienceString": "Women 50-54",
           "Id": 13
         },
         "CPM": null,
@@ -9855,7 +9855,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 55-64",
+          "AudienceString": "Women 55-64",
           "Id": 14
         },
         "CPM": null,
@@ -9866,7 +9866,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 65+",
+          "AudienceString": "Women 65+",
           "Id": 15
         },
         "CPM": null,
@@ -9877,7 +9877,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 12-14",
+          "AudienceString": "Men 12-14",
           "Id": 19
         },
         "CPM": null,
@@ -9888,7 +9888,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 15-17",
+          "AudienceString": "Men 15-17",
           "Id": 20
         },
         "CPM": null,
@@ -9899,7 +9899,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 18-20",
+          "AudienceString": "Men 18-20",
           "Id": 21
         },
         "CPM": null,
@@ -9910,7 +9910,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 21-24",
+          "AudienceString": "Men 21-24",
           "Id": 22
         },
         "CPM": null,
@@ -9921,7 +9921,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 50-54",
+          "AudienceString": "Men 50-54",
           "Id": 28
         },
         "CPM": null,
@@ -9932,7 +9932,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 55-64",
+          "AudienceString": "Men 55-64",
           "Id": 29
         },
         "CPM": null,
@@ -9943,7 +9943,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 65+",
+          "AudienceString": "Men 65+",
           "Id": 30
         },
         "CPM": null,
@@ -9965,7 +9965,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Kids 6-11",
+          "AudienceString": "Children 6-11",
           "Id": 46
         },
         "CPM": null,
@@ -9976,7 +9976,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 25-34",
+          "AudienceString": "Men 25-34",
           "Id": 284
         },
         "CPM": null,
@@ -9987,7 +9987,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 35-49",
+          "AudienceString": "Men 35-49",
           "Id": 290
         },
         "CPM": null,
@@ -9998,7 +9998,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Kids 2-5",
+          "AudienceString": "Children 2-5",
           "Id": 339
         },
         "CPM": null,
@@ -10009,7 +10009,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 35-49",
+          "AudienceString": "Women 35-49",
           "Id": 347
         },
         "CPM": null,
@@ -10020,7 +10020,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
+          "AudienceString": "Women 25-34",
           "Id": 348
         },
         "CPM": null,
@@ -10033,7 +10033,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
+          "AudienceString": "Women 25-34",
           "Id": 348
         },
         "CPM": 99.8800,
@@ -10685,7 +10685,7 @@
     "ManifestAudiences": [
       {
         "Audience": {
-          "AudienceString": "Females 12-14",
+          "AudienceString": "Women 12-14",
           "Id": 4
         },
         "CPM": null,
@@ -10696,7 +10696,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 15-17",
+          "AudienceString": "Women 15-17",
           "Id": 5
         },
         "CPM": null,
@@ -10707,7 +10707,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 18-20",
+          "AudienceString": "Women 18-20",
           "Id": 6
         },
         "CPM": null,
@@ -10718,7 +10718,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 21-24",
+          "AudienceString": "Women 21-24",
           "Id": 7
         },
         "CPM": null,
@@ -10729,7 +10729,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 50-54",
+          "AudienceString": "Women 50-54",
           "Id": 13
         },
         "CPM": null,
@@ -10740,7 +10740,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 55-64",
+          "AudienceString": "Women 55-64",
           "Id": 14
         },
         "CPM": null,
@@ -10751,7 +10751,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 65+",
+          "AudienceString": "Women 65+",
           "Id": 15
         },
         "CPM": null,
@@ -10762,7 +10762,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 12-14",
+          "AudienceString": "Men 12-14",
           "Id": 19
         },
         "CPM": null,
@@ -10773,7 +10773,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 15-17",
+          "AudienceString": "Men 15-17",
           "Id": 20
         },
         "CPM": null,
@@ -10784,7 +10784,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 18-20",
+          "AudienceString": "Men 18-20",
           "Id": 21
         },
         "CPM": null,
@@ -10795,7 +10795,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 21-24",
+          "AudienceString": "Men 21-24",
           "Id": 22
         },
         "CPM": null,
@@ -10806,7 +10806,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 50-54",
+          "AudienceString": "Men 50-54",
           "Id": 28
         },
         "CPM": null,
@@ -10817,7 +10817,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 55-64",
+          "AudienceString": "Men 55-64",
           "Id": 29
         },
         "CPM": null,
@@ -10828,7 +10828,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 65+",
+          "AudienceString": "Men 65+",
           "Id": 30
         },
         "CPM": null,
@@ -10850,7 +10850,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Kids 6-11",
+          "AudienceString": "Children 6-11",
           "Id": 46
         },
         "CPM": null,
@@ -10861,7 +10861,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 25-34",
+          "AudienceString": "Men 25-34",
           "Id": 284
         },
         "CPM": null,
@@ -10872,7 +10872,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 35-49",
+          "AudienceString": "Men 35-49",
           "Id": 290
         },
         "CPM": null,
@@ -10883,7 +10883,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Kids 2-5",
+          "AudienceString": "Children 2-5",
           "Id": 339
         },
         "CPM": null,
@@ -10894,7 +10894,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 35-49",
+          "AudienceString": "Women 35-49",
           "Id": 347
         },
         "CPM": null,
@@ -10905,7 +10905,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
+          "AudienceString": "Women 25-34",
           "Id": 348
         },
         "CPM": null,
@@ -10918,7 +10918,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
+          "AudienceString": "Women 25-34",
           "Id": 348
         },
         "CPM": 99.8800,
@@ -11570,7 +11570,7 @@
     "ManifestAudiences": [
       {
         "Audience": {
-          "AudienceString": "Females 12-14",
+          "AudienceString": "Women 12-14",
           "Id": 4
         },
         "CPM": null,
@@ -11581,7 +11581,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 15-17",
+          "AudienceString": "Women 15-17",
           "Id": 5
         },
         "CPM": null,
@@ -11592,7 +11592,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 18-20",
+          "AudienceString": "Women 18-20",
           "Id": 6
         },
         "CPM": null,
@@ -11603,7 +11603,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 21-24",
+          "AudienceString": "Women 21-24",
           "Id": 7
         },
         "CPM": null,
@@ -11614,7 +11614,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 50-54",
+          "AudienceString": "Women 50-54",
           "Id": 13
         },
         "CPM": null,
@@ -11625,7 +11625,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 55-64",
+          "AudienceString": "Women 55-64",
           "Id": 14
         },
         "CPM": null,
@@ -11636,7 +11636,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 65+",
+          "AudienceString": "Women 65+",
           "Id": 15
         },
         "CPM": null,
@@ -11647,7 +11647,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 12-14",
+          "AudienceString": "Men 12-14",
           "Id": 19
         },
         "CPM": null,
@@ -11658,7 +11658,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 15-17",
+          "AudienceString": "Men 15-17",
           "Id": 20
         },
         "CPM": null,
@@ -11669,7 +11669,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 18-20",
+          "AudienceString": "Men 18-20",
           "Id": 21
         },
         "CPM": null,
@@ -11680,7 +11680,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 21-24",
+          "AudienceString": "Men 21-24",
           "Id": 22
         },
         "CPM": null,
@@ -11691,7 +11691,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 50-54",
+          "AudienceString": "Men 50-54",
           "Id": 28
         },
         "CPM": null,
@@ -11702,7 +11702,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 55-64",
+          "AudienceString": "Men 55-64",
           "Id": 29
         },
         "CPM": null,
@@ -11713,7 +11713,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 65+",
+          "AudienceString": "Men 65+",
           "Id": 30
         },
         "CPM": null,
@@ -11735,7 +11735,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Kids 6-11",
+          "AudienceString": "Children 6-11",
           "Id": 46
         },
         "CPM": null,
@@ -11746,7 +11746,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 25-34",
+          "AudienceString": "Men 25-34",
           "Id": 284
         },
         "CPM": null,
@@ -11757,7 +11757,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 35-49",
+          "AudienceString": "Men 35-49",
           "Id": 290
         },
         "CPM": null,
@@ -11768,7 +11768,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Kids 2-5",
+          "AudienceString": "Children 2-5",
           "Id": 339
         },
         "CPM": null,
@@ -11779,7 +11779,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 35-49",
+          "AudienceString": "Women 35-49",
           "Id": 347
         },
         "CPM": null,
@@ -11790,7 +11790,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
+          "AudienceString": "Women 25-34",
           "Id": 348
         },
         "CPM": null,
@@ -11803,7 +11803,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
+          "AudienceString": "Women 25-34",
           "Id": 348
         },
         "CPM": 99.8800,
@@ -12497,7 +12497,7 @@
     "ManifestAudiences": [
       {
         "Audience": {
-          "AudienceString": "Females 12-14",
+          "AudienceString": "Women 12-14",
           "Id": 4
         },
         "CPM": null,
@@ -12508,7 +12508,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 15-17",
+          "AudienceString": "Women 15-17",
           "Id": 5
         },
         "CPM": null,
@@ -12519,7 +12519,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 18-20",
+          "AudienceString": "Women 18-20",
           "Id": 6
         },
         "CPM": null,
@@ -12530,7 +12530,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 21-24",
+          "AudienceString": "Women 21-24",
           "Id": 7
         },
         "CPM": null,
@@ -12541,7 +12541,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 50-54",
+          "AudienceString": "Women 50-54",
           "Id": 13
         },
         "CPM": null,
@@ -12552,7 +12552,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 55-64",
+          "AudienceString": "Women 55-64",
           "Id": 14
         },
         "CPM": null,
@@ -12563,7 +12563,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 65+",
+          "AudienceString": "Women 65+",
           "Id": 15
         },
         "CPM": null,
@@ -12574,7 +12574,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 12-14",
+          "AudienceString": "Men 12-14",
           "Id": 19
         },
         "CPM": null,
@@ -12585,7 +12585,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 15-17",
+          "AudienceString": "Men 15-17",
           "Id": 20
         },
         "CPM": null,
@@ -12596,7 +12596,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 18-20",
+          "AudienceString": "Men 18-20",
           "Id": 21
         },
         "CPM": null,
@@ -12607,7 +12607,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 21-24",
+          "AudienceString": "Men 21-24",
           "Id": 22
         },
         "CPM": null,
@@ -12618,7 +12618,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 50-54",
+          "AudienceString": "Men 50-54",
           "Id": 28
         },
         "CPM": null,
@@ -12629,7 +12629,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 55-64",
+          "AudienceString": "Men 55-64",
           "Id": 29
         },
         "CPM": null,
@@ -12640,7 +12640,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 65+",
+          "AudienceString": "Men 65+",
           "Id": 30
         },
         "CPM": null,
@@ -12662,7 +12662,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Kids 6-11",
+          "AudienceString": "Children 6-11",
           "Id": 46
         },
         "CPM": null,
@@ -12673,7 +12673,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 25-34",
+          "AudienceString": "Men 25-34",
           "Id": 284
         },
         "CPM": null,
@@ -12684,7 +12684,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 35-49",
+          "AudienceString": "Men 35-49",
           "Id": 290
         },
         "CPM": null,
@@ -12695,7 +12695,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Kids 2-5",
+          "AudienceString": "Children 2-5",
           "Id": 339
         },
         "CPM": null,
@@ -12706,7 +12706,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 35-49",
+          "AudienceString": "Women 35-49",
           "Id": 347
         },
         "CPM": null,
@@ -12717,7 +12717,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
+          "AudienceString": "Women 25-34",
           "Id": 348
         },
         "CPM": null,
@@ -12730,7 +12730,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
+          "AudienceString": "Women 25-34",
           "Id": 348
         },
         "CPM": 99.8800,
@@ -13377,7 +13377,7 @@
     "ManifestAudiences": [
       {
         "Audience": {
-          "AudienceString": "Females 12-14",
+          "AudienceString": "Women 12-14",
           "Id": 4
         },
         "CPM": null,
@@ -13388,7 +13388,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 15-17",
+          "AudienceString": "Women 15-17",
           "Id": 5
         },
         "CPM": null,
@@ -13399,7 +13399,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 18-20",
+          "AudienceString": "Women 18-20",
           "Id": 6
         },
         "CPM": null,
@@ -13410,7 +13410,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 21-24",
+          "AudienceString": "Women 21-24",
           "Id": 7
         },
         "CPM": null,
@@ -13421,7 +13421,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 50-54",
+          "AudienceString": "Women 50-54",
           "Id": 13
         },
         "CPM": null,
@@ -13432,7 +13432,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 55-64",
+          "AudienceString": "Women 55-64",
           "Id": 14
         },
         "CPM": null,
@@ -13443,7 +13443,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 65+",
+          "AudienceString": "Women 65+",
           "Id": 15
         },
         "CPM": null,
@@ -13454,7 +13454,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 12-14",
+          "AudienceString": "Men 12-14",
           "Id": 19
         },
         "CPM": null,
@@ -13465,7 +13465,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 15-17",
+          "AudienceString": "Men 15-17",
           "Id": 20
         },
         "CPM": null,
@@ -13476,7 +13476,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 18-20",
+          "AudienceString": "Men 18-20",
           "Id": 21
         },
         "CPM": null,
@@ -13487,7 +13487,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 21-24",
+          "AudienceString": "Men 21-24",
           "Id": 22
         },
         "CPM": null,
@@ -13498,7 +13498,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 50-54",
+          "AudienceString": "Men 50-54",
           "Id": 28
         },
         "CPM": null,
@@ -13509,7 +13509,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 55-64",
+          "AudienceString": "Men 55-64",
           "Id": 29
         },
         "CPM": null,
@@ -13520,7 +13520,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 65+",
+          "AudienceString": "Men 65+",
           "Id": 30
         },
         "CPM": null,
@@ -13542,7 +13542,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Kids 6-11",
+          "AudienceString": "Children 6-11",
           "Id": 46
         },
         "CPM": null,
@@ -13553,7 +13553,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 25-34",
+          "AudienceString": "Men 25-34",
           "Id": 284
         },
         "CPM": null,
@@ -13564,7 +13564,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 35-49",
+          "AudienceString": "Men 35-49",
           "Id": 290
         },
         "CPM": null,
@@ -13575,7 +13575,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Kids 2-5",
+          "AudienceString": "Children 2-5",
           "Id": 339
         },
         "CPM": null,
@@ -13586,7 +13586,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 35-49",
+          "AudienceString": "Women 35-49",
           "Id": 347
         },
         "CPM": null,
@@ -13597,7 +13597,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
+          "AudienceString": "Women 25-34",
           "Id": 348
         },
         "CPM": null,
@@ -13610,7 +13610,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
+          "AudienceString": "Women 25-34",
           "Id": 348
         },
         "CPM": 99.8800,
@@ -14257,7 +14257,7 @@
     "ManifestAudiences": [
       {
         "Audience": {
-          "AudienceString": "Females 12-14",
+          "AudienceString": "Women 12-14",
           "Id": 4
         },
         "CPM": null,
@@ -14268,7 +14268,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 15-17",
+          "AudienceString": "Women 15-17",
           "Id": 5
         },
         "CPM": null,
@@ -14279,7 +14279,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 18-20",
+          "AudienceString": "Women 18-20",
           "Id": 6
         },
         "CPM": null,
@@ -14290,7 +14290,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 21-24",
+          "AudienceString": "Women 21-24",
           "Id": 7
         },
         "CPM": null,
@@ -14301,7 +14301,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 50-54",
+          "AudienceString": "Women 50-54",
           "Id": 13
         },
         "CPM": null,
@@ -14312,7 +14312,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 55-64",
+          "AudienceString": "Women 55-64",
           "Id": 14
         },
         "CPM": null,
@@ -14323,7 +14323,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 65+",
+          "AudienceString": "Women 65+",
           "Id": 15
         },
         "CPM": null,
@@ -14334,7 +14334,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 12-14",
+          "AudienceString": "Men 12-14",
           "Id": 19
         },
         "CPM": null,
@@ -14345,7 +14345,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 15-17",
+          "AudienceString": "Men 15-17",
           "Id": 20
         },
         "CPM": null,
@@ -14356,7 +14356,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 18-20",
+          "AudienceString": "Men 18-20",
           "Id": 21
         },
         "CPM": null,
@@ -14367,7 +14367,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 21-24",
+          "AudienceString": "Men 21-24",
           "Id": 22
         },
         "CPM": null,
@@ -14378,7 +14378,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 50-54",
+          "AudienceString": "Men 50-54",
           "Id": 28
         },
         "CPM": null,
@@ -14389,7 +14389,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 55-64",
+          "AudienceString": "Men 55-64",
           "Id": 29
         },
         "CPM": null,
@@ -14400,7 +14400,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 65+",
+          "AudienceString": "Men 65+",
           "Id": 30
         },
         "CPM": null,
@@ -14422,7 +14422,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Kids 6-11",
+          "AudienceString": "Children 6-11",
           "Id": 46
         },
         "CPM": null,
@@ -14433,7 +14433,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 25-34",
+          "AudienceString": "Men 25-34",
           "Id": 284
         },
         "CPM": null,
@@ -14444,7 +14444,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 35-49",
+          "AudienceString": "Men 35-49",
           "Id": 290
         },
         "CPM": null,
@@ -14455,7 +14455,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Kids 2-5",
+          "AudienceString": "Children 2-5",
           "Id": 339
         },
         "CPM": null,
@@ -14466,7 +14466,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 35-49",
+          "AudienceString": "Women 35-49",
           "Id": 347
         },
         "CPM": null,
@@ -14477,7 +14477,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
+          "AudienceString": "Women 25-34",
           "Id": 348
         },
         "CPM": null,
@@ -14490,7 +14490,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
+          "AudienceString": "Women 25-34",
           "Id": 348
         },
         "CPM": 99.8800,
@@ -15142,7 +15142,7 @@
     "ManifestAudiences": [
       {
         "Audience": {
-          "AudienceString": "Females 12-14",
+          "AudienceString": "Women 12-14",
           "Id": 4
         },
         "CPM": null,
@@ -15153,7 +15153,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 15-17",
+          "AudienceString": "Women 15-17",
           "Id": 5
         },
         "CPM": null,
@@ -15164,7 +15164,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 18-20",
+          "AudienceString": "Women 18-20",
           "Id": 6
         },
         "CPM": null,
@@ -15175,7 +15175,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 21-24",
+          "AudienceString": "Women 21-24",
           "Id": 7
         },
         "CPM": null,
@@ -15186,7 +15186,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 50-54",
+          "AudienceString": "Women 50-54",
           "Id": 13
         },
         "CPM": null,
@@ -15197,7 +15197,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 55-64",
+          "AudienceString": "Women 55-64",
           "Id": 14
         },
         "CPM": null,
@@ -15208,7 +15208,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 65+",
+          "AudienceString": "Women 65+",
           "Id": 15
         },
         "CPM": null,
@@ -15219,7 +15219,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 12-14",
+          "AudienceString": "Men 12-14",
           "Id": 19
         },
         "CPM": null,
@@ -15230,7 +15230,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 15-17",
+          "AudienceString": "Men 15-17",
           "Id": 20
         },
         "CPM": null,
@@ -15241,7 +15241,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 18-20",
+          "AudienceString": "Men 18-20",
           "Id": 21
         },
         "CPM": null,
@@ -15252,7 +15252,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 21-24",
+          "AudienceString": "Men 21-24",
           "Id": 22
         },
         "CPM": null,
@@ -15263,7 +15263,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 50-54",
+          "AudienceString": "Men 50-54",
           "Id": 28
         },
         "CPM": null,
@@ -15274,7 +15274,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 55-64",
+          "AudienceString": "Men 55-64",
           "Id": 29
         },
         "CPM": null,
@@ -15285,7 +15285,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 65+",
+          "AudienceString": "Men 65+",
           "Id": 30
         },
         "CPM": null,
@@ -15307,7 +15307,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Kids 6-11",
+          "AudienceString": "Children 6-11",
           "Id": 46
         },
         "CPM": null,
@@ -15318,7 +15318,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 25-34",
+          "AudienceString": "Men 25-34",
           "Id": 284
         },
         "CPM": null,
@@ -15329,7 +15329,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 35-49",
+          "AudienceString": "Men 35-49",
           "Id": 290
         },
         "CPM": null,
@@ -15340,7 +15340,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Kids 2-5",
+          "AudienceString": "Children 2-5",
           "Id": 339
         },
         "CPM": null,
@@ -15351,7 +15351,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 35-49",
+          "AudienceString": "Women 35-49",
           "Id": 347
         },
         "CPM": null,
@@ -15362,7 +15362,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
+          "AudienceString": "Women 25-34",
           "Id": 348
         },
         "CPM": null,
@@ -15375,7 +15375,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
+          "AudienceString": "Women 25-34",
           "Id": 348
         },
         "CPM": 99.8800,
@@ -16027,7 +16027,7 @@
     "ManifestAudiences": [
       {
         "Audience": {
-          "AudienceString": "Females 12-14",
+          "AudienceString": "Women 12-14",
           "Id": 4
         },
         "CPM": null,
@@ -16038,7 +16038,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 15-17",
+          "AudienceString": "Women 15-17",
           "Id": 5
         },
         "CPM": null,
@@ -16049,7 +16049,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 18-20",
+          "AudienceString": "Women 18-20",
           "Id": 6
         },
         "CPM": null,
@@ -16060,7 +16060,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 21-24",
+          "AudienceString": "Women 21-24",
           "Id": 7
         },
         "CPM": null,
@@ -16071,7 +16071,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 50-54",
+          "AudienceString": "Women 50-54",
           "Id": 13
         },
         "CPM": null,
@@ -16082,7 +16082,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 55-64",
+          "AudienceString": "Women 55-64",
           "Id": 14
         },
         "CPM": null,
@@ -16093,7 +16093,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 65+",
+          "AudienceString": "Women 65+",
           "Id": 15
         },
         "CPM": null,
@@ -16104,7 +16104,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 12-14",
+          "AudienceString": "Men 12-14",
           "Id": 19
         },
         "CPM": null,
@@ -16115,7 +16115,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 15-17",
+          "AudienceString": "Men 15-17",
           "Id": 20
         },
         "CPM": null,
@@ -16126,7 +16126,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 18-20",
+          "AudienceString": "Men 18-20",
           "Id": 21
         },
         "CPM": null,
@@ -16137,7 +16137,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 21-24",
+          "AudienceString": "Men 21-24",
           "Id": 22
         },
         "CPM": null,
@@ -16148,7 +16148,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 50-54",
+          "AudienceString": "Men 50-54",
           "Id": 28
         },
         "CPM": null,
@@ -16159,7 +16159,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 55-64",
+          "AudienceString": "Men 55-64",
           "Id": 29
         },
         "CPM": null,
@@ -16170,7 +16170,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 65+",
+          "AudienceString": "Men 65+",
           "Id": 30
         },
         "CPM": null,
@@ -16192,7 +16192,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Kids 6-11",
+          "AudienceString": "Children 6-11",
           "Id": 46
         },
         "CPM": null,
@@ -16203,7 +16203,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 25-34",
+          "AudienceString": "Men 25-34",
           "Id": 284
         },
         "CPM": null,
@@ -16214,7 +16214,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 35-49",
+          "AudienceString": "Men 35-49",
           "Id": 290
         },
         "CPM": null,
@@ -16225,7 +16225,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Kids 2-5",
+          "AudienceString": "Children 2-5",
           "Id": 339
         },
         "CPM": null,
@@ -16236,7 +16236,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 35-49",
+          "AudienceString": "Women 35-49",
           "Id": 347
         },
         "CPM": null,
@@ -16247,7 +16247,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
+          "AudienceString": "Women 25-34",
           "Id": 348
         },
         "CPM": null,
@@ -16260,7 +16260,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
+          "AudienceString": "Women 25-34",
           "Id": 348
         },
         "CPM": 99.8800,
@@ -16954,7 +16954,7 @@
     "ManifestAudiences": [
       {
         "Audience": {
-          "AudienceString": "Females 12-14",
+          "AudienceString": "Women 12-14",
           "Id": 4
         },
         "CPM": null,
@@ -16965,7 +16965,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 15-17",
+          "AudienceString": "Women 15-17",
           "Id": 5
         },
         "CPM": null,
@@ -16976,7 +16976,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 18-20",
+          "AudienceString": "Women 18-20",
           "Id": 6
         },
         "CPM": null,
@@ -16987,7 +16987,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 21-24",
+          "AudienceString": "Women 21-24",
           "Id": 7
         },
         "CPM": null,
@@ -16998,7 +16998,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 50-54",
+          "AudienceString": "Women 50-54",
           "Id": 13
         },
         "CPM": null,
@@ -17009,7 +17009,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 55-64",
+          "AudienceString": "Women 55-64",
           "Id": 14
         },
         "CPM": null,
@@ -17020,7 +17020,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 65+",
+          "AudienceString": "Women 65+",
           "Id": 15
         },
         "CPM": null,
@@ -17031,7 +17031,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 12-14",
+          "AudienceString": "Men 12-14",
           "Id": 19
         },
         "CPM": null,
@@ -17042,7 +17042,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 15-17",
+          "AudienceString": "Men 15-17",
           "Id": 20
         },
         "CPM": null,
@@ -17053,7 +17053,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 18-20",
+          "AudienceString": "Men 18-20",
           "Id": 21
         },
         "CPM": null,
@@ -17064,7 +17064,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 21-24",
+          "AudienceString": "Men 21-24",
           "Id": 22
         },
         "CPM": null,
@@ -17075,7 +17075,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 50-54",
+          "AudienceString": "Men 50-54",
           "Id": 28
         },
         "CPM": null,
@@ -17086,7 +17086,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 55-64",
+          "AudienceString": "Men 55-64",
           "Id": 29
         },
         "CPM": null,
@@ -17097,7 +17097,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 65+",
+          "AudienceString": "Men 65+",
           "Id": 30
         },
         "CPM": null,
@@ -17119,7 +17119,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Kids 6-11",
+          "AudienceString": "Children 6-11",
           "Id": 46
         },
         "CPM": null,
@@ -17130,7 +17130,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 25-34",
+          "AudienceString": "Men 25-34",
           "Id": 284
         },
         "CPM": null,
@@ -17141,7 +17141,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 35-49",
+          "AudienceString": "Men 35-49",
           "Id": 290
         },
         "CPM": null,
@@ -17152,7 +17152,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Kids 2-5",
+          "AudienceString": "Children 2-5",
           "Id": 339
         },
         "CPM": null,
@@ -17163,7 +17163,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 35-49",
+          "AudienceString": "Women 35-49",
           "Id": 347
         },
         "CPM": null,
@@ -17174,7 +17174,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
+          "AudienceString": "Women 25-34",
           "Id": 348
         },
         "CPM": null,
@@ -17187,7 +17187,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
+          "AudienceString": "Women 25-34",
           "Id": 348
         },
         "CPM": 99.8800,
@@ -17834,7 +17834,7 @@
     "ManifestAudiences": [
       {
         "Audience": {
-          "AudienceString": "Females 12-14",
+          "AudienceString": "Women 12-14",
           "Id": 4
         },
         "CPM": null,
@@ -17845,7 +17845,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 15-17",
+          "AudienceString": "Women 15-17",
           "Id": 5
         },
         "CPM": null,
@@ -17856,7 +17856,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 18-20",
+          "AudienceString": "Women 18-20",
           "Id": 6
         },
         "CPM": null,
@@ -17867,7 +17867,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 21-24",
+          "AudienceString": "Women 21-24",
           "Id": 7
         },
         "CPM": null,
@@ -17878,7 +17878,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 50-54",
+          "AudienceString": "Women 50-54",
           "Id": 13
         },
         "CPM": null,
@@ -17889,7 +17889,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 55-64",
+          "AudienceString": "Women 55-64",
           "Id": 14
         },
         "CPM": null,
@@ -17900,7 +17900,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 65+",
+          "AudienceString": "Women 65+",
           "Id": 15
         },
         "CPM": null,
@@ -17911,7 +17911,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 12-14",
+          "AudienceString": "Men 12-14",
           "Id": 19
         },
         "CPM": null,
@@ -17922,7 +17922,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 15-17",
+          "AudienceString": "Men 15-17",
           "Id": 20
         },
         "CPM": null,
@@ -17933,7 +17933,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 18-20",
+          "AudienceString": "Men 18-20",
           "Id": 21
         },
         "CPM": null,
@@ -17944,7 +17944,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 21-24",
+          "AudienceString": "Men 21-24",
           "Id": 22
         },
         "CPM": null,
@@ -17955,7 +17955,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 50-54",
+          "AudienceString": "Men 50-54",
           "Id": 28
         },
         "CPM": null,
@@ -17966,7 +17966,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 55-64",
+          "AudienceString": "Men 55-64",
           "Id": 29
         },
         "CPM": null,
@@ -17977,7 +17977,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 65+",
+          "AudienceString": "Men 65+",
           "Id": 30
         },
         "CPM": null,
@@ -17999,7 +17999,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Kids 6-11",
+          "AudienceString": "Children 6-11",
           "Id": 46
         },
         "CPM": null,
@@ -18010,7 +18010,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 25-34",
+          "AudienceString": "Men 25-34",
           "Id": 284
         },
         "CPM": null,
@@ -18021,7 +18021,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 35-49",
+          "AudienceString": "Men 35-49",
           "Id": 290
         },
         "CPM": null,
@@ -18032,7 +18032,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Kids 2-5",
+          "AudienceString": "Children 2-5",
           "Id": 339
         },
         "CPM": null,
@@ -18043,7 +18043,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 35-49",
+          "AudienceString": "Women 35-49",
           "Id": 347
         },
         "CPM": null,
@@ -18054,7 +18054,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
+          "AudienceString": "Women 25-34",
           "Id": 348
         },
         "CPM": null,
@@ -18067,7 +18067,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
+          "AudienceString": "Women 25-34",
           "Id": 348
         },
         "CPM": 99.8800,
@@ -18714,7 +18714,7 @@
     "ManifestAudiences": [
       {
         "Audience": {
-          "AudienceString": "Females 12-14",
+          "AudienceString": "Women 12-14",
           "Id": 4
         },
         "CPM": null,
@@ -18725,7 +18725,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 15-17",
+          "AudienceString": "Women 15-17",
           "Id": 5
         },
         "CPM": null,
@@ -18736,7 +18736,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 18-20",
+          "AudienceString": "Women 18-20",
           "Id": 6
         },
         "CPM": null,
@@ -18747,7 +18747,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 21-24",
+          "AudienceString": "Women 21-24",
           "Id": 7
         },
         "CPM": null,
@@ -18758,7 +18758,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 50-54",
+          "AudienceString": "Women 50-54",
           "Id": 13
         },
         "CPM": null,
@@ -18769,7 +18769,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 55-64",
+          "AudienceString": "Women 55-64",
           "Id": 14
         },
         "CPM": null,
@@ -18780,7 +18780,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 65+",
+          "AudienceString": "Women 65+",
           "Id": 15
         },
         "CPM": null,
@@ -18791,7 +18791,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 12-14",
+          "AudienceString": "Men 12-14",
           "Id": 19
         },
         "CPM": null,
@@ -18802,7 +18802,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 15-17",
+          "AudienceString": "Men 15-17",
           "Id": 20
         },
         "CPM": null,
@@ -18813,7 +18813,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 18-20",
+          "AudienceString": "Men 18-20",
           "Id": 21
         },
         "CPM": null,
@@ -18824,7 +18824,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 21-24",
+          "AudienceString": "Men 21-24",
           "Id": 22
         },
         "CPM": null,
@@ -18835,7 +18835,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 50-54",
+          "AudienceString": "Men 50-54",
           "Id": 28
         },
         "CPM": null,
@@ -18846,7 +18846,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 55-64",
+          "AudienceString": "Men 55-64",
           "Id": 29
         },
         "CPM": null,
@@ -18857,7 +18857,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 65+",
+          "AudienceString": "Men 65+",
           "Id": 30
         },
         "CPM": null,
@@ -18879,7 +18879,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Kids 6-11",
+          "AudienceString": "Children 6-11",
           "Id": 46
         },
         "CPM": null,
@@ -18890,7 +18890,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 25-34",
+          "AudienceString": "Men 25-34",
           "Id": 284
         },
         "CPM": null,
@@ -18901,7 +18901,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 35-49",
+          "AudienceString": "Men 35-49",
           "Id": 290
         },
         "CPM": null,
@@ -18912,7 +18912,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Kids 2-5",
+          "AudienceString": "Children 2-5",
           "Id": 339
         },
         "CPM": null,
@@ -18923,7 +18923,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 35-49",
+          "AudienceString": "Women 35-49",
           "Id": 347
         },
         "CPM": null,
@@ -18934,7 +18934,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
+          "AudienceString": "Women 25-34",
           "Id": 348
         },
         "CPM": null,
@@ -18947,7 +18947,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
+          "AudienceString": "Women 25-34",
           "Id": 348
         },
         "CPM": 99.8800,
@@ -19599,7 +19599,7 @@
     "ManifestAudiences": [
       {
         "Audience": {
-          "AudienceString": "Females 12-14",
+          "AudienceString": "Women 12-14",
           "Id": 4
         },
         "CPM": null,
@@ -19610,7 +19610,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 15-17",
+          "AudienceString": "Women 15-17",
           "Id": 5
         },
         "CPM": null,
@@ -19621,7 +19621,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 18-20",
+          "AudienceString": "Women 18-20",
           "Id": 6
         },
         "CPM": null,
@@ -19632,7 +19632,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 21-24",
+          "AudienceString": "Women 21-24",
           "Id": 7
         },
         "CPM": null,
@@ -19643,7 +19643,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 50-54",
+          "AudienceString": "Women 50-54",
           "Id": 13
         },
         "CPM": null,
@@ -19654,7 +19654,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 55-64",
+          "AudienceString": "Women 55-64",
           "Id": 14
         },
         "CPM": null,
@@ -19665,7 +19665,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 65+",
+          "AudienceString": "Women 65+",
           "Id": 15
         },
         "CPM": null,
@@ -19676,7 +19676,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 12-14",
+          "AudienceString": "Men 12-14",
           "Id": 19
         },
         "CPM": null,
@@ -19687,7 +19687,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 15-17",
+          "AudienceString": "Men 15-17",
           "Id": 20
         },
         "CPM": null,
@@ -19698,7 +19698,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 18-20",
+          "AudienceString": "Men 18-20",
           "Id": 21
         },
         "CPM": null,
@@ -19709,7 +19709,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 21-24",
+          "AudienceString": "Men 21-24",
           "Id": 22
         },
         "CPM": null,
@@ -19720,7 +19720,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 50-54",
+          "AudienceString": "Men 50-54",
           "Id": 28
         },
         "CPM": null,
@@ -19731,7 +19731,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 55-64",
+          "AudienceString": "Men 55-64",
           "Id": 29
         },
         "CPM": null,
@@ -19742,7 +19742,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 65+",
+          "AudienceString": "Men 65+",
           "Id": 30
         },
         "CPM": null,
@@ -19764,7 +19764,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Kids 6-11",
+          "AudienceString": "Children 6-11",
           "Id": 46
         },
         "CPM": null,
@@ -19775,7 +19775,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 25-34",
+          "AudienceString": "Men 25-34",
           "Id": 284
         },
         "CPM": null,
@@ -19786,7 +19786,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 35-49",
+          "AudienceString": "Men 35-49",
           "Id": 290
         },
         "CPM": null,
@@ -19797,7 +19797,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Kids 2-5",
+          "AudienceString": "Children 2-5",
           "Id": 339
         },
         "CPM": null,
@@ -19808,7 +19808,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 35-49",
+          "AudienceString": "Women 35-49",
           "Id": 347
         },
         "CPM": null,
@@ -19819,7 +19819,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
+          "AudienceString": "Women 25-34",
           "Id": 348
         },
         "CPM": null,
@@ -19832,7 +19832,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
+          "AudienceString": "Women 25-34",
           "Id": 348
         },
         "CPM": 99.8800,
@@ -20484,7 +20484,7 @@
     "ManifestAudiences": [
       {
         "Audience": {
-          "AudienceString": "Females 12-14",
+          "AudienceString": "Women 12-14",
           "Id": 4
         },
         "CPM": null,
@@ -20495,7 +20495,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 15-17",
+          "AudienceString": "Women 15-17",
           "Id": 5
         },
         "CPM": null,
@@ -20506,7 +20506,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 18-20",
+          "AudienceString": "Women 18-20",
           "Id": 6
         },
         "CPM": null,
@@ -20517,7 +20517,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 21-24",
+          "AudienceString": "Women 21-24",
           "Id": 7
         },
         "CPM": null,
@@ -20528,7 +20528,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 50-54",
+          "AudienceString": "Women 50-54",
           "Id": 13
         },
         "CPM": null,
@@ -20539,7 +20539,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 55-64",
+          "AudienceString": "Women 55-64",
           "Id": 14
         },
         "CPM": null,
@@ -20550,7 +20550,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 65+",
+          "AudienceString": "Women 65+",
           "Id": 15
         },
         "CPM": null,
@@ -20561,7 +20561,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 12-14",
+          "AudienceString": "Men 12-14",
           "Id": 19
         },
         "CPM": null,
@@ -20572,7 +20572,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 15-17",
+          "AudienceString": "Men 15-17",
           "Id": 20
         },
         "CPM": null,
@@ -20583,7 +20583,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 18-20",
+          "AudienceString": "Men 18-20",
           "Id": 21
         },
         "CPM": null,
@@ -20594,7 +20594,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 21-24",
+          "AudienceString": "Men 21-24",
           "Id": 22
         },
         "CPM": null,
@@ -20605,7 +20605,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 50-54",
+          "AudienceString": "Men 50-54",
           "Id": 28
         },
         "CPM": null,
@@ -20616,7 +20616,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 55-64",
+          "AudienceString": "Men 55-64",
           "Id": 29
         },
         "CPM": null,
@@ -20627,7 +20627,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 65+",
+          "AudienceString": "Men 65+",
           "Id": 30
         },
         "CPM": null,
@@ -20649,7 +20649,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Kids 6-11",
+          "AudienceString": "Children 6-11",
           "Id": 46
         },
         "CPM": null,
@@ -20660,7 +20660,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 25-34",
+          "AudienceString": "Men 25-34",
           "Id": 284
         },
         "CPM": null,
@@ -20671,7 +20671,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 35-49",
+          "AudienceString": "Men 35-49",
           "Id": 290
         },
         "CPM": null,
@@ -20682,7 +20682,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Kids 2-5",
+          "AudienceString": "Children 2-5",
           "Id": 339
         },
         "CPM": null,
@@ -20693,7 +20693,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 35-49",
+          "AudienceString": "Women 35-49",
           "Id": 347
         },
         "CPM": null,
@@ -20704,7 +20704,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
+          "AudienceString": "Women 25-34",
           "Id": 348
         },
         "CPM": null,
@@ -20717,7 +20717,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
+          "AudienceString": "Women 25-34",
           "Id": 348
         },
         "CPM": 99.8800,
@@ -21411,7 +21411,7 @@
     "ManifestAudiences": [
       {
         "Audience": {
-          "AudienceString": "Females 12-14",
+          "AudienceString": "Women 12-14",
           "Id": 4
         },
         "CPM": null,
@@ -21422,7 +21422,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 15-17",
+          "AudienceString": "Women 15-17",
           "Id": 5
         },
         "CPM": null,
@@ -21433,7 +21433,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 18-20",
+          "AudienceString": "Women 18-20",
           "Id": 6
         },
         "CPM": null,
@@ -21444,7 +21444,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 21-24",
+          "AudienceString": "Women 21-24",
           "Id": 7
         },
         "CPM": null,
@@ -21455,7 +21455,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 50-54",
+          "AudienceString": "Women 50-54",
           "Id": 13
         },
         "CPM": null,
@@ -21466,7 +21466,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 55-64",
+          "AudienceString": "Women 55-64",
           "Id": 14
         },
         "CPM": null,
@@ -21477,7 +21477,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 65+",
+          "AudienceString": "Women 65+",
           "Id": 15
         },
         "CPM": null,
@@ -21488,7 +21488,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 12-14",
+          "AudienceString": "Men 12-14",
           "Id": 19
         },
         "CPM": null,
@@ -21499,7 +21499,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 15-17",
+          "AudienceString": "Men 15-17",
           "Id": 20
         },
         "CPM": null,
@@ -21510,7 +21510,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 18-20",
+          "AudienceString": "Men 18-20",
           "Id": 21
         },
         "CPM": null,
@@ -21521,7 +21521,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 21-24",
+          "AudienceString": "Men 21-24",
           "Id": 22
         },
         "CPM": null,
@@ -21532,7 +21532,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 50-54",
+          "AudienceString": "Men 50-54",
           "Id": 28
         },
         "CPM": null,
@@ -21543,7 +21543,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 55-64",
+          "AudienceString": "Men 55-64",
           "Id": 29
         },
         "CPM": null,
@@ -21554,7 +21554,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 65+",
+          "AudienceString": "Men 65+",
           "Id": 30
         },
         "CPM": null,
@@ -21576,7 +21576,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Kids 6-11",
+          "AudienceString": "Children 6-11",
           "Id": 46
         },
         "CPM": null,
@@ -21587,7 +21587,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 25-34",
+          "AudienceString": "Men 25-34",
           "Id": 284
         },
         "CPM": null,
@@ -21598,7 +21598,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 35-49",
+          "AudienceString": "Men 35-49",
           "Id": 290
         },
         "CPM": null,
@@ -21609,7 +21609,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Kids 2-5",
+          "AudienceString": "Children 2-5",
           "Id": 339
         },
         "CPM": null,
@@ -21620,7 +21620,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 35-49",
+          "AudienceString": "Women 35-49",
           "Id": 347
         },
         "CPM": null,
@@ -21631,7 +21631,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
+          "AudienceString": "Women 25-34",
           "Id": 348
         },
         "CPM": null,
@@ -21644,7 +21644,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
+          "AudienceString": "Women 25-34",
           "Id": 348
         },
         "CPM": 99.8800,
@@ -22291,7 +22291,7 @@
     "ManifestAudiences": [
       {
         "Audience": {
-          "AudienceString": "Females 12-14",
+          "AudienceString": "Women 12-14",
           "Id": 4
         },
         "CPM": null,
@@ -22302,7 +22302,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 15-17",
+          "AudienceString": "Women 15-17",
           "Id": 5
         },
         "CPM": null,
@@ -22313,7 +22313,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 18-20",
+          "AudienceString": "Women 18-20",
           "Id": 6
         },
         "CPM": null,
@@ -22324,7 +22324,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 21-24",
+          "AudienceString": "Women 21-24",
           "Id": 7
         },
         "CPM": null,
@@ -22335,7 +22335,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 50-54",
+          "AudienceString": "Women 50-54",
           "Id": 13
         },
         "CPM": null,
@@ -22346,7 +22346,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 55-64",
+          "AudienceString": "Women 55-64",
           "Id": 14
         },
         "CPM": null,
@@ -22357,7 +22357,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 65+",
+          "AudienceString": "Women 65+",
           "Id": 15
         },
         "CPM": null,
@@ -22368,7 +22368,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 12-14",
+          "AudienceString": "Men 12-14",
           "Id": 19
         },
         "CPM": null,
@@ -22379,7 +22379,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 15-17",
+          "AudienceString": "Men 15-17",
           "Id": 20
         },
         "CPM": null,
@@ -22390,7 +22390,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 18-20",
+          "AudienceString": "Men 18-20",
           "Id": 21
         },
         "CPM": null,
@@ -22401,7 +22401,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 21-24",
+          "AudienceString": "Men 21-24",
           "Id": 22
         },
         "CPM": null,
@@ -22412,7 +22412,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 50-54",
+          "AudienceString": "Men 50-54",
           "Id": 28
         },
         "CPM": null,
@@ -22423,7 +22423,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 55-64",
+          "AudienceString": "Men 55-64",
           "Id": 29
         },
         "CPM": null,
@@ -22434,7 +22434,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 65+",
+          "AudienceString": "Men 65+",
           "Id": 30
         },
         "CPM": null,
@@ -22456,7 +22456,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Kids 6-11",
+          "AudienceString": "Children 6-11",
           "Id": 46
         },
         "CPM": null,
@@ -22467,7 +22467,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 25-34",
+          "AudienceString": "Men 25-34",
           "Id": 284
         },
         "CPM": null,
@@ -22478,7 +22478,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 35-49",
+          "AudienceString": "Men 35-49",
           "Id": 290
         },
         "CPM": null,
@@ -22489,7 +22489,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Kids 2-5",
+          "AudienceString": "Children 2-5",
           "Id": 339
         },
         "CPM": null,
@@ -22500,7 +22500,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 35-49",
+          "AudienceString": "Women 35-49",
           "Id": 347
         },
         "CPM": null,
@@ -22511,7 +22511,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
+          "AudienceString": "Women 25-34",
           "Id": 348
         },
         "CPM": null,
@@ -22524,7 +22524,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
+          "AudienceString": "Women 25-34",
           "Id": 348
         },
         "CPM": 99.8800,
@@ -23171,7 +23171,7 @@
     "ManifestAudiences": [
       {
         "Audience": {
-          "AudienceString": "Females 12-14",
+          "AudienceString": "Women 12-14",
           "Id": 4
         },
         "CPM": null,
@@ -23182,7 +23182,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 15-17",
+          "AudienceString": "Women 15-17",
           "Id": 5
         },
         "CPM": null,
@@ -23193,7 +23193,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 18-20",
+          "AudienceString": "Women 18-20",
           "Id": 6
         },
         "CPM": null,
@@ -23204,7 +23204,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 21-24",
+          "AudienceString": "Women 21-24",
           "Id": 7
         },
         "CPM": null,
@@ -23215,7 +23215,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 50-54",
+          "AudienceString": "Women 50-54",
           "Id": 13
         },
         "CPM": null,
@@ -23226,7 +23226,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 55-64",
+          "AudienceString": "Women 55-64",
           "Id": 14
         },
         "CPM": null,
@@ -23237,7 +23237,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 65+",
+          "AudienceString": "Women 65+",
           "Id": 15
         },
         "CPM": null,
@@ -23248,7 +23248,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 12-14",
+          "AudienceString": "Men 12-14",
           "Id": 19
         },
         "CPM": null,
@@ -23259,7 +23259,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 15-17",
+          "AudienceString": "Men 15-17",
           "Id": 20
         },
         "CPM": null,
@@ -23270,7 +23270,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 18-20",
+          "AudienceString": "Men 18-20",
           "Id": 21
         },
         "CPM": null,
@@ -23281,7 +23281,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 21-24",
+          "AudienceString": "Men 21-24",
           "Id": 22
         },
         "CPM": null,
@@ -23292,7 +23292,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 50-54",
+          "AudienceString": "Men 50-54",
           "Id": 28
         },
         "CPM": null,
@@ -23303,7 +23303,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 55-64",
+          "AudienceString": "Men 55-64",
           "Id": 29
         },
         "CPM": null,
@@ -23314,7 +23314,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 65+",
+          "AudienceString": "Men 65+",
           "Id": 30
         },
         "CPM": null,
@@ -23336,7 +23336,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Kids 6-11",
+          "AudienceString": "Children 6-11",
           "Id": 46
         },
         "CPM": null,
@@ -23347,7 +23347,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 25-34",
+          "AudienceString": "Men 25-34",
           "Id": 284
         },
         "CPM": null,
@@ -23358,7 +23358,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 35-49",
+          "AudienceString": "Men 35-49",
           "Id": 290
         },
         "CPM": null,
@@ -23369,7 +23369,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Kids 2-5",
+          "AudienceString": "Children 2-5",
           "Id": 339
         },
         "CPM": null,
@@ -23380,7 +23380,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 35-49",
+          "AudienceString": "Women 35-49",
           "Id": 347
         },
         "CPM": null,
@@ -23391,7 +23391,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
+          "AudienceString": "Women 25-34",
           "Id": 348
         },
         "CPM": null,
@@ -23404,7 +23404,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
+          "AudienceString": "Women 25-34",
           "Id": 348
         },
         "CPM": 99.8800,
@@ -24056,7 +24056,7 @@
     "ManifestAudiences": [
       {
         "Audience": {
-          "AudienceString": "Females 12-14",
+          "AudienceString": "Women 12-14",
           "Id": 4
         },
         "CPM": null,
@@ -24067,7 +24067,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 15-17",
+          "AudienceString": "Women 15-17",
           "Id": 5
         },
         "CPM": null,
@@ -24078,7 +24078,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 18-20",
+          "AudienceString": "Women 18-20",
           "Id": 6
         },
         "CPM": null,
@@ -24089,7 +24089,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 21-24",
+          "AudienceString": "Women 21-24",
           "Id": 7
         },
         "CPM": null,
@@ -24100,7 +24100,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 50-54",
+          "AudienceString": "Women 50-54",
           "Id": 13
         },
         "CPM": null,
@@ -24111,7 +24111,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 55-64",
+          "AudienceString": "Women 55-64",
           "Id": 14
         },
         "CPM": null,
@@ -24122,7 +24122,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 65+",
+          "AudienceString": "Women 65+",
           "Id": 15
         },
         "CPM": null,
@@ -24133,7 +24133,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 12-14",
+          "AudienceString": "Men 12-14",
           "Id": 19
         },
         "CPM": null,
@@ -24144,7 +24144,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 15-17",
+          "AudienceString": "Men 15-17",
           "Id": 20
         },
         "CPM": null,
@@ -24155,7 +24155,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 18-20",
+          "AudienceString": "Men 18-20",
           "Id": 21
         },
         "CPM": null,
@@ -24166,7 +24166,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 21-24",
+          "AudienceString": "Men 21-24",
           "Id": 22
         },
         "CPM": null,
@@ -24177,7 +24177,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 50-54",
+          "AudienceString": "Men 50-54",
           "Id": 28
         },
         "CPM": null,
@@ -24188,7 +24188,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 55-64",
+          "AudienceString": "Men 55-64",
           "Id": 29
         },
         "CPM": null,
@@ -24199,7 +24199,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 65+",
+          "AudienceString": "Men 65+",
           "Id": 30
         },
         "CPM": null,
@@ -24221,7 +24221,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Kids 6-11",
+          "AudienceString": "Children 6-11",
           "Id": 46
         },
         "CPM": null,
@@ -24232,7 +24232,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 25-34",
+          "AudienceString": "Men 25-34",
           "Id": 284
         },
         "CPM": null,
@@ -24243,7 +24243,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 35-49",
+          "AudienceString": "Men 35-49",
           "Id": 290
         },
         "CPM": null,
@@ -24254,7 +24254,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Kids 2-5",
+          "AudienceString": "Children 2-5",
           "Id": 339
         },
         "CPM": null,
@@ -24265,7 +24265,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 35-49",
+          "AudienceString": "Women 35-49",
           "Id": 347
         },
         "CPM": null,
@@ -24276,7 +24276,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
+          "AudienceString": "Women 25-34",
           "Id": 348
         },
         "CPM": null,
@@ -24289,7 +24289,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
+          "AudienceString": "Women 25-34",
           "Id": 348
         },
         "CPM": 99.8800,
@@ -24941,7 +24941,7 @@
     "ManifestAudiences": [
       {
         "Audience": {
-          "AudienceString": "Females 12-14",
+          "AudienceString": "Women 12-14",
           "Id": 4
         },
         "CPM": null,
@@ -24952,7 +24952,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 15-17",
+          "AudienceString": "Women 15-17",
           "Id": 5
         },
         "CPM": null,
@@ -24963,7 +24963,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 18-20",
+          "AudienceString": "Women 18-20",
           "Id": 6
         },
         "CPM": null,
@@ -24974,7 +24974,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 21-24",
+          "AudienceString": "Women 21-24",
           "Id": 7
         },
         "CPM": null,
@@ -24985,7 +24985,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 50-54",
+          "AudienceString": "Women 50-54",
           "Id": 13
         },
         "CPM": null,
@@ -24996,7 +24996,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 55-64",
+          "AudienceString": "Women 55-64",
           "Id": 14
         },
         "CPM": null,
@@ -25007,7 +25007,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 65+",
+          "AudienceString": "Women 65+",
           "Id": 15
         },
         "CPM": null,
@@ -25018,7 +25018,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 12-14",
+          "AudienceString": "Men 12-14",
           "Id": 19
         },
         "CPM": null,
@@ -25029,7 +25029,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 15-17",
+          "AudienceString": "Men 15-17",
           "Id": 20
         },
         "CPM": null,
@@ -25040,7 +25040,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 18-20",
+          "AudienceString": "Men 18-20",
           "Id": 21
         },
         "CPM": null,
@@ -25051,7 +25051,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 21-24",
+          "AudienceString": "Men 21-24",
           "Id": 22
         },
         "CPM": null,
@@ -25062,7 +25062,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 50-54",
+          "AudienceString": "Men 50-54",
           "Id": 28
         },
         "CPM": null,
@@ -25073,7 +25073,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 55-64",
+          "AudienceString": "Men 55-64",
           "Id": 29
         },
         "CPM": null,
@@ -25084,7 +25084,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 65+",
+          "AudienceString": "Men 65+",
           "Id": 30
         },
         "CPM": null,
@@ -25106,7 +25106,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Kids 6-11",
+          "AudienceString": "Children 6-11",
           "Id": 46
         },
         "CPM": null,
@@ -25117,7 +25117,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 25-34",
+          "AudienceString": "Men 25-34",
           "Id": 284
         },
         "CPM": null,
@@ -25128,7 +25128,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 35-49",
+          "AudienceString": "Men 35-49",
           "Id": 290
         },
         "CPM": null,
@@ -25139,7 +25139,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Kids 2-5",
+          "AudienceString": "Children 2-5",
           "Id": 339
         },
         "CPM": null,
@@ -25150,7 +25150,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 35-49",
+          "AudienceString": "Women 35-49",
           "Id": 347
         },
         "CPM": null,
@@ -25161,7 +25161,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
+          "AudienceString": "Women 25-34",
           "Id": 348
         },
         "CPM": null,
@@ -25174,7 +25174,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
+          "AudienceString": "Women 25-34",
           "Id": 348
         },
         "CPM": 99.8800,
@@ -25868,7 +25868,7 @@
     "ManifestAudiences": [
       {
         "Audience": {
-          "AudienceString": "Females 12-14",
+          "AudienceString": "Women 12-14",
           "Id": 4
         },
         "CPM": null,
@@ -25879,7 +25879,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 15-17",
+          "AudienceString": "Women 15-17",
           "Id": 5
         },
         "CPM": null,
@@ -25890,7 +25890,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 18-20",
+          "AudienceString": "Women 18-20",
           "Id": 6
         },
         "CPM": null,
@@ -25901,7 +25901,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 21-24",
+          "AudienceString": "Women 21-24",
           "Id": 7
         },
         "CPM": null,
@@ -25912,7 +25912,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 50-54",
+          "AudienceString": "Women 50-54",
           "Id": 13
         },
         "CPM": null,
@@ -25923,7 +25923,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 55-64",
+          "AudienceString": "Women 55-64",
           "Id": 14
         },
         "CPM": null,
@@ -25934,7 +25934,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 65+",
+          "AudienceString": "Women 65+",
           "Id": 15
         },
         "CPM": null,
@@ -25945,7 +25945,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 12-14",
+          "AudienceString": "Men 12-14",
           "Id": 19
         },
         "CPM": null,
@@ -25956,7 +25956,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 15-17",
+          "AudienceString": "Men 15-17",
           "Id": 20
         },
         "CPM": null,
@@ -25967,7 +25967,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 18-20",
+          "AudienceString": "Men 18-20",
           "Id": 21
         },
         "CPM": null,
@@ -25978,7 +25978,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 21-24",
+          "AudienceString": "Men 21-24",
           "Id": 22
         },
         "CPM": null,
@@ -25989,7 +25989,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 50-54",
+          "AudienceString": "Men 50-54",
           "Id": 28
         },
         "CPM": null,
@@ -26000,7 +26000,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 55-64",
+          "AudienceString": "Men 55-64",
           "Id": 29
         },
         "CPM": null,
@@ -26011,7 +26011,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 65+",
+          "AudienceString": "Men 65+",
           "Id": 30
         },
         "CPM": null,
@@ -26033,7 +26033,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Kids 6-11",
+          "AudienceString": "Children 6-11",
           "Id": 46
         },
         "CPM": null,
@@ -26044,7 +26044,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 25-34",
+          "AudienceString": "Men 25-34",
           "Id": 284
         },
         "CPM": null,
@@ -26055,7 +26055,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 35-49",
+          "AudienceString": "Men 35-49",
           "Id": 290
         },
         "CPM": null,
@@ -26066,7 +26066,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Kids 2-5",
+          "AudienceString": "Children 2-5",
           "Id": 339
         },
         "CPM": null,
@@ -26077,7 +26077,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 35-49",
+          "AudienceString": "Women 35-49",
           "Id": 347
         },
         "CPM": null,
@@ -26088,7 +26088,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
+          "AudienceString": "Women 25-34",
           "Id": 348
         },
         "CPM": null,
@@ -26101,7 +26101,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
+          "AudienceString": "Women 25-34",
           "Id": 348
         },
         "CPM": 99.8800,
@@ -26748,7 +26748,7 @@
     "ManifestAudiences": [
       {
         "Audience": {
-          "AudienceString": "Females 12-14",
+          "AudienceString": "Women 12-14",
           "Id": 4
         },
         "CPM": null,
@@ -26759,7 +26759,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 15-17",
+          "AudienceString": "Women 15-17",
           "Id": 5
         },
         "CPM": null,
@@ -26770,7 +26770,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 18-20",
+          "AudienceString": "Women 18-20",
           "Id": 6
         },
         "CPM": null,
@@ -26781,7 +26781,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 21-24",
+          "AudienceString": "Women 21-24",
           "Id": 7
         },
         "CPM": null,
@@ -26792,7 +26792,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 50-54",
+          "AudienceString": "Women 50-54",
           "Id": 13
         },
         "CPM": null,
@@ -26803,7 +26803,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 55-64",
+          "AudienceString": "Women 55-64",
           "Id": 14
         },
         "CPM": null,
@@ -26814,7 +26814,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 65+",
+          "AudienceString": "Women 65+",
           "Id": 15
         },
         "CPM": null,
@@ -26825,7 +26825,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 12-14",
+          "AudienceString": "Men 12-14",
           "Id": 19
         },
         "CPM": null,
@@ -26836,7 +26836,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 15-17",
+          "AudienceString": "Men 15-17",
           "Id": 20
         },
         "CPM": null,
@@ -26847,7 +26847,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 18-20",
+          "AudienceString": "Men 18-20",
           "Id": 21
         },
         "CPM": null,
@@ -26858,7 +26858,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 21-24",
+          "AudienceString": "Men 21-24",
           "Id": 22
         },
         "CPM": null,
@@ -26869,7 +26869,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 50-54",
+          "AudienceString": "Men 50-54",
           "Id": 28
         },
         "CPM": null,
@@ -26880,7 +26880,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 55-64",
+          "AudienceString": "Men 55-64",
           "Id": 29
         },
         "CPM": null,
@@ -26891,7 +26891,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 65+",
+          "AudienceString": "Men 65+",
           "Id": 30
         },
         "CPM": null,
@@ -26913,7 +26913,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Kids 6-11",
+          "AudienceString": "Children 6-11",
           "Id": 46
         },
         "CPM": null,
@@ -26924,7 +26924,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 25-34",
+          "AudienceString": "Men 25-34",
           "Id": 284
         },
         "CPM": null,
@@ -26935,7 +26935,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 35-49",
+          "AudienceString": "Men 35-49",
           "Id": 290
         },
         "CPM": null,
@@ -26946,7 +26946,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Kids 2-5",
+          "AudienceString": "Children 2-5",
           "Id": 339
         },
         "CPM": null,
@@ -26957,7 +26957,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 35-49",
+          "AudienceString": "Women 35-49",
           "Id": 347
         },
         "CPM": null,
@@ -26968,7 +26968,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
+          "AudienceString": "Women 25-34",
           "Id": 348
         },
         "CPM": null,
@@ -26981,7 +26981,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
+          "AudienceString": "Women 25-34",
           "Id": 348
         },
         "CPM": 99.8800,
@@ -27628,7 +27628,7 @@
     "ManifestAudiences": [
       {
         "Audience": {
-          "AudienceString": "Females 12-14",
+          "AudienceString": "Women 12-14",
           "Id": 4
         },
         "CPM": null,
@@ -27639,7 +27639,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 15-17",
+          "AudienceString": "Women 15-17",
           "Id": 5
         },
         "CPM": null,
@@ -27650,7 +27650,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 18-20",
+          "AudienceString": "Women 18-20",
           "Id": 6
         },
         "CPM": null,
@@ -27661,7 +27661,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 21-24",
+          "AudienceString": "Women 21-24",
           "Id": 7
         },
         "CPM": null,
@@ -27672,7 +27672,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 50-54",
+          "AudienceString": "Women 50-54",
           "Id": 13
         },
         "CPM": null,
@@ -27683,7 +27683,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 55-64",
+          "AudienceString": "Women 55-64",
           "Id": 14
         },
         "CPM": null,
@@ -27694,7 +27694,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 65+",
+          "AudienceString": "Women 65+",
           "Id": 15
         },
         "CPM": null,
@@ -27705,7 +27705,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 12-14",
+          "AudienceString": "Men 12-14",
           "Id": 19
         },
         "CPM": null,
@@ -27716,7 +27716,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 15-17",
+          "AudienceString": "Men 15-17",
           "Id": 20
         },
         "CPM": null,
@@ -27727,7 +27727,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 18-20",
+          "AudienceString": "Men 18-20",
           "Id": 21
         },
         "CPM": null,
@@ -27738,7 +27738,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 21-24",
+          "AudienceString": "Men 21-24",
           "Id": 22
         },
         "CPM": null,
@@ -27749,7 +27749,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 50-54",
+          "AudienceString": "Men 50-54",
           "Id": 28
         },
         "CPM": null,
@@ -27760,7 +27760,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 55-64",
+          "AudienceString": "Men 55-64",
           "Id": 29
         },
         "CPM": null,
@@ -27771,7 +27771,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 65+",
+          "AudienceString": "Men 65+",
           "Id": 30
         },
         "CPM": null,
@@ -27793,7 +27793,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Kids 6-11",
+          "AudienceString": "Children 6-11",
           "Id": 46
         },
         "CPM": null,
@@ -27804,7 +27804,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 25-34",
+          "AudienceString": "Men 25-34",
           "Id": 284
         },
         "CPM": null,
@@ -27815,7 +27815,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 35-49",
+          "AudienceString": "Men 35-49",
           "Id": 290
         },
         "CPM": null,
@@ -27826,7 +27826,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Kids 2-5",
+          "AudienceString": "Children 2-5",
           "Id": 339
         },
         "CPM": null,
@@ -27837,7 +27837,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 35-49",
+          "AudienceString": "Women 35-49",
           "Id": 347
         },
         "CPM": null,
@@ -27848,7 +27848,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
+          "AudienceString": "Women 25-34",
           "Id": 348
         },
         "CPM": null,
@@ -27861,7 +27861,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
+          "AudienceString": "Women 25-34",
           "Id": 348
         },
         "CPM": 99.8800,
@@ -28513,7 +28513,7 @@
     "ManifestAudiences": [
       {
         "Audience": {
-          "AudienceString": "Females 12-14",
+          "AudienceString": "Women 12-14",
           "Id": 4
         },
         "CPM": null,
@@ -28524,7 +28524,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 15-17",
+          "AudienceString": "Women 15-17",
           "Id": 5
         },
         "CPM": null,
@@ -28535,7 +28535,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 18-20",
+          "AudienceString": "Women 18-20",
           "Id": 6
         },
         "CPM": null,
@@ -28546,7 +28546,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 21-24",
+          "AudienceString": "Women 21-24",
           "Id": 7
         },
         "CPM": null,
@@ -28557,7 +28557,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 50-54",
+          "AudienceString": "Women 50-54",
           "Id": 13
         },
         "CPM": null,
@@ -28568,7 +28568,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 55-64",
+          "AudienceString": "Women 55-64",
           "Id": 14
         },
         "CPM": null,
@@ -28579,7 +28579,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 65+",
+          "AudienceString": "Women 65+",
           "Id": 15
         },
         "CPM": null,
@@ -28590,7 +28590,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 12-14",
+          "AudienceString": "Men 12-14",
           "Id": 19
         },
         "CPM": null,
@@ -28601,7 +28601,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 15-17",
+          "AudienceString": "Men 15-17",
           "Id": 20
         },
         "CPM": null,
@@ -28612,7 +28612,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 18-20",
+          "AudienceString": "Men 18-20",
           "Id": 21
         },
         "CPM": null,
@@ -28623,7 +28623,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 21-24",
+          "AudienceString": "Men 21-24",
           "Id": 22
         },
         "CPM": null,
@@ -28634,7 +28634,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 50-54",
+          "AudienceString": "Men 50-54",
           "Id": 28
         },
         "CPM": null,
@@ -28645,7 +28645,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 55-64",
+          "AudienceString": "Men 55-64",
           "Id": 29
         },
         "CPM": null,
@@ -28656,7 +28656,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 65+",
+          "AudienceString": "Men 65+",
           "Id": 30
         },
         "CPM": null,
@@ -28678,7 +28678,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Kids 6-11",
+          "AudienceString": "Children 6-11",
           "Id": 46
         },
         "CPM": null,
@@ -28689,7 +28689,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 25-34",
+          "AudienceString": "Men 25-34",
           "Id": 284
         },
         "CPM": null,
@@ -28700,7 +28700,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 35-49",
+          "AudienceString": "Men 35-49",
           "Id": 290
         },
         "CPM": null,
@@ -28711,7 +28711,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Kids 2-5",
+          "AudienceString": "Children 2-5",
           "Id": 339
         },
         "CPM": null,
@@ -28722,7 +28722,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 35-49",
+          "AudienceString": "Women 35-49",
           "Id": 347
         },
         "CPM": null,
@@ -28733,7 +28733,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
+          "AudienceString": "Women 25-34",
           "Id": 348
         },
         "CPM": null,
@@ -28746,7 +28746,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
+          "AudienceString": "Women 25-34",
           "Id": 348
         },
         "CPM": 99.8800,
@@ -29398,7 +29398,7 @@
     "ManifestAudiences": [
       {
         "Audience": {
-          "AudienceString": "Females 12-14",
+          "AudienceString": "Women 12-14",
           "Id": 4
         },
         "CPM": null,
@@ -29409,7 +29409,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 15-17",
+          "AudienceString": "Women 15-17",
           "Id": 5
         },
         "CPM": null,
@@ -29420,7 +29420,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 18-20",
+          "AudienceString": "Women 18-20",
           "Id": 6
         },
         "CPM": null,
@@ -29431,7 +29431,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 21-24",
+          "AudienceString": "Women 21-24",
           "Id": 7
         },
         "CPM": null,
@@ -29442,7 +29442,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 50-54",
+          "AudienceString": "Women 50-54",
           "Id": 13
         },
         "CPM": null,
@@ -29453,7 +29453,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 55-64",
+          "AudienceString": "Women 55-64",
           "Id": 14
         },
         "CPM": null,
@@ -29464,7 +29464,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 65+",
+          "AudienceString": "Women 65+",
           "Id": 15
         },
         "CPM": null,
@@ -29475,7 +29475,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 12-14",
+          "AudienceString": "Men 12-14",
           "Id": 19
         },
         "CPM": null,
@@ -29486,7 +29486,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 15-17",
+          "AudienceString": "Men 15-17",
           "Id": 20
         },
         "CPM": null,
@@ -29497,7 +29497,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 18-20",
+          "AudienceString": "Men 18-20",
           "Id": 21
         },
         "CPM": null,
@@ -29508,7 +29508,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 21-24",
+          "AudienceString": "Men 21-24",
           "Id": 22
         },
         "CPM": null,
@@ -29519,7 +29519,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 50-54",
+          "AudienceString": "Men 50-54",
           "Id": 28
         },
         "CPM": null,
@@ -29530,7 +29530,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 55-64",
+          "AudienceString": "Men 55-64",
           "Id": 29
         },
         "CPM": null,
@@ -29541,7 +29541,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 65+",
+          "AudienceString": "Men 65+",
           "Id": 30
         },
         "CPM": null,
@@ -29563,7 +29563,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Kids 6-11",
+          "AudienceString": "Children 6-11",
           "Id": 46
         },
         "CPM": null,
@@ -29574,7 +29574,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 25-34",
+          "AudienceString": "Men 25-34",
           "Id": 284
         },
         "CPM": null,
@@ -29585,7 +29585,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 35-49",
+          "AudienceString": "Men 35-49",
           "Id": 290
         },
         "CPM": null,
@@ -29596,7 +29596,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Kids 2-5",
+          "AudienceString": "Children 2-5",
           "Id": 339
         },
         "CPM": null,
@@ -29607,7 +29607,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 35-49",
+          "AudienceString": "Women 35-49",
           "Id": 347
         },
         "CPM": null,
@@ -29618,7 +29618,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
+          "AudienceString": "Women 25-34",
           "Id": 348
         },
         "CPM": null,
@@ -29631,7 +29631,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
+          "AudienceString": "Women 25-34",
           "Id": 348
         },
         "CPM": 99.8800,
@@ -30325,7 +30325,7 @@
     "ManifestAudiences": [
       {
         "Audience": {
-          "AudienceString": "Females 12-14",
+          "AudienceString": "Women 12-14",
           "Id": 4
         },
         "CPM": null,
@@ -30336,7 +30336,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 15-17",
+          "AudienceString": "Women 15-17",
           "Id": 5
         },
         "CPM": null,
@@ -30347,7 +30347,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 18-20",
+          "AudienceString": "Women 18-20",
           "Id": 6
         },
         "CPM": null,
@@ -30358,7 +30358,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 21-24",
+          "AudienceString": "Women 21-24",
           "Id": 7
         },
         "CPM": null,
@@ -30369,7 +30369,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 50-54",
+          "AudienceString": "Women 50-54",
           "Id": 13
         },
         "CPM": null,
@@ -30380,7 +30380,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 55-64",
+          "AudienceString": "Women 55-64",
           "Id": 14
         },
         "CPM": null,
@@ -30391,7 +30391,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 65+",
+          "AudienceString": "Women 65+",
           "Id": 15
         },
         "CPM": null,
@@ -30402,7 +30402,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 12-14",
+          "AudienceString": "Men 12-14",
           "Id": 19
         },
         "CPM": null,
@@ -30413,7 +30413,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 15-17",
+          "AudienceString": "Men 15-17",
           "Id": 20
         },
         "CPM": null,
@@ -30424,7 +30424,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 18-20",
+          "AudienceString": "Men 18-20",
           "Id": 21
         },
         "CPM": null,
@@ -30435,7 +30435,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 21-24",
+          "AudienceString": "Men 21-24",
           "Id": 22
         },
         "CPM": null,
@@ -30446,7 +30446,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 50-54",
+          "AudienceString": "Men 50-54",
           "Id": 28
         },
         "CPM": null,
@@ -30457,7 +30457,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 55-64",
+          "AudienceString": "Men 55-64",
           "Id": 29
         },
         "CPM": null,
@@ -30468,7 +30468,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 65+",
+          "AudienceString": "Men 65+",
           "Id": 30
         },
         "CPM": null,
@@ -30490,7 +30490,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Kids 6-11",
+          "AudienceString": "Children 6-11",
           "Id": 46
         },
         "CPM": null,
@@ -30501,7 +30501,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 25-34",
+          "AudienceString": "Men 25-34",
           "Id": 284
         },
         "CPM": null,
@@ -30512,7 +30512,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Males 35-49",
+          "AudienceString": "Men 35-49",
           "Id": 290
         },
         "CPM": null,
@@ -30523,7 +30523,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Kids 2-5",
+          "AudienceString": "Children 2-5",
           "Id": 339
         },
         "CPM": null,
@@ -30534,7 +30534,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 35-49",
+          "AudienceString": "Women 35-49",
           "Id": 347
         },
         "CPM": null,
@@ -30545,7 +30545,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
+          "AudienceString": "Women 25-34",
           "Id": 348
         },
         "CPM": null,
@@ -30558,7 +30558,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Females 25-34",
+          "AudienceString": "Women 25-34",
           "Id": 348
         },
         "CPM": 99.8800,

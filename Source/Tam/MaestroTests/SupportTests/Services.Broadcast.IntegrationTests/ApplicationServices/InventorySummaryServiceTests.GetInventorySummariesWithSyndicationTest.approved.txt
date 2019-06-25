@@ -234,7 +234,7 @@
   },
   {
     "Details": [],
-    "HasInventoryGaps": false,
+    "HasInventoryGaps": true,
     "HasRatesAvailableForQuarter": false,
     "HouseholdImpressions": null,
     "HutBook": null,
