@@ -8,6 +8,7 @@ using Common.Services.Repositories;
 using OfficeOpenXml;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.BusinessEngines.InventoryDaypartParsing;
+using Services.Broadcast.Cache;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.ProprietaryInventory;
 using Services.Broadcast.Entities.StationInventory;
@@ -51,7 +52,7 @@ namespace Services.Broadcast.Converters.RateImport
             _ImpressionAdjustmentEngine = impressionAdjustmentEngine;
         }
 
-        protected override void LoadAndValidateHeaderData(ExcelWorksheet worksheet, ProprietaryInventoryFile proprietaryFile)
+        public override void LoadAndValidateHeaderData(ExcelWorksheet worksheet, ProprietaryInventoryFile proprietaryFile)
         {
             var header = new ProprietaryInventoryHeader { DaypartCode = DEFAULT_DAYPART_CODE };
             var validationProblems = new List<string>();

@@ -3,6 +3,7 @@ using Common.Services.Repositories;
 using OfficeOpenXml;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.BusinessEngines.InventoryDaypartParsing;
+using Services.Broadcast.Cache;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.ProprietaryInventory;
@@ -43,7 +44,8 @@ namespace Services.Broadcast.Converters.RateImport
             ISpotLengthEngine spotLengthEngine,
             IDaypartCache daypartCache,
             IImpressionAdjustmentEngine impressionAdjustmentEngine,
-            IFileService fileService) : base(broadcastDataRepositoryFactory, broadcastAudiencesCache, inventoryDaypartParsingEngine, mediaMonthAndWeekAggregateCache,
+            IFileService fileService) : base(broadcastDataRepositoryFactory, broadcastAudiencesCache,
+                inventoryDaypartParsingEngine, mediaMonthAndWeekAggregateCache,
                 stationProcessingEngine, spotLengthEngine, fileService)
         {
             _DaypartCache = daypartCache;
@@ -87,7 +89,7 @@ namespace Services.Broadcast.Converters.RateImport
                 }).ToList();
         }
 
-        protected override void LoadAndValidateHeaderData(ExcelWorksheet worksheet, ProprietaryInventoryFile proprietaryFile)
+        public override void LoadAndValidateHeaderData(ExcelWorksheet worksheet, ProprietaryInventoryFile proprietaryFile)
         {
             var header = new ProprietaryInventoryHeader();
             var validationProblems = new List<string>();

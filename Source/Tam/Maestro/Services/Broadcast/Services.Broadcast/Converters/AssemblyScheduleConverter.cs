@@ -3,6 +3,7 @@ using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
 using EntityFrameworkMapping.Broadcast;
 using Microsoft.VisualBasic.FileIO;
+using Services.Broadcast.Cache;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Repositories;
 using System;
@@ -261,20 +262,16 @@ namespace Services.Broadcast.Converters
                 var audienceField = fields[rover];
                 if (audienceField[0] == 'R')
                     continue; // skip ratings (note demo rank remains unchanged)
-
-                int startAge;
-                int endAge;
-
-                var subcategoryCode = AssemblyImportHelper.ExtractAudienceInfo(audienceField.Substring(1), out startAge, out endAge);
+                
+                var subcategoryCode = AssemblyImportHelper.ExtractAudienceInfo(audienceField.Substring(1), out int startAge, out int endAge);
 
                 var possibleAudienceMatches = _AudienceCache.FindByAgeRange(startAge, endAge).Select(a => new LookupDto(a.Id, a.SubCategoryCode)).ToList();
 
                 var matchingAudience = possibleAudienceMatches.FirstOrDefault(a => a.Display == subcategoryCode);
-
-
+                
                 if (matchingAudience == null && subcategoryCode == AssemblyImportHelper.WomanSubcategoryCode)
                 {
-                    matchingAudience = possibleAudienceMatches.FirstOrDefault(a => a.Display == AssemblyImportHelper.FemaleSubcategoryCode);
+                    matchingAudience = possibleAudienceMatches.FirstOrDefault(a => a.Display == AssemblyImportHelper.WomanSubcategoryCode);
                 }
                 if (matchingAudience == null)
                 {

@@ -33,6 +33,7 @@ namespace EntityFrameworkMapping.Broadcast
             this.nti_transmittals_audiences = new HashSet<nti_transmittals_audiences>();
             this.station_inventory_manifest_audiences = new HashSet<station_inventory_manifest_audiences>();
             this.inventory_file_proprietary_header = new HashSet<inventory_file_proprietary_header>();
+            this.audience_maps = new HashSet<audience_maps>();
         }
     
         public int id { get; set; }
@@ -62,5 +63,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<nti_transmittals_audiences> nti_transmittals_audiences { get; set; }
         public virtual ICollection<station_inventory_manifest_audiences> station_inventory_manifest_audiences { get; set; }
         public virtual ICollection<inventory_file_proprietary_header> inventory_file_proprietary_header { get; set; }
+        public virtual ICollection<audience_maps> audience_maps { get; set; }
     }
 }

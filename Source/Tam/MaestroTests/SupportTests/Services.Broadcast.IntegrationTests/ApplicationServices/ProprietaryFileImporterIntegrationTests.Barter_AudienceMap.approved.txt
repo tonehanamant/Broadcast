@@ -1,0 +1,75 @@
+﻿{
+  "CreatedBy": null,
+  "DataLines": [
+    {
+      "Audiences": [],
+      "Comment": "Some comment",
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 35999,
+          "_Friday": true,
+          "_Id": 6724,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 32400,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": null,
+      "Station": "WRBU",
+      "Units": [
+        {
+          "ProprietaryInventoryUnit": {
+            "Name": "Unit 1",
+            "SpotLength": 30
+          },
+          "Spots": 1
+        },
+        {
+          "ProprietaryInventoryUnit": {
+            "Name": "Unit 2",
+            "SpotLength": 30
+          },
+          "Spots": 4
+        },
+        {
+          "ProprietaryInventoryUnit": {
+            "Name": "Unit 3",
+            "SpotLength": 30
+          },
+          "Spots": 3
+        },
+        {
+          "ProprietaryInventoryUnit": {
+            "Name": "Unit 4",
+            "SpotLength": 30
+          },
+          "Spots": 5
+        }
+      ],
+      "Weeks": []
+    }
+  ],
+  "FileName": null,
+  "FileStatus": 0,
+  "Hash": null,
+  "Header": null,
+  "InventoryGroups": [],
+  "InventoryManifests": [],
+  "InventorySource": null,
+  "RowsProcessed": null,
+  "UniqueIdentifier": null,
+  "ValidationProblems": []
+}

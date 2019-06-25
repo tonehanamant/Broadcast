@@ -16,6 +16,7 @@ using Services.Broadcast.Helpers;
 using Tam.Maestro.Data.Entities;
 using static Services.Broadcast.Entities.ProprietaryInventory.ProprietaryInventoryFile;
 using Common.Services;
+using Services.Broadcast.Cache;
 
 namespace Services.Broadcast.Converters.RateImport
 {
@@ -49,7 +50,7 @@ namespace Services.Broadcast.Converters.RateImport
         {
         }
 
-        protected override void LoadAndValidateHeaderData(ExcelWorksheet worksheet, ProprietaryInventoryFile proprietaryFile)
+        public override void LoadAndValidateHeaderData(ExcelWorksheet worksheet, ProprietaryInventoryFile proprietaryFile)
         {
             var header = new ProprietaryInventoryHeader();
             var validationProblems = new List<string>();

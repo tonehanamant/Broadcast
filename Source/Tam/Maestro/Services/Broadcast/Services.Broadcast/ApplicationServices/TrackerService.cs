@@ -3,6 +3,7 @@ using Common.Services.ApplicationServices;
 using Common.Services.Extensions;
 using Common.Services.Repositories;
 using Services.Broadcast.BusinessEngines;
+using Services.Broadcast.Cache;
 using Services.Broadcast.Converters;
 using Services.Broadcast.Converters.Scx;
 using Services.Broadcast.Entities;

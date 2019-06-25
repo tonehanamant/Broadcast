@@ -9,15 +9,16 @@ using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Data.EntityFrameworkMapping;
 using Tam.Maestro.Services.Clients;
 using Tam.Maestro.Services.ContractInterfaces.AudienceAndRatingsBusinessObjects;
+using System.Data.Entity;
 
 namespace Services.Broadcast.Repositories
 {
     public interface IAudienceRepository : IDataRepository
     {
-        DisplayAudience GetDisplayAudienceByAgeAndSubcategory(string subcategory, int ageFrom, int ageTo);
         DisplayAudience GetDisplayAudienceByCode(string audienceCode);
         List<BroadcastAudience> GetAllAudiences(int ratingsGroupId);
         List<LookupDto> GetAudiencesByIds(List<int> audiencesIds);
+        Dictionary<string, LookupDto> GetAudienceMaps();
     }
 
     public class AudienceRepository : BroadcastRepositoryBase, IAudienceRepository
@@ -26,39 +27,19 @@ namespace Services.Broadcast.Repositories
             : base(pSmsClient, pContextFactory, pTransactionHelper)
         {
         }
-
-        public DisplayAudience GetDisplayAudienceByAgeAndSubcategory(string subcategory, int ageFrom, int ageTo)
-        {
-            using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
-            {
-                return _InReadUncommitedTransaction(
-                    context =>
-                    {
-                        return (from a in context.audiences
-                            where a.sub_category_code == subcategory
-                                  && a.range_start == ageFrom
-                                  && a.range_end == ageTo
-                            select new DisplayAudience()
-                            {
-                                Id = a.id,
-                                AudienceString = a.name
-                            }).SingleOrDefault();
-                    });
-            }
-        }
-
+        
         public DisplayAudience GetDisplayAudienceByCode(string audienceCode)
         {
             using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
             {
                 return _InReadUncommitedTransaction(
                     context => (from a in context.audiences
-                        where a.code == audienceCode
-                        select new DisplayAudience()
-                        {
-                            Id = a.id,
-                            AudienceString = a.name
-                        }).SingleOrDefault());
+                                where a.code == audienceCode
+                                select new DisplayAudience()
+                                {
+                                    Id = a.id,
+                                    AudienceString = a.name
+                                }).SingleOrDefault());
             }
         }
 
@@ -79,24 +60,36 @@ namespace Services.Broadcast.Repositories
                                     RangeEnd = a.range_end,
                                     Custom = a.custom,
                                     Code = a.code,
-                                    Name = a.name
+                                    Name = a.name,
                                 }).Distinct().ToList());
             }
         }
-        
+
         public List<LookupDto> GetAudiencesByIds(List<int> audiencesIds)
         {
             using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
             {
                 return _InReadUncommitedTransaction(
                     context => (from c in context.audiences
-                        where audiencesIds.Contains(c.id)
-                        select new LookupDto()
-                        {
-                            Display = c.name,
-                            Id = c.id
-                        }).ToList());
-            }            
+                                where audiencesIds.Contains(c.id)
+                                select new LookupDto()
+                                {
+                                    Display = c.name,
+                                    Id = c.id
+                                }).ToList());
+            }
+        }
+
+        public Dictionary<string, LookupDto> GetAudienceMaps()
+        {
+            return _InReadUncommitedTransaction(
+                context =>
+                {
+                    return (from c in context.audience_maps
+                                .Include(l => l.audience)
+                            select new { audience_map = c, c.audience })
+                            .ToDictionary(x => x.audience_map.map_value, x => new LookupDto(x.audience.id, x.audience.code));
+                });
         }
     }
 }

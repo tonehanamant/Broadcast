@@ -1,0 +1,67 @@
+﻿{
+  "CreatedBy": null,
+  "DataLines": [
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "House Holds",
+            "Id": 31
+          },
+          "Cpm": 10.0,
+          "Impressions": 10.0,
+          "Rating": 10.0,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Women 25-54",
+            "Id": 58
+          },
+          "Cpm": 20.0,
+          "Impressions": 20.0,
+          "Rating": 20.0,
+          "Vpvh": 20.0
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 86399,
+          "_Friday": true,
+          "_Id": 38,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": true,
+          "_StartTime": 0,
+          "_Sunday": true,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": "The bug bang",
+      "RowIndex": 16,
+      "SpotCost": 10.0,
+      "Station": null,
+      "Units": [],
+      "Weeks": []
+    }
+  ],
+  "FileName": null,
+  "FileStatus": 0,
+  "Hash": null,
+  "Header": null,
+  "InventoryGroups": [],
+  "InventoryManifests": [],
+  "InventorySource": null,
+  "RowsProcessed": null,
+  "UniqueIdentifier": null,
+  "ValidationProblems": []
+}

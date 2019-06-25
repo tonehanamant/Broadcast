@@ -2,6 +2,7 @@
 using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
 using EntityFrameworkMapping.Broadcast;
+using Services.Broadcast.Cache;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Scx;
 using Services.Broadcast.Entities.spotcableXML;
@@ -20,7 +21,7 @@ namespace Services.Broadcast.Converters.Scx
     public interface IScxScheduleConverter : IApplicationService, IScheduleConverter
     {
     }
-    public class ScxScheduleConverter : ScheduleConverterBase,IScxScheduleConverter
+    public class ScxScheduleConverter : ScheduleConverterBase, IScxScheduleConverter
     {
         protected adx _RawScx;
         public ScxScheduleConverter(IDataRepositoryFactory broadcastDataRepositoryFactory,
@@ -40,7 +41,7 @@ namespace Services.Broadcast.Converters.Scx
             var convertedSchedule = _MapSchedule(scheduleDto);
             convertedSchedule.schedule_audiences = _MapAudiences();
             convertedSchedule.schedule_details = _MapDetails();
-            
+
             return convertedSchedule;
         }
 
@@ -60,10 +61,12 @@ namespace Services.Broadcast.Converters.Scx
 
             foreach (var demo in demos)
             {
-                var audience = new schedule_audiences();
-                audience.audience_id = demo.Value;
-                audience.rank = demo.Key;
-                audience.population = int.Parse(_RawScx.campaign.populations.Single(x => x.demoRank == demo.Key).Value);
+                var audience = new schedule_audiences
+                {
+                    audience_id = demo.Value,
+                    rank = demo.Key,
+                    population = int.Parse(_RawScx.campaign.populations.Single(x => x.demoRank == demo.Key).Value)
+                };
                 audiences.Add(audience);
             }
             return audiences;
@@ -111,16 +114,19 @@ namespace Services.Broadcast.Converters.Scx
 
                         var audiences = new List<schedule_detail_audiences>();
                         if (detailLine.demoValue != null)
-                        { 
+                        {
                             foreach (var demoValue in detailLine.demoValue)
                             {
                                 var demoRank = int.Parse(demoValue.demoRank);
                                 audiences.Add(new schedule_detail_audiences()
                                 {
                                     audience_rank = demoRank
-                                    ,impressions = double.Parse(demoValue.value.Single(pVal => pVal.type == demoValueValueType.Impressions).Value)
-                                    ,audience_population = systemOrder.populations.Single(pop => pop.demoRank == demoRank).Value != null ? int.Parse(systemOrder.populations.Single(pop => pop.demoRank == demoRank).Value) : 0
-                                    ,audience_id = demos[demoRank]
+                                    ,
+                                    impressions = double.Parse(demoValue.value.Single(pVal => pVal.type == demoValueValueType.Impressions).Value)
+                                    ,
+                                    audience_population = systemOrder.populations.Single(pop => pop.demoRank == demoRank).Value != null ? int.Parse(systemOrder.populations.Single(pop => pop.demoRank == demoRank).Value) : 0
+                                    ,
+                                    audience_id = demos[demoRank]
                                 });
                             }
                         }
@@ -143,7 +149,7 @@ namespace Services.Broadcast.Converters.Scx
 
             return spotLengthsDict[spotLength];
         }
-   
+
         public static string OverwriteDateTimeToHoursMinutesSeconds(string pXml)
         {
             var lXmlDocument = new XmlDocument();
@@ -182,7 +188,7 @@ namespace Services.Broadcast.Converters.Scx
             return dayPart;
         }
 
-        private Dictionary<int,int> _FindMatchingAudiences(List<demo> demos)
+        private Dictionary<int, int> _FindMatchingAudiences(List<demo> demos)
         {
             var matchedDemos = new Dictionary<int, int>();
             foreach (var demo in demos)
@@ -216,6 +222,18 @@ namespace Services.Broadcast.Converters.Scx
                             case "Women":
                                 {
                                     if (lAudience.Display == "W")
+                                        bestMatch = lAudience;
+                                    break;
+                                }
+                            case "Children":
+                                {
+                                    if (lAudience.Display == "C")
+                                        bestMatch = lAudience;
+                                    break;
+                                }
+                            case "Persons":
+                                {
+                                    if (lAudience.Display == "P")
                                         bestMatch = lAudience;
                                     break;
                                 }

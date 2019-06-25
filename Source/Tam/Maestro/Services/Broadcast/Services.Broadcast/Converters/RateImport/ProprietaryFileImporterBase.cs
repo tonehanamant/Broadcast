@@ -15,6 +15,7 @@ using Tam.Maestro.Common;
 using Common.Services;
 using System.IO;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
+using Services.Broadcast.Cache;
 
 namespace Services.Broadcast.Converters.RateImport
 {
@@ -42,6 +43,13 @@ namespace Services.Broadcast.Converters.RateImport
         /// <param name="worksheet">Excel worksheet to process</param>
         /// <param name="proprietaryFile">ProprietaryInventoryFile to be loaded</param>
         void LoadAndValidateDataLines(ExcelWorksheet worksheet, ProprietaryInventoryFile proprietaryFile);
+
+        /// <summary>
+        /// Load and validate header lines
+        /// </summary>
+        /// <param name="worksheet">Excel worksheet to process</param>
+        /// <param name="proprietaryFile">ProprietaryInventoryFile to be loaded</param>
+        void LoadAndValidateHeaderData(ExcelWorksheet worksheet, ProprietaryInventoryFile proprietaryFile);
 
         void PopulateManifests(ProprietaryInventoryFile proprietaryFile, List<DisplayBroadcastStation> stations);
     }
@@ -154,7 +162,7 @@ namespace Services.Broadcast.Converters.RateImport
         /// </summary>
         /// <param name="worksheet">Excel worksheet to process</param>
         /// <param name="proprietaryFile">ProprietaryInventoryFile object to be loaded</param>
-        protected abstract void LoadAndValidateHeaderData(ExcelWorksheet worksheet, ProprietaryInventoryFile proprietaryFile);
+        public abstract void LoadAndValidateHeaderData(ExcelWorksheet worksheet, ProprietaryInventoryFile proprietaryFile);
 
         /// <summary>
         /// Load and validate data lines

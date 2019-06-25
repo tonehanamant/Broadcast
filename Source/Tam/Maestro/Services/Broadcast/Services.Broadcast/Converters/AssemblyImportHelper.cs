@@ -8,7 +8,6 @@ namespace Services.Broadcast.Converters
     public static class AssemblyImportHelper
     {
         public const string WomanSubcategoryCode = "W";
-        public const string FemaleSubcategoryCode = "F";
 
         public const int SecondsPerHour = 60 * 60;
         public const int SecondsPerMinute = 60;
@@ -225,7 +224,7 @@ namespace Services.Broadcast.Converters
                     subcategoryCode = "P";
                     break;
                 case "KD":
-                    subcategoryCode = "K";
+                    subcategoryCode = "C";
                     break;
                 case "HH":
                     subcategoryCode = "H";
@@ -241,7 +240,7 @@ namespace Services.Broadcast.Converters
                 startAge = 0;
                 endAge = 99;
             }
-            else if (subcategoryCode == "K")
+            else if (subcategoryCode == "C")
             {
                 startAge = Int32.Parse(agePart.Split('-')[0]);
                 endAge = Int32.Parse(agePart.Split('-')[1]);

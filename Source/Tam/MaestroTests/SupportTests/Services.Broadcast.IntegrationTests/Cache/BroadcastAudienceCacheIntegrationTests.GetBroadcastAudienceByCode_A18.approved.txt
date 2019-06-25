@@ -1,0 +1,11 @@
+﻿{
+  "_CategoryCode": 0,
+  "_Code": "A18+",
+  "_Custom": true,
+  "_Id": 34,
+  "_Name": "Adults 18+",
+  "_RangeEnd": 99,
+  "_RangeStart": 18,
+  "_SubCategoryCode": "A",
+  "IsDirty": true
+}

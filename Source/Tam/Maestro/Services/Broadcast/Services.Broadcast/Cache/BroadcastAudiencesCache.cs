@@ -1,7 +1,9 @@
-﻿using Common.Services.Extensions;
+﻿using Common.Services.ApplicationServices;
+using Common.Services.Extensions;
 using Common.Services.Repositories;
 using Services.Broadcast.Converters;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Extensions;
 using Services.Broadcast.Repositories;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,9 +12,9 @@ using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.ContractInterfaces.AudienceAndRatingsBusinessObjects;
 
-namespace Services.Broadcast
+namespace Services.Broadcast.Cache
 {
-    public interface IBroadcastAudiencesCache
+    public interface IBroadcastAudiencesCache : IApplicationService
     {
         List<BroadcastAudience> GetAllEntities();
         List<LookupDto> GetAllLookups();
@@ -29,6 +31,7 @@ namespace Services.Broadcast
     public class BroadcastAudiencesCache : IBroadcastAudiencesCache
     {
         private readonly List<BroadcastAudience> _Audiences;
+        private readonly Dictionary<string, LookupDto> _AudienceMaps;
 
         public BroadcastAudiencesCache(IDataRepositoryFactory broadcastDataRepositoryFactory)
         {
@@ -37,6 +40,7 @@ namespace Services.Broadcast
                 var repository = broadcastDataRepositoryFactory.GetDataRepository<IAudienceRepository>();
                 var audiences = repository.GetAllAudiences(BroadcastConstants.RatingsGroupId);
                 _Audiences = _SortAudiences(audiences);
+                _AudienceMaps = repository.GetAudienceMaps();
             }
         }
 
@@ -86,21 +90,21 @@ namespace Services.Broadcast
         {
             return (from x in _Audiences
                     select new LookupDto()
-                {
-                    Id = x.Id,
-                    Display = x.Name
-                }).ToList();
+                    {
+                        Id = x.Id,
+                        Display = x.Name
+                    }).ToList();
         }
 
         public DisplayAudience GetDisplayAudienceById(int id)
         {
             return (from a in _Audiences
                     where a.Id == id
-                select new DisplayAudience()
-                {
-                    Id = id,
-                    AudienceString = a.Name
-                }).SingleOrDefault();
+                    select new DisplayAudience()
+                    {
+                        Id = id,
+                        AudienceString = a.Name
+                    }).SingleOrDefault();
         }
 
         public bool IsValidAudienceCode(string audienceCode)
@@ -121,13 +125,16 @@ namespace Services.Broadcast
 
         public BroadcastAudience GetBroadcastAudienceByCode(string audienceCode)
         {
+            //remove all the white spaces from the audience
+            audienceCode = audienceCode.RemoveWhiteSpaces();
+
             var audience = _Audiences.SingleOrDefault(x => x.Code == audienceCode);
 
-            if (audience == null && AudienceHelper.TryMapToSupportedFormat(audienceCode, out var mappingResult))
+            if (audience == null && _Map(audienceCode, out var mappingResult))
             {
-                audience = _Audiences.SingleOrDefault(x => x.Code == mappingResult);
+                audience = mappingResult;                
             }
-
+            
             return audience;
         }
 
@@ -150,11 +157,21 @@ namespace Services.Broadcast
         {
             return (from x in _Audiences
                     where x.Id == id
-                select new LookupDto()
-                {
-                    Id = x.Id,
-                    Display = x.Code
-                }).Single(string.Format("Could not find Audience with id {0}", id));
+                    select new LookupDto()
+                    {
+                        Id = x.Id,
+                        Display = x.Code
+                    }).Single(string.Format("Could not find Audience with id {0}", id));
+        }
+
+        private bool _Map(string audienceToMap, out BroadcastAudience audience)
+        {
+            var audienceMap = _AudienceMaps.Where(y => y.Key.Equals(audienceToMap)).SingleOrDefault().Value;
+
+            //return the mapped code 
+            audience = _Audiences.SingleOrDefault(x => x.Code == audienceMap?.Display);
+
+            return audience != null;
         }
     }
 }

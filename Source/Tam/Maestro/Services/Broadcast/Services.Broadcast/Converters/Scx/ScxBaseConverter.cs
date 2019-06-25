@@ -484,22 +484,20 @@ namespace Services.Broadcast.Converters.Scx
 
         private demoNameComplexTypeGroup _GetGroupFromAudience(DemoData demo)
         {
-            if (demo.Demo.Name.Contains("Adult"))
-                return demoNameComplexTypeGroup.Adults;
-            if (demo.Demo.Name.Contains("Kid") || demo.Demo.Name.Contains("Children"))
-                return demoNameComplexTypeGroup.Children;
             if (demo.Demo.Name.Contains("House Hold"))
                 return demoNameComplexTypeGroup.Households;
+            if (demo.Demo.Name.Contains("Adult"))
+                return demoNameComplexTypeGroup.Adults;
             if (demo.Demo.Name.StartsWith("Male"))
-                return demoNameComplexTypeGroup.Men;
+                return demoNameComplexTypeGroup.Men;            
+            if (demo.Demo.Name.StartsWith("Women"))
+                return demoNameComplexTypeGroup.Women;
+            if (demo.Demo.Name.Contains("Children"))
+                return demoNameComplexTypeGroup.Children;
             if (demo.Demo.Name.StartsWith("Person"))
                 return demoNameComplexTypeGroup.Persons;
-            if (demo.Demo.Name.Contains("Teen"))
-                return demoNameComplexTypeGroup.Teens;
-            if (demo.Demo.Name.StartsWith("Women") || demo.Demo.Name.StartsWith("Female"))
-                return demoNameComplexTypeGroup.Women;
 
-            return demoNameComplexTypeGroup.Households;
+            throw new Exception ($"Unknown demo group {demo.Demo.Name}");
         }
 
         private void _SetScxEstimate(campaign camp)

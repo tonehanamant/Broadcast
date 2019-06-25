@@ -22,6 +22,7 @@ using Common.Services.Repositories;
 using Common.Services;
 using Services.Broadcast.Exceptions;
 using Services.Broadcast.BusinessEngines.InventoryDaypartParsing;
+using Services.Broadcast.Cache;
 
 namespace Services.Broadcast.Converters.RateImport
 {
@@ -50,16 +51,19 @@ namespace Services.Broadcast.Converters.RateImport
         private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekAggregateCache;
         private readonly IDaypartCache _DaypartCache;
         private readonly IInventoryDaypartParsingEngine _InventoryDaypartParsingEngine;
+        private readonly IBroadcastAudiencesCache _AudienceCache;
 
         public OpenMarketFileImporter(IDataRepositoryFactory dataRepositoryFactory
             , IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache
             , IDaypartCache daypartCache
-            , IInventoryDaypartParsingEngine inventoryDaypartParsingEngine)
+            , IInventoryDaypartParsingEngine inventoryDaypartParsingEngine
+            , IBroadcastAudiencesCache broadcastAudiencesCache)
         {
             _BroadcastDataRepositoryFactory = dataRepositoryFactory;
             _MediaMonthAndWeekAggregateCache = mediaMonthAndWeekAggregateCache;
             _DaypartCache = daypartCache;
             _InventoryDaypartParsingEngine = inventoryDaypartParsingEngine;
+            _AudienceCache = broadcastAudiencesCache;
         }
 
         /// <summary>
@@ -481,40 +485,13 @@ namespace Services.Broadcast.Converters.RateImport
 
         private DisplayAudience _GetAudienceForDemo(AAAAMessageProposalAvailListDemoCategory demo)
         {
-            string audienceSubcategory = null;
+            string audienceCode = $"{demo.Group} {demo.AgeFrom}-{demo.AgeTo}";
 
-            switch (demo.Group.ToString())
-            {
-                case "Homes":
-                    audienceSubcategory = "H";
-                    break;
-                case "Adults":
-                    audienceSubcategory = "A";
-                    break;
-                case "Women":
-                    audienceSubcategory = "W";
-                    break;
-                case "Females":
-                    audienceSubcategory = "F";
-                    break;
-                case "Men":
-                    audienceSubcategory = "M";
-                    break;
-                case "Males":
-                    audienceSubcategory = "M";
-                    break;
-                default:
-                    throw new Exception("Unknown demo group [" + demo.Group + "] in rate file.");
-            }
-
-            var result = _BroadcastDataRepositoryFactory.GetDataRepository<IAudienceRepository>().GetDisplayAudienceByAgeAndSubcategory(
-                audienceSubcategory,
-                demo.AgeFrom,
-                demo.AgeTo);
+            var result = _AudienceCache.GetDisplayAudienceByCode(audienceCode);
 
             if (result == null)
             {
-                throw new Exception($"Unable to find audience for subcategory {audienceSubcategory} and age {demo.AgeFrom}-{demo.AgeTo}");
+                throw new Exception($"Unable to find audience for code {audienceCode}");
             }
 
             return result;

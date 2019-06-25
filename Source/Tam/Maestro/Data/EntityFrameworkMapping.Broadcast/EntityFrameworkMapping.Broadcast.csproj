@@ -363,6 +363,9 @@
     <Compile Include="audience_audiences.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="audience_maps.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="BroadcastContext.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

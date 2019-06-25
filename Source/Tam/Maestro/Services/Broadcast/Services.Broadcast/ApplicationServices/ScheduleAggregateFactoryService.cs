@@ -2,6 +2,7 @@
 using Common.Services.Repositories;
 using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast.Aggregates;
+using Services.Broadcast.Cache;
 using Services.Broadcast.Repositories;
 
 namespace Services.Broadcast.ApplicationServices

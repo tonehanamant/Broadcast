@@ -460,5 +460,44 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 }
             }
         }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void Barter_AudienceMap()
+        {
+            const string fileName = @".\Files\ProprietaryDataFiles\Barter_Valid_AudienceMap1.xlsx";
+            var inventorySource = new InventorySource { InventoryType = InventorySourceTypeEnum.Barter };
+            _VerifyFile(fileName, inventorySource);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void Syndication_AudienceMap()
+        {
+            const string fileName = @".\Files\ProprietaryDataFiles\Syndicator_Valid_AudienceMap1.xlsx";
+            var inventorySource = new InventorySource { InventoryType = InventorySourceTypeEnum.Syndication };
+            _VerifyFile(fileName, inventorySource);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void Diginet_AudienceMap()
+        {
+            const string fileName = @".\Files\ProprietaryDataFiles\Diginet_Valid_AudienceMap1.xlsx";
+            var inventorySource = new InventorySource { InventoryType = InventorySourceTypeEnum.Diginet };
+            _VerifyFile(fileName, inventorySource);
+        }
+
+        private void _VerifyFile(string fileName, InventorySource inventorySource)
+        {
+            using (var package = new ExcelPackage(new FileInfo(fileName)))
+            {
+                
+                var fileImporter = _ProprietaryFileImporterFactory.GetFileImporterInstance(inventorySource);
+                var proprietaryFile = new ProprietaryInventoryFile();
+                fileImporter.LoadAndValidateDataLines(package.Workbook.Worksheets[1], proprietaryFile);
+                _VerifyProprietaryInventoryFile(proprietaryFile);
+            }
+        }
     }
 }

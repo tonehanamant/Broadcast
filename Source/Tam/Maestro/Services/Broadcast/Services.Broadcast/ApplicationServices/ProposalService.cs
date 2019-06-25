@@ -30,6 +30,7 @@ using Services.Broadcast.Helpers;
 using System.Text;
 using Services.Broadcast.Converters.Scx;
 using Services.Broadcast.Entities.Scx;
+using Services.Broadcast.Cache;
 
 namespace Services.Broadcast.ApplicationServices
 {

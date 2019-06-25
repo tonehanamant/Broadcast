@@ -5,6 +5,7 @@ using OfficeOpenXml;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.BusinessEngines.InventoryDaypartParsing;
+using Services.Broadcast.Cache;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.ProprietaryInventory;
@@ -64,7 +65,7 @@ namespace Services.Broadcast.Converters.RateImport
             _ImpressionsService = impressionsService;
         }
 
-        protected override void LoadAndValidateHeaderData(ExcelWorksheet worksheet, ProprietaryInventoryFile proprietaryFile)
+        public override void LoadAndValidateHeaderData(ExcelWorksheet worksheet, ProprietaryInventoryFile proprietaryFile)
         {
             var header = new ProprietaryInventoryHeader();
             var validationProblems = new List<string>();
@@ -157,7 +158,9 @@ namespace Services.Broadcast.Converters.RateImport
 
             //Must be valid nelson demo.
             var demo = worksheet.Cells[DEMO_CELL.ToString()].GetStringValue();
-            if (!AudienceCache.IsValidAudienceCode(demo))
+
+            var audience = AudienceCache.GetBroadcastAudienceByCode(demo);
+            if (audience == null)
             {
                 var errorMessage = $"Invalid demo ({demo})";
                 validationProblems.Add(errorMessage);

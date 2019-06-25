@@ -1269,7 +1269,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [Ignore]
         public void CanLoadHudsonOpenMarketInventoryFile()
         {
             using (new TransactionScopeWrapper())

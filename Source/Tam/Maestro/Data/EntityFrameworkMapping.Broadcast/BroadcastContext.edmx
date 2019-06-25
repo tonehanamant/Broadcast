@@ -141,6 +141,14 @@
           <Property Name="custom_audience_id" Type="int" Nullable="false" />
           <Property Name="rating_audience_id" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="audience_maps">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="audience_id" Type="int" Nullable="false" />
+          <Property Name="map_value" Type="nvarchar" MaxLength="16" Nullable="false" />
+        </EntityType>
         <EntityType Name="audiences">
           <Key>
             <PropertyRef Name="id" />
@@ -1581,6 +1589,18 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Principal>
             <Dependent Role="audience_audiences">
               <PropertyRef Name="custom_audience_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_audience_maps_audiences">
+          <End Role="audiences" Type="Self.audiences" Multiplicity="1" />
+          <End Role="audience_maps" Type="Self.audience_maps" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="audiences">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="audience_maps">
+              <PropertyRef Name="audience_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3523,6 +3543,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySet Name="affidavit_outbound_file_problems" EntityType="Self.affidavit_outbound_file_problems" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="affidavit_outbound_files" EntityType="Self.affidavit_outbound_files" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="audience_audiences" EntityType="Self.audience_audiences" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="audience_maps" EntityType="Self.audience_maps" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="audiences" EntityType="Self.audiences" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="bvs_file_details" EntityType="Self.bvs_file_details" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="bvs_files" EntityType="Self.bvs_files" Schema="dbo" store:Type="Tables" />
@@ -3693,6 +3714,10 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <AssociationSet Name="FK_audience_audiences_audiences" Association="Self.FK_audience_audiences_audiences">
             <End Role="audiences" EntitySet="audiences" />
             <End Role="audience_audiences" EntitySet="audience_audiences" />
+          </AssociationSet>
+          <AssociationSet Name="FK_audience_maps_audiences" Association="Self.FK_audience_maps_audiences">
+            <End Role="audiences" EntitySet="audiences" />
+            <End Role="audience_maps" EntitySet="audience_maps" />
           </AssociationSet>
           <AssociationSet Name="FK_bvs_file_bvs_file_details" Association="Self.FK_bvs_file_bvs_file_details">
             <End Role="bvs_files" EntitySet="bvs_files" />
@@ -5046,6 +5071,11 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="inventory_sources" EntitySet="inventory_sources" />
             <End Role="inventory_source_logos" EntitySet="inventory_source_logos" />
           </AssociationSet>
+          <EntitySet Name="audience_maps" EntityType="BroadcastModel.audience_maps" />
+          <AssociationSet Name="FK_audience_maps_audiences" Association="BroadcastModel.FK_audience_maps_audiences">
+            <End Role="audience" EntitySet="audiences" />
+            <End Role="audience_maps" EntitySet="audience_maps" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="audience_audiences">
           <Key>
@@ -5088,6 +5118,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="nti_transmittals_audiences" Relationship="BroadcastModel.FK_nti_transmittals_audiences_audiences" FromRole="audience" ToRole="nti_transmittals_audiences" />
           <NavigationProperty Name="station_inventory_manifest_audiences" Relationship="BroadcastModel.FK_station_inventory_manifest_audiences_audiences" FromRole="audience" ToRole="station_inventory_manifest_audiences" />
           <NavigationProperty Name="inventory_file_proprietary_header" Relationship="BroadcastModel.FK_inventory_file_proprietary_header_audiences" FromRole="audience" ToRole="inventory_file_proprietary_header" />
+          <NavigationProperty Name="audience_maps" Relationship="BroadcastModel.FK_audience_maps_audiences" FromRole="audience" ToRole="audience_maps" />
         </EntityType>
         <EntityType Name="bvs_file_details">
           <Key>
@@ -8826,6 +8857,27 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="audience_maps">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="audience_id" Type="Int32" Nullable="false" />
+          <Property Name="map_value" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="audience" Relationship="BroadcastModel.FK_audience_maps_audiences" FromRole="audience_maps" ToRole="audience" />
+        </EntityType>
+        <Association Name="FK_audience_maps_audiences">
+          <End Type="BroadcastModel.audience" Role="audience" Multiplicity="1" />
+          <End Type="BroadcastModel.audience_maps" Role="audience_maps" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="audience">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="audience_maps">
+              <PropertyRef Name="audience_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -10351,6 +10403,15 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
                 <ScalarProperty Name="created_date" ColumnName="created_date" />
                 <ScalarProperty Name="created_by" ColumnName="created_by" />
                 <ScalarProperty Name="inventory_source_id" ColumnName="inventory_source_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="audience_maps">
+            <EntityTypeMapping TypeName="BroadcastModel.audience_maps">
+              <MappingFragment StoreEntitySet="audience_maps">
+                <ScalarProperty Name="map_value" ColumnName="map_value" />
+                <ScalarProperty Name="audience_id" ColumnName="audience_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

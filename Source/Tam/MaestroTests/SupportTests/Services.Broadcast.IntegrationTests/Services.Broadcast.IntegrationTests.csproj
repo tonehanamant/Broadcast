@@ -265,6 +265,7 @@
     <Compile Include="ApplicationServices\WhosWatchingTvServiceTests.cs" />
     <Compile Include="AttributeIgnorer.cs" />
     <Compile Include="ApplicationServices\AffidavitMatchingEngineTests.cs" />
+    <Compile Include="Cache\BroadcastAudienceCacheIntegrationTests.cs" />
     <Compile Include="MediaMonthCrunchCacheTest.cs" />
     <Compile Include="Repositories\RatingForcastRepositoryTests.cs" />
     <Compile Include="Repositories\PostRepositoryTests.cs" />
@@ -411,6 +412,9 @@
     <None Include="Files\ProprietaryDataFiles\Barter_ValidFormat_UnknownStation.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Files\ProprietaryDataFiles\Barter_Valid_AudienceMap1.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Files\ProprietaryDataFiles\Diginet_InvalidFile1.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -469,6 +473,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Files\ProprietaryDataFiles\Diginet_ValidFile5.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\ProprietaryDataFiles\Diginet_Valid_AudienceMap1.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Files\ProprietaryDataFiles\DuplicateData_ForecastDB_SingleBook.xlsx">
@@ -571,6 +578,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Files\ProprietaryDataFiles\Syndication_ValidFile5.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\ProprietaryDataFiles\Syndicator_Valid_AudienceMap1.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Files\ProprietaryDataFiles\TTWN EMN Q1 Barter_Inventory Template_2.6.2019 %2817%29.xlsx">

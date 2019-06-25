@@ -274,6 +274,8 @@
         <AssociationConnector Association="BroadcastModel.FK_inventory_file_proprietary_header_daypart_codes" />
         <EntityTypeShape EntityType="BroadcastModel.inventory_source_logos" Width="1.5" PointX="2.75" PointY="37.125" />
         <AssociationConnector Association="BroadcastModel.FK_inventory_source_logos_inventory_sources" />
+        <EntityTypeShape EntityType="BroadcastModel.audience_maps" Width="1.5" PointX="5" PointY="30.75" />
+        <AssociationConnector Association="BroadcastModel.FK_audience_maps_audiences" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

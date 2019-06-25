@@ -16,6 +16,7 @@ using System.Net.Mail;
 using Services.Broadcast.Entities.Enums;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 using System;
+using Services.Broadcast.Cache;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
