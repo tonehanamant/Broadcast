@@ -44,7 +44,7 @@
 	"LeadInShowType": "News",
 	"LeadOutShowType": "Documentary",
 	"Demographics": [{
-			"Demographic": "A25-49",
+			"Demographic": "K 2-5",
 			"OvernightRating": 1.5,
 			"OvernightImpressions": 825
 		}

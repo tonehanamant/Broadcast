@@ -8,7 +8,7 @@
       "ClientScrubs": [],
       "Demographics": [
         {
-          "AudienceId": 36,
+          "AudienceId": 57,
           "Demographic": null,
           "OvernightImpressions": 1928.0,
           "OvernightRating": 2.3
@@ -45,7 +45,7 @@
       "ClientScrubs": [],
       "Demographics": [
         {
-          "AudienceId": 36,
+          "AudienceId": 57,
           "Demographic": null,
           "OvernightImpressions": 825.0,
           "OvernightRating": 1.5
@@ -75,7 +75,7 @@
       "SuppliedProgramName": null
     }
   ],
-  "FileHash": "9A-91-E2-51-83-9E-E5-CB-8B-28-36-F1-88-C8-ED-04-C5-31-E1-4C",
+  "FileHash": "3A-54-EF-0F-1C-CB-33-8D-E1-50-D0-51-45-1D-2A-16-68-66-E3-68",
   "FileName": "WWTV_AffidavitValidFileContent_SpotCost.txt",
   "FileProblems": [],
   "SourceId": 3,

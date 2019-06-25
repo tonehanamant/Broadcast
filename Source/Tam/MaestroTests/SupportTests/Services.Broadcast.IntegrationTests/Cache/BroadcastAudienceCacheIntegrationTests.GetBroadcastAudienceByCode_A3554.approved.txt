@@ -1,0 +1,11 @@
+﻿{
+  "_CategoryCode": 0,
+  "_Code": "A35-54",
+  "_Custom": true,
+  "_Id": 39,
+  "_Name": "Adults 35-54",
+  "_RangeEnd": 54,
+  "_RangeStart": 35,
+  "_SubCategoryCode": "A",
+  "IsDirty": true
+}

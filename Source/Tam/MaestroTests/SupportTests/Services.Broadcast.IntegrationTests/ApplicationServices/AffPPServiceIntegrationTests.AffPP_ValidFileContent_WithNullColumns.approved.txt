@@ -119,7 +119,7 @@
       ],
       "Demographics": [
         {
-          "AudienceId": 36,
+          "AudienceId": 60,
           "Demographic": null,
           "OvernightImpressions": 1928.0,
           "OvernightRating": 2.3
@@ -149,7 +149,7 @@
       "SuppliedProgramName": "Everybody Loves Raymond"
     }
   ],
-  "FileHash": "E8-89-98-47-71-12-1B-47-B3-60-8A-31-2A-C5-35-CD-23-39-4A-30",
+  "FileHash": "1D-34-69-FB-AB-6C-EF-54-8A-FB-4B-3A-AC-1C-F4-F1-D1-C1-F6-CB",
   "FileName": "WWTV_AffidavitValidFile_NullValues.txt",
   "FileProblems": [],
   "SourceId": 3,

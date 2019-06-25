@@ -12,7 +12,7 @@
 	"Affiliate": "CBS",
 	"SuppliedProgram": "Everybody Loves Raymond",
 	"Demographics": [{
-			"Demographic": "A25-49",
+			"Demographic": "P35-54",
 			"OvernightRating": 2.3,
 			"OvernightImpressions": 1928
 		}

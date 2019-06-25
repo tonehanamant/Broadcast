@@ -293,7 +293,7 @@ namespace Services.Broadcast.ApplicationServices
                 {
                     saveRequestDetail.Demographics = jsonDetail.Demographics.Select(y =>
                     {
-                        if (_ValidateDemography(validationErrors, y, recordNumber, inventorySource, out string xtransformedCode))
+                        if (!_IsValidDemography(validationErrors, y, recordNumber, inventorySource, out string xtransformedCode))
                             return null;
                         var audienceId = _AudienceCache.GetDisplayAudienceByCode(xtransformedCode).Id;
 
@@ -312,22 +312,12 @@ namespace Services.Broadcast.ApplicationServices
             return saveRequest;
         }
 
-        private bool _ValidateDemography(List<WWTVInboundFileValidationResult> validationErrors, ScrubbingDemographics demo, int recordNumber
+        private bool _IsValidDemography(List<WWTVInboundFileValidationResult> validationErrors, ScrubbingDemographics demo, int recordNumber
             , DeliveryFileSourceEnum inventorySource, out string xtransformedCode)
         {
-            xtransformedCode = demo.Demographic;
-            if (inventorySource == DeliveryFileSourceEnum.KeepingTrac)
-            {
-                if (xtransformedCode.StartsWith("ad", StringComparison.CurrentCultureIgnoreCase))
-                {
-                    xtransformedCode = "A" + xtransformedCode.Substring(2);
-                }
-                else if (xtransformedCode.StartsWith("C", StringComparison.CurrentCultureIgnoreCase))
-                {
-                    xtransformedCode = "K" + xtransformedCode.Substring(2);
-                }
-            }
-            if (!_AudienceCache.IsValidAudienceCode(xtransformedCode))
+            xtransformedCode = _AudienceCache.GetBroadcastAudienceByCode(demo.Demographic).Code;
+
+            if (string.IsNullOrWhiteSpace(xtransformedCode))
             {
                 validationErrors.Add(new WWTVInboundFileValidationResult()
                 {
@@ -335,10 +325,10 @@ namespace Services.Broadcast.ApplicationServices
                     InvalidField = "Demographic Code",
                     InvalidLine = recordNumber
                 });
-                return true;
+                return false;
             }
 
-            return false;
+            return true;
         }
     }
 }

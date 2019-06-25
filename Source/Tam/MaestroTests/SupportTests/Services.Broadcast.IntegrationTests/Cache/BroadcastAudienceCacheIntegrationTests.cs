@@ -26,6 +26,16 @@ namespace Services.Broadcast.IntegrationTests.Cache
         }
 
         [Test]
+        [TestCase("Adults 35-54")]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetBroadcastAudienceByCode_A3554(string audienceCode)
+        {
+            var result = _BroadcastAudiencesCache.GetBroadcastAudienceByCode(audienceCode);
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
         [TestCase("P18+")]
         [TestCase("P 18+")]
         [TestCase("A 18+")]

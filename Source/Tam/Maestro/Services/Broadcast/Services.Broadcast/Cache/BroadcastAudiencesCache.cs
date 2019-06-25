@@ -5,6 +5,7 @@ using Services.Broadcast.Converters;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Extensions;
 using Services.Broadcast.Repositories;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Transactions;
@@ -127,7 +128,7 @@ namespace Services.Broadcast.Cache
         {
             //remove all the white spaces from the audience
             audienceCode = audienceCode.RemoveWhiteSpaces();
-
+            
             var audience = _Audiences.SingleOrDefault(x => x.Code == audienceCode);
 
             if (audience == null && _Map(audienceCode, out var mappingResult))

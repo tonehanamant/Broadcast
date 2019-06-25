@@ -45,7 +45,7 @@
       "ClientScrubs": [],
       "Demographics": [
         {
-          "AudienceId": 36,
+          "AudienceId": 44,
           "Demographic": null,
           "OvernightImpressions": 825.0,
           "OvernightRating": 1.5
@@ -75,7 +75,7 @@
       "SuppliedProgramName": null
     }
   ],
-  "FileHash": "12-E4-DE-79-96-CD-D6-6E-B3-65-83-15-45-C3-4C-CB-8C-E0-F7-BB",
+  "FileHash": "1B-A4-EC-3A-51-75-E1-18-8F-54-7A-A0-48-4E-36-B3-82-62-D0-E4",
   "FileName": "WWTV_AffidavitValidFile.txt",
   "FileProblems": [],
   "SourceId": 3,

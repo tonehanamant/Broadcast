@@ -22,7 +22,7 @@
 	"LeadInShowType": "News",
 	"LeadOutShowType": "Documentary",
 	"Demographics": [{
-			"Demographic": "A25-49",
+			"Demographic": "P 25-49",
 			"OvernightRating": 2.3,
 			"OvernightImpressions": 1928
 		}
@@ -51,7 +51,7 @@
 	"LeadInShowType": "News",
 	"LeadOutShowType": "Documentary",
 	"Demographics": [{
-			"Demographic": "A25-49",
+			"Demographic": " P 65+   ",
 			"OvernightRating": 1.5,
 			"OvernightImpressions": 825
 		}
