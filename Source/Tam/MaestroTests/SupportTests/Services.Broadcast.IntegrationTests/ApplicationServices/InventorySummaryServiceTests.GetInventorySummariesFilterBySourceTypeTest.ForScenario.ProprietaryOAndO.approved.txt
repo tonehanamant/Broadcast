@@ -2,6 +2,7 @@
   {
     "Details": [],
     "HasInventoryGaps": false,
+    "HasLogo": false,
     "HasRatesAvailableForQuarter": false,
     "HouseholdImpressions": null,
     "HutBook": null,
@@ -27,6 +28,7 @@
   {
     "Details": [],
     "HasInventoryGaps": false,
+    "HasLogo": false,
     "HasRatesAvailableForQuarter": false,
     "HouseholdImpressions": null,
     "HutBook": null,
@@ -52,6 +54,7 @@
   {
     "Details": [],
     "HasInventoryGaps": true,
+    "HasLogo": false,
     "HasRatesAvailableForQuarter": false,
     "HouseholdImpressions": null,
     "HutBook": null,
@@ -147,6 +150,7 @@
   {
     "Details": [],
     "HasInventoryGaps": false,
+    "HasLogo": false,
     "HasRatesAvailableForQuarter": false,
     "HouseholdImpressions": null,
     "HutBook": null,

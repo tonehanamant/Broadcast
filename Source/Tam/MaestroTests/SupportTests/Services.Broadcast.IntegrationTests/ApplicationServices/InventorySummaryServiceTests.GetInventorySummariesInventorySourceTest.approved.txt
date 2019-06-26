@@ -11,6 +11,7 @@
       }
     ],
     "HasInventoryGaps": true,
+    "HasLogo": false,
     "HasRatesAvailableForQuarter": true,
     "HouseholdImpressions": 1234.0,
     "HutBook": {

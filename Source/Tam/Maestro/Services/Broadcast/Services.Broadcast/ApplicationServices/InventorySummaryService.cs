@@ -45,6 +45,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IMarketCoverageCache _MarketCoverageCache;
         private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekAggregateCache;
         private readonly IInventoryGapCalculationEngine _InventoryGapCalculationEngine;
+        private readonly IInventoryLogoRepository _InventoryLogoRepository;
 
         public InventorySummaryService(IDataRepositoryFactory broadcastDataRepositoryFactory,
                                        IQuarterCalculationEngine quarterCalculationEngine,
@@ -62,6 +63,7 @@ namespace Services.Broadcast.ApplicationServices
             _MarketCoverageCache = marketCoverageCache;
             _MediaMonthAndWeekAggregateCache = mediaMonthAndWeekAggregateCache;
             _InventoryGapCalculationEngine = inventoryGapCalculationEngine;
+            _InventoryLogoRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryLogoRepository>();
         }
 
         public List<InventorySource> GetInventorySources()
@@ -107,7 +109,20 @@ namespace Services.Broadcast.ApplicationServices
                 inventorySummaryDtos.AddRange(_CreateInventorySummaryForQuarter(inventorySummaryFilterDto, householdAudienceId));
             }
 
+            _SetHasLogo(inventorySummaryDtos);
+
             return inventorySummaryDtos;
+        }
+
+        private void _SetHasLogo(List<InventorySummaryDto> inventorySummaryDtos)
+        {
+            var inventorySources = inventorySummaryDtos.Select(x => x.InventorySourceId).Distinct();
+            var inventorySourcesWithLogo = _InventoryLogoRepository.GetInventorySourcesWithLogo(inventorySources);
+
+            foreach(var inventorySummaryDto in inventorySummaryDtos)
+            {
+                inventorySummaryDto.HasLogo = inventorySourcesWithLogo.Contains(inventorySummaryDto.InventorySourceId);
+            }
         }
 
         private bool _FilterByDaypartCode(List<string> daypartCodes, int? daypartCodeId)

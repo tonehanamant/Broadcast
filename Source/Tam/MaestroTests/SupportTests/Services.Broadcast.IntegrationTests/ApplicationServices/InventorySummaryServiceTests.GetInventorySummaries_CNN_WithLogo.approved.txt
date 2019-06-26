@@ -2,13 +2,13 @@
   {
     "Details": [],
     "HasInventoryGaps": false,
-    "HasLogo": false,
+    "HasLogo": true,
     "HasRatesAvailableForQuarter": false,
     "HouseholdImpressions": null,
     "HutBook": null,
     "InventoryGaps": [],
-    "InventorySourceId": 8,
-    "InventorySourceName": "MLB",
+    "InventorySourceId": 5,
+    "InventorySourceName": "CNN",
     "IsUpdating": false,
     "LastUpdatedDate": null,
     "Quarter": {

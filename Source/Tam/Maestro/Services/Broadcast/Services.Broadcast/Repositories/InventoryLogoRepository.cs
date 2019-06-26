@@ -7,6 +7,7 @@ using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
 using Tam.Maestro.Services.Clients;
 using System.Data.Entity;
+using System.Collections.Generic;
 
 namespace Services.Broadcast.Repositories
 {
@@ -14,6 +15,7 @@ namespace Services.Broadcast.Repositories
     {
         void SaveInventoryLogo(InventoryLogo inventoryLogo);
         InventoryLogo GetLatestInventoryLogo(int inventorySourceId);
+        List<int> GetInventorySourcesWithLogo(IEnumerable<int> inventorySourceIds);
     }
 
     public class InventoryLogoRepository : BroadcastRepositoryBase, IInventoryLogoRepository
@@ -24,6 +26,18 @@ namespace Services.Broadcast.Repositories
             ITransactionHelper pTransactionHelper)
                 : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper)
         {
+        }
+
+        public List<int> GetInventorySourcesWithLogo(IEnumerable<int> inventorySourceIds)
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                return context.inventory_source_logos
+                    .Where(x => inventorySourceIds.Contains(x.inventory_source_id))
+                    .Select(x => x.inventory_source_id)
+                    .Distinct()
+                    .ToList();
+            });
         }
 
         public InventoryLogo GetLatestInventoryLogo(int inventorySourceId)

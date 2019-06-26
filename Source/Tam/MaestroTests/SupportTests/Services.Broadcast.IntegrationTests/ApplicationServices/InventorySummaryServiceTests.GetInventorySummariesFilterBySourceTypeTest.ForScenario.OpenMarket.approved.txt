@@ -2,6 +2,7 @@
   {
     "Details": null,
     "HasInventoryGaps": true,
+    "HasLogo": false,
     "HasRatesAvailableForQuarter": true,
     "HouseholdImpressions": 1000.0,
     "HutBook": {

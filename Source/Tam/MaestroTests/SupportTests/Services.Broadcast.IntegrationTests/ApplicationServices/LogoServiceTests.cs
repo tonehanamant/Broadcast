@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Extensions;
 using System;
 using System.IO;
 using Tam.Maestro.Common.DataLayer;
@@ -24,7 +25,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var now = new DateTime(2019, 02, 02);
                 var request = new FileRequest
                 {
-                    RawData = _GetBase64String(new FileStream($@".\Files\{fileName}", FileMode.Open, FileAccess.Read)),
+                    RawData = new FileStream($@".\Files\{fileName}", FileMode.Open, FileAccess.Read).ToBase64String(),
                     FileName = fileName
                 };
 
@@ -54,7 +55,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var now = new DateTime(2019, 02, 02);
                 var request = new FileRequest
                 {
-                    RawData = _GetBase64String(new FileStream($@".\Files\{fileName}", FileMode.Open, FileAccess.Read)),
+                    RawData = new FileStream($@".\Files\{fileName}", FileMode.Open, FileAccess.Read).ToBase64String(),
                     FileName = fileName
                 };
 
@@ -82,19 +83,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var exception = Assert.Throws<Exception>(() => _LogoService.SaveInventoryLogo(inventorySourceId, request, createdBy, now));
                 Assert.AreEqual(expectedMessage, exception.Message);
             }
-        }
-
-        private string _GetBase64String(FileStream stream)
-        {
-            byte[] bytes;
-
-            using (var memoryStream = new MemoryStream())
-            {
-                stream.CopyTo(memoryStream);
-                bytes = memoryStream.ToArray();
-            }
-
-            return Convert.ToBase64String(bytes);
         }
     }
 }

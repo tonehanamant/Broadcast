@@ -9,6 +9,7 @@
       }
     ],
     "HasInventoryGaps": true,
+    "HasLogo": false,
     "HasRatesAvailableForQuarter": true,
     "HouseholdImpressions": null,
     "HutBook": null,

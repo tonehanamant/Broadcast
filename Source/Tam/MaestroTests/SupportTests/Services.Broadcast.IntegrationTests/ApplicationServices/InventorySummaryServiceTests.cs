@@ -15,12 +15,14 @@ using System.IO;
 using System.Linq;
 using Tam.Maestro.Common.DataLayer;
 using Microsoft.Practices.Unity;
+using Services.Broadcast.Extensions;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
     [TestFixture]
     public class InventorySummaryServiceTests
     {
+        private readonly ILogoService _LogoService = IntegrationTestApplicationServiceFactory.GetApplicationService<ILogoService>();
         private readonly IInventorySummaryService _InventorySummaryService = IntegrationTestApplicationServiceFactory.GetApplicationService<IInventorySummaryService>();
         private readonly IInventoryRepository _InventoryRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
         private readonly IDaypartCodeRepository _DaypartCodeRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IDaypartCodeRepository>();       
@@ -46,6 +48,34 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 throw;
             }
 
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetInventorySummaries_CNN_WithLogo()
+        {
+            const string fileName = @"CNN.jpg";
+            const int inventorySourceId = 5;
+            const string createdBy = "IntegrationTestUser";
+
+            using (new TransactionScopeWrapper())
+            {
+                var now = new DateTime(2019, 02, 02);
+                var request = new FileRequest
+                {
+                    RawData = new FileStream($@".\Files\{fileName}", FileMode.Open, FileAccess.Read).ToBase64String(),
+                    FileName = fileName
+                };
+
+                _LogoService.SaveInventoryLogo(inventorySourceId, request, createdBy, now);
+
+                var inventoryCards = _InventorySummaryService.GetInventorySummaries(new InventorySummaryFilterDto
+                {
+                    InventorySourceId = inventorySourceId,
+                }, new DateTime(2019, 04, 01));
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(inventoryCards));
+            }
         }
 
         [Test]
