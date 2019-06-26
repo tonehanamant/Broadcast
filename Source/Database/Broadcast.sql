@@ -76,6 +76,32 @@ BEGIN
 END
 /*************************************** END PRI-5664 *****************************************************/
 
+/*************************************** START PRI-9110 Required indexes  *****************************************************/
+CREATE NONCLUSTERED INDEX [IX_audience_ID] ON [dbo].[schedule_detail_audiences]
+(
+    [audience_id] ASC
+)
+ WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = ON, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+
+CREATE NONCLUSTERED INDEX [IX_demo] ON [dbo].[post_file_detail_impressions]
+(
+    [demo] ASC
+)
+WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = ON, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+ 
+CREATE NONCLUSTERED INDEX [IX_audience_ID] ON [dbo].[bvs_post_details]
+(
+    [audience_id] ASC
+)
+ WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = ON, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+
+CREATE NONCLUSTERED INDEX [IX_audience_ID] ON [dbo].[affidavit_client_scrub_audiences]
+(
+    [audience_id] ASC
+)
+WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = ON, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+/*************************************** END PRI-9110 Required indexes  *****************************************************/
+
 /*************************************** START PRI-9110 Demo Cleanup Script *****************************************************/
 --if there are cable specific demo configurations run the cleanup script
 IF EXISTS(SELECT TOP 1 1 FROM audience_audiences WHERE rating_category_group_id <> 2)
