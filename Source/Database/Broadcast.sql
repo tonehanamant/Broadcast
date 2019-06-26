@@ -77,29 +77,50 @@ END
 /*************************************** END PRI-5664 *****************************************************/
 
 /*************************************** START PRI-9110 Required indexes  *****************************************************/
-CREATE NONCLUSTERED INDEX [IX_audience_ID] ON [dbo].[schedule_detail_audiences]
-(
-    [audience_id] ASC
-)
- WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = ON, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+IF EXISTS(SELECT 1 FROM sys.indexes WHERE name = 'IX_audience_ID' AND OBJECT_ID = object_id('schedule_detail_audiences'))
+	DROP INDEX [IX_audience_ID] ON [schedule_detail_audiences]
+IF NOT EXISTS(SELECT 1 FROM sys.indexes WHERE name = 'IX_schedule_detail_audiences_audience_id' AND OBJECT_ID = object_id('schedule_detail_audiences'))
+BEGIN
+	CREATE NONCLUSTERED INDEX [IX_schedule_detail_audiences_audience_id] ON [dbo].[schedule_detail_audiences]
+	(
+		[audience_id] ASC
+	)
+	 WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = ON, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+END
 
-CREATE NONCLUSTERED INDEX [IX_demo] ON [dbo].[post_file_detail_impressions]
-(
-    [demo] ASC
-)
-WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = ON, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
- 
-CREATE NONCLUSTERED INDEX [IX_audience_ID] ON [dbo].[bvs_post_details]
-(
-    [audience_id] ASC
-)
- WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = ON, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+IF EXISTS(SELECT 1 FROM sys.indexes WHERE name = 'IX_demo' AND OBJECT_ID = object_id('post_file_detail_impressions'))
+	DROP INDEX [IX_demo] ON [post_file_detail_impressions]
+IF NOT EXISTS(SELECT 1 FROM sys.indexes WHERE name = 'IX_post_file_detail_impressions_demo' AND OBJECT_ID = object_id('post_file_detail_impressions'))
+BEGIN
+	CREATE NONCLUSTERED INDEX [IX_post_file_detail_impressions_demo] ON [dbo].[post_file_detail_impressions]
+	(
+		[demo] ASC
+	)
+	WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = ON, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+END
 
-CREATE NONCLUSTERED INDEX [IX_audience_ID] ON [dbo].[affidavit_client_scrub_audiences]
-(
-    [audience_id] ASC
-)
-WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = ON, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+IF EXISTS(SELECT 1 FROM sys.indexes WHERE name = 'IX_audience_ID' AND OBJECT_ID = object_id('bvs_post_details'))
+	DROP INDEX [IX_audience_ID] ON [bvs_post_details]
+IF NOT EXISTS(SELECT 1 FROM sys.indexes WHERE name = 'IX_bvs_post_details_audience_id' AND OBJECT_ID = object_id('bvs_post_details'))
+BEGIN
+	CREATE NONCLUSTERED INDEX [IX_bvs_post_details_audience_id] ON [dbo].[bvs_post_details]
+	(
+		[audience_id] ASC
+	)
+	 WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = ON, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+END
+
+IF EXISTS(SELECT 1 FROM sys.indexes WHERE name = 'IX_audience_ID' AND OBJECT_ID = object_id('affidavit_client_scrub_audiences'))
+	DROP INDEX [IX_audience_ID] ON [affidavit_client_scrub_audiences]
+IF NOT EXISTS(SELECT 1 FROM sys.indexes WHERE name = 'IX_affidavit_client_scrub_audiences_audience_id' AND OBJECT_ID = object_id('affidavit_client_scrub_audiences'))
+BEGIN
+	CREATE NONCLUSTERED INDEX [IX_affidavit_client_scrub_audiences_audience_id] ON [dbo].[affidavit_client_scrub_audiences]
+	(
+		[audience_id] ASC
+	)
+	WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = ON, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+END
+
 /*************************************** END PRI-9110 Required indexes  *****************************************************/
 
 /*************************************** START PRI-9110 Demo Cleanup Script *****************************************************/
