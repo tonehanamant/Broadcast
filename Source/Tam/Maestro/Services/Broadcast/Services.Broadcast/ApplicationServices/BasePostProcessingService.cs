@@ -293,7 +293,7 @@ namespace Services.Broadcast.ApplicationServices
                 {
                     saveRequestDetail.Demographics = jsonDetail.Demographics.Select(y =>
                     {
-                        if (!_IsValidDemography(validationErrors, y, recordNumber, inventorySource, out string xtransformedCode))
+                        if (!_IsValidDemo(validationErrors, y, recordNumber, inventorySource, out string xtransformedCode))
                             return null;
                         var audienceId = _AudienceCache.GetDisplayAudienceByCode(xtransformedCode).Id;
 
@@ -312,12 +312,12 @@ namespace Services.Broadcast.ApplicationServices
             return saveRequest;
         }
 
-        private bool _IsValidDemography(List<WWTVInboundFileValidationResult> validationErrors, ScrubbingDemographics demo, int recordNumber
+        private bool _IsValidDemo(List<WWTVInboundFileValidationResult> validationErrors, ScrubbingDemographics demo, int recordNumber
             , DeliveryFileSourceEnum inventorySource, out string xtransformedCode)
         {
-            xtransformedCode = _AudienceCache.GetBroadcastAudienceByCode(demo.Demographic).Code;
+            var audience = _AudienceCache.GetBroadcastAudienceByCode(demo.Demographic);
 
-            if (string.IsNullOrWhiteSpace(xtransformedCode))
+            if (audience == null)
             {
                 validationErrors.Add(new WWTVInboundFileValidationResult()
                 {
@@ -325,8 +325,10 @@ namespace Services.Broadcast.ApplicationServices
                     InvalidField = "Demographic Code",
                     InvalidLine = recordNumber
                 });
+                xtransformedCode = null;
                 return false;
             }
+            xtransformedCode = audience.Code;
 
             return true;
         }

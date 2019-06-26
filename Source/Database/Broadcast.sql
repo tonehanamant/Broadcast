@@ -217,7 +217,8 @@ BEGIN
 		INSERT INTO audience_audiences (rating_category_group_id,custom_audience_id,rating_audience_id) VALUES (2,319,15)
 
 	-- W25-64
-	INSERT INTO audience_audiences (rating_category_group_id,custom_audience_id,rating_audience_id) VALUES (2,318,348)
+	IF (SELECT COUNT(1) FROM audience_audiences WHERE rating_category_group_id=2 AND custom_audience_id=318 AND rating_audience_id=348)=0
+		INSERT INTO audience_audiences (rating_category_group_id,custom_audience_id,rating_audience_id) VALUES (2,318,348)
 	IF (SELECT COUNT(1) FROM audience_audiences WHERE rating_category_group_id=2 AND custom_audience_id=318 AND rating_audience_id=347)=0
 		INSERT INTO audience_audiences (rating_category_group_id,custom_audience_id,rating_audience_id) VALUES (2,318,347)
 	IF (SELECT COUNT(1) FROM audience_audiences WHERE rating_category_group_id=2 AND custom_audience_id=318 AND rating_audience_id=13)=0
@@ -1201,6 +1202,11 @@ BEGIN
 	INSERT INTO audience_maps(audience_id, map_value) VALUES ((SELECT id FROM audiences WHERE code = 'A35-54'), 'Adults35-54')
 	INSERT INTO audience_maps(audience_id, map_value) VALUES ((SELECT id FROM audiences WHERE code = 'A35-64'), 'Adults35-64')
 	INSERT INTO audience_maps(audience_id, map_value) VALUES ((SELECT id FROM audiences WHERE code = 'A50+'), 'Adults50-99')
+	
+	--map keeping trac audiences
+	INSERT INTO audience_maps(audience_id, map_value) VALUES ((SELECT id FROM audiences WHERE code = 'A35-64'), 'AD35-64')
+	INSERT INTO audience_maps(audience_id, map_value) VALUES ((SELECT id FROM audiences WHERE code = 'A18-49'), 'AD18-49')
+	INSERT INTO audience_maps(audience_id, map_value) VALUES ((SELECT id FROM audiences WHERE code = 'A25-54'), 'AD25-54')
 END
 /*************************************** END PRI-9110 *****************************************************/
 
