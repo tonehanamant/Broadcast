@@ -106,10 +106,6 @@ WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_
 --if there are cable specific demo configurations run the cleanup script
 IF EXISTS(SELECT TOP 1 1 FROM audience_audiences WHERE rating_category_group_id <> 2)
 BEGIN
-	SET NOCOUNT ON;
-
-	BEGIN TRANSACTION
-
 	-- remove cable specific demo configurations since they're not needed/used in broadcast
 	DELETE FROM audience_audiences WHERE rating_category_group_id<>2
 	DELETE FROM audiences WHERE id IN (309,316,321,326,328,330)
@@ -361,25 +357,34 @@ BEGIN
 
 
 	-- P12-14
-	DECLARE @p12_14_id INT
-	INSERT INTO audiences ([category_code], [sub_category_code], [range_start], [range_end], [custom], [code], [name]) VALUES (0,'P',12,14,1,'P12-14','Persons 12-14')
-	SET @p12_14_id = SCOPE_IDENTITY()
-	INSERT INTO audience_audiences (rating_category_group_id,custom_audience_id,rating_audience_id) VALUES (2,@p12_14_id,4)
-	INSERT INTO audience_audiences (rating_category_group_id,custom_audience_id,rating_audience_id) VALUES (2,@p12_14_id,19)
+	IF(SELECT COUNT(1) FROM audiences WHERE code='P12-14') = 0
+	BEGIN
+		DECLARE @p12_14_id INT
+		INSERT INTO audiences ([category_code], [sub_category_code], [range_start], [range_end], [custom], [code], [name]) VALUES (0,'P',12,14,1,'P12-14','Persons 12-14')
+		SET @p12_14_id = SCOPE_IDENTITY()
+		INSERT INTO audience_audiences (rating_category_group_id,custom_audience_id,rating_audience_id) VALUES (2,@p12_14_id,4)
+		INSERT INTO audience_audiences (rating_category_group_id,custom_audience_id,rating_audience_id) VALUES (2,@p12_14_id,19)
+	END
 
 	-- P15-17
-	DECLARE @p15_17_id INT
-	INSERT INTO audiences ([category_code], [sub_category_code], [range_start], [range_end], [custom], [code], [name]) VALUES (0,'P',15,17,1,'P15-17','Persons 15-17')
-	SET @p15_17_id = SCOPE_IDENTITY()
-	INSERT INTO audience_audiences (rating_category_group_id,custom_audience_id,rating_audience_id) VALUES (2,@p15_17_id,5)
-	INSERT INTO audience_audiences (rating_category_group_id,custom_audience_id,rating_audience_id) VALUES (2,@p15_17_id,20)
+	IF(SELECT COUNT(1) FROM audiences WHERE code='P15-17') = 0
+	BEGIN
+		DECLARE @p15_17_id INT
+		INSERT INTO audiences ([category_code], [sub_category_code], [range_start], [range_end], [custom], [code], [name]) VALUES (0,'P',15,17,1,'P15-17','Persons 15-17')
+		SET @p15_17_id = SCOPE_IDENTITY()
+		INSERT INTO audience_audiences (rating_category_group_id,custom_audience_id,rating_audience_id) VALUES (2,@p15_17_id,5)
+		INSERT INTO audience_audiences (rating_category_group_id,custom_audience_id,rating_audience_id) VALUES (2,@p15_17_id,20)
+	END
 
 	-- A18-20
-	DECLARE @p18_20_id INT
-	INSERT INTO audiences ([category_code], [sub_category_code], [range_start], [range_end], [custom], [code], [name]) VALUES (0,'A',18,20,1,'A18-20','Adults 18-20')
-	SET @p18_20_id = SCOPE_IDENTITY()
-	INSERT INTO audience_audiences (rating_category_group_id,custom_audience_id,rating_audience_id) VALUES (2,@p18_20_id,6)
-	INSERT INTO audience_audiences (rating_category_group_id,custom_audience_id,rating_audience_id) VALUES (2,@p18_20_id,21)
+	IF(SELECT COUNT(1) FROM audiences WHERE code='A18-20') = 0
+	BEGIN
+		DECLARE @a18_20_id INT
+		INSERT INTO audiences ([category_code], [sub_category_code], [range_start], [range_end], [custom], [code], [name]) VALUES (0,'A',18,20,1,'A18-20','Adults 18-20')
+		SET @a18_20_id = SCOPE_IDENTITY()
+		INSERT INTO audience_audiences (rating_category_group_id,custom_audience_id,rating_audience_id) VALUES (2,@a18_20_id,6)
+		INSERT INTO audience_audiences (rating_category_group_id,custom_audience_id,rating_audience_id) VALUES (2,@a18_20_id,21)
+	END
 
 	-- A21-24
 	IF (SELECT COUNT(1) FROM audience_audiences WHERE rating_category_group_id=2 AND custom_audience_id=249 AND rating_audience_id=7)=0
@@ -1138,12 +1143,12 @@ BEGIN
 		SET @error = 1;
 	END
 
-	SELECT @error '@error'
-
 	IF @error = 1
-		ROLLBACK
-
-	COMMIT
+	BEGIN
+		-- cause an error!
+		-- this is a fake statement intended to cause an exception in order to rollback the whole job
+		INSERT INTO audiences ([id], [category_code], [sub_category_code], [range_start], [range_end], [custom], [code], [name]) VALUES (4,0,'W',12,14,0,'W12-14','Women 12-14')
+	END
 END
 
 /*************************************** END PRI-9110 Demo Cleanup Script *****************************************************/
