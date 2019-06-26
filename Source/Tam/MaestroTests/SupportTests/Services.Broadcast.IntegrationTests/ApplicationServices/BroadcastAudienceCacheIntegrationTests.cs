@@ -4,7 +4,7 @@ using IntegrationTests.Common;
 using NUnit.Framework;
 using Services.Broadcast.Cache;
 
-namespace Services.Broadcast.IntegrationTests.Cache
+namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
     [TestFixture]
     public class BroadcastAudienceCacheIntegrationTests
