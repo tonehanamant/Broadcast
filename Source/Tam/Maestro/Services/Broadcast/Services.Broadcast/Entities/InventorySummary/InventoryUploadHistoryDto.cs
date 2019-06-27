@@ -1,4 +1,5 @@
-﻿using Services.Broadcast.Entities.Enums;
+﻿using Services.Broadcast.ApplicationServices;
+using Services.Broadcast.Entities.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,5 +21,9 @@ namespace Services.Broadcast.Entities.InventorySummary
         public MediaMonthDto ShareBook { get; set; }
         public int Rows { get; set; }
         public String Status { get; set; }
+        public FileStatusEnum FileLoadStatus { get; set; }
+        public InventoryFileRatingsProcessingStatus FileProcessingStatus { get; set; }
+
+
     }
 }

@@ -736,8 +736,30 @@ namespace Services.Broadcast.ApplicationServices
 
         public List<InventoryUploadHistoryDto> GetInventoryUploadHistory(int inventorySourceId)
         {
-            var result = _InventoryRepository.GetInventoryUploadHistoryForInventorySource(inventorySourceId);
-            return result;
+            var uploadHistory = _InventoryRepository.GetInventoryUploadHistoryForInventorySource(inventorySourceId);
+            foreach(var uploadFile in uploadHistory)
+            {
+                if(uploadFile.FileLoadStatus == FileStatusEnum.Failed)
+                {
+                    uploadFile.Status = "Validation Error";
+                    continue;
+                }
+
+                if(uploadFile.FileProcessingStatus == InventoryFileRatingsProcessingStatus.Failed)
+                {
+                    uploadFile.Status = "Processing Error";
+                    continue;
+                }
+
+                if(uploadFile.FileProcessingStatus == InventoryFileRatingsProcessingStatus.Succeeded)
+                {
+                    uploadFile.Status = "Succeeded";
+                    continue;
+                }
+
+                uploadFile.Status = "Processing";
+            }
+            return uploadHistory;
         }
 
         public Tuple<string, Stream, string> DownloadErrorFile(int fileId)

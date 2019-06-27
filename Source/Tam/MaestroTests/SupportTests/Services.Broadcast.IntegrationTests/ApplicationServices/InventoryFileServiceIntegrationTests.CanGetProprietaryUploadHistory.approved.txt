@@ -4,7 +4,9 @@
     "EffectiveDate": "2019-04-01T00:00:00",
     "EndDate": "2019-06-30T00:00:00",
     "FileId": 238972,
+    "FileLoadStatus": 2,
     "Filename": "TTWN EMN Q1 Barter_Inventory Template_2.6.2019 (17).xlsx",
+    "FileProcessingStatus": 1,
     "HutBook": null,
     "Rows": 0,
     "ShareBook": {
@@ -12,7 +14,7 @@
       "Month": 2,
       "Year": 2017
     },
-    "Status": "Queued",
+    "Status": "Processing",
     "UploadDateTime": "2019-04-12T15:55:59.753",
     "Username": "sroibu"
   }

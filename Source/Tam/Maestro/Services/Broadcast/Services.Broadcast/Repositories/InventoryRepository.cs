@@ -1076,13 +1076,11 @@ namespace Services.Broadcast.Repositories
                             fileHistory.EndDate = file.station_inventory_manifest.SelectMany(m => m.station_inventory_manifest_weeks.Select(w => w.end_date)).Max();
                         }
 
-                        if(file.status == (byte) FileStatusEnum.Loaded && file.inventory_file_ratings_jobs.Any())
+                        fileHistory.FileLoadStatus = (FileStatusEnum)file.status;
+                        if (file.inventory_file_ratings_jobs.Any())
                         {
                             var fileJob = file.inventory_file_ratings_jobs.OrderBy(j => j.id).Last();
-                            fileHistory.Status = ((InventoryFileRatingsProcessingStatus) fileJob.status).ToString();
-                        } else
-                        {
-                            fileHistory.Status = ((FileStatusEnum)file.status).ToString();
+                            fileHistory.FileProcessingStatus = (InventoryFileRatingsProcessingStatus)fileJob.status;
                         }
 
                         result.Add(fileHistory);
