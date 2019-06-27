@@ -1028,7 +1028,8 @@ namespace Services.Broadcast.Repositories
                              .Include("inventory_file_proprietary_header.hut_media_months")
                              .Include("station_inventory_manifest.station_inventory_manifest_weeks")
                              .Include(f => f.inventory_file_ratings_jobs)
-                             .Where(x => x.inventory_source_id == inventorySourceId);
+                             .Where(x => x.inventory_source_id == inventorySourceId)
+                             .OrderByDescending(x => x.id);
 
                     var result = new List<InventoryUploadHistoryDto>();
 

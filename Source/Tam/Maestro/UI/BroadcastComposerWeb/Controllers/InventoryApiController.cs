@@ -272,6 +272,7 @@ namespace BroadcastComposerWeb.Controllers
         [Route("UploadHistory")]
         public BaseResponse<List<InventoryUploadHistoryDto>> GetInventoryUploadHistory(int inventorySourceId)
         {
+            //Returning list of upload history records
             return _ConvertToBaseResponse(() => 
                 _ApplicationServiceFactory.GetApplicationService<IInventoryService>()
                     .GetInventoryUploadHistory(inventorySourceId));
