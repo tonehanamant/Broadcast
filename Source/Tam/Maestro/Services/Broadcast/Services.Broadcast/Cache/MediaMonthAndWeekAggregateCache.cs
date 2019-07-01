@@ -89,6 +89,11 @@ namespace Services.Broadcast
             return _MediaMonthAndWeekAggregate.GetMediaWeekContainingDate(date);
         }
 
+        public MediaWeek GetMediaWeekContainingDateOrNull(DateTime date)
+        {
+            return _MediaMonthAndWeekAggregate.GetMediaWeekContainingDateOrNull(date);
+        }
+
         public List<MediaWeek> GetMediaWeeksByIdList(List<int> idList)
         {
             return _MediaMonthAndWeekAggregate.GetMediaWeeksByIdList(idList);

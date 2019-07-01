@@ -22,6 +22,7 @@ namespace Services.Broadcast
         List<MediaWeek> GetMediaWeeksByMediaMonth(int mediaMonthId);
         LookupDto FindMediaWeekLookup(int mediaWeekId);
         MediaWeek GetMediaWeekContainingDate(DateTime date);
+        MediaWeek GetMediaWeekContainingDateOrNull(DateTime date);
         List<MediaWeek> GetMediaWeeksByIdList(List<int> idList);
         List<MediaWeek> GetMediaWeeksInRange(DateTime startDate, DateTime endDate);
         List<MediaWeek> GetAllMediaWeeksStartAfterDate(DateTime effectiveDate);
@@ -168,21 +169,31 @@ namespace Services.Broadcast
         }
 
         private readonly Dictionary<DateTime, MediaWeek> _ContainingCache = new Dictionary<DateTime, MediaWeek>();
+
         public MediaWeek GetMediaWeekContainingDate(DateTime date)
         {
-            MediaWeek value;
-            if (_ContainingCache.TryGetValue(date, out value))
+            return GetMediaWeekContainingDateOrNull(date) ?? 
+                   throw new Exception($"Unable to find media week containing date {date.ToShortDateString()}");
+        }
+
+        /// <summary>
+        /// Returns a media week containing the date or null when a week is not found
+        /// </summary>
+        public MediaWeek GetMediaWeekContainingDateOrNull(DateTime date)
+        {
+            if (_ContainingCache.TryGetValue(date, out MediaWeek value))
                 return value;
 
             var mediaWeek = (from x in _MediaWeeks
                              where date >= x.StartDate
                              && date <= x.EndDate
                              select x).SingleOrDefault();
-            if (mediaWeek == null)
+
+            if (mediaWeek != null)
             {
-                throw new Exception(string.Format("Unable to find media week containing date {0}", date.ToShortDateString()));
+                _ContainingCache[date] = mediaWeek;
             }
-            _ContainingCache[date] = mediaWeek;
+            
             return mediaWeek;
         }
 

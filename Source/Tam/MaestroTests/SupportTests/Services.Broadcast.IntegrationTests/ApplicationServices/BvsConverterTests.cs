@@ -88,6 +88,24 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        public void Tests_BvsConverter_InvalidMediaWeek()
+        {
+            const string fileName = "BVS Load For Invalid Media Week.xlsx";
+            const string userName = "Tests_BvsConverter";
+            const string expectedMessage = "Error in row 10: Invalid Media Week for Time Aired";
+
+            using (new TransactionScopeWrapper())
+            {
+                var stream = new FileStream($@".\Files\{fileName}", FileMode.Open, FileAccess.Read);
+                string message = string.Empty;
+
+                var exception = Assert.Throws<ExtractBvsException>(() => _IBvsConverter.ExtractBvsData(stream, "hash", userName, fileName, out message, out Dictionary<TrackerFileDetailKey<BvsFileDetail>, int> line));
+                Assert.AreEqual(expectedMessage, exception.Message);
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
         public void Tests_LineNumbers_Correct()
         {
             using (new TransactionScopeWrapper())

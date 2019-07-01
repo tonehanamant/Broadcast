@@ -63,11 +63,16 @@ namespace Services.Broadcast.Converters
     {
         private readonly IDataRepositoryFactory _DataRepositoryFactory;
         private readonly IDateAdjustmentEngine _DateAdjustmentEngine;
+        private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekAggregateCache;
 
-        public BvsConverter(IDataRepositoryFactory dataRepositoryFactory, IDateAdjustmentEngine dateAdjustment)
+        public BvsConverter(
+            IDataRepositoryFactory dataRepositoryFactory, 
+            IDateAdjustmentEngine dateAdjustment,
+            IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache)
         {
             _DataRepositoryFactory = dataRepositoryFactory;
             _DateAdjustmentEngine = dateAdjustment;
+            _MediaMonthAndWeekAggregateCache = mediaMonthAndWeekAggregateCache;
         }
 
         const string CABLE_TV = "CABLE TV";
@@ -163,11 +168,10 @@ namespace Services.Broadcast.Converters
                     bvsDetail.Rank = rankNumber;
                     bvsDetail.Station = _GetCellValue(row, "Station").ToUpper();
                     bvsDetail.Affiliate = _GetCellValue(row, "Affiliate").ToUpper();
-
-
+                    
                     var extractedDate = _GetAirTime(row);
                     bvsDetail.DateAired = extractedDate.Date;
-
+                    
                     var time = extractedDate.TimeOfDay;
                     bvsDetail.TimeAired = (int)time.TotalSeconds;
                     bvsDetail.NsiDate = _DateAdjustmentEngine.ConvertToNSITime(bvsDetail.DateAired, time);
@@ -227,8 +231,15 @@ namespace Services.Broadcast.Converters
         private DateTime _GetAirTime(int row)
         {
             var dateTime = _Worksheet.GetValue<DateTime>(row, _Headers["Time Aired"]);
+
+            if (_MediaMonthAndWeekAggregateCache.GetMediaWeekContainingDateOrNull(dateTime) == null)
+            {
+                throw new ExtractBvsException("Invalid Media Week for Time Aired", row);
+            }
+
             return dateTime;
         }
+
         private string _GetCellValue(int row, string columnName)
         {
             var value = _Worksheet.Cells[row, _Headers[columnName]].Value ?? "";
