@@ -33,6 +33,7 @@ namespace Common.Services.Repositories
             {
                 sqlBulkCopy.BatchSize = list.Count;
                 sqlBulkCopy.DestinationTableName = name1;
+                sqlBulkCopy.BulkCopyTimeout = 0; // Infinite - the context should have its own timeout
                 DataTable table = new DataTable();
                 PropertyDescriptor[] array = TypeDescriptor.GetProperties(typeof(T)).Cast<PropertyDescriptor>().Where<PropertyDescriptor>((Func<PropertyDescriptor, bool>)(propertyInfo => propertyInfo.PropertyType.Namespace.Equals("System"))).ToArray<PropertyDescriptor>();
                 foreach (PropertyDescriptor propertyDescriptor in array)
