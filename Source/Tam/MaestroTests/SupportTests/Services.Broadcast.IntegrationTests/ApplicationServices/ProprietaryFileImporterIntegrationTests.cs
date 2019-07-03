@@ -488,6 +488,24 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             _VerifyFile(fileName, inventorySource);
         }
 
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void Diginet_AudienceMap_PRI11102()
+        {
+            const string fileName = @".\Files\ProprietaryDataFiles\Diginet_Bounce_M18+_7.1.19 .xlsx";
+            var inventorySource = new InventorySource { InventoryType = InventorySourceTypeEnum.Diginet };
+            _VerifyFile(fileName, inventorySource);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void Syndicator_AudienceMap_PRI11102()
+        {
+            const string fileName = @".\Files\ProprietaryDataFiles\Syndicator NBCUSyn M35+ 07-01-2019 .xlsx";
+            var inventorySource = new InventorySource { InventoryType = InventorySourceTypeEnum.Syndication };
+            _VerifyFile(fileName, inventorySource);
+        }
+
         private void _VerifyFile(string fileName, InventorySource inventorySource)
         {
             using (var package = new ExcelPackage(new FileInfo(fileName)))

@@ -367,9 +367,9 @@ namespace Services.Broadcast.Converters.RateImport
         {
             const int audienceRowIndex = 15;
             int currentAudienceColumnIndex = 3;
-            var ratingRegex = new Regex(@"Avg\s*(?<Audience>[a-z0-9\s-]+)\s*Rtg.*", RegexOptions.IgnoreCase);
-            var impressionsRegex = new Regex(@"Avg\s*(?<Audience>[a-z0-9\s-]+)\s*Imps\s*\(000\).*", RegexOptions.IgnoreCase);
-            var cpmRegex = new Regex(@"Avg\s*(?<Audience>[a-z0-9\s-]+)\s*CPM.*", RegexOptions.IgnoreCase);
+            var ratingRegex = new Regex(@"Avg\s{0,}(?<Audience>h{2})\s{0,}Rtg.{0,}", RegexOptions.IgnoreCase);
+            var impressionsRegex = new Regex(@"Avg\s{0,}(?<Audience>h{2})\s{0,}Imps\s{0,}\(000\).{0,}", RegexOptions.IgnoreCase);
+            var cpmRegex = new Regex(@"Avg\s{0,}(?<Audience>h{2})\s{0,}CPM.{0,}", RegexOptions.IgnoreCase);
             var ratingColumnIndex = currentAudienceColumnIndex;
             var impressionsColumnIndex = currentAudienceColumnIndex + 1;
             var cpmColumnIndex = impressionsColumnIndex + 1;
@@ -456,10 +456,10 @@ namespace Services.Broadcast.Converters.RateImport
         private void _ReadAudiences(ExcelWorksheet worksheet, List<string> validationProblems, List<BroadcastAudience> audiences)
         {
             int currentAudienceColumnIndex = 6;
-            var ratingRegex = new Regex(@"(?<Audience>[a-z0-9\s-\[\]]+)\sAvg\s*Rtg.*", RegexOptions.IgnoreCase);
-            var impressionsRegex = new Regex(@"(?<Audience>[a-z0-9\s-\[\]]+)\s*Avg\s*Imps\s*\(000\).*", RegexOptions.IgnoreCase);
-            var vpvhRegex = new Regex(@"(?<Audience>[a-z0-9\s-\[\]]+)\s*VPVH.*", RegexOptions.IgnoreCase);
-            var cpmRegex = new Regex(@"(?<Audience>[a-z0-9\s-\[\]]+)\s*CPM.*", RegexOptions.IgnoreCase);
+            var ratingRegex = new Regex(@"Avg\s{0,}(?<Audience>[a-z]\s{0,}[0-9]{1,}[-+]{1}[0-9]{0,})\s{0,}Rtg.*", RegexOptions.IgnoreCase);
+            var impressionsRegex = new Regex(@"Avg\s{0,}(?<Audience>[a-z]\s{0,}[0-9]{1,}[-+]{1}[0-9]{0,})\s{0,}Imps\s*\(000\).*", RegexOptions.IgnoreCase);//asta trebuie corectata
+            var vpvhRegex = new Regex(@"(?<Audience>[a-z]\s{0,}[0-9]{1,}[-+]{1}[0-9]{0,})\s{0,}VPVH.*", RegexOptions.IgnoreCase);
+            var cpmRegex = new Regex(@"(?<Audience>[a-z]\s{0,}[0-9]{1,}[-+]{1}[0-9]{0,})\s{0,}CPM.*", RegexOptions.IgnoreCase);
 
             while (currentAudienceColumnIndex < _ErrorColumnIndex - 1)
             {

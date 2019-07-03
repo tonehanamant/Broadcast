@@ -372,8 +372,8 @@ namespace Services.Broadcast.Converters.RateImport
             validationProblems = new List<string>();            
             var result = new List<BroadcastAudience>();
             var currentAudienceColumnIndex = 3;
-            var ratingRegex = new Regex(@"(?<Audience>[a-z0-9\s-\[\]]+)\sRtg.*", RegexOptions.IgnoreCase);
-            var impressionsRegex = new Regex(@"(?<Audience>[a-z0-9\s-\[\]]+)\sImps\s*\(000\).*", RegexOptions.IgnoreCase);
+            var ratingRegex = new Regex(@"(?<Audience>[a-z0-9\s-+\[\]]+)\sRtg.{0,}", RegexOptions.IgnoreCase);
+            var impressionsRegex = new Regex(@"(?<Audience>[a-z0-9\s-+\[\]]+)\sImps\s*\(000\).{0,}", RegexOptions.IgnoreCase);
 
             while (currentAudienceColumnIndex < _ErrorColumnIndex - 1)
             {                

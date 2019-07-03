@@ -1,0 +1,327 @@
+﻿{
+  "CreatedBy": null,
+  "DataLines": [
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "House Holds",
+            "Id": 31
+          },
+          "Cpm": 14.5,
+          "Impressions": 748.0,
+          "Rating": 0.62,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 35+",
+            "Id": 54
+          },
+          "Cpm": 22.37,
+          "Impressions": 485.0,
+          "Rating": 0.4,
+          "Vpvh": 648.0
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 86399,
+          "_Friday": true,
+          "_Id": 38,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": true,
+          "_StartTime": 0,
+          "_Sunday": true,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": "American Dad",
+      "RowIndex": 16,
+      "SpotCost": 1.2,
+      "Station": null,
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "House Holds",
+            "Id": 31
+          },
+          "Cpm": 18.72,
+          "Impressions": 1318.0,
+          "Rating": 1.1,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 35+",
+            "Id": 54
+          },
+          "Cpm": 29.24,
+          "Impressions": 844.0,
+          "Rating": 0.7,
+          "Vpvh": 640.0
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 86399,
+          "_Friday": true,
+          "_Id": 38,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": true,
+          "_StartTime": 0,
+          "_Sunday": true,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": "Bob's Burgers",
+      "RowIndex": 17,
+      "SpotCost": 2.2,
+      "Station": null,
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "House Holds",
+            "Id": 31
+          },
+          "Cpm": 18.59,
+          "Impressions": 1901.0,
+          "Rating": 1.58,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 35+",
+            "Id": 54
+          },
+          "Cpm": 29.23,
+          "Impressions": 1209.0,
+          "Rating": 1.0,
+          "Vpvh": 636.0
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 86399,
+          "_Friday": true,
+          "_Id": 38,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": true,
+          "_StartTime": 0,
+          "_Sunday": true,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": "Bob's Burgers Weekend",
+      "RowIndex": 18,
+      "SpotCost": 1.6,
+      "Station": null,
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "House Holds",
+            "Id": 31
+          },
+          "Cpm": 12.31,
+          "Impressions": 679.0,
+          "Rating": 0.57,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 35+",
+            "Id": 54
+          },
+          "Cpm": 28.88,
+          "Impressions": 290.0,
+          "Rating": 0.24,
+          "Vpvh": 426.0
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 86399,
+          "_Friday": true,
+          "_Id": 38,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": true,
+          "_StartTime": 0,
+          "_Sunday": true,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": "Bones Weekend",
+      "RowIndex": 19,
+      "SpotCost": 1.5,
+      "Station": null,
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "House Holds",
+            "Id": 31
+          },
+          "Cpm": 4.78,
+          "Impressions": 1198.0,
+          "Rating": 1.0,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 35+",
+            "Id": 54
+          },
+          "Cpm": 12.05,
+          "Impressions": 475.0,
+          "Rating": 0.39,
+          "Vpvh": 396.0
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 86399,
+          "_Friday": true,
+          "_Id": 38,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": true,
+          "_StartTime": 0,
+          "_Sunday": true,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": "Caught in Providence",
+      "RowIndex": 20,
+      "SpotCost": 2.1,
+      "Station": null,
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "House Holds",
+            "Id": 31
+          },
+          "Cpm": 3.48,
+          "Impressions": 937.0,
+          "Rating": 0.78,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 35+",
+            "Id": 54
+          },
+          "Cpm": 6.55,
+          "Impressions": 498.0,
+          "Rating": 0.41,
+          "Vpvh": 531.0
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 86399,
+          "_Friday": true,
+          "_Id": 38,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": true,
+          "_StartTime": 0,
+          "_Sunday": true,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": "Cops",
+      "RowIndex": 21,
+      "SpotCost": 3.0,
+      "Station": null,
+      "Units": [],
+      "Weeks": []
+    }
+  ],
+  "FileName": null,
+  "FileStatus": 0,
+  "Hash": null,
+  "Header": null,
+  "InventoryGroups": [],
+  "InventoryManifests": [],
+  "InventorySource": null,
+  "RowsProcessed": null,
+  "UniqueIdentifier": null,
+  "ValidationProblems": []
+}
