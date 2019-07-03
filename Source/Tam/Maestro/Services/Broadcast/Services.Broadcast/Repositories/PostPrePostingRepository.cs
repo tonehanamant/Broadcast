@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Linq;
+using ConfigurationService.Client;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
 using Tam.Maestro.Services.Clients;
@@ -29,7 +30,9 @@ namespace Services.Broadcast.Repositories
 
     public class PostPrePostingRepository : BroadcastRepositoryBase, IPostPrePostingRepository
     {
-        public PostPrePostingRepository(ISMSClient pSmsClient, IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory, ITransactionHelper pTransactionHelper) : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper) { }
+        public PostPrePostingRepository(ISMSClient pSmsClient, IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory, 
+            ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient) 
+            : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
 
         public List<PostPrePostingFile> GetAllPostsList()
         {

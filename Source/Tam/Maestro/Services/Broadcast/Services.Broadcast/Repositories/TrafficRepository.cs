@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ConfigurationService.Client;
 using Services.Broadcast.Entities.spotcableXML;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
@@ -25,12 +26,9 @@ namespace Services.Broadcast.Repositories
     public class TrafficRepository : BroadcastRepositoryBase, ITrafficRepository
     {
 
-        public TrafficRepository(ISMSClient pSmsClient,
-            IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory
-            , ITransactionHelper pTransactionHelper)
-            : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper)
-        {
-        }
+        public TrafficRepository(ISMSClient pSmsClient, IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
+            ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient)
+            : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
 
         public TrafficDisplayDto GetTrafficProposals(List<int> weekIds, ProposalEnums.ProposalStatusType? proposalStatus)
         {

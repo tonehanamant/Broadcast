@@ -6,6 +6,7 @@ using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
 using Tam.Maestro.Services.Clients;
 using System.Linq;
+using ConfigurationService.Client;
 
 namespace Services.Broadcast.Repositories
 {
@@ -16,11 +17,9 @@ namespace Services.Broadcast.Repositories
 
     public class NsiComponentAudienceRepository : BroadcastRepositoryBase, INsiComponentAudienceRepository
     {
-        public NsiComponentAudienceRepository(ISMSClient pSmsClient,
-            IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory, ITransactionHelper pTransactionHelper)
-            : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper)
-        {
-        }
+        public NsiComponentAudienceRepository(ISMSClient pSmsClient, IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
+            ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient)
+            : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
 
         public List<BroadcastAudience> GetAllNsiComponentAudiences()
         {

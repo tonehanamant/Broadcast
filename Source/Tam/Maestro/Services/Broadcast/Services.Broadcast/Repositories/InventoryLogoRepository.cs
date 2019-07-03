@@ -8,6 +8,7 @@ using Tam.Maestro.Data.EntityFrameworkMapping;
 using Tam.Maestro.Services.Clients;
 using System.Data.Entity;
 using System.Collections.Generic;
+using ConfigurationService.Client;
 
 namespace Services.Broadcast.Repositories
 {
@@ -23,8 +24,8 @@ namespace Services.Broadcast.Repositories
         public InventoryLogoRepository(
             ISMSClient pSmsClient,
             IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
-            ITransactionHelper pTransactionHelper)
-                : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper)
+            ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient)
+                : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient)
         {
         }
 

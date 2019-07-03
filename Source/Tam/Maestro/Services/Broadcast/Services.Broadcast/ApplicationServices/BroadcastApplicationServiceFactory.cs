@@ -1,6 +1,7 @@
 ﻿using Common.Services;
 using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
+using ConfigurationService.Client;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.InterceptionExtension;
 using Services.Broadcast.ApplicationServices.Inventory;
@@ -42,6 +43,7 @@ namespace Services.Broadcast.ApplicationServices
 
                         _instance.RegisterInstance<ISMSClient>(SMSClient.Handler);
                         _instance.RegisterType<ILockingManagerApplicationService, LockingManagerApplicationService>();
+                        _instance.RegisterInstance<IConfigurationWebApiClient>(ConfigurationWebApiClient.Handler);
                         _instance.RegisterType<IDataRepositoryFactory, BroadcastDataDataRepositoryFactory>();
 
                         SystemComponentHelper.SetSmsClient(SMSClient.Handler);
@@ -171,13 +173,14 @@ namespace Services.Broadcast.ApplicationServices
 
             unityContainer.RegisterType<IDaypartCodeService, DaypartCodeService>();
 
+
             //@todo This is temporary to control the daypart source for Broadcast
             var repoFactory = unityContainer.Resolve<IDataRepositoryFactory>();
             var daypartRepo = repoFactory.GetDataRepository<IDisplayDaypartRepository>();
             DaypartCache.DaypartCacheInstance = new DaypartCache(daypartRepo);
             unityContainer.RegisterInstance<IDaypartCache>(DaypartCache.Instance);
 
-            MediaMonthCrunchCache.MediaMonthCrunchCacheInstance = new MediaMonthCrunchCache(repoFactory,unityContainer.Resolve<IMediaMonthAndWeekAggregateCache>());
+            MediaMonthCrunchCache.MediaMonthCrunchCacheInstance = new MediaMonthCrunchCache(repoFactory, unityContainer.Resolve<IMediaMonthAndWeekAggregateCache>());
             unityContainer.RegisterInstance<IMediaMonthCrunchCache>(MediaMonthCrunchCache.MediaMonthCrunchCacheInstance);
         }
 

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Common.Services.Repositories;
+using ConfigurationService.Client;
 using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
@@ -29,11 +30,9 @@ namespace Services.Broadcast.Repositories
 
     public class NtiTransmittalsRepository : BroadcastRepositoryBase, INtiTransmittalsRepository
     {
-        public NtiTransmittalsRepository(ISMSClient pSmsClient,
-            IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
-            ITransactionHelper pTransactionHelper) : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper)
-        {
-        }
+        public NtiTransmittalsRepository(ISMSClient pSmsClient, IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
+            ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient)
+            : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
 
         /// <summary>
         /// Gets the proposal weeks by myevents report name

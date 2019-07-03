@@ -3,6 +3,7 @@ using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast.Entities;
 using System.Collections.Generic;
 using System.Linq;
+using ConfigurationService.Client;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Data.EntityFrameworkMapping;
@@ -17,8 +18,9 @@ namespace Services.Broadcast.Repositories
 
     public class ProposalProgramsCriteriaRepository : BroadcastRepositoryBase, IProposalProgramsCriteriaRepository
     {
-        public ProposalProgramsCriteriaRepository(ISMSClient pSmsClient, IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory, ITransactionHelper pTransactionHelper)
-            : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper) { }
+        public ProposalProgramsCriteriaRepository(ISMSClient pSmsClient, IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
+            ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient)
+            : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
 
         public OpenMarketCriterion UpdateCriteria(int proposalDetailId, List<CpmCriteria> newCpmCriterion, List<int> deleteCpmCriterion, List<GenreCriteria> newGenreCriteria, List<int> deleteGenreCriteria, List<ProgramCriteria> newProgramNameCriteria, List<int> oldProgramNameCriteria)
         {

@@ -4,6 +4,7 @@ using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast.Entities;
 using System.Collections.Generic;
 using System.Linq;
+using ConfigurationService.Client;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
 using Tam.Maestro.Services.Clients;
@@ -23,13 +24,9 @@ namespace Services.Broadcast.Repositories
     {
         private const string DaypartCodeNotFoundMessage = "Unable to find daypart code";
 
-        public DaypartCodeRepository(
-            ISMSClient pSmsClient,
-            IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory, 
-            ITransactionHelper pTransactionHelper)
-            : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper)
-        {
-        }
+        public DaypartCodeRepository(ISMSClient pSmsClient, IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
+            ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient)
+            : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
 
         public bool ActiveDaypartCodeExists(string daypartCode)
         {

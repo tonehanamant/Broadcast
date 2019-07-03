@@ -9,6 +9,7 @@ using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
 using Tam.Maestro.Services.Clients;
 using System;
+using ConfigurationService.Client;
 using Tam.Maestro.Common;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Extensions;
@@ -67,7 +68,8 @@ namespace Services.Broadcast.Repositories
 
         public AffidavitRepository(ISMSClient pSmsClient,
             IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
-            ITransactionHelper pTransactionHelper) : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper)
+            ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient) 
+            : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient)
         {
         }
 

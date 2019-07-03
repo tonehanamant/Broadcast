@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Common.Services;
+using ConfigurationService.Client;
 using Tam.Maestro.Common;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
@@ -103,12 +104,9 @@ namespace Services.Broadcast.Repositories
 
     public class InventoryRepository : BroadcastRepositoryBase, IInventoryRepository
     {
-        public InventoryRepository(ISMSClient pSmsClient,
-            IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory
-            , ITransactionHelper pTransactionHelper)
-            : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper)
-        {
-        }
+        public InventoryRepository(ISMSClient pSmsClient, IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
+            ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient)
+            : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
 
         /// <summary>
         /// Adds validation problems for an inventory file to DB

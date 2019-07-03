@@ -6,7 +6,9 @@ using Moq;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Repositories;
 using System;
+using ConfigurationService.Client;
 using IntegrationTests.Common;
+using Services.Broadcast.IntegrationTests.Stubbs;
 using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 using Tam.Maestro.Services.Clients;
@@ -34,10 +36,12 @@ namespace Services.Broadcast.IntegrationTests
                     _instance = new UnityContainer();
 
                     BroadcastDataRepositoryFactory = new BroadcastDataDataRepositoryFactory();
+                    CommonRepositoryFactory.Instance.RegisterInstance<IConfigurationWebApiClient>(new StubbedConfigurationWebApiClient());
 
                     var stubbedSmsClient = new StubbedSMSClient();
                     BroadcastDataRepositoryFactory.RebindSms(stubbedSmsClient);
                     _instance.RegisterInstance<IDataRepositoryFactory>(BroadcastDataRepositoryFactory);
+                    _instance.RegisterInstance<IConfigurationWebApiClient>(new StubbedConfigurationWebApiClient());
 
                     SystemComponentHelper.SetSmsClient(stubbedSmsClient);
                     

@@ -10,6 +10,7 @@ using Tam.Maestro.Data.EntityFrameworkMapping;
 using Tam.Maestro.Services.Clients;
 using System;
 using System.Diagnostics;
+using ConfigurationService.Client;
 using Tam.Maestro.Common;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.DTO;
@@ -171,12 +172,9 @@ namespace Services.Broadcast.Repositories
     }
     public class PostLogRepository : BroadcastRepositoryBase, IPostLogRepository
     {
-        public PostLogRepository(ISMSClient pSmsClient,
-                                IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
-                                ITransactionHelper pTransactionHelper)
-            : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper)
-        {
-        }
+        public PostLogRepository(ISMSClient pSmsClient, IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
+            ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient)
+            : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
 
         /// <summary>
         /// Saves processing validation results

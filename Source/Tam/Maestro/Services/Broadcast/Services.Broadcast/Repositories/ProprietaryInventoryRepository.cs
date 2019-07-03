@@ -9,6 +9,7 @@ using System.Linq;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities;
 using Common.Services.Extensions;
+using ConfigurationService.Client;
 using static Services.Broadcast.Entities.Enums.ProposalEnums;
 
 namespace Services.Broadcast.Repositories
@@ -26,12 +27,9 @@ namespace Services.Broadcast.Repositories
 
     public class ProprietaryInventoryRepository : BroadcastRepositoryBase, IProprietaryRepository
     {
-        public ProprietaryInventoryRepository(ISMSClient pSmsClient,
-           IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory
-           , ITransactionHelper pTransactionHelper)
-           : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper)
-        {
-        }
+        public ProprietaryInventoryRepository(ISMSClient pSmsClient, IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
+            ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient)
+            : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
 
         public ProprietaryInventoryFile GetInventoryFileWithHeaderById(int fileId)
         {

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Transactions;
+using ConfigurationService.Client;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
 using Tam.Maestro.Services.Clients;
@@ -49,9 +50,9 @@ namespace Services.Broadcast.Repositories
 
     public class DisplayDaypartBroadcastRepository : BroadcastRepositoryBase, IDisplayDaypartRepository
     {
-        public DisplayDaypartBroadcastRepository(ISMSClient pSmsClient, IBroadcastContextFactory pBroadcastContextFactory, ITransactionHelper pTransactionHelper) : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper)
-        {
-        }
+        public DisplayDaypartBroadcastRepository(ISMSClient pSmsClient, IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
+            ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient)
+            : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
 
         public int SaveDaypart(DisplayDaypart pDaypart)
         {

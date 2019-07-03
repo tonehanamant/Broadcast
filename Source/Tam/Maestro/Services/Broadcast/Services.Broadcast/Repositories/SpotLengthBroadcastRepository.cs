@@ -4,6 +4,7 @@ using EntityFrameworkMapping.Broadcast;
 using System.Collections.Generic;
 using System.Linq;
 using System.Transactions;
+using ConfigurationService.Client;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Data.EntityFrameworkMapping;
@@ -40,10 +41,9 @@ namespace Services.Broadcast.Repositories
 
     public class SpotLengthBroadcastRepository : BroadcastRepositoryBase, ISpotLengthRepository
     {
-        public SpotLengthBroadcastRepository(ISMSClient pSmsClient, IBroadcastContextFactory pBroadcastContextFactory, ITransactionHelper pTransactionHelper)
-            : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper)
-        {
-        }
+        public SpotLengthBroadcastRepository(ISMSClient pSmsClient, IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
+            ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient)
+            : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
 
         private static Dictionary<int, int> _SpotLengthDictionary = new Dictionary<int, int>();
 

@@ -2,6 +2,7 @@
 using Common.Services.Repositories;
 using EntityFrameworkMapping.Broadcast;
 using System;
+using ConfigurationService.Client;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
 using Tam.Maestro.Services.Clients;
@@ -18,9 +19,9 @@ namespace Services.Broadcast.Repositories
 
     public class BvsTestDataGeneratorRepository : BroadcastRepositoryBase, IBvsTestDataGeneratorRepository
     {
-        public BvsTestDataGeneratorRepository(ISMSClient pSmsClient, IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory, ITransactionHelper pTransactionHelper) : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper)
-        {
-        }
+        public BvsTestDataGeneratorRepository(ISMSClient pSmsClient, IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
+            ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient)
+            : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
 
         public void CreateLeadInAndBlockTestData()
         {

@@ -3,6 +3,7 @@ using EntityFrameworkMapping.Broadcast;
 using System.Collections.Generic;
 using System.Linq;
 using System.Transactions;
+using ConfigurationService.Client;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Data.EntityFrameworkMapping;
@@ -24,11 +25,9 @@ namespace Services.Broadcast.Repositories
     public class BroadcastAudienceRepository : BroadcastRepositoryBase, IBroadcastAudienceRepository
     {
 
-        public BroadcastAudienceRepository(ISMSClient pSmsClient, IContextFactory<QueryHintBroadcastContext> pContextFactory, ITransactionHelper pTransactionHelper)
-            : base(pSmsClient, pContextFactory, pTransactionHelper)
-        {
-
-        }
+        public BroadcastAudienceRepository(ISMSClient pSmsClient, IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
+            ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient)
+            : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
 
         public List<audience> GetAudiencesByRange(int rangeStart, int rangeEnd)
         {

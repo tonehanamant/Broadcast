@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Transactions;
+using ConfigurationService.Client;
 using Services.Broadcast.Entities.DTO;
 using Tam.Maestro.Common;
 using Tam.Maestro.Common.DataLayer;
@@ -84,12 +85,9 @@ namespace Services.Broadcast.Repositories
     public class ProposalRepository : BroadcastRepositoryBase, IProposalRepository
     {
 
-        public ProposalRepository(ISMSClient pSmsClient,
-            IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
-            ITransactionHelper pTransactionHelper)
-            : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper)
-        {
-        }
+        public ProposalRepository(ISMSClient pSmsClient, IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
+            ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient)
+            : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
 
         public void CreateProposal(ProposalDto proposalDto, string userName)
         {

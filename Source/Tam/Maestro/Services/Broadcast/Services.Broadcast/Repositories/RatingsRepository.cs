@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using ConfigurationService.Client;
+using EntityFrameworkMapping.Broadcast;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Data.EntityFrameworkMapping;
@@ -17,8 +19,9 @@ namespace Services.Broadcast.Repositories
 
     public class RatingsRepository : BroadcastForecastRepositoryBase, IRatingsRepository
     {
-        public RatingsRepository(ISMSClient pSmsClient, IContextFactory<QueryHintBroadcastForecastContext> pContextFactory, ITransactionHelper pTransactionHelper)
-            : base(pSmsClient, pContextFactory, pTransactionHelper) { }
+        public RatingsRepository(ISMSClient pSmsClient, IContextFactory<QueryHintBroadcastForecastContext> pBroadcastContextFactory,
+            ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient)
+            : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
 
         public List<Tuple<MediaMonth, int>> GetNielsonMarkets(List<MediaMonth> mediaMonths)
         {

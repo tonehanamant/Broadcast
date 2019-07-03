@@ -9,6 +9,7 @@ using Tam.Maestro.Data.EntityFrameworkMapping;
 using Tam.Maestro.Services.Clients;
 using Common.Services.Extensions;
 using System;
+using ConfigurationService.Client;
 using Tam.Maestro.Common;
 using static Services.Broadcast.Entities.OpenMarketInventory.ProposalVersionSnapshot.ProposalVersionDetail.ProposalVersionDetailQuarter.ProposalVersionDetailQuarterWeek;
 using static Services.Broadcast.Entities.OpenMarketInventory.ProposalVersionSnapshot.ProposalVersionDetail.ProposalVersionDetailQuarter;
@@ -29,10 +30,9 @@ namespace Services.Broadcast.Repositories
 
     public class ProposalOpenMarketInventoryRepository : BroadcastRepositoryBase, IProposalOpenMarketInventoryRepository
     {
-        public ProposalOpenMarketInventoryRepository(ISMSClient pSmsClient, IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory, ITransactionHelper pTransactionHelper)
-            : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper)
-        {
-        }
+        public ProposalOpenMarketInventoryRepository(ISMSClient pSmsClient, IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
+            ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient)
+            : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
 
         public List<OpenMarketInventoryAllocation> GetProposalDetailAllocations(int proposalVersionDetailId)
         {

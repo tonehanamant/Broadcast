@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using ConfigurationService.Client;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
 using Tam.Maestro.Services.Clients;
@@ -28,8 +29,8 @@ namespace Services.Broadcast.Repositories
             ISMSClient pSmsClient,
             IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
             ITransactionHelper pTransactionHelper,
-            IStationProcessingEngine stationProcessingEngine)
-            : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper)
+            IStationProcessingEngine stationProcessingEngine, IConfigurationWebApiClient pConfigurationWebApiClient)
+            : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient)
         {
             _StationProcessingEngine = stationProcessingEngine;
         }

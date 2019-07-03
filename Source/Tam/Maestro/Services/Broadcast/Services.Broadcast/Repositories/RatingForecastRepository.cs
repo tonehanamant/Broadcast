@@ -9,6 +9,8 @@ using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Linq;
 using System.Transactions;
+using ConfigurationService.Client;
+using EntityFrameworkMapping.Broadcast;
 using Tam.Maestro.Common;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities;
@@ -35,8 +37,9 @@ namespace Services.Broadcast.Repositories
 
     public class RatingForecastRepository : BroadcastForecastRepositoryBase, IRatingForecastRepository
     {
-        public RatingForecastRepository(ISMSClient pSmsClient, IContextFactory<QueryHintBroadcastForecastContext> pBroadcastContextFactory, ITransactionHelper pTransactionHelper) : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper) { }
-
+        public RatingForecastRepository(ISMSClient pSmsClient, IContextFactory<QueryHintBroadcastForecastContext> pBroadcastContextFactory,
+            ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient)
+            : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
 
         public List<RatingsResult> ForecastRatings(short hutMediaMonth, short shareMediaMonth, IEnumerable<int> audience, PlaybackTypeEnum playbackType, List<ManifestDetailDaypart> manifestDayparts)
         {

@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Transactions;
+using ConfigurationService.Client;
+using EntityFrameworkMapping.Broadcast;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
 using Tam.Maestro.Data.EntityFrameworkMapping.BroadcastForecast;
@@ -22,10 +24,9 @@ namespace Services.Broadcast.Repositories
 
     public class NsiUniverseRepository : BroadcastForecastRepositoryBase, INsiUniverseRepository
     {
-        public NsiUniverseRepository(ISMSClient pSmsClient, IContextFactory<QueryHintBroadcastForecastContext> pContextFactory, ITransactionHelper pTransactionHelper)
-            : base(pSmsClient, pContextFactory, pTransactionHelper)
-        {
-        }
+        public NsiUniverseRepository(ISMSClient pSmsClient, IContextFactory<QueryHintBroadcastForecastContext> pBroadcastContextFactory,
+            ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient)
+            : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
 
         /// <summary>
         /// Returns a dictionary with market codes and subscribers for specified audiences

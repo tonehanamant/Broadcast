@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Linq;
+using ConfigurationService.Client;
 using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast;
 using Tam.Maestro.Common.DataLayer;
@@ -14,13 +16,13 @@ using Tam.Maestro.Services.ContractInterfaces;
 
 namespace Common.Services.Repositories
 {
-    public class BroadcastRepositoryBase : CoreRepositoryBase<QueryHintBroadcastContext>
+    public class BroadcastRepositoryBase : RepositoryBase<QueryHintBroadcastContext>
     {
-        public BroadcastRepositoryBase(ISMSClient pSmsClient, IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory, ITransactionHelper pTransactionHelper)
-            : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper, TAMResource.BroadcastConnectionString.ToString())
+        public BroadcastRepositoryBase(ISMSClient pSmsClient, IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory, ITransactionHelper pTransactionHelper, IConfigurationWebApiClient configurationWebApiClient)
+            : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper, configurationWebApiClient, TAMResource.BroadcastConnectionString.ToString())
         {
         }
-        public void BulkInsert<T>(DbContext context, List<T> list)
+        public new void BulkInsert<T>(DbContext context, List<T> list)
         {
             string name1 = typeof(T).Name;
             SqlConnection connection = context.Database.Connection as SqlConnection;

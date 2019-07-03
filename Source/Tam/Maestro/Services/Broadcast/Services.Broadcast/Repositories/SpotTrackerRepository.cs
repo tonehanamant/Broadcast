@@ -3,6 +3,7 @@ using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast.Entities;
 using System.Collections.Generic;
 using System.Linq;
+using ConfigurationService.Client;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
 using Tam.Maestro.Services.Clients;
@@ -37,10 +38,9 @@ namespace Services.Broadcast.Repositories
 
     public class SpotTrackerRepository : BroadcastRepositoryBase, ISpotTrackerRepository
     {
-        public SpotTrackerRepository(ISMSClient pSmsClient, IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory, ITransactionHelper pTransactionHelper)
-            : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper)
-        {
-        }
+        public SpotTrackerRepository(ISMSClient pSmsClient, IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
+            ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient)
+            : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
 
         public int GetSigmaFileIdByHash(string hash)
         {
