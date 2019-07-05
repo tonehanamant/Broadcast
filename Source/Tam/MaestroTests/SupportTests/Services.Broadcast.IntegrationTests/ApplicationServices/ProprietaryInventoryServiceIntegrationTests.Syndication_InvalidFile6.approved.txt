@@ -1,6 +1,8 @@
 ﻿{
   "Status": 3,
   "ValidationProblems": [
+    "Rating header is incorrect: Avg A18-34 Rtg. Row: 15, column: C. Correct format: 'Avg HH Rtg'",
+    "Impressions header is incorrect: Avg A18-34 Imps (000). Row: 15, column: D. Correct format: 'Avg HH Imps (000)'",
     "CPM header is incorrect: A18-34 VPVH. Row: 15, column: E. Correct format: 'Avg HH CPM'",
     "Impressions header is expected. Row: 15, column: G",
     "CPM header is expected. Row: 15, column: I"

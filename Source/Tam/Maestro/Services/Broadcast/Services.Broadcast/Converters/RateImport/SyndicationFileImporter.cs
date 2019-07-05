@@ -456,10 +456,10 @@ namespace Services.Broadcast.Converters.RateImport
         private void _ReadAudiences(ExcelWorksheet worksheet, List<string> validationProblems, List<BroadcastAudience> audiences)
         {
             int currentAudienceColumnIndex = 6;
-            var ratingRegex = new Regex(@"Avg\s{0,}(?<Audience>[a-z]\s{0,}[0-9]{1,}[-+]{1}[0-9]{0,})\s{0,}Rtg.*", RegexOptions.IgnoreCase);
-            var impressionsRegex = new Regex(@"Avg\s{0,}(?<Audience>[a-z]\s{0,}[0-9]{1,}[-+]{1}[0-9]{0,})\s{0,}Imps\s*\(000\).*", RegexOptions.IgnoreCase);//asta trebuie corectata
-            var vpvhRegex = new Regex(@"(?<Audience>[a-z]\s{0,}[0-9]{1,}[-+]{1}[0-9]{0,})\s{0,}VPVH.*", RegexOptions.IgnoreCase);
-            var cpmRegex = new Regex(@"(?<Audience>[a-z]\s{0,}[0-9]{1,}[-+]{1}[0-9]{0,})\s{0,}CPM.*", RegexOptions.IgnoreCase);
+            var ratingRegex = new Regex(@"Avg\s{0,}(?<Audience>[a-z0-9\s\[\]]{0,}[-+]{0,}[0-9]{0,2})\s{0,}Rtg.*", RegexOptions.IgnoreCase);
+            var impressionsRegex = new Regex(@"Avg\s{0,}(?<Audience>[a-z0-9\s\[\]]{0,}[-+]{0,}[0-9]{0,2})\s{0,}Imps\s*\(000\).*", RegexOptions.IgnoreCase);//asta trebuie corectata
+            var vpvhRegex = new Regex(@"(?<Audience>[a-z0-9\s\[\]]{0,}[-+]{0,}[0-9]{0,2})\s{0,}VPVH.*", RegexOptions.IgnoreCase);
+            var cpmRegex = new Regex(@"(?<Audience>[a-z0-9\s\[\]]{0,}[-+]{0,}[0-9]{0,2})\s{0,}CPM.*", RegexOptions.IgnoreCase);
 
             while (currentAudienceColumnIndex < _ErrorColumnIndex - 1)
             {
@@ -509,13 +509,13 @@ namespace Services.Broadcast.Converters.RateImport
 
                 if (!ratingMatch.Success)
                 {
-                    validationProblems.Add($"Rating header is incorrect: {ratingText}. Row: {audienceRowIndex}, column: {ratingColumnIndex.GetColumnAdress()}. Correct format: '[DEMO] Avg Rtg'");
+                    validationProblems.Add($"Rating header is incorrect: {ratingText}. Row: {audienceRowIndex}, column: {ratingColumnIndex.GetColumnAdress()}. Correct format: 'Avg [DEMO] Rtg'");
                     invalidAudience = true;
                 }
 
                 if (!impressionsMatch.Success)
                 {
-                    validationProblems.Add($"Impressions header is incorrect: {impressionsText}. Row: {audienceRowIndex}, column: {impressionsColumnIndex.GetColumnAdress()}. Correct format: '[DEMO] Avg Imps (000)'");
+                    validationProblems.Add($"Impressions header is incorrect: {impressionsText}. Row: {audienceRowIndex}, column: {impressionsColumnIndex.GetColumnAdress()}. Correct format: 'Avg [DEMO] Imps (000)'");
                     invalidAudience = true;
                 }
 
