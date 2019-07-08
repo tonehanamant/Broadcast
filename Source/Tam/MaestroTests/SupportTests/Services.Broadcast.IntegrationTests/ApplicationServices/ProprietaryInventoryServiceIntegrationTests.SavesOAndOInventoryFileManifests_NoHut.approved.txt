@@ -23,7 +23,6 @@
           "_Code": "CUS",
           "_EndTime": 35999,
           "_Friday": false,
-          "_Id": 51352,
           "_Is24Hour": false,
           "_LastEndTime": 0,
           "_LastStartTime": 0,
@@ -36,6 +35,7 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
+        "DaypartCode": null,
         "Genres": [],
         "ProgramName": "Eyewitness News/GMA Weekend"
       }
@@ -119,7 +119,6 @@
           "_Code": "CUS",
           "_EndTime": 35999,
           "_Friday": false,
-          "_Id": 51352,
           "_Is24Hour": false,
           "_LastEndTime": 0,
           "_LastStartTime": 0,
@@ -132,6 +131,7 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
+        "DaypartCode": null,
         "Genres": [],
         "ProgramName": "Eyewitness News/GMA Weekend"
       }
@@ -203,7 +203,6 @@
           "_Code": "CUS",
           "_EndTime": 35999,
           "_Friday": false,
-          "_Id": 51352,
           "_Is24Hour": false,
           "_LastEndTime": 0,
           "_LastStartTime": 0,
@@ -216,6 +215,7 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
+        "DaypartCode": null,
         "Genres": [],
         "ProgramName": "Eyewitness News/GMA Weekend"
       }

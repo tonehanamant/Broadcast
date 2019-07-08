@@ -226,7 +226,8 @@ namespace Services.Broadcast.Repositories
                                         manifest.ManifestDayparts.Select(md => new station_inventory_manifest_dayparts()
                                         {
                                             daypart_id = md.Daypart.Id,
-                                            program_name = md.ProgramName
+                                            program_name = md.ProgramName,
+                                            daypart_code_id = md.DaypartCode?.Id
                                         }).ToList(),
                 station_inventory_manifest_rates =
                                         manifest.ManifestRates.Select(mr => new station_inventory_manifest_rates()
@@ -257,6 +258,7 @@ namespace Services.Broadcast.Repositories
                                 .Include(x => x.station_inventory_manifest_weeks)
                                 .Include(x => x.station_inventory_manifest_rates)
                                 .Include(x => x.station_inventory_manifest_dayparts)
+                                .Include(x => x.station_inventory_manifest_dayparts.Select(d => d.daypart_codes))
                                 .Include(s => s.station)
                          join g in context.station_inventory_group on m.station_inventory_group_id equals g.id
                          where m.file_id == fileId
@@ -278,6 +280,7 @@ namespace Services.Broadcast.Repositories
                                 .Include(x => x.station_inventory_manifest_weeks)
                                 .Include(x => x.station_inventory_manifest_rates)
                                 .Include(x => x.station_inventory_manifest_dayparts)
+                                .Include(x => x.station_inventory_manifest_dayparts.Select(d => d.daypart_codes))
                                 .Include(s => s.station)
                                 .Include(x => x.inventory_files)
                                 .Include(x => x.inventory_files.inventory_file_proprietary_header)
@@ -298,6 +301,7 @@ namespace Services.Broadcast.Repositories
                     var query = c.station_inventory_manifest
                         .Include(x => x.station)
                         .Include(x => x.station_inventory_manifest_dayparts)
+                        .Include(x => x.station_inventory_manifest_dayparts.Select(d => d.daypart_codes))
                         .Include(x => x.station_inventory_manifest_audiences)
                         .Include(x => x.station_inventory_manifest_rates)
                         .Include(x => x.station_inventory_manifest_weeks)
@@ -347,7 +351,13 @@ namespace Services.Broadcast.Repositories
                 {
                     Id = md.id,
                     Daypart = DaypartCache.Instance.GetDisplayDaypart(md.daypart_id),
-                    ProgramName = md.program_name
+                    ProgramName = md.program_name,
+                    DaypartCode = md.daypart_codes == null ? null : new DaypartCode
+                    {
+                        Id = md.daypart_codes.id,
+                        Code = md.daypart_codes.code,
+                        FullName = md.daypart_codes.full_name
+                    }
                 }).ToList(),
                 ManifestAudiences = manifest.station_inventory_manifest_audiences.Where(ma => ma.is_reference == false).Select(
                                 audience => new StationInventoryManifestAudience()
@@ -992,6 +1002,7 @@ namespace Services.Broadcast.Repositories
                         .Include(x => x.station_inventory_manifest_weeks)
                         .Include(x => x.station_inventory_manifest_rates)
                         .Include(x => x.station_inventory_manifest_dayparts)
+                        .Include(x => x.station_inventory_manifest_dayparts.Select(d => d.daypart_codes))
                         .Include(x => x.station)
                         .Where(x => manifestIds.Contains(x.id))
                         .ToList()

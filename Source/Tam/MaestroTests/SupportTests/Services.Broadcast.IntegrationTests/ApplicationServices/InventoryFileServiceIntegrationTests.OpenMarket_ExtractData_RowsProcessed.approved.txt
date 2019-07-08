@@ -100,6 +100,7 @@
             "_Tuesday": true,
             "_Wednesday": true
           },
+          "DaypartCode": null,
           "Genres": [],
           "Id": null,
           "ProgramName": "WENDY WILLIAMS"
@@ -372,6 +373,7 @@
             "_Tuesday": true,
             "_Wednesday": true
           },
+          "DaypartCode": null,
           "Genres": [],
           "Id": null,
           "ProgramName": "LIFESTYLE MATTERS"
@@ -644,6 +646,7 @@
             "_Tuesday": true,
             "_Wednesday": true
           },
+          "DaypartCode": null,
           "Genres": [],
           "Id": null,
           "ProgramName": "AM ROTATION"
@@ -916,6 +919,7 @@
             "_Tuesday": true,
             "_Wednesday": true
           },
+          "DaypartCode": null,
           "Genres": [],
           "Id": null,
           "ProgramName": "COPS"
@@ -1188,6 +1192,7 @@
             "_Tuesday": true,
             "_Wednesday": true
           },
+          "DaypartCode": null,
           "Genres": [],
           "Id": null,
           "ProgramName": "PEOPLE'S COURT"
@@ -1460,6 +1465,7 @@
             "_Tuesday": true,
             "_Wednesday": true
           },
+          "DaypartCode": null,
           "Genres": [],
           "Id": null,
           "ProgramName": "HOT BENCH X2"
@@ -1732,6 +1738,7 @@
             "_Tuesday": true,
             "_Wednesday": true
           },
+          "DaypartCode": null,
           "Genres": [],
           "Id": null,
           "ProgramName": "JUDGE JUDY X2"
@@ -2004,6 +2011,7 @@
             "_Tuesday": true,
             "_Wednesday": true
           },
+          "DaypartCode": null,
           "Genres": [],
           "Id": null,
           "ProgramName": "FAMILY FEUD"
@@ -2276,6 +2284,7 @@
             "_Tuesday": true,
             "_Wednesday": true
           },
+          "DaypartCode": null,
           "Genres": [],
           "Id": null,
           "ProgramName": "SIMPSONS"
@@ -2548,6 +2557,7 @@
             "_Tuesday": true,
             "_Wednesday": true
           },
+          "DaypartCode": null,
           "Genres": [],
           "Id": null,
           "ProgramName": "SIMPSONS"
@@ -2820,6 +2830,7 @@
             "_Tuesday": true,
             "_Wednesday": true
           },
+          "DaypartCode": null,
           "Genres": [],
           "Id": null,
           "ProgramName": "FRINGE ROTATOR"
@@ -3092,6 +3103,7 @@
             "_Tuesday": true,
             "_Wednesday": true
           },
+          "DaypartCode": null,
           "Genres": [],
           "Id": null,
           "ProgramName": "FRINGE/ACCESS ROTATOR"
@@ -3364,6 +3376,7 @@
             "_Tuesday": true,
             "_Wednesday": true
           },
+          "DaypartCode": null,
           "Genres": [],
           "Id": null,
           "ProgramName": "BIG BANG THEORY"
@@ -3636,6 +3649,7 @@
             "_Tuesday": true,
             "_Wednesday": true
           },
+          "DaypartCode": null,
           "Genres": [],
           "Id": null,
           "ProgramName": "BIG BANG THEORY"
@@ -3908,6 +3922,7 @@
             "_Tuesday": true,
             "_Wednesday": true
           },
+          "DaypartCode": null,
           "Genres": [],
           "Id": null,
           "ProgramName": "FAMILY FEUD"
@@ -4180,6 +4195,7 @@
             "_Tuesday": true,
             "_Wednesday": true
           },
+          "DaypartCode": null,
           "Genres": [],
           "Id": null,
           "ProgramName": "SIMPSONS"
@@ -4452,6 +4468,7 @@
             "_Tuesday": true,
             "_Wednesday": true
           },
+          "DaypartCode": null,
           "Genres": [],
           "Id": null,
           "ProgramName": "SIMPSONS"
@@ -4724,6 +4741,7 @@
             "_Tuesday": true,
             "_Wednesday": true
           },
+          "DaypartCode": null,
           "Genres": [],
           "Id": null,
           "ProgramName": "BIG BANG THEORY"
@@ -4996,6 +5014,7 @@
             "_Tuesday": true,
             "_Wednesday": true
           },
+          "DaypartCode": null,
           "Genres": [],
           "Id": null,
           "ProgramName": "BIG BANG THEORY"
@@ -5268,6 +5287,7 @@
             "_Tuesday": true,
             "_Wednesday": true
           },
+          "DaypartCode": null,
           "Genres": [],
           "Id": null,
           "ProgramName": "MODERN FAMILY"
@@ -5540,6 +5560,7 @@
             "_Tuesday": true,
             "_Wednesday": true
           },
+          "DaypartCode": null,
           "Genres": [],
           "Id": null,
           "ProgramName": "MODERN FAMILY"
@@ -5812,6 +5833,7 @@
             "_Tuesday": true,
             "_Wednesday": true
           },
+          "DaypartCode": null,
           "Genres": [],
           "Id": null,
           "ProgramName": "MODERN FAMILY"
@@ -6084,6 +6106,7 @@
             "_Tuesday": true,
             "_Wednesday": true
           },
+          "DaypartCode": null,
           "Genres": [],
           "Id": null,
           "ProgramName": "MODERN FAMILY"
@@ -6356,6 +6379,7 @@
             "_Tuesday": true,
             "_Wednesday": true
           },
+          "DaypartCode": null,
           "Genres": [],
           "Id": null,
           "ProgramName": "MODERN FAMILY ROTATOR"
@@ -6628,6 +6652,7 @@
             "_Tuesday": true,
             "_Wednesday": true
           },
+          "DaypartCode": null,
           "Genres": [],
           "Id": null,
           "ProgramName": "SEINFELD"
@@ -6900,6 +6925,7 @@
             "_Tuesday": true,
             "_Wednesday": true
           },
+          "DaypartCode": null,
           "Genres": [],
           "Id": null,
           "ProgramName": "SEINFELD"
@@ -7172,6 +7198,7 @@
             "_Tuesday": true,
             "_Wednesday": true
           },
+          "DaypartCode": null,
           "Genres": [],
           "Id": null,
           "ProgramName": "MIKE & MOLLY"
@@ -7444,6 +7471,7 @@
             "_Tuesday": true,
             "_Wednesday": true
           },
+          "DaypartCode": null,
           "Genres": [],
           "Id": null,
           "ProgramName": "MIKE & MOLLY"
@@ -7716,6 +7744,7 @@
             "_Tuesday": true,
             "_Wednesday": true
           },
+          "DaypartCode": null,
           "Genres": [],
           "Id": null,
           "ProgramName": "2 BROKE GIRLS"
@@ -7988,6 +8017,7 @@
             "_Tuesday": false,
             "_Wednesday": false
           },
+          "DaypartCode": null,
           "Genres": [],
           "Id": null,
           "ProgramName": "KMPH 12N MOVIE"
@@ -8260,6 +8290,7 @@
             "_Tuesday": false,
             "_Wednesday": false
           },
+          "DaypartCode": null,
           "Genres": [],
           "Id": null,
           "ProgramName": "KMPH 2P MOVIE"
@@ -8532,6 +8563,7 @@
             "_Tuesday": false,
             "_Wednesday": false
           },
+          "DaypartCode": null,
           "Genres": [],
           "Id": null,
           "ProgramName": "FAMILY FEUD X2"
@@ -8804,6 +8836,7 @@
             "_Tuesday": false,
             "_Wednesday": false
           },
+          "DaypartCode": null,
           "Genres": [],
           "Id": null,
           "ProgramName": "SAT FRINGE/ACCESS ROS"
@@ -9076,6 +9109,7 @@
             "_Tuesday": false,
             "_Wednesday": false
           },
+          "DaypartCode": null,
           "Genres": [],
           "Id": null,
           "ProgramName": "MODERN FAMILY"
@@ -9348,6 +9382,7 @@
             "_Tuesday": false,
             "_Wednesday": false
           },
+          "DaypartCode": null,
           "Genres": [],
           "Id": null,
           "ProgramName": "MODERN FAMILY"
@@ -9620,6 +9655,7 @@
             "_Tuesday": false,
             "_Wednesday": false
           },
+          "DaypartCode": null,
           "Genres": [],
           "Id": null,
           "ProgramName": "SATURDAY ACCESS ROS"
@@ -9892,6 +9928,7 @@
             "_Tuesday": false,
             "_Wednesday": false
           },
+          "DaypartCode": null,
           "Genres": [],
           "Id": null,
           "ProgramName": "FOX NETWORK"
@@ -10164,6 +10201,7 @@
             "_Tuesday": false,
             "_Wednesday": false
           },
+          "DaypartCode": null,
           "Genres": [],
           "Id": null,
           "ProgramName": "SEINFELD 2X"
@@ -10436,6 +10474,7 @@
             "_Tuesday": false,
             "_Wednesday": false
           },
+          "DaypartCode": null,
           "Genres": [],
           "Id": null,
           "ProgramName": "FULL MEASURE"
@@ -10708,6 +10747,7 @@
             "_Tuesday": false,
             "_Wednesday": false
           },
+          "DaypartCode": null,
           "Genres": [],
           "Id": null,
           "ProgramName": "THE BIG BANG THEORY 2X"
@@ -10980,6 +11020,7 @@
             "_Tuesday": false,
             "_Wednesday": false
           },
+          "DaypartCode": null,
           "Genres": [],
           "Id": null,
           "ProgramName": "IN DEPTH WITH GRAHAM B"
@@ -11252,6 +11293,7 @@
             "_Tuesday": false,
             "_Wednesday": false
           },
+          "DaypartCode": null,
           "Genres": [],
           "Id": null,
           "ProgramName": "FOX NFL SUNDAY WRAP-UP"

@@ -149,7 +149,7 @@ namespace Services.Broadcast.ApplicationServices
                     continue;
 
                 var manifests = _GetInventorySummaryManifests(inventorySource, quarterDetail);
-                var daypartCodes = manifests.Select(m => m.DaypartCode).ToList();
+                var daypartCodes = manifests.Where(x => x.DaypartCodes != null).SelectMany(m => m.DaypartCodes).Distinct().ToList();
 
                 if (_FilterByDaypartCode(daypartCodes, inventorySummaryFilterDto.DaypartCodeId))
                     continue;
@@ -177,7 +177,7 @@ namespace Services.Broadcast.ApplicationServices
                     continue;
 
                 var manifests = _GetInventorySummaryManifests(inventorySource, quarterDetail);
-                var daypartCodes = manifests.Select(m => m.DaypartCode).Distinct().ToList();
+                var daypartCodes = manifests.Where(x => x.DaypartCodes != null).SelectMany(m => m.DaypartCodes).Distinct().ToList();
 
                 if (_FilterByDaypartCode(daypartCodes, inventorySummaryFilterDto.DaypartCodeId))
                     continue;
@@ -201,10 +201,13 @@ namespace Services.Broadcast.ApplicationServices
             {
                 return _InventorySummaryRepository.GetInventorySummaryManifestsForProprietaryOAndOSources(inventorySource, quarterDetail.StartDate, quarterDetail.EndDate);
             }
-            else if (inventorySource.InventoryType == InventorySourceTypeEnum.Syndication ||
-                     inventorySource.InventoryType == InventorySourceTypeEnum.Diginet)
+            else if (inventorySource.InventoryType == InventorySourceTypeEnum.Syndication)
             {
-                return _InventorySummaryRepository.GetInventorySummaryManifestsForSyndicationOrDiginetSources(inventorySource, quarterDetail.StartDate, quarterDetail.EndDate);
+                return _InventorySummaryRepository.GetInventorySummaryManifestsForSyndicationSources(inventorySource, quarterDetail.StartDate, quarterDetail.EndDate);
+            }
+            else if (inventorySource.InventoryType == InventorySourceTypeEnum.Diginet)
+            {
+                return _InventorySummaryRepository.GetInventorySummaryManifestsForDiginetSources(inventorySource, quarterDetail.StartDate, quarterDetail.EndDate);
             }
 
             return new List<InventorySummaryManifestDto>();
@@ -256,16 +259,6 @@ namespace Services.Broadcast.ApplicationServices
                                                                         _MediaMonthAndWeekAggregateCache,
                                                                         _MarketCoverageCache,
                                                                         _InventoryGapCalculationEngine);
-            }
-            else if (inventorySource.InventoryType == InventorySourceTypeEnum.Diginet)
-            {
-                inventorySummaryFactory = new DiginetSummaryFactory(_InventoryRepository,
-                                                                    _InventorySummaryRepository,
-                                                                    _QuarterCalculationEngine,
-                                                                    _ProgramRepository,
-                                                                    _MediaMonthAndWeekAggregateCache,
-                                                                    _MarketCoverageCache,
-                                                                    _InventoryGapCalculationEngine);
             }
             else if (inventorySource.InventoryType == InventorySourceTypeEnum.Diginet)
             {

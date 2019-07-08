@@ -1315,6 +1315,24 @@ BEGIN
 END
 /*************************************** END PRI-9110 *****************************************************/
 
+/*************************************** START PRI-10694 *****************************************************/
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE name = N'daypart_code_id' AND OBJECT_ID = OBJECT_ID(N'station_inventory_manifest_dayparts'))
+BEGIN
+    ALTER TABLE station_inventory_manifest_dayparts ADD daypart_code_id int NULL
+
+	ALTER TABLE [dbo].[station_inventory_manifest_dayparts] WITH CHECK ADD CONSTRAINT [FK_station_inventory_manifest_dayparts_daypart_codes] FOREIGN KEY([daypart_code_id])
+	REFERENCES [dbo].[daypart_codes] ([id])
+	ALTER TABLE [dbo].[station_inventory_manifest_dayparts] CHECK CONSTRAINT [FK_station_inventory_manifest_dayparts_daypart_codes]
+
+	EXEC('CREATE NONCLUSTERED INDEX [IX_station_inventory_manifest_dayparts_daypart_code_id] ON [dbo].[station_inventory_manifest_dayparts] ([daypart_code_id])')
+END
+
+IF NOT EXISTS(SELECT 1 FROM daypart_codes WHERE code = 'EM')
+BEGIN
+    insert into daypart_codes(code, is_active, full_name) values('EM', 1, 'Early Morning')
+END
+/*************************************** END PRI-10694 *****************************************************/
+
 /*************************************** END UPDATE SCRIPT *****************************************************/
 -- Update the Schema Version of the database to the current release version
 UPDATE system_component_parameters 

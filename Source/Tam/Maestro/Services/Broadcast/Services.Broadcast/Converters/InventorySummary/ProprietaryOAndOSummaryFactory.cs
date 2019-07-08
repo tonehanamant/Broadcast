@@ -42,6 +42,11 @@ namespace Services.Broadcast.Converters.InventorySummary
 
             var inventoryGaps = InventoryGapCalculationEngine.GetInventoryGaps(allInventorySourceManifestWeeks, quartersForInventoryAvailable, quarterDetail);
 
+            // For O&O source, there is always only 1 daypart code for 1 manifest. 
+            // The collection is needed because we use a common model InventorySummaryManifestDto for all the sources 
+            // and Diginet can have several daypart codes
+            var totalDaypartCodes = inventorySummaryManifests.GroupBy(x => x.DaypartCodes.Single()).Count();
+
             var result = new ProprietaryOAndOInventorySummaryDto
             {
                 InventorySourceId = inventorySource.Id,
@@ -51,7 +56,7 @@ namespace Services.Broadcast.Converters.InventorySummary
                 TotalMarkets = GetTotalMarkets(inventorySummaryManifests),
                 TotalStations = GetTotalStations(inventorySummaryManifests),
                 TotalPrograms = GetTotalPrograms(manifests),
-                TotalDaypartCodes = inventorySummaryManifests.GroupBy(x => x.DaypartCode).Count(),
+                TotalDaypartCodes = totalDaypartCodes,
                 LastUpdatedDate = GetLastJobCompletedDate(inventorySummaryManifestFiles),
                 IsUpdating = GetIsInventoryUpdating(inventorySummaryManifestFiles),
                 RatesAvailableFromQuarter = quartersForInventoryAvailable.Item1,
@@ -76,7 +81,11 @@ namespace Services.Broadcast.Converters.InventorySummary
         private List<ProprietaryOAndOInventorySummaryDto.Detail> _GetDetails(List<InventorySummaryManifestDto> allSummaryManifests, List<StationInventoryManifest> allManifests, int householdAudienceId)
         {
             var result = new List<ProprietaryOAndOInventorySummaryDto.Detail>();
-            var allManifestsGroupedByDaypart = allSummaryManifests.GroupBy(x => x.DaypartCode);
+
+            // For O&O source, there is always only 1 daypart code for 1 manifest. 
+            // The collection is needed because we use a common model InventorySummaryManifestDto for all the sources 
+            // and Diginet can have several daypart codes
+            var allManifestsGroupedByDaypart = allSummaryManifests.GroupBy(x => x.DaypartCodes.Single());
 
             foreach (var manifestsGrouping in allManifestsGroupedByDaypart)
             {

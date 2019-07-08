@@ -248,6 +248,7 @@
     <Compile Include="Converters\RateImport\OAndOProprietaryFileImporter.cs" />
     <Compile Include="Converters\RateImport\SyndicationFileImporter.cs" />
     <Compile Include="Entities\DateRange.cs" />
+    <Compile Include="Entities\DaypartCode.cs" />
     <Compile Include="Entities\DaypartCodeDto.cs" />
     <Compile Include="Entities\Enums\RatesTimeframe.cs" />
     <Compile Include="Entities\InventoryLogo.cs" />

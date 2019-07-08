@@ -18,7 +18,8 @@ namespace Services.Broadcast.Repositories
         List<InventorySummaryManifestDto> GetInventorySummaryManifestsForBarterSources(InventorySource inventorySource, DateTime startDate, DateTime endDate);
         List<InventorySummaryManifestDto> GetInventorySummaryManifestsForOpenMarketSources(InventorySource inventorySource, DateTime startDate, DateTime endDate);
         List<InventorySummaryManifestDto> GetInventorySummaryManifestsForProprietaryOAndOSources(InventorySource inventorySource, DateTime startDate, DateTime endDate);
-        List<InventorySummaryManifestDto> GetInventorySummaryManifestsForSyndicationOrDiginetSources(InventorySource inventorySource, DateTime startDate, DateTime endDate);
+        List<InventorySummaryManifestDto> GetInventorySummaryManifestsForSyndicationSources(InventorySource inventorySource, DateTime startDate, DateTime endDate);
+        List<InventorySummaryManifestDto> GetInventorySummaryManifestsForDiginetSources(InventorySource inventorySource, DateTime startDate, DateTime endDate);
         double? GetInventorySummaryHouseholdImpressions(List<int> manifestIds, int householdAudienceId);
         List<InventorySummaryManifestFileDto> GetInventorySummaryManifestFileDtos(List<int> inventoryFileIds);
     }
@@ -40,13 +41,14 @@ namespace Services.Broadcast.Repositories
                             join station in context.stations on manifest.station_id equals station.id
                             join file in context.inventory_files on manifest.file_id equals file.id
                             join header in context.inventory_file_proprietary_header on file.id equals header.inventory_file_id
+                            join daypartCode in context.daypart_codes on header.daypart_code_id equals daypartCode.id
                             where week.start_date <= endDate && week.end_date >= startDate && manifest.inventory_source_id == inventorySource.Id
                             select new InventorySummaryManifestDto
                             {
                                 ManifestId = manifest.id,
                                 StationId = station.id,
                                 MarketCode = station.market_code,
-                                DaypartCode = header.daypart_codes.code,
+                                DaypartCodes = new List<string> { daypartCode.code },
                                 UnitName = manifestGroup.name,
                                 FileId = file.id
                             })
@@ -87,13 +89,14 @@ namespace Services.Broadcast.Repositories
                             join station in context.stations on manifest.station_id equals station.id
                             join file in context.inventory_files on manifest.file_id equals file.id
                             join header in context.inventory_file_proprietary_header on file.id equals header.inventory_file_id
+                            join daypartCode in context.daypart_codes on header.daypart_code_id equals daypartCode.id
                             where week.start_date <= endDate && week.end_date >= startDate && manifest.inventory_source_id == inventorySource.Id
                             select new InventorySummaryManifestDto
                             {
                                 ManifestId = manifest.id,
                                 StationId = station.id,
                                 MarketCode = station.market_code,
-                                DaypartCode = header.daypart_codes.code,
+                                DaypartCodes = new List<string> { daypartCode.code },
                                 FileId = file.id
                             })
                             .GroupBy(x => x.ManifestId)
@@ -102,7 +105,7 @@ namespace Services.Broadcast.Repositories
                 });
         }
 
-        public List<InventorySummaryManifestDto> GetInventorySummaryManifestsForSyndicationOrDiginetSources(InventorySource inventorySource, DateTime startDate, DateTime endDate)
+        public List<InventorySummaryManifestDto> GetInventorySummaryManifestsForSyndicationSources(InventorySource inventorySource, DateTime startDate, DateTime endDate)
         {
             return _InReadUncommitedTransaction(
                 context =>
@@ -111,15 +114,43 @@ namespace Services.Broadcast.Repositories
                             join manifest in context.station_inventory_manifest on week.station_inventory_manifest_id equals manifest.id
                             join file in context.inventory_files on manifest.file_id equals file.id
                             join header in context.inventory_file_proprietary_header on file.id equals header.inventory_file_id
+                            join daypartCode in context.daypart_codes on header.daypart_code_id equals daypartCode.id
                             where week.start_date <= endDate && week.end_date >= startDate && manifest.inventory_source_id == inventorySource.Id
                             select new InventorySummaryManifestDto
                             {
                                 ManifestId = manifest.id,
-                                DaypartCode = header.daypart_codes.code,
+                                DaypartCodes = new List<string> { daypartCode.code },
                                 FileId = file.id
                             })
                             .GroupBy(x => x.ManifestId)
                             .Select(x => x.FirstOrDefault())
+                            .ToList();
+                });
+        }
+
+        public List<InventorySummaryManifestDto> GetInventorySummaryManifestsForDiginetSources(InventorySource inventorySource, DateTime startDate, DateTime endDate)
+        {
+            return _InReadUncommitedTransaction(
+                context =>
+                {
+                    return (from week in context.station_inventory_manifest_weeks
+                            join manifest in context.station_inventory_manifest on week.station_inventory_manifest_id equals manifest.id
+                            join manifestDaypart in context.station_inventory_manifest_dayparts on manifest.id equals manifestDaypart.station_inventory_manifest_id
+                            join manifestDaypartCode in context.daypart_codes on manifestDaypart.daypart_code_id equals manifestDaypartCode.id
+                            where week.start_date <= endDate && week.end_date >= startDate && manifest.inventory_source_id == inventorySource.Id
+                            select new
+                            {
+                                ManifestId = manifest.id,
+                                DaypartCode = manifestDaypartCode.code,
+                                FileId = manifest.file_id
+                            })
+                            .GroupBy(x => x.ManifestId)
+                            .Select(x => new InventorySummaryManifestDto
+                            {
+                                ManifestId = x.Key,
+                                FileId = x.FirstOrDefault().FileId,
+                                DaypartCodes = x.Select(d => d.DaypartCode).Distinct().ToList()
+                            })
                             .ToList();
                 });
         }
@@ -154,8 +185,6 @@ namespace Services.Broadcast.Repositories
                                 header.hut_projection_book_id,
                                 header.share_projection_book_id,
                                 file.created_date,
-                                daypart_code_id = header.daypart_codes.id,
-                                daypart_code = header.daypart_codes.code
                             }).Select(f => new InventorySummaryManifestFileDto
                             {
                                 FileId = f.file_id,
@@ -163,9 +192,7 @@ namespace Services.Broadcast.Repositories
                                 JobStatus = (InventoryFileRatingsProcessingStatus?)f.status,
                                 HutProjectionBookId = f.hut_projection_book_id,
                                 ShareProjectionBookId = f.share_projection_book_id,
-                                CreatedDate = f.created_date,
-                                DaypartId = f.daypart_code_id,
-                                DaypartCode = f.daypart_code
+                                CreatedDate = f.created_date
                             }).ToList();
                 });
         }

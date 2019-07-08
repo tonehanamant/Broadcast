@@ -13,6 +13,8 @@ using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.ProprietaryInventory;
 using Services.Broadcast.Entities.StationInventory;
 using Services.Broadcast.Extensions;
+using Services.Broadcast.Repositories;
+using Tam.Maestro.Services.ContractInterfaces.Common;
 using static Services.Broadcast.Entities.ProprietaryInventory.ProprietaryInventoryFile;
 using static Services.Broadcast.Entities.ProprietaryInventory.ProprietaryInventoryFile.ProprietaryInventoryDataLine;
 
@@ -27,6 +29,7 @@ namespace Services.Broadcast.Converters.RateImport
 
         private readonly IDaypartCache _DaypartCache;
         private readonly IImpressionAdjustmentEngine _ImpressionAdjustmentEngine;
+        private readonly IDaypartCodeRepository _DaypartCodeRepository;
         private int _ErrorColumnIndex = 0;
         private const int audienceRowIndex = 11;
 
@@ -50,6 +53,7 @@ namespace Services.Broadcast.Converters.RateImport
         {
             _DaypartCache = daypartCache;
             _ImpressionAdjustmentEngine = impressionAdjustmentEngine;
+            _DaypartCodeRepository = broadcastDataRepositoryFactory.GetDataRepository<IDaypartCodeRepository>();
         }
 
         public override void LoadAndValidateHeaderData(ExcelWorksheet worksheet, ProprietaryInventoryFile proprietaryFile)
@@ -339,6 +343,7 @@ namespace Services.Broadcast.Converters.RateImport
             var fileHeader = proprietaryFile.Header;
             var ntiToNsiIncreaseInDecimals = (double)(fileHeader.NtiToNsiIncrease.Value / 100);
             var defaultSpotLengthId = SpotLengthEngine.GetSpotLengthIdByValue(defaultSpotLength);
+            var allDaypartCodes = _DaypartCodeRepository.GetAllActiveDaypartCodes();
 
             proprietaryFile.InventoryManifests = proprietaryFile.DataLines
                 .Select(x => new StationInventoryManifest
@@ -347,7 +352,11 @@ namespace Services.Broadcast.Converters.RateImport
                     InventoryFileId = proprietaryFile.Id,
                     SpotLengthId = defaultSpotLengthId,
                     DaypartCode = fileHeader.DaypartCode,
-                    ManifestDayparts = x.Dayparts.Select(d => new StationInventoryManifestDaypart { Daypart = d }).ToList(),
+                    ManifestDayparts = x.Dayparts.Select(d => new StationInventoryManifestDaypart
+                    {
+                        Daypart = d,
+                        DaypartCode = _MapToDaypartCode(d, allDaypartCodes)
+                    }).ToList(),
                     ManifestWeeks = GetManifestWeeksInRange(fileHeader.EffectiveDate, fileHeader.EndDate, defaultSpotsNumberPerWeek),
                     ManifestAudiences = x.Audiences.Select(a => new StationInventoryManifestAudience
                     {
@@ -365,6 +374,44 @@ namespace Services.Broadcast.Converters.RateImport
                         }
                     }
                 }).ToList();
+        }
+
+        private DaypartCode _MapToDaypartCode(DisplayDaypart displayDaypart, List<DaypartCodeDto> allDaypartCodes)
+        {
+            var startHour = int.Parse(displayDaypart.StartHourFullPercision);
+            var endHour = int.Parse(displayDaypart.EndHourFullPercision);
+
+            var daypartCode = _IsBetween(startHour, 2, 5) ? "OVN" :
+                              _IsBetween(startHour, 6, 8) ? "EM" :
+                              
+                              // for program that overlap 3p-4p
+                              _IsBetween(startHour, 9, 14) ? "DAY" :
+                              startHour == 15 && endHour == 16 ? "DAY" :
+                              startHour == 15 && _IsAfter(endHour, 16) ? "EF" :
+                              startHour == 15 && _IsBefore(endHour, 16) ? "EF" :
+                              _IsBetween(startHour, 16, 17) ? "EF" :
+                              
+                              _IsBetween(startHour, 18, 19) ? "PA" :
+                              _IsBetween(startHour, 20, 22) ? "PT" :
+                              startHour == 23 ? "LF" :
+                              _IsBetween(startHour, 0, 1) ? "LF" : string.Empty;
+
+            return allDaypartCodes.SingleOrDefault(dc => dc.Code == daypartCode);
+        }
+
+        private bool _IsBetween(int hour, int start, int end)
+        {
+            return hour >= start && hour <= end;
+        }
+
+        private bool _IsBefore(int hour, int beforeHour)
+        {
+            return hour < beforeHour;
+        }
+
+        private bool _IsAfter(int hour, int afterHour)
+        {
+            return hour > afterHour;
         }
                 
         private List<BroadcastAudience> _ReadAudiences(ExcelWorksheet worksheet, out List<string> validationProblems)

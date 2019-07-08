@@ -23,7 +23,6 @@
           "_Code": "CUS",
           "_EndTime": 28799,
           "_Friday": true,
-          "_Id": 44461,
           "_Is24Hour": false,
           "_LastEndTime": 0,
           "_LastStartTime": 0,
@@ -36,6 +35,7 @@
           "_Tuesday": true,
           "_Wednesday": false
         },
+        "DaypartCode": null,
         "Genres": [],
         "ProgramName": "Eyewitness News/GMA Weekend"
       }

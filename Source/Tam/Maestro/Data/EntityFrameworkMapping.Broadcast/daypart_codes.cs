@@ -17,6 +17,7 @@ namespace EntityFrameworkMapping.Broadcast
         public daypart_codes()
         {
             this.inventory_file_proprietary_header = new HashSet<inventory_file_proprietary_header>();
+            this.station_inventory_manifest_dayparts = new HashSet<station_inventory_manifest_dayparts>();
         }
     
         public int id { get; set; }
@@ -25,5 +26,6 @@ namespace EntityFrameworkMapping.Broadcast
         public string full_name { get; set; }
     
         public virtual ICollection<inventory_file_proprietary_header> inventory_file_proprietary_header { get; set; }
+        public virtual ICollection<station_inventory_manifest_dayparts> station_inventory_manifest_dayparts { get; set; }
     }
 }

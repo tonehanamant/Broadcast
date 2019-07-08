@@ -1,10 +1,12 @@
-﻿namespace Services.Broadcast.Entities.InventorySummary
+﻿using System.Collections.Generic;
+
+namespace Services.Broadcast.Entities.InventorySummary
 {
     public class InventorySummaryManifestDto
     {
         public int? StationId { get; set; }
         public short? MarketCode { get; set; }
-        public string DaypartCode { get; set; }
+        public List<string> DaypartCodes { get; set; }
         public string UnitName { get; set; }
         public int? FileId { get; set; }
         public int ManifestId { get; set; }

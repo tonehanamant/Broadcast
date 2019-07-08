@@ -1,11 +1,41 @@
 ﻿[
   {
-    "CPM": 10.0000,
+    "CPM": 0.7377049180327868852459016393,
     "Details": [
       {
-        "CPM": 10.0000,
-        "Daypart": "DIGI",
-        "HouseholdImpressions": 6000.0
+        "CPM": 0.0588235294117648108419838524,
+        "Daypart": "EM",
+        "HouseholdImpressions": 7285.7142857142853
+      },
+      {
+        "CPM": 0.0588235294117646877162629758,
+        "Daypart": "OVN",
+        "HouseholdImpressions": 9714.2857142857138
+      },
+      {
+        "CPM": 0.99999999999999818359375,
+        "Daypart": "DAY",
+        "HouseholdImpressions": 17066.666666666664
+      },
+      {
+        "CPM": 1.0000,
+        "Daypart": "EF",
+        "HouseholdImpressions": 13600.0
+      },
+      {
+        "CPM": 1.00000,
+        "Daypart": "PA",
+        "HouseholdImpressions": 2000.0
+      },
+      {
+        "CPM": 1.00000,
+        "Daypart": "PT",
+        "HouseholdImpressions": 3000.0
+      },
+      {
+        "CPM": 1.00000000000000012,
+        "Daypart": "LF",
+        "HouseholdImpressions": 8333.3333333333321
       }
     ],
     "HasInventoryGaps": true,
@@ -18,46 +48,45 @@
         "AllQuarterMissing": false,
         "DateGaps": [
           {
-            "End": "2019-05-19T00:00:00",
-            "Start": "2019-04-01T00:00:00"
+            "End": "2018-10-07T00:00:00",
+            "Start": "2018-10-01T00:00:00"
           },
           {
-            "End": "2019-06-30T00:00:00",
-            "Start": "2019-06-03T00:00:00"
+            "End": "2018-12-30T00:00:00",
+            "Start": "2018-10-15T00:00:00"
           }
         ],
         "Quarter": {
-          "EndDate": "2019-06-30T23:59:59",
-          "Quarter": 2,
-          "StartDate": "2019-04-01T00:00:00",
-          "Year": 2019
+          "EndDate": "2018-12-30T23:59:59",
+          "Quarter": 4,
+          "StartDate": "2018-10-01T00:00:00",
+          "Year": 2018
         }
       }
     ],
-    "InventorySourceId": 18,
-    "InventorySourceName": "Bounce",
+    "InventorySourceId": 23,
+    "InventorySourceName": "HITV",
     "IsUpdating": false,
-    "LastUpdatedDate": "2019-06-06T08:15:36.56",
     "Quarter": {
-      "EndDate": "2019-06-30T23:59:59",
-      "Quarter": 2,
-      "StartDate": "2019-04-01T00:00:00",
-      "Year": 2019
+      "EndDate": "2018-12-30T23:59:59",
+      "Quarter": 4,
+      "StartDate": "2018-10-01T00:00:00",
+      "Year": 2018
     },
     "RatesAvailableFromQuarter": {
-      "EndDate": "2019-06-30T23:59:59",
-      "Quarter": 2,
-      "StartDate": "2019-04-01T00:00:00",
-      "Year": 2019
+      "EndDate": "2018-12-30T23:59:59",
+      "Quarter": 4,
+      "StartDate": "2018-10-01T00:00:00",
+      "Year": 2018
     },
     "RatesAvailableToQuarter": {
-      "EndDate": "2019-06-30T23:59:59",
-      "Quarter": 2,
-      "StartDate": "2019-04-01T00:00:00",
-      "Year": 2019
+      "EndDate": "2018-12-30T23:59:59",
+      "Quarter": 4,
+      "StartDate": "2018-10-01T00:00:00",
+      "Year": 2018
     },
     "ShareBook": null,
-    "TotalDaypartCodes": 1,
+    "TotalDaypartCodes": 7,
     "TotalMarkets": 0,
     "TotalStations": 0
   }

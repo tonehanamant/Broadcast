@@ -268,6 +268,7 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
+        "DaypartCode": null,
         "Genres": [],
         "ProgramName": null
       }
@@ -1148,6 +1149,7 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
+        "DaypartCode": null,
         "Genres": [],
         "ProgramName": null
       }
@@ -2033,6 +2035,7 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
+        "DaypartCode": null,
         "Genres": [],
         "ProgramName": null
       }
@@ -2918,6 +2921,7 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
+        "DaypartCode": null,
         "Genres": [],
         "ProgramName": null
       },
@@ -2939,6 +2943,7 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
+        "DaypartCode": null,
         "Genres": [],
         "ProgramName": null
       },
@@ -2960,6 +2965,7 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
+        "DaypartCode": null,
         "Genres": [],
         "ProgramName": null
       }
@@ -3845,6 +3851,7 @@
           "_Tuesday": false,
           "_Wednesday": true
         },
+        "DaypartCode": null,
         "Genres": [],
         "ProgramName": null
       }
@@ -4725,6 +4732,7 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
+        "DaypartCode": null,
         "Genres": [],
         "ProgramName": null
       }
@@ -5605,6 +5613,7 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
+        "DaypartCode": null,
         "Genres": [],
         "ProgramName": null
       }
@@ -6490,6 +6499,7 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
+        "DaypartCode": null,
         "Genres": [],
         "ProgramName": null
       }
@@ -7375,6 +7385,7 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
+        "DaypartCode": null,
         "Genres": [],
         "ProgramName": null
       },
@@ -7396,6 +7407,7 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
+        "DaypartCode": null,
         "Genres": [],
         "ProgramName": null
       },
@@ -7417,6 +7429,7 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
+        "DaypartCode": null,
         "Genres": [],
         "ProgramName": null
       }
@@ -8302,6 +8315,7 @@
           "_Tuesday": false,
           "_Wednesday": true
         },
+        "DaypartCode": null,
         "Genres": [],
         "ProgramName": null
       }
@@ -9182,6 +9196,7 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
+        "DaypartCode": null,
         "Genres": [],
         "ProgramName": null
       }
@@ -10062,6 +10077,7 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
+        "DaypartCode": null,
         "Genres": [],
         "ProgramName": null
       }
@@ -10947,6 +10963,7 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
+        "DaypartCode": null,
         "Genres": [],
         "ProgramName": null
       }
@@ -11832,6 +11849,7 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
+        "DaypartCode": null,
         "Genres": [],
         "ProgramName": null
       },
@@ -11853,6 +11871,7 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
+        "DaypartCode": null,
         "Genres": [],
         "ProgramName": null
       },
@@ -11874,6 +11893,7 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
+        "DaypartCode": null,
         "Genres": [],
         "ProgramName": null
       }
@@ -12759,6 +12779,7 @@
           "_Tuesday": false,
           "_Wednesday": true
         },
+        "DaypartCode": null,
         "Genres": [],
         "ProgramName": null
       }
@@ -13639,6 +13660,7 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
+        "DaypartCode": null,
         "Genres": [],
         "ProgramName": null
       }
@@ -14519,6 +14541,7 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
+        "DaypartCode": null,
         "Genres": [],
         "ProgramName": null
       }
@@ -15404,6 +15427,7 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
+        "DaypartCode": null,
         "Genres": [],
         "ProgramName": null
       }
@@ -16289,6 +16313,7 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
+        "DaypartCode": null,
         "Genres": [],
         "ProgramName": null
       },
@@ -16310,6 +16335,7 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
+        "DaypartCode": null,
         "Genres": [],
         "ProgramName": null
       },
@@ -16331,6 +16357,7 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
+        "DaypartCode": null,
         "Genres": [],
         "ProgramName": null
       }
@@ -17216,6 +17243,7 @@
           "_Tuesday": false,
           "_Wednesday": true
         },
+        "DaypartCode": null,
         "Genres": [],
         "ProgramName": null
       }
@@ -18096,6 +18124,7 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
+        "DaypartCode": null,
         "Genres": [],
         "ProgramName": null
       }
@@ -18976,6 +19005,7 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
+        "DaypartCode": null,
         "Genres": [],
         "ProgramName": null
       }
@@ -19861,6 +19891,7 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
+        "DaypartCode": null,
         "Genres": [],
         "ProgramName": null
       }
@@ -20746,6 +20777,7 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
+        "DaypartCode": null,
         "Genres": [],
         "ProgramName": null
       },
@@ -20767,6 +20799,7 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
+        "DaypartCode": null,
         "Genres": [],
         "ProgramName": null
       },
@@ -20788,6 +20821,7 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
+        "DaypartCode": null,
         "Genres": [],
         "ProgramName": null
       }
@@ -21673,6 +21707,7 @@
           "_Tuesday": false,
           "_Wednesday": true
         },
+        "DaypartCode": null,
         "Genres": [],
         "ProgramName": null
       }
@@ -22553,6 +22588,7 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
+        "DaypartCode": null,
         "Genres": [],
         "ProgramName": null
       }
@@ -23433,6 +23469,7 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
+        "DaypartCode": null,
         "Genres": [],
         "ProgramName": null
       }
@@ -24318,6 +24355,7 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
+        "DaypartCode": null,
         "Genres": [],
         "ProgramName": null
       }
@@ -25203,6 +25241,7 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
+        "DaypartCode": null,
         "Genres": [],
         "ProgramName": null
       },
@@ -25224,6 +25263,7 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
+        "DaypartCode": null,
         "Genres": [],
         "ProgramName": null
       },
@@ -25245,6 +25285,7 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
+        "DaypartCode": null,
         "Genres": [],
         "ProgramName": null
       }
@@ -26130,6 +26171,7 @@
           "_Tuesday": false,
           "_Wednesday": true
         },
+        "DaypartCode": null,
         "Genres": [],
         "ProgramName": null
       }
@@ -27010,6 +27052,7 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
+        "DaypartCode": null,
         "Genres": [],
         "ProgramName": null
       }
@@ -27890,6 +27933,7 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
+        "DaypartCode": null,
         "Genres": [],
         "ProgramName": null
       }
@@ -28775,6 +28819,7 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
+        "DaypartCode": null,
         "Genres": [],
         "ProgramName": null
       }
@@ -29660,6 +29705,7 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
+        "DaypartCode": null,
         "Genres": [],
         "ProgramName": null
       },
@@ -29681,6 +29727,7 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
+        "DaypartCode": null,
         "Genres": [],
         "ProgramName": null
       },
@@ -29702,6 +29749,7 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
+        "DaypartCode": null,
         "Genres": [],
         "ProgramName": null
       }
@@ -30587,6 +30635,7 @@
           "_Tuesday": false,
           "_Wednesday": true
         },
+        "DaypartCode": null,
         "Genres": [],
         "ProgramName": null
       }

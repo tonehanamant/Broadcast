@@ -1,0 +1,816 @@
+﻿[
+  {
+    "Comment": null,
+    "DaypartCode": "DIGI",
+    "InventorySourceId": 23,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "House Holds",
+          "Id": 31
+        },
+        "CPM": null,
+        "Impressions": 17000.0,
+        "IsReference": true,
+        "Rating": 1.0,
+        "Vpvh": null
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 21599,
+          "_Friday": true,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 7200,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "DaypartCode": {
+          "Code": "OVN",
+          "FullName": "Overnights",
+          "Id": 11
+        },
+        "Genres": [],
+        "ProgramName": null
+      },
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 32399,
+          "_Friday": true,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": false,
+          "_Name": "Custom",
+          "_Saturday": true,
+          "_StartTime": 21600,
+          "_Sunday": true,
+          "_Thursday": true,
+          "_Tuesday": false,
+          "_Wednesday": true
+        },
+        "DaypartCode": {
+          "Code": "EM",
+          "FullName": "Early Morning",
+          "Id": 14
+        },
+        "Genres": [],
+        "ProgramName": null
+      }
+    ],
+    "ManifestRates": [
+      {
+        "SpotCost": 1.0000,
+        "SpotLengthId": 1
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "EndDate": "2018-10-11T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-14T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-08T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-10T00:00:00"
+      }
+    ],
+    "ProjectedStationImpressions": [],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": null
+  },
+  {
+    "Comment": null,
+    "DaypartCode": "DIGI",
+    "InventorySourceId": 23,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "House Holds",
+          "Id": 31
+        },
+        "CPM": null,
+        "Impressions": 2000.0,
+        "IsReference": true,
+        "Rating": 2.0,
+        "Vpvh": null
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "DAY",
+          "_EndTime": 57599,
+          "_Friday": true,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Daytime",
+          "_Saturday": false,
+          "_StartTime": 32400,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "DaypartCode": {
+          "Code": "DAY",
+          "FullName": "Daytime",
+          "Id": 12
+        },
+        "Genres": [],
+        "ProgramName": null
+      },
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 64799,
+          "_Friday": true,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": false,
+          "_Name": "Custom",
+          "_Saturday": true,
+          "_StartTime": 54000,
+          "_Sunday": true,
+          "_Thursday": true,
+          "_Tuesday": false,
+          "_Wednesday": true
+        },
+        "DaypartCode": {
+          "Code": "EF",
+          "FullName": "Early Fringe",
+          "Id": 6
+        },
+        "Genres": [],
+        "ProgramName": null
+      }
+    ],
+    "ManifestRates": [
+      {
+        "SpotCost": 2.0000,
+        "SpotLengthId": 1
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "EndDate": "2018-10-11T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-14T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-08T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-10T00:00:00"
+      }
+    ],
+    "ProjectedStationImpressions": [],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": null
+  },
+  {
+    "Comment": null,
+    "DaypartCode": "DIGI",
+    "InventorySourceId": 23,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "House Holds",
+          "Id": 31
+        },
+        "CPM": null,
+        "Impressions": 3000.0,
+        "IsReference": true,
+        "Rating": 3.0,
+        "Vpvh": null
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 57599,
+          "_Friday": true,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 54000,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "DaypartCode": {
+          "Code": "DAY",
+          "FullName": "Daytime",
+          "Id": 12
+        },
+        "Genres": [],
+        "ProgramName": null
+      },
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 53999,
+          "_Friday": true,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": false,
+          "_Name": "Custom",
+          "_Saturday": true,
+          "_StartTime": 32400,
+          "_Sunday": true,
+          "_Thursday": true,
+          "_Tuesday": false,
+          "_Wednesday": true
+        },
+        "DaypartCode": {
+          "Code": "DAY",
+          "FullName": "Daytime",
+          "Id": 12
+        },
+        "Genres": [],
+        "ProgramName": null
+      }
+    ],
+    "ManifestRates": [
+      {
+        "SpotCost": 3.0000,
+        "SpotLengthId": 1
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "EndDate": "2018-10-11T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-14T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-08T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-10T00:00:00"
+      }
+    ],
+    "ProjectedStationImpressions": [],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": null
+  },
+  {
+    "Comment": null,
+    "DaypartCode": "DIGI",
+    "InventorySourceId": 23,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "House Holds",
+          "Id": 31
+        },
+        "CPM": null,
+        "Impressions": 4000.0,
+        "IsReference": true,
+        "Rating": 4.0,
+        "Vpvh": null
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 50399,
+          "_Friday": true,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 54000,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "DaypartCode": {
+          "Code": "EF",
+          "FullName": "Early Fringe",
+          "Id": 6
+        },
+        "Genres": [],
+        "ProgramName": null
+      },
+      {
+        "Daypart": {
+          "_Code": "EF1",
+          "_EndTime": 64799,
+          "_Friday": true,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": false,
+          "_Name": "M-Su Early Fringe",
+          "_Saturday": true,
+          "_StartTime": 57600,
+          "_Sunday": true,
+          "_Thursday": true,
+          "_Tuesday": false,
+          "_Wednesday": true
+        },
+        "DaypartCode": {
+          "Code": "EF",
+          "FullName": "Early Fringe",
+          "Id": 6
+        },
+        "Genres": [],
+        "ProgramName": null
+      }
+    ],
+    "ManifestRates": [
+      {
+        "SpotCost": 4.0000,
+        "SpotLengthId": 1
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "EndDate": "2018-10-11T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-14T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-08T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-10T00:00:00"
+      }
+    ],
+    "ProjectedStationImpressions": [],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": null
+  },
+  {
+    "Comment": null,
+    "DaypartCode": "DIGI",
+    "InventorySourceId": 23,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "House Holds",
+          "Id": 31
+        },
+        "CPM": null,
+        "Impressions": 5000.0,
+        "IsReference": true,
+        "Rating": 5.0,
+        "Vpvh": null
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 71999,
+          "_Friday": true,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 64800,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "DaypartCode": {
+          "Code": "PA",
+          "FullName": "Prime Access",
+          "Id": 7
+        },
+        "Genres": [],
+        "ProgramName": null
+      },
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 82799,
+          "_Friday": true,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": false,
+          "_Name": "Custom",
+          "_Saturday": true,
+          "_StartTime": 72000,
+          "_Sunday": true,
+          "_Thursday": true,
+          "_Tuesday": false,
+          "_Wednesday": true
+        },
+        "DaypartCode": {
+          "Code": "PT",
+          "FullName": "Prime",
+          "Id": 8
+        },
+        "Genres": [],
+        "ProgramName": null
+      }
+    ],
+    "ManifestRates": [
+      {
+        "SpotCost": 5.0000,
+        "SpotLengthId": 1
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "EndDate": "2018-10-11T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-14T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-08T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-10T00:00:00"
+      }
+    ],
+    "ProjectedStationImpressions": [],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": null
+  },
+  {
+    "Comment": null,
+    "DaypartCode": "DIGI",
+    "InventorySourceId": 23,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "House Holds",
+          "Id": 31
+        },
+        "CPM": null,
+        "Impressions": 6000.0,
+        "IsReference": true,
+        "Rating": 6.0,
+        "Vpvh": null
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 86399,
+          "_Friday": true,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "BRDCST DP362",
+          "_Saturday": false,
+          "_StartTime": 82800,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "DaypartCode": {
+          "Code": "LF",
+          "FullName": "Late Fringe",
+          "Id": 9
+        },
+        "Genres": [],
+        "ProgramName": null
+      },
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 7199,
+          "_Friday": true,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": false,
+          "_Name": "Custom",
+          "_Saturday": true,
+          "_StartTime": 0,
+          "_Sunday": true,
+          "_Thursday": true,
+          "_Tuesday": false,
+          "_Wednesday": true
+        },
+        "DaypartCode": {
+          "Code": "LF",
+          "FullName": "Late Fringe",
+          "Id": 9
+        },
+        "Genres": [],
+        "ProgramName": null
+      }
+    ],
+    "ManifestRates": [
+      {
+        "SpotCost": 6.0000,
+        "SpotLengthId": 1
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "EndDate": "2018-10-11T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-14T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-08T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-10T00:00:00"
+      }
+    ],
+    "ProjectedStationImpressions": [],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": null
+  },
+  {
+    "Comment": null,
+    "DaypartCode": "DIGI",
+    "InventorySourceId": 23,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "House Holds",
+          "Id": 31
+        },
+        "CPM": null,
+        "Impressions": 7000.0,
+        "IsReference": true,
+        "Rating": 7.0,
+        "Vpvh": null
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 7199,
+          "_Friday": true,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 82800,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "DaypartCode": {
+          "Code": "LF",
+          "FullName": "Late Fringe",
+          "Id": 9
+        },
+        "Genres": [],
+        "ProgramName": null
+      },
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 71999,
+          "_Friday": true,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": false,
+          "_Name": "Custom",
+          "_Saturday": true,
+          "_StartTime": 50400,
+          "_Sunday": true,
+          "_Thursday": true,
+          "_Tuesday": false,
+          "_Wednesday": true
+        },
+        "DaypartCode": {
+          "Code": "DAY",
+          "FullName": "Daytime",
+          "Id": 12
+        },
+        "Genres": [],
+        "ProgramName": null
+      }
+    ],
+    "ManifestRates": [
+      {
+        "SpotCost": 7.0000,
+        "SpotLengthId": 1
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "EndDate": "2018-10-11T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-14T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-08T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-10T00:00:00"
+      }
+    ],
+    "ProjectedStationImpressions": [],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": null
+  },
+  {
+    "Comment": null,
+    "DaypartCode": "DIGI",
+    "InventorySourceId": 23,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "House Holds",
+          "Id": 31
+        },
+        "CPM": null,
+        "Impressions": 8000.0,
+        "IsReference": true,
+        "Rating": 8.0,
+        "Vpvh": null
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 57599,
+          "_Friday": true,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "BRDCST DP362",
+          "_Saturday": false,
+          "_StartTime": 50400,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "DaypartCode": {
+          "Code": "DAY",
+          "FullName": "Daytime",
+          "Id": 12
+        },
+        "Genres": [],
+        "ProgramName": null
+      }
+    ],
+    "ManifestRates": [
+      {
+        "SpotCost": 8.0000,
+        "SpotLengthId": 1
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "EndDate": "2018-10-11T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-14T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-08T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-10T00:00:00"
+      }
+    ],
+    "ProjectedStationImpressions": [],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": null
+  },
+  {
+    "Comment": null,
+    "DaypartCode": "DIGI",
+    "InventorySourceId": 23,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "House Holds",
+          "Id": 31
+        },
+        "CPM": null,
+        "Impressions": 9000.0,
+        "IsReference": true,
+        "Rating": 9.0,
+        "Vpvh": null
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 53999,
+          "_Friday": true,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 54000,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "DaypartCode": {
+          "Code": "EF",
+          "FullName": "Early Fringe",
+          "Id": 6
+        },
+        "Genres": [],
+        "ProgramName": null
+      }
+    ],
+    "ManifestRates": [
+      {
+        "SpotCost": 9.0000,
+        "SpotLengthId": 1
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "EndDate": "2018-10-11T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-14T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-08T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-10T00:00:00"
+      }
+    ],
+    "ProjectedStationImpressions": [],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": null
+  }
+]

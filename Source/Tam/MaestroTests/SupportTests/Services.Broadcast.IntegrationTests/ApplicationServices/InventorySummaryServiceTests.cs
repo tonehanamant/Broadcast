@@ -82,12 +82,35 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void GetInventorySummaries_Diginet()
         {
-            var inventoryCards = _InventorySummaryService.GetInventorySummaries(new InventorySummaryFilterDto
-            {
-                InventorySourceId = 18,
-            }, new DateTime(2019, 04, 01));
+            const string fileName = @"ProprietaryDataFiles\Diginet_WithDaypartCodes.xlsx";
 
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(inventoryCards));
+            using (new TransactionScopeWrapper())
+            {
+                var request = new InventoryFileSaveRequest
+                {
+                    StreamData = new FileStream($@".\Files\{fileName}", FileMode.Open, FileAccess.Read),
+                    FileName = fileName
+                };
+
+                var result = _ProprietaryService.SaveProprietaryInventoryFile(request, "IntegrationTestUser", new DateTime(2018, 10, 02));
+                var job = _InventoryFileRatingsJobsRepository.GetLatestJob();
+                _InventoryRatingsProcessingService.ProcessInventoryRatingsJob(job.id.Value);
+
+                var inventoryCards = _InventorySummaryService.GetInventorySummaries(new InventorySummaryFilterDto
+                {
+                    InventorySourceId = 23,
+                }, new DateTime(2018, 10, 02));
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(InventorySummaryDto), "LastUpdatedDate");
+                var jsonSerializerSettings = new JsonSerializerSettings
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(inventoryCards, jsonSerializerSettings));
+            }
         }
 
         [Test]
@@ -183,7 +206,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var daypartCodes = _InventorySummaryService.GetDaypartCodes(inventorySource.Id);
 
             var jsonResolver = new IgnorableSerializerContractResolver();
-            jsonResolver.Ignore(typeof(DaypartCodeDto), "Id");
+            jsonResolver.Ignore(typeof(DaypartCode), "Id");
             var jsonSettings = new JsonSerializerSettings()
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore,

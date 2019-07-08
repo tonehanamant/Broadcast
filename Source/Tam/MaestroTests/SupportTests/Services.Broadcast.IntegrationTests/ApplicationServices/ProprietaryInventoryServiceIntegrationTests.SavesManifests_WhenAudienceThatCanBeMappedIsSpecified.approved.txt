@@ -34,7 +34,6 @@
           "_Code": "CUS",
           "_EndTime": 28799,
           "_Friday": true,
-          "_Id": 35772,
           "_Is24Hour": false,
           "_LastEndTime": 0,
           "_LastStartTime": 0,
@@ -46,6 +45,11 @@
           "_Thursday": true,
           "_Tuesday": true,
           "_Wednesday": true
+        },
+        "DaypartCode": {
+          "Code": "EM",
+          "FullName": "Early Morning",
+          "Id": 14
         },
         "Genres": [],
         "ProgramName": null
@@ -124,7 +128,6 @@
           "_Code": "CUS",
           "_EndTime": 35999,
           "_Friday": true,
-          "_Id": 6724,
           "_Is24Hour": false,
           "_LastEndTime": 0,
           "_LastStartTime": 0,
@@ -137,6 +140,11 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
+        "DaypartCode": {
+          "Code": "DAY",
+          "FullName": "Daytime",
+          "Id": 12
+        },
         "Genres": [],
         "ProgramName": null
       },
@@ -145,7 +153,6 @@
           "_Code": "CUS",
           "_EndTime": 25199,
           "_Friday": false,
-          "_Id": 6448,
           "_Is24Hour": false,
           "_LastEndTime": 0,
           "_LastStartTime": 0,
@@ -157,6 +164,11 @@
           "_Thursday": false,
           "_Tuesday": false,
           "_Wednesday": false
+        },
+        "DaypartCode": {
+          "Code": "EM",
+          "FullName": "Early Morning",
+          "Id": 14
         },
         "Genres": [],
         "ProgramName": null

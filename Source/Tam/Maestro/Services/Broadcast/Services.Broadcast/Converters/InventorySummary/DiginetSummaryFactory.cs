@@ -34,11 +34,11 @@ namespace Services.Broadcast.Converters.InventorySummary
             var allInventorySourceManifestWeeks = InventoryRepository.GetStationInventoryManifestWeeksForInventorySource(inventorySource.Id);
             var quartersForInventoryAvailable = GetQuartersForInventoryAvailable(allInventorySourceManifestWeeks);
             var inventorySummaryManifestFiles = GetInventorySummaryManifestFiles(inventorySummaryManifests);
-            var stationInventoryManifest = InventoryRepository.GetStationInventoryManifestsByIds(inventorySummaryManifests.Select(x => x.ManifestId));
+            var stationInventoryManifests = InventoryRepository.GetStationInventoryManifestsByIds(inventorySummaryManifests.Select(x => x.ManifestId));
             
-            RemoveWeeksNotInQuarter(stationInventoryManifest, quarterDetail);
+            RemoveWeeksNotInQuarter(stationInventoryManifests, quarterDetail);
 
-            _CalculateHouseHoldImpressionsAndCPM(stationInventoryManifest, householdAudienceId, out var hhImpressions, out var CPM);
+            _CalculateCPM(stationInventoryManifests, householdAudienceId, out var CPM);
 
             var inventoryGaps = InventoryGapCalculationEngine.GetInventoryGaps(allInventorySourceManifestWeeks, quartersForInventoryAvailable, quarterDetail);
 
@@ -48,7 +48,7 @@ namespace Services.Broadcast.Converters.InventorySummary
                 InventorySourceName = inventorySource.Name,
                 HasRatesAvailableForQuarter = inventorySummaryManifests.Any(),
                 Quarter = quarterDetail,
-                TotalDaypartCodes = inventorySummaryManifests.GroupBy(x => x.DaypartCode).Count(),
+                TotalDaypartCodes = inventorySummaryManifests.SelectMany(x => x.DaypartCodes).Distinct().Count(),
                 LastUpdatedDate = GetLastJobCompletedDate(inventorySummaryManifestFiles),
                 IsUpdating = GetIsInventoryUpdating(inventorySummaryManifestFiles),
                 RatesAvailableFromQuarter = quartersForInventoryAvailable.Item1,
@@ -56,26 +56,24 @@ namespace Services.Broadcast.Converters.InventorySummary
                 InventoryGaps = inventoryGaps,
                 HasInventoryGaps = inventoryGaps.Any(),
                 CPM = CPM,
-                Details = _GetDetails(inventorySummaryManifests, stationInventoryManifest, householdAudienceId, inventorySummaryManifestFiles)
+                Details = _GetDetails(inventorySummaryManifests, stationInventoryManifests, householdAudienceId)
             };
         }
 
-        private List<DiginetInventorySummaryDto.Detail> _GetDetails(List<InventorySummaryManifestDto> allSummaryManifests, List<StationInventoryManifest> stationInventoryManifest, int householdAudienceId, List<InventorySummaryManifestFileDto> inventorySummaryManifestFiles)
+        private List<DiginetInventorySummaryDto.Detail> _GetDetails(List<InventorySummaryManifestDto> allSummaryManifests, List<StationInventoryManifest> stationInventoryManifests, int householdAudienceId)
         {
             var result = new List<DiginetInventorySummaryDto.Detail>();
-            var allFilesGroupedByDaypart = inventorySummaryManifestFiles.GroupBy(x => x.DaypartCode);
+            var allDaypartCodes = allSummaryManifests.SelectMany(x => x.DaypartCodes).Distinct();
 
-            foreach (var fileGrouping in allFilesGroupedByDaypart)
+            foreach (var daypartCode in allDaypartCodes)
             {
-                var files = fileGrouping.ToList();
-                var fileIds = files.Select(m => m.FileId);
-                var manifests = stationInventoryManifest.Where(x => fileIds.Contains(x.InventoryFileId.Value));
+                var manifests = stationInventoryManifests.Where(x => x.ManifestDayparts.Any(d => d.DaypartCode.Code == daypartCode));
 
-                _CalculateHouseHoldImpressionsAndCPM(manifests, householdAudienceId, out var householdImpressions, out var cpm);
+                _CalculateHouseHoldImpressionsAndCPMUsingDaypartCodePortion(manifests, householdAudienceId, daypartCode, out var householdImpressions, out var cpm);
 
                 result.Add(new DiginetInventorySummaryDto.Detail
                 {
-                    Daypart = fileGrouping.Key,
+                    Daypart = daypartCode,
                     HouseholdImpressions = householdImpressions,
                     CPM = cpm,
                 });
@@ -84,9 +82,10 @@ namespace Services.Broadcast.Converters.InventorySummary
             return result;
         }
 
-        private void _CalculateHouseHoldImpressionsAndCPM(
+        private void _CalculateHouseHoldImpressionsAndCPMUsingDaypartCodePortion(
             IEnumerable<StationInventoryManifest> manifests,
             int householdAudienceId,
+            string daypartCode,
             out double? impressionsResult,
             out decimal? cpmResult)
         {
@@ -106,11 +105,43 @@ namespace Services.Broadcast.Converters.InventorySummary
                 var hhImpressions = manifest.ManifestAudiencesReferences.Single(x => x.Audience.Id == householdAudienceId).Impressions.Value;
                 var spotCost = manifest.ManifestRates.First(r => r.SpotLengthId == manifest.SpotLengthId).SpotCost;
 
-                impressionsTotal += hhImpressions;
-                spotCostTotal += spotCost;
+                var manifestDayparts = manifest.ManifestDayparts.ToList();
+                var totalHours = manifestDayparts.Sum(x => x.Daypart.TotalHours);
+                var totalHoursForDaypartCode = manifestDayparts.Where(x => x.DaypartCode.Code == daypartCode).Sum(x => x.Daypart.TotalHours);
+                var portion = totalHoursForDaypartCode / totalHours;
+
+                impressionsTotal += hhImpressions * portion;
+                spotCostTotal += spotCost * (decimal)portion;
             }
 
             impressionsResult = impressionsTotal;
+            cpmResult = ProposalMath.CalculateCpm(spotCostTotal, impressionsTotal);
+        }
+
+        private void _CalculateCPM(
+            IEnumerable<StationInventoryManifest> manifests,
+            int householdAudienceId,
+            out decimal? cpmResult)
+        {
+            cpmResult = null;
+
+            manifests = manifests.Where(x => _ManifestHasProvidedHHImpressionsAndSpotCost(x, householdAudienceId));
+
+            if (!manifests.Any())
+                return;
+
+            double impressionsTotal = 0;
+            decimal spotCostTotal = 0;
+
+            foreach (var manifest in manifests)
+            {
+                var hhImpressions = manifest.ManifestAudiencesReferences.Single(x => x.Audience.Id == householdAudienceId).Impressions.Value;
+                var spotCost = manifest.ManifestRates.First(r => r.SpotLengthId == manifest.SpotLengthId).SpotCost;
+
+                impressionsTotal += hhImpressions;
+                spotCostTotal += spotCost;
+            }
+            
             cpmResult = ProposalMath.CalculateCpm(spotCostTotal, impressionsTotal);
         }
 

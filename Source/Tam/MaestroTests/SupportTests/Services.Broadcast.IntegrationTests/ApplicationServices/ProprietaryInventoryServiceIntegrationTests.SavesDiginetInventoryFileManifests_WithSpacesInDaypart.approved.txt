@@ -34,7 +34,6 @@
           "_Code": "CUS",
           "_EndTime": 32399,
           "_Friday": true,
-          "_Id": 7059,
           "_Is24Hour": false,
           "_LastEndTime": 0,
           "_LastStartTime": 0,
@@ -46,6 +45,11 @@
           "_Thursday": true,
           "_Tuesday": true,
           "_Wednesday": true
+        },
+        "DaypartCode": {
+          "Code": "EM",
+          "FullName": "Early Morning",
+          "Id": 14
         },
         "Genres": [],
         "ProgramName": null

@@ -11,7 +11,5 @@ namespace Services.Broadcast.Entities.InventorySummary
         public int? ShareProjectionBookId { get; set; }
         public InventoryFileRatingsProcessingStatus? JobStatus { get; set; }
         public DateTime CreatedDate { get; set; }
-        public int? DaypartId { get; set; }
-        public string DaypartCode { get; set; }
     }
 }

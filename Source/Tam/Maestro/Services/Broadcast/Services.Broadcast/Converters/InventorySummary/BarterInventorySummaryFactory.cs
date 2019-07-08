@@ -39,7 +39,11 @@ namespace Services.Broadcast.Converters.InventorySummary
             var allInventorySourceManifestWeeks = InventoryRepository.GetStationInventoryManifestWeeksForInventorySource(inventorySource.Id);
             var quartersForInventoryAvailable = GetQuartersForInventoryAvailable(allInventorySourceManifestWeeks);
             var inventorySummaryManifestFiles = GetInventorySummaryManifestFiles(inventorySummaryManifests);
-            var totalDaypartsCodes = inventorySummaryManifests.GroupBy(x => x.DaypartCode).Count();
+
+            // For Barter source, there is always only 1 daypart code for 1 manifest. 
+            // The collection is needed because we use a common model InventorySummaryManifestDto for all the sources 
+            // and Diginet can have several daypart codes
+            var totalDaypartsCodes = inventorySummaryManifests.GroupBy(x => x.DaypartCodes.Single()).Count();
             var manifests = InventoryRepository.GetStationInventoryManifestsByIds(inventorySummaryManifests.Select(x => x.ManifestId));
 
             GetLatestInventoryPostingBook(inventorySummaryManifestFiles, out var shareBook, out var hutBook);
@@ -82,7 +86,11 @@ namespace Services.Broadcast.Converters.InventorySummary
         private List<BarterInventorySummaryDto.Detail> _GetDetails(List<InventorySummaryManifestDto> allSummaryManifests, List<StationInventoryManifest> allManifests, int householdAudienceId)
         {
             var result = new List<BarterInventorySummaryDto.Detail>();
-            var allManifestsGroupedByDaypart = allSummaryManifests.GroupBy(x => x.DaypartCode);
+
+            // For Barter source, there is always only 1 daypart code for 1 manifest. 
+            // The collection is needed because we use a common model InventorySummaryManifestDto for all the sources 
+            // and Diginet can have several daypart codes
+            var allManifestsGroupedByDaypart = allSummaryManifests.GroupBy(x => x.DaypartCodes.Single());
 
             foreach (var manifestsGrouping in allManifestsGroupedByDaypart)
             {

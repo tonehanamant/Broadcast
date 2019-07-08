@@ -19,6 +19,7 @@ using System.IO.Compression;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
+using Tam.Maestro.Services.ContractInterfaces.Common;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
@@ -579,6 +580,14 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        public void SavesDiginetInventoryFileManifests_WithDaypartCodes()
+        {
+            const string fileName = @"ProprietaryDataFiles\Diginet_WithDaypartCodes.xlsx";
+            _VerifyFileInventoryManifests(fileName);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
         public void SavesDiginetInventoryFileManifests_WithSpacesInAudience()
         {
             const string fileName = @"ProprietaryDataFiles\Diginet_ValidFile3.xlsx";
@@ -835,6 +844,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             jsonResolver.Ignore(typeof(StationInventoryManifestRate), "Id");
             jsonResolver.Ignore(typeof(MediaWeek), "_Id");
             jsonResolver.Ignore(typeof(DisplayBroadcastStation), "Id");
+            jsonResolver.Ignore(typeof(DisplayDaypart), "_Id");
             var jsonSettings = new JsonSerializerSettings()
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
