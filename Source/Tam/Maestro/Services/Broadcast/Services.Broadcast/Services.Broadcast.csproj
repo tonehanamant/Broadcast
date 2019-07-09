@@ -227,6 +227,8 @@
     <Compile Include="Aggregates\SchedulesAggregate.cs" />
     <Compile Include="ApplicationServices\DaypartCodeService.cs" />
     <Compile Include="BusinessEngines\InventorySummaryRatesGapEngine.cs" />
+    <Compile Include="Cache\BaseMemoryCache.cs" />
+    <Compile Include="Cache\InventorySummaryCache.cs" />
     <Compile Include="Cache\MarketCoverageCache.cs" />
     <Compile Include="Converters\InventorySummary\DiginetSummaryFactory.cs" />
     <Compile Include="Converters\InventorySummary\ProprietaryOAndOSummaryFactory.cs" />

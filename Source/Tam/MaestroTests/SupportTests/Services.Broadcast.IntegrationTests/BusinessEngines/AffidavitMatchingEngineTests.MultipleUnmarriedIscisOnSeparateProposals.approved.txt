@@ -1,3 +1,0 @@
-﻿[
-  "Unmarried Isci ABC123 exists on multiple proposals"
-]

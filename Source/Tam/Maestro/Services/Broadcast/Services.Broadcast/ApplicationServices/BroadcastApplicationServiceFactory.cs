@@ -70,6 +70,7 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<ISigmaConverter, SigmaConverter>();
             unityContainer.RegisterType<IDefaultScheduleConverter, DefaultScheduleConverter>();
             unityContainer.RegisterType<IAssemblyScheduleConverter, AssemblyScheduleConverter>();
+            unityContainer.RegisterType<IInventorySummaryCache, InventorySummaryCache>(new ContainerControlledLifetimeManager()); // singleton
             unityContainer.RegisterType<IBroadcastAudiencesCache, BroadcastAudiencesCache>();
             unityContainer.RegisterType<IMarketCoverageCache, MarketCoverageCache>();
             unityContainer.RegisterType<IInventoryService, InventoryService>();

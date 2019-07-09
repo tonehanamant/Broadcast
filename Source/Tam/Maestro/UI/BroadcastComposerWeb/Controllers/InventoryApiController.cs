@@ -14,7 +14,8 @@ using Services.Broadcast.Exceptions;
 using Services.Broadcast.Entities.Scx;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using System.Linq;
-using System.IO;
+using Microsoft.Practices.Unity;
+using Services.Broadcast.Cache;
 
 namespace BroadcastComposerWeb.Controllers
 {
@@ -99,7 +100,13 @@ namespace BroadcastComposerWeb.Controllers
         [Route("Summaries")]
         public BaseResponse<List<InventorySummaryDto>> GetInventorySummaries(InventorySummaryFilterDto inventorySourceCardFilter)
         {
-            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IInventorySummaryService>().GetInventorySummaries(inventorySourceCardFilter, DateTime.Now));
+            var cache = BroadcastApplicationServiceFactory.Instance.Resolve<IInventorySummaryCache>();
+            var service = _ApplicationServiceFactory.GetApplicationService<IInventorySummaryService>();
+            var result = cache.GetOrCreate(
+                inventorySourceCardFilter,
+                () => service.GetInventorySummaries(inventorySourceCardFilter, DateTime.Now));
+
+            return _ConvertToBaseResponse(() => result);
         }
 
         /// <summary>

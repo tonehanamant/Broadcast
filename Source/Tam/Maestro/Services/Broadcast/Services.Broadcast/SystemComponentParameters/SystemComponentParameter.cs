@@ -527,6 +527,12 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.InventoryRatingsParallelJobs); }
         }
 	 
+		public static int InventorySummaryCacheAbsoluteExpirationSeconds  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<int>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.InventorySummaryCacheAbsoluteExpirationSeconds); }
+        }
+	 
 		public static string InventoryUploadErrorsFolder  
 		{
             get { return SystemComponentHelper.GetPropertyValue<string>
@@ -1292,30 +1298,6 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 					(PostLogServiceSystemParameterNames.ComponentID , PostLogServiceSystemParameterNames.DailyReportRecipients); }
         }
 	 
-		public static int DatabricksJobId  
-		{
-            get { return SystemComponentHelper.GetPropertyValue<int>
-					(PostLogServiceSystemParameterNames.ComponentID , PostLogServiceSystemParameterNames.DatabricksJobId); }
-        }
-	 
-		public static int DatabricksJobStatusCheckInterval  
-		{
-            get { return SystemComponentHelper.GetPropertyValue<int>
-					(PostLogServiceSystemParameterNames.ComponentID , PostLogServiceSystemParameterNames.DatabricksJobStatusCheckInterval); }
-        }
-	 
-		public static string DatabricksToken  
-		{
-            get { return SystemComponentHelper.GetPropertyValue<string>
-					(PostLogServiceSystemParameterNames.ComponentID , PostLogServiceSystemParameterNames.DatabricksToken); }
-        }
-	 
-		public static string DatabricksURL  
-		{
-            get { return SystemComponentHelper.GetPropertyValue<string>
-					(PostLogServiceSystemParameterNames.ComponentID , PostLogServiceSystemParameterNames.DatabricksURL); }
-        }
-	 
 		public static int DeliveryCalculationsAlarmThresholdSeconds  
 		{
             get { return SystemComponentHelper.GetPropertyValue<int>
@@ -1880,6 +1862,12 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 					(ProposalsServiceSystemParameterNames.ComponentID , ProposalsServiceSystemParameterNames.ProposalWeeklyImpressionStartHour); }
         }
 	 
+		public static bool ReportingTabFeatureToggle  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<bool>
+					(ProposalsServiceSystemParameterNames.ComponentID , ProposalsServiceSystemParameterNames.ReportingTabFeatureToggle); }
+        }
+	 
 		public static string rootOperationsDirectory  
 		{
             get { return SystemComponentHelper.GetPropertyValue<string>
@@ -1976,10 +1964,10 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 	 
 	public static class ReportGenerationSystemParameter 
 	{ 
-		public static bool UseWebEXCELReportGeneration  
+		public static bool UseWebExcelReportGeneration  
 		{
             get { return SystemComponentHelper.GetPropertyValue<bool>
-					(ReportGenerationSystemParameterNames.ComponentID , ReportGenerationSystemParameterNames.UseWebEXCELReportGeneration); }
+					(ReportGenerationSystemParameterNames.ComponentID , ReportGenerationSystemParameterNames.UseWebExcelReportGeneration); }
         }
 	 
 		public static bool UseWebForInnovarXmlGeneration  
@@ -2090,6 +2078,12 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 	 
 	public static class SalesApiSystemParameter 
 	{ 
+		public static string HealthCheckApiEmailAddresses  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(SalesApiSystemParameterNames.ComponentID , SalesApiSystemParameterNames.HealthCheckApiEmailAddresses); }
+        }
+	 
 		public static int HealthCheckServicesTimeout  
 		{
             get { return SystemComponentHelper.GetPropertyValue<int>
@@ -2256,6 +2250,12 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 		{
             get { return SystemComponentHelper.GetPropertyValue<string>
 					(TrafficComposerWebSystemParameterNames.ComponentID , TrafficComposerWebSystemParameterNames.DeliveryInsightUrl); }
+        }
+	 
+		public static bool EnablePilotTesting  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<bool>
+					(TrafficComposerWebSystemParameterNames.ComponentID , TrafficComposerWebSystemParameterNames.EnablePilotTesting); }
         }
 	 
 		public static string IndexRecommendModelApiResource  

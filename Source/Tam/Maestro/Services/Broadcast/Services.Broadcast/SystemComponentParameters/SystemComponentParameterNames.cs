@@ -477,6 +477,11 @@ namespace Tam.Maestro.Common.SystemComponentParameter
             get { return "InventoryRatingsParallelJobs"; }
         }
 	 
+		public static string InventorySummaryCacheAbsoluteExpirationSeconds  
+		{
+            get { return "InventorySummaryCacheAbsoluteExpirationSeconds"; }
+        }
+	 
 		public static string InventoryUploadErrorsFolder  
 		{
             get { return "InventoryUploadErrorsFolder"; }
@@ -1186,26 +1191,6 @@ namespace Tam.Maestro.Common.SystemComponentParameter
             get { return "DailyReportRecipients"; }
         }
 	 
-		public static string DatabricksJobId  
-		{
-            get { return "DatabricksJobId"; }
-        }
-	 
-		public static string DatabricksJobStatusCheckInterval  
-		{
-            get { return "DatabricksJobStatusCheckInterval"; }
-        }
-	 
-		public static string DatabricksToken  
-		{
-            get { return "DatabricksToken"; }
-        }
-	 
-		public static string DatabricksURL  
-		{
-            get { return "DatabricksURL"; }
-        }
-	 
 		public static string DeliveryCalculationsAlarmThresholdSeconds  
 		{
             get { return "DeliveryCalculationsAlarmThresholdSeconds"; }
@@ -1687,6 +1672,11 @@ namespace Tam.Maestro.Common.SystemComponentParameter
             get { return "ProposalWeeklyImpressionStartHour"; }
         }
 	 
+		public static string ReportingTabFeatureToggle  
+		{
+            get { return "ReportingTabFeatureToggle"; }
+        }
+	 
 		public static string rootOperationsDirectory  
 		{
             get { return "rootOperationsDirectory"; }
@@ -1789,9 +1779,9 @@ namespace Tam.Maestro.Common.SystemComponentParameter
             get { return "ReportGeneration" ; }
         }
 	  
-		public static string UseWebEXCELReportGeneration  
+		public static string UseWebExcelReportGeneration  
 		{
-            get { return "UseWebEXCELReportGeneration"; }
+            get { return "UseWebExcelReportGeneration"; }
         }
 	 
 		public static string UseWebForInnovarXmlGeneration  
@@ -1895,6 +1885,11 @@ namespace Tam.Maestro.Common.SystemComponentParameter
             get { return "SalesApi" ; }
         }
 	  
+		public static string HealthCheckApiEmailAddresses  
+		{
+            get { return "HealthCheckApiEmailAddresses"; }
+        }
+	 
 		public static string HealthCheckServicesTimeout  
 		{
             get { return "HealthCheckServicesTimeout"; }
@@ -2055,6 +2050,11 @@ namespace Tam.Maestro.Common.SystemComponentParameter
 		public static string DeliveryInsightUrl  
 		{
             get { return "DeliveryInsightUrl"; }
+        }
+	 
+		public static string EnablePilotTesting  
+		{
+            get { return "EnablePilotTesting"; }
         }
 	 
 		public static string IndexRecommendModelApiResource  
