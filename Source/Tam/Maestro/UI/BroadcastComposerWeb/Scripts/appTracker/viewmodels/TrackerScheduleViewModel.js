@@ -98,6 +98,15 @@ var TrackerScheduleViewModel = function (controller) {
         if (values && values.length) {
             scheduleValidator.element("#schedule_input_demos");
         }
+        $scope.Demos.sort(function (a, b) {
+            if (a.Display > b.Display) {
+                return 1;
+            }
+            if (a.Display < b.Display) {
+                return -1;
+            }
+            return 0;
+        });;
     });
 
     //storedObservables - upload only

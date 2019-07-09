@@ -124,7 +124,18 @@
                                 <div class="form-group">
                                     <label for="schedule_input_demos">Demos</label>
                                     <div>
-                                        <select multiple="multiple" style="width:100%;" class="form-control" id="schedule_input_demos" name="schedule_input_demos" data-bind="options: $root.Demos, optionsValue: 'Id', optionsText: 'Display', selectedOptions: DemoInputs, select2: true"></select>
+                                        <select 
+                                                multiple="multiple" 
+                                                style="width:100%;" 
+                                                class="form-control" 
+                                                id="schedule_input_demos" 
+                                                name="schedule_input_demos" 
+                                                data-bind="options: $root.Demos, 
+                                                           optionsValue: 'Id', 
+                                                           optionsText: 'Display', 
+                                                           selectedOptions: DemoInputs, 
+                                                           select2: true"
+                                                ></select>
                                     </div>
                                 </div>
                             </div>
