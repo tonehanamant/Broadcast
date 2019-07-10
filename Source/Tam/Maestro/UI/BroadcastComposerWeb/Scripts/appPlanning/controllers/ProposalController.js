@@ -111,20 +111,6 @@ var ProposalController = BaseController.extend({
             });
     },
 
-    apiGetGenres: function (callback) {
-        var url = baseUrl + "api/RatesManager/Genres";
-
-        httpService.get(url,
-            callback.bind(this),
-            null,
-            {
-                $ViewElement: $('#criteria_builder_view'),
-                ErrorMessage: 'Get Genres Data Error',
-                TitleErrorMessage: 'Get Genres',
-                StatusMessage: 'Get Genres'
-            });
-    },
-
     apiGetPrograms: function (proposal, callback, errorCallback) {
         var jsonObj = JSON.stringify(proposal);
         var url = baseUrl + 'api/Proposals/GetStationProgramsByCriteria';

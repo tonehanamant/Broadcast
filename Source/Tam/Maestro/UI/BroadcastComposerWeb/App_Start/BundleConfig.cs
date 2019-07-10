@@ -96,30 +96,7 @@ namespace BroadcastComposerWeb
                 "~/Scripts/appTracker/TrackerUploadManager.js"
                 );
 
-            var rateBundle = new ScriptBundle("~/bundles/rate").Include(
-                /* Config */
-                "~/Scripts/appRate/config/RateConfig.js",
 
-                /* Controllers */
-                "~/Scripts/appRate/controllers/RateMainController.js",
-                "~/Scripts/appRate/controllers/RateStationController.js",
-
-                /* View Models */
-                "~/Scripts/appRate/viewmodels/RateStationViewModel.js",
-                "~/Scripts/appRate/viewmodels/ImportThirdPartyViewModel.js",
-
-                /* Views */
-                "~/Scripts/appRate/views/RateMainView.js",
-                "~/Scripts/appRate/views/RateStationView.js",
-
-                /* Hybrid */
-                "~/Scripts/appRate/RateUploadManager.js",
-                "~/Scripts/appRate/StationModalEditRate.js",
-                "~/Scripts/appRate/StationModalEditRateThirdparty.js",
-                "~/Scripts/appRate/StationModalEndFlight.js",
-                "~/Scripts/appRate/StationModalNewRate.js"
-
-                );
 
             /* See revise directory - revisions for React intgration */
             var planningBundle = new ScriptBundle("~/bundles/planning").Include(
@@ -236,7 +213,6 @@ namespace BroadcastComposerWeb
             bundles.Add(librariesBundle);
             bundles.Add(appBundle);
             bundles.Add(trackerBundle);
-            bundles.Add(rateBundle);
             bundles.Add(planningBundle);
             bundles.Add(trackerScrubBundle);
             bundles.Add(postingBundle);
