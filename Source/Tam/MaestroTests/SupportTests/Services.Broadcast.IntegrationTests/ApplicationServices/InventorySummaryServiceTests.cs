@@ -80,6 +80,41 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        public void SavesDiginetInventoryFileManifests_WithDaypartCodes_WithoutFullHours()
+        {
+            const string fileName = @"ProprietaryDataFiles\Diginet_WithDaypartCodes_WithoutFullHours.xlsx";
+
+            using (new TransactionScopeWrapper())
+            {
+                var request = new InventoryFileSaveRequest
+                {
+                    StreamData = new FileStream($@".\Files\{fileName}", FileMode.Open, FileAccess.Read),
+                    FileName = fileName
+                };
+
+                var result = _ProprietaryService.SaveProprietaryInventoryFile(request, "IntegrationTestUser", new DateTime(2018, 10, 02));
+                var job = _InventoryFileRatingsJobsRepository.GetLatestJob();
+                _InventoryRatingsProcessingService.ProcessInventoryRatingsJob(job.id.Value);
+
+                var inventoryCards = _InventorySummaryService.GetInventorySummaries(new InventorySummaryFilterDto
+                {
+                    InventorySourceId = 23,
+                }, new DateTime(2018, 10, 02));
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(InventorySummaryDto), "LastUpdatedDate");
+                var jsonSerializerSettings = new JsonSerializerSettings
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(inventoryCards, jsonSerializerSettings));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
         public void GetInventorySummaries_Diginet()
         {
             const string fileName = @"ProprietaryDataFiles\Diginet_WithDaypartCodes.xlsx";

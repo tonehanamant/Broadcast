@@ -3,6 +3,7 @@ using Services.Broadcast.Cache;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.InventorySummary;
 using Services.Broadcast.Entities.StationInventory;
+using Services.Broadcast.Extensions;
 using Services.Broadcast.Repositories;
 using System.Collections.Generic;
 using System.Linq;
@@ -106,9 +107,13 @@ namespace Services.Broadcast.Converters.InventorySummary
                 var spotCost = manifest.ManifestRates.First(r => r.SpotLengthId == manifest.SpotLengthId).SpotCost;
 
                 var manifestDayparts = manifest.ManifestDayparts.ToList();
-                var totalHours = manifestDayparts.Sum(x => x.Daypart.TotalHours);
-                var totalHoursForDaypartCode = manifestDayparts.Where(x => x.DaypartCode.Code == daypartCode).Sum(x => x.Daypart.TotalHours);
-                var portion = totalHoursForDaypartCode / totalHours;
+                var totalTimeDuration = manifestDayparts.Sum(x => x.Daypart.GetTotalTimeDuration());
+                var totalTimeDurationForDaypartCode = manifestDayparts.Where(x => x.DaypartCode.Code == daypartCode).Sum(x => x.Daypart.GetTotalTimeDuration());
+
+                if (totalTimeDuration == 0 || totalTimeDurationForDaypartCode == 0)
+                    continue;
+
+                var portion = (double)totalTimeDurationForDaypartCode / totalTimeDuration;
 
                 impressionsTotal += hhImpressions * portion;
                 spotCostTotal += spotCost * (decimal)portion;

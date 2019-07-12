@@ -276,6 +276,7 @@
     <Compile Include="Entities\Scx\InventoryScxDownloadRequest.cs" />
     <Compile Include="Entities\StationInventory\StationInventoryManifestWeekHistory.cs" />
     <Compile Include="Extensions\AudienceExtensions.cs" />
+    <Compile Include="Extensions\DisplayDaypartExtensions.cs" />
     <Compile Include="Extensions\FileStreamExtensions.cs" />
     <Compile Include="Helpers\DataLakeSystemParameters.cs" />
     <Compile Include="BusinessEngines\InventoryDaypartParsing\DaypartParserBase.cs" />
