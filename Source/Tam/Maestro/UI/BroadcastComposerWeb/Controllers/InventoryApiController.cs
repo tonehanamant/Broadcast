@@ -102,11 +102,9 @@ namespace BroadcastComposerWeb.Controllers
         {
             var cache = BroadcastApplicationServiceFactory.Instance.Resolve<IInventorySummaryCache>();
             var service = _ApplicationServiceFactory.GetApplicationService<IInventorySummaryService>();
-            var result = cache.GetOrCreate(
-                inventorySourceCardFilter,
-                () => service.GetInventorySummaries(inventorySourceCardFilter, DateTime.Now));
+            List<InventorySummaryDto> getSummaryFunc() => service.GetInventorySummaries(inventorySourceCardFilter, DateTime.Now);
 
-            return _ConvertToBaseResponse(() => result);
+            return _ConvertToBaseResponse(() => cache.GetOrCreate(inventorySourceCardFilter, getSummaryFunc));
         }
 
         /// <summary>

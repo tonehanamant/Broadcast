@@ -5,6 +5,7 @@ using Services.Broadcast.Entities.InventorySummary;
 using Services.Broadcast.Entities.StationInventory;
 using Services.Broadcast.Extensions;
 using Services.Broadcast.Repositories;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -111,7 +112,7 @@ namespace Services.Broadcast.Converters.InventorySummary
                 var totalTimeDurationForDaypartCode = manifestDayparts.Where(x => x.DaypartCode.Code == daypartCode).Sum(x => x.Daypart.GetTotalTimeDuration());
 
                 if (totalTimeDuration == 0 || totalTimeDurationForDaypartCode == 0)
-                    continue;
+                    throw new Exception("Invalid daypart with zero time found");
 
                 var portion = (double)totalTimeDurationForDaypartCode / totalTimeDuration;
 
