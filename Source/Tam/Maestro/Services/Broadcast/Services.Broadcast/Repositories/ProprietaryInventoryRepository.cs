@@ -11,6 +11,7 @@ using Services.Broadcast.Entities;
 using Common.Services.Extensions;
 using ConfigurationService.Client;
 using static Services.Broadcast.Entities.Enums.ProposalEnums;
+using System.Data.Entity;
 
 namespace Services.Broadcast.Repositories
 {
@@ -23,6 +24,13 @@ namespace Services.Broadcast.Repositories
         void SaveProprietaryInventoryFile(ProprietaryInventoryFile proprietaryFile);
 
         ProprietaryInventoryFile GetInventoryFileWithHeaderById(int fileId);
+
+        /// <summary>
+        /// Gets the header information for an inventory file id
+        /// </summary>
+        /// <param name="inventoryFileId">Inventory file id to get the data for</param>
+        /// <returns>ProprietaryInventoryHeader object containing the header data</returns>
+        ProprietaryInventoryHeader GetInventoryFileHeader(int inventoryFileId);
     }
 
     public class ProprietaryInventoryRepository : BroadcastRepositoryBase, IProprietaryRepository
@@ -87,6 +95,54 @@ namespace Services.Broadcast.Repositories
 
                 return result;
             });
+        }
+
+        /// <summary>
+        /// Gets the header information for an inventory file id
+        /// </summary>
+        /// <param name="inventoryFileId">Inventory file id to get the data for</param>
+        /// <returns>ProprietaryInventoryHeader object containing the header data</returns>
+        public ProprietaryInventoryHeader GetInventoryFileHeader(int inventoryFileId)
+        {
+            return _InReadUncommitedTransaction(
+                context =>
+                {
+                    var queryResult = context.inventory_file_proprietary_header
+                        .Include(x => x.audience)
+                        .Where(x => x.inventory_file_id == inventoryFileId)
+                        .Single();
+
+                    var audience = queryResult.audience;
+                    var header = new ProprietaryInventoryHeader
+                    {
+                        ContractedDaypartId = queryResult.contracted_daypart_id,
+                        Cpm = queryResult.cpm,
+                        DaypartCode = queryResult.daypart_codes.code,
+                        EffectiveDate = queryResult.effective_date,
+                        EndDate = queryResult.end_date,
+                        HutBookId = queryResult.hut_projection_book_id,
+                        PlaybackType = (ProposalPlaybackType)queryResult.playback_type,
+                        ShareBookId = queryResult.share_projection_book_id,
+                        NtiToNsiIncrease = queryResult.nti_to_nsi_increase
+                    };
+
+                    if (audience != null)
+                    {
+                        header.Audience = new BroadcastAudience
+                        {
+                            Id = audience.id,
+                            CategoryCode = (EBroadcastAudienceCategoryCode)audience.category_code,
+                            SubCategoryCode = audience.sub_category_code,
+                            RangeStart = audience.range_start,
+                            RangeEnd = audience.range_end,
+                            Custom = audience.custom,
+                            Code = audience.code,
+                            Name = audience.name
+                        };
+                    }
+
+                    return header;
+                });
         }
 
         /// <summary>

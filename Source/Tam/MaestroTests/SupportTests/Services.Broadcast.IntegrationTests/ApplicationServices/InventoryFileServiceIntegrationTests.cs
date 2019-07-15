@@ -50,6 +50,34 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        public void InventoryFileLoad_OpenMarket_NegativeDemoValue()
+        {
+            const string fileName = "Open Market negative demo value.xml";
+
+            using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
+            {
+                var request = new InventoryFileSaveRequest
+                {
+                    StreamData = new FileStream($@".\Files\ImportingRateData\{fileName}", FileMode.Open, FileAccess.Read),
+                    FileName = fileName
+                };
+
+                var result = _InventoryService.SaveInventoryFile(request, "IntegrationTestUser", new DateTime(2016, 09, 26));
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(InventoryFileSaveResult), "FileId");
+                var jsonSettings = new JsonSerializerSettings
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
         public void InventoryFileLoad_OpenMarket()
         {
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
@@ -429,6 +457,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void LoadInventoryFileWithOverlapingFlightWeeks()
         {
+            var service = IntegrationTestApplicationServiceFactory.GetApplicationService<IInventoryService>();
+
             using (new TransactionScopeWrapper())
             {
                 string filename = @".\Files\station_program_overlapping_flights_wvtm.xml";
@@ -442,7 +472,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     ContractResolver = jsonResolver
                 };
 
-                var result = _InventoryService.SaveInventoryFile(request, "IntegrationTestUser", new DateTime(2016, 09, 26));
+                var result = service.SaveInventoryFile(request, "IntegrationTestUser", new DateTime(2016, 09, 26));
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
             }

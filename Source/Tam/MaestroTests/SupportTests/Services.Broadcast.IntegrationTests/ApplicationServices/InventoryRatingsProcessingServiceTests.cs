@@ -20,6 +20,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
     public class InventoryRatingsProcessingServiceTests
     {
         private IProprietaryInventoryService _ProprietaryService;
+        private IInventoryService _InventoryService;
         private IInventoryRepository _IInventoryRepository;
         private IInventoryRatingsProcessingService _InventoryRatingsProcessingService;
         private IInventoryFileRatingsJobsRepository _InventoryFileRatingsJobsRepository;
@@ -31,6 +32,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 IntegrationTestApplicationServiceFactory.Instance.RegisterType<IFileService, FileServiceDataLakeStubb>();
                 _ProprietaryService = IntegrationTestApplicationServiceFactory.GetApplicationService<IProprietaryInventoryService>();
+                _InventoryService = IntegrationTestApplicationServiceFactory.GetApplicationService<IInventoryService>();
                 _IInventoryRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
                 _InventoryRatingsProcessingService = IntegrationTestApplicationServiceFactory.GetApplicationService<IInventoryRatingsProcessingService>();
                 _InventoryFileRatingsJobsRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryFileRatingsJobsRepository>();
@@ -41,6 +43,29 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 throw;
             }
 
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void ProcessInventoryRatingsAfterOpenMarketFileLoad()
+        {
+            const string fileName = @"ImportingRateData\Open Market projected imps.xml";
+
+            using (new TransactionScopeWrapper())
+            {
+                var request = new InventoryFileSaveRequest
+                {
+                    StreamData = new FileStream($@".\Files\{fileName}", FileMode.Open, FileAccess.Read),
+                    FileName = fileName
+                };
+
+                var now = new DateTime(2019, 02, 02);
+                var result = _InventoryService.SaveInventoryFile(request, "IntegrationTestUser", now);
+                var job = _InventoryFileRatingsJobsRepository.GetLatestJob();
+                _InventoryRatingsProcessingService.ProcessInventoryRatingsJob(job.id.Value);
+
+                _VerifyFileInventoryManifests(result.FileId);
+            }
         }
 
         [Test]

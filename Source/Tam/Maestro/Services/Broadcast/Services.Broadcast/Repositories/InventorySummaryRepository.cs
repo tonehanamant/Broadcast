@@ -20,7 +20,6 @@ namespace Services.Broadcast.Repositories
         List<InventorySummaryManifestDto> GetInventorySummaryManifestsForProprietaryOAndOSources(InventorySource inventorySource, DateTime startDate, DateTime endDate);
         List<InventorySummaryManifestDto> GetInventorySummaryManifestsForSyndicationSources(InventorySource inventorySource, DateTime startDate, DateTime endDate);
         List<InventorySummaryManifestDto> GetInventorySummaryManifestsForDiginetSources(InventorySource inventorySource, DateTime startDate, DateTime endDate);
-        double? GetInventorySummaryHouseholdImpressions(List<int> manifestIds, int householdAudienceId);
         List<InventorySummaryManifestFileDto> GetInventorySummaryManifestFileDtos(List<int> inventoryFileIds);
     }
 
@@ -152,19 +151,6 @@ namespace Services.Broadcast.Repositories
                                 DaypartCodes = x.Select(d => d.DaypartCode).Distinct().ToList()
                             })
                             .ToList();
-                });
-        }
-
-        public double? GetInventorySummaryHouseholdImpressions(List<int> manifestIds, int householdAudienceId)
-        {
-            return _InReadUncommitedTransaction(
-                context =>
-                {
-                    return (from manifest in context.station_inventory_manifest
-                            from audience in manifest.station_inventory_manifest_audiences
-                            where manifestIds.Contains(manifest.id) &&
-                                  audience.audience_id == householdAudienceId
-                            select audience.impressions).Sum();
                 });
         }
 

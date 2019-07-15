@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Common.Services;
 using ConfigurationService.Client;
-using Tam.Maestro.Common;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
 using Tam.Maestro.Services.Clients;
@@ -17,9 +16,9 @@ using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Services.Broadcast.Entities.StationInventory;
 using Tam.Maestro.Data.Entities;
 using Services.Broadcast.Entities.Enums;
-using Services.Broadcast.Entities.ProprietaryInventory;
 using Services.Broadcast.Entities.InventorySummary;
 using Services.Broadcast.ApplicationServices;
+using Services.Broadcast.Entities.ProprietaryInventory;
 
 namespace Services.Broadcast.Repositories
 {
@@ -840,7 +839,6 @@ namespace Services.Broadcast.Repositories
                 });
         }
 
-
         /// <summary>
         /// Update the rates and add the audiences for all the manifests in the list
         /// </summary>
@@ -1023,21 +1021,41 @@ namespace Services.Broadcast.Repositories
 
         public List<StationInventoryManifest> GetStationInventoryManifestsByIds(IEnumerable<int> manifestIds)
         {
-            return _InReadUncommitedTransaction(
-                context =>
+            const int maxChunkSize = 1000;
+            var endIndex = manifestIds.Count() / maxChunkSize;
+            var chunks = new List<IEnumerable<int>>();
+
+            for (var i = 0; i <= endIndex; i++)
+            {
+                var manifestsNumberToSkip = maxChunkSize * i;
+                var manifestsNumberToTake = Math.Min(maxChunkSize, manifestIds.Count() - manifestsNumberToSkip);
+                var manifestsToTake = manifestIds.Skip(manifestsNumberToSkip).Take(manifestsNumberToTake);
+                chunks.Add(manifestsToTake);
+            }
+
+            var result = chunks
+                .AsParallel()
+                .SelectMany(chunk =>
                 {
-                    return context.station_inventory_manifest
-                        .Include(x => x.station_inventory_manifest_audiences)
-                        .Include(x => x.station_inventory_manifest_weeks)
-                        .Include(x => x.station_inventory_manifest_rates)
-                        .Include(x => x.station_inventory_manifest_dayparts)
-                        .Include(x => x.station_inventory_manifest_dayparts.Select(d => d.daypart_codes))
-                        .Include(x => x.station)
-                        .Where(x => manifestIds.Contains(x.id))
-                        .ToList()
-                        .Select(x => _MapToInventoryManifest(x))
-                        .ToList();
-                });
+                    return _InReadUncommitedTransaction(
+                        context =>
+                        {
+                            return context.station_inventory_manifest
+                                .Include(x => x.station_inventory_manifest_audiences)
+                                .Include(x => x.station_inventory_manifest_weeks)
+                                .Include(x => x.station_inventory_manifest_rates)
+                                .Include(x => x.station_inventory_manifest_dayparts)
+                                .Include(x => x.station_inventory_manifest_dayparts.Select(d => d.daypart_codes))
+                                .Include(x => x.station)
+                                .Where(x => chunk.Contains(x.id))
+                                .ToList()
+                                .Select(x => _MapToInventoryManifest(x))
+                                .ToList();
+                        });
+                })
+                .ToList();
+
+            return result;
         }
 
         public List<StationInventoryManifestWeek> GetStationInventoryManifestWeeksForInventorySource(int inventorySourceId)

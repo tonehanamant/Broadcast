@@ -1,0 +1,6 @@
+﻿{
+  "Status": 3,
+  "ValidationProblems": [
+    "Station: unknown; Program: unknown; Problem: Error while processing News 10 @ Noon on Television Schedule - Albany-Schenectady-Troy Feb18 Proj. (Feb17 HUT, May17 SHR) DMA Nielsen Live+SD: Demo value must be more than 0. Audience: 'House Holds', demo type: 'Impression'"
+  ]
+}

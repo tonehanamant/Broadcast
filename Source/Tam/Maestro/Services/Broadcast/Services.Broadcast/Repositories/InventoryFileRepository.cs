@@ -19,6 +19,7 @@ namespace Services.Broadcast.Repositories
         void UpdateInventoryFile(InventoryFile inventoryFile);
         void DeleteInventoryFileById(int inventoryFileId);
         void UpdateInventoryFileStatus(int fileId, FileStatusEnum status);
+        InventoryFile GetInventoryFileById(int fileId);
     }
 
     public class InventoryFileRepository : BroadcastRepositoryBase, IInventoryFileRepository
@@ -27,6 +28,35 @@ namespace Services.Broadcast.Repositories
         public InventoryFileRepository(ISMSClient pSmsClient, IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
             ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient)
             : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
+
+        public InventoryFile GetInventoryFileById(int fileId)
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                var file = context.inventory_files.Single(x => x.id == fileId, $"Could not find existing file with id={fileId}");
+
+                var result = new InventoryFile
+                {
+                    Id = file.id,
+                    FileName = file.name,
+                    FileStatus = (FileStatusEnum)file.status,
+                    Hash = file.file_hash,
+                    UniqueIdentifier = file.identifier,
+                    CreatedBy = file.created_by,
+                    CreatedDate = file.created_date,
+                    RowsProcessed = file.rows_processed,
+                    InventorySource = new InventorySource
+                    {
+                        Id = file.inventory_sources.id,
+                        InventoryType = (InventorySourceTypeEnum)file.inventory_sources.inventory_source_type,
+                        IsActive = file.inventory_sources.is_active,
+                        Name = file.inventory_sources.name
+                    }
+                };
+
+                return result;
+            });
+        }
 
         public int GetInventoryFileIdByHash(string hash)
         {

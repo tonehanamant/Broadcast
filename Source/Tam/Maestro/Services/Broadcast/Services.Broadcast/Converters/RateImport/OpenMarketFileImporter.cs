@@ -92,11 +92,13 @@ namespace Services.Broadcast.Converters.RateImport
 
                 Debug.WriteLine(message.Proposal.uniqueIdentifier + " parsed successfully !");
 
-                BuildRatesFile(message, inventoryFile);
+                var rowsProcessed = 0;
+
+                BuildRatesFile(message, inventoryFile, ref rowsProcessed);
 
                 if (!FileProblems.Any())
                 {
-                    inventoryFile.RowsProcessed = inventoryFile.InventoryManifests.Count();
+                    inventoryFile.RowsProcessed = rowsProcessed;
                 }
             }
             catch (Exception e)
@@ -105,7 +107,7 @@ namespace Services.Broadcast.Converters.RateImport
             }
         }
 
-        private void BuildRatesFile(AAAAMessage message, InventoryFile inventoryFile)
+        private void BuildRatesFile(AAAAMessage message, InventoryFile inventoryFile, ref int rowsProcessed)
         {
             var proposal = message.Proposal;
 
@@ -113,13 +115,14 @@ namespace Services.Broadcast.Converters.RateImport
             inventoryFile.StartDate = proposal.startDate;
             inventoryFile.EndDate = proposal.endDate;
 
-            _PopulateStationProgramList(message.Proposal, inventoryFile);
+            _PopulateStationProgramList(message.Proposal, inventoryFile, ref rowsProcessed);
+
             if (inventoryFile.ValidationProblems.Any()) return;
 
             inventoryFile.StationContacts = _ExtractContactData(message);
         }
 
-        private void _PopulateStationProgramList(AAAAMessageProposal proposal, InventoryFile inventoryFile)
+        private void _PopulateStationProgramList(AAAAMessageProposal proposal, InventoryFile inventoryFile, ref int rowsProcessed)
         {
             if (!IsValid(proposal.AvailList))
             {
@@ -141,7 +144,7 @@ namespace Services.Broadcast.Converters.RateImport
                     availLines.AddRange(availList.AvailLineWithPeriods.Select(_Map));
                 }
 
-                _PopulateProgramsFromAvailLineWithPeriods(proposal, availList, availLines, inventoryFile, FileProblems);
+                _PopulateProgramsFromAvailLineWithPeriods(proposal, availList, availLines, inventoryFile, FileProblems, ref rowsProcessed);
             }
         }
 
@@ -208,7 +211,8 @@ namespace Services.Broadcast.Converters.RateImport
             AAAAMessageProposalAvailList availList,
             List<AvailLineWithPeriods> availLines,
             InventoryFile inventoryFile,
-            List<InventoryFileProblem> fileProblems)
+            List<InventoryFileProblem> fileProblems,
+            ref int rowsProcessed)
         {
             var audienceMap = _GetAudienceMap(availList.DemoCategories);
             var allStationNames = proposal.Outlets.Select(o => o.callLetters).Distinct().ToList();
@@ -246,35 +250,35 @@ namespace Services.Broadcast.Converters.RateImport
                         var manifestAudiences = _GetManifestAudienceListForAvailLine(availList, audienceMap, _ToDemoValueDict(availLinePeriod.DemoValues));
                         var manifestRates = _GetManifestRatesforAvailLineWithDetailedPeriods(spotLengthId, spotLength, availLinePeriod.Rate, programName, callLetters, fileProblems);
                         var manifestWeeks = _GetManifestWeeksForAvailLine(availLinePeriod.StartDate, availLinePeriod.EndDate);
+                        var manifestStation = station ?? new DisplayBroadcastStation { CallLetters = callLetters };
 
-                        if (station == null)
+                        // let`s group all weeks by quarter and create a manifest per each quarter
+                        var allMediaMonthIds = manifestWeeks.Select(x => x.MediaWeek.MediaMonthId).Distinct();
+                        var allMediaMonths = _MediaMonthAndWeekAggregateCache.GetMediaMonthsByIds(allMediaMonthIds);
+                        var weeksGroupedByQuarter = manifestWeeks
+                            .Select(x => new
+                            {
+                                week = x,
+                                quarter = allMediaMonths.Single(m => m.Id == x.MediaWeek.MediaMonthId).QuarterAndYearText
+                            })
+                            .GroupBy(x => x.quarter);
+
+                        foreach (var weeksGroup in weeksGroupedByQuarter)
                         {
                             inventoryFile.InventoryManifests.Add(new StationInventoryManifest
                             {
-                                Station = new DisplayBroadcastStation { CallLetters = callLetters },
+                                Station = manifestStation,
                                 DaypartCode = availLine.DaypartName,
-                                SpotsPerWeek = null,
                                 SpotLengthId = spotLengthId,
                                 ManifestDayparts = _GetDaypartsListForAvailLineWithPeriods(availLine),
                                 ManifestAudiencesReferences = manifestAudiences,
                                 ManifestRates = manifestRates,
-                                ManifestWeeks = manifestWeeks
+                                ManifestWeeks = weeksGroup.Select(x => x.week).ToList()
                             });
                         }
-                        else
-                        {
-                            inventoryFile.InventoryManifests.Add(new StationInventoryManifest
-                            {
-                                Station = station,
-                                DaypartCode = availLine.DaypartName,
-                                SpotsPerWeek = null,
-                                SpotLengthId = spotLengthId,
-                                ManifestDayparts = _GetDaypartsListForAvailLineWithPeriods(availLine),
-                                ManifestAudiencesReferences = manifestAudiences,
-                                ManifestRates = manifestRates,
-                                ManifestWeeks = manifestWeeks
-                            });
-                        }
+
+                        if (weeksGroupedByQuarter.Any())
+                            rowsProcessed++;
                     }
                 }
                 catch (Exception e)
@@ -315,6 +319,11 @@ namespace Services.Broadcast.Converters.RateImport
                     manifestAudience = new StationInventoryManifestAudience();
                     manifestAudience.Audience = audience;
                     manifestAudience.IsReference = true;
+                }
+
+                if (demoValue.Value <= 0)
+                {
+                    throw new Exception($"Demo value must be more than 0. Audience: '{audience.AudienceString}', demo type: '{demo.DemoType}'");
                 }
 
                 switch (demo.DemoType)

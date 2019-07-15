@@ -1037,6 +1037,15 @@
     <Content Include="Files\ImportingRateData\4Q18\4Q18 Baltimore-WMAR-SYN.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Files\ImportingRateData\Open Market negative demo value.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Files\ImportingRateData\Open Market projected imps.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Files\ImportingRateData\Open Market provided and projected imps.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Files\ImportingRateData\San Francisco_InvalidFile.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

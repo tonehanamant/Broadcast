@@ -59,13 +59,6 @@ namespace Services.Broadcast.Converters.InventorySummary
             }
 
             return new Tuple<QuarterDetailDto, QuarterDetailDto>(null, null);
-        }      
-
-        protected double? GetHouseholdImpressions(List<InventorySummaryManifestDto> inventorySummaryManifests, int householdAudienceId)
-        {
-            var manifestIds = inventorySummaryManifests.Select(x => x.ManifestId).ToList();
-
-            return InventorySummaryRepository.GetInventorySummaryHouseholdImpressions(manifestIds, householdAudienceId);
         }
 
         protected void GetLatestInventoryPostingBook(List<InventorySummaryManifestFileDto> inventorySummaryManifestFileDtos, out MediaMonthDto shareBook, out MediaMonthDto hutBook)

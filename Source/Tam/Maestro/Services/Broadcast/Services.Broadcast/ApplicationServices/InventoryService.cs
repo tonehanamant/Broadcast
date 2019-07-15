@@ -90,7 +90,6 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IStationInventoryGroupService _StationInventoryGroupService;
         private readonly IInventoryRepository _InventoryRepository;
         private readonly INsiPostingBookService _NsiPostingBookService;
-
         private readonly ILockingEngine _LockingEngine;
         private readonly IDataLakeFileService _DataLakeFileService;
         private readonly IStationProcessingEngine _StationProcessingEngine;
@@ -98,6 +97,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IOpenMarketFileImporter _OpenMarketFileImporter;
         private readonly IAudienceRepository _AudienceRepository;
         private readonly IFileService _FileService;
+        private readonly IInventoryRatingsProcessingService _InventoryRatingsService;
 
         public InventoryService(IDataRepositoryFactory broadcastDataRepositoryFactory,
             IInventoryFileValidator inventoryFileValidator,
@@ -114,7 +114,8 @@ namespace Services.Broadcast.ApplicationServices
             IStationProcessingEngine stationProcessingEngine,
             IImpressionsService impressionsService,
             IOpenMarketFileImporter openMarketFileImporter,
-            IFileService fileService)
+            IFileService fileService,
+            IInventoryRatingsProcessingService inventoryRatingsService)
         {
             _broadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
             _StationRepository = broadcastDataRepositoryFactory.GetDataRepository<IStationRepository>();
@@ -131,7 +132,6 @@ namespace Services.Broadcast.ApplicationServices
             _ProprietarySpotCostCalculationEngine = proprietarySpotCostCalculationEngine;
             _StationInventoryGroupService = stationInventoryGroupService;
             _InventoryRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
-
             _NsiPostingBookService = nsiPostingBookService;
             _LockingEngine = lockingEngine;
             _DataLakeFileService = dataLakeFileService;
@@ -140,6 +140,7 @@ namespace Services.Broadcast.ApplicationServices
             _OpenMarketFileImporter = openMarketFileImporter;
             _AudienceRepository = broadcastDataRepositoryFactory.GetDataRepository<IAudienceRepository>();
             _FileService = fileService;
+            _InventoryRatingsService = inventoryRatingsService;
         }
 
         public bool GetStationProgramConflicted(StationProgramConflictRequest conflict, int manifestId)
@@ -189,12 +190,12 @@ namespace Services.Broadcast.ApplicationServices
                 };
             }
 
-            var inventorySource = _ParseInventorySourceOrDefault(request.InventorySource);
+            var inventorySource = _InventoryRepository.GetInventorySource(BroadcastConstants.OpenMarketSourceId);
 
             _OpenMarketFileImporter.LoadFromSaveRequest(request);
             _OpenMarketFileImporter.CheckFileHash();
 
-            InventoryFile inventoryFile = _OpenMarketFileImporter.GetPendingInventoryFile(_ParseInventorySourceOrDefault(request.InventorySource), userName, nowDate);
+            InventoryFile inventoryFile = _OpenMarketFileImporter.GetPendingInventoryFile(inventorySource, userName, nowDate);
 
             inventoryFile.Id = _InventoryFileRepository.CreateInventoryFile(inventoryFile, userName, nowDate);
 
@@ -207,26 +208,13 @@ namespace Services.Broadcast.ApplicationServices
 
                 if (_OpenMarketFileImporter.FileProblems.Any())
                 {
-                    inventoryFile.FileStatus = FileStatusEnum.Failed;
-                    inventoryFile.ValidationProblems.AddRange(_LoadValidationProblemsFromFileProblems(_OpenMarketFileImporter.FileProblems));
-
-                    _InventoryRepository.AddValidationProblems(inventoryFile);
-                    _InventoryFileRepository.UpdateInventoryFile(inventoryFile);
-
-                    WriteErrorFileToDisk(inventoryFile.Id, request.FileName, inventoryFile.ValidationProblems);
+                    _ProcessFileWithProblems(inventoryFile, _LoadValidationProblemsFromFileProblems(_OpenMarketFileImporter.FileProblems));
                 }
                 else
                 {
                     if (!inventoryFile.HasManifests())
                     {
-                        inventoryFile.FileStatus = FileStatusEnum.Failed;
-                        inventoryFile.ValidationProblems.Add("Unable to parse any file records.");
-
-                        _InventoryRepository.AddValidationProblems(inventoryFile);
-                        _InventoryFileRepository.UpdateInventoryFile(inventoryFile);
-
-                        WriteErrorFileToDisk(inventoryFile.Id, request.FileName, inventoryFile.ValidationProblems);
-
+                        _ProcessFileWithProblems(inventoryFile, "Unable to parse any file records.");
                         return _SetInventoryFileSaveResult(inventoryFile);
                     }
 
@@ -236,14 +224,7 @@ namespace Services.Broadcast.ApplicationServices
 
                     if (_OpenMarketFileImporter.FileProblems.Any())
                     {
-                        inventoryFile.FileStatus = FileStatusEnum.Failed;
-                        inventoryFile.ValidationProblems.AddRange(_LoadValidationProblemsFromFileProblems(_OpenMarketFileImporter.FileProblems));
-
-                        _InventoryRepository.AddValidationProblems(inventoryFile);
-                        _InventoryFileRepository.UpdateInventoryFile(inventoryFile);
-
-                        WriteErrorFileToDisk(inventoryFile.Id, request.FileName, inventoryFile.ValidationProblems);
-
+                        _ProcessFileWithProblems(inventoryFile, _LoadValidationProblemsFromFileProblems(_OpenMarketFileImporter.FileProblems));
                         return _SetInventoryFileSaveResult(inventoryFile);
                     }
 
@@ -293,9 +274,10 @@ namespace Services.Broadcast.ApplicationServices
                 throw new BroadcastInventoryDataException($"Error loading new inventory file: {e.Message}", inventoryFile.Id, e);
             }
 
-            //send valid files to data lake
             if (!inventoryFile.ValidationProblems.Any())
             {
+                _InventoryRatingsService.QueueInventoryFileRatingsJob(inventoryFile.Id);
+
                 try
                 {
                     _DataLakeFileService.Save(request);
@@ -309,7 +291,18 @@ namespace Services.Broadcast.ApplicationServices
             return _SetInventoryFileSaveResult(inventoryFile);
         }
 
-        private void WriteErrorFileToDisk(int fileId, string fileName, List<string> validationErrors)
+        private void _ProcessFileWithProblems(InventoryFile inventoryFile, params string[] problems)
+        {
+            inventoryFile.FileStatus = FileStatusEnum.Failed;
+            inventoryFile.ValidationProblems.AddRange(problems);
+
+            _InventoryRepository.AddValidationProblems(inventoryFile);
+            _InventoryFileRepository.UpdateInventoryFile(inventoryFile);
+
+            _WriteErrorFileToDisk(inventoryFile.Id, inventoryFile.FileName, inventoryFile.ValidationProblems);
+        }
+
+        private void _WriteErrorFileToDisk(int fileId, string fileName, List<string> validationErrors)
         {
             string path = $@"{BroadcastServiceSystemParameter.InventoryUploadErrorsFolder}\{fileId}_{fileName}.txt";
 
@@ -326,7 +319,7 @@ namespace Services.Broadcast.ApplicationServices
             };
         }
 
-        private List<string> _LoadValidationProblemsFromFileProblems(List<InventoryFileProblem> fileProblems)
+        private string[] _LoadValidationProblemsFromFileProblems(List<InventoryFileProblem> fileProblems)
         {
             string problemFormat = "Station: {0}; Program: {1}; Problem: {2}";
             return fileProblems
@@ -334,7 +327,7 @@ namespace Services.Broadcast.ApplicationServices
                     , string.IsNullOrWhiteSpace(x.StationLetters) ? "unknown" : x.StationLetters
                     , string.IsNullOrWhiteSpace(x.ProgramName) ? "unknown" : x.ProgramName
                     , x.ProblemDescription))
-                .ToList();
+                .ToArray();
         }
 
         private void _CreateUnknownStationsAndPopulate(InventoryFile inventoryFile, string userName)

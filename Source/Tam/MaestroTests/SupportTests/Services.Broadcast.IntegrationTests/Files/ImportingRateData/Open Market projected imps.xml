@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AAAA-Message xmlns:tvb="http://www.AAAA.org/schemas/spotTV" xmlns:tvb-tp="http://www.AAAA.org/schemas/TVBGeneralTypes" xmlns="http://www.AAAA.org/schemas/spotTVCableProposal">
+	<AAAA-Values>
+		<SchemaName>SpotTVCableProposal</SchemaName>
+		<SchemaVersion>0.3.0.5A</SchemaVersion>
+		<Media>SpotTV</Media>
+		<BusinessObject>Proposal</BusinessObject>
+		<Action>New</Action>
+		<UniqueMessageID>IDAJS3GF</UniqueMessageID>
+	</AAAA-Values>
+	<Proposal uniqueIdentifier="UNWIRED-WTEN" version="1" sendDateTime="2017-11-13T15:18:19" weekStartDay="Mo" startDate="2018-03-25" endDate="2018-04-25">
+		<Seller companyName="KATZ TV GROUP">
+			<Salesperson name="RICH DIFALCO"/>
+		</Seller>
+		<Buyer buyingCompanyName="N/A"/>
+		<Advertiser name="Cadent Network">
+			<Product name="UNWIRED"/>
+		</Advertiser>
+		<Name>UNWIRED-WTEN</Name>
+		<Outlets>
+			<TelevisionStation callLetters="WTEN" parentPlus="Y" outletId="OUT0"/>
+		</Outlets>
+		<AvailList startDate="2018-03-25" endDate="2018-04-25" identifier="AL001" isPackage="N">
+			<Name>Television Schedule - Albany-Schenectady-Troy Feb18 Proj. (Feb17 HUT, May17 SHR) DMA Nielsen Live+SD</Name>
+			<OutletReferences>
+				<OutletReference outletFromProposalRef="OUT0" outletForListId="OUL0"/>
+			</OutletReferences>
+			<DemoCategories>
+				<DemoCategory DemoId="DM0">
+					<tvb:DemoType>Rating</tvb:DemoType>
+					<tvb:Group>Homes</tvb:Group>
+					<tvb:AgeFrom>0</tvb:AgeFrom>
+					<tvb:AgeTo>99</tvb:AgeTo>
+				</DemoCategory>
+			</DemoCategories>
+			<TargetDemo demoRef="DM0"/>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>12:00</StartTime>
+						<EndTime>13:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>Y</tvb-tp:Monday>
+							<tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>Y</tvb-tp:Thursday>
+							<tvb-tp:Friday>Y</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+						<ProgramName>News 10 @ Noon</ProgramName>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>DY</DaypartName>
+				<AvailName>News 10 @ Noon</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2018-03-25" endDate="2018-04-25">
+						<Rate>75.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">1</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+		</AvailList>
+	</Proposal>
+</AAAA-Message>

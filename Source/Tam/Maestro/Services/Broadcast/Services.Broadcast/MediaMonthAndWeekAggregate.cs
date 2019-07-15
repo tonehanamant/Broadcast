@@ -11,7 +11,7 @@ namespace Services.Broadcast
     {
         MediaWeek GetMediaWeekById(int mediaWeekId);
         MediaMonth GetMediaMonthContainingMediaWeekId(int mediaWeekId);
-        List<MediaMonth> GetMediaMonthsByIds(List<int> mediaMonthIds);
+        List<MediaMonth> GetMediaMonthsByIds(IEnumerable<int> mediaMonthIds);
         MediaMonth GetMediaMonthContainingDate(DateTime date);
         MediaMonth GetMediaMonthByYearAndMonth(int year, int month);
         MediaMonth GetMediaMonthById(int id);
@@ -63,7 +63,7 @@ namespace Services.Broadcast
             return GetMediaMonthById(mediaWeek.MediaMonthId);
         }
 
-        public List<MediaMonth> GetMediaMonthsByIds(List<int> mediaMonthIds)
+        public List<MediaMonth> GetMediaMonthsByIds(IEnumerable<int> mediaMonthIds)
         {
             return _MediaMonths.Where(x => mediaMonthIds.Contains(x.Id)).ToList();
         }

@@ -31,7 +31,7 @@ namespace Services.Broadcast.ApplicationServices
         /// <param name="playbackType">Playback type</param>
         /// <param name="shareBook">Share book</param>
         /// <param name="hutBook">Hut book</param>
-        void AddProjectedImpressionsForComponentsToManifests(IEnumerable<StationInventoryManifest> manifests, ProposalEnums.ProposalPlaybackType? playbackType, int shareBook, int? hutBook);
+        void AddProjectedImpressionsForComponentsToManifests(IEnumerable<StationInventoryManifest> manifests, ProposalEnums.ProposalPlaybackType? playbackType, int shareBook, int? hutBook = null);
     }
 
     public class ImpressionsService : IImpressionsService
@@ -224,7 +224,6 @@ namespace Services.Broadcast.ApplicationServices
         public void AddProjectedImpressionsForComponentsToManifests(IEnumerable<StationInventoryManifest> manifests, ProposalEnums.ProposalPlaybackType? playbackType, int shareBook, int? hutBook)
         {
             var componentAudiences = _NsiComponentAudienceRepository.GetAllNsiComponentAudiences();
-            var manifestsByStation = manifests.GroupBy(x => x.Station.LegacyCallLetters).ToList();
 
             var manifestsByStationDaypartList =
                    (

@@ -16,6 +16,7 @@ using System.Linq;
 using Tam.Maestro.Common.DataLayer;
 using Microsoft.Practices.Unity;
 using Services.Broadcast.Extensions;
+using System.Collections.Generic;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
@@ -30,6 +31,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         private IInventoryRepository _IInventoryRepository;
         private IInventoryRatingsProcessingService _InventoryRatingsProcessingService;
         private IInventoryFileRatingsJobsRepository _InventoryFileRatingsJobsRepository;
+        private IInventoryService _InventoryService;
 
         [TestFixtureSetUp]
         public void init()
@@ -41,6 +43,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 _IInventoryRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
                 _InventoryRatingsProcessingService = IntegrationTestApplicationServiceFactory.GetApplicationService<IInventoryRatingsProcessingService>();
                 _InventoryFileRatingsJobsRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryFileRatingsJobsRepository>();
+                _InventoryService = IntegrationTestApplicationServiceFactory.GetApplicationService<IInventoryService>();
             }
             catch (Exception e)
             {
@@ -76,6 +79,49 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(inventoryCards));
             }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetInventorySummaries_OpenMarket()
+        {
+            const string fileName = @"ImportingRateData\Open Market provided and projected imps.xml";
+
+            using (new TransactionScopeWrapper())
+            {
+                var request = new InventoryFileSaveRequest
+                {
+                    StreamData = new FileStream($@".\Files\{fileName}", FileMode.Open, FileAccess.Read),
+                    FileName = fileName
+                };
+
+                var result = _InventoryService.SaveInventoryFile(request, "IntegrationTestUser", new DateTime(2018, 1, 1));
+                var job = _InventoryFileRatingsJobsRepository.GetLatestJob();
+                _InventoryRatingsProcessingService.ProcessInventoryRatingsJob(job.id.Value);
+
+                var inventoryCards = _GetOpenMarketSummaryForQuarter(2018, 1)
+                              .Union(_GetOpenMarketSummaryForQuarter(2018, 2));
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(InventorySummaryDto), "LastUpdatedDate");
+                var jsonSerializerSettings = new JsonSerializerSettings
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(inventoryCards, jsonSerializerSettings));
+            }
+        }
+
+        private IEnumerable<InventorySummaryDto> _GetOpenMarketSummaryForQuarter(int year, int quarter)
+        {
+            return _InventorySummaryService.GetInventorySummaries(
+                new InventorySummaryFilterDto
+                {
+                    Quarter = new InventorySummaryQuarter { Year = year, Quarter = quarter }
+                }, new DateTime(2018, 1, 15))
+                .Where(x => x.InventorySourceId == 1);
         }
 
         [Test]

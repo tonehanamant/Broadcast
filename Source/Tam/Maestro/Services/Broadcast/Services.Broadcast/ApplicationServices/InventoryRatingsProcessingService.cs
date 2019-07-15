@@ -1,11 +1,12 @@
 ﻿using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
 using Services.Broadcast.BusinessEngines;
+using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
+using static Services.Broadcast.Entities.Enums.ProposalEnums;
 
 namespace Services.Broadcast.ApplicationServices
 {
@@ -39,11 +40,16 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IInventoryRepository _InventoryRepository;
         private readonly IImpressionsService _ImpressionsService;
         private readonly IProprietarySpotCostCalculationEngine _ProprietarySpotCostCalculationEngine;
+        private readonly IInventoryFileRepository _InventoryFileRepository;
+        private readonly INsiPostingBookService _NsiPostingBookService;
+        private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekAggregateCache;
 
-        public InventoryRatingsProcessingService
-            (IDataRepositoryFactory broadcastDataRepositoryFactory,
+        public InventoryRatingsProcessingService(
+            IDataRepositoryFactory broadcastDataRepositoryFactory,
             IImpressionsService impressionsService,
-            IProprietarySpotCostCalculationEngine proprietarySpotCostCalculationEngine)
+            IProprietarySpotCostCalculationEngine proprietarySpotCostCalculationEngine,
+            INsiPostingBookService nsiPostingBookService,
+            IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache)
         {
             _InventoryFileRatingsJobsRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryFileRatingsJobsRepository>();
             _ProprietaryRepository = broadcastDataRepositoryFactory
@@ -51,6 +57,9 @@ namespace Services.Broadcast.ApplicationServices
             _InventoryRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
             _ImpressionsService = impressionsService;
             _ProprietarySpotCostCalculationEngine = proprietarySpotCostCalculationEngine;
+            _InventoryFileRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryFileRepository>();
+            _NsiPostingBookService = nsiPostingBookService;
+            _MediaMonthAndWeekAggregateCache = mediaMonthAndWeekAggregateCache;
         }
 
         public List<InventoryFileRatingsProcessingJob> GetQueuedJobs(int limit)
@@ -77,11 +86,15 @@ namespace Services.Broadcast.ApplicationServices
 
         public void ProcessInventoryRatingsJob(int jobId)
         {
+            const ProposalPlaybackType defaultOpenMarketPlaybackType = ProposalPlaybackType.LivePlus3;
+
             var job = _InventoryFileRatingsJobsRepository.GetJobById(jobId);
+
             if(job == null)
             {
                 throw new ApplicationException($"Job with id {jobId} was not found");
             }
+
             if(job.Status != InventoryFileRatingsProcessingStatus.Queued)
             {
                 throw new ApplicationException($"Job with id {jobId} already has status {job.Status}");
@@ -92,58 +105,37 @@ namespace Services.Broadcast.ApplicationServices
                 job.Status = InventoryFileRatingsProcessingStatus.Processing;
                 _InventoryFileRatingsJobsRepository.UpdateJob(job);
 
-                //This just processed proprietary files right now. Needs to be consolidated to 
-                //var sw = Stopwatch.StartNew();
-                var proprietaryFile = _ProprietaryRepository.GetInventoryFileWithHeaderById(job.InventoryFileId);
-                //sw.Stop();
-                //Debug.WriteLine($"GetInventoryFileWithHeaderById: {sw.ElapsedMilliseconds}");
-
-                if (proprietaryFile.InventorySource.InventoryType == Entities.Enums.InventorySourceTypeEnum.Barter)
+                var inventoryFile = _InventoryFileRepository.GetInventoryFileById(job.InventoryFileId);
+                var inventorySource = inventoryFile.InventorySource;
+                
+                if (inventorySource.InventoryType == InventorySourceTypeEnum.Barter)
                 {
-                    //load manifests for file
-                    //sw = Stopwatch.StartNew();
+                    var header =  _ProprietaryRepository.GetInventoryFileHeader(job.InventoryFileId);
                     var manifests = _InventoryRepository.GetStationInventoryManifestsByFileId(job.InventoryFileId);
-                    //sw.Stop();
-                    //Debug.WriteLine($"_InventoryRepository.GetStationInventoryManifestsByFileId: {sw.ElapsedMilliseconds}");
 
-                    //process impressions/cost
-                    //sw = Stopwatch.StartNew();
-                    _ImpressionsService.AddProjectedImpressionsToManifests(manifests, proprietaryFile.Header.PlaybackType, proprietaryFile.Header.ShareBookId.Value, proprietaryFile.Header.HutBookId);
-                    //sw.Stop();
-                    //Debug.WriteLine($"GetProjectedStationImpressions: {sw.ElapsedMilliseconds}");
-
-                    //sw = Stopwatch.StartNew();
+                    // process impressions/cost
+                    _ImpressionsService.AddProjectedImpressionsToManifests(manifests, header.PlaybackType, header.ShareBookId.Value, header.HutBookId);
                     _ProprietarySpotCostCalculationEngine.CalculateSpotCost(manifests);
-                    //sw.Stop();
-                    //Debug.WriteLine($"CalculateSpotCost: {sw.ElapsedMilliseconds}");
-                    
-                    //process components impressions
-                    //sw = Stopwatch.StartNew();
-                    _ImpressionsService.AddProjectedImpressionsForComponentsToManifests(manifests, proprietaryFile.Header.PlaybackType, proprietaryFile.Header.ShareBookId.Value, proprietaryFile.Header.HutBookId);
-                    //sw.Stop();
-                    //Debug.WriteLine($"GetProjectedStationImpressionsForComponents: {sw.ElapsedMilliseconds}");
-                    
-                    //update manifest rates and audiences
-                    //sw = Stopwatch.StartNew();
+
+                    // process components impressions
+                    _ImpressionsService.AddProjectedImpressionsForComponentsToManifests(manifests, header.PlaybackType, header.ShareBookId.Value, header.HutBookId);
+
+                    // update manifest rates and audiences
                     _InventoryRepository.UpdateInventoryManifests(manifests);
-                    //sw.Stop();
-                    //Debug.WriteLine($"UpdateInventoryRatesForManifests: {sw.ElapsedMilliseconds}");
 
                     job.Status = InventoryFileRatingsProcessingStatus.Succeeded;
                     job.CompletedAt = DateTime.Now;
                 }
-                else if (proprietaryFile.InventorySource.InventoryType == Entities.Enums.InventorySourceTypeEnum.ProprietaryOAndO)
-                {                    
-                    //Debug.WriteLine("OandO Source");
-                    //process cost
+                else if (inventorySource.InventoryType == InventorySourceTypeEnum.ProprietaryOAndO)
+                {
+                    var header = _ProprietaryRepository.GetInventoryFileHeader(job.InventoryFileId);
                     var manifests = _InventoryRepository.GetStationInventoryManifestsByFileId(job.InventoryFileId);
+
+                    //process cost
                     _ProprietarySpotCostCalculationEngine.CalculateSpotCost(manifests, useProvidedImpressions: true);
 
                     //process components impressions
-                    //sw = Stopwatch.StartNew();
-                    _ImpressionsService.AddProjectedImpressionsForComponentsToManifests(manifests, proprietaryFile.Header.PlaybackType, proprietaryFile.Header.ShareBookId.Value, proprietaryFile.Header.HutBookId);
-                    //sw.Stop();
-                    //Debug.WriteLine($"GetProjectedStationImpressionsForComponents: {sw.ElapsedMilliseconds}");
+                    _ImpressionsService.AddProjectedImpressionsForComponentsToManifests(manifests, header.PlaybackType, header.ShareBookId.Value, header.HutBookId);
 
                     //update manifest rates
                     _InventoryRepository.UpdateInventoryManifests(manifests);
@@ -151,21 +143,57 @@ namespace Services.Broadcast.ApplicationServices
                     job.Status = InventoryFileRatingsProcessingStatus.Succeeded;
                     job.CompletedAt = DateTime.Now;
                 }
-                else if (proprietaryFile.InventorySource.InventoryType == Entities.Enums.InventorySourceTypeEnum.Diginet)
+                else if (inventorySource.InventoryType == InventorySourceTypeEnum.Diginet)
                 {
                     // nothing to process so just set Succeeded status. Diginet template already have spot cost calculated
                     job.Status = InventoryFileRatingsProcessingStatus.Succeeded;
                     job.CompletedAt = DateTime.Now;
                 }
-                else if (proprietaryFile.InventorySource.InventoryType == Entities.Enums.InventorySourceTypeEnum.Syndication)
+                else if (inventorySource.InventoryType == InventorySourceTypeEnum.Syndication)
                 {
                     // nothing to process so just set succeeded status. Syndication template already have spot cost calculated
                     job.Status = InventoryFileRatingsProcessingStatus.Succeeded;
                     job.CompletedAt = DateTime.Now;
                 }
+                else if (inventorySource.InventoryType == InventorySourceTypeEnum.OpenMarket)
+                {
+                    var manifests = _InventoryRepository.GetStationInventoryManifestsByFileId(job.InventoryFileId);
+
+                    // filter out manifests without weeks
+                    manifests = manifests.Where(x => x.ManifestWeeks.Any()).ToList();
+                    
+                    var allMediaMonthIds = manifests.SelectMany(x => x.ManifestWeeks).Select(x => x.MediaWeek.MediaMonthId).Distinct();
+                    var allMediaMonths = _MediaMonthAndWeekAggregateCache.GetMediaMonthsByIds(allMediaMonthIds);
+                    var manifestsGroupedByQuarter = manifests
+                        .Select(x => new
+                        {
+                            manifest = x,
+
+                            // all weeks in a manifest belongs to a single quarter so that we can just take a first week and find its quarter
+                            // see OpenMarketFileImporter._PopulateProgramsFromAvailLineWithPeriods for details
+                            quarter = allMediaMonths.Single(m => m.Id == x.ManifestWeeks.First().MediaWeek.MediaMonthId).QuarterAndYearText
+                        })
+                        .GroupBy(x => x.quarter);
+
+                    foreach (var manifestsGroup in manifestsGroupedByQuarter)
+                    {
+                        var quarterManifests = manifestsGroup.Select(x => x.manifest).ToList();
+
+                        // we can take any week of any manifest since all they belong to the same quarter
+                        var postingBookDate = quarterManifests.First().ManifestWeeks.First().StartDate;
+                        var postingBook = _NsiPostingBookService.GetLatestNsiPostingBookForMonthContainingDate(postingBookDate);
+
+                        _ImpressionsService.AddProjectedImpressionsForComponentsToManifests(quarterManifests, defaultOpenMarketPlaybackType, postingBook);                       
+                    }
+
+                    // save all changes to DB
+                    _InventoryRepository.UpdateInventoryManifests(manifests);
+
+                    job.Status = InventoryFileRatingsProcessingStatus.Succeeded;
+                    job.CompletedAt = DateTime.Now;
+                }
                 else
                 {
-                    //Debug.WriteLine("Unknown source");
                     // Failed for unsupported types
                     job.Status = InventoryFileRatingsProcessingStatus.Failed;
                 }
@@ -174,7 +202,6 @@ namespace Services.Broadcast.ApplicationServices
             }
             catch (Exception e)
             {
-                //Debug.WriteLine(e);
                 job.Status = InventoryFileRatingsProcessingStatus.Failed;
                 _InventoryFileRatingsJobsRepository.UpdateJob(job);
                 throw;

@@ -36,7 +36,7 @@ namespace Services.Broadcast
             return _MediaMonthAndWeekAggregate.GetMediaMonthContainingMediaWeekId(mediaWeekId);
         }
 
-        public List<MediaMonth> GetMediaMonthsByIds(List<int> mediaMonthIds)
+        public List<MediaMonth> GetMediaMonthsByIds(IEnumerable<int> mediaMonthIds)
         {
             return _MediaMonthAndWeekAggregate.GetMediaMonthsByIds(mediaMonthIds);
         }
