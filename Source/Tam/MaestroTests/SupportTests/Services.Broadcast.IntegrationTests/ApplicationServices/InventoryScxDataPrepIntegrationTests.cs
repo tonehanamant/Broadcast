@@ -21,12 +21,12 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
     [TestFixture]
     class InventoryScxDataPrepIntegrationTests
     {
-        private readonly IInventoryScxDataPrep _InventoryScxDataPrep;
+        private readonly IInventoryScxDataPrepFactory _InventoryScxDataPrepFactory;
         private readonly IInventoryScxDataConverter _InventoryScxDataConverter;
 
         public InventoryScxDataPrepIntegrationTests()
         {
-            _InventoryScxDataPrep = IntegrationTestApplicationServiceFactory.GetApplicationService<IInventoryScxDataPrep>();
+            _InventoryScxDataPrepFactory = IntegrationTestApplicationServiceFactory.GetApplicationService<IInventoryScxDataPrepFactory>();
             _InventoryScxDataConverter = IntegrationTestApplicationServiceFactory.GetApplicationService<IInventoryScxDataConverter>();
         }
 
@@ -36,7 +36,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                InventoryScxDownloadRequest request = new InventoryScxDownloadRequest
+                var inventoryScxDataPrep = _InventoryScxDataPrepFactory.GetInventoryDataPrep(Entities.Enums.InventorySourceTypeEnum.Barter);
+
+                var request = new InventoryScxDownloadRequest
                 {
                     EndDate = new DateTime(2019, 03, 31),
                     StartDate = new DateTime(2018, 12, 31),
@@ -44,7 +46,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     InventorySourceId = 7,
                     UnitNames = new List<string> { "ExpiresGroupsTest" }
                 };
-                var result = _InventoryScxDataPrep.GetInventoryScxData(request.InventorySourceId, request.DaypartCodeId, request.StartDate, request.EndDate, request.UnitNames);
+                var result = inventoryScxDataPrep.GetInventoryScxData(request.InventorySourceId, request.DaypartCodeId, request.StartDate, request.EndDate, request.UnitNames);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
 
@@ -65,6 +67,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
+                var inventoryScxDataPrep = _InventoryScxDataPrepFactory.GetInventoryDataPrep(Entities.Enums.InventorySourceTypeEnum.Barter);
+
                 string fileName = "Barter_A25-54_Q1 CNN.xlsx";
                 var request = new FileRequest
                 {
@@ -75,7 +79,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var now = new DateTime(2019, 02, 02);
                 IntegrationTestApplicationServiceFactory.GetApplicationService<IProprietaryInventoryService>().SaveProprietaryInventoryFile(request, "sroibu", now);
 
-                InventoryScxDownloadRequest scxRequest = new InventoryScxDownloadRequest()
+                var scxRequest = new InventoryScxDownloadRequest()
                 {
                     StartDate = new DateTime(2019, 01, 01),
                     EndDate = new DateTime(2019, 03, 31),
@@ -83,7 +87,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     UnitNames = new List<string> { "Unit 1", "Unit 2", "Unit 3", "Unit 4"},
                     DaypartCodeId = 2
                 };
-                var result = _InventoryScxDataPrep.GetInventoryScxData(scxRequest.InventorySourceId, scxRequest.DaypartCodeId, scxRequest.StartDate, scxRequest.EndDate, scxRequest.UnitNames);
+                var result = inventoryScxDataPrep.GetInventoryScxData(scxRequest.InventorySourceId, scxRequest.DaypartCodeId, scxRequest.StartDate, scxRequest.EndDate, scxRequest.UnitNames);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(ScxProgram), "ProgramId");
@@ -104,7 +108,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                InventoryScxDownloadRequest request = new InventoryScxDownloadRequest
+                var inventoryScxDataPrep = _InventoryScxDataPrepFactory.GetInventoryDataPrep(Entities.Enums.InventorySourceTypeEnum.Barter);
+
+                var request = new InventoryScxDownloadRequest
                 {
                     EndDate = new DateTime(2019, 06, 30),
                     StartDate = new DateTime(2019, 04, 01),
@@ -112,7 +118,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     InventorySourceId = 4,
                     UnitNames = new List<string> { "AM 1" }
                 };
-                var dataList = _InventoryScxDataPrep.GetInventoryScxData(request.InventorySourceId, request.DaypartCodeId, request.StartDate, request.EndDate, request.UnitNames);
+                var dataList = inventoryScxDataPrep.GetInventoryScxData(request.InventorySourceId, request.DaypartCodeId, request.StartDate, request.EndDate, request.UnitNames);
 
                 var adx = _InventoryScxDataConverter.CreateAdxObject(dataList.First());
 
@@ -127,6 +133,62 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 };
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(adx, jsonSettings));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetInventoryScxDataAbcOAndOTest()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var inventoryScxDataPrep = _InventoryScxDataPrepFactory.GetInventoryDataPrep(Entities.Enums.InventorySourceTypeEnum.ProprietaryOAndO);
+
+                var request = new InventoryScxDownloadRequest
+                {
+                    EndDate = new DateTime(2020, 03, 01),
+                    StartDate = new DateTime(2020, 01, 01),
+                    DaypartCodeId = 4,
+                    InventorySourceId = 10
+                };
+
+                var result = inventoryScxDataPrep.GetInventoryScxData(request.InventorySourceId, request.DaypartCodeId, request.StartDate, request.EndDate, request.UnitNames);
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                var jsonSettings = new JsonSerializerSettings
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetInventoryScxDataNbcOAndOTest()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var inventoryScxDataPrep = _InventoryScxDataPrepFactory.GetInventoryDataPrep(Entities.Enums.InventorySourceTypeEnum.ProprietaryOAndO);
+
+                var request = new InventoryScxDownloadRequest
+                {
+                    EndDate = new DateTime(2019, 03, 01),
+                    StartDate = new DateTime(2019, 01, 01),
+                    DaypartCodeId = 1,
+                    InventorySourceId = 11
+                };
+
+                var result = inventoryScxDataPrep.GetInventoryScxData(request.InventorySourceId, request.DaypartCodeId, request.StartDate, request.EndDate, request.UnitNames);
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                var jsonSettings = new JsonSerializerSettings
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
             }
         }
     }

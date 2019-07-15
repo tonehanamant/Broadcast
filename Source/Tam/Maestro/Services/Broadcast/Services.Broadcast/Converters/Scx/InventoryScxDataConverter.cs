@@ -28,8 +28,7 @@ namespace Services.Broadcast.Converters.Scx
     public class InventoryScxDataConverter : ScxBaseConverter, IInventoryScxDataConverter
     {
 
-        public InventoryScxDataConverter(IInventoryScxDataPrep inventoryScxDataPrep
-            , IDaypartCache daypartCach) : base(daypartCach)
+        public InventoryScxDataConverter(IDaypartCache daypartCache) : base(daypartCache)
         {
         }
 

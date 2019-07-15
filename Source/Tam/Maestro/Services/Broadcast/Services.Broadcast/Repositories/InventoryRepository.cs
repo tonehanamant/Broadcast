@@ -64,9 +64,11 @@ namespace Services.Broadcast.Repositories
         /// <param name="startDate">Start date of the quarter</param>
         /// <param name="endDate">End date of the quarter</param>
         /// <returns>List of StationInventoryGroup objects containing the data</returns>
-        List<StationInventoryGroup> GetInventoryScxData(int inventorySourceId, int daypartCodeId, DateTime startDate, DateTime endDate, List<string> unitNames);
+        List<StationInventoryGroup> GetInventoryScxDataForBarter(int inventorySourceId, int daypartCodeId, DateTime startDate, DateTime endDate, List<string> unitNames);
 
-        /// <summary>
+        List<StationInventoryManifest> GetInventoryScxDataForOAndO(int inventorySourceId, int daypartCodeId, DateTime startDate, DateTime endDate);
+        
+            /// <summary>
         /// Gets the header information for an inventory file id
         /// </summary>
         /// <param name="inventoryFileId">Inventory file id to get the data for</param>
@@ -747,7 +749,7 @@ namespace Services.Broadcast.Repositories
         /// <param name="startDate">Start date of the quarter</param>
         /// <param name="endDate">End date of the quarter</param>
         /// <returns>List of StationInventoryGroup objects containing the data</returns>
-        public List<StationInventoryGroup> GetInventoryScxData(int inventorySourceId, int daypartCodeId, DateTime startDate, DateTime endDate, List<string> unitNames)
+        public List<StationInventoryGroup> GetInventoryScxDataForBarter(int inventorySourceId, int daypartCodeId, DateTime startDate, DateTime endDate, List<string> unitNames)
         {
             return _InReadUncommitedTransaction(
                 context =>
@@ -780,6 +782,33 @@ namespace Services.Broadcast.Repositories
                     }
 
                     return groups;
+                });
+        }
+
+        public List<StationInventoryManifest> GetInventoryScxDataForOAndO(int inventorySourceId, int daypartCodeId, DateTime startDate, DateTime endDate)
+        {
+            return _InReadUncommitedTransaction(
+                context =>
+                {
+                    var manifests = context.station_inventory_manifest
+                        .Where(x => x.inventory_source_id == inventorySourceId)
+                        .Where(x => x.inventory_files.inventory_file_proprietary_header.FirstOrDefault().daypart_code_id == daypartCodeId)
+                        .Include(x => x.station_inventory_manifest_audiences)
+                        .Include(x => x.station_inventory_manifest_weeks)
+                        .Include(x => x.station_inventory_manifest_rates)
+                        .Include(x => x.station_inventory_manifest_dayparts)
+                        .Include(x => x.inventory_sources)
+                        .Select(x => x)
+                        .ToList()
+                        .Select(x => _MapToInventoryManifest(x, x.inventory_files.inventory_file_proprietary_header.SingleOrDefault()?.daypart_codes.code))
+                        .ToList();
+
+                    foreach (var manifest in manifests)
+                    {
+                        manifests = manifests.Where(m => m.ManifestWeeks.Any(w => w.StartDate <= endDate && w.EndDate >= startDate)).ToList();
+                    }
+
+                    return manifests;
                 });
         }
 

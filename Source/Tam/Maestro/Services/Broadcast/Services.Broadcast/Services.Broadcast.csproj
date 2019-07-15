@@ -233,6 +233,10 @@
     <Compile Include="Converters\InventorySummary\DiginetSummaryFactory.cs" />
     <Compile Include="Converters\InventorySummary\ProprietaryOAndOSummaryFactory.cs" />
     <Compile Include="Converters\InventorySummary\SyndicationSummaryFactory.cs" />
+    <Compile Include="Converters\Scx\BaseScxDataPrep.cs" />
+    <Compile Include="Converters\Scx\InventoryScxDataPrep.cs" />
+    <Compile Include="Converters\Scx\InventoryScxDataPrepFactory.cs" />
+    <Compile Include="Converters\Scx\OAndOScxDataPrep.cs" />
     <Compile Include="Entities\CampaignDto.cs" />
     <Compile Include="ApplicationServices\CampaignService.cs" />
     <Compile Include="ApplicationServices\ProprietaryInventoryService.cs" />
@@ -240,7 +244,7 @@
     <Compile Include="BusinessEngines\InventoryWeekEngine.cs" />
     <Compile Include="Converters\RateImport\BarterFileImporter.cs" />
     <Compile Include="Converters\Scx\InventoryScxDataConverter.cs" />
-    <Compile Include="Converters\Scx\InventoryScxDataPrep.cs" />
+    <Compile Include="Converters\Scx\BarterScxDataPrep.cs" />
     <Compile Include="ApplicationServices\InventoryRatingsProcessingService.cs" />
     <Compile Include="ApplicationServices\InventorySummaryService.cs" />
     <Compile Include="Converters\Scx\ScxBaseConverter.cs" />
