@@ -331,7 +331,10 @@
     <None Include="EnvironmentSpecificSettings.config.release">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Files\BVS Load For Invalid Media Week.xlsx">
+    <None Include="Files\BVS Load For Invalid Media Week left limit.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\BVS Load For Invalid Media Week right limit.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Files\InventoryDaypartParsing\CNN_dayparts_valid.xlsx">

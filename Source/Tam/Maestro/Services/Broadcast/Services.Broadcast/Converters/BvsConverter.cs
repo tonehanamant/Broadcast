@@ -232,7 +232,7 @@ namespace Services.Broadcast.Converters
         {
             var dateTime = _Worksheet.GetValue<DateTime>(row, _Headers["Time Aired"]);
 
-            if (_MediaMonthAndWeekAggregateCache.GetMediaWeekContainingDateOrNull(dateTime) == null)
+            if (_MediaMonthAndWeekAggregateCache.GetMediaWeekContainingDateOrNull(dateTime.Date) == null)
             {
                 throw new ExtractBvsException("Invalid Media Week for Time Aired", row);
             }

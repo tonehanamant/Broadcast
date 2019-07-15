@@ -87,12 +87,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [UseReporter(typeof(DiffReporter))]
-        public void Tests_BvsConverter_InvalidMediaWeek()
+        [TestCase("BVS Load For Invalid Media Week left limit.xlsx", "Error in row 11: Invalid Media Week for Time Aired")]
+        [TestCase("BVS Load For Invalid Media Week right limit.xlsx", "Error in row 12: Invalid Media Week for Time Aired")]
+        public void Tests_BvsConverter_InvalidMediaWeek_LeftLimit(string fileName, string expectedMessage)
         {
-            const string fileName = "BVS Load For Invalid Media Week.xlsx";
             const string userName = "Tests_BvsConverter";
-            const string expectedMessage = "Error in row 10: Invalid Media Week for Time Aired";
 
             using (new TransactionScopeWrapper())
             {
