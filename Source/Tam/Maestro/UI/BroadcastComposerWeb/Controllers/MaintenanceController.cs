@@ -128,10 +128,63 @@ namespace BroadcastComposerWeb.Controllers
                 var service = _ApplicationServiceFactory.GetApplicationService<IInventoryRatingsProcessingService>();
                 service.ProcessInventoryRatingsJob(jobId);
                 ViewBag.Message = "Job Processed";
-            }catch(Exception e)
+            }
+            catch (Exception e)
             {
                 ViewBag.Message = "Error Processing Job: " + e.Message;
             }
+
+            return View("Index");
+        }
+
+        [HttpPost]
+        public ActionResult ProcessScxGenerationJob(int jobId)
+        {
+            try
+            {
+                var service = _ApplicationServiceFactory.GetApplicationService<IScxGenerationService>();
+                service.ProcessScxGenerationJob(jobId, DateTime.Now);
+                ViewBag.Message = "Job Processed";
+            }
+            catch (Exception e)
+            {
+                ViewBag.Message = "Error Processing Job: " + e.Message;
+            }
+
+            return View("Index");
+        }
+
+        [HttpPost]
+        public ActionResult ResetRatingsJobStatus(int jobId)
+        {
+            try
+            {
+                var service = _ApplicationServiceFactory.GetApplicationService<IInventoryRatingsProcessingService>();
+                service.ResetJobStatusToQueued(jobId);
+                ViewBag.Message = "Job Status Set to Queued";
+            }
+            catch (Exception e)
+            {
+                ViewBag.Message = "Error Resetting Job Status: " + e.Message;
+            }
+
+            return View("Index");
+        }
+
+        [HttpPost]
+        public ActionResult ResetScxGenerationJobStatus(int jobId)
+        {
+            try
+            {
+                var service = _ApplicationServiceFactory.GetApplicationService<IScxGenerationService>();
+                service.ResetJobStatusToQueued(jobId);
+                ViewBag.Message = "Job Status Set to Queued";
+            }
+            catch (Exception e)
+            {
+                ViewBag.Message = "Error Resetting Job Status: " + e.Message;
+            }
+
             return View("Index");
         }
 

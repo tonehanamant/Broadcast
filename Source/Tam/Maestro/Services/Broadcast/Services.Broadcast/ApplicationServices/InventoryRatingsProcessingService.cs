@@ -10,29 +10,24 @@ using static Services.Broadcast.Entities.Enums.ProposalEnums;
 
 namespace Services.Broadcast.ApplicationServices
 {
-    public enum InventoryFileRatingsProcessingStatus
-    {
-        Queued = 1,
-        Processing = 2,
-        Succeeded = 3,
-        Failed = 4
-    }
-
     public class InventoryFileRatingsProcessingJob
     {
         public int? id;
         public int InventoryFileId;
-        public InventoryFileRatingsProcessingStatus Status;
+        public BackgroundJobProcessingStatus Status;
         public DateTime QueuedAt;
         public DateTime? CompletedAt;
     }
+
     public interface IInventoryRatingsProcessingService : IApplicationService
     {
         void QueueInventoryFileRatingsJob(int inventoryFileId);
         List<InventoryFileRatingsProcessingJob> GetQueuedJobs(int limit);
         InventoryFileRatingsProcessingJob GetJobByFileId(int fileId);
         void ProcessInventoryRatingsJob(int jobId);
+        void ResetJobStatusToQueued(int jobId);
     }
+
     public class InventoryRatingsProcessingService : IInventoryRatingsProcessingService
     {
         private readonly IInventoryFileRatingsJobsRepository _InventoryFileRatingsJobsRepository;
@@ -77,7 +72,7 @@ namespace Services.Broadcast.ApplicationServices
             var job = new InventoryFileRatingsProcessingJob
             {
                 InventoryFileId = inventoryFileId,
-                Status = InventoryFileRatingsProcessingStatus.Queued,
+                Status = BackgroundJobProcessingStatus.Queued,
                 QueuedAt = DateTime.Now
             };
 
@@ -95,14 +90,14 @@ namespace Services.Broadcast.ApplicationServices
                 throw new ApplicationException($"Job with id {jobId} was not found");
             }
 
-            if(job.Status != InventoryFileRatingsProcessingStatus.Queued)
+            if(job.Status != BackgroundJobProcessingStatus.Queued)
             {
                 throw new ApplicationException($"Job with id {jobId} already has status {job.Status}");
             }
 
             try
             {
-                job.Status = InventoryFileRatingsProcessingStatus.Processing;
+                job.Status = BackgroundJobProcessingStatus.Processing;
                 _InventoryFileRatingsJobsRepository.UpdateJob(job);
 
                 var inventoryFile = _InventoryFileRepository.GetInventoryFileById(job.InventoryFileId);
@@ -123,7 +118,7 @@ namespace Services.Broadcast.ApplicationServices
                     // update manifest rates and audiences
                     _InventoryRepository.UpdateInventoryManifests(manifests);
 
-                    job.Status = InventoryFileRatingsProcessingStatus.Succeeded;
+                    job.Status = BackgroundJobProcessingStatus.Succeeded;
                     job.CompletedAt = DateTime.Now;
                 }
                 else if (inventorySource.InventoryType == InventorySourceTypeEnum.ProprietaryOAndO)
@@ -140,19 +135,19 @@ namespace Services.Broadcast.ApplicationServices
                     //update manifest rates
                     _InventoryRepository.UpdateInventoryManifests(manifests);
 
-                    job.Status = InventoryFileRatingsProcessingStatus.Succeeded;
+                    job.Status = BackgroundJobProcessingStatus.Succeeded;
                     job.CompletedAt = DateTime.Now;
                 }
                 else if (inventorySource.InventoryType == InventorySourceTypeEnum.Diginet)
                 {
                     // nothing to process so just set Succeeded status. Diginet template already have spot cost calculated
-                    job.Status = InventoryFileRatingsProcessingStatus.Succeeded;
+                    job.Status = BackgroundJobProcessingStatus.Succeeded;
                     job.CompletedAt = DateTime.Now;
                 }
                 else if (inventorySource.InventoryType == InventorySourceTypeEnum.Syndication)
                 {
                     // nothing to process so just set succeeded status. Syndication template already have spot cost calculated
-                    job.Status = InventoryFileRatingsProcessingStatus.Succeeded;
+                    job.Status = BackgroundJobProcessingStatus.Succeeded;
                     job.CompletedAt = DateTime.Now;
                 }
                 else if (inventorySource.InventoryType == InventorySourceTypeEnum.OpenMarket)
@@ -189,24 +184,31 @@ namespace Services.Broadcast.ApplicationServices
                     // save all changes to DB
                     _InventoryRepository.UpdateInventoryManifests(manifests);
 
-                    job.Status = InventoryFileRatingsProcessingStatus.Succeeded;
+                    job.Status = BackgroundJobProcessingStatus.Succeeded;
                     job.CompletedAt = DateTime.Now;
                 }
                 else
                 {
                     // Failed for unsupported types
-                    job.Status = InventoryFileRatingsProcessingStatus.Failed;
+                    job.Status = BackgroundJobProcessingStatus.Failed;
                 }
                 
                 _InventoryFileRatingsJobsRepository.UpdateJob(job);
             }
-            catch (Exception e)
+            catch
             {
-                job.Status = InventoryFileRatingsProcessingStatus.Failed;
+                job.Status = BackgroundJobProcessingStatus.Failed;
                 _InventoryFileRatingsJobsRepository.UpdateJob(job);
                 throw;
             }
         }
 
+        public void ResetJobStatusToQueued(int jobId)
+        {
+            var job = _InventoryFileRatingsJobsRepository.GetJobById(jobId);
+            job.Status = BackgroundJobProcessingStatus.Queued;
+            job.CompletedAt = null;
+            _InventoryFileRatingsJobsRepository.UpdateJob(job);
+        }
     }
 }

@@ -10,6 +10,7 @@ using ConfigurationService.Client;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
 using Tam.Maestro.Services.Clients;
+using Services.Broadcast.Entities.Enums;
 
 namespace Services.Broadcast.Repositories
 {
@@ -175,7 +176,7 @@ namespace Services.Broadcast.Repositories
                             {
                                 FileId = f.file_id,
                                 JobCompletedDate = f.completed_at,
-                                JobStatus = (InventoryFileRatingsProcessingStatus?)f.status,
+                                JobStatus = (BackgroundJobProcessingStatus?)f.status,
                                 HutProjectionBookId = f.hut_projection_book_id,
                                 ShareProjectionBookId = f.share_projection_book_id,
                                 CreatedDate = f.created_date

@@ -277,6 +277,15 @@
         <EntityTypeShape EntityType="BroadcastModel.audience_maps" Width="1.5" PointX="5" PointY="30.75" />
         <AssociationConnector Association="BroadcastModel.FK_audience_maps_audiences" />
         <AssociationConnector Association="BroadcastModel.FK_station_inventory_manifest_dayparts_daypart_codes" />
+        <EntityTypeShape EntityType="BroadcastModel.scx_generation_job_files" Width="1.5" PointX="19.875" PointY="36.875" />
+        <EntityTypeShape EntityType="BroadcastModel.scx_generation_job_units" Width="1.5" PointX="9.875" PointY="22.625" />
+        <EntityTypeShape EntityType="BroadcastModel.scx_generation_jobs" Width="1.5" PointX="7.625" PointY="32.75" />
+        <AssociationConnector Association="BroadcastModel.FK_scx_generation_job_files_daypart_codes" />
+        <AssociationConnector Association="BroadcastModel.FK_scx_generation_jobs_daypart_codes" />
+        <AssociationConnector Association="BroadcastModel.FK_scx_generation_job_files_inventory_sources" />
+        <AssociationConnector Association="BroadcastModel.FK_scx_generation_jobs_inventory_sources" />
+        <AssociationConnector Association="BroadcastModel.FK_scx_generation_job_files_scx_generation_job" />
+        <AssociationConnector Association="BroadcastModel.FK_scx_generation_job_units_scx_generation_jobs" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -226,6 +226,10 @@
   <ItemGroup>
     <Compile Include="Aggregates\SchedulesAggregate.cs" />
     <Compile Include="ApplicationServices\DaypartCodeService.cs" />
+    <Compile Include="Entities\Enums\BackgroundJobProcessingStatus.cs" />
+    <Compile Include="Entities\ScxGenerationJob.cs" />
+    <Compile Include="Repositories\ScxGenerationJobRepository.cs" />
+    <Compile Include="ApplicationServices\ScxGenerationService.cs" />
     <Compile Include="BusinessEngines\InventorySummaryRatesGapEngine.cs" />
     <Compile Include="Cache\BaseMemoryCache.cs" />
     <Compile Include="Cache\InventorySummaryCache.cs" />

@@ -38,6 +38,13 @@ namespace Services.Broadcast.ApplicationServices
         /// </summary>
         /// <returns>Returns a zip archive as stream and the zip name</returns>
         Tuple<string, Stream> GenerateScxFileArchive(InventoryScxDownloadRequest request);
+
+        /// <summary>
+        /// Generate a list of SCX files for a request
+        /// </summary>
+        /// <param name="request">The generation request</param>
+        /// <returns></returns>
+        List<InventoryScxFile> GenerateScxFiles(InventoryScxDownloadRequest request);
     }
 
     public class ProprietaryInventoryService : IProprietaryInventoryService
@@ -224,7 +231,7 @@ namespace Services.Broadcast.ApplicationServices
             {
                 foreach (var scxFile in scxFiles)
                 {
-                    var scxFileName = string.Format(fileNameTemplate, scxFile.InventorySourceName, scxFile.UnitName);
+                    var scxFileName = string.Format(fileNameTemplate, scxFile.InventorySource.Name, scxFile.UnitName);
                     var archiveEntry = archive.CreateEntry(scxFileName, System.IO.Compression.CompressionLevel.Fastest);
 
                     using (var zippedStreamEntry = archiveEntry.Open())
@@ -237,6 +244,15 @@ namespace Services.Broadcast.ApplicationServices
             archiveFile.Seek(0, SeekOrigin.Begin);
 
             return new Tuple<string, Stream>(archiveFileName, archiveFile);
+        }
+
+        public List<InventoryScxFile> GenerateScxFiles(InventoryScxDownloadRequest request)
+        {
+            var inventorySource = _InventoryRepository.GetInventorySource(request.InventorySourceId);
+            var inventoryDataPrep = _InventoryScxDataPrepFactory.GetInventoryDataPrep(inventorySource.InventoryType);
+            var inventoryData = inventoryDataPrep.GetInventoryScxData(request.InventorySourceId, request.DaypartCodeId, request.StartDate, request.EndDate, request.UnitNames);
+
+            return _InventoryScxDataConverter.ConvertInventoryData(inventoryData);
         }
 
         private InventorySource _ReadInventorySourceFromFile(Stream streamData)

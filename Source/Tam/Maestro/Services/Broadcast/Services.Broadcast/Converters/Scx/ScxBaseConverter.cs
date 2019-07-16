@@ -131,7 +131,7 @@ namespace Services.Broadcast.Converters.Scx
                 var detLine = new detailLine();
                 Array.Resize(ref detLines, detailIndex + 1);
 
-                detLine.program = program.ProgramNames.Single();
+                detLine.program = program.ProgramNames.First();
                 _SetDaypartInfo(detLine, program, data.DaypartCode);
                 detLine.length = string.Format("PT{0}S", data.SpotLength);
                 detLine.comment = " ";
@@ -250,7 +250,7 @@ namespace Services.Broadcast.Converters.Scx
         private void _SetDaypartInfo(detailLine detLine, ScxProgram program, string daypartCode)
         {
             detLine.startDay = detailLineStartDay.M;
-            var daypart = _DaypartCache.GetDisplayDaypart(program.Dayparts.Single().Id);
+            var daypart = _DaypartCache.GetDisplayDaypart(program.Dayparts.First().Id);
             DateTime lStartTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0, 0);
             lStartTime = lStartTime.Add(new TimeSpan(0, 0, 0, daypart.StartTime, 0));
             detLine.startTime = lStartTime;

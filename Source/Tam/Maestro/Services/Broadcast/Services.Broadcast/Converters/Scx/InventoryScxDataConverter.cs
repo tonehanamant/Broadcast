@@ -53,8 +53,11 @@ namespace Services.Broadcast.Converters.Scx
                 scxFiles.Add(new InventoryScxFile
                 {
                     ScxStream = stream,
-                    InventorySourceName = scxDataObject.InventorySource.Name,
-                    UnitName = scxDataObject.UnitName
+                    InventorySource = scxDataObject.InventorySource,
+                    DaypartCodeId = scxDataObject.DaypartCodeId,
+                    UnitName = scxDataObject.UnitName,
+                    StartDate = scxDataObject.StartDate,
+                    EndDate = scxDataObject.EndDate
                 });
             }
 

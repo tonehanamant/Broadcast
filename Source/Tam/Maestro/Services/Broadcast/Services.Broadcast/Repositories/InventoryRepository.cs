@@ -1137,7 +1137,7 @@ namespace Services.Broadcast.Repositories
                         if (file.inventory_file_ratings_jobs.Any())
                         {
                             var fileJob = file.inventory_file_ratings_jobs.OrderBy(j => j.id).Last();
-                            fileHistory.FileProcessingStatus = (InventoryFileRatingsProcessingStatus)fileJob.status;
+                            fileHistory.FileProcessingStatus = (BackgroundJobProcessingStatus)fileJob.status;
                         }
 
                         result.Add(fileHistory);

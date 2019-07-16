@@ -46,7 +46,7 @@ namespace Services.Broadcast.Converters.Scx
                 var unitName = group.Key.GroupName;
                 var inventorySource = firstGroup.InventorySource;
                 var spotLength = _SpotLengthEngine.GetSpotLengthValueById(firstGroup.Manifests.First().SpotLengthId);
-                var scxData = CreateScxData(startDate, endDate, inventorySource, markets, manifests.ToList(), weeks, spotLength, daypartCode, unitName);
+                var scxData = CreateScxData(startDate, endDate, inventorySource, markets, manifests.ToList(), weeks, spotLength, daypartCodeId, daypartCode, unitName);
 
                 result.Add(scxData);
             }

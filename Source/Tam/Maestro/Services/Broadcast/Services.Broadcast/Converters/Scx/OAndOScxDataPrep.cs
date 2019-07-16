@@ -43,7 +43,7 @@ namespace Services.Broadcast.Converters.Scx
             var daypartCode = firstManifest.DaypartCode;
             var unitName = firstManifest.DaypartCode;
             var spotLength = _SpotLengthEngine.GetSpotLengthValueById(firstManifest.SpotLengthId);
-            var scxData = CreateScxData(startDate, endDate, inventorySource, markets, manifests, weeks, spotLength, daypartCode, unitName);
+            var scxData = CreateScxData(startDate, endDate, inventorySource, markets, manifests, weeks, spotLength, daypartCodeId, daypartCode, unitName);
 
             result.Add(scxData);
 

@@ -52,6 +52,7 @@ namespace Services.Broadcast.Converters.Scx
             List<StationInventoryManifest> manifests,
             IEnumerable<StationInventoryManifestWeek> weeks,
             int spotLength,
+            int daypartCodeId,
             string daypartCode,
             string unitName)
         {
@@ -59,6 +60,7 @@ namespace Services.Broadcast.Converters.Scx
 
             var scxData = new ScxData
             {
+                DaypartCodeId = daypartCodeId,
                 DaypartCode = daypartCode,
                 StartDate = weeks.Min(x => x.StartDate),
                 EndDate = weeks.Max(x => x.EndDate),

@@ -108,55 +108,21 @@ namespace BroadcastComposerWeb.Controllers
         }
 
         /// <summary>
-        /// Generates the SCX zip archive containing all the inventory, for CNN, Q12019, all units
+        /// Enqueues a job to generate the SCX files based on the parameters sent.
+        /// The SCX will be generated and saved in the folder location
         /// </summary>
-        /// <remarks>Returns same archive every time to support old UI</remarks>
-        /// <returns>A zip archive containing multiple .scx files</returns>
-        [HttpGet]
-        [Route("ScxArchive")]
-        public HttpResponseMessage GenerateScxArchive(DateTime? nowDate = null)
-        {
-            InventoryScxDownloadRequest request = new InventoryScxDownloadRequest()
-            {
-                StartDate = new DateTime(2019, 01, 01),
-                EndDate = new DateTime(2019, 03, 31),
-                InventorySourceId = 5,
-                UnitNames = new List<string> { "Unit 1", "Unit 2", "Unit 3", "Unit 4", "AM News1", "AM News2", "AM News3", "AM News4", "AM News5" },
-                DaypartCodeId = 2
-            };
-            var archive = _ApplicationServiceFactory.GetApplicationService<IProprietaryInventoryService>().GenerateScxFileArchive(request);
-
-            var result = Request.CreateResponse(HttpStatusCode.OK);
-            result.Content = new StreamContent(archive.Item2);
-            result.Content.Headers.ContentType = new MediaTypeHeaderValue("application/zip");
-            result.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
-            {
-                FileName = archive.Item1
-            };
-
-            return result;
-        }
-
-        /// <summary>
-        /// Generates the SCX zip archive containing all the inventory, filter by the input parameters
-        /// </summary>
-        /// <remarks>Current code returns inventory for first quarter</remarks>
-        /// <returns>A zip archive containing multiple .scx files</returns>
+        /// <returns>Success or failure to create a new job to generate the SCX files</returns>
         [HttpGet]
         [Route("ScxDownload")]
-        public HttpResponseMessage GenerateScxArchive([FromUri(Name = "")]InventoryScxDownloadRequest request)
+        public BaseResponse GenerateScxArchive([FromUri(Name = "")]InventoryScxDownloadRequest request)
         {
-            var archive = _ApplicationServiceFactory.GetApplicationService<IProprietaryInventoryService>().GenerateScxFileArchive(request);
+            _ApplicationServiceFactory.GetApplicationService<IScxGenerationService>().QueueScxGenerationJob(request, Identity.Name, DateTime.Now);
 
-            var result = Request.CreateResponse(HttpStatusCode.OK);
-            result.Content = new StreamContent(archive.Item2);
-            result.Content.Headers.ContentType = new MediaTypeHeaderValue("application/zip");
-            result.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
+            return new BaseResponse
             {
-                FileName = archive.Item1
+                Success = true,
+                Message = "SCX file generation job has been added to the queue successfully"
             };
-
-            return result;
         }
 
         [HttpPost]

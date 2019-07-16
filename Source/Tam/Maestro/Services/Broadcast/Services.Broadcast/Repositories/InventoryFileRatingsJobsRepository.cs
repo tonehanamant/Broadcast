@@ -10,6 +10,7 @@ using ConfigurationService.Client;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
 using Tam.Maestro.Services.Clients;
+using Services.Broadcast.Entities.Enums;
 
 namespace Services.Broadcast.Repositories
 {
@@ -58,7 +59,7 @@ namespace Services.Broadcast.Repositories
                         {
                             id = j.id,
                             InventoryFileId = j.inventory_file_id,
-                            Status = (InventoryFileRatingsProcessingStatus)j.status,
+                            Status = (BackgroundJobProcessingStatus)j.status,
                             QueuedAt = j.queued_at,
                             CompletedAt = j.completed_at
                         }).SingleOrDefault();
@@ -79,7 +80,7 @@ namespace Services.Broadcast.Repositories
                         {
                             id = j.id,
                             InventoryFileId = j.inventory_file_id,
-                            Status = (InventoryFileRatingsProcessingStatus)j.status,
+                            Status = (BackgroundJobProcessingStatus)j.status,
                             QueuedAt = j.queued_at,
                             CompletedAt = j.completed_at
                         }).SingleOrDefault();
@@ -94,13 +95,13 @@ namespace Services.Broadcast.Repositories
                 context =>
                 {
                     var jobs = context.inventory_file_ratings_jobs
-                        .Where(j => j.status == (int)InventoryFileRatingsProcessingStatus.Queued)
+                        .Where(j => j.status == (int)BackgroundJobProcessingStatus.Queued)
                         .OrderBy(j => j.queued_at).Take(limit)
                         .Select(j => new InventoryFileRatingsProcessingJob
                         {
                             id = j.id,
                             InventoryFileId = j.inventory_file_id,
-                            Status = (InventoryFileRatingsProcessingStatus)j.status,
+                            Status = (BackgroundJobProcessingStatus)j.status,
                             QueuedAt = j.queued_at,
                             CompletedAt = j.completed_at
                         }).ToList();
@@ -128,7 +129,7 @@ namespace Services.Broadcast.Repositories
                 context =>
                 {
                     var job = context.inventory_file_ratings_jobs
-                        .Where(j => j.status == (int)InventoryFileRatingsProcessingStatus.Queued)
+                        .Where(j => j.status == (int)BackgroundJobProcessingStatus.Queued)
                         .OrderByDescending(j => j.queued_at)
                         .FirstOrDefault();
                     
@@ -136,7 +137,7 @@ namespace Services.Broadcast.Repositories
                     {
                         id = job.id,
                         InventoryFileId = job.inventory_file_id,
-                        Status = (InventoryFileRatingsProcessingStatus)job.status,
+                        Status = (BackgroundJobProcessingStatus)job.status,
                         QueuedAt = job.queued_at,
                         CompletedAt = job.completed_at
                     };

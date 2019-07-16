@@ -502,6 +502,21 @@ namespace Tam.Maestro.Common.SystemComponentParameter
             get { return "RelativePathToMarketCoveragesFile"; }
         }
 	 
+		public static string ScxGenerationFolder  
+		{
+            get { return "ScxGenerationFolder"; }
+        }
+	 
+		public static string ScxGenerationJobIntervalSeconds  
+		{
+            get { return "ScxGenerationJobIntervalSeconds"; }
+        }
+	 
+		public static string ScxGenerationParallelJobs  
+		{
+            get { return "ScxGenerationParallelJobs"; }
+        }
+	 
 		public static string UseMaestroDaypartRepo  
 		{
             get { return "UseMaestroDaypartRepo"; }
@@ -1099,6 +1114,11 @@ namespace Tam.Maestro.Common.SystemComponentParameter
 		public static string AwsAccessKeyId  
 		{
             get { return "AwsAccessKeyId"; }
+        }
+	 
+		public static string AwsEgressZoneRole  
+		{
+            get { return "AwsEgressZoneRole"; }
         }
 	 
 		public static string AwsRegion  
@@ -1779,6 +1799,11 @@ namespace Tam.Maestro.Common.SystemComponentParameter
             get { return "ReportGeneration" ; }
         }
 	  
+		public static string PDFThreadCount  
+		{
+            get { return "PDFThreadCount"; }
+        }
+	 
 		public static string UseWebExcelReportGeneration  
 		{
             get { return "UseWebExcelReportGeneration"; }

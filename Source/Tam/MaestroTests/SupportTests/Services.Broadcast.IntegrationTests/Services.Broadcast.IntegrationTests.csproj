@@ -251,6 +251,7 @@
     <Compile Include="ApplicationServices\PostLogServiceTests.cs" />
     <Compile Include="ApplicationServices\PricingGuideServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\ProprietarySpotCostCalculationEngineIntegrationTests.cs" />
+    <Compile Include="ApplicationServices\ScxGenerationServiceTests.cs" />
     <Compile Include="ApplicationServices\SigmaConverterTests.cs" />
     <Compile Include="ApplicationServices\BvsRepositoryIntegrationTests.cs" />
     <Compile Include="ApplicationServices\ImpressionAdjustmentEngineIntegrationTests.cs" />

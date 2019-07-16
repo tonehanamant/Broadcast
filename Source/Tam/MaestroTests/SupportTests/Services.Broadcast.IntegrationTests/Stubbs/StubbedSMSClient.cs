@@ -205,6 +205,15 @@ namespace Services.Broadcast.IntegrationTests
                 case "InventoryUploadErrorsFolder":
                     result = @"\\cadfs11\Inventory Management UI\Continuous Deployment";
                     break;
+                case "ScxGenerationFolder":
+                    result = Path.GetTempPath();
+                    break;
+                case "ScxGenerationIntervalSeconds":
+                    result = "300";
+                    break;
+                case "ScxGenerationParallelJobs":
+                    result = "3";
+                    break;
                 default:
                     throw new Exception("Unknown SystemComponentParameter: " + pSystemParameterID);
             }

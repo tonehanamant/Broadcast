@@ -1,4 +1,5 @@
 ﻿using Services.Broadcast.ApplicationServices;
+using Services.Broadcast.Entities.Enums;
 using System;
 
 namespace Services.Broadcast.Entities.InventorySummary
@@ -9,7 +10,7 @@ namespace Services.Broadcast.Entities.InventorySummary
         public DateTime? JobCompletedDate { get; set; }
         public int? HutProjectionBookId { get; set; }
         public int? ShareProjectionBookId { get; set; }
-        public InventoryFileRatingsProcessingStatus? JobStatus { get; set; }
+        public BackgroundJobProcessingStatus? JobStatus { get; set; }
         public DateTime CreatedDate { get; set; }
     }
 }

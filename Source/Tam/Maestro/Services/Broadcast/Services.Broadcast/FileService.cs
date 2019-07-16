@@ -55,6 +55,8 @@ namespace Common.Services
         /// <returns>New file path</returns>
         string Copy(Stream inputStream, string destinationPath, bool overwriteExisting = false);
 
+        void Create(string path, Stream stream);
+
         /// <summary>
         /// Creates a zip archive file from the file paths
         /// </summary>
@@ -256,6 +258,18 @@ namespace Common.Services
         public void CreateTextFile(string filePath, List<string> lines)
         {
             File.WriteAllLines(filePath, lines);
+        }
+
+        public void Create(string path, Stream stream)
+        {
+            if (File.Exists(path))
+                File.Delete(path);
+
+            using (var file = File.Create(path))
+            {
+                stream.Seek(0, SeekOrigin.Begin);
+                stream.CopyTo(file);
+            }
         }
     }
 }

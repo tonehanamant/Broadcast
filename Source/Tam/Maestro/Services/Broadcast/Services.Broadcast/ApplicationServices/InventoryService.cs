@@ -738,13 +738,13 @@ namespace Services.Broadcast.ApplicationServices
                     continue;
                 }
 
-                if(uploadFile.FileProcessingStatus == InventoryFileRatingsProcessingStatus.Failed)
+                if(uploadFile.FileProcessingStatus == BackgroundJobProcessingStatus.Failed)
                 {
                     uploadFile.Status = "Processing Error";
                     continue;
                 }
 
-                if(uploadFile.FileProcessingStatus == InventoryFileRatingsProcessingStatus.Succeeded)
+                if(uploadFile.FileProcessingStatus == BackgroundJobProcessingStatus.Succeeded)
                 {
                     uploadFile.Status = "Succeeded";
                     continue;

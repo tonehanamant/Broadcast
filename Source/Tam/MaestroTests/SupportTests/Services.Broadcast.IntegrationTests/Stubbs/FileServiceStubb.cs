@@ -68,6 +68,23 @@ namespace Services.Broadcast.IntegrationTests
         {
             throw new NotImplementedException();
         }
+
+        public virtual void Create(string path, Stream stream)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class InMemoryFileServiceStubb : FileServiceStubb
+    {
+        public List<string> Paths { get; set; } = new List<string>();
+        public List<Stream> Streams { get; set; } = new List<Stream>();
+
+        public override void Create(string path, Stream stream)
+        {
+            Paths.Add(path);
+            Streams.Add(stream);
+        }
     }
 
     public class FileServiceSingleFileStubb : FileServiceStubb

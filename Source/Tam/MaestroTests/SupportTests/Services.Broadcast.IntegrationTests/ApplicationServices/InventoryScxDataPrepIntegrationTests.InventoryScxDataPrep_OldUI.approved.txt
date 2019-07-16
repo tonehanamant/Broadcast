@@ -2,6 +2,7 @@
   {
     "AdvertisersName": null,
     "DaypartCode": "MDN",
+    "DaypartCodeId": 2,
     "Demos": null,
     "EndDate": "2019-03-20T00:00:00",
     "GuaranteedDemoId": 0,
@@ -1652,6 +1653,7 @@
   {
     "AdvertisersName": null,
     "DaypartCode": "MDN",
+    "DaypartCodeId": 2,
     "Demos": null,
     "EndDate": "2019-03-20T00:00:00",
     "GuaranteedDemoId": 0,
@@ -2656,6 +2658,7 @@
   {
     "AdvertisersName": null,
     "DaypartCode": "MDN",
+    "DaypartCodeId": 2,
     "Demos": null,
     "EndDate": "2019-03-20T00:00:00",
     "GuaranteedDemoId": 0,

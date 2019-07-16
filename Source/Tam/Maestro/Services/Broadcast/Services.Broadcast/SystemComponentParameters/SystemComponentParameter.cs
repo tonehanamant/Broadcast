@@ -557,6 +557,24 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.RelativePathToMarketCoveragesFile); }
         }
 	 
+		public static string ScxGenerationFolder  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.ScxGenerationFolder); }
+        }
+	 
+		public static int ScxGenerationJobIntervalSeconds  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<int>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.ScxGenerationJobIntervalSeconds); }
+        }
+	 
+		public static int ScxGenerationParallelJobs  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<int>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.ScxGenerationParallelJobs); }
+        }
+	 
 		public static bool UseMaestroDaypartRepo  
 		{
             get { return SystemComponentHelper.GetPropertyValue<bool>
@@ -1188,6 +1206,12 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 		{
             get { return SystemComponentHelper.GetPropertyValue<string>
 					(PostLogServiceSystemParameterNames.ComponentID , PostLogServiceSystemParameterNames.AwsAccessKeyId); }
+        }
+	 
+		public static string AwsEgressZoneRole  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(PostLogServiceSystemParameterNames.ComponentID , PostLogServiceSystemParameterNames.AwsEgressZoneRole); }
         }
 	 
 		public static string AwsRegion  
@@ -1964,6 +1988,12 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 	 
 	public static class ReportGenerationSystemParameter 
 	{ 
+		public static int PDFThreadCount  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<int>
+					(ReportGenerationSystemParameterNames.ComponentID , ReportGenerationSystemParameterNames.PDFThreadCount); }
+        }
+	 
 		public static bool UseWebExcelReportGeneration  
 		{
             get { return SystemComponentHelper.GetPropertyValue<bool>

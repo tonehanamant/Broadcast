@@ -22,7 +22,7 @@ namespace Services.Broadcast.Entities.InventorySummary
         public int Rows { get; set; }
         public String Status { get; set; }
         public FileStatusEnum FileLoadStatus { get; set; }
-        public InventoryFileRatingsProcessingStatus FileProcessingStatus { get; set; }
+        public BackgroundJobProcessingStatus FileProcessingStatus { get; set; }
 
 
     }

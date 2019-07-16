@@ -7,6 +7,7 @@ namespace Services.Broadcast.Entities.Scx
 {
     public class ScxData
     {
+        public int DaypartCodeId { get; set; }
         public string DaypartCode { get; set; }
         public string AdvertisersName { get; set; }
         public string SpotLength { get; set; }

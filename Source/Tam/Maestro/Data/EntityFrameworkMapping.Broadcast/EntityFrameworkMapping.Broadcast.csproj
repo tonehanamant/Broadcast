@@ -608,6 +608,15 @@
     <Compile Include="schedule_restriction_dayparts.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="scx_generation_jobs.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="scx_generation_job_files.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="scx_generation_job_units.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="show_types.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>

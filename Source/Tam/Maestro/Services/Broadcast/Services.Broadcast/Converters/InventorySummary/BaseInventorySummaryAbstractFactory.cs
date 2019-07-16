@@ -2,6 +2,7 @@
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Cache;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.InventorySummary;
 using Services.Broadcast.Entities.StationInventory;
 using Services.Broadcast.Repositories;
@@ -111,8 +112,8 @@ namespace Services.Broadcast.Converters.InventorySummary
 
         protected bool GetIsInventoryUpdating(List<InventorySummaryManifestFileDto> inventorySummaryManifestFiles)
         {
-            return inventorySummaryManifestFiles.Any(x => x.JobStatus == InventoryFileRatingsProcessingStatus.Queued ||
-                                                          x.JobStatus == InventoryFileRatingsProcessingStatus.Processing);
+            return inventorySummaryManifestFiles.Any(x => x.JobStatus == BackgroundJobProcessingStatus.Queued ||
+                                                          x.JobStatus == BackgroundJobProcessingStatus.Processing);
         }
 
         protected DateTime? GetLastJobCompletedDate(List<InventorySummaryManifestFileDto> inventorySummaryManifestFiles)

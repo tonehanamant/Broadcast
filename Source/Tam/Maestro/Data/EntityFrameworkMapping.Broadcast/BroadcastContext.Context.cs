@@ -136,5 +136,8 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<station_inventory_manifest_weeks_history> station_inventory_manifest_weeks_history { get; set; }
         public virtual DbSet<inventory_source_logos> inventory_source_logos { get; set; }
         public virtual DbSet<audience_maps> audience_maps { get; set; }
+        public virtual DbSet<scx_generation_job_files> scx_generation_job_files { get; set; }
+        public virtual DbSet<scx_generation_job_units> scx_generation_job_units { get; set; }
+        public virtual DbSet<scx_generation_jobs> scx_generation_jobs { get; set; }
     }
 }
