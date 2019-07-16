@@ -1336,34 +1336,6 @@ END
 
 /*************************************** START PRI-10290 *****************************************************/
 
--- [scx_generation_job_requests]
-IF (NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES 
-                WHERE TABLE_SCHEMA = 'dbo' AND 
-				      TABLE_NAME = 'scx_generation_job_requests'))
-BEGIN
-	CREATE TABLE [dbo].[scx_generation_job_requests](
-		[id] [int] IDENTITY(1,1) NOT NULL,
-		[inventory_source_id] [int] NOT NULL,
-		[daypart_code_id] [int] NOT NULL,
-		[start_date] [datetime] NOT NULL,
-		[end_date] [datetime] NOT NULL,
-	 CONSTRAINT [PK_scx_generation_job_requests] PRIMARY KEY CLUSTERED 
-	(
-		[id] ASC
-	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
-	) ON [PRIMARY]
-	
-	ALTER TABLE [dbo].[scx_generation_job_requests]  WITH CHECK ADD  CONSTRAINT [FK_scx_generation_job_requests_inventory_sources] FOREIGN KEY([inventory_source_id])
-	REFERENCES [dbo].[inventory_sources] ([id])
-	
-	ALTER TABLE [dbo].[scx_generation_job_requests] CHECK CONSTRAINT [FK_scx_generation_job_requests_inventory_sources]
-	
-	ALTER TABLE [dbo].[scx_generation_job_requests]  WITH CHECK ADD  CONSTRAINT [FK_scx_generation_job_requests_daypart_codes] FOREIGN KEY([daypart_code_id])
-	REFERENCES [dbo].[daypart_codes] ([id])
-	
-	ALTER TABLE [dbo].[scx_generation_job_requests] CHECK CONSTRAINT [FK_scx_generation_job_requests_daypart_codes]
-END
-
 -- [scx_generation_jobs]
 IF (NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES 
                 WHERE TABLE_SCHEMA = 'dbo' AND 
@@ -1371,7 +1343,10 @@ IF (NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES
 BEGIN
 	CREATE TABLE [dbo].[scx_generation_jobs](
 		[id] [int] IDENTITY(1,1) NOT NULL,
-		[scx_generation_job_request_id] [int] NOT NULL,
+		[inventory_source_id] [int] NOT NULL,
+		[daypart_code_id] [int] NOT NULL,
+		[start_date] [datetime] NOT NULL,
+		[end_date] [datetime] NOT NULL,
 		[status] [int] NOT NULL,
 		[queued_at] [datetime] NOT NULL,
 		[completed_at] [datetime] NULL,
@@ -1382,20 +1357,25 @@ BEGIN
 	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
 	) ON [PRIMARY]
 
-	ALTER TABLE [dbo].[scx_generation_jobs]  WITH CHECK ADD  CONSTRAINT [FK_scx_generation_jobs_scx_generation_job_requests] FOREIGN KEY([scx_generation_job_request_id])
-	REFERENCES [dbo].[scx_generation_job_requests] ([id])
-
-	ALTER TABLE [dbo].[scx_generation_jobs] CHECK CONSTRAINT [FK_scx_generation_jobs_scx_generation_job_requests]
+	ALTER TABLE [dbo].[scx_generation_jobs] WITH CHECK ADD  CONSTRAINT [FK_scx_generation_jobs_inventory_sources] FOREIGN KEY([inventory_source_id])
+	REFERENCES [dbo].[inventory_sources] ([id])
+	
+	ALTER TABLE [dbo].[scx_generation_jobs] CHECK CONSTRAINT [FK_scx_generation_jobs_inventory_sources]
+	
+	ALTER TABLE [dbo].[scx_generation_jobs] WITH CHECK ADD CONSTRAINT [FK_scx_generation_jobs_daypart_codes] FOREIGN KEY([daypart_code_id])
+	REFERENCES [dbo].[daypart_codes] ([id])
+	
+	ALTER TABLE [dbo].[scx_generation_jobs] CHECK CONSTRAINT [FK_scx_generation_jobs_daypart_codes]
 END
 
 -- [scx_generation_job_request_units]
 IF (NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES 
                 WHERE TABLE_SCHEMA = 'dbo' AND 
-				      TABLE_NAME = 'scx_generation_job_request_units'))
+				      TABLE_NAME = 'scx_generation_job_units'))
 BEGIN
-	CREATE TABLE [dbo].[scx_generation_job_request_units](
+	CREATE TABLE [dbo].[scx_generation_job_units](
 		[id] [int] IDENTITY(1,1) NOT NULL,
-		[scx_generation_job_request_id] [int] NOT NULL,
+		[scx_generation_job_id] [int] NOT NULL,
 		[unit_name] varchar(50) NOT NULL
 	 CONSTRAINT [PK_scx_generation_job_request_units] PRIMARY KEY CLUSTERED 
 	(
@@ -1403,10 +1383,10 @@ BEGIN
 	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
 	) ON [PRIMARY]
 
-	ALTER TABLE [dbo].[scx_generation_job_request_units]  WITH CHECK ADD  CONSTRAINT [FK_scx_generation_job_request_units_scx_generation_job_requests] FOREIGN KEY([scx_generation_job_request_id])
-	REFERENCES [dbo].[scx_generation_job_requests] ([id])
+	ALTER TABLE [dbo].[scx_generation_job_units]  WITH CHECK ADD  CONSTRAINT [FK_scx_generation_job_units_scx_generation_jobs] FOREIGN KEY([scx_generation_job_id])
+	REFERENCES [dbo].[scx_generation_jobs] ([id])
 
-	ALTER TABLE [dbo].[scx_generation_job_request_units] CHECK CONSTRAINT [FK_scx_generation_job_request_units_scx_generation_job_requests]
+	ALTER TABLE [dbo].[scx_generation_job_units] CHECK CONSTRAINT [FK_scx_generation_job_units_scx_generation_jobs]
 END
 
 --[scx_generation_job_files]
@@ -1444,7 +1424,6 @@ BEGIN
 	
 	ALTER TABLE [dbo].[scx_generation_job_files] CHECK CONSTRAINT [FK_scx_generation_job_files_daypart_codes]
 END
-
 
 /*************************************** END PRI-10290 *******************************************************/
 
