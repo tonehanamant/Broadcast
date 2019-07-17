@@ -6,7 +6,7 @@ using System.Reflection;
 using System.ServiceModel;
 using Microsoft.Practices.EnterpriseLibrary.SemanticLogging;
 using Microsoft.Practices.EnterpriseLibrary.SemanticLogging.Sinks;
-using Tam.Maestro.Common.Logging;
+using Tam.Maestro.Common.Utilities.Logging;
 using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Services.Clients;
 
@@ -26,14 +26,14 @@ namespace Services.Broadcast.Services
             var userName = _GetWindowsUserName();
             var environment = SMSClient.Handler.TamEnvironment;
 
-            TamMaestroEventSource.Log.ServiceCallStart(ServiceName, methodName, userName, environment);
-
+            LogHelper.Log.ServiceCallStart(ServiceName, methodName, userName, environment);
             var stopWatch = Stopwatch.StartNew();
             func();
             stopWatch.Stop();
 
-            TamMaestroEventSource.Log.ServiceCallStop(ServiceName, methodName, userName, environment);
-            TamMaestroEventSource.Log.ServiceCallTotalTime(ServiceName, methodName, stopWatch.Elapsed.TotalSeconds, userName, environment);
+            
+            LogHelper.Log.ServiceCallStop(ServiceName, methodName, userName, environment);
+            LogHelper.Log.ServiceCallTotalTime(ServiceName, methodName, stopWatch.Elapsed.TotalSeconds, userName, environment);
         }
 
 
@@ -42,15 +42,15 @@ namespace Services.Broadcast.Services
             var userName = _GetWindowsUserName();
             var environment = SMSClient.Handler.TamEnvironment;
 
-            TamMaestroEventSource.Log.ServiceCallStart(ServiceName, methodName, userName, environment);
+            LogHelper.Log.ServiceCallStart(ServiceName, methodName, userName, environment);
 
             var stopWatch = Stopwatch.StartNew();
             var results = func();
             stopWatch.Stop();
 
-            TamMaestroEventSource.Log.ServiceCallStop(ServiceName, methodName, userName, environment);
-            TamMaestroEventSource.Log.ServiceCallTotalTime(ServiceName, methodName, stopWatch.Elapsed.TotalSeconds, userName, environment);
-
+            LogHelper.Log.ServiceCallStop(ServiceName, methodName, userName, environment);
+            LogHelper.Log.ServiceCallTotalTime(ServiceName, methodName, stopWatch.Elapsed.TotalSeconds, userName, environment);
+            
             return results;
         }
 
@@ -81,7 +81,7 @@ namespace Services.Broadcast.Services
             if (exception != null)
                 expMessage = exception.ToString();
 
-            TamMaestroEventSource.Log.ServiceError(serviceName, message, expMessage, userName, environment);
+            LogHelper.Log.ServiceError(serviceName, message, expMessage, userName, environment);
         }
 
         public void LogServiceErrorNoCallStack(string message)
@@ -106,7 +106,8 @@ namespace Services.Broadcast.Services
             catch
             {
             }
-            TamMaestroEventSource.Log.ServiceErrorNoCallStack(serviceName, message, userName, environment);
+
+            LogHelper.Log.ServiceErrorNoCallStack(serviceName, message, userName, environment);
         }
 
         public void LogServiceEvent(string message)
@@ -132,7 +133,7 @@ namespace Services.Broadcast.Services
             {
             }
 
-            TamMaestroEventSource.Log.ServiceEvent(serviceName, message, userName, environment);
+            LogHelper.Log.ServiceEvent(serviceName, message, userName, environment);
         }
 
         private static string _GetWindowsUserName()
@@ -170,7 +171,7 @@ namespace Services.Broadcast.Services
         {
             var listener = new ObservableEventListener();
             listener.LogToRollingFlatFile("error_log.txt", 42342343, "yyyy-MM-dd", RollFileExistsBehavior.Increment, RollInterval.Day);
-            listener.EnableEvents(TamMaestroEventSource.Log, EventLevel.Error,Keywords.All);
+            //Not required because removed Common Lib Logging dependency. listener.EnableEvents(TamMaestroEventSource.Log, EventLevel.Error,Keywords.All);
             return listener;
         }
 

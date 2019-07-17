@@ -72,7 +72,7 @@ namespace BroadcastComposerWeb
                     Microsoft.Practices.EnterpriseLibrary.SemanticLogging.Sinks.RollFileExistsBehavior.Increment,
                     Microsoft.Practices.EnterpriseLibrary.SemanticLogging.Sinks.RollInterval.Day);
                 //_logListener.LogToFlatFile(config.LogFilePath);
-                _logListener.EnableEvents(Tam.Maestro.Common.Logging.TamMaestroEventSource.Log, EventLevel.Error);
+               // _logListener.EnableEvents(Tam.Maestro.Common.Logging.TamMaestroEventSource.Log, EventLevel.Error);
             }
 
             _logger.LogEventInformation("Broadcast Web Application Initialized.", "BroadcastController");

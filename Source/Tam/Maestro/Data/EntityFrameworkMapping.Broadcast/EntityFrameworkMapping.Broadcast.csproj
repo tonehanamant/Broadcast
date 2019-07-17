@@ -313,20 +313,11 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="Tam.Maestro.Common.Clients, Version=18.4.1.16, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\Tam.Maestro.Common.Clients.18.4.1.16\lib\net45\Tam.Maestro.Common.Clients.dll</HintPath>
-    </Reference>
-    <Reference Include="Tam.Maestro.Common.DataLayer, Version=18.4.1.14, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\Tam.Maestro.Common.DataLayer.18.4.1.14\lib\net45\Tam.Maestro.Common.DataLayer.dll</HintPath>
-    </Reference>
     <Reference Include="Tam.Maestro.Common.Logging, Version=18.4.1.10, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\Tam.Maestro.Common.Logging.18.4.1.10\lib\net45\Tam.Maestro.Common.Logging.dll</HintPath>
     </Reference>
     <Reference Include="Tam.Maestro.Common.Systems, Version=18.4.1.12, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\Tam.Maestro.Common.Systems.18.4.1.12\lib\net45\Tam.Maestro.Common.Systems.dll</HintPath>
-    </Reference>
-    <Reference Include="Tam.Maestro.Web.Common, Version=18.4.1.12, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\Tam.Maestro.Web.Common.18.4.1.12\lib\net45\Tam.Maestro.Web.Common.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -718,6 +709,12 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common.DataLayer\Common.DataLayer.csproj">
+      <Project>{ee3106ac-43d6-4ea7-b439-0ca5f06f9ba7}</Project>
+      <Name>Common.DataLayer</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
