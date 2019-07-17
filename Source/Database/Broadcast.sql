@@ -50,6 +50,130 @@ GO
 
 /*************************************** START UPDATE SCRIPT *****************************************************/
 
+/*************************************** START PRI-10290 *****************************************************/
+
+IF (EXISTS(SELECT * FROM INFORMATION_SCHEMA.TABLES 
+                WHERE TABLE_SCHEMA = 'dbo' AND 
+				      TABLE_NAME = 'scx_generation_job_request_units'))
+BEGIN
+	DROP TABLE scx_generation_job_request_units
+END
+
+IF (EXISTS(SELECT * FROM INFORMATION_SCHEMA.TABLES 
+                WHERE TABLE_SCHEMA = 'dbo' AND 
+				      TABLE_NAME = 'scx_generation_job_requests'))
+BEGIN
+	DROP TABLE scx_generation_job_requests
+END
+
+-- If the table doesn't have the new column, recreate it and its dependencies.
+IF NOT EXISTS(SELECT 1 FROM sys.columns 
+              WHERE NAME = 'inventory_source_id' AND
+              OBJECT_ID = OBJECT_ID('scx_generation_jobs'))
+BEGIN
+	DROP TABLE scx_generation_job_files
+	DROP TABLE scx_generation_job_units
+	DROP TABLE scx_generation_jobs
+END
+
+-- Renaming incorrectly named PK.
+IF EXISTS (SELECT * 
+		   FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS 
+		   WHERE CONSTRAINT_NAME ='PK_scx_generation_files')
+BEGIN
+	EXEC sp_rename @objname = N'[dbo].[scx_generation_job_files].[PK_scx_generation_files]', @newname = N'PK_scx_generation_job_files'
+END
+
+IF (NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES 
+                WHERE TABLE_SCHEMA = 'dbo' AND 
+				      TABLE_NAME = 'scx_generation_jobs'))
+BEGIN
+	CREATE TABLE [dbo].[scx_generation_jobs](
+		[id] [int] IDENTITY(1,1) NOT NULL,
+		[inventory_source_id] [int] NOT NULL,
+		[daypart_code_id] [int] NOT NULL,
+		[start_date] [datetime] NOT NULL,
+		[end_date] [datetime] NOT NULL,
+		[status] [int] NOT NULL,
+		[queued_at] [datetime] NOT NULL,
+		[completed_at] [datetime] NULL,
+		[requested_by] varchar(63) NOT NULL,
+	 CONSTRAINT [PK_scx_generation_jobs] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY]
+
+	ALTER TABLE [dbo].[scx_generation_jobs] WITH CHECK ADD  CONSTRAINT [FK_scx_generation_jobs_inventory_sources] FOREIGN KEY([inventory_source_id])
+	REFERENCES [dbo].[inventory_sources] ([id])
+	
+	ALTER TABLE [dbo].[scx_generation_jobs] CHECK CONSTRAINT [FK_scx_generation_jobs_inventory_sources]
+	
+	ALTER TABLE [dbo].[scx_generation_jobs] WITH CHECK ADD CONSTRAINT [FK_scx_generation_jobs_daypart_codes] FOREIGN KEY([daypart_code_id])
+	REFERENCES [dbo].[daypart_codes] ([id])
+	
+	ALTER TABLE [dbo].[scx_generation_jobs] CHECK CONSTRAINT [FK_scx_generation_jobs_daypart_codes]
+END
+
+-- [scx_generation_job_request_units]
+IF (NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES 
+                WHERE TABLE_SCHEMA = 'dbo' AND 
+				      TABLE_NAME = 'scx_generation_job_units'))
+BEGIN
+	CREATE TABLE [dbo].[scx_generation_job_units](
+		[id] [int] IDENTITY(1,1) NOT NULL,
+		[scx_generation_job_id] [int] NOT NULL,
+		[unit_name] varchar(50) NOT NULL
+	 CONSTRAINT [PK_scx_generation_job_units] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY]
+
+	ALTER TABLE [dbo].[scx_generation_job_units]  WITH CHECK ADD  CONSTRAINT [FK_scx_generation_job_units_scx_generation_jobs] FOREIGN KEY([scx_generation_job_id])
+	REFERENCES [dbo].[scx_generation_jobs] ([id])
+
+	ALTER TABLE [dbo].[scx_generation_job_units] CHECK CONSTRAINT [FK_scx_generation_job_units_scx_generation_jobs]
+END
+
+--[scx_generation_job_files]
+IF (NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES 
+                WHERE TABLE_SCHEMA = 'dbo' AND 
+				      TABLE_NAME = 'scx_generation_job_files'))
+BEGIN
+	CREATE TABLE [dbo].[scx_generation_job_files](
+		[id] [int] IDENTITY(1,1) NOT NULL,
+		[scx_generation_job_id] [int] NOT NULL,
+		[file_name] varchar(255) NOT NULL,
+		[inventory_source_id] [int] NOT NULL,
+		[daypart_code_id] [int] NOT NULL,
+		[start_date] [datetime] NOT NULL,
+		[end_date] [datetime] NOT NULL,
+		[unit_name] varchar(50) NOT NULL
+	 CONSTRAINT [PK_scx_generation_job_files] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY]
+
+	ALTER TABLE [dbo].[scx_generation_job_files]  WITH CHECK ADD  CONSTRAINT [FK_scx_generation_job_files_scx_generation_job] FOREIGN KEY([scx_generation_job_id])
+	REFERENCES [dbo].[scx_generation_jobs] ([id])
+	
+	ALTER TABLE [dbo].[scx_generation_job_files] CHECK CONSTRAINT [FK_scx_generation_job_files_scx_generation_job]
+	
+	ALTER TABLE [dbo].[scx_generation_job_files]  WITH CHECK ADD  CONSTRAINT [FK_scx_generation_job_files_inventory_sources] FOREIGN KEY([inventory_source_id])
+	REFERENCES [dbo].[inventory_sources] ([id])
+	
+	ALTER TABLE [dbo].[scx_generation_job_files] CHECK CONSTRAINT [FK_scx_generation_job_files_inventory_sources]
+	
+	ALTER TABLE [dbo].[scx_generation_job_files]  WITH CHECK ADD  CONSTRAINT [FK_scx_generation_job_files_daypart_codes] FOREIGN KEY([daypart_code_id])
+	REFERENCES [dbo].[daypart_codes] ([id])
+	
+	ALTER TABLE [dbo].[scx_generation_job_files] CHECK CONSTRAINT [FK_scx_generation_job_files_daypart_codes]
+END
+
+/*************************************** END PRI-10290 *****************************************************/
+
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
