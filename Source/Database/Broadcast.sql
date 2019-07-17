@@ -52,6 +52,19 @@ GO
 
 /*************************************** START PRI-10290 *****************************************************/
 
+-- If the table doesn't have the new column, recreate it and its dependencies.
+IF NOT EXISTS(SELECT 1 FROM sys.columns 
+              WHERE NAME = 'inventory_source_id' AND
+              OBJECT_ID = OBJECT_ID('scx_generation_jobs'))
+BEGIN
+	IF OBJECT_ID('dbo.scx_generation_job_files', 'U') IS NOT NULL 
+		DROP TABLE dbo.scx_generation_job_files; 
+	IF OBJECT_ID('dbo.scx_generation_job_units', 'U') IS NOT NULL 
+		DROP TABLE dbo.scx_generation_job_units;
+	IF OBJECT_ID('dbo.scx_generation_jobs', 'U') IS NOT NULL 
+		DROP TABLE dbo.scx_generation_jobs;
+END
+
 IF (EXISTS(SELECT * FROM INFORMATION_SCHEMA.TABLES 
                 WHERE TABLE_SCHEMA = 'dbo' AND 
 				      TABLE_NAME = 'scx_generation_job_request_units'))
@@ -63,17 +76,13 @@ IF (EXISTS(SELECT * FROM INFORMATION_SCHEMA.TABLES
                 WHERE TABLE_SCHEMA = 'dbo' AND 
 				      TABLE_NAME = 'scx_generation_job_requests'))
 BEGIN
+	IF OBJECT_ID('dbo.scx_generation_job_files', 'U') IS NOT NULL 
+		DROP TABLE dbo.scx_generation_job_files; 
+	IF OBJECT_ID('dbo.scx_generation_job_units', 'U') IS NOT NULL 
+		DROP TABLE dbo.scx_generation_job_units;
+	IF OBJECT_ID('dbo.scx_generation_jobs', 'U') IS NOT NULL 
+		DROP TABLE dbo.scx_generation_jobs;
 	DROP TABLE scx_generation_job_requests
-END
-
--- If the table doesn't have the new column, recreate it and its dependencies.
-IF NOT EXISTS(SELECT 1 FROM sys.columns 
-              WHERE NAME = 'inventory_source_id' AND
-              OBJECT_ID = OBJECT_ID('scx_generation_jobs'))
-BEGIN
-	DROP TABLE scx_generation_job_files
-	DROP TABLE scx_generation_job_units
-	DROP TABLE scx_generation_jobs
 END
 
 -- Renaming incorrectly named PK.
