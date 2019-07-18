@@ -1,11 +1,9 @@
-﻿using BroadcastComposerWeb.App_Start;
-using Common.Services;
+﻿using Common.Services;
 using Common.Services.WebComponents;
 using Microsoft.Practices.EnterpriseLibrary.SemanticLogging;
 using Microsoft.Practices.Unity;
 using System;
 using System.Configuration;
-using System.Diagnostics.Tracing;
 using System.Web.Configuration;
 using System.Web.Http;
 using System.Web.Http.Cors;
@@ -21,14 +19,16 @@ namespace BroadcastComposerWeb
     {
         private UnityContainer _container;
         private IWebLogger _logger;
-
         private ObservableEventListener _logListener;
-        //private ObservableEventListener _FlatFileListener;
 
         protected void Application_Start()
         {
+            log4net.Config.XmlConfigurator.Configure();
+
             _container = new UnityContainer();
             UnityConfig.RegisterTypes(_container);
+            _container.RegisterType<IWebLogger, BroadcastWebLogger>();
+
             _logger = _container.Resolve<IWebLogger>();
             _logger.LogEventInformation("Initializing Broadcast Web Application.", "BroadcastController");
 
@@ -47,7 +47,6 @@ namespace BroadcastComposerWeb
                         methods: string.Join(", ", allowedMethods));
             cors.SupportsCredentials = true;
             GlobalConfiguration.Configuration.EnableCors(cors);
-            //GlobalConfiguration.Configuration.MessageHandlers.Add(new PreflightRequestsHandler(allowedOrigins, allowedHeaders, allowedMethods));
 
             GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
@@ -71,16 +70,9 @@ namespace BroadcastComposerWeb
                 _logListener.LogToRollingFlatFile(config.LogFilePath, 102400, "yyyyMMdd",
                     Microsoft.Practices.EnterpriseLibrary.SemanticLogging.Sinks.RollFileExistsBehavior.Increment,
                     Microsoft.Practices.EnterpriseLibrary.SemanticLogging.Sinks.RollInterval.Day);
-                //_logListener.LogToFlatFile(config.LogFilePath);
-               // _logListener.EnableEvents(Tam.Maestro.Common.Logging.TamMaestroEventSource.Log, EventLevel.Error);
             }
 
             _logger.LogEventInformation("Broadcast Web Application Initialized.", "BroadcastController");
-
-            //var listener = new ObservableEventListener();
-            //listener.LogToRollingFlatFile(config.LogFilePath, 42342343, "yyyy-MM-dd", RollFileExistsBehavior.Increment, RollInterval.Day);
-            //listener.EnableEvents(TamMaestroEventSource.Log, EventLevel.Error, Keywords.All);
-            //_FlatFileListener = listener;
         }
     }
 }

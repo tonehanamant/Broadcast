@@ -242,6 +242,7 @@
     <Compile Include="App_Start\PreflightRequestHandler.cs" />
     <Compile Include="App_Start\Startup.cs" />
     <Compile Include="App_Start\SwaggerConfig.cs" />
+    <Compile Include="BroadcastWebLogger.cs" />
     <Compile Include="Controllers\AffidavitUploadApiController.cs" />
     <Compile Include="Controllers\BroadcastControllerBase.cs" />
     <Compile Include="Controllers\CampaignApiController.cs" />
@@ -532,6 +533,10 @@
     <Content Include="Views\Maintenance\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Common.DataLayer\Common.DataLayer.csproj">
+      <Project>{EE3106AC-43D6-4EA7-B439-0CA5F06F9BA7}</Project>
+      <Name>Common.DataLayer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Services\Broadcast\Services.Broadcast\Services.Broadcast.csproj">
       <Project>{ba718c31-1f25-4df1-a2af-eea92da4dab6}</Project>
       <Name>Services.Broadcast</Name>
