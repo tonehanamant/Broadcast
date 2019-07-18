@@ -1336,6 +1336,47 @@ END
 
 /*************************************** START PRI-10290 *****************************************************/
 
+-- If the table doesn't have the new column, recreate it and its dependencies.
+IF NOT EXISTS(SELECT 1 FROM sys.columns 
+              WHERE NAME = 'inventory_source_id' AND
+              OBJECT_ID = OBJECT_ID('scx_generation_jobs'))
+BEGIN
+	IF OBJECT_ID('dbo.scx_generation_job_files', 'U') IS NOT NULL 
+		DROP TABLE dbo.scx_generation_job_files; 
+	IF OBJECT_ID('dbo.scx_generation_job_units', 'U') IS NOT NULL 
+		DROP TABLE dbo.scx_generation_job_units;
+	IF OBJECT_ID('dbo.scx_generation_jobs', 'U') IS NOT NULL 
+		DROP TABLE dbo.scx_generation_jobs;
+END
+
+IF (EXISTS(SELECT * FROM INFORMATION_SCHEMA.TABLES 
+                WHERE TABLE_SCHEMA = 'dbo' AND 
+				      TABLE_NAME = 'scx_generation_job_request_units'))
+BEGIN
+	DROP TABLE scx_generation_job_request_units
+END
+
+IF (EXISTS(SELECT * FROM INFORMATION_SCHEMA.TABLES 
+                WHERE TABLE_SCHEMA = 'dbo' AND 
+				      TABLE_NAME = 'scx_generation_job_requests'))
+BEGIN
+	IF OBJECT_ID('dbo.scx_generation_job_files', 'U') IS NOT NULL 
+		DROP TABLE dbo.scx_generation_job_files; 
+	IF OBJECT_ID('dbo.scx_generation_job_units', 'U') IS NOT NULL 
+		DROP TABLE dbo.scx_generation_job_units;
+	IF OBJECT_ID('dbo.scx_generation_jobs', 'U') IS NOT NULL 
+		DROP TABLE dbo.scx_generation_jobs;
+	DROP TABLE scx_generation_job_requests
+END
+
+-- Renaming incorrectly named PK.
+IF EXISTS (SELECT * 
+		   FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS 
+		   WHERE CONSTRAINT_NAME ='PK_scx_generation_files')
+BEGIN
+	EXEC sp_rename @objname = N'[dbo].[scx_generation_job_files].[PK_scx_generation_files]', @newname = N'PK_scx_generation_job_files'
+END
+
 -- [scx_generation_jobs]
 IF (NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES 
                 WHERE TABLE_SCHEMA = 'dbo' AND 
@@ -1377,7 +1418,7 @@ BEGIN
 		[id] [int] IDENTITY(1,1) NOT NULL,
 		[scx_generation_job_id] [int] NOT NULL,
 		[unit_name] varchar(50) NOT NULL
-	 CONSTRAINT [PK_scx_generation_job_request_units] PRIMARY KEY CLUSTERED 
+	 CONSTRAINT [PK_scx_generation_job_units] PRIMARY KEY CLUSTERED 
 	(
 		[id] ASC
 	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
@@ -1403,7 +1444,7 @@ BEGIN
 		[start_date] [datetime] NOT NULL,
 		[end_date] [datetime] NOT NULL,
 		[unit_name] varchar(50) NOT NULL
-	 CONSTRAINT [PK_scx_generation_files] PRIMARY KEY CLUSTERED 
+	 CONSTRAINT [PK_scx_generation_job_files] PRIMARY KEY CLUSTERED 
 	(
 		[id] ASC
 	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
