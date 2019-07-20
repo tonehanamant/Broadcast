@@ -220,8 +220,12 @@
   <ItemGroup>
     <Compile Include="Aggregates\SchedulesAggregate.cs" />
     <Compile Include="ApplicationServices\DaypartCodeService.cs" />
+    <Compile Include="ApplicationServices\Scx\ScxFileGenerationDetailTransformer.cs" />
+    <Compile Include="ApplicationServices\Scx\ScxFileGenerationHistorian.cs" />
     <Compile Include="Entities\Enums\BackgroundJobProcessingStatus.cs" />
     <Compile Include="Entities\ScxGenerationJob.cs" />
+    <Compile Include="Entities\Scx\ScxFileGenerationDetailDto.cs" />
+    <Compile Include="Entities\Scx\ScxFileGenerationDetail.cs" />
     <Compile Include="Repositories\ScxGenerationJobRepository.cs" />
     <Compile Include="ApplicationServices\ScxGenerationService.cs" />
     <Compile Include="BusinessEngines\InventorySummaryRatesGapEngine.cs" />

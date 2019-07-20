@@ -2,7 +2,6 @@
 using Common.Services.Repositories;
 using ConfigurationService.Client;
 using EntityFrameworkMapping.Broadcast;
-using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Scx;
@@ -22,6 +21,13 @@ namespace Services.Broadcast.Repositories
         void UpdateJob(ScxGenerationJob job);
         List<ScxGenerationJob> GetJobsBatch(int limit);
         void SaveScxJobFiles(List<InventoryScxFile> files, ScxGenerationJob job);
+
+        /// <summary>
+        /// Gets the SCX file generation details.
+        /// </summary>
+        /// <param name="inventorySourceId">The inventory source identifier.</param>
+        /// <returns></returns>
+        List<ScxFileGenerationDetailDto> GetScxFileGenerationDetails(int inventorySourceId);
     }
 
     public class ScxGenerationJobRepository : BroadcastRepositoryBase, IScxGenerationJobRepository
@@ -150,5 +156,42 @@ namespace Services.Broadcast.Repositories
                     context.SaveChanges();
                 });
         }
+
+        #region GetScxFileGenerationDetails
+
+        /// <inheritdoc />
+        public List<ScxFileGenerationDetailDto> GetScxFileGenerationDetails(int inventorySourceId)
+        {
+            var result = _InReadUncommitedTransaction(context =>
+            {
+                var details = GetGenerationDetails(context, inventorySourceId);
+                return details;
+            });
+            return result;
+        }
+
+        private static List<ScxFileGenerationDetailDto> GetGenerationDetails(BroadcastContext context, int inventorySourceId)
+        {
+            var details = (from f in context.scx_generation_job_files
+                    join j in context.scx_generation_jobs on f.scx_generation_job_id equals j.id
+                    join d in context.daypart_codes on f.daypart_code_id equals d.id
+                    where f.inventory_source_id.Equals(inventorySourceId)
+                    select new ScxFileGenerationDetailDto
+                    {
+                        GenerationRequestDateTime = j.queued_at,
+                        GenerationRequestedByUsername = j.requested_by,
+                        FileName = f.file_name,
+                        UnitName = f.unit_name,
+                        DaypartCodeId = d.id,
+                        DaypartCodeName = d.full_name,
+                        StartDateTime = f.start_date,
+                        EndDateTime = f.end_date,
+                        ProcessingStatusId = j.status
+                    })
+                .ToList();
+            return details;
+        }
+        
+        #endregion // #region GetScxFileGenerationDetails
     }
 }

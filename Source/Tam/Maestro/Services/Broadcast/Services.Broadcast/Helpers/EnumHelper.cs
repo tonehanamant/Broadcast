@@ -1,5 +1,6 @@
 ﻿using Services.Broadcast.Entities.Enums;
 using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -55,6 +56,23 @@ namespace Services.Broadcast.Helpers
             inventorySources.Remove(InventorySourceEnum.OpenMarket);
 
             return inventorySources;
+        }
+
+        /// <summary>
+        /// Gets the enum.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="candidate">The candidate.</param>
+        /// <returns></returns>
+        /// <exception cref="InvalidOperationException">Given status of {candidate} is an invalid {typeof(T).FullName}.</exception>
+        public static T GetEnum<T>(int candidate) where T : Enum
+        {
+            if (Enum.IsDefined(typeof(T), candidate) == false)
+            {
+                throw new InvalidOperationException($"Given status of {candidate} is an invalid {typeof(T).FullName}.");
+            }
+            var result = (T)Enum.Parse(typeof(T), candidate.ToString());
+            return result;
         }
     }
 }

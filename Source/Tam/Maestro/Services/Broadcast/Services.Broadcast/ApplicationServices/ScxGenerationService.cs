@@ -1,6 +1,8 @@
-﻿using Common.Services;
+using Common.Services;
 using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
+using Services.Broadcast.ApplicationServices.Scx;
+using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Scx;
@@ -20,6 +22,13 @@ namespace Services.Broadcast.ApplicationServices
         void ProcessScxGenerationJob(ScxGenerationJob job, DateTime currentDate);
         List<ScxGenerationJob> GetQueuedJobs(int limit);
         void ResetJobStatusToQueued(int jobId);
+
+        /// <summary>
+        /// Gets the SCX file generation history.
+        /// </summary>
+        /// <param name="sourceId">The source identifier.</param>
+        /// <returns></returns>
+        List<ScxFileGenerationDetail> GetScxFileGenerationHistory(int sourceId);
     }
 
     public class ScxGenerationService : IScxGenerationService
@@ -27,6 +36,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IScxGenerationJobRepository _ScxGenerationJobRepository;
         private readonly IProprietaryInventoryService _ProprietaryInventoryService;
         private readonly IFileService _FileService;
+        private readonly IDataRepositoryFactory _BroadcastDataRepositoryFactory;
 
         public ScxGenerationService(IDataRepositoryFactory broadcastDataRepositoryFactory, 
             IProprietaryInventoryService proprietaryInventoryService, 
@@ -35,6 +45,7 @@ namespace Services.Broadcast.ApplicationServices
             _ScxGenerationJobRepository = broadcastDataRepositoryFactory.GetDataRepository<IScxGenerationJobRepository>();
             _ProprietaryInventoryService = proprietaryInventoryService;
             _FileService = fileService;
+            _BroadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
         }
 
         public int QueueScxGenerationJob(InventoryScxDownloadRequest inventoryScxDownloadRequest, string userName, DateTime currentDate)
@@ -105,12 +116,80 @@ namespace Services.Broadcast.ApplicationServices
             _ScxGenerationJobRepository.UpdateJob(job);
         }
 
+        #region ScxFileGenerationHistory
+
+        /// <inheritdoc />
+        public List<ScxFileGenerationDetail> GetScxFileGenerationHistory(int sourceId)
+        {
+            var historian = GetScxFileGenerationHistorian();
+            var results = historian.GetScxFileGenerationHistory(sourceId);
+            return results;
+        }
+
+        /// <summary>
+        /// Gets the SCX file generation historian.
+        /// </summary>
+        /// <returns></returns>
+        protected virtual IScxFileGenerationHistorian GetScxFileGenerationHistorian()
+        {
+            var repo = GetScxGenerationJobRepository();
+            var quarterCalculationEngine = GetQuarterCalculationEngine();
+            var dropFolderPath = GetDropFolderPath();
+            var historian = new ScxFileGenerationHistorian(repo, quarterCalculationEngine, dropFolderPath);
+            return historian;
+        }
+
+        /// <summary>
+        /// Gets the quarter calculation engine.
+        /// </summary>
+        /// <returns></returns>
+        protected virtual IQuarterCalculationEngine GetQuarterCalculationEngine()
+        {
+            var repoFactory = GetBroadcastDataRepositoryFactory();
+            var aggCache = new MediaMonthAndWeekAggregateCache(repoFactory);
+            var engine = new QuarterCalculationEngine(repoFactory, aggCache);
+            return engine;
+        }
+
+        /// <summary>
+        /// Gets the broadcast data repository factory.
+        /// </summary>
+        /// <returns></returns>
+        protected IDataRepositoryFactory GetBroadcastDataRepositoryFactory()
+        {
+            return _BroadcastDataRepositoryFactory;
+        }
+
+        /// <summary>
+        /// Gets the drop folder path.
+        /// </summary>
+        /// <returns></returns>
+        protected virtual string GetDropFolderPath()
+        {
+            var result = BroadcastServiceSystemParameter.InventoryUploadErrorsFolder;
+            return result;
+        }
+
+        /// <summary>
+        /// Gets the SCX generation job repository.
+        /// </summary>
+        /// <returns></returns>
+        protected virtual IScxGenerationJobRepository GetScxGenerationJobRepository()
+        {
+            return _ScxGenerationJobRepository;
+        }
+
+        #endregion // #region ScxFileGenerationHistory
+
         private void _SaveToFolder(List<InventoryScxFile> scxFiles)
-        {         
+        {
+            var dropFolderPath = GetDropFolderPath();
             foreach (var scxFile in scxFiles)
             {
+                // TODO: Change to actual parameter when Cable approves the PR.
+                // ScxGenerationFolder
                 var path = Path.Combine(
-                    BroadcastServiceSystemParameter.ScxGenerationFolder, 
+                    dropFolderPath, 
                     scxFile.FileName);
 
                 _FileService.Create(path, scxFile.ScxStream);
