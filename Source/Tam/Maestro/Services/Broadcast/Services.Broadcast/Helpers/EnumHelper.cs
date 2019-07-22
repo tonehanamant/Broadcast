@@ -65,8 +65,13 @@ namespace Services.Broadcast.Helpers
         /// <param name="candidate">The candidate.</param>
         /// <returns></returns>
         /// <exception cref="InvalidOperationException">Given status of {candidate} is an invalid {typeof(T).FullName}.</exception>
-        public static T GetEnum<T>(int candidate) where T : Enum
+        public static T GetEnum<T>(int candidate)
         {
+            if (typeof(T).IsEnum == false)
+            {
+                throw new InvalidOperationException("The type must be an Enum.");
+            }
+
             if (Enum.IsDefined(typeof(T), candidate) == false)
             {
                 throw new InvalidOperationException($"Given status of {candidate} is an invalid {typeof(T).FullName}.");

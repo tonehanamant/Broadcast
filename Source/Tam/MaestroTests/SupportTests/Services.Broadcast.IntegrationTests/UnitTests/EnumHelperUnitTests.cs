@@ -15,11 +15,30 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
         [TestCase(3, BackgroundJobProcessingStatus.Succeeded)]
         [TestCase(2, InventorySourceTypeEnum.Barter)]
         [TestCase(4, InventorySourceTypeEnum.Syndication)]
-        public void GetEnumWithValidValue<T>(int candidate, T expectedResult) where T: Enum
+        public void GetEnumWithValidValue<T>(int candidate, T expectedResult)
         {
             var result = EnumHelper.GetEnum<T>(candidate);
 
             Assert.AreEqual(expectedResult, result);
+        }
+
+        [Test]
+        public void GetEnumWithInvalidType()
+        {
+            var candidate = 12;
+            Exception caught = null;
+
+            try
+            {
+                EnumHelper.GetEnum<String>(candidate);
+            }
+            catch (Exception e)
+            {
+                caught = e;
+            }
+            
+            Assert.IsNotNull(caught);
+            Assert.IsTrue(caught.Message.Contains("The type must be an Enum."));
         }
 
         [Test]
