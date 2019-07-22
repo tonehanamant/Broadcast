@@ -29,6 +29,7 @@
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\Services.Broadcast.xml</DocumentationFile>
     <NoWarn>1591</NoWarn>
+    <LangVersion>7.3</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -38,10 +39,12 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\Services.Broadcast.xml</DocumentationFile>
+    <LangVersion>7.3</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'IntegrationTests|AnyCPU'">
     <OutputPath>bin\IntegrationTests\</OutputPath>
     <DocumentationFile>bin\Services.Broadcast.xml</DocumentationFile>
+    <LangVersion>7.3</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'QARelease|AnyCPU'">
     <OutputPath>bin\QARelease\</OutputPath>
@@ -52,34 +55,40 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <DocumentationFile>bin\Services.Broadcast.xml</DocumentationFile>
+    <LangVersion>7.3</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReportingWebQA|AnyCPU'">
     <OutputPath>bin\ReportingWebQA\</OutputPath>
     <DocumentationFile>bin\Services.Broadcast.xml</DocumentationFile>
+    <LangVersion>7.3</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'TrafficComposerWebQA|AnyCPU'">
     <OutputPath>bin\TrafficComposerWebQA\</OutputPath>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <DocumentationFile>bin\Services.Broadcast.xml</DocumentationFile>
+    <LangVersion>7.3</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleaseComposerWebQA|AnyCPU'">
     <OutputPath>bin\ReleaseComposerWebQA\</OutputPath>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <DocumentationFile>bin\Services.Broadcast.xml</DocumentationFile>
+    <LangVersion>7.3</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'CableTrackQA|AnyCPU'">
     <OutputPath>bin\CableTrackQA\</OutputPath>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <DocumentationFile>bin\Services.Broadcast.xml</DocumentationFile>
+    <LangVersion>7.3</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'BroadcastComposerWeb|AnyCPU'">
     <OutputPath>bin\BroadcastComposerWeb\</OutputPath>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <DocumentationFile>bin\Services.Broadcast.xml</DocumentationFile>
+    <LangVersion>7.3</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'WWTVDataService|AnyCPU'">
     <OutputPath>bin\WWTVDataService\</OutputPath>
@@ -90,6 +99,7 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <DocumentationFile>bin\Services.Broadcast.xml</DocumentationFile>
+    <LangVersion>7.3</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'WWTVDataServiceConfig|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
@@ -100,6 +110,7 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <DocumentationFile>bin\Services.Broadcast.xml</DocumentationFile>
+    <LangVersion>7.3</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ConfigurationService.Client, Version=1.0.0.34, Culture=neutral, processorArchitecture=MSIL">
