@@ -140,5 +140,31 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(jobs, _JsonSettings));
             }
         }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void ScxGenerationGetHistoryTest()
+        {
+            const int inventorySourceId = 7;
+            using (new TransactionScopeWrapper())
+            {
+                var request = new InventoryScxDownloadRequest
+                {
+                    EndDate = new DateTime(2019, 03, 31),
+                    StartDate = new DateTime(2018, 12, 31),
+                    DaypartCodeId = 1,
+                    InventorySourceId = inventorySourceId,
+                    UnitNames = new List<string> {"ExpiresGroupsTest"}
+                };
+                var currentDate = new DateTime(2019,04,17,12,30,23);
+                var jobId = _ScxGenerationService.QueueScxGenerationJob(request, "IntegrationTestUser", currentDate);
+                var job = _ScxGenerationJobRepository.GetJobById(jobId);
+                _ScxGenerationService.ProcessScxGenerationJob(job, currentDate);
+
+                var history = _ScxGenerationService.GetScxFileGenerationHistory(inventorySourceId);
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(history, _JsonSettings));
+            }
+        }
     }
 }

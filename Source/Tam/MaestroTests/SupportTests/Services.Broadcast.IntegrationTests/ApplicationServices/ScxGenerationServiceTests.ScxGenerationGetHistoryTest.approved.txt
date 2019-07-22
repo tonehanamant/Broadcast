@@ -1,0 +1,19 @@
+﻿[
+  {
+    "DaypartCodeId": 1,
+    "DaypartCodeName": "Early Morning News",
+    "FullFilePath": "\\\\cadfs11\\Inventory Management UI\\Continuous Deployment\\LilaMax_ExpiresGroupsTest_20190210_20190217.scx",
+    "GenerationRequestDateTime": "2019-04-17T12:30:23",
+    "GenerationRequestedByUsername": "IntegrationTestUser",
+    "ProcessingStatus": 3,
+    "QuarterDetails": [
+      {
+        "EndDate": "2019-03-31T23:59:59",
+        "Quarter": 1,
+        "StartDate": "2018-12-31T00:00:00",
+        "Year": 2019
+      }
+    ],
+    "UnitName": "ExpiresGroupsTest"
+  }
+]

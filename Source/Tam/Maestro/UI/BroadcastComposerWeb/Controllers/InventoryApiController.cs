@@ -252,5 +252,20 @@ namespace BroadcastComposerWeb.Controllers
                 _ApplicationServiceFactory.GetApplicationService<IInventoryService>()
                     .GetInventoryUploadHistory(inventorySourceId));
         }
+
+        /// <summary>
+        /// Gets the SCX file generation history.
+        /// </summary>
+        /// <param name="inventorySourceId">The inventory source identifier.</param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("ScxFileGenerationHistory")]
+        public BaseResponse<List<ScxFileGenerationDetail>> GetScxFileGenerationHistory(int inventorySourceId)
+        {
+            var rawResponse = _ApplicationServiceFactory.GetApplicationService<IScxGenerationService>()
+                .GetScxFileGenerationHistory(inventorySourceId);
+            var response = _ConvertToBaseResponse(() => rawResponse);
+            return response;
+        }
     }
 }
