@@ -6,6 +6,7 @@ using System.ServiceModel;
 using Common.Services.ApplicationServices;
 using Services.Broadcast;
 using Tam.Maestro.Common;
+using Tam.Maestro.Common.SystemComponentParameter;
 using Tam.Maestro.Common.Utilities.Logging;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 using Tam.Maestro.Services.Clients;
@@ -37,8 +38,7 @@ namespace Common.Services
             if (!BroadcastServiceSystemParameter.EmailNotificationsEnabled)
                 return false;
 
-            LogHelper.Log.ServiceEvent("Broadcast EmailerService", ",sg test", "user test",
-                SMSClient.Handler.TamEnvironment.ToString());
+            LogHelper.Log.ServiceEvent("Broadcast EmailerService", ",sg test", "user test", MaestroEnvironmentSystemParameterNames.Environment);
 
             try
             {
@@ -76,8 +76,7 @@ namespace Common.Services
             }
             catch (System.Exception exc)
             {
-                LogHelper.Log.ServiceError("Broadcast EmailerService", exc.Message, exc.ToString(),
-                    GetWindowsUserName(), SMSClient.Handler.TamEnvironment.ToString());
+                LogHelper.Log.ServiceError("Broadcast EmailerService", exc.Message, exc.ToString(), GetWindowsUserName(), MaestroEnvironmentSystemParameterNames.Environment);
                 throw;
             }
         }

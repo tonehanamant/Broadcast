@@ -14,6 +14,7 @@ using System.Net.Mail;
 using System.Text;
 using System.Text.RegularExpressions;
 using Tam.Maestro.Common;
+using Tam.Maestro.Common.SystemComponentParameter;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 using Tam.Maestro.Services.Clients;
 using Tam.Maestro.Services.ContractInterfaces;
@@ -53,7 +54,7 @@ namespace Services.Broadcast.ApplicationServices
         /// <returns>List of ftp file paths</returns>
         public List<string> DownloadFilesToBeProcessed(string path)
         {
-            var environment = SMSClient.Handler.TamEnvironment.ToString();
+            var environment = MaestroEnvironmentSystemParameterNames.Environment;
 
             try
             {
