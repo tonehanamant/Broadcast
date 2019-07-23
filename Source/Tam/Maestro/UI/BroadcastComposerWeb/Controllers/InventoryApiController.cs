@@ -108,6 +108,24 @@ namespace BroadcastComposerWeb.Controllers
         }
 
         /// <summary>
+        /// Enqueues a job to generate the SCX files based on the parameters sent.
+        /// The SCX will be generated and saved in the folder location
+        /// </summary>
+        /// <returns>Success or failure to create a new job to generate the SCX files</returns>
+        [HttpGet]
+        [Route("ScxDownloadJob")]
+        public BaseResponse GenerateScxArchiveJob([FromUri(Name = "")]InventoryScxDownloadRequest request)
+        {
+            _ApplicationServiceFactory.GetApplicationService<IScxGenerationService>().QueueScxGenerationJob(request, Identity.Name, DateTime.Now);
+
+            return new BaseResponse
+            {
+                Success = true,
+                Message = "SCX file generation job has been added to the queue successfully"
+            };
+        }
+
+        /// <summary>
         /// Generates the SCX zip archive containing all the inventory, filter by the input parameters
         /// </summary>
         /// <remarks>Current code returns inventory for first quarter</remarks>
