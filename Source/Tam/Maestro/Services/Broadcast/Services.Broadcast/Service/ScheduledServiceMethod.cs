@@ -1,6 +1,5 @@
 ﻿using System;
 using Services.Broadcast.ApplicationServices;
-using Tam.Maestro.Common.SystemComponentParameter;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 using Tam.Maestro.Services.Clients;
 using Tam.Maestro.Services.ContractInterfaces;
@@ -96,7 +95,7 @@ namespace Services.Broadcast.Services
                 runWhen = null;
             }
 
-            if (MaestroEnvironmentSystemParameterNames.Environment != TAMEnvironment.PROD.ToString())
+            if (SMSClient.Handler.TamEnvironment != TAMEnvironment.PROD.ToString())
                 runWhen = null;
 
             return runWhen;

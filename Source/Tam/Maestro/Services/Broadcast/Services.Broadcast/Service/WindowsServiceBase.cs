@@ -6,7 +6,6 @@ using System.Reflection;
 using System.ServiceModel;
 using Microsoft.Practices.EnterpriseLibrary.SemanticLogging;
 using Microsoft.Practices.EnterpriseLibrary.SemanticLogging.Sinks;
-using Tam.Maestro.Common.SystemComponentParameter;
 using Tam.Maestro.Common.Utilities.Logging;
 using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Services.Clients;
@@ -25,7 +24,7 @@ namespace Services.Broadcast.Services
         protected void TimeResultsNoReturn(String methodName, Action func)
         {
             var userName = _GetWindowsUserName();
-            var environment = MaestroEnvironmentSystemParameterNames.Environment;
+            var environment = SMSClient.Handler.TamEnvironment;
 
             LogHelper.Log.ServiceCallStart(ServiceName, methodName, userName, environment);
             var stopWatch = Stopwatch.StartNew();
@@ -41,7 +40,7 @@ namespace Services.Broadcast.Services
         protected T TimeResults<T>(String methodName, Func<T> func)
         {
             var userName = _GetWindowsUserName();
-            var environment = MaestroEnvironmentSystemParameterNames.Environment;
+            var environment = SMSClient.Handler.TamEnvironment;
 
             LogHelper.Log.ServiceCallStart(ServiceName, methodName, userName, environment);
 
@@ -72,7 +71,7 @@ namespace Services.Broadcast.Services
             try
             {
                 userName = _GetWindowsUserName();
-                environment = MaestroEnvironmentSystemParameterNames.Environment;
+                environment = SMSClient.Handler.TamEnvironment;
             }
             catch
             {
@@ -102,7 +101,7 @@ namespace Services.Broadcast.Services
             try
             {
                 userName = _GetWindowsUserName();
-                environment = MaestroEnvironmentSystemParameterNames.Environment;
+                environment = SMSClient.Handler.TamEnvironment;
             }
             catch
             {
@@ -128,7 +127,7 @@ namespace Services.Broadcast.Services
             try
             {
                 userName = _GetWindowsUserName();
-                environment = MaestroEnvironmentSystemParameterNames.Environment;
+                environment = SMSClient.Handler.TamEnvironment;
             }
             catch
             {
