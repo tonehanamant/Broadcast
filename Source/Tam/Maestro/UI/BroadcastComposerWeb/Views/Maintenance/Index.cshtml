@@ -89,6 +89,13 @@
                 <input type="submit" value="Reset SCX Generation Job Status" id="submit" />
             }
         </div>
+        <div>
+            @using (Html.BeginForm("AggregateInventorySourcesData", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <input type="text" name="inventorySourceId" />
+                <input type="submit" value="Aggregate inventory sources by id" id="submit" />
+            }
+        </div>
     </div>
 
     <div>

@@ -189,6 +189,23 @@ namespace BroadcastComposerWeb.Controllers
         }
 
         [HttpPost]
+        public ActionResult AggregateInventorySourcesData(int inventorySourceId)
+        {
+            try
+            {
+                var service = _ApplicationServiceFactory.GetApplicationService<IInventorySummaryService>();
+                service.AggregateInventorySummaryData(new System.Collections.Generic.List<int> { inventorySourceId});
+                ViewBag.Message = $"Job Processed. Data aggregated for source id = {inventorySourceId}";
+            }
+            catch (Exception e)
+            {
+                ViewBag.Message = "Error Processing Job: " + e.Message;
+            }
+
+            return View("Index");
+        }
+
+        [HttpPost]
         [Route("UploadMarketCoverageFile")]
         public ActionResult UploadMarketCoverageFile(HttpPostedFileBase file)
         {
