@@ -1,12 +1,29 @@
 ﻿[
   {
     "DaypartCode": "EMN",
+    "EffectiveDate": "2019-04-10T00:00:00",
+    "EndDate": "2019-04-25T00:00:00",
+    "FileLoadStatus": 2,
+    "Filename": "ProprietaryDataFiles\\Barter_ValidFormat_SingleBook_ShortDateRange.xlsx",
+    "FileProcessingStatus": 3,
+    "HutBook": null,
+    "Rows": 5,
+    "ShareBook": {
+      "Id": 437,
+      "Month": 2,
+      "Year": 2018
+    },
+    "Status": "Succeeded",
+    "UploadDateTime": "2019-07-20T00:00:00",
+    "Username": "IntegrationTestUser"
+  },
+  {
+    "DaypartCode": "EMN",
     "EffectiveDate": "2019-04-01T00:00:00",
     "EndDate": "2019-06-30T00:00:00",
-    "FileId": 238972,
     "FileLoadStatus": 2,
     "Filename": "TTWN EMN Q1 Barter_Inventory Template_2.6.2019 (17).xlsx",
-    "FileProcessingStatus": 1,
+    "FileProcessingStatus": 3,
     "HutBook": null,
     "Rows": 0,
     "ShareBook": {
@@ -14,7 +31,7 @@
       "Month": 2,
       "Year": 2017
     },
-    "Status": "Processing",
+    "Status": "Succeeded",
     "UploadDateTime": "2019-04-12T15:55:59.753",
     "Username": "sroibu"
   }

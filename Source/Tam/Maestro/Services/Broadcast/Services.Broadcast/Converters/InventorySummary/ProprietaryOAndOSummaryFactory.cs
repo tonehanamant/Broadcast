@@ -50,18 +50,14 @@ namespace Services.Broadcast.Converters.InventorySummary
             var result = new ProprietaryOAndOInventorySummaryDto
             {
                 InventorySourceId = inventorySource.Id,
-                InventorySourceName = inventorySource.Name,
-                HasRatesAvailableForQuarter = inventorySummaryManifests.Any(),
                 Quarter = quarterDetail,
                 TotalMarkets = GetTotalMarkets(inventorySummaryManifests),
                 TotalStations = GetTotalStations(inventorySummaryManifests),
                 TotalPrograms = GetTotalPrograms(manifests),
                 TotalDaypartCodes = totalDaypartCodes,
                 LastUpdatedDate = GetLastJobCompletedDate(inventorySummaryManifestFiles),
-                IsUpdating = GetIsInventoryUpdating(inventorySummaryManifestFiles),
                 RatesAvailableFromQuarter = quartersForInventoryAvailable.Item1,
                 RatesAvailableToQuarter = quartersForInventoryAvailable.Item2,
-                HasInventoryGaps = inventoryGaps.Any(),
                 InventoryGaps = inventoryGaps,
                 Details = _GetDetails(inventorySummaryManifests, manifests, householdAudienceId),
                 ShareBook = shareBook,
@@ -147,6 +143,55 @@ namespace Services.Broadcast.Converters.InventorySummary
         {
             return manifest.ManifestAudiencesReferences.Any(x => x.Audience.Id == householdAudienceId && x.Impressions.HasValue) &&
                    manifest.ManifestRates.Any(x => x.SpotLengthId == manifest.SpotLengthId);
+        }
+
+        /// <summary>
+        /// Loads the inventory summary data into InventorySummaryDto object for proprietary O&O.
+        /// </summary>
+        /// <param name="inventorySource">The inventory source.</param>
+        /// <param name="data">The data.</param>
+        /// <param name="quarterDetail">Quarter detail data</param>
+        /// <returns>InventorySummaryDto object</returns>
+        public override InventorySummaryDto LoadInventorySummary(InventorySource inventorySource, InventorySummaryAggregation proprietaryData, QuarterDetailDto quarterDetail)
+        {
+            if (proprietaryData == null) return new ProprietaryOAndOInventorySummaryDto()
+            {
+                Quarter = quarterDetail,
+                InventorySourceId = inventorySource.Id,
+                InventorySourceName = inventorySource.Name
+            };
+
+            GetLatestInventoryPostingBook(proprietaryData.ShareBookId, proprietaryData.HutBookId, out var shareBook, out var hutBook);
+            return new ProprietaryOAndOInventorySummaryDto
+            {
+                HasInventoryGaps = proprietaryData.InventoryGaps.Any(),
+                HutBook = hutBook,
+                ShareBook = shareBook,
+                InventoryGaps = proprietaryData.InventoryGaps,
+                HouseholdImpressions = proprietaryData.TotalProjectedHouseholdImpressions,
+                InventorySourceId = inventorySource.Id,
+                InventorySourceName = inventorySource.Name,
+                LastUpdatedDate = proprietaryData.LastUpdatedDate,
+                Quarter = quarterDetail,
+                RatesAvailableFromQuarter = GetQuarter(proprietaryData.RatesAvailableFromQuarter.Quarter, proprietaryData.RatesAvailableFromQuarter.Year),
+                RatesAvailableToQuarter = GetQuarter(proprietaryData.RatesAvailableToQuarter.Quarter, proprietaryData.RatesAvailableToQuarter.Year),
+                TotalMarkets = proprietaryData.TotalMarkets,
+                TotalStations = proprietaryData.TotalStations,
+                TotalDaypartCodes = proprietaryData.TotalDaypartCodes ?? 0,
+                HasRatesAvailableForQuarter = proprietaryData.TotalMarkets > 0,
+                TotalPrograms = proprietaryData.TotalPrograms ?? 0,
+                Details = proprietaryData.Details.Select(x => new ProprietaryOAndOInventorySummaryDto.Detail
+                {
+                    CPM = x.CPM,
+                    Daypart = x.Daypart,
+                    HouseholdImpressions = x.TotalProjectedHouseholdImpressions,
+                    TotalCoverage = x.TotalCoverage,
+                    TotalMarkets = x.TotalMarkets,
+                    MaxSpotsPerWeek = x.MaxSpotsPerWeek ?? 0,
+                    MinSpotsPerWeek = x.MinSpotsPerWeek ?? 0,
+                    TotalPrograms = x.TotalPrograms ?? 0
+                }).ToList()
+            };
         }
     }
 }

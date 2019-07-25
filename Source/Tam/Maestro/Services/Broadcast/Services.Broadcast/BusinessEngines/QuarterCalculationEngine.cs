@@ -21,7 +21,7 @@ namespace Services.Broadcast.BusinessEngines
     {
         private readonly IDataRepositoryFactory _BroadcastDataRepositoryFactory;
         private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekAggregateCache;
-
+               
         public QuarterCalculationEngine(IDataRepositoryFactory broadcastDataRepositoryFactory, IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache)
         {
             _BroadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
@@ -57,7 +57,7 @@ namespace Services.Broadcast.BusinessEngines
 
             return GetQuarterRangeByDate(currentDate.Value, 0);
         }
-
+              
         public QuarterDetailDto GetQuarterRangeByDate(DateTime currentDate, int quarterShift)
         {
             var currentMonth = _MediaMonthAndWeekAggregateCache.GetMediaMonthContainingDate(currentDate);

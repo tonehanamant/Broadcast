@@ -57,36 +57,6 @@
         }
       },
       {
-        "AllQuarterMissing": true,
-        "DateGaps": null,
-        "Quarter": {
-          "EndDate": "2019-03-31T23:59:59",
-          "Quarter": 1,
-          "StartDate": "2018-12-31T00:00:00",
-          "Year": 2019
-        }
-      },
-      {
-        "AllQuarterMissing": true,
-        "DateGaps": null,
-        "Quarter": {
-          "EndDate": "2019-06-30T23:59:59",
-          "Quarter": 2,
-          "StartDate": "2019-04-01T00:00:00",
-          "Year": 2019
-        }
-      },
-      {
-        "AllQuarterMissing": true,
-        "DateGaps": null,
-        "Quarter": {
-          "EndDate": "2019-09-29T23:59:59",
-          "Quarter": 3,
-          "StartDate": "2019-07-01T00:00:00",
-          "Year": 2019
-        }
-      },
-      {
         "AllQuarterMissing": false,
         "DateGaps": [
           {
@@ -102,6 +72,36 @@
           "EndDate": "2019-12-29T23:59:59",
           "Quarter": 4,
           "StartDate": "2019-09-30T00:00:00",
+          "Year": 2019
+        }
+      },
+      {
+        "AllQuarterMissing": true,
+        "DateGaps": [],
+        "Quarter": {
+          "EndDate": "2019-03-31T23:59:59",
+          "Quarter": 1,
+          "StartDate": "2018-12-31T00:00:00",
+          "Year": 2019
+        }
+      },
+      {
+        "AllQuarterMissing": true,
+        "DateGaps": [],
+        "Quarter": {
+          "EndDate": "2019-06-30T23:59:59",
+          "Quarter": 2,
+          "StartDate": "2019-04-01T00:00:00",
+          "Year": 2019
+        }
+      },
+      {
+        "AllQuarterMissing": true,
+        "DateGaps": [],
+        "Quarter": {
+          "EndDate": "2019-09-29T23:59:59",
+          "Quarter": 3,
+          "StartDate": "2019-07-01T00:00:00",
           "Year": 2019
         }
       }
@@ -175,36 +175,6 @@
         }
       },
       {
-        "AllQuarterMissing": true,
-        "DateGaps": null,
-        "Quarter": {
-          "EndDate": "2019-03-31T23:59:59",
-          "Quarter": 1,
-          "StartDate": "2018-12-31T00:00:00",
-          "Year": 2019
-        }
-      },
-      {
-        "AllQuarterMissing": true,
-        "DateGaps": null,
-        "Quarter": {
-          "EndDate": "2019-06-30T23:59:59",
-          "Quarter": 2,
-          "StartDate": "2019-04-01T00:00:00",
-          "Year": 2019
-        }
-      },
-      {
-        "AllQuarterMissing": true,
-        "DateGaps": null,
-        "Quarter": {
-          "EndDate": "2019-09-29T23:59:59",
-          "Quarter": 3,
-          "StartDate": "2019-07-01T00:00:00",
-          "Year": 2019
-        }
-      },
-      {
         "AllQuarterMissing": false,
         "DateGaps": [
           {
@@ -220,6 +190,36 @@
           "EndDate": "2019-12-29T23:59:59",
           "Quarter": 4,
           "StartDate": "2019-09-30T00:00:00",
+          "Year": 2019
+        }
+      },
+      {
+        "AllQuarterMissing": true,
+        "DateGaps": [],
+        "Quarter": {
+          "EndDate": "2019-03-31T23:59:59",
+          "Quarter": 1,
+          "StartDate": "2018-12-31T00:00:00",
+          "Year": 2019
+        }
+      },
+      {
+        "AllQuarterMissing": true,
+        "DateGaps": [],
+        "Quarter": {
+          "EndDate": "2019-06-30T23:59:59",
+          "Quarter": 2,
+          "StartDate": "2019-04-01T00:00:00",
+          "Year": 2019
+        }
+      },
+      {
+        "AllQuarterMissing": true,
+        "DateGaps": [],
+        "Quarter": {
+          "EndDate": "2019-09-29T23:59:59",
+          "Quarter": 3,
+          "StartDate": "2019-07-01T00:00:00",
           "Year": 2019
         }
       }

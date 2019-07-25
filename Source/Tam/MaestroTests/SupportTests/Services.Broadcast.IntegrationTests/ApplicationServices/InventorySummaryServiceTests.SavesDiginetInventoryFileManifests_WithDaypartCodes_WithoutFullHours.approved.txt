@@ -1,16 +1,41 @@
 ﻿[
   {
-    "CPM": 0.0588235294117647058823529412,
+    "CPM": 0.5897,
     "Details": [
       {
-        "CPM": 0.0588235294117646576733524282,
+        "CPM": 0.0588,
         "Daypart": "EM",
-        "HouseholdImpressions": 14642.127931089488
+        "HouseholdImpressions": 21927.74583727252
       },
       {
-        "CPM": 0.0588235294117647557777906007,
+        "CPM": 0.0588,
         "Daypart": "OVN",
-        "HouseholdImpressions": 2357.8720689105121
+        "HouseholdImpressions": 12072.254162727482
+      },
+      {
+        "CPM": 0.9999,
+        "Daypart": "DAY",
+        "HouseholdImpressions": 17066.760911030167
+      },
+      {
+        "CPM": 1.0000,
+        "Daypart": "EF",
+        "HouseholdImpressions": 13599.977776543141
+      },
+      {
+        "CPM": 1.0000,
+        "Daypart": "PA",
+        "HouseholdImpressions": 1999.9444382709189
+      },
+      {
+        "CPM": 1.0000,
+        "Daypart": "PT",
+        "HouseholdImpressions": 3000.0555617290806
+      },
+      {
+        "CPM": 1.0000,
+        "Daypart": "LF",
+        "HouseholdImpressions": 8333.2613124266936
       }
     ],
     "HasInventoryGaps": true,
@@ -61,7 +86,7 @@
       "Year": 2018
     },
     "ShareBook": null,
-    "TotalDaypartCodes": 2,
+    "TotalDaypartCodes": 7,
     "TotalMarkets": 0,
     "TotalStations": 0
   }

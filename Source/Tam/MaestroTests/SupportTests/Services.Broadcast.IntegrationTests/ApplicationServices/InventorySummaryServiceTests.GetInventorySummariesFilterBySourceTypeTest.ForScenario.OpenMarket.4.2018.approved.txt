@@ -1,0 +1,87 @@
+﻿[
+  {
+    "Details": null,
+    "HasInventoryGaps": true,
+    "HasLogo": false,
+    "HasRatesAvailableForQuarter": true,
+    "HouseholdImpressions": 140877420.0,
+    "HutBook": null,
+    "InventoryGaps": [
+      {
+        "AllQuarterMissing": false,
+        "DateGaps": [
+          {
+            "End": "2019-10-06T00:00:00",
+            "Start": "2019-09-30T00:00:00"
+          },
+          {
+            "End": "2019-12-29T00:00:00",
+            "Start": "2019-12-09T00:00:00"
+          }
+        ],
+        "Quarter": {
+          "EndDate": "2019-12-29T23:59:59",
+          "Quarter": 4,
+          "StartDate": "2019-09-30T00:00:00",
+          "Year": 2019
+        }
+      },
+      {
+        "AllQuarterMissing": true,
+        "DateGaps": [],
+        "Quarter": {
+          "EndDate": "2019-03-31T23:59:59",
+          "Quarter": 1,
+          "StartDate": "2018-12-31T00:00:00",
+          "Year": 2019
+        }
+      },
+      {
+        "AllQuarterMissing": true,
+        "DateGaps": [],
+        "Quarter": {
+          "EndDate": "2019-06-30T23:59:59",
+          "Quarter": 2,
+          "StartDate": "2019-04-01T00:00:00",
+          "Year": 2019
+        }
+      },
+      {
+        "AllQuarterMissing": true,
+        "DateGaps": [],
+        "Quarter": {
+          "EndDate": "2019-09-29T23:59:59",
+          "Quarter": 3,
+          "StartDate": "2019-07-01T00:00:00",
+          "Year": 2019
+        }
+      }
+    ],
+    "InventorySourceId": 1,
+    "InventorySourceName": "Open Market",
+    "IsUpdating": false,
+    "LastUpdatedDate": "2017-12-01T16:39:12.397",
+    "Quarter": {
+      "EndDate": "2018-12-30T23:59:59",
+      "Quarter": 4,
+      "StartDate": "2018-10-01T00:00:00",
+      "Year": 2018
+    },
+    "RatesAvailableFromQuarter": {
+      "EndDate": "2016-06-26T23:59:59",
+      "Quarter": 2,
+      "StartDate": "2016-03-28T00:00:00",
+      "Year": 2016
+    },
+    "RatesAvailableToQuarter": {
+      "EndDate": "2019-12-29T23:59:59",
+      "Quarter": 4,
+      "StartDate": "2019-09-30T00:00:00",
+      "Year": 2019
+    },
+    "ShareBook": null,
+    "TotalMarkets": 91,
+    "TotalPrograms": 2622,
+    "TotalStations": 192
+  }
+]

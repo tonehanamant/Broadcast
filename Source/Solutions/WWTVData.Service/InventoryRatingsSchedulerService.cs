@@ -37,7 +37,7 @@ namespace WWTVData.Service
 
             try
             {
-                var summaryDataList = new List<InventoryAggregationDto>();
+                var summaryDataList = new List<int>();
                 var service = ApplicationServiceFactory.GetApplicationService<IInventoryRatingsProcessingService>();
                 var jobs = service.GetQueuedJobs(BroadcastServiceSystemParameter.InventoryRatingsParallelJobs);
 

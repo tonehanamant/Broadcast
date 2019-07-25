@@ -3,7 +3,7 @@
   "HasInventoryGaps": true,
   "HasLogo": false,
   "HasRatesAvailableForQuarter": true,
-  "HouseholdImpressions": 1000.0,
+  "HouseholdImpressions": 23341.025,
   "HutBook": {
     "Id": 437,
     "Month": 2,
@@ -14,7 +14,7 @@
       "AllQuarterMissing": false,
       "DateGaps": [
         {
-          "End": "2018-03-25T00:00:00",
+          "End": "2018-03-18T00:00:00",
           "Start": "2018-01-08T00:00:00"
         }
       ],
@@ -26,8 +26,13 @@
       }
     },
     {
-      "AllQuarterMissing": true,
-      "DateGaps": null,
+      "AllQuarterMissing": false,
+      "DateGaps": [
+        {
+          "End": "2018-06-24T00:00:00",
+          "Start": "2018-04-30T00:00:00"
+        }
+      ],
       "Quarter": {
         "EndDate": "2018-06-24T23:59:59",
         "Quarter": 2,
@@ -51,36 +56,6 @@
       }
     },
     {
-      "AllQuarterMissing": true,
-      "DateGaps": null,
-      "Quarter": {
-        "EndDate": "2019-03-31T23:59:59",
-        "Quarter": 1,
-        "StartDate": "2018-12-31T00:00:00",
-        "Year": 2019
-      }
-    },
-    {
-      "AllQuarterMissing": true,
-      "DateGaps": null,
-      "Quarter": {
-        "EndDate": "2019-06-30T23:59:59",
-        "Quarter": 2,
-        "StartDate": "2019-04-01T00:00:00",
-        "Year": 2019
-      }
-    },
-    {
-      "AllQuarterMissing": true,
-      "DateGaps": null,
-      "Quarter": {
-        "EndDate": "2019-09-29T23:59:59",
-        "Quarter": 3,
-        "StartDate": "2019-07-01T00:00:00",
-        "Year": 2019
-      }
-    },
-    {
       "AllQuarterMissing": false,
       "DateGaps": [
         {
@@ -98,12 +73,42 @@
         "StartDate": "2019-09-30T00:00:00",
         "Year": 2019
       }
+    },
+    {
+      "AllQuarterMissing": true,
+      "DateGaps": [],
+      "Quarter": {
+        "EndDate": "2019-03-31T23:59:59",
+        "Quarter": 1,
+        "StartDate": "2018-12-31T00:00:00",
+        "Year": 2019
+      }
+    },
+    {
+      "AllQuarterMissing": true,
+      "DateGaps": [],
+      "Quarter": {
+        "EndDate": "2019-06-30T23:59:59",
+        "Quarter": 2,
+        "StartDate": "2019-04-01T00:00:00",
+        "Year": 2019
+      }
+    },
+    {
+      "AllQuarterMissing": true,
+      "DateGaps": [],
+      "Quarter": {
+        "EndDate": "2019-09-29T23:59:59",
+        "Quarter": 3,
+        "StartDate": "2019-07-01T00:00:00",
+        "Year": 2019
+      }
     }
   ],
   "InventorySourceId": 1,
   "InventorySourceName": "Open Market",
   "IsUpdating": false,
-  "LastUpdatedDate": "2017-12-01T16:39:12.403",
+  "LastUpdatedDate": "2017-12-01T16:39:12.397",
   "Quarter": {
     "EndDate": "2018-03-25T23:59:59",
     "Quarter": 1,
@@ -127,7 +132,7 @@
     "Month": 3,
     "Year": 2018
   },
-  "TotalMarkets": 1,
-  "TotalPrograms": 1,
-  "TotalStations": 1
+  "TotalMarkets": 2,
+  "TotalPrograms": 2,
+  "TotalStations": 2
 }

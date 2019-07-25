@@ -519,6 +519,9 @@
     <None Include="Files\ProprietaryDataFiles\Diginet_WithDaypartCodes.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Files\ProprietaryDataFiles\Diginet_WithDaypartCodes_test.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Files\ProprietaryDataFiles\Diginet_WithDaypartCodes_WithoutFullHours.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

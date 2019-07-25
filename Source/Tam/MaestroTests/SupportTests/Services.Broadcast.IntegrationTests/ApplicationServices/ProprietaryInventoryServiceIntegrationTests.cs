@@ -582,7 +582,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void SavesDiginetInventoryFileManifests_WithDaypartCodes()
         {
-            const string fileName = @"ProprietaryDataFiles\Diginet_WithDaypartCodes.xlsx";
+            const string fileName = @"ProprietaryDataFiles\Diginet_WithDaypartCodes_test.xlsx";
             _VerifyFileInventoryManifests(fileName);
         }
 

@@ -13,7 +13,7 @@
         "CPM": null,
         "Impressions": 17000.0,
         "IsReference": true,
-        "Rating": 1.0,
+        "Rating": 2.0,
         "Vpvh": null
       }
     ],
@@ -109,7 +109,7 @@
         "CPM": null,
         "Impressions": 2000.0,
         "IsReference": true,
-        "Rating": 2.0,
+        "Rating": 3.0,
         "Vpvh": null
       }
     ],
@@ -205,7 +205,7 @@
         "CPM": null,
         "Impressions": 3000.0,
         "IsReference": true,
-        "Rating": 3.0,
+        "Rating": 4.0,
         "Vpvh": null
       }
     ],
@@ -301,7 +301,7 @@
         "CPM": null,
         "Impressions": 4000.0,
         "IsReference": true,
-        "Rating": 4.0,
+        "Rating": 5.0,
         "Vpvh": null
       }
     ],
@@ -395,7 +395,7 @@
           "Id": 31
         },
         "CPM": null,
-        "Impressions": 5000.0,
+        "Impressions": 10000.0,
         "IsReference": true,
         "Rating": 5.0,
         "Vpvh": null
@@ -491,9 +491,9 @@
           "Id": 31
         },
         "CPM": null,
-        "Impressions": 6000.0,
+        "Impressions": 10000.0,
         "IsReference": true,
-        "Rating": 6.0,
+        "Rating": 8.0,
         "Vpvh": null
       }
     ],
@@ -526,7 +526,7 @@
       {
         "Daypart": {
           "_Code": "CUS",
-          "_EndTime": 7199,
+          "_EndTime": 14399,
           "_Friday": true,
           "_Is24Hour": false,
           "_LastEndTime": 0,
@@ -587,7 +587,7 @@
           "Id": 31
         },
         "CPM": null,
-        "Impressions": 7000.0,
+        "Impressions": 10000.0,
         "IsReference": true,
         "Rating": 7.0,
         "Vpvh": null
@@ -683,9 +683,9 @@
           "Id": 31
         },
         "CPM": null,
-        "Impressions": 8000.0,
+        "Impressions": 10000.0,
         "IsReference": true,
-        "Rating": 8.0,
+        "Rating": 1.0,
         "Vpvh": null
       }
     ],
@@ -754,9 +754,9 @@
           "Id": 31
         },
         "CPM": null,
-        "Impressions": 9000.0,
+        "Impressions": 10000.0,
         "IsReference": true,
-        "Rating": 9.0,
+        "Rating": 5.0,
         "Vpvh": null
       }
     ],

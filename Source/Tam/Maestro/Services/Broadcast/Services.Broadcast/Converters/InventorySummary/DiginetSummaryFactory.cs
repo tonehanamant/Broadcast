@@ -47,22 +47,19 @@ namespace Services.Broadcast.Converters.InventorySummary
             return new DiginetInventorySummaryDto
             {
                 InventorySourceId = inventorySource.Id,
-                InventorySourceName = inventorySource.Name,
-                HasRatesAvailableForQuarter = inventorySummaryManifests.Any(),
                 Quarter = quarterDetail,
                 TotalDaypartCodes = inventorySummaryManifests.SelectMany(x => x.DaypartCodes).Distinct().Count(),
                 LastUpdatedDate = GetLastJobCompletedDate(inventorySummaryManifestFiles),
-                IsUpdating = GetIsInventoryUpdating(inventorySummaryManifestFiles),
                 RatesAvailableFromQuarter = quartersForInventoryAvailable.Item1,
                 RatesAvailableToQuarter = quartersForInventoryAvailable.Item2,
                 InventoryGaps = inventoryGaps,
-                HasInventoryGaps = inventoryGaps.Any(),
                 CPM = CPM,
                 Details = _GetDetails(inventorySummaryManifests, stationInventoryManifests, householdAudienceId)
             };
         }
 
-        private List<DiginetInventorySummaryDto.Detail> _GetDetails(List<InventorySummaryManifestDto> allSummaryManifests, List<StationInventoryManifest> stationInventoryManifests, int householdAudienceId)
+        private List<DiginetInventorySummaryDto.Detail> _GetDetails(List<InventorySummaryManifestDto> allSummaryManifests
+            , List<StationInventoryManifest> stationInventoryManifests, int householdAudienceId)
         {
             var result = new List<DiginetInventorySummaryDto.Detail>();
             var allDaypartCodes = allSummaryManifests.SelectMany(x => x.DaypartCodes).Distinct();
@@ -155,6 +152,50 @@ namespace Services.Broadcast.Converters.InventorySummary
         {
             return manifest.ManifestAudiencesReferences.Any(x => x.Audience.Id == householdAudienceId && x.Impressions.HasValue) &&
                    manifest.ManifestRates.Any(x => x.SpotLengthId == manifest.SpotLengthId);
+        }
+
+        /// <summary>
+        /// Loads the inventory summary data into InventorySummaryDto object for diginet.
+        /// </summary>
+        /// <param name="inventorySource">The inventory source.</param>
+        /// <param name="diginetData">The data.</param>
+        /// <param name="quarterDetail">Quarter detail data</param>
+        /// <returns>InventorySummaryDto object</returns>
+        public override InventorySummaryDto LoadInventorySummary(InventorySource inventorySource, InventorySummaryAggregation diginetData, QuarterDetailDto quarterDetail)
+        {
+            if (diginetData == null) return new DiginetInventorySummaryDto()
+            {
+                Quarter = quarterDetail,
+                InventorySourceId = inventorySource.Id,
+                InventorySourceName = inventorySource.Name
+            };
+
+            GetLatestInventoryPostingBook(diginetData.ShareBookId, diginetData.HutBookId, out var shareBook, out var hutBook);
+            return new DiginetInventorySummaryDto
+            {
+                InventorySourceId = inventorySource.Id,
+                InventorySourceName = inventorySource.Name,
+                HutBook = hutBook,
+                ShareBook = shareBook,
+                InventoryGaps = diginetData.InventoryGaps,
+                HouseholdImpressions = diginetData.TotalProjectedHouseholdImpressions,                
+                LastUpdatedDate = diginetData.LastUpdatedDate,
+                Quarter = quarterDetail,
+                RatesAvailableFromQuarter = GetQuarter(diginetData.RatesAvailableFromQuarter.Quarter, diginetData.RatesAvailableFromQuarter.Year),
+                RatesAvailableToQuarter = GetQuarter(diginetData.RatesAvailableToQuarter.Quarter, diginetData.RatesAvailableToQuarter.Year),
+                TotalMarkets = diginetData.TotalMarkets,
+                TotalStations = diginetData.TotalStations,
+                TotalDaypartCodes = diginetData.TotalDaypartCodes ?? 0,
+                HasRatesAvailableForQuarter = diginetData.TotalDaypartCodes > 0,
+                HasInventoryGaps = diginetData.InventoryGaps.Any(),
+                CPM = diginetData.CPM,
+                Details = diginetData.Details.Select(x => new DiginetInventorySummaryDto.Detail
+                {
+                    CPM = x.CPM,
+                    Daypart = x.Daypart,
+                    HouseholdImpressions = x.TotalProjectedHouseholdImpressions
+                }).ToList()
+            };
         }
     }
 }

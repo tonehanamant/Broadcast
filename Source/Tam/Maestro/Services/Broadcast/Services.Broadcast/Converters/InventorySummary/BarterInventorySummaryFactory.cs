@@ -55,18 +55,14 @@ namespace Services.Broadcast.Converters.InventorySummary
             var result = new BarterInventorySummaryDto
             {
                 InventorySourceId = inventorySource.Id,
-                InventorySourceName = inventorySource.Name,
-                HasRatesAvailableForQuarter = inventorySummaryManifests.Any(),
                 Quarter = quarterDetail,
                 TotalMarkets = GetTotalMarkets(inventorySummaryManifests),
                 TotalStations = GetTotalStations(inventorySummaryManifests),
                 TotalDaypartCodes = totalDaypartsCodes,
                 TotalUnits = _GetTotalUnits(inventorySummaryManifests),
                 LastUpdatedDate = GetLastJobCompletedDate(inventorySummaryManifestFiles),
-                IsUpdating = GetIsInventoryUpdating(inventorySummaryManifestFiles),
                 RatesAvailableFromQuarter = quartersForInventoryAvailable.Item1,
                 RatesAvailableToQuarter = quartersForInventoryAvailable.Item2,
-                HasInventoryGaps = inventoryGaps.Any(),
                 InventoryGaps = inventoryGaps,
                 Details = _GetDetails(inventorySummaryManifests, manifests, householdAudienceId),
                 ShareBook = shareBook,
@@ -154,6 +150,53 @@ namespace Services.Broadcast.Converters.InventorySummary
         {
             return manifest.ManifestAudiences.Any(x => x.Audience.Id == householdAudienceId && x.Impressions.HasValue) &&
                    manifest.ManifestRates.Any(x => x.SpotLengthId == manifest.SpotLengthId);
+        }
+
+        /// <summary>
+        /// Loads the inventory summary data into InventorySummaryDto object for barter.
+        /// </summary>
+        /// <param name="inventorySource">The inventory source.</param>
+        /// <param name="barterData">The data.</param>
+        /// <param name="quarterDetail">Quarter detail data</param>
+        /// <returns>InventorySummaryDto object</returns>
+        public override InventorySummaryDto LoadInventorySummary(InventorySource inventorySource, InventorySummaryAggregation barterData, QuarterDetailDto quarterDetail)
+        {
+            if (barterData == null) return new BarterInventorySummaryDto()
+            {
+                Quarter = quarterDetail,
+                InventorySourceId = inventorySource.Id,
+                InventorySourceName = inventorySource.Name
+            };
+
+            GetLatestInventoryPostingBook(barterData.ShareBookId, barterData.HutBookId, out var shareBook, out var hutBook);
+            return new BarterInventorySummaryDto
+            {
+                HasInventoryGaps = barterData.InventoryGaps.Any(),
+                HutBook = hutBook,
+                ShareBook = shareBook,
+                InventoryGaps = barterData.InventoryGaps,
+                HouseholdImpressions = barterData.TotalProjectedHouseholdImpressions,
+                InventorySourceId = inventorySource.Id,
+                InventorySourceName = inventorySource.Name,
+                LastUpdatedDate = barterData.LastUpdatedDate,
+                Quarter = quarterDetail,
+                RatesAvailableFromQuarter = GetQuarter(barterData.RatesAvailableFromQuarter.Quarter, barterData.RatesAvailableFromQuarter.Year),
+                RatesAvailableToQuarter = GetQuarter(barterData.RatesAvailableToQuarter.Quarter, barterData.RatesAvailableToQuarter.Year),
+                TotalMarkets = barterData.TotalMarkets,
+                TotalStations = barterData.TotalStations,
+                TotalUnits = barterData.TotalUnits ?? 0,
+                TotalDaypartCodes = barterData.TotalDaypartCodes ?? 0,
+                HasRatesAvailableForQuarter = barterData.TotalUnits > 0,
+                Details = barterData.Details.Select(x=> new BarterInventorySummaryDto.Detail
+                {
+                    CPM = x.CPM,
+                    TotalUnits = x.TotalUnits ?? 0,
+                    Daypart = x.Daypart,
+                    HouseholdImpressions = x.TotalProjectedHouseholdImpressions,
+                    TotalCoverage =  x.TotalCoverage,
+                    TotalMarkets = x.TotalMarkets
+                }).ToList()
+            };
         }
     }
 }

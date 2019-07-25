@@ -2,7 +2,7 @@
   {
     "Details": [
       {
-        "CPM": 1.9931327254390139689786450738,
+        "CPM": 1.9931,
         "Daypart": "EMN",
         "HouseholdImpressions": 236732.80458333332,
         "TotalCoverage": 46.686,
@@ -18,7 +18,7 @@
     "InventoryGaps": [],
     "InventorySourceId": 4,
     "InventorySourceName": "TTWN",
-    "IsUpdating": true,
+    "IsUpdating": false,
     "Quarter": {
       "EndDate": "2019-06-30T23:59:59",
       "Quarter": 2,
@@ -38,9 +38,9 @@
       "Year": 2019
     },
     "ShareBook": {
-      "Id": 425,
+      "Id": 437,
       "Month": 2,
-      "Year": 2017
+      "Year": 2018
     },
     "TotalDaypartCodes": 1,
     "TotalMarkets": 38,

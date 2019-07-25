@@ -9,6 +9,7 @@ using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Converters.RateImport;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
+using Services.Broadcast.Entities.InventorySummary;
 using Services.Broadcast.Entities.StationInventory;
 using Services.Broadcast.Exceptions;
 using Services.Broadcast.IntegrationTests.Stubbs;
@@ -1459,7 +1460,17 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             var source = 1; //OpenMarket
             var result = _InventoryService.GetInventoryUploadHistory(source);
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+
+            var jsonResolver = new IgnorableSerializerContractResolver();
+            jsonResolver.Ignore(typeof(InventoryUploadHistoryDto), "FileId");
+
+            var serializer = new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                ContractResolver = jsonResolver
+            };
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, serializer));
         }
 
         [Test]
@@ -1468,7 +1479,17 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             var source = 4; 
             var result = _InventoryService.GetInventoryUploadHistory(source);
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+
+            var jsonResolver = new IgnorableSerializerContractResolver();
+            jsonResolver.Ignore(typeof(InventoryUploadHistoryDto), "FileId");
+
+            var serializer = new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                ContractResolver = jsonResolver
+            };
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, serializer));
         }
         private InventoryFileSaveRequest _GetInventoryFileSaveRequest(string filePath)
         {

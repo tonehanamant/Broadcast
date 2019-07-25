@@ -30,8 +30,15 @@ namespace Services.Broadcast.ApplicationServices
         /// Process the specified job returning a list of Summary data required for the inventory aggregation process
         /// </summary>
         /// <param name="jobId">Job id to process</param>
-        /// <returns>Summary data required for the inventory aggregation process</returns>
-        InventoryAggregationDto ProcessInventoryRatingsJob(int jobId);
+        /// <returns>
+        /// Inventory source id required for the inventory aggregation process
+        /// </returns>
+        /// <exception cref="ApplicationException">
+        /// Job with id {jobId} was not found
+        /// or
+        /// Job with id {jobId} already has status {job.Status}
+        /// </exception>
+        int ProcessInventoryRatingsJob(int jobId);
         
         void ResetJobStatusToQueued(int jobId);
     }
@@ -84,15 +91,11 @@ namespace Services.Broadcast.ApplicationServices
                 QueuedAt = DateTime.Now
             };
 
-            _InventoryFileRatingsJobsRepository.AddJob(job);
+            _InventoryFileRatingsJobsRepository.AddJob(job);            
         }
 
-        /// <summary>
-        /// Process the specified job returning a list of Summary data required for the inventory aggregation process
-        /// </summary>
-        /// <param name="jobId">Job id to process</param>
-        /// <returns>Summary data required for the inventory aggregation process</returns>
-        public InventoryAggregationDto ProcessInventoryRatingsJob(int jobId)
+        /// <inheritdoc/>        
+        public int ProcessInventoryRatingsJob(int jobId)
         {
             const ProposalPlaybackType defaultOpenMarketPlaybackType = ProposalPlaybackType.LivePlus3;
 
@@ -207,11 +210,7 @@ namespace Services.Broadcast.ApplicationServices
                 }
                 _InventoryFileRatingsJobsRepository.UpdateJob(job);
 
-                return new InventoryAggregationDto
-                {
-                    InventorySourceId = inventoryFile.InventorySource.Id,
-                    InventorySourceType = inventoryFile.InventorySource.InventoryType
-                };
+                return inventoryFile.InventorySource.Id;
             }
             catch
             {

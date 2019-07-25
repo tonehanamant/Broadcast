@@ -67,6 +67,7 @@
     "InventorySourceId": 23,
     "InventorySourceName": "HITV",
     "IsUpdating": false,
+    "LastUpdatedDate": "2019-07-24T13:03:47.71",
     "Quarter": {
       "EndDate": "2018-12-30T23:59:59",
       "Quarter": 4,

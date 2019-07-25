@@ -910,7 +910,7 @@ namespace Services.Broadcast.Repositories
                context =>
                {
                    var weeks = context.station_inventory_manifest
-                        .Where(x => x.inventory_source_id == inventorySourceId)
+                        .Where(x => x.inventory_source_id == inventorySourceId && (FileStatusEnum)x.inventory_files.status == FileStatusEnum.Loaded)
                         .SelectMany(x => x.station_inventory_manifest_weeks)
                         .ToList();
 

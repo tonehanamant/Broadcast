@@ -16,18 +16,18 @@ namespace Services.Broadcast.Entities.InventorySummary
         public bool IsUpdating { get; set; }
         public QuarterDetailDto RatesAvailableFromQuarter { get; set; }
         public QuarterDetailDto RatesAvailableToQuarter { get; set; }
-        public bool? HasInventoryGaps { get; set; }
+        public bool? HasInventoryGaps { get; set; } = false;
         public MediaMonthDto ShareBook { get; set; }
         public MediaMonthDto HutBook { get; set; }
-        public List<InventoryGapDetail> InventoryGaps { get; set; }
-        public bool HasLogo { get; set; }
+        public List<InventoryGapDetail> InventoryGaps { get; set; } = new List<InventoryGapDetail>();
+        public bool HasLogo { get; set; } = false;
     }
 
     public class BarterInventorySummaryDto : InventorySummaryDto
     {
         public int TotalUnits { get; set; }
         public int TotalDaypartCodes { get; set; }
-        public List<Detail> Details { get; set; }
+        public List<Detail> Details { get; set; } = new List<Detail>();
 
         public class Detail
         {
@@ -50,7 +50,7 @@ namespace Services.Broadcast.Entities.InventorySummary
     {
         public int TotalPrograms { get; set; }
         public int TotalDaypartCodes { get; set; }
-        public List<Detail> Details { get; set; }
+        public List<Detail> Details { get; set; } = new List<Detail>();
 
         public class Detail
         {
@@ -76,7 +76,7 @@ namespace Services.Broadcast.Entities.InventorySummary
     {
         public decimal? CPM { get; set; }
         public int TotalDaypartCodes { get; set; }
-        public List<Detail> Details { get; set; }
+        public List<Detail> Details { get; set; } = new List<Detail>();
         public class Detail
         {
             public string Daypart { get; set; }

@@ -52,8 +52,6 @@ namespace Services.Broadcast.Converters.InventorySummary
             return new OpenMarketInventorySummaryDto
             {
                 InventorySourceId = inventorySource.Id,
-                InventorySourceName = inventorySource.Name,
-                HasRatesAvailableForQuarter = inventorySummaryManifests.Any(),
                 Quarter = quarterDetail,
                 TotalMarkets = GetTotalMarkets(inventorySummaryManifests),
                 TotalStations = GetTotalStations(inventorySummaryManifests),
@@ -62,7 +60,6 @@ namespace Services.Broadcast.Converters.InventorySummary
                 LastUpdatedDate = GetFileLastCreatedDate(inventorySummaryManifestFiles),
                 RatesAvailableFromQuarter = quartersForInventoryAvailable.Item1,
                 RatesAvailableToQuarter = quartersForInventoryAvailable.Item2,
-                HasInventoryGaps = inventoryGaps.Any(),
                 InventoryGaps = inventoryGaps,
                 Details = null, //open market does not have details
                 ShareBook = shareBook,
@@ -94,6 +91,44 @@ namespace Services.Broadcast.Converters.InventorySummary
         private StationInventoryManifestAudience _GetAudienceWithPositiveImpressions(IEnumerable<StationInventoryManifestAudience> audiences, int audienceId)
         {
             return audiences.SingleOrDefault(x => x.Audience.Id == audienceId && x.Impressions.HasValue && x.Impressions.Value > 0);
+        }
+
+        /// <summary>
+        /// Loads the inventory summary data into InventorySummaryDto object for open market.
+        /// </summary>
+        /// <param name="inventorySource">The inventory source.</param>
+        /// <param name="openMarketData">The data.</param>
+        /// <param name="quarterDetail">Quarter detail data</param>
+        /// <returns>InventorySummaryDto object</returns>
+        public override InventorySummaryDto LoadInventorySummary(InventorySource inventorySource, InventorySummaryAggregation openMarketData, QuarterDetailDto quarterDetail)
+        {
+            if (openMarketData == null) return new OpenMarketInventorySummaryDto()
+            {
+                Quarter = quarterDetail,
+                InventorySourceId = inventorySource.Id,
+                InventorySourceName = inventorySource.Name
+            };
+            
+            GetLatestInventoryPostingBook(openMarketData.ShareBookId, openMarketData.HutBookId, out var shareBook, out var hutBook);
+            return new OpenMarketInventorySummaryDto
+            {
+                HasInventoryGaps = openMarketData.InventoryGaps.Any(),
+                HutBook = hutBook,
+                ShareBook = shareBook,
+                InventoryGaps = openMarketData.InventoryGaps,
+                HouseholdImpressions = openMarketData.TotalProjectedHouseholdImpressions,
+                InventorySourceId = inventorySource.Id,
+                InventorySourceName = inventorySource.Name,
+                LastUpdatedDate = openMarketData.LastUpdatedDate,
+                Quarter = quarterDetail,
+                RatesAvailableFromQuarter = GetQuarter(openMarketData.RatesAvailableFromQuarter.Quarter, openMarketData.RatesAvailableFromQuarter.Year),
+                RatesAvailableToQuarter = GetQuarter(openMarketData.RatesAvailableToQuarter.Quarter, openMarketData.RatesAvailableToQuarter.Year),
+                TotalMarkets = openMarketData.TotalMarkets,
+                TotalStations = openMarketData.TotalStations,
+                TotalPrograms = openMarketData.TotalPrograms ?? 0,
+                HasRatesAvailableForQuarter = openMarketData.TotalMarkets > 0,
+                Details = null  //open market does not have details
+            };
         }
     }
 }

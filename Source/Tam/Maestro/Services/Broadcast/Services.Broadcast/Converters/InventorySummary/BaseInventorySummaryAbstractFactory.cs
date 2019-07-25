@@ -48,7 +48,7 @@ namespace Services.Broadcast.Converters.InventorySummary
                                                                    List<InventorySummaryManifestDto> manifests);
 
         /// <summary>
-        /// Abstract method to call the proper save method on each type passes
+        /// Call the proper save method on each type passes
         /// </summary>
         /// <typeparam name="T">Inventory source type</typeparam>
         /// <param name="inventorySummaryDto">Inventory summary data</param>
@@ -61,13 +61,16 @@ namespace Services.Broadcast.Converters.InventorySummary
                     () => InventorySummaryRepository.SaveInventorySummaryForOpenMarketSources(inventorySummaryDto as OpenMarketInventorySummaryDto) },
                 { typeof(ProprietaryOAndOInventorySummaryDto),
                     () => InventorySummaryRepository.SaveInventorySummaryForProprietaryOAndOSources(inventorySummaryDto as ProprietaryOAndOInventorySummaryDto) },
-                { typeof(DiginetInventorySummaryDto), () => InventorySummaryRepository.SaveInventorySummaryForDiginetSources(inventorySummaryDto as DiginetInventorySummaryDto) },
+                { typeof(DiginetInventorySummaryDto),
+                    () => InventorySummaryRepository.SaveInventorySummaryForDiginetSources(inventorySummaryDto as DiginetInventorySummaryDto) },
                 { typeof(SyndicationInventorySummaryDto),
                     () => InventorySummaryRepository.SaveInventorySummaryForSyndicationSources(inventorySummaryDto as SyndicationInventorySummaryDto) },
             };
 
-            @switch[typeof(T)]();
+            @switch[inventorySummaryDto.GetType()]();
         }
+
+        public abstract InventorySummaryDto LoadInventorySummary(InventorySource inventorySource, InventorySummaryAggregation data, QuarterDetailDto quarterDetail);
 
         protected Tuple<QuarterDetailDto, QuarterDetailDto> GetQuartersForInventoryAvailable(List<StationInventoryManifestWeek> weeks)
         {
@@ -82,6 +85,11 @@ namespace Services.Broadcast.Converters.InventorySummary
             }
 
             return new Tuple<QuarterDetailDto, QuarterDetailDto>(null, null);
+        }
+
+        protected QuarterDetailDto GetQuarter(int quarterNumber, int year)
+        {
+            return _QuarterCalculationEngine.GetQuarterDetail(quarterNumber, year);
         }
 
         protected void GetLatestInventoryPostingBook(List<InventorySummaryManifestFileDto> inventorySummaryManifestFileDtos, out MediaMonthDto shareBook, out MediaMonthDto hutBook)
@@ -102,6 +110,21 @@ namespace Services.Broadcast.Converters.InventorySummary
                 {
                     hutBook = _ToMediaMonthDto(_MediaMonthAndWeekAggregateCache.GetMediaMonthById(latestUploadedFile.HutProjectionBookId.Value));
                 }
+            }
+        }
+
+        protected void GetLatestInventoryPostingBook(int? shareBookId, int? hutBookId, out MediaMonthDto shareBook, out MediaMonthDto hutBook)
+        {
+            shareBook = null;
+            hutBook = null;
+
+            if (shareBookId.HasValue)
+            {
+                shareBook = _ToMediaMonthDto(_MediaMonthAndWeekAggregateCache.GetMediaMonthById(shareBookId.Value));
+            }
+            if (hutBookId.HasValue)
+            {
+                hutBook = _ToMediaMonthDto(_MediaMonthAndWeekAggregateCache.GetMediaMonthById(hutBookId.Value));
             }
         }
 
@@ -130,12 +153,6 @@ namespace Services.Broadcast.Converters.InventorySummary
         protected int GetTotalStations(List<InventorySummaryManifestDto> inventorySummaryManifests)
         {
             return inventorySummaryManifests.Where(x => x.StationId.HasValue).GroupBy(x => x.StationId).Count();
-        }
-
-        protected bool GetIsInventoryUpdating(List<InventorySummaryManifestFileDto> inventorySummaryManifestFiles)
-        {
-            return inventorySummaryManifestFiles.Any(x => x.JobStatus == BackgroundJobProcessingStatus.Queued ||
-                                                          x.JobStatus == BackgroundJobProcessingStatus.Processing);
         }
 
         protected DateTime? GetLastJobCompletedDate(List<InventorySummaryManifestFileDto> inventorySummaryManifestFiles)

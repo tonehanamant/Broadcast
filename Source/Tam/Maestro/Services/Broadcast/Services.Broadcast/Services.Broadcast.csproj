@@ -234,6 +234,8 @@
     <Compile Include="ApplicationServices\Scx\ScxFileGenerationDetailTransformer.cs" />
     <Compile Include="ApplicationServices\Scx\ScxFileGenerationHistorian.cs" />
     <Compile Include="Entities\Enums\BackgroundJobProcessingStatus.cs" />
+    <Compile Include="Entities\InventorySummary\InventorySummaryAggregation.cs" />
+    <Compile Include="Entities\InventorySummary\InventorySummaryQuarter.cs" />
     <Compile Include="Entities\ScxGenerationJob.cs" />
     <Compile Include="Entities\Scx\ScxFileGenerationDetailDto.cs" />
     <Compile Include="Entities\Scx\ScxFileGenerationDetail.cs" />
@@ -271,14 +273,12 @@
     <Compile Include="Entities\DaypartCodeDto.cs" />
     <Compile Include="Entities\Enums\RatesTimeframe.cs" />
     <Compile Include="Entities\InventoryLogo.cs" />
-    <Compile Include="Entities\InventorySummary\InventoryAggregationDto.cs" />
     <Compile Include="Entities\InventorySummary\InventorySummaryDto.cs" />
     <Compile Include="Converters\InventorySummary\BaseInventorySummaryAbstractFactory.cs" />
     <Compile Include="Entities\InventorySummary\InventorySummaryFilterDto.cs" />
     <Compile Include="Entities\InventorySummary\InventoryQuartersDto.cs" />
     <Compile Include="Entities\InventorySummary\InventorySummaryManifestFileDto.cs" />
     <Compile Include="Entities\InventorySummary\InventorySummaryMissingWeeks.cs" />
-    <Compile Include="Entities\InventorySummary\InventorySummaryQuarterDto.cs" />
     <Compile Include="Converters\InventorySummary\OpenMarketSummaryFactory.cs" />
     <Compile Include="Converters\InventorySummary\BarterInventorySummaryFactory.cs" />
     <Compile Include="Entities\InventorySummary\InventoryUploadHistoryDto.cs" />

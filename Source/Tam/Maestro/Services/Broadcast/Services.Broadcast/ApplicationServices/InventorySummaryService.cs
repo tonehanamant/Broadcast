@@ -26,10 +26,10 @@ namespace Services.Broadcast.ApplicationServices
         List<LookupDto> GetInventorySourceTypes();
 
         /// <summary>
-        /// Aggregates all the information based on the list of inventory summary data
+        /// Aggregates all the information based on the list of inventory source ids
         /// </summary>
-        /// <param name="summaryData">List of inventory summary data</param>
-        void AggregateInventorySummaryData(List<InventoryAggregationDto> summaryData);
+        /// <param name="inventorySourceIds">List of inventory source ids</param>
+        void AggregateInventorySummaryData(List<int> inventorySourceIds);
     }
 
     public class InventorySummaryService : IInventorySummaryService
@@ -103,17 +103,98 @@ namespace Services.Broadcast.ApplicationServices
         public List<InventorySummaryDto> GetInventorySummaries(InventorySummaryFilterDto inventorySummaryFilterDto, DateTime currentDate)
         {
             var inventorySummaryDtos = new List<InventorySummaryDto>();
-            var houseHoldAudience = _AudiencesCache.GetDefaultAudience();
-            var householdAudienceId = houseHoldAudience.Id;
 
-            //load the aggregated data from db
-            //inventorySummaryDtos.AddRange(_CreateInventorySummariesForSource(inventorySummaryFilterDto, householdAudienceId, currentDate));
+            if (inventorySummaryFilterDto.InventorySourceId != null)
+            {
+                inventorySummaryDtos.AddRange(_LoadInventorySummariesForSource(inventorySummaryFilterDto, currentDate));
+            }
+            else
+            {
+                inventorySummaryDtos.AddRange(_LoadInventorySummaryForQuarter(inventorySummaryFilterDto));
+            }
 
-            _SetHasLogo(inventorySummaryDtos);
+            if (inventorySummaryDtos.Any(x => x.InventorySourceId != 0))   //if there is summary data in the result set
+            {
+                _SetHasLogo(inventorySummaryDtos);
+            }
 
             return inventorySummaryDtos;
         }
 
+        private IEnumerable<InventorySummaryDto> _LoadInventorySummaryForQuarter(InventorySummaryFilterDto inventorySummaryFilterDto)
+        {
+            var quarter = inventorySummaryFilterDto.Quarter.Quarter;
+            var year = inventorySummaryFilterDto.Quarter.Year;
+            var quarterDetail = _QuarterCalculationEngine.GetQuarterDetail(quarter, year);
+            var inventorySources = GetInventorySources();
+
+            foreach (var inventorySource in inventorySources)
+            {
+                if (_ShouldFilterBySourceType(inventorySummaryFilterDto, inventorySource))
+                {
+                    continue;
+                }                    
+                                
+                var data = _InventorySummaryRepository.GetInventorySummaryDataForSources(inventorySource, quarterDetail.Quarter, quarterDetail.Year);
+
+                if (data == null)//there is no inventory for this source
+                {
+                    continue;
+                }
+
+                var daypartCodes = data.Details.Where(x => x.Daypart != null).Select(m => m.Daypart).Distinct().ToList();
+
+                if (_ShouldFilterByDaypartCode(daypartCodes, inventorySummaryFilterDto.DaypartCodeId))
+                {
+                    continue;
+                }
+
+                yield return _LoadInventorySummary(inventorySource, data, quarterDetail);
+            }
+        }
+
+        private IEnumerable<InventorySummaryDto> _LoadInventorySummariesForSource(InventorySummaryFilterDto inventorySummaryFilterDto, DateTime currentDate)
+        {
+            var inventorySourceId = inventorySummaryFilterDto.InventorySourceId.Value;
+            var inventorySource = _InventoryRepository.GetInventorySource(inventorySourceId);
+            var inventorySourceDateRange = _GetInventorySourceOrCurrentQuarterDateRange(inventorySourceId, currentDate);
+            var allQuartersBetweenDates =
+                _QuarterCalculationEngine.GetAllQuartersBetweenDates(inventorySourceDateRange.Start.Value,
+                                                                     inventorySourceDateRange.End.Value);
+
+            foreach (var quarterDetail in allQuartersBetweenDates)
+            {
+                var data = _InventorySummaryRepository.GetInventorySummaryDataForSources(inventorySource, quarterDetail.Quarter, quarterDetail.Year);
+
+                yield return _LoadInventorySummary(inventorySource, data, quarterDetail);
+            }
+        }
+
+        private List<InventorySummaryDto> _CreateInventorySummariesForSource(InventorySource inventorySource, 
+            BaseInventorySummaryAbstractFactory inventorySummaryFactory,
+            int householdAudienceId, DateTime currentDate)
+        {
+            var result = new List<InventorySummaryDto>();
+            var inventorySourceDateRange = _GetInventorySourceOrCurrentQuarterDateRange(inventorySource.Id, currentDate);
+            var allQuartersBetweenDates =
+                _QuarterCalculationEngine.GetAllQuartersBetweenDates(inventorySourceDateRange.Start.Value,
+                                                                     inventorySourceDateRange.End.Value);
+
+            foreach (var quarterDetail in allQuartersBetweenDates)
+            {
+                var manifests = _GetInventorySummaryManifests(inventorySource, quarterDetail);
+                
+                if (manifests.Count == 0)   //there is no data in this quarter
+                {
+                    continue;
+                }
+
+                var summaryData = inventorySummaryFactory.CreateInventorySummary(inventorySource, householdAudienceId, quarterDetail, manifests);
+                result.Add(summaryData);
+            }
+            return result;
+        }
+        
         private void _SetHasLogo(List<InventorySummaryDto> inventorySummaryDtos)
         {
             var inventorySources = inventorySummaryDtos.Select(x => x.InventorySourceId).Distinct();
@@ -125,7 +206,7 @@ namespace Services.Broadcast.ApplicationServices
             }
         }
 
-        private bool _FilterByDaypartCode(List<string> daypartCodes, int? daypartCodeId)
+        private bool _ShouldFilterByDaypartCode(List<string> daypartCodes, int? daypartCodeId)
         {
             if (!daypartCodeId.HasValue)
                 return false;
@@ -134,50 +215,10 @@ namespace Services.Broadcast.ApplicationServices
             return !daypartCodes.Contains(daypartCode);
         }
 
-        private IEnumerable<InventorySummaryDto> _CreateInventorySummariesForSource(InventoryAggregationDto inventoryAggregationDto, int householdAudienceId, DateTime currentDate)
-        {
-            var inventorySourceId = inventoryAggregationDto.InventorySourceId;
-            var inventorySource = _InventoryRepository.GetInventorySource(inventorySourceId);
-            var inventorySourceDateRange = _GetInventorySourceOrCurrentQuarterDateRange(inventorySourceId, currentDate);
-            var allQuartersBetweenDates =
-                _QuarterCalculationEngine.GetAllQuartersBetweenDates(inventorySourceDateRange.Start.Value,
-                                                                     inventorySourceDateRange.End.Value);
-
-            foreach (var quarterDetail in allQuartersBetweenDates)
-            {
-                var manifests = _GetInventorySummaryManifests(inventorySource, quarterDetail);
-                var daypartCodes = manifests.Where(x => x.DaypartCodes != null).SelectMany(m => m.DaypartCodes).Distinct().ToList();
-
-                yield return _CreateInventorySummary(inventorySource, householdAudienceId, quarterDetail, manifests);
-            }
-        }
-
-        private bool _FilterBySourceType(InventorySummaryFilterDto inventorySummaryFilterDto, InventorySource inventorySource)
+        private bool _ShouldFilterBySourceType(InventorySummaryFilterDto inventorySummaryFilterDto, InventorySource inventorySource)
         {
             return inventorySummaryFilterDto.InventorySourceType.HasValue &&
                    inventorySource.InventoryType != inventorySummaryFilterDto.InventorySourceType;
-        }
-
-        private IEnumerable<InventorySummaryDto> _CreateInventorySummaryForQuarter(InventorySummaryFilterDto inventorySummaryFilterDto, int householdAudienceId)
-        {
-            var inventorySources = GetInventorySources();
-            var quarter = inventorySummaryFilterDto.Quarter.Quarter;
-            var year = inventorySummaryFilterDto.Quarter.Year;
-            var quarterDetail = _QuarterCalculationEngine.GetQuarterDetail(quarter, year);
-
-            foreach (var inventorySource in inventorySources)
-            {
-                if (_FilterBySourceType(inventorySummaryFilterDto, inventorySource))
-                    continue;
-
-                var manifests = _GetInventorySummaryManifests(inventorySource, quarterDetail);
-                var daypartCodes = manifests.Where(x => x.DaypartCodes != null).SelectMany(m => m.DaypartCodes).Distinct().ToList();
-
-                if (_FilterByDaypartCode(daypartCodes, inventorySummaryFilterDto.DaypartCodeId))
-                    continue;
-
-                yield return _CreateInventorySummary(inventorySource, householdAudienceId, quarterDetail, manifests);
-            }
         }
 
         private List<InventorySummaryManifestDto> _GetInventorySummaryManifests(InventorySource inventorySource, QuarterDetailDto quarterDetail)
@@ -199,68 +240,73 @@ namespace Services.Broadcast.ApplicationServices
 
             return result.Any() ? result : new List<InventorySummaryManifestDto>();
         }
-
-        private InventorySummaryDto _CreateInventorySummary(InventorySource inventorySource,
-                                                            int householdAudienceId,
-                                                            QuarterDetailDto quarterDetail,
-                                                            List<InventorySummaryManifestDto> manifests)
+        
+        private InventorySummaryDto _LoadInventorySummary(InventorySource inventorySource, InventorySummaryAggregation data, QuarterDetailDto quarterDetail)
         {
-            BaseInventorySummaryAbstractFactory inventorySummaryFactory = null;
-
-            if (inventorySource.InventoryType == InventorySourceTypeEnum.Barter)
+            var inventorySummaryFactory = _GetInventorySummaryFactory(inventorySource.InventoryType);
+            if (data != null && data.InventoryGaps.Any())
             {
-                inventorySummaryFactory = new BarterInventorySummaryFactory(_InventoryRepository,
+                foreach (var gap in data.InventoryGaps)
+                {
+                    gap.Quarter = _QuarterCalculationEngine.GetQuarterDetail(gap.Quarter.Quarter, gap.Quarter.Year);
+                }
+            }
+            
+            return inventorySummaryFactory.LoadInventorySummary(inventorySource, data, quarterDetail);
+        }
+
+        private BaseInventorySummaryAbstractFactory _GetInventorySummaryFactory(InventorySourceTypeEnum inventoryType)
+        {
+            var @switch = new Dictionary<InventorySourceTypeEnum, BaseInventorySummaryAbstractFactory>
+            {
+                {
+                InventorySourceTypeEnum.Barter, new BarterInventorySummaryFactory(_InventoryRepository,
                                                                             _InventorySummaryRepository,
                                                                             _QuarterCalculationEngine,
                                                                             _ProgramRepository,
                                                                             _MediaMonthAndWeekAggregateCache,
                                                                             _MarketCoverageCache,
-                                                                            _InventoryGapCalculationEngine);
-            }
-            else if (inventorySource.InventoryType == InventorySourceTypeEnum.OpenMarket)
-            {
-                inventorySummaryFactory = new OpenMarketSummaryFactory(_InventoryRepository,
+                                                                            _InventoryGapCalculationEngine)
+                },
+                {
+                    InventorySourceTypeEnum.OpenMarket, new OpenMarketSummaryFactory(_InventoryRepository,
                                                                        _InventorySummaryRepository,
                                                                        _QuarterCalculationEngine,
                                                                        _ProgramRepository,
                                                                        _MediaMonthAndWeekAggregateCache,
                                                                        _MarketCoverageCache,
-                                                                       _InventoryGapCalculationEngine);
-            }
-            else if (inventorySource.InventoryType == InventorySourceTypeEnum.ProprietaryOAndO)
-            {
-                inventorySummaryFactory = new ProprietaryOAndOSummaryFactory(_InventoryRepository,
+                                                                       _InventoryGapCalculationEngine)
+                },
+                {
+                    InventorySourceTypeEnum.ProprietaryOAndO, new ProprietaryOAndOSummaryFactory(_InventoryRepository,
                                                                              _InventorySummaryRepository,
                                                                              _QuarterCalculationEngine,
                                                                              _ProgramRepository,
                                                                              _MediaMonthAndWeekAggregateCache,
                                                                              _MarketCoverageCache,
-                                                                             _InventoryGapCalculationEngine);
-            }
-            else if (inventorySource.InventoryType == InventorySourceTypeEnum.Syndication)
-            {
-                inventorySummaryFactory = new SyndicationSummaryFactory(_InventoryRepository,
+                                                                             _InventoryGapCalculationEngine)
+                },
+                {
+                     InventorySourceTypeEnum.Syndication, new SyndicationSummaryFactory(_InventoryRepository,
                                                                         _InventorySummaryRepository,
                                                                         _QuarterCalculationEngine,
                                                                         _ProgramRepository,
                                                                         _MediaMonthAndWeekAggregateCache,
                                                                         _MarketCoverageCache,
-                                                                        _InventoryGapCalculationEngine);
-            }
-            else if (inventorySource.InventoryType == InventorySourceTypeEnum.Diginet)
-            {
-                inventorySummaryFactory = new DiginetSummaryFactory(_InventoryRepository,
+                                                                        _InventoryGapCalculationEngine)
+                },
+                {
+                    InventorySourceTypeEnum.Diginet, new DiginetSummaryFactory(_InventoryRepository,
                                                                     _InventorySummaryRepository,
                                                                     _QuarterCalculationEngine,
                                                                     _ProgramRepository,
                                                                     _MediaMonthAndWeekAggregateCache,
                                                                     _MarketCoverageCache,
-                                                                    _InventoryGapCalculationEngine);
-            }
+                                                                    _InventoryGapCalculationEngine)
+                }
+            };
 
-            var summaryData = inventorySummaryFactory.CreateInventorySummary(inventorySource, householdAudienceId, quarterDetail, manifests);
-            inventorySummaryFactory.SaveInventorySummary(summaryData);
-            return summaryData;
+            return @switch[inventoryType];
         }
 
         private List<QuarterDetailDto> _GetInventorySummaryQuarters(DateTime currentDate)
@@ -326,15 +372,22 @@ namespace Services.Broadcast.ApplicationServices
         }
 
         /// <summary>
-        /// Aggregates all the information based on the list of inventory summary data
+        /// Aggregates all the information based on the list of inventory source ids
         /// </summary>
-        /// <param name="summaryData">List of inventory summary data</param>
-        public void AggregateInventorySummaryData(List<InventoryAggregationDto> summaryData)
+        /// <param name="inventorySourceIds">List of inventory source ids</param>
+        public void AggregateInventorySummaryData(List<int> inventorySourceIds)
         {
             var houseHoldAudienceId = _AudiencesCache.GetDefaultAudience().Id;
-            foreach (var data in summaryData)
-            {
-                _CreateInventorySummariesForSource(data, houseHoldAudienceId, DateTime.Now);
+            
+            foreach (var inventorySourceId in inventorySourceIds)
+            {                
+                var inventorySource = _InventoryRepository.GetInventorySource(inventorySourceId);
+                var inventorySummaryFactory = _GetInventorySummaryFactory(inventorySource.InventoryType);
+                var summaryData = _CreateInventorySummariesForSource(inventorySource, inventorySummaryFactory, houseHoldAudienceId, DateTime.Now);
+                foreach(var data in summaryData)
+                {
+                    inventorySummaryFactory.SaveInventorySummary(data);
+                }                
             }
         }
     }

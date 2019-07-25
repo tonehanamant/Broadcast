@@ -26,15 +26,16 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         private readonly ILogoService _LogoService = IntegrationTestApplicationServiceFactory.GetApplicationService<ILogoService>();
         private readonly IInventorySummaryService _InventorySummaryService = IntegrationTestApplicationServiceFactory.GetApplicationService<IInventorySummaryService>();
         private readonly IInventoryRepository _InventoryRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
-        private readonly IDaypartCodeRepository _DaypartCodeRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IDaypartCodeRepository>();       
+        private readonly IDaypartCodeRepository _DaypartCodeRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IDaypartCodeRepository>();
         private IProprietaryInventoryService _ProprietaryService;
         private IInventoryRepository _IInventoryRepository;
         private IInventoryRatingsProcessingService _InventoryRatingsProcessingService;
         private IInventoryFileRatingsJobsRepository _InventoryFileRatingsJobsRepository;
         private IInventoryService _InventoryService;
+        private int nbcOAndO_InventorySourceId = 0;
 
         [TestFixtureSetUp]
-        public void init()
+        public void Init()
         {
             try
             {
@@ -44,6 +45,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 _InventoryRatingsProcessingService = IntegrationTestApplicationServiceFactory.GetApplicationService<IInventoryRatingsProcessingService>();
                 _InventoryFileRatingsJobsRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryFileRatingsJobsRepository>();
                 _InventoryService = IntegrationTestApplicationServiceFactory.GetApplicationService<IInventoryService>();
+                nbcOAndO_InventorySourceId = _InventoryRepository.GetInventorySourceByName("NBC O&O").Id;
             }
             catch (Exception e)
             {
@@ -85,20 +87,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void GetInventorySummaries_OpenMarket()
         {
-            const string fileName = @"ImportingRateData\Open Market provided and projected imps.xml";
-
             using (new TransactionScopeWrapper())
             {
-                var request = new InventoryFileSaveRequest
-                {
-                    StreamData = new FileStream($@".\Files\{fileName}", FileMode.Open, FileAccess.Read),
-                    FileName = fileName
-                };
-
-                var result = _InventoryService.SaveInventoryFile(request, "IntegrationTestUser", new DateTime(2018, 1, 1));
-                var job = _InventoryFileRatingsJobsRepository.GetLatestJob();
-                _InventoryRatingsProcessingService.ProcessInventoryRatingsJob(job.id.Value);
-
                 var inventoryCards = _GetOpenMarketSummaryForQuarter(2018, 1)
                               .Union(_GetOpenMarketSummaryForQuarter(2018, 2));
 
@@ -128,20 +118,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void SavesDiginetInventoryFileManifests_WithDaypartCodes_WithoutFullHours()
         {
-            const string fileName = @"ProprietaryDataFiles\Diginet_WithDaypartCodes_WithoutFullHours.xlsx";
-
             using (new TransactionScopeWrapper())
             {
-                var request = new InventoryFileSaveRequest
-                {
-                    StreamData = new FileStream($@".\Files\{fileName}", FileMode.Open, FileAccess.Read),
-                    FileName = fileName
-                };
-
-                var result = _ProprietaryService.SaveProprietaryInventoryFile(request, "IntegrationTestUser", new DateTime(2018, 10, 02));
-                var job = _InventoryFileRatingsJobsRepository.GetLatestJob();
-                _InventoryRatingsProcessingService.ProcessInventoryRatingsJob(job.id.Value);
-
                 var inventoryCards = _InventorySummaryService.GetInventorySummaries(new InventorySummaryFilterDto
                 {
                     InventorySourceId = 23,
@@ -163,20 +141,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void GetInventorySummaries_Diginet()
         {
-            const string fileName = @"ProprietaryDataFiles\Diginet_WithDaypartCodes.xlsx";
-
             using (new TransactionScopeWrapper())
             {
-                var request = new InventoryFileSaveRequest
-                {
-                    StreamData = new FileStream($@".\Files\{fileName}", FileMode.Open, FileAccess.Read),
-                    FileName = fileName
-                };
-
-                var result = _ProprietaryService.SaveProprietaryInventoryFile(request, "IntegrationTestUser", new DateTime(2018, 10, 02));
-                var job = _InventoryFileRatingsJobsRepository.GetLatestJob();
-                _InventoryRatingsProcessingService.ProcessInventoryRatingsJob(job.id.Value);
-
                 var inventoryCards = _InventorySummaryService.GetInventorySummaries(new InventorySummaryFilterDto
                 {
                     InventorySourceId = 23,
@@ -201,7 +167,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var inventoryCards = _InventorySummaryService.GetInventorySummaries(new InventorySummaryFilterDto
             {
                 InventorySourceId = 11,
-            }, new DateTime(2019, 04, 01));
+            }, new DateTime(2019, 07, 01));
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(inventoryCards));
         }
@@ -210,20 +176,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void GetInventorySummaryDetailsTest()
         {
-            const string fileName = @"ProprietaryDataFiles\Barter_ValidFormat_SingleBook_ShortDateRange.xlsx";
-
             using (new TransactionScopeWrapper())
             {
-                var request = new InventoryFileSaveRequest
-                {
-                    StreamData = new FileStream($@".\Files\{fileName}", FileMode.Open, FileAccess.Read),
-                    FileName = fileName
-                };
-
-                var result = _ProprietaryService.SaveProprietaryInventoryFile(request, "IntegrationTestUser", new DateTime(2019, 02, 02));
-                var job = _InventoryFileRatingsJobsRepository.GetLatestJob();
-                _InventoryRatingsProcessingService.ProcessInventoryRatingsJob(job.id.Value);
-
                 var inventoryCards = _InventorySummaryService.GetInventorySummaries(new InventorySummaryFilterDto
                 {
                     InventorySourceId = 4,
@@ -259,10 +213,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void GetInventoryQuartersBySourceAndDaypartCodeTest()
         {
-            var inventorySourceId = _InventoryRepository.GetInventorySourceByName("NBC O&O").Id;
             var daypartCodeId = _DaypartCodeRepository.GetDaypartCodeByCode("EMN").Id;
 
-            var quarters = _InventorySummaryService.GetInventoryQuarters(inventorySourceId, daypartCodeId);
+            var quarters = _InventorySummaryService.GetInventoryQuarters(nbcOAndO_InventorySourceId, daypartCodeId);
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(quarters));
         }
@@ -271,10 +224,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void GetInventoryQuartersBySourceAndDaypartCodeTest_NoData()
         {
-            var inventorySourceId = _InventoryRepository.GetInventorySourceByName("NBC O&O").Id;
             var daypartCodeId = _DaypartCodeRepository.GetDaypartCodeByCode("DIGI").Id;
 
-            var quarters = _InventorySummaryService.GetInventoryQuarters(inventorySourceId, daypartCodeId);
+            var quarters = _InventorySummaryService.GetInventoryQuarters(nbcOAndO_InventorySourceId, daypartCodeId);
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(quarters));
         }
@@ -283,8 +235,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void GetDaypartCodesTest()
         {
-            var inventorySource = _InventoryRepository.GetInventorySourceByName("NBC O&O");
-            var daypartCodes = _InventorySummaryService.GetDaypartCodes(inventorySource.Id);
+            var daypartCodes = _InventorySummaryService.GetDaypartCodes(nbcOAndO_InventorySourceId);
 
             var jsonResolver = new IgnorableSerializerContractResolver();
             jsonResolver.Ignore(typeof(DaypartCode), "Id");
@@ -293,7 +244,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                 ContractResolver = jsonResolver
             };
-            
+
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(daypartCodes, jsonSettings));
         }
 
@@ -338,7 +289,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(inventoryCards));
         }
-        
+
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void GetInventorySummariesQuarterTest()
@@ -354,7 +305,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(inventoryCards));
         }
-        
+
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void GetInventorySummariesWithOpenMarketTest()
@@ -373,14 +324,14 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             Approvals.Verify(openMarketCardJson);
         }
-        
+
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void GetInventorySummaryOpenMarketTest()
         {
             var request = new InventorySummaryFilterDto
             {
-                InventorySourceId = _InventoryRepository.GetInventorySourceByName("Open Market").Id,
+                InventorySourceId = 1,  //open market
                 Quarter = new InventorySummaryQuarter
                 {
                     Quarter = 1,
@@ -467,27 +418,102 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [TestCase(InventorySourceTypeEnum.Barter)]
-        [TestCase(InventorySourceTypeEnum.Diginet)]
-        [TestCase(InventorySourceTypeEnum.OpenMarket)]
-        [TestCase(InventorySourceTypeEnum.ProprietaryOAndO)]
-        [TestCase(InventorySourceTypeEnum.Syndication)]
+        [TestCase(InventorySourceTypeEnum.Barter, 2, 2019)]
+        [TestCase(InventorySourceTypeEnum.Diginet, 4, 2018)]
+        [TestCase(InventorySourceTypeEnum.OpenMarket, 4, 2018)]
+        [TestCase(InventorySourceTypeEnum.ProprietaryOAndO, 1, 2019)]
+        [TestCase(InventorySourceTypeEnum.Syndication, 1, 2018)]
         [UseReporter(typeof(DiffReporter))]
-        public void GetInventorySummariesFilterBySourceTypeTest(InventorySourceTypeEnum inventorySourceType)
+        public void GetInventorySummariesFilterBySourceTypeTest(InventorySourceTypeEnum inventorySourceType, int quarterNumber, int quarterYear)
         {
-            using (ApprovalResults.ForScenario(inventorySourceType))
+            using (ApprovalResults.ForScenario(inventorySourceType, quarterNumber, quarterYear))
             {
                 var inventoryCards = _InventorySummaryService.GetInventorySummaries(new InventorySummaryFilterDto
                 {
                     Quarter = new InventorySummaryQuarter
                     {
-                        Quarter = 1,
-                        Year = 2018
+                        Quarter = quarterNumber,
+                        Year = quarterYear
                     },
                     InventorySourceType = inventorySourceType
                 }, new DateTime(2019, 04, 01));
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(inventoryCards));
+            }
+        }
+
+        [Test]
+        [Ignore("This test is used to load and aggregate all the data in the db and saved it to inventory_summary tables")]
+        public void LoadAggregationDataIntoDb()
+        {
+            var inventorySources = new List<int>
+                {
+                    1       ,//   Open Market
+                    3       ,//   TVB
+                    4       ,//   TTWN
+                    5       ,//   CNN
+                    6       ,//   Sinclair
+                    7       ,//   LilaMax
+                    8       ,//   MLB
+                    9       ,//   Ference Media
+                    10       ,//  ABC O&O
+                    11       ,//  NBC O&O
+                    12       ,//  KATZ
+                    13       ,//  20th Century Fox (Twentieth Century)
+                    14       ,//  CBS Synd
+                    15       ,//  NBCU Syn
+                    16       ,//  WB Syn
+                    17       ,//  Antenna TV
+                    18       ,//  Bounce
+                    19       ,//  BUZZR
+                    20       ,//  COZI
+                    21       ,//  Escape
+                    22       ,//  Grit
+                    23       ,//  HITV
+                    24       ,//  Laff
+                    25       ,//  Me TV
+                };
+
+            List<string> files = new List<string> {
+                    //@"ProprietaryDataFiles\Diginet_WithDaypartCodes_WithoutFullHours.xlsx",
+                    //@"ProprietaryDataFiles\Barter_ValidFormat_SingleBook_ShortDateRange.xlsx",
+                    //@"ImportingRateData\Open Market provided and projected imps.xml",
+                    //@"ProprietaryDataFiles\Diginet_WithDaypartCodes.xlsx"
+                };
+
+            using (var trx = new TransactionScopeWrapper())
+            {
+                ////load data from files into db
+                //foreach (var filePath in files)
+                //{
+                //    var request = new InventoryFileSaveRequest
+                //    {
+                //        StreamData = new FileStream($@".\Files\{filePath}", FileMode.Open, FileAccess.Read),
+                //        FileName = filePath
+                //    };
+
+                //    if (Path.GetExtension(filePath).Equals(".xml"))
+                //    {
+                //        _InventoryService.SaveInventoryFile(request, "IntegrationTestUser", new DateTime(2019, 07, 20));
+                //    }
+                //    else
+                //    {
+                //        _ProprietaryService.SaveProprietaryInventoryFile(request, "IntegrationTestUser", new DateTime(2019, 07, 20));
+                //    }
+
+                //}
+
+                ////process the imported data
+                //foreach (var job in _InventoryFileRatingsJobsRepository.GetJobsBatch(files.Count()))
+                //{
+                //    _InventoryRatingsProcessingService.ProcessInventoryRatingsJob(job.id.Value);
+                //}
+
+                //aggregate the data
+                _InventorySummaryService.AggregateInventorySummaryData(inventorySources);
+
+                //uncomment this to save the data
+                trx.Complete();
             }
         }
     }
