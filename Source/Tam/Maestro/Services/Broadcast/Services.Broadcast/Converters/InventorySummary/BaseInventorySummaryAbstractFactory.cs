@@ -47,6 +47,28 @@ namespace Services.Broadcast.Converters.InventorySummary
                                                                    QuarterDetailDto quarterDetail,
                                                                    List<InventorySummaryManifestDto> manifests);
 
+        /// <summary>
+        /// Abstract method to call the proper save method on each type passes
+        /// </summary>
+        /// <typeparam name="T">Inventory source type</typeparam>
+        /// <param name="inventorySummaryDto">Inventory summary data</param>
+        public void SaveInventorySummary<T>(T inventorySummaryDto) where T : InventorySummaryDto
+        {
+            var @switch = new Dictionary<Type, Action> {
+                { typeof(BarterInventorySummaryDto),
+                    () => InventorySummaryRepository.SaveInventorySummaryForBarterSources(inventorySummaryDto as BarterInventorySummaryDto) },
+                { typeof(OpenMarketInventorySummaryDto),
+                    () => InventorySummaryRepository.SaveInventorySummaryForOpenMarketSources(inventorySummaryDto as OpenMarketInventorySummaryDto) },
+                { typeof(ProprietaryOAndOInventorySummaryDto),
+                    () => InventorySummaryRepository.SaveInventorySummaryForProprietaryOAndOSources(inventorySummaryDto as ProprietaryOAndOInventorySummaryDto) },
+                { typeof(DiginetInventorySummaryDto), () => InventorySummaryRepository.SaveInventorySummaryForDiginetSources(inventorySummaryDto as DiginetInventorySummaryDto) },
+                { typeof(SyndicationInventorySummaryDto),
+                    () => InventorySummaryRepository.SaveInventorySummaryForSyndicationSources(inventorySummaryDto as SyndicationInventorySummaryDto) },
+            };
+
+            @switch[typeof(T)]();
+        }
+
         protected Tuple<QuarterDetailDto, QuarterDetailDto> GetQuartersForInventoryAvailable(List<StationInventoryManifestWeek> weeks)
         {
             if (weeks.Any())

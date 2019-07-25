@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using static Services.Broadcast.Converters.InventorySummary.BaseInventorySummaryAbstractFactory;
 
 namespace Services.Broadcast.Entities.InventorySummary
 {

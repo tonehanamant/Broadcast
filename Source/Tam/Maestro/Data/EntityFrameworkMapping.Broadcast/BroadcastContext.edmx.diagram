@@ -286,6 +286,16 @@
         <AssociationConnector Association="BroadcastModel.FK_scx_generation_jobs_inventory_sources" />
         <AssociationConnector Association="BroadcastModel.FK_scx_generation_job_files_scx_generation_job" />
         <AssociationConnector Association="BroadcastModel.FK_scx_generation_job_units_scx_generation_jobs" />
+        <EntityTypeShape EntityType="BroadcastModel.inventory_summary" Width="1.5" PointX="2.75" PointY="58.25" />
+        <EntityTypeShape EntityType="BroadcastModel.inventory_summary_gap_ranges" Width="1.5" PointX="7.25" PointY="56.375" />
+        <EntityTypeShape EntityType="BroadcastModel.inventory_summary_gaps" Width="1.5" PointX="5" PointY="56.125" />
+        <EntityTypeShape EntityType="BroadcastModel.inventory_summary_quarter_details" Width="1.5" PointX="5" PointY="51.625" />
+        <EntityTypeShape EntityType="BroadcastModel.inventory_summary_quarters" Width="1.5" PointX="2.75" PointY="53" />
+        <AssociationConnector Association="BroadcastModel.FK_inventory_summary_inventory_sources" />
+        <AssociationConnector Association="BroadcastModel.FK_inventory_summary_quarters_inventory_sources" />
+        <AssociationConnector Association="BroadcastModel.FK_inventory_summary_gap_ranges_inventory_summary_gaps" />
+        <AssociationConnector Association="BroadcastModel.FK_inventory_summary_gaps_inventory_summary" />
+        <AssociationConnector Association="BroadcastModel.FK_inventory_summary_quarter_details_inventory_summary_quarters" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

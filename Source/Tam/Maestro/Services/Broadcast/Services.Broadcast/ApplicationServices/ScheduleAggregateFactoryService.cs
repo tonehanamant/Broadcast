@@ -31,7 +31,7 @@ namespace Services.Broadcast.ApplicationServices
         {
             var schedule = _BroadcastDataRepositoryFactory.GetDataRepository<IScheduleRepository>().GetById(scheduleId);
             var mediaWeeks = _MediaMonthAndWeekAggregateCache.GetDisplayMediaWeekByFlight(schedule.start_date, schedule.end_date);
-            var houseHoldAudienceId = _AudienceCache.GetDisplayAudienceByCode(BroadcastConstants.HOUSEHOLD_CODE).Id;
+            var houseHoldAudienceId = _AudienceCache.GetDefaultAudience().Id;
 
             return _BroadcastDataRepositoryFactory.GetDataRepository<IScheduleAggregateRepository>().Find(scheduleId, mediaWeeks, houseHoldAudienceId);
         }

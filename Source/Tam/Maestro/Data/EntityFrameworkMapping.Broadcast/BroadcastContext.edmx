@@ -371,6 +371,76 @@
           <Property Name="is_active" Type="bit" Nullable="false" />
           <Property Name="inventory_source_type" Type="tinyint" Nullable="false" />
         </EntityType>
+        <EntityType Name="inventory_summary">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="inventory_source_id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="inventory_source_id" Type="int" Nullable="false" />
+          <Property Name="first_quarter_number" Type="int" Nullable="false" />
+          <Property Name="first_quarter_year" Type="int" Nullable="false" />
+          <Property Name="last_quarter_number" Type="int" Nullable="false" />
+          <Property Name="last_quarter_year" Type="int" Nullable="false" />
+          <Property Name="last_update_date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="inventory_summary_gap_ranges">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="inventory_summary_gaps_id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="inventory_summary_gaps_id" Type="int" Nullable="false" />
+          <Property Name="start_date" Type="datetime" Nullable="false" />
+          <Property Name="end_date" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="inventory_summary_gaps">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="inventory_summary_id" Type="int" Nullable="false" />
+          <Property Name="quarter_number" Type="int" Nullable="false" />
+          <Property Name="quarter_year" Type="int" Nullable="false" />
+          <Property Name="all_quarter_missing" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="inventory_summary_quarter_details">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="inventory_summary_quarter_id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="inventory_summary_quarter_id" Type="int" Nullable="false" />
+          <Property Name="daypart" Type="varchar" MaxLength="64" />
+          <Property Name="total_markets" Type="int" Nullable="false" />
+          <Property Name="total_coverage" Type="float" Nullable="false" />
+          <Property Name="total_units" Type="int" />
+          <Property Name="total_programs" Type="int" />
+          <Property Name="total_projected_impressions" Type="float" />
+          <Property Name="cpm" Type="money" />
+          <Property Name="min_spots_per_week" Type="int" />
+          <Property Name="max_spots_per_week" Type="int" />
+          <Property Name="share_book_id" Type="int" />
+          <Property Name="hut_book_id" Type="int" />
+        </EntityType>
+        <EntityType Name="inventory_summary_quarters">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="inventory_source_id" Type="int" Nullable="false" />
+          <Property Name="quarter_number" Type="int" Nullable="false" />
+          <Property Name="quarter_year" Type="int" Nullable="false" />
+          <Property Name="share_book_id" Type="int" />
+          <Property Name="hut_book_id" Type="int" />
+          <Property Name="total_markets" Type="int" Nullable="false" />
+          <Property Name="total_stations" Type="int" Nullable="false" />
+          <Property Name="total_programs" Type="int" />
+          <Property Name="total_daypart_codes" Type="int" />
+          <Property Name="total_units" Type="int" />
+          <Property Name="total_projected_impressions" Type="float" />
+          <Property Name="cpm" Type="money" />
+        </EntityType>
         <EntityType Name="isci_blacklist">
           <Key>
             <PropertyRef Name="id" />
@@ -1856,6 +1926,72 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="inventory_source_logos">
+              <PropertyRef Name="inventory_source_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_inventory_summary_gap_ranges_inventory_summary_gaps">
+          <End Role="inventory_summary_gaps" Type="Self.inventory_summary_gaps" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="inventory_summary_gap_ranges" Type="Self.inventory_summary_gap_ranges" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="inventory_summary_gaps">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="inventory_summary_gap_ranges">
+              <PropertyRef Name="inventory_summary_gaps_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_inventory_summary_gaps_inventory_summary">
+          <End Role="inventory_summary_quarters" Type="Self.inventory_summary_quarters" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="inventory_summary_gaps" Type="Self.inventory_summary_gaps" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="inventory_summary_quarters">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="inventory_summary_gaps">
+              <PropertyRef Name="inventory_summary_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_inventory_summary_inventory_sources">
+          <End Role="inventory_sources" Type="Self.inventory_sources" Multiplicity="1" />
+          <End Role="inventory_summary" Type="Self.inventory_summary" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="inventory_sources">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="inventory_summary">
+              <PropertyRef Name="inventory_source_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_inventory_summary_quarter_details_inventory_summary_quarters">
+          <End Role="inventory_summary_quarters" Type="Self.inventory_summary_quarters" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="inventory_summary_quarter_details" Type="Self.inventory_summary_quarter_details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="inventory_summary_quarters">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="inventory_summary_quarter_details">
+              <PropertyRef Name="inventory_summary_quarter_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_inventory_summary_quarters_inventory_sources">
+          <End Role="inventory_sources" Type="Self.inventory_sources" Multiplicity="1" />
+          <End Role="inventory_summary_quarters" Type="Self.inventory_summary_quarters" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="inventory_sources">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="inventory_summary_quarters">
               <PropertyRef Name="inventory_source_id" />
             </Dependent>
           </ReferentialConstraint>
@@ -3682,6 +3818,11 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySet Name="inventory_files" EntityType="Self.inventory_files" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="inventory_source_logos" EntityType="Self.inventory_source_logos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="inventory_sources" EntityType="Self.inventory_sources" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="inventory_summary" EntityType="Self.inventory_summary" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="inventory_summary_gap_ranges" EntityType="Self.inventory_summary_gap_ranges" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="inventory_summary_gaps" EntityType="Self.inventory_summary_gaps" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="inventory_summary_quarter_details" EntityType="Self.inventory_summary_quarter_details" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="inventory_summary_quarters" EntityType="Self.inventory_summary_quarters" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="isci_blacklist" EntityType="Self.isci_blacklist" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="isci_mapping" EntityType="Self.isci_mapping" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="market_coverage_files" EntityType="Self.market_coverage_files" Schema="dbo" store:Type="Tables" />
@@ -3913,6 +4054,26 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <AssociationSet Name="FK_inventory_source_logos_inventory_sources" Association="Self.FK_inventory_source_logos_inventory_sources">
             <End Role="inventory_sources" EntitySet="inventory_sources" />
             <End Role="inventory_source_logos" EntitySet="inventory_source_logos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_inventory_summary_gap_ranges_inventory_summary_gaps" Association="Self.FK_inventory_summary_gap_ranges_inventory_summary_gaps">
+            <End Role="inventory_summary_gaps" EntitySet="inventory_summary_gaps" />
+            <End Role="inventory_summary_gap_ranges" EntitySet="inventory_summary_gap_ranges" />
+          </AssociationSet>
+          <AssociationSet Name="FK_inventory_summary_gaps_inventory_summary" Association="Self.FK_inventory_summary_gaps_inventory_summary">
+            <End Role="inventory_summary_quarters" EntitySet="inventory_summary_quarters" />
+            <End Role="inventory_summary_gaps" EntitySet="inventory_summary_gaps" />
+          </AssociationSet>
+          <AssociationSet Name="FK_inventory_summary_inventory_sources" Association="Self.FK_inventory_summary_inventory_sources">
+            <End Role="inventory_sources" EntitySet="inventory_sources" />
+            <End Role="inventory_summary" EntitySet="inventory_summary" />
+          </AssociationSet>
+          <AssociationSet Name="FK_inventory_summary_quarter_details_inventory_summary_quarters" Association="Self.FK_inventory_summary_quarter_details_inventory_summary_quarters">
+            <End Role="inventory_summary_quarters" EntitySet="inventory_summary_quarters" />
+            <End Role="inventory_summary_quarter_details" EntitySet="inventory_summary_quarter_details" />
+          </AssociationSet>
+          <AssociationSet Name="FK_inventory_summary_quarters_inventory_sources" Association="Self.FK_inventory_summary_quarters_inventory_sources">
+            <End Role="inventory_sources" EntitySet="inventory_sources" />
+            <End Role="inventory_summary_quarters" EntitySet="inventory_summary_quarters" />
           </AssociationSet>
           <AssociationSet Name="FK_market_coverages_market_coverage_files" Association="Self.FK_market_coverages_market_coverage_files">
             <End Role="market_coverage_files" EntitySet="market_coverage_files" />
@@ -5258,6 +5419,31 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="scx_generation_jobs" EntitySet="scx_generation_jobs" />
             <End Role="scx_generation_job_units" EntitySet="scx_generation_job_units" />
           </AssociationSet>
+          <EntitySet Name="inventory_summary" EntityType="BroadcastModel.inventory_summary" />
+          <EntitySet Name="inventory_summary_gap_ranges" EntityType="BroadcastModel.inventory_summary_gap_ranges" />
+          <EntitySet Name="inventory_summary_gaps" EntityType="BroadcastModel.inventory_summary_gaps" />
+          <EntitySet Name="inventory_summary_quarter_details" EntityType="BroadcastModel.inventory_summary_quarter_details" />
+          <EntitySet Name="inventory_summary_quarters" EntityType="BroadcastModel.inventory_summary_quarters" />
+          <AssociationSet Name="FK_inventory_summary_inventory_sources" Association="BroadcastModel.FK_inventory_summary_inventory_sources">
+            <End Role="inventory_sources" EntitySet="inventory_sources" />
+            <End Role="inventory_summary" EntitySet="inventory_summary" />
+          </AssociationSet>
+          <AssociationSet Name="FK_inventory_summary_quarters_inventory_sources" Association="BroadcastModel.FK_inventory_summary_quarters_inventory_sources">
+            <End Role="inventory_sources" EntitySet="inventory_sources" />
+            <End Role="inventory_summary_quarters" EntitySet="inventory_summary_quarters" />
+          </AssociationSet>
+          <AssociationSet Name="FK_inventory_summary_gap_ranges_inventory_summary_gaps" Association="BroadcastModel.FK_inventory_summary_gap_ranges_inventory_summary_gaps">
+            <End Role="inventory_summary_gaps" EntitySet="inventory_summary_gaps" />
+            <End Role="inventory_summary_gap_ranges" EntitySet="inventory_summary_gap_ranges" />
+          </AssociationSet>
+          <AssociationSet Name="FK_inventory_summary_gaps_inventory_summary" Association="BroadcastModel.FK_inventory_summary_gaps_inventory_summary">
+            <End Role="inventory_summary_quarters" EntitySet="inventory_summary_quarters" />
+            <End Role="inventory_summary_gaps" EntitySet="inventory_summary_gaps" />
+          </AssociationSet>
+          <AssociationSet Name="FK_inventory_summary_quarter_details_inventory_summary_quarters" Association="BroadcastModel.FK_inventory_summary_quarter_details_inventory_summary_quarters">
+            <End Role="inventory_summary_quarters" EntitySet="inventory_summary_quarters" />
+            <End Role="inventory_summary_quarter_details" EntitySet="inventory_summary_quarter_details" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="audience_audiences">
           <Key>
@@ -6260,6 +6446,8 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="inventory_source_logos" Relationship="BroadcastModel.FK_inventory_source_logos_inventory_sources" FromRole="inventory_sources" ToRole="inventory_source_logos" />
           <NavigationProperty Name="scx_generation_job_files" Relationship="BroadcastModel.FK_scx_generation_job_files_inventory_sources" FromRole="inventory_sources" ToRole="scx_generation_job_files" />
           <NavigationProperty Name="scx_generation_jobs" Relationship="BroadcastModel.FK_scx_generation_jobs_inventory_sources" FromRole="inventory_sources" ToRole="scx_generation_jobs" />
+          <NavigationProperty Name="inventory_summary" Relationship="BroadcastModel.FK_inventory_summary_inventory_sources" FromRole="inventory_sources" ToRole="inventory_summary" />
+          <NavigationProperty Name="inventory_summary_quarters" Relationship="BroadcastModel.FK_inventory_summary_quarters_inventory_sources" FromRole="inventory_sources" ToRole="inventory_summary_quarters" />
         </EntityType>
         <EntityType Name="station_inventory_group">
           <Key>
@@ -9194,6 +9382,150 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="inventory_summary">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="inventory_source_id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="inventory_source_id" Type="Int32" Nullable="false" />
+          <Property Name="first_quarter_number" Type="Int32" Nullable="false" />
+          <Property Name="first_quarter_year" Type="Int32" Nullable="false" />
+          <Property Name="last_quarter_number" Type="Int32" Nullable="false" />
+          <Property Name="last_quarter_year" Type="Int32" Nullable="false" />
+          <Property Name="last_update_date" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="inventory_sources" Relationship="BroadcastModel.FK_inventory_summary_inventory_sources" FromRole="inventory_summary" ToRole="inventory_sources" />
+        </EntityType>
+        <EntityType Name="inventory_summary_gap_ranges">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="inventory_summary_gaps_id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="inventory_summary_gaps_id" Type="Int32" Nullable="false" />
+          <Property Name="start_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="end_date" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="inventory_summary_gaps" Relationship="BroadcastModel.FK_inventory_summary_gap_ranges_inventory_summary_gaps" FromRole="inventory_summary_gap_ranges" ToRole="inventory_summary_gaps" />
+        </EntityType>
+        <EntityType Name="inventory_summary_gaps">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="inventory_summary_id" Type="Int32" Nullable="false" />
+          <Property Name="quarter_number" Type="Int32" Nullable="false" />
+          <Property Name="quarter_year" Type="Int32" Nullable="false" />
+          <Property Name="all_quarter_missing" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="inventory_summary_gap_ranges" Relationship="BroadcastModel.FK_inventory_summary_gap_ranges_inventory_summary_gaps" FromRole="inventory_summary_gaps" ToRole="inventory_summary_gap_ranges" />
+          <NavigationProperty Name="inventory_summary_quarters" Relationship="BroadcastModel.FK_inventory_summary_gaps_inventory_summary" FromRole="inventory_summary_gaps" ToRole="inventory_summary_quarters" />
+        </EntityType>
+        <EntityType Name="inventory_summary_quarter_details">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="inventory_summary_quarter_id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="inventory_summary_quarter_id" Type="Int32" Nullable="false" />
+          <Property Name="daypart" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="total_markets" Type="Int32" Nullable="false" />
+          <Property Name="total_coverage" Type="Double" Nullable="false" />
+          <Property Name="total_units" Type="Int32" />
+          <Property Name="total_programs" Type="Int32" />
+          <Property Name="total_projected_impressions" Type="Double" />
+          <Property Name="cpm" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="min_spots_per_week" Type="Int32" />
+          <Property Name="max_spots_per_week" Type="Int32" />
+          <Property Name="share_book_id" Type="Int32" />
+          <Property Name="hut_book_id" Type="Int32" />
+          <NavigationProperty Name="inventory_summary_quarters" Relationship="BroadcastModel.FK_inventory_summary_quarter_details_inventory_summary_quarters" FromRole="inventory_summary_quarter_details" ToRole="inventory_summary_quarters" />
+        </EntityType>
+        <EntityType Name="inventory_summary_quarters">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="inventory_source_id" Type="Int32" Nullable="false" />
+          <Property Name="quarter_number" Type="Int32" Nullable="false" />
+          <Property Name="quarter_year" Type="Int32" Nullable="false" />
+          <Property Name="share_book_id" Type="Int32" />
+          <Property Name="hut_book_id" Type="Int32" />
+          <Property Name="total_markets" Type="Int32" Nullable="false" />
+          <Property Name="total_stations" Type="Int32" Nullable="false" />
+          <Property Name="total_programs" Type="Int32" />
+          <Property Name="total_daypart_codes" Type="Int32" />
+          <Property Name="total_units" Type="Int32" />
+          <Property Name="total_projected_impressions" Type="Double" />
+          <Property Name="cpm" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="inventory_sources" Relationship="BroadcastModel.FK_inventory_summary_quarters_inventory_sources" FromRole="inventory_summary_quarters" ToRole="inventory_sources" />
+          <NavigationProperty Name="inventory_summary_gaps" Relationship="BroadcastModel.FK_inventory_summary_gaps_inventory_summary" FromRole="inventory_summary_quarters" ToRole="inventory_summary_gaps" />
+          <NavigationProperty Name="inventory_summary_quarter_details" Relationship="BroadcastModel.FK_inventory_summary_quarter_details_inventory_summary_quarters" FromRole="inventory_summary_quarters" ToRole="inventory_summary_quarter_details" />
+        </EntityType>
+        <Association Name="FK_inventory_summary_inventory_sources">
+          <End Type="BroadcastModel.inventory_sources" Role="inventory_sources" Multiplicity="1" />
+          <End Type="BroadcastModel.inventory_summary" Role="inventory_summary" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="inventory_sources">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="inventory_summary">
+              <PropertyRef Name="inventory_source_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_inventory_summary_quarters_inventory_sources">
+          <End Type="BroadcastModel.inventory_sources" Role="inventory_sources" Multiplicity="1" />
+          <End Type="BroadcastModel.inventory_summary_quarters" Role="inventory_summary_quarters" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="inventory_sources">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="inventory_summary_quarters">
+              <PropertyRef Name="inventory_source_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_inventory_summary_gap_ranges_inventory_summary_gaps">
+          <End Type="BroadcastModel.inventory_summary_gaps" Role="inventory_summary_gaps" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BroadcastModel.inventory_summary_gap_ranges" Role="inventory_summary_gap_ranges" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="inventory_summary_gaps">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="inventory_summary_gap_ranges">
+              <PropertyRef Name="inventory_summary_gaps_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_inventory_summary_gaps_inventory_summary">
+          <End Type="BroadcastModel.inventory_summary_quarters" Role="inventory_summary_quarters" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BroadcastModel.inventory_summary_gaps" Role="inventory_summary_gaps" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="inventory_summary_quarters">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="inventory_summary_gaps">
+              <PropertyRef Name="inventory_summary_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_inventory_summary_quarter_details_inventory_summary_quarters">
+          <End Type="BroadcastModel.inventory_summary_quarters" Role="inventory_summary_quarters" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BroadcastModel.inventory_summary_quarter_details" Role="inventory_summary_quarter_details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="inventory_summary_quarters">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="inventory_summary_quarter_details">
+              <PropertyRef Name="inventory_summary_quarter_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -10766,6 +11098,78 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
                 <ScalarProperty Name="end_date" ColumnName="end_date" />
                 <ScalarProperty Name="start_date" ColumnName="start_date" />
                 <ScalarProperty Name="daypart_code_id" ColumnName="daypart_code_id" />
+                <ScalarProperty Name="inventory_source_id" ColumnName="inventory_source_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="inventory_summary">
+            <EntityTypeMapping TypeName="BroadcastModel.inventory_summary">
+              <MappingFragment StoreEntitySet="inventory_summary">
+                <ScalarProperty Name="last_update_date" ColumnName="last_update_date" />
+                <ScalarProperty Name="last_quarter_year" ColumnName="last_quarter_year" />
+                <ScalarProperty Name="last_quarter_number" ColumnName="last_quarter_number" />
+                <ScalarProperty Name="first_quarter_year" ColumnName="first_quarter_year" />
+                <ScalarProperty Name="first_quarter_number" ColumnName="first_quarter_number" />
+                <ScalarProperty Name="inventory_source_id" ColumnName="inventory_source_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="inventory_summary_gap_ranges">
+            <EntityTypeMapping TypeName="BroadcastModel.inventory_summary_gap_ranges">
+              <MappingFragment StoreEntitySet="inventory_summary_gap_ranges">
+                <ScalarProperty Name="end_date" ColumnName="end_date" />
+                <ScalarProperty Name="start_date" ColumnName="start_date" />
+                <ScalarProperty Name="inventory_summary_gaps_id" ColumnName="inventory_summary_gaps_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="inventory_summary_gaps">
+            <EntityTypeMapping TypeName="BroadcastModel.inventory_summary_gaps">
+              <MappingFragment StoreEntitySet="inventory_summary_gaps">
+                <ScalarProperty Name="all_quarter_missing" ColumnName="all_quarter_missing" />
+                <ScalarProperty Name="quarter_year" ColumnName="quarter_year" />
+                <ScalarProperty Name="quarter_number" ColumnName="quarter_number" />
+                <ScalarProperty Name="inventory_summary_id" ColumnName="inventory_summary_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="inventory_summary_quarter_details">
+            <EntityTypeMapping TypeName="BroadcastModel.inventory_summary_quarter_details">
+              <MappingFragment StoreEntitySet="inventory_summary_quarter_details">
+                <ScalarProperty Name="hut_book_id" ColumnName="hut_book_id" />
+                <ScalarProperty Name="share_book_id" ColumnName="share_book_id" />
+                <ScalarProperty Name="max_spots_per_week" ColumnName="max_spots_per_week" />
+                <ScalarProperty Name="min_spots_per_week" ColumnName="min_spots_per_week" />
+                <ScalarProperty Name="cpm" ColumnName="cpm" />
+                <ScalarProperty Name="total_projected_impressions" ColumnName="total_projected_impressions" />
+                <ScalarProperty Name="total_programs" ColumnName="total_programs" />
+                <ScalarProperty Name="total_units" ColumnName="total_units" />
+                <ScalarProperty Name="total_coverage" ColumnName="total_coverage" />
+                <ScalarProperty Name="total_markets" ColumnName="total_markets" />
+                <ScalarProperty Name="daypart" ColumnName="daypart" />
+                <ScalarProperty Name="inventory_summary_quarter_id" ColumnName="inventory_summary_quarter_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="inventory_summary_quarters">
+            <EntityTypeMapping TypeName="BroadcastModel.inventory_summary_quarters">
+              <MappingFragment StoreEntitySet="inventory_summary_quarters">
+                <ScalarProperty Name="cpm" ColumnName="cpm" />
+                <ScalarProperty Name="total_projected_impressions" ColumnName="total_projected_impressions" />
+                <ScalarProperty Name="total_units" ColumnName="total_units" />
+                <ScalarProperty Name="total_daypart_codes" ColumnName="total_daypart_codes" />
+                <ScalarProperty Name="total_programs" ColumnName="total_programs" />
+                <ScalarProperty Name="total_stations" ColumnName="total_stations" />
+                <ScalarProperty Name="total_markets" ColumnName="total_markets" />
+                <ScalarProperty Name="hut_book_id" ColumnName="hut_book_id" />
+                <ScalarProperty Name="share_book_id" ColumnName="share_book_id" />
+                <ScalarProperty Name="quarter_year" ColumnName="quarter_year" />
+                <ScalarProperty Name="quarter_number" ColumnName="quarter_number" />
                 <ScalarProperty Name="inventory_source_id" ColumnName="inventory_source_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>

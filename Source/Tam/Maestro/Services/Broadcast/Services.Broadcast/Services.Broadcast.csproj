@@ -271,6 +271,7 @@
     <Compile Include="Entities\DaypartCodeDto.cs" />
     <Compile Include="Entities\Enums\RatesTimeframe.cs" />
     <Compile Include="Entities\InventoryLogo.cs" />
+    <Compile Include="Entities\InventorySummary\InventoryAggregationDto.cs" />
     <Compile Include="Entities\InventorySummary\InventorySummaryDto.cs" />
     <Compile Include="Converters\InventorySummary\BaseInventorySummaryAbstractFactory.cs" />
     <Compile Include="Entities\InventorySummary\InventorySummaryFilterDto.cs" />

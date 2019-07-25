@@ -151,7 +151,7 @@ namespace Services.Broadcast.Cache
 
         public BroadcastAudience GetDefaultAudience()
         {
-            return _Audiences.SingleOrDefault(a => a.Code == "HH");
+            return _Audiences.SingleOrDefault(a => a.Code == BroadcastConstants.HOUSEHOLD_CODE);
         }
 
         public LookupDto FindDto(int id)

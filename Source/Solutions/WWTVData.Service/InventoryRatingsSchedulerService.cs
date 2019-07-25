@@ -1,7 +1,9 @@
 ﻿using Services.Broadcast.ApplicationServices;
+using Services.Broadcast.Entities.InventorySummary;
 using Services.Broadcast.Services;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 
@@ -35,6 +37,7 @@ namespace WWTVData.Service
 
             try
             {
+                var summaryDataList = new List<InventoryAggregationDto>();
                 var service = ApplicationServiceFactory.GetApplicationService<IInventoryRatingsProcessingService>();
                 var jobs = service.GetQueuedJobs(BroadcastServiceSystemParameter.InventoryRatingsParallelJobs);
 
@@ -51,11 +54,13 @@ namespace WWTVData.Service
                     BaseWindowsService.LogServiceEvent($"Processing inventory ratings Job {job.id}");
                     tasks.Add(Task.Run(() =>
                     {
-                        service.ProcessInventoryRatingsJob(job.id.Value);
+                        summaryDataList.Add(service.ProcessInventoryRatingsJob(job.id.Value));
                     }));
                 }
                 Task.WaitAll(tasks.ToArray());
-                
+
+                ApplicationServiceFactory.GetApplicationService<IInventorySummaryService>().AggregateInventorySummaryData(summaryDataList.Distinct().ToList());
+
             }
             catch (Exception e)
             {

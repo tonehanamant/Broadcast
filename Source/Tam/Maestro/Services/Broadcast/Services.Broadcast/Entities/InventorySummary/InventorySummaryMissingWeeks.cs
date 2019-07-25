@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Tam.Maestro.Services.ContractInterfaces.Common;
 
 namespace Services.Broadcast.Entities.InventorySummary
 {

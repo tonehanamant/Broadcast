@@ -183,6 +183,137 @@ END
 
 /*************************************** END PRI-10290 *****************************************************/
 
+/*************************************** START PRI-10832 *****************************************************/
+IF OBJECT_ID('inventory_summary', 'U') IS NULL
+BEGIN	
+	CREATE TABLE [dbo].[inventory_summary](
+		[id] [int] IDENTITY(1,1) NOT NULL,
+		[inventory_source_id] [INT] NOT NULL,
+		[first_quarter_number] [INT] NOT NULL,
+		[first_quarter_year] [INT] NOT NULL,
+		[last_quarter_number] [INT] NOT NULL,
+		[last_quarter_year] [INT] NOT NULL,
+		[last_update_date] [DATETIME] NULL
+	 CONSTRAINT [PK_inventory_summary] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC,
+		[inventory_source_id]
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY]
+
+	ALTER TABLE [dbo].[inventory_summary] WITH CHECK ADD CONSTRAINT [FK_inventory_summary_inventory_sources] FOREIGN KEY([inventory_source_id])
+	REFERENCES [dbo].[inventory_sources] ([id])
+	ALTER TABLE [dbo].[inventory_summary] CHECK CONSTRAINT [FK_inventory_summary_inventory_sources]
+	CREATE NONCLUSTERED INDEX [IX_inventory_summary_inventory_source_id]  ON [dbo].[inventory_summary] ([inventory_source_id] ASC)
+	INCLUDE ([id]) 
+	WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+END
+
+IF OBJECT_ID('inventory_summary_quarters', 'U') IS NULL
+BEGIN	
+	CREATE TABLE [dbo].[inventory_summary_quarters](
+		[id] [int] IDENTITY(1,1) NOT NULL,
+		[inventory_source_id] [INT] NOT NULL,
+		[quarter_number] [INT] NOT NULL,
+		[quarter_year] [INT] NOT NULL,
+		[share_book_id] [INT] NULL,
+		[hut_book_id] [INT] NULL,
+		[total_markets] [INT] NOT NULL,
+		[total_stations] [INT] NOT NULL,
+		[total_programs] [INT] NULL,
+		[total_daypart_codes] [INT] NULL,
+		[total_units] [INT] NULL,
+		[total_projected_impressions] [FLOAT] NULL,
+		[cpm] [MONEY] NULL
+	 CONSTRAINT [PK_inventory_summary_quarters] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY]
+
+	ALTER TABLE [dbo].[inventory_summary_quarters] WITH CHECK ADD CONSTRAINT [FK_inventory_summary_quarters_inventory_sources] FOREIGN KEY([inventory_source_id])
+	REFERENCES [dbo].[inventory_sources] ([id])
+	ALTER TABLE [dbo].[inventory_summary_quarters] CHECK CONSTRAINT [FK_inventory_summary_quarters_inventory_sources]
+	CREATE NONCLUSTERED INDEX [IX_inventory_summary_quarters_inventory_source_id]  ON [dbo].[inventory_summary_quarters] ([inventory_source_id] ASC)
+	INCLUDE ([id], [quarter_number], [quarter_year]) 
+	WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+END
+
+IF OBJECT_ID('inventory_summary_quarter_details', 'U') IS NULL
+BEGIN	
+	CREATE TABLE [dbo].[inventory_summary_quarter_details](
+		[id] [int] IDENTITY(1,1) NOT NULL,
+		[inventory_summary_quarter_id] [INT] NOT NULL,
+		[daypart] [VARCHAR](64),
+		[total_markets] [INT] NOT NULL,
+		[total_coverage] [FLOAT] NOT NULL,
+		[total_units] [INT] NULL,
+		[total_programs] [INT] NULL,
+		[total_projected_impressions] [FLOAT] NULL,
+		[cpm] [MONEY] NULL,
+		[min_spots_per_week] [INT] NULL,
+		[max_spots_per_week] [INT] NULL,
+		[share_book_id] [INT] NULL,
+		[hut_book_id] [INT] NULL
+	 CONSTRAINT [PK_inventory_summary_quarter_details] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC,
+		[inventory_summary_quarter_id]
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY]
+
+	ALTER TABLE [dbo].[inventory_summary_quarter_details] WITH CHECK ADD CONSTRAINT [FK_inventory_summary_quarter_details_inventory_summary_quarters] FOREIGN KEY([inventory_summary_quarter_id])
+	REFERENCES [dbo].[inventory_summary_quarters] ([id]) ON DELETE CASCADE
+	ALTER TABLE [dbo].[inventory_summary_quarter_details] CHECK CONSTRAINT [FK_inventory_summary_quarter_details_inventory_summary_quarters]
+	CREATE NONCLUSTERED INDEX [IX_inventory_summary_quarter_details_inventory_summary_quarter_id]  ON [dbo].[inventory_summary_quarter_details] ([inventory_summary_quarter_id] ASC)
+	INCLUDE ([id]) 
+	WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+END
+
+IF OBJECT_ID('inventory_summary_gaps', 'U') IS NULL
+BEGIN	
+	CREATE TABLE [dbo].[inventory_summary_gaps](
+		[id] [int] IDENTITY(1,1) NOT NULL,
+		[inventory_summary_id] [INT] NOT NULL,
+		[quarter_number] [INT] NOT NULL,
+		[quarter_year] [INT] NOT NULL,
+		[all_quarter_missing] [BIT] NOT NULL
+	 CONSTRAINT [PK_inventory_summary_gaps] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY]
+
+	ALTER TABLE [dbo].[inventory_summary_gaps] WITH CHECK ADD CONSTRAINT [FK_inventory_summary_gaps_inventory_summary] FOREIGN KEY([inventory_summary_id])
+	REFERENCES [dbo].[inventory_summary_quarters] ([id]) ON DELETE CASCADE
+	ALTER TABLE [dbo].[inventory_summary_gaps] CHECK CONSTRAINT [FK_inventory_summary_gaps_inventory_summary]
+	CREATE NONCLUSTERED INDEX [IX_inventory_summary_gaps_inventory_summary_id]  ON [dbo].[inventory_summary_gaps] ([inventory_summary_id] ASC)
+	INCLUDE ([id]) 
+	WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+END
+
+IF OBJECT_ID('inventory_summary_gap_ranges', 'U') IS NULL
+BEGIN	
+	CREATE TABLE [dbo].[inventory_summary_gap_ranges](
+		[id] [int] IDENTITY(1,1) NOT NULL,
+		[inventory_summary_gaps_id] [INT] NOT NULL,
+		[start_date] [DATETIME] NOT NULL,
+		[end_date] [DATETIME] NOT NULL
+	 CONSTRAINT [PK_inventory_summary_gap_ranges] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC,
+		[inventory_summary_gaps_id]
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY]
+
+	ALTER TABLE [dbo].[inventory_summary_gap_ranges] WITH CHECK ADD CONSTRAINT [FK_inventory_summary_gap_ranges_inventory_summary_gaps] FOREIGN KEY([inventory_summary_gaps_id])
+	REFERENCES [dbo].[inventory_summary_gaps] ([id]) ON DELETE CASCADE
+	ALTER TABLE [dbo].[inventory_summary_gap_ranges] CHECK CONSTRAINT [FK_inventory_summary_gap_ranges_inventory_summary_gaps]
+	CREATE NONCLUSTERED INDEX [IX_inventory_summary_gap_rages_inventory_summary_gaps_id]  ON [dbo].[inventory_summary_gap_ranges] ([inventory_summary_gaps_id] ASC)
+	INCLUDE ([id]) 
+	WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+END
+/*************************************** END PRI-10832 *****************************************************/
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 

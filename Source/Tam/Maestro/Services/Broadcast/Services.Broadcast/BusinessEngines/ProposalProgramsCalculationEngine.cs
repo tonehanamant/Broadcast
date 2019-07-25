@@ -85,7 +85,7 @@ namespace Services.Broadcast.BusinessEngines
                 RATING of the program by the demographic chosen * market coverage universe (provided by Nielsen) = Target Impressions per Spot.
 
              */
-            var houseHoldAudienceId = _AudienceCache.GetDisplayAudienceByCode(BroadcastConstants.HOUSEHOLD_CODE).Id;
+            var houseHoldAudienceId = _AudienceCache.GetDefaultAudience().Id;
             foreach (var programDetails in programsList)
             {
                 int spotsForCalculation;

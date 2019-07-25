@@ -1,6 +1,7 @@
 ﻿using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
 using Services.Broadcast.BusinessEngines;
+using Services.Broadcast.Entities.InventorySummary;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Repositories;
 using System;
@@ -24,7 +25,14 @@ namespace Services.Broadcast.ApplicationServices
         void QueueInventoryFileRatingsJob(int inventoryFileId);
         List<InventoryFileRatingsProcessingJob> GetQueuedJobs(int limit);
         InventoryFileRatingsProcessingJob GetJobByFileId(int fileId);
-        void ProcessInventoryRatingsJob(int jobId);
+
+        /// <summary>
+        /// Process the specified job returning a list of Summary data required for the inventory aggregation process
+        /// </summary>
+        /// <param name="jobId">Job id to process</param>
+        /// <returns>Summary data required for the inventory aggregation process</returns>
+        InventoryAggregationDto ProcessInventoryRatingsJob(int jobId);
+        
         void ResetJobStatusToQueued(int jobId);
     }
 
@@ -79,7 +87,12 @@ namespace Services.Broadcast.ApplicationServices
             _InventoryFileRatingsJobsRepository.AddJob(job);
         }
 
-        public void ProcessInventoryRatingsJob(int jobId)
+        /// <summary>
+        /// Process the specified job returning a list of Summary data required for the inventory aggregation process
+        /// </summary>
+        /// <param name="jobId">Job id to process</param>
+        /// <returns>Summary data required for the inventory aggregation process</returns>
+        public InventoryAggregationDto ProcessInventoryRatingsJob(int jobId)
         {
             const ProposalPlaybackType defaultOpenMarketPlaybackType = ProposalPlaybackType.LivePlus3;
 
@@ -99,7 +112,7 @@ namespace Services.Broadcast.ApplicationServices
             {
                 job.Status = BackgroundJobProcessingStatus.Processing;
                 _InventoryFileRatingsJobsRepository.UpdateJob(job);
-
+                
                 var inventoryFile = _InventoryFileRepository.GetInventoryFileById(job.InventoryFileId);
                 var inventorySource = inventoryFile.InventorySource;
                 
@@ -192,8 +205,13 @@ namespace Services.Broadcast.ApplicationServices
                     // Failed for unsupported types
                     job.Status = BackgroundJobProcessingStatus.Failed;
                 }
-                
                 _InventoryFileRatingsJobsRepository.UpdateJob(job);
+
+                return new InventoryAggregationDto
+                {
+                    InventorySourceId = inventoryFile.InventorySource.Id,
+                    InventorySourceType = inventoryFile.InventorySource.InventoryType
+                };
             }
             catch
             {
