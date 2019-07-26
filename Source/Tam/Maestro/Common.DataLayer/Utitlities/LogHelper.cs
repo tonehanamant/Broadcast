@@ -70,14 +70,5 @@ namespace Tam.Maestro.Common.Utilities.Logging
         {
             Logger.ErrorFormat("Error in Property  {0} Error -{1}", property, error);
         }
-        //static void Main(string[] args)
-
-        //{
-        //    log4net.Config.XmlConfigurator.Configure();
-        //    Logger.Error("test 1");
-        //    ServiceCallStart(serviceName: " testService", methodName: "testmethod", userName: "testUser",environment: "testEnvironment");
-
-        //    Console.ReadKey();
-        //}
     }
 }
