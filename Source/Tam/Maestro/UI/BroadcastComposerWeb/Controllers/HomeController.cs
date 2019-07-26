@@ -6,7 +6,7 @@ namespace BroadcastComposerWeb.Controllers
     {
         public ActionResult Index()
         {
-            return Redirect("/broadcastreact/inventory");
+            return Redirect("/broadcastreact/campaigns");
         }
 
         public ActionResult TrackerPrePosting()
