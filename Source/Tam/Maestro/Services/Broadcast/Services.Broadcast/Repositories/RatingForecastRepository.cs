@@ -37,9 +37,9 @@ namespace Services.Broadcast.Repositories
 
     public class RatingForecastRepository : BroadcastForecastRepositoryBase, IRatingForecastRepository
     {
-        public RatingForecastRepository(ISMSClient pSmsClient, IContextFactory<QueryHintBroadcastForecastContext> pBroadcastContextFactory,
+        public RatingForecastRepository(IContextFactory<QueryHintBroadcastForecastContext> pBroadcastContextFactory,
             ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient)
-            : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
+            : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
 
         public List<RatingsResult> ForecastRatings(short hutMediaMonth, short shareMediaMonth, IEnumerable<int> audience, PlaybackTypeEnum playbackType, List<ManifestDetailDaypart> manifestDayparts)
         {

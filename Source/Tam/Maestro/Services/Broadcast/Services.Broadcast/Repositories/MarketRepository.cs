@@ -26,9 +26,9 @@ namespace Services.Broadcast.Repositories
 
     public class MarketRepository: BroadcastRepositoryBase, IMarketRepository
     {
-        public MarketRepository(ISMSClient pSmsClient, IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
+        public MarketRepository(IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
             ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient)
-            : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
+            : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
 
         public List<market> GetMarkets()
         {

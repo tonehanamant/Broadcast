@@ -11,6 +11,7 @@ using Services.Broadcast.ApplicationServices.Helpers;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 using Common.Services;
 using System.Text;
+using ConfigurationService.Client;
 using Services.Broadcast.Cache;
 
 namespace Services.Broadcast.ApplicationServices
@@ -52,7 +53,8 @@ namespace Services.Broadcast.ApplicationServices
             , IWWTVSharedNetworkHelper wWTVSharedNetworkHelper
             , IEmailerService emailerService
             , IFileService fileService
-            , IDataLakeFileService dataLakeFileService) : base(emailHelper, ftpHelper, audienceCache, emailerService, fileService, dataLakeFileService)
+            , IDataLakeFileService dataLakeFileService
+            , IConfigurationWebApiClient configurationWebApiClient): base(emailHelper, ftpHelper, audienceCache, emailerService, fileService, dataLakeFileService, configurationWebApiClient)
         {
             _affidavitEmailProcessorService = affidavitEmailProcessorService;
             _AffidavidService = affidavidService;

@@ -58,9 +58,9 @@ namespace Services.Broadcast.Repositories
     /// </summary>
     public class IsciRepository : BroadcastRepositoryBase, IIsciRepository
     {
-        public IsciRepository(ISMSClient pSmsClient, IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
+        public IsciRepository(IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
             ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient)
-            : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
+            : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
 
 
         /// <summary>

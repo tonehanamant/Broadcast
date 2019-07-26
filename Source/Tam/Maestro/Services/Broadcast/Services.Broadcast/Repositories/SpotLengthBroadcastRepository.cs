@@ -41,9 +41,9 @@ namespace Services.Broadcast.Repositories
 
     public class SpotLengthBroadcastRepository : BroadcastRepositoryBase, ISpotLengthRepository
     {
-        public SpotLengthBroadcastRepository(ISMSClient pSmsClient, IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
+        public SpotLengthBroadcastRepository(IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
             ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient)
-            : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
+            : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
 
         private static Dictionary<int, int> _SpotLengthDictionary = new Dictionary<int, int>();
 

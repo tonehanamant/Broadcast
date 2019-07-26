@@ -30,9 +30,9 @@ namespace Services.Broadcast.Repositories
 
     public class StationRepository : BroadcastRepositoryBase, IStationRepository
     {
-        public StationRepository(ISMSClient pSmsClient, IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
+        public StationRepository(IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
             ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient)
-            : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
+            : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
 
         public DisplayBroadcastStation GetBroadcastStationByCode(int code)
         {

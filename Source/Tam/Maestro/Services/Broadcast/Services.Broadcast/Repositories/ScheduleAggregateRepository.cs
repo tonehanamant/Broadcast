@@ -30,7 +30,7 @@ namespace Services.Broadcast.Repositories
             IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
             ITransactionHelper pTransactionHelper,
             IStationProcessingEngine stationProcessingEngine, IConfigurationWebApiClient pConfigurationWebApiClient)
-            : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient)
+            : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient)
         {
             _StationProcessingEngine = stationProcessingEngine;
         }

@@ -38,9 +38,9 @@ namespace Services.Broadcast.Repositories
 
     public class SpotTrackerRepository : BroadcastRepositoryBase, ISpotTrackerRepository
     {
-        public SpotTrackerRepository(ISMSClient pSmsClient, IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
+        public SpotTrackerRepository(IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
             ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient)
-            : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
+            : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
 
         public int GetSigmaFileIdByHash(string hash)
         {

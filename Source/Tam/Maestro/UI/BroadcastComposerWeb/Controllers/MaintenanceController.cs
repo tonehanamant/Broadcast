@@ -75,13 +75,6 @@ namespace BroadcastComposerWeb.Controllers
         }
 
         [HttpPost]
-        public ActionResult ClearCache()
-        {
-            ClearSystemParameterCache();
-            ViewBag.Message = "Cache cleared, good luck with that!";
-            return View("Index");
-        }
-        [HttpPost]
         public ActionResult ClearMediaMonthCrunchCache()
         {
             var service = _ApplicationServiceFactory.GetApplicationService<IRatingForecastService>();
@@ -89,11 +82,6 @@ namespace BroadcastComposerWeb.Controllers
 
             ViewBag.Message = "Media Month Crunch Cache cleared, good luck!";
             return View("Index");
-        }
-
-        public void ClearSystemParameterCache()
-        {
-            SMSClient.Handler.ClearSystemComponentParameterCache(BroadcastServiceSystemParameterNames.ComponentID, null);
         }
 
         [HttpGet]

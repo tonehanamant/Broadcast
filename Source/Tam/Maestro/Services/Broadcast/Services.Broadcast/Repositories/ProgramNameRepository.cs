@@ -19,9 +19,9 @@ namespace Services.Broadcast.Repositories
     }
     public class ProgramNameRepository : BroadcastRepositoryBase, IProgramNameRepository
     {
-        public ProgramNameRepository(ISMSClient pSmsClient, IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
+        public ProgramNameRepository(IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
             ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient)
-            : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
+            : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
 
         public List<LookupDto> FindPrograms(string programSearchString, int start, int limit)
         {

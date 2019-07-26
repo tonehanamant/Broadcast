@@ -18,9 +18,9 @@ namespace Services.Broadcast.Repositories
 
     public class PostingBookRepository : BroadcastForecastRepositoryBase, IPostingBookRepository
     {
-        public PostingBookRepository(ISMSClient pSmsClient, IContextFactory<QueryHintBroadcastForecastContext> pBroadcastContextFactory,
+        public PostingBookRepository(IContextFactory<QueryHintBroadcastForecastContext> pBroadcastContextFactory,
             ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient)
-            : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
+            : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
 
         public List<int> GetPostableMediaMonths(int marketThreshold)
         {

@@ -19,9 +19,9 @@ namespace Services.Broadcast.Repositories
     public class RatingAdjustmentsRepository : BroadcastRepositoryBase, IRatingAdjustmentsRepository
     {
 
-        public RatingAdjustmentsRepository(ISMSClient pSmsClient, IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
+        public RatingAdjustmentsRepository(IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
             ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient)
-            : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
+            : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
 
         public void SaveRatingAdjustments(List<RatingAdjustmentsDto> ratingAdjustments)
         {

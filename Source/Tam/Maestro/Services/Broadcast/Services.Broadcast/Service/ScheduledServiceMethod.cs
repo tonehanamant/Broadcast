@@ -95,7 +95,7 @@ namespace Services.Broadcast.Services
                 runWhen = null;
             }
 
-            if (SMSClient.Handler.TamEnvironment != TAMEnvironment.PROD.ToString())
+            if (WindowsServiceBase.TamEnvironment != TAMEnvironment.PROD.ToString())
                 runWhen = null;
 
             return runWhen;

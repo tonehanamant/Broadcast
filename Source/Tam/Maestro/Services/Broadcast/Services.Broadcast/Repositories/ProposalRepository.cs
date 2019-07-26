@@ -85,9 +85,9 @@ namespace Services.Broadcast.Repositories
     public class ProposalRepository : BroadcastRepositoryBase, IProposalRepository
     {
 
-        public ProposalRepository(ISMSClient pSmsClient, IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
+        public ProposalRepository(IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
             ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient)
-            : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
+            : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
 
         public void CreateProposal(ProposalDto proposalDto, string userName)
         {

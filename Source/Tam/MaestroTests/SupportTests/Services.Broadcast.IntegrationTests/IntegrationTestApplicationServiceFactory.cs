@@ -8,6 +8,7 @@ using Services.Broadcast.Repositories;
 using System;
 using ConfigurationService.Client;
 using IntegrationTests.Common;
+using Services.Broadcast.Helpers;
 using Services.Broadcast.IntegrationTests.Stubbs;
 using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
@@ -39,11 +40,12 @@ namespace Services.Broadcast.IntegrationTests
                     CommonRepositoryFactory.Instance.RegisterInstance<IConfigurationWebApiClient>(new StubbedConfigurationWebApiClient());
 
                     var stubbedSmsClient = new StubbedSMSClient();
+                    var stubbedConfigurationClient = new StubbedConfigurationWebApiClient();
                     BroadcastDataRepositoryFactory.RebindSms(stubbedSmsClient);
                     _instance.RegisterInstance<IDataRepositoryFactory>(BroadcastDataRepositoryFactory);
-                    _instance.RegisterInstance<IConfigurationWebApiClient>(new StubbedConfigurationWebApiClient());
+                    _instance.RegisterInstance<IConfigurationWebApiClient>(stubbedConfigurationClient);
 
-                    SystemComponentHelper.SetSmsClient(stubbedSmsClient);
+                    SystemComponentParameterHelper.SetConfigurationClient(stubbedConfigurationClient);
                     
                     _instance.RegisterType<ILockingManagerApplicationService, LockingManagerApplicationService>();
                     _instance.RegisterInstance<ISMSClient>(stubbedSmsClient);

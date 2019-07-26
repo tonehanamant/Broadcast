@@ -4,6 +4,7 @@ using System.Net;
 using System.Net.Mail;
 using System.ServiceModel;
 using Common.Services.ApplicationServices;
+using ConfigurationService.Client;
 using Services.Broadcast;
 using Tam.Maestro.Common;
 using Tam.Maestro.Common.Utilities.Logging;
@@ -22,6 +23,12 @@ namespace Common.Services
 
     public class EmailerService : IEmailerService
     {
+        private IConfigurationWebApiClient _configurationWebApiClient;
+        public EmailerService(IConfigurationWebApiClient configurationWebApiClient)
+        {
+            _configurationWebApiClient = configurationWebApiClient;
+        }
+
         public bool QuickSend(bool pIsHtmlBody, string pBody, string pSubject, MailPriority pPriority, string from, string[] pTos, List<string> attachFileNames = null)
         {
             List<MailAddress> lTos = new List<MailAddress>();
@@ -38,7 +45,7 @@ namespace Common.Services
                 return false;
 
             LogHelper.Log.ServiceEvent("Broadcast EmailerService", ",sg test", "user test",
-                SMSClient.Handler.TamEnvironment.ToString());
+                _configurationWebApiClient.TAMEnvironment.ToString());
 
             try
             {
@@ -77,7 +84,7 @@ namespace Common.Services
             catch (System.Exception exc)
             {
                 LogHelper.Log.ServiceError("Broadcast EmailerService", exc.Message, exc.ToString(),
-                    GetWindowsUserName(), SMSClient.Handler.TamEnvironment.ToString());
+                    GetWindowsUserName(), _configurationWebApiClient.TAMEnvironment.ToString());
                 throw;
             }
         }

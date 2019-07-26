@@ -24,9 +24,9 @@ namespace Services.Broadcast.Repositories
     {
         private const string DaypartCodeNotFoundMessage = "Unable to find daypart code";
 
-        public DaypartCodeRepository(ISMSClient pSmsClient, IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
+        public DaypartCodeRepository(IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
             ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient)
-            : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
+            : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
 
         public bool ActiveDaypartCodeExists(string daypartCode)
         {

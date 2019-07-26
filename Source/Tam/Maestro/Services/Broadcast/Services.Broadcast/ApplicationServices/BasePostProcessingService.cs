@@ -13,6 +13,7 @@ using System.Linq;
 using System.Net.Mail;
 using System.Text;
 using System.Text.RegularExpressions;
+using ConfigurationService.Client;
 using Tam.Maestro.Common;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 using Tam.Maestro.Services.Clients;
@@ -28,6 +29,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IEmailerService _EmailerService;
         private readonly IFileService _FileService;
         private readonly IDataLakeFileService _DataLakeFileService;
+        private readonly IConfigurationWebApiClient _configurationWebApiClient;
 
         private const string VALID_INCOMING_FILE_EXTENSION = ".txt";
 
@@ -36,7 +38,8 @@ namespace Services.Broadcast.ApplicationServices
             , IBroadcastAudiencesCache audienceCache
             , IEmailerService emailerService
             , IFileService fileService
-            , IDataLakeFileService dataLakeFileService)
+            , IDataLakeFileService dataLakeFileService
+            , IConfigurationWebApiClient configurationWebApiClient)
         {
             _EmailHelper = emailHelper;
             _WWTVFtpHelper = wwtvFTPHelper;
@@ -44,6 +47,7 @@ namespace Services.Broadcast.ApplicationServices
             _EmailerService = emailerService;
             _FileService = fileService;
             _DataLakeFileService = dataLakeFileService;
+            _configurationWebApiClient = configurationWebApiClient;
         }
 
         /// <summary>
@@ -53,7 +57,7 @@ namespace Services.Broadcast.ApplicationServices
         /// <returns>List of ftp file paths</returns>
         public List<string> DownloadFilesToBeProcessed(string path)
         {
-            var environment = SMSClient.Handler.TamEnvironment.ToString();
+            var environment = _configurationWebApiClient.TAMEnvironment;
 
             try
             {

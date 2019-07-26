@@ -116,6 +116,9 @@
     <Reference Include="ConfigurationService.Client, Version=1.0.0.34, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\ConfigurationService.Client.1.0.0.34\lib\net45\ConfigurationService.Client.dll</HintPath>
     </Reference>
+    <Reference Include="ConfigurationService.Interfaces, Version=1.0.0.34, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\ConfigurationService.Interfaces.1.0.0.35\lib\net45\ConfigurationService.Interfaces.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
       <Private>True</Private>
@@ -233,12 +236,14 @@
     <Compile Include="ApplicationServices\DaypartCodeService.cs" />
     <Compile Include="ApplicationServices\Scx\ScxFileGenerationDetailTransformer.cs" />
     <Compile Include="ApplicationServices\Scx\ScxFileGenerationHistorian.cs" />
+    <Compile Include="Clients\ConfigurationClientSwitch.cs" />
     <Compile Include="Entities\Enums\BackgroundJobProcessingStatus.cs" />
     <Compile Include="Entities\InventorySummary\InventorySummaryAggregation.cs" />
     <Compile Include="Entities\InventorySummary\InventorySummaryQuarter.cs" />
     <Compile Include="Entities\ScxGenerationJob.cs" />
     <Compile Include="Entities\Scx\ScxFileGenerationDetailDto.cs" />
     <Compile Include="Entities\Scx\ScxFileGenerationDetail.cs" />
+    <Compile Include="Helpers\SystemComponentParameterHelper.cs" />
     <Compile Include="Repositories\ScxGenerationJobRepository.cs" />
     <Compile Include="ApplicationServices\ScxGenerationService.cs" />
     <Compile Include="BusinessEngines\InventorySummaryRatesGapEngine.cs" />
@@ -674,7 +679,6 @@
     <Compile Include="Repositories\NtiTransmittalsRepository.cs" />
     <Compile Include="Repositories\PricingGuideRepository.cs" />
     <Compile Include="Repositories\ProgramRepository.cs" />
-    <Compile Include="Repositories\RepositoryBase.cs" />
     <Compile Include="Repositories\SpotTrackerRepository.cs" />
     <Compile Include="Repositories\BvsRepository.cs" />
     <Compile Include="Repositories\BvsTestDataGeneratorRepository.cs" />

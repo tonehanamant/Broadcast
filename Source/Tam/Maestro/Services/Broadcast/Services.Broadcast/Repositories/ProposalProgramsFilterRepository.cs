@@ -18,9 +18,9 @@ namespace Services.Broadcast.Repositories
 
     public class ProposalProgramsCriteriaRepository : BroadcastRepositoryBase, IProposalProgramsCriteriaRepository
     {
-        public ProposalProgramsCriteriaRepository(ISMSClient pSmsClient, IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
+        public ProposalProgramsCriteriaRepository(IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
             ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient)
-            : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
+            : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
 
         public OpenMarketCriterion UpdateCriteria(int proposalDetailId, List<CpmCriteria> newCpmCriterion, List<int> deleteCpmCriterion, List<GenreCriteria> newGenreCriteria, List<int> deleteGenreCriteria, List<ProgramCriteria> newProgramNameCriteria, List<int> oldProgramNameCriteria)
         {

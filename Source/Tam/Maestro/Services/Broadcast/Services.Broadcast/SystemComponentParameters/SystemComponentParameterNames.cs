@@ -1500,6 +1500,19 @@ namespace Tam.Maestro.Common.SystemComponentParameter
         }
 	}
 	 
+	public static class ProposalComposerWebSystemParameterNames
+	{
+		public static string ComponentID
+        {
+            get { return "ProposalComposerWeb" ; }
+        }
+	  
+		public static string ShowAdvancedTV  
+		{
+            get { return "ShowAdvancedTV"; }
+        }
+	}
+	 
 	public static class ProposalsServiceSystemParameterNames
 	{
 		public static string ComponentID

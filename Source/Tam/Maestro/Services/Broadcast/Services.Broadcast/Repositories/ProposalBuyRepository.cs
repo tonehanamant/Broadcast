@@ -31,9 +31,9 @@ namespace Services.Broadcast.Repositories
     }
     public class ProposalBuyRepository : BroadcastRepositoryBase, IProposalBuyRepository
     {
-        public ProposalBuyRepository(ISMSClient pSmsClient, IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
+        public ProposalBuyRepository(IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
             ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient)
-            : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
+            : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
 
         public void DeleteProposalBuyByProposalDetail(int proposalVersionDetailId)
         {

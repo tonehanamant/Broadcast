@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using ConfigurationService.Client;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 
 namespace Services.Broadcast.ApplicationServices
@@ -54,7 +55,8 @@ namespace Services.Broadcast.ApplicationServices
             , IWWTVSharedNetworkHelper wWTVSharedNetworkHelper
             , IEmailerService emailerService
             , IFileService fileService
-            , IDataLakeFileService dataLakeFileService) : base(emailHelper, wwtvFtpHelper, audienceCache, emailerService, fileService, dataLakeFileService)
+            , IDataLakeFileService dataLakeFileService
+            , IConfigurationWebApiClient configurationWebApiClient) : base(emailHelper, wwtvFtpHelper, audienceCache, emailerService, fileService, dataLakeFileService, configurationWebApiClient)
         {
             _WWTVFtpHelper = wwtvFtpHelper;
             _EmailProcessorService = emailService;

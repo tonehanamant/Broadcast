@@ -56,9 +56,9 @@ namespace Services.Broadcast.Repositories
 
     public class ScheduleRepository : BroadcastRepositoryBase, IScheduleRepository
     {
-        public ScheduleRepository(ISMSClient pSmsClient, IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
+        public ScheduleRepository(IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
             ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient)
-            : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
+            : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
 
         public schedule GetById(int id)
         {

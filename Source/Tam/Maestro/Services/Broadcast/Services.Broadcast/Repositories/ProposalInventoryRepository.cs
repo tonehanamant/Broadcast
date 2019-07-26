@@ -35,9 +35,9 @@ namespace Services.Broadcast.Repositories
 
     public class ProposalInventoryRepository : BroadcastRepositoryBase, IProposalInventoryRepository
     {
-        public ProposalInventoryRepository(ISMSClient pSmsClient, IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
+        public ProposalInventoryRepository(IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
             ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient)
-            : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
+            : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
 
         public List<InventoryDetail> GetSortedFilteredInventoryDetails(ICollection<int> relevantMediaWeeks, List<int> proposalMarketIds, IEnumerable<int> spotLengths)
         {

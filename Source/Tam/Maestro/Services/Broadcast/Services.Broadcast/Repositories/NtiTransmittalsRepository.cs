@@ -30,9 +30,9 @@ namespace Services.Broadcast.Repositories
 
     public class NtiTransmittalsRepository : BroadcastRepositoryBase, INtiTransmittalsRepository
     {
-        public NtiTransmittalsRepository(ISMSClient pSmsClient, IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
+        public NtiTransmittalsRepository(IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
             ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient)
-            : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
+            : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
 
         /// <summary>
         /// Gets the proposal weeks by myevents report name

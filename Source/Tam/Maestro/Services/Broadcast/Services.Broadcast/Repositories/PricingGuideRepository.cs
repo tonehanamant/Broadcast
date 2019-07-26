@@ -58,9 +58,9 @@ namespace Services.Broadcast.Repositories
     }
     public class PricingGuideRepository : BroadcastRepositoryBase, IPricingGuideRepository
     {
-        public PricingGuideRepository(ISMSClient pSmsClient, IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
+        public PricingGuideRepository(IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
             ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient)
-            : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
+            : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
 
         public PricingGuideOpenMarketInventory GetProposalDetailPricingGuideInventory(int proposalDetailId)
         {

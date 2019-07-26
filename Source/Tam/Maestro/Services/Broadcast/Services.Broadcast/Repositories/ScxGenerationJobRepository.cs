@@ -32,11 +32,11 @@ namespace Services.Broadcast.Repositories
 
     public class ScxGenerationJobRepository : BroadcastRepositoryBase, IScxGenerationJobRepository
     {
-        public ScxGenerationJobRepository(ISMSClient pSmsClient, 
+        public ScxGenerationJobRepository(
             IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory, 
             ITransactionHelper pTransactionHelper, 
             IConfigurationWebApiClient configurationWebApiClient) : 
-            base(pSmsClient, pBroadcastContextFactory, pTransactionHelper, configurationWebApiClient)
+            base(pBroadcastContextFactory, pTransactionHelper, configurationWebApiClient)
         {
         }
 

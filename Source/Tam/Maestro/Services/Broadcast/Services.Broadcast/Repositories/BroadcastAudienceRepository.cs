@@ -25,9 +25,9 @@ namespace Services.Broadcast.Repositories
     public class BroadcastAudienceRepository : BroadcastRepositoryBase, IBroadcastAudienceRepository
     {
 
-        public BroadcastAudienceRepository(ISMSClient pSmsClient, IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
+        public BroadcastAudienceRepository(IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
             ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient)
-            : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
+            : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
 
         public List<audience> GetAudiencesByRange(int rangeStart, int rangeEnd)
         {

@@ -6,7 +6,9 @@ using System.Data;
 using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Runtime.Caching;
 using System.Threading;
+using ConfigurationService.Client;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
 using Tam.Maestro.Services.Clients;
@@ -22,6 +24,7 @@ namespace Common.Services.Repositories
     public class CoreRepositoryBase<CT> : IRepositoryBase where CT : DbContext
     {
         private static readonly int _Timeout;
+        MemoryCache _Cache = MemoryCache.Default;
 
         static CoreRepositoryBase()
         {
@@ -36,14 +39,14 @@ namespace Common.Services.Repositories
             }
         }
 
-        private readonly ISMSClient _SmsClient;
+        private readonly IConfigurationWebApiClient _configurationWebApiClient;
         private readonly IContextFactory<CT> _ContextFactory;
         private readonly ITransactionHelper _TransactionHelper;
         private readonly string _ConnectionStringType;
 
-        public CoreRepositoryBase(ISMSClient pSmsClient, IContextFactory<CT> pContextFactory, ITransactionHelper pTransactionHelper, string connectionStringType)
+        public CoreRepositoryBase(IConfigurationWebApiClient configurationWebApiClient, IContextFactory<CT> pContextFactory, ITransactionHelper pTransactionHelper, string connectionStringType)
         {
-            _SmsClient = pSmsClient;
+            _configurationWebApiClient = configurationWebApiClient;
             _ContextFactory = pContextFactory;
             _TransactionHelper = pTransactionHelper;
             _ConnectionStringType = connectionStringType;
@@ -121,7 +124,7 @@ namespace Common.Services.Repositories
 
         protected virtual CT CreateDBContext(bool pOptimizeForBulkIsert)
         {
-            var lConnectionString = _SmsClient.GetResource(_ConnectionStringType);
+            var lConnectionString = GetConnectionString();
             //@todo _MaestroContextFactory must be tired to generic
             var context = _ContextFactory.FromTamConnectionString(lConnectionString);
             if (context != null)
@@ -135,6 +138,20 @@ namespace Common.Services.Repositories
             }
 
             return context;
+        }
+
+        private string GetConnectionString()
+        {
+            if (_Cache.Contains(_ConnectionStringType))
+            {
+                return _Cache[_ConnectionStringType] as string;
+            }
+
+            string connectionString = _configurationWebApiClient.GetResource(_ConnectionStringType);
+
+            _Cache.Set(_ConnectionStringType, connectionString, new CacheItemPolicy()
+                { AbsoluteExpiration = DateTime.UtcNow.AddSeconds(30) });
+            return connectionString;
         }
 
         public void BulkInsert<T>(System.Data.Entity.DbContext context, List<T> list)

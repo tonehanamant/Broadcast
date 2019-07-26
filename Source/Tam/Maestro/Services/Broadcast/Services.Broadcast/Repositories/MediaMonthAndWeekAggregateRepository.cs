@@ -18,9 +18,9 @@ namespace Services.Broadcast.Repositories
 
     public class MediaMonthAndWeekAggregateAndWeekAggregateRepository : BroadcastRepositoryBase, IMediaMonthAndWeekAggregateRepository
     {
-        public MediaMonthAndWeekAggregateAndWeekAggregateRepository(ISMSClient pSmsClient, IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
+        public MediaMonthAndWeekAggregateAndWeekAggregateRepository(IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
             ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient)
-            : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
+            : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
 
         public MediaMonthAndWeekAggregate GetMediaMonthAggregate()
         {

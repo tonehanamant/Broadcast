@@ -16,10 +16,10 @@ using Tam.Maestro.Services.ContractInterfaces;
 
 namespace Common.Services.Repositories
 {
-    public class BroadcastRepositoryBase : RepositoryBase<QueryHintBroadcastContext>
+    public class BroadcastRepositoryBase : CoreRepositoryBase<QueryHintBroadcastContext>
     {
-        public BroadcastRepositoryBase(ISMSClient pSmsClient, IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory, ITransactionHelper pTransactionHelper, IConfigurationWebApiClient configurationWebApiClient)
-            : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper, configurationWebApiClient, TAMResource.BroadcastConnectionString.ToString())
+        public BroadcastRepositoryBase(IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory, ITransactionHelper pTransactionHelper, IConfigurationWebApiClient configurationWebApiClient)
+            : base(configurationWebApiClient, pBroadcastContextFactory, pTransactionHelper, TAMResource.BroadcastConnectionString.ToString())
         {
         }
         public new void BulkInsert<T>(DbContext context, List<T> list)

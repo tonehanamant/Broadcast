@@ -23,9 +23,9 @@ namespace Services.Broadcast.Repositories
 
     public class NsiMarketRepository : BroadcastForecastRepositoryBase, INsiMarketRepository
     {
-        public NsiMarketRepository(ISMSClient pSmsClient, IContextFactory<QueryHintBroadcastForecastContext> pBroadcastContextFactory,
+        public NsiMarketRepository(IContextFactory<QueryHintBroadcastForecastContext> pBroadcastContextFactory,
             ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient)
-            : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
+            : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
 
         public Dictionary<int, int> GetMarketRankingsByMediaMonth(int mediaMonthId)
         {

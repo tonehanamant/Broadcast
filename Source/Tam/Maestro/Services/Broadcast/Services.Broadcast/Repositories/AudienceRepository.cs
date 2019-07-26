@@ -24,9 +24,9 @@ namespace Services.Broadcast.Repositories
 
     public class AudienceRepository : BroadcastRepositoryBase, IAudienceRepository
     {
-        public AudienceRepository(ISMSClient pSmsClient, IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
+        public AudienceRepository(IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
             ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient)
-            : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
+            : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
         
 
         public DisplayAudience GetDisplayAudienceByCode(string audienceCode)

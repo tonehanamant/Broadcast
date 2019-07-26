@@ -25,9 +25,9 @@ namespace Services.Broadcast.Repositories
     public class InventoryFileRepository : BroadcastRepositoryBase, IInventoryFileRepository
     {
 
-        public InventoryFileRepository(ISMSClient pSmsClient, IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
+        public InventoryFileRepository(IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
             ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient)
-            : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
+            : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
 
         public InventoryFile GetInventoryFileById(int fileId)
         {

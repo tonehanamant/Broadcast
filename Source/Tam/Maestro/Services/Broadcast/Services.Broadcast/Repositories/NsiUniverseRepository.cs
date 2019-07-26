@@ -24,9 +24,9 @@ namespace Services.Broadcast.Repositories
 
     public class NsiUniverseRepository : BroadcastForecastRepositoryBase, INsiUniverseRepository
     {
-        public NsiUniverseRepository(ISMSClient pSmsClient, IContextFactory<QueryHintBroadcastForecastContext> pBroadcastContextFactory,
+        public NsiUniverseRepository(IContextFactory<QueryHintBroadcastForecastContext> pBroadcastContextFactory,
             ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient)
-            : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
+            : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
 
         /// <summary>
         /// Returns a dictionary with market codes and subscribers for specified audiences

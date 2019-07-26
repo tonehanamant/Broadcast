@@ -19,9 +19,9 @@ namespace Services.Broadcast.Repositories
     }
     public class TrackerMappingRepository : BroadcastRepositoryBase, ITrackerMappingRepository
     {
-        public TrackerMappingRepository(ISMSClient pSmsClient, IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
+        public TrackerMappingRepository(IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
             ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient)
-            : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
+            : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
 
         public BvsMap GetMap(int mapId)
         {

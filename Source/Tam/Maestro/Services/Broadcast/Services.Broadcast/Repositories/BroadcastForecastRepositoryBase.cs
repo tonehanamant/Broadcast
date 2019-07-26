@@ -8,10 +8,10 @@ using Tam.Maestro.Services.ContractInterfaces;
 
 namespace Services.Broadcast.Repositories
 {
-    public class BroadcastForecastRepositoryBase : RepositoryBase<QueryHintBroadcastForecastContext>
+    public class BroadcastForecastRepositoryBase : CoreRepositoryBase<QueryHintBroadcastForecastContext>
     {
-        public BroadcastForecastRepositoryBase(ISMSClient pSmsClient, IContextFactory<QueryHintBroadcastForecastContext> pBroadcastContextFactory, ITransactionHelper pTransactionHelper, IConfigurationWebApiClient configurationWebApiClient)
-            : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper, configurationWebApiClient, TAMResource.BroadcastForecastConnectionString.ToString())
+        public BroadcastForecastRepositoryBase(IContextFactory<QueryHintBroadcastForecastContext> pBroadcastContextFactory, ITransactionHelper pTransactionHelper, IConfigurationWebApiClient configurationWebApiClient)
+            : base(configurationWebApiClient, pBroadcastContextFactory, pTransactionHelper, TAMResource.BroadcastForecastConnectionString.ToString())
         {
         }
     }

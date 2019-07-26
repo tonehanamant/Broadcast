@@ -19,9 +19,9 @@ namespace Services.Broadcast.Repositories
 
     public class RatingsRepository : BroadcastForecastRepositoryBase, IRatingsRepository
     {
-        public RatingsRepository(ISMSClient pSmsClient, IContextFactory<QueryHintBroadcastForecastContext> pBroadcastContextFactory,
+        public RatingsRepository(IContextFactory<QueryHintBroadcastForecastContext> pBroadcastContextFactory,
             ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient)
-            : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
+            : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
 
         public List<Tuple<MediaMonth, int>> GetNielsonMarkets(List<MediaMonth> mediaMonths)
         {

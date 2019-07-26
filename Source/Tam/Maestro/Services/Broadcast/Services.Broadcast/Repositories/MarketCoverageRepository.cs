@@ -38,9 +38,9 @@ namespace Services.Broadcast.Repositories
 
     public class MarketCoverageRepository : BroadcastRepositoryBase, IMarketCoverageRepository
     {
-        public MarketCoverageRepository(ISMSClient pSmsClient, IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
+        public MarketCoverageRepository(IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
             ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient)
-            : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
+            : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
 
         public List<MarketCoverage> GetAll()
         {

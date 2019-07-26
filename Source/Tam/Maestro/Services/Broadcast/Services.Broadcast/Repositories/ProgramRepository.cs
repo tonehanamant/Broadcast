@@ -16,9 +16,9 @@ namespace Services.Broadcast.Repositories
 
     public class ProgramRepository : BroadcastRepositoryBase, IProgramRepository
     {
-        public ProgramRepository(ISMSClient pSmsClient, IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
+        public ProgramRepository(IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
             ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient)
-            : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
+            : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
 
         public List<string> GetUniqueProgramNamesByManifests(List<int> manifestIds)
         {

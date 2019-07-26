@@ -18,9 +18,9 @@ namespace Services.Broadcast.Repositories
 
     public class CampaignRepository : BroadcastRepositoryBase, ICampaignRepository
     {
-        public CampaignRepository(ISMSClient pSmsClient, IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
+        public CampaignRepository(IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
             ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient)
-            : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
+            : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
 
         public CampaignDto CreateCampaign(CampaignDto campaignDto)
         {

@@ -43,10 +43,10 @@ namespace Services.Broadcast.ApplicationServices
 
                         _instance.RegisterInstance<ISMSClient>(SMSClient.Handler);
                         _instance.RegisterType<ILockingManagerApplicationService, LockingManagerApplicationService>();
-                        _instance.RegisterInstance<IConfigurationWebApiClient>(ConfigurationWebApiClient.Handler);
+                        _instance.RegisterInstance<IConfigurationWebApiClient>(ConfigurationClientSwitch.Handler);
                         _instance.RegisterType<IDataRepositoryFactory, BroadcastDataDataRepositoryFactory>();
 
-                        SystemComponentHelper.SetSmsClient(SMSClient.Handler);
+                        SystemComponentParameterHelper.SetConfigurationClient(ConfigurationClientSwitch.Handler);
                         RegisterApplicationServices(_instance);
                     }
                 }

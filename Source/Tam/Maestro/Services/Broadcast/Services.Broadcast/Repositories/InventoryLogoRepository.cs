@@ -25,7 +25,7 @@ namespace Services.Broadcast.Repositories
             ISMSClient pSmsClient,
             IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
             ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient)
-                : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient)
+                : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient)
         {
         }
 

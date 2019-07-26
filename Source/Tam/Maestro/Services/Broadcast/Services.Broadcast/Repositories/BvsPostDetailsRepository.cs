@@ -18,9 +18,9 @@ namespace Services.Broadcast.Repositories
     }
     public class BvsPostDetailsRepository : BroadcastRepositoryBase, IBvsPostDetailsRepository
     {
-        public BvsPostDetailsRepository(ISMSClient pSmsClient, IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory, 
+        public BvsPostDetailsRepository(IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory, 
             ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient)
-            : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient)
+            : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient)
         {
         }
 

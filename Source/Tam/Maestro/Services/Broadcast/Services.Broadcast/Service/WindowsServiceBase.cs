@@ -21,10 +21,15 @@ namespace Services.Broadcast.Services
         public abstract string ServiceName { get; }
         public bool IsConsole { get; set; }
 
+        public static string TamEnvironment
+        {
+            get => ConfigurationClientSwitch.Handler.TAMEnvironment; 
+        }
+
         protected void TimeResultsNoReturn(String methodName, Action func)
         {
             var userName = _GetWindowsUserName();
-            var environment = SMSClient.Handler.TamEnvironment;
+            var environment = TamEnvironment;
 
             LogHelper.Log.ServiceCallStart(ServiceName, methodName, userName, environment);
             var stopWatch = Stopwatch.StartNew();
@@ -40,7 +45,7 @@ namespace Services.Broadcast.Services
         protected T TimeResults<T>(String methodName, Func<T> func)
         {
             var userName = _GetWindowsUserName();
-            var environment = SMSClient.Handler.TamEnvironment;
+            var environment = TamEnvironment;
 
             LogHelper.Log.ServiceCallStart(ServiceName, methodName, userName, environment);
 
@@ -71,7 +76,7 @@ namespace Services.Broadcast.Services
             try
             {
                 userName = _GetWindowsUserName();
-                environment = SMSClient.Handler.TamEnvironment;
+                environment = TamEnvironment;
             }
             catch
             {
@@ -101,7 +106,7 @@ namespace Services.Broadcast.Services
             try
             {
                 userName = _GetWindowsUserName();
-                environment = SMSClient.Handler.TamEnvironment;
+                environment = TamEnvironment;
             }
             catch
             {
@@ -127,7 +132,7 @@ namespace Services.Broadcast.Services
             try
             {
                 userName = _GetWindowsUserName();
-                environment = SMSClient.Handler.TamEnvironment;
+                environment = TamEnvironment;
             }
             catch
             {

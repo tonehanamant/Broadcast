@@ -50,9 +50,9 @@ namespace Services.Broadcast.Repositories
 
     public class DisplayDaypartBroadcastRepository : BroadcastRepositoryBase, IDisplayDaypartRepository
     {
-        public DisplayDaypartBroadcastRepository(ISMSClient pSmsClient, IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
+        public DisplayDaypartBroadcastRepository(IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
             ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient)
-            : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
+            : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
 
         public int SaveDaypart(DisplayDaypart pDaypart)
         {

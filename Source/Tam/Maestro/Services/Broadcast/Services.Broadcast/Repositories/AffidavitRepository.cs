@@ -66,10 +66,10 @@ namespace Services.Broadcast.Repositories
     public class AffidavitRepository : BroadcastRepositoryBase, IAffidavitRepository
     {
 
-        public AffidavitRepository(ISMSClient pSmsClient,
+        public AffidavitRepository(
             IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
             ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient) 
-            : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient)
+            : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient)
         {
         }
 

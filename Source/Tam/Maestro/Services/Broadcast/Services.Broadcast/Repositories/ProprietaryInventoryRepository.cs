@@ -35,9 +35,9 @@ namespace Services.Broadcast.Repositories
 
     public class ProprietaryInventoryRepository : BroadcastRepositoryBase, IProprietaryRepository
     {
-        public ProprietaryInventoryRepository(ISMSClient pSmsClient, IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
+        public ProprietaryInventoryRepository(IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
             ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient)
-            : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
+            : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
 
         public ProprietaryInventoryFile GetInventoryFileWithHeaderById(int fileId)
         {

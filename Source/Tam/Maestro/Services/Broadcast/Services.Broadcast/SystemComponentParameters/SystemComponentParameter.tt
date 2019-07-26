@@ -22,6 +22,7 @@
 //------------------------------------------------------------------------------
 
 using Tam.Maestro.Common.SystemComponentParameter;
+using Services.Broadcast.Helpers;
 
 namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 {	<#
@@ -86,7 +87,7 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 	  #> 
 		public static <#= propertyDictionary[parameterKey] #> <#= parameterKey #>  
 		{
-            get { return SystemComponentHelper.GetPropertyValue<<#= propertyDictionary[parameterKey] #>>
+            get { return SystemComponentParameterHelper.GetPropertyValue<<#= propertyDictionary[parameterKey] #>>
 					(<#= componentId #>SystemParameterNames.ComponentID , <#= componentId #>SystemParameterNames.<#= parameterKey #>); }
         }
 	<#

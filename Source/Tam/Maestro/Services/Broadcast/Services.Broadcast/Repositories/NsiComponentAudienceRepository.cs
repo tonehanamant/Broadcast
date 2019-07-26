@@ -17,9 +17,9 @@ namespace Services.Broadcast.Repositories
 
     public class NsiComponentAudienceRepository : BroadcastRepositoryBase, INsiComponentAudienceRepository
     {
-        public NsiComponentAudienceRepository(ISMSClient pSmsClient, IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
+        public NsiComponentAudienceRepository(IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
             ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient)
-            : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
+            : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
 
         public List<BroadcastAudience> GetAllNsiComponentAudiences()
         {

@@ -29,7 +29,7 @@ namespace Services.Broadcast.Repositories
             instance.RegisterType<IContextFactory<QueryHintBroadcastForecastContext>, BroadcastForecastContextFactory>();
 
             instance.RegisterInstance<ISMSClient>(SMSClient.Handler);
-            instance.RegisterInstance<IConfigurationWebApiClient>(ConfigurationWebApiClient.Handler);
+            instance.RegisterInstance<IConfigurationWebApiClient>(ConfigurationClientSwitch.Handler);
             instance.RegisterType<IDisplayDaypartRepository, DisplayDaypartBroadcastRepository>();
             instance.RegisterType<IAudienceRepository, AudienceRepository>();
             instance.RegisterType<IScheduleRepository, ScheduleRepository>();

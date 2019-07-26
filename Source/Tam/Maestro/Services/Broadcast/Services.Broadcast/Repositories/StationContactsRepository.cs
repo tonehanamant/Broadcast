@@ -28,9 +28,9 @@ namespace Services.Broadcast.Repositories
 
     public class StationContactsRepository : BroadcastRepositoryBase, IStationContactsRepository
     {
-        public StationContactsRepository(ISMSClient pSmsClient, IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
+        public StationContactsRepository(IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
             ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient)
-            : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
+            : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
 
         public List<StationContact> GetStationContactsByStationIds(List<int> stationIds)
         {
