@@ -35,10 +35,11 @@ namespace Services.Broadcast.Converters.InventorySummary
             return inventorySummaryManifestFiles.Max(x => (DateTime?)x.CreatedDate);
         }
 
-        public override InventorySummaryDto CreateInventorySummary(InventorySource inventorySource,
+        public override InventorySummaryAggregation CreateInventorySummary(InventorySource inventorySource,
                                                                    int householdAudienceId,
                                                                    QuarterDetailDto quarterDetail,
-                                                                   List<InventorySummaryManifestDto> inventorySummaryManifests)
+                                                                   List<InventorySummaryManifestDto> inventorySummaryManifests,
+                                                                   List<DaypartCodeDto> daypartCodes)
         {
             var allInventorySourceManifestWeeks = InventoryRepository.GetStationInventoryManifestWeeksForInventorySource(inventorySource.Id);
             var quartersForInventoryAvailable = GetQuartersForInventoryAvailable(allInventorySourceManifestWeeks);
@@ -49,21 +50,21 @@ namespace Services.Broadcast.Converters.InventorySummary
 
             var inventoryGaps = InventoryGapCalculationEngine.GetInventoryGaps(allInventorySourceManifestWeeks, quartersForInventoryAvailable, quarterDetail);
 
-            return new OpenMarketInventorySummaryDto
+            return new InventorySummaryAggregation
             {
                 InventorySourceId = inventorySource.Id,
-                Quarter = quarterDetail,
+                Quarter = GetInventorySummaryQuarter(quarterDetail),
                 TotalMarkets = GetTotalMarkets(inventorySummaryManifests),
                 TotalStations = GetTotalStations(inventorySummaryManifests),
                 TotalPrograms = GetTotalPrograms(inventorySummaryManifests),
-                HouseholdImpressions = _GetHouseholdImpressions(manifests, householdAudienceId),
+                TotalProjectedHouseholdImpressions = _GetHouseholdImpressions(manifests, householdAudienceId),
                 LastUpdatedDate = GetFileLastCreatedDate(inventorySummaryManifestFiles),
-                RatesAvailableFromQuarter = quartersForInventoryAvailable.Item1,
-                RatesAvailableToQuarter = quartersForInventoryAvailable.Item2,
+                RatesAvailableFromQuarter = GetInventorySummaryQuarter(quartersForInventoryAvailable.Item1),
+                RatesAvailableToQuarter = GetInventorySummaryQuarter(quartersForInventoryAvailable.Item2),
                 InventoryGaps = inventoryGaps,
                 Details = null, //open market does not have details
-                ShareBook = shareBook,
-                HutBook = hutBook
+                ShareBookId = shareBook?.Id,
+                HutBookId = hutBook?.Id
             };
         }
 

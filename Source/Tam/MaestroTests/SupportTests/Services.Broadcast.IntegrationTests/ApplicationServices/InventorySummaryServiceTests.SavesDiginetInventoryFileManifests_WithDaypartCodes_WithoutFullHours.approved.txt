@@ -3,21 +3,6 @@
     "CPM": 0.5897,
     "Details": [
       {
-        "CPM": 0.0588,
-        "Daypart": "EM",
-        "HouseholdImpressions": 21927.74583727252
-      },
-      {
-        "CPM": 0.0588,
-        "Daypart": "OVN",
-        "HouseholdImpressions": 12072.254162727482
-      },
-      {
-        "CPM": 0.9999,
-        "Daypart": "DAY",
-        "HouseholdImpressions": 17066.760911030167
-      },
-      {
         "CPM": 1.0000,
         "Daypart": "EF",
         "HouseholdImpressions": 13599.977776543141
@@ -36,6 +21,21 @@
         "CPM": 1.0000,
         "Daypart": "LF",
         "HouseholdImpressions": 8333.2613124266936
+      },
+      {
+        "CPM": 0.0588,
+        "Daypart": "OVN",
+        "HouseholdImpressions": 12072.254162727482
+      },
+      {
+        "CPM": 0.9999,
+        "Daypart": "DAY",
+        "HouseholdImpressions": 17066.760911030167
+      },
+      {
+        "CPM": 0.0588,
+        "Daypart": "EM",
+        "HouseholdImpressions": 21927.74583727252
       }
     ],
     "HasInventoryGaps": true,

@@ -137,14 +137,19 @@ namespace Services.Broadcast.ApplicationServices
                                 
                 var data = _InventorySummaryRepository.GetInventorySummaryDataForSources(inventorySource, quarterDetail.Quarter, quarterDetail.Year);
 
-                if (data == null)//there is no inventory for this source
+                //check if I should filter by daypart code
+                if (data != null && inventorySummaryFilterDto.DaypartCodeId.HasValue)
                 {
-                    continue;
+                    var daypartCodes = data.Details.Select(m => m.DaypartCodeId).Distinct().ToList();
+
+                    if (_ShouldFilterByDaypartCode(daypartCodes, inventorySummaryFilterDto.DaypartCodeId))
+                    {
+                        continue;
+                    }
                 }
 
-                var daypartCodes = data.Details.Where(x => x.Daypart != null).Select(m => m.Daypart).Distinct().ToList();
-
-                if (_ShouldFilterByDaypartCode(daypartCodes, inventorySummaryFilterDto.DaypartCodeId))
+                //don't add empty objects if I filter by daypart
+                if(data == null && inventorySummaryFilterDto.DaypartCodeId.HasValue)
                 {
                     continue;
                 }
@@ -166,20 +171,30 @@ namespace Services.Broadcast.ApplicationServices
             {
                 var data = _InventorySummaryRepository.GetInventorySummaryDataForSources(inventorySource, quarterDetail.Quarter, quarterDetail.Year);
 
+                if (data != null && inventorySummaryFilterDto.DaypartCodeId.HasValue)
+                {
+                    var daypartCodes = data.Details.Select(m => m.DaypartCodeId).Distinct().ToList();
+
+                    if (_ShouldFilterByDaypartCode(daypartCodes, inventorySummaryFilterDto.DaypartCodeId))
+                    {
+                        continue;
+                    }
+                }
+
                 yield return _LoadInventorySummary(inventorySource, data, quarterDetail);
             }
         }
 
-        private List<InventorySummaryDto> _CreateInventorySummariesForSource(InventorySource inventorySource, 
+        private List<InventorySummaryAggregation> _CreateInventorySummariesForSource(InventorySource inventorySource, 
             BaseInventorySummaryAbstractFactory inventorySummaryFactory,
             int householdAudienceId, DateTime currentDate)
         {
-            var result = new List<InventorySummaryDto>();
+            var result = new List<InventorySummaryAggregation>();
             var inventorySourceDateRange = _GetInventorySourceOrCurrentQuarterDateRange(inventorySource.Id, currentDate);
             var allQuartersBetweenDates =
                 _QuarterCalculationEngine.GetAllQuartersBetweenDates(inventorySourceDateRange.Start.Value,
                                                                      inventorySourceDateRange.End.Value);
-
+            List<DaypartCodeDto> daypartCodesAndIds = _DaypartCodeRepository.GetAllActiveDaypartCodes();
             foreach (var quarterDetail in allQuartersBetweenDates)
             {
                 var manifests = _GetInventorySummaryManifests(inventorySource, quarterDetail);
@@ -188,8 +203,8 @@ namespace Services.Broadcast.ApplicationServices
                 {
                     continue;
                 }
-
-                var summaryData = inventorySummaryFactory.CreateInventorySummary(inventorySource, householdAudienceId, quarterDetail, manifests);
+                
+                var summaryData = inventorySummaryFactory.CreateInventorySummary(inventorySource, householdAudienceId, quarterDetail, manifests, daypartCodesAndIds);
                 result.Add(summaryData);
             }
             return result;
@@ -206,13 +221,11 @@ namespace Services.Broadcast.ApplicationServices
             }
         }
 
-        private bool _ShouldFilterByDaypartCode(List<string> daypartCodes, int? daypartCodeId)
+        private bool _ShouldFilterByDaypartCode(List<int> daypartCodeIds, int? daypartCodeId)
         {
             if (!daypartCodeId.HasValue)
                 return false;
-            var daypartCodeDto = _DaypartCodeRepository.GetDaypartCodeById(daypartCodeId.Value);
-            var daypartCode = daypartCodeDto.Code;
-            return !daypartCodes.Contains(daypartCode);
+            return !daypartCodeIds.Contains(daypartCodeId.Value);
         }
 
         private bool _ShouldFilterBySourceType(InventorySummaryFilterDto inventorySummaryFilterDto, InventorySource inventorySource)
@@ -386,7 +399,7 @@ namespace Services.Broadcast.ApplicationServices
                 var summaryData = _CreateInventorySummariesForSource(inventorySource, inventorySummaryFactory, houseHoldAudienceId, DateTime.Now);
                 foreach(var data in summaryData)
                 {
-                    inventorySummaryFactory.SaveInventorySummary(data);
+                    _InventorySummaryRepository.SaveInventoryAggregatedData(data);
                 }                
             }
         }

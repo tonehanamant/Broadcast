@@ -1,5 +1,57 @@
 ﻿[
   {
+    "Details": [],
+    "HasInventoryGaps": false,
+    "HasLogo": false,
+    "HasRatesAvailableForQuarter": false,
+    "HouseholdImpressions": null,
+    "HutBook": null,
+    "InventoryGaps": [],
+    "InventorySourceId": 6,
+    "InventorySourceName": "Sinclair",
+    "IsUpdating": false,
+    "LastUpdatedDate": null,
+    "Quarter": {
+      "EndDate": "2019-03-31T23:59:59",
+      "Quarter": 1,
+      "StartDate": "2018-12-31T00:00:00",
+      "Year": 2019
+    },
+    "RatesAvailableFromQuarter": null,
+    "RatesAvailableToQuarter": null,
+    "ShareBook": null,
+    "TotalDaypartCodes": 0,
+    "TotalMarkets": 0,
+    "TotalPrograms": 0,
+    "TotalStations": 0
+  },
+  {
+    "Details": [],
+    "HasInventoryGaps": false,
+    "HasLogo": false,
+    "HasRatesAvailableForQuarter": false,
+    "HouseholdImpressions": null,
+    "HutBook": null,
+    "InventoryGaps": [],
+    "InventorySourceId": 10,
+    "InventorySourceName": "ABC O&O",
+    "IsUpdating": false,
+    "LastUpdatedDate": null,
+    "Quarter": {
+      "EndDate": "2019-03-31T23:59:59",
+      "Quarter": 1,
+      "StartDate": "2018-12-31T00:00:00",
+      "Year": 2019
+    },
+    "RatesAvailableFromQuarter": null,
+    "RatesAvailableToQuarter": null,
+    "ShareBook": null,
+    "TotalDaypartCodes": 0,
+    "TotalMarkets": 0,
+    "TotalPrograms": 0,
+    "TotalStations": 0
+  },
+  {
     "Details": [
       {
         "CPM": 27.0000,
@@ -73,5 +125,31 @@
     "TotalMarkets": 1,
     "TotalPrograms": 3,
     "TotalStations": 2
+  },
+  {
+    "Details": [],
+    "HasInventoryGaps": false,
+    "HasLogo": false,
+    "HasRatesAvailableForQuarter": false,
+    "HouseholdImpressions": null,
+    "HutBook": null,
+    "InventoryGaps": [],
+    "InventorySourceId": 12,
+    "InventorySourceName": "KATZ",
+    "IsUpdating": false,
+    "LastUpdatedDate": null,
+    "Quarter": {
+      "EndDate": "2019-03-31T23:59:59",
+      "Quarter": 1,
+      "StartDate": "2018-12-31T00:00:00",
+      "Year": 2019
+    },
+    "RatesAvailableFromQuarter": null,
+    "RatesAvailableToQuarter": null,
+    "ShareBook": null,
+    "TotalDaypartCodes": 0,
+    "TotalMarkets": 0,
+    "TotalPrograms": 0,
+    "TotalStations": 0
   }
 ]

@@ -28,7 +28,8 @@ namespace Services.Broadcast.Entities.InventorySummary
 
         public class Detail
         {
-            public string Daypart { get; set; }
+            public int DaypartCodeId { get; set; }
+            public string DaypartCode { get; set; }
             public int TotalMarkets { get; set; }
             public double TotalCoverage { get; set; }
             public double? TotalProjectedHouseholdImpressions { get; set; }

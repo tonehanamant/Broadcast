@@ -18,18 +18,22 @@ namespace Services.Broadcast.Converters.InventorySummary
                                               IProgramRepository programRepository,
                                               IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
                                               IMarketCoverageCache marketCoverageCache,
-                                              IInventoryGapCalculationEngine inventoryGapCalculationEngine) 
-            : base(inventoryRepository, 
-                   inventorySummaryRepository, 
-                   quarterCalculationEngine, 
-                   programRepository, 
+                                              IInventoryGapCalculationEngine inventoryGapCalculationEngine)
+            : base(inventoryRepository,
+                   inventorySummaryRepository,
+                   quarterCalculationEngine,
+                   programRepository,
                    mediaMonthAndWeekAggregateCache,
                    marketCoverageCache,
                    inventoryGapCalculationEngine)
         {
         }
 
-        public override InventorySummaryDto CreateInventorySummary(InventorySource inventorySource, int householdAudienceId, QuarterDetailDto quarterDetail, List<InventorySummaryManifestDto> inventorySummaryManifests)
+        public override InventorySummaryAggregation CreateInventorySummary(InventorySource inventorySource,
+                                                int householdAudienceId,
+                                                QuarterDetailDto quarterDetail,
+                                                List<InventorySummaryManifestDto> inventorySummaryManifests,
+                                                List<DaypartCodeDto> daypartCodes)
         {
             var allInventorySourceManifestWeeks = InventoryRepository.GetStationInventoryManifestWeeksForInventorySource(inventorySource.Id);
             var quartersForInventoryAvailable = GetQuartersForInventoryAvailable(allInventorySourceManifestWeeks);
@@ -45,43 +49,43 @@ namespace Services.Broadcast.Converters.InventorySummary
             // For O&O source, there is always only 1 daypart code for 1 manifest. 
             // The collection is needed because we use a common model InventorySummaryManifestDto for all the sources 
             // and Diginet can have several daypart codes
-            var totalDaypartCodes = inventorySummaryManifests.GroupBy(x => x.DaypartCodes.Single()).Count();
+            var totalDaypartCodes = inventorySummaryManifests.GroupBy(x => x.DaypartCodeIds.Single()).Count();
 
-            var result = new ProprietaryOAndOInventorySummaryDto
+            var result = new InventorySummaryAggregation
             {
                 InventorySourceId = inventorySource.Id,
-                Quarter = quarterDetail,
+                Quarter = GetInventorySummaryQuarter(quarterDetail),
                 TotalMarkets = GetTotalMarkets(inventorySummaryManifests),
                 TotalStations = GetTotalStations(inventorySummaryManifests),
                 TotalPrograms = GetTotalPrograms(manifests),
                 TotalDaypartCodes = totalDaypartCodes,
                 LastUpdatedDate = GetLastJobCompletedDate(inventorySummaryManifestFiles),
-                RatesAvailableFromQuarter = quartersForInventoryAvailable.Item1,
-                RatesAvailableToQuarter = quartersForInventoryAvailable.Item2,
+                RatesAvailableFromQuarter = GetInventorySummaryQuarter(quartersForInventoryAvailable.Item1),
+                RatesAvailableToQuarter = GetInventorySummaryQuarter(quartersForInventoryAvailable.Item2),
                 InventoryGaps = inventoryGaps,
                 Details = _GetDetails(inventorySummaryManifests, manifests, householdAudienceId),
-                ShareBook = shareBook,
-                HutBook = hutBook
+                ShareBookId = shareBook.Id,
+                HutBookId = hutBook.Id
             };
 
-            var detailsWithHHImpressions = result.Details.Where(x => x.HouseholdImpressions.HasValue);
+            var detailsWithHHImpressions = result.Details.Where(x => x.TotalProjectedHouseholdImpressions.HasValue);
 
             if (detailsWithHHImpressions.Any())
             {
-                result.HouseholdImpressions = detailsWithHHImpressions.Sum(x => x.HouseholdImpressions);
+                result.TotalProjectedHouseholdImpressions = detailsWithHHImpressions.Sum(x => x.TotalProjectedHouseholdImpressions);
             }
 
             return result;
         }
 
-        private List<ProprietaryOAndOInventorySummaryDto.Detail> _GetDetails(List<InventorySummaryManifestDto> allSummaryManifests, List<StationInventoryManifest> allManifests, int householdAudienceId)
+        private List<InventorySummaryAggregation.Detail> _GetDetails(List<InventorySummaryManifestDto> allSummaryManifests, List<StationInventoryManifest> allManifests, int householdAudienceId)
         {
-            var result = new List<ProprietaryOAndOInventorySummaryDto.Detail>();
+            var result = new List<InventorySummaryAggregation.Detail>();
 
             // For O&O source, there is always only 1 daypart code for 1 manifest. 
             // The collection is needed because we use a common model InventorySummaryManifestDto for all the sources 
             // and Diginet can have several daypart codes
-            var allManifestsGroupedByDaypart = allSummaryManifests.GroupBy(x => x.DaypartCodes.Single());
+            var allManifestsGroupedByDaypart = allSummaryManifests.GroupBy(x => x.DaypartCodeIds.Single());
 
             foreach (var manifestsGrouping in allManifestsGroupedByDaypart)
             {
@@ -92,14 +96,14 @@ namespace Services.Broadcast.Converters.InventorySummary
                 var manifestSpots = manifests.SelectMany(x => x.ManifestWeeks).Select(x => x.Spots);
 
                 _CalculateHouseHoldImpressionsAndCPM(manifests, householdAudienceId, out var householdImpressions, out var cpm);
-                
-                result.Add(new ProprietaryOAndOInventorySummaryDto.Detail
+
+                result.Add(new InventorySummaryAggregation.Detail
                 {
-                    Daypart = manifestsGrouping.Key,
+                    DaypartCodeId = manifestsGrouping.Key,
                     TotalMarkets = marketCodes.Count(),
                     TotalCoverage = MarketCoverageCache.GetMarketCoverages(marketCodes).Sum(x => x.Value),
                     TotalPrograms = GetTotalPrograms(manifests),
-                    HouseholdImpressions = householdImpressions,
+                    TotalProjectedHouseholdImpressions = householdImpressions,
                     CPM = cpm,
                     MinSpotsPerWeek = manifestSpots.Min(),
                     MaxSpotsPerWeek = manifestSpots.Max()
@@ -183,7 +187,7 @@ namespace Services.Broadcast.Converters.InventorySummary
                 Details = proprietaryData.Details.Select(x => new ProprietaryOAndOInventorySummaryDto.Detail
                 {
                     CPM = x.CPM,
-                    Daypart = x.Daypart,
+                    Daypart = x.DaypartCode,
                     HouseholdImpressions = x.TotalProjectedHouseholdImpressions,
                     TotalCoverage = x.TotalCoverage,
                     TotalMarkets = x.TotalMarkets,

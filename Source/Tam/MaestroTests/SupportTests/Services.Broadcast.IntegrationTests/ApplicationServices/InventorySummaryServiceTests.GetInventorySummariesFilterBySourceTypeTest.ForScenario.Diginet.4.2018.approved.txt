@@ -1,22 +1,163 @@
 ﻿[
   {
+    "CPM": null,
+    "Details": [],
+    "HasInventoryGaps": false,
+    "HasLogo": false,
+    "HasRatesAvailableForQuarter": false,
+    "HouseholdImpressions": null,
+    "HutBook": null,
+    "InventoryGaps": [],
+    "InventorySourceId": 17,
+    "InventorySourceName": "Antenna TV",
+    "IsUpdating": false,
+    "LastUpdatedDate": null,
+    "Quarter": {
+      "EndDate": "2018-12-30T23:59:59",
+      "Quarter": 4,
+      "StartDate": "2018-10-01T00:00:00",
+      "Year": 2018
+    },
+    "RatesAvailableFromQuarter": null,
+    "RatesAvailableToQuarter": null,
+    "ShareBook": null,
+    "TotalDaypartCodes": 0,
+    "TotalMarkets": 0,
+    "TotalStations": 0
+  },
+  {
+    "CPM": null,
+    "Details": [],
+    "HasInventoryGaps": false,
+    "HasLogo": false,
+    "HasRatesAvailableForQuarter": false,
+    "HouseholdImpressions": null,
+    "HutBook": null,
+    "InventoryGaps": [],
+    "InventorySourceId": 18,
+    "InventorySourceName": "Bounce",
+    "IsUpdating": false,
+    "LastUpdatedDate": null,
+    "Quarter": {
+      "EndDate": "2018-12-30T23:59:59",
+      "Quarter": 4,
+      "StartDate": "2018-10-01T00:00:00",
+      "Year": 2018
+    },
+    "RatesAvailableFromQuarter": null,
+    "RatesAvailableToQuarter": null,
+    "ShareBook": null,
+    "TotalDaypartCodes": 0,
+    "TotalMarkets": 0,
+    "TotalStations": 0
+  },
+  {
+    "CPM": null,
+    "Details": [],
+    "HasInventoryGaps": false,
+    "HasLogo": false,
+    "HasRatesAvailableForQuarter": false,
+    "HouseholdImpressions": null,
+    "HutBook": null,
+    "InventoryGaps": [],
+    "InventorySourceId": 19,
+    "InventorySourceName": "BUZZR",
+    "IsUpdating": false,
+    "LastUpdatedDate": null,
+    "Quarter": {
+      "EndDate": "2018-12-30T23:59:59",
+      "Quarter": 4,
+      "StartDate": "2018-10-01T00:00:00",
+      "Year": 2018
+    },
+    "RatesAvailableFromQuarter": null,
+    "RatesAvailableToQuarter": null,
+    "ShareBook": null,
+    "TotalDaypartCodes": 0,
+    "TotalMarkets": 0,
+    "TotalStations": 0
+  },
+  {
+    "CPM": null,
+    "Details": [],
+    "HasInventoryGaps": false,
+    "HasLogo": false,
+    "HasRatesAvailableForQuarter": false,
+    "HouseholdImpressions": null,
+    "HutBook": null,
+    "InventoryGaps": [],
+    "InventorySourceId": 20,
+    "InventorySourceName": "COZI",
+    "IsUpdating": false,
+    "LastUpdatedDate": null,
+    "Quarter": {
+      "EndDate": "2018-12-30T23:59:59",
+      "Quarter": 4,
+      "StartDate": "2018-10-01T00:00:00",
+      "Year": 2018
+    },
+    "RatesAvailableFromQuarter": null,
+    "RatesAvailableToQuarter": null,
+    "ShareBook": null,
+    "TotalDaypartCodes": 0,
+    "TotalMarkets": 0,
+    "TotalStations": 0
+  },
+  {
+    "CPM": null,
+    "Details": [],
+    "HasInventoryGaps": false,
+    "HasLogo": false,
+    "HasRatesAvailableForQuarter": false,
+    "HouseholdImpressions": null,
+    "HutBook": null,
+    "InventoryGaps": [],
+    "InventorySourceId": 21,
+    "InventorySourceName": "Escape",
+    "IsUpdating": false,
+    "LastUpdatedDate": null,
+    "Quarter": {
+      "EndDate": "2018-12-30T23:59:59",
+      "Quarter": 4,
+      "StartDate": "2018-10-01T00:00:00",
+      "Year": 2018
+    },
+    "RatesAvailableFromQuarter": null,
+    "RatesAvailableToQuarter": null,
+    "ShareBook": null,
+    "TotalDaypartCodes": 0,
+    "TotalMarkets": 0,
+    "TotalStations": 0
+  },
+  {
+    "CPM": null,
+    "Details": [],
+    "HasInventoryGaps": false,
+    "HasLogo": false,
+    "HasRatesAvailableForQuarter": false,
+    "HouseholdImpressions": null,
+    "HutBook": null,
+    "InventoryGaps": [],
+    "InventorySourceId": 22,
+    "InventorySourceName": "Grit",
+    "IsUpdating": false,
+    "LastUpdatedDate": null,
+    "Quarter": {
+      "EndDate": "2018-12-30T23:59:59",
+      "Quarter": 4,
+      "StartDate": "2018-10-01T00:00:00",
+      "Year": 2018
+    },
+    "RatesAvailableFromQuarter": null,
+    "RatesAvailableToQuarter": null,
+    "ShareBook": null,
+    "TotalDaypartCodes": 0,
+    "TotalMarkets": 0,
+    "TotalStations": 0
+  },
+  {
     "CPM": 0.5897,
     "Details": [
-      {
-        "CPM": 0.0588,
-        "Daypart": "EM",
-        "HouseholdImpressions": 21927.74583727252
-      },
-      {
-        "CPM": 0.0588,
-        "Daypart": "OVN",
-        "HouseholdImpressions": 12072.254162727482
-      },
-      {
-        "CPM": 0.9999,
-        "Daypart": "DAY",
-        "HouseholdImpressions": 17066.760911030167
-      },
       {
         "CPM": 1.0000,
         "Daypart": "EF",
@@ -36,6 +177,21 @@
         "CPM": 1.0000,
         "Daypart": "LF",
         "HouseholdImpressions": 8333.2613124266936
+      },
+      {
+        "CPM": 0.0588,
+        "Daypart": "OVN",
+        "HouseholdImpressions": 12072.254162727482
+      },
+      {
+        "CPM": 0.9999,
+        "Daypart": "DAY",
+        "HouseholdImpressions": 17066.760911030167
+      },
+      {
+        "CPM": 0.0588,
+        "Daypart": "EM",
+        "HouseholdImpressions": 21927.74583727252
       }
     ],
     "HasInventoryGaps": true,
@@ -88,6 +244,58 @@
     },
     "ShareBook": null,
     "TotalDaypartCodes": 7,
+    "TotalMarkets": 0,
+    "TotalStations": 0
+  },
+  {
+    "CPM": null,
+    "Details": [],
+    "HasInventoryGaps": false,
+    "HasLogo": false,
+    "HasRatesAvailableForQuarter": false,
+    "HouseholdImpressions": null,
+    "HutBook": null,
+    "InventoryGaps": [],
+    "InventorySourceId": 24,
+    "InventorySourceName": "Laff",
+    "IsUpdating": false,
+    "LastUpdatedDate": null,
+    "Quarter": {
+      "EndDate": "2018-12-30T23:59:59",
+      "Quarter": 4,
+      "StartDate": "2018-10-01T00:00:00",
+      "Year": 2018
+    },
+    "RatesAvailableFromQuarter": null,
+    "RatesAvailableToQuarter": null,
+    "ShareBook": null,
+    "TotalDaypartCodes": 0,
+    "TotalMarkets": 0,
+    "TotalStations": 0
+  },
+  {
+    "CPM": null,
+    "Details": [],
+    "HasInventoryGaps": false,
+    "HasLogo": false,
+    "HasRatesAvailableForQuarter": false,
+    "HouseholdImpressions": null,
+    "HutBook": null,
+    "InventoryGaps": [],
+    "InventorySourceId": 25,
+    "InventorySourceName": "Me TV",
+    "IsUpdating": false,
+    "LastUpdatedDate": null,
+    "Quarter": {
+      "EndDate": "2018-12-30T23:59:59",
+      "Quarter": 4,
+      "StartDate": "2018-10-01T00:00:00",
+      "Year": 2018
+    },
+    "RatesAvailableFromQuarter": null,
+    "RatesAvailableToQuarter": null,
+    "ShareBook": null,
+    "TotalDaypartCodes": 0,
     "TotalMarkets": 0,
     "TotalStations": 0
   }

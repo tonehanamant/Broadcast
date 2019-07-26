@@ -16,7 +16,6 @@ namespace EntityFrameworkMapping.Broadcast
     {
         public int id { get; set; }
         public int inventory_summary_quarter_id { get; set; }
-        public string daypart { get; set; }
         public int total_markets { get; set; }
         public double total_coverage { get; set; }
         public Nullable<int> total_units { get; set; }
@@ -27,7 +26,9 @@ namespace EntityFrameworkMapping.Broadcast
         public Nullable<int> max_spots_per_week { get; set; }
         public Nullable<int> share_book_id { get; set; }
         public Nullable<int> hut_book_id { get; set; }
+        public int daypart_code_id { get; set; }
     
+        public virtual daypart_codes daypart_codes { get; set; }
         public virtual inventory_summary_quarters inventory_summary_quarters { get; set; }
     }
 }

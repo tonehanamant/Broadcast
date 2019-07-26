@@ -42,34 +42,12 @@ namespace Services.Broadcast.Converters.InventorySummary
             _MediaMonthAndWeekAggregateCache = mediaMonthAndWeekAggregateCache;
         }
 
-        public abstract InventorySummaryDto CreateInventorySummary(InventorySource inventorySource,
+        public abstract InventorySummaryAggregation CreateInventorySummary(InventorySource inventorySource,
                                                                    int householdAudienceId,
                                                                    QuarterDetailDto quarterDetail,
-                                                                   List<InventorySummaryManifestDto> manifests);
-
-        /// <summary>
-        /// Call the proper save method on each type passes
-        /// </summary>
-        /// <typeparam name="T">Inventory source type</typeparam>
-        /// <param name="inventorySummaryDto">Inventory summary data</param>
-        public void SaveInventorySummary<T>(T inventorySummaryDto) where T : InventorySummaryDto
-        {
-            var @switch = new Dictionary<Type, Action> {
-                { typeof(BarterInventorySummaryDto),
-                    () => InventorySummaryRepository.SaveInventorySummaryForBarterSources(inventorySummaryDto as BarterInventorySummaryDto) },
-                { typeof(OpenMarketInventorySummaryDto),
-                    () => InventorySummaryRepository.SaveInventorySummaryForOpenMarketSources(inventorySummaryDto as OpenMarketInventorySummaryDto) },
-                { typeof(ProprietaryOAndOInventorySummaryDto),
-                    () => InventorySummaryRepository.SaveInventorySummaryForProprietaryOAndOSources(inventorySummaryDto as ProprietaryOAndOInventorySummaryDto) },
-                { typeof(DiginetInventorySummaryDto),
-                    () => InventorySummaryRepository.SaveInventorySummaryForDiginetSources(inventorySummaryDto as DiginetInventorySummaryDto) },
-                { typeof(SyndicationInventorySummaryDto),
-                    () => InventorySummaryRepository.SaveInventorySummaryForSyndicationSources(inventorySummaryDto as SyndicationInventorySummaryDto) },
-            };
-
-            @switch[inventorySummaryDto.GetType()]();
-        }
-
+                                                                   List<InventorySummaryManifestDto> manifests,
+                                                                   List<DaypartCodeDto> daypartCodes);
+                
         public abstract InventorySummaryDto LoadInventorySummary(InventorySource inventorySource, InventorySummaryAggregation data, QuarterDetailDto quarterDetail);
 
         protected Tuple<QuarterDetailDto, QuarterDetailDto> GetQuartersForInventoryAvailable(List<StationInventoryManifestWeek> weeks)
@@ -92,6 +70,14 @@ namespace Services.Broadcast.Converters.InventorySummary
             return _QuarterCalculationEngine.GetQuarterDetail(quarterNumber, year);
         }
 
+        protected InventorySummaryQuarter GetInventorySummaryQuarter(QuarterDetailDto quarterDetail)
+        {
+            return new InventorySummaryQuarter
+            {
+                Quarter = quarterDetail.Quarter,
+                Year = quarterDetail.Year
+            };
+        }
         protected void GetLatestInventoryPostingBook(List<InventorySummaryManifestFileDto> inventorySummaryManifestFileDtos, out MediaMonthDto shareBook, out MediaMonthDto hutBook)
         {
             shareBook = null;

@@ -411,7 +411,6 @@
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="inventory_summary_quarter_id" Type="int" Nullable="false" />
-          <Property Name="daypart" Type="varchar" MaxLength="64" />
           <Property Name="total_markets" Type="int" Nullable="false" />
           <Property Name="total_coverage" Type="float" Nullable="false" />
           <Property Name="total_units" Type="int" />
@@ -422,6 +421,7 @@
           <Property Name="max_spots_per_week" Type="int" />
           <Property Name="share_book_id" Type="int" />
           <Property Name="hut_book_id" Type="int" />
+          <Property Name="daypart_code_id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="inventory_summary_quarters">
           <Key>
@@ -1438,7 +1438,7 @@
           <Property Name="sys_end_date" Type="datetime2" Precision="7" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'broadcast_integration_staging.dbo.station_inventory_manifest_weeks_history' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'broadcast_integration.dbo.station_inventory_manifest_weeks_history' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="station_inventory_manifest_weeks_history">
           <Key>
             <PropertyRef Name="id" />
@@ -1534,7 +1534,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.station_inventor
           <Property Name="end_time" Type="int" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'broadcast_integration.dbo.vw_ccc_daypart' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vw_ccc_daypart">
           <Key>
             <PropertyRef Name="id" />
@@ -1967,6 +1967,18 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Principal>
             <Dependent Role="inventory_summary">
               <PropertyRef Name="inventory_source_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_inventory_summary_quarter_details_daypart_codes">
+          <End Role="daypart_codes" Type="Self.daypart_codes" Multiplicity="1" />
+          <End Role="inventory_summary_quarter_details" Type="Self.inventory_summary_quarter_details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="daypart_codes">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="inventory_summary_quarter_details">
+              <PropertyRef Name="daypart_code_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -4067,6 +4079,10 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="inventory_sources" EntitySet="inventory_sources" />
             <End Role="inventory_summary" EntitySet="inventory_summary" />
           </AssociationSet>
+          <AssociationSet Name="FK_inventory_summary_quarter_details_daypart_codes" Association="Self.FK_inventory_summary_quarter_details_daypart_codes">
+            <End Role="daypart_codes" EntitySet="daypart_codes" />
+            <End Role="inventory_summary_quarter_details" EntitySet="inventory_summary_quarter_details" />
+          </AssociationSet>
           <AssociationSet Name="FK_inventory_summary_quarter_details_inventory_summary_quarters" Association="Self.FK_inventory_summary_quarter_details_inventory_summary_quarters">
             <End Role="inventory_summary_quarters" EntitySet="inventory_summary_quarters" />
             <End Role="inventory_summary_quarter_details" EntitySet="inventory_summary_quarter_details" />
@@ -5422,7 +5438,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySet Name="inventory_summary" EntityType="BroadcastModel.inventory_summary" />
           <EntitySet Name="inventory_summary_gap_ranges" EntityType="BroadcastModel.inventory_summary_gap_ranges" />
           <EntitySet Name="inventory_summary_gaps" EntityType="BroadcastModel.inventory_summary_gaps" />
-          <EntitySet Name="inventory_summary_quarter_details" EntityType="BroadcastModel.inventory_summary_quarter_details" />
           <EntitySet Name="inventory_summary_quarters" EntityType="BroadcastModel.inventory_summary_quarters" />
           <AssociationSet Name="FK_inventory_summary_inventory_sources" Association="BroadcastModel.FK_inventory_summary_inventory_sources">
             <End Role="inventory_sources" EntitySet="inventory_sources" />
@@ -5439,6 +5454,11 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <AssociationSet Name="FK_inventory_summary_gaps_inventory_summary" Association="BroadcastModel.FK_inventory_summary_gaps_inventory_summary">
             <End Role="inventory_summary_quarters" EntitySet="inventory_summary_quarters" />
             <End Role="inventory_summary_gaps" EntitySet="inventory_summary_gaps" />
+          </AssociationSet>
+          <EntitySet Name="inventory_summary_quarter_details" EntityType="BroadcastModel.inventory_summary_quarter_details" />
+          <AssociationSet Name="FK_inventory_summary_quarter_details_daypart_codes" Association="BroadcastModel.FK_inventory_summary_quarter_details_daypart_codes">
+            <End Role="daypart_codes" EntitySet="daypart_codes" />
+            <End Role="inventory_summary_quarter_details" EntitySet="inventory_summary_quarter_details" />
           </AssociationSet>
           <AssociationSet Name="FK_inventory_summary_quarter_details_inventory_summary_quarters" Association="BroadcastModel.FK_inventory_summary_quarter_details_inventory_summary_quarters">
             <End Role="inventory_summary_quarters" EntitySet="inventory_summary_quarters" />
@@ -9197,6 +9217,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="station_inventory_manifest_dayparts" Relationship="BroadcastModel.FK_station_inventory_manifest_dayparts_daypart_codes" FromRole="daypart_codes" ToRole="station_inventory_manifest_dayparts" />
           <NavigationProperty Name="scx_generation_job_files" Relationship="BroadcastModel.FK_scx_generation_job_files_daypart_codes" FromRole="daypart_codes" ToRole="scx_generation_job_files" />
           <NavigationProperty Name="scx_generation_jobs" Relationship="BroadcastModel.FK_scx_generation_jobs_daypart_codes" FromRole="daypart_codes" ToRole="scx_generation_jobs" />
+          <NavigationProperty Name="inventory_summary_quarter_details" Relationship="BroadcastModel.FK_inventory_summary_quarter_details_daypart_codes" FromRole="daypart_codes" ToRole="inventory_summary_quarter_details" />
         </EntityType>
         <Association Name="FK_inventory_file_proprietary_header_daypart_codes">
           <End Type="BroadcastModel.daypart_codes" Role="daypart_codes" Multiplicity="1" />
@@ -9419,26 +9440,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="inventory_summary_gap_ranges" Relationship="BroadcastModel.FK_inventory_summary_gap_ranges_inventory_summary_gaps" FromRole="inventory_summary_gaps" ToRole="inventory_summary_gap_ranges" />
           <NavigationProperty Name="inventory_summary_quarters" Relationship="BroadcastModel.FK_inventory_summary_gaps_inventory_summary" FromRole="inventory_summary_gaps" ToRole="inventory_summary_quarters" />
         </EntityType>
-        <EntityType Name="inventory_summary_quarter_details">
-          <Key>
-            <PropertyRef Name="id" />
-            <PropertyRef Name="inventory_summary_quarter_id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="inventory_summary_quarter_id" Type="Int32" Nullable="false" />
-          <Property Name="daypart" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="total_markets" Type="Int32" Nullable="false" />
-          <Property Name="total_coverage" Type="Double" Nullable="false" />
-          <Property Name="total_units" Type="Int32" />
-          <Property Name="total_programs" Type="Int32" />
-          <Property Name="total_projected_impressions" Type="Double" />
-          <Property Name="cpm" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="min_spots_per_week" Type="Int32" />
-          <Property Name="max_spots_per_week" Type="Int32" />
-          <Property Name="share_book_id" Type="Int32" />
-          <Property Name="hut_book_id" Type="Int32" />
-          <NavigationProperty Name="inventory_summary_quarters" Relationship="BroadcastModel.FK_inventory_summary_quarter_details_inventory_summary_quarters" FromRole="inventory_summary_quarter_details" ToRole="inventory_summary_quarters" />
-        </EntityType>
         <EntityType Name="inventory_summary_quarters">
           <Key>
             <PropertyRef Name="id" />
@@ -9509,6 +9510,39 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Principal>
             <Dependent Role="inventory_summary_gaps">
               <PropertyRef Name="inventory_summary_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="inventory_summary_quarter_details">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="inventory_summary_quarter_id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="inventory_summary_quarter_id" Type="Int32" Nullable="false" />
+          <Property Name="total_markets" Type="Int32" Nullable="false" />
+          <Property Name="total_coverage" Type="Double" Nullable="false" />
+          <Property Name="total_units" Type="Int32" />
+          <Property Name="total_programs" Type="Int32" />
+          <Property Name="total_projected_impressions" Type="Double" />
+          <Property Name="cpm" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="min_spots_per_week" Type="Int32" />
+          <Property Name="max_spots_per_week" Type="Int32" />
+          <Property Name="share_book_id" Type="Int32" />
+          <Property Name="hut_book_id" Type="Int32" />
+          <Property Name="daypart_code_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="daypart_codes" Relationship="BroadcastModel.FK_inventory_summary_quarter_details_daypart_codes" FromRole="inventory_summary_quarter_details" ToRole="daypart_codes" />
+          <NavigationProperty Name="inventory_summary_quarters" Relationship="BroadcastModel.FK_inventory_summary_quarter_details_inventory_summary_quarters" FromRole="inventory_summary_quarter_details" ToRole="inventory_summary_quarters" />
+        </EntityType>
+        <Association Name="FK_inventory_summary_quarter_details_daypart_codes">
+          <End Type="BroadcastModel.daypart_codes" Role="daypart_codes" Multiplicity="1" />
+          <End Type="BroadcastModel.inventory_summary_quarter_details" Role="inventory_summary_quarter_details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="daypart_codes">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="inventory_summary_quarter_details">
+              <PropertyRef Name="daypart_code_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -11137,25 +11171,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="inventory_summary_quarter_details">
-            <EntityTypeMapping TypeName="BroadcastModel.inventory_summary_quarter_details">
-              <MappingFragment StoreEntitySet="inventory_summary_quarter_details">
-                <ScalarProperty Name="hut_book_id" ColumnName="hut_book_id" />
-                <ScalarProperty Name="share_book_id" ColumnName="share_book_id" />
-                <ScalarProperty Name="max_spots_per_week" ColumnName="max_spots_per_week" />
-                <ScalarProperty Name="min_spots_per_week" ColumnName="min_spots_per_week" />
-                <ScalarProperty Name="cpm" ColumnName="cpm" />
-                <ScalarProperty Name="total_projected_impressions" ColumnName="total_projected_impressions" />
-                <ScalarProperty Name="total_programs" ColumnName="total_programs" />
-                <ScalarProperty Name="total_units" ColumnName="total_units" />
-                <ScalarProperty Name="total_coverage" ColumnName="total_coverage" />
-                <ScalarProperty Name="total_markets" ColumnName="total_markets" />
-                <ScalarProperty Name="daypart" ColumnName="daypart" />
-                <ScalarProperty Name="inventory_summary_quarter_id" ColumnName="inventory_summary_quarter_id" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="inventory_summary_quarters">
             <EntityTypeMapping TypeName="BroadcastModel.inventory_summary_quarters">
               <MappingFragment StoreEntitySet="inventory_summary_quarters">
@@ -11171,6 +11186,25 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
                 <ScalarProperty Name="quarter_year" ColumnName="quarter_year" />
                 <ScalarProperty Name="quarter_number" ColumnName="quarter_number" />
                 <ScalarProperty Name="inventory_source_id" ColumnName="inventory_source_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="inventory_summary_quarter_details">
+            <EntityTypeMapping TypeName="BroadcastModel.inventory_summary_quarter_details">
+              <MappingFragment StoreEntitySet="inventory_summary_quarter_details">
+                <ScalarProperty Name="daypart_code_id" ColumnName="daypart_code_id" />
+                <ScalarProperty Name="hut_book_id" ColumnName="hut_book_id" />
+                <ScalarProperty Name="share_book_id" ColumnName="share_book_id" />
+                <ScalarProperty Name="max_spots_per_week" ColumnName="max_spots_per_week" />
+                <ScalarProperty Name="min_spots_per_week" ColumnName="min_spots_per_week" />
+                <ScalarProperty Name="cpm" ColumnName="cpm" />
+                <ScalarProperty Name="total_projected_impressions" ColumnName="total_projected_impressions" />
+                <ScalarProperty Name="total_programs" ColumnName="total_programs" />
+                <ScalarProperty Name="total_units" ColumnName="total_units" />
+                <ScalarProperty Name="total_coverage" ColumnName="total_coverage" />
+                <ScalarProperty Name="total_markets" ColumnName="total_markets" />
+                <ScalarProperty Name="inventory_summary_quarter_id" ColumnName="inventory_summary_quarter_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

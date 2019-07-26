@@ -31,7 +31,8 @@ namespace Services.Broadcast.Converters.InventorySummary
         {
         }
 
-        public override InventorySummaryDto CreateInventorySummary(InventorySource inventorySource, int householdAudienceId, QuarterDetailDto quarterDetail, List<InventorySummaryManifestDto> inventorySummaryManifests)
+        public override InventorySummaryAggregation CreateInventorySummary(InventorySource inventorySource, int householdAudienceId, 
+            QuarterDetailDto quarterDetail, List<InventorySummaryManifestDto> inventorySummaryManifests, List<DaypartCodeDto> daypartCodes)
         {
             var allInventorySourceManifestWeeks = InventoryRepository.GetStationInventoryManifestWeeksForInventorySource(inventorySource.Id);
             var quartersForInventoryAvailable = GetQuartersForInventoryAvailable(allInventorySourceManifestWeeks);
@@ -44,36 +45,36 @@ namespace Services.Broadcast.Converters.InventorySummary
 
             var inventoryGaps = InventoryGapCalculationEngine.GetInventoryGaps(allInventorySourceManifestWeeks, quartersForInventoryAvailable, quarterDetail);
 
-            return new DiginetInventorySummaryDto
+            return new InventorySummaryAggregation
             {
                 InventorySourceId = inventorySource.Id,
-                Quarter = quarterDetail,
-                TotalDaypartCodes = inventorySummaryManifests.SelectMany(x => x.DaypartCodes).Distinct().Count(),
+                Quarter = GetInventorySummaryQuarter( quarterDetail),
+                TotalDaypartCodes = inventorySummaryManifests.SelectMany(x => x.DaypartCodeIds).Distinct().Count(),
                 LastUpdatedDate = GetLastJobCompletedDate(inventorySummaryManifestFiles),
-                RatesAvailableFromQuarter = quartersForInventoryAvailable.Item1,
-                RatesAvailableToQuarter = quartersForInventoryAvailable.Item2,
+                RatesAvailableFromQuarter = GetInventorySummaryQuarter(quartersForInventoryAvailable.Item1),
+                RatesAvailableToQuarter = GetInventorySummaryQuarter(quartersForInventoryAvailable.Item2),
                 InventoryGaps = inventoryGaps,
                 CPM = CPM,
                 Details = _GetDetails(inventorySummaryManifests, stationInventoryManifests, householdAudienceId)
             };
         }
 
-        private List<DiginetInventorySummaryDto.Detail> _GetDetails(List<InventorySummaryManifestDto> allSummaryManifests
+        private List<InventorySummaryAggregation.Detail> _GetDetails(List<InventorySummaryManifestDto> allSummaryManifests
             , List<StationInventoryManifest> stationInventoryManifests, int householdAudienceId)
         {
-            var result = new List<DiginetInventorySummaryDto.Detail>();
-            var allDaypartCodes = allSummaryManifests.SelectMany(x => x.DaypartCodes).Distinct();
+            var result = new List<InventorySummaryAggregation.Detail>();
+            var allDaypartCodes = allSummaryManifests.SelectMany(x => x.DaypartCodeIds).Distinct();
 
             foreach (var daypartCode in allDaypartCodes)
             {
-                var manifests = stationInventoryManifests.Where(x => x.ManifestDayparts.Any(d => d.DaypartCode.Code == daypartCode));
+                var manifests = stationInventoryManifests.Where(x => x.ManifestDayparts.Any(d => d.DaypartCode.Id == daypartCode));
 
                 _CalculateHouseHoldImpressionsAndCPMUsingDaypartCodePortion(manifests, householdAudienceId, daypartCode, out var householdImpressions, out var cpm);
 
-                result.Add(new DiginetInventorySummaryDto.Detail
+                result.Add(new InventorySummaryAggregation.Detail
                 {
-                    Daypart = daypartCode,
-                    HouseholdImpressions = householdImpressions,
+                    DaypartCodeId = daypartCode,
+                    TotalProjectedHouseholdImpressions = householdImpressions,
                     CPM = cpm,
                 });
             }
@@ -84,7 +85,7 @@ namespace Services.Broadcast.Converters.InventorySummary
         private void _CalculateHouseHoldImpressionsAndCPMUsingDaypartCodePortion(
             IEnumerable<StationInventoryManifest> manifests,
             int householdAudienceId,
-            string daypartCode,
+            int daypartCode,
             out double? impressionsResult,
             out decimal? cpmResult)
         {
@@ -106,7 +107,7 @@ namespace Services.Broadcast.Converters.InventorySummary
 
                 var manifestDayparts = manifest.ManifestDayparts.ToList();
                 var totalTimeDuration = manifestDayparts.Sum(x => x.Daypart.GetTotalTimeDuration());
-                var totalTimeDurationForDaypartCode = manifestDayparts.Where(x => x.DaypartCode.Code == daypartCode).Sum(x => x.Daypart.GetTotalTimeDuration());
+                var totalTimeDurationForDaypartCode = manifestDayparts.Where(x => x.DaypartCode.Id == daypartCode).Sum(x => x.Daypart.GetTotalTimeDuration());
 
                 if (totalTimeDuration == 0 || totalTimeDurationForDaypartCode == 0)
                     throw new Exception("Invalid daypart with zero time found");
@@ -192,7 +193,7 @@ namespace Services.Broadcast.Converters.InventorySummary
                 Details = diginetData.Details.Select(x => new DiginetInventorySummaryDto.Detail
                 {
                     CPM = x.CPM,
-                    Daypart = x.Daypart,
+                    Daypart = x.DaypartCode,
                     HouseholdImpressions = x.TotalProjectedHouseholdImpressions
                 }).ToList()
             };

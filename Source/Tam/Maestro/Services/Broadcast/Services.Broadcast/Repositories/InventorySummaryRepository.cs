@@ -25,34 +25,10 @@ namespace Services.Broadcast.Repositories
         List<InventorySummaryManifestFileDto> GetInventorySummaryManifestFileDtos(List<int> inventoryFileIds);
 
         /// <summary>
-        /// Saves the barter summary data
+        /// Saves the inventory summary aggregated data for the source
         /// </summary>
-        /// <param name="inventorySummaryDto">BarterInventorySummaryDto object to be saved</param>
-        void SaveInventorySummaryForBarterSources(BarterInventorySummaryDto inventorySummaryDto);
-
-        /// <summary>
-        /// Saves the open market summary data
-        /// </summary>
-        /// <param name="inventorySummaryDto">BarterInventorySummaryDto object to be saved</param>
-        void SaveInventorySummaryForOpenMarketSources(OpenMarketInventorySummaryDto inventorySummaryDto);
-
-        /// <summary>
-        /// Saves the Proprietary O&O summary data
-        /// </summary>
-        /// <param name="inventorySummaryDto">ProprietaryOAndOInventorySummaryDto object to be saved</param>
-        void SaveInventorySummaryForProprietaryOAndOSources(ProprietaryOAndOInventorySummaryDto inventorySummaryDto);
-
-        /// <summary>
-        /// Saves the Syndication summary data
-        /// </summary>
-        /// <param name="inventorySummaryDto">SyndicationInventorySummaryDto object to be saved</param>
-        void SaveInventorySummaryForSyndicationSources(SyndicationInventorySummaryDto inventorySummaryDto);
-
-        /// <summary>
-        /// Saves the diginet summary data
-        /// </summary>
-        /// <param name="inventorySummaryDto">DiginetInventorySummaryDto object to be saved</param>
-        void SaveInventorySummaryForDiginetSources(DiginetInventorySummaryDto inventorySummaryDto);
+        /// <param name="inventorySummaryAggregation">InventorySummaryAggregation object to be saved</param>
+        void SaveInventoryAggregatedData(InventorySummaryAggregation inventorySummaryAggregation);
 
         /// <summary>
         /// Gets the aggregated summary data for the source and selected quarter
@@ -88,7 +64,7 @@ namespace Services.Broadcast.Repositories
                                 ManifestId = manifest.id,
                                 StationId = station.id,
                                 MarketCode = station.market_code,
-                                DaypartCodes = new List<string> { daypartCode.code },
+                                DaypartCodeIds = new List<int> { daypartCode.id },
                                 UnitName = manifestGroup.name,
                                 FileId = file.id
                             })
@@ -98,42 +74,44 @@ namespace Services.Broadcast.Repositories
                 });
         }
 
-        /// <summary>
-        /// Saves the barter summary data
-        /// </summary>
-        /// <param name="inventorySummaryDto">BarterInventorySummaryDto object to be saved</param>
-        public void SaveInventorySummaryForBarterSources(BarterInventorySummaryDto inventorySummaryDto)
+        /// <inheritdoc/>
+        public void SaveInventoryAggregatedData(InventorySummaryAggregation inventorySummaryAggregation)
         {
             _InReadUncommitedTransaction(
                 context =>
                 {
-                    _RemoveExistingAggregationData(inventorySummaryDto.InventorySourceId, inventorySummaryDto.Quarter.Quarter, inventorySummaryDto.Quarter.Year, context);
+                    _RemoveExistingAggregationData(inventorySummaryAggregation.InventorySourceId, inventorySummaryAggregation.Quarter.Quarter, inventorySummaryAggregation.Quarter.Year, context);
 
                     //add new data
-                    context.inventory_summary.Add(_MapInventorySummaryData(inventorySummaryDto));
+                    context.inventory_summary.Add(_MapInventorySummaryData(inventorySummaryAggregation));
                     context.inventory_summary_quarters.Add(new inventory_summary_quarters
                     {
-                        inventory_source_id = inventorySummaryDto.InventorySourceId,
-                        quarter_number = inventorySummaryDto.Quarter.Quarter,
-                        quarter_year = inventorySummaryDto.Quarter.Year,
-                        total_daypart_codes = inventorySummaryDto.TotalDaypartCodes,
-                        total_markets = inventorySummaryDto.TotalMarkets,
-                        total_stations = inventorySummaryDto.TotalStations,
-                        total_projected_impressions = inventorySummaryDto.HouseholdImpressions,
-                        total_units = inventorySummaryDto.TotalUnits,
-                        share_book_id = inventorySummaryDto.ShareBook != null ? inventorySummaryDto.ShareBook.Id : default(int?),
-                        hut_book_id = inventorySummaryDto.HutBook != null ? inventorySummaryDto.HutBook.Id : default(int?),
-                        inventory_summary_quarter_details = inventorySummaryDto.Details.Select(x => new inventory_summary_quarter_details
+                        inventory_source_id = inventorySummaryAggregation.InventorySourceId,
+                        quarter_number = inventorySummaryAggregation.Quarter.Quarter,
+                        quarter_year = inventorySummaryAggregation.Quarter.Year,
+                        total_daypart_codes = inventorySummaryAggregation.TotalDaypartCodes,
+                        total_markets = inventorySummaryAggregation.TotalMarkets,
+                        total_stations = inventorySummaryAggregation.TotalStations,
+                        total_projected_impressions = inventorySummaryAggregation.TotalProjectedHouseholdImpressions,
+                        total_units = inventorySummaryAggregation.TotalUnits,
+                        share_book_id = inventorySummaryAggregation.ShareBookId,
+                        hut_book_id = inventorySummaryAggregation.HutBookId,
+                        total_programs = inventorySummaryAggregation.TotalPrograms,
+                        cpm = inventorySummaryAggregation.CPM,
+                        inventory_summary_quarter_details = inventorySummaryAggregation.Details?.Select(x => new inventory_summary_quarter_details
                         {
-                            daypart = x.Daypart,
+                            daypart_code_id = x.DaypartCodeId,
                             cpm = x.CPM,
                             total_coverage = x.TotalCoverage,
                             total_markets = x.TotalMarkets,
                             total_units = x.TotalUnits,
-                            total_projected_impressions = x.HouseholdImpressions
+                            total_projected_impressions = x.TotalProjectedHouseholdImpressions,
+                            total_programs = x.TotalPrograms,
+                            min_spots_per_week = x.MinSpotsPerWeek,
+                            max_spots_per_week = x.MaxSpotsPerWeek
                         }).ToList()
                     });
-                    context.inventory_summary_gaps.AddRange(_MapInventorySummaryGapsData(inventorySummaryDto));
+                    context.inventory_summary_gaps.AddRange(_MapInventorySummaryGapsData(inventorySummaryAggregation));
                     context.SaveChanges();
                 });
         }
@@ -159,35 +137,6 @@ namespace Services.Broadcast.Repositories
                 });
         }
 
-        /// <summary>
-        /// Saves the open market summary data
-        /// </summary>
-        /// <param name="inventorySummaryDto">OpenMarketInventorySummaryDto object to be saved</param>
-        public void SaveInventorySummaryForOpenMarketSources(OpenMarketInventorySummaryDto inventorySummaryDto)
-        {
-            _InReadUncommitedTransaction(
-                context =>
-                {
-                    _RemoveExistingAggregationData(inventorySummaryDto.InventorySourceId, inventorySummaryDto.Quarter.Quarter, inventorySummaryDto.Quarter.Year, context);
-
-                    context.inventory_summary.Add(_MapInventorySummaryData(inventorySummaryDto));
-                    context.inventory_summary_quarters.Add(new inventory_summary_quarters
-                    {
-                        inventory_source_id = inventorySummaryDto.InventorySourceId,
-                        quarter_number = inventorySummaryDto.Quarter.Quarter,
-                        quarter_year = inventorySummaryDto.Quarter.Year,
-                        total_markets = inventorySummaryDto.TotalMarkets,
-                        total_stations = inventorySummaryDto.TotalStations,
-                        total_programs = inventorySummaryDto.TotalPrograms,
-                        total_projected_impressions = inventorySummaryDto.HouseholdImpressions,
-                        share_book_id = inventorySummaryDto.ShareBook != null ? inventorySummaryDto.ShareBook.Id : default(int?),
-                        hut_book_id = inventorySummaryDto.HutBook != null ? inventorySummaryDto.HutBook.Id : default(int?)
-                    });
-                    context.inventory_summary_gaps.AddRange(_MapInventorySummaryGapsData(inventorySummaryDto));
-                    context.SaveChanges();
-                });
-        }
-
         public List<InventorySummaryManifestDto> GetInventorySummaryManifestsForProprietaryOAndOSources(InventorySource inventorySource, DateTime startDate, DateTime endDate)
         {
             return _InReadUncommitedTransaction(
@@ -205,7 +154,7 @@ namespace Services.Broadcast.Repositories
                                 ManifestId = manifest.id,
                                 StationId = station.id,
                                 MarketCode = station.market_code,
-                                DaypartCodes = new List<string> { daypartCode.code },
+                                DaypartCodeIds = new List<int> { daypartCode.id },
                                 FileId = file.id
                             })
                             .GroupBy(x => x.ManifestId)
@@ -213,48 +162,7 @@ namespace Services.Broadcast.Repositories
                             .ToList();
                 });
         }
-
-        /// <summary>
-        /// Saves the Proprietary O&O summary data
-        /// </summary>
-        /// <param name="inventorySummaryDto">ProprietaryOAndOInventorySummaryDto object to be saved</param>
-        public void SaveInventorySummaryForProprietaryOAndOSources(ProprietaryOAndOInventorySummaryDto inventorySummaryDto)
-        {
-            _InReadUncommitedTransaction(
-                context =>
-                {
-                    _RemoveExistingAggregationData(inventorySummaryDto.InventorySourceId, inventorySummaryDto.Quarter.Quarter, inventorySummaryDto.Quarter.Year, context);
-
-                    context.inventory_summary.Add(_MapInventorySummaryData(inventorySummaryDto));
-                    context.inventory_summary_quarters.Add(new inventory_summary_quarters
-                    {
-                        inventory_source_id = inventorySummaryDto.InventorySourceId,
-                        quarter_number = inventorySummaryDto.Quarter.Quarter,
-                        quarter_year = inventorySummaryDto.Quarter.Year,
-                        total_daypart_codes = inventorySummaryDto.TotalDaypartCodes,
-                        total_markets = inventorySummaryDto.TotalMarkets,
-                        total_stations = inventorySummaryDto.TotalStations,
-                        total_programs = inventorySummaryDto.TotalPrograms,
-                        total_projected_impressions = inventorySummaryDto.HouseholdImpressions,
-                        share_book_id = inventorySummaryDto.ShareBook != null ? inventorySummaryDto.ShareBook.Id : default(int?),
-                        hut_book_id = inventorySummaryDto.HutBook != null ? inventorySummaryDto.HutBook.Id : default(int?),
-                        inventory_summary_quarter_details = inventorySummaryDto.Details.Select(x => new inventory_summary_quarter_details
-                        {
-                            daypart = x.Daypart,
-                            cpm = x.CPM,
-                            total_coverage = x.TotalCoverage,
-                            total_markets = x.TotalMarkets,
-                            total_projected_impressions = x.HouseholdImpressions,
-                            total_programs = x.TotalPrograms,
-                            min_spots_per_week = x.MinSpotsPerWeek,
-                            max_spots_per_week = x.MaxSpotsPerWeek
-                        }).ToList()
-                    });
-                    context.inventory_summary_gaps.AddRange(_MapInventorySummaryGapsData(inventorySummaryDto));
-                    context.SaveChanges();
-                });
-        }
-
+        
         public List<InventorySummaryManifestDto> GetInventorySummaryManifestsForSyndicationSources(InventorySource inventorySource, DateTime startDate, DateTime endDate)
         {
             return _InReadUncommitedTransaction(
@@ -269,42 +177,12 @@ namespace Services.Broadcast.Repositories
                             select new InventorySummaryManifestDto
                             {
                                 ManifestId = manifest.id,
-                                DaypartCodes = new List<string> { daypartCode.code },
+                                DaypartCodeIds = new List<int> { daypartCode.id },
                                 FileId = file.id
                             })
                             .GroupBy(x => x.ManifestId)
                             .Select(x => x.FirstOrDefault())
                             .ToList();
-                });
-        }
-
-        /// <summary>
-        /// Saves the Syndication summary data
-        /// </summary>
-        /// <param name="inventorySummaryDto">SyndicationInventorySummaryDto object to be saved</param>
-        public void SaveInventorySummaryForSyndicationSources(SyndicationInventorySummaryDto inventorySummaryDto)
-        {
-            _InReadUncommitedTransaction(
-                context =>
-                {
-                    _RemoveExistingAggregationData(inventorySummaryDto.InventorySourceId, inventorySummaryDto.Quarter.Quarter, inventorySummaryDto.Quarter.Year, context);
-
-                    context.inventory_summary.Add(_MapInventorySummaryData(inventorySummaryDto));
-                    context.inventory_summary_quarters.Add(new inventory_summary_quarters
-                    {
-                        inventory_source_id = inventorySummaryDto.InventorySourceId,
-                        quarter_number = inventorySummaryDto.Quarter.Quarter,
-                        quarter_year = inventorySummaryDto.Quarter.Year,
-                        total_markets = inventorySummaryDto.TotalMarkets,
-                        total_programs = inventorySummaryDto.TotalPrograms,
-                        total_stations = inventorySummaryDto.TotalStations,
-                        total_projected_impressions = inventorySummaryDto.HouseholdImpressions,
-                        share_book_id = inventorySummaryDto.ShareBook != null ? inventorySummaryDto.ShareBook.Id : default(int?),
-                        hut_book_id = inventorySummaryDto.HutBook != null ? inventorySummaryDto.HutBook.Id : default(int?),
-                        total_daypart_codes = 1, //syndication has only 1 daypartcode: "SYN"                        
-                    });
-                    context.inventory_summary_gaps.AddRange(_MapInventorySummaryGapsData(inventorySummaryDto));
-                    context.SaveChanges();
                 });
         }
 
@@ -322,7 +200,7 @@ namespace Services.Broadcast.Repositories
                             select new
                             {
                                 ManifestId = manifest.id,
-                                DaypartCode = manifestDaypartCode.code,
+                                DaypartCode = manifestDaypartCode.id,
                                 FileId = manifest.file_id
                             })
                             .GroupBy(x => x.ManifestId)
@@ -330,45 +208,9 @@ namespace Services.Broadcast.Repositories
                             {
                                 ManifestId = x.Key,
                                 FileId = x.FirstOrDefault().FileId,
-                                DaypartCodes = x.Select(d => d.DaypartCode).Distinct().ToList()
+                                DaypartCodeIds = x.Select(d => d.DaypartCode).Distinct().ToList()
                             })
                             .ToList();
-                });
-        }
-
-        /// <summary>
-        /// Saves the diginet summary data
-        /// </summary>
-        /// <param name="inventorySummaryDto">DiginetInventorySummaryDto object to be saved</param>
-        public void SaveInventorySummaryForDiginetSources(DiginetInventorySummaryDto inventorySummaryDto)
-        {
-            _InReadUncommitedTransaction(
-                context =>
-                {
-                    _RemoveExistingAggregationData(inventorySummaryDto.InventorySourceId, inventorySummaryDto.Quarter.Quarter, inventorySummaryDto.Quarter.Year, context);
-
-                    context.inventory_summary.Add(_MapInventorySummaryData(inventorySummaryDto));
-                    context.inventory_summary_quarters.Add(new inventory_summary_quarters
-                    {
-                        inventory_source_id = inventorySummaryDto.InventorySourceId,
-                        quarter_number = inventorySummaryDto.Quarter.Quarter,
-                        quarter_year = inventorySummaryDto.Quarter.Year,
-                        total_daypart_codes = inventorySummaryDto.TotalDaypartCodes,
-                        total_markets = inventorySummaryDto.TotalMarkets,
-                        total_stations = inventorySummaryDto.TotalStations,
-                        total_projected_impressions = inventorySummaryDto.HouseholdImpressions,
-                        share_book_id = inventorySummaryDto.ShareBook != null ? inventorySummaryDto.ShareBook.Id : default(int?),
-                        hut_book_id = inventorySummaryDto.HutBook != null ? inventorySummaryDto.HutBook.Id : default(int?),
-                        cpm = inventorySummaryDto.CPM,
-                        inventory_summary_quarter_details = inventorySummaryDto.Details.Select(x => new inventory_summary_quarter_details
-                        {
-                            daypart = x.Daypart,
-                            cpm = x.CPM,
-                            total_projected_impressions = x.HouseholdImpressions
-                        }).ToList()
-                    });
-                    context.inventory_summary_gaps.AddRange(_MapInventorySummaryGapsData(inventorySummaryDto));
-                    context.SaveChanges();
                 });
         }
 
@@ -401,16 +243,16 @@ namespace Services.Broadcast.Repositories
                 });
         }
 
-        private static inventory_summary _MapInventorySummaryData<T>(T inventorySummaryDto) where T : InventorySummaryDto
+        private static inventory_summary _MapInventorySummaryData(InventorySummaryAggregation inventorySummaryAggregation)
         {
             return new inventory_summary
             {
-                first_quarter_number = inventorySummaryDto.RatesAvailableFromQuarter.Quarter,
-                first_quarter_year = inventorySummaryDto.RatesAvailableFromQuarter.Year,
-                inventory_source_id = inventorySummaryDto.InventorySourceId,
-                last_quarter_number = inventorySummaryDto.RatesAvailableToQuarter.Quarter,
-                last_quarter_year = inventorySummaryDto.RatesAvailableToQuarter.Year,
-                last_update_date = inventorySummaryDto.LastUpdatedDate,
+                first_quarter_number = inventorySummaryAggregation.RatesAvailableFromQuarter.Quarter,
+                first_quarter_year = inventorySummaryAggregation.RatesAvailableFromQuarter.Year,
+                inventory_source_id = inventorySummaryAggregation.InventorySourceId,
+                last_quarter_number = inventorySummaryAggregation.RatesAvailableToQuarter.Quarter,
+                last_quarter_year = inventorySummaryAggregation.RatesAvailableToQuarter.Year,
+                last_update_date = inventorySummaryAggregation.LastUpdatedDate,
             };
         }
 
@@ -424,9 +266,9 @@ namespace Services.Broadcast.Repositories
                         && x.quarter_year == year).ToList());
         }
 
-        private List<inventory_summary_gaps> _MapInventorySummaryGapsData(InventorySummaryDto inventorySummaryDto)
+        private List<inventory_summary_gaps> _MapInventorySummaryGapsData(InventorySummaryAggregation inventorySummaryAggregation)
         {
-            return inventorySummaryDto.InventoryGaps.Select(x => new inventory_summary_gaps
+            return inventorySummaryAggregation.InventoryGaps.Select(x => new inventory_summary_gaps
             {
                 all_quarter_missing = x.AllQuarterMissing,
                 quarter_number = x.Quarter.Quarter,
@@ -501,10 +343,11 @@ namespace Services.Broadcast.Repositories
                                   where file.inventory_source_id == inventorySource.Id
                                   && (job.status == (int)BackgroundJobProcessingStatus.Queued || job.status == (int)BackgroundJobProcessingStatus.Processing)
                                   select job).Any(),
-                    Details = quarterData.inventory_summary_quarter_details.Select((Func<inventory_summary_quarter_details, InventorySummaryAggregation.Detail>)(x => new InventorySummaryAggregation.Detail
+                    Details = quarterData.inventory_summary_quarter_details.Select(x => new InventorySummaryAggregation.Detail
                     {
                         CPM = x.cpm,
-                        Daypart = x.daypart,
+                        DaypartCodeId = x.daypart_code_id,
+                        DaypartCode = x.daypart_codes?.code,
                         TotalCoverage = x.total_coverage,
                         TotalMarkets = x.total_markets,
                         TotalProjectedHouseholdImpressions = x.total_projected_impressions,
@@ -512,7 +355,7 @@ namespace Services.Broadcast.Repositories
                         MaxSpotsPerWeek = x.max_spots_per_week,
                         MinSpotsPerWeek = x.min_spots_per_week,
                         TotalPrograms = x.total_programs
-                    })).ToList()
+                    }).OrderBy(x=>x.DaypartCodeId).ToList()
                 };
                 return summaryAggregationData;
             });

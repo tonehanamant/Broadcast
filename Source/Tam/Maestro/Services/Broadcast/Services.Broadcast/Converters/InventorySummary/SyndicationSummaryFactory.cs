@@ -27,24 +27,25 @@ namespace Services.Broadcast.Converters.InventorySummary
         {
         }
 
-        public override InventorySummaryDto CreateInventorySummary(InventorySource inventorySource,
+        public override InventorySummaryAggregation CreateInventorySummary(InventorySource inventorySource,
                                                                    int householdAudienceId,
                                                                    QuarterDetailDto quarterDetail,
-                                                                   List<InventorySummaryManifestDto> manifests)
+                                                                   List<InventorySummaryManifestDto> manifests,
+                                                                   List<DaypartCodeDto> daypartCodes)
         {
             var allInventorySourceManifestWeeks = InventoryRepository.GetStationInventoryManifestWeeksForInventorySource(inventorySource.Id);
             var quartersForInventoryAvailable = GetQuartersForInventoryAvailable(allInventorySourceManifestWeeks);
             var inventorySummaryManifestFiles = GetInventorySummaryManifestFiles(manifests);
             var inventoryGaps = InventoryGapCalculationEngine.GetInventoryGaps(allInventorySourceManifestWeeks, quartersForInventoryAvailable, quarterDetail);
 
-            return new SyndicationInventorySummaryDto
+            return new InventorySummaryAggregation
             {
                 InventorySourceId = inventorySource.Id,
-                Quarter = quarterDetail,
+                Quarter = GetInventorySummaryQuarter(quarterDetail),
                 LastUpdatedDate = GetLastJobCompletedDate(inventorySummaryManifestFiles),
                 TotalPrograms = GetTotalPrograms(manifests),
-                RatesAvailableFromQuarter = quartersForInventoryAvailable.Item1,
-                RatesAvailableToQuarter = quartersForInventoryAvailable.Item2,
+                RatesAvailableFromQuarter = GetInventorySummaryQuarter(quartersForInventoryAvailable.Item1),
+                RatesAvailableToQuarter = GetInventorySummaryQuarter(quartersForInventoryAvailable.Item2),
                 InventoryGaps = inventoryGaps,
                 Details = null //Syndication does not have details
             };

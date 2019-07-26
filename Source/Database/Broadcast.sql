@@ -315,6 +315,44 @@ BEGIN
 END
 /*************************************** END PRI-10832 *****************************************************/
 
+/*************************************** START PRI-10832 Part 2 *****************************************************/
+IF NOT EXISTS(SELECT 1 from sys.columns where name = 'daypart_code_id' AND object_id = OBJECT_id('inventory_summary_quarter_details'))
+BEGIN
+	DECLARE @Sql VARCHAR(1024)
+
+	--add the daypart_code_id column
+	ALTER TABLE [inventory_summary_quarter_details] ADD [daypart_code_id] INT NULL
+
+	--assign value to daypart_code_id based on daypart column
+	SET @Sql = 'UPDATE t1
+				SET t1.daypart_code_id = t2.id
+				FROM [inventory_summary_quarter_details] AS t1
+				INNER JOIN [daypart_codes] AS t2 on T2.code = t1.daypart'
+	EXEC (@Sql)
+
+	--remove the nullable property from daypart_code_id
+	EXEC('ALTER TABLE inventory_summary_quarter_details ALTER COLUMN [daypart_code_id] INT NOT NULL')
+	
+	--add FK pointing to daypart_codes
+	ALTER TABLE [dbo].[inventory_summary_quarter_details] WITH CHECK ADD CONSTRAINT [FK_inventory_summary_quarter_details_daypart_codes] FOREIGN KEY([daypart_code_id])
+	REFERENCES [dbo].[daypart_codes] ([id])
+	ALTER TABLE [dbo].[inventory_summary_quarter_details] CHECK CONSTRAINT [FK_inventory_summary_quarter_details_daypart_codes]
+	
+	--add index on the FK
+	SET @Sql =  'CREATE NONCLUSTERED INDEX [IX_inventory_summary_quarter_details_daypart_code_id]  ON [dbo].[inventory_summary_quarter_details] ([daypart_code_id] ASC)
+	INCLUDE ([id]) 
+	WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]'	
+	EXEC (@Sql)	
+END
+
+IF EXISTS(SELECT 1 from sys.columns where name = 'daypart' AND object_id = OBJECT_id('inventory_summary_quarter_details'))
+BEGIN	
+	--drop the column not used
+	ALTER TABLE [inventory_summary_quarter_details] DROP COLUMN [daypart]
+END
+/*************************************** END PRI-10832 *****************************************************/
+IF EXISTS()
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version
