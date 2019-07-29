@@ -166,7 +166,7 @@ namespace Services.Broadcast.ApplicationServices
         /// <returns></returns>
         protected virtual string GetDropFolderPath()
         {
-            var result = BroadcastServiceSystemParameter.InventoryUploadErrorsFolder;
+            var result = BroadcastServiceSystemParameter.ScxGenerationFolder;
             return result;
         }
 
@@ -186,8 +186,6 @@ namespace Services.Broadcast.ApplicationServices
             var dropFolderPath = GetDropFolderPath();
             foreach (var scxFile in scxFiles)
             {
-                // TODO: Change to actual parameter when Cable approves the PR.
-                // ScxGenerationFolder
                 var path = Path.Combine(
                     dropFolderPath, 
                     scxFile.FileName);
