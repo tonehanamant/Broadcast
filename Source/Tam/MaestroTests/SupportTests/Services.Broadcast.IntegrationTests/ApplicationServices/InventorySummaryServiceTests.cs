@@ -443,6 +443,39 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void ProprietaryOAndO_CanAggregateData_HutIsNull()
+        {
+
+            string file = @"ProprietaryDataFiles\O&O ABC O&O 3Q2021.xlsx";
+
+            using (var trx = new TransactionScopeWrapper())
+            {
+                var request = new InventoryFileSaveRequest
+                {
+                    StreamData = new FileStream($@".\Files\{file}", FileMode.Open, FileAccess.Read),
+                    FileName = file
+                };
+
+                _ProprietaryService.SaveProprietaryInventoryFile(request, "IntegrationTestUser", new DateTime(2019, 07, 20));
+
+                //process the imported data
+                var job = _InventoryFileRatingsJobsRepository.GetLatestJob();
+                _InventoryRatingsProcessingService.ProcessInventoryRatingsJob(job.id.Value);
+                
+                //aggregate the data
+                _InventorySummaryService.AggregateInventorySummaryData(new List<int> { 10 });
+
+                var inventoryCards = _InventorySummaryService.GetInventorySummaries(new InventorySummaryFilterDto
+                {
+                    InventorySourceId = 10,
+                }, new DateTime(2019, 07, 01));
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(inventoryCards));
+            }
+        }
+
+        [Test]
         [Ignore("This test is used to load and aggregate all the data in the db and saved it to inventory_summary tables")]
         public void LoadAggregationDataIntoDb()
         {
@@ -474,12 +507,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     25       ,//  Me TV
                 };
 
-            List<string> files = new List<string> {
-                    //@"ProprietaryDataFiles\Diginet_WithDaypartCodes_WithoutFullHours.xlsx",
-                    //@"ProprietaryDataFiles\Barter_ValidFormat_SingleBook_ShortDateRange.xlsx",
-                    //@"ImportingRateData\Open Market provided and projected imps.xml",
-                    //@"ProprietaryDataFiles\Diginet_WithDaypartCodes.xlsx"
-                };
+            List<string> files = new List<string>
+            {
+                //@"ProprietaryDataFiles\Diginet_WithDaypartCodes_WithoutFullHours.xlsx",
+                //@"ProprietaryDataFiles\Barter_ValidFormat_SingleBook_ShortDateRange.xlsx",
+                //@"ImportingRateData\Open Market provided and projected imps.xml",
+                //@"ProprietaryDataFiles\Diginet_WithDaypartCodes.xlsx"
+            };
 
             using (var trx = new TransactionScopeWrapper())
             {
@@ -513,7 +547,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 _InventorySummaryService.AggregateInventorySummaryData(inventorySources);
 
                 //uncomment this to save the data
-                trx.Complete();
+                //trx.Complete();
             }
         }
     }

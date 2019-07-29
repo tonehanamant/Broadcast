@@ -64,8 +64,8 @@ namespace Services.Broadcast.Converters.InventorySummary
                 RatesAvailableToQuarter = GetInventorySummaryQuarter(quartersForInventoryAvailable.Item2),
                 InventoryGaps = inventoryGaps,
                 Details = _GetDetails(inventorySummaryManifests, manifests, householdAudienceId),
-                ShareBookId = shareBook.Id,
-                HutBookId = hutBook.Id
+                ShareBookId = shareBook?.Id,
+                HutBookId = hutBook?.Id
             };
 
             var detailsWithHHImpressions = result.Details.Where(x => x.TotalProjectedHouseholdImpressions.HasValue);

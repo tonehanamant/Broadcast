@@ -538,6 +538,9 @@
     <None Include="Files\ProprietaryDataFiles\Barter_WrongCommentsColumn.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Files\ProprietaryDataFiles\O&amp;O ABC O&amp;O 3Q2021.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Files\ProprietaryDataFiles\OAndO_InvalidFile5.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
