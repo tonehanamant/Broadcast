@@ -9,7 +9,7 @@ using Tam.Maestro.Web.Common;
 
 namespace BroadcastComposerWeb.Controllers
 {
-    [RoutePrefix("api/Campaigns")]
+    [RoutePrefix("api/v1/Campaigns")]
     public class CampaignApiController : BroadcastControllerBase
     {
         private readonly BroadcastApplicationServiceFactory _ApplicationServiceFactory;
@@ -28,9 +28,9 @@ namespace BroadcastComposerWeb.Controllers
         [Route("")]
         public BaseResponse<List<CampaignDto>> GetAllCampaigns()
         {
-            return
-                _ConvertToBaseResponse(
-                    () => _ApplicationServiceFactory.GetApplicationService<ICampaignService>().GetAllCampaigns());
+            var items = _ApplicationServiceFactory.GetApplicationService<ICampaignService>().GetAllCampaigns();
+            var response = _ConvertToBaseResponse(() => items);
+            return response;
         }
 
         /// <summary>
@@ -40,11 +40,41 @@ namespace BroadcastComposerWeb.Controllers
         /// <returns>The created campaign object</returns>
         [HttpPost]
         [Route("")]
-        public BaseResponse<CampaignDto> CreateCampaign(CampaignDto campaignDto)
+        public BaseResponse CreateCampaign(CampaignDto campaign)
         {
-            return
-                _ConvertToBaseResponse(
-                    () => _ApplicationServiceFactory.GetApplicationService<ICampaignService>().CreateCampaign(campaignDto, Identity.Name, DateTime.Now));
+            _ApplicationServiceFactory.GetApplicationService<ICampaignService>()
+                .CreateCampaign(campaign, Identity.Name, DateTime.Now);
+            var response = new BaseResponse
+            {
+                Success = true
+            };
+            return response;
+        }
+
+        /// <summary>
+        /// Gets the advertisers.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("GetAdvertisers")]
+        public BaseResponse<List<AdvertiserDto>> GetAdvertisers()
+        {
+            List<AdvertiserDto> items = _ApplicationServiceFactory.GetApplicationService<ICampaignService>().GetAdvertisers();
+            var response = _ConvertToBaseResponse(() => items);
+            return response;
+        }
+
+        /// <summary>
+        /// Gets the agencies.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("GetAgencies")]
+        public BaseResponse<List<AgencyDto>> GetAgencies()
+        {
+            List<AgencyDto> items = _ApplicationServiceFactory.GetApplicationService<ICampaignService>().GetAgencies();
+            var response = _ConvertToBaseResponse(() => items);
+            return response;
         }
     }
 }

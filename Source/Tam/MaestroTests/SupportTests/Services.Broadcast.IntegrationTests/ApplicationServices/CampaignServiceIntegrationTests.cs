@@ -1,9 +1,9 @@
 ﻿using ApprovalTests;
 using ApprovalTests.Reporters;
 using IntegrationTests.Common;
-using Newtonsoft.Json;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
+using Services.Broadcast.ApplicationServices.Campaigns;
 using Services.Broadcast.Entities;
 using System;
 using Tam.Maestro.Common.DataLayer;
@@ -34,11 +34,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var campaign = _GetValidCampaign();            
+                var campaign = _GetValidCampaign();
 
-                var createdCampaign = _CampaignService.CreateCampaign(campaign, IntegrationTestUser, CreatedDate);
-
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(createdCampaign, _GetJsonSettings()));
+                _CampaignService.CreateCampaign(campaign, IntegrationTestUser, CreatedDate);
             }
         }
 
@@ -53,32 +51,14 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 // Invalid advertiser id.
                 campaign.AdvertiserId = 0;
 
-                var exception = Assert.Throws<Exception>(() => _CampaignService.CreateCampaign(campaign, IntegrationTestUser, CreatedDate));
+                var exception = Assert.Throws<InvalidOperationException>(() => _CampaignService.CreateCampaign(campaign, IntegrationTestUser, CreatedDate));
 
-                Assert.That(exception.Message, Is.EqualTo(CampaignService.InvalidAdvertiserErrorMessage));
-            }
-        }
-
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
-        public void CreateCampaignInvalidStartAndEndDateTest()
-        {
-            using (new TransactionScopeWrapper())
-            {
-                var campaign = _GetValidCampaign();
-
-                // End date before start date.
-                campaign.EndDate = new DateTime(2019, 5, 13);
-
-                var exception = Assert.Throws<Exception>(() => _CampaignService.CreateCampaign(campaign, IntegrationTestUser, CreatedDate));
-
-                Assert.That(exception.Message, Is.EqualTo(CampaignService.InvalidDatesErrorMessage));
+                Assert.That(exception.Message, Is.EqualTo(CampaignValidator.InvalidAdvertiserErrorMessage));
             }
         }
 
         [TestCase(null)]
         [TestCase("")]
-        [TestCase(" ")]
         [TestCase("      ")]
         [TestCase("\t")]
         [UseReporter(typeof(DiffReporter))]
@@ -90,9 +70,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 campaign.Name = campaignName;
 
-                var exception = Assert.Throws<Exception>(() => _CampaignService.CreateCampaign(campaign, IntegrationTestUser, CreatedDate));
+                var exception = Assert.Throws<InvalidOperationException>(() => _CampaignService.CreateCampaign(campaign, IntegrationTestUser, CreatedDate));
 
-                Assert.That(exception.Message, Is.EqualTo(CampaignService.InvalidCampaignNameErrorMessage));
+                Assert.That(exception.Message, Is.EqualTo(CampaignValidator.InvalidCampaignNameErrorMessage));
             }
         }
 
@@ -101,24 +81,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             return new CampaignDto
             {
                 Name = "Test Campaign",
-                AdvertiserId = 37674,
+                AdvertiserId = 1,
                 AgencyId = 1,
-                StartDate = new DateTime(2019, 5, 14),
-                EndDate = new DateTime(2019, 5, 18),
-                Budget = 543.12m,
-            };
-        }
-
-        private JsonSerializerSettings _GetJsonSettings()
-        {
-            var jsonResolver = new IgnorableSerializerContractResolver();
-
-            jsonResolver.Ignore(typeof(CampaignDto), "Id");
-
-            return new JsonSerializerSettings
-            {
-                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                ContractResolver = jsonResolver
+                Notes = "Hello. I'm a campaign.  Well, part of a test really, so you could say I am a 'test campaign' and therefore don't exist.  How dreary..."
             };
         }
     }

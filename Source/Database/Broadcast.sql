@@ -315,6 +315,46 @@ BEGIN
 END
 /*************************************** END PRI-10832 *****************************************************/
 
+/*************************************** START PRI-7402 ***************************************************/
+
+IF EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'campaigns' AND COLUMN_NAME = 'start_date')
+BEGIN
+	ALTER TABLE Campaigns
+		DROP COLUMN [start_date]
+END
+
+IF EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'campaigns' AND COLUMN_NAME = 'end_date')
+BEGIN
+	ALTER TABLE Campaigns
+		DROP COLUMN [end_date]
+END
+
+IF EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'campaigns' AND COLUMN_NAME = 'budget')
+BEGIN
+	ALTER TABLE Campaigns
+		DROP COLUMN budget
+END
+
+IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'campaigns' AND COLUMN_NAME = 'notes')
+BEGIN
+	ALTER TABLE Campaigns
+		ADD notes VARCHAR(1024) NULL
+END
+
+IF (1 = (SELECT is_nullable FROM SYS.COLUMNS WHERE OBJECT_ID = OBJECT_ID('campaigns') AND [Name] = 'modified_date'))
+BEGIN
+	ALTER TABLE campaigns
+		ALTER COLUMN modified_date DATETIME NOT NULL
+END
+
+IF (1 = (SELECT is_nullable FROM SYS.COLUMNS WHERE OBJECT_ID = OBJECT_ID('campaigns') AND [Name] = 'modified_by'))
+BEGIN
+	ALTER TABLE campaigns
+		ALTER COLUMN modified_by varchar(63) NOT NULL
+END
+
+/*************************************** END PRI-7402 *****************************************************/
+
 /*************************************** START PRI-10832 Part 2 *****************************************************/
 IF NOT EXISTS(SELECT 1 from sys.columns where name = 'daypart_code_id' AND object_id = OBJECT_id('inventory_summary_quarter_details'))
 BEGIN

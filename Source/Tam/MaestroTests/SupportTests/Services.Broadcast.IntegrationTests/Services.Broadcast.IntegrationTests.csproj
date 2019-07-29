@@ -304,7 +304,11 @@
     <Compile Include="Stubbs\StubbedSMSClient.cs" />
     <Compile Include="ApplicationServices\EmailerServiceTests.cs" />
     <Compile Include="ApplicationServices\ProgramScrubbingEngineTests.cs" />
+    <Compile Include="UnitTests\ApplicationServices\Campaigns\CampaignServiceDataUnitTests.cs" />
+    <Compile Include="UnitTests\ApplicationServices\Campaigns\CampaignServiceUnitTestClass.cs" />
+    <Compile Include="UnitTests\ApplicationServices\Campaigns\CampaignValidatorUnitTests.cs" />
     <Compile Include="UnitTests\BaseMemoryCacheTests.cs" />
+    <Compile Include="UnitTests\CampaignServiceUnitTests.cs" />
     <Compile Include="UnitTests\EnumHelperUnitTests.cs" />
     <Compile Include="UnitTests\FtpServiceTester.cs" />
     <Compile Include="UnitTests\Post\BvsPostFileParserTests.cs" />

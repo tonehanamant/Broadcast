@@ -233,9 +233,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Aggregates\SchedulesAggregate.cs" />
+    <Compile Include="ApplicationServices\Campaigns\CampaignServiceData.cs" />
+    <Compile Include="ApplicationServices\Campaigns\CampaignValidator.cs" />
     <Compile Include="ApplicationServices\DaypartCodeService.cs" />
     <Compile Include="ApplicationServices\Scx\ScxFileGenerationDetailTransformer.cs" />
     <Compile Include="ApplicationServices\Scx\ScxFileGenerationHistorian.cs" />
+    <Compile Include="Entities\AdvertiserDto.cs" />
+    <Compile Include="Entities\AgencyDto.cs" />
     <Compile Include="Clients\ConfigurationClientSwitch.cs" />
     <Compile Include="Entities\Enums\BackgroundJobProcessingStatus.cs" />
     <Compile Include="Entities\InventorySummary\InventorySummaryAggregation.cs" />

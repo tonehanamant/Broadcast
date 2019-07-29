@@ -1,0 +1,146 @@
+﻿using Services.Broadcast.Entities;
+using Services.Broadcast.Repositories;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Tam.Maestro.Data.Entities.DataTransferObjects;
+using Tam.Maestro.Services.Clients;
+
+namespace Services.Broadcast.ApplicationServices.Campaigns
+{
+    /// <summary>
+    /// Data operations in the Campaign domain.
+    /// </summary>
+    public interface ICampaignServiceData
+    {
+        /// <summary>
+        /// Gets the advertisers.
+        /// </summary>
+        /// <returns></returns>
+        List<AdvertiserDto> GetAdvertisers();
+
+        /// <summary>
+        /// Gets the agencies.
+        /// </summary>
+        /// <returns></returns>
+        List<AgencyDto> GetAgencies();
+
+        /// <summary>
+        /// Gets all campaigns.
+        /// </summary>
+        /// <returns></returns>
+        List<CampaignDto> GetAllCampaigns();
+
+        /// <summary>
+        /// Saves the campaign.
+        /// </summary>
+        /// <param name="campaign">The campaign.</param>
+        /// <param name="createdBy">The created by.</param>
+        /// <param name="createdDate">The created date.</param>
+        void CreateCampaign(CampaignDto campaign, string createdBy, DateTime createdDate);
+    }
+
+    /// <summary>
+    /// Data operations in the Campaign domain.
+    /// </summary>
+    /// <seealso cref="ICampaignServiceData" />
+    public class CampaignServiceData : ICampaignServiceData
+    {
+        #region Fields
+
+        private ISMSClient _SmsClient;
+        private ICampaignRepository _CampaignRepository;
+
+        #endregion // #region Fields
+
+        #region Constructor
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CampaignServiceData"/> class.
+        /// </summary>
+        /// <param name="campaignRepository">The campaign repository.</param>
+        /// <param name="smsClient">The SMS client.</param>
+        public CampaignServiceData(ICampaignRepository campaignRepository, ISMSClient smsClient)
+        {
+            _CampaignRepository = campaignRepository;
+            _SmsClient = smsClient;
+        }
+
+        #endregion // #region Constructor
+
+        #region Operations
+
+        /// <inheritdoc />
+        public List<AdvertiserDto> GetAdvertisers()
+        {
+            // TODO : Sms Api Call tbd
+            /* PRI 11436 : Update SMS contract to enable Broadcast
+             * GetAllAdvertisers(string filter) <--- for type-ahead, if null/empty, return all
+                returns List<{id, agencyId, name}>
+             */
+            var items = new List<AdvertiserDto>
+            {
+                new AdvertiserDto{Id = 1, Name = "Advertiser1"},
+                new AdvertiserDto{Id = 2, Name = "Advertiser2"},
+                new AdvertiserDto{Id = 3, Name = "Advertiser3"}
+            };
+            return items;
+        }
+
+        /// <inheritdoc />
+        public List<AgencyDto> GetAgencies()
+        {
+            // TODO : Sms Api Call tbd
+            /* PRI 11436 : Update SMS contract to enable Broadcast
+             * GetAllAgencies(string filter) <--- for type-ahead, if null/empty, return all
+                returns List<{id, name}>             
+             */
+            var items = new List<AgencyDto>
+            {
+                new AgencyDto{ Id = 1, Name = "Agency1"},
+                new AgencyDto{ Id = 2, Name = "Agency2"},
+                new AgencyDto{ Id = 3, Name = "Agency3"}
+            };
+            return items;
+        }
+
+        /// <inheritdoc />
+        public List<CampaignDto> GetAllCampaigns()
+        {
+            var repo = GetCampaignRepository();
+            List<CampaignDto> campaigns = repo.GetAllCampaigns();
+            return campaigns;
+        }
+
+        /// <inheritdoc />
+        public void CreateCampaign(CampaignDto campaign, string createdBy, DateTime createdDate)
+        {
+            var repo = GetCampaignRepository();
+            repo.CreateCampaign(campaign, createdBy, createdDate);
+        }
+
+        #endregion // #region Operations
+
+        #region Helpers
+
+        /// <summary>
+        /// Gets the SMS client.
+        /// </summary>
+        /// <returns></returns>
+        protected ISMSClient GetSmsClient()
+        {
+            return _SmsClient;
+        }
+
+        /// <summary>
+        /// Gets the campaign repository.
+        /// </summary>
+        /// <returns></returns>
+        protected ICampaignRepository GetCampaignRepository()
+        {
+            return _CampaignRepository;
+        }
+
+        #endregion // #region Helpers
+    }
+}

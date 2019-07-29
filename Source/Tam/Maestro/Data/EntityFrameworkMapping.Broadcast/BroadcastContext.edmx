@@ -243,13 +243,11 @@
           <Property Name="name" Type="varchar" MaxLength="127" Nullable="false" />
           <Property Name="advertiser_id" Type="int" Nullable="false" />
           <Property Name="agency_id" Type="int" Nullable="false" />
-          <Property Name="start_date" Type="datetime" Nullable="false" />
-          <Property Name="end_date" Type="datetime" Nullable="false" />
-          <Property Name="budget" Type="money" />
           <Property Name="created_date" Type="datetime" Nullable="false" />
           <Property Name="created_by" Type="varchar" MaxLength="63" Nullable="false" />
-          <Property Name="modified_date" Type="datetime" />
-          <Property Name="modified_by" Type="varchar" MaxLength="63" />
+          <Property Name="modified_date" Type="datetime" Nullable="false" />
+          <Property Name="modified_by" Type="varchar" MaxLength="63" Nullable="false" />
+          <Property Name="notes" Type="varchar" MaxLength="1024" />
         </EntityType>
         <EntityType Name="daypart_codes">
           <Key>
@@ -9164,14 +9162,12 @@ warning 6002: The table/view 'broadcast_integration.dbo.vw_ccc_daypart' does not
           <Property Name="name" Type="String" Nullable="false" MaxLength="127" FixedLength="false" Unicode="false" />
           <Property Name="advertiser_id" Type="Int32" Nullable="false" />
           <Property Name="agency_id" Type="Int32" Nullable="false" />
-          <Property Name="start_date" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="end_date" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="budget" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="created_by" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
-          <Property Name="modified_date" Type="DateTime" Precision="3" />
-          <Property Name="modified_by" Type="String" MaxLength="63" FixedLength="false" Unicode="false" />
+          <Property Name="modified_date" Type="DateTime" Precision="3" Nullable="false" />
+          <Property Name="modified_by" Type="String" MaxLength="63" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="proposals" Relationship="BroadcastModel.FK_proposals_campaigns" FromRole="campaign" ToRole="proposal" />
+          <Property Name="notes" Type="String" MaxLength="1024" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="station_inventory_manifest_weeks_history">
           <Key>
@@ -11040,13 +11036,11 @@ warning 6002: The table/view 'broadcast_integration.dbo.vw_ccc_daypart' does not
           <EntitySetMapping Name="campaigns">
             <EntityTypeMapping TypeName="BroadcastModel.campaign">
               <MappingFragment StoreEntitySet="campaigns">
+                <ScalarProperty Name="notes" ColumnName="notes" />
                 <ScalarProperty Name="modified_by" ColumnName="modified_by" />
                 <ScalarProperty Name="modified_date" ColumnName="modified_date" />
                 <ScalarProperty Name="created_by" ColumnName="created_by" />
                 <ScalarProperty Name="created_date" ColumnName="created_date" />
-                <ScalarProperty Name="budget" ColumnName="budget" />
-                <ScalarProperty Name="end_date" ColumnName="end_date" />
-                <ScalarProperty Name="start_date" ColumnName="start_date" />
                 <ScalarProperty Name="agency_id" ColumnName="agency_id" />
                 <ScalarProperty Name="advertiser_id" ColumnName="advertiser_id" />
                 <ScalarProperty Name="name" ColumnName="name" />

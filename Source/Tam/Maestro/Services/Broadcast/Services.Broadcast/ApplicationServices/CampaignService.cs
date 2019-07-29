@@ -1,80 +1,138 @@
 ﻿using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
+using Services.Broadcast.ApplicationServices.Campaigns;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Runtime.CompilerServices;
 using Tam.Maestro.Services.Clients;
 
 namespace Services.Broadcast.ApplicationServices
 {
+    /// <summary>
+    /// Operations related to the Campaign domain.
+    /// </summary>
+    /// <seealso cref="Common.Services.ApplicationServices.IApplicationService" />
     public interface ICampaignService : IApplicationService
     {
+        /// <summary>
+        /// Gets all campaigns.
+        /// </summary>
+        /// <returns></returns>
         List<CampaignDto> GetAllCampaigns();
-        CampaignDto CreateCampaign(CampaignDto campaignDto, string userName, DateTime createdDate);
+
+        /// <summary>
+        /// Creates the campaign.
+        /// </summary>
+        /// <param name="campaign">The campaign.</param>
+        /// <param name="userName">Name of the user.</param>
+        /// <param name="createdDate">The created date.</param>
+        void CreateCampaign(CampaignDto campaign, string userName, DateTime createdDate);
+
+        /// <summary>
+        /// Gets the advertisers.
+        /// </summary>
+        /// <returns></returns>
+        List<AdvertiserDto> GetAdvertisers();
+
+        /// <summary>
+        /// Gets the agencies.
+        /// </summary>
+        /// <returns></returns>
+        List<AgencyDto> GetAgencies();
     }
 
+    /// <summary>
+    /// Operations related to the Campaign domain.
+    /// </summary>
+    /// <seealso cref="Services.Broadcast.ApplicationServices.ICampaignService" />
     public class CampaignService : ICampaignService
     {
-        private readonly ICampaignRepository _CampaginRepository;
-        private readonly ISMSClient _SmsClient;
+        #region Fields
 
-        public const string InvalidDatesErrorMessage = "The end date must be greater than the start date for the campaign";
-        public const string InvalidAdvertiserErrorMessage = "The advertiser id is invalid, please provide a valid and active id";
-        public const string InvalidCampaignNameErrorMessage = "The campaign name is invalid, please provide a valid name";
+        private readonly ICampaignServiceData _CampaignData;
+        private readonly ICampaignValidator _CampaignValidator;
 
+        #endregion // #region Fields
+
+        #region Constructor
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CampaignService"/> class.
+        /// </summary>
+        /// <param name="dataRepositoryFactory">The data repository factory.</param>
+        /// <param name="smsClient">The SMS client.</param>
         public CampaignService(IDataRepositoryFactory dataRepositoryFactory, ISMSClient smsClient)
         {
-            _CampaginRepository = dataRepositoryFactory.GetDataRepository<ICampaignRepository>();
-            _SmsClient = smsClient;
+            var campaignRepository = dataRepositoryFactory.GetDataRepository<ICampaignRepository>();
+            _CampaignData = new CampaignServiceData(campaignRepository, smsClient);
+            _CampaignValidator = new CampaignValidator(_CampaignData);
         }
 
+        #endregion // #region Constructor
+
+        #region Operations
+
+        /// <inheritdoc />
         public List<CampaignDto> GetAllCampaigns()
         {
-            return _CampaginRepository.GetAllCampaigns();
+            var data = GetCampaignServiceData();
+            var campaigns = data.GetAllCampaigns();
+            return campaigns;
         }
 
-        public CampaignDto CreateCampaign(CampaignDto campaignDto, string createdBy, DateTime createdDate)
+        /// <inheritdoc />
+        public List<AdvertiserDto> GetAdvertisers()
         {
-            _SetAuditFields(campaignDto, createdBy, createdDate);
-            _ValidateAdvertiser(campaignDto);
-            _ValidateDates(campaignDto);
-            _ValidateCampaignName(campaignDto);
-
-            return _CampaginRepository.CreateCampaign(campaignDto);
+            var data = GetCampaignServiceData();
+            var items = data.GetAdvertisers();
+            return items;
         }
 
-        private void _ValidateCampaignName(CampaignDto campaignDto)
+        /// <inheritdoc />
+        public List<AgencyDto> GetAgencies()
         {
-            if (string.IsNullOrWhiteSpace(campaignDto.Name))
-                throw new Exception(InvalidCampaignNameErrorMessage);
+            var data = GetCampaignServiceData();
+            var items = data.GetAgencies();
+            return items;
         }
 
-        private void _ValidateDates(CampaignDto campaignDto)
+        /// <inheritdoc />
+        public void CreateCampaign(CampaignDto campaign, string createdBy, DateTime createdDate)
         {
-            if (campaignDto.StartDate >= campaignDto.EndDate)
-                throw new Exception(InvalidDatesErrorMessage);
+            var validator = GetCampaignValidator();
+            validator.Validate(campaign);
+
+            campaign.ModifiedBy = createdBy;
+            campaign.ModifiedDate = createdDate;
+
+            var data = GetCampaignServiceData();
+            data.CreateCampaign(campaign, createdBy, createdDate);
         }
 
-        private void _ValidateAdvertiser(CampaignDto campaignDto)
+        #endregion // #region Operations
+
+        #region Helpers
+
+        /// <summary>
+        /// Gets the campaign data.
+        /// </summary>
+        /// <returns></returns>
+        protected virtual ICampaignServiceData GetCampaignServiceData()
         {
-            try
-            {
-                _SmsClient.FindAdvertiserById(campaignDto.AdvertiserId);
-            }
-            catch
-            {
-                throw new Exception(InvalidAdvertiserErrorMessage);
-            }
+            return _CampaignData;
         }
 
-        private void _SetAuditFields(CampaignDto campaignDto, string createdBy, DateTime createdDate)
+        /// <summary>
+        /// Gets the campaign validator.
+        /// </summary>
+        /// <returns></returns>
+        protected virtual ICampaignValidator GetCampaignValidator()
         {
-            campaignDto.CreatedBy = createdBy;
-            campaignDto.CreatedDate = createdDate;
-            campaignDto.ModifiedBy = null;
-            campaignDto.ModifiedDate = null;
+            return _CampaignValidator;
         }
+
+        #endregion // #region Helpers
     }
 }
