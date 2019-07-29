@@ -1,0 +1,8 @@
+﻿{
+  "AdvertiserId": 2,
+  "AgencyId": 9,
+  "ModifiedBy": "CROSSMW\\bbotelho",
+  "ModifiedDate": "2019-05-13T00:00:00",
+  "Name": "Test Campaign 2",
+  "Notes": "This is a test note for a test campaign."
+}

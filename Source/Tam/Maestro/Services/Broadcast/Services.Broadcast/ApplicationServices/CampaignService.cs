@@ -23,6 +23,13 @@ namespace Services.Broadcast.ApplicationServices
         List<CampaignDto> GetAllCampaigns();
 
         /// <summary>
+        /// Gets the campaign.
+        /// </summary>
+        /// <param name="campaignId">The campaign identifier.</param>
+        /// <returns></returns>
+        CampaignDto GetCampaignById(int campaignId);
+
+        /// <summary>
         /// Creates the campaign.
         /// </summary>
         /// <param name="campaign">The campaign.</param>
@@ -80,6 +87,14 @@ namespace Services.Broadcast.ApplicationServices
             var data = GetCampaignServiceData();
             var campaigns = data.GetAllCampaigns();
             return campaigns;
+        }
+
+        /// <inheritdoc />
+        public CampaignDto GetCampaignById(int campaignId)
+        {
+            var data = GetCampaignServiceData();
+            var campaign = data.GetCampaign(campaignId);
+            return campaign;
         }
 
         /// <inheritdoc />

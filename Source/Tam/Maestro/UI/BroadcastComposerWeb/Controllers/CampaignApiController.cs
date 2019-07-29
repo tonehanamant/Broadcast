@@ -34,10 +34,23 @@ namespace BroadcastComposerWeb.Controllers
         }
 
         /// <summary>
+        /// Gets the campaign by identifier.
+        /// </summary>
+        /// <param name="campaignId">The campaign identifier.</param>
+        /// <returns>The campaign referenced by the given id.</returns>
+        [HttpGet]
+        [Route("GetCampaignById")]
+        public BaseResponse<CampaignDto> GetCampaignById(int campaignId)
+        {
+            return
+                _ConvertToBaseResponse(
+                    () => _ApplicationServiceFactory.GetApplicationService<ICampaignService>().GetCampaignById(campaignId));
+        }
+
+        /// <summary>
         /// Endpoint for creating new campaigns
         /// </summary>
         /// <param name="campaignDto">The object with the data for the new campaign</param>
-        /// <returns>The created campaign object</returns>
         [HttpPost]
         [Route("")]
         public BaseResponse CreateCampaign(CampaignDto campaign)
@@ -54,7 +67,7 @@ namespace BroadcastComposerWeb.Controllers
         /// <summary>
         /// Gets the advertisers.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A list of advertiser objects.</returns>
         [HttpGet]
         [Route("GetAdvertisers")]
         public BaseResponse<List<AdvertiserDto>> GetAdvertisers()
@@ -67,7 +80,7 @@ namespace BroadcastComposerWeb.Controllers
         /// <summary>
         /// Gets the agencies.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A list of agency objects.</returns>
         [HttpGet]
         [Route("GetAgencies")]
         public BaseResponse<List<AgencyDto>> GetAgencies()

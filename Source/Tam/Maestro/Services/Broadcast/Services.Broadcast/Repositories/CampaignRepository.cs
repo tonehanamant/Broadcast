@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Common.Services.Extensions;
 using Common.Services.Repositories;
+using ConfigurationService.Client;
 using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using ConfigurationService.Client;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
 using Tam.Maestro.Services.Clients;
@@ -22,6 +23,13 @@ namespace Services.Broadcast.Repositories
         /// </summary>
         /// <returns></returns>
         List<CampaignDto> GetAllCampaigns();
+
+        /// <summary>
+        /// Gets the campaign.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
+        CampaignDto GetCampaign(int id);
 
         /// <summary>
         /// Creates the campaign.
@@ -50,11 +58,7 @@ namespace Services.Broadcast.Repositories
             ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient)
             : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
 
-        /// <summary>
-        /// Creates the campaign.
-        /// </summary>
-        /// <param name="campaignDto">The campaign dto.</param>
-        /// <returns></returns>
+        /// <inheritdoc />
         public void CreateCampaign(CampaignDto campaignDto, string createdBy, DateTime createdDate)
         {
             var campaign = new campaign
@@ -77,15 +81,24 @@ namespace Services.Broadcast.Repositories
                });
         }
 
-        /// <summary>
-        /// Gets all campaigns.
-        /// </summary>
-        /// <returns></returns>
+        /// <inheritdoc />
         public List<CampaignDto> GetAllCampaigns()
         {
             return _InReadUncommitedTransaction(
                 context => (from c in context.campaigns
                             select c).Select(_MapToDto).ToList());
+        }
+
+        /// <inheritdoc />
+        public CampaignDto GetCampaign(int campaignId)
+        {
+            return _InReadUncommitedTransaction(
+                context =>
+                {
+                    var found = context.campaigns.Single(c => c.id.Equals(campaignId), $"Could not find existing campaign with id '{campaignId}'");
+                    var result = _MapToDto(found);
+                    return result;
+                });
         }
 
         private CampaignDto _MapToDto(campaign c)

@@ -2,8 +2,6 @@
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.Clients;
 
 namespace Services.Broadcast.ApplicationServices.Campaigns
@@ -30,6 +28,13 @@ namespace Services.Broadcast.ApplicationServices.Campaigns
         /// </summary>
         /// <returns></returns>
         List<CampaignDto> GetAllCampaigns();
+
+        /// <summary>
+        /// Gets the campaign.
+        /// </summary>
+        /// <param name="campaignId">The campaign identifier.</param>
+        /// <returns></returns>
+        CampaignDto GetCampaign(int campaignId);
 
         /// <summary>
         /// Saves the campaign.
@@ -110,6 +115,14 @@ namespace Services.Broadcast.ApplicationServices.Campaigns
             var repo = GetCampaignRepository();
             List<CampaignDto> campaigns = repo.GetAllCampaigns();
             return campaigns;
+        }
+
+        /// <inheritdoc />
+        public CampaignDto GetCampaign(int campaignId)
+        {
+            var repo = GetCampaignRepository();
+            var campaign = repo.GetCampaign(campaignId);
+            return campaign;
         }
 
         /// <inheritdoc />

@@ -1,11 +1,13 @@
 ﻿using ApprovalTests;
 using ApprovalTests.Reporters;
 using IntegrationTests.Common;
+using Newtonsoft.Json;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.ApplicationServices.Campaigns;
 using Services.Broadcast.Entities;
 using System;
+using System.Linq;
 using Tam.Maestro.Common.DataLayer;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
@@ -25,6 +27,19 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 var campaigns = _CampaignService.GetAllCampaigns();
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(campaigns));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetCampaignById()
+        {
+            var campaignId = 2;
+            using (new TransactionScopeWrapper())
+            {
+                var foundCampaign = _CampaignService.GetCampaignById(campaignId);
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(foundCampaign, _GetJsonSettings()));
             }
         }
 
@@ -80,10 +95,23 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             return new CampaignDto
             {
-                Name = "Test Campaign",
+                Name = "Campaign1",
                 AdvertiserId = 1,
                 AgencyId = 1,
-                Notes = "Hello. I'm a campaign.  Well, part of a test really, so you could say I am a 'test campaign' and therefore don't exist.  How dreary..."
+                Notes = "Notes for CampaignOne."
+            };
+        }
+
+        private JsonSerializerSettings _GetJsonSettings()
+        {
+            var jsonResolver = new IgnorableSerializerContractResolver();
+
+            jsonResolver.Ignore(typeof(CampaignDto), "Id");
+
+            return new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                ContractResolver = jsonResolver
             };
         }
     }
