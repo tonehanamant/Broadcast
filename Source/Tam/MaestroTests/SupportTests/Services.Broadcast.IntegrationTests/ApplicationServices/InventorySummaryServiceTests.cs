@@ -462,7 +462,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 //process the imported data
                 var job = _InventoryFileRatingsJobsRepository.GetLatestJob();
                 _InventoryRatingsProcessingService.ProcessInventoryRatingsJob(job.id.Value);
-                
+
                 //aggregate the data
                 _InventorySummaryService.AggregateInventorySummaryData(new List<int> { 10 });
 
@@ -471,7 +471,15 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     InventorySourceId = 10,
                 }, new DateTime(2019, 07, 01));
 
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(inventoryCards));
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(InventorySummaryDto), "LastUpdatedDate");
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(inventoryCards, jsonSettings));
             }
         }
 

@@ -45,7 +45,6 @@
     "InventorySourceId": 10,
     "InventorySourceName": "ABC O&O",
     "IsUpdating": false,
-    "LastUpdatedDate": "2019-07-29T16:40:42.957",
     "Quarter": {
       "EndDate": "2021-12-26T23:59:59",
       "Quarter": 4,
