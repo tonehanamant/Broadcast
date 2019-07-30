@@ -65,7 +65,7 @@
         </DayTimes>
         <DaypartName>EARLY NEWS</DaypartName>
         <AvailName>CADENT NEWS AT 11:30AM</AvailName>
-        <SpotLength>00:00:10</SpotLength>
+        <SpotLength>00:00:11</SpotLength>
         <Periods>
           <DetailedPeriod endDate="2016-10-09" startDate="2016-09-26">
             <Rate>125.00</Rate>

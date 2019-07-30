@@ -297,6 +297,9 @@
         <EntityTypeShape EntityType="BroadcastModel.inventory_summary_quarter_details" Width="1.5" PointX="17.625" PointY="41" />
         <AssociationConnector Association="BroadcastModel.FK_inventory_summary_quarter_details_daypart_codes" />
         <AssociationConnector Association="BroadcastModel.FK_inventory_summary_quarter_details_inventory_summary_quarters" />
+        <EntityTypeShape EntityType="BroadcastModel.plan" Width="1.5" PointX="31.625" PointY="12.625" />
+        <AssociationConnector Association="BroadcastModel.FK_plans_campaigns" />
+        <AssociationConnector Association="BroadcastModel.FK_plans_spot_lengths" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

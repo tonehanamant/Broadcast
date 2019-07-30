@@ -480,6 +480,9 @@
     <Compile Include="nti_transmittals_file_report_ratings.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="plan.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="postlog_client_scrubs.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>

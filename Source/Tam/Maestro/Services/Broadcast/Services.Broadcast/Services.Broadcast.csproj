@@ -236,18 +236,23 @@
     <Compile Include="ApplicationServices\Campaigns\CampaignServiceData.cs" />
     <Compile Include="ApplicationServices\Campaigns\CampaignValidator.cs" />
     <Compile Include="ApplicationServices\DaypartCodeService.cs" />
+    <Compile Include="ApplicationServices\Plan\PlanService.cs" />
     <Compile Include="ApplicationServices\Scx\ScxFileGenerationDetailTransformer.cs" />
     <Compile Include="ApplicationServices\Scx\ScxFileGenerationHistorian.cs" />
     <Compile Include="Entities\AdvertiserDto.cs" />
+    <Compile Include="ApplicationServices\SpotLengthService.cs" />
     <Compile Include="Entities\AgencyDto.cs" />
     <Compile Include="Clients\ConfigurationClientSwitch.cs" />
     <Compile Include="Entities\Enums\BackgroundJobProcessingStatus.cs" />
+    <Compile Include="Entities\Enums\PlanStatusEnum.cs" />
     <Compile Include="Entities\InventorySummary\InventorySummaryAggregation.cs" />
     <Compile Include="Entities\InventorySummary\InventorySummaryQuarter.cs" />
+    <Compile Include="Entities\Plan\CreatePlanDto.cs" />
     <Compile Include="Entities\ScxGenerationJob.cs" />
     <Compile Include="Entities\Scx\ScxFileGenerationDetailDto.cs" />
     <Compile Include="Entities\Scx\ScxFileGenerationDetail.cs" />
     <Compile Include="Helpers\SystemComponentParameterHelper.cs" />
+    <Compile Include="Repositories\PlanRepository.cs" />
     <Compile Include="Repositories\ScxGenerationJobRepository.cs" />
     <Compile Include="ApplicationServices\ScxGenerationService.cs" />
     <Compile Include="BusinessEngines\InventorySummaryRatesGapEngine.cs" />
@@ -742,6 +747,7 @@
     </Compile>
     <Compile Include="TAMResource.cs" />
     <Compile Include="Validators\InventoryFileValidator.cs" />
+    <Compile Include="Validators\PlanValidator.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Schemas\SpotTVCableProposalSample.xml" />

@@ -23,6 +23,7 @@ using Services.Broadcast.Helpers;
 using Services.Broadcast.BusinessEngines.InventoryDaypartParsing;
 using Services.Broadcast.Converters.Scx;
 using Services.Broadcast.Cache;
+using Services.Broadcast.ApplicationServices.Plan;
 
 namespace Services.Broadcast.ApplicationServices
 {
@@ -176,6 +177,10 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IDaypartCodeService, DaypartCodeService>();
 
             unityContainer.RegisterType<IScxGenerationService, ScxGenerationService>();
+
+            unityContainer.RegisterType<IPlanService, PlanService>();
+            unityContainer.RegisterType<IPlanValidator, PlanValidator>();
+            unityContainer.RegisterType<ISpotLengthService, SpotLengthService>();
 
 
             //@todo This is temporary to control the daypart source for Broadcast

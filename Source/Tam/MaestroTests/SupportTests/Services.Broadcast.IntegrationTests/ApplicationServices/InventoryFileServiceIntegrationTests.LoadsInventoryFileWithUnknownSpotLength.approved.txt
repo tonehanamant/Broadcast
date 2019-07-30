@@ -1,6 +1,6 @@
 ﻿{
   "Status": 3,
   "ValidationProblems": [
-    "Station: WVTM; Program: CADENT NEWS AT 11:30AM; Problem: Unknown spot length found: 10"
+    "Station: WVTM; Program: CADENT NEWS AT 11:30AM; Problem: Unknown spot length found: 11"
   ]
 }

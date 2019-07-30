@@ -236,6 +236,7 @@
     <Folder Include="Views\DaypartCode\" />
     <Folder Include="Views\InventoryCard\" />
     <Folder Include="Views\PricingGuide\" />
+    <Folder Include="Views\SpotLength\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -250,6 +251,8 @@
     <Compile Include="Controllers\EnvironmentController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ImageApiController.cs" />
+    <Compile Include="Controllers\SpotLengthApiController.cs" />
+    <Compile Include="Controllers\PlanApiController.cs" />
     <Compile Include="Controllers\MaintenanceController.cs" />
     <Compile Include="Controllers\PostApiController.cs" />
     <Compile Include="Controllers\PostLogController.cs" />

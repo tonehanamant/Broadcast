@@ -392,6 +392,55 @@ BEGIN
 END
 /*************************************** END PRI-10832 *****************************************************/
 
+/*************************************** START PRI-7452 *****************************************************/
+IF OBJECT_ID('plans') IS NULL
+BEGIN
+	CREATE TABLE [dbo].[plans](
+		[id] [int] IDENTITY(1,1) NOT NULL,
+		[campaign_id] [int] NOT NULL,
+		[name] [NVARCHAR](265),
+		[product_id] [INT] NOT NULL,
+		[spot_length_id] [INT] NOT NULL,
+		[equivalized] [BIT] NOT NULL,
+		[status] [INT] NOT NULL,
+		[created_by] [VARCHAR](63) NOT NULL,
+		[created_date] [DATETIME] NOT NULL
+	 CONSTRAINT [PK_plans] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY]
+
+	ALTER TABLE [dbo].[plans] WITH CHECK ADD  CONSTRAINT [FK_plans_campaigns] FOREIGN KEY([campaign_id])
+	REFERENCES [dbo].[campaigns] ([id])	
+	ALTER TABLE [dbo].[plans] CHECK CONSTRAINT [FK_plans_campaigns]
+	CREATE NONCLUSTERED INDEX [IX_plans_campaign_id]  ON [dbo].[plans] ([campaign_id] ASC)
+	INCLUDE ([id]) 
+	WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+	
+	ALTER TABLE [dbo].[plans] WITH CHECK ADD  CONSTRAINT [FK_plans_spot_lengths] FOREIGN KEY([spot_length_id])
+	REFERENCES [dbo].[spot_lengths] ([id])	
+	ALTER TABLE [dbo].[plans] CHECK CONSTRAINT [FK_plans_campaigns]
+	CREATE NONCLUSTERED INDEX [IX_plans_spot_length_id]  ON [dbo].[plans] ([spot_length_id] ASC)
+	INCLUDE ([id], [campaign_id]) 
+	WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+END
+
+IF NOT EXISTS(SELECT 1 FROM spot_lengths WHERE length = 10)
+BEGIN
+	INSERT INTO spot_lengths(length, delivery_multiplier, order_by, is_default)
+	VALUES(10,0.3,8,0)
+	INSERT INTO spot_length_cost_multipliers(spot_length_id, cost_multiplier)
+	VALUES((SELECT id FROM spot_lengths WHERE length = 10), 0.3)
+END
+IF NOT EXISTS(SELECT 1 FROM spot_lengths WHERE length = 150)
+BEGIN
+	INSERT INTO spot_lengths(length, delivery_multiplier, order_by, is_default)
+	VALUES(150,5,9,0)
+	INSERT INTO spot_length_cost_multipliers(spot_length_id, cost_multiplier)
+	VALUES((SELECT id FROM spot_lengths WHERE length = 150), 5)
+END
+/*************************************** END PRI-7452 *****************************************************/
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 

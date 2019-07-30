@@ -586,6 +586,20 @@
           <Property Name="created_by" Type="varchar" MaxLength="63" Nullable="false" />
           <Property Name="status" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="plans">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="campaign_id" Type="int" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="265" />
+          <Property Name="product_id" Type="int" Nullable="false" />
+          <Property Name="spot_length_id" Type="int" Nullable="false" />
+          <Property Name="equivalized" Type="bit" Nullable="false" />
+          <Property Name="status" Type="int" Nullable="false" />
+          <Property Name="created_by" Type="varchar" MaxLength="63" Nullable="false" />
+          <Property Name="created_date" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="post_file_demos">
           <Key>
             <PropertyRef Name="post_file_id" />
@@ -1436,7 +1450,7 @@
           <Property Name="sys_end_date" Type="datetime2" Precision="7" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'broadcast_integration.dbo.station_inventory_manifest_weeks_history' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'broadcast_integration_staging.dbo.station_inventory_manifest_weeks_history' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="station_inventory_manifest_weeks_history">
           <Key>
             <PropertyRef Name="id" />
@@ -1532,7 +1546,7 @@ warning 6002: The table/view 'broadcast_integration.dbo.station_inventory_manife
           <Property Name="end_time" Type="int" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'broadcast_integration.dbo.vw_ccc_daypart' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vw_ccc_daypart">
           <Key>
             <PropertyRef Name="id" />
@@ -2147,6 +2161,30 @@ warning 6002: The table/view 'broadcast_integration.dbo.vw_ccc_daypart' does not
             </Principal>
             <Dependent Role="nti_transmittals_file_reports">
               <PropertyRef Name="nti_transmittals_file_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plans_campaigns">
+          <End Role="campaigns" Type="Self.campaigns" Multiplicity="1" />
+          <End Role="plans" Type="Self.plans" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="campaigns">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plans">
+              <PropertyRef Name="campaign_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plans_spot_lengths">
+          <End Role="spot_lengths" Type="Self.spot_lengths" Multiplicity="1" />
+          <End Role="plans" Type="Self.plans" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="spot_lengths">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plans">
+              <PropertyRef Name="spot_length_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3847,6 +3885,7 @@ warning 6002: The table/view 'broadcast_integration.dbo.vw_ccc_daypart' does not
           <EntitySet Name="nti_transmittals_file_report_ratings" EntityType="Self.nti_transmittals_file_report_ratings" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="nti_transmittals_file_reports" EntityType="Self.nti_transmittals_file_reports" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="nti_transmittals_files" EntityType="Self.nti_transmittals_files" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="plans" EntityType="Self.plans" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="post_file_demos" EntityType="Self.post_file_demos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="post_file_detail_impressions" EntityType="Self.post_file_detail_impressions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="post_file_details" EntityType="Self.post_file_details" Schema="dbo" store:Type="Tables" />
@@ -4132,6 +4171,14 @@ warning 6002: The table/view 'broadcast_integration.dbo.vw_ccc_daypart' does not
           <AssociationSet Name="FK_nti_transmittals_file_reports_nti_transmittals_files" Association="Self.FK_nti_transmittals_file_reports_nti_transmittals_files">
             <End Role="nti_transmittals_files" EntitySet="nti_transmittals_files" />
             <End Role="nti_transmittals_file_reports" EntitySet="nti_transmittals_file_reports" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plans_campaigns" Association="Self.FK_plans_campaigns">
+            <End Role="campaigns" EntitySet="campaigns" />
+            <End Role="plans" EntitySet="plans" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plans_spot_lengths" Association="Self.FK_plans_spot_lengths">
+            <End Role="spot_lengths" EntitySet="spot_lengths" />
+            <End Role="plans" EntitySet="plans" />
           </AssociationSet>
           <AssociationSet Name="FK_post_file_demos_post_files" Association="Self.FK_post_file_demos_post_files">
             <End Role="post_files" EntitySet="post_files" />
@@ -5462,6 +5509,15 @@ warning 6002: The table/view 'broadcast_integration.dbo.vw_ccc_daypart' does not
             <End Role="inventory_summary_quarters" EntitySet="inventory_summary_quarters" />
             <End Role="inventory_summary_quarter_details" EntitySet="inventory_summary_quarter_details" />
           </AssociationSet>
+          <EntitySet Name="plans" EntityType="BroadcastModel.plan" />
+          <AssociationSet Name="FK_plans_campaigns" Association="BroadcastModel.FK_plans_campaigns">
+            <End Role="campaign" EntitySet="campaigns" />
+            <End Role="plan" EntitySet="plans" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plans_spot_lengths" Association="BroadcastModel.FK_plans_spot_lengths">
+            <End Role="spot_lengths" EntitySet="spot_lengths" />
+            <End Role="plan" EntitySet="plans" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="audience_audiences">
           <Key>
@@ -6547,6 +6603,7 @@ warning 6002: The table/view 'broadcast_integration.dbo.vw_ccc_daypart' does not
           <NavigationProperty Name="proposal_version_details" Relationship="BroadcastModel.FK_proposal_version_details_spot_lengths" FromRole="spot_lengths" ToRole="proposal_version_details" />
           <NavigationProperty Name="station_inventory_spot_snapshots" Relationship="BroadcastModel.FK_station_inventory_spot_snapshots_spot_lengths" FromRole="spot_lengths" ToRole="station_inventory_spot_snapshots" />
           <NavigationProperty Name="station_inventory_manifest_rates" Relationship="BroadcastModel.FK_station_inventory_manifest_rates_spot_lengths" FromRole="spot_lengths" ToRole="station_inventory_manifest_rates" />
+          <NavigationProperty Name="plans" Relationship="BroadcastModel.FK_plans_spot_lengths" FromRole="spot_lengths" ToRole="plan" />
         </EntityType>
         <EntityType Name="station_inventory_manifest_audiences">
           <Key>
@@ -9168,6 +9225,7 @@ warning 6002: The table/view 'broadcast_integration.dbo.vw_ccc_daypart' does not
           <Property Name="modified_by" Type="String" MaxLength="63" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="proposals" Relationship="BroadcastModel.FK_proposals_campaigns" FromRole="campaign" ToRole="proposal" />
           <Property Name="notes" Type="String" MaxLength="1024" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="plans" Relationship="BroadcastModel.FK_plans_campaigns" FromRole="campaign" ToRole="plan" />
         </EntityType>
         <EntityType Name="station_inventory_manifest_weeks_history">
           <Key>
@@ -9553,6 +9611,46 @@ warning 6002: The table/view 'broadcast_integration.dbo.vw_ccc_daypart' does not
             </Principal>
             <Dependent Role="inventory_summary_quarter_details">
               <PropertyRef Name="inventory_summary_quarter_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="plan">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="campaign_id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="265" FixedLength="false" Unicode="true" />
+          <Property Name="product_id" Type="Int32" Nullable="false" />
+          <Property Name="spot_length_id" Type="Int32" Nullable="false" />
+          <Property Name="equivalized" Type="Boolean" Nullable="false" />
+          <Property Name="status" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="campaign" Relationship="BroadcastModel.FK_plans_campaigns" FromRole="plan" ToRole="campaign" />
+          <NavigationProperty Name="spot_lengths" Relationship="BroadcastModel.FK_plans_spot_lengths" FromRole="plan" ToRole="spot_lengths" />
+          <Property Name="created_by" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
+          <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <Association Name="FK_plans_campaigns">
+          <End Type="BroadcastModel.campaign" Role="campaign" Multiplicity="1" />
+          <End Type="BroadcastModel.plan" Role="plan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="campaign">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan">
+              <PropertyRef Name="campaign_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plans_spot_lengths">
+          <End Type="BroadcastModel.spot_lengths" Role="spot_lengths" Multiplicity="1" />
+          <End Type="BroadcastModel.plan" Role="plan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="spot_lengths">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan">
+              <PropertyRef Name="spot_length_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -11199,6 +11297,21 @@ warning 6002: The table/view 'broadcast_integration.dbo.vw_ccc_daypart' does not
                 <ScalarProperty Name="total_coverage" ColumnName="total_coverage" />
                 <ScalarProperty Name="total_markets" ColumnName="total_markets" />
                 <ScalarProperty Name="inventory_summary_quarter_id" ColumnName="inventory_summary_quarter_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="plans">
+            <EntityTypeMapping TypeName="BroadcastModel.plan">
+              <MappingFragment StoreEntitySet="plans">
+                <ScalarProperty Name="created_date" ColumnName="created_date" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="equivalized" ColumnName="equivalized" />
+                <ScalarProperty Name="spot_length_id" ColumnName="spot_length_id" />
+                <ScalarProperty Name="product_id" ColumnName="product_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="campaign_id" ColumnName="campaign_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

@@ -12,25 +12,19 @@ namespace EntityFrameworkMapping.Broadcast
     using System;
     using System.Collections.Generic;
     
-    public partial class campaign
+    public partial class plan
     {
-        public campaign()
-        {
-            this.proposals = new HashSet<proposal>();
-            this.plans = new HashSet<plan>();
-        }
-    
         public int id { get; set; }
+        public int campaign_id { get; set; }
         public string name { get; set; }
-        public int advertiser_id { get; set; }
-        public int agency_id { get; set; }
-        public System.DateTime created_date { get; set; }
+        public int product_id { get; set; }
+        public int spot_length_id { get; set; }
+        public bool equivalized { get; set; }
+        public int status { get; set; }
         public string created_by { get; set; }
-        public System.DateTime modified_date { get; set; }
-        public string modified_by { get; set; }
-        public string notes { get; set; }
+        public System.DateTime created_date { get; set; }
     
-        public virtual ICollection<proposal> proposals { get; set; }
-        public virtual ICollection<plan> plans { get; set; }
+        public virtual campaign campaign { get; set; }
+        public virtual spot_lengths spot_lengths { get; set; }
     }
 }

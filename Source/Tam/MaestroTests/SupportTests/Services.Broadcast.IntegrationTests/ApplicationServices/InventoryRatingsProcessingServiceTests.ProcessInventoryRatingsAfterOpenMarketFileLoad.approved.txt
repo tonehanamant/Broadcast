@@ -305,6 +305,14 @@
       {
         "SpotCost": 112.5000,
         "SpotLengthId": 8
+      },
+      {
+        "SpotCost": 22.5000,
+        "SpotLengthId": 9
+      },
+      {
+        "SpotCost": 375.0000,
+        "SpotLengthId": 10
       }
     ],
     "ManifestWeeks": [
@@ -643,6 +651,14 @@
       {
         "SpotCost": 112.5000,
         "SpotLengthId": 8
+      },
+      {
+        "SpotCost": 22.5000,
+        "SpotLengthId": 9
+      },
+      {
+        "SpotCost": 375.0000,
+        "SpotLengthId": 10
       }
     ],
     "ManifestWeeks": [
