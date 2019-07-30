@@ -237,6 +237,7 @@
     <Compile Include="ApplicationServices\Campaigns\CampaignValidator.cs" />
     <Compile Include="ApplicationServices\DaypartCodeService.cs" />
     <Compile Include="ApplicationServices\Plan\PlanService.cs" />
+    <Compile Include="ApplicationServices\EnvironmentService.cs" />
     <Compile Include="ApplicationServices\Scx\ScxFileGenerationDetailTransformer.cs" />
     <Compile Include="ApplicationServices\Scx\ScxFileGenerationHistorian.cs" />
     <Compile Include="Entities\AdvertiserDto.cs" />

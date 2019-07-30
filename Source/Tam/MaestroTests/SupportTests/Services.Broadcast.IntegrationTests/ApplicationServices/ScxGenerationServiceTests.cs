@@ -30,6 +30,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             _ScxGenerationJobRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IScxGenerationJobRepository>();
             var jsonResolver = new IgnorableSerializerContractResolver();
             jsonResolver.Ignore(typeof(ScxGenerationJob), "Id");
+            jsonResolver.Ignore(typeof(ScxFileGenerationDetail), "FullFilePath");
             _JsonSettings = new JsonSerializerSettings
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore,

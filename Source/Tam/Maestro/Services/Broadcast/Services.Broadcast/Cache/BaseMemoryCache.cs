@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Runtime.Caching;
+using System.Threading;
 
 namespace Services.Broadcast.Cache
 {
     public class BaseMemoryCache<TItem>
     {
-        private readonly MemoryCache _Cache;
+        private MemoryCache _Cache;
         private readonly ConcurrentDictionary<string, object> _KeyLocks = new ConcurrentDictionary<string, object>();
 
         public BaseMemoryCache(string cacheName = null)
@@ -58,6 +59,18 @@ namespace Services.Broadcast.Cache
         public bool Contains(string key)
         {
             return _Cache.Contains(key);
+        }
+
+        public long GetItemCount(bool reset)
+        {
+            var itemCount = _Cache.GetCount();
+            if (reset)
+            {
+                var oldCache = Interlocked.Exchange(ref _Cache, new MemoryCache(_Cache.Name));
+                oldCache.Dispose();
+            }
+            return itemCount;
+            
         }
     }
 }

@@ -2,7 +2,6 @@
   {
     "DaypartCodeId": 1,
     "DaypartCodeName": "Early Morning News",
-    "FullFilePath": "\\\\cadfs11\\Inventory Management UI\\Continuous Deployment\\LilaMax_ExpiresGroupsTest_20190210_20190217.scx",
     "GenerationRequestDateTime": "2019-04-17T12:30:23",
     "GenerationRequestedByUsername": "IntegrationTestUser",
     "ProcessingStatus": 3,

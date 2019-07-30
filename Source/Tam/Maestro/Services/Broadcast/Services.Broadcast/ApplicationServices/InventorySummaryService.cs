@@ -21,6 +21,7 @@ namespace Services.Broadcast.ApplicationServices
         InventoryQuartersDto GetInventoryQuarters(int inventorySourceId, int daypartCodeId);
         InventoryQuartersDto GetInventoryQuarters(DateTime currentDate);
         List<InventorySummaryDto> GetInventorySummaries(InventorySummaryFilterDto inventorySummaryFilterDto, DateTime currentDate);
+        List<InventorySummaryDto> GetInventorySummariesWithCache(InventorySummaryFilterDto inventorySummaryFilterDto, DateTime currentDate);
         List<DaypartCodeDto> GetDaypartCodes(int inventorySourceId);
         List<string> GetInventoryUnits(int inventorySourceId, int daypartCodeId, DateTime startDate, DateTime endDate);
         List<LookupDto> GetInventorySourceTypes();
@@ -52,13 +53,15 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekAggregateCache;
         private readonly IInventoryGapCalculationEngine _InventoryGapCalculationEngine;
         private readonly IInventoryLogoRepository _InventoryLogoRepository;
+        private readonly IInventorySummaryCache _InventorySummaryCache;
 
         public InventorySummaryService(IDataRepositoryFactory broadcastDataRepositoryFactory,
                                        IQuarterCalculationEngine quarterCalculationEngine,
                                        IBroadcastAudiencesCache audiencesCache,
                                        IMarketCoverageCache marketCoverageCache,
                                        IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
-                                       IInventoryGapCalculationEngine inventoryGapCalculationEngine)
+                                       IInventoryGapCalculationEngine inventoryGapCalculationEngine,
+                                       IInventorySummaryCache inventorySummaryCache)
         {
             _QuarterCalculationEngine = quarterCalculationEngine;
             _AudiencesCache = audiencesCache;
@@ -70,6 +73,7 @@ namespace Services.Broadcast.ApplicationServices
             _MediaMonthAndWeekAggregateCache = mediaMonthAndWeekAggregateCache;
             _InventoryGapCalculationEngine = inventoryGapCalculationEngine;
             _InventoryLogoRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryLogoRepository>();
+            _InventorySummaryCache = inventorySummaryCache;
         }
 
         public List<InventorySource> GetInventorySources()
@@ -102,6 +106,7 @@ namespace Services.Broadcast.ApplicationServices
 
         public List<InventorySummaryDto> GetInventorySummaries(InventorySummaryFilterDto inventorySummaryFilterDto, DateTime currentDate)
         {
+
             var inventorySummaryDtos = new List<InventorySummaryDto>();
 
             if (inventorySummaryFilterDto.InventorySourceId != null)
@@ -119,6 +124,13 @@ namespace Services.Broadcast.ApplicationServices
             }
 
             return inventorySummaryDtos;
+        }
+
+        public List<InventorySummaryDto> GetInventorySummariesWithCache(InventorySummaryFilterDto inventorySummaryFilterDto, DateTime currentDate)
+        {
+            List<InventorySummaryDto> GetInventorySummariesFunc () => GetInventorySummaries(inventorySummaryFilterDto, currentDate);
+            inventorySummaryFilterDto.LatestInventorySourceFileIds = _InventorySummaryRepository.GetLatestFileIdsBySource();
+            return _InventorySummaryCache.GetOrCreate(inventorySummaryFilterDto, GetInventorySummariesFunc);
         }
 
         private IEnumerable<InventorySummaryDto> _LoadInventorySummaryForQuarter(InventorySummaryFilterDto inventorySummaryFilterDto)

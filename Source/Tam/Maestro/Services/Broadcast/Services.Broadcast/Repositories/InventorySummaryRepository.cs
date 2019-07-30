@@ -23,7 +23,7 @@ namespace Services.Broadcast.Repositories
         List<InventorySummaryManifestDto> GetInventorySummaryManifestsForSyndicationSources(InventorySource inventorySource, DateTime startDate, DateTime endDate);
         List<InventorySummaryManifestDto> GetInventorySummaryManifestsForDiginetSources(InventorySource inventorySource, DateTime startDate, DateTime endDate);
         List<InventorySummaryManifestFileDto> GetInventorySummaryManifestFileDtos(List<int> inventoryFileIds);
-
+        Dictionary<int, int> GetLatestFileIdsBySource();
         /// <summary>
         /// Saves the inventory summary aggregated data for the source
         /// </summary>
@@ -240,6 +240,28 @@ namespace Services.Broadcast.Repositories
                                 ShareProjectionBookId = f.share_projection_book_id,
                                 CreatedDate = f.created_date
                             }).ToList();
+                });
+        }
+
+        /// <summary>
+        /// Returns file id and job id for the latest inventory file completed by source.
+        /// Used for caching inventory data.
+        /// </summary>
+        /// <returns></returns>
+        public Dictionary<int, int> GetLatestFileIdsBySource()
+        {
+            return _InReadUncommitedTransaction(
+                context =>
+                {
+                    return (from file in context.inventory_files
+                            join job in context.inventory_file_ratings_jobs
+                            on file.id equals job.inventory_file_id into fileJobs
+                            from fileJob in fileJobs.DefaultIfEmpty()
+                            where file.status == (byte) FileStatusEnum.Loaded && (fileJob == null || fileJob.status == (byte) BackgroundJobProcessingStatus.Succeeded)
+                            select new { file, fileJob })
+                            .GroupBy(g => g.file.inventory_source_id)
+                            .ToDictionary(g => g.Key, g => g.Max(f => f.file.id));
+                            
                 });
         }
 

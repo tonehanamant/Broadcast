@@ -8,6 +8,8 @@ using Tam.Maestro.Services.Cable.Security;
 using Tam.Maestro.Services.Clients;
 using Tam.Maestro.Web.Common;
 using System.Web.Http.Cors;
+using Services.Broadcast.ApplicationServices;
+using System.Collections.Generic;
 
 namespace BroadcastComposerWeb.Controllers
 {
@@ -16,9 +18,13 @@ namespace BroadcastComposerWeb.Controllers
     //[EnableCors(origins: "*", headers: "*", methods: "*")] //Enabled globally in global.asax
     public class EnvironmentController : ControllerBase
     {
-        public EnvironmentController(IWebLogger logger)
+        private readonly BroadcastApplicationServiceFactory _ApplicationServiceFactory;
+
+        public EnvironmentController(IWebLogger logger,
+            BroadcastApplicationServiceFactory applicationServiceFactory)
             : base(logger, new ControllerNameRetriever("TrackerController"))
         {
+            _ApplicationServiceFactory = applicationServiceFactory;
         }
 
         // GET api/employee/
@@ -39,6 +45,12 @@ namespace BroadcastComposerWeb.Controllers
         public BaseResponse<string> GetSystemEnvironment()
         {
             return _ConvertToBaseResponse(() => new AppSettings().Environment.ToString());
+        }
+
+        [Route("dbinfo")]
+        public BaseResponse<Dictionary<string,string>> GetBroadcastDbInfo()
+        {
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IEnvironmentService>().GetDbInfo());
         }
 
     }

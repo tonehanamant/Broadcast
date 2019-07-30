@@ -22,6 +22,15 @@ namespace Common.Services.Repositories
             : base(configurationWebApiClient, pBroadcastContextFactory, pTransactionHelper, TAMResource.BroadcastConnectionString.ToString())
         {
         }
+
+        public string GetDbInfo()
+        {
+            return _InReadUncommitedTransaction(
+                context =>
+                {
+                    return $"{context.Database.Connection.DataSource}|{context.Database.Connection.Database}";
+                });
+        }
         public new void BulkInsert<T>(DbContext context, List<T> list)
         {
             string name1 = typeof(T).Name;

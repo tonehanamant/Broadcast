@@ -100,11 +100,21 @@ namespace BroadcastComposerWeb.Controllers
         [Route("Summaries")]
         public BaseResponse<List<InventorySummaryDto>> GetInventorySummaries(InventorySummaryFilterDto inventorySourceCardFilter)
         {
-            var cache = BroadcastApplicationServiceFactory.Instance.Resolve<IInventorySummaryCache>();
             var service = _ApplicationServiceFactory.GetApplicationService<IInventorySummaryService>();
-            List<InventorySummaryDto> getSummaryFunc() => service.GetInventorySummaries(inventorySourceCardFilter, DateTime.Now);
+            return _ConvertToBaseResponse(() => service.GetInventorySummariesWithCache(inventorySourceCardFilter, DateTime.Now));
+        }
+        /// <summary>
+        /// Get number of items in inventory cache. Optionally reset the cache.
+        /// </summary>
+        /// <param name="reset">Flag indicating whether to reset cache. Defaults to false.</param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("Cache")]
+        public BaseResponse<long> GetCountAndReset(Boolean reset = false)
+        {
+            var cache = BroadcastApplicationServiceFactory.Instance.Resolve<IInventorySummaryCache>();
 
-            return _ConvertToBaseResponse(() => cache.GetOrCreate(inventorySourceCardFilter, getSummaryFunc));
+            return _ConvertToBaseResponse(() => cache.GetItemCount(reset));
         }
 
         /// <summary>

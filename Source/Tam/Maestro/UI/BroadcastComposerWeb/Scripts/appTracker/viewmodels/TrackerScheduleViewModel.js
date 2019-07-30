@@ -5,25 +5,6 @@
 var TrackerScheduleViewModel = function (controller) {
     var $scope = this;
 
-    var defaultSorter = function (a, b) {
-        if (a.Display > b.Display) {
-            return 1;
-        }
-        if (a.Display < b.Display) {
-            return -1;
-        }
-        return 0;
-    }
-
-    var sortToBottom = function (a, b, matchStr) {
-        var isAMatchStr = a.Display.indexOf(matchStr) !== -1;
-        var isBMatchStr = b.Display.indexOf(matchStr) !== -1;
-        if (isAMatchStr && isBMatchStr) {
-            return defaultSorter(a, b)
-        }
-        return -1
-    }
-
     var controller = controller;
     var scheduleValidator = null;
     $scope.activeSchedule = null;  //active schedule upload (non observable)
@@ -117,19 +98,6 @@ var TrackerScheduleViewModel = function (controller) {
         if (values && values.length) {
             scheduleValidator.element("#schedule_input_demos");
         }
-        $scope.Demos.sort(function (a, b) {
-            if (a.Display === "House Holde") {
-                return 1;
-            }
-            if (a.Display.indexOf("Children")) {
-                return sortToBottom(a, b, "Children");
-            }
-            if (a.Display.indexOf("Person")) {
-                return sortToBottom(a, b, "Children");
-            }
-            return defaultSorter(a, b);
-
-        });;
     });
 
     //storedObservables - upload only

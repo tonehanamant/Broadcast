@@ -10,6 +10,7 @@ namespace Services.Broadcast.Cache
     public interface IInventorySummaryCache
     {
         List<InventorySummaryDto> GetOrCreate(InventorySummaryFilterDto keyObject, Func<List<InventorySummaryDto>> createItemForKeyFunc);
+        long GetItemCount(bool reset);
     }
 
     public class InventorySummaryCache : BaseMemoryCache<List<InventorySummaryDto>>, IInventorySummaryCache
@@ -26,5 +27,6 @@ namespace Services.Broadcast.Cache
 
             return item;
         }
+
     }
 }

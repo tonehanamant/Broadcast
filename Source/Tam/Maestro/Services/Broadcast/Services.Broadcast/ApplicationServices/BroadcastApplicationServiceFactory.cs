@@ -182,6 +182,8 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IPlanValidator, PlanValidator>();
             unityContainer.RegisterType<ISpotLengthService, SpotLengthService>();
 
+            unityContainer.RegisterType<IEnvironmentService, EnvironmentService>();
+
 
             //@todo This is temporary to control the daypart source for Broadcast
             var repoFactory = unityContainer.Resolve<IDataRepositoryFactory>();

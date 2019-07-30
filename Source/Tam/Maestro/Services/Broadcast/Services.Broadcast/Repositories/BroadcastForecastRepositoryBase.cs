@@ -14,5 +14,14 @@ namespace Services.Broadcast.Repositories
             : base(configurationWebApiClient, pBroadcastContextFactory, pTransactionHelper, TAMResource.BroadcastForecastConnectionString.ToString())
         {
         }
+
+        public string GetDbInfo()
+        {
+            return _InReadUncommitedTransaction(
+                context =>
+                {
+                    return $"{context.Database.Connection.DataSource}|{context.Database.Connection.Database}";
+                });
+        }
     }
 }

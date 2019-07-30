@@ -20,6 +20,7 @@ namespace Services.Broadcast.Repositories
         void DeleteInventoryFileById(int inventoryFileId);
         void UpdateInventoryFileStatus(int fileId, FileStatusEnum status);
         InventoryFile GetInventoryFileById(int fileId);
+        string GetDbInfo();
     }
 
     public class InventoryFileRepository : BroadcastRepositoryBase, IInventoryFileRepository

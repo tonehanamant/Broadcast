@@ -215,6 +215,9 @@ namespace Services.Broadcast.IntegrationTests.Stubbs
                 case "ScxGenerationParallelJobs":
                     result = "3";
                     break;
+                case "InventorySummaryCacheAbsoluteExpirationSeconds":
+                    result = "600";
+                    break;
                 default:
                     throw new Exception("Unknown SystemComponentParameter: " + parameterId);
             }

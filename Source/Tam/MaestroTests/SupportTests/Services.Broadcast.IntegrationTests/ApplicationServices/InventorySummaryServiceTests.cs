@@ -17,6 +17,7 @@ using Tam.Maestro.Common.DataLayer;
 using Microsoft.Practices.Unity;
 using Services.Broadcast.Extensions;
 using System.Collections.Generic;
+using Services.Broadcast.Cache;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
@@ -25,6 +26,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
     {
         private readonly ILogoService _LogoService = IntegrationTestApplicationServiceFactory.GetApplicationService<ILogoService>();
         private readonly IInventorySummaryService _InventorySummaryService = IntegrationTestApplicationServiceFactory.GetApplicationService<IInventorySummaryService>();
+        private readonly IInventorySummaryCache _InventorySummaryCache = IntegrationTestApplicationServiceFactory.Instance.Resolve<IInventorySummaryCache>();
         private readonly IInventoryRepository _InventoryRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
         private readonly IDaypartCodeRepository _DaypartCodeRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IDaypartCodeRepository>();
         private IProprietaryInventoryService _ProprietaryService;
@@ -556,6 +558,47 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 //uncomment this to save the data
                 //trx.Complete();
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetInventorySummariesWithCache()
+        {
+            const int inventorySourceId = 5;
+
+            using (new TransactionScopeWrapper())
+            {
+                var requestFilter = new InventorySummaryFilterDto
+                {
+                    InventorySourceId = inventorySourceId,
+                };
+                var requestDate = new DateTime(2019, 04, 01);
+                var cleanCacheSize = _InventorySummaryCache.GetItemCount(false);
+                var inventoryCards = _InventorySummaryService.GetInventorySummariesWithCache(requestFilter, requestDate);
+                var usedCacheSize = _InventorySummaryCache.GetItemCount(false);
+                inventoryCards = _InventorySummaryService.GetInventorySummariesWithCache(requestFilter, requestDate);
+                var reusedCacheSize = _InventorySummaryCache.GetItemCount(false);
+
+                //Load and process a new inventory file
+                const string fileName = @"ImportingRateData\Open Market projected imps.xml";
+                var request = new InventoryFileSaveRequest
+                {
+                    StreamData = new FileStream($@".\Files\{fileName}", FileMode.Open, FileAccess.Read),
+                    FileName = fileName
+                };
+
+                var now = new DateTime(2019, 02, 02);
+                var result = _InventoryService.SaveInventoryFile(request, "IntegrationTestUser", now);
+                var job = _InventoryFileRatingsJobsRepository.GetLatestJob();
+                _InventoryRatingsProcessingService.ProcessInventoryRatingsJob(job.id.Value);
+
+                inventoryCards = _InventorySummaryService.GetInventorySummariesWithCache(requestFilter, requestDate);
+                var afterNewFileCacheSize = _InventorySummaryCache.GetItemCount(false);
+
+                Assert.True(cleanCacheSize + 1 == usedCacheSize); //check new request is cached
+                Assert.True(usedCacheSize == reusedCacheSize); //check cache used for the same request
+                Assert.True(usedCacheSize + 1 == afterNewFileCacheSize); //check new data cached after file upload
             }
         }
     }

@@ -15,6 +15,7 @@ namespace Services.Broadcast.Repositories
     public interface IRatingsRepository : IDataRepository
     {
         List<Tuple<MediaMonth, int>> GetNielsonMarkets(List<MediaMonth> mediaMonths);
+        string GetDbInfo();
     }
 
     public class RatingsRepository : BroadcastForecastRepositoryBase, IRatingsRepository
