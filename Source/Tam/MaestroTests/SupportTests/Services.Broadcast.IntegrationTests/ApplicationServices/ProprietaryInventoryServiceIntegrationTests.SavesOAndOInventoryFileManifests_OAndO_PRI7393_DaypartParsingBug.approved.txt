@@ -11,9 +11,11 @@
           "Id": 31
         },
         "CPM": 920.0000,
+        "HutPlaybackType": null,
         "Impressions": 95000.0,
         "IsReference": true,
         "Rating": null,
+        "SharePlaybackType": null,
         "Vpvh": null
       }
     ],

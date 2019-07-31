@@ -1,884 +1,1980 @@
-﻿[
-  {
-    "audience_id": 6,
-    "Id": 5,
-    "Impressions": 0.0,
-    "Legacy_call_letters": "WMAR",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 7,
-    "Id": 5,
-    "Impressions": 97.5,
-    "Legacy_call_letters": "WMAR",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 13,
-    "Id": 5,
-    "Impressions": 77.4,
-    "Legacy_call_letters": "WMAR",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 14,
-    "Id": 5,
-    "Impressions": 1931.0,
-    "Legacy_call_letters": "WMAR",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 15,
-    "Id": 5,
-    "Impressions": 3244.0,
-    "Legacy_call_letters": "WMAR",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 21,
-    "Id": 5,
-    "Impressions": 138.25,
-    "Legacy_call_letters": "WMAR",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 22,
-    "Id": 5,
-    "Impressions": 0.0,
-    "Legacy_call_letters": "WMAR",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 28,
-    "Id": 5,
-    "Impressions": 100.75,
-    "Legacy_call_letters": "WMAR",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 29,
-    "Id": 5,
-    "Impressions": 676.75,
-    "Legacy_call_letters": "WMAR",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 30,
-    "Id": 5,
-    "Impressions": 1248.05,
-    "Legacy_call_letters": "WMAR",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 284,
-    "Id": 5,
-    "Impressions": 471.75,
-    "Legacy_call_letters": "WMAR",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 290,
-    "Id": 5,
-    "Impressions": 162.45,
-    "Legacy_call_letters": "WMAR",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 347,
-    "Id": 5,
-    "Impressions": 1756.75,
-    "Legacy_call_letters": "WMAR",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 348,
-    "Id": 5,
-    "Impressions": 265.25,
-    "Legacy_call_letters": "WMAR",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 6,
-    "Id": 6,
-    "Impressions": 0.0,
-    "Legacy_call_letters": "WMAR",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 7,
-    "Id": 6,
-    "Impressions": 204.6,
-    "Legacy_call_letters": "WMAR",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 13,
-    "Id": 6,
-    "Impressions": 177.55,
-    "Legacy_call_letters": "WMAR",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 14,
-    "Id": 6,
-    "Impressions": 1891.55,
-    "Legacy_call_letters": "WMAR",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 15,
-    "Id": 6,
-    "Impressions": 8024.55,
-    "Legacy_call_letters": "WMAR",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 21,
-    "Id": 6,
-    "Impressions": 0.0,
-    "Legacy_call_letters": "WMAR",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 22,
-    "Id": 6,
-    "Impressions": 0.0,
-    "Legacy_call_letters": "WMAR",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 28,
-    "Id": 6,
-    "Impressions": 0.0,
-    "Legacy_call_letters": "WMAR",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 29,
-    "Id": 6,
-    "Impressions": 340.3,
-    "Legacy_call_letters": "WMAR",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 30,
-    "Id": 6,
-    "Impressions": 1392.55,
-    "Legacy_call_letters": "WMAR",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 284,
-    "Id": 6,
-    "Impressions": 358.6,
-    "Legacy_call_letters": "WMAR",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 290,
-    "Id": 6,
-    "Impressions": 218.55,
-    "Legacy_call_letters": "WMAR",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 347,
-    "Id": 6,
-    "Impressions": 1154.1,
-    "Legacy_call_letters": "WMAR",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 348,
-    "Id": 6,
-    "Impressions": 395.75,
-    "Legacy_call_letters": "WMAR",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 6,
-    "Id": 7,
-    "Impressions": 0.0,
-    "Legacy_call_letters": "WMAR",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 7,
-    "Id": 7,
-    "Impressions": 204.6,
-    "Legacy_call_letters": "WMAR",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 13,
-    "Id": 7,
-    "Impressions": 0.95,
-    "Legacy_call_letters": "WMAR",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 14,
-    "Id": 7,
-    "Impressions": 4230.95,
-    "Legacy_call_letters": "WMAR",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 15,
-    "Id": 7,
-    "Impressions": 8498.55,
-    "Legacy_call_letters": "WMAR",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 21,
-    "Id": 7,
-    "Impressions": 0.0,
-    "Legacy_call_letters": "WMAR",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 22,
-    "Id": 7,
-    "Impressions": 57.35,
-    "Legacy_call_letters": "WMAR",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 28,
-    "Id": 7,
-    "Impressions": 139.85,
-    "Legacy_call_letters": "WMAR",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 29,
-    "Id": 7,
-    "Impressions": 480.8,
-    "Legacy_call_letters": "WMAR",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 30,
-    "Id": 7,
-    "Impressions": 1149.3,
-    "Legacy_call_letters": "WMAR",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 284,
-    "Id": 7,
-    "Impressions": 340.9,
-    "Legacy_call_letters": "WMAR",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 290,
-    "Id": 7,
-    "Impressions": 116.1,
-    "Legacy_call_letters": "WMAR",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 347,
-    "Id": 7,
-    "Impressions": 1230.4,
-    "Legacy_call_letters": "WMAR",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 348,
-    "Id": 7,
-    "Impressions": 794.5,
-    "Legacy_call_letters": "WMAR",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 6,
-    "Id": 71,
-    "Impressions": 0.0,
-    "Legacy_call_letters": "WESH",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 7,
-    "Id": 71,
-    "Impressions": 202.65,
-    "Legacy_call_letters": "WESH",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 13,
-    "Id": 71,
-    "Impressions": 2851.55,
-    "Legacy_call_letters": "WESH",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 14,
-    "Id": 71,
-    "Impressions": 8490.3,
-    "Legacy_call_letters": "WESH",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 15,
-    "Id": 71,
-    "Impressions": 14902.2,
-    "Legacy_call_letters": "WESH",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 21,
-    "Id": 71,
-    "Impressions": 0.0,
-    "Legacy_call_letters": "WESH",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 22,
-    "Id": 71,
-    "Impressions": 67.85,
-    "Legacy_call_letters": "WESH",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 28,
-    "Id": 71,
-    "Impressions": 1187.55,
-    "Legacy_call_letters": "WESH",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 29,
-    "Id": 71,
-    "Impressions": 2395.05,
-    "Legacy_call_letters": "WESH",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 30,
-    "Id": 71,
-    "Impressions": 12007.2,
-    "Legacy_call_letters": "WESH",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 284,
-    "Id": 71,
-    "Impressions": 233.2,
-    "Legacy_call_letters": "WESH",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 290,
-    "Id": 71,
-    "Impressions": 1817.7,
-    "Legacy_call_letters": "WESH",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 347,
-    "Id": 71,
-    "Impressions": 3065.55,
-    "Legacy_call_letters": "WESH",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 348,
-    "Id": 71,
-    "Impressions": 329.25,
-    "Legacy_call_letters": "WESH",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 6,
-    "Id": 74,
-    "Impressions": 0.0,
-    "Legacy_call_letters": "WESH",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 7,
-    "Id": 74,
-    "Impressions": 0.0,
-    "Legacy_call_letters": "WESH",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 13,
-    "Id": 74,
-    "Impressions": 1118.25,
-    "Legacy_call_letters": "WESH",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 14,
-    "Id": 74,
-    "Impressions": 6246.9,
-    "Legacy_call_letters": "WESH",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 15,
-    "Id": 74,
-    "Impressions": 11194.0,
-    "Legacy_call_letters": "WESH",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 21,
-    "Id": 74,
-    "Impressions": 0.0,
-    "Legacy_call_letters": "WESH",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 22,
-    "Id": 74,
-    "Impressions": 67.85,
-    "Legacy_call_letters": "WESH",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 28,
-    "Id": 74,
-    "Impressions": 567.6,
-    "Legacy_call_letters": "WESH",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 29,
-    "Id": 74,
-    "Impressions": 3451.55,
-    "Legacy_call_letters": "WESH",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 30,
-    "Id": 74,
-    "Impressions": 10923.7,
-    "Legacy_call_letters": "WESH",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 284,
-    "Id": 74,
-    "Impressions": 535.45,
-    "Legacy_call_letters": "WESH",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 290,
-    "Id": 74,
-    "Impressions": 764.05,
-    "Legacy_call_letters": "WESH",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 347,
-    "Id": 74,
-    "Impressions": 1650.7,
-    "Legacy_call_letters": "WESH",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 348,
-    "Id": 74,
-    "Impressions": 278.85,
-    "Legacy_call_letters": "WESH",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 6,
-    "Id": 77,
-    "Impressions": 0.0,
-    "Legacy_call_letters": "WESH",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 7,
-    "Id": 77,
-    "Impressions": 0.0,
-    "Legacy_call_letters": "WESH",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 13,
-    "Id": 77,
-    "Impressions": 1264.3,
-    "Legacy_call_letters": "WESH",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 14,
-    "Id": 77,
-    "Impressions": 4906.95,
-    "Legacy_call_letters": "WESH",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 15,
-    "Id": 77,
-    "Impressions": 9014.1,
-    "Legacy_call_letters": "WESH",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 21,
-    "Id": 77,
-    "Impressions": 0.0,
-    "Legacy_call_letters": "WESH",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 22,
-    "Id": 77,
-    "Impressions": 67.85,
-    "Legacy_call_letters": "WESH",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 28,
-    "Id": 77,
-    "Impressions": 419.9,
-    "Legacy_call_letters": "WESH",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 29,
-    "Id": 77,
-    "Impressions": 2286.55,
-    "Legacy_call_letters": "WESH",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 30,
-    "Id": 77,
-    "Impressions": 8728.9,
-    "Legacy_call_letters": "WESH",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 284,
-    "Id": 77,
-    "Impressions": 0.0,
-    "Legacy_call_letters": "WESH",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 290,
-    "Id": 77,
-    "Impressions": 614.65,
-    "Legacy_call_letters": "WESH",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 347,
-    "Id": 77,
-    "Impressions": 3586.7,
-    "Legacy_call_letters": "WESH",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 348,
-    "Id": 77,
-    "Impressions": 253.6,
-    "Legacy_call_letters": "WESH",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 6,
-    "Id": 89,
-    "Impressions": 403.9,
-    "Legacy_call_letters": "EESH",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 7,
-    "Id": 89,
-    "Impressions": 0.0,
-    "Legacy_call_letters": "EESH",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 13,
-    "Id": 89,
-    "Impressions": 1923.05,
-    "Legacy_call_letters": "EESH",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 14,
-    "Id": 89,
-    "Impressions": 331.75,
-    "Legacy_call_letters": "EESH",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 15,
-    "Id": 89,
-    "Impressions": 2799.85,
-    "Legacy_call_letters": "EESH",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 21,
-    "Id": 89,
-    "Impressions": 440.2,
-    "Legacy_call_letters": "EESH",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 22,
-    "Id": 89,
-    "Impressions": 0.0,
-    "Legacy_call_letters": "EESH",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 28,
-    "Id": 89,
-    "Impressions": 0.0,
-    "Legacy_call_letters": "EESH",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 29,
-    "Id": 89,
-    "Impressions": 197.85,
-    "Legacy_call_letters": "EESH",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 30,
-    "Id": 89,
-    "Impressions": 1036.55,
-    "Legacy_call_letters": "EESH",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 284,
-    "Id": 89,
-    "Impressions": 0.0,
-    "Legacy_call_letters": "EESH",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 290,
-    "Id": 89,
-    "Impressions": 0.0,
-    "Legacy_call_letters": "EESH",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 347,
-    "Id": 89,
-    "Impressions": 0.0,
-    "Legacy_call_letters": "EESH",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 348,
-    "Id": 89,
-    "Impressions": 75.5,
-    "Legacy_call_letters": "EESH",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 6,
-    "Id": 90,
-    "Impressions": 0.0,
-    "Legacy_call_letters": "EESH",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 7,
-    "Id": 90,
-    "Impressions": 0.0,
-    "Legacy_call_letters": "EESH",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 13,
-    "Id": 90,
-    "Impressions": 253.45,
-    "Legacy_call_letters": "EESH",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 14,
-    "Id": 90,
-    "Impressions": 371.6,
-    "Legacy_call_letters": "EESH",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 15,
-    "Id": 90,
-    "Impressions": 1451.2,
-    "Legacy_call_letters": "EESH",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 21,
-    "Id": 90,
-    "Impressions": 0.0,
-    "Legacy_call_letters": "EESH",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 22,
-    "Id": 90,
-    "Impressions": 0.0,
-    "Legacy_call_letters": "EESH",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 28,
-    "Id": 90,
-    "Impressions": 0.0,
-    "Legacy_call_letters": "EESH",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 29,
-    "Id": 90,
-    "Impressions": 475.65,
-    "Legacy_call_letters": "EESH",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 30,
-    "Id": 90,
-    "Impressions": 82.8,
-    "Legacy_call_letters": "EESH",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 284,
-    "Id": 90,
-    "Impressions": 0.0,
-    "Legacy_call_letters": "EESH",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 290,
-    "Id": 90,
-    "Impressions": 0.0,
-    "Legacy_call_letters": "EESH",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 347,
-    "Id": 90,
-    "Impressions": 260.75,
-    "Legacy_call_letters": "EESH",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 348,
-    "Id": 90,
-    "Impressions": 75.5,
-    "Legacy_call_letters": "EESH",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 6,
-    "Id": 91,
-    "Impressions": 0.0,
-    "Legacy_call_letters": "EESH",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 7,
-    "Id": 91,
-    "Impressions": 0.0,
-    "Legacy_call_letters": "EESH",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 13,
-    "Id": 91,
-    "Impressions": 130.0,
-    "Legacy_call_letters": "EESH",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 14,
-    "Id": 91,
-    "Impressions": 324.45,
-    "Legacy_call_letters": "EESH",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 15,
-    "Id": 91,
-    "Impressions": 1756.55,
-    "Legacy_call_letters": "EESH",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 21,
-    "Id": 91,
-    "Impressions": 0.0,
-    "Legacy_call_letters": "EESH",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 22,
-    "Id": 91,
-    "Impressions": 0.0,
-    "Legacy_call_letters": "EESH",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 28,
-    "Id": 91,
-    "Impressions": 0.0,
-    "Legacy_call_letters": "EESH",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 29,
-    "Id": 91,
-    "Impressions": 730.1,
-    "Legacy_call_letters": "EESH",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 30,
-    "Id": 91,
-    "Impressions": 181.75,
-    "Legacy_call_letters": "EESH",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 284,
-    "Id": 91,
-    "Impressions": 0.0,
-    "Legacy_call_letters": "EESH",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 290,
-    "Id": 91,
-    "Impressions": 0.0,
-    "Legacy_call_letters": "EESH",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 347,
-    "Id": 91,
-    "Impressions": 139.3,
-    "Legacy_call_letters": "EESH",
-    "Rating": 0.0
-  },
-  {
-    "audience_id": 348,
-    "Id": 91,
-    "Impressions": 75.5,
-    "Legacy_call_letters": "EESH",
-    "Rating": 0.0
-  }
-]
+﻿{
+  "Impressions": [
+    {
+      "AudienceId": 6,
+      "HutPlaybackType": null,
+      "Id": 5,
+      "Impressions": 0.0,
+      "LegacyCallLetters": "WMAR",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 7,
+      "HutPlaybackType": null,
+      "Id": 5,
+      "Impressions": 97.5,
+      "LegacyCallLetters": "WMAR",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 13,
+      "HutPlaybackType": null,
+      "Id": 5,
+      "Impressions": 77.4,
+      "LegacyCallLetters": "WMAR",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 14,
+      "HutPlaybackType": null,
+      "Id": 5,
+      "Impressions": 1931.0,
+      "LegacyCallLetters": "WMAR",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 15,
+      "HutPlaybackType": null,
+      "Id": 5,
+      "Impressions": 3244.0,
+      "LegacyCallLetters": "WMAR",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 21,
+      "HutPlaybackType": null,
+      "Id": 5,
+      "Impressions": 138.25,
+      "LegacyCallLetters": "WMAR",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 22,
+      "HutPlaybackType": null,
+      "Id": 5,
+      "Impressions": 0.0,
+      "LegacyCallLetters": "WMAR",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 28,
+      "HutPlaybackType": null,
+      "Id": 5,
+      "Impressions": 100.75,
+      "LegacyCallLetters": "WMAR",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 29,
+      "HutPlaybackType": null,
+      "Id": 5,
+      "Impressions": 676.75,
+      "LegacyCallLetters": "WMAR",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 30,
+      "HutPlaybackType": null,
+      "Id": 5,
+      "Impressions": 1248.05,
+      "LegacyCallLetters": "WMAR",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 284,
+      "HutPlaybackType": null,
+      "Id": 5,
+      "Impressions": 471.75,
+      "LegacyCallLetters": "WMAR",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 290,
+      "HutPlaybackType": null,
+      "Id": 5,
+      "Impressions": 162.45,
+      "LegacyCallLetters": "WMAR",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 347,
+      "HutPlaybackType": null,
+      "Id": 5,
+      "Impressions": 1756.75,
+      "LegacyCallLetters": "WMAR",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 348,
+      "HutPlaybackType": null,
+      "Id": 5,
+      "Impressions": 265.25,
+      "LegacyCallLetters": "WMAR",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 6,
+      "HutPlaybackType": null,
+      "Id": 6,
+      "Impressions": 0.0,
+      "LegacyCallLetters": "WMAR",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 7,
+      "HutPlaybackType": null,
+      "Id": 6,
+      "Impressions": 204.6,
+      "LegacyCallLetters": "WMAR",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 13,
+      "HutPlaybackType": null,
+      "Id": 6,
+      "Impressions": 177.55,
+      "LegacyCallLetters": "WMAR",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 14,
+      "HutPlaybackType": null,
+      "Id": 6,
+      "Impressions": 1891.55,
+      "LegacyCallLetters": "WMAR",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 15,
+      "HutPlaybackType": null,
+      "Id": 6,
+      "Impressions": 8024.55,
+      "LegacyCallLetters": "WMAR",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 21,
+      "HutPlaybackType": null,
+      "Id": 6,
+      "Impressions": 0.0,
+      "LegacyCallLetters": "WMAR",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 22,
+      "HutPlaybackType": null,
+      "Id": 6,
+      "Impressions": 0.0,
+      "LegacyCallLetters": "WMAR",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 28,
+      "HutPlaybackType": null,
+      "Id": 6,
+      "Impressions": 0.0,
+      "LegacyCallLetters": "WMAR",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 29,
+      "HutPlaybackType": null,
+      "Id": 6,
+      "Impressions": 340.3,
+      "LegacyCallLetters": "WMAR",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 30,
+      "HutPlaybackType": null,
+      "Id": 6,
+      "Impressions": 1392.55,
+      "LegacyCallLetters": "WMAR",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 284,
+      "HutPlaybackType": null,
+      "Id": 6,
+      "Impressions": 358.6,
+      "LegacyCallLetters": "WMAR",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 290,
+      "HutPlaybackType": null,
+      "Id": 6,
+      "Impressions": 218.55,
+      "LegacyCallLetters": "WMAR",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 347,
+      "HutPlaybackType": null,
+      "Id": 6,
+      "Impressions": 1154.1,
+      "LegacyCallLetters": "WMAR",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 348,
+      "HutPlaybackType": null,
+      "Id": 6,
+      "Impressions": 395.75,
+      "LegacyCallLetters": "WMAR",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 6,
+      "HutPlaybackType": null,
+      "Id": 7,
+      "Impressions": 0.0,
+      "LegacyCallLetters": "WMAR",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 7,
+      "HutPlaybackType": null,
+      "Id": 7,
+      "Impressions": 204.6,
+      "LegacyCallLetters": "WMAR",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 13,
+      "HutPlaybackType": null,
+      "Id": 7,
+      "Impressions": 0.95,
+      "LegacyCallLetters": "WMAR",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 14,
+      "HutPlaybackType": null,
+      "Id": 7,
+      "Impressions": 4230.95,
+      "LegacyCallLetters": "WMAR",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 15,
+      "HutPlaybackType": null,
+      "Id": 7,
+      "Impressions": 8498.55,
+      "LegacyCallLetters": "WMAR",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 21,
+      "HutPlaybackType": null,
+      "Id": 7,
+      "Impressions": 0.0,
+      "LegacyCallLetters": "WMAR",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 22,
+      "HutPlaybackType": null,
+      "Id": 7,
+      "Impressions": 57.35,
+      "LegacyCallLetters": "WMAR",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 28,
+      "HutPlaybackType": null,
+      "Id": 7,
+      "Impressions": 139.85,
+      "LegacyCallLetters": "WMAR",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 29,
+      "HutPlaybackType": null,
+      "Id": 7,
+      "Impressions": 480.8,
+      "LegacyCallLetters": "WMAR",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 30,
+      "HutPlaybackType": null,
+      "Id": 7,
+      "Impressions": 1149.3,
+      "LegacyCallLetters": "WMAR",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 284,
+      "HutPlaybackType": null,
+      "Id": 7,
+      "Impressions": 340.9,
+      "LegacyCallLetters": "WMAR",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 290,
+      "HutPlaybackType": null,
+      "Id": 7,
+      "Impressions": 116.1,
+      "LegacyCallLetters": "WMAR",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 347,
+      "HutPlaybackType": null,
+      "Id": 7,
+      "Impressions": 1230.4,
+      "LegacyCallLetters": "WMAR",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 348,
+      "HutPlaybackType": null,
+      "Id": 7,
+      "Impressions": 794.5,
+      "LegacyCallLetters": "WMAR",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 6,
+      "HutPlaybackType": null,
+      "Id": 71,
+      "Impressions": 0.0,
+      "LegacyCallLetters": "WESH",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 7,
+      "HutPlaybackType": null,
+      "Id": 71,
+      "Impressions": 202.65,
+      "LegacyCallLetters": "WESH",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 13,
+      "HutPlaybackType": null,
+      "Id": 71,
+      "Impressions": 2851.55,
+      "LegacyCallLetters": "WESH",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 14,
+      "HutPlaybackType": null,
+      "Id": 71,
+      "Impressions": 8490.3,
+      "LegacyCallLetters": "WESH",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 15,
+      "HutPlaybackType": null,
+      "Id": 71,
+      "Impressions": 14902.2,
+      "LegacyCallLetters": "WESH",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 21,
+      "HutPlaybackType": null,
+      "Id": 71,
+      "Impressions": 0.0,
+      "LegacyCallLetters": "WESH",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 22,
+      "HutPlaybackType": null,
+      "Id": 71,
+      "Impressions": 67.85,
+      "LegacyCallLetters": "WESH",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 28,
+      "HutPlaybackType": null,
+      "Id": 71,
+      "Impressions": 1187.55,
+      "LegacyCallLetters": "WESH",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 29,
+      "HutPlaybackType": null,
+      "Id": 71,
+      "Impressions": 2395.05,
+      "LegacyCallLetters": "WESH",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 30,
+      "HutPlaybackType": null,
+      "Id": 71,
+      "Impressions": 12007.2,
+      "LegacyCallLetters": "WESH",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 284,
+      "HutPlaybackType": null,
+      "Id": 71,
+      "Impressions": 233.2,
+      "LegacyCallLetters": "WESH",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 290,
+      "HutPlaybackType": null,
+      "Id": 71,
+      "Impressions": 1817.7,
+      "LegacyCallLetters": "WESH",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 347,
+      "HutPlaybackType": null,
+      "Id": 71,
+      "Impressions": 3065.55,
+      "LegacyCallLetters": "WESH",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 348,
+      "HutPlaybackType": null,
+      "Id": 71,
+      "Impressions": 329.25,
+      "LegacyCallLetters": "WESH",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 6,
+      "HutPlaybackType": null,
+      "Id": 74,
+      "Impressions": 0.0,
+      "LegacyCallLetters": "WESH",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 7,
+      "HutPlaybackType": null,
+      "Id": 74,
+      "Impressions": 0.0,
+      "LegacyCallLetters": "WESH",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 13,
+      "HutPlaybackType": null,
+      "Id": 74,
+      "Impressions": 1118.25,
+      "LegacyCallLetters": "WESH",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 14,
+      "HutPlaybackType": null,
+      "Id": 74,
+      "Impressions": 6246.9,
+      "LegacyCallLetters": "WESH",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 15,
+      "HutPlaybackType": null,
+      "Id": 74,
+      "Impressions": 11194.0,
+      "LegacyCallLetters": "WESH",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 21,
+      "HutPlaybackType": null,
+      "Id": 74,
+      "Impressions": 0.0,
+      "LegacyCallLetters": "WESH",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 22,
+      "HutPlaybackType": null,
+      "Id": 74,
+      "Impressions": 67.85,
+      "LegacyCallLetters": "WESH",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 28,
+      "HutPlaybackType": null,
+      "Id": 74,
+      "Impressions": 567.6,
+      "LegacyCallLetters": "WESH",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 29,
+      "HutPlaybackType": null,
+      "Id": 74,
+      "Impressions": 3451.55,
+      "LegacyCallLetters": "WESH",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 30,
+      "HutPlaybackType": null,
+      "Id": 74,
+      "Impressions": 10923.7,
+      "LegacyCallLetters": "WESH",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 284,
+      "HutPlaybackType": null,
+      "Id": 74,
+      "Impressions": 535.45,
+      "LegacyCallLetters": "WESH",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 290,
+      "HutPlaybackType": null,
+      "Id": 74,
+      "Impressions": 764.05,
+      "LegacyCallLetters": "WESH",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 347,
+      "HutPlaybackType": null,
+      "Id": 74,
+      "Impressions": 1650.7,
+      "LegacyCallLetters": "WESH",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 348,
+      "HutPlaybackType": null,
+      "Id": 74,
+      "Impressions": 278.85,
+      "LegacyCallLetters": "WESH",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 6,
+      "HutPlaybackType": null,
+      "Id": 77,
+      "Impressions": 0.0,
+      "LegacyCallLetters": "WESH",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 7,
+      "HutPlaybackType": null,
+      "Id": 77,
+      "Impressions": 0.0,
+      "LegacyCallLetters": "WESH",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 13,
+      "HutPlaybackType": null,
+      "Id": 77,
+      "Impressions": 1264.3,
+      "LegacyCallLetters": "WESH",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 14,
+      "HutPlaybackType": null,
+      "Id": 77,
+      "Impressions": 4906.95,
+      "LegacyCallLetters": "WESH",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 15,
+      "HutPlaybackType": null,
+      "Id": 77,
+      "Impressions": 9014.1,
+      "LegacyCallLetters": "WESH",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 21,
+      "HutPlaybackType": null,
+      "Id": 77,
+      "Impressions": 0.0,
+      "LegacyCallLetters": "WESH",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 22,
+      "HutPlaybackType": null,
+      "Id": 77,
+      "Impressions": 67.85,
+      "LegacyCallLetters": "WESH",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 28,
+      "HutPlaybackType": null,
+      "Id": 77,
+      "Impressions": 419.9,
+      "LegacyCallLetters": "WESH",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 29,
+      "HutPlaybackType": null,
+      "Id": 77,
+      "Impressions": 2286.55,
+      "LegacyCallLetters": "WESH",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 30,
+      "HutPlaybackType": null,
+      "Id": 77,
+      "Impressions": 8728.9,
+      "LegacyCallLetters": "WESH",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 284,
+      "HutPlaybackType": null,
+      "Id": 77,
+      "Impressions": 0.0,
+      "LegacyCallLetters": "WESH",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 290,
+      "HutPlaybackType": null,
+      "Id": 77,
+      "Impressions": 614.65,
+      "LegacyCallLetters": "WESH",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 347,
+      "HutPlaybackType": null,
+      "Id": 77,
+      "Impressions": 3586.7,
+      "LegacyCallLetters": "WESH",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 348,
+      "HutPlaybackType": null,
+      "Id": 77,
+      "Impressions": 253.6,
+      "LegacyCallLetters": "WESH",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 6,
+      "HutPlaybackType": null,
+      "Id": 89,
+      "Impressions": 403.9,
+      "LegacyCallLetters": "EESH",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 7,
+      "HutPlaybackType": null,
+      "Id": 89,
+      "Impressions": 0.0,
+      "LegacyCallLetters": "EESH",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 13,
+      "HutPlaybackType": null,
+      "Id": 89,
+      "Impressions": 1923.05,
+      "LegacyCallLetters": "EESH",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 14,
+      "HutPlaybackType": null,
+      "Id": 89,
+      "Impressions": 331.75,
+      "LegacyCallLetters": "EESH",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 15,
+      "HutPlaybackType": null,
+      "Id": 89,
+      "Impressions": 2799.85,
+      "LegacyCallLetters": "EESH",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 21,
+      "HutPlaybackType": null,
+      "Id": 89,
+      "Impressions": 440.2,
+      "LegacyCallLetters": "EESH",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 22,
+      "HutPlaybackType": null,
+      "Id": 89,
+      "Impressions": 0.0,
+      "LegacyCallLetters": "EESH",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 28,
+      "HutPlaybackType": null,
+      "Id": 89,
+      "Impressions": 0.0,
+      "LegacyCallLetters": "EESH",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 29,
+      "HutPlaybackType": null,
+      "Id": 89,
+      "Impressions": 197.85,
+      "LegacyCallLetters": "EESH",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 30,
+      "HutPlaybackType": null,
+      "Id": 89,
+      "Impressions": 1036.55,
+      "LegacyCallLetters": "EESH",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 284,
+      "HutPlaybackType": null,
+      "Id": 89,
+      "Impressions": 0.0,
+      "LegacyCallLetters": "EESH",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 290,
+      "HutPlaybackType": null,
+      "Id": 89,
+      "Impressions": 0.0,
+      "LegacyCallLetters": "EESH",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 347,
+      "HutPlaybackType": null,
+      "Id": 89,
+      "Impressions": 0.0,
+      "LegacyCallLetters": "EESH",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 348,
+      "HutPlaybackType": null,
+      "Id": 89,
+      "Impressions": 75.5,
+      "LegacyCallLetters": "EESH",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 6,
+      "HutPlaybackType": null,
+      "Id": 90,
+      "Impressions": 0.0,
+      "LegacyCallLetters": "EESH",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 7,
+      "HutPlaybackType": null,
+      "Id": 90,
+      "Impressions": 0.0,
+      "LegacyCallLetters": "EESH",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 13,
+      "HutPlaybackType": null,
+      "Id": 90,
+      "Impressions": 253.45,
+      "LegacyCallLetters": "EESH",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 14,
+      "HutPlaybackType": null,
+      "Id": 90,
+      "Impressions": 371.6,
+      "LegacyCallLetters": "EESH",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 15,
+      "HutPlaybackType": null,
+      "Id": 90,
+      "Impressions": 1451.2,
+      "LegacyCallLetters": "EESH",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 21,
+      "HutPlaybackType": null,
+      "Id": 90,
+      "Impressions": 0.0,
+      "LegacyCallLetters": "EESH",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 22,
+      "HutPlaybackType": null,
+      "Id": 90,
+      "Impressions": 0.0,
+      "LegacyCallLetters": "EESH",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 28,
+      "HutPlaybackType": null,
+      "Id": 90,
+      "Impressions": 0.0,
+      "LegacyCallLetters": "EESH",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 29,
+      "HutPlaybackType": null,
+      "Id": 90,
+      "Impressions": 475.65,
+      "LegacyCallLetters": "EESH",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 30,
+      "HutPlaybackType": null,
+      "Id": 90,
+      "Impressions": 82.8,
+      "LegacyCallLetters": "EESH",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 284,
+      "HutPlaybackType": null,
+      "Id": 90,
+      "Impressions": 0.0,
+      "LegacyCallLetters": "EESH",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 290,
+      "HutPlaybackType": null,
+      "Id": 90,
+      "Impressions": 0.0,
+      "LegacyCallLetters": "EESH",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 347,
+      "HutPlaybackType": null,
+      "Id": 90,
+      "Impressions": 260.75,
+      "LegacyCallLetters": "EESH",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 348,
+      "HutPlaybackType": null,
+      "Id": 90,
+      "Impressions": 75.5,
+      "LegacyCallLetters": "EESH",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 6,
+      "HutPlaybackType": null,
+      "Id": 91,
+      "Impressions": 0.0,
+      "LegacyCallLetters": "EESH",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 7,
+      "HutPlaybackType": null,
+      "Id": 91,
+      "Impressions": 0.0,
+      "LegacyCallLetters": "EESH",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 13,
+      "HutPlaybackType": null,
+      "Id": 91,
+      "Impressions": 130.0,
+      "LegacyCallLetters": "EESH",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 14,
+      "HutPlaybackType": null,
+      "Id": 91,
+      "Impressions": 324.45,
+      "LegacyCallLetters": "EESH",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 15,
+      "HutPlaybackType": null,
+      "Id": 91,
+      "Impressions": 1756.55,
+      "LegacyCallLetters": "EESH",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 21,
+      "HutPlaybackType": null,
+      "Id": 91,
+      "Impressions": 0.0,
+      "LegacyCallLetters": "EESH",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 22,
+      "HutPlaybackType": null,
+      "Id": 91,
+      "Impressions": 0.0,
+      "LegacyCallLetters": "EESH",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 28,
+      "HutPlaybackType": null,
+      "Id": 91,
+      "Impressions": 0.0,
+      "LegacyCallLetters": "EESH",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 29,
+      "HutPlaybackType": null,
+      "Id": 91,
+      "Impressions": 730.1,
+      "LegacyCallLetters": "EESH",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 30,
+      "HutPlaybackType": null,
+      "Id": 91,
+      "Impressions": 181.75,
+      "LegacyCallLetters": "EESH",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 284,
+      "HutPlaybackType": null,
+      "Id": 91,
+      "Impressions": 0.0,
+      "LegacyCallLetters": "EESH",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 290,
+      "HutPlaybackType": null,
+      "Id": 91,
+      "Impressions": 0.0,
+      "LegacyCallLetters": "EESH",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 347,
+      "HutPlaybackType": null,
+      "Id": 91,
+      "Impressions": 139.3,
+      "LegacyCallLetters": "EESH",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    },
+    {
+      "AudienceId": 348,
+      "HutPlaybackType": null,
+      "Id": 91,
+      "Impressions": 75.5,
+      "LegacyCallLetters": "EESH",
+      "Rating": 0.0,
+      "SharePlaybackType": 0
+    }
+  ],
+  "UsedMarketPlaybackTypes": [
+    {
+      "MarketCode": 100,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 101,
+      "PlaybackType": 4
+    },
+    {
+      "MarketCode": 102,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 103,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 104,
+      "PlaybackType": 4
+    },
+    {
+      "MarketCode": 105,
+      "PlaybackType": 4
+    },
+    {
+      "MarketCode": 106,
+      "PlaybackType": 4
+    },
+    {
+      "MarketCode": 107,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 108,
+      "PlaybackType": 4
+    },
+    {
+      "MarketCode": 109,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 110,
+      "PlaybackType": 4
+    },
+    {
+      "MarketCode": 111,
+      "PlaybackType": 4
+    },
+    {
+      "MarketCode": 112,
+      "PlaybackType": 4
+    },
+    {
+      "MarketCode": 113,
+      "PlaybackType": 4
+    },
+    {
+      "MarketCode": 114,
+      "PlaybackType": 4
+    },
+    {
+      "MarketCode": 115,
+      "PlaybackType": 4
+    },
+    {
+      "MarketCode": 116,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 117,
+      "PlaybackType": 4
+    },
+    {
+      "MarketCode": 118,
+      "PlaybackType": 4
+    },
+    {
+      "MarketCode": 119,
+      "PlaybackType": 4
+    },
+    {
+      "MarketCode": 120,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 121,
+      "PlaybackType": 4
+    },
+    {
+      "MarketCode": 122,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 123,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 124,
+      "PlaybackType": 4
+    },
+    {
+      "MarketCode": 125,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 126,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 127,
+      "PlaybackType": 4
+    },
+    {
+      "MarketCode": 128,
+      "PlaybackType": 4
+    },
+    {
+      "MarketCode": 129,
+      "PlaybackType": 4
+    },
+    {
+      "MarketCode": 130,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 131,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 132,
+      "PlaybackType": 4
+    },
+    {
+      "MarketCode": 133,
+      "PlaybackType": 4
+    },
+    {
+      "MarketCode": 134,
+      "PlaybackType": 4
+    },
+    {
+      "MarketCode": 135,
+      "PlaybackType": 4
+    },
+    {
+      "MarketCode": 136,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 137,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 138,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 139,
+      "PlaybackType": 4
+    },
+    {
+      "MarketCode": 140,
+      "PlaybackType": 4
+    },
+    {
+      "MarketCode": 141,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 142,
+      "PlaybackType": 4
+    },
+    {
+      "MarketCode": 143,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 144,
+      "PlaybackType": 4
+    },
+    {
+      "MarketCode": 145,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 146,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 147,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 148,
+      "PlaybackType": 4
+    },
+    {
+      "MarketCode": 149,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 150,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 151,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 152,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 153,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 154,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 155,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 156,
+      "PlaybackType": 4
+    },
+    {
+      "MarketCode": 157,
+      "PlaybackType": 4
+    },
+    {
+      "MarketCode": 158,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 159,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 160,
+      "PlaybackType": 4
+    },
+    {
+      "MarketCode": 161,
+      "PlaybackType": 4
+    },
+    {
+      "MarketCode": 163,
+      "PlaybackType": 4
+    },
+    {
+      "MarketCode": 164,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 165,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 166,
+      "PlaybackType": 4
+    },
+    {
+      "MarketCode": 167,
+      "PlaybackType": 4
+    },
+    {
+      "MarketCode": 169,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 170,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 171,
+      "PlaybackType": 4
+    },
+    {
+      "MarketCode": 173,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 174,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 175,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 176,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 177,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 181,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 182,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 183,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 184,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 188,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 192,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 196,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 197,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 198,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 200,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 202,
+      "PlaybackType": 4
+    },
+    {
+      "MarketCode": 203,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 204,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 205,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 206,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 209,
+      "PlaybackType": 4
+    },
+    {
+      "MarketCode": 210,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 211,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 212,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 213,
+      "PlaybackType": 4
+    },
+    {
+      "MarketCode": 216,
+      "PlaybackType": 4
+    },
+    {
+      "MarketCode": 217,
+      "PlaybackType": 4
+    },
+    {
+      "MarketCode": 218,
+      "PlaybackType": 4
+    },
+    {
+      "MarketCode": 219,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 222,
+      "PlaybackType": 4
+    },
+    {
+      "MarketCode": 223,
+      "PlaybackType": 4
+    },
+    {
+      "MarketCode": 224,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 225,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 226,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 227,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 228,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 230,
+      "PlaybackType": 4
+    },
+    {
+      "MarketCode": 231,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 232,
+      "PlaybackType": 4
+    },
+    {
+      "MarketCode": 233,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 234,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 235,
+      "PlaybackType": 4
+    },
+    {
+      "MarketCode": 236,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 237,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 238,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 239,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 240,
+      "PlaybackType": 4
+    },
+    {
+      "MarketCode": 241,
+      "PlaybackType": 4
+    },
+    {
+      "MarketCode": 242,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 243,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 244,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 247,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 248,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 249,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 250,
+      "PlaybackType": 4
+    },
+    {
+      "MarketCode": 251,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 252,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 256,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 257,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 258,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 259,
+      "PlaybackType": 4
+    },
+    {
+      "MarketCode": 261,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 262,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 269,
+      "PlaybackType": 4
+    },
+    {
+      "MarketCode": 270,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 271,
+      "PlaybackType": 4
+    },
+    {
+      "MarketCode": 273,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 275,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 276,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 278,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 279,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 282,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 286,
+      "PlaybackType": 4
+    },
+    {
+      "MarketCode": 287,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 291,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 292,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 293,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 298,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 302,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 305,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 309,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 310,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 311,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 316,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 317,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 318,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 322,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 324,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 325,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 334,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 336,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 337,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 340,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 343,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 344,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 345,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 346,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 347,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 349,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 351,
+      "PlaybackType": 4
+    },
+    {
+      "MarketCode": 352,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 353,
+      "PlaybackType": 4
+    },
+    {
+      "MarketCode": 354,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 355,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 356,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 357,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 358,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 359,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 360,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 362,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 364,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 365,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 366,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 367,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 370,
+      "PlaybackType": 4
+    },
+    {
+      "MarketCode": 371,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 373,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 389,
+      "PlaybackType": 4
+    },
+    {
+      "MarketCode": 390,
+      "PlaybackType": 4
+    },
+    {
+      "MarketCode": 398,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 400,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 401,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 402,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 403,
+      "PlaybackType": 4
+    },
+    {
+      "MarketCode": 404,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 407,
+      "PlaybackType": 4
+    },
+    {
+      "MarketCode": 410,
+      "PlaybackType": 4
+    },
+    {
+      "MarketCode": 411,
+      "PlaybackType": 4
+    },
+    {
+      "MarketCode": 413,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 419,
+      "PlaybackType": 4
+    },
+    {
+      "MarketCode": 420,
+      "PlaybackType": 4
+    },
+    {
+      "MarketCode": 421,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 425,
+      "PlaybackType": 4
+    },
+    {
+      "MarketCode": 428,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 439,
+      "PlaybackType": 4
+    },
+    {
+      "MarketCode": 455,
+      "PlaybackType": 4
+    },
+    {
+      "MarketCode": 462,
+      "PlaybackType": 4
+    },
+    {
+      "MarketCode": 466,
+      "PlaybackType": 4
+    },
+    {
+      "MarketCode": 468,
+      "PlaybackType": 3
+    },
+    {
+      "MarketCode": 481,
+      "PlaybackType": 3
+    }
+  ]
+}

@@ -11,9 +11,11 @@
           "Id": 31
         },
         "CPM": 6.2500,
+        "HutPlaybackType": null,
         "Impressions": 160000.0,
         "IsReference": true,
         "Rating": null,
+        "SharePlaybackType": null,
         "Vpvh": null
       }
     ],
@@ -107,9 +109,11 @@
           "Id": 31
         },
         "CPM": 5.6250,
+        "HutPlaybackType": null,
         "Impressions": 160000.0,
         "IsReference": true,
         "Rating": null,
+        "SharePlaybackType": null,
         "Vpvh": null
       }
     ],
@@ -191,9 +195,11 @@
           "Id": 31
         },
         "CPM": 6.2500,
+        "HutPlaybackType": null,
         "Impressions": 160000.0,
         "IsReference": true,
         "Rating": null,
+        "SharePlaybackType": null,
         "Vpvh": null
       }
     ],

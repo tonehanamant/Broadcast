@@ -13,6 +13,7 @@ using System.Linq;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 using Tam.Maestro.Services.ContractInterfaces.AudienceAndRatingsBusinessObjects;
+using static Services.Broadcast.Entities.Enums.ProposalEnums;
 
 namespace Services.Broadcast.ApplicationServices
 {
@@ -41,6 +42,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IStationProcessingEngine _StationProcessingEngine;
         private readonly IRatingForecastRepository _RatingsRepository;
         private readonly IBroadcastAudienceRepository _BroadcastAudienceRepository;
+        private readonly IStationRepository _StationRepository;
 
         public ImpressionsService(IDataRepositoryFactory broadcastDataRepositoryFactory, IStationProcessingEngine stationProcessingEngine)
         {
@@ -49,6 +51,7 @@ namespace Services.Broadcast.ApplicationServices
             _StationProcessingEngine = stationProcessingEngine;
             _RatingsRepository = broadcastDataRepositoryFactory.GetDataRepository<IRatingForecastRepository>();
             _BroadcastAudienceRepository = broadcastDataRepositoryFactory.GetDataRepository<IBroadcastAudienceRepository>();
+            _StationRepository = broadcastDataRepositoryFactory.GetDataRepository<IStationRepository>();
         }
 
         public void RecalculateImpressionsForProposalDetail(int proposalDetailId)
@@ -113,14 +116,14 @@ namespace Services.Broadcast.ApplicationServices
                 ctr = 1;
                 foreach (var affidavitFileDetail in affidavitDetailsForPostingBook)
                 {
-                    var imps = impressionsPointInTime.Where(i => i.Id == ctr).ToList();
+                    var imps = impressionsPointInTime.Impressions.Where(i => i.Id == ctr).ToList();
 
                     affidavitFileDetail.ClientScrubs.Where(s => s.PostingBookId == postingData.PostingBookId &&
                                                                          s.PostingPlaybackType == postingData.PostingPlaybackType)
                         .ForEach(s => s.ClientScrubAudiences = imps.Select(imp => new ScrubbingFileAudiences
                         {
                             ClientScrubId = s.Id,
-                            AudienceId = imp.audience_id,
+                            AudienceId = imp.AudienceId,
                             Impressions = imp.Impressions
                         }).ToList()
                         );
@@ -170,30 +173,23 @@ namespace Services.Broadcast.ApplicationServices
                                 LegacyCallLetters = msd.Key.LegacyCallLetters
                             }
                         );
-                    Debug.WriteLine($"station detail: {msd.Key.daypart} {msd.Key.LegacyCallLetters}");
                 }
 
                 List<StationImpressions> stationImpressions = null;
 
-                //Stopwatch sw;
-
                 if (hutBook.HasValue)
                 {
-                    //sw = Stopwatch.StartNew();
                     stationImpressions = _RatingsRepository
-                        .GetImpressionsDaypart((short)hutBook.Value, (short)shareBook, ratingAudiences, stationDetails, playbackType);
-                    //sw.Stop();
-                    //Debug.WriteLine($"GetImpressionsDaypart for 2 books: {sw.ElapsedMilliseconds} ");
+                        .GetImpressionsDaypart((short)hutBook.Value, (short)shareBook, ratingAudiences, stationDetails, playbackType)
+                        .Impressions;
                 }
                 else
                 {
-                    //sw = Stopwatch.StartNew();
                     stationImpressions = _RatingsRepository
                         .GetImpressionsDaypart(shareBook, ratingAudiences, stationDetails, playbackType)
+                        .Impressions
                         .Select(x => (StationImpressions)x)
-                        .ToList();
-                    //sw.Stop();
-                    //Debug.WriteLine($"GetImpressionsDaypart for 1 book: {sw.ElapsedMilliseconds}");                    
+                        .ToList();                   
                 }
 
                 counter = 1;
@@ -206,7 +202,7 @@ namespace Services.Broadcast.ApplicationServices
                             new StationImpressions
                             {
                                 Impressions = impressions.Sum(i => i.Impressions),
-                                Legacy_call_letters = impressions.Select(i => i.Legacy_call_letters).FirstOrDefault()
+                                LegacyCallLetters = impressions.Select(i => i.LegacyCallLetters).FirstOrDefault()
                             });
                     }
                     counter++;
@@ -224,6 +220,9 @@ namespace Services.Broadcast.ApplicationServices
         public void AddProjectedImpressionsForComponentsToManifests(IEnumerable<StationInventoryManifest> manifests, ProposalEnums.ProposalPlaybackType? playbackType, int shareBook, int? hutBook)
         {
             var componentAudiences = _NsiComponentAudienceRepository.GetAllNsiComponentAudiences();
+            var stationMarketCodeDict = _StationRepository.GetBroadcastStations()
+                .Where(x => x.MarketCode.HasValue)
+                .ToDictionary(x => x.LegacyCallLetters, x => x.MarketCode.Value);
 
             var manifestsByStationDaypartList =
                    (
@@ -234,19 +233,23 @@ namespace Services.Broadcast.ApplicationServices
 
             foreach (var msd in manifestsByStationDaypartList)
             {
-                var stationDetail = new ManifestDetailDaypart()
+                // skip unknown stations
+                if (stationMarketCodeDict.TryGetValue(msd.Key.LegacyCallLetters, out var marketCode))
                 {
-                    DisplayDaypart = msd.Key.daypart,
-                    LegacyCallLetters = msd.Key.LegacyCallLetters
-                };
+                    var stationDetail = new ManifestDetailDaypart()
+                    {
+                        DisplayDaypart = msd.Key.daypart,
+                        LegacyCallLetters = msd.Key.LegacyCallLetters
+                    };
 
-                //get the impressions for this station detail and all the nsi components
-                var stationInventoryManifestAudiences = _LoadImpressionsForComponents(componentAudiences, new List<ManifestDetailDaypart>() { stationDetail }, hutBook, shareBook, playbackType);
-                
-                //each manifest in this group has the same impressions for the nsi componentns
-                foreach (var manifest in msd.Select(x => x.manifest).ToList())
-                {
-                    manifest.ManifestAudiences.AddRange(stationInventoryManifestAudiences);
+                    //get the impressions for this station detail and all the nsi components
+                    var stationInventoryManifestAudiences = _LoadImpressionsForComponents(componentAudiences, stationDetail, hutBook, shareBook, playbackType, marketCode);
+
+                    //each manifest in this group has the same impressions for the nsi componentns
+                    foreach (var manifest in msd.Select(x => x.manifest).ToList())
+                    {
+                        manifest.ManifestAudiences.AddRange(stationInventoryManifestAudiences);
+                    }
                 }
             }
 
@@ -259,46 +262,70 @@ namespace Services.Broadcast.ApplicationServices
                     {
                         Audience = new DisplayAudience { Id = x.Key },
                         Impressions = x.Average(a => a.Impressions),
-                        IsReference = false
+                        IsReference = false,
+                        SharePlaybackType = x.FirstOrDefault(a => a.SharePlaybackType.HasValue)?.SharePlaybackType,
+                        HutPlaybackType = x.FirstOrDefault(a => a.HutPlaybackType.HasValue)?.HutPlaybackType
                     })
                     .ToList();
             }
         }
 
-        private List<StationInventoryManifestAudience> _LoadImpressionsForComponents(List<BroadcastAudience> componentAudiences, List<ManifestDetailDaypart> stationDetail
-            , int? hutBook, int shareBook, ProposalEnums.ProposalPlaybackType? playbackType)
+        private List<StationInventoryManifestAudience> _LoadImpressionsForComponents(
+            List<BroadcastAudience> componentAudiences, 
+            ManifestDetailDaypart stationDetail, 
+            int? hutBook, 
+            int shareBook,
+            ProposalPlaybackType? playbackType,
+            int marketCode)
         {
             List<StationInventoryManifestAudience> result = new List<StationInventoryManifestAudience>();
 
             foreach (var component in componentAudiences)
             {
                 List<StationImpressions> stationImpressions;
+                ProposalPlaybackType? usedHutPlaybackType = null;
+                ProposalPlaybackType? usedSharePlaybackType = null;
 
                 if (hutBook.HasValue)
                 {
-                    stationImpressions = _RatingsRepository.GetImpressionsDaypart(
+                    var impressionsTwoBooksResult = _RatingsRepository.GetImpressionsDaypart(
                             (short)hutBook.Value, 
                             (short)shareBook,
                             new List<int> { component.Id }, 
-                            stationDetail, 
+                            new List<ManifestDetailDaypart> { stationDetail }, 
                             playbackType);
+
+                    stationImpressions = impressionsTwoBooksResult.Impressions;
+
+                    if (stationImpressions.Any())
+                    {
+                        usedHutPlaybackType = impressionsTwoBooksResult.UsedHutMarketPlaybackTypes.Single(x => x.MarketCode == marketCode).PlaybackType;
+                        usedSharePlaybackType = impressionsTwoBooksResult.UsedShareMarketPlaybackTypes.Single(x => x.MarketCode == marketCode).PlaybackType;
+                    }
                 }
                 else
                 {
-                    stationImpressions = _RatingsRepository.GetImpressionsDaypart(
+                    var impressionsSingleBookResult = _RatingsRepository.GetImpressionsDaypart(
                             shareBook,
                             new List<int> { component.Id },
-                            stationDetail,
-                            playbackType)
-                        .Select(x => (StationImpressions)x)
-                        .ToList();
+                            new List<ManifestDetailDaypart> { stationDetail },
+                            playbackType);
+
+                    stationImpressions = impressionsSingleBookResult.Impressions.Select(x => (StationImpressions)x).ToList();
+
+                    if (stationImpressions.Any())
+                    {
+                        usedSharePlaybackType = impressionsSingleBookResult.UsedMarketPlaybackTypes.Single(x => x.MarketCode == marketCode).PlaybackType;
+                    }
                 }
 
                 result.Add(new StationInventoryManifestAudience
                 {
                     Audience = new DisplayAudience { Id = component.Id },
                     Impressions = stationImpressions.Sum(x => x.Impressions),
-                    IsReference = false
+                    IsReference = false,
+                    SharePlaybackType = usedSharePlaybackType,
+                    HutPlaybackType = usedHutPlaybackType
                 });
             }
 

@@ -226,12 +226,14 @@ namespace Services.Broadcast.Converters.Scx
             foreach (var demo in data.Demos)
             {
                 var audienceIds = demo.RatingAudienceIds;
+
                 if (isSingleBook)
                 {
                     stationImpressions = repo.GetImpressionsDaypart(proposalDetailDto.SingleProjectionBookId.Value
                                                , audienceIds
                                                , stations
                                                , playbackType)
+                                               .Impressions
                                                .Cast<StationImpressions>()
                                                .ToList();
                 }
@@ -241,8 +243,10 @@ namespace Services.Broadcast.Converters.Scx
                                                 , (short)proposalDetailDto.ShareProjectionBookId.Value
                                                 , audienceIds
                                                 , stations
-                                                , playbackType);
+                                                , playbackType)
+                                                .Impressions;
                 }
+
                 demo.Impressions = stationImpressions;//.Where(si => data.MarketIds.Contains(si.market_code)).ToList();
             }
         }
@@ -276,7 +280,7 @@ namespace Services.Broadcast.Converters.Scx
                     {
                         DaypartId = manifestDetail.DisplayDaypart.Id,
                         Rating = impressionData.Rating * 100,
-                        LegacyCallLetters = impressionData.Legacy_call_letters
+                        LegacyCallLetters = impressionData.LegacyCallLetters
                     };
                     demo.Ratings.Add(demoRating);
                 }

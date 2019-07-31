@@ -11,9 +11,11 @@
           "Id": 31
         },
         "CPM": null,
+        "HutPlaybackType": null,
         "Impressions": 17000.0,
         "IsReference": true,
         "Rating": 2.0,
+        "SharePlaybackType": null,
         "Vpvh": null
       }
     ],
@@ -107,9 +109,11 @@
           "Id": 31
         },
         "CPM": null,
+        "HutPlaybackType": null,
         "Impressions": 2000.0,
         "IsReference": true,
         "Rating": 3.0,
+        "SharePlaybackType": null,
         "Vpvh": null
       }
     ],
@@ -203,9 +207,11 @@
           "Id": 31
         },
         "CPM": null,
+        "HutPlaybackType": null,
         "Impressions": 3000.0,
         "IsReference": true,
         "Rating": 4.0,
+        "SharePlaybackType": null,
         "Vpvh": null
       }
     ],
@@ -299,9 +305,11 @@
           "Id": 31
         },
         "CPM": null,
+        "HutPlaybackType": null,
         "Impressions": 4000.0,
         "IsReference": true,
         "Rating": 5.0,
+        "SharePlaybackType": null,
         "Vpvh": null
       }
     ],
@@ -395,9 +403,11 @@
           "Id": 31
         },
         "CPM": null,
+        "HutPlaybackType": null,
         "Impressions": 10000.0,
         "IsReference": true,
         "Rating": 5.0,
+        "SharePlaybackType": null,
         "Vpvh": null
       }
     ],
@@ -491,9 +501,11 @@
           "Id": 31
         },
         "CPM": null,
+        "HutPlaybackType": null,
         "Impressions": 10000.0,
         "IsReference": true,
         "Rating": 8.0,
+        "SharePlaybackType": null,
         "Vpvh": null
       }
     ],
@@ -587,9 +599,11 @@
           "Id": 31
         },
         "CPM": null,
+        "HutPlaybackType": null,
         "Impressions": 10000.0,
         "IsReference": true,
         "Rating": 7.0,
+        "SharePlaybackType": null,
         "Vpvh": null
       }
     ],
@@ -683,9 +697,11 @@
           "Id": 31
         },
         "CPM": null,
+        "HutPlaybackType": null,
         "Impressions": 10000.0,
         "IsReference": true,
         "Rating": 1.0,
+        "SharePlaybackType": null,
         "Vpvh": null
       }
     ],
@@ -754,9 +770,11 @@
           "Id": 31
         },
         "CPM": null,
+        "HutPlaybackType": null,
         "Impressions": 10000.0,
         "IsReference": true,
         "Rating": 5.0,
+        "SharePlaybackType": null,
         "Vpvh": null
       }
     ],

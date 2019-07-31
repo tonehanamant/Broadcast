@@ -1368,6 +1368,8 @@
           <Property Name="is_reference" Type="bit" Nullable="false" />
           <Property Name="rating" Type="float" />
           <Property Name="vpvh" Type="float" />
+          <Property Name="share_playback_type" Type="int" />
+          <Property Name="hut_playback_type" Type="int" />
         </EntityType>
         <EntityType Name="station_inventory_manifest_daypart_genres">
           <Key>
@@ -6619,6 +6621,8 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="station_inventory_manifest" Relationship="BroadcastModel.FK_station_inventory_manifest_audiences_station_inventory_manifest" FromRole="station_inventory_manifest_audiences" ToRole="station_inventory_manifest" />
           <Property Name="cpm" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="vpvh" Type="Double" />
+          <Property Name="share_playback_type" Type="Int32" />
+          <Property Name="hut_playback_type" Type="Int32" />
         </EntityType>
         <EntityType Name="station_inventory_manifest_dayparts">
           <Key>
@@ -10235,6 +10239,8 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="station_inventory_manifest_audiences">
             <EntityTypeMapping TypeName="BroadcastModel.station_inventory_manifest_audiences">
               <MappingFragment StoreEntitySet="station_inventory_manifest_audiences">
+                <ScalarProperty Name="hut_playback_type" ColumnName="hut_playback_type" />
+                <ScalarProperty Name="share_playback_type" ColumnName="share_playback_type" />
                 <ScalarProperty Name="vpvh" ColumnName="vpvh" />
                 <ScalarProperty Name="cpm" ColumnName="cpm" />
                 <ScalarProperty Name="is_reference" ColumnName="is_reference" />

@@ -19,9 +19,11 @@
               "Id": 348
             },
             "CPM": 99.8800,
+            "HutPlaybackType": null,
             "Impressions": null,
             "IsReference": true,
             "Rating": null,
+            "SharePlaybackType": null,
             "Vpvh": null
           }
         ],
@@ -127,9 +129,11 @@
               "Id": 348
             },
             "CPM": 99.8800,
+            "HutPlaybackType": null,
             "Impressions": null,
             "IsReference": true,
             "Rating": null,
+            "SharePlaybackType": null,
             "Vpvh": null
           }
         ],
@@ -235,9 +239,11 @@
               "Id": 348
             },
             "CPM": 99.8800,
+            "HutPlaybackType": null,
             "Impressions": null,
             "IsReference": true,
             "Rating": null,
+            "SharePlaybackType": null,
             "Vpvh": null
           }
         ],
@@ -343,9 +349,11 @@
               "Id": 348
             },
             "CPM": 99.8800,
+            "HutPlaybackType": null,
             "Impressions": null,
             "IsReference": true,
             "Rating": null,
+            "SharePlaybackType": null,
             "Vpvh": null
           }
         ],
@@ -495,9 +503,11 @@
               "Id": 348
             },
             "CPM": 99.8800,
+            "HutPlaybackType": null,
             "Impressions": null,
             "IsReference": true,
             "Rating": null,
+            "SharePlaybackType": null,
             "Vpvh": null
           }
         ],
@@ -615,9 +625,11 @@
               "Id": 348
             },
             "CPM": 99.8800,
+            "HutPlaybackType": null,
             "Impressions": null,
             "IsReference": true,
             "Rating": null,
+            "SharePlaybackType": null,
             "Vpvh": null
           }
         ],
@@ -723,9 +735,11 @@
               "Id": 348
             },
             "CPM": 99.8800,
+            "HutPlaybackType": null,
             "Impressions": null,
             "IsReference": true,
             "Rating": null,
+            "SharePlaybackType": null,
             "Vpvh": null
           }
         ],
@@ -831,9 +845,11 @@
               "Id": 348
             },
             "CPM": 99.8800,
+            "HutPlaybackType": null,
             "Impressions": null,
             "IsReference": true,
             "Rating": null,
+            "SharePlaybackType": null,
             "Vpvh": null
           }
         ],
@@ -939,9 +955,11 @@
               "Id": 348
             },
             "CPM": 99.8800,
+            "HutPlaybackType": null,
             "Impressions": null,
             "IsReference": true,
             "Rating": null,
+            "SharePlaybackType": null,
             "Vpvh": null
           }
         ],
@@ -1091,9 +1109,11 @@
               "Id": 348
             },
             "CPM": 99.8800,
+            "HutPlaybackType": null,
             "Impressions": null,
             "IsReference": true,
             "Rating": null,
+            "SharePlaybackType": null,
             "Vpvh": null
           }
         ],
@@ -1211,9 +1231,11 @@
               "Id": 348
             },
             "CPM": 99.8800,
+            "HutPlaybackType": null,
             "Impressions": null,
             "IsReference": true,
             "Rating": null,
+            "SharePlaybackType": null,
             "Vpvh": null
           }
         ],
@@ -1319,9 +1341,11 @@
               "Id": 348
             },
             "CPM": 99.8800,
+            "HutPlaybackType": null,
             "Impressions": null,
             "IsReference": true,
             "Rating": null,
+            "SharePlaybackType": null,
             "Vpvh": null
           }
         ],
@@ -1427,9 +1451,11 @@
               "Id": 348
             },
             "CPM": 99.8800,
+            "HutPlaybackType": null,
             "Impressions": null,
             "IsReference": true,
             "Rating": null,
+            "SharePlaybackType": null,
             "Vpvh": null
           }
         ],
@@ -1535,9 +1561,11 @@
               "Id": 348
             },
             "CPM": 99.8800,
+            "HutPlaybackType": null,
             "Impressions": null,
             "IsReference": true,
             "Rating": null,
+            "SharePlaybackType": null,
             "Vpvh": null
           }
         ],
@@ -1687,9 +1715,11 @@
               "Id": 348
             },
             "CPM": 99.8800,
+            "HutPlaybackType": null,
             "Impressions": null,
             "IsReference": true,
             "Rating": null,
+            "SharePlaybackType": null,
             "Vpvh": null
           }
         ],
@@ -1807,9 +1837,11 @@
               "Id": 348
             },
             "CPM": 99.8800,
+            "HutPlaybackType": null,
             "Impressions": null,
             "IsReference": true,
             "Rating": null,
+            "SharePlaybackType": null,
             "Vpvh": null
           }
         ],
@@ -1915,9 +1947,11 @@
               "Id": 348
             },
             "CPM": 99.8800,
+            "HutPlaybackType": null,
             "Impressions": null,
             "IsReference": true,
             "Rating": null,
+            "SharePlaybackType": null,
             "Vpvh": null
           }
         ],
@@ -2023,9 +2057,11 @@
               "Id": 348
             },
             "CPM": 99.8800,
+            "HutPlaybackType": null,
             "Impressions": null,
             "IsReference": true,
             "Rating": null,
+            "SharePlaybackType": null,
             "Vpvh": null
           }
         ],
@@ -2131,9 +2167,11 @@
               "Id": 348
             },
             "CPM": 99.8800,
+            "HutPlaybackType": null,
             "Impressions": null,
             "IsReference": true,
             "Rating": null,
+            "SharePlaybackType": null,
             "Vpvh": null
           }
         ],
@@ -2283,9 +2321,11 @@
               "Id": 348
             },
             "CPM": 99.8800,
+            "HutPlaybackType": null,
             "Impressions": null,
             "IsReference": true,
             "Rating": null,
+            "SharePlaybackType": null,
             "Vpvh": null
           }
         ],
@@ -2403,9 +2443,11 @@
               "Id": 348
             },
             "CPM": 99.8800,
+            "HutPlaybackType": null,
             "Impressions": null,
             "IsReference": true,
             "Rating": null,
+            "SharePlaybackType": null,
             "Vpvh": null
           }
         ],
@@ -2511,9 +2553,11 @@
               "Id": 348
             },
             "CPM": 99.8800,
+            "HutPlaybackType": null,
             "Impressions": null,
             "IsReference": true,
             "Rating": null,
+            "SharePlaybackType": null,
             "Vpvh": null
           }
         ],
@@ -2619,9 +2663,11 @@
               "Id": 348
             },
             "CPM": 99.8800,
+            "HutPlaybackType": null,
             "Impressions": null,
             "IsReference": true,
             "Rating": null,
+            "SharePlaybackType": null,
             "Vpvh": null
           }
         ],
@@ -2727,9 +2773,11 @@
               "Id": 348
             },
             "CPM": 99.8800,
+            "HutPlaybackType": null,
             "Impressions": null,
             "IsReference": true,
             "Rating": null,
+            "SharePlaybackType": null,
             "Vpvh": null
           }
         ],
@@ -2879,9 +2927,11 @@
               "Id": 348
             },
             "CPM": 99.8800,
+            "HutPlaybackType": null,
             "Impressions": null,
             "IsReference": true,
             "Rating": null,
+            "SharePlaybackType": null,
             "Vpvh": null
           }
         ],

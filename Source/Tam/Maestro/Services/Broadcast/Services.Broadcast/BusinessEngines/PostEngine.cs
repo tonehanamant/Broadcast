@@ -51,7 +51,7 @@ namespace Services.Broadcast.BusinessEngines
 
             var ratingsData = _DataRepositoryFactory.GetDataRepository<IRatingForecastRepository>().GetImpressionsPointInTime(postFile.posting_book_id, uniqueRatingsAudiences, postDetails, (ProposalEnums.ProposalPlaybackType)postFile.playback_type);
 
-            var ratingsByStation = ratingsData.ToLookup(rd => rd.Id);
+            var ratingsByStation = ratingsData.Impressions.ToLookup(rd => rd.Id);
             var allImpressions = new List<post_file_detail_impressions>();
             foreach (var postDetail in postDetails)
             {
@@ -59,7 +59,7 @@ namespace Services.Broadcast.BusinessEngines
                 foreach (var rating in ratingsByStation[postDetail.Id])
                 {
                     //Merge the rating audiences back into maestro audiences
-                    foreach (var demo in audiencemappings[rating.audience_id])
+                    foreach (var demo in audiencemappings[rating.AudienceId])
                     {
                         var imp = impPerMaestroDemo.GetOrInitialize(demo);
                         imp.demo = demo;

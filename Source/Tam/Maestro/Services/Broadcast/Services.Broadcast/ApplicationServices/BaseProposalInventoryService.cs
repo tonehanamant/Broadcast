@@ -41,15 +41,25 @@ namespace Services.Broadcast.ApplicationServices
 
         protected IEnumerable<StationImpressions> GetImpressions(ProposalDetailInventoryBase proposalDetailInventory, List<int> ratingAudiences, List<ManifestDetailDaypart> impressionRequests)
         {
+            var repository = BroadcastDataRepositoryFactory.GetDataRepository<IRatingForecastRepository>();
             List<StationImpressions> impressions = null;
 
             if (proposalDetailInventory.ShareProjectionBookId.HasValue && proposalDetailInventory.HutProjectionBookId.HasValue)
             {
-                impressions = BroadcastDataRepositoryFactory.GetDataRepository<IRatingForecastRepository>().GetImpressionsDaypart((short)proposalDetailInventory.HutProjectionBookId.Value, (short)proposalDetailInventory.ShareProjectionBookId.Value, ratingAudiences, impressionRequests, proposalDetailInventory.PlaybackType);
+                impressions = repository.GetImpressionsDaypart(
+                    (short)proposalDetailInventory.HutProjectionBookId.Value, 
+                    (short)proposalDetailInventory.ShareProjectionBookId.Value, 
+                    ratingAudiences, 
+                    impressionRequests, 
+                    proposalDetailInventory.PlaybackType).Impressions;
             }
             else if (proposalDetailInventory.SingleProjectionBookId.HasValue)
             {
-                impressions = new List<StationImpressions>(BroadcastDataRepositoryFactory.GetDataRepository<IRatingForecastRepository>().GetImpressionsDaypart(proposalDetailInventory.SingleProjectionBookId.Value, ratingAudiences, impressionRequests, proposalDetailInventory.PlaybackType));
+                impressions = repository.GetImpressionsDaypart(
+                    proposalDetailInventory.SingleProjectionBookId.Value,
+                    ratingAudiences,
+                    impressionRequests,
+                    proposalDetailInventory.PlaybackType).Impressions.Select(x => (StationImpressions)x).ToList();
             }
 
             if (impressions != null)

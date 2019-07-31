@@ -1,4 +1,5 @@
 using Tam.Maestro.Services.ContractInterfaces.AudienceAndRatingsBusinessObjects;
+using static Services.Broadcast.Entities.Enums.ProposalEnums;
 
 namespace Services.Broadcast.Entities.StationInventory
 {
@@ -10,5 +11,7 @@ namespace Services.Broadcast.Entities.StationInventory
         public double? Rating { get; set; }
         public decimal? CPM { get; set; }
         public double? Vpvh { get; set; }
+        public ProposalPlaybackType? SharePlaybackType { get; set; }
+        public ProposalPlaybackType? HutPlaybackType { get; set; }
     }
 }

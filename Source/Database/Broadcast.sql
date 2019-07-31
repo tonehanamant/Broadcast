@@ -442,6 +442,18 @@ BEGIN
 END
 /*************************************** END PRI-7452 *****************************************************/
 
+/*************************************** START PRI-12160 *****************************************************/
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE name = N'share_playback_type' AND OBJECT_ID = OBJECT_ID(N'station_inventory_manifest_audiences'))
+BEGIN
+    ALTER TABLE station_inventory_manifest_audiences ADD share_playback_type int NULL
+END
+
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE name = N'hut_playback_type' AND OBJECT_ID = OBJECT_ID(N'station_inventory_manifest_audiences'))
+BEGIN
+    ALTER TABLE station_inventory_manifest_audiences ADD hut_playback_type int NULL
+END
+/*************************************** END PRI-12160 *****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

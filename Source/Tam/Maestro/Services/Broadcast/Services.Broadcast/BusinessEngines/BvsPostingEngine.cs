@@ -117,7 +117,7 @@ namespace Services.Broadcast.BusinessEngines
             var ratings = forecastRepo.GetImpressionsPointInTime(postingBook,
                                                                     uniqueRatingsAudiences,
                                                                     stationDetails,
-                                                                    DefaultPlaybackType);
+                                                                    DefaultPlaybackType).Impressions;
 
             var postResults = _GetPostResults(ratings, bvsData, scheduleAudiences, ratingsAudienceMappings.GroupBy(g => g.custom_audience_id).ToDictionary(k => k.Key, v => v.Select(a => a.rating_audience_id).ToList())).ToList();
 
@@ -144,7 +144,7 @@ namespace Services.Broadcast.BusinessEngines
                     {
                         delivery = detailRatingList
                                             .Where(r => customAudienceMappings[audience.Value]
-                                                            .Contains(r.audience_id))
+                                                            .Contains(r.AudienceId))
                                             .Sum(r => r.Impressions);
                     }
                     yield return new BvsPostDetailAudience(bvsDetail.BvsFileDetailId, audience.Key, audience.Value, delivery);

@@ -22,6 +22,8 @@ namespace EntityFrameworkMapping.Broadcast
         public bool is_reference { get; set; }
         public Nullable<decimal> cpm { get; set; }
         public Nullable<double> vpvh { get; set; }
+        public Nullable<int> share_playback_type { get; set; }
+        public Nullable<int> hut_playback_type { get; set; }
     
         public virtual audience audience { get; set; }
         public virtual station_inventory_manifest station_inventory_manifest { get; set; }

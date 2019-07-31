@@ -93,6 +93,29 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        public void ProcessInventoryRatingsAfterProprietaryFileLoad_TwoBooks()
+        {
+            const string fileName = @"ProprietaryDataFiles\Barter_ValidFormat_TwoBooks.xlsx";
+
+            using (new TransactionScopeWrapper())
+            {
+                var request = new InventoryFileSaveRequest
+                {
+                    StreamData = new FileStream($@".\Files\{fileName}", FileMode.Open, FileAccess.Read),
+                    FileName = fileName
+                };
+
+                var now = new DateTime(2019, 02, 02);
+                var result = _ProprietaryService.SaveProprietaryInventoryFile(request, "IntegrationTestUser", now);
+                var job = _InventoryFileRatingsJobsRepository.GetLatestJob();
+                _InventoryRatingsProcessingService.ProcessInventoryRatingsJob(job.id.Value);
+
+                _VerifyFileInventoryManifests(result.FileId);
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
         public void ProcessInventoryRatingsAfterProprietaryFileLoad_HH()
         {
             const string fileName = @"ProprietaryDataFiles\Barter_ValidFormat_SingleBook_HH.xlsx";

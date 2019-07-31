@@ -1,5 +1,5 @@
-﻿using Services.Broadcast.Entities;
-using Services.Broadcast.Entities.Enums;
+﻿using Services.Broadcast.Entities.Enums;
+using System;
 
 namespace Services.Broadcast.Converters
 {
@@ -23,6 +23,7 @@ namespace Services.Broadcast.Converters
                     return PlaybackTypeEnum.Three;
             }
         }
+
         public static ProposalEnums.ProposalPlaybackType ForecastPlaybackTypeToProposalPlaybackType(PlaybackTypeEnum playbackType)
         {
             switch (playbackType)
@@ -39,6 +40,25 @@ namespace Services.Broadcast.Converters
                     return ProposalEnums.ProposalPlaybackType.LivePlus7;
                 default:
                     return ProposalEnums.ProposalPlaybackType.LivePlus3;
+            }
+        }
+
+        public static ProposalEnums.ProposalPlaybackType ForecastPlaybackTypeToProposalPlaybackType(string playbackType)
+        {
+            switch (playbackType)
+            {
+                case "O":
+                    return ProposalEnums.ProposalPlaybackType.Live;
+                case "S":
+                    return ProposalEnums.ProposalPlaybackType.LiveSameDay;
+                case "1":
+                    return ProposalEnums.ProposalPlaybackType.LivePlus1;
+                case "3":
+                    return ProposalEnums.ProposalPlaybackType.LivePlus3;
+                case "7":
+                    return ProposalEnums.ProposalPlaybackType.LivePlus7;
+                default:
+                    throw new Exception($"Unknown forecast playback type: {playbackType}");
             }
         }
     }

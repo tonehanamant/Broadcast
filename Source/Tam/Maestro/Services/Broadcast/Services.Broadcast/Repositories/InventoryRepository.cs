@@ -19,6 +19,7 @@ using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.InventorySummary;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Entities.ProprietaryInventory;
+using static Services.Broadcast.Entities.Enums.ProposalEnums;
 
 namespace Services.Broadcast.Repositories
 {
@@ -372,7 +373,9 @@ namespace Services.Broadcast.Repositories
                                     Impressions = audience.impressions,
                                     CPM = audience.cpm,
                                     Rating = audience.rating,
-                                    Vpvh = audience.vpvh
+                                    Vpvh = audience.vpvh,
+                                    SharePlaybackType = (ProposalPlaybackType?)audience.share_playback_type,
+                                    HutPlaybackType = (ProposalPlaybackType?)audience.hut_playback_type
                                 }).ToList(),
                 ManifestAudiencesReferences = manifest.station_inventory_manifest_audiences.Where(ma => ma.is_reference == true).Select(
                                 audience => new StationInventoryManifestAudience()
@@ -386,7 +389,9 @@ namespace Services.Broadcast.Repositories
                                     Impressions = audience.impressions,
                                     CPM = audience.cpm,
                                     Rating = audience.rating,
-                                    Vpvh = audience.vpvh
+                                    Vpvh = audience.vpvh,
+                                    SharePlaybackType = (ProposalPlaybackType?)audience.share_playback_type,
+                                    HutPlaybackType = (ProposalPlaybackType?)audience.hut_playback_type
                                 }).ToList(),
                 ManifestRates = manifest.station_inventory_manifest_rates
                                 .Select(r => new StationInventoryManifestRate()
@@ -880,7 +885,9 @@ namespace Services.Broadcast.Repositories
                            is_reference = x.IsReference,
                            rating = x.Rating,
                            cpm = x.CPM,
-                           station_inventory_manifest_id = dbManifest.id
+                           station_inventory_manifest_id = dbManifest.id,
+                           share_playback_type = (int?)x.SharePlaybackType,
+                           hut_playback_type = (int?)x.HutPlaybackType
                        }).ToList();
                        context.station_inventory_manifest_audiences.AddRange(manifestAudiences);
                    }

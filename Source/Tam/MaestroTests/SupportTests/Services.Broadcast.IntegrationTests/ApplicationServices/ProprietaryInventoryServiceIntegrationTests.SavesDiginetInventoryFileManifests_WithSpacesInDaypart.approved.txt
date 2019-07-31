@@ -11,9 +11,11 @@
           "Id": 31
         },
         "CPM": null,
+        "HutPlaybackType": null,
         "Impressions": 3728560.775540641,
         "IsReference": true,
         "Rating": 1.36,
+        "SharePlaybackType": null,
         "Vpvh": null
       },
       {
@@ -22,9 +24,11 @@
           "Id": 33
         },
         "CPM": null,
+        "HutPlaybackType": null,
         "Impressions": 84856.900408855974,
         "IsReference": true,
         "Rating": 25.01,
+        "SharePlaybackType": null,
         "Vpvh": null
       }
     ],
