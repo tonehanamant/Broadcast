@@ -10,6 +10,7 @@ using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 
@@ -29,6 +30,13 @@ namespace Services.Broadcast.ApplicationServices
         /// <param name="sourceId">The source identifier.</param>
         /// <returns></returns>
         List<ScxFileGenerationDetail> GetScxFileGenerationHistory(int sourceId);
+
+        /// <summary>
+        /// Downloads the generated SCX file.
+        /// </summary>
+        /// <param name="fileId">The file identifier.</param>
+        /// <returns></returns>
+        Tuple<string, Stream> DownloadGeneratedScxFile(int fileId);
     }
 
     public class ScxGenerationService : IScxGenerationService
@@ -180,6 +188,26 @@ namespace Services.Broadcast.ApplicationServices
         }
 
         #endregion // #region ScxFileGenerationHistory
+
+        /// <inheritdoc />
+        public Tuple<string, Stream> DownloadGeneratedScxFile(int fileId)
+        {
+            var repo = GetScxGenerationJobRepository();
+            var fileName = repo.GetScxFileName(fileId);
+
+            var dropFolderPath = GetDropFolderPath();
+
+            var filePaths = _FileService.GetFiles(dropFolderPath);
+            var filePath = filePaths.FirstOrDefault(x => Path.GetFileName(x) == fileName);
+            if (string.IsNullOrWhiteSpace(filePath))
+            {
+                throw new Exception($"File not found!");
+            }
+
+            Stream fileStream = _FileService.GetFileStream(filePath);
+            var result = new Tuple<string, Stream>(fileName, fileStream);
+            return result;
+        }
 
         private void _SaveToFolder(List<InventoryScxFile> scxFiles)
         {

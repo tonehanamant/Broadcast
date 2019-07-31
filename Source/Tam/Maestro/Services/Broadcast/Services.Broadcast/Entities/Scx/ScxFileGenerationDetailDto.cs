@@ -25,12 +25,12 @@ namespace Services.Broadcast.Entities.Scx
         public string GenerationRequestedByUsername { get; set; }
 
         /// <summary>
-        /// Gets or sets the name of the file.
+        /// Gets or sets the file identifier.
         /// </summary>
         /// <value>
-        /// The name of the file.
+        /// The file identifier.
         /// </value>
-        public string FileName { get; set; }
+        public int FileId { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the unit.
@@ -41,20 +41,12 @@ namespace Services.Broadcast.Entities.Scx
         public string UnitName { get; set; }
 
         /// <summary>
-        /// Gets or sets the daypart code identifier.
+        /// Gets or sets the daypart code.
         /// </summary>
         /// <value>
-        /// The daypart code identifier.
+        /// The daypart code.
         /// </value>
-        public int DaypartCodeId { get; set; }
-
-        /// <summary>
-        /// Gets or sets the name of the daypart code.
-        /// </summary>
-        /// <value>
-        /// The name of the daypart code.
-        /// </value>
-        public string DaypartCodeName { get; set; }
+        public string DaypartCode { get; set; }
 
         /// <summary>
         /// Gets or sets the start date time.

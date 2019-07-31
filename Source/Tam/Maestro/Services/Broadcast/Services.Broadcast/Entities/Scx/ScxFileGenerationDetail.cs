@@ -34,20 +34,12 @@ namespace Services.Broadcast.Entities.Scx
         public string UnitName { get; set; }
 
         /// <summary>
-        /// Gets or sets the daypart code identifier.
+        /// Gets or sets the daypart code.
         /// </summary>
         /// <value>
-        /// The daypart code identifier.
+        /// The daypart code.
         /// </value>
-        public int DaypartCodeId { get; set; }
-
-        /// <summary>
-        /// Gets or sets the name of the daypart code.
-        /// </summary>
-        /// <value>
-        /// The name of the daypart code.
-        /// </value>
-        public string DaypartCodeName { get; set; }
+        public string DaypartCode { get; set; }
 
         /// <summary>
         /// Gets or sets the quarter details.
@@ -66,11 +58,11 @@ namespace Services.Broadcast.Entities.Scx
         public BackgroundJobProcessingStatus ProcessingStatus { get; set; }
 
         /// <summary>
-        /// Gets or sets the full file path.
+        /// Gets or sets the file identifier.
         /// </summary>
         /// <value>
-        /// The full file path.
+        /// The file identifier.
         /// </value>
-        public string FullFilePath { get; set; }
+        public int FileId { get; set; }
     }
 }

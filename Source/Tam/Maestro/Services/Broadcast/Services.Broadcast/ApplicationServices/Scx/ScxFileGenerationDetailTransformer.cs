@@ -2,7 +2,6 @@
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Scx;
 using Services.Broadcast.Helpers;
-using System.IO;
 
 namespace Services.Broadcast.ApplicationServices.Scx
 {
@@ -15,7 +14,6 @@ namespace Services.Broadcast.ApplicationServices.Scx
             , string dropFolderPath)
         {
             var processingStatus = EnumHelper.GetEnum<BackgroundJobProcessingStatus>(dto.ProcessingStatusId);
-            var filePath = Path.Combine(dropFolderPath, dto.FileName);
             var quarters = quarterCalculator.GetAllQuartersBetweenDates(dto.StartDateTime, dto.EndDateTime);
 
             var item = new ScxFileGenerationDetail
@@ -23,11 +21,10 @@ namespace Services.Broadcast.ApplicationServices.Scx
                 GenerationRequestDateTime = dto.GenerationRequestDateTime,
                 GenerationRequestedByUsername = dto.GenerationRequestedByUsername,
                 UnitName = dto.UnitName,
-                DaypartCodeId = dto.DaypartCodeId,
-                DaypartCodeName = dto.DaypartCodeName,
+                DaypartCode = dto.DaypartCode,
                 QuarterDetails = quarters,
                 ProcessingStatus = processingStatus,
-                FullFilePath = filePath
+                FileId = dto.FileId
             };
             return item;
         }

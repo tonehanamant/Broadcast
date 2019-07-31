@@ -64,7 +64,7 @@ namespace Services.Broadcast.IntegrationTests
         {
             throw new NotImplementedException();
         }
-        public Stream GetFileStream(string filePath)
+        public virtual Stream GetFileStream(string filePath)
         {
             throw new NotImplementedException();
         }
@@ -84,6 +84,16 @@ namespace Services.Broadcast.IntegrationTests
         {
             Paths.Add(path);
             Streams.Add(stream);
+        }
+
+        public override List<string> GetFiles(string path)
+        {
+            return Paths;
+        }
+
+        public override Stream GetFileStream(string filePath)
+        {
+            return Streams.FirstOrDefault();
         }
     }
 

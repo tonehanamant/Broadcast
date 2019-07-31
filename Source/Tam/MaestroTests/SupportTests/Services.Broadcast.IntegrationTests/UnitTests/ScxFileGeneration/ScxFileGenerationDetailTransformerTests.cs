@@ -32,13 +32,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ScxFileGeneration
             calculator.Setup(s => s.GetAllQuartersBetweenDates(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Callback<DateTime, DateTime>((s, e) => getAllQuartersBetweenDatesCalls.Add(new Tuple<DateTime, DateTime>(s, e)))
                 .Returns(getAllQuartersBetweenDatesResults);
-            var expectedFullPath = Path.Combine(dropFolder, dto.FileName);
 
             var result = ScxFileGenerationDetailTransformer.TransformFromDtoToEntity(dto, calculator.Object, dropFolder);
 
             Assert.IsNotNull(result);
             AssertBaseTransform(dto, result);
-            AssertCalculatedFields(result, BackgroundJobProcessingStatus.Queued, getAllQuartersBetweenDatesResults.Count, expectedFullPath);
+            AssertCalculatedFields(result, BackgroundJobProcessingStatus.Queued, getAllQuartersBetweenDatesResults.Count);
             Assert.AreEqual(1, getAllQuartersBetweenDatesCalls.Count);
             Assert.AreEqual(getAllQuartersBetweenDatesCalls[0].Item1, startDate);
             Assert.AreEqual(getAllQuartersBetweenDatesCalls[0].Item2, endDate);
@@ -69,13 +68,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ScxFileGeneration
             calculator.Setup(s => s.GetAllQuartersBetweenDates(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Callback<DateTime, DateTime>((s, e) => getAllQuartersBetweenDatesCalls.Add(new Tuple<DateTime, DateTime>(s, e)))
                 .Returns(getAllQuartersBetweenDatesResults);
-            var expectedFullPath = Path.Combine(dropFolder, dto.FileName);
 
             var result = ScxFileGenerationDetailTransformer.TransformFromDtoToEntity(dto, calculator.Object, dropFolder);
 
             Assert.IsNotNull(result);
             AssertBaseTransform(dto, result);
-            AssertCalculatedFields(result, BackgroundJobProcessingStatus.Queued, getAllQuartersBetweenDatesResults.Count, expectedFullPath);
+            AssertCalculatedFields(result, BackgroundJobProcessingStatus.Queued, getAllQuartersBetweenDatesResults.Count);
             Assert.AreEqual(1, getAllQuartersBetweenDatesCalls.Count);
             Assert.AreEqual(getAllQuartersBetweenDatesCalls[0].Item1, startDate);
             Assert.AreEqual(getAllQuartersBetweenDatesCalls[0].Item2, endDate);
@@ -90,11 +88,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ScxFileGeneration
             var raw = new ScxFileGenerationDetailDto
             {
                 GenerationRequestDateTime = new DateTime(2019, 10, 17, 12, 23, 33),
-                GenerationRequestedByUsername = "SomeGuy",
-                FileName = "SomeFile",
+                GenerationRequestedByUsername = "TestUser",
+                FileId = 12,
                 UnitName = "U1",
-                DaypartCodeId = 1,
-                DaypartCodeName = "DP",
+                DaypartCode = "EMN",
                 ProcessingStatusId = processingStatusId,
                 StartDateTime = startDate,
                 EndDateTime = endDate
@@ -107,15 +104,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ScxFileGeneration
             Assert.AreEqual(dto.GenerationRequestDateTime, entity.GenerationRequestDateTime);
             Assert.AreEqual(dto.GenerationRequestedByUsername, entity.GenerationRequestedByUsername);
             Assert.AreEqual(dto.UnitName, entity.UnitName);
-            Assert.AreEqual(dto.DaypartCodeId, entity.DaypartCodeId);
-            Assert.AreEqual(dto.DaypartCodeName, entity.DaypartCodeName);
+            Assert.AreEqual(dto.FileId, entity.FileId);
+            Assert.AreEqual(dto.DaypartCode, entity.DaypartCode);
         }
 
-        private void AssertCalculatedFields(ScxFileGenerationDetail entity, BackgroundJobProcessingStatus expectedStatus, int expectedQuartersCount, string expectedFullPath)
+        private void AssertCalculatedFields(ScxFileGenerationDetail entity, BackgroundJobProcessingStatus expectedStatus, int expectedQuartersCount)
         {
             Assert.AreEqual(expectedStatus, entity.ProcessingStatus);
             Assert.AreEqual(expectedQuartersCount, entity.QuarterDetails.Count);
-            Assert.AreEqual(expectedFullPath, entity.FullFilePath);
         }
 
         #endregion // #region Helpers

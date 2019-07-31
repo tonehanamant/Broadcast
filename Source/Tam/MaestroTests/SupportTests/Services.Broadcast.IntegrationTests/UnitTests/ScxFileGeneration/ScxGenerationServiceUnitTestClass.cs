@@ -2,6 +2,7 @@
 using Common.Services.Repositories;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.ApplicationServices.Scx;
+using Services.Broadcast.Repositories;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.ScxFileGeneration
 {
@@ -9,6 +10,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ScxFileGeneration
     {
         public IScxFileGenerationHistorian ScxFileGenerationHistorian { get; set; }
         public string DropFolderPath { get; set; }
+        public IScxGenerationJobRepository ScxGenerationJobRepository { get; set; }
 
         public ScxGenerationServiceUnitTestClass(
             IDataRepositoryFactory broadcastDataRepositoryFactory,
@@ -27,6 +29,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ScxFileGeneration
         protected override string GetDropFolderPath()
         {
             return DropFolderPath;
+        }
+
+        protected override IScxGenerationJobRepository GetScxGenerationJobRepository()
+        {
+            return ScxGenerationJobRepository;
         }
     }
 }

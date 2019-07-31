@@ -11,6 +11,7 @@ using Services.Broadcast.Entities.Scx;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Tam.Maestro.Common.DataLayer;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
@@ -164,8 +165,50 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var history = _ScxGenerationService.GetScxFileGenerationHistory(inventorySourceId);
 
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(history, _JsonSettings));
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(history, _GetJsonSettings()));
             }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void ScxGenerationDownloadFileTest()
+        {
+            const int inventorySourceId = 7;
+            using (new TransactionScopeWrapper())
+            {
+                var request = new InventoryScxDownloadRequest
+                {
+                    EndDate = new DateTime(2019, 03, 31),
+                    StartDate = new DateTime(2018, 12, 31),
+                    DaypartCodeId = 1,
+                    InventorySourceId = inventorySourceId,
+                    UnitNames = new List<string> { "ExpiresGroupsTest" }
+                };
+                var currentDate = new DateTime(2019, 04, 17, 12, 30, 23);
+                var jobId = _ScxGenerationService.QueueScxGenerationJob(request, "IntegrationTestUser", currentDate);
+                var job = _ScxGenerationJobRepository.GetJobById(jobId);
+                _ScxGenerationService.ProcessScxGenerationJob(job, currentDate);
+                var history = _ScxGenerationService.GetScxFileGenerationHistory(inventorySourceId);
+                var fileId = history.First().FileId;
+
+                var result = _ScxGenerationService.DownloadGeneratedScxFile(fileId);
+
+                Assert.AreEqual(result.Item1, "LilaMax_ExpiresGroupsTest_20190210_20190217.scx");
+                Assert.IsTrue(result.Item2.Length > 0);
+            }
+        }
+
+        private JsonSerializerSettings _GetJsonSettings()
+        {
+            var jsonResolver = new IgnorableSerializerContractResolver();
+
+            jsonResolver.Ignore(typeof(ScxFileGenerationDetail), "FileId");
+
+            return new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                ContractResolver = jsonResolver
+            };
         }
     }
 }

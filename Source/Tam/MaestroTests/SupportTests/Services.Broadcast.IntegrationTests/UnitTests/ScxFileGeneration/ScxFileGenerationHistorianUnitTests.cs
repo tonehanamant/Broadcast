@@ -126,10 +126,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ScxFileGeneration
             {
                 GenerationRequestDateTime = new DateTime(2017, 10, 17, 19, 30, 3),
                 GenerationRequestedByUsername = "SomeGuy",
-                FileName = "IFile.txt",
+                FileId = 12,
                 UnitName = "IUnit",
-                DaypartCodeId = 6,
-                DaypartCodeName = "NN",
+                DaypartCode = "EMN",
                 StartDateTime = new DateTime(2017, 10, 17, 19, 30, 3),
                 EndDateTime = new DateTime(2017, 11, 17, 19, 30, 3),
                 ProcessingStatusId = 1

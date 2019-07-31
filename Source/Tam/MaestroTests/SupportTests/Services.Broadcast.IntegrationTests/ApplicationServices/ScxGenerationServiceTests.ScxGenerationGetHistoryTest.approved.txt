@@ -1,7 +1,6 @@
 ﻿[
   {
-    "DaypartCodeId": 1,
-    "DaypartCodeName": "Early Morning News",
+    "DaypartCode": "EMN",
     "GenerationRequestDateTime": "2019-04-17T12:30:23",
     "GenerationRequestedByUsername": "IntegrationTestUser",
     "ProcessingStatus": 3,

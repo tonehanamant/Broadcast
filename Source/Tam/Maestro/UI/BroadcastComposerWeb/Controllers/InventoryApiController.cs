@@ -8,6 +8,7 @@ using System.Net.Http.Headers;
 using System.Net;
 using Tam.Maestro.Services.Cable.Entities;
 using System.Collections.Generic;
+using System.IO;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.InventorySummary;
 using Services.Broadcast.Exceptions;
@@ -290,10 +291,23 @@ namespace BroadcastComposerWeb.Controllers
         [Route("ScxFileGenerationHistory")]
         public BaseResponse<List<ScxFileGenerationDetail>> GetScxFileGenerationHistory(int inventorySourceId)
         {
-            var rawResponse = _ApplicationServiceFactory.GetApplicationService<IScxGenerationService>()
-                .GetScxFileGenerationHistory(inventorySourceId);
-            var response = _ConvertToBaseResponse(() => rawResponse);
-            return response;
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory
+                .GetApplicationService<IScxGenerationService>()
+                .GetScxFileGenerationHistory(inventorySourceId));
+        }
+
+        /// <summary>
+        /// Downloads the generated SCX file.
+        /// </summary>
+        /// <param name="fileId">The file identifier.</param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("DownloadScxFile")]
+        public BaseResponse<Tuple<string, Stream>> DownloadScxFile(int fileId)
+        {
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory
+                .GetApplicationService<IScxGenerationService>()
+                .DownloadGeneratedScxFile(fileId));
         }
     }
 }

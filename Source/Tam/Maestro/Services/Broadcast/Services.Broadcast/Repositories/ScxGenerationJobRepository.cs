@@ -28,6 +28,13 @@ namespace Services.Broadcast.Repositories
         /// <param name="inventorySourceId">The inventory source identifier.</param>
         /// <returns></returns>
         List<ScxFileGenerationDetailDto> GetScxFileGenerationDetails(int inventorySourceId);
+
+        /// <summary>
+        /// Gets the name of the SCX file.
+        /// </summary>
+        /// <param name="fileId">The file identifier.</param>
+        /// <returns></returns>
+        string GetScxFileName(int fileId);
     }
 
     public class ScxGenerationJobRepository : BroadcastRepositoryBase, IScxGenerationJobRepository
@@ -180,10 +187,9 @@ namespace Services.Broadcast.Repositories
                     {
                         GenerationRequestDateTime = j.queued_at,
                         GenerationRequestedByUsername = j.requested_by,
-                        FileName = f.file_name,
+                        FileId = f.id,
                         UnitName = f.unit_name,
-                        DaypartCodeId = d.id,
-                        DaypartCodeName = d.full_name,
+                        DaypartCode = d.code,
                         StartDateTime = f.start_date,
                         EndDateTime = f.end_date,
                         ProcessingStatusId = j.status
@@ -191,7 +197,19 @@ namespace Services.Broadcast.Repositories
                 .ToList();
             return details;
         }
-        
+
         #endregion // #region GetScxFileGenerationDetails
+
+        /// <inheritdoc />
+        public string GetScxFileName(int fileId)
+        {
+             var fileName = _InReadUncommitedTransaction(context =>
+                {
+                    var file = context.scx_generation_job_files.Single(s => s.id == fileId, $"File with Id {fileId} not found.");
+                    return file.file_name;
+                }
+            );
+             return fileName;
+        }
     }
 }
