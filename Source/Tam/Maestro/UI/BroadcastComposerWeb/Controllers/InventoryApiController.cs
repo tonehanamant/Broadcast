@@ -1,22 +1,21 @@
 ﻿using Common.Services.WebComponents;
+using Microsoft.Practices.Unity;
 using Services.Broadcast.ApplicationServices;
-using System;
-using System.Net.Http;
-using System.Web.Http;
-using Tam.Maestro.Web.Common;
-using System.Net.Http.Headers;
-using System.Net;
-using Tam.Maestro.Services.Cable.Entities;
-using System.Collections.Generic;
-using System.IO;
+using Services.Broadcast.Cache;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.InventorySummary;
-using Services.Broadcast.Exceptions;
 using Services.Broadcast.Entities.Scx;
-using Tam.Maestro.Data.Entities.DataTransferObjects;
+using Services.Broadcast.Exceptions;
+using System;
+using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Practices.Unity;
-using Services.Broadcast.Cache;
+using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Web.Http;
+using Tam.Maestro.Data.Entities.DataTransferObjects;
+using Tam.Maestro.Services.Cable.Entities;
+using Tam.Maestro.Web.Common;
 
 namespace BroadcastComposerWeb.Controllers
 {
@@ -303,11 +302,24 @@ namespace BroadcastComposerWeb.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("DownloadScxFile")]
-        public BaseResponse<Tuple<string, Stream>> DownloadScxFile(int fileId)
+        public HttpResponseMessage DownloadScxFile(int fileId)
         {
-            return _ConvertToBaseResponse(() => _ApplicationServiceFactory
-                .GetApplicationService<IScxGenerationService>()
-                .DownloadGeneratedScxFile(fileId));
+            if (fileId == 0)
+            {
+                return new HttpResponseMessage { StatusCode = HttpStatusCode.NoContent, ReasonPhrase = "No file id was supplied" };
+            }
+
+            var file = _ApplicationServiceFactory.GetApplicationService<IScxGenerationService>()
+                .DownloadGeneratedScxFile(fileId);
+
+            var result = Request.CreateResponse(HttpStatusCode.OK);
+            result.Content = new StreamContent(file.Item2);
+            result.Content.Headers.ContentType = new MediaTypeHeaderValue(file.Item3);
+            result.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
+            {
+                FileName = file.Item1
+            };
+            return result;
         }
     }
 }

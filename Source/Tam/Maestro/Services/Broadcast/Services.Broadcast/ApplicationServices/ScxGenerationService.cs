@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Web;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 
@@ -35,8 +36,8 @@ namespace Services.Broadcast.ApplicationServices
         /// Downloads the generated SCX file.
         /// </summary>
         /// <param name="fileId">The file identifier.</param>
-        /// <returns></returns>
-        Tuple<string, Stream> DownloadGeneratedScxFile(int fileId);
+        /// <returns>Tuple : File Name, Content Stream, MIME Type Name</returns>
+        Tuple<string, Stream, string> DownloadGeneratedScxFile(int fileId);
     }
 
     public class ScxGenerationService : IScxGenerationService
@@ -190,7 +191,7 @@ namespace Services.Broadcast.ApplicationServices
         #endregion // #region ScxFileGenerationHistory
 
         /// <inheritdoc />
-        public Tuple<string, Stream> DownloadGeneratedScxFile(int fileId)
+        public Tuple<string, Stream, string> DownloadGeneratedScxFile(int fileId)
         {
             var repo = GetScxGenerationJobRepository();
             var fileName = repo.GetScxFileName(fileId);
@@ -205,7 +206,8 @@ namespace Services.Broadcast.ApplicationServices
             }
 
             Stream fileStream = _FileService.GetFileStream(filePath);
-            var result = new Tuple<string, Stream>(fileName, fileStream);
+            var fileMimeType = MimeMapping.GetMimeMapping(fileName);
+            var result = new Tuple<string, Stream, string>(fileName, fileStream, fileMimeType);
             return result;
         }
 

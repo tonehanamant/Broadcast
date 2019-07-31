@@ -160,6 +160,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ScxFileGeneration
             Assert.IsNotNull(result);
             Assert.AreEqual("fileTwo.txt", result.Item1);
             Assert.IsNotNull(result.Item2);
+            Assert.AreEqual("text/plain", result.Item3);
             Assert.AreEqual(1, getFilesCallCount);
             Assert.AreEqual(1, getScxFileNameCallCount);
             Assert.AreEqual(1, getFileStreamCallCount);
