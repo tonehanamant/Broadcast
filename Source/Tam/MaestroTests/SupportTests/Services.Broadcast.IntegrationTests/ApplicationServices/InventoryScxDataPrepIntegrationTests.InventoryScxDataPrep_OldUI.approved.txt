@@ -1,6 +1,112 @@
 ﻿[
   {
     "AdvertisersName": null,
+    "AllSortedMediaWeeks": [
+      {
+        "_EndDate": "2019-01-06T00:00:00",
+        "_Id": 784,
+        "_MediaMonthId": 448,
+        "_StartDate": "2018-12-31T00:00:00",
+        "_WeekNumber": 1,
+        "IsDirty": true
+      },
+      {
+        "_EndDate": "2019-01-13T00:00:00",
+        "_Id": 785,
+        "_MediaMonthId": 448,
+        "_StartDate": "2019-01-07T00:00:00",
+        "_WeekNumber": 2,
+        "IsDirty": true
+      },
+      {
+        "_EndDate": "2019-01-20T00:00:00",
+        "_Id": 786,
+        "_MediaMonthId": 448,
+        "_StartDate": "2019-01-14T00:00:00",
+        "_WeekNumber": 3,
+        "IsDirty": true
+      },
+      {
+        "_EndDate": "2019-01-27T00:00:00",
+        "_Id": 787,
+        "_MediaMonthId": 448,
+        "_StartDate": "2019-01-21T00:00:00",
+        "_WeekNumber": 4,
+        "IsDirty": true
+      },
+      {
+        "_EndDate": "2019-02-03T00:00:00",
+        "_Id": 788,
+        "_MediaMonthId": 449,
+        "_StartDate": "2019-01-28T00:00:00",
+        "_WeekNumber": 1,
+        "IsDirty": true
+      },
+      {
+        "_EndDate": "2019-02-10T00:00:00",
+        "_Id": 789,
+        "_MediaMonthId": 449,
+        "_StartDate": "2019-02-04T00:00:00",
+        "_WeekNumber": 2,
+        "IsDirty": true
+      },
+      {
+        "_EndDate": "2019-02-17T00:00:00",
+        "_Id": 790,
+        "_MediaMonthId": 449,
+        "_StartDate": "2019-02-11T00:00:00",
+        "_WeekNumber": 3,
+        "IsDirty": true
+      },
+      {
+        "_EndDate": "2019-02-24T00:00:00",
+        "_Id": 791,
+        "_MediaMonthId": 449,
+        "_StartDate": "2019-02-18T00:00:00",
+        "_WeekNumber": 4,
+        "IsDirty": true
+      },
+      {
+        "_EndDate": "2019-03-03T00:00:00",
+        "_Id": 792,
+        "_MediaMonthId": 450,
+        "_StartDate": "2019-02-25T00:00:00",
+        "_WeekNumber": 1,
+        "IsDirty": true
+      },
+      {
+        "_EndDate": "2019-03-10T00:00:00",
+        "_Id": 793,
+        "_MediaMonthId": 450,
+        "_StartDate": "2019-03-04T00:00:00",
+        "_WeekNumber": 2,
+        "IsDirty": true
+      },
+      {
+        "_EndDate": "2019-03-17T00:00:00",
+        "_Id": 794,
+        "_MediaMonthId": 450,
+        "_StartDate": "2019-03-11T00:00:00",
+        "_WeekNumber": 3,
+        "IsDirty": true
+      },
+      {
+        "_EndDate": "2019-03-24T00:00:00",
+        "_Id": 795,
+        "_MediaMonthId": 450,
+        "_StartDate": "2019-03-18T00:00:00",
+        "_WeekNumber": 4,
+        "IsDirty": true
+      },
+      {
+        "_EndDate": "2019-03-31T00:00:00",
+        "_Id": 796,
+        "_MediaMonthId": 450,
+        "_StartDate": "2019-03-25T00:00:00",
+        "_WeekNumber": 5,
+        "IsDirty": true
+      }
+    ],
     "DaypartCode": "MDN",
     "DaypartCodeId": 2,
     "Demos": null,
@@ -9,15 +115,9 @@
     "InventoryMarkets": [
       {
         "DmaMarketName": "New York",
-        "MarketCoverage": 10.0,
         "MarketId": 101,
-        "MarketName": "New York",
-        "MarketRank": 1,
-        "MarketSubscribers": 0.0,
         "Stations": [
           {
-            "Affiliation": "CBS",
-            "CallLetters": "WCBS-TV 2.1",
             "LegacyCallLetters": "WCBS",
             "Programs": [
               {
@@ -27,23 +127,148 @@
                     "Id": 29862
                   }
                 ],
-                "FlightWeeks": [],
-                "Genres": [],
                 "ProgramNames": [
                   null
                 ],
-                "ProvidedUnitImpressions": null,
-                "StationCode": 5012,
-                "TargetCpm": 0.0,
-                "TargetImpressions": 0.0,
-                "UnitImpressions": 0.0
+                "Weeks": [
+                  {
+                    "MediaWeek": {
+                      "_EndDate": "2019-01-06T00:00:00",
+                      "_Id": 784,
+                      "_MediaMonthId": 448,
+                      "_StartDate": "2018-12-31T00:00:00",
+                      "_WeekNumber": 1,
+                      "IsDirty": true
+                    },
+                    "Spots": 1
+                  },
+                  {
+                    "MediaWeek": {
+                      "_EndDate": "2019-01-13T00:00:00",
+                      "_Id": 785,
+                      "_MediaMonthId": 448,
+                      "_StartDate": "2019-01-07T00:00:00",
+                      "_WeekNumber": 2,
+                      "IsDirty": true
+                    },
+                    "Spots": 1
+                  },
+                  {
+                    "MediaWeek": {
+                      "_EndDate": "2019-01-20T00:00:00",
+                      "_Id": 786,
+                      "_MediaMonthId": 448,
+                      "_StartDate": "2019-01-14T00:00:00",
+                      "_WeekNumber": 3,
+                      "IsDirty": true
+                    },
+                    "Spots": 1
+                  },
+                  {
+                    "MediaWeek": {
+                      "_EndDate": "2019-01-27T00:00:00",
+                      "_Id": 787,
+                      "_MediaMonthId": 448,
+                      "_StartDate": "2019-01-21T00:00:00",
+                      "_WeekNumber": 4,
+                      "IsDirty": true
+                    },
+                    "Spots": 1
+                  },
+                  {
+                    "MediaWeek": {
+                      "_EndDate": "2019-02-03T00:00:00",
+                      "_Id": 788,
+                      "_MediaMonthId": 449,
+                      "_StartDate": "2019-01-28T00:00:00",
+                      "_WeekNumber": 1,
+                      "IsDirty": true
+                    },
+                    "Spots": 1
+                  },
+                  {
+                    "MediaWeek": {
+                      "_EndDate": "2019-02-10T00:00:00",
+                      "_Id": 789,
+                      "_MediaMonthId": 449,
+                      "_StartDate": "2019-02-04T00:00:00",
+                      "_WeekNumber": 2,
+                      "IsDirty": true
+                    },
+                    "Spots": 1
+                  },
+                  {
+                    "MediaWeek": {
+                      "_EndDate": "2019-02-17T00:00:00",
+                      "_Id": 790,
+                      "_MediaMonthId": 449,
+                      "_StartDate": "2019-02-11T00:00:00",
+                      "_WeekNumber": 3,
+                      "IsDirty": true
+                    },
+                    "Spots": 1
+                  },
+                  {
+                    "MediaWeek": {
+                      "_EndDate": "2019-02-24T00:00:00",
+                      "_Id": 791,
+                      "_MediaMonthId": 449,
+                      "_StartDate": "2019-02-18T00:00:00",
+                      "_WeekNumber": 4,
+                      "IsDirty": true
+                    },
+                    "Spots": 1
+                  },
+                  {
+                    "MediaWeek": {
+                      "_EndDate": "2019-03-03T00:00:00",
+                      "_Id": 792,
+                      "_MediaMonthId": 450,
+                      "_StartDate": "2019-02-25T00:00:00",
+                      "_WeekNumber": 1,
+                      "IsDirty": true
+                    },
+                    "Spots": 1
+                  },
+                  {
+                    "MediaWeek": {
+                      "_EndDate": "2019-03-10T00:00:00",
+                      "_Id": 793,
+                      "_MediaMonthId": 450,
+                      "_StartDate": "2019-03-04T00:00:00",
+                      "_WeekNumber": 2,
+                      "IsDirty": true
+                    },
+                    "Spots": 1
+                  },
+                  {
+                    "MediaWeek": {
+                      "_EndDate": "2019-03-17T00:00:00",
+                      "_Id": 794,
+                      "_MediaMonthId": 450,
+                      "_StartDate": "2019-03-11T00:00:00",
+                      "_WeekNumber": 3,
+                      "IsDirty": true
+                    },
+                    "Spots": 1
+                  },
+                  {
+                    "MediaWeek": {
+                      "_EndDate": "2019-03-24T00:00:00",
+                      "_Id": 795,
+                      "_MediaMonthId": 450,
+                      "_StartDate": "2019-03-18T00:00:00",
+                      "_WeekNumber": 4,
+                      "IsDirty": true
+                    },
+                    "Spots": 1
+                  }
+                ]
               }
             ],
             "StationCode": 5012
           },
           {
-            "Affiliation": "CW",
-            "CallLetters": "WPIX 11.1",
             "LegacyCallLetters": "WPIX",
             "Programs": [
               {
@@ -53,16 +278,143 @@
                     "Id": 29862
                   }
                 ],
-                "FlightWeeks": [],
-                "Genres": [],
                 "ProgramNames": [
                   null
                 ],
-                "ProvidedUnitImpressions": null,
-                "StationCode": 5014,
-                "TargetCpm": 0.0,
-                "TargetImpressions": 0.0,
-                "UnitImpressions": 0.0
+                "Weeks": [
+                  {
+                    "MediaWeek": {
+                      "_EndDate": "2019-01-06T00:00:00",
+                      "_Id": 784,
+                      "_MediaMonthId": 448,
+                      "_StartDate": "2018-12-31T00:00:00",
+                      "_WeekNumber": 1,
+                      "IsDirty": true
+                    },
+                    "Spots": 1
+                  },
+                  {
+                    "MediaWeek": {
+                      "_EndDate": "2019-01-13T00:00:00",
+                      "_Id": 785,
+                      "_MediaMonthId": 448,
+                      "_StartDate": "2019-01-07T00:00:00",
+                      "_WeekNumber": 2,
+                      "IsDirty": true
+                    },
+                    "Spots": 1
+                  },
+                  {
+                    "MediaWeek": {
+                      "_EndDate": "2019-01-20T00:00:00",
+                      "_Id": 786,
+                      "_MediaMonthId": 448,
+                      "_StartDate": "2019-01-14T00:00:00",
+                      "_WeekNumber": 3,
+                      "IsDirty": true
+                    },
+                    "Spots": 1
+                  },
+                  {
+                    "MediaWeek": {
+                      "_EndDate": "2019-01-27T00:00:00",
+                      "_Id": 787,
+                      "_MediaMonthId": 448,
+                      "_StartDate": "2019-01-21T00:00:00",
+                      "_WeekNumber": 4,
+                      "IsDirty": true
+                    },
+                    "Spots": 1
+                  },
+                  {
+                    "MediaWeek": {
+                      "_EndDate": "2019-02-03T00:00:00",
+                      "_Id": 788,
+                      "_MediaMonthId": 449,
+                      "_StartDate": "2019-01-28T00:00:00",
+                      "_WeekNumber": 1,
+                      "IsDirty": true
+                    },
+                    "Spots": 1
+                  },
+                  {
+                    "MediaWeek": {
+                      "_EndDate": "2019-02-10T00:00:00",
+                      "_Id": 789,
+                      "_MediaMonthId": 449,
+                      "_StartDate": "2019-02-04T00:00:00",
+                      "_WeekNumber": 2,
+                      "IsDirty": true
+                    },
+                    "Spots": 1
+                  },
+                  {
+                    "MediaWeek": {
+                      "_EndDate": "2019-02-17T00:00:00",
+                      "_Id": 790,
+                      "_MediaMonthId": 449,
+                      "_StartDate": "2019-02-11T00:00:00",
+                      "_WeekNumber": 3,
+                      "IsDirty": true
+                    },
+                    "Spots": 1
+                  },
+                  {
+                    "MediaWeek": {
+                      "_EndDate": "2019-02-24T00:00:00",
+                      "_Id": 791,
+                      "_MediaMonthId": 449,
+                      "_StartDate": "2019-02-18T00:00:00",
+                      "_WeekNumber": 4,
+                      "IsDirty": true
+                    },
+                    "Spots": 1
+                  },
+                  {
+                    "MediaWeek": {
+                      "_EndDate": "2019-03-03T00:00:00",
+                      "_Id": 792,
+                      "_MediaMonthId": 450,
+                      "_StartDate": "2019-02-25T00:00:00",
+                      "_WeekNumber": 1,
+                      "IsDirty": true
+                    },
+                    "Spots": 1
+                  },
+                  {
+                    "MediaWeek": {
+                      "_EndDate": "2019-03-10T00:00:00",
+                      "_Id": 793,
+                      "_MediaMonthId": 450,
+                      "_StartDate": "2019-03-04T00:00:00",
+                      "_WeekNumber": 2,
+                      "IsDirty": true
+                    },
+                    "Spots": 1
+                  },
+                  {
+                    "MediaWeek": {
+                      "_EndDate": "2019-03-17T00:00:00",
+                      "_Id": 794,
+                      "_MediaMonthId": 450,
+                      "_StartDate": "2019-03-11T00:00:00",
+                      "_WeekNumber": 3,
+                      "IsDirty": true
+                    },
+                    "Spots": 1
+                  },
+                  {
+                    "MediaWeek": {
+                      "_EndDate": "2019-03-24T00:00:00",
+                      "_Id": 795,
+                      "_MediaMonthId": 450,
+                      "_StartDate": "2019-03-18T00:00:00",
+                      "_WeekNumber": 4,
+                      "IsDirty": true
+                    },
+                    "Spots": 1
+                  }
+                ]
               }
             ],
             "StationCode": 5014
@@ -71,15 +423,9 @@
       },
       {
         "DmaMarketName": "Chicago",
-        "MarketCoverage": 2.942,
         "MarketId": 202,
-        "MarketName": "Chicago",
-        "MarketRank": 3,
-        "MarketSubscribers": 0.0,
         "Stations": [
           {
-            "Affiliation": "CBS",
-            "CallLetters": "WBBM-TV 2.1",
             "LegacyCallLetters": "WBBM",
             "Programs": [
               {
@@ -89,16 +435,143 @@
                     "Id": 78
                   }
                 ],
-                "FlightWeeks": [],
-                "Genres": [],
                 "ProgramNames": [
                   null
                 ],
-                "ProvidedUnitImpressions": null,
-                "StationCode": 5050,
-                "TargetCpm": 0.0,
-                "TargetImpressions": 0.0,
-                "UnitImpressions": 0.0
+                "Weeks": [
+                  {
+                    "MediaWeek": {
+                      "_EndDate": "2019-01-06T00:00:00",
+                      "_Id": 784,
+                      "_MediaMonthId": 448,
+                      "_StartDate": "2018-12-31T00:00:00",
+                      "_WeekNumber": 1,
+                      "IsDirty": true
+                    },
+                    "Spots": 1
+                  },
+                  {
+                    "MediaWeek": {
+                      "_EndDate": "2019-01-13T00:00:00",
+                      "_Id": 785,
+                      "_MediaMonthId": 448,
+                      "_StartDate": "2019-01-07T00:00:00",
+                      "_WeekNumber": 2,
+                      "IsDirty": true
+                    },
+                    "Spots": 1
+                  },
+                  {
+                    "MediaWeek": {
+                      "_EndDate": "2019-01-20T00:00:00",
+                      "_Id": 786,
+                      "_MediaMonthId": 448,
+                      "_StartDate": "2019-01-14T00:00:00",
+                      "_WeekNumber": 3,
+                      "IsDirty": true
+                    },
+                    "Spots": 1
+                  },
+                  {
+                    "MediaWeek": {
+                      "_EndDate": "2019-01-27T00:00:00",
+                      "_Id": 787,
+                      "_MediaMonthId": 448,
+                      "_StartDate": "2019-01-21T00:00:00",
+                      "_WeekNumber": 4,
+                      "IsDirty": true
+                    },
+                    "Spots": 1
+                  },
+                  {
+                    "MediaWeek": {
+                      "_EndDate": "2019-02-03T00:00:00",
+                      "_Id": 788,
+                      "_MediaMonthId": 449,
+                      "_StartDate": "2019-01-28T00:00:00",
+                      "_WeekNumber": 1,
+                      "IsDirty": true
+                    },
+                    "Spots": 1
+                  },
+                  {
+                    "MediaWeek": {
+                      "_EndDate": "2019-02-10T00:00:00",
+                      "_Id": 789,
+                      "_MediaMonthId": 449,
+                      "_StartDate": "2019-02-04T00:00:00",
+                      "_WeekNumber": 2,
+                      "IsDirty": true
+                    },
+                    "Spots": 1
+                  },
+                  {
+                    "MediaWeek": {
+                      "_EndDate": "2019-02-17T00:00:00",
+                      "_Id": 790,
+                      "_MediaMonthId": 449,
+                      "_StartDate": "2019-02-11T00:00:00",
+                      "_WeekNumber": 3,
+                      "IsDirty": true
+                    },
+                    "Spots": 1
+                  },
+                  {
+                    "MediaWeek": {
+                      "_EndDate": "2019-02-24T00:00:00",
+                      "_Id": 791,
+                      "_MediaMonthId": 449,
+                      "_StartDate": "2019-02-18T00:00:00",
+                      "_WeekNumber": 4,
+                      "IsDirty": true
+                    },
+                    "Spots": 1
+                  },
+                  {
+                    "MediaWeek": {
+                      "_EndDate": "2019-03-03T00:00:00",
+                      "_Id": 792,
+                      "_MediaMonthId": 450,
+                      "_StartDate": "2019-02-25T00:00:00",
+                      "_WeekNumber": 1,
+                      "IsDirty": true
+                    },
+                    "Spots": 1
+                  },
+                  {
+                    "MediaWeek": {
+                      "_EndDate": "2019-03-10T00:00:00",
+                      "_Id": 793,
+                      "_MediaMonthId": 450,
+                      "_StartDate": "2019-03-04T00:00:00",
+                      "_WeekNumber": 2,
+                      "IsDirty": true
+                    },
+                    "Spots": 1
+                  },
+                  {
+                    "MediaWeek": {
+                      "_EndDate": "2019-03-17T00:00:00",
+                      "_Id": 794,
+                      "_MediaMonthId": 450,
+                      "_StartDate": "2019-03-11T00:00:00",
+                      "_WeekNumber": 3,
+                      "IsDirty": true
+                    },
+                    "Spots": 1
+                  },
+                  {
+                    "MediaWeek": {
+                      "_EndDate": "2019-03-24T00:00:00",
+                      "_Id": 795,
+                      "_MediaMonthId": 450,
+                      "_StartDate": "2019-03-18T00:00:00",
+                      "_WeekNumber": 4,
+                      "IsDirty": true
+                    },
+                    "Spots": 1
+                  }
+                ]
               }
             ],
             "StationCode": 5050
@@ -346,1312 +819,116 @@
       "100": "Nov16 DMA Nielsen Live+3",
       "343": "Nov16 DMA Nielsen Live+3"
     },
-    "UnitName": "Unit 4",
-    "WeekData": [
-      {
-        "InventoryWeek": {
-          "Budget": 0.0,
-          "BudgetMarginAchieved": false,
-          "BudgetPercent": 0.0,
-          "BudgetTotal": 0.0,
-          "ImpressionsGoal": 0.0,
-          "ImpressionsMarginAchieved": false,
-          "ImpressionsPercent": 0.0,
-          "ImpressionsTotal": 0.0,
-          "IsHiatus": false,
-          "Markets": [
-            {
-              "Cost": 0.0,
-              "DisplayImpressions": 0.0,
-              "DisplayStationImpressions": 0.0,
-              "Impressions": 0.0,
-              "MarketId": 101,
-              "Spots": 0,
-              "Stations": [
-                {
-                  "Programs": [
-                    {
-                      "Cost": 0.0,
-                      "DisplayImpressions": 0.0,
-                      "DisplayStationImpressions": 0.0,
-                      "EFF": 0.0,
-                      "HasImpressions": false,
-                      "ProvidedUnitImpressions": null,
-                      "Spots": 1,
-                      "TargetCpm": 0.0,
-                      "TargetImpressions": 0.0,
-                      "TotalImpressions": 0.0,
-                      "UnitCost": 0.0,
-                      "UnitImpression": 0.0
-                    }
-                  ],
-                  "StationCode": 5012
-                },
-                {
-                  "Programs": [
-                    {
-                      "Cost": 0.0,
-                      "DisplayImpressions": 0.0,
-                      "DisplayStationImpressions": 0.0,
-                      "EFF": 0.0,
-                      "HasImpressions": false,
-                      "ProvidedUnitImpressions": null,
-                      "Spots": 1,
-                      "TargetCpm": 0.0,
-                      "TargetImpressions": 0.0,
-                      "TotalImpressions": 0.0,
-                      "UnitCost": 0.0,
-                      "UnitImpression": 0.0
-                    }
-                  ],
-                  "StationCode": 5014
-                }
-              ]
-            },
-            {
-              "Cost": 0.0,
-              "DisplayImpressions": 0.0,
-              "DisplayStationImpressions": 0.0,
-              "Impressions": 0.0,
-              "MarketId": 202,
-              "Spots": 0,
-              "Stations": [
-                {
-                  "Programs": [
-                    {
-                      "Cost": 0.0,
-                      "DisplayImpressions": 0.0,
-                      "DisplayStationImpressions": 0.0,
-                      "EFF": 0.0,
-                      "HasImpressions": false,
-                      "ProvidedUnitImpressions": null,
-                      "Spots": 1,
-                      "TargetCpm": 0.0,
-                      "TargetImpressions": 0.0,
-                      "TotalImpressions": 0.0,
-                      "UnitCost": 0.0,
-                      "UnitImpression": 0.0
-                    }
-                  ],
-                  "StationCode": 5050
-                }
-              ]
-            }
-          ],
-          "MediaWeekId": 0,
-          "ProposalVersionDetailQuarterWeekId": 0,
-          "QuarterText": null,
-          "Week": null
-        },
-        "MediaWeek": {
-          "_EndDate": "2019-01-06T00:00:00",
-          "_Id": 784,
-          "_MediaMonthId": 448,
-          "_StartDate": "2018-12-31T00:00:00",
-          "_WeekNumber": 1,
-          "IsDirty": true
-        },
-        "StartDate": "2018-12-31T00:00:00",
-        "WeekNumber": 1
-      },
-      {
-        "InventoryWeek": {
-          "Budget": 0.0,
-          "BudgetMarginAchieved": false,
-          "BudgetPercent": 0.0,
-          "BudgetTotal": 0.0,
-          "ImpressionsGoal": 0.0,
-          "ImpressionsMarginAchieved": false,
-          "ImpressionsPercent": 0.0,
-          "ImpressionsTotal": 0.0,
-          "IsHiatus": false,
-          "Markets": [
-            {
-              "Cost": 0.0,
-              "DisplayImpressions": 0.0,
-              "DisplayStationImpressions": 0.0,
-              "Impressions": 0.0,
-              "MarketId": 101,
-              "Spots": 0,
-              "Stations": [
-                {
-                  "Programs": [
-                    {
-                      "Cost": 0.0,
-                      "DisplayImpressions": 0.0,
-                      "DisplayStationImpressions": 0.0,
-                      "EFF": 0.0,
-                      "HasImpressions": false,
-                      "ProvidedUnitImpressions": null,
-                      "Spots": 1,
-                      "TargetCpm": 0.0,
-                      "TargetImpressions": 0.0,
-                      "TotalImpressions": 0.0,
-                      "UnitCost": 0.0,
-                      "UnitImpression": 0.0
-                    }
-                  ],
-                  "StationCode": 5012
-                },
-                {
-                  "Programs": [
-                    {
-                      "Cost": 0.0,
-                      "DisplayImpressions": 0.0,
-                      "DisplayStationImpressions": 0.0,
-                      "EFF": 0.0,
-                      "HasImpressions": false,
-                      "ProvidedUnitImpressions": null,
-                      "Spots": 1,
-                      "TargetCpm": 0.0,
-                      "TargetImpressions": 0.0,
-                      "TotalImpressions": 0.0,
-                      "UnitCost": 0.0,
-                      "UnitImpression": 0.0
-                    }
-                  ],
-                  "StationCode": 5014
-                }
-              ]
-            },
-            {
-              "Cost": 0.0,
-              "DisplayImpressions": 0.0,
-              "DisplayStationImpressions": 0.0,
-              "Impressions": 0.0,
-              "MarketId": 202,
-              "Spots": 0,
-              "Stations": [
-                {
-                  "Programs": [
-                    {
-                      "Cost": 0.0,
-                      "DisplayImpressions": 0.0,
-                      "DisplayStationImpressions": 0.0,
-                      "EFF": 0.0,
-                      "HasImpressions": false,
-                      "ProvidedUnitImpressions": null,
-                      "Spots": 1,
-                      "TargetCpm": 0.0,
-                      "TargetImpressions": 0.0,
-                      "TotalImpressions": 0.0,
-                      "UnitCost": 0.0,
-                      "UnitImpression": 0.0
-                    }
-                  ],
-                  "StationCode": 5050
-                }
-              ]
-            }
-          ],
-          "MediaWeekId": 0,
-          "ProposalVersionDetailQuarterWeekId": 0,
-          "QuarterText": null,
-          "Week": null
-        },
-        "MediaWeek": {
-          "_EndDate": "2019-01-13T00:00:00",
-          "_Id": 785,
-          "_MediaMonthId": 448,
-          "_StartDate": "2019-01-07T00:00:00",
-          "_WeekNumber": 2,
-          "IsDirty": true
-        },
-        "StartDate": "2019-01-07T00:00:00",
-        "WeekNumber": 2
-      },
-      {
-        "InventoryWeek": {
-          "Budget": 0.0,
-          "BudgetMarginAchieved": false,
-          "BudgetPercent": 0.0,
-          "BudgetTotal": 0.0,
-          "ImpressionsGoal": 0.0,
-          "ImpressionsMarginAchieved": false,
-          "ImpressionsPercent": 0.0,
-          "ImpressionsTotal": 0.0,
-          "IsHiatus": false,
-          "Markets": [
-            {
-              "Cost": 0.0,
-              "DisplayImpressions": 0.0,
-              "DisplayStationImpressions": 0.0,
-              "Impressions": 0.0,
-              "MarketId": 101,
-              "Spots": 0,
-              "Stations": [
-                {
-                  "Programs": [
-                    {
-                      "Cost": 0.0,
-                      "DisplayImpressions": 0.0,
-                      "DisplayStationImpressions": 0.0,
-                      "EFF": 0.0,
-                      "HasImpressions": false,
-                      "ProvidedUnitImpressions": null,
-                      "Spots": 1,
-                      "TargetCpm": 0.0,
-                      "TargetImpressions": 0.0,
-                      "TotalImpressions": 0.0,
-                      "UnitCost": 0.0,
-                      "UnitImpression": 0.0
-                    }
-                  ],
-                  "StationCode": 5012
-                },
-                {
-                  "Programs": [
-                    {
-                      "Cost": 0.0,
-                      "DisplayImpressions": 0.0,
-                      "DisplayStationImpressions": 0.0,
-                      "EFF": 0.0,
-                      "HasImpressions": false,
-                      "ProvidedUnitImpressions": null,
-                      "Spots": 1,
-                      "TargetCpm": 0.0,
-                      "TargetImpressions": 0.0,
-                      "TotalImpressions": 0.0,
-                      "UnitCost": 0.0,
-                      "UnitImpression": 0.0
-                    }
-                  ],
-                  "StationCode": 5014
-                }
-              ]
-            },
-            {
-              "Cost": 0.0,
-              "DisplayImpressions": 0.0,
-              "DisplayStationImpressions": 0.0,
-              "Impressions": 0.0,
-              "MarketId": 202,
-              "Spots": 0,
-              "Stations": [
-                {
-                  "Programs": [
-                    {
-                      "Cost": 0.0,
-                      "DisplayImpressions": 0.0,
-                      "DisplayStationImpressions": 0.0,
-                      "EFF": 0.0,
-                      "HasImpressions": false,
-                      "ProvidedUnitImpressions": null,
-                      "Spots": 1,
-                      "TargetCpm": 0.0,
-                      "TargetImpressions": 0.0,
-                      "TotalImpressions": 0.0,
-                      "UnitCost": 0.0,
-                      "UnitImpression": 0.0
-                    }
-                  ],
-                  "StationCode": 5050
-                }
-              ]
-            }
-          ],
-          "MediaWeekId": 0,
-          "ProposalVersionDetailQuarterWeekId": 0,
-          "QuarterText": null,
-          "Week": null
-        },
-        "MediaWeek": {
-          "_EndDate": "2019-01-20T00:00:00",
-          "_Id": 786,
-          "_MediaMonthId": 448,
-          "_StartDate": "2019-01-14T00:00:00",
-          "_WeekNumber": 3,
-          "IsDirty": true
-        },
-        "StartDate": "2019-01-14T00:00:00",
-        "WeekNumber": 3
-      },
-      {
-        "InventoryWeek": {
-          "Budget": 0.0,
-          "BudgetMarginAchieved": false,
-          "BudgetPercent": 0.0,
-          "BudgetTotal": 0.0,
-          "ImpressionsGoal": 0.0,
-          "ImpressionsMarginAchieved": false,
-          "ImpressionsPercent": 0.0,
-          "ImpressionsTotal": 0.0,
-          "IsHiatus": false,
-          "Markets": [
-            {
-              "Cost": 0.0,
-              "DisplayImpressions": 0.0,
-              "DisplayStationImpressions": 0.0,
-              "Impressions": 0.0,
-              "MarketId": 101,
-              "Spots": 0,
-              "Stations": [
-                {
-                  "Programs": [
-                    {
-                      "Cost": 0.0,
-                      "DisplayImpressions": 0.0,
-                      "DisplayStationImpressions": 0.0,
-                      "EFF": 0.0,
-                      "HasImpressions": false,
-                      "ProvidedUnitImpressions": null,
-                      "Spots": 1,
-                      "TargetCpm": 0.0,
-                      "TargetImpressions": 0.0,
-                      "TotalImpressions": 0.0,
-                      "UnitCost": 0.0,
-                      "UnitImpression": 0.0
-                    }
-                  ],
-                  "StationCode": 5012
-                },
-                {
-                  "Programs": [
-                    {
-                      "Cost": 0.0,
-                      "DisplayImpressions": 0.0,
-                      "DisplayStationImpressions": 0.0,
-                      "EFF": 0.0,
-                      "HasImpressions": false,
-                      "ProvidedUnitImpressions": null,
-                      "Spots": 1,
-                      "TargetCpm": 0.0,
-                      "TargetImpressions": 0.0,
-                      "TotalImpressions": 0.0,
-                      "UnitCost": 0.0,
-                      "UnitImpression": 0.0
-                    }
-                  ],
-                  "StationCode": 5014
-                }
-              ]
-            },
-            {
-              "Cost": 0.0,
-              "DisplayImpressions": 0.0,
-              "DisplayStationImpressions": 0.0,
-              "Impressions": 0.0,
-              "MarketId": 202,
-              "Spots": 0,
-              "Stations": [
-                {
-                  "Programs": [
-                    {
-                      "Cost": 0.0,
-                      "DisplayImpressions": 0.0,
-                      "DisplayStationImpressions": 0.0,
-                      "EFF": 0.0,
-                      "HasImpressions": false,
-                      "ProvidedUnitImpressions": null,
-                      "Spots": 1,
-                      "TargetCpm": 0.0,
-                      "TargetImpressions": 0.0,
-                      "TotalImpressions": 0.0,
-                      "UnitCost": 0.0,
-                      "UnitImpression": 0.0
-                    }
-                  ],
-                  "StationCode": 5050
-                }
-              ]
-            }
-          ],
-          "MediaWeekId": 0,
-          "ProposalVersionDetailQuarterWeekId": 0,
-          "QuarterText": null,
-          "Week": null
-        },
-        "MediaWeek": {
-          "_EndDate": "2019-01-27T00:00:00",
-          "_Id": 787,
-          "_MediaMonthId": 448,
-          "_StartDate": "2019-01-21T00:00:00",
-          "_WeekNumber": 4,
-          "IsDirty": true
-        },
-        "StartDate": "2019-01-21T00:00:00",
-        "WeekNumber": 4
-      },
-      {
-        "InventoryWeek": {
-          "Budget": 0.0,
-          "BudgetMarginAchieved": false,
-          "BudgetPercent": 0.0,
-          "BudgetTotal": 0.0,
-          "ImpressionsGoal": 0.0,
-          "ImpressionsMarginAchieved": false,
-          "ImpressionsPercent": 0.0,
-          "ImpressionsTotal": 0.0,
-          "IsHiatus": false,
-          "Markets": [
-            {
-              "Cost": 0.0,
-              "DisplayImpressions": 0.0,
-              "DisplayStationImpressions": 0.0,
-              "Impressions": 0.0,
-              "MarketId": 101,
-              "Spots": 0,
-              "Stations": [
-                {
-                  "Programs": [
-                    {
-                      "Cost": 0.0,
-                      "DisplayImpressions": 0.0,
-                      "DisplayStationImpressions": 0.0,
-                      "EFF": 0.0,
-                      "HasImpressions": false,
-                      "ProvidedUnitImpressions": null,
-                      "Spots": 1,
-                      "TargetCpm": 0.0,
-                      "TargetImpressions": 0.0,
-                      "TotalImpressions": 0.0,
-                      "UnitCost": 0.0,
-                      "UnitImpression": 0.0
-                    }
-                  ],
-                  "StationCode": 5012
-                },
-                {
-                  "Programs": [
-                    {
-                      "Cost": 0.0,
-                      "DisplayImpressions": 0.0,
-                      "DisplayStationImpressions": 0.0,
-                      "EFF": 0.0,
-                      "HasImpressions": false,
-                      "ProvidedUnitImpressions": null,
-                      "Spots": 1,
-                      "TargetCpm": 0.0,
-                      "TargetImpressions": 0.0,
-                      "TotalImpressions": 0.0,
-                      "UnitCost": 0.0,
-                      "UnitImpression": 0.0
-                    }
-                  ],
-                  "StationCode": 5014
-                }
-              ]
-            },
-            {
-              "Cost": 0.0,
-              "DisplayImpressions": 0.0,
-              "DisplayStationImpressions": 0.0,
-              "Impressions": 0.0,
-              "MarketId": 202,
-              "Spots": 0,
-              "Stations": [
-                {
-                  "Programs": [
-                    {
-                      "Cost": 0.0,
-                      "DisplayImpressions": 0.0,
-                      "DisplayStationImpressions": 0.0,
-                      "EFF": 0.0,
-                      "HasImpressions": false,
-                      "ProvidedUnitImpressions": null,
-                      "Spots": 1,
-                      "TargetCpm": 0.0,
-                      "TargetImpressions": 0.0,
-                      "TotalImpressions": 0.0,
-                      "UnitCost": 0.0,
-                      "UnitImpression": 0.0
-                    }
-                  ],
-                  "StationCode": 5050
-                }
-              ]
-            }
-          ],
-          "MediaWeekId": 0,
-          "ProposalVersionDetailQuarterWeekId": 0,
-          "QuarterText": null,
-          "Week": null
-        },
-        "MediaWeek": {
-          "_EndDate": "2019-02-03T00:00:00",
-          "_Id": 788,
-          "_MediaMonthId": 449,
-          "_StartDate": "2019-01-28T00:00:00",
-          "_WeekNumber": 1,
-          "IsDirty": true
-        },
-        "StartDate": "2019-01-28T00:00:00",
-        "WeekNumber": 5
-      },
-      {
-        "InventoryWeek": {
-          "Budget": 0.0,
-          "BudgetMarginAchieved": false,
-          "BudgetPercent": 0.0,
-          "BudgetTotal": 0.0,
-          "ImpressionsGoal": 0.0,
-          "ImpressionsMarginAchieved": false,
-          "ImpressionsPercent": 0.0,
-          "ImpressionsTotal": 0.0,
-          "IsHiatus": false,
-          "Markets": [
-            {
-              "Cost": 0.0,
-              "DisplayImpressions": 0.0,
-              "DisplayStationImpressions": 0.0,
-              "Impressions": 0.0,
-              "MarketId": 101,
-              "Spots": 0,
-              "Stations": [
-                {
-                  "Programs": [
-                    {
-                      "Cost": 0.0,
-                      "DisplayImpressions": 0.0,
-                      "DisplayStationImpressions": 0.0,
-                      "EFF": 0.0,
-                      "HasImpressions": false,
-                      "ProvidedUnitImpressions": null,
-                      "Spots": 1,
-                      "TargetCpm": 0.0,
-                      "TargetImpressions": 0.0,
-                      "TotalImpressions": 0.0,
-                      "UnitCost": 0.0,
-                      "UnitImpression": 0.0
-                    }
-                  ],
-                  "StationCode": 5012
-                },
-                {
-                  "Programs": [
-                    {
-                      "Cost": 0.0,
-                      "DisplayImpressions": 0.0,
-                      "DisplayStationImpressions": 0.0,
-                      "EFF": 0.0,
-                      "HasImpressions": false,
-                      "ProvidedUnitImpressions": null,
-                      "Spots": 1,
-                      "TargetCpm": 0.0,
-                      "TargetImpressions": 0.0,
-                      "TotalImpressions": 0.0,
-                      "UnitCost": 0.0,
-                      "UnitImpression": 0.0
-                    }
-                  ],
-                  "StationCode": 5014
-                }
-              ]
-            },
-            {
-              "Cost": 0.0,
-              "DisplayImpressions": 0.0,
-              "DisplayStationImpressions": 0.0,
-              "Impressions": 0.0,
-              "MarketId": 202,
-              "Spots": 0,
-              "Stations": [
-                {
-                  "Programs": [
-                    {
-                      "Cost": 0.0,
-                      "DisplayImpressions": 0.0,
-                      "DisplayStationImpressions": 0.0,
-                      "EFF": 0.0,
-                      "HasImpressions": false,
-                      "ProvidedUnitImpressions": null,
-                      "Spots": 1,
-                      "TargetCpm": 0.0,
-                      "TargetImpressions": 0.0,
-                      "TotalImpressions": 0.0,
-                      "UnitCost": 0.0,
-                      "UnitImpression": 0.0
-                    }
-                  ],
-                  "StationCode": 5050
-                }
-              ]
-            }
-          ],
-          "MediaWeekId": 0,
-          "ProposalVersionDetailQuarterWeekId": 0,
-          "QuarterText": null,
-          "Week": null
-        },
-        "MediaWeek": {
-          "_EndDate": "2019-02-10T00:00:00",
-          "_Id": 789,
-          "_MediaMonthId": 449,
-          "_StartDate": "2019-02-04T00:00:00",
-          "_WeekNumber": 2,
-          "IsDirty": true
-        },
-        "StartDate": "2019-02-04T00:00:00",
-        "WeekNumber": 6
-      },
-      {
-        "InventoryWeek": {
-          "Budget": 0.0,
-          "BudgetMarginAchieved": false,
-          "BudgetPercent": 0.0,
-          "BudgetTotal": 0.0,
-          "ImpressionsGoal": 0.0,
-          "ImpressionsMarginAchieved": false,
-          "ImpressionsPercent": 0.0,
-          "ImpressionsTotal": 0.0,
-          "IsHiatus": false,
-          "Markets": [
-            {
-              "Cost": 0.0,
-              "DisplayImpressions": 0.0,
-              "DisplayStationImpressions": 0.0,
-              "Impressions": 0.0,
-              "MarketId": 101,
-              "Spots": 0,
-              "Stations": [
-                {
-                  "Programs": [
-                    {
-                      "Cost": 0.0,
-                      "DisplayImpressions": 0.0,
-                      "DisplayStationImpressions": 0.0,
-                      "EFF": 0.0,
-                      "HasImpressions": false,
-                      "ProvidedUnitImpressions": null,
-                      "Spots": 1,
-                      "TargetCpm": 0.0,
-                      "TargetImpressions": 0.0,
-                      "TotalImpressions": 0.0,
-                      "UnitCost": 0.0,
-                      "UnitImpression": 0.0
-                    }
-                  ],
-                  "StationCode": 5012
-                },
-                {
-                  "Programs": [
-                    {
-                      "Cost": 0.0,
-                      "DisplayImpressions": 0.0,
-                      "DisplayStationImpressions": 0.0,
-                      "EFF": 0.0,
-                      "HasImpressions": false,
-                      "ProvidedUnitImpressions": null,
-                      "Spots": 1,
-                      "TargetCpm": 0.0,
-                      "TargetImpressions": 0.0,
-                      "TotalImpressions": 0.0,
-                      "UnitCost": 0.0,
-                      "UnitImpression": 0.0
-                    }
-                  ],
-                  "StationCode": 5014
-                }
-              ]
-            },
-            {
-              "Cost": 0.0,
-              "DisplayImpressions": 0.0,
-              "DisplayStationImpressions": 0.0,
-              "Impressions": 0.0,
-              "MarketId": 202,
-              "Spots": 0,
-              "Stations": [
-                {
-                  "Programs": [
-                    {
-                      "Cost": 0.0,
-                      "DisplayImpressions": 0.0,
-                      "DisplayStationImpressions": 0.0,
-                      "EFF": 0.0,
-                      "HasImpressions": false,
-                      "ProvidedUnitImpressions": null,
-                      "Spots": 1,
-                      "TargetCpm": 0.0,
-                      "TargetImpressions": 0.0,
-                      "TotalImpressions": 0.0,
-                      "UnitCost": 0.0,
-                      "UnitImpression": 0.0
-                    }
-                  ],
-                  "StationCode": 5050
-                }
-              ]
-            }
-          ],
-          "MediaWeekId": 0,
-          "ProposalVersionDetailQuarterWeekId": 0,
-          "QuarterText": null,
-          "Week": null
-        },
-        "MediaWeek": {
-          "_EndDate": "2019-02-17T00:00:00",
-          "_Id": 790,
-          "_MediaMonthId": 449,
-          "_StartDate": "2019-02-11T00:00:00",
-          "_WeekNumber": 3,
-          "IsDirty": true
-        },
-        "StartDate": "2019-02-11T00:00:00",
-        "WeekNumber": 7
-      },
-      {
-        "InventoryWeek": {
-          "Budget": 0.0,
-          "BudgetMarginAchieved": false,
-          "BudgetPercent": 0.0,
-          "BudgetTotal": 0.0,
-          "ImpressionsGoal": 0.0,
-          "ImpressionsMarginAchieved": false,
-          "ImpressionsPercent": 0.0,
-          "ImpressionsTotal": 0.0,
-          "IsHiatus": false,
-          "Markets": [
-            {
-              "Cost": 0.0,
-              "DisplayImpressions": 0.0,
-              "DisplayStationImpressions": 0.0,
-              "Impressions": 0.0,
-              "MarketId": 101,
-              "Spots": 0,
-              "Stations": [
-                {
-                  "Programs": [
-                    {
-                      "Cost": 0.0,
-                      "DisplayImpressions": 0.0,
-                      "DisplayStationImpressions": 0.0,
-                      "EFF": 0.0,
-                      "HasImpressions": false,
-                      "ProvidedUnitImpressions": null,
-                      "Spots": 1,
-                      "TargetCpm": 0.0,
-                      "TargetImpressions": 0.0,
-                      "TotalImpressions": 0.0,
-                      "UnitCost": 0.0,
-                      "UnitImpression": 0.0
-                    }
-                  ],
-                  "StationCode": 5012
-                },
-                {
-                  "Programs": [
-                    {
-                      "Cost": 0.0,
-                      "DisplayImpressions": 0.0,
-                      "DisplayStationImpressions": 0.0,
-                      "EFF": 0.0,
-                      "HasImpressions": false,
-                      "ProvidedUnitImpressions": null,
-                      "Spots": 1,
-                      "TargetCpm": 0.0,
-                      "TargetImpressions": 0.0,
-                      "TotalImpressions": 0.0,
-                      "UnitCost": 0.0,
-                      "UnitImpression": 0.0
-                    }
-                  ],
-                  "StationCode": 5014
-                }
-              ]
-            },
-            {
-              "Cost": 0.0,
-              "DisplayImpressions": 0.0,
-              "DisplayStationImpressions": 0.0,
-              "Impressions": 0.0,
-              "MarketId": 202,
-              "Spots": 0,
-              "Stations": [
-                {
-                  "Programs": [
-                    {
-                      "Cost": 0.0,
-                      "DisplayImpressions": 0.0,
-                      "DisplayStationImpressions": 0.0,
-                      "EFF": 0.0,
-                      "HasImpressions": false,
-                      "ProvidedUnitImpressions": null,
-                      "Spots": 1,
-                      "TargetCpm": 0.0,
-                      "TargetImpressions": 0.0,
-                      "TotalImpressions": 0.0,
-                      "UnitCost": 0.0,
-                      "UnitImpression": 0.0
-                    }
-                  ],
-                  "StationCode": 5050
-                }
-              ]
-            }
-          ],
-          "MediaWeekId": 0,
-          "ProposalVersionDetailQuarterWeekId": 0,
-          "QuarterText": null,
-          "Week": null
-        },
-        "MediaWeek": {
-          "_EndDate": "2019-02-24T00:00:00",
-          "_Id": 791,
-          "_MediaMonthId": 449,
-          "_StartDate": "2019-02-18T00:00:00",
-          "_WeekNumber": 4,
-          "IsDirty": true
-        },
-        "StartDate": "2019-02-18T00:00:00",
-        "WeekNumber": 8
-      },
-      {
-        "InventoryWeek": {
-          "Budget": 0.0,
-          "BudgetMarginAchieved": false,
-          "BudgetPercent": 0.0,
-          "BudgetTotal": 0.0,
-          "ImpressionsGoal": 0.0,
-          "ImpressionsMarginAchieved": false,
-          "ImpressionsPercent": 0.0,
-          "ImpressionsTotal": 0.0,
-          "IsHiatus": false,
-          "Markets": [
-            {
-              "Cost": 0.0,
-              "DisplayImpressions": 0.0,
-              "DisplayStationImpressions": 0.0,
-              "Impressions": 0.0,
-              "MarketId": 101,
-              "Spots": 0,
-              "Stations": [
-                {
-                  "Programs": [
-                    {
-                      "Cost": 0.0,
-                      "DisplayImpressions": 0.0,
-                      "DisplayStationImpressions": 0.0,
-                      "EFF": 0.0,
-                      "HasImpressions": false,
-                      "ProvidedUnitImpressions": null,
-                      "Spots": 1,
-                      "TargetCpm": 0.0,
-                      "TargetImpressions": 0.0,
-                      "TotalImpressions": 0.0,
-                      "UnitCost": 0.0,
-                      "UnitImpression": 0.0
-                    }
-                  ],
-                  "StationCode": 5012
-                },
-                {
-                  "Programs": [
-                    {
-                      "Cost": 0.0,
-                      "DisplayImpressions": 0.0,
-                      "DisplayStationImpressions": 0.0,
-                      "EFF": 0.0,
-                      "HasImpressions": false,
-                      "ProvidedUnitImpressions": null,
-                      "Spots": 1,
-                      "TargetCpm": 0.0,
-                      "TargetImpressions": 0.0,
-                      "TotalImpressions": 0.0,
-                      "UnitCost": 0.0,
-                      "UnitImpression": 0.0
-                    }
-                  ],
-                  "StationCode": 5014
-                }
-              ]
-            },
-            {
-              "Cost": 0.0,
-              "DisplayImpressions": 0.0,
-              "DisplayStationImpressions": 0.0,
-              "Impressions": 0.0,
-              "MarketId": 202,
-              "Spots": 0,
-              "Stations": [
-                {
-                  "Programs": [
-                    {
-                      "Cost": 0.0,
-                      "DisplayImpressions": 0.0,
-                      "DisplayStationImpressions": 0.0,
-                      "EFF": 0.0,
-                      "HasImpressions": false,
-                      "ProvidedUnitImpressions": null,
-                      "Spots": 1,
-                      "TargetCpm": 0.0,
-                      "TargetImpressions": 0.0,
-                      "TotalImpressions": 0.0,
-                      "UnitCost": 0.0,
-                      "UnitImpression": 0.0
-                    }
-                  ],
-                  "StationCode": 5050
-                }
-              ]
-            }
-          ],
-          "MediaWeekId": 0,
-          "ProposalVersionDetailQuarterWeekId": 0,
-          "QuarterText": null,
-          "Week": null
-        },
-        "MediaWeek": {
-          "_EndDate": "2019-03-03T00:00:00",
-          "_Id": 792,
-          "_MediaMonthId": 450,
-          "_StartDate": "2019-02-25T00:00:00",
-          "_WeekNumber": 1,
-          "IsDirty": true
-        },
-        "StartDate": "2019-02-25T00:00:00",
-        "WeekNumber": 9
-      },
-      {
-        "InventoryWeek": {
-          "Budget": 0.0,
-          "BudgetMarginAchieved": false,
-          "BudgetPercent": 0.0,
-          "BudgetTotal": 0.0,
-          "ImpressionsGoal": 0.0,
-          "ImpressionsMarginAchieved": false,
-          "ImpressionsPercent": 0.0,
-          "ImpressionsTotal": 0.0,
-          "IsHiatus": false,
-          "Markets": [
-            {
-              "Cost": 0.0,
-              "DisplayImpressions": 0.0,
-              "DisplayStationImpressions": 0.0,
-              "Impressions": 0.0,
-              "MarketId": 101,
-              "Spots": 0,
-              "Stations": [
-                {
-                  "Programs": [
-                    {
-                      "Cost": 0.0,
-                      "DisplayImpressions": 0.0,
-                      "DisplayStationImpressions": 0.0,
-                      "EFF": 0.0,
-                      "HasImpressions": false,
-                      "ProvidedUnitImpressions": null,
-                      "Spots": 1,
-                      "TargetCpm": 0.0,
-                      "TargetImpressions": 0.0,
-                      "TotalImpressions": 0.0,
-                      "UnitCost": 0.0,
-                      "UnitImpression": 0.0
-                    }
-                  ],
-                  "StationCode": 5012
-                },
-                {
-                  "Programs": [
-                    {
-                      "Cost": 0.0,
-                      "DisplayImpressions": 0.0,
-                      "DisplayStationImpressions": 0.0,
-                      "EFF": 0.0,
-                      "HasImpressions": false,
-                      "ProvidedUnitImpressions": null,
-                      "Spots": 1,
-                      "TargetCpm": 0.0,
-                      "TargetImpressions": 0.0,
-                      "TotalImpressions": 0.0,
-                      "UnitCost": 0.0,
-                      "UnitImpression": 0.0
-                    }
-                  ],
-                  "StationCode": 5014
-                }
-              ]
-            },
-            {
-              "Cost": 0.0,
-              "DisplayImpressions": 0.0,
-              "DisplayStationImpressions": 0.0,
-              "Impressions": 0.0,
-              "MarketId": 202,
-              "Spots": 0,
-              "Stations": [
-                {
-                  "Programs": [
-                    {
-                      "Cost": 0.0,
-                      "DisplayImpressions": 0.0,
-                      "DisplayStationImpressions": 0.0,
-                      "EFF": 0.0,
-                      "HasImpressions": false,
-                      "ProvidedUnitImpressions": null,
-                      "Spots": 1,
-                      "TargetCpm": 0.0,
-                      "TargetImpressions": 0.0,
-                      "TotalImpressions": 0.0,
-                      "UnitCost": 0.0,
-                      "UnitImpression": 0.0
-                    }
-                  ],
-                  "StationCode": 5050
-                }
-              ]
-            }
-          ],
-          "MediaWeekId": 0,
-          "ProposalVersionDetailQuarterWeekId": 0,
-          "QuarterText": null,
-          "Week": null
-        },
-        "MediaWeek": {
-          "_EndDate": "2019-03-10T00:00:00",
-          "_Id": 793,
-          "_MediaMonthId": 450,
-          "_StartDate": "2019-03-04T00:00:00",
-          "_WeekNumber": 2,
-          "IsDirty": true
-        },
-        "StartDate": "2019-03-04T00:00:00",
-        "WeekNumber": 10
-      },
-      {
-        "InventoryWeek": {
-          "Budget": 0.0,
-          "BudgetMarginAchieved": false,
-          "BudgetPercent": 0.0,
-          "BudgetTotal": 0.0,
-          "ImpressionsGoal": 0.0,
-          "ImpressionsMarginAchieved": false,
-          "ImpressionsPercent": 0.0,
-          "ImpressionsTotal": 0.0,
-          "IsHiatus": false,
-          "Markets": [
-            {
-              "Cost": 0.0,
-              "DisplayImpressions": 0.0,
-              "DisplayStationImpressions": 0.0,
-              "Impressions": 0.0,
-              "MarketId": 101,
-              "Spots": 0,
-              "Stations": [
-                {
-                  "Programs": [
-                    {
-                      "Cost": 0.0,
-                      "DisplayImpressions": 0.0,
-                      "DisplayStationImpressions": 0.0,
-                      "EFF": 0.0,
-                      "HasImpressions": false,
-                      "ProvidedUnitImpressions": null,
-                      "Spots": 1,
-                      "TargetCpm": 0.0,
-                      "TargetImpressions": 0.0,
-                      "TotalImpressions": 0.0,
-                      "UnitCost": 0.0,
-                      "UnitImpression": 0.0
-                    }
-                  ],
-                  "StationCode": 5012
-                },
-                {
-                  "Programs": [
-                    {
-                      "Cost": 0.0,
-                      "DisplayImpressions": 0.0,
-                      "DisplayStationImpressions": 0.0,
-                      "EFF": 0.0,
-                      "HasImpressions": false,
-                      "ProvidedUnitImpressions": null,
-                      "Spots": 1,
-                      "TargetCpm": 0.0,
-                      "TargetImpressions": 0.0,
-                      "TotalImpressions": 0.0,
-                      "UnitCost": 0.0,
-                      "UnitImpression": 0.0
-                    }
-                  ],
-                  "StationCode": 5014
-                }
-              ]
-            },
-            {
-              "Cost": 0.0,
-              "DisplayImpressions": 0.0,
-              "DisplayStationImpressions": 0.0,
-              "Impressions": 0.0,
-              "MarketId": 202,
-              "Spots": 0,
-              "Stations": [
-                {
-                  "Programs": [
-                    {
-                      "Cost": 0.0,
-                      "DisplayImpressions": 0.0,
-                      "DisplayStationImpressions": 0.0,
-                      "EFF": 0.0,
-                      "HasImpressions": false,
-                      "ProvidedUnitImpressions": null,
-                      "Spots": 1,
-                      "TargetCpm": 0.0,
-                      "TargetImpressions": 0.0,
-                      "TotalImpressions": 0.0,
-                      "UnitCost": 0.0,
-                      "UnitImpression": 0.0
-                    }
-                  ],
-                  "StationCode": 5050
-                }
-              ]
-            }
-          ],
-          "MediaWeekId": 0,
-          "ProposalVersionDetailQuarterWeekId": 0,
-          "QuarterText": null,
-          "Week": null
-        },
-        "MediaWeek": {
-          "_EndDate": "2019-03-17T00:00:00",
-          "_Id": 794,
-          "_MediaMonthId": 450,
-          "_StartDate": "2019-03-11T00:00:00",
-          "_WeekNumber": 3,
-          "IsDirty": true
-        },
-        "StartDate": "2019-03-11T00:00:00",
-        "WeekNumber": 11
-      },
-      {
-        "InventoryWeek": {
-          "Budget": 0.0,
-          "BudgetMarginAchieved": false,
-          "BudgetPercent": 0.0,
-          "BudgetTotal": 0.0,
-          "ImpressionsGoal": 0.0,
-          "ImpressionsMarginAchieved": false,
-          "ImpressionsPercent": 0.0,
-          "ImpressionsTotal": 0.0,
-          "IsHiatus": false,
-          "Markets": [
-            {
-              "Cost": 0.0,
-              "DisplayImpressions": 0.0,
-              "DisplayStationImpressions": 0.0,
-              "Impressions": 0.0,
-              "MarketId": 101,
-              "Spots": 0,
-              "Stations": [
-                {
-                  "Programs": [
-                    {
-                      "Cost": 0.0,
-                      "DisplayImpressions": 0.0,
-                      "DisplayStationImpressions": 0.0,
-                      "EFF": 0.0,
-                      "HasImpressions": false,
-                      "ProvidedUnitImpressions": null,
-                      "Spots": 1,
-                      "TargetCpm": 0.0,
-                      "TargetImpressions": 0.0,
-                      "TotalImpressions": 0.0,
-                      "UnitCost": 0.0,
-                      "UnitImpression": 0.0
-                    }
-                  ],
-                  "StationCode": 5012
-                },
-                {
-                  "Programs": [
-                    {
-                      "Cost": 0.0,
-                      "DisplayImpressions": 0.0,
-                      "DisplayStationImpressions": 0.0,
-                      "EFF": 0.0,
-                      "HasImpressions": false,
-                      "ProvidedUnitImpressions": null,
-                      "Spots": 1,
-                      "TargetCpm": 0.0,
-                      "TargetImpressions": 0.0,
-                      "TotalImpressions": 0.0,
-                      "UnitCost": 0.0,
-                      "UnitImpression": 0.0
-                    }
-                  ],
-                  "StationCode": 5014
-                }
-              ]
-            },
-            {
-              "Cost": 0.0,
-              "DisplayImpressions": 0.0,
-              "DisplayStationImpressions": 0.0,
-              "Impressions": 0.0,
-              "MarketId": 202,
-              "Spots": 0,
-              "Stations": [
-                {
-                  "Programs": [
-                    {
-                      "Cost": 0.0,
-                      "DisplayImpressions": 0.0,
-                      "DisplayStationImpressions": 0.0,
-                      "EFF": 0.0,
-                      "HasImpressions": false,
-                      "ProvidedUnitImpressions": null,
-                      "Spots": 1,
-                      "TargetCpm": 0.0,
-                      "TargetImpressions": 0.0,
-                      "TotalImpressions": 0.0,
-                      "UnitCost": 0.0,
-                      "UnitImpression": 0.0
-                    }
-                  ],
-                  "StationCode": 5050
-                }
-              ]
-            }
-          ],
-          "MediaWeekId": 0,
-          "ProposalVersionDetailQuarterWeekId": 0,
-          "QuarterText": null,
-          "Week": null
-        },
-        "MediaWeek": {
-          "_EndDate": "2019-03-24T00:00:00",
-          "_Id": 795,
-          "_MediaMonthId": 450,
-          "_StartDate": "2019-03-18T00:00:00",
-          "_WeekNumber": 4,
-          "IsDirty": true
-        },
-        "StartDate": "2019-03-18T00:00:00",
-        "WeekNumber": 12
-      },
-      {
-        "InventoryWeek": {
-          "Budget": 0.0,
-          "BudgetMarginAchieved": false,
-          "BudgetPercent": 0.0,
-          "BudgetTotal": 0.0,
-          "ImpressionsGoal": 0.0,
-          "ImpressionsMarginAchieved": false,
-          "ImpressionsPercent": 0.0,
-          "ImpressionsTotal": 0.0,
-          "IsHiatus": false,
-          "Markets": [],
-          "MediaWeekId": 0,
-          "ProposalVersionDetailQuarterWeekId": 0,
-          "QuarterText": null,
-          "Week": null
-        },
-        "MediaWeek": {
-          "_EndDate": "2019-03-31T00:00:00",
-          "_Id": 796,
-          "_MediaMonthId": 450,
-          "_StartDate": "2019-03-25T00:00:00",
-          "_WeekNumber": 5,
-          "IsDirty": true
-        },
-        "StartDate": "2019-03-25T00:00:00",
-        "WeekNumber": 13
-      }
-    ]
+    "UnitName": "Unit 4"
   },
   {
     "AdvertisersName": null,
+    "AllSortedMediaWeeks": [
+      {
+        "_EndDate": "2019-01-06T00:00:00",
+        "_Id": 784,
+        "_MediaMonthId": 448,
+        "_StartDate": "2018-12-31T00:00:00",
+        "_WeekNumber": 1,
+        "IsDirty": true
+      },
+      {
+        "_EndDate": "2019-01-13T00:00:00",
+        "_Id": 785,
+        "_MediaMonthId": 448,
+        "_StartDate": "2019-01-07T00:00:00",
+        "_WeekNumber": 2,
+        "IsDirty": true
+      },
+      {
+        "_EndDate": "2019-01-20T00:00:00",
+        "_Id": 786,
+        "_MediaMonthId": 448,
+        "_StartDate": "2019-01-14T00:00:00",
+        "_WeekNumber": 3,
+        "IsDirty": true
+      },
+      {
+        "_EndDate": "2019-01-27T00:00:00",
+        "_Id": 787,
+        "_MediaMonthId": 448,
+        "_StartDate": "2019-01-21T00:00:00",
+        "_WeekNumber": 4,
+        "IsDirty": true
+      },
+      {
+        "_EndDate": "2019-02-03T00:00:00",
+        "_Id": 788,
+        "_MediaMonthId": 449,
+        "_StartDate": "2019-01-28T00:00:00",
+        "_WeekNumber": 1,
+        "IsDirty": true
+      },
+      {
+        "_EndDate": "2019-02-10T00:00:00",
+        "_Id": 789,
+        "_MediaMonthId": 449,
+        "_StartDate": "2019-02-04T00:00:00",
+        "_WeekNumber": 2,
+        "IsDirty": true
+      },
+      {
+        "_EndDate": "2019-02-17T00:00:00",
+        "_Id": 790,
+        "_MediaMonthId": 449,
+        "_StartDate": "2019-02-11T00:00:00",
+        "_WeekNumber": 3,
+        "IsDirty": true
+      },
+      {
+        "_EndDate": "2019-02-24T00:00:00",
+        "_Id": 791,
+        "_MediaMonthId": 449,
+        "_StartDate": "2019-02-18T00:00:00",
+        "_WeekNumber": 4,
+        "IsDirty": true
+      },
+      {
+        "_EndDate": "2019-03-03T00:00:00",
+        "_Id": 792,
+        "_MediaMonthId": 450,
+        "_StartDate": "2019-02-25T00:00:00",
+        "_WeekNumber": 1,
+        "IsDirty": true
+      },
+      {
+        "_EndDate": "2019-03-10T00:00:00",
+        "_Id": 793,
+        "_MediaMonthId": 450,
+        "_StartDate": "2019-03-04T00:00:00",
+        "_WeekNumber": 2,
+        "IsDirty": true
+      },
+      {
+        "_EndDate": "2019-03-17T00:00:00",
+        "_Id": 794,
+        "_MediaMonthId": 450,
+        "_StartDate": "2019-03-11T00:00:00",
+        "_WeekNumber": 3,
+        "IsDirty": true
+      },
+      {
+        "_EndDate": "2019-03-24T00:00:00",
+        "_Id": 795,
+        "_MediaMonthId": 450,
+        "_StartDate": "2019-03-18T00:00:00",
+        "_WeekNumber": 4,
+        "IsDirty": true
+      },
+      {
+        "_EndDate": "2019-03-31T00:00:00",
+        "_Id": 796,
+        "_MediaMonthId": 450,
+        "_StartDate": "2019-03-25T00:00:00",
+        "_WeekNumber": 5,
+        "IsDirty": true
+      }
+    ],
     "DaypartCode": "MDN",
     "DaypartCodeId": 2,
     "Demos": null,
@@ -1660,15 +937,9 @@
     "InventoryMarkets": [
       {
         "DmaMarketName": "New York",
-        "MarketCoverage": 10.0,
         "MarketId": 101,
-        "MarketName": "New York",
-        "MarketRank": 1,
-        "MarketSubscribers": 0.0,
         "Stations": [
           {
-            "Affiliation": "NBC",
-            "CallLetters": "WNBC 4.1",
             "LegacyCallLetters": "WNBC",
             "Programs": [
               {
@@ -1678,16 +949,143 @@
                     "Id": 70595
                   }
                 ],
-                "FlightWeeks": [],
-                "Genres": [],
                 "ProgramNames": [
                   null
                 ],
-                "ProvidedUnitImpressions": null,
-                "StationCode": 5013,
-                "TargetCpm": 0.0,
-                "TargetImpressions": 0.0,
-                "UnitImpressions": 0.0
+                "Weeks": [
+                  {
+                    "MediaWeek": {
+                      "_EndDate": "2019-01-06T00:00:00",
+                      "_Id": 784,
+                      "_MediaMonthId": 448,
+                      "_StartDate": "2018-12-31T00:00:00",
+                      "_WeekNumber": 1,
+                      "IsDirty": true
+                    },
+                    "Spots": 1
+                  },
+                  {
+                    "MediaWeek": {
+                      "_EndDate": "2019-01-13T00:00:00",
+                      "_Id": 785,
+                      "_MediaMonthId": 448,
+                      "_StartDate": "2019-01-07T00:00:00",
+                      "_WeekNumber": 2,
+                      "IsDirty": true
+                    },
+                    "Spots": 1
+                  },
+                  {
+                    "MediaWeek": {
+                      "_EndDate": "2019-01-20T00:00:00",
+                      "_Id": 786,
+                      "_MediaMonthId": 448,
+                      "_StartDate": "2019-01-14T00:00:00",
+                      "_WeekNumber": 3,
+                      "IsDirty": true
+                    },
+                    "Spots": 1
+                  },
+                  {
+                    "MediaWeek": {
+                      "_EndDate": "2019-01-27T00:00:00",
+                      "_Id": 787,
+                      "_MediaMonthId": 448,
+                      "_StartDate": "2019-01-21T00:00:00",
+                      "_WeekNumber": 4,
+                      "IsDirty": true
+                    },
+                    "Spots": 1
+                  },
+                  {
+                    "MediaWeek": {
+                      "_EndDate": "2019-02-03T00:00:00",
+                      "_Id": 788,
+                      "_MediaMonthId": 449,
+                      "_StartDate": "2019-01-28T00:00:00",
+                      "_WeekNumber": 1,
+                      "IsDirty": true
+                    },
+                    "Spots": 1
+                  },
+                  {
+                    "MediaWeek": {
+                      "_EndDate": "2019-02-10T00:00:00",
+                      "_Id": 789,
+                      "_MediaMonthId": 449,
+                      "_StartDate": "2019-02-04T00:00:00",
+                      "_WeekNumber": 2,
+                      "IsDirty": true
+                    },
+                    "Spots": 1
+                  },
+                  {
+                    "MediaWeek": {
+                      "_EndDate": "2019-02-17T00:00:00",
+                      "_Id": 790,
+                      "_MediaMonthId": 449,
+                      "_StartDate": "2019-02-11T00:00:00",
+                      "_WeekNumber": 3,
+                      "IsDirty": true
+                    },
+                    "Spots": 1
+                  },
+                  {
+                    "MediaWeek": {
+                      "_EndDate": "2019-02-24T00:00:00",
+                      "_Id": 791,
+                      "_MediaMonthId": 449,
+                      "_StartDate": "2019-02-18T00:00:00",
+                      "_WeekNumber": 4,
+                      "IsDirty": true
+                    },
+                    "Spots": 1
+                  },
+                  {
+                    "MediaWeek": {
+                      "_EndDate": "2019-03-03T00:00:00",
+                      "_Id": 792,
+                      "_MediaMonthId": 450,
+                      "_StartDate": "2019-02-25T00:00:00",
+                      "_WeekNumber": 1,
+                      "IsDirty": true
+                    },
+                    "Spots": 1
+                  },
+                  {
+                    "MediaWeek": {
+                      "_EndDate": "2019-03-10T00:00:00",
+                      "_Id": 793,
+                      "_MediaMonthId": 450,
+                      "_StartDate": "2019-03-04T00:00:00",
+                      "_WeekNumber": 2,
+                      "IsDirty": true
+                    },
+                    "Spots": 1
+                  },
+                  {
+                    "MediaWeek": {
+                      "_EndDate": "2019-03-17T00:00:00",
+                      "_Id": 794,
+                      "_MediaMonthId": 450,
+                      "_StartDate": "2019-03-11T00:00:00",
+                      "_WeekNumber": 3,
+                      "IsDirty": true
+                    },
+                    "Spots": 1
+                  },
+                  {
+                    "MediaWeek": {
+                      "_EndDate": "2019-03-24T00:00:00",
+                      "_Id": 795,
+                      "_MediaMonthId": 450,
+                      "_StartDate": "2019-03-18T00:00:00",
+                      "_WeekNumber": 4,
+                      "IsDirty": true
+                    },
+                    "Spots": 1
+                  }
+                ]
               }
             ],
             "StationCode": 5013
@@ -1927,736 +1325,116 @@
       "100": "Nov16 DMA Nielsen Live+3",
       "343": "Nov16 DMA Nielsen Live+3"
     },
-    "UnitName": "Unit 1",
-    "WeekData": [
-      {
-        "InventoryWeek": {
-          "Budget": 0.0,
-          "BudgetMarginAchieved": false,
-          "BudgetPercent": 0.0,
-          "BudgetTotal": 0.0,
-          "ImpressionsGoal": 0.0,
-          "ImpressionsMarginAchieved": false,
-          "ImpressionsPercent": 0.0,
-          "ImpressionsTotal": 0.0,
-          "IsHiatus": false,
-          "Markets": [
-            {
-              "Cost": 0.0,
-              "DisplayImpressions": 0.0,
-              "DisplayStationImpressions": 0.0,
-              "Impressions": 0.0,
-              "MarketId": 101,
-              "Spots": 0,
-              "Stations": [
-                {
-                  "Programs": [
-                    {
-                      "Cost": 0.0,
-                      "DisplayImpressions": 0.0,
-                      "DisplayStationImpressions": 0.0,
-                      "EFF": 0.0,
-                      "HasImpressions": false,
-                      "ProvidedUnitImpressions": null,
-                      "Spots": 1,
-                      "TargetCpm": 0.0,
-                      "TargetImpressions": 0.0,
-                      "TotalImpressions": 0.0,
-                      "UnitCost": 0.0,
-                      "UnitImpression": 0.0
-                    }
-                  ],
-                  "StationCode": 5013
-                }
-              ]
-            }
-          ],
-          "MediaWeekId": 0,
-          "ProposalVersionDetailQuarterWeekId": 0,
-          "QuarterText": null,
-          "Week": null
-        },
-        "MediaWeek": {
-          "_EndDate": "2019-01-06T00:00:00",
-          "_Id": 784,
-          "_MediaMonthId": 448,
-          "_StartDate": "2018-12-31T00:00:00",
-          "_WeekNumber": 1,
-          "IsDirty": true
-        },
-        "StartDate": "2018-12-31T00:00:00",
-        "WeekNumber": 1
-      },
-      {
-        "InventoryWeek": {
-          "Budget": 0.0,
-          "BudgetMarginAchieved": false,
-          "BudgetPercent": 0.0,
-          "BudgetTotal": 0.0,
-          "ImpressionsGoal": 0.0,
-          "ImpressionsMarginAchieved": false,
-          "ImpressionsPercent": 0.0,
-          "ImpressionsTotal": 0.0,
-          "IsHiatus": false,
-          "Markets": [
-            {
-              "Cost": 0.0,
-              "DisplayImpressions": 0.0,
-              "DisplayStationImpressions": 0.0,
-              "Impressions": 0.0,
-              "MarketId": 101,
-              "Spots": 0,
-              "Stations": [
-                {
-                  "Programs": [
-                    {
-                      "Cost": 0.0,
-                      "DisplayImpressions": 0.0,
-                      "DisplayStationImpressions": 0.0,
-                      "EFF": 0.0,
-                      "HasImpressions": false,
-                      "ProvidedUnitImpressions": null,
-                      "Spots": 1,
-                      "TargetCpm": 0.0,
-                      "TargetImpressions": 0.0,
-                      "TotalImpressions": 0.0,
-                      "UnitCost": 0.0,
-                      "UnitImpression": 0.0
-                    }
-                  ],
-                  "StationCode": 5013
-                }
-              ]
-            }
-          ],
-          "MediaWeekId": 0,
-          "ProposalVersionDetailQuarterWeekId": 0,
-          "QuarterText": null,
-          "Week": null
-        },
-        "MediaWeek": {
-          "_EndDate": "2019-01-13T00:00:00",
-          "_Id": 785,
-          "_MediaMonthId": 448,
-          "_StartDate": "2019-01-07T00:00:00",
-          "_WeekNumber": 2,
-          "IsDirty": true
-        },
-        "StartDate": "2019-01-07T00:00:00",
-        "WeekNumber": 2
-      },
-      {
-        "InventoryWeek": {
-          "Budget": 0.0,
-          "BudgetMarginAchieved": false,
-          "BudgetPercent": 0.0,
-          "BudgetTotal": 0.0,
-          "ImpressionsGoal": 0.0,
-          "ImpressionsMarginAchieved": false,
-          "ImpressionsPercent": 0.0,
-          "ImpressionsTotal": 0.0,
-          "IsHiatus": false,
-          "Markets": [
-            {
-              "Cost": 0.0,
-              "DisplayImpressions": 0.0,
-              "DisplayStationImpressions": 0.0,
-              "Impressions": 0.0,
-              "MarketId": 101,
-              "Spots": 0,
-              "Stations": [
-                {
-                  "Programs": [
-                    {
-                      "Cost": 0.0,
-                      "DisplayImpressions": 0.0,
-                      "DisplayStationImpressions": 0.0,
-                      "EFF": 0.0,
-                      "HasImpressions": false,
-                      "ProvidedUnitImpressions": null,
-                      "Spots": 1,
-                      "TargetCpm": 0.0,
-                      "TargetImpressions": 0.0,
-                      "TotalImpressions": 0.0,
-                      "UnitCost": 0.0,
-                      "UnitImpression": 0.0
-                    }
-                  ],
-                  "StationCode": 5013
-                }
-              ]
-            }
-          ],
-          "MediaWeekId": 0,
-          "ProposalVersionDetailQuarterWeekId": 0,
-          "QuarterText": null,
-          "Week": null
-        },
-        "MediaWeek": {
-          "_EndDate": "2019-01-20T00:00:00",
-          "_Id": 786,
-          "_MediaMonthId": 448,
-          "_StartDate": "2019-01-14T00:00:00",
-          "_WeekNumber": 3,
-          "IsDirty": true
-        },
-        "StartDate": "2019-01-14T00:00:00",
-        "WeekNumber": 3
-      },
-      {
-        "InventoryWeek": {
-          "Budget": 0.0,
-          "BudgetMarginAchieved": false,
-          "BudgetPercent": 0.0,
-          "BudgetTotal": 0.0,
-          "ImpressionsGoal": 0.0,
-          "ImpressionsMarginAchieved": false,
-          "ImpressionsPercent": 0.0,
-          "ImpressionsTotal": 0.0,
-          "IsHiatus": false,
-          "Markets": [
-            {
-              "Cost": 0.0,
-              "DisplayImpressions": 0.0,
-              "DisplayStationImpressions": 0.0,
-              "Impressions": 0.0,
-              "MarketId": 101,
-              "Spots": 0,
-              "Stations": [
-                {
-                  "Programs": [
-                    {
-                      "Cost": 0.0,
-                      "DisplayImpressions": 0.0,
-                      "DisplayStationImpressions": 0.0,
-                      "EFF": 0.0,
-                      "HasImpressions": false,
-                      "ProvidedUnitImpressions": null,
-                      "Spots": 1,
-                      "TargetCpm": 0.0,
-                      "TargetImpressions": 0.0,
-                      "TotalImpressions": 0.0,
-                      "UnitCost": 0.0,
-                      "UnitImpression": 0.0
-                    }
-                  ],
-                  "StationCode": 5013
-                }
-              ]
-            }
-          ],
-          "MediaWeekId": 0,
-          "ProposalVersionDetailQuarterWeekId": 0,
-          "QuarterText": null,
-          "Week": null
-        },
-        "MediaWeek": {
-          "_EndDate": "2019-01-27T00:00:00",
-          "_Id": 787,
-          "_MediaMonthId": 448,
-          "_StartDate": "2019-01-21T00:00:00",
-          "_WeekNumber": 4,
-          "IsDirty": true
-        },
-        "StartDate": "2019-01-21T00:00:00",
-        "WeekNumber": 4
-      },
-      {
-        "InventoryWeek": {
-          "Budget": 0.0,
-          "BudgetMarginAchieved": false,
-          "BudgetPercent": 0.0,
-          "BudgetTotal": 0.0,
-          "ImpressionsGoal": 0.0,
-          "ImpressionsMarginAchieved": false,
-          "ImpressionsPercent": 0.0,
-          "ImpressionsTotal": 0.0,
-          "IsHiatus": false,
-          "Markets": [
-            {
-              "Cost": 0.0,
-              "DisplayImpressions": 0.0,
-              "DisplayStationImpressions": 0.0,
-              "Impressions": 0.0,
-              "MarketId": 101,
-              "Spots": 0,
-              "Stations": [
-                {
-                  "Programs": [
-                    {
-                      "Cost": 0.0,
-                      "DisplayImpressions": 0.0,
-                      "DisplayStationImpressions": 0.0,
-                      "EFF": 0.0,
-                      "HasImpressions": false,
-                      "ProvidedUnitImpressions": null,
-                      "Spots": 1,
-                      "TargetCpm": 0.0,
-                      "TargetImpressions": 0.0,
-                      "TotalImpressions": 0.0,
-                      "UnitCost": 0.0,
-                      "UnitImpression": 0.0
-                    }
-                  ],
-                  "StationCode": 5013
-                }
-              ]
-            }
-          ],
-          "MediaWeekId": 0,
-          "ProposalVersionDetailQuarterWeekId": 0,
-          "QuarterText": null,
-          "Week": null
-        },
-        "MediaWeek": {
-          "_EndDate": "2019-02-03T00:00:00",
-          "_Id": 788,
-          "_MediaMonthId": 449,
-          "_StartDate": "2019-01-28T00:00:00",
-          "_WeekNumber": 1,
-          "IsDirty": true
-        },
-        "StartDate": "2019-01-28T00:00:00",
-        "WeekNumber": 5
-      },
-      {
-        "InventoryWeek": {
-          "Budget": 0.0,
-          "BudgetMarginAchieved": false,
-          "BudgetPercent": 0.0,
-          "BudgetTotal": 0.0,
-          "ImpressionsGoal": 0.0,
-          "ImpressionsMarginAchieved": false,
-          "ImpressionsPercent": 0.0,
-          "ImpressionsTotal": 0.0,
-          "IsHiatus": false,
-          "Markets": [
-            {
-              "Cost": 0.0,
-              "DisplayImpressions": 0.0,
-              "DisplayStationImpressions": 0.0,
-              "Impressions": 0.0,
-              "MarketId": 101,
-              "Spots": 0,
-              "Stations": [
-                {
-                  "Programs": [
-                    {
-                      "Cost": 0.0,
-                      "DisplayImpressions": 0.0,
-                      "DisplayStationImpressions": 0.0,
-                      "EFF": 0.0,
-                      "HasImpressions": false,
-                      "ProvidedUnitImpressions": null,
-                      "Spots": 1,
-                      "TargetCpm": 0.0,
-                      "TargetImpressions": 0.0,
-                      "TotalImpressions": 0.0,
-                      "UnitCost": 0.0,
-                      "UnitImpression": 0.0
-                    }
-                  ],
-                  "StationCode": 5013
-                }
-              ]
-            }
-          ],
-          "MediaWeekId": 0,
-          "ProposalVersionDetailQuarterWeekId": 0,
-          "QuarterText": null,
-          "Week": null
-        },
-        "MediaWeek": {
-          "_EndDate": "2019-02-10T00:00:00",
-          "_Id": 789,
-          "_MediaMonthId": 449,
-          "_StartDate": "2019-02-04T00:00:00",
-          "_WeekNumber": 2,
-          "IsDirty": true
-        },
-        "StartDate": "2019-02-04T00:00:00",
-        "WeekNumber": 6
-      },
-      {
-        "InventoryWeek": {
-          "Budget": 0.0,
-          "BudgetMarginAchieved": false,
-          "BudgetPercent": 0.0,
-          "BudgetTotal": 0.0,
-          "ImpressionsGoal": 0.0,
-          "ImpressionsMarginAchieved": false,
-          "ImpressionsPercent": 0.0,
-          "ImpressionsTotal": 0.0,
-          "IsHiatus": false,
-          "Markets": [
-            {
-              "Cost": 0.0,
-              "DisplayImpressions": 0.0,
-              "DisplayStationImpressions": 0.0,
-              "Impressions": 0.0,
-              "MarketId": 101,
-              "Spots": 0,
-              "Stations": [
-                {
-                  "Programs": [
-                    {
-                      "Cost": 0.0,
-                      "DisplayImpressions": 0.0,
-                      "DisplayStationImpressions": 0.0,
-                      "EFF": 0.0,
-                      "HasImpressions": false,
-                      "ProvidedUnitImpressions": null,
-                      "Spots": 1,
-                      "TargetCpm": 0.0,
-                      "TargetImpressions": 0.0,
-                      "TotalImpressions": 0.0,
-                      "UnitCost": 0.0,
-                      "UnitImpression": 0.0
-                    }
-                  ],
-                  "StationCode": 5013
-                }
-              ]
-            }
-          ],
-          "MediaWeekId": 0,
-          "ProposalVersionDetailQuarterWeekId": 0,
-          "QuarterText": null,
-          "Week": null
-        },
-        "MediaWeek": {
-          "_EndDate": "2019-02-17T00:00:00",
-          "_Id": 790,
-          "_MediaMonthId": 449,
-          "_StartDate": "2019-02-11T00:00:00",
-          "_WeekNumber": 3,
-          "IsDirty": true
-        },
-        "StartDate": "2019-02-11T00:00:00",
-        "WeekNumber": 7
-      },
-      {
-        "InventoryWeek": {
-          "Budget": 0.0,
-          "BudgetMarginAchieved": false,
-          "BudgetPercent": 0.0,
-          "BudgetTotal": 0.0,
-          "ImpressionsGoal": 0.0,
-          "ImpressionsMarginAchieved": false,
-          "ImpressionsPercent": 0.0,
-          "ImpressionsTotal": 0.0,
-          "IsHiatus": false,
-          "Markets": [
-            {
-              "Cost": 0.0,
-              "DisplayImpressions": 0.0,
-              "DisplayStationImpressions": 0.0,
-              "Impressions": 0.0,
-              "MarketId": 101,
-              "Spots": 0,
-              "Stations": [
-                {
-                  "Programs": [
-                    {
-                      "Cost": 0.0,
-                      "DisplayImpressions": 0.0,
-                      "DisplayStationImpressions": 0.0,
-                      "EFF": 0.0,
-                      "HasImpressions": false,
-                      "ProvidedUnitImpressions": null,
-                      "Spots": 1,
-                      "TargetCpm": 0.0,
-                      "TargetImpressions": 0.0,
-                      "TotalImpressions": 0.0,
-                      "UnitCost": 0.0,
-                      "UnitImpression": 0.0
-                    }
-                  ],
-                  "StationCode": 5013
-                }
-              ]
-            }
-          ],
-          "MediaWeekId": 0,
-          "ProposalVersionDetailQuarterWeekId": 0,
-          "QuarterText": null,
-          "Week": null
-        },
-        "MediaWeek": {
-          "_EndDate": "2019-02-24T00:00:00",
-          "_Id": 791,
-          "_MediaMonthId": 449,
-          "_StartDate": "2019-02-18T00:00:00",
-          "_WeekNumber": 4,
-          "IsDirty": true
-        },
-        "StartDate": "2019-02-18T00:00:00",
-        "WeekNumber": 8
-      },
-      {
-        "InventoryWeek": {
-          "Budget": 0.0,
-          "BudgetMarginAchieved": false,
-          "BudgetPercent": 0.0,
-          "BudgetTotal": 0.0,
-          "ImpressionsGoal": 0.0,
-          "ImpressionsMarginAchieved": false,
-          "ImpressionsPercent": 0.0,
-          "ImpressionsTotal": 0.0,
-          "IsHiatus": false,
-          "Markets": [
-            {
-              "Cost": 0.0,
-              "DisplayImpressions": 0.0,
-              "DisplayStationImpressions": 0.0,
-              "Impressions": 0.0,
-              "MarketId": 101,
-              "Spots": 0,
-              "Stations": [
-                {
-                  "Programs": [
-                    {
-                      "Cost": 0.0,
-                      "DisplayImpressions": 0.0,
-                      "DisplayStationImpressions": 0.0,
-                      "EFF": 0.0,
-                      "HasImpressions": false,
-                      "ProvidedUnitImpressions": null,
-                      "Spots": 1,
-                      "TargetCpm": 0.0,
-                      "TargetImpressions": 0.0,
-                      "TotalImpressions": 0.0,
-                      "UnitCost": 0.0,
-                      "UnitImpression": 0.0
-                    }
-                  ],
-                  "StationCode": 5013
-                }
-              ]
-            }
-          ],
-          "MediaWeekId": 0,
-          "ProposalVersionDetailQuarterWeekId": 0,
-          "QuarterText": null,
-          "Week": null
-        },
-        "MediaWeek": {
-          "_EndDate": "2019-03-03T00:00:00",
-          "_Id": 792,
-          "_MediaMonthId": 450,
-          "_StartDate": "2019-02-25T00:00:00",
-          "_WeekNumber": 1,
-          "IsDirty": true
-        },
-        "StartDate": "2019-02-25T00:00:00",
-        "WeekNumber": 9
-      },
-      {
-        "InventoryWeek": {
-          "Budget": 0.0,
-          "BudgetMarginAchieved": false,
-          "BudgetPercent": 0.0,
-          "BudgetTotal": 0.0,
-          "ImpressionsGoal": 0.0,
-          "ImpressionsMarginAchieved": false,
-          "ImpressionsPercent": 0.0,
-          "ImpressionsTotal": 0.0,
-          "IsHiatus": false,
-          "Markets": [
-            {
-              "Cost": 0.0,
-              "DisplayImpressions": 0.0,
-              "DisplayStationImpressions": 0.0,
-              "Impressions": 0.0,
-              "MarketId": 101,
-              "Spots": 0,
-              "Stations": [
-                {
-                  "Programs": [
-                    {
-                      "Cost": 0.0,
-                      "DisplayImpressions": 0.0,
-                      "DisplayStationImpressions": 0.0,
-                      "EFF": 0.0,
-                      "HasImpressions": false,
-                      "ProvidedUnitImpressions": null,
-                      "Spots": 1,
-                      "TargetCpm": 0.0,
-                      "TargetImpressions": 0.0,
-                      "TotalImpressions": 0.0,
-                      "UnitCost": 0.0,
-                      "UnitImpression": 0.0
-                    }
-                  ],
-                  "StationCode": 5013
-                }
-              ]
-            }
-          ],
-          "MediaWeekId": 0,
-          "ProposalVersionDetailQuarterWeekId": 0,
-          "QuarterText": null,
-          "Week": null
-        },
-        "MediaWeek": {
-          "_EndDate": "2019-03-10T00:00:00",
-          "_Id": 793,
-          "_MediaMonthId": 450,
-          "_StartDate": "2019-03-04T00:00:00",
-          "_WeekNumber": 2,
-          "IsDirty": true
-        },
-        "StartDate": "2019-03-04T00:00:00",
-        "WeekNumber": 10
-      },
-      {
-        "InventoryWeek": {
-          "Budget": 0.0,
-          "BudgetMarginAchieved": false,
-          "BudgetPercent": 0.0,
-          "BudgetTotal": 0.0,
-          "ImpressionsGoal": 0.0,
-          "ImpressionsMarginAchieved": false,
-          "ImpressionsPercent": 0.0,
-          "ImpressionsTotal": 0.0,
-          "IsHiatus": false,
-          "Markets": [
-            {
-              "Cost": 0.0,
-              "DisplayImpressions": 0.0,
-              "DisplayStationImpressions": 0.0,
-              "Impressions": 0.0,
-              "MarketId": 101,
-              "Spots": 0,
-              "Stations": [
-                {
-                  "Programs": [
-                    {
-                      "Cost": 0.0,
-                      "DisplayImpressions": 0.0,
-                      "DisplayStationImpressions": 0.0,
-                      "EFF": 0.0,
-                      "HasImpressions": false,
-                      "ProvidedUnitImpressions": null,
-                      "Spots": 1,
-                      "TargetCpm": 0.0,
-                      "TargetImpressions": 0.0,
-                      "TotalImpressions": 0.0,
-                      "UnitCost": 0.0,
-                      "UnitImpression": 0.0
-                    }
-                  ],
-                  "StationCode": 5013
-                }
-              ]
-            }
-          ],
-          "MediaWeekId": 0,
-          "ProposalVersionDetailQuarterWeekId": 0,
-          "QuarterText": null,
-          "Week": null
-        },
-        "MediaWeek": {
-          "_EndDate": "2019-03-17T00:00:00",
-          "_Id": 794,
-          "_MediaMonthId": 450,
-          "_StartDate": "2019-03-11T00:00:00",
-          "_WeekNumber": 3,
-          "IsDirty": true
-        },
-        "StartDate": "2019-03-11T00:00:00",
-        "WeekNumber": 11
-      },
-      {
-        "InventoryWeek": {
-          "Budget": 0.0,
-          "BudgetMarginAchieved": false,
-          "BudgetPercent": 0.0,
-          "BudgetTotal": 0.0,
-          "ImpressionsGoal": 0.0,
-          "ImpressionsMarginAchieved": false,
-          "ImpressionsPercent": 0.0,
-          "ImpressionsTotal": 0.0,
-          "IsHiatus": false,
-          "Markets": [
-            {
-              "Cost": 0.0,
-              "DisplayImpressions": 0.0,
-              "DisplayStationImpressions": 0.0,
-              "Impressions": 0.0,
-              "MarketId": 101,
-              "Spots": 0,
-              "Stations": [
-                {
-                  "Programs": [
-                    {
-                      "Cost": 0.0,
-                      "DisplayImpressions": 0.0,
-                      "DisplayStationImpressions": 0.0,
-                      "EFF": 0.0,
-                      "HasImpressions": false,
-                      "ProvidedUnitImpressions": null,
-                      "Spots": 1,
-                      "TargetCpm": 0.0,
-                      "TargetImpressions": 0.0,
-                      "TotalImpressions": 0.0,
-                      "UnitCost": 0.0,
-                      "UnitImpression": 0.0
-                    }
-                  ],
-                  "StationCode": 5013
-                }
-              ]
-            }
-          ],
-          "MediaWeekId": 0,
-          "ProposalVersionDetailQuarterWeekId": 0,
-          "QuarterText": null,
-          "Week": null
-        },
-        "MediaWeek": {
-          "_EndDate": "2019-03-24T00:00:00",
-          "_Id": 795,
-          "_MediaMonthId": 450,
-          "_StartDate": "2019-03-18T00:00:00",
-          "_WeekNumber": 4,
-          "IsDirty": true
-        },
-        "StartDate": "2019-03-18T00:00:00",
-        "WeekNumber": 12
-      },
-      {
-        "InventoryWeek": {
-          "Budget": 0.0,
-          "BudgetMarginAchieved": false,
-          "BudgetPercent": 0.0,
-          "BudgetTotal": 0.0,
-          "ImpressionsGoal": 0.0,
-          "ImpressionsMarginAchieved": false,
-          "ImpressionsPercent": 0.0,
-          "ImpressionsTotal": 0.0,
-          "IsHiatus": false,
-          "Markets": [],
-          "MediaWeekId": 0,
-          "ProposalVersionDetailQuarterWeekId": 0,
-          "QuarterText": null,
-          "Week": null
-        },
-        "MediaWeek": {
-          "_EndDate": "2019-03-31T00:00:00",
-          "_Id": 796,
-          "_MediaMonthId": 450,
-          "_StartDate": "2019-03-25T00:00:00",
-          "_WeekNumber": 5,
-          "IsDirty": true
-        },
-        "StartDate": "2019-03-25T00:00:00",
-        "WeekNumber": 13
-      }
-    ]
+    "UnitName": "Unit 1"
   },
   {
     "AdvertisersName": null,
+    "AllSortedMediaWeeks": [
+      {
+        "_EndDate": "2019-01-06T00:00:00",
+        "_Id": 784,
+        "_MediaMonthId": 448,
+        "_StartDate": "2018-12-31T00:00:00",
+        "_WeekNumber": 1,
+        "IsDirty": true
+      },
+      {
+        "_EndDate": "2019-01-13T00:00:00",
+        "_Id": 785,
+        "_MediaMonthId": 448,
+        "_StartDate": "2019-01-07T00:00:00",
+        "_WeekNumber": 2,
+        "IsDirty": true
+      },
+      {
+        "_EndDate": "2019-01-20T00:00:00",
+        "_Id": 786,
+        "_MediaMonthId": 448,
+        "_StartDate": "2019-01-14T00:00:00",
+        "_WeekNumber": 3,
+        "IsDirty": true
+      },
+      {
+        "_EndDate": "2019-01-27T00:00:00",
+        "_Id": 787,
+        "_MediaMonthId": 448,
+        "_StartDate": "2019-01-21T00:00:00",
+        "_WeekNumber": 4,
+        "IsDirty": true
+      },
+      {
+        "_EndDate": "2019-02-03T00:00:00",
+        "_Id": 788,
+        "_MediaMonthId": 449,
+        "_StartDate": "2019-01-28T00:00:00",
+        "_WeekNumber": 1,
+        "IsDirty": true
+      },
+      {
+        "_EndDate": "2019-02-10T00:00:00",
+        "_Id": 789,
+        "_MediaMonthId": 449,
+        "_StartDate": "2019-02-04T00:00:00",
+        "_WeekNumber": 2,
+        "IsDirty": true
+      },
+      {
+        "_EndDate": "2019-02-17T00:00:00",
+        "_Id": 790,
+        "_MediaMonthId": 449,
+        "_StartDate": "2019-02-11T00:00:00",
+        "_WeekNumber": 3,
+        "IsDirty": true
+      },
+      {
+        "_EndDate": "2019-02-24T00:00:00",
+        "_Id": 791,
+        "_MediaMonthId": 449,
+        "_StartDate": "2019-02-18T00:00:00",
+        "_WeekNumber": 4,
+        "IsDirty": true
+      },
+      {
+        "_EndDate": "2019-03-03T00:00:00",
+        "_Id": 792,
+        "_MediaMonthId": 450,
+        "_StartDate": "2019-02-25T00:00:00",
+        "_WeekNumber": 1,
+        "IsDirty": true
+      },
+      {
+        "_EndDate": "2019-03-10T00:00:00",
+        "_Id": 793,
+        "_MediaMonthId": 450,
+        "_StartDate": "2019-03-04T00:00:00",
+        "_WeekNumber": 2,
+        "IsDirty": true
+      },
+      {
+        "_EndDate": "2019-03-17T00:00:00",
+        "_Id": 794,
+        "_MediaMonthId": 450,
+        "_StartDate": "2019-03-11T00:00:00",
+        "_WeekNumber": 3,
+        "IsDirty": true
+      },
+      {
+        "_EndDate": "2019-03-24T00:00:00",
+        "_Id": 795,
+        "_MediaMonthId": 450,
+        "_StartDate": "2019-03-18T00:00:00",
+        "_WeekNumber": 4,
+        "IsDirty": true
+      },
+      {
+        "_EndDate": "2019-03-31T00:00:00",
+        "_Id": 796,
+        "_MediaMonthId": 450,
+        "_StartDate": "2019-03-25T00:00:00",
+        "_WeekNumber": 5,
+        "IsDirty": true
+      }
+    ],
     "DaypartCode": "MDN",
     "DaypartCodeId": 2,
     "Demos": null,
@@ -2665,15 +1443,9 @@
     "InventoryMarkets": [
       {
         "DmaMarketName": "New York",
-        "MarketCoverage": 10.0,
         "MarketId": 101,
-        "MarketName": "New York",
-        "MarketRank": 1,
-        "MarketSubscribers": 0.0,
         "Stations": [
           {
-            "Affiliation": "FOX",
-            "CallLetters": "WNYW 5.1",
             "LegacyCallLetters": "WNYW",
             "Programs": [
               {
@@ -2683,16 +1455,143 @@
                     "Id": 34478
                   }
                 ],
-                "FlightWeeks": [],
-                "Genres": [],
                 "ProgramNames": [
                   null
                 ],
-                "ProvidedUnitImpressions": null,
-                "StationCode": 5010,
-                "TargetCpm": 0.0,
-                "TargetImpressions": 0.0,
-                "UnitImpressions": 0.0
+                "Weeks": [
+                  {
+                    "MediaWeek": {
+                      "_EndDate": "2019-01-06T00:00:00",
+                      "_Id": 784,
+                      "_MediaMonthId": 448,
+                      "_StartDate": "2018-12-31T00:00:00",
+                      "_WeekNumber": 1,
+                      "IsDirty": true
+                    },
+                    "Spots": 1
+                  },
+                  {
+                    "MediaWeek": {
+                      "_EndDate": "2019-01-13T00:00:00",
+                      "_Id": 785,
+                      "_MediaMonthId": 448,
+                      "_StartDate": "2019-01-07T00:00:00",
+                      "_WeekNumber": 2,
+                      "IsDirty": true
+                    },
+                    "Spots": 1
+                  },
+                  {
+                    "MediaWeek": {
+                      "_EndDate": "2019-01-20T00:00:00",
+                      "_Id": 786,
+                      "_MediaMonthId": 448,
+                      "_StartDate": "2019-01-14T00:00:00",
+                      "_WeekNumber": 3,
+                      "IsDirty": true
+                    },
+                    "Spots": 1
+                  },
+                  {
+                    "MediaWeek": {
+                      "_EndDate": "2019-01-27T00:00:00",
+                      "_Id": 787,
+                      "_MediaMonthId": 448,
+                      "_StartDate": "2019-01-21T00:00:00",
+                      "_WeekNumber": 4,
+                      "IsDirty": true
+                    },
+                    "Spots": 1
+                  },
+                  {
+                    "MediaWeek": {
+                      "_EndDate": "2019-02-03T00:00:00",
+                      "_Id": 788,
+                      "_MediaMonthId": 449,
+                      "_StartDate": "2019-01-28T00:00:00",
+                      "_WeekNumber": 1,
+                      "IsDirty": true
+                    },
+                    "Spots": 1
+                  },
+                  {
+                    "MediaWeek": {
+                      "_EndDate": "2019-02-10T00:00:00",
+                      "_Id": 789,
+                      "_MediaMonthId": 449,
+                      "_StartDate": "2019-02-04T00:00:00",
+                      "_WeekNumber": 2,
+                      "IsDirty": true
+                    },
+                    "Spots": 1
+                  },
+                  {
+                    "MediaWeek": {
+                      "_EndDate": "2019-02-17T00:00:00",
+                      "_Id": 790,
+                      "_MediaMonthId": 449,
+                      "_StartDate": "2019-02-11T00:00:00",
+                      "_WeekNumber": 3,
+                      "IsDirty": true
+                    },
+                    "Spots": 1
+                  },
+                  {
+                    "MediaWeek": {
+                      "_EndDate": "2019-02-24T00:00:00",
+                      "_Id": 791,
+                      "_MediaMonthId": 449,
+                      "_StartDate": "2019-02-18T00:00:00",
+                      "_WeekNumber": 4,
+                      "IsDirty": true
+                    },
+                    "Spots": 1
+                  },
+                  {
+                    "MediaWeek": {
+                      "_EndDate": "2019-03-03T00:00:00",
+                      "_Id": 792,
+                      "_MediaMonthId": 450,
+                      "_StartDate": "2019-02-25T00:00:00",
+                      "_WeekNumber": 1,
+                      "IsDirty": true
+                    },
+                    "Spots": 1
+                  },
+                  {
+                    "MediaWeek": {
+                      "_EndDate": "2019-03-10T00:00:00",
+                      "_Id": 793,
+                      "_MediaMonthId": 450,
+                      "_StartDate": "2019-03-04T00:00:00",
+                      "_WeekNumber": 2,
+                      "IsDirty": true
+                    },
+                    "Spots": 1
+                  },
+                  {
+                    "MediaWeek": {
+                      "_EndDate": "2019-03-17T00:00:00",
+                      "_Id": 794,
+                      "_MediaMonthId": 450,
+                      "_StartDate": "2019-03-11T00:00:00",
+                      "_WeekNumber": 3,
+                      "IsDirty": true
+                    },
+                    "Spots": 1
+                  },
+                  {
+                    "MediaWeek": {
+                      "_EndDate": "2019-03-24T00:00:00",
+                      "_Id": 795,
+                      "_MediaMonthId": 450,
+                      "_StartDate": "2019-03-18T00:00:00",
+                      "_WeekNumber": 4,
+                      "IsDirty": true
+                    },
+                    "Spots": 1
+                  }
+                ]
               }
             ],
             "StationCode": 5010
@@ -2932,732 +1831,6 @@
       "100": "Nov16 DMA Nielsen Live+3",
       "343": "Nov16 DMA Nielsen Live+3"
     },
-    "UnitName": "Unit 2",
-    "WeekData": [
-      {
-        "InventoryWeek": {
-          "Budget": 0.0,
-          "BudgetMarginAchieved": false,
-          "BudgetPercent": 0.0,
-          "BudgetTotal": 0.0,
-          "ImpressionsGoal": 0.0,
-          "ImpressionsMarginAchieved": false,
-          "ImpressionsPercent": 0.0,
-          "ImpressionsTotal": 0.0,
-          "IsHiatus": false,
-          "Markets": [
-            {
-              "Cost": 0.0,
-              "DisplayImpressions": 0.0,
-              "DisplayStationImpressions": 0.0,
-              "Impressions": 0.0,
-              "MarketId": 101,
-              "Spots": 0,
-              "Stations": [
-                {
-                  "Programs": [
-                    {
-                      "Cost": 0.0,
-                      "DisplayImpressions": 0.0,
-                      "DisplayStationImpressions": 0.0,
-                      "EFF": 0.0,
-                      "HasImpressions": false,
-                      "ProvidedUnitImpressions": null,
-                      "Spots": 1,
-                      "TargetCpm": 0.0,
-                      "TargetImpressions": 0.0,
-                      "TotalImpressions": 0.0,
-                      "UnitCost": 0.0,
-                      "UnitImpression": 0.0
-                    }
-                  ],
-                  "StationCode": 5010
-                }
-              ]
-            }
-          ],
-          "MediaWeekId": 0,
-          "ProposalVersionDetailQuarterWeekId": 0,
-          "QuarterText": null,
-          "Week": null
-        },
-        "MediaWeek": {
-          "_EndDate": "2019-01-06T00:00:00",
-          "_Id": 784,
-          "_MediaMonthId": 448,
-          "_StartDate": "2018-12-31T00:00:00",
-          "_WeekNumber": 1,
-          "IsDirty": true
-        },
-        "StartDate": "2018-12-31T00:00:00",
-        "WeekNumber": 1
-      },
-      {
-        "InventoryWeek": {
-          "Budget": 0.0,
-          "BudgetMarginAchieved": false,
-          "BudgetPercent": 0.0,
-          "BudgetTotal": 0.0,
-          "ImpressionsGoal": 0.0,
-          "ImpressionsMarginAchieved": false,
-          "ImpressionsPercent": 0.0,
-          "ImpressionsTotal": 0.0,
-          "IsHiatus": false,
-          "Markets": [
-            {
-              "Cost": 0.0,
-              "DisplayImpressions": 0.0,
-              "DisplayStationImpressions": 0.0,
-              "Impressions": 0.0,
-              "MarketId": 101,
-              "Spots": 0,
-              "Stations": [
-                {
-                  "Programs": [
-                    {
-                      "Cost": 0.0,
-                      "DisplayImpressions": 0.0,
-                      "DisplayStationImpressions": 0.0,
-                      "EFF": 0.0,
-                      "HasImpressions": false,
-                      "ProvidedUnitImpressions": null,
-                      "Spots": 1,
-                      "TargetCpm": 0.0,
-                      "TargetImpressions": 0.0,
-                      "TotalImpressions": 0.0,
-                      "UnitCost": 0.0,
-                      "UnitImpression": 0.0
-                    }
-                  ],
-                  "StationCode": 5010
-                }
-              ]
-            }
-          ],
-          "MediaWeekId": 0,
-          "ProposalVersionDetailQuarterWeekId": 0,
-          "QuarterText": null,
-          "Week": null
-        },
-        "MediaWeek": {
-          "_EndDate": "2019-01-13T00:00:00",
-          "_Id": 785,
-          "_MediaMonthId": 448,
-          "_StartDate": "2019-01-07T00:00:00",
-          "_WeekNumber": 2,
-          "IsDirty": true
-        },
-        "StartDate": "2019-01-07T00:00:00",
-        "WeekNumber": 2
-      },
-      {
-        "InventoryWeek": {
-          "Budget": 0.0,
-          "BudgetMarginAchieved": false,
-          "BudgetPercent": 0.0,
-          "BudgetTotal": 0.0,
-          "ImpressionsGoal": 0.0,
-          "ImpressionsMarginAchieved": false,
-          "ImpressionsPercent": 0.0,
-          "ImpressionsTotal": 0.0,
-          "IsHiatus": false,
-          "Markets": [
-            {
-              "Cost": 0.0,
-              "DisplayImpressions": 0.0,
-              "DisplayStationImpressions": 0.0,
-              "Impressions": 0.0,
-              "MarketId": 101,
-              "Spots": 0,
-              "Stations": [
-                {
-                  "Programs": [
-                    {
-                      "Cost": 0.0,
-                      "DisplayImpressions": 0.0,
-                      "DisplayStationImpressions": 0.0,
-                      "EFF": 0.0,
-                      "HasImpressions": false,
-                      "ProvidedUnitImpressions": null,
-                      "Spots": 1,
-                      "TargetCpm": 0.0,
-                      "TargetImpressions": 0.0,
-                      "TotalImpressions": 0.0,
-                      "UnitCost": 0.0,
-                      "UnitImpression": 0.0
-                    }
-                  ],
-                  "StationCode": 5010
-                }
-              ]
-            }
-          ],
-          "MediaWeekId": 0,
-          "ProposalVersionDetailQuarterWeekId": 0,
-          "QuarterText": null,
-          "Week": null
-        },
-        "MediaWeek": {
-          "_EndDate": "2019-01-20T00:00:00",
-          "_Id": 786,
-          "_MediaMonthId": 448,
-          "_StartDate": "2019-01-14T00:00:00",
-          "_WeekNumber": 3,
-          "IsDirty": true
-        },
-        "StartDate": "2019-01-14T00:00:00",
-        "WeekNumber": 3
-      },
-      {
-        "InventoryWeek": {
-          "Budget": 0.0,
-          "BudgetMarginAchieved": false,
-          "BudgetPercent": 0.0,
-          "BudgetTotal": 0.0,
-          "ImpressionsGoal": 0.0,
-          "ImpressionsMarginAchieved": false,
-          "ImpressionsPercent": 0.0,
-          "ImpressionsTotal": 0.0,
-          "IsHiatus": false,
-          "Markets": [
-            {
-              "Cost": 0.0,
-              "DisplayImpressions": 0.0,
-              "DisplayStationImpressions": 0.0,
-              "Impressions": 0.0,
-              "MarketId": 101,
-              "Spots": 0,
-              "Stations": [
-                {
-                  "Programs": [
-                    {
-                      "Cost": 0.0,
-                      "DisplayImpressions": 0.0,
-                      "DisplayStationImpressions": 0.0,
-                      "EFF": 0.0,
-                      "HasImpressions": false,
-                      "ProvidedUnitImpressions": null,
-                      "Spots": 1,
-                      "TargetCpm": 0.0,
-                      "TargetImpressions": 0.0,
-                      "TotalImpressions": 0.0,
-                      "UnitCost": 0.0,
-                      "UnitImpression": 0.0
-                    }
-                  ],
-                  "StationCode": 5010
-                }
-              ]
-            }
-          ],
-          "MediaWeekId": 0,
-          "ProposalVersionDetailQuarterWeekId": 0,
-          "QuarterText": null,
-          "Week": null
-        },
-        "MediaWeek": {
-          "_EndDate": "2019-01-27T00:00:00",
-          "_Id": 787,
-          "_MediaMonthId": 448,
-          "_StartDate": "2019-01-21T00:00:00",
-          "_WeekNumber": 4,
-          "IsDirty": true
-        },
-        "StartDate": "2019-01-21T00:00:00",
-        "WeekNumber": 4
-      },
-      {
-        "InventoryWeek": {
-          "Budget": 0.0,
-          "BudgetMarginAchieved": false,
-          "BudgetPercent": 0.0,
-          "BudgetTotal": 0.0,
-          "ImpressionsGoal": 0.0,
-          "ImpressionsMarginAchieved": false,
-          "ImpressionsPercent": 0.0,
-          "ImpressionsTotal": 0.0,
-          "IsHiatus": false,
-          "Markets": [
-            {
-              "Cost": 0.0,
-              "DisplayImpressions": 0.0,
-              "DisplayStationImpressions": 0.0,
-              "Impressions": 0.0,
-              "MarketId": 101,
-              "Spots": 0,
-              "Stations": [
-                {
-                  "Programs": [
-                    {
-                      "Cost": 0.0,
-                      "DisplayImpressions": 0.0,
-                      "DisplayStationImpressions": 0.0,
-                      "EFF": 0.0,
-                      "HasImpressions": false,
-                      "ProvidedUnitImpressions": null,
-                      "Spots": 1,
-                      "TargetCpm": 0.0,
-                      "TargetImpressions": 0.0,
-                      "TotalImpressions": 0.0,
-                      "UnitCost": 0.0,
-                      "UnitImpression": 0.0
-                    }
-                  ],
-                  "StationCode": 5010
-                }
-              ]
-            }
-          ],
-          "MediaWeekId": 0,
-          "ProposalVersionDetailQuarterWeekId": 0,
-          "QuarterText": null,
-          "Week": null
-        },
-        "MediaWeek": {
-          "_EndDate": "2019-02-03T00:00:00",
-          "_Id": 788,
-          "_MediaMonthId": 449,
-          "_StartDate": "2019-01-28T00:00:00",
-          "_WeekNumber": 1,
-          "IsDirty": true
-        },
-        "StartDate": "2019-01-28T00:00:00",
-        "WeekNumber": 5
-      },
-      {
-        "InventoryWeek": {
-          "Budget": 0.0,
-          "BudgetMarginAchieved": false,
-          "BudgetPercent": 0.0,
-          "BudgetTotal": 0.0,
-          "ImpressionsGoal": 0.0,
-          "ImpressionsMarginAchieved": false,
-          "ImpressionsPercent": 0.0,
-          "ImpressionsTotal": 0.0,
-          "IsHiatus": false,
-          "Markets": [
-            {
-              "Cost": 0.0,
-              "DisplayImpressions": 0.0,
-              "DisplayStationImpressions": 0.0,
-              "Impressions": 0.0,
-              "MarketId": 101,
-              "Spots": 0,
-              "Stations": [
-                {
-                  "Programs": [
-                    {
-                      "Cost": 0.0,
-                      "DisplayImpressions": 0.0,
-                      "DisplayStationImpressions": 0.0,
-                      "EFF": 0.0,
-                      "HasImpressions": false,
-                      "ProvidedUnitImpressions": null,
-                      "Spots": 1,
-                      "TargetCpm": 0.0,
-                      "TargetImpressions": 0.0,
-                      "TotalImpressions": 0.0,
-                      "UnitCost": 0.0,
-                      "UnitImpression": 0.0
-                    }
-                  ],
-                  "StationCode": 5010
-                }
-              ]
-            }
-          ],
-          "MediaWeekId": 0,
-          "ProposalVersionDetailQuarterWeekId": 0,
-          "QuarterText": null,
-          "Week": null
-        },
-        "MediaWeek": {
-          "_EndDate": "2019-02-10T00:00:00",
-          "_Id": 789,
-          "_MediaMonthId": 449,
-          "_StartDate": "2019-02-04T00:00:00",
-          "_WeekNumber": 2,
-          "IsDirty": true
-        },
-        "StartDate": "2019-02-04T00:00:00",
-        "WeekNumber": 6
-      },
-      {
-        "InventoryWeek": {
-          "Budget": 0.0,
-          "BudgetMarginAchieved": false,
-          "BudgetPercent": 0.0,
-          "BudgetTotal": 0.0,
-          "ImpressionsGoal": 0.0,
-          "ImpressionsMarginAchieved": false,
-          "ImpressionsPercent": 0.0,
-          "ImpressionsTotal": 0.0,
-          "IsHiatus": false,
-          "Markets": [
-            {
-              "Cost": 0.0,
-              "DisplayImpressions": 0.0,
-              "DisplayStationImpressions": 0.0,
-              "Impressions": 0.0,
-              "MarketId": 101,
-              "Spots": 0,
-              "Stations": [
-                {
-                  "Programs": [
-                    {
-                      "Cost": 0.0,
-                      "DisplayImpressions": 0.0,
-                      "DisplayStationImpressions": 0.0,
-                      "EFF": 0.0,
-                      "HasImpressions": false,
-                      "ProvidedUnitImpressions": null,
-                      "Spots": 1,
-                      "TargetCpm": 0.0,
-                      "TargetImpressions": 0.0,
-                      "TotalImpressions": 0.0,
-                      "UnitCost": 0.0,
-                      "UnitImpression": 0.0
-                    }
-                  ],
-                  "StationCode": 5010
-                }
-              ]
-            }
-          ],
-          "MediaWeekId": 0,
-          "ProposalVersionDetailQuarterWeekId": 0,
-          "QuarterText": null,
-          "Week": null
-        },
-        "MediaWeek": {
-          "_EndDate": "2019-02-17T00:00:00",
-          "_Id": 790,
-          "_MediaMonthId": 449,
-          "_StartDate": "2019-02-11T00:00:00",
-          "_WeekNumber": 3,
-          "IsDirty": true
-        },
-        "StartDate": "2019-02-11T00:00:00",
-        "WeekNumber": 7
-      },
-      {
-        "InventoryWeek": {
-          "Budget": 0.0,
-          "BudgetMarginAchieved": false,
-          "BudgetPercent": 0.0,
-          "BudgetTotal": 0.0,
-          "ImpressionsGoal": 0.0,
-          "ImpressionsMarginAchieved": false,
-          "ImpressionsPercent": 0.0,
-          "ImpressionsTotal": 0.0,
-          "IsHiatus": false,
-          "Markets": [
-            {
-              "Cost": 0.0,
-              "DisplayImpressions": 0.0,
-              "DisplayStationImpressions": 0.0,
-              "Impressions": 0.0,
-              "MarketId": 101,
-              "Spots": 0,
-              "Stations": [
-                {
-                  "Programs": [
-                    {
-                      "Cost": 0.0,
-                      "DisplayImpressions": 0.0,
-                      "DisplayStationImpressions": 0.0,
-                      "EFF": 0.0,
-                      "HasImpressions": false,
-                      "ProvidedUnitImpressions": null,
-                      "Spots": 1,
-                      "TargetCpm": 0.0,
-                      "TargetImpressions": 0.0,
-                      "TotalImpressions": 0.0,
-                      "UnitCost": 0.0,
-                      "UnitImpression": 0.0
-                    }
-                  ],
-                  "StationCode": 5010
-                }
-              ]
-            }
-          ],
-          "MediaWeekId": 0,
-          "ProposalVersionDetailQuarterWeekId": 0,
-          "QuarterText": null,
-          "Week": null
-        },
-        "MediaWeek": {
-          "_EndDate": "2019-02-24T00:00:00",
-          "_Id": 791,
-          "_MediaMonthId": 449,
-          "_StartDate": "2019-02-18T00:00:00",
-          "_WeekNumber": 4,
-          "IsDirty": true
-        },
-        "StartDate": "2019-02-18T00:00:00",
-        "WeekNumber": 8
-      },
-      {
-        "InventoryWeek": {
-          "Budget": 0.0,
-          "BudgetMarginAchieved": false,
-          "BudgetPercent": 0.0,
-          "BudgetTotal": 0.0,
-          "ImpressionsGoal": 0.0,
-          "ImpressionsMarginAchieved": false,
-          "ImpressionsPercent": 0.0,
-          "ImpressionsTotal": 0.0,
-          "IsHiatus": false,
-          "Markets": [
-            {
-              "Cost": 0.0,
-              "DisplayImpressions": 0.0,
-              "DisplayStationImpressions": 0.0,
-              "Impressions": 0.0,
-              "MarketId": 101,
-              "Spots": 0,
-              "Stations": [
-                {
-                  "Programs": [
-                    {
-                      "Cost": 0.0,
-                      "DisplayImpressions": 0.0,
-                      "DisplayStationImpressions": 0.0,
-                      "EFF": 0.0,
-                      "HasImpressions": false,
-                      "ProvidedUnitImpressions": null,
-                      "Spots": 1,
-                      "TargetCpm": 0.0,
-                      "TargetImpressions": 0.0,
-                      "TotalImpressions": 0.0,
-                      "UnitCost": 0.0,
-                      "UnitImpression": 0.0
-                    }
-                  ],
-                  "StationCode": 5010
-                }
-              ]
-            }
-          ],
-          "MediaWeekId": 0,
-          "ProposalVersionDetailQuarterWeekId": 0,
-          "QuarterText": null,
-          "Week": null
-        },
-        "MediaWeek": {
-          "_EndDate": "2019-03-03T00:00:00",
-          "_Id": 792,
-          "_MediaMonthId": 450,
-          "_StartDate": "2019-02-25T00:00:00",
-          "_WeekNumber": 1,
-          "IsDirty": true
-        },
-        "StartDate": "2019-02-25T00:00:00",
-        "WeekNumber": 9
-      },
-      {
-        "InventoryWeek": {
-          "Budget": 0.0,
-          "BudgetMarginAchieved": false,
-          "BudgetPercent": 0.0,
-          "BudgetTotal": 0.0,
-          "ImpressionsGoal": 0.0,
-          "ImpressionsMarginAchieved": false,
-          "ImpressionsPercent": 0.0,
-          "ImpressionsTotal": 0.0,
-          "IsHiatus": false,
-          "Markets": [
-            {
-              "Cost": 0.0,
-              "DisplayImpressions": 0.0,
-              "DisplayStationImpressions": 0.0,
-              "Impressions": 0.0,
-              "MarketId": 101,
-              "Spots": 0,
-              "Stations": [
-                {
-                  "Programs": [
-                    {
-                      "Cost": 0.0,
-                      "DisplayImpressions": 0.0,
-                      "DisplayStationImpressions": 0.0,
-                      "EFF": 0.0,
-                      "HasImpressions": false,
-                      "ProvidedUnitImpressions": null,
-                      "Spots": 1,
-                      "TargetCpm": 0.0,
-                      "TargetImpressions": 0.0,
-                      "TotalImpressions": 0.0,
-                      "UnitCost": 0.0,
-                      "UnitImpression": 0.0
-                    }
-                  ],
-                  "StationCode": 5010
-                }
-              ]
-            }
-          ],
-          "MediaWeekId": 0,
-          "ProposalVersionDetailQuarterWeekId": 0,
-          "QuarterText": null,
-          "Week": null
-        },
-        "MediaWeek": {
-          "_EndDate": "2019-03-10T00:00:00",
-          "_Id": 793,
-          "_MediaMonthId": 450,
-          "_StartDate": "2019-03-04T00:00:00",
-          "_WeekNumber": 2,
-          "IsDirty": true
-        },
-        "StartDate": "2019-03-04T00:00:00",
-        "WeekNumber": 10
-      },
-      {
-        "InventoryWeek": {
-          "Budget": 0.0,
-          "BudgetMarginAchieved": false,
-          "BudgetPercent": 0.0,
-          "BudgetTotal": 0.0,
-          "ImpressionsGoal": 0.0,
-          "ImpressionsMarginAchieved": false,
-          "ImpressionsPercent": 0.0,
-          "ImpressionsTotal": 0.0,
-          "IsHiatus": false,
-          "Markets": [
-            {
-              "Cost": 0.0,
-              "DisplayImpressions": 0.0,
-              "DisplayStationImpressions": 0.0,
-              "Impressions": 0.0,
-              "MarketId": 101,
-              "Spots": 0,
-              "Stations": [
-                {
-                  "Programs": [
-                    {
-                      "Cost": 0.0,
-                      "DisplayImpressions": 0.0,
-                      "DisplayStationImpressions": 0.0,
-                      "EFF": 0.0,
-                      "HasImpressions": false,
-                      "ProvidedUnitImpressions": null,
-                      "Spots": 1,
-                      "TargetCpm": 0.0,
-                      "TargetImpressions": 0.0,
-                      "TotalImpressions": 0.0,
-                      "UnitCost": 0.0,
-                      "UnitImpression": 0.0
-                    }
-                  ],
-                  "StationCode": 5010
-                }
-              ]
-            }
-          ],
-          "MediaWeekId": 0,
-          "ProposalVersionDetailQuarterWeekId": 0,
-          "QuarterText": null,
-          "Week": null
-        },
-        "MediaWeek": {
-          "_EndDate": "2019-03-17T00:00:00",
-          "_Id": 794,
-          "_MediaMonthId": 450,
-          "_StartDate": "2019-03-11T00:00:00",
-          "_WeekNumber": 3,
-          "IsDirty": true
-        },
-        "StartDate": "2019-03-11T00:00:00",
-        "WeekNumber": 11
-      },
-      {
-        "InventoryWeek": {
-          "Budget": 0.0,
-          "BudgetMarginAchieved": false,
-          "BudgetPercent": 0.0,
-          "BudgetTotal": 0.0,
-          "ImpressionsGoal": 0.0,
-          "ImpressionsMarginAchieved": false,
-          "ImpressionsPercent": 0.0,
-          "ImpressionsTotal": 0.0,
-          "IsHiatus": false,
-          "Markets": [
-            {
-              "Cost": 0.0,
-              "DisplayImpressions": 0.0,
-              "DisplayStationImpressions": 0.0,
-              "Impressions": 0.0,
-              "MarketId": 101,
-              "Spots": 0,
-              "Stations": [
-                {
-                  "Programs": [
-                    {
-                      "Cost": 0.0,
-                      "DisplayImpressions": 0.0,
-                      "DisplayStationImpressions": 0.0,
-                      "EFF": 0.0,
-                      "HasImpressions": false,
-                      "ProvidedUnitImpressions": null,
-                      "Spots": 1,
-                      "TargetCpm": 0.0,
-                      "TargetImpressions": 0.0,
-                      "TotalImpressions": 0.0,
-                      "UnitCost": 0.0,
-                      "UnitImpression": 0.0
-                    }
-                  ],
-                  "StationCode": 5010
-                }
-              ]
-            }
-          ],
-          "MediaWeekId": 0,
-          "ProposalVersionDetailQuarterWeekId": 0,
-          "QuarterText": null,
-          "Week": null
-        },
-        "MediaWeek": {
-          "_EndDate": "2019-03-24T00:00:00",
-          "_Id": 795,
-          "_MediaMonthId": 450,
-          "_StartDate": "2019-03-18T00:00:00",
-          "_WeekNumber": 4,
-          "IsDirty": true
-        },
-        "StartDate": "2019-03-18T00:00:00",
-        "WeekNumber": 12
-      },
-      {
-        "InventoryWeek": {
-          "Budget": 0.0,
-          "BudgetMarginAchieved": false,
-          "BudgetPercent": 0.0,
-          "BudgetTotal": 0.0,
-          "ImpressionsGoal": 0.0,
-          "ImpressionsMarginAchieved": false,
-          "ImpressionsPercent": 0.0,
-          "ImpressionsTotal": 0.0,
-          "IsHiatus": false,
-          "Markets": [],
-          "MediaWeekId": 0,
-          "ProposalVersionDetailQuarterWeekId": 0,
-          "QuarterText": null,
-          "Week": null
-        },
-        "MediaWeek": {
-          "_EndDate": "2019-03-31T00:00:00",
-          "_Id": 796,
-          "_MediaMonthId": 450,
-          "_StartDate": "2019-03-25T00:00:00",
-          "_WeekNumber": 5,
-          "IsDirty": true
-        },
-        "StartDate": "2019-03-25T00:00:00",
-        "WeekNumber": 13
-      }
-    ]
+    "UnitName": "Unit 2"
   }
 ]

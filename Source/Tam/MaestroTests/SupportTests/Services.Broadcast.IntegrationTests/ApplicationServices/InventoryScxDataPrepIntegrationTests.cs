@@ -15,6 +15,7 @@ using System.IO;
 using Services.Broadcast.ApplicationServices;
 using static Services.Broadcast.Entities.Scx.ScxMarketDto;
 using static Services.Broadcast.Entities.OpenMarketInventory.ProposalOpenMarketInventoryWeekDto;
+using static Services.Broadcast.Entities.Scx.ScxMarketDto.ScxStation;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {

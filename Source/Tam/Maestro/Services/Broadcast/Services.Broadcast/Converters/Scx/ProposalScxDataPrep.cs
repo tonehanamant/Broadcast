@@ -125,38 +125,38 @@ namespace Services.Broadcast.Converters.Scx
                 v => mediaMonthInfo + " DMA Nielsen " + v.PlaybackType.ToString().Replace("Plus", "+"));
         }
 
-        private void _SetDemos(ScxData data, ProposalDetailDto proposalDetailDto)
-        {
-            var demos = new List<int>
-            {
-                data.GuaranteedDemoId
-            };
-            demos.AddRange(data.SecondaryDemos);
+        //private void _SetDemos(ScxData data, ProposalDetailDto proposalDetailDto)
+        //{
+        //    var demos = new List<int>
+        //    {
+        //        data.GuaranteedDemoId
+        //    };
+        //    demos.AddRange(data.SecondaryDemos);
 
-            var audiencesMappings = _BroadcastDataRepositoryFactory.GetDataRepository<IBroadcastAudienceRepository>()
-                        .GetRatingsAudiencesByMaestroAudience(demos).ToList();
+        //    var audiencesMappings = _BroadcastDataRepositoryFactory.GetDataRepository<IBroadcastAudienceRepository>()
+        //                .GetRatingsAudiencesByMaestroAudience(demos).ToList();
 
-            data.Demos = new List<DemoData>();
-            int demoIndex = 1;
-            foreach (var demo in demos)
-            {
-                var aud = _AudienceCache.GetAllEntities().Single(a => a.Id == demo);
-                var demoData = new DemoData
-                {
-                    IsPrimaryDemo = demo == demos.First(),
-                    Demo = aud,
-                    DemoRank = demoIndex,
-                    AudienceId = demo,
-                    RatingAudienceIds = audiencesMappings.Where(a => a.custom_audience_id == demo).Select(a => a.rating_audience_id).Distinct().ToList()
-                };
-                data.Demos.Add(demoData);
-                demoIndex++;
-            }
+        //    data.Demos = new List<DemoData>();
+        //    int demoIndex = 1;
+        //    foreach (var demo in demos)
+        //    {
+        //        var aud = _AudienceCache.GetAllEntities().Single(a => a.Id == demo);
+        //        var demoData = new DemoData
+        //        {
+        //            IsPrimaryDemo = demo == demos.First(),
+        //            Demo = aud,
+        //            DemoRank = demoIndex,
+        //            AudienceId = demo,
+        //            RatingAudienceIds = audiencesMappings.Where(a => a.custom_audience_id == demo).Select(a => a.rating_audience_id).Distinct().ToList()
+        //        };
+        //        data.Demos.Add(demoData);
+        //        demoIndex++;
+        //    }
 
-            _GetDemoUniverseData(data, proposalDetailDto);
-            _GetDemoImpressionData(data, proposalDetailDto);
-            _GetDemoRatingData(data, proposalDetailDto);
-        }
+        //    _GetDemoUniverseData(data, proposalDetailDto);
+        //    _GetDemoImpressionData(data, proposalDetailDto);
+        //    _GetDemoRatingData(data, proposalDetailDto);
+        //}
 
         private void _GetDemoUniverseData(ScxData data, ProposalDetailDto proposalDetailDto)
         {
@@ -192,100 +192,96 @@ namespace Services.Broadcast.Converters.Scx
             }
         }
 
-        private void _GetDemoImpressionData(ScxData data, ProposalDetailDto proposalDetailDto)
-        {
-            var playbackType = proposalDetailDto.ProjectionPlaybackType;
+        //private void _GetDemoImpressionData(ScxData data, ProposalDetailDto proposalDetailDto)
+        //{
+        //    var playbackType = proposalDetailDto.ProjectionPlaybackType;
 
-            var repo = _BroadcastDataRepositoryFactory.GetDataRepository<IRatingForecastRepository>();
-            bool isSingleBook = proposalDetailDto.SingleProjectionBookId.HasValue;
+        //    var repo = _BroadcastDataRepositoryFactory.GetDataRepository<IRatingForecastRepository>();
+        //    bool isSingleBook = proposalDetailDto.SingleProjectionBookId.HasValue;
 
-            var programIds = data.WeekData.Where(wd => wd.InventoryWeek != null)
-                .SelectMany(w => w.InventoryWeek.Markets)
-                .SelectMany(m => m.Stations)
-                .SelectMany(s => s.Programs)
-                .Where(p => p != null && p.Spots > 0)
-                .Select(dd => dd.ProgramId);
-            var stations = data.InventoryMarkets
-                .SelectMany(pm => pm.Stations)
-                .SelectMany(s => s.Programs
-                    .Where(p => programIds.Contains(p.ProgramId))
-                    .SelectMany(p =>
-                        p.Dayparts.Select(pdp =>
-                        new ManifestDetailDaypart()
-                        {
-                            Id = p.ProgramId,
-                            LegacyCallLetters = s.LegacyCallLetters
-                            ,
-                            DisplayDaypart = _DaypartCache.GetDisplayDaypart(pdp.Id)
-                        }))).ToList();
+        //    var programIds = data.WeekData.Where(wd => wd.InventoryWeek != null)
+        //        .SelectMany(w => w.InventoryWeek.Markets)
+        //        .SelectMany(m => m.Stations)
+        //        .SelectMany(s => s.Programs)
+        //        .Where(p => p != null && p.Spots > 0)
+        //        .Select(dd => dd.ProgramId);
+        //    var stations = data.InventoryMarkets
+        //        .SelectMany(pm => pm.Stations)
+        //        .SelectMany(s => s.Programs
+        //            .Where(p => programIds.Contains(p.ProgramId))
+        //            .SelectMany(p =>
+        //                p.Dayparts.Select(pdp =>
+        //                new ManifestDetailDaypart()
+        //                {
+        //                    Id = p.ProgramId,
+        //                    LegacyCallLetters = s.LegacyCallLetters
+        //                    ,
+        //                    DisplayDaypart = _DaypartCache.GetDisplayDaypart(pdp.Id)
+        //                }))).ToList();
 
-            List<StationImpressions> stationImpressions;
-            if (!stations.Any())
-                return;
+        //    List<StationImpressions> stationImpressions;
+        //    if (!stations.Any())
+        //        return;
 
-            foreach (var demo in data.Demos)
-            {
-                var audienceIds = demo.RatingAudienceIds;
+        //    foreach (var demo in data.Demos)
+        //    {
+        //        var audienceIds = demo.RatingAudienceIds;
+        //        if (isSingleBook)
+        //        {
+        //            stationImpressions = repo.GetImpressionsDaypart(proposalDetailDto.SingleProjectionBookId.Value
+        //                                       , audienceIds
+        //                                       , stations
+        //                                       , playbackType)
+        //                                       .Cast<StationImpressions>()
+        //                                       .ToList();
+        //        }
+        //        else
+        //        {
+        //            stationImpressions = repo.GetImpressionsDaypart((short)proposalDetailDto.HutProjectionBookId.Value
+        //                                        , (short)proposalDetailDto.ShareProjectionBookId.Value
+        //                                        , audienceIds
+        //                                        , stations
+        //                                        , playbackType);
+        //        }
+        //        demo.Impressions = stationImpressions;//.Where(si => data.MarketIds.Contains(si.market_code)).ToList();
+        //    }
+        //}
 
-                if (isSingleBook)
-                {
-                    stationImpressions = repo.GetImpressionsDaypart(proposalDetailDto.SingleProjectionBookId.Value
-                                               , audienceIds
-                                               , stations
-                                               , playbackType)
-                                               .Impressions
-                                               .Cast<StationImpressions>()
-                                               .ToList();
-                }
-                else
-                {
-                    stationImpressions = repo.GetImpressionsDaypart((short)proposalDetailDto.HutProjectionBookId.Value
-                                                , (short)proposalDetailDto.ShareProjectionBookId.Value
-                                                , audienceIds
-                                                , stations
-                                                , playbackType)
-                                                .Impressions;
-                }
+        //private void _GetDemoRatingData(ScxData data, ProposalDetailDto proposalDetailDto)
+        //{
+        //    bool isSingleBook = proposalDetailDto.SingleProjectionBookId.HasValue;
 
-                demo.Impressions = stationImpressions;//.Where(si => data.MarketIds.Contains(si.market_code)).ToList();
-            }
-        }
+        //    foreach (var demo in data.Demos)
+        //    {
+        //        var programIds = data.WeekData.Where(wd => wd.InventoryWeek != null)
+        //            .SelectMany(w => w.InventoryWeek.Markets)
+        //            .SelectMany(m => m.Stations)
+        //            .SelectMany(s => s.Programs)
+        //            .Where(p => p != null && p.Spots > 0)
+        //            .Select(dd => dd.ProgramId);
+        //        var manifestInfo = data.InventoryMarkets
+        //            .SelectMany(pm => pm.Stations)
+        //            .SelectMany(s => s.Programs
+        //                .Where(p => programIds.Contains(p.ProgramId))
+        //                .SelectMany(p =>
+        //                    p.Dayparts.Select(dp =>
+        //                        new ManifestDetailDaypart() { Id = p.ProgramId, LegacyCallLetters = s.LegacyCallLetters, DisplayDaypart = _DaypartCache.GetDisplayDaypart(dp.Id) })));
 
-        private void _GetDemoRatingData(ScxData data, ProposalDetailDto proposalDetailDto)
-        {
-            bool isSingleBook = proposalDetailDto.SingleProjectionBookId.HasValue;
+        //        demo.Ratings = new List<Ratingdata>();
+        //        foreach (var impressionData in demo.Impressions)
+        //        {
+        //            var manifestDetail = manifestInfo.First(m => m.Id == impressionData.Id);
 
-            foreach (var demo in data.Demos)
-            {
-                var programIds = data.WeekData.Where(wd => wd.InventoryWeek != null)
-                    .SelectMany(w => w.InventoryWeek.Markets)
-                    .SelectMany(m => m.Stations)
-                    .SelectMany(s => s.Programs)
-                    .Where(p => p != null && p.Spots > 0)
-                    .Select(dd => dd.ProgramId);
-                var manifestInfo = data.InventoryMarkets
-                    .SelectMany(pm => pm.Stations)
-                    .SelectMany(s => s.Programs
-                        .Where(p => programIds.Contains(p.ProgramId))
-                        .SelectMany(p =>
-                            p.Dayparts.Select(dp =>
-                                new ManifestDetailDaypart() { Id = p.ProgramId, LegacyCallLetters = s.LegacyCallLetters, DisplayDaypart = _DaypartCache.GetDisplayDaypart(dp.Id) })));
-
-                demo.Ratings = new List<Ratingdata>();
-                foreach (var impressionData in demo.Impressions)
-                {
-                    var manifestDetail = manifestInfo.First(m => m.Id == impressionData.Id);
-
-                    Ratingdata demoRating = new Ratingdata()
-                    {
-                        DaypartId = manifestDetail.DisplayDaypart.Id,
-                        Rating = impressionData.Rating * 100,
-                        LegacyCallLetters = impressionData.LegacyCallLetters
-                    };
-                    demo.Ratings.Add(demoRating);
-                }
-            }
-        }
+        //            Ratingdata demoRating = new Ratingdata()
+        //            {
+        //                DaypartId = manifestDetail.DisplayDaypart.Id,
+        //                Rating = impressionData.Rating * 100,
+        //                LegacyCallLetters = impressionData.Legacy_call_letters
+        //            };
+        //            demo.Ratings.Add(demoRating);
+        //        }
+        //    }
+        //}
 
         private List<ScxMarketStationProgramSpotWeek> _SetProgramWeeks(ProposalDetailOpenMarketInventoryDto detail)
         {

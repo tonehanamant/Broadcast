@@ -370,9 +370,7 @@
                 "subStatusSpecified": false,
                 "updateDateSpecified": false,
                 "version": null
-              },
-              null,
-              null
+              }
             ],
             "populations": [],
             "specialCommissionSpecified": false,
@@ -387,7 +385,7 @@
                 "currency": "USD",
                 "Value": 0.0
               },
-              "spots": "39"
+              "spots": "13"
             },
             "weeks": {
               "count": "13",
@@ -590,9 +588,7 @@
                 "subStatusSpecified": false,
                 "updateDateSpecified": false,
                 "version": null
-              },
-              null,
-              null
+              }
             ],
             "populations": [],
             "specialCommissionSpecified": false,
@@ -607,7 +603,7 @@
                 "currency": "USD",
                 "Value": 0.0
               },
-              "spots": "39"
+              "spots": "13"
             },
             "weeks": {
               "count": "13",
@@ -810,9 +806,7 @@
                 "subStatusSpecified": false,
                 "updateDateSpecified": false,
                 "version": null
-              },
-              null,
-              null
+              }
             ],
             "populations": [],
             "specialCommissionSpecified": false,
@@ -827,7 +821,7 @@
                 "currency": "USD",
                 "Value": 0.0
               },
-              "spots": "39"
+              "spots": "13"
             },
             "weeks": {
               "count": "13",
@@ -1093,9 +1087,7 @@
                 "subStatusSpecified": false,
                 "updateDateSpecified": false,
                 "version": null
-              },
-              null,
-              null
+              }
             ],
             "populations": [],
             "specialCommissionSpecified": false,
@@ -1376,9 +1368,7 @@
                 "subStatusSpecified": false,
                 "updateDateSpecified": false,
                 "version": null
-              },
-              null,
-              null
+              }
             ],
             "populations": [],
             "specialCommissionSpecified": false,
@@ -1393,7 +1383,7 @@
                 "currency": "USD",
                 "Value": 0.0
               },
-              "spots": "26"
+              "spots": "13"
             },
             "weeks": {
               "count": "13",
@@ -1596,9 +1586,7 @@
                 "subStatusSpecified": false,
                 "updateDateSpecified": false,
                 "version": null
-              },
-              null,
-              null
+              }
             ],
             "populations": [],
             "specialCommissionSpecified": false,
@@ -1613,7 +1601,7 @@
                 "currency": "USD",
                 "Value": 0.0
               },
-              "spots": "26"
+              "spots": "13"
             },
             "weeks": {
               "count": "13",
@@ -2006,9 +1994,7 @@
                 "subStatusSpecified": false,
                 "updateDateSpecified": false,
                 "version": null
-              },
-              null,
-              null
+              }
             ],
             "populations": [],
             "specialCommissionSpecified": false,
@@ -2023,7 +2009,7 @@
                 "currency": "USD",
                 "Value": 0.0
               },
-              "spots": "65"
+              "spots": "26"
             },
             "weeks": {
               "count": "13",
@@ -2226,9 +2212,7 @@
                 "subStatusSpecified": false,
                 "updateDateSpecified": false,
                 "version": null
-              },
-              null,
-              null
+              }
             ],
             "populations": [],
             "specialCommissionSpecified": false,
@@ -2243,7 +2227,7 @@
                 "currency": "USD",
                 "Value": 0.0
               },
-              "spots": "65"
+              "spots": "13"
             },
             "weeks": {
               "count": "13",
@@ -2573,9 +2557,7 @@
                 "subStatusSpecified": false,
                 "updateDateSpecified": false,
                 "version": null
-              },
-              null,
-              null
+              }
             ],
             "populations": [],
             "specialCommissionSpecified": false,
@@ -2590,7 +2572,7 @@
                 "currency": "USD",
                 "Value": 0.0
               },
-              "spots": "65"
+              "spots": "26"
             },
             "weeks": {
               "count": "13",
@@ -2856,9 +2838,7 @@
                 "subStatusSpecified": false,
                 "updateDateSpecified": false,
                 "version": null
-              },
-              null,
-              null
+              }
             ],
             "populations": [],
             "specialCommissionSpecified": false,
@@ -3139,9 +3119,7 @@
                 "subStatusSpecified": false,
                 "updateDateSpecified": false,
                 "version": null
-              },
-              null,
-              null
+              }
             ],
             "populations": [],
             "specialCommissionSpecified": false,
@@ -3422,9 +3400,7 @@
                 "subStatusSpecified": false,
                 "updateDateSpecified": false,
                 "version": null
-              },
-              null,
-              null
+              }
             ],
             "populations": [],
             "specialCommissionSpecified": false,
@@ -3832,9 +3808,7 @@
                 "subStatusSpecified": false,
                 "updateDateSpecified": false,
                 "version": null
-              },
-              null,
-              null
+              }
             ],
             "populations": [],
             "specialCommissionSpecified": false,
@@ -4115,9 +4089,7 @@
                 "subStatusSpecified": false,
                 "updateDateSpecified": false,
                 "version": null
-              },
-              null,
-              null
+              }
             ],
             "populations": [],
             "specialCommissionSpecified": false,
@@ -4132,7 +4104,7 @@
                 "currency": "USD",
                 "Value": 0.0
               },
-              "spots": "65"
+              "spots": "13"
             },
             "weeks": {
               "count": "13",
@@ -4462,9 +4434,7 @@
                 "subStatusSpecified": false,
                 "updateDateSpecified": false,
                 "version": null
-              },
-              null,
-              null
+              }
             ],
             "populations": [],
             "specialCommissionSpecified": false,
@@ -4479,7 +4449,7 @@
                 "currency": "USD",
                 "Value": 0.0
               },
-              "spots": "65"
+              "spots": "26"
             },
             "weeks": {
               "count": "13",
@@ -4809,9 +4779,7 @@
                 "subStatusSpecified": false,
                 "updateDateSpecified": false,
                 "version": null
-              },
-              null,
-              null
+              }
             ],
             "populations": [],
             "specialCommissionSpecified": false,
@@ -4826,7 +4794,7 @@
                 "currency": "USD",
                 "Value": 0.0
               },
-              "spots": "65"
+              "spots": "26"
             },
             "weeks": {
               "count": "13",
@@ -5092,9 +5060,7 @@
                 "subStatusSpecified": false,
                 "updateDateSpecified": false,
                 "version": null
-              },
-              null,
-              null
+              }
             ],
             "populations": [],
             "specialCommissionSpecified": false,
@@ -5109,7 +5075,7 @@
                 "currency": "USD",
                 "Value": 0.0
               },
-              "spots": "42"
+              "spots": "13"
             },
             "weeks": {
               "count": "13",
@@ -5312,9 +5278,7 @@
                 "subStatusSpecified": false,
                 "updateDateSpecified": false,
                 "version": null
-              },
-              null,
-              null
+              }
             ],
             "populations": [],
             "specialCommissionSpecified": false,
@@ -5329,7 +5293,7 @@
                 "currency": "USD",
                 "Value": 0.0
               },
-              "spots": "42"
+              "spots": "13"
             },
             "weeks": {
               "count": "13",
@@ -5532,9 +5496,7 @@
                 "subStatusSpecified": false,
                 "updateDateSpecified": false,
                 "version": null
-              },
-              null,
-              null
+              }
             ],
             "populations": [],
             "specialCommissionSpecified": false,
@@ -5549,7 +5511,7 @@
                 "currency": "USD",
                 "Value": 0.0
               },
-              "spots": "42"
+              "spots": "13"
             },
             "weeks": {
               "count": "13",
@@ -5752,9 +5714,7 @@
                 "subStatusSpecified": false,
                 "updateDateSpecified": false,
                 "version": null
-              },
-              null,
-              null
+              }
             ],
             "populations": [],
             "specialCommissionSpecified": false,
@@ -5769,7 +5729,7 @@
                 "currency": "USD",
                 "Value": 0.0
               },
-              "spots": "42"
+              "spots": "3"
             },
             "weeks": {
               "count": "13",
@@ -6035,9 +5995,7 @@
                 "subStatusSpecified": false,
                 "updateDateSpecified": false,
                 "version": null
-              },
-              null,
-              null
+              }
             ],
             "populations": [],
             "specialCommissionSpecified": false,
@@ -6318,9 +6276,7 @@
                 "subStatusSpecified": false,
                 "updateDateSpecified": false,
                 "version": null
-              },
-              null,
-              null
+              }
             ],
             "populations": [],
             "specialCommissionSpecified": false,
@@ -6728,9 +6684,7 @@
                 "subStatusSpecified": false,
                 "updateDateSpecified": false,
                 "version": null
-              },
-              null,
-              null
+              }
             ],
             "populations": [],
             "specialCommissionSpecified": false,
@@ -7138,9 +7092,7 @@
                 "subStatusSpecified": false,
                 "updateDateSpecified": false,
                 "version": null
-              },
-              null,
-              null
+              }
             ],
             "populations": [],
             "specialCommissionSpecified": false,
@@ -7421,9 +7373,7 @@
                 "subStatusSpecified": false,
                 "updateDateSpecified": false,
                 "version": null
-              },
-              null,
-              null
+              }
             ],
             "populations": [],
             "specialCommissionSpecified": false,
@@ -7704,9 +7654,7 @@
                 "subStatusSpecified": false,
                 "updateDateSpecified": false,
                 "version": null
-              },
-              null,
-              null
+              }
             ],
             "populations": [],
             "specialCommissionSpecified": false,
@@ -8114,9 +8062,7 @@
                 "subStatusSpecified": false,
                 "updateDateSpecified": false,
                 "version": null
-              },
-              null,
-              null
+              }
             ],
             "populations": [],
             "specialCommissionSpecified": false,
@@ -8397,9 +8343,7 @@
                 "subStatusSpecified": false,
                 "updateDateSpecified": false,
                 "version": null
-              },
-              null,
-              null
+              }
             ],
             "populations": [],
             "specialCommissionSpecified": false,
@@ -8680,9 +8624,7 @@
                 "subStatusSpecified": false,
                 "updateDateSpecified": false,
                 "version": null
-              },
-              null,
-              null
+              }
             ],
             "populations": [],
             "specialCommissionSpecified": false,
@@ -9090,9 +9032,7 @@
                 "subStatusSpecified": false,
                 "updateDateSpecified": false,
                 "version": null
-              },
-              null,
-              null
+              }
             ],
             "populations": [],
             "specialCommissionSpecified": false,
@@ -9373,9 +9313,7 @@
                 "subStatusSpecified": false,
                 "updateDateSpecified": false,
                 "version": null
-              },
-              null,
-              null
+              }
             ],
             "populations": [],
             "specialCommissionSpecified": false,
@@ -9656,9 +9594,7 @@
                 "subStatusSpecified": false,
                 "updateDateSpecified": false,
                 "version": null
-              },
-              null,
-              null
+              }
             ],
             "populations": [],
             "specialCommissionSpecified": false,
@@ -9673,7 +9609,7 @@
                 "currency": "USD",
                 "Value": 0.0
               },
-              "spots": "26"
+              "spots": "13"
             },
             "weeks": {
               "count": "13",
@@ -9876,9 +9812,7 @@
                 "subStatusSpecified": false,
                 "updateDateSpecified": false,
                 "version": null
-              },
-              null,
-              null
+              }
             ],
             "populations": [],
             "specialCommissionSpecified": false,
@@ -9893,7 +9827,7 @@
                 "currency": "USD",
                 "Value": 0.0
               },
-              "spots": "26"
+              "spots": "13"
             },
             "weeks": {
               "count": "13",
@@ -10159,9 +10093,7 @@
                 "subStatusSpecified": false,
                 "updateDateSpecified": false,
                 "version": null
-              },
-              null,
-              null
+              }
             ],
             "populations": [],
             "specialCommissionSpecified": false,
@@ -10176,7 +10108,7 @@
                 "currency": "USD",
                 "Value": 0.0
               },
-              "spots": "26"
+              "spots": "13"
             },
             "weeks": {
               "count": "13",
@@ -10379,9 +10311,7 @@
                 "subStatusSpecified": false,
                 "updateDateSpecified": false,
                 "version": null
-              },
-              null,
-              null
+              }
             ],
             "populations": [],
             "specialCommissionSpecified": false,
@@ -10396,7 +10326,7 @@
                 "currency": "USD",
                 "Value": 0.0
               },
-              "spots": "26"
+              "spots": "13"
             },
             "weeks": {
               "count": "13",
@@ -10662,9 +10592,7 @@
                 "subStatusSpecified": false,
                 "updateDateSpecified": false,
                 "version": null
-              },
-              null,
-              null
+              }
             ],
             "populations": [],
             "specialCommissionSpecified": false,
@@ -10679,7 +10607,7 @@
                 "currency": "USD",
                 "Value": 0.0
               },
-              "spots": "26"
+              "spots": "13"
             },
             "weeks": {
               "count": "13",
@@ -10882,9 +10810,7 @@
                 "subStatusSpecified": false,
                 "updateDateSpecified": false,
                 "version": null
-              },
-              null,
-              null
+              }
             ],
             "populations": [],
             "specialCommissionSpecified": false,
@@ -10899,7 +10825,7 @@
                 "currency": "USD",
                 "Value": 0.0
               },
-              "spots": "26"
+              "spots": "13"
             },
             "weeks": {
               "count": "13",
@@ -11165,9 +11091,7 @@
                 "subStatusSpecified": false,
                 "updateDateSpecified": false,
                 "version": null
-              },
-              null,
-              null
+              }
             ],
             "populations": [],
             "specialCommissionSpecified": false,
@@ -11448,9 +11372,7 @@
                 "subStatusSpecified": false,
                 "updateDateSpecified": false,
                 "version": null
-              },
-              null,
-              null
+              }
             ],
             "populations": [],
             "specialCommissionSpecified": false,
@@ -11731,9 +11653,7 @@
                 "subStatusSpecified": false,
                 "updateDateSpecified": false,
                 "version": null
-              },
-              null,
-              null
+              }
             ],
             "populations": [],
             "specialCommissionSpecified": false,
@@ -11748,7 +11668,7 @@
                 "currency": "USD",
                 "Value": 0.0
               },
-              "spots": "26"
+              "spots": "13"
             },
             "weeks": {
               "count": "13",
@@ -11951,9 +11871,7 @@
                 "subStatusSpecified": false,
                 "updateDateSpecified": false,
                 "version": null
-              },
-              null,
-              null
+              }
             ],
             "populations": [],
             "specialCommissionSpecified": false,
@@ -11968,7 +11886,7 @@
                 "currency": "USD",
                 "Value": 0.0
               },
-              "spots": "26"
+              "spots": "13"
             },
             "weeks": {
               "count": "13",
@@ -12234,9 +12152,7 @@
                 "subStatusSpecified": false,
                 "updateDateSpecified": false,
                 "version": null
-              },
-              null,
-              null
+              }
             ],
             "populations": [],
             "specialCommissionSpecified": false,
@@ -12517,9 +12433,7 @@
                 "subStatusSpecified": false,
                 "updateDateSpecified": false,
                 "version": null
-              },
-              null,
-              null
+              }
             ],
             "populations": [],
             "specialCommissionSpecified": false,
@@ -12800,9 +12714,7 @@
                 "subStatusSpecified": false,
                 "updateDateSpecified": false,
                 "version": null
-              },
-              null,
-              null
+              }
             ],
             "populations": [],
             "specialCommissionSpecified": false,
@@ -13210,9 +13122,7 @@
                 "subStatusSpecified": false,
                 "updateDateSpecified": false,
                 "version": null
-              },
-              null,
-              null
+              }
             ],
             "populations": [],
             "specialCommissionSpecified": false,
@@ -13493,9 +13403,7 @@
                 "subStatusSpecified": false,
                 "updateDateSpecified": false,
                 "version": null
-              },
-              null,
-              null
+              }
             ],
             "populations": [],
             "specialCommissionSpecified": false,
@@ -13903,9 +13811,7 @@
                 "subStatusSpecified": false,
                 "updateDateSpecified": false,
                 "version": null
-              },
-              null,
-              null
+              }
             ],
             "populations": [],
             "specialCommissionSpecified": false,
@@ -14186,9 +14092,7 @@
                 "subStatusSpecified": false,
                 "updateDateSpecified": false,
                 "version": null
-              },
-              null,
-              null
+              }
             ],
             "populations": [],
             "specialCommissionSpecified": false,
@@ -14203,7 +14107,7 @@
                 "currency": "USD",
                 "Value": 0.0
               },
-              "spots": "12"
+              "spots": "6"
             },
             "weeks": {
               "count": "13",
@@ -14406,9 +14310,7 @@
                 "subStatusSpecified": false,
                 "updateDateSpecified": false,
                 "version": null
-              },
-              null,
-              null
+              }
             ],
             "populations": [],
             "specialCommissionSpecified": false,
@@ -14423,7 +14325,7 @@
                 "currency": "USD",
                 "Value": 0.0
               },
-              "spots": "12"
+              "spots": "6"
             },
             "weeks": {
               "count": "13",

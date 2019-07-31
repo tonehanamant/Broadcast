@@ -779,10 +779,14 @@ namespace Services.Broadcast.Repositories
                         .Select(_MapToInventoryGroup)
                         .ToList();
 
-                    // filter out manifests which are out of the date range
                     foreach (var group in groups)
                     {
-                        group.Manifests = group.Manifests.Where(m => m.ManifestWeeks.Any(w => w.StartDate <= endDate && w.EndDate >= startDate)).ToList();                        
+                        foreach (var manifest in group.Manifests)
+                        {
+                            manifest.ManifestWeeks = manifest.ManifestWeeks.Where(w => w.StartDate <= endDate && w.EndDate >= startDate).ToList();
+                        }
+
+                        group.Manifests = group.Manifests.Where(m => m.ManifestWeeks.Any()).ToList();
                     }
 
                     return groups;
@@ -809,8 +813,10 @@ namespace Services.Broadcast.Repositories
 
                     foreach (var manifest in manifests)
                     {
-                        manifests = manifests.Where(m => m.ManifestWeeks.Any(w => w.StartDate <= endDate && w.EndDate >= startDate)).ToList();
+                        manifest.ManifestWeeks = manifest.ManifestWeeks.Where(w => w.StartDate <= endDate && w.EndDate >= startDate).ToList();
                     }
+
+                    manifests = manifests.Where(m => m.ManifestWeeks.Any()).ToList();
 
                     return manifests;
                 });
