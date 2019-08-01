@@ -1,12 +1,13 @@
-﻿using Common.Services.Repositories;
+﻿using Common.Services.Extensions;
+using Common.Services.Repositories;
 using ConfigurationService.Client;
 using EntityFrameworkMapping.Broadcast;
+using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
+using Services.Broadcast.Helpers;
 using System;
-using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
 
@@ -17,11 +18,26 @@ namespace Services.Broadcast.Repositories
         /// <summary>
         /// Saves the new plan.
         /// </summary>
-        /// <param name="plan">The plan.</param>
+        /// <param name="planDto">The plan.</param>
         /// <param name="createdBy">The created by.</param>
         /// <param name="createdDate">The created date.</param>
         /// <returns>Id of the new plan</returns>
-        int SaveNewPlan(CreatePlanDto plan, string createdBy, DateTime createdDate);
+        int SaveNewPlan(PlanDto planDto, string createdBy, DateTime createdDate);
+
+        /// <summary>
+        /// Saves the plan.
+        /// </summary>
+        /// <param name="planDto">The plan.</param>
+        /// <param name="modifiedBy">The modified by.</param>
+        /// <param name="modifiedDate">The modified date.</param>
+        void SavePlan(PlanDto planDto, string modifiedBy, DateTime modifiedDate);
+
+        /// <summary>
+        /// Gets the plan.
+        /// </summary>
+        /// <param name="planId">The plan identifier.</param>
+        /// <returns></returns>
+        PlanDto GetPlan(int planId);
     }
 
     public class PlanRepository : BroadcastRepositoryBase, IPlanRepository
@@ -34,26 +50,106 @@ namespace Services.Broadcast.Repositories
         }
 
         /// <inheritdoc/>
-        public int SaveNewPlan(CreatePlanDto plan, string createdBy, DateTime createdDate)
+        public int SaveNewPlan(PlanDto planDto, string createdBy, DateTime createdDate)
         {
             return _InReadUncommitedTransaction(
                 context =>
                 {
                     var newPlan = new plan
                     {
-                        campaign_id = plan.CampaignId,
                         created_by = createdBy,
                         created_date = createdDate,
-                        equivalized = plan.Equivalized,
-                        name = plan.Name,
-                        product_id = plan.ProductId,
-                        spot_length_id = plan.SpotLengthId,
-                        status = (int)plan.Status
                     };
+                    _HydrateFromDto(newPlan, planDto, context);
+
                     context.plans.Add(newPlan);
                     context.SaveChanges();
                     return newPlan.id;
                 });
         }
+
+        /// <inheritdoc />
+        public void SavePlan(PlanDto planDto, string modifiedBy, DateTime modifiedDate)
+        {
+            _InReadUncommitedTransaction(
+                context =>
+                {
+                    var plan = context.plans
+                        .Include(p => p.plan_flight_hiatus)
+                        .Single(p => p.id == planDto.Id, "Invalid plan id.");
+                    _HydrateFromDto(plan, planDto, context);
+
+                    context.SaveChanges();
+                });
+        }
+
+        /// <inheritdoc />
+        public PlanDto GetPlan(int planId)
+        {
+            return _InReadUncommitedTransaction(context =>
+                {
+                    var entity = context.plans
+                        .Include(p => p.plan_flight_hiatus)
+                        .Single(s => s.id == planId, "Invalid plan id.");
+                    var dto = _MapToDto(entity);
+                    return dto;
+                });
+        }
+
+        private PlanDto _MapToDto(plan entity)
+        {
+            var status = EnumHelper.GetEnum<PlanStatusEnum>(entity.status);
+            var dto = new PlanDto
+            {
+                Id = entity.id,
+                CampaignId = entity.campaign_id,
+                Name = entity.name,
+                SpotLengthId = entity.spot_length_id,
+                Equivalized = entity.equivalized,
+                Status = status,
+                ProductId = entity.product_id,
+                FlightStartDate = entity.flight_start_date,
+                FlightEndDate = entity.flight_end_date,
+                FlightNotes = entity.flight_notes
+            };
+            dto.FlightHiatusDays.AddRange(entity.plan_flight_hiatus.Select(h => h.hiatus_day));
+
+            return dto;
+        }
+
+        /// <summary>
+        /// Populates the editable fields from the dto to the entity.
+        /// </summary>
+        /// <param name="entity">The entity.</param>
+        /// <param name="planDto">The plan dto.</param>
+        /// <param name="context">The context.</param>
+        private void _HydrateFromDto(plan entity, PlanDto planDto, QueryHintBroadcastContext context)
+        {
+            entity.name = planDto.Name;
+            entity.product_id = planDto.ProductId;
+            entity.spot_length_id = planDto.SpotLengthId;
+            entity.equivalized = planDto.Equivalized;
+            entity.status = (int)planDto.Status;
+            entity.campaign_id = planDto.CampaignId;
+
+            entity.flight_start_date = planDto.FlightStartDate;
+            entity.flight_end_date = planDto.FlightEndDate;
+            entity.flight_notes = planDto.FlightNotes;
+
+            _HydratePlanFlightHiatus(entity, planDto, context);
+        }
+
+        #region Flight and Hiatus
+
+        private void _HydratePlanFlightHiatus(plan entity, PlanDto planDto, QueryHintBroadcastContext context)
+        {
+            context.plan_flight_hiatus.RemoveRange(entity.plan_flight_hiatus);
+            planDto.FlightHiatusDays.ForEach(d =>
+            {
+                entity.plan_flight_hiatus.Add(new plan_flight_hiatus { hiatus_day = d });
+            });
+        }
+
+        #endregion // #region Flight and Hiatus
     }
 }

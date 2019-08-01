@@ -586,6 +586,14 @@
           <Property Name="created_by" Type="varchar" MaxLength="63" Nullable="false" />
           <Property Name="status" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="plan_flight_hiatus">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="plan_id" Type="int" Nullable="false" />
+          <Property Name="hiatus_day" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="plans">
           <Key>
             <PropertyRef Name="id" />
@@ -599,6 +607,9 @@
           <Property Name="status" Type="int" Nullable="false" />
           <Property Name="created_by" Type="varchar" MaxLength="63" Nullable="false" />
           <Property Name="created_date" Type="datetime" Nullable="false" />
+          <Property Name="flight_start_date" Type="datetime" />
+          <Property Name="flight_end_date" Type="datetime" />
+          <Property Name="flight_notes" Type="nvarchar" MaxLength="1024" />
         </EntityType>
         <EntityType Name="post_file_demos">
           <Key>
@@ -2163,6 +2174,20 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Principal>
             <Dependent Role="nti_transmittals_file_reports">
               <PropertyRef Name="nti_transmittals_file_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_flight_hiatus_plans">
+          <End Role="plans" Type="Self.plans" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="plan_flight_hiatus" Type="Self.plan_flight_hiatus" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="plans">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_flight_hiatus">
+              <PropertyRef Name="plan_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3887,6 +3912,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySet Name="nti_transmittals_file_report_ratings" EntityType="Self.nti_transmittals_file_report_ratings" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="nti_transmittals_file_reports" EntityType="Self.nti_transmittals_file_reports" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="nti_transmittals_files" EntityType="Self.nti_transmittals_files" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="plan_flight_hiatus" EntityType="Self.plan_flight_hiatus" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="plans" EntityType="Self.plans" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="post_file_demos" EntityType="Self.post_file_demos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="post_file_detail_impressions" EntityType="Self.post_file_detail_impressions" Schema="dbo" store:Type="Tables" />
@@ -4173,6 +4199,10 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <AssociationSet Name="FK_nti_transmittals_file_reports_nti_transmittals_files" Association="Self.FK_nti_transmittals_file_reports_nti_transmittals_files">
             <End Role="nti_transmittals_files" EntitySet="nti_transmittals_files" />
             <End Role="nti_transmittals_file_reports" EntitySet="nti_transmittals_file_reports" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_flight_hiatus_plans" Association="Self.FK_plan_flight_hiatus_plans">
+            <End Role="plans" EntitySet="plans" />
+            <End Role="plan_flight_hiatus" EntitySet="plan_flight_hiatus" />
           </AssociationSet>
           <AssociationSet Name="FK_plans_campaigns" Association="Self.FK_plans_campaigns">
             <End Role="campaigns" EntitySet="campaigns" />
@@ -5519,6 +5549,11 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <AssociationSet Name="FK_plans_spot_lengths" Association="BroadcastModel.FK_plans_spot_lengths">
             <End Role="spot_lengths" EntitySet="spot_lengths" />
             <End Role="plan" EntitySet="plans" />
+          </AssociationSet>
+          <EntitySet Name="plan_flight_hiatus" EntityType="BroadcastModel.plan_flight_hiatus" />
+          <AssociationSet Name="FK_plan_flight_hiatus_plans" Association="BroadcastModel.FK_plan_flight_hiatus_plans">
+            <End Role="plan" EntitySet="plans" />
+            <End Role="plan_flight_hiatus" EntitySet="plan_flight_hiatus" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="audience_audiences">
@@ -9633,6 +9668,10 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="spot_lengths" Relationship="BroadcastModel.FK_plans_spot_lengths" FromRole="plan" ToRole="spot_lengths" />
           <Property Name="created_by" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
           <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="flight_start_date" Type="DateTime" Precision="3" />
+          <Property Name="flight_end_date" Type="DateTime" Precision="3" />
+          <Property Name="flight_notes" Type="String" MaxLength="1024" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="plan_flight_hiatus" Relationship="BroadcastModel.FK_plan_flight_hiatus_plans" FromRole="plan" ToRole="plan_flight_hiatus" />
         </EntityType>
         <Association Name="FK_plans_campaigns">
           <End Type="BroadcastModel.campaign" Role="campaign" Multiplicity="1" />
@@ -9655,6 +9694,29 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Principal>
             <Dependent Role="plan">
               <PropertyRef Name="spot_length_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="plan_flight_hiatus">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="hiatus_day" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="plan_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="plan" Relationship="BroadcastModel.FK_plan_flight_hiatus_plans" FromRole="plan_flight_hiatus" ToRole="plan" />
+        </EntityType>
+        <Association Name="FK_plan_flight_hiatus_plans">
+          <End Type="BroadcastModel.plan" Role="plan" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BroadcastModel.plan_flight_hiatus" Role="plan_flight_hiatus" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="plan">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_flight_hiatus">
+              <PropertyRef Name="plan_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -11310,6 +11372,9 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="plans">
             <EntityTypeMapping TypeName="BroadcastModel.plan">
               <MappingFragment StoreEntitySet="plans">
+                <ScalarProperty Name="flight_notes" ColumnName="flight_notes" />
+                <ScalarProperty Name="flight_end_date" ColumnName="flight_end_date" />
+                <ScalarProperty Name="flight_start_date" ColumnName="flight_start_date" />
                 <ScalarProperty Name="created_date" ColumnName="created_date" />
                 <ScalarProperty Name="created_by" ColumnName="created_by" />
                 <ScalarProperty Name="status" ColumnName="status" />
@@ -11318,6 +11383,15 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
                 <ScalarProperty Name="product_id" ColumnName="product_id" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="campaign_id" ColumnName="campaign_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="plan_flight_hiatus">
+            <EntityTypeMapping TypeName="BroadcastModel.plan_flight_hiatus">
+              <MappingFragment StoreEntitySet="plan_flight_hiatus">
+                <ScalarProperty Name="plan_id" ColumnName="plan_id" />
+                <ScalarProperty Name="hiatus_day" ColumnName="hiatus_day" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

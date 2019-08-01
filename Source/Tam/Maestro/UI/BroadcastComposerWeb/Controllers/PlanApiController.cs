@@ -25,16 +25,15 @@ namespace BroadcastComposerWeb.Controllers
         }
 
         /// <summary>
-        /// Get inventory sources for summaries
+        /// Saves the plan.
         /// </summary>
-        /// <remarks>
-        /// Get a list of inventory sources available for summary
-        /// </remarks>
+        /// <param name="newPlan">The new plan.</param>
+        /// <returns></returns>
         [HttpPost]
-        [Route("Create")]
-        public BaseResponse<int> CreatePlan(CreatePlanDto newPlan)
+        [Route("Save")]
+        public BaseResponse<int> SavePlan(PlanDto newPlan)
         {
-            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanService>().CreatePlan(newPlan, Identity.Name, DateTime.Now));
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanService>().SavePlan(newPlan, Identity.Name, DateTime.Now));
         }
 
         /// <summary>

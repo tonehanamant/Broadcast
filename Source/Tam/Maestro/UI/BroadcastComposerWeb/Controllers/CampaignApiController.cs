@@ -50,7 +50,7 @@ namespace BroadcastComposerWeb.Controllers
         /// <summary>
         /// Endpoint for creating new campaigns
         /// </summary>
-        /// <param name="campaignDto">The object with the data for the new campaign</param>
+        /// <param name="campaign">The object with the data for the new campaign</param>
         [HttpPost]
         [Route("")]
         public BaseResponse CreateCampaign(CampaignDto campaign)

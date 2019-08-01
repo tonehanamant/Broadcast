@@ -14,13 +14,20 @@ namespace Services.Broadcast.ApplicationServices.Plan
     public interface IPlanService : IApplicationService
     {
         /// <summary>
-        /// Creates the plan.
+        /// Saves the plan.
         /// </summary>
-        /// <param name="newPlan">The new plan.</param>
-        /// <param name="createdBy">The created by.</param>
-        /// <param name="createdDate">The created date.</param>
-        /// <returns>Id of the newly created plan</returns>
-        int CreatePlan(CreatePlanDto newPlan, string createdBy, DateTime createdDate);
+        /// <param name="plan">The plan.</param>
+        /// <param name="modifiedBy">The modified by.</param>
+        /// <param name="modifiedDate">The modified date.</param>
+        /// <returns></returns>
+        int SavePlan(PlanDto plan, string modifiedBy, DateTime modifiedDate);
+
+        /// <summary>
+        /// Gets the plan.
+        /// </summary>
+        /// <param name="planId">The plan identifier.</param>
+        /// <returns></returns>
+        PlanDto GetPlan(int planId);
 
         /// <summary>
         /// Gets the products.
@@ -40,11 +47,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private readonly IPlanRepository _PlanRepository;
         private readonly IPlanValidator _PlanValidator;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PlanService"/> class.
-        /// </summary>
-        /// <param name="broadcastDataRepositoryFactory">The broadcast data repository factory.</param>
-        /// <param name="planValidator">The plan validator.</param>
         public PlanService(IDataRepositoryFactory broadcastDataRepositoryFactory
             , IPlanValidator planValidator)
         {
@@ -53,12 +55,27 @@ namespace Services.Broadcast.ApplicationServices.Plan
         }
 
         ///<inheritdoc/>
-        public int CreatePlan(CreatePlanDto newPlan, string createdBy, DateTime createdDate)
+        public int SavePlan(PlanDto plan, string modifiedBy, DateTime modifiedDate)
         {
-            _PlanValidator.ValidateNewPlan(newPlan);
-            return _PlanRepository.SaveNewPlan(newPlan, createdBy, createdDate);
+            _PlanValidator.ValidatePlan(plan);
+
+            if (plan.Id == 0)
+            {
+                var newPlanId = _PlanRepository.SaveNewPlan(plan, modifiedBy, modifiedDate);
+                return newPlanId;
+            }
+
+            _PlanRepository.SavePlan(plan, modifiedBy, modifiedDate);
+            return plan.Id;
         }
-        
+
+        ///<inheritdoc/>
+        public PlanDto GetPlan(int planId)
+        {
+            var result = _PlanRepository.GetPlan(planId);
+            return result;
+        }
+
         ///<inheritdoc/>
         public List<LookupDto> GetPlanStatuses()
         {

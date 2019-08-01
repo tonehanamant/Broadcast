@@ -1,0 +1,12 @@
+﻿{
+  "CampaignId": 1,
+  "Equivalized": true,
+  "FlightEndDate": null,
+  "FlightHiatusDays": [],
+  "FlightNotes": null,
+  "FlightStartDate": null,
+  "Name": "New Plan",
+  "ProductId": 1,
+  "SpotLengthId": 1,
+  "Status": 1
+}

@@ -442,6 +442,50 @@ BEGIN
 END
 /*************************************** END PRI-7452 *****************************************************/
 
+/*************************************** START PRI-7456 *****************************************************/
+
+IF NOT EXISTS (SELECT 1 FROM sys.columns WHERE Name = 'flight_start_date' AND Object_ID = OBJECT_ID('plans'))
+BEGIN 
+	ALTER TABLE plans
+		ADD flight_start_date DATETIME NULL
+END
+
+IF NOT EXISTS (SELECT 1 FROM sys.columns WHERE Name = 'flight_end_date' AND Object_ID = OBJECT_ID('plans'))
+BEGIN 
+	ALTER TABLE plans
+		ADD flight_end_date DATETIME NULL
+END
+
+IF NOT EXISTS (SELECT 1 FROM sys.columns WHERE Name = 'flight_notes' AND Object_ID = OBJECT_ID('plans'))
+BEGIN 
+	ALTER TABLE plans
+		ADD flight_notes NVARCHAR(1024) NULL
+END
+
+IF OBJECT_ID('plan_flight_hiatus') IS NULL
+BEGIN
+	CREATE TABLE [dbo].[plan_flight_hiatus]
+	(
+		[id] [INT] IDENTITY(1,1) NOT NULL,
+		[plan_id] [INT] NOT NULL,
+		[hiatus_day] [DATETIME] NOT NULL,		
+		CONSTRAINT [PK_plan_flight_hiatus] PRIMARY KEY CLUSTERED 
+		(
+			[id] ASC
+		)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY]
+
+	ALTER TABLE [dbo].[plan_flight_hiatus] WITH CHECK ADD CONSTRAINT [FK_plan_flight_hiatus_plans] FOREIGN KEY ([plan_id])
+		REFERENCES [dbo].[plans] (id)
+		ON DELETE CASCADE
+
+	CREATE NONCLUSTERED INDEX [IX_plan_flight_hiatus_plan_id] ON [dbo].[plan_flight_hiatus] ([plan_id] ASC)
+		INCLUDE ([id])
+		WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+END
+
+/*************************************** END PRI-7456 *****************************************************/
+
 /*************************************** START PRI-12160 *****************************************************/
 IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE name = N'share_playback_type' AND OBJECT_ID = OBJECT_ID(N'station_inventory_manifest_audiences'))
 BEGIN

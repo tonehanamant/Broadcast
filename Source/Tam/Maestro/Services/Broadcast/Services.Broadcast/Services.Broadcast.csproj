@@ -248,11 +248,11 @@
     <Compile Include="Entities\Enums\PlanStatusEnum.cs" />
     <Compile Include="Entities\InventorySummary\InventorySummaryAggregation.cs" />
     <Compile Include="Entities\InventorySummary\InventorySummaryQuarter.cs" />
-    <Compile Include="Entities\Plan\CreatePlanDto.cs" />
     <Compile Include="Entities\ImpressionsDaypartResultForSingleBook.cs" />
     <Compile Include="Entities\ImpressionsDaypartResultForTwoBooks.cs" />
     <Compile Include="Entities\ImpressionsPointInTimeResult.cs" />
     <Compile Include="Entities\MarketPlaybackType.cs" />
+    <Compile Include="Entities\Plan\PlanDto.cs" />
     <Compile Include="Entities\ScxGenerationJob.cs" />
     <Compile Include="Entities\Scx\ScxFileGenerationDetailDto.cs" />
     <Compile Include="Entities\Scx\ScxFileGenerationDetail.cs" />

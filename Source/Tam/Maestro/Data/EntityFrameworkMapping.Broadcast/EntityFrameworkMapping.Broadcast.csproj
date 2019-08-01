@@ -483,6 +483,9 @@
     <Compile Include="plan.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="plan_flight_hiatus.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="postlog_client_scrubs.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>

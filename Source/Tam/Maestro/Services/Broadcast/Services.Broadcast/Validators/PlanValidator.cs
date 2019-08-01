@@ -1,16 +1,17 @@
 ﻿using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities.Plan;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Services.Broadcast.Validators
 {
     public interface IPlanValidator
     {
-        void ValidateNewPlan(CreatePlanDto plan);
+        /// <summary>
+        /// Validates the new plan.
+        /// </summary>
+        /// <param name="plan">The plan.</param>
+        void ValidatePlan(PlanDto plan);
     }
 
     public class PlanValidator : IPlanValidator
@@ -25,8 +26,10 @@ namespace Services.Broadcast.Validators
         const string INVALID_PLAN_NAME = "Invalid plan name";
         const string INVALID_SPOT_LENGTH = "Invalid spot length";
         const string INVALID_PRODUCT = "Invalid product";
+        const string INVALID_FLIGHT_DATES = "Invalid flight dates.  The end date cannot be before the start date.";
+        const string INVALID_FLIGHT_HIATUS_DAY = "Invalid flight hiatus day.  All days must be within the flight date range.";
 
-        public void ValidateNewPlan(CreatePlanDto plan)
+        public void ValidatePlan(PlanDto plan)
         {
             if (string.IsNullOrWhiteSpace(plan.Name) || plan.Name.Length > 255)
             {
@@ -40,6 +43,35 @@ namespace Services.Broadcast.Validators
             {
                 throw new Exception(INVALID_PRODUCT);
             }
+
+            _ValidateFlightAndHiatusDates(plan);
         }
+
+        #region Helpers
+
+        private void _ValidateFlightAndHiatusDates(PlanDto plan)
+        {
+            if (plan.FlightStartDate.HasValue == false || plan.FlightEndDate.HasValue == false)
+            {
+                return;
+            }
+
+            if (plan.FlightStartDate > plan.FlightEndDate)
+            {
+                throw new Exception(INVALID_FLIGHT_DATES);
+            }
+
+            if (plan.FlightHiatusDays?.Any() == true)
+            {
+                var hasInvalids =
+                    plan.FlightHiatusDays.Any(h => h.Date < plan.FlightStartDate || h.Date > plan.FlightEndDate);
+                if (hasInvalids)
+                {
+                    throw new Exception(INVALID_FLIGHT_HIATUS_DAY);
+                }
+            }
+        }
+
+        #endregion // #region Helpers
     }
 }

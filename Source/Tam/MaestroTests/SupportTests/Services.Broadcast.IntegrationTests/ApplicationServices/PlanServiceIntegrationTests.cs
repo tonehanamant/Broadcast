@@ -1,10 +1,12 @@
 ﻿using ApprovalTests;
 using ApprovalTests.Reporters;
 using IntegrationTests.Common;
+using Newtonsoft.Json;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices.Plan;
 using Services.Broadcast.Entities.Plan;
 using System;
+using System.Collections.Generic;
 using Tam.Maestro.Common.DataLayer;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
@@ -38,9 +40,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                CreatePlanDto newPlan = _GetNewPlan();
+                PlanDto newPlan = _GetNewPlan();
 
-                var newPlanId = _PlanService.CreatePlan(newPlan, "integration_test", new System.DateTime(2019, 01, 01));
+                var newPlanId = _PlanService.SavePlan(newPlan, "integration_test", new System.DateTime(2019, 01, 01));
 
                 Assert.IsTrue(newPlanId > 0);
             }
@@ -51,10 +53,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                CreatePlanDto newPlan = _GetNewPlan();
+                PlanDto newPlan = _GetNewPlan();
                 newPlan.SpotLengthId = 100;
 
-                var exception = Assert.Throws<Exception>(() => _PlanService.CreatePlan(newPlan, "integration_test", new System.DateTime(2019, 01, 01)));
+                var exception = Assert.Throws<Exception>(() => _PlanService.SavePlan(newPlan, "integration_test", new System.DateTime(2019, 01, 01)));
 
                 Assert.That(exception.Message, Is.EqualTo("Invalid spot length"));
             }
@@ -65,10 +67,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                CreatePlanDto newPlan = _GetNewPlan();
+                PlanDto newPlan = _GetNewPlan();
                 newPlan.ProductId = 0;
 
-                var exception = Assert.Throws<Exception>(() => _PlanService.CreatePlan(newPlan, "integration_test", new System.DateTime(2019, 01, 01)));
+                var exception = Assert.Throws<Exception>(() => _PlanService.SavePlan(newPlan, "integration_test", new System.DateTime(2019, 01, 01)));
 
                 Assert.That(exception.Message, Is.EqualTo("Invalid product"));
             }
@@ -79,18 +81,200 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                CreatePlanDto newPlan = _GetNewPlan();
+                PlanDto newPlan = _GetNewPlan();
                 newPlan.Name = null;
 
-                var exception = Assert.Throws<Exception>(() => _PlanService.CreatePlan(newPlan, "integration_test", new System.DateTime(2019, 01, 01)));
+                var exception = Assert.Throws<Exception>(() => _PlanService.SavePlan(newPlan, "integration_test", new System.DateTime(2019, 01, 01)));
 
                 Assert.That(exception.Message, Is.EqualTo("Invalid plan name"));
             }
         }
 
-        private static CreatePlanDto _GetNewPlan()
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetPlan()
         {
-            return new CreatePlanDto
+            using (new TransactionScopeWrapper())
+            {
+                // generate a plan for test
+                PlanDto newPlan = _GetNewPlan();
+                var newPlanId = _PlanService.SavePlan(newPlan, "integration_test", new System.DateTime(2019, 01, 01));
+                
+                PlanDto testPlan = _PlanService.GetPlan(newPlanId);
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(testPlan, _GetJsonSettings()));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void SavePlan()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                // generate a plan for test
+                PlanDto newPlan = _GetNewPlan();
+                var newPlanId = _PlanService.SavePlan(newPlan, "integration_test", new System.DateTime(2019, 01, 01));
+                // modify the plan
+                PlanDto testPlan = _PlanService.GetPlan(newPlanId);
+                testPlan.Name = "Renamed Plan";
+                testPlan.ProductId = 2;
+                // modify the flight.
+                testPlan.FlightNotes = "Changed the flight notes";
+                testPlan.FlightHiatusDays = new List<DateTime>
+                {
+                    new DateTime(2019, 1, 28),
+                    new DateTime(2019, 6, 4)
+                };
+
+                var modifedPlanId = _PlanService.SavePlan(testPlan, "integration_test", new System.DateTime(2019, 01, 15));
+                PlanDto finalPlan = _PlanService.GetPlan(modifedPlanId);
+
+                Assert.IsTrue(modifedPlanId > 0);
+                Assert.AreEqual(newPlanId, modifedPlanId);
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(finalPlan, _GetJsonSettings()));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void SavePlanAndRemoveHiatusDays()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                // generate a plan for test
+                PlanDto newPlan = _GetNewPlan();
+                var newPlanId = _PlanService.SavePlan(newPlan, "integration_test", new System.DateTime(2019, 01, 01));
+                // modify the plan
+                PlanDto testPlan = _PlanService.GetPlan(newPlanId);
+                testPlan.Name = "Renamed Plan";
+                testPlan.ProductId = 2;
+                // modify the flight.
+                testPlan.FlightNotes = "Changed the flight notes";
+                testPlan.FlightHiatusDays = new List<DateTime>();
+
+                var modifedPlanId = _PlanService.SavePlan(testPlan, "integration_test", new System.DateTime(2019, 01, 15));
+                PlanDto finalPlan = _PlanService.GetPlan(modifedPlanId);
+
+                Assert.IsTrue(modifedPlanId > 0);
+                Assert.AreEqual(newPlanId, modifedPlanId);
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(finalPlan, _GetJsonSettings()));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void SavePlanAddFlightInfo()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                // generate a plan for test
+                PlanDto newPlan = _GetNewPlanWithoutFlightInfo();
+                var newPlanId = _PlanService.SavePlan(newPlan, "integration_test", new System.DateTime(2019, 01, 01));
+                PlanDto testPlan = _PlanService.GetPlan(newPlanId);
+                // add the flight
+                testPlan.FlightStartDate = new DateTime(1966, 1, 1);
+                testPlan.FlightEndDate = new DateTime(1999, 11, 12);
+                testPlan.FlightNotes = "Notes for this flight.";
+                testPlan.FlightHiatusDays = new List<DateTime>
+                {
+                    new DateTime(1968, 1, 28),
+                    new DateTime(1976, 6, 4)
+                };
+                var modifedPlanId = _PlanService.SavePlan(testPlan, "integration_test", new System.DateTime(2019, 01, 15));
+                PlanDto finalPlan = _PlanService.GetPlan(modifedPlanId);
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(finalPlan, _GetJsonSettings()));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void SavePlanRemoveFlightInfo()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                // generate a plan for test
+                PlanDto newPlan = _GetNewPlan();
+                var newPlanId = _PlanService.SavePlan(newPlan, "integration_test", new System.DateTime(2019, 01, 01));
+                PlanDto testPlan = _PlanService.GetPlan(newPlanId);
+                // remove the flight
+                testPlan.FlightEndDate = null;
+                testPlan.FlightStartDate = null;
+                testPlan.FlightNotes = null;
+                testPlan.FlightHiatusDays.Clear();
+
+                var modifedPlanId = _PlanService.SavePlan(testPlan, "integration_test", new System.DateTime(2019, 01, 15));
+                PlanDto finalPlan = _PlanService.GetPlan(modifedPlanId);
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(finalPlan, _GetJsonSettings()));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void SavePlanInvalidFlightDays()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                PlanDto newPlan = _GetNewPlanWithoutFlightInfo();
+                newPlan.FlightStartDate = new DateTime(2019,10, 1);
+                newPlan.FlightEndDate = new DateTime(2018, 01,01);
+
+                var caught = Assert.Throws<Exception>(() => _PlanService.SavePlan(newPlan, "integration_test",
+                    new DateTime(2019, 01, 01)), "Invalid flight dates.  The end date cannot be before the start date.");
+
+                Assert.IsNotNull(caught);
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void SavePlanInvalidHiatusDays()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                PlanDto newPlan = _GetNewPlanWithoutFlightInfo();
+                newPlan.FlightStartDate = new DateTime(2019, 01, 1);
+                newPlan.FlightEndDate = new DateTime(2019, 02, 01);
+                newPlan.FlightNotes = "Changed the flight notes";
+                newPlan.FlightHiatusDays = new List<DateTime>
+                {
+                    new DateTime(1968, 1, 28),
+                    new DateTime(1976, 6, 4)
+                };
+
+                var caught = Assert.Throws<Exception>(() => _PlanService.SavePlan(newPlan, "integration_test",
+                    new DateTime(2019, 01, 01)), "Invalid flight hiatus day.  All days must be within the flight date range.");
+
+                Assert.IsNotNull(caught);
+            }
+        }
+
+        private static PlanDto _GetNewPlan()
+        {
+            return new PlanDto
+            {
+                CampaignId = 1,
+                Equivalized = true,
+                Name = "New Plan",
+                ProductId = 1,
+                SpotLengthId = 1,
+                Status = Entities.Enums.PlanStatusEnum.Working,
+                FlightStartDate = new DateTime(2019, 1, 1),
+                FlightEndDate = new DateTime(2019, 7, 31),
+                FlightNotes = "Sample notes",
+                FlightHiatusDays = new List<DateTime>
+                {
+                    new DateTime(2019,1,20),
+                    new DateTime(2019,4,15)
+                }
+            };
+        }
+
+        private static PlanDto _GetNewPlanWithoutFlightInfo()
+        {
+            return new PlanDto
             {
                 CampaignId = 1,
                 Equivalized = true,
@@ -98,6 +282,19 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 ProductId = 1,
                 SpotLengthId = 1,
                 Status = Entities.Enums.PlanStatusEnum.Working
+            };
+        }
+
+        private JsonSerializerSettings _GetJsonSettings()
+        {
+            var jsonResolver = new IgnorableSerializerContractResolver();
+
+            jsonResolver.Ignore(typeof(PlanDto), "Id");
+
+            return new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                ContractResolver = jsonResolver
             };
         }
     }

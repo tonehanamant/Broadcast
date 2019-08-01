@@ -1,0 +1,15 @@
+﻿{
+  "CampaignId": 1,
+  "Equivalized": true,
+  "FlightEndDate": "1999-11-12T00:00:00",
+  "FlightHiatusDays": [
+    "1968-01-28T00:00:00",
+    "1976-06-04T00:00:00"
+  ],
+  "FlightNotes": "Notes for this flight.",
+  "FlightStartDate": "1966-01-01T00:00:00",
+  "Name": "New Plan",
+  "ProductId": 1,
+  "SpotLengthId": 1,
+  "Status": 1
+}

@@ -14,6 +14,11 @@ namespace EntityFrameworkMapping.Broadcast
     
     public partial class plan
     {
+        public plan()
+        {
+            this.plan_flight_hiatus = new HashSet<plan_flight_hiatus>();
+        }
+    
         public int id { get; set; }
         public int campaign_id { get; set; }
         public string name { get; set; }
@@ -23,8 +28,12 @@ namespace EntityFrameworkMapping.Broadcast
         public int status { get; set; }
         public string created_by { get; set; }
         public System.DateTime created_date { get; set; }
+        public Nullable<System.DateTime> flight_start_date { get; set; }
+        public Nullable<System.DateTime> flight_end_date { get; set; }
+        public string flight_notes { get; set; }
     
         public virtual campaign campaign { get; set; }
         public virtual spot_lengths spot_lengths { get; set; }
+        public virtual ICollection<plan_flight_hiatus> plan_flight_hiatus { get; set; }
     }
 }
