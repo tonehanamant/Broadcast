@@ -33,6 +33,14 @@ namespace Services.Broadcast.Entities.Scx
         public int FileId { get; set; }
 
         /// <summary>
+        /// Gets or sets the filename.
+        /// </summary>
+        /// <value>
+        /// The filename.
+        /// </value>
+        public string Filename { get; set; }
+
+        /// <summary>
         /// Gets or sets the name of the unit.
         /// </summary>
         /// <value>

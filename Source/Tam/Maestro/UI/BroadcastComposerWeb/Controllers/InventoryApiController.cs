@@ -304,22 +304,25 @@ namespace BroadcastComposerWeb.Controllers
         [Route("DownloadScxFile")]
         public HttpResponseMessage DownloadScxFile(int fileId)
         {
-            if (fileId == 0)
+            try
             {
-                return new HttpResponseMessage { StatusCode = HttpStatusCode.NoContent, ReasonPhrase = "No file id was supplied" };
+                var file = _ApplicationServiceFactory.GetApplicationService<IScxGenerationService>()
+                    .DownloadGeneratedScxFile(fileId);
+
+                var result = Request.CreateResponse(HttpStatusCode.OK);
+                result.Content = new StreamContent(file.Item2);
+                result.Content.Headers.ContentType = new MediaTypeHeaderValue(file.Item3);
+                result.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
+                {
+                    FileName = file.Item1
+                };
+                return result;
             }
-
-            var file = _ApplicationServiceFactory.GetApplicationService<IScxGenerationService>()
-                .DownloadGeneratedScxFile(fileId);
-
-            var result = Request.CreateResponse(HttpStatusCode.OK);
-            result.Content = new StreamContent(file.Item2);
-            result.Content.Headers.ContentType = new MediaTypeHeaderValue(file.Item3);
-            result.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
+            catch (Exception e)
             {
-                FileName = file.Item1
-            };
-            return result;
+                var errorResponse = Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e.Message);
+                return errorResponse;
+            }
         }
     }
 }

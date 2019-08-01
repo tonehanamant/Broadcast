@@ -188,6 +188,7 @@ namespace Services.Broadcast.Repositories
                         GenerationRequestDateTime = j.queued_at,
                         GenerationRequestedByUsername = j.requested_by,
                         FileId = f.id,
+                        Filename = f.file_name,
                         UnitName = f.unit_name,
                         DaypartCode = d.code,
                         StartDateTime = f.start_date,

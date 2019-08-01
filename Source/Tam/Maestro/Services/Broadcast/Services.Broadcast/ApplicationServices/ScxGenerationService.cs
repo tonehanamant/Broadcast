@@ -8,6 +8,7 @@ using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Scx;
 using Services.Broadcast.Repositories;
 using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -193,6 +194,11 @@ namespace Services.Broadcast.ApplicationServices
         /// <inheritdoc />
         public Tuple<string, Stream, string> DownloadGeneratedScxFile(int fileId)
         {
+            if (fileId == 0)
+            {
+                throw new Exception("No file id was supplied!");
+            }
+
             var repo = GetScxGenerationJobRepository();
             var fileName = repo.GetScxFileName(fileId);
 

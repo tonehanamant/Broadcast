@@ -24,7 +24,8 @@ namespace Services.Broadcast.ApplicationServices.Scx
                 DaypartCode = dto.DaypartCode,
                 QuarterDetails = quarters,
                 ProcessingStatus = processingStatus,
-                FileId = dto.FileId
+                FileId = dto.FileId,
+                FileName = dto.Filename
             };
             return item;
         }
