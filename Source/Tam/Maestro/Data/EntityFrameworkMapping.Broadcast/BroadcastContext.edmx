@@ -417,8 +417,6 @@
           <Property Name="cpm" Type="money" />
           <Property Name="min_spots_per_week" Type="int" />
           <Property Name="max_spots_per_week" Type="int" />
-          <Property Name="share_book_id" Type="int" />
-          <Property Name="hut_book_id" Type="int" />
           <Property Name="daypart_code_id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="inventory_summary_quarters">
@@ -610,10 +608,10 @@
           <Property Name="flight_start_date" Type="datetime" />
           <Property Name="flight_end_date" Type="datetime" />
           <Property Name="flight_notes" Type="nvarchar" MaxLength="1024" />
-          <Property Name="audience_id" Type="int" Nullable="false" />
-          <Property Name="share_book_id" Type="int" Nullable="false" />
           <Property Name="audience_type" Type="int" Nullable="false" />
           <Property Name="posting_type" Type="int" Nullable="false" />
+          <Property Name="audience_id" Type="int" Nullable="false" />
+          <Property Name="share_book_id" Type="int" Nullable="false" />
           <Property Name="hut_book_id" Type="int" />
         </EntityType>
         <EntityType Name="post_file_demos">
@@ -1468,7 +1466,7 @@
           <Property Name="sys_end_date" Type="datetime2" Precision="7" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'broadcast_integration_staging.dbo.station_inventory_manifest_weeks_history' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'broadcast_integration.dbo.station_inventory_manifest_weeks_history' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="station_inventory_manifest_weeks_history">
           <Key>
             <PropertyRef Name="id" />
@@ -1564,7 +1562,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.station_inventor
           <Property Name="end_time" Type="int" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'broadcast_integration.dbo.vw_ccc_daypart' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vw_ccc_daypart">
           <Key>
             <PropertyRef Name="id" />
@@ -9672,8 +9670,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="cpm" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="min_spots_per_week" Type="Int32" />
           <Property Name="max_spots_per_week" Type="Int32" />
-          <Property Name="share_book_id" Type="Int32" />
-          <Property Name="hut_book_id" Type="Int32" />
           <Property Name="daypart_code_id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="daypart_codes" Relationship="BroadcastModel.FK_inventory_summary_quarter_details_daypart_codes" FromRole="inventory_summary_quarter_details" ToRole="daypart_codes" />
           <NavigationProperty Name="inventory_summary_quarters" Relationship="BroadcastModel.FK_inventory_summary_quarter_details_inventory_summary_quarters" FromRole="inventory_summary_quarter_details" ToRole="inventory_summary_quarters" />
@@ -11440,8 +11436,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <EntityTypeMapping TypeName="BroadcastModel.inventory_summary_quarter_details">
               <MappingFragment StoreEntitySet="inventory_summary_quarter_details">
                 <ScalarProperty Name="daypart_code_id" ColumnName="daypart_code_id" />
-                <ScalarProperty Name="hut_book_id" ColumnName="hut_book_id" />
-                <ScalarProperty Name="share_book_id" ColumnName="share_book_id" />
                 <ScalarProperty Name="max_spots_per_week" ColumnName="max_spots_per_week" />
                 <ScalarProperty Name="min_spots_per_week" ColumnName="min_spots_per_week" />
                 <ScalarProperty Name="cpm" ColumnName="cpm" />

@@ -550,6 +550,17 @@ BEGIN
 END
 /*************************************** END PRI-7460 *****************************************************/
 
+/*************************************** START PRI-12674 *****************************************************/
+IF EXISTS(SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('inventory_summary_quarter_details') AND name = 'share_book_id')
+BEGIN
+	ALTER TABLE [inventory_summary_quarter_details] DROP COLUMN [share_book_id]
+END
+IF EXISTS(SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('inventory_summary_quarter_details') AND name = 'hut_book_id')
+BEGIN
+	ALTER TABLE [inventory_summary_quarter_details] DROP COLUMN [hut_book_id]
+END
+/*************************************** END PRI-12674 *****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version
