@@ -27,6 +27,15 @@ namespace Services.Broadcast.Cache
         BroadcastAudience GetDefaultAudience();
         LookupDto FindDto(int id);
         BroadcastAudience GetBroadcastAudienceByCode(string audienceCode);
+
+        /// <summary>
+        /// Determines whether [is valid audience] [the specified audience identifier].
+        /// </summary>
+        /// <param name="audienceId">The audience identifier.</param>
+        /// <returns>
+        ///   <c>true</c> if [is valid audience] [the specified audience identifier]; otherwise, <c>false</c>.
+        /// </returns>
+        bool IsValidAudience(int audienceId);
     }
 
     public class BroadcastAudiencesCache : IBroadcastAudiencesCache
@@ -111,6 +120,11 @@ namespace Services.Broadcast.Cache
         public bool IsValidAudienceCode(string audienceCode)
         {
             return GetBroadcastAudienceByCode(audienceCode) != null;
+        }
+
+        public bool IsValidAudience(int audienceId)
+        {
+            return _Audiences.Any(x => x.Id == audienceId);
         }
 
         public DisplayAudience GetDisplayAudienceByCode(string audienceCode)

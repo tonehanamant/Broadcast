@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Services.Broadcast.Entities.Enums;
+using System;
 using System.Collections.Generic;
 
 namespace Services.Broadcast.Entities
@@ -17,7 +18,7 @@ namespace Services.Broadcast.Entities
         public double HouseholdDeliveredImpressions { get; set; }
         public int AdvertiserId { get; set; }
         public string Advertiser { get; set; }
-        public SchedulePostType PostType { get; set; }
+        public PostingTypeEnum PostType { get; set; }
         public bool Equivalized { get; set; }
         public bool IsActiveThisWeek { get; set; }
         public DateTime? LastBuyDate { get; set; }

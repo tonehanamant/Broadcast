@@ -1,12 +1,17 @@
 ﻿{
+  "AudienceId": 31,
+  "AudienceType": 1,
   "CampaignId": 1,
   "Equivalized": true,
   "FlightEndDate": null,
   "FlightHiatusDays": [],
   "FlightNotes": null,
   "FlightStartDate": null,
+  "HUTBookId": null,
   "Name": "New Plan",
+  "PostingType": 2,
   "ProductId": 1,
+  "ShareBookId": 437,
   "SpotLengthId": 1,
   "Status": 1
 }

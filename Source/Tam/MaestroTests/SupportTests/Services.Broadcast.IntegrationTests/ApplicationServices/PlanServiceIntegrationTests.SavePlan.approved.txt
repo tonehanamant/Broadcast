@@ -1,4 +1,6 @@
 ﻿{
+  "AudienceId": 31,
+  "AudienceType": 1,
   "CampaignId": 1,
   "Equivalized": true,
   "FlightEndDate": "2019-07-31T00:00:00",
@@ -8,8 +10,11 @@
   ],
   "FlightNotes": "Changed the flight notes",
   "FlightStartDate": "2019-01-01T00:00:00",
+  "HUTBookId": null,
   "Name": "Renamed Plan",
+  "PostingType": 2,
   "ProductId": 2,
+  "ShareBookId": 437,
   "SpotLengthId": 1,
   "Status": 1
 }

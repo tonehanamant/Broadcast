@@ -957,7 +957,7 @@ namespace Services.Broadcast.ApplicationServices
             post.Advertiser = advertiserLookupDto.Display;
         }
 
-        private double _GetImpressionsForAudience(List<PostImpressionsData> postImpressionData,int proposalData, SchedulePostType type, List<int> postAudienceIds, bool equivalized)
+        private double _GetImpressionsForAudience(List<PostImpressionsData> postImpressionData,int proposalData, PostingTypeEnum type, List<int> postAudienceIds, bool equivalized)
         {
             var impressionsDataGuaranteed = postImpressionData.Where(d => d.ProposalId == proposalData && postAudienceIds.Contains(d.AudienceId));
 
@@ -966,7 +966,7 @@ namespace Services.Broadcast.ApplicationServices
             {
                 double impressions = _ImpressionAdjustmentEngine.AdjustImpression(impressionData.Impressions, equivalized, _SpotLengthEngine.GetSpotLengthValueById(impressionData.SpotLengthId));
 
-                if (type == SchedulePostType.NTI)
+                if (type == PostingTypeEnum.NTI)
                 {
                     impressions = _ImpressionAdjustmentEngine.AdjustImpression(impressions, impressionData.NtiConversionFactor.Value);
                 }

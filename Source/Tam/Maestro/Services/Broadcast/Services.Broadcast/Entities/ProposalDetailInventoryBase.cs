@@ -58,6 +58,6 @@ namespace Services.Broadcast.Entities
         public int? SingleProjectionBookId { get; set; }
         public int? GuaranteedAudience { get; set; }
         public bool? Equivalized { get; set; }
-        public SchedulePostType? PostType { get; set; }
+        public PostingTypeEnum? PostType { get; set; }
     }
 }

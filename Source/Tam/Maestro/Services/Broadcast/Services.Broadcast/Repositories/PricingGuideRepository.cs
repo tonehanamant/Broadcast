@@ -222,7 +222,7 @@ namespace Services.Broadcast.Repositories
             var pv = pvd.proposal_versions;
             baseDto.ProposalVersionId = pv.id;
             baseDto.Margin = pv.margin;
-            baseDto.PostType = (SchedulePostType?)pv.post_type;
+            baseDto.PostType = (PostingTypeEnum?)pv.post_type;
             baseDto.GuaranteedAudience = pv.guaranteed_audience_id;
             baseDto.Equivalized = pv.equivalized;
             baseDto.ProposalId = pv.proposal.id;

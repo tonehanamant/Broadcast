@@ -1,5 +1,7 @@
 ﻿using Common.Services.ApplicationServices;
+using Common.Services.Extensions;
 using Common.Services.Repositories;
+using Services.Broadcast.Cache;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
 using Services.Broadcast.Repositories;
@@ -7,6 +9,7 @@ using Services.Broadcast.Validators;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 
 namespace Services.Broadcast.ApplicationServices.Plan
@@ -46,12 +49,14 @@ namespace Services.Broadcast.ApplicationServices.Plan
     {
         private readonly IPlanRepository _PlanRepository;
         private readonly IPlanValidator _PlanValidator;
+        
+        private readonly IBroadcastAudiencesCache _AudiencesCache;
 
         public PlanService(IDataRepositoryFactory broadcastDataRepositoryFactory
             , IPlanValidator planValidator)
         {
             _PlanRepository = broadcastDataRepositoryFactory.GetDataRepository<IPlanRepository>();
-            _PlanValidator = planValidator;
+            _PlanValidator = planValidator;            
         }
 
         ///<inheritdoc/>
@@ -61,8 +66,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
             if (plan.Id == 0)
             {
-                var newPlanId = _PlanRepository.SaveNewPlan(plan, modifiedBy, modifiedDate);
-                return newPlanId;
+                return _PlanRepository.SaveNewPlan(plan, modifiedBy, modifiedDate);
             }
 
             _PlanRepository.SavePlan(plan, modifiedBy, modifiedDate);
@@ -72,16 +76,13 @@ namespace Services.Broadcast.ApplicationServices.Plan
         ///<inheritdoc/>
         public PlanDto GetPlan(int planId)
         {
-            var result = _PlanRepository.GetPlan(planId);
-            return result;
+            return _PlanRepository.GetPlan(planId);
         }
 
         ///<inheritdoc/>
         public List<LookupDto> GetPlanStatuses()
         {
-            return Enum.GetValues(typeof(PlanStatusEnum))
-                .Cast<PlanStatusEnum>()
-                .Select(x => new LookupDto { Id = (int)x, Display = x.ToString() }).ToList();
+            return EnumExtensions.ToLookupDtoList<PlanStatusEnum>(); ;
         }
 
         ///<inheritdoc/>

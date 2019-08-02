@@ -158,10 +158,7 @@ namespace Services.Broadcast.ApplicationServices
                     .Where(e => e != InventorySourceEnum.Blank)
                     .Select(e => new LookupDto { Display = e.Description(), Id = (int)e })
                     .ToList(),
-                SchedulePostTypes = Enum.GetValues(typeof(SchedulePostType))
-                    .Cast<SchedulePostType>()
-                    .Select(e => new LookupDto { Display = e.ToString(), Id = (int)e })
-                    .ToList(),
+                SchedulePostTypes = EnumExtensions.ToLookupDtoList<PostingTypeEnum>(),
                 Markets = _BroadcastDataRepositoryFactory.GetDataRepository<IMarketRepository>()
                     .GetMarkets()
                     .Select(m => new LookupDto { Display = m.geography_name, Id = m.market_code })

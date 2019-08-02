@@ -14,6 +14,7 @@ using Services.Broadcast.BusinessEngines;
 using Tam.Maestro.Common;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Services.Broadcast.Cache;
+using Services.Broadcast.Entities.Enums;
 
 namespace Services.Broadcast.ApplicationServices
 {
@@ -93,7 +94,7 @@ namespace Services.Broadcast.ApplicationServices
             //Order of adjustments is important. If main delivery is calculated first, the NsiDelivery would get discounted twice. We may need to consider how to make this more resilient.
             prePostDataList.ForEach(d => d.AudienceImpressions.ForEach(a =>
                 a.NsiDelivery = _ImpressionAdjustmentEngine.AdjustImpression(a.Delivery,
-                    schedulesAggregate.IsEquivalized, d.Length, SchedulePostType.NSI,
+                    schedulesAggregate.IsEquivalized, d.Length, PostingTypeEnum.NSI,
                     schedulesAggregate.PostingBookId)));
             prePostDataList.ForEach(d => d.AudienceImpressions.ForEach(a =>
                 a.Delivery = _ImpressionAdjustmentEngine.AdjustImpression(a.Delivery, schedulesAggregate.IsEquivalized,
@@ -773,7 +774,7 @@ namespace Services.Broadcast.ApplicationServices
 
         private DateTime _GetBroadcastDate(bvs_file_details bvsDetail, SchedulesAggregate schedulesAggregate)
         {
-            return schedulesAggregate.PostType == SchedulePostType.NSI ? bvsDetail.nsi_date : bvsDetail.nti_date;
+            return schedulesAggregate.PostType == PostingTypeEnum.NSI ? bvsDetail.nsi_date : bvsDetail.nti_date;
         }
 
         private Dictionary<string, int> GetMarketRanksByStations(SchedulesAggregate schedulesAggregate)

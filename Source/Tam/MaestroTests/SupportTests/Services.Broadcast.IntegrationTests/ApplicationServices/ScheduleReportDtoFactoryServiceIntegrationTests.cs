@@ -326,7 +326,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 new IsciDto {House = "CCCDDD", Client = "cl_CCCDDD"}
             };
 
-            schedule.PostType = SchedulePostType.NTI;
+            schedule.PostType = PostingTypeEnum.NTI;
             schedule.InventorySource = InventorySourceEnum.Assembly;
             saveRequest.Schedule = schedule;
             sut.SaveSchedule(saveRequest);
@@ -366,7 +366,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 new IsciDto {House = "CCCDDD", Client = "cl_CCCDDD"}
             };
 
-            schedule.PostType = SchedulePostType.NTI;
+            schedule.PostType = PostingTypeEnum.NTI;
             schedule.InventorySource = InventorySourceEnum.Assembly;
             saveRequest.Schedule = schedule;
             sut.SaveSchedule(saveRequest);
@@ -404,7 +404,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 new IsciDto {House = "AAABBB", Client = "cl_AAABBB"},
                 new IsciDto {House = "CCCDDD", Client = "cl_CCCDDD"}
             };
-            schedule.PostType = SchedulePostType.NTI;
+            schedule.PostType = PostingTypeEnum.NTI;
             schedule.Audiences = new List<BvsTrackingAudience>
             {
                 new BvsTrackingAudience() {AudienceId = 33, Rank = 0}, 
@@ -462,7 +462,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 new IsciDto {House = "CCCDDD", Client = "cl_CCCDDD"}
             };
 
-            schedule.PostType = SchedulePostType.NTI;
+            schedule.PostType = PostingTypeEnum.NTI;
             schedule.InventorySource = InventorySourceEnum.Assembly;
             saveRequest.Schedule = schedule;
             int scheduleId = sut.SaveSchedule(saveRequest);
@@ -509,7 +509,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 new IsciDto {House = "CCCDDD", Client = "cl_CCCDDD"}
             };
 
-            schedule.PostType = SchedulePostType.NTI;
+            schedule.PostType = PostingTypeEnum.NTI;
             schedule.InventorySource = InventorySourceEnum.Assembly;
             saveRequest.Schedule = schedule;
             int scheduleId = sut.SaveSchedule(saveRequest);
@@ -633,7 +633,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     new IsciDto {House = "CCCDDD", Client = "cl_CCCDDD"}
                 },
 
-                    PostType = SchedulePostType.NTI,
+                    PostType = PostingTypeEnum.NTI,
                     InventorySource = InventorySourceEnum.OpenMarket
                 };
                 saveRequest.Schedule = schedule;
@@ -712,7 +712,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     new IsciDto {House = "cccddd", Client = "cl_CCCDDD"}
                 };
 
-                schedule.PostType = SchedulePostType.NTI;
+                schedule.PostType = PostingTypeEnum.NTI;
                 schedule.InventorySource = InventorySourceEnum.Assembly;
                 saveRequest.Schedule = schedule;
                 var scheduleId = sut.SaveSchedule(saveRequest);

@@ -61,7 +61,7 @@ namespace Services.Broadcast.ApplicationServices
         {
             var crunchedMonths =
                 _RatingForecastService.GetMediaMonthCrunchStatuses()
-                    .Where(month => month.Crunched == CrunchStatus.Crunched).ToList();
+                    .Where(month => month.Crunched == CrunchStatusEnum.Crunched).ToList();
             var shareBook = _GetSharePostingBook(dateTime, crunchedMonths);
 
             var defaultProjectionBookDto = new DefaultProjectionBooksDto

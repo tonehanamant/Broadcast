@@ -4,14 +4,15 @@ using System.Linq;
 using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Repositories;
 
 namespace Services.Broadcast.BusinessEngines
 {
     public interface IImpressionAdjustmentEngine : IApplicationService
     {
-        double AdjustImpression(double impression, SchedulePostType? postType, int schedulePostingBook, bool applyAnnualAdjustment = true);
-        double AdjustImpression(double impression, bool? isEquivilized, int spotLength, SchedulePostType? postType, int schedulePostingBook, bool applyAnnualAdjustment = true);
+        double AdjustImpression(double impression, PostingTypeEnum? postType, int schedulePostingBook, bool applyAnnualAdjustment = true);
+        double AdjustImpression(double impression, bool? isEquivilized, int spotLength, PostingTypeEnum? postType, int schedulePostingBook, bool applyAnnualAdjustment = true);
 
         /// <summary>
         /// Adjust impressions by applying equivalization
@@ -52,7 +53,7 @@ namespace Services.Broadcast.BusinessEngines
             _RatingAdjustments = new Lazy<Dictionary<int, RatingAdjustmentsDto>>(() => broadcastDataRepositoryFactory.GetDataRepository<IRatingAdjustmentsRepository>().GetRatingAdjustments().ToDictionary(ra => ra.MediaMonthId));
         }
 
-        public double AdjustImpression(double impression, SchedulePostType? postType, int schedulePostingBook, bool applyAnnualAdjustment = true)
+        public double AdjustImpression(double impression, PostingTypeEnum? postType, int schedulePostingBook, bool applyAnnualAdjustment = true)
         {
             var result = impression;
 
@@ -62,7 +63,7 @@ namespace Services.Broadcast.BusinessEngines
                 {
                     result = result * (double)(1 - adjustments.AnnualAdjustment / 100);
                 }
-                if (postType == SchedulePostType.NTI)
+                if (postType == PostingTypeEnum.NTI)
                 {
                     result = result * (double)(1 - adjustments.NtiAdjustment / 100);
                 }
@@ -71,7 +72,7 @@ namespace Services.Broadcast.BusinessEngines
             return result;
         }
 
-        public double AdjustImpression(double impression, bool? isEquivilized, int spotLength, SchedulePostType? postType, int schedulePostingBook, bool applyAnnualAdjustment = true)
+        public double AdjustImpression(double impression, bool? isEquivilized, int spotLength, PostingTypeEnum? postType, int schedulePostingBook, bool applyAnnualAdjustment = true)
         {
             var result = AdjustImpression(impression, postType, schedulePostingBook, applyAnnualAdjustment);
 

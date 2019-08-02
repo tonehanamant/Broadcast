@@ -98,7 +98,6 @@ namespace Services.Broadcast.Repositories
 
         private PlanDto _MapToDto(plan entity)
         {
-            var status = EnumHelper.GetEnum<PlanStatusEnum>(entity.status);
             var dto = new PlanDto
             {
                 Id = entity.id,
@@ -106,14 +105,18 @@ namespace Services.Broadcast.Repositories
                 Name = entity.name,
                 SpotLengthId = entity.spot_length_id,
                 Equivalized = entity.equivalized,
-                Status = status,
+                Status = EnumHelper.GetEnum<PlanStatusEnum>(entity.status),
                 ProductId = entity.product_id,
                 FlightStartDate = entity.flight_start_date,
                 FlightEndDate = entity.flight_end_date,
-                FlightNotes = entity.flight_notes
+                FlightNotes = entity.flight_notes,
+                AudienceId = entity.audience_id,
+                AudienceType = EnumHelper.GetEnum<AudienceTypeEnum>(entity.audience_type),
+                HUTBookId = entity.hut_book_id,
+                ShareBookId = entity.share_book_id,
+                PostingType = EnumHelper.GetEnum<PostingTypeEnum>(entity.posting_type),
+                FlightHiatusDays = entity.plan_flight_hiatus.Select(h => h.hiatus_day).ToList()
             };
-            dto.FlightHiatusDays.AddRange(entity.plan_flight_hiatus.Select(h => h.hiatus_day));
-
             return dto;
         }
 
@@ -135,6 +138,12 @@ namespace Services.Broadcast.Repositories
             entity.flight_start_date = planDto.FlightStartDate;
             entity.flight_end_date = planDto.FlightEndDate;
             entity.flight_notes = planDto.FlightNotes;
+
+            entity.audience_id = planDto.AudienceId;
+            entity.audience_type = (int)planDto.AudienceType;
+            entity.hut_book_id = planDto.HUTBookId;
+            entity.share_book_id = planDto.ShareBookId;
+            entity.posting_type = (int)planDto.PostingType;
 
             _HydratePlanFlightHiatus(entity, planDto, context);
         }

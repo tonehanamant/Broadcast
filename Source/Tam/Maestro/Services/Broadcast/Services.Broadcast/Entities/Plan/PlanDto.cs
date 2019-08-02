@@ -96,5 +96,45 @@ namespace Services.Broadcast.Entities.Plan
         /// The flight hiatus days.
         /// </value>
         public List<DateTime> FlightHiatusDays { get; set; } = new List<DateTime>();
+
+        /// <summary>
+        /// Gets or sets the audience identifier.
+        /// </summary>
+        /// <value>
+        /// The audience identifier.
+        /// </value>
+        public int AudienceId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the type of the audience.
+        /// </summary>
+        /// <value>
+        /// The type of the audience.
+        /// </value>
+        public AudienceTypeEnum AudienceType { get; set; }
+
+        /// <summary>
+        /// Gets or sets the type of the posting.
+        /// </summary>
+        /// <value>
+        /// The type of the posting.
+        /// </value>
+        public PostingTypeEnum PostingType { get; set; }
+
+        /// <summary>
+        /// Gets or sets the share book identifier.
+        /// </summary>
+        /// <value>
+        /// The share book identifier.
+        /// </value>
+        public int ShareBookId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the hut book identifier.
+        /// </summary>
+        /// <value>
+        /// The hut book identifier.
+        /// </value>
+        public int? HUTBookId { get; set; }
     }
 }

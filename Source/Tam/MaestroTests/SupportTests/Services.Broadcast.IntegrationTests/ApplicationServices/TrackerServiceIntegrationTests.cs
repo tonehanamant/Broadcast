@@ -170,7 +170,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     PrimaryDemoBooked = 9999,
                     PostingBookId = 420,
-                    PostType = SchedulePostType.NTI,
+                    PostType = PostingTypeEnum.NTI,
                     DeliveryDetails =
                         new List<ScheduleDeliveryDetails>
                         {
@@ -212,7 +212,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var dto = new ScheduleDTO
                 {
                     EstimateId = 124124,
-                    PostType = SchedulePostType.NTI,
+                    PostType = PostingTypeEnum.NTI,
                     PostingBookId = 12412
                 };
 
@@ -247,7 +247,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var dto = new ScheduleDTO
                 {
                     EstimateId = 124124,
-                    PostType = SchedulePostType.NTI,
+                    PostType = PostingTypeEnum.NTI,
                     PostingBookId = 12412,
                     Equivalized = true
                 };
@@ -567,7 +567,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     }
                 };
 
-                schedule.PostType = SchedulePostType.NTI;
+                schedule.PostType = PostingTypeEnum.NTI;
                 schedule.InventorySource = InventorySourceEnum.CNN;
 
                 saveRequest.Schedule = schedule;
@@ -967,7 +967,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 schedule.FileStream = new FileStream(@".\Files\Checkers 2Q16 SYN - Estimate4401.scx", FileMode.Open,
                     FileAccess.Read);
                 schedule.InventorySource = InventorySourceEnum.TVB;
-                schedule.PostType = SchedulePostType.NTI;
+                schedule.PostType = PostingTypeEnum.NTI;
                 saveRequest.Schedule = schedule;
 
                 _TrackerService.SaveSchedule(saveRequest);
@@ -1055,7 +1055,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     }
                 };
 
-                schedule.PostType = SchedulePostType.NTI;
+                schedule.PostType = PostingTypeEnum.NTI;
                 schedule.InventorySource = InventorySourceEnum.CNN;
 
                 saveRequest.Schedule = schedule;
@@ -1108,7 +1108,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 schedule.FileStream = new FileStream(@".\Files\Checkers 2Q16 SYN - Estimate44001 With Empty Spots.scx", FileMode.Open,
                     FileAccess.Read);
                 schedule.InventorySource = InventorySourceEnum.OpenMarket;
-                schedule.PostType = SchedulePostType.NSI;
+                schedule.PostType = PostingTypeEnum.NSI;
                 saveRequest.Schedule = schedule;
                 var scheduleId = _TrackerService.SaveSchedule(saveRequest);
 
@@ -1169,7 +1169,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     }
                 };
 
-                schedule.PostType = SchedulePostType.NTI;
+                schedule.PostType = PostingTypeEnum.NTI;
                 schedule.InventorySource = InventorySourceEnum.CNN;
                 schedule.Audiences = new List<BvsTrackingAudience>
                 {
@@ -1228,7 +1228,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     }
                 };
 
-                schedule.PostType = SchedulePostType.NTI;
+                schedule.PostType = PostingTypeEnum.NTI;
                 schedule.InventorySource = InventorySourceEnum.CNN;
                 schedule.Audiences = new List<BvsTrackingAudience>
                 {
@@ -1311,7 +1311,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         Client = "QRVA45BK95H"
                     }
                 };
-                schedule.PostType = SchedulePostType.NTI;
+                schedule.PostType = PostingTypeEnum.NTI;
                 schedule.InventorySource = InventorySourceEnum.CNN;
                 schedule.Audiences = new List<BvsTrackingAudience>
                 {
@@ -1356,7 +1356,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         Client = "QRVA49CE08"
                     }
                 };
-                schedule.PostType = SchedulePostType.NTI;
+                schedule.PostType = PostingTypeEnum.NTI;
                 schedule.InventorySource = InventorySourceEnum.CNN;
                 schedule.Audiences = new List<BvsTrackingAudience>
                 {
@@ -1432,7 +1432,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     }
                 };
 
-                schedule.PostType = SchedulePostType.NTI;
+                schedule.PostType = PostingTypeEnum.NTI;
                 schedule.InventorySource = InventorySourceEnum.CNN;
                 schedule.Audiences = new List<BvsTrackingAudience>
                 {
@@ -1479,7 +1479,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     }
                 };
 
-                schedule.PostType = SchedulePostType.NTI;
+                schedule.PostType = PostingTypeEnum.NTI;
                 schedule.InventorySource = InventorySourceEnum.CNN;
                 schedule.Audiences = new List<BvsTrackingAudience>
                 {
@@ -1538,7 +1538,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 }
             };
 
-            schedule.PostType = SchedulePostType.NTI;
+            schedule.PostType = PostingTypeEnum.NTI;
             schedule.InventorySource = InventorySourceEnum.CNN;
             schedule.Audiences = new List<BvsTrackingAudience>
                 {
@@ -1616,7 +1616,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 }
             };
 
-            schedule.PostType = SchedulePostType.NTI;
+            schedule.PostType = PostingTypeEnum.NTI;
             schedule.InventorySource = InventorySourceEnum.CNN;
             schedule.Audiences = new List<BvsTrackingAudience>
                 {
@@ -1676,7 +1676,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         sat = true,
                         sun = true
                     };
-                    schedule.PostType = SchedulePostType.NSI;
+                    schedule.PostType = PostingTypeEnum.NSI;
                     schedule.Equivalized = false;
                     schedule.Audiences = new List<BvsTrackingAudience>
                     {
@@ -1815,7 +1815,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 new IsciDto {House = "O_N_RR", Client = "CO_N_RR"}
             };
 
-            schedule.PostType = SchedulePostType.NSI;
+            schedule.PostType = PostingTypeEnum.NSI;
             schedule.InventorySource = InventorySourceEnum.Assembly;
             saveRequest.Schedule = schedule;
             var scheduleId = sut.SaveSchedule(saveRequest);
@@ -1960,7 +1960,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 schedule.FileStream = new FileStream(@".\Files\SCX Overlapping Fields.scx", FileMode.Open,
                     FileAccess.Read);
                 schedule.InventorySource = InventorySourceEnum.OpenMarket;
-                schedule.PostType = SchedulePostType.NTI;
+                schedule.PostType = PostingTypeEnum.NTI;
                 saveRequest.Schedule = schedule;
 
                 _TrackerService.SaveSchedule(saveRequest);
@@ -2015,7 +2015,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 schedule.FileStream = new FileStream(@".\Files\" + scxFileName, FileMode.Open,
                     FileAccess.Read);
                 schedule.InventorySource = InventorySourceEnum.OpenMarket;
-                schedule.PostType = SchedulePostType.NTI;
+                schedule.PostType = PostingTypeEnum.NTI;
                 saveRequest.Schedule = schedule;
 
                 var scheduleId = _TrackerService.SaveSchedule(saveRequest);
@@ -2095,7 +2095,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     new IsciDto {House = "CCCDDD", Client = "cl_CCCDDD"}
                 };
 
-                schedule.PostType = SchedulePostType.NTI;
+                schedule.PostType = PostingTypeEnum.NTI;
                 schedule.InventorySource = InventorySourceEnum.OpenMarket;
                 saveRequest.Schedule = schedule;
                 int scheduleId = sut.SaveSchedule(saveRequest);

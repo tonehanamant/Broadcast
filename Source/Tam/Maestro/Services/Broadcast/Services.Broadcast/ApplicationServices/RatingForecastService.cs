@@ -12,6 +12,7 @@ using Tam.Maestro.Common;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 using Tam.Maestro.Services.ContractInterfaces.Common;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
+using Services.Broadcast.Entities.Enums;
 
 namespace Services.Broadcast.ApplicationServices
 {
@@ -57,7 +58,7 @@ namespace Services.Broadcast.ApplicationServices
         public List<LookupDto> GetPostingBooks()
         {
             return _MediaMonthCrunchCache.GetMediaMonthCrunchStatuses()
-                .Where(m => m.Crunched == CrunchStatus.Crunched).Select(m => new LookupDto(m.MediaMonth.Id, m.MediaMonth.MediaMonthX))
+                .Where(m => m.Crunched == CrunchStatusEnum.Crunched).Select(m => new LookupDto(m.MediaMonth.Id, m.MediaMonth.MediaMonthX))
                 .ToList();
         }
     }

@@ -54,7 +54,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 },
                 TargetUnits = 1,
                 Equivalized = false,
-                PostType = SchedulePostType.NSI
+                PostType = PostingTypeEnum.NSI
             };
         }
 
@@ -494,7 +494,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 proposalDto.ProposalName = "Edited Proposal Test";
                 proposalDto.MarketGroupId = ProposalEnums.ProposalMarketGroups.All;
                 proposalDto.Equivalized = true;
-                proposalDto.PostType = SchedulePostType.NTI;
+                proposalDto.PostType = PostingTypeEnum.NTI;
 
                 var proposalDetailDto = SetupProposalDetailDto();
 
@@ -542,7 +542,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     AdvertiserId = 37444,
                     ProposalName = "Proposal Test",
                     GuaranteedDemoId = 31,
-                    PostType = SchedulePostType.NSI
+                    PostType = PostingTypeEnum.NSI
                 };
 
                 var proposal = _ProposalService.SaveProposal(proposalDto, "Integration User", _CurrentDateTime);
@@ -1550,7 +1550,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var proposalDto = _ProposalService.GetProposalById(248);
                 var originalAdvertiserId = proposalDto.AdvertiserId;
                 proposalDto.AdvertiserId = 37373;
-                proposalDto.PostType = SchedulePostType.NTI;
+                proposalDto.PostType = PostingTypeEnum.NTI;
                 var proposal = _ProposalService.SaveProposal(proposalDto, "IntegrationTestUser", _CurrentDateTime);
                 Assert.IsTrue(proposal.ValidationWarning.HasWarning);
                 var originalProposal = _ProposalService.GetProposalById(248);
@@ -1565,7 +1565,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 var proposalDto = _ProposalService.GetProposalById(250);
-                proposalDto.PostType = SchedulePostType.NTI;
+                proposalDto.PostType = PostingTypeEnum.NTI;
 
                 proposalDto.ForceSave = true;
 
@@ -2167,7 +2167,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var previouslyContractedProposal = _ProposalService.GetProposalByIdWithVersion(proposalId,
                     lastProposalVersion.Version);
 
-                previouslyContractedProposal.PostType = SchedulePostType.NSI;
+                previouslyContractedProposal.PostType = PostingTypeEnum.NSI;
                 previouslyContractedProposal.ProposalName = "Previously Contracted Test";
 
                 _ProposalService.SaveProposal(previouslyContractedProposal, "IntegrationTestUser", _CurrentDateTime);
@@ -2495,7 +2495,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     AdvertiserId = 37444,
                     ProposalName = "Proposal Test",
                     GuaranteedDemoId = 31,
-                    PostType = SchedulePostType.NSI,
+                    PostType = PostingTypeEnum.NSI,
                     MarketCoverage = 0.5555
                 };
 
@@ -2516,7 +2516,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     AdvertiserId = 37444,
                     ProposalName = "Proposal Test",
                     GuaranteedDemoId = 0,
-                    PostType = SchedulePostType.NSI
+                    PostType = PostingTypeEnum.NSI
                 };
 
                 var result = _ProposalService.SaveProposal(proposalDto, "Integration User", _CurrentDateTime);

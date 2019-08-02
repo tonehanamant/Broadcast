@@ -248,6 +248,8 @@
     <Compile Include="ApplicationServices\DaypartCodeServiceTests.cs" />
     <Compile Include="ApplicationServices\LogoServiceTests.cs" />
     <Compile Include="ApplicationServices\InventoryGapCalculationEngineTests.cs" />
+    <Compile Include="ApplicationServices\AudienceServiceIntegrationTests.cs" />
+    <Compile Include="ApplicationServices\PostingBookServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\ProprietaryFileImporterIntegrationTests.cs" />
     <Compile Include="ApplicationServices\ProprietaryInventoryServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\BaseProposalInventoryServiceIntegrationTests.cs" />
@@ -273,7 +275,7 @@
     <Compile Include="ApplicationServices\MarketServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\MyEventsReportNamingEngineTests.cs" />
     <Compile Include="ApplicationServices\NsiUniverseServiceIntegrationTests.cs" />
-    <Compile Include="ApplicationServices\PostingBookServiceTests.cs" />
+    <Compile Include="ApplicationServices\ProjectionBooksService.cs" />
     <Compile Include="ApplicationServices\PostLogPreprocessingServiceTests.cs" />
     <Compile Include="ApplicationServices\PostPrePostingRepositoryIntegrationTests.cs" />
     <Compile Include="ApplicationServices\PostPrePostingServiceIntegrationTests.cs" />
@@ -282,6 +284,8 @@
     <Compile Include="ApplicationServices\ProposalScxConverterTest.cs" />
     <Compile Include="ApplicationServices\ProposalTestHelper.cs" />
     <Compile Include="ApplicationServices\ProposalWeeklyTotalCalculationEngineTests.cs" />
+    <Compile Include="ApplicationServices\PostingTypesServiceIntegrationTests.cs" />
+    <Compile Include="ApplicationServices\SpotLengthServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\SpotTrackerServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\StationInventoryGroupServiceTests.cs" />
     <Compile Include="ApplicationServices\TrafficServiceIntegrationTests.cs" />

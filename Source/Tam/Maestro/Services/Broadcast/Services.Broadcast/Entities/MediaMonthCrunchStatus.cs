@@ -1,4 +1,5 @@
-﻿using Tam.Maestro.Data.Entities;
+﻿using Services.Broadcast.Entities.Enums;
+using Tam.Maestro.Data.Entities;
 
 namespace Services.Broadcast.Entities
 {
@@ -19,24 +20,24 @@ namespace Services.Broadcast.Entities
             NielsonMarkets = nielsonMarkets;
         }
 
-        public CrunchStatus Crunched
+        public CrunchStatusEnum Crunched
         {
             get
             {
                 if (NielsonMarkets == 0)
-                    return CrunchStatus.NoMarkets;
+                    return CrunchStatusEnum.NoMarkets;
 
                 if (UniverseMarkets == NielsonMarkets &&
                     UsageMarkets == NielsonMarkets &&
                     ViewerMarkets == NielsonMarkets)
-                    return CrunchStatus.Crunched;
+                    return CrunchStatusEnum.Crunched;
 
                 if (UniverseMarkets > 0 ||
                     UsageMarkets > 0 ||
                     ViewerMarkets > 0)
-                    return CrunchStatus.Incomplete;
+                    return CrunchStatusEnum.Incomplete;
 
-                return CrunchStatus.NotCrunched;
+                return CrunchStatusEnum.NotCrunched;
             }
         }
 

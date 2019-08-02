@@ -31,7 +31,7 @@ namespace Services.Broadcast.Entities.DTO
         public int? PrimaryVersionId { get; set; }
         public int VersionId { get; set; }
         public ProposalEnums.ProposalStatusType Status { get; set; }
-        public SchedulePostType PostType { get; set; }
+        public PostingTypeEnum PostType { get; set; }
         public bool Equivalized { get; set; }
         public List<ProposalFlightWeek> FlightWeeks { get; set; } = new List<ProposalFlightWeek>();
         public List<int> SecondaryDemos { get; set; } = new List<int>();

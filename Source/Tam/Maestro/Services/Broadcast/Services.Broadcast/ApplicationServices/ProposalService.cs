@@ -526,7 +526,7 @@ namespace Services.Broadcast.ApplicationServices
             var spotLengths = _SpotLengthRepository.GetSpotLengthAndIds();
             proposalDto.Details.ForEach(detail =>
             {
-                if (proposalDto.PostType.Equals(SchedulePostType.NTI))
+                if (proposalDto.PostType.Equals(PostingTypeEnum.NTI))
                 {
                     //set default value for NTI Conversion factor
                     detail.NtiConversionFactor = detail.NtiConversionFactor == null
@@ -1215,11 +1215,7 @@ namespace Services.Broadcast.ApplicationServices
                 Advertisers = _SmsClient.GetActiveAdvertisers(),
                 Audiences = _AudiencesCache.GetAllLookups(),
                 SpotLengths = _SpotLengthRepository.GetSpotLengths(),
-                SchedulePostTypes =
-                    Enum.GetValues(typeof(SchedulePostType))
-                        .Cast<SchedulePostType>()
-                        .Select(e => new LookupDto { Display = e.ToString(), Id = (int)e })
-                        .ToList(),
+                SchedulePostTypes = EnumExtensions.ToLookupDtoList<PostingTypeEnum>(),
                 Markets = _BroadcastDataRepositoryFactory.GetDataRepository<IMarketRepository>().GetMarketDtos()
                     .OrderBy(m => m.Display).ToList(),
                 DefaultMarketCoverage = BroadcastServiceSystemParameter.DefaultMarketCoverage,
@@ -1232,7 +1228,7 @@ namespace Services.Broadcast.ApplicationServices
                 {
                     PlaybackTypes = EnumExtensions.ToLookupDtoList<ProposalEnums.ProposalPlaybackType>(),
                     CrunchedMonths = _RatingForecastService.GetMediaMonthCrunchStatuses()
-                        .Where(a => a.Crunched == CrunchStatus.Crunched)
+                        .Where(a => a.Crunched == CrunchStatusEnum.Crunched)
                         .Select(
                             m => new LookupDto
                             {

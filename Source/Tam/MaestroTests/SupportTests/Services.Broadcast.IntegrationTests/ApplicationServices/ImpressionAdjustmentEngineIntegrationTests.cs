@@ -3,6 +3,7 @@ using Moq;
 using NUnit.Framework;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Repositories;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
@@ -21,7 +22,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var sut = IntegrationTestApplicationServiceFactory.GetApplicationService<IImpressionAdjustmentEngine>();
                 const long impression = 100;
 
-                var result = sut.AdjustImpression(impression, SchedulePostType.NTI, 420);
+                var result = sut.AdjustImpression(impression, PostingTypeEnum.NTI, 420);
 
                 Assert.That(result, Is.EqualTo(impression));
             }
@@ -41,7 +42,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var sut = IntegrationTestApplicationServiceFactory.GetApplicationService<IImpressionAdjustmentEngine>();
                 const long impression = 100;
 
-                var result = sut.AdjustImpression(impression, SchedulePostType.NTI, dto.MediaMonthId);
+                var result = sut.AdjustImpression(impression, PostingTypeEnum.NTI, dto.MediaMonthId);
 
                 Assert.That(result, Is.EqualTo(impression * (double)(1 - dto.AnnualAdjustment / 100)));
             }
@@ -61,7 +62,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var sut = IntegrationTestApplicationServiceFactory.GetApplicationService<IImpressionAdjustmentEngine>();
                 const long impression = 100;
 
-                var result = sut.AdjustImpression(impression, SchedulePostType.NTI, dto.MediaMonthId, false);
+                var result = sut.AdjustImpression(impression, PostingTypeEnum.NTI, dto.MediaMonthId, false);
 
                 Assert.That(result, Is.EqualTo(impression * (double)(1 - dto.NtiAdjustment / 100)));
             }
@@ -81,7 +82,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var sut = IntegrationTestApplicationServiceFactory.GetApplicationService<IImpressionAdjustmentEngine>();
                 const long impression = 100;
 
-                var result = sut.AdjustImpression(impression, SchedulePostType.NTI, dto.MediaMonthId);
+                var result = sut.AdjustImpression(impression, PostingTypeEnum.NTI, dto.MediaMonthId);
 
                 Assert.That(result, Is.EqualTo(50.050000000000004d));
             }

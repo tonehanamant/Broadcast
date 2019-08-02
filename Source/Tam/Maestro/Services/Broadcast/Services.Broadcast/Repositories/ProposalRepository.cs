@@ -848,7 +848,7 @@ namespace Services.Broadcast.Repositories
                 Equivalized = proposalVersion.equivalized,
                 SecondaryDemos =
                 proposalVersion.proposal_version_audiences.OrderBy(r => r.rank).Select(a => a.audience_id).ToList(),
-                PostType = (SchedulePostType)proposalVersion.post_type,
+                PostType = (PostingTypeEnum)proposalVersion.post_type,
                 SpotLengths =
                 proposalVersion.proposal_version_spot_length.Select(a => new LookupDto { Id = a.spot_length_id })
                     .ToList(),
@@ -1446,7 +1446,7 @@ namespace Services.Broadcast.Repositories
             var pv = pvd.proposal_versions;
             baseDto.ProposalVersionId = pv.id;
             baseDto.Margin = pv.margin;
-            baseDto.PostType = (SchedulePostType?)pv.post_type;
+            baseDto.PostType = (PostingTypeEnum?)pv.post_type;
             baseDto.GuaranteedAudience = pv.guaranteed_audience_id;
             baseDto.Equivalized = pv.equivalized;
             baseDto.ProposalId = pv.proposal.id;

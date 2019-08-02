@@ -233,26 +233,32 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Aggregates\SchedulesAggregate.cs" />
+    <Compile Include="ApplicationServices\AudienceService.cs" />
     <Compile Include="ApplicationServices\Campaigns\CampaignServiceData.cs" />
     <Compile Include="ApplicationServices\Campaigns\CampaignValidator.cs" />
     <Compile Include="ApplicationServices\DaypartCodeService.cs" />
     <Compile Include="ApplicationServices\Plan\PlanService.cs" />
     <Compile Include="ApplicationServices\EnvironmentService.cs" />
+    <Compile Include="ApplicationServices\PostingBookService.cs" />
+    <Compile Include="ApplicationServices\PostingTypeService.cs" />
     <Compile Include="ApplicationServices\Scx\ScxFileGenerationDetailTransformer.cs" />
     <Compile Include="ApplicationServices\Scx\ScxFileGenerationHistorian.cs" />
     <Compile Include="Entities\AdvertiserDto.cs" />
     <Compile Include="ApplicationServices\SpotLengthService.cs" />
     <Compile Include="Entities\AgencyDto.cs" />
     <Compile Include="Clients\ConfigurationClientSwitch.cs" />
+    <Compile Include="Entities\Enums\AudienceTypeEnum.cs" />
     <Compile Include="Entities\Enums\BackgroundJobProcessingStatus.cs" />
     <Compile Include="Entities\Enums\PlanStatusEnum.cs" />
     <Compile Include="Entities\InventorySummary\InventorySummaryAggregation.cs" />
     <Compile Include="Entities\InventorySummary\InventorySummaryQuarter.cs" />
+    <Compile Include="Entities\Plan\PlanAudienceDto.cs" />
     <Compile Include="Entities\ImpressionsDaypartResultForSingleBook.cs" />
     <Compile Include="Entities\ImpressionsDaypartResultForTwoBooks.cs" />
     <Compile Include="Entities\ImpressionsPointInTimeResult.cs" />
     <Compile Include="Entities\MarketPlaybackType.cs" />
     <Compile Include="Entities\Plan\PlanDto.cs" />
+    <Compile Include="Entities\Plan\PlanFlightDto.cs" />
     <Compile Include="Entities\ScxGenerationJob.cs" />
     <Compile Include="Entities\Scx\ScxFileGenerationDetailDto.cs" />
     <Compile Include="Entities\Scx\ScxFileGenerationDetail.cs" />
@@ -590,7 +596,7 @@
     <Compile Include="Entities\RatingAdjustmentsResponse.cs" />
     <Compile Include="Entities\RatingAdjustmentsDto.cs" />
     <Compile Include="Entities\StationImpressionsWithAudience.cs" />
-    <Compile Include="Entities\SchedulePostType.cs" />
+    <Compile Include="Entities\Enums\PostingTypeEnum.cs" />
     <Compile Include="Entities\ScheduleHeaderDto.cs" />
     <Compile Include="Entities\OutOfSpecToDateDto.cs" />
     <Compile Include="Entities\SpotsAndImpressionsDeliveryByAdvertiser.cs" />
@@ -600,7 +606,7 @@
     <Compile Include="Exceptions\NoProgramsException.cs" />
     <Compile Include="Exceptions\HutGreaterThanShareException.cs" />
     <Compile Include="Exceptions\NoSelectedDaysException.cs" />
-    <Compile Include="Entities\CrunchStatus.cs" />
+    <Compile Include="Entities\Enums\CrunchStatus.cs" />
     <Compile Include="ApplicationServices\NsiUniverseService.cs" />
     <Compile Include="ApplicationServices\ProposalService.cs" />
     <Compile Include="ApplicationServices\InventoryService.cs" />

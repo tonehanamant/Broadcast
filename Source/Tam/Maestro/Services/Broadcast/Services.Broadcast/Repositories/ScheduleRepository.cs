@@ -110,7 +110,7 @@ namespace Services.Broadcast.Repositories
                         StartDate = s.start_date,
                         EndDate = s.end_date,
                         IsEquivalized = s.equivalized,
-                        PostType = (SchedulePostType)s.post_type,
+                        PostType = (PostingTypeEnum)s.post_type,
                         SpotsBooked = (from sd in context.schedule_details
                                        where sd.schedule_id == s.id
                                        select sd.total_spots).Sum(),
@@ -261,7 +261,7 @@ namespace Services.Broadcast.Repositories
                         StartDate = efSchedule.start_date,
                         EndDate = efSchedule.end_date,
                         Equivalized = efSchedule.equivalized,
-                        PostType = (SchedulePostType)efSchedule.post_type
+                        PostType = (PostingTypeEnum)efSchedule.post_type
                     };
 
                     scheduleDto.ISCIs = (from i in context.schedule_iscis
@@ -555,7 +555,7 @@ namespace Services.Broadcast.Repositories
                             StartDate = s.start_date,
                             EndDate = s.end_date,
                             IsEquivalized = s.equivalized,
-                            PostType = (SchedulePostType)s.post_type,
+                            PostType = (PostingTypeEnum)s.post_type,
                             InventorySource = (InventorySourceEnum)s.inventory_source,
 
                             SpotsBooked = (from sd in context.schedule_details

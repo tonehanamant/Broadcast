@@ -302,6 +302,8 @@
         <AssociationConnector Association="BroadcastModel.FK_plans_spot_lengths" />
         <EntityTypeShape EntityType="BroadcastModel.plan_flight_hiatus" Width="1.5" PointX="36.125" PointY="4.875" />
         <AssociationConnector Association="BroadcastModel.FK_plan_flight_hiatus_plans" />
+        <AssociationConnector Association="BroadcastModel.FK_plans_audiences" />
+        <AssociationConnector Association="BroadcastModel.FK_plans_media_months" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -498,6 +498,58 @@ BEGIN
 END
 /*************************************** END PRI-12160 *****************************************************/
 
+/*************************************** START PRI-7460 *****************************************************/
+	--add audience_type
+IF NOT EXISTS(SELECT * FROM sys.columns WHERE object_id = OBJECT_ID('plans') AND name = 'audience_type')
+BEGIN
+	DECLARE @UpdateAudienceType VARCHAR(1024)
+	ALTER TABLE [plans] ADD [audience_type] [INT] NULL
+	SET @UpdateAudienceType = 'UPDATE [plans] SET [audience_type] = 1'		--Nielsen
+	EXEC (@UpdateAudienceType)
+	ALTER TABLE [plans] ALTER COLUMN [audience_type] [INT] NOT NULL
+END
+
+	--add posting_type
+IF NOT EXISTS(SELECT * FROM sys.columns WHERE object_id = OBJECT_ID('plans') AND name = 'posting_type')
+BEGIN
+	DECLARE @UpdatePostingType VARCHAR(1024)
+	ALTER TABLE [plans] ADD [posting_type] [INT] NULL
+	SET @UpdatePostingType = 'UPDATE [plans] SET [posting_type] = 2'		--NTI
+	EXEC (@UpdatePostingType)
+	ALTER TABLE [plans] ALTER COLUMN [posting_type] [INT] NOT NULL
+END
+
+	--add primary_audience_id
+IF NOT EXISTS(SELECT * FROM sys.columns WHERE object_id = OBJECT_ID('plans') AND name = 'audience_id')
+BEGIN
+	DECLARE @UpdateAudience VARCHAR(1024)
+	ALTER TABLE [plans] ADD [audience_id] [INT] NULL
+	SET @UpdateAudience = 'UPDATE [plans] SET [audience_id] = 31'		--HH
+	EXEC (@UpdateAudience)
+	ALTER TABLE [plans] ALTER COLUMN [audience_id] [INT] NOT NULL
+	ALTER TABLE [dbo].[plans] ADD CONSTRAINT [FK_plans_audiences] FOREIGN KEY([audience_id])
+	REFERENCES [dbo].[audiences] ([id]) ON DELETE CASCADE
+END
+
+	--add share_book_id
+IF NOT EXISTS(SELECT * FROM sys.columns WHERE object_id = OBJECT_ID('plans') AND name = 'share_book_id')
+BEGIN
+	DECLARE @UpdateShareBook VARCHAR(1024)
+	ALTER TABLE [plans] ADD [share_book_id] [INT] NULL
+	SET @UpdateShareBook = 'UPDATE [plans] SET [share_book_id] = 437'		--Feb 2018
+	EXEC (@UpdateShareBook)
+	ALTER TABLE [plans] ALTER COLUMN [share_book_id] [INT] NOT NULL
+	ALTER TABLE [dbo].[plans] ADD CONSTRAINT [FK_plans_media_months] FOREIGN KEY([share_book_id])
+	REFERENCES [dbo].[media_months] ([id]) ON DELETE CASCADE
+END
+
+	--add hut_book_id
+IF NOT EXISTS(SELECT * FROM sys.columns WHERE object_id = OBJECT_ID('plans') AND name = 'hut_book_id')
+BEGIN
+	ALTER TABLE [plans] ADD [hut_book_id] [INT] NULL
+END
+/*************************************** END PRI-7460 *****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

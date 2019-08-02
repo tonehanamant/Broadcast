@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Services.Broadcast.Entities.Enums;
+using System;
 using System.Collections.Generic;
 
 namespace Services.Broadcast.Entities.DTO
@@ -8,6 +9,6 @@ namespace Services.Broadcast.Entities.DTO
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public List<FlightWeekDto> FlightWeeks { get; set; }
-        public SchedulePostType PostType { get; set; }
+        public PostingTypeEnum PostType { get; set; }
     }
 }

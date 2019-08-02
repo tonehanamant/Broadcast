@@ -26,7 +26,7 @@ namespace Services.Broadcast.Aggregates
         private DateTime _StartDate;
         private DateTime _EndDate;
 
-        public SchedulePostType PostType { get; set; }
+        public PostingTypeEnum PostType { get; set; }
         public InventorySourceEnum InventorySource { get; set; }
         public bool IsEquivalized { get; set; }
         private schedule _Schedule;
@@ -44,7 +44,7 @@ namespace Services.Broadcast.Aggregates
                                     List<bvs_file_details> bvsFileDetails,
                                     List<bvs_post_details> bvsPostDetails,
                                     List<DisplayMediaWeek> mediaWeeks,
-                                    SchedulePostType postType,
+                                    PostingTypeEnum postType,
                                     InventorySourceEnum inventorySource,
                                     bool isEquivalized,
                                     DateTime startDate,
@@ -335,7 +335,7 @@ namespace Services.Broadcast.Aggregates
 
         private DateTime _GetBVSFileDetailDate(bvs_file_details bvsFile)
         {
-            return PostType == SchedulePostType.NSI ? bvsFile.nsi_date : bvsFile.nti_date;
+            return PostType == PostingTypeEnum.NSI ? bvsFile.nsi_date : bvsFile.nti_date;
         }
 
         public List<int> GetScheduleWeeks()

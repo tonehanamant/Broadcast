@@ -22,7 +22,7 @@ namespace Services.Broadcast.Entities
         public DateTime? PostingBookDate { get; set; }
         public double? PrimaryDemoBooked { get; set; }
         public double PrimaryDemoDelivered { get; set; }
-        public SchedulePostType PostType { get; set; }
+        public PostingTypeEnum PostType { get; set; }
         public InventorySourceEnum InventorySource { get; set; }
         public bool IsEquivalized { get; set; }
         public List<short> MarketRestrictions { get; set; }

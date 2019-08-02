@@ -180,7 +180,7 @@ namespace Services.Broadcast.ReportGenerators
         private string _GetPostingBookMonthAndYear(int postingBookId)
         {
             return _RatingForecastService.GetMediaMonthCrunchStatuses()
-                .Where(m => m.Crunched == CrunchStatus.Crunched && m.MediaMonth.Id == postingBookId)
+                .Where(m => m.Crunched == CrunchStatusEnum.Crunched && m.MediaMonth.Id == postingBookId)
                 .Select(m => m.MediaMonth.MediaMonthX)
                 .First();
         }

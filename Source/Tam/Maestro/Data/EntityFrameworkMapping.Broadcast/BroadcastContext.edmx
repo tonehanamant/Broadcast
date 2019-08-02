@@ -610,6 +610,11 @@
           <Property Name="flight_start_date" Type="datetime" />
           <Property Name="flight_end_date" Type="datetime" />
           <Property Name="flight_notes" Type="nvarchar" MaxLength="1024" />
+          <Property Name="audience_id" Type="int" Nullable="false" />
+          <Property Name="share_book_id" Type="int" Nullable="false" />
+          <Property Name="audience_type" Type="int" Nullable="false" />
+          <Property Name="posting_type" Type="int" Nullable="false" />
+          <Property Name="hut_book_id" Type="int" />
         </EntityType>
         <EntityType Name="post_file_demos">
           <Key>
@@ -2191,6 +2196,20 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_plans_audiences">
+          <End Role="audiences" Type="Self.audiences" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="plans" Type="Self.plans" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="audiences">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plans">
+              <PropertyRef Name="audience_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_plans_campaigns">
           <End Role="campaigns" Type="Self.campaigns" Multiplicity="1" />
           <End Role="plans" Type="Self.plans" Multiplicity="*" />
@@ -2200,6 +2219,20 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Principal>
             <Dependent Role="plans">
               <PropertyRef Name="campaign_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plans_media_months">
+          <End Role="media_months" Type="Self.media_months" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="plans" Type="Self.plans" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="media_months">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plans">
+              <PropertyRef Name="share_book_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -4204,8 +4237,16 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="plans" EntitySet="plans" />
             <End Role="plan_flight_hiatus" EntitySet="plan_flight_hiatus" />
           </AssociationSet>
+          <AssociationSet Name="FK_plans_audiences" Association="Self.FK_plans_audiences">
+            <End Role="audiences" EntitySet="audiences" />
+            <End Role="plans" EntitySet="plans" />
+          </AssociationSet>
           <AssociationSet Name="FK_plans_campaigns" Association="Self.FK_plans_campaigns">
             <End Role="campaigns" EntitySet="campaigns" />
+            <End Role="plans" EntitySet="plans" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plans_media_months" Association="Self.FK_plans_media_months">
+            <End Role="media_months" EntitySet="media_months" />
             <End Role="plans" EntitySet="plans" />
           </AssociationSet>
           <AssociationSet Name="FK_plans_spot_lengths" Association="Self.FK_plans_spot_lengths">
@@ -5555,6 +5596,14 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="plan" EntitySet="plans" />
             <End Role="plan_flight_hiatus" EntitySet="plan_flight_hiatus" />
           </AssociationSet>
+          <AssociationSet Name="FK_plans_audiences" Association="BroadcastModel.FK_plans_audiences">
+            <End Role="audience" EntitySet="audiences" />
+            <End Role="plan" EntitySet="plans" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plans_media_months" Association="BroadcastModel.FK_plans_media_months">
+            <End Role="media_months" EntitySet="media_months" />
+            <End Role="plan" EntitySet="plans" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="audience_audiences">
           <Key>
@@ -5598,6 +5647,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="station_inventory_manifest_audiences" Relationship="BroadcastModel.FK_station_inventory_manifest_audiences_audiences" FromRole="audience" ToRole="station_inventory_manifest_audiences" />
           <NavigationProperty Name="inventory_file_proprietary_header" Relationship="BroadcastModel.FK_inventory_file_proprietary_header_audiences" FromRole="audience" ToRole="inventory_file_proprietary_header" />
           <NavigationProperty Name="audience_maps" Relationship="BroadcastModel.FK_audience_maps_audiences" FromRole="audience" ToRole="audience_maps" />
+          <NavigationProperty Name="plans" Relationship="BroadcastModel.FK_plans_audiences" FromRole="audience" ToRole="plan" />
         </EntityType>
         <EntityType Name="bvs_file_details">
           <Key>
@@ -5731,6 +5781,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="proposal_version_details3" Relationship="BroadcastModel.FK_proposal_version_details_single_media_months" FromRole="media_months" ToRole="proposal_version_details" />
           <NavigationProperty Name="inventory_file_proprietary_header" Relationship="BroadcastModel.FK_inventory_file_proprietary_header_media_months" FromRole="media_months" ToRole="inventory_file_proprietary_header" />
           <NavigationProperty Name="inventory_file_proprietary_header1" Relationship="BroadcastModel.FK_inventory_file_proprietary_header_media_months_hut_book" FromRole="media_months" ToRole="inventory_file_proprietary_header" />
+          <NavigationProperty Name="plans" Relationship="BroadcastModel.FK_plans_media_months" FromRole="media_months" ToRole="plan" />
           </EntityType>
         <EntityType Name="media_weeks">
           <Key>
@@ -9672,6 +9723,13 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="flight_end_date" Type="DateTime" Precision="3" />
           <Property Name="flight_notes" Type="String" MaxLength="1024" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="plan_flight_hiatus" Relationship="BroadcastModel.FK_plan_flight_hiatus_plans" FromRole="plan" ToRole="plan_flight_hiatus" />
+          <Property Name="audience_id" Type="Int32" Nullable="false" />
+          <Property Name="share_book_id" Type="Int32" Nullable="false" />
+          <Property Name="audience_type" Type="Int32" Nullable="false" />
+          <Property Name="posting_type" Type="Int32" Nullable="false" />
+          <Property Name="hut_book_id" Type="Int32" />
+          <NavigationProperty Name="audience" Relationship="BroadcastModel.FK_plans_audiences" FromRole="plan" ToRole="audience" />
+          <NavigationProperty Name="media_months" Relationship="BroadcastModel.FK_plans_media_months" FromRole="plan" ToRole="media_months" />
         </EntityType>
         <Association Name="FK_plans_campaigns">
           <End Type="BroadcastModel.campaign" Role="campaign" Multiplicity="1" />
@@ -9717,6 +9775,34 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Principal>
             <Dependent Role="plan_flight_hiatus">
               <PropertyRef Name="plan_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plans_audiences">
+          <End Type="BroadcastModel.audience" Role="audience" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BroadcastModel.plan" Role="plan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="audience">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan">
+              <PropertyRef Name="audience_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plans_media_months">
+          <End Type="BroadcastModel.media_months" Role="media_months" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BroadcastModel.plan" Role="plan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="media_months">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan">
+              <PropertyRef Name="share_book_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -11372,6 +11458,11 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="plans">
             <EntityTypeMapping TypeName="BroadcastModel.plan">
               <MappingFragment StoreEntitySet="plans">
+                <ScalarProperty Name="hut_book_id" ColumnName="hut_book_id" />
+                <ScalarProperty Name="posting_type" ColumnName="posting_type" />
+                <ScalarProperty Name="audience_type" ColumnName="audience_type" />
+                <ScalarProperty Name="share_book_id" ColumnName="share_book_id" />
+                <ScalarProperty Name="audience_id" ColumnName="audience_id" />
                 <ScalarProperty Name="flight_notes" ColumnName="flight_notes" />
                 <ScalarProperty Name="flight_end_date" ColumnName="flight_end_date" />
                 <ScalarProperty Name="flight_start_date" ColumnName="flight_start_date" />

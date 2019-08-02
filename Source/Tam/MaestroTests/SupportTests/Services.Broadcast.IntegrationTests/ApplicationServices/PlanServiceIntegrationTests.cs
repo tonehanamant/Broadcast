@@ -268,7 +268,12 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     new DateTime(2019,1,20),
                     new DateTime(2019,4,15)
-                }
+                },
+                AudienceId = 31,        //HH
+                AudienceType = Entities.Enums.AudienceTypeEnum.Nielsen,
+                HUTBookId = null,
+                PostingType = Entities.Enums.PostingTypeEnum.NTI,
+                ShareBookId = 437
             };
         }
 
@@ -281,7 +286,12 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Name = "New Plan",
                 ProductId = 1,
                 SpotLengthId = 1,
-                Status = Entities.Enums.PlanStatusEnum.Working
+                Status = Entities.Enums.PlanStatusEnum.Working,
+                AudienceId = 31,        //HH
+                AudienceType = Entities.Enums.AudienceTypeEnum.Nielsen,
+                HUTBookId = null,
+                PostingType = Entities.Enums.PostingTypeEnum.NTI,
+                ShareBookId = 437
             };
         }
 

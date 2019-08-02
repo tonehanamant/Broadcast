@@ -55,7 +55,7 @@ namespace Services.Broadcast.Entities
         public List<BvsTrackingDetail> BvsTrackingDetails { get; set; }
         public List<int> MarketRestrictions { get; set; }
         public DaypartDto DaypartRestriction { get; set; }
-        public SchedulePostType PostType { get; set; }
+        public PostingTypeEnum PostType { get; set; }
         public InventorySourceEnum? InventorySource { get; set; }
         public bool Equivalized { get; set; }
         public List<BvsTrackingAudience> Audiences { get; set; }

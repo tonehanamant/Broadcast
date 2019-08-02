@@ -723,7 +723,7 @@ namespace Services.Broadcast.ApplicationServices
             return postedProposalImpresssionData;
         }
 
-        private double _GetImpressionsForAudience(Dictionary<int, List<PostImpressionsData>> contractImpressionsData, int contractId, SchedulePostType type, int audienceId, bool equivalized)
+        private double _GetImpressionsForAudience(Dictionary<int, List<PostImpressionsData>> contractImpressionsData, int contractId, PostingTypeEnum type, int audienceId, bool equivalized)
         {
             double deliveredImpressions = 0;
             if (contractImpressionsData.ContainsKey(contractId))
@@ -733,7 +733,7 @@ namespace Services.Broadcast.ApplicationServices
                     var impressions = _ImpressionAdjustmentEngine.AdjustImpression(impressionData.Impressions,
                         equivalized, _SpotLengthEngine.GetSpotLengthValueById(impressionData.SpotLengthId));
 
-                    if (type == SchedulePostType.NTI)
+                    if (type == PostingTypeEnum.NTI)
                     {
                         impressions = _ImpressionAdjustmentEngine.AdjustImpression(impressions,
                             impressionData.NtiConversionFactor.Value);

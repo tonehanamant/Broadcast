@@ -181,6 +181,9 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IPlanService, PlanService>();
             unityContainer.RegisterType<IPlanValidator, PlanValidator>();
             unityContainer.RegisterType<ISpotLengthService, SpotLengthService>();
+            unityContainer.RegisterType<IPostingTypeService, PostingTypeService>();
+            unityContainer.RegisterType<IAudienceService, AudienceService>();
+            unityContainer.RegisterType<IPostingBookService, PostingBookService>();
 
             unityContainer.RegisterType<IEnvironmentService, EnvironmentService>();
 
