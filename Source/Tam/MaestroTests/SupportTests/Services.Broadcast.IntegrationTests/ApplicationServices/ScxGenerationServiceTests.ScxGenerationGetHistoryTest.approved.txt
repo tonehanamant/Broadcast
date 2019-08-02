@@ -1,6 +1,7 @@
 ﻿[
   {
     "DaypartCode": "EMN",
+    "FileName": "LilaMax_ExpiresGroupsTest_20190210_20190217.scx",
     "GenerationRequestDateTime": "2019-04-17T12:30:23",
     "GenerationRequestedByUsername": "IntegrationTestUser",
     "ProcessingStatus": 3,
