@@ -1,14 +1,11 @@
-﻿using NUnit.Framework;
+﻿using ApprovalTests;
 using ApprovalTests.Reporters;
-using Services.Broadcast.ApplicationServices;
-using Services.Broadcast.Entities;
-using System.Collections.Generic;
-using System.IO;
-using Tam.Maestro.Common.DataLayer;
-using ApprovalTests;
 using IntegrationTests.Common;
 using Newtonsoft.Json;
-using System;
+using NUnit.Framework;
+using Services.Broadcast.ApplicationServices;
+using Tam.Maestro.Common.DataLayer;
+using Tam.Maestro.Data.Entities.DataTransferObjects;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
@@ -29,8 +26,21 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 var spotLengths = _PostingTypeService.GetPostingTypes();
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(spotLengths));
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(spotLengths, _GetJsonSettings()));
             }
+        }
+
+        private JsonSerializerSettings _GetJsonSettings()
+        {
+            var jsonResolver = new IgnorableSerializerContractResolver();
+
+            jsonResolver.Ignore(typeof(LookupDto), "Id");
+
+            return new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                ContractResolver = jsonResolver
+            };
         }
     }
 }

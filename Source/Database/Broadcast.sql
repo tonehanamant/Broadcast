@@ -548,6 +548,7 @@ IF NOT EXISTS(SELECT * FROM sys.columns WHERE object_id = OBJECT_ID('plans') AND
 BEGIN
 	ALTER TABLE [plans] ADD [hut_book_id] [INT] NULL
 END
+
 /*************************************** END PRI-7460 *****************************************************/
 
 /*************************************** START PRI-12674 *****************************************************/

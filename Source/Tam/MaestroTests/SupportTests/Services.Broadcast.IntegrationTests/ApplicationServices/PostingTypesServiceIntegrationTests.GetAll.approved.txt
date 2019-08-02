@@ -1,10 +1,8 @@
 ﻿[
   {
-    "Display": "NSI",
-    "Id": 1
+    "Display": "NTI"
   },
   {
-    "Display": "NTI",
-    "Id": 2
+    "Display": "NSI"
   }
 ]
