@@ -55,6 +55,7 @@ namespace Services.Broadcast.ApplicationServices
         /// Maps an original isci to an effective isci
         /// </summary>
         /// <param name="mapIsciDto">MapIsciDto object containing the iscis to map</param>
+        /// <param name="currentDateTime">Current date and time</param>
         /// <param name="name">User requesting the mapping</param>
         /// <returns>The result of the mapping in true or false</returns>
         bool MapIsci(MapIsciDto mapIsciDto, DateTime currentDateTime, string name);
@@ -69,6 +70,8 @@ namespace Services.Broadcast.ApplicationServices
         /// Gets a client post scrubbing proposal with details
         /// </summary>
         /// <param name="proposalId">Proposal id to filter by</param>
+        /// <param name="proposalScrubbingRequest">ProposalScrubbingRequest object</param>
+        /// <param name="scrubs">Optional List of ProposalDetailPostScrubbingDto objects</param>
         /// <returns>ClientPostScrubbingProposalDto object containing the post scrubbing information</returns>
         ClientPostScrubbingProposalDto GetClientScrubbingForProposal(int proposalId, ProposalScrubbingRequest proposalScrubbingRequest, List<ProposalDetailPostScrubbingDto> scrubs = null);
 
@@ -176,6 +179,7 @@ namespace Services.Broadcast.ApplicationServices
             _SpotLengthEngine = spotLengthEngine;
         }
 
+        ///<inheritdoc/>
         public WWTVSaveResult SaveAffidavitValidationErrors(InboundFileSaveRequest saveRequest, string userName, List<WWTVInboundFileValidationResult> affidavitValidationResults)
         {
             var affidavitFile = _EnsureAffidavitFile(saveRequest, DateTime.Now);
@@ -212,6 +216,7 @@ namespace Services.Broadcast.ApplicationServices
             return affidavitFile;
         }
 
+        ///<inheritdoc/>
         public WWTVSaveResult SaveAffidavit(InboundFileSaveRequest saveRequest, string username, DateTime currentDateTime)
         {
             var affidavitFile = _EnsureAffidavitFile(saveRequest, currentDateTime);
@@ -325,6 +330,7 @@ namespace Services.Broadcast.ApplicationServices
             return result;
         }
 
+        ///<inheritdoc/>
         public bool RescrubProposalDetail(RescrubProposalDetailRequest request, string userName, DateTime changeDate)
         {
             var proposal = _ProposalService.GetProposalById(request.ProposalId);
@@ -353,6 +359,7 @@ namespace Services.Broadcast.ApplicationServices
             return true;
         }
 
+        ///<inheritdoc/>
         public bool CanRescrubProposalDetail(ProposalDto proposal, ProposalDetailDto proposalDetail)
         {
             if (proposal.Status != ProposalEnums.ProposalStatusType.Contracted)
@@ -371,13 +378,7 @@ namespace Services.Broadcast.ApplicationServices
                 throw new InvalidOperationException(ProposalNotContractedMessage);
         }
 
-        /// <summary>
-        /// Scrubs an affidavit detail by an isci
-        /// </summary>
-        /// <param name="isci">Isci to scrub</param>
-        /// <param name="currentDateTime">Current date and time</param>
-        /// <param name="username">User requesting the scrubbing</param>
-        /// <returns>True or false</returns>
+        ///<inheritdoc/>
         public bool ScrubUnlinkedAffidavitDetailsByIsci(string isci, DateTime currentDateTime, string username)
         {
             var postingBookId = _NsiPostingBookService.GetLatestNsiPostingBookForMonthContainingDate(currentDateTime);
@@ -424,25 +425,14 @@ namespace Services.Broadcast.ApplicationServices
             }
         }
 
-        /// <summary>
-        /// Maps an original isci to an effective isci
-        /// </summary>
-        /// <param name="mapIsciDto">MapIsciDto object containing the iscis to map</param>
-        /// <param name="username">User requesting the mapping</param>
-        /// <returns>The result of the mapping in true or false</returns>
+        ///<inheritdoc/>
         public bool MapIsci(MapIsciDto mapIsciDto, DateTime currentDateTime, string username)
         {
             _IsciService.AddIsciMapping(mapIsciDto, username);
             return ScrubUnlinkedAffidavitDetailsByIsci(mapIsciDto.OriginalIsci, currentDateTime, username);
         }
 
-        /// <summary>
-        /// Swaps one or more client scrubs to another proposal detail
-        /// </summary>
-        /// <param name="requestData">SwapProposalDetailRequest object containing a list of affidavit client scrubs to be swapped and the proposal detail id to swap to</param>
-        /// <param name="currentDateTime">Current date and time</param>
-        /// <param name="username">Username requesting the change</param>
-        /// <returns>True or false</returns>
+        ///<inheritdoc/>
         public bool SwapProposalDetails(SwapProposalDetailRequest requestData, DateTime currentDateTime, string username)
         {
             var postingBookId = _NsiPostingBookService.GetLatestNsiPostingBookForMonthContainingDate(currentDateTime);
@@ -576,7 +566,7 @@ namespace Services.Broadcast.ApplicationServices
             return null;
         }
 
-        public List<FileProblem> _MapValidationErrorToAffidavitFileProblem(List<WWTVInboundFileValidationResult> affidavitValidationResults)
+        private List<FileProblem> _MapValidationErrorToAffidavitFileProblem(List<WWTVInboundFileValidationResult> affidavitValidationResults)
         {
             List<FileProblem> problems = new List<FileProblem>();
 
@@ -686,10 +676,7 @@ namespace Services.Broadcast.ApplicationServices
 
         private Dictionary<int, List<int>> _ratingsAudiencesIds;
 
-        /// <summary>
-        /// Returns a list of the posts and unlinked iscis count in the system
-        /// </summary>
-        /// <returns>List of PostDto objects</returns>
+        ///<inheritdoc/>
         public PostedContractedProposalsDto GetPosts()
         {
             var postedProposals = _PostRepository.GetAllPostedProposals();
@@ -735,6 +722,7 @@ namespace Services.Broadcast.ApplicationServices
             var postedProposalImpresssionData = _GetPostImpressionsData(contractIds, audiences).GroupBy(g => g.ProposalId).ToDictionary(key => key.Key, val => val.ToList());
             return postedProposalImpresssionData;
         }
+
         private double _GetImpressionsForAudience(Dictionary<int, List<PostImpressionsData>> contractImpressionsData, int contractId, SchedulePostType type, int audienceId, bool equivalized)
         {
             double deliveredImpressions = 0;
@@ -779,11 +767,7 @@ namespace Services.Broadcast.ApplicationServices
             return _PostRepository.GetPostImpressionsData(contractId, ratingsAudiencesIds);
         }
 
-        /// <summary>
-        /// Gets a client post scrubbing proposal with details
-        /// </summary>
-        /// <param name="proposalId">Proposal id to filter by</param>
-        /// <returns>ClientPostScrubbingProposalDto object containing the post scrubbing information</returns>
+        ///<inheritdoc/>
         public ClientPostScrubbingProposalDto GetClientScrubbingForProposal(int proposalId, ProposalScrubbingRequest proposalScrubbingRequest, List<ProposalDetailPostScrubbingDto> clientScrubs = null)
         {
             using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
@@ -809,7 +793,7 @@ namespace Services.Broadcast.ApplicationServices
                     Equivalized = proposal.Equivalized
                 };
 
-                ///Load all Client Scrubs
+                //Load all Client Scrubs
                 if (clientScrubs == null)
                 {
                     clientScrubs = _MapClientScrubDataToDto(_AffidavitRepository.GetProposalDetailPostScrubbing(proposalId, proposalScrubbingRequest.ScrubbingStatusFilter));
@@ -829,7 +813,7 @@ namespace Services.Broadcast.ApplicationServices
                     result.ClientScrubs.AddRange(detailClientScrubs);
                 });
 
-                ///Load Filters
+                //Load Filters
                 result.Filters = _LoadFilters(result.ClientScrubs);
 
                 return result;
@@ -949,10 +933,7 @@ namespace Services.Broadcast.ApplicationServices
             }
         }
 
-        /// <summary>
-        /// Returns a list of unlinked iscis
-        /// </summary>
-        /// <returns>List of UnlinkedIscisDto objects</returns>
+        ///<inheritdoc/>
         public List<UnlinkedIscisDto> GetUnlinkedIscis()
         {
             List<UnlinkedIscis> iscis = _PostRepository.GetUnlinkedIscis();
@@ -966,10 +947,7 @@ namespace Services.Broadcast.ApplicationServices
             }).ToList();
         }
 
-        /// <summary>
-        /// Returns a list of unlinked iscis
-        /// </summary>
-        /// <returns>List of UnlinkedIscisDto objects</returns>
+        ///<inheritdoc/>
         public List<ArchivedIscisDto> GetArchivedIscis()
         {
             List<ArchivedIscisDto> iscis = _PostRepository.GetArchivedIscis();
@@ -992,11 +970,7 @@ namespace Services.Broadcast.ApplicationServices
             return GetClientScrubbingForProposal(scrubStatusOverrides.ProposalId, filter);
         }
 
-        /// <summary>
-        /// Undo the overriding of an affidavit client scrub status
-        /// </summary>
-        /// <param name="request">ScrubStatusOverrideRequest object containing the ids of the records to undo</param>
-        /// <returns>ClientPostScrubbingProposalDto object</returns>
+        ///<inheritdoc/>
         public ClientPostScrubbingProposalDto UndoOverrideScrubbingStatus(ScrubStatusOverrideRequest request)
         {
             var affidavitClientScrubs = _AffidavitRepository.GetAffidavitClientScrubsByIds(request.ScrubIds);
@@ -1012,12 +986,7 @@ namespace Services.Broadcast.ApplicationServices
             return GetClientScrubbingForProposal(request.ProposalId, new ProposalScrubbingRequest() { ScrubbingStatusFilter = request.ReturnStatusFilter });
         }
 
-        /// <summary>
-        /// Archives an isci from the unlinked isci list
-        /// </summary>
-        /// <param name="iscis">Iscis to archive</param>
-        /// <param name="username">User requesting the change</param>
-        /// <returns>True or false based on the errors</returns>
+        ///<inheritdoc/>
         public bool ArchiveUnlinkedIsci(List<string> iscis, string username)
         {
             List<string> iscisToArchive = iscis.Distinct().ToList();
@@ -1043,13 +1012,7 @@ namespace Services.Broadcast.ApplicationServices
             return true;
         }
 
-        /// <summary>
-        /// Undo the archive process of a list of iscis
-        /// </summary>
-        /// <param name="fileDetailIds">List of affidavit file detail ids</param>
-        /// <param name="currentDateTime">Current date and time</param>
-        /// <param name="username">User requesting the undo operation</param>
-        /// <returns>True or false</returns>
+        ///<inheritdoc/>
         public bool UndoArchiveUnlinkedIsci(List<long> fileDetailIds, DateTime currentDateTime, string username)
         {
             List<ScrubbingFileDetail> fileDetailList = _PostRepository.LoadFileDetailsByIds(fileDetailIds);

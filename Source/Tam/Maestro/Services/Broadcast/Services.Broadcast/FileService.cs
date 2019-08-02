@@ -12,7 +12,7 @@ namespace Common.Services
         /// <summary>
         /// Returns a list with the file paths contined in the folder
         /// </summary>
-        /// <param name="folderPath">Path to the directory</param>
+        /// <param name="path">Path to the directory</param>
         /// <returns>List of file paths contained in the directory</returns>
         List<string> GetFiles(string path);
 
@@ -84,11 +84,7 @@ namespace Common.Services
 
     public class FileService : IFileService
     {
-        /// <summary>
-        /// Returns a list with the file paths contined in the folder
-        /// </summary>
-        /// <param name="folderPath">Path to the directory</param>
-        /// <returns>List of file paths contained in the directory</returns>
+        ///<inheritdoc/>
         public List<string> GetFiles(string folderPath)
         {
             List<string> filepathList;
@@ -104,20 +100,13 @@ namespace Common.Services
             return filepathList;
         }
 
-        /// <summary>
-        /// Checks if the path exists
-        /// </summary>
-        /// <param name="path">Path to check</param>
-        /// <returns>True or false</returns>
+        ///<inheritdoc/>
         public bool Exists(string path)
         {
             return File.Exists(path);
         }
 
-        /// <summary>
-        /// Delete all the files in the filePaths
-        /// </summary>
-        /// <param name="filePaths">List of file paths to be deleted</param>
+        ///<inheritdoc/>
         public void Delete(params string[] filePaths)
         {
             foreach (string path in filePaths)
@@ -126,12 +115,7 @@ namespace Common.Services
             }
         }
 
-        /// <summary>
-        /// Moved a file to another destination
-        /// </summary>
-        /// <param name="filePath">Current file path</param>
-        /// <param name="destinationFolderPath">Destination directory</param>
-        /// <returns>New file path</returns>
+        ///<inheritdoc/>
         public string Move(string filePath, string destinationFolderPath)
         {
             var destinationPath = Path.Combine(destinationFolderPath, Path.GetFileName(filePath));
@@ -144,13 +128,7 @@ namespace Common.Services
             return destinationPath;
         }
 
-        /// <summary>
-        /// Copies a file to another destination
-        /// </summary>
-        /// <param name="filePath">Current file path</param>
-        /// <param name="destinationPath">Destination directory</param>
-        /// <param name="overwriteExisting">Optional: Flag to overwrite the existing file if there is one at the same location</param>
-        /// <returns>New file path</returns>
+        ///<inheritdoc/>
         public string Copy(string filePath, string destinationPath, bool overwriteExisting = false)
         {
             if (Exists(destinationPath))
@@ -170,13 +148,7 @@ namespace Common.Services
             return destinationPath;
         }
 
-        /// <summary>
-        /// Copies a stream to a file
-        /// </summary>
-        /// <param name="inputStream">Input stream</param>
-        /// <param name="destinationPath">Destination directory</param>
-        /// <param name="overwriteExisting">Optional: Flag to overwrite the existing file if there is one at the same location</param>
-        /// <returns>New file path</returns>
+        ///<inheritdoc/>
         public string Copy(Stream inputStream, string destinationPath, bool overwriteExisting = false)
         {
             if (Exists(destinationPath))
@@ -211,11 +183,7 @@ namespace Common.Services
             }
         }
 
-        /// <summary>
-        /// Creates a stream containing a zip file from the file paths
-        /// </summary>
-        /// <param name="filePaths">Dictionary of path and name file pairs</param>
-        /// <returns>Stream containing the zip archive</returns>
+        ///<inheritdoc/>
         public Stream CreateZipArchive(IDictionary<string, string> filePaths)
         {
             MemoryStream archiveFile = new MemoryStream();
@@ -230,16 +198,19 @@ namespace Common.Services
             return archiveFile;
         }
 
+        ///<inheritdoc/>
         public bool DirectoryExists(string filePath)
         {
             return Directory.Exists(filePath);
         }
 
+        ///<inheritdoc/>
         public void CreateDirectory(string filePath)
         {
             Directory.CreateDirectory(filePath);
         }
 
+        ///<inheritdoc/>
         public Stream GetFileStream(string filePath)
         {
             if (File.Exists(filePath))
@@ -250,16 +221,13 @@ namespace Common.Services
             throw new ApplicationException($"File not found: {filePath}");
         }
 
-        /// <summary>
-        /// Creates a txt file with the content passed
-        /// </summary>
-        /// <param name="filePath">File path where to create the file</param>
-        /// <param name="lines">New file content</param>
+        ///<inheritdoc/>
         public void CreateTextFile(string filePath, List<string> lines)
         {
             File.WriteAllLines(filePath, lines);
         }
 
+        ///<inheritdoc/>
         public void Create(string path, Stream stream)
         {
             if (File.Exists(path))

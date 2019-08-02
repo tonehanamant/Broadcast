@@ -34,11 +34,7 @@ namespace Services.Broadcast.Repositories
             ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient)
             : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
 
-        /// <summary>
-        /// Gets the proposal weeks by myevents report name
-        /// </summary>
-        /// <param name="reportName">Report name to filter by</param>
-        /// <returns>List of NtiProposalVersionDetailWeek objects</returns>
+        ///<inheritdoc/>
         public List<NtiProposalVersionDetailWeek> GetProposalWeeksByReportName(string reportName)
         {
             return _InReadUncommitedTransaction(
@@ -66,10 +62,7 @@ namespace Services.Broadcast.Repositories
                 });
         }
 
-        /// <summary>
-        /// Save a nti file to nti tables
-        /// </summary>
-        /// <param name="file">NtiFile object to save</param>
+        ///<inheritdoc/>
         public void SaveFile(NtiFile ntiFile)
         {
             _InReadUncommitedTransaction(

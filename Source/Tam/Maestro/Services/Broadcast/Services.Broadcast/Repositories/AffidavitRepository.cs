@@ -34,6 +34,7 @@ namespace Services.Broadcast.Repositories
         /// </summary>
         /// <param name="model">List of OutboundAffidavitFileValidationResultDto objects to be saved</param>
         void SaveValidationObject(List<WWTVOutboundFileValidationResult> model);
+
         List<MyEventsReportData> GetMyEventsReportData(int proposalId);
         void OverrideScrubStatus(List<int> ClientScrubIds, ScrubbingStatus overrideToStatus);
         List<ScrubbingFileDetail> GetAffidavitDetails(int proposalDetailId);
@@ -45,7 +46,7 @@ namespace Services.Broadcast.Repositories
         /// <summary>
         /// Undo the override status
         /// </summary>
-        /// <param name="scrubIds">List of affidavit client scrubs to undo the override status</param>
+        /// <param name="scrubs">List of affidavit client scrubs to undo the override status</param>
         void SaveScrubsStatus(List<affidavit_client_scrubs> scrubs);
 
         /// <summary>
@@ -73,6 +74,7 @@ namespace Services.Broadcast.Repositories
         {
         }
 
+        /// <inheritdoc/>
         public int SaveAffidavitFile(ScrubbingFile affidavitFile)
         {
             return _InReadUncommitedTransaction(
@@ -186,6 +188,7 @@ namespace Services.Broadcast.Repositories
             return result;
         }
 
+        /// <inheritdoc/>
         public void SaveScrubbedFileDetails(List<ScrubbingFileDetail> affidavitFileDetails)
         {
             _InReadUncommitedTransaction(
@@ -203,6 +206,7 @@ namespace Services.Broadcast.Repositories
                 });
         }
 
+        /// <inheritdoc/>
         public ScrubbingFile GetAffidavit(int affidavitId, bool includeScrubbingDetail = false)
         {
             return _InReadUncommitedTransaction(
@@ -388,11 +392,7 @@ namespace Services.Broadcast.Repositories
             };
         }
 
-        /// <summary>
-        /// Gets the data for the NSI Post Report
-        /// </summary>
-        /// <param name="proposalId">Proposal Id to get the data for</param>
-        /// <returns>List of NSIPostReportDto objects</returns>
+        /// <inheritdoc/>
         public List<InSpecAffidavitFileDetail> GetInSpecSpotsForProposal(int proposalId)
         {
             return _InReadUncommitedTransaction(
@@ -451,10 +451,7 @@ namespace Services.Broadcast.Repositories
                 });
         }
 
-        /// <summary>
-        /// Persists a List of OutboundAffidavitFileValidationResultDto objects
-        /// </summary>
-        /// <param name="model">List of OutboundAffidavitFileValidationResultDto objects to be saved</param>
+        /// <inheritdoc/>
         public void SaveValidationObject(List<WWTVOutboundFileValidationResult> model)
         {
             _InReadUncommitedTransaction(context =>
@@ -478,6 +475,7 @@ namespace Services.Broadcast.Repositories
             });
         }
 
+        /// <inheritdoc/>
         public List<MyEventsReportData> GetMyEventsReportData(int proposalId)
         {
             return _InReadUncommitedTransaction(
@@ -532,6 +530,7 @@ namespace Services.Broadcast.Repositories
                 });
         }
 
+        /// <inheritdoc/>
         public void OverrideScrubStatus(List<int> ClientScrubIds, ScrubbingStatus overrideToStatus)
         {
             _InReadUncommitedTransaction(
@@ -551,11 +550,7 @@ namespace Services.Broadcast.Repositories
             );
         }
 
-        /// <summary>
-        /// Gets all override affidavit client scrubs based on ids
-        /// </summary>
-        /// <param name="scrubIds">List of affidavit client scrub ids</param>
-        /// <returns>List of override affidavit_client_scrubs objects</returns>
+        /// <inheritdoc/>
         public List<affidavit_client_scrubs> GetAffidavitClientScrubsByIds(List<int> scrubIds)
         {
             return _InReadUncommitedTransaction(
@@ -568,10 +563,7 @@ namespace Services.Broadcast.Repositories
             );
         }
 
-        /// <summary>
-        /// Undo the override status
-        /// </summary>
-        /// <param name="scrubs">List of affidavit client scrubs to undo the override status</param>
+        /// <inheritdoc/>
         public void SaveScrubsStatus(List<affidavit_client_scrubs> scrubs)
         {
             _InReadUncommitedTransaction(
@@ -593,6 +585,7 @@ namespace Services.Broadcast.Repositories
             );
         }
 
+        /// <inheritdoc/>
         public List<ScrubbingFileDetail> GetAffidavitDetails(int proposalDetailId)
         {
             return _InReadUncommitedTransaction(
@@ -667,6 +660,7 @@ namespace Services.Broadcast.Repositories
                 });
         }
 
+        /// <inheritdoc/>
         public void RemoveAffidavitAudiences(List<ScrubbingFileDetail> affidavitFileDetails)
         {
             _InReadUncommitedTransaction(
@@ -687,6 +681,7 @@ namespace Services.Broadcast.Repositories
                 });
         }
 
+        /// <inheritdoc/>
         public void SaveAffidavitAudiences(List<ScrubbingFileDetail> affidavitFileDetails)
         {
             _InReadUncommitedTransaction(
@@ -713,6 +708,7 @@ namespace Services.Broadcast.Repositories
                 });
         }
 
+        /// <inheritdoc/>
         public List<ScrubbingFileDetail> GetUnlinkedAffidavitDetailsByIsci(string isci)
         {
             return _InReadUncommitedTransaction(
@@ -759,11 +755,7 @@ namespace Services.Broadcast.Repositories
             }).ToList();
         }
 
-        /// <summary>
-        /// Gets all the affidavit details based on affidavit client scubs ids
-        /// </summary>
-        /// <param name="affidavitScrubbingIds">Affidavit Client scrubs ids</param>
-        /// <returns>List of AffidavitFileDetail objects</returns>
+        /// <inheritdoc/>
         public List<ScrubbingFileDetail> GetAffidavitDetailsByClientScrubIds(List<int> affidavitScrubbingIds)
         {
             return _InReadUncommitedTransaction(

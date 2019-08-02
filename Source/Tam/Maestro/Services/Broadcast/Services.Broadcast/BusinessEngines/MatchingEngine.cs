@@ -14,8 +14,9 @@ namespace Services.Broadcast.BusinessEngines
         /// <summary>
         /// Match file detail with proposal week
         /// </summary>
-        /// <param name="fileDetail">File detail to match</param>
+        /// <param name="affidavitFileDetail">File detail to match</param>
         /// <param name="proposalWeeks">Proposal weeks to find the match to.</param>
+        /// <param name="spotLenghtId"></param>
         /// <returns>List of MatchingProposalWeek objects containing the matched weeks</returns>
         List<MatchingProposalWeek> Match(ScrubbingFileDetail affidavitFileDetail, List<MatchingProposalWeek> proposalWeeks, int spotLenghtId);
 
@@ -33,10 +34,7 @@ namespace Services.Broadcast.BusinessEngines
         private readonly int _BroadcastMatchingBuffer;
         private readonly IDaypartCache _DaypartCache;
 
-        /// <summary>
-        /// Access to matching problems object
-        /// </summary>
-        /// <returns>List of FileDetailProblem objects </returns>
+        ///<inheritdoc/>
         public List<FileDetailProblem> GetMatchingProblems()
         {
             return _MatchingProblems;
@@ -48,12 +46,7 @@ namespace Services.Broadcast.BusinessEngines
             _BroadcastMatchingBuffer = BroadcastServiceSystemParameter.BroadcastMatchingBuffer;
         }
 
-        /// <summary>
-        /// Match file detail with proposal week
-        /// </summary>
-        /// <param name="fileDetail">File detail to match</param>
-        /// <param name="proposalWeeks">Proposal weeks to find the match to.</param>
-        /// <returns>List of MatchingProposalWeek objects containing the matched weeks</returns>
+        ///<inheritdoc/>
         public List<MatchingProposalWeek> Match(ScrubbingFileDetail fileDetail, List<MatchingProposalWeek> proposalWeeks, int spotLenghtId)
         {
             _MatchingProposalWeeks = new List<MatchingProposalWeek>();

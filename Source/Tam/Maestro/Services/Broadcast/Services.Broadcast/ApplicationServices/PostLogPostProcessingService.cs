@@ -29,6 +29,7 @@ namespace Services.Broadcast.ApplicationServices
         /// <param name="userName">Username requesting the processing</param>
         /// <param name="fileName">FIlename to be processed</param>
         /// <param name="fileContents">File content as string</param>
+        /// <param name="currentDateTime"></param>
         /// <returns>WWTVSaveResult object</returns>
         WWTVSaveResult ProcessFileContents(string userName, string fileName, string fileContents, DateTime currentDateTime);
 
@@ -65,12 +66,8 @@ namespace Services.Broadcast.ApplicationServices
             _EmailerService = emailerService;
             _FileService = fileService;
         }
-    
-        /// <summary>
-        /// Downloads the WWTV processed files and calls the postlog processing service
-        /// return true if download success, false if download fails (use for loggin)
-        /// This involves FTP 
-        /// </summary>
+
+        ///<inheritdoc/>
         public DownloadAndProcessWWTVFilesResponse DownloadAndProcessWWTVFiles(string userName, DateTime currentDateTime)
         {
             var inboundFile = BroadcastServiceSystemParameter.WWTV_KeepingTracFtpInboundFolder;
@@ -126,13 +123,7 @@ namespace Services.Broadcast.ApplicationServices
             return response;
         }
 
-        /// <summary>
-        /// Processes the file content
-        /// </summary>
-        /// <param name="userName">Username requesting the processing</param>
-        /// <param name="fileName">FIlename to be processed</param>
-        /// <param name="fileContents">File content as string</param>
-        /// <returns>WWTVSaveResult object</returns>
+        ///<inheritdoc/>
         public WWTVSaveResult ProcessFileContents(string userName, string fileName, string fileContents, DateTime currentDateTime)
         {
             List<WWTVInboundFileValidationResult> validationErrors = new List<WWTVInboundFileValidationResult>();
@@ -157,9 +148,7 @@ namespace Services.Broadcast.ApplicationServices
             return result;
         }
 
-        /// <summary>
-        /// Process error files created by WWTV based on files uploaded by us
-        /// </summary>
+        ///<inheritdoc/>
         public void ProcessErrorFiles()
         {
             _WWTVSharedNetworkHelper.Impersonate(delegate

@@ -15,6 +15,9 @@ namespace Services.Broadcast.Entities.Nti
         /// <summary>
         /// Contains list of ratings with categories & subcategories from the rating document
         /// </summary>
+        /// <value>
+        /// The ratings.
+        /// </value>
         public List<NtiRatingCategoryDto> Ratings { get; set; }
     }
 }

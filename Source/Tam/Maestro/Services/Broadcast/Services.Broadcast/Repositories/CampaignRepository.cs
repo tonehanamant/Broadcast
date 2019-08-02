@@ -43,8 +43,8 @@ namespace Services.Broadcast.Repositories
     /// <summary>
     /// Data operations for the Campaign Repository.
     /// </summary>
-    /// <seealso cref="Common.Services.Repositories.BroadcastRepositoryBase" />
-    /// <seealso cref="Services.Broadcast.Repositories.ICampaignRepository" />
+    /// <seealso cref="BroadcastRepositoryBase" />
+    /// <seealso cref="ICampaignRepository" />
     public class CampaignRepository : BroadcastRepositoryBase, ICampaignRepository
     {
         /// <summary>

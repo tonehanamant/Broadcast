@@ -21,6 +21,11 @@ namespace Services.Broadcast.BusinessEngines
         int ProcessAndSendValidationErrors(string filePath, List<WWTVInboundFileValidationResult> validationErrors, string fileContents);
         int ProcessAndSendTechError(string filePath, string errorMessage, string fileContents);
         void ProcessAndSendFailedFiles(List<string> filesFailedDownload, string ftpLocation);
+
+        /// <summary>
+        /// Move invalid files to invalid files folder. Notify users about failed files
+        /// </summary>
+        /// <param name="invalidFiles">List of OutboundAffidavitFileValidationResultDto objects representing the invalid files to process</param>
         void ProcessAndSendInvalidDataFiles(List<WWTVOutboundFileValidationResult> validationList);
         string CreateValidationErrorEmailBody(List<WWTVInboundFileValidationResult> validationErrors, string fileName);
         string CreateTechErrorEmailBody(string errorMessage, string filePath);
@@ -89,11 +94,7 @@ namespace Services.Broadcast.BusinessEngines
             _EmailHelper.SendEmail(emailBody, "WWTV File Failed");
         }
 
-
-        /// <summary>
-        /// Move invalid files to invalid files folder. Notify users about failed files
-        /// </summary>
-        /// <param name="files">List of OutboundAffidavitFileValidationResultDto objects representing the invalid files to process</param>
+        ///<inheritdoc/>
         public void ProcessAndSendInvalidDataFiles(List<WWTVOutboundFileValidationResult> invalidFiles)
         {
             foreach (var invalidFile in invalidFiles)
@@ -147,6 +148,7 @@ namespace Services.Broadcast.BusinessEngines
             return emailBody.ToString();
         }
 
+        ///<inheritdoc/>
         public int LogAffidavitError(string filePath, string errorMessage)
         {
             var affidavitFile = new ScrubbingFile

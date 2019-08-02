@@ -10763,6 +10763,7 @@ namespace Services.Broadcast.Entities.spotcableXML
         /// Deserializes xml markup from file into an spot object
         /// </summary>
         /// <param name="fileName">string xml file to load and deserialize</param>
+        /// <param name="encoding"></param>
         /// <param name="obj">Output spot object</param>
         /// <param name="exception">output Exception value if deserialize failed</param>
         /// <returns>true if this XmlSerializer can deserialize the object; otherwise, false</returns>

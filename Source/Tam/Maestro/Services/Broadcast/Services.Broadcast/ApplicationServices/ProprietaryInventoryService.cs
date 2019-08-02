@@ -30,6 +30,7 @@ namespace Services.Broadcast.ApplicationServices
         /// </summary>
         /// <param name="request">InventoryFileSaveRequest object containing a proprietary inventory file</param>
         /// <param name="userName">Username requesting the operation</param>
+        /// <param name="now"></param>
         /// <returns>InventoryFileSaveResult object</returns>
         InventoryFileSaveResult SaveProprietaryInventoryFile(FileRequest request, string userName, DateTime now);
 
@@ -106,13 +107,7 @@ namespace Services.Broadcast.ApplicationServices
             _InventoryScxDataPrepFactory = inventoryScxDataPrepFactory;
         }
 
-        /// <summary>
-        /// Saves a proprietary inventory file
-        /// </summary>
-        /// <param name="request">InventoryFileSaveRequest object containing a proprietary inventory file</param>
-        /// <param name="userName">Username requesting the operation</param>
-        /// <param name="nowDate">Now date</param>
-        /// <returns>InventoryFileSaveResult object</returns>
+        ///<inheritdoc/>
         public InventoryFileSaveResult SaveProprietaryInventoryFile(FileRequest request, string userName, DateTime nowDate)
         {
             if (!request.FileName.EndsWith(".xlsx"))
@@ -213,10 +208,7 @@ namespace Services.Broadcast.ApplicationServices
             }
         }
 
-        /// <summary>
-        /// Generates one SCX archive for the current quarter
-        /// </summary>
-        /// <returns>Returnsa zip archive as stream and the zip name</returns>
+        ///<inheritdoc/>
         public Tuple<string, Stream> GenerateScxFileArchive(InventoryScxDownloadRequest request)
         {
             const string fileNameTemplate = "{0}{1}.scx";
@@ -246,6 +238,7 @@ namespace Services.Broadcast.ApplicationServices
             return new Tuple<string, Stream>(archiveFileName, archiveFile);
         }
 
+        ///<inheritdoc/>
         public List<InventoryScxFile> GenerateScxFiles(InventoryScxDownloadRequest request)
         {
             var inventorySource = _InventoryRepository.GetInventorySource(request.InventorySourceId);
@@ -324,13 +317,7 @@ namespace Services.Broadcast.ApplicationServices
 
             return existingStations;
         }
-
-        /// <summary>
-        /// Writes a stream to a specific error folder
-        /// </summary>
-        /// <param name="stream"></param>
-        /// <param name="fileId"></param>
-        /// <param name="fileName"></param>
+                
         private void WriteErrorFileToDisk(Stream stream, int fileId, string fileName)
         {
             string path = $@"{BroadcastServiceSystemParameter.InventoryUploadErrorsFolder}\{fileId}_{fileName}";

@@ -71,21 +71,23 @@ namespace Services.Broadcast.ApplicationServices
                 throw;
             }
         }
-        
+
         /// <summary>
         /// Process a WWTV post processing file
         /// </summary>
-        /// <param name="filePath">Path of the file to process</param>
+        /// <param name="filePath">File path</param>
+        /// <param name="fileContents">File content</param>
+        /// <param name="validationErrors">List of WWTVInboundFileValidationResult objects</param>
         /// <returns>InboundFileSaveRequest object </returns>
-        public InboundFileSaveRequest ParseWWTVFile(string fileName, string fileContents, List<WWTVInboundFileValidationResult> validationErrors)
+        public InboundFileSaveRequest ParseWWTVFile(string filePath, string fileContents, List<WWTVInboundFileValidationResult> validationErrors)
         {
             InboundFileSaveRequest saveRequest = new InboundFileSaveRequest();
             try
             {
-                saveRequest.FileName = Path.GetFileName(fileName);
+                saveRequest.FileName = Path.GetFileName(filePath);
                 saveRequest.FileHash = HashGenerator.ComputeHash(fileContents.ToByteArray());
 
-                if (!Path.GetExtension(fileName).Equals(VALID_INCOMING_FILE_EXTENSION))
+                if (!Path.GetExtension(filePath).Equals(VALID_INCOMING_FILE_EXTENSION))
                 {
                     throw new Exception("Invalid file extension.");
                 }

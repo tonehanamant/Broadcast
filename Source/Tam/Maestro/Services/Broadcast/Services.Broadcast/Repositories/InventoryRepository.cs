@@ -59,16 +59,19 @@ namespace Services.Broadcast.Repositories
         void UpdateInventoryManifests(List<StationInventoryManifest> manifests);
 
         /// <summary>
-        /// Get inventory data for the sxc file        
+        /// Gets the inventory SCX data for barter.
         /// </summary>
-        /// <param name="startDate">Start date of the quarter</param>
-        /// <param name="endDate">End date of the quarter</param>
-        /// <returns>List of StationInventoryGroup objects containing the data</returns>
+        /// <param name="inventorySourceId">The inventory source identifier.</param>
+        /// <param name="daypartCodeId">The daypart code identifier.</param>
+        /// <param name="startDate">The start date.</param>
+        /// <param name="endDate">The end date.</param>
+        /// <param name="unitNames">The unit names.</param>
+        /// <returns>List of StationInventoryGroup objects</returns>
         List<StationInventoryGroup> GetInventoryScxDataForBarter(int inventorySourceId, int daypartCodeId, DateTime startDate, DateTime endDate, List<string> unitNames);
 
         List<StationInventoryManifest> GetInventoryScxDataForOAndO(int inventorySourceId, int daypartCodeId, DateTime startDate, DateTime endDate);
         
-            /// <summary>
+        /// <summary>
         /// Gets the header information for an inventory file id
         /// </summary>
         /// <param name="inventoryFileId">Inventory file id to get the data for</param>
@@ -95,6 +98,7 @@ namespace Services.Broadcast.Repositories
         List<StationInventoryGroup> GetInventoryGroups(int inventorySourceId, int daypartCodeId, DateTime startDate, DateTime endDate);
 
         List<StationInventoryManifestWeek> GetStationInventoryManifestWeeksForInventorySource(int inventorySourceId);
+
         List<InventoryUploadHistoryDto> GetInventoryUploadHistoryForInventorySource(int inventorySourceId);
 
         /// <summary>
@@ -110,10 +114,7 @@ namespace Services.Broadcast.Repositories
             ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient)
             : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
 
-        /// <summary>
-        /// Adds validation problems for an inventory file to DB
-        /// </summary>
-        /// <param name="file">File containing validation problems</param>
+        ///<inheritdoc/>
         public void AddValidationProblems(InventoryFileBase file)
         {
             _InReadUncommitedTransaction(context =>
@@ -129,6 +130,7 @@ namespace Services.Broadcast.Repositories
             });
         }
 
+        ///<inheritdoc/>
         public List<InventorySource> GetInventorySources()
         {
             return _InReadUncommitedTransaction(
@@ -142,6 +144,7 @@ namespace Services.Broadcast.Repositories
                             }).ToList());
         }
 
+        ///<inheritdoc/>
         public InventorySource GetInventorySourceByName(string sourceName)
         {
             return _InReadUncommitedTransaction(
@@ -156,6 +159,7 @@ namespace Services.Broadcast.Repositories
                             }).SingleOrDefault());
         }
 
+        ///<inheritdoc/>
         public void AddNewInventory(InventoryFileBase inventoryFile)
         {
             _InReadUncommitedTransaction(
@@ -248,6 +252,7 @@ namespace Services.Broadcast.Repositories
             };
         }
 
+        ///<inheritdoc/>
         public List<StationInventoryGroup> GetStationInventoryGroupsByFileId(int fileId)
         {
             return _InReadUncommitedTransaction(
@@ -270,6 +275,7 @@ namespace Services.Broadcast.Repositories
                 });
         }
 
+        ///<inheritdoc/>
         public List<StationInventoryManifest> GetStationInventoryManifestsByFileId(int fileId)
         {
             return _InReadUncommitedTransaction(
@@ -295,6 +301,7 @@ namespace Services.Broadcast.Repositories
                 });
         }
 
+        ///<inheritdoc/>
         public List<StationInventoryManifest> GetInventoryManifestsBySource(InventorySource source)
         {
             return _InReadUncommitedTransaction(
@@ -455,6 +462,7 @@ namespace Services.Broadcast.Repositories
             };
         }
 
+        ///<inheritdoc/>
         public List<StationInventoryGroup> GetInventoryBySourceAndName(
                                                 InventorySource inventorySource,
                                                 List<string> groupNames)
@@ -482,6 +490,7 @@ namespace Services.Broadcast.Repositories
             return inventory;
         }
 
+        ///<inheritdoc/>
         public List<StationInventoryGroup> GetActiveInventoryByTypeAndUnitName(InventorySource inventorySource, List<string> unitNames)
         {
             return _InReadUncommitedTransaction(
@@ -501,6 +510,7 @@ namespace Services.Broadcast.Repositories
                 });
         }
 
+        ///<inheritdoc/>
         public List<StationInventoryManifest> GetStationManifestsBySourceAndStationCode(InventorySource rateSource, int stationCode)
         {
             return _InReadUncommitedTransaction(
@@ -580,6 +590,7 @@ namespace Services.Broadcast.Repositories
                 });
         }
 
+        ///<inheritdoc/>
         public StationInventoryManifest GetStationManifest(int manifestId)
         {
             return _InReadUncommitedTransaction(
@@ -663,6 +674,7 @@ namespace Services.Broadcast.Repositories
                 });
         }
 
+        ///<inheritdoc/>
         public void RemoveManifest(int manifestId)
         {
             _InReadUncommitedTransaction(context =>
@@ -675,12 +687,14 @@ namespace Services.Broadcast.Repositories
             });
         }
 
+        ///<inheritdoc/>
         public bool HasSpotsAllocated(int manifestId)
         {
             return _InReadUncommitedTransaction(
                 context => context.station_inventory_spots.Any(s => s.station_inventory_manifest_id == manifestId));
         }
 
+        ///<inheritdoc/>
         public List<StationInventoryManifestWeek> GetStationInventoryManifestWeeks(InventorySource inventorySource, int contractedDaypartId, IEnumerable<int> mediaWeekIds)
         {
             return _InReadUncommitedTransaction(
@@ -695,13 +709,7 @@ namespace Services.Broadcast.Repositories
                 });
         }
 
-        /// <summary>
-        /// Returns all the weeks for a station, program name and daypart that need to be expired
-        /// </summary>
-        /// <param name="stationId">Station id to filter stations</param>
-        /// <param name="programName">Program name to filter programs</param>
-        /// <param name="daypartId">Daypart id to filter dayparts</param>
-        /// <returns>List of StationInventoryManifestWeek objects</returns>
+        ///<inheritdoc/>
         public List<StationInventoryManifestWeek> GetStationInventoryManifestWeeksForOpenMarket(int stationId, string programName, int daypartId)
         {
             return _InReadUncommitedTransaction(
@@ -730,10 +738,7 @@ namespace Services.Broadcast.Repositories
                 });
         }
 
-        /// <summary>
-        /// Removes station_inventory_manifest_weeks records based on their id
-        /// </summary>
-        /// <param name="weeks">List of StationInventoryManifestWeek to remove</param>
+        ///<inheritdoc/>
         public void RemoveManifestWeeks(List<StationInventoryManifestWeek> weeks)
         {
             _InReadUncommitedTransaction(
@@ -746,13 +751,7 @@ namespace Services.Broadcast.Repositories
                 });
         }
 
-        /// <summary>
-        /// Get inventory data for the sxc file
-        /// </summary>
-        /// <remarks>The commented code is there because BE is done but FE not and we need to use the old logic</remarks>
-        /// <param name="startDate">Start date of the quarter</param>
-        /// <param name="endDate">End date of the quarter</param>
-        /// <returns>List of StationInventoryGroup objects containing the data</returns>
+        ///<inheritdoc/>
         public List<StationInventoryGroup> GetInventoryScxDataForBarter(int inventorySourceId, int daypartCodeId, DateTime startDate, DateTime endDate, List<string> unitNames)
         {
             return _InReadUncommitedTransaction(
@@ -793,6 +792,7 @@ namespace Services.Broadcast.Repositories
                 });
         }
 
+        ///<inheritdoc/>
         public List<StationInventoryManifest> GetInventoryScxDataForOAndO(int inventorySourceId, int daypartCodeId, DateTime startDate, DateTime endDate)
         {
             return _InReadUncommitedTransaction(
@@ -822,11 +822,7 @@ namespace Services.Broadcast.Repositories
                 });
         }
 
-        /// <summary>
-        /// Gets the header information for an inventory file id
-        /// </summary>
-        /// <param name="inventoryFileId">Inventory file id to get the data for</param>
-        /// <returns>ProprietaryInventoryHeader object containing the header data</returns>
+        ///<inheritdoc/>
         public ProprietaryInventoryHeader GetInventoryFileHeader(int inventoryFileId)
         {
             return _InReadUncommitedTransaction(
@@ -850,10 +846,7 @@ namespace Services.Broadcast.Repositories
                 });
         }
 
-        /// <summary>
-        /// Update the rates and add the audiences for all the manifests in the list
-        /// </summary>
-        /// <param name="manifests">List of manifests to process</param>
+        ///<inheritdoc/>
         public void UpdateInventoryManifests(List<StationInventoryManifest> manifests)
         {
             _InReadUncommitedTransaction(
@@ -901,6 +894,7 @@ namespace Services.Broadcast.Repositories
                });
         }
 
+        ///<inheritdoc/>
         public InventorySource GetInventorySource(int inventorySourceId)
         {
             return _InReadUncommitedTransaction(context =>
@@ -917,6 +911,7 @@ namespace Services.Broadcast.Repositories
             });
         }
 
+        ///<inheritdoc/>
         public DateRange GetInventorySourceDateRange(int inventorySourceId)
         {
             return _InReadUncommitedTransaction(
@@ -931,6 +926,7 @@ namespace Services.Broadcast.Repositories
                });
         }
 
+        ///<inheritdoc/>
         public DateRange GetAllInventoriesDateRange()
         {
             return _InReadUncommitedTransaction(context => _GetMinMaxDateRange(context.station_inventory_manifest_weeks.ToList()));
@@ -949,10 +945,7 @@ namespace Services.Broadcast.Repositories
             return new DateRange(null, null);
         }
 
-        /// <summary>
-        /// Adds the manifest audiences
-        /// </summary>
-        /// <param name="manifests">List of manifests containing audiences</param>
+        ///<inheritdoc/>
         public void AddInventoryAudiencesForManifests(List<StationInventoryManifest> manifests)
         {
             _InReadUncommitedTransaction(
@@ -984,6 +977,7 @@ namespace Services.Broadcast.Repositories
             });
         }
 
+        ///<inheritdoc/>
         public DateRange GetInventoryStartAndEndDates(int inventorySourceId, int daypartCodeId)
         {
             return _InReadUncommitedTransaction(
@@ -1007,6 +1001,7 @@ namespace Services.Broadcast.Repositories
                });
         }
 
+        ///<inheritdoc/>
         public List<StationInventoryGroup> GetInventoryGroups(int inventorySourceId, int daypartCodeId, DateTime startDate, DateTime endDate)
         {
             return _InReadUncommitedTransaction(
@@ -1032,6 +1027,7 @@ namespace Services.Broadcast.Repositories
                });
         }
 
+        ///<inheritdoc/>
         public List<StationInventoryManifest> GetStationInventoryManifestsByIds(IEnumerable<int> manifestIds)
         {
             const int maxChunkSize = 1000;
@@ -1071,6 +1067,7 @@ namespace Services.Broadcast.Repositories
             return result;
         }
 
+        ///<inheritdoc/>
         public List<StationInventoryManifestWeek> GetStationInventoryManifestWeeksForInventorySource(int inventorySourceId)
         {
             return _InReadUncommitedTransaction(
@@ -1086,6 +1083,7 @@ namespace Services.Broadcast.Repositories
                 });
         }
 
+        ///<inheritdoc/>
         public List<InventoryUploadHistoryDto> GetInventoryUploadHistoryForInventorySource(int inventorySourceId)
         {
             return _InReadUncommitedTransaction(

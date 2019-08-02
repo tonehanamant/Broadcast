@@ -15,7 +15,7 @@ namespace Services.Broadcast.Helpers
         /// Get worksheet to process based on worksheet name
         /// </summary>
         /// <param name="fileInfo">FileInfo object</param>
-        /// <param name="fileValidationResult">WWTVOutboundFileValidationResult object for error loading</param>/// <param name="fileValidationResult"></param>
+        /// <param name="fileValidationResult">WWTVOutboundFileValidationResult object for error loading</param>
         /// <param name="tabName">Optional Worksheet name</param>
         /// <returns>ExcelWorksheet object</returns>
         ExcelWorksheet GetWorksheetToProcess(FileInfo fileInfo, WWTVOutboundFileValidationResult fileValidationResult, string tabName = null);
@@ -38,17 +38,10 @@ namespace Services.Broadcast.Helpers
         /// <param name="fileValidationResult">WWTVOutboundFileValidationResult object to load the errors</param>
         void CheckMissingDataOnRequiredColumns(List<string> fileHeaders, Dictionary<string, int> fileColumns, ExcelWorksheet worksheet, WWTVOutboundFileValidationResult fileValidationResult);
     }
-
-
+    
     public class ExcelHelper : IExcelHelper
     {
-        /// <summary>
-        /// Get worksheet to process based on worksheet name
-        /// </summary>
-        /// <param name="fileInfo">FileInfo object</param>
-        /// <param name="fileValidationResult">WWTVOutboundFileValidationResult object for error loading</param>/// <param name="fileValidationResult"></param>
-        /// <param name="tabName">Optional Worksheet name</param>
-        /// <returns>ExcelWorksheet based on name (if provided) or first sheet in the file</returns>
+        ///<inheritdoc/>
         public ExcelWorksheet GetWorksheetToProcess(FileInfo fileInfo, WWTVOutboundFileValidationResult fileValidationResult, string tabName = null)
         {
             var package = new ExcelPackage(fileInfo, true);
@@ -62,13 +55,7 @@ namespace Services.Broadcast.Helpers
             }
         }
 
-        /// <summary>
-        /// Checks if all the required columns are present in the worksheet 
-        /// </summary>
-        /// <param name="requiredColumns">List of required column names</param>
-        /// <param name="worksheet">Excel worksheet</param>
-        /// <param name="fileValidationResult">WWTVOutboundFileValidationResult object for error loading</param>
-        /// <returns>Dictionary with the required columns position</returns>
+        ///<inheritdoc/>
         public Dictionary<string, int> ValidateHeaders(List<string> requiredColumns, ExcelWorksheet worksheet, WWTVOutboundFileValidationResult fileValidationResult)
         {
             var foundColumns = new Dictionary<string, int>();
@@ -97,13 +84,7 @@ namespace Services.Broadcast.Helpers
             return foundColumns;
         }
 
-        /// <summary>
-        /// Checks if the worksheet has data missing on required columns
-        /// </summary>
-        /// <param name="fileHeaders">Column names</param>
-        /// <param name="fileColumns">Excel columns dictionary</param>
-        /// <param name="worksheet">Excel worksheet to check</param>
-        /// <param name="fileValidationResult">WWTVOutboundFileValidationResult object to load the errors</param>
+        ///<inheritdoc/>
         public void CheckMissingDataOnRequiredColumns(List<string> fileHeaders, Dictionary<string, int> fileColumns, ExcelWorksheet worksheet, WWTVOutboundFileValidationResult fileValidationResult)
         {
             var hasMissingData = false;

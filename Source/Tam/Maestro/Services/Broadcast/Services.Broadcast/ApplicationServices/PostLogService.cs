@@ -86,6 +86,7 @@ namespace Services.Broadcast.ApplicationServices
         /// Maps an original isci to an effective isci
         /// </summary>
         /// <param name="mapIsciDto">MapIsciDto object containing the iscis to map</param>
+        /// <param name="currentDateTime"></param>
         /// <param name="name">User requesting the mapping</param>
         /// <returns>The result of the mapping in true or false</returns>
         bool MapIsci(MapIsciDto mapIsciDto, DateTime currentDateTime, string name);
@@ -187,13 +188,7 @@ namespace Services.Broadcast.ApplicationServices
             _MediaMonthAndWeekCache = mediaMonthAndWeekAggregateCache;
         }
 
-        /// <summary>
-        /// Saves a keeping trac file
-        /// </summary>
-        /// <param name="saveRequest">InboundFileSaveRequest object</param>
-        /// <param name="username">Username requesting the save</param>
-        /// <param name="currentDateTime">Current date and time</param>
-        /// <returns>WWTVSaveResult object</returns>
+        ///<inheritdoc/>
         public WWTVSaveResult SaveKeepingTracFile(InboundFileSaveRequest saveRequest, string username, DateTime currentDateTime)
         {
             var postLogFile = _MapInboundFileSaveRequestToPostLogFile(saveRequest, currentDateTime);
@@ -202,13 +197,7 @@ namespace Services.Broadcast.ApplicationServices
             return result;
         }
 
-        /// <summary>
-        /// Saves keeping trac validation errors
-        /// </summary>
-        /// <param name="saveRequest">InboundFileSaveRequest object</param>
-        /// <param name="userName">User requesting the save</param>
-        /// <param name="validationResults">Validation results to save</param>
-        /// <returns>WWTVSaveResult object</returns>
+        ///<inheritdoc/>
         public WWTVSaveResult SaveKeepingTracValidationErrors(InboundFileSaveRequest saveRequest, string userName, List<WWTVInboundFileValidationResult> validationResults)
         {
             var postLogFile = _MapInboundFileSaveRequestToPostLogFile(saveRequest, DateTime.Now);
@@ -225,10 +214,7 @@ namespace Services.Broadcast.ApplicationServices
             return result;
         }
 
-        /// <summary>
-        /// Returns a list of unlinked iscis
-        /// </summary>
-        /// <returns>List of UnlinkedIscisDto objects</returns>
+        ///<inheritdoc/>
         public List<UnlinkedIscisDto> GetUnlinkedIscis()
         {
             List<UnlinkedIscis> iscis = _PostLogRepository.GetUnlinkedIscis();
@@ -242,10 +228,7 @@ namespace Services.Broadcast.ApplicationServices
             }).ToList();
         }
 
-        /// <summary>
-        /// Returns a list of the posts and unlinked iscis count in the system
-        /// </summary>
-        /// <returns>List of PostDto objects</returns>
+        ///<inheritdoc/>
         public PostedContractedProposalsDto GetPostLogs(DateTime currentWeekDate)
         {
             var houseHoldAudienceId = _AudiencesCache.GetDefaultAudience().Id;
@@ -279,9 +262,7 @@ namespace Services.Broadcast.ApplicationServices
             };
         }
 
-        /// <summary>
-        /// Sets IsActiveThisWeek property true if proposal has spots bought this week
-        /// </summary>
+        ///<inheritdoc/>
         private void _SetIsActiveThisWeekProperty(List<PostedContract> posts, DateTime currentWeekDate)
         {
             var mediaMonthAggregate = _MediaMonthAndWeekAggregateRepository.GetMediaMonthAggregate();
@@ -309,25 +290,14 @@ namespace Services.Broadcast.ApplicationServices
             }
         }
 
-        /// <summary>
-        /// Maps an original isci to an effective isci
-        /// </summary>
-        /// <param name="mapIsciDto">MapIsciDto object containing the iscis to map</param>
-        /// <param name="username">User requesting the mapping</param>
-        /// <returns>The result of the mapping in true or false</returns>
+        ///<inheritdoc/>
         public bool MapIsci(MapIsciDto mapIsciDto, DateTime currentDateTime, string username)
         {
             _IsciService.AddIsciMapping(mapIsciDto, username);
             return ScrubUnlinkedPostLogDetailsByIsci(mapIsciDto.OriginalIsci, currentDateTime, username);
         }
 
-        /// <summary>
-        /// Scrubs a postlog detail by an isci
-        /// </summary>
-        /// <param name="isci">Isci to scrub</param>
-        /// <param name="currentDateTime">Current date and time</param>
-        /// <param name="username">User requesting the scrubbing</param>
-        /// <returns>True or false</returns>
+        ///<inheritdoc/>
         public bool ScrubUnlinkedPostLogDetailsByIsci(string isci, DateTime currentDateTime, string username)
         {
             var postingBookId = _NsiPostingBookService.GetLatestNsiPostingBookForMonthContainingDate(currentDateTime);
@@ -374,12 +344,7 @@ namespace Services.Broadcast.ApplicationServices
             return true;
         }
 
-        /// <summary>
-        /// Archives an isci from the unlinked isci list
-        /// </summary>
-        /// <param name="iscis">Iscis to archive</param>
-        /// <param name="username">User requesting the change</param>
-        /// <returns>True or false based on the errors</returns>
+        ///<inheritdoc/>
         public bool ArchiveUnlinkedIsci(List<string> iscis, string username)
         {
             List<string> iscisToArchive = iscis.Distinct().ToList();
@@ -405,10 +370,7 @@ namespace Services.Broadcast.ApplicationServices
             return true;
         }
 
-        /// <summary>
-        /// Returns a list of unlinked iscis
-        /// </summary>
-        /// <returns>List of UnlinkedIscisDto objects</returns>
+        ///<inheritdoc/>
         public List<ArchivedIscisDto> GetArchivedIscis()
         {
             List<ArchivedIscisDto> iscis = _PostLogRepository.GetArchivedIscis();
@@ -421,11 +383,7 @@ namespace Services.Broadcast.ApplicationServices
             return iscis;
         }
 
-        /// <summary>
-        /// Gets a client post scrubbing proposal with details
-        /// </summary>
-        /// <param name="proposalId">Proposal id to filter by</param>
-        /// <returns>ClientPostScrubbingProposalDto object containing the post scrubbing information</returns>
+        ///<inheritdoc/>
         public ClientPostScrubbingProposalDto GetClientScrubbingForProposal(int proposalId, ProposalScrubbingRequest proposalScrubbingRequest, List<ProposalDetailPostScrubbingDto> clientScrubs = null)
         {
             using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
@@ -478,11 +436,7 @@ namespace Services.Broadcast.ApplicationServices
             }
         }
 
-        /// <summary>
-        /// Override post log client scrubs statuses
-        /// </summary>
-        /// <param name="request">ScrubStatusOverrideRequest object containing the ids of the records to undo</param>
-        /// <returns>ClientPostScrubbingProposalDto object</returns>
+        ///<inheritdoc/>
         public ClientPostScrubbingProposalDto OverrideScrubbingStatus(ScrubStatusOverrideRequest scrubStatusOverrides)
         {
             _PostLogRepository.OverrideScrubStatus(scrubStatusOverrides.ScrubIds, scrubStatusOverrides.OverrideStatus);
@@ -490,11 +444,7 @@ namespace Services.Broadcast.ApplicationServices
             return GetClientScrubbingForProposal(scrubStatusOverrides.ProposalId, new ProposalScrubbingRequest() { ScrubbingStatusFilter = scrubStatusOverrides.ReturnStatusFilter });
         }
 
-        /// <summary>
-        /// Undo the overriding of an post log client scrub status
-        /// </summary>
-        /// <param name="request">ScrubStatusOverrideRequest object containing the ids of the records to undo</param>
-        /// <returns>ClientPostScrubbingProposalDto object</returns>
+        ///<inheritdoc/>
         public ClientPostScrubbingProposalDto UndoOverrideScrubbingStatus(ScrubStatusOverrideRequest request)
         {
             var clientScrubs = _PostLogRepository.GetPostLogClientScrubsByIds(request.ScrubIds);
@@ -510,13 +460,7 @@ namespace Services.Broadcast.ApplicationServices
             return GetClientScrubbingForProposal(request.ProposalId, new ProposalScrubbingRequest() { ScrubbingStatusFilter = request.ReturnStatusFilter });
         }
 
-        /// <summary>
-        /// Swaps one or more client scrubs to another proposal detail
-        /// </summary>
-        /// <param name="requestData">SwapProposalDetailRequest object containing a list of postlog client scrubs to be swapped and the proposal detail id to swap to</param>
-        /// <param name="currentDateTime">Current date and time</param>
-        /// <param name="username">Username requesting the change</param>
-        /// <returns>True or false</returns>
+        ///<inheritdoc/>
         public bool SwapProposalDetails(SwapProposalDetailRequest requestData, DateTime currentDateTime, string username)
         {
             var postingBookId = _NsiPostingBookService.GetLatestNsiPostingBookForMonthContainingDate(currentDateTime);

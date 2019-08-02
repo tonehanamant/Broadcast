@@ -17,19 +17,23 @@ namespace Services.Broadcast.Repositories
         /// <summary>
         /// Removes all the existing market coverages and inserts new ones
         /// </summary>
-        /// <param name="marketCoverages">Market coverages for inserting</param>
+        /// <param name="marketCoverageFile">MarketCoverageFile object</param>
         void SaveMarketCoverageFile(MarketCoverageFile marketCoverageFile);
+        
         /// <summary>
         /// Returns all the market coverages
         /// </summary>
         List<MarketCoverage> GetAll();
+
         bool HasFile(string fileHash);
+        
         /// <summary>
         /// Returns a dictionary of market code and percentage coverage based on the market ids sent.
         /// </summary>
         /// <param name="marketCodes">Market codes list.</param>
         /// <returns>Dictionary of market code and percentage coverage</returns>
         MarketCoverageDto GetLatestMarketCoverages(IEnumerable<int> marketCodes = null);
+
         MarketCoverageDto GetMarketCoveragesForFile(IEnumerable<int> marketIds, int marketCoverageFileId);
         MarketCoverageByStation GetLatestMarketCoveragesWithStations();
         List<MarketCoverageFile> GetMarketCoverageFiles();
@@ -42,6 +46,7 @@ namespace Services.Broadcast.Repositories
             ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient)
             : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
 
+        ///<inheritdoc/>
         public List<MarketCoverage> GetAll()
         {
             return _InReadUncommitedTransaction(context => context.market_coverages.Select(x => new MarketCoverage
@@ -62,6 +67,7 @@ namespace Services.Broadcast.Repositories
           
         }
 
+        ///<inheritdoc/>
         public void SaveMarketCoverageFile(MarketCoverageFile marketCoverageFile)
         {
             _InReadUncommitedTransaction(
@@ -75,11 +81,7 @@ namespace Services.Broadcast.Repositories
                 });
         }
 
-        /// <summary>
-        /// Returns a dictionary of market code and percentage coverage based on the market ids sent.
-        /// </summary>
-        /// <param name="marketCodes">Market codes list.</param>
-        /// <returns>Dictionary of market code and percentage coverage</returns>
+        ///<inheritdoc/>
         public MarketCoverageDto GetLatestMarketCoverages(IEnumerable<int> marketCodes = null)
         {
             return _InReadUncommitedTransaction(

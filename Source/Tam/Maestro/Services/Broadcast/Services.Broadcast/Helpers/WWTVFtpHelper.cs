@@ -61,7 +61,7 @@ namespace Services.Broadcast.ApplicationServices.Helpers
         /// <summary>
         /// Delete files from the ftp path
         /// </summary>
-        /// <param name="filePaths">List of filepaths to delete</param>
+        /// <param name="fileNames">List of filepaths to delete</param>
         void DeleteFiles(params string[] fileNames);
     }
 
@@ -87,24 +87,17 @@ namespace Services.Broadcast.ApplicationServices.Helpers
             _Environment = new AppSettings().Environment.ToString();
         }
 
-        /// <summary>
-        /// Gets the newtwork credentials for WWTV FTP
-        /// </summary>
-        /// <returns>NetworkCredential object</returns>
+        ///<inheritdoc/>
         public NetworkCredential GetClientCredentials()
         {
             return new NetworkCredential(BroadcastServiceSystemParameter.WWTV_FtpUsername,
                 BroadcastServiceSystemParameter.WWTV_FtpPassword);
         }
 
-        
+
         #region Remote path getter
 
-        /// <summary>
-        /// Builds the complete path with scheme, host and a specified path
-        /// </summary>
-        /// <param name="path">Specific path inside FTP directory structure</param>
-        /// <returns>Full path</returns>
+        ///<inheritdoc/>
         public string GetRemoteFullPath(string path)
         {
             return $"{FTP_SCHEME}{Host}/{path}";
@@ -139,13 +132,7 @@ namespace Services.Broadcast.ApplicationServices.Helpers
             OnSuccessfulUpload?.Invoke(sourceFilePath);
         }
 
-        /// <summary>
-        /// Downloads a ftp file
-        /// </summary>
-        /// <param name="fileName">File name to download</param>
-        /// <param name="success">True or false based on download success</param>
-        /// <param name="errorMessage">Empty or not based on download success</param>
-        /// <returns>File content as string</returns>
+        ///<inheritdoc/>
         public string DownloadFTPFileContent(string filePath, out bool success, out string errorMessage)
         {
             try
@@ -196,12 +183,7 @@ namespace Services.Broadcast.ApplicationServices.Helpers
             }
         }
 
-        /// <summary>
-        /// Get a list of files from the remote path.
-        /// </summary>
-        /// <param name="path">Remote path</param>
-        /// <param name="isValidFile">Function that will filter the remote files</param>
-        /// <returns>List of remote file paths</returns>
+        ///<inheritdoc/>
         public List<string> GetInboundFileList(string path, Func<string, bool> isValidFile = null)
         {
             string remoteFTPPath = GetRemoteFullPath(path);
@@ -224,10 +206,7 @@ namespace Services.Broadcast.ApplicationServices.Helpers
             }
         }
 
-        /// <summary>
-        /// Delete files from the ftp path
-        /// </summary>
-        /// <param name="filePaths">List of filepaths to delete</param>
+        ///<inheritdoc/>
         public void DeleteFiles(params string[] filePaths)
         {
             foreach (var fileName in filePaths)

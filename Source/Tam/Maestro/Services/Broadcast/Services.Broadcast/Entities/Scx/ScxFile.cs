@@ -159,8 +159,6 @@ namespace Services.Broadcast.Entities.Scx
 
         public class ScxFileAudience
         {
-            private demo d;
-
             public int Rank { get; }
             public string Group { get; }
             public int AgeFrom { get; }

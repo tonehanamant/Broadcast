@@ -21,7 +21,6 @@ namespace Services.Broadcast.ApplicationServices
         /// <summary>
         /// Checks if all the files are valid according to Strata file validation rules
         /// </summary>
-        /// <param name="filepathList">List of filepaths</param>
         /// <param name="userName">User processing the files</param>
         /// <returns>List of OutboundAffidavitFileValidationResultDto objects</returns>
         List<WWTVOutboundFileValidationResult> ProcessFiles(string userName);
@@ -73,7 +72,6 @@ namespace Services.Broadcast.ApplicationServices
         /// <summary>
         /// Checks if all the files are valid according to Strata file validation rules
         /// </summary>
-        /// <param name="filepathList">List of filepaths</param>
         /// <param name="userName">User processing the files</param>
         /// <returns>List of ValidationFileResponseDto objects</returns>
         public List<WWTVOutboundFileValidationResult> ProcessFiles(string userName)
@@ -102,7 +100,7 @@ namespace Services.Broadcast.ApplicationServices
         /// <summary>
         /// Creates and uploads zip archives to WWTV FTP server
         /// </summary>
-        /// <param name="files">List of file paths objects representing the valid files to be sent</param>
+        /// <param name="filePaths">List of file paths representing the valid files to be sent</param>
         private void _CreateAndUploadZipArchiveToWWTV(List<string> filePaths)
         {
             string zipPath = WWTVSharedNetworkHelper.GetLocalErrorFolder();

@@ -100,11 +100,7 @@ namespace Services.Broadcast.ApplicationServices
             _StationRepository = broadcastDataRepositoryFactory.GetDataRepository<IStationRepository>();
         }
 
-        /// <summary>
-        /// Gets the pricing guide for a proposal
-        /// </summary>
-        /// <param name="proposalDetailId">Proposal detail id</param>
-        /// <returns>PricingGuideDto object</returns>
+        ///<inheritdoc/>
         public PricingGuideDto GetPricingGuideForProposalDetail(int proposalDetailId)
         {
             var distribution = _PricingGuideRepository.GetPricingGuideForProposalDetail(proposalDetailId);
@@ -223,12 +219,7 @@ namespace Services.Broadcast.ApplicationServices
             return dto;
         }
 
-        /// <summary>
-        /// Saves the pricing guide data and distribution
-        /// </summary>
-        /// <param name="model">ProposalDetailPricingGuideSaveRequest object</param>
-        /// <param name="username">User requesting the save</param>
-        /// <returns>ProposalDetailDto object</returns>
+        ///<inheritdoc/>
         public bool SaveDistribution(ProposalDetailPricingGuideSaveRequestDto request, string username)
         {
             _ValidateProprietaryPricing(request.ProprietaryPricing);
@@ -286,11 +277,7 @@ namespace Services.Broadcast.ApplicationServices
             };
         }
 
-        /// <summary>
-        /// Distribution
-        /// </summary>
-        /// <param name="request">PricingGuideOpenMarketInventoryRequestDto request object</param>
-        /// <returns>PricingGuideDto object</returns>
+        ///<inheritdoc/>
         public PricingGuideDto GetOpenMarketInventory(PricingGuideOpenMarketInventoryRequestDto request)
         {
             var pricingGuideOpenMarketInventory = GetPricingGuideInventory(request.ProposalDetailId);

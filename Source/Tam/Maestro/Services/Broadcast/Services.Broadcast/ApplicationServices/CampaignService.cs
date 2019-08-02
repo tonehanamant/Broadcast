@@ -53,7 +53,7 @@ namespace Services.Broadcast.ApplicationServices
     /// <summary>
     /// Operations related to the Campaign domain.
     /// </summary>
-    /// <seealso cref="Services.Broadcast.ApplicationServices.ICampaignService" />
+    /// <seealso cref="ICampaignService" />
     public class CampaignService : ICampaignService
     {
         #region Fields

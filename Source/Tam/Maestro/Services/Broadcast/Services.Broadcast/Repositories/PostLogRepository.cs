@@ -111,7 +111,7 @@ namespace Services.Broadcast.Repositories
         /// <summary>
         /// Removes not a cadent entries for specific post log file details
         /// </summary>
-        /// <param name="fileDetailIds">PostLog file detail ids to remove the problems for</param>
+        /// <param name="fileDetailList">PostLog file detail ids to remove the problems for</param>
         void RemoveNotACadentIsciProblems(List<long> fileDetailList);
 
         /// <summary>
@@ -176,10 +176,7 @@ namespace Services.Broadcast.Repositories
             ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient)
             : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
 
-        /// <summary>
-        /// Saves processing validation results
-        /// </summary>
-        /// <param name="validationResults">List of FileValidationResult objects</param>
+        ///<inheritdoc/>
         public void SavePreprocessingValidationResults(List<WWTVOutboundFileValidationResult> validationResults)
         {
             _InReadUncommitedTransaction(context =>
@@ -203,11 +200,7 @@ namespace Services.Broadcast.Repositories
             });
         }
 
-        /// <summary>
-        /// Saves a post log file
-        /// </summary>
-        /// <param name="postLogFile">Post log file to be saved</param>
-        /// <returns>The newly created id</returns>
+        ///<inheritdoc/>
         public int SavePostLogFile(ScrubbingFile postLogFile)
         {
             return _InReadUncommitedTransaction(
@@ -220,10 +213,7 @@ namespace Services.Broadcast.Repositories
                 });
         }
 
-        /// <summary>
-        /// Gets the unlinked iscis
-        /// </summary>
-        /// <returns>List of UnlinkedIscis objects</returns>
+        ///<inheritdoc/>
         public List<UnlinkedIscis> GetUnlinkedIscis()
         {
             return _InReadUncommitedTransaction(
@@ -244,10 +234,7 @@ namespace Services.Broadcast.Repositories
                 });
         }
 
-        /// <summary>
-        /// Counts all the unlinked iscis
-        /// </summary>
-        /// <returns>Number of unlinked iscis</returns>
+        ///<inheritdoc/>
         public int CountUnlinkedIscis()
         {
             return _InReadUncommitedTransaction(
@@ -257,10 +244,7 @@ namespace Services.Broadcast.Repositories
                 });
         }
 
-        /// <summary>
-        /// Gets the archived iscis
-        /// </summary>
-        /// <returns>List of ArchivedIscisDto objects</returns>
+        ///<inheritdoc/>
         public List<ArchivedIscisDto> GetArchivedIscis()
         {
             return _InReadUncommitedTransaction(
@@ -287,10 +271,7 @@ namespace Services.Broadcast.Repositories
                 });
         }
 
-        /// <summary>
-        /// Gets all the contracted proposals that have played spots
-        /// </summary>
-        /// <returns>List of PostedContracts objects</returns>
+        ///<inheritdoc/>
         public List<PostedContract> GetAllPostedProposals()
         {
             return _InReadUncommitedTransaction(
@@ -345,10 +326,7 @@ namespace Services.Broadcast.Repositories
                 });
         }
 
-        /// <summary>
-        /// Saves scrubbed records
-        /// </summary>
-        /// <param name="fileDetails">List of ScrubbingFileDetail objects</param>
+        ///<inheritdoc/>
         public void SaveScrubbedFileDetails(List<ScrubbingFileDetail> fileDetails)
         {
             _InReadUncommitedTransaction(
@@ -367,10 +345,7 @@ namespace Services.Broadcast.Repositories
                 });
         }
 
-        /// <summary>
-        /// Removes not a cadent entries for specific post log file details
-        /// </summary>
-        /// <param name="fileDetailIds">PostLog file detail ids to remove the problems for</param>
+        ///<inheritdoc/>
         public void RemoveNotACadentIsciProblems(List<long> fileDetailIds)
         {
             _InReadUncommitedTransaction(
@@ -384,11 +359,7 @@ namespace Services.Broadcast.Repositories
                });
         }
 
-        /// <summary>
-        /// Sets the archived flag for all the iscis in the list
-        /// </summary>
-        /// <param name="fileDetailIds">List of Post Log File Detail ids to set the flag to</param>
-        /// <param name="flag">Flag to set</param>
+        ///<inheritdoc/>
         public void SetArchivedFlag(List<long> fileDetailIds, bool flag)
         {
             _InReadUncommitedTransaction(
@@ -405,12 +376,7 @@ namespace Services.Broadcast.Repositories
                });
         }
 
-        /// <summary>
-        /// Get the impression for a list of audiences of a proposal
-        /// </summary>
-        /// <param name="proposalId">Proposal to filter by</param>
-        /// <param name="ratingsAudiences">List of audiences</param>
-        /// <returns>List of PostImpressionsData objects</returns>
+        ///<inheritdoc/>
         public List<PostImpressionsData> GetPostLogImpressionsData(int proposalId, List<int> ratingsAudiences)
         {
             return _InReadUncommitedTransaction(
@@ -436,6 +402,7 @@ namespace Services.Broadcast.Repositories
                 });
         }
 
+        ///<inheritdoc/>
         public List<PostImpressionsData> GetPostLogImpressionsData(List<int> proposalIds,List<int> ratingsAudiences)
         {
             return _InReadUncommitedTransaction(
@@ -462,13 +429,8 @@ namespace Services.Broadcast.Repositories
                             }).ToList();
                 });
         }
-
-
-        /// <summary>
-        /// Checks if an isci is blacklisted
-        /// </summary>
-        /// <param name="iscis">Iscis to check</param>
-        /// <returns>True or false</returns>
+        
+        ///<inheritdoc/>
         public bool IsIsciBlacklisted(List<string> iscis)
         {
             return _InReadUncommitedTransaction(
@@ -478,11 +440,7 @@ namespace Services.Broadcast.Repositories
                });
         }
 
-        /// <summary>
-        /// Gets all the unlinked post log records for an isci
-        /// </summary>
-        /// <param name="isci">ISCI to filter by</param>
-        /// <returns>List of ScrubbingFileDetail objects</returns>
+        ///<inheritdoc/>
         public List<ScrubbingFileDetail> GetUnlinkedPostLogDetailsByIsci(string isci)
         {
             return _InReadUncommitedTransaction(
@@ -497,11 +455,7 @@ namespace Services.Broadcast.Repositories
                 });
         }
 
-        /// <summary>
-        /// Loads all the file details records for the specified id list
-        /// </summary>
-        /// <param name="fileDetailIds">List of ids</param>
-        /// <returns>List of file detail ids</returns>
+        ///<inheritdoc/>
         public List<ScrubbingFileDetail> LoadFileDetailsByIds(List<long> fileDetailIds)
         {
             List<string> iscis = new List<string>();
@@ -513,11 +467,7 @@ namespace Services.Broadcast.Repositories
             return LoadFileDetailsByIscis(iscis);
         }
 
-        /// <summary>
-        /// Loads all the file details records for the specified isci list
-        /// </summary>
-        /// <param name="iscis">List of iscis</param>
-        /// <returns>List of file detail ids</returns>
+        ///<inheritdoc/>
         public List<ScrubbingFileDetail> LoadFileDetailsByIscis(List<string> iscis)
         {
             return _InReadUncommitedTransaction(
@@ -534,10 +484,7 @@ namespace Services.Broadcast.Repositories
                });
         }
 
-        /// <summary>
-        /// Adds a 'Not a Cadent Isci' problem
-        /// </summary>
-        /// <param name="details">List of file detail ids to process</param>
+        ///<inheritdoc/>
         public void AddNotACadentIsciProblem(List<long> details)
         {
             _InReadUncommitedTransaction(
@@ -553,12 +500,7 @@ namespace Services.Broadcast.Repositories
                });
         }
 
-        /// <summary>
-        /// Gets a post log file record based on id. Optional: includes scrubbing details
-        /// </summary>
-        /// <param name="postLogFileId">Post log file id</param>
-        /// <param name="includeScrubbingDetail">Optional: include scrubbing details</param>
-        /// <returns>WWTVFile Object</returns>
+        ///<inheritdoc/>
         public ScrubbingFile GetPostLogFile(int postLogFileId, bool includeScrubbingDetail = false)
         {
             return _InReadUncommitedTransaction(
@@ -583,12 +525,7 @@ namespace Services.Broadcast.Repositories
                 });
         }
 
-        /// <summary>
-        /// Gets all the scrubbing records for a proposal
-        /// </summary>
-        /// <param name="proposalId">Proposal id to filter by</param>
-        /// <param name="status">Scrubbing status to filter by</param>
-        /// <returns>List of ProposalDetailPostScrubbing objects</returns>
+        ///<inheritdoc/>
         public List<ProposalDetailPostScrubbing> GetProposalDetailPostScrubbing(int proposalId, ScrubbingStatus? status)
         {
             return _InReadUncommitedTransaction(
@@ -665,11 +602,7 @@ namespace Services.Broadcast.Repositories
             };
         }
 
-        /// <summary>
-        /// Overrides the status of post log client scrubs
-        /// </summary>
-        /// <param name="ClientScrubIds">Client scrub ids to override the status</param>
-        /// <param name="overrideToStatus">New Status</param>
+        ///<inheritdoc/>
         public void OverrideScrubStatus(List<int> ClientScrubIds, ScrubbingStatus overrideToStatus)
         {
             _InReadUncommitedTransaction(
@@ -689,11 +622,7 @@ namespace Services.Broadcast.Repositories
             );
         }
 
-        /// <summary>
-        /// Gets all override post log client scrubs based on ids
-        /// </summary>
-        /// <param name="scrubIds">List of post log client scrub ids</param>
-        /// <returns>List of override postlog_client_scrubs objects</returns>
+        ///<inheritdoc/>
         public List<postlog_client_scrubs> GetPostLogClientScrubsByIds(List<int> scrubIds)
         {
             return _InReadUncommitedTransaction(
@@ -706,10 +635,7 @@ namespace Services.Broadcast.Repositories
             );
         }
 
-        /// <summary>
-        /// Save scrubbing status
-        /// </summary>
-        /// <param name="scrubs">List of post log client scrubs to undo the override status</param>
+        ///<inheritdoc/>
         public void SaveScrubsStatus(List<postlog_client_scrubs> scrubs)
         {
             _InReadUncommitedTransaction(
@@ -731,11 +657,7 @@ namespace Services.Broadcast.Repositories
             );
         }
 
-        /// <summary>
-        /// Gets all the post log details based on post log client scubs ids
-        /// </summary>
-        /// <param name="scrubbingIds">Post log Client scrubs ids</param>
-        /// <returns>List of ScrubbingFileDetail objects</returns>
+        ///<inheritdoc/>
         public List<ScrubbingFileDetail> GetPostLogDetailsByClientScrubsByIds(List<int> scrubbingIds)
         {
             return _InReadUncommitedTransaction(
