@@ -6,8 +6,5 @@ namespace Services.Broadcast.Entities.Plan
     {
         public AudienceTypeEnum Type { get; set; }
         public int AudienceId { get; set; }
-        public PostingTypeEnum PostingType { get; set; }
-        public int ShareBookId { get; set; }
-        public int? HutBookId { get; set; }
     }
 }

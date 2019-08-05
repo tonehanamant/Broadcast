@@ -17,6 +17,7 @@ namespace EntityFrameworkMapping.Broadcast
         public plan()
         {
             this.plan_flight_hiatus = new HashSet<plan_flight_hiatus>();
+            this.plan_secondary_audiences = new HashSet<plan_secondary_audiences>();
         }
     
         public int id { get; set; }
@@ -31,16 +32,18 @@ namespace EntityFrameworkMapping.Broadcast
         public Nullable<System.DateTime> flight_start_date { get; set; }
         public Nullable<System.DateTime> flight_end_date { get; set; }
         public string flight_notes { get; set; }
-        public int audience_id { get; set; }
-        public int share_book_id { get; set; }
         public int audience_type { get; set; }
         public int posting_type { get; set; }
+        public int audience_id { get; set; }
+        public int share_book_id { get; set; }
         public Nullable<int> hut_book_id { get; set; }
     
-        public virtual campaign campaign { get; set; }
-        public virtual spot_lengths spot_lengths { get; set; }
-        public virtual ICollection<plan_flight_hiatus> plan_flight_hiatus { get; set; }
         public virtual audience audience { get; set; }
+        public virtual campaign campaign { get; set; }
         public virtual media_months media_months { get; set; }
+        public virtual media_months media_months1 { get; set; }
+        public virtual ICollection<plan_flight_hiatus> plan_flight_hiatus { get; set; }
+        public virtual ICollection<plan_secondary_audiences> plan_secondary_audiences { get; set; }
+        public virtual spot_lengths spot_lengths { get; set; }
     }
 }

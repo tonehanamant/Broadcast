@@ -11,6 +11,7 @@
   "Name": "Renamed Plan",
   "PostingType": 2,
   "ProductId": 2,
+  "SecondaryAudiences": [],
   "ShareBookId": 437,
   "SpotLengthId": 1,
   "Status": 1

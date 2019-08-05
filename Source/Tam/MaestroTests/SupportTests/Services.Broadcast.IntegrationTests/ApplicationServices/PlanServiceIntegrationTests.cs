@@ -46,7 +46,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 Assert.IsTrue(newPlanId > 0);
             }
-        }                
+        }
 
         [Test]
         public void CreatePlan_InvalidSpotLengthId()
@@ -99,7 +99,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 // generate a plan for test
                 PlanDto newPlan = _GetNewPlan();
                 var newPlanId = _PlanService.SavePlan(newPlan, "integration_test", new System.DateTime(2019, 01, 01));
-                
+
                 PlanDto testPlan = _PlanService.GetPlan(newPlanId);
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(testPlan, _GetJsonSettings()));
@@ -218,8 +218,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 PlanDto newPlan = _GetNewPlanWithoutFlightInfo();
-                newPlan.FlightStartDate = new DateTime(2019,10, 1);
-                newPlan.FlightEndDate = new DateTime(2018, 01,01);
+                newPlan.FlightStartDate = new DateTime(2019, 10, 1);
+                newPlan.FlightEndDate = new DateTime(2018, 01, 01);
 
                 var caught = Assert.Throws<Exception>(() => _PlanService.SavePlan(newPlan, "integration_test",
                     new DateTime(2019, 01, 01)), "Invalid flight dates.  The end date cannot be before the start date.");
@@ -246,6 +246,64 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var caught = Assert.Throws<Exception>(() => _PlanService.SavePlan(newPlan, "integration_test",
                     new DateTime(2019, 01, 01)), "Invalid flight hiatus day.  All days must be within the flight date range.");
+
+                Assert.IsNotNull(caught);
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void SavePlan_WithSecondaryAudiences()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                PlanDto newPlan = _GetNewPlan();
+                newPlan.SecondaryAudiences = new List<PlanAudienceDto>()
+                {
+                    new PlanAudienceDto {AudienceId = 7, Type = Entities.Enums.AudienceTypeEnum.Nielsen},
+                    new PlanAudienceDto {AudienceId = 6, Type = Entities.Enums.AudienceTypeEnum.Nielsen}
+                };
+
+                var planId = _PlanService.SavePlan(newPlan, "integration_test", new DateTime(2019, 01, 01));
+                Assert.IsTrue(planId > 0);
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(_PlanService.GetPlan(planId), _GetJsonSettings()));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void SavePlan_WithInvalidSecondaryAudience()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                PlanDto newPlan = _GetNewPlan();
+                newPlan.SecondaryAudiences = new List<PlanAudienceDto>()
+                {
+                    new PlanAudienceDto {AudienceId = 0, Type = Entities.Enums.AudienceTypeEnum.Nielsen},
+                };
+
+                var caught = Assert.Throws<Exception>(() => _PlanService.SavePlan(newPlan, "integration_test",
+                new DateTime(2019, 01, 01)), "Invalid audience");
+
+                Assert.IsNotNull(caught);
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void SavePlan_WithInvalidSecondaryAudienceDuplicate()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                PlanDto newPlan = _GetNewPlan();
+                newPlan.SecondaryAudiences = new List<PlanAudienceDto>()
+                {
+                    new PlanAudienceDto {AudienceId = 31, Type = Entities.Enums.AudienceTypeEnum.Nielsen},
+                };
+
+                var caught = Assert.Throws<Exception>(() => 
+                _PlanService.SavePlan(newPlan, "integration_test", new DateTime(2019, 01, 01)),
+                "An audience cannot appear multiple times");
 
                 Assert.IsNotNull(caught);
             }

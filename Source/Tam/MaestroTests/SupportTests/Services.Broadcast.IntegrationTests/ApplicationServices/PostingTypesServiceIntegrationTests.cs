@@ -26,21 +26,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 var spotLengths = _PostingTypeService.GetPostingTypes();
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(spotLengths, _GetJsonSettings()));
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(spotLengths));
             }
-        }
-
-        private JsonSerializerSettings _GetJsonSettings()
-        {
-            var jsonResolver = new IgnorableSerializerContractResolver();
-
-            jsonResolver.Ignore(typeof(LookupDto), "Id");
-
-            return new JsonSerializerSettings
-            {
-                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                ContractResolver = jsonResolver
-            };
-        }
+        }        
     }
 }

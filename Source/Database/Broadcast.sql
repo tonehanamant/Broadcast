@@ -528,7 +528,7 @@ BEGIN
 	EXEC (@UpdateAudience)
 	ALTER TABLE [plans] ALTER COLUMN [audience_id] [INT] NOT NULL
 	ALTER TABLE [dbo].[plans] ADD CONSTRAINT [FK_plans_audiences] FOREIGN KEY([audience_id])
-	REFERENCES [dbo].[audiences] ([id]) ON DELETE CASCADE
+	REFERENCES [dbo].[audiences] ([id])
 END
 
 	--add share_book_id
@@ -550,6 +550,38 @@ BEGIN
 END
 
 /*************************************** END PRI-7460 *****************************************************/
+
+/*************************************** END PRI-12235 *****************************************************/
+IF OBJECT_ID('plan_secondary_audiences', 'U') IS NULL
+BEGIN	
+	CREATE TABLE [dbo].[plan_secondary_audiences](
+		[id] [int] IDENTITY(1,1) NOT NULL,
+		[plan_id] [INT] NOT NULL,
+		[audience_type] [INT] NOT NULL,
+		[audience_id] [INT] NOT NULL
+	 CONSTRAINT [PK_plan_secondary_audiences] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY]
+
+	ALTER TABLE [dbo].[plan_secondary_audiences] ADD CONSTRAINT [FK_plan_secondary_audiences_plans] FOREIGN KEY([plan_id])
+	REFERENCES [dbo].[plans] ([id]) ON DELETE CASCADE
+	CREATE NONCLUSTERED INDEX [IX_plan_secondary_audiences_plan_id]  ON [dbo].[plan_secondary_audiences] ([plan_id] ASC)
+	INCLUDE ([id]) 
+	WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+
+	ALTER TABLE [dbo].[plan_secondary_audiences] ADD CONSTRAINT [FK_plan_secondary_audiences_audiences] FOREIGN KEY([audience_id])
+	REFERENCES [dbo].[audiences] ([id])
+END
+
+--add missing foreign key on hut_book_id
+IF NOT EXISTS(SELECT 1 FROM sys.foreign_keys WHERE parent_object_id = OBJECT_ID('plans') AND name = 'FK_plans_media_months_hut')
+BEGIN
+	ALTER TABLE [dbo].[plans] ADD CONSTRAINT [FK_plans_media_months_hut] FOREIGN KEY([hut_book_id])
+	REFERENCES [dbo].[media_months] ([id])
+END
+/*************************************** END PRI-12235 *****************************************************/
 
 /*************************************** START PRI-12674 *****************************************************/
 IF EXISTS(SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('inventory_summary_quarter_details') AND name = 'share_book_id')

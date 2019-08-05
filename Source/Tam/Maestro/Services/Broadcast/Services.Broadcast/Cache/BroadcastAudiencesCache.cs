@@ -29,11 +29,11 @@ namespace Services.Broadcast.Cache
         BroadcastAudience GetBroadcastAudienceByCode(string audienceCode);
 
         /// <summary>
-        /// Determines whether [is valid audience] [the specified audience identifier].
+        /// Determines whether the audience id passed is a valid audience id.
         /// </summary>
         /// <param name="audienceId">The audience identifier.</param>
         /// <returns>
-        ///   <c>true</c> if [is valid audience] [the specified audience identifier]; otherwise, <c>false</c>.
+        ///   <c>true</c> if the audience id passed is a valid audience id; otherwise, <c>false</c>.
         /// </returns>
         bool IsValidAudience(int audienceId);
     }
@@ -91,11 +91,13 @@ namespace Services.Broadcast.Cache
                 .ToList();
         }
 
+        ///</inheritdoc>
         public List<BroadcastAudience> GetAllEntities()
         {
             return _Audiences;
         }
 
+        ///</inheritdoc>
         public List<LookupDto> GetAllLookups()
         {
             return (from x in _Audiences
@@ -106,6 +108,7 @@ namespace Services.Broadcast.Cache
                     }).ToList();
         }
 
+        ///</inheritdoc>
         public DisplayAudience GetDisplayAudienceById(int id)
         {
             return (from a in _Audiences
@@ -117,16 +120,19 @@ namespace Services.Broadcast.Cache
                     }).SingleOrDefault();
         }
 
+        ///</inheritdoc>
         public bool IsValidAudienceCode(string audienceCode)
         {
             return GetBroadcastAudienceByCode(audienceCode) != null;
         }
 
+        ///</inheritdoc>
         public bool IsValidAudience(int audienceId)
         {
             return _Audiences.Any(x => x.Id == audienceId);
         }
 
+        ///</inheritdoc>
         public DisplayAudience GetDisplayAudienceByCode(string audienceCode)
         {
             var audience = GetBroadcastAudienceByCode(audienceCode);
@@ -138,6 +144,7 @@ namespace Services.Broadcast.Cache
             };
         }
 
+        ///</inheritdoc>
         public BroadcastAudience GetBroadcastAudienceByCode(string audienceCode)
         {
             //remove all the white spaces from the audience
@@ -153,21 +160,25 @@ namespace Services.Broadcast.Cache
             return audience;
         }
 
+        ///</inheritdoc>
         public IEnumerable<BroadcastAudience> FindByAgeRange(int fromAge, int toAge)
         {
             return _Audiences.Where(a => a.RangeStart == fromAge && a.RangeEnd == toAge);
         }
 
+        ///</inheritdoc>
         public IEnumerable<BroadcastAudience> FindByAgeRangeAndSubcategory(int fromAge, int toAge, string subcategory)
         {
             return _Audiences.Where(a => a.RangeStart == fromAge && a.RangeEnd == toAge && a.SubCategoryCode.Equals(subcategory, System.StringComparison.InvariantCultureIgnoreCase));
         }
 
+        ///</inheritdoc>
         public BroadcastAudience GetDefaultAudience()
         {
             return _Audiences.SingleOrDefault(a => a.Code == BroadcastConstants.HOUSEHOLD_CODE);
         }
 
+        ///</inheritdoc>
         public LookupDto FindDto(int id)
         {
             return (from x in _Audiences

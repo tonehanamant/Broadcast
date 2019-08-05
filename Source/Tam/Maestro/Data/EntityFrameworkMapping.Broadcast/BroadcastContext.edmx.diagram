@@ -297,13 +297,17 @@
         <EntityTypeShape EntityType="BroadcastModel.inventory_summary_quarter_details" Width="1.5" PointX="17.625" PointY="41" />
         <AssociationConnector Association="BroadcastModel.FK_inventory_summary_quarter_details_daypart_codes" />
         <AssociationConnector Association="BroadcastModel.FK_inventory_summary_quarter_details_inventory_summary_quarters" />
-        <EntityTypeShape EntityType="BroadcastModel.plan" Width="1.5" PointX="31.625" PointY="12.625" />
-        <AssociationConnector Association="BroadcastModel.FK_plans_campaigns" />
-        <AssociationConnector Association="BroadcastModel.FK_plans_spot_lengths" />
         <EntityTypeShape EntityType="BroadcastModel.plan_flight_hiatus" Width="1.5" PointX="36.125" PointY="4.875" />
-        <AssociationConnector Association="BroadcastModel.FK_plan_flight_hiatus_plans" />
+        <EntityTypeShape EntityType="BroadcastModel.plan_secondary_audiences" Width="1.5" PointX="8" PointY="4.75" />
+        <EntityTypeShape EntityType="BroadcastModel.plan" Width="1.5" PointX="31.625" PointY="10.125" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_secondary_audiences_audiences" />
         <AssociationConnector Association="BroadcastModel.FK_plans_audiences" />
+        <AssociationConnector Association="BroadcastModel.FK_plans_campaigns" />
         <AssociationConnector Association="BroadcastModel.FK_plans_media_months" />
+        <AssociationConnector Association="BroadcastModel.FK_plans_media_months_hut" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_flight_hiatus_plans" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_secondary_audiences_plans" />
+        <AssociationConnector Association="BroadcastModel.FK_plans_spot_lengths" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

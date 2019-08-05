@@ -136,5 +136,13 @@ namespace Services.Broadcast.Entities.Plan
         /// The hut book identifier.
         /// </value>
         public int? HUTBookId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the secondary audiences.
+        /// </summary>
+        /// <value>
+        /// The secondary audiences.
+        /// </value>
+        public List<PlanAudienceDto> SecondaryAudiences { get; set; } = new List<PlanAudienceDto>();
     }
 }

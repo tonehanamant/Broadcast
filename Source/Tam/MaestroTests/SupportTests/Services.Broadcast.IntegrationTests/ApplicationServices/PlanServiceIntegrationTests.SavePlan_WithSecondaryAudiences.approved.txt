@@ -5,16 +5,25 @@
   "Equivalized": true,
   "FlightEndDate": "2019-07-31T00:00:00",
   "FlightHiatusDays": [
-    "2019-01-28T00:00:00",
-    "2019-06-04T00:00:00"
+    "2019-01-20T00:00:00",
+    "2019-04-15T00:00:00"
   ],
-  "FlightNotes": "Changed the flight notes",
+  "FlightNotes": "Sample notes",
   "FlightStartDate": "2019-01-01T00:00:00",
   "HUTBookId": null,
-  "Name": "Renamed Plan",
+  "Name": "New Plan",
   "PostingType": 2,
-  "ProductId": 2,
-  "SecondaryAudiences": [],
+  "ProductId": 1,
+  "SecondaryAudiences": [
+    {
+      "AudienceId": 7,
+      "Type": 1
+    },
+    {
+      "AudienceId": 6,
+      "Type": 1
+    }
+  ],
   "ShareBookId": 437,
   "SpotLengthId": 1,
   "Status": 1

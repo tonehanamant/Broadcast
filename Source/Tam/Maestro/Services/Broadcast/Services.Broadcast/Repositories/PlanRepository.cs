@@ -90,9 +90,9 @@ namespace Services.Broadcast.Repositories
                 {
                     var entity = context.plans
                         .Include(p => p.plan_flight_hiatus)
+                        .Include(p => p.plan_secondary_audiences)
                         .Single(s => s.id == planId, "Invalid plan id.");
-                    var dto = _MapToDto(entity);
-                    return dto;
+                    return _MapToDto(entity);
                 });
         }
 
@@ -115,7 +115,13 @@ namespace Services.Broadcast.Repositories
                 HUTBookId = entity.hut_book_id,
                 ShareBookId = entity.share_book_id,
                 PostingType = EnumHelper.GetEnum<PostingTypeEnum>(entity.posting_type),
-                FlightHiatusDays = entity.plan_flight_hiatus.Select(h => h.hiatus_day).ToList()
+                FlightHiatusDays = entity.plan_flight_hiatus.Select(h => h.hiatus_day).ToList(),
+                SecondaryAudiences = entity.plan_secondary_audiences
+                    .Select(x => new PlanAudienceDto
+                    {
+                        AudienceId = x.audience_id,
+                        Type = (AudienceTypeEnum)x.audience_type
+                    }).ToList()
             };
             return dto;
         }
@@ -144,11 +150,12 @@ namespace Services.Broadcast.Repositories
             entity.hut_book_id = planDto.HUTBookId;
             entity.share_book_id = planDto.ShareBookId;
             entity.posting_type = (int)planDto.PostingType;
-
+            
             _HydratePlanFlightHiatus(entity, planDto, context);
+            _HydratePlanSecondaryAudiences(entity, planDto, context);
         }
 
-        #region Flight and Hiatus
+        #region Private methods
 
         private void _HydratePlanFlightHiatus(plan entity, PlanDto planDto, QueryHintBroadcastContext context)
         {
@@ -159,6 +166,18 @@ namespace Services.Broadcast.Repositories
             });
         }
 
-        #endregion // #region Flight and Hiatus
+        private void _HydratePlanSecondaryAudiences(plan entity, PlanDto planDto, QueryHintBroadcastContext context)
+        {
+            context.plan_secondary_audiences.RemoveRange(entity.plan_secondary_audiences);
+            planDto.SecondaryAudiences.ForEach(d =>
+            {
+                entity.plan_secondary_audiences.Add(new plan_secondary_audiences
+                {
+                    audience_id = d.AudienceId,
+                    audience_type = (int)d.Type
+                });
+            });
+        }
+        #endregion
     }
 }

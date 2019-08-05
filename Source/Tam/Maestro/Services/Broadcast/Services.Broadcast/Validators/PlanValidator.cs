@@ -6,6 +6,7 @@ using Services.Broadcast.Entities.Plan;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Tam.Maestro.Common;
 using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 
@@ -31,10 +32,11 @@ namespace Services.Broadcast.Validators
         const string INVALID_SPOT_LENGTH = "Invalid spot length";
         const string INVALID_PRODUCT = "Invalid product";
         const string INVALID_SHARE_BOOK = "Invalid share book";
-        const string INVALID_HUT_BOOK = "Invalid HUT boook. The HUT book must be prior to share book";
+        const string INVALID_HUT_BOOK = "Invalid HUT boook.";
         const string INVALID_FLIGHT_DATES = "Invalid flight dates.  The end date cannot be before the start date.";
         const string INVALID_FLIGHT_HIATUS_DAY = "Invalid flight hiatus day.  All days must be within the flight date range.";
         const string INVALID_AUDIENCE = "Invalid audience";
+        const string INVALID_AUDIENCE_DUPLICATE = "An audience cannot appear multiple times";
         const string INVALID_SHARE_HUT_BOOKS = "HUT Book must be prior to Share Book";
         #endregion
 
@@ -61,13 +63,14 @@ namespace Services.Broadcast.Validators
             {
                 throw new Exception(INVALID_SPOT_LENGTH);
             }
-            if(plan.ProductId <= 0)
+            if (plan.ProductId <= 0)
             {
                 throw new Exception(INVALID_PRODUCT);
             }
 
             _ValidateFlightAndHiatusDates(plan);
-            _ValidateAudiences(plan);
+            _ValidatePrimaryAudience(plan);
+            _ValidateSecondaryAudiences(plan.SecondaryAudiences, plan.AudienceId);
         }
 
         #region Helpers
@@ -94,31 +97,50 @@ namespace Services.Broadcast.Validators
                 }
             }
         }
-        
-        private void _ValidateAudiences(PlanDto plan)
-        {   
+
+        private void _ValidatePrimaryAudience(PlanDto plan)
+        {
             if (!_AudienceCache.IsValidAudience(plan.AudienceId))
             {
                 throw new Exception(INVALID_AUDIENCE);
             }
-            if (!_PostingBooks.Any(x=>x.Id == plan.ShareBookId)){
+            if (!_PostingBooks.Any(x => x.Id == plan.ShareBookId))
+            {
                 throw new Exception(INVALID_SHARE_BOOK);
             }
 
             //if the hutbook is set but it's 0 or a value not available throw exception
-            if (plan.HUTBookId.HasValue && (plan.HUTBookId <= 0 || !_PostingBooks.Any(x => x.Id == plan.HUTBookId))){
+            if (plan.HUTBookId.HasValue && (plan.HUTBookId <= 0 || !_PostingBooks.Any(x => x.Id == plan.HUTBookId)))
+            {
                 throw new Exception(INVALID_HUT_BOOK);
             }
-
             if (plan.HUTBookId.HasValue)
             {
                 var shareBook = _PostingBooks.Single(x => x.Id == plan.ShareBookId);
                 var hutBook = _PostingBooks.Single(x => x.Id == plan.HUTBookId);
-                if(hutBook.StartDate > shareBook.StartDate)
+                if (hutBook.StartDate > shareBook.StartDate)
                 {
                     throw new Exception(INVALID_SHARE_HUT_BOOKS);
                 }
-            }
+            }            
+        }
+
+        private void _ValidateSecondaryAudiences(List<PlanAudienceDto> secondaryAudiences, int primaryAudienceId)
+        {
+            var distinctAudiences = new List<int> { primaryAudienceId };
+            secondaryAudiences.Select(x => x.AudienceId)
+                .ForEach(audienceId =>
+                {
+                    if (!_AudienceCache.IsValidAudience(audienceId))
+                    {
+                        throw new Exception(INVALID_AUDIENCE);
+                    }
+                    if (distinctAudiences.Contains(audienceId))
+                    {
+                        throw new Exception(INVALID_AUDIENCE_DUPLICATE);
+                    }
+                    distinctAudiences.Add(audienceId);
+                });
         }
 
         #endregion // #region Helpers

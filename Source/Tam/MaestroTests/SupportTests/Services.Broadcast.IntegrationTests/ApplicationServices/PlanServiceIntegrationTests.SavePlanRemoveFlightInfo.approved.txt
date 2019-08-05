@@ -11,6 +11,7 @@
   "Name": "New Plan",
   "PostingType": 2,
   "ProductId": 1,
+  "SecondaryAudiences": [],
   "ShareBookId": 437,
   "SpotLengthId": 1,
   "Status": 1

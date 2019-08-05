@@ -30,7 +30,7 @@ namespace BroadcastComposerWeb.Controllers
         /// <param name="newPlan">The new plan.</param>
         /// <returns></returns>
         [HttpPost]
-        [Route("Save")]
+        [Route("")]
         public BaseResponse<int> SavePlan(PlanDto newPlan)
         {
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanService>().SavePlan(newPlan, Identity.Name, DateTime.Now));
@@ -40,8 +40,8 @@ namespace BroadcastComposerWeb.Controllers
         /// Gets the products.
         /// </summary>
         /// <returns>List of LookupDto objects</returns>
-        [HttpPost]
-        [Route("GetProducts")]
+        [HttpGet]
+        [Route("Products")]
         public BaseResponse<List<LookupDto>> GetProducts()
         {
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanService>().GetProducts());
@@ -51,11 +51,22 @@ namespace BroadcastComposerWeb.Controllers
         /// Gets the plan statuses.
         /// </summary>
         /// <returns>List of LookupDto objects</returns>
-        [HttpPost]
-        [Route("GetStatuses")]
+        [HttpGet]
+        [Route("Statuses")]
         public BaseResponse<List<LookupDto>> GetStatuses()
         {
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanService>().GetPlanStatuses());
+        }
+
+        /// <summary>
+        /// Gets the plan statuses (This endpoint was added for testing purposes only).
+        /// </summary>
+        /// <returns>List of LookupDto objects</returns>
+        [HttpGet]
+        [Route("")]
+        public BaseResponse<PlanDto> GetPlanById(int planId)
+        {
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanService>().GetPlan(planId));
         }
     }
 }

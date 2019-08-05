@@ -26,6 +26,7 @@ namespace EntityFrameworkMapping.Broadcast
             this.inventory_file_proprietary_header = new HashSet<inventory_file_proprietary_header>();
             this.inventory_file_proprietary_header1 = new HashSet<inventory_file_proprietary_header>();
             this.plans = new HashSet<plan>();
+            this.plans1 = new HashSet<plan>();
         }
     
         public int id { get; set; }
@@ -46,5 +47,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<inventory_file_proprietary_header> inventory_file_proprietary_header { get; set; }
         public virtual ICollection<inventory_file_proprietary_header> inventory_file_proprietary_header1 { get; set; }
         public virtual ICollection<plan> plans { get; set; }
+        public virtual ICollection<plan> plans1 { get; set; }
     }
 }
