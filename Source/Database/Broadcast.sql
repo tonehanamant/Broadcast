@@ -657,9 +657,7 @@ BEGIN
 			ALTER COLUMN default_end_time_seconds INT NOT NULL
 	'
 
-	EXEC (@DaypartCodesMakeNewColumnsNotNull)
-
-	DROP TABLE #daypart_extensions
+	EXEC (@DaypartCodesMakeNewColumnsNotNull)	
 END	
 
 IF OBJECT_ID('plan_dayparts') IS NULL
