@@ -1,6 +1,4 @@
 ﻿using Services.Broadcast.ApplicationServices;
-using Services.Broadcast.Entities;
-using Services.Broadcast.Entities.DTO;
 using Tam.Maestro.Services.Cable.Entities;
 using Tam.Maestro.Web.Common;
 using System.Web.Http;
@@ -18,7 +16,7 @@ namespace BroadcastComposerWeb.Controllers
         public PricingGuideController(
             IWebLogger logger,
             BroadcastApplicationServiceFactory applicationServiceFactory)
-            : base(logger, new ControllerNameRetriever(typeof(ProposalController).Name))
+            : base(logger, new ControllerNameRetriever(typeof(PricingGuideController).Name))
         {
             _Logger = logger;
             _ApplicationServiceFactory = applicationServiceFactory;

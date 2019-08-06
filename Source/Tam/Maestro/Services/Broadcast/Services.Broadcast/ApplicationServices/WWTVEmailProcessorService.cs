@@ -25,7 +25,7 @@ namespace Services.Broadcast.BusinessEngines
         /// <summary>
         /// Move invalid files to invalid files folder. Notify users about failed files
         /// </summary>
-        /// <param name="invalidFiles">List of OutboundAffidavitFileValidationResultDto objects representing the invalid files to process</param>
+        /// <param name="validationList">List of OutboundAffidavitFileValidationResultDto objects representing the invalid files to process</param>
         void ProcessAndSendInvalidDataFiles(List<WWTVOutboundFileValidationResult> validationList);
         string CreateValidationErrorEmailBody(List<WWTVInboundFileValidationResult> validationErrors, string fileName);
         string CreateTechErrorEmailBody(string errorMessage, string filePath);

@@ -95,13 +95,15 @@ namespace Services.Broadcast.ApplicationServices
         /// Gets a client post scrubbing proposal with details
         /// </summary>
         /// <param name="proposalId">Proposal id to filter by</param>
+        /// <param name="proposalScrubbingRequest"></param>
+        /// <param name="scrubs"></param>
         /// <returns>ClientPostScrubbingProposalDto object containing the post scrubbing information</returns>
         ClientPostScrubbingProposalDto GetClientScrubbingForProposal(int proposalId, ProposalScrubbingRequest proposalScrubbingRequest, List<ProposalDetailPostScrubbingDto> scrubs = null);
 
         /// <summary>
         /// Override post log client scrubs statuses
         /// </summary>
-        /// <param name="request">ScrubStatusOverrideRequest object containing the ids of the records to undo</param>
+        /// <param name="scrubStatusOverrides">ScrubStatusOverrideRequest object containing the ids of the records to undo</param>
         /// <returns>ClientPostScrubbingProposalDto object</returns>
         ClientPostScrubbingProposalDto OverrideScrubbingStatus(ScrubStatusOverrideRequest scrubStatusOverrides);
 
@@ -409,7 +411,7 @@ namespace Services.Broadcast.ApplicationServices
                     Equivalized = proposal.Equivalized
                 };
 
-                ///Load all Client Scrubs
+                //Load all Client Scrubs
                 if (clientScrubs == null)
                 {
                     clientScrubs = _MapClientScrubDataToDto(_PostLogRepository.GetProposalDetailPostScrubbing(proposalId, proposalScrubbingRequest.ScrubbingStatusFilter));
@@ -429,7 +431,7 @@ namespace Services.Broadcast.ApplicationServices
                     result.ClientScrubs.AddRange(detailClientScrubs);
                 });
 
-                ///Load Filters
+                //Load Filters
                 result.Filters = _LoadFilters(result.ClientScrubs);
 
                 return result;

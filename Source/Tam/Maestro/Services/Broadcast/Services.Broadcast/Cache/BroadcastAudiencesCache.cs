@@ -91,13 +91,13 @@ namespace Services.Broadcast.Cache
                 .ToList();
         }
 
-        ///</inheritdoc>
+        ///<inheritdoc/>
         public List<BroadcastAudience> GetAllEntities()
         {
             return _Audiences;
         }
 
-        ///</inheritdoc>
+        ///<inheritdoc/>
         public List<LookupDto> GetAllLookups()
         {
             return (from x in _Audiences
@@ -108,7 +108,7 @@ namespace Services.Broadcast.Cache
                     }).ToList();
         }
 
-        ///</inheritdoc>
+        ///<inheritdoc/>
         public DisplayAudience GetDisplayAudienceById(int id)
         {
             return (from a in _Audiences
@@ -120,13 +120,13 @@ namespace Services.Broadcast.Cache
                     }).SingleOrDefault();
         }
 
-        ///</inheritdoc>
+        ///<inheritdoc/>
         public bool IsValidAudienceCode(string audienceCode)
         {
             return GetBroadcastAudienceByCode(audienceCode) != null;
         }
 
-        ///</inheritdoc>
+        ///<inheritdoc/>
         public bool IsValidAudience(int audienceId)
         {
             return _Audiences.Any(x => x.Id == audienceId);
@@ -144,7 +144,7 @@ namespace Services.Broadcast.Cache
             };
         }
 
-        ///</inheritdoc>
+        ///<inheritdoc/>
         public BroadcastAudience GetBroadcastAudienceByCode(string audienceCode)
         {
             //remove all the white spaces from the audience
@@ -160,25 +160,25 @@ namespace Services.Broadcast.Cache
             return audience;
         }
 
-        ///</inheritdoc>
+        ///<inheritdoc/>
         public IEnumerable<BroadcastAudience> FindByAgeRange(int fromAge, int toAge)
         {
             return _Audiences.Where(a => a.RangeStart == fromAge && a.RangeEnd == toAge);
         }
 
-        ///</inheritdoc>
+        ///<inheritdoc/>
         public IEnumerable<BroadcastAudience> FindByAgeRangeAndSubcategory(int fromAge, int toAge, string subcategory)
         {
             return _Audiences.Where(a => a.RangeStart == fromAge && a.RangeEnd == toAge && a.SubCategoryCode.Equals(subcategory, System.StringComparison.InvariantCultureIgnoreCase));
         }
 
-        ///</inheritdoc>
+        ///<inheritdoc/>
         public BroadcastAudience GetDefaultAudience()
         {
             return _Audiences.SingleOrDefault(a => a.Code == BroadcastConstants.HOUSEHOLD_CODE);
         }
 
-        ///</inheritdoc>
+        ///<inheritdoc/>
         public LookupDto FindDto(int id)
         {
             return (from x in _Audiences

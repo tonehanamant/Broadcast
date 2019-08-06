@@ -28,7 +28,7 @@ namespace BroadcastComposerWeb.Controllers
         public TrackerController(
             IWebLogger logger,
             BroadcastApplicationServiceFactory applicationServiceFactory)
-            : base(logger, new ControllerNameRetriever("TrackerController"))
+            : base(logger, new ControllerNameRetriever(typeof(TrackerController).Name))
         {
             _Logger = logger;
             _ApplicationServiceFactory = applicationServiceFactory;

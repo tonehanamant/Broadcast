@@ -150,7 +150,7 @@ namespace Services.Broadcast.Converters.InventorySummary
         }
 
         /// <summary>
-        /// Loads the inventory summary data into InventorySummaryDto object for proprietary O & O.
+        /// Loads the inventory summary data into InventorySummaryDto object for proprietary O\&O.
         /// </summary>
         /// <param name="inventorySource">The inventory source.</param>
         /// <param name="data">The data.</param>

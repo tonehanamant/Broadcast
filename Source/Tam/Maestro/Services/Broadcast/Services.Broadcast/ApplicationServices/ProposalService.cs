@@ -873,8 +873,9 @@ namespace Services.Broadcast.ApplicationServices
             if (proposalDetailDto.ShareProjectionBookId == null)
                 throw new Exception("Cannot save proposal without specifying a Share Book");
 
-            if (proposalDetailDto.ProjectionPlaybackType == null)
-                throw new Exception("Cannot save proposal without specifying a Playback Type");
+            //ProjectionPlaybackType is not nullable
+            //if (proposalDetailDto.ProjectionPlaybackType == null)
+            //    throw new Exception("Cannot save proposal without specifying a Playback Type");
 
             if (proposalDetailDto.ShareProjectionBookId == proposalDetailDto.HutProjectionBookId ||
                 proposalDetailDto.HutProjectionBookId > proposalDetailDto.ShareProjectionBookId)

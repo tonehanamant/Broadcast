@@ -15,7 +15,6 @@ namespace Services.Broadcast.Services
         protected List<ScheduledServiceMethod> _ServicesToRun;
 
         public const int MILSEC_BETWEEN_CHECKS = 1000 * 5;
-        private DateTime? _timeLastRun;
 
         readonly Timer _Timer;
         public ScheduledWindowsServiceMethodRunner(List<ScheduledServiceMethod> servicesToRun) 

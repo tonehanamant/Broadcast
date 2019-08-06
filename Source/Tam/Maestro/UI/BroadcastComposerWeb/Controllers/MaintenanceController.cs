@@ -1,23 +1,15 @@
 ﻿using System;
 using System.IO;
 using System.Net;
-using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Net.Mail;
-using System.Security.Principal;
 using System.Web;
 using System.Web.Mvc;
 using Common.Services;
-using Common.Services.WebComponents;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.ApplicationServices.Helpers;
 using Services.Broadcast.Entities;
-using Tam.Maestro.Common.SystemComponentParameter;
 using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Services.Cable.Security;
-using Tam.Maestro.Services.Cable.SystemComponentParameters;
-using Tam.Maestro.Services.Clients;
-using Tam.Maestro.Web.Common;
 
 namespace BroadcastComposerWeb.Controllers
 {

@@ -14,7 +14,7 @@ namespace BroadcastComposerWeb.Controllers
         private readonly BroadcastApplicationServiceFactory _ApplicationServiceFactory;
 
         public DaypartCodeApiController(IWebLogger logger, BroadcastApplicationServiceFactory applicationServiceFactory) :
-            base(logger, new ControllerNameRetriever(typeof(ProposalController).Name))
+            base(logger, new ControllerNameRetriever(typeof(DaypartCodeApiController).Name))
         {
             _ApplicationServiceFactory = applicationServiceFactory;
         }

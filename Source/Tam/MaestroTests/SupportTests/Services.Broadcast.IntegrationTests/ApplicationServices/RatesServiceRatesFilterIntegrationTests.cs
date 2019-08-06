@@ -1,16 +1,9 @@
-﻿using ApprovalTests;
-using ApprovalTests.Reporters;
-using IntegrationTests.Common;
-using Newtonsoft.Json;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Entities;
-using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Repositories;
 using System;
 using System.IO;
-using System.Reflection;
-using Tam.Maestro.Common.DataLayer;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
@@ -22,8 +15,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         private IInventoryFileRepository _inventoryFileRepository =
             IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryFileRepository>();
-
-        int _stationCodeWVTM = 5044;
 
         private int _Setup(string testName)
         {

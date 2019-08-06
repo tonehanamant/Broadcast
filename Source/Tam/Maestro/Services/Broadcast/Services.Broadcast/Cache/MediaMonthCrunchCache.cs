@@ -58,7 +58,7 @@ namespace Common.Services
                 if (_CacheTimeoutInSeconds <= 0)
                     _CacheTimeoutInSeconds = 24 * 60 * 60; //24 hours;
             }
-            catch (Exception ex)
+            catch
             {
                 //use a default
                 _CacheTimeoutInSeconds = 24 * 60 * 60; //24 hours;

@@ -11,7 +11,6 @@ using Tam.Maestro.Services.Cable.Entities;
 using Tam.Maestro.Services.Cable.Security;
 using Tam.Maestro.Web.Common;
 using Services.Broadcast.Entities.OpenMarketInventory;
-using Services.Broadcast.Entities.DTO.PricingGuide;
 
 namespace BroadcastComposerWeb.Controllers
 {

@@ -16,7 +16,7 @@ namespace BroadcastComposerWeb.Controllers
         public SpotLengthApiController(
             IWebLogger logger,
             BroadcastApplicationServiceFactory applicationServiceFactory)
-            : base(logger, new ControllerNameRetriever(typeof(InventoryApiController).Name))
+            : base(logger, new ControllerNameRetriever(typeof(SpotLengthApiController).Name))
         {
             _ApplicationServiceFactory = applicationServiceFactory;
         }

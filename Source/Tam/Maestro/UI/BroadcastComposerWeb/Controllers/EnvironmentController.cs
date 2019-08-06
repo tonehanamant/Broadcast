@@ -7,7 +7,6 @@ using Tam.Maestro.Services.Cable.Entities;
 using Tam.Maestro.Services.Cable.Security;
 using Tam.Maestro.Services.Clients;
 using Tam.Maestro.Web.Common;
-using System.Web.Http.Cors;
 using Services.Broadcast.ApplicationServices;
 using System.Collections.Generic;
 
@@ -22,7 +21,7 @@ namespace BroadcastComposerWeb.Controllers
 
         public EnvironmentController(IWebLogger logger,
             BroadcastApplicationServiceFactory applicationServiceFactory)
-            : base(logger, new ControllerNameRetriever("TrackerController"))
+            : base(logger, new ControllerNameRetriever(typeof(EnvironmentController).Name))
         {
             _ApplicationServiceFactory = applicationServiceFactory;
         }

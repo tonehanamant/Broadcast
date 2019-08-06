@@ -15,7 +15,7 @@ namespace BroadcastComposerWeb.Controllers
         private readonly BroadcastApplicationServiceFactory _ApplicationServiceFactory;
 
         public CampaignApiController(IWebLogger logger, BroadcastApplicationServiceFactory applicationServiceFactory) : 
-            base(logger, new ControllerNameRetriever(typeof(ProposalController).Name))
+            base(logger, new ControllerNameRetriever(typeof(CampaignApiController).Name))
         {
             _ApplicationServiceFactory = applicationServiceFactory;
         }

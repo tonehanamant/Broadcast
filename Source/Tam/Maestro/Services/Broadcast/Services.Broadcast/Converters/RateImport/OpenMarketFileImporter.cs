@@ -44,9 +44,7 @@ namespace Services.Broadcast.Converters.RateImport
         public List<InventoryFileProblem> FileProblems { get; set; } = new List<InventoryFileProblem>();
         private InventoryFileSaveRequest _Request { get; set; }
         private string _FileHash { get; set; }
-        private readonly string _validTimeExpression =
-            @"(^([0-9]|[0-1][0-9]|[2][0-3])(:)?([0-5][0-9])(\s{0,1})(A|AM|P|PM|a|am|p|pm|aM|Am|pM|Pm{2,2})$)|(^([0-9]|[1][0-9]|[2][0-3])(\s{0,1})(A|AM|P|PM|a|am|p|pm|aM|Am|pM|Pm{2,2})$)";
-
+       
         private readonly IDataRepositoryFactory _BroadcastDataRepositoryFactory;
         private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekAggregateCache;
         private readonly IDaypartCache _DaypartCache;

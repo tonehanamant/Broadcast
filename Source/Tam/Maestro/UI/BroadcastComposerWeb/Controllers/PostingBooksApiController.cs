@@ -17,7 +17,7 @@ namespace BroadcastComposerWeb.Controllers
         public PostingBooksApiController(
             IWebLogger logger,
             BroadcastApplicationServiceFactory applicationServiceFactory)
-            : base(logger, new ControllerNameRetriever(typeof(InventoryApiController).Name))
+            : base(logger, new ControllerNameRetriever(typeof(PostingBooksApiController).Name))
         {
             _ApplicationServiceFactory = applicationServiceFactory;
         }

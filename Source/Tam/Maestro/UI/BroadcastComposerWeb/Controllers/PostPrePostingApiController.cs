@@ -22,7 +22,7 @@ namespace BroadcastComposerWeb.Controllers
         private readonly BroadcastApplicationServiceFactory _ApplicationServiceFactory;
 
         public PostPrePostingApiController(IWebLogger logger, BroadcastApplicationServiceFactory applicationServiceFactory)
-            : base(logger, new ControllerNameRetriever("PostController"))
+            : base(logger, new ControllerNameRetriever(typeof(PostPrePostingApiController).Name))
         {
             _ApplicationServiceFactory = applicationServiceFactory;
         }

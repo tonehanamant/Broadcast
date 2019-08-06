@@ -20,7 +20,7 @@ namespace BroadcastComposerWeb.Controllers
         public PostLogController(
             IWebLogger logger,
             BroadcastApplicationServiceFactory applicationServiceFactory)
-            : base(logger, new ControllerNameRetriever("PostLogController"))
+            : base(logger, new ControllerNameRetriever(typeof(PostLogController).Name))
         {
             _Logger = logger;
             _ApplicationServiceFactory = applicationServiceFactory;

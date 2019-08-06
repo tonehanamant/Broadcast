@@ -19,7 +19,7 @@ namespace BroadcastComposerWeb.Controllers
         public PlanApiController(
             IWebLogger logger,
             BroadcastApplicationServiceFactory applicationServiceFactory)
-            : base(logger, new ControllerNameRetriever(typeof(InventoryApiController).Name))
+            : base(logger, new ControllerNameRetriever(typeof(PlanApiController).Name))
         {
             _ApplicationServiceFactory = applicationServiceFactory;
         }

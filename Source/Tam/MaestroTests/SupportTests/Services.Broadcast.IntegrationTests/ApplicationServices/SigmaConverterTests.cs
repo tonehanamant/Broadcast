@@ -3,10 +3,8 @@ using ApprovalTests.Reporters;
 using IntegrationTests.Common;
 using Newtonsoft.Json;
 using NUnit.Framework;
-using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Converters;
 using Services.Broadcast.Entities;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using Tam.Maestro.Common.DataLayer;
@@ -17,7 +15,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
     public class SigmaConverterTests
     {
         private readonly ISigmaConverter _ISigmaConverter;
-        private readonly IDateAdjustmentEngine _IDateAdjustmentEngine;
 
         public SigmaConverterTests()
         {

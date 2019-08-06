@@ -18,8 +18,6 @@ namespace Services.Broadcast.Services
             BaseWindowsService = windowsServiceBase;
         }
 
-        private bool _RunWhenChecked = false;
-        private DateTime? _RunWhen = null;
         /// <summary>
         /// When RunWeeklyWhen is null, SecondsBetweenRuns is used
         /// </summary>

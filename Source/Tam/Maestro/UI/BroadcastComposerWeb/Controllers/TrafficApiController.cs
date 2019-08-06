@@ -3,10 +3,6 @@ using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Services.Cable.Entities;
@@ -25,7 +21,7 @@ namespace BroadcastComposerWeb.Controllers
         public TrafficApiController(
             IWebLogger logger,
             BroadcastApplicationServiceFactory applicationServiceFactory)
-            : base(logger, new ControllerNameRetriever(typeof (TrafficController).Name))
+            : base(logger, new ControllerNameRetriever(typeof (TrafficApiController).Name))
         {
             _Logger = logger;
             _ApplicationServiceFactory = applicationServiceFactory;

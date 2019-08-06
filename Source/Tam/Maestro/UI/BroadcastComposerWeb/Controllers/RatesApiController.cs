@@ -24,7 +24,7 @@ namespace BroadcastComposerWeb.Controllers
         public RatesApiController(
             IWebLogger logger,
             BroadcastApplicationServiceFactory applicationServiceFactory)
-            : base(logger, new ControllerNameRetriever(typeof(InventoryApiController).Name))
+            : base(logger, new ControllerNameRetriever(typeof(RatesApiController).Name))
         {
             _ApplicationServiceFactory = applicationServiceFactory;
         }

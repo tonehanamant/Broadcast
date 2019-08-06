@@ -52,7 +52,7 @@ namespace Common.Services
                 if (_CacheTimeoutInSeconds <= 0)
                     throw new ApplicationException(string.Format("The value of the DaypartCacheSlidingExpirationSeconds is {0}.  It must be greater than zero.", _CacheTimeoutInSeconds));
             }
-            catch (Exception ex)
+            catch
             {   //use a default
                 _CacheTimeoutInSeconds = 300; //5 minutes;
             }

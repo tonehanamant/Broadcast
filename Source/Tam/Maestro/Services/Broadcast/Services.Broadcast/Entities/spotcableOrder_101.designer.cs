@@ -224,6 +224,7 @@ namespace Services.Broadcast.Entities.spotcableXML
         /// Serializes current address object into file
         /// </summary>
         /// <param name="fileName">full path of outupt xml file</param>
+        /// <param name="encoding"></param>
         /// <param name="exception">output Exception value if failed</param>
         /// <returns>true if can serialize and save into file; otherwise, false</returns>
         public virtual bool SaveToFile(string fileName, System.Text.Encoding encoding, out System.Exception exception)
@@ -274,6 +275,7 @@ namespace Services.Broadcast.Entities.spotcableXML
         /// Deserializes xml markup from file into an address object
         /// </summary>
         /// <param name="fileName">string xml file to load and deserialize</param>
+        /// <param name="encoding"></param>
         /// <param name="obj">Output address object</param>
         /// <param name="exception">output Exception value if deserialize failed</param>
         /// <returns>true if this XmlSerializer can deserialize the object; otherwise, false</returns>
@@ -477,6 +479,7 @@ namespace Services.Broadcast.Entities.spotcableXML
         /// Serializes current state object into file
         /// </summary>
         /// <param name="fileName">full path of outupt xml file</param>
+        /// <param name="encoding"></param>
         /// <param name="exception">output Exception value if failed</param>
         /// <returns>true if can serialize and save into file; otherwise, false</returns>
         public virtual bool SaveToFile(string fileName, System.Text.Encoding encoding, out System.Exception exception)
@@ -527,6 +530,7 @@ namespace Services.Broadcast.Entities.spotcableXML
         /// Deserializes xml markup from file into an state object
         /// </summary>
         /// <param name="fileName">string xml file to load and deserialize</param>
+        /// <param name="encoding"></param>
         /// <param name="obj">Output state object</param>
         /// <param name="exception">output Exception value if deserialize failed</param>
         /// <returns>true if this XmlSerializer can deserialize the object; otherwise, false</returns>
@@ -730,6 +734,7 @@ namespace Services.Broadcast.Entities.spotcableXML
         /// Serializes current advertiser object into file
         /// </summary>
         /// <param name="fileName">full path of outupt xml file</param>
+        /// <param name="encoding"></param>
         /// <param name="exception">output Exception value if failed</param>
         /// <returns>true if can serialize and save into file; otherwise, false</returns>
         public virtual bool SaveToFile(string fileName, System.Text.Encoding encoding, out System.Exception exception)
@@ -780,6 +785,7 @@ namespace Services.Broadcast.Entities.spotcableXML
         /// Deserializes xml markup from file into an advertiser object
         /// </summary>
         /// <param name="fileName">string xml file to load and deserialize</param>
+        /// <param name="encoding"></param>
         /// <param name="obj">Output advertiser object</param>
         /// <param name="exception">output Exception value if deserialize failed</param>
         /// <returns>true if this XmlSerializer can deserialize the object; otherwise, false</returns>
@@ -982,6 +988,7 @@ namespace Services.Broadcast.Entities.spotcableXML
         /// Serializes current codeComplexType object into file
         /// </summary>
         /// <param name="fileName">full path of outupt xml file</param>
+        /// <param name="encoding"></param>
         /// <param name="exception">output Exception value if failed</param>
         /// <returns>true if can serialize and save into file; otherwise, false</returns>
         public virtual bool SaveToFile(string fileName, System.Text.Encoding encoding, out System.Exception exception)
@@ -1032,6 +1039,7 @@ namespace Services.Broadcast.Entities.spotcableXML
         /// Deserializes xml markup from file into an codeComplexType object
         /// </summary>
         /// <param name="fileName">string xml file to load and deserialize</param>
+        /// <param name="encoding"></param>
         /// <param name="obj">Output codeComplexType object</param>
         /// <param name="exception">output Exception value if deserialize failed</param>
         /// <returns>true if this XmlSerializer can deserialize the object; otherwise, false</returns>
@@ -1249,6 +1257,7 @@ namespace Services.Broadcast.Entities.spotcableXML
         /// Serializes current codeComplexTypeCode object into file
         /// </summary>
         /// <param name="fileName">full path of outupt xml file</param>
+        /// <param name="encoding"></param>
         /// <param name="exception">output Exception value if failed</param>
         /// <returns>true if can serialize and save into file; otherwise, false</returns>
         public virtual bool SaveToFile(string fileName, System.Text.Encoding encoding, out System.Exception exception)
@@ -1299,6 +1308,7 @@ namespace Services.Broadcast.Entities.spotcableXML
         /// Deserializes xml markup from file into an codeComplexTypeCode object
         /// </summary>
         /// <param name="fileName">string xml file to load and deserialize</param>
+        /// <param name="encoding"></param>
         /// <param name="obj">Output codeComplexTypeCode object</param>
         /// <param name="exception">output Exception value if deserialize failed</param>
         /// <returns>true if this XmlSerializer can deserialize the object; otherwise, false</returns>
@@ -1505,6 +1515,7 @@ namespace Services.Broadcast.Entities.spotcableXML
         /// Serializes current adx object into file
         /// </summary>
         /// <param name="fileName">full path of outupt xml file</param>
+        /// <param name="encoding"></param>
         /// <param name="exception">output Exception value if failed</param>
         /// <returns>true if can serialize and save into file; otherwise, false</returns>
         public virtual bool SaveToFile(string fileName, System.Text.Encoding encoding, out System.Exception exception)
@@ -1555,6 +1566,7 @@ namespace Services.Broadcast.Entities.spotcableXML
         /// Deserializes xml markup from file into an adx object
         /// </summary>
         /// <param name="fileName">string xml file to load and deserialize</param>
+        /// <param name="encoding"></param>
         /// <param name="obj">Output adx object</param>
         /// <param name="exception">output Exception value if deserialize failed</param>
         /// <returns>true if this XmlSerializer can deserialize the object; otherwise, false</returns>
@@ -1818,6 +1830,7 @@ namespace Services.Broadcast.Entities.spotcableXML
         /// Serializes current document object into file
         /// </summary>
         /// <param name="fileName">full path of outupt xml file</param>
+        /// <param name="encoding"></param>
         /// <param name="exception">output Exception value if failed</param>
         /// <returns>true if can serialize and save into file; otherwise, false</returns>
         public virtual bool SaveToFile(string fileName, System.Text.Encoding encoding, out System.Exception exception)
@@ -1868,6 +1881,7 @@ namespace Services.Broadcast.Entities.spotcableXML
         /// Deserializes xml markup from file into an document object
         /// </summary>
         /// <param name="fileName">string xml file to load and deserialize</param>
+        /// <param name="encoding"></param>
         /// <param name="obj">Output document object</param>
         /// <param name="exception">output Exception value if deserialize failed</param>
         /// <returns>true if this XmlSerializer can deserialize the object; otherwise, false</returns>
@@ -2220,6 +2234,7 @@ namespace Services.Broadcast.Entities.spotcableXML
         /// Serializes current campaign object into file
         /// </summary>
         /// <param name="fileName">full path of outupt xml file</param>
+        /// <param name="encoding"></param>
         /// <param name="exception">output Exception value if failed</param>
         /// <returns>true if can serialize and save into file; otherwise, false</returns>
         public virtual bool SaveToFile(string fileName, System.Text.Encoding encoding, out System.Exception exception)
@@ -2270,6 +2285,7 @@ namespace Services.Broadcast.Entities.spotcableXML
         /// Deserializes xml markup from file into an campaign object
         /// </summary>
         /// <param name="fileName">string xml file to load and deserialize</param>
+        /// <param name="encoding"></param>
         /// <param name="obj">Output campaign object</param>
         /// <param name="exception">output Exception value if deserialize failed</param>
         /// <returns>true if this XmlSerializer can deserialize the object; otherwise, false</returns>
@@ -2623,6 +2639,7 @@ namespace Services.Broadcast.Entities.spotcableXML
         /// Serializes current key object into file
         /// </summary>
         /// <param name="fileName">full path of outupt xml file</param>
+        /// <param name="encoding"></param>
         /// <param name="exception">output Exception value if failed</param>
         /// <returns>true if can serialize and save into file; otherwise, false</returns>
         public virtual bool SaveToFile(string fileName, System.Text.Encoding encoding, out System.Exception exception)
@@ -2673,6 +2690,7 @@ namespace Services.Broadcast.Entities.spotcableXML
         /// Deserializes xml markup from file into an key object
         /// </summary>
         /// <param name="fileName">string xml file to load and deserialize</param>
+        /// <param name="encoding"></param>
         /// <param name="obj">Output key object</param>
         /// <param name="exception">output Exception value if deserialize failed</param>
         /// <returns>true if this XmlSerializer can deserialize the object; otherwise, false</returns>
@@ -2921,6 +2939,7 @@ namespace Services.Broadcast.Entities.spotcableXML
         /// Serializes current dateRange object into file
         /// </summary>
         /// <param name="fileName">full path of outupt xml file</param>
+        /// <param name="encoding"></param>
         /// <param name="exception">output Exception value if failed</param>
         /// <returns>true if can serialize and save into file; otherwise, false</returns>
         public virtual bool SaveToFile(string fileName, System.Text.Encoding encoding, out System.Exception exception)
@@ -2971,6 +2990,7 @@ namespace Services.Broadcast.Entities.spotcableXML
         /// Deserializes xml markup from file into an dateRange object
         /// </summary>
         /// <param name="fileName">string xml file to load and deserialize</param>
+        /// <param name="encoding"></param>
         /// <param name="obj">Output dateRange object</param>
         /// <param name="exception">output Exception value if deserialize failed</param>
         /// <returns>true if this XmlSerializer can deserialize the object; otherwise, false</returns>
@@ -3249,6 +3269,7 @@ namespace Services.Broadcast.Entities.spotcableXML
         /// Serializes current company object into file
         /// </summary>
         /// <param name="fileName">full path of outupt xml file</param>
+        /// <param name="encoding"></param>
         /// <param name="exception">output Exception value if failed</param>
         /// <returns>true if can serialize and save into file; otherwise, false</returns>
         public virtual bool SaveToFile(string fileName, System.Text.Encoding encoding, out System.Exception exception)
@@ -3299,6 +3320,7 @@ namespace Services.Broadcast.Entities.spotcableXML
         /// Deserializes xml markup from file into an company object
         /// </summary>
         /// <param name="fileName">string xml file to load and deserialize</param>
+        /// <param name="encoding"></param>
         /// <param name="obj">Output company object</param>
         /// <param name="exception">output Exception value if deserialize failed</param>
         /// <returns>true if this XmlSerializer can deserialize the object; otherwise, false</returns>
@@ -3562,6 +3584,7 @@ namespace Services.Broadcast.Entities.spotcableXML
         /// Serializes current office object into file
         /// </summary>
         /// <param name="fileName">full path of outupt xml file</param>
+        /// <param name="encoding"></param>
         /// <param name="exception">output Exception value if failed</param>
         /// <returns>true if can serialize and save into file; otherwise, false</returns>
         public virtual bool SaveToFile(string fileName, System.Text.Encoding encoding, out System.Exception exception)
@@ -3612,6 +3635,7 @@ namespace Services.Broadcast.Entities.spotcableXML
         /// Deserializes xml markup from file into an office object
         /// </summary>
         /// <param name="fileName">string xml file to load and deserialize</param>
+        /// <param name="encoding"></param>
         /// <param name="obj">Output office object</param>
         /// <param name="exception">output Exception value if deserialize failed</param>
         /// <returns>true if this XmlSerializer can deserialize the object; otherwise, false</returns>
@@ -3836,6 +3860,7 @@ namespace Services.Broadcast.Entities.spotcableXML
         /// Serializes current phone object into file
         /// </summary>
         /// <param name="fileName">full path of outupt xml file</param>
+        /// <param name="encoding"></param>
         /// <param name="exception">output Exception value if failed</param>
         /// <returns>true if can serialize and save into file; otherwise, false</returns>
         public virtual bool SaveToFile(string fileName, System.Text.Encoding encoding, out System.Exception exception)
@@ -3886,6 +3911,7 @@ namespace Services.Broadcast.Entities.spotcableXML
         /// Deserializes xml markup from file into an phone object
         /// </summary>
         /// <param name="fileName">string xml file to load and deserialize</param>
+        /// <param name="encoding"></param>
         /// <param name="obj">Output phone object</param>
         /// <param name="exception">output Exception value if deserialize failed</param>
         /// <returns>true if this XmlSerializer can deserialize the object; otherwise, false</returns>
@@ -4177,6 +4203,7 @@ namespace Services.Broadcast.Entities.spotcableXML
         /// Serializes current contact object into file
         /// </summary>
         /// <param name="fileName">full path of outupt xml file</param>
+        /// <param name="encoding"></param>
         /// <param name="exception">output Exception value if failed</param>
         /// <returns>true if can serialize and save into file; otherwise, false</returns>
         public virtual bool SaveToFile(string fileName, System.Text.Encoding encoding, out System.Exception exception)
@@ -4227,6 +4254,7 @@ namespace Services.Broadcast.Entities.spotcableXML
         /// Deserializes xml markup from file into an contact object
         /// </summary>
         /// <param name="fileName">string xml file to load and deserialize</param>
+        /// <param name="encoding"></param>
         /// <param name="obj">Output contact object</param>
         /// <param name="exception">output Exception value if deserialize failed</param>
         /// <returns>true if this XmlSerializer can deserialize the object; otherwise, false</returns>
@@ -4446,6 +4474,7 @@ namespace Services.Broadcast.Entities.spotcableXML
         /// Serializes current product object into file
         /// </summary>
         /// <param name="fileName">full path of outupt xml file</param>
+        /// <param name="encoding"></param>
         /// <param name="exception">output Exception value if failed</param>
         /// <returns>true if can serialize and save into file; otherwise, false</returns>
         public virtual bool SaveToFile(string fileName, System.Text.Encoding encoding, out System.Exception exception)
@@ -4496,6 +4525,7 @@ namespace Services.Broadcast.Entities.spotcableXML
         /// Deserializes xml markup from file into an product object
         /// </summary>
         /// <param name="fileName">string xml file to load and deserialize</param>
+        /// <param name="encoding"></param>
         /// <param name="obj">Output product object</param>
         /// <param name="exception">output Exception value if deserialize failed</param>
         /// <returns>true if this XmlSerializer can deserialize the object; otherwise, false</returns>
@@ -4699,6 +4729,7 @@ namespace Services.Broadcast.Entities.spotcableXML
         /// Serializes current estimate object into file
         /// </summary>
         /// <param name="fileName">full path of outupt xml file</param>
+        /// <param name="encoding"></param>
         /// <param name="exception">output Exception value if failed</param>
         /// <returns>true if can serialize and save into file; otherwise, false</returns>
         public virtual bool SaveToFile(string fileName, System.Text.Encoding encoding, out System.Exception exception)
@@ -4749,6 +4780,7 @@ namespace Services.Broadcast.Entities.spotcableXML
         /// Deserializes xml markup from file into an estimate object
         /// </summary>
         /// <param name="fileName">string xml file to load and deserialize</param>
+        /// <param name="encoding"></param>
         /// <param name="obj">Output estimate object</param>
         /// <param name="exception">output Exception value if deserialize failed</param>
         /// <returns>true if this XmlSerializer can deserialize the object; otherwise, false</returns>
@@ -4937,6 +4969,7 @@ namespace Services.Broadcast.Entities.spotcableXML
         /// Serializes current demo object into file
         /// </summary>
         /// <param name="fileName">full path of outupt xml file</param>
+        /// <param name="encoding"></param>
         /// <param name="exception">output Exception value if failed</param>
         /// <returns>true if can serialize and save into file; otherwise, false</returns>
         public virtual bool SaveToFile(string fileName, System.Text.Encoding encoding, out System.Exception exception)
@@ -4987,6 +5020,7 @@ namespace Services.Broadcast.Entities.spotcableXML
         /// Deserializes xml markup from file into an demo object
         /// </summary>
         /// <param name="fileName">string xml file to load and deserialize</param>
+        /// <param name="encoding"></param>
         /// <param name="obj">Output demo object</param>
         /// <param name="exception">output Exception value if deserialize failed</param>
         /// <returns>true if this XmlSerializer can deserialize the object; otherwise, false</returns>
@@ -5204,6 +5238,7 @@ namespace Services.Broadcast.Entities.spotcableXML
         /// Serializes current demoNameComplexType object into file
         /// </summary>
         /// <param name="fileName">full path of outupt xml file</param>
+        /// <param name="encoding"></param>
         /// <param name="exception">output Exception value if failed</param>
         /// <returns>true if can serialize and save into file; otherwise, false</returns>
         public virtual bool SaveToFile(string fileName, System.Text.Encoding encoding, out System.Exception exception)
@@ -5254,6 +5289,7 @@ namespace Services.Broadcast.Entities.spotcableXML
         /// Deserializes xml markup from file into an demoNameComplexType object
         /// </summary>
         /// <param name="fileName">string xml file to load and deserialize</param>
+        /// <param name="encoding"></param>
         /// <param name="obj">Output demoNameComplexType object</param>
         /// <param name="exception">output Exception value if deserialize failed</param>
         /// <returns>true if this XmlSerializer can deserialize the object; otherwise, false</returns>
@@ -5512,6 +5548,7 @@ namespace Services.Broadcast.Entities.spotcableXML
         /// Serializes current populations object into file
         /// </summary>
         /// <param name="fileName">full path of outupt xml file</param>
+        /// <param name="encoding"></param>
         /// <param name="exception">output Exception value if failed</param>
         /// <returns>true if can serialize and save into file; otherwise, false</returns>
         public virtual bool SaveToFile(string fileName, System.Text.Encoding encoding, out System.Exception exception)
@@ -5562,6 +5599,7 @@ namespace Services.Broadcast.Entities.spotcableXML
         /// Deserializes xml markup from file into an populations object
         /// </summary>
         /// <param name="fileName">string xml file to load and deserialize</param>
+        /// <param name="encoding"></param>
         /// <param name="obj">Output populations object</param>
         /// <param name="exception">output Exception value if deserialize failed</param>
         /// <returns>true if this XmlSerializer can deserialize the object; otherwise, false</returns>
@@ -5855,6 +5893,7 @@ namespace Services.Broadcast.Entities.spotcableXML
         /// Serializes current order object into file
         /// </summary>
         /// <param name="fileName">full path of outupt xml file</param>
+        /// <param name="encoding"></param>
         /// <param name="exception">output Exception value if failed</param>
         /// <returns>true if can serialize and save into file; otherwise, false</returns>
         public virtual bool SaveToFile(string fileName, System.Text.Encoding encoding, out System.Exception exception)
@@ -5905,6 +5944,7 @@ namespace Services.Broadcast.Entities.spotcableXML
         /// Deserializes xml markup from file into an order object
         /// </summary>
         /// <param name="fileName">string xml file to load and deserialize</param>
+        /// <param name="encoding"></param>
         /// <param name="obj">Output order object</param>
         /// <param name="exception">output Exception value if deserialize failed</param>
         /// <returns>true if this XmlSerializer can deserialize the object; otherwise, false</returns>
@@ -6108,6 +6148,7 @@ namespace Services.Broadcast.Entities.spotcableXML
         /// Serializes current totals object into file
         /// </summary>
         /// <param name="fileName">full path of outupt xml file</param>
+        /// <param name="encoding"></param>
         /// <param name="exception">output Exception value if failed</param>
         /// <returns>true if can serialize and save into file; otherwise, false</returns>
         public virtual bool SaveToFile(string fileName, System.Text.Encoding encoding, out System.Exception exception)
@@ -6158,6 +6199,7 @@ namespace Services.Broadcast.Entities.spotcableXML
         /// Deserializes xml markup from file into an totals object
         /// </summary>
         /// <param name="fileName">string xml file to load and deserialize</param>
+        /// <param name="encoding"></param>
         /// <param name="obj">Output totals object</param>
         /// <param name="exception">output Exception value if deserialize failed</param>
         /// <returns>true if this XmlSerializer can deserialize the object; otherwise, false</returns>
@@ -6367,6 +6409,7 @@ namespace Services.Broadcast.Entities.spotcableXML
         /// Serializes current cost object into file
         /// </summary>
         /// <param name="fileName">full path of outupt xml file</param>
+        /// <param name="encoding"></param>
         /// <param name="exception">output Exception value if failed</param>
         /// <returns>true if can serialize and save into file; otherwise, false</returns>
         public virtual bool SaveToFile(string fileName, System.Text.Encoding encoding, out System.Exception exception)
@@ -6417,6 +6460,7 @@ namespace Services.Broadcast.Entities.spotcableXML
         /// Deserializes xml markup from file into an cost object
         /// </summary>
         /// <param name="fileName">string xml file to load and deserialize</param>
+        /// <param name="encoding"></param>
         /// <param name="obj">Output cost object</param>
         /// <param name="exception">output Exception value if deserialize failed</param>
         /// <returns>true if this XmlSerializer can deserialize the object; otherwise, false</returns>
@@ -6620,6 +6664,7 @@ namespace Services.Broadcast.Entities.spotcableXML
         /// Serializes current market object into file
         /// </summary>
         /// <param name="fileName">full path of outupt xml file</param>
+        /// <param name="encoding"></param>
         /// <param name="exception">output Exception value if failed</param>
         /// <returns>true if can serialize and save into file; otherwise, false</returns>
         public virtual bool SaveToFile(string fileName, System.Text.Encoding encoding, out System.Exception exception)
@@ -6670,6 +6715,7 @@ namespace Services.Broadcast.Entities.spotcableXML
         /// Deserializes xml markup from file into an market object
         /// </summary>
         /// <param name="fileName">string xml file to load and deserialize</param>
+        /// <param name="encoding"></param>
         /// <param name="obj">Output market object</param>
         /// <param name="exception">output Exception value if deserialize failed</param>
         /// <returns>true if this XmlSerializer can deserialize the object; otherwise, false</returns>
@@ -6933,6 +6979,7 @@ namespace Services.Broadcast.Entities.spotcableXML
         /// Serializes current survey object into file
         /// </summary>
         /// <param name="fileName">full path of outupt xml file</param>
+        /// <param name="encoding"></param>
         /// <param name="exception">output Exception value if failed</param>
         /// <returns>true if can serialize and save into file; otherwise, false</returns>
         public virtual bool SaveToFile(string fileName, System.Text.Encoding encoding, out System.Exception exception)
@@ -6983,6 +7030,7 @@ namespace Services.Broadcast.Entities.spotcableXML
         /// Deserializes xml markup from file into an survey object
         /// </summary>
         /// <param name="fileName">string xml file to load and deserialize</param>
+        /// <param name="encoding"></param>
         /// <param name="obj">Output survey object</param>
         /// <param name="exception">output Exception value if deserialize failed</param>
         /// <returns>true if this XmlSerializer can deserialize the object; otherwise, false</returns>
@@ -7185,6 +7233,7 @@ namespace Services.Broadcast.Entities.spotcableXML
         /// Serializes current surveyComment object into file
         /// </summary>
         /// <param name="fileName">full path of outupt xml file</param>
+        /// <param name="encoding"></param>
         /// <param name="exception">output Exception value if failed</param>
         /// <returns>true if can serialize and save into file; otherwise, false</returns>
         public virtual bool SaveToFile(string fileName, System.Text.Encoding encoding, out System.Exception exception)
@@ -7235,6 +7284,7 @@ namespace Services.Broadcast.Entities.spotcableXML
         /// Deserializes xml markup from file into an surveyComment object
         /// </summary>
         /// <param name="fileName">string xml file to load and deserialize</param>
+        /// <param name="encoding"></param>
         /// <param name="obj">Output surveyComment object</param>
         /// <param name="exception">output Exception value if deserialize failed</param>
         /// <returns>true if this XmlSerializer can deserialize the object; otherwise, false</returns>
@@ -7438,6 +7488,7 @@ namespace Services.Broadcast.Entities.spotcableXML
         /// Serializes current breakoutMonth object into file
         /// </summary>
         /// <param name="fileName">full path of outupt xml file</param>
+        /// <param name="encoding"></param>
         /// <param name="exception">output Exception value if failed</param>
         /// <returns>true if can serialize and save into file; otherwise, false</returns>
         public virtual bool SaveToFile(string fileName, System.Text.Encoding encoding, out System.Exception exception)
@@ -7488,6 +7539,7 @@ namespace Services.Broadcast.Entities.spotcableXML
         /// Deserializes xml markup from file into an breakoutMonth object
         /// </summary>
         /// <param name="fileName">string xml file to load and deserialize</param>
+        /// <param name="encoding"></param>
         /// <param name="obj">Output breakoutMonth object</param>
         /// <param name="exception">output Exception value if deserialize failed</param>
         /// <returns>true if this XmlSerializer can deserialize the object; otherwise, false</returns>
@@ -7831,6 +7883,7 @@ namespace Services.Broadcast.Entities.spotcableXML
         /// Serializes current systemOrder object into file
         /// </summary>
         /// <param name="fileName">full path of outupt xml file</param>
+        /// <param name="encoding"></param>
         /// <param name="exception">output Exception value if failed</param>
         /// <returns>true if can serialize and save into file; otherwise, false</returns>
         public virtual bool SaveToFile(string fileName, System.Text.Encoding encoding, out System.Exception exception)
@@ -7881,6 +7934,7 @@ namespace Services.Broadcast.Entities.spotcableXML
         /// Deserializes xml markup from file into an systemOrder object
         /// </summary>
         /// <param name="fileName">string xml file to load and deserialize</param>
+        /// <param name="encoding"></param>
         /// <param name="obj">Output systemOrder object</param>
         /// <param name="exception">output Exception value if deserialize failed</param>
         /// <returns>true if this XmlSerializer can deserialize the object; otherwise, false</returns>
@@ -8084,6 +8138,7 @@ namespace Services.Broadcast.Entities.spotcableXML
         /// Serializes current system object into file
         /// </summary>
         /// <param name="fileName">full path of outupt xml file</param>
+        /// <param name="encoding"></param>
         /// <param name="exception">output Exception value if failed</param>
         /// <returns>true if can serialize and save into file; otherwise, false</returns>
         public virtual bool SaveToFile(string fileName, System.Text.Encoding encoding, out System.Exception exception)
@@ -8134,6 +8189,7 @@ namespace Services.Broadcast.Entities.spotcableXML
         /// Deserializes xml markup from file into an system object
         /// </summary>
         /// <param name="fileName">string xml file to load and deserialize</param>
+        /// <param name="encoding"></param>
         /// <param name="obj">Output system object</param>
         /// <param name="exception">output Exception value if deserialize failed</param>
         /// <returns>true if this XmlSerializer can deserialize the object; otherwise, false</returns>
@@ -8337,6 +8393,7 @@ namespace Services.Broadcast.Entities.spotcableXML
         /// Serializes current weeks object into file
         /// </summary>
         /// <param name="fileName">full path of outupt xml file</param>
+        /// <param name="encoding"></param>
         /// <param name="exception">output Exception value if failed</param>
         /// <returns>true if can serialize and save into file; otherwise, false</returns>
         public virtual bool SaveToFile(string fileName, System.Text.Encoding encoding, out System.Exception exception)
@@ -8387,6 +8444,7 @@ namespace Services.Broadcast.Entities.spotcableXML
         /// Deserializes xml markup from file into an weeks object
         /// </summary>
         /// <param name="fileName">string xml file to load and deserialize</param>
+        /// <param name="encoding"></param>
         /// <param name="obj">Output weeks object</param>
         /// <param name="exception">output Exception value if deserialize failed</param>
         /// <returns>true if this XmlSerializer can deserialize the object; otherwise, false</returns>
@@ -8590,6 +8648,7 @@ namespace Services.Broadcast.Entities.spotcableXML
         /// Serializes current week object into file
         /// </summary>
         /// <param name="fileName">full path of outupt xml file</param>
+        /// <param name="encoding"></param>
         /// <param name="exception">output Exception value if failed</param>
         /// <returns>true if can serialize and save into file; otherwise, false</returns>
         public virtual bool SaveToFile(string fileName, System.Text.Encoding encoding, out System.Exception exception)
@@ -8640,6 +8699,7 @@ namespace Services.Broadcast.Entities.spotcableXML
         /// Deserializes xml markup from file into an week object
         /// </summary>
         /// <param name="fileName">string xml file to load and deserialize</param>
+        /// <param name="encoding"></param>
         /// <param name="obj">Output week object</param>
         /// <param name="exception">output Exception value if deserialize failed</param>
         /// <returns>true if this XmlSerializer can deserialize the object; otherwise, false</returns>
@@ -9023,6 +9083,7 @@ namespace Services.Broadcast.Entities.spotcableXML
         /// Serializes current detailLine object into file
         /// </summary>
         /// <param name="fileName">full path of outupt xml file</param>
+        /// <param name="encoding"></param>
         /// <param name="exception">output Exception value if failed</param>
         /// <returns>true if can serialize and save into file; otherwise, false</returns>
         public virtual bool SaveToFile(string fileName, System.Text.Encoding encoding, out System.Exception exception)
@@ -9073,6 +9134,7 @@ namespace Services.Broadcast.Entities.spotcableXML
         /// Deserializes xml markup from file into an detailLine object
         /// </summary>
         /// <param name="fileName">string xml file to load and deserialize</param>
+        /// <param name="encoding"></param>
         /// <param name="obj">Output detailLine object</param>
         /// <param name="exception">output Exception value if deserialize failed</param>
         /// <returns>true if this XmlSerializer can deserialize the object; otherwise, false</returns>
@@ -9379,6 +9441,7 @@ namespace Services.Broadcast.Entities.spotcableXML
         /// Serializes current dayOfWeek object into file
         /// </summary>
         /// <param name="fileName">full path of outupt xml file</param>
+        /// <param name="encoding"></param>
         /// <param name="exception">output Exception value if failed</param>
         /// <returns>true if can serialize and save into file; otherwise, false</returns>
         public virtual bool SaveToFile(string fileName, System.Text.Encoding encoding, out System.Exception exception)
@@ -9429,6 +9492,7 @@ namespace Services.Broadcast.Entities.spotcableXML
         /// Deserializes xml markup from file into an dayOfWeek object
         /// </summary>
         /// <param name="fileName">string xml file to load and deserialize</param>
+        /// <param name="encoding"></param>
         /// <param name="obj">Output dayOfWeek object</param>
         /// <param name="exception">output Exception value if deserialize failed</param>
         /// <returns>true if this XmlSerializer can deserialize the object; otherwise, false</returns>
@@ -9632,6 +9696,7 @@ namespace Services.Broadcast.Entities.spotcableXML
         /// Serializes current network object into file
         /// </summary>
         /// <param name="fileName">full path of outupt xml file</param>
+        /// <param name="encoding"></param>
         /// <param name="exception">output Exception value if failed</param>
         /// <returns>true if can serialize and save into file; otherwise, false</returns>
         public virtual bool SaveToFile(string fileName, System.Text.Encoding encoding, out System.Exception exception)
@@ -9682,6 +9747,7 @@ namespace Services.Broadcast.Entities.spotcableXML
         /// Deserializes xml markup from file into an network object
         /// </summary>
         /// <param name="fileName">string xml file to load and deserialize</param>
+        /// <param name="encoding"></param>
         /// <param name="obj">Output network object</param>
         /// <param name="exception">output Exception value if deserialize failed</param>
         /// <returns>true if this XmlSerializer can deserialize the object; otherwise, false</returns>
@@ -9885,6 +9951,7 @@ namespace Services.Broadcast.Entities.spotcableXML
         /// Serializes current spotCost object into file
         /// </summary>
         /// <param name="fileName">full path of outupt xml file</param>
+        /// <param name="encoding"></param>
         /// <param name="exception">output Exception value if failed</param>
         /// <returns>true if can serialize and save into file; otherwise, false</returns>
         public virtual bool SaveToFile(string fileName, System.Text.Encoding encoding, out System.Exception exception)
@@ -9935,6 +10002,7 @@ namespace Services.Broadcast.Entities.spotcableXML
         /// Deserializes xml markup from file into an spotCost object
         /// </summary>
         /// <param name="fileName">string xml file to load and deserialize</param>
+        /// <param name="encoding"></param>
         /// <param name="obj">Output spotCost object</param>
         /// <param name="exception">output Exception value if deserialize failed</param>
         /// <returns>true if this XmlSerializer can deserialize the object; otherwise, false</returns>
@@ -10159,6 +10227,7 @@ namespace Services.Broadcast.Entities.spotcableXML
         /// Serializes current demoValue object into file
         /// </summary>
         /// <param name="fileName">full path of outupt xml file</param>
+        /// <param name="encoding"></param>
         /// <param name="exception">output Exception value if failed</param>
         /// <returns>true if can serialize and save into file; otherwise, false</returns>
         public virtual bool SaveToFile(string fileName, System.Text.Encoding encoding, out System.Exception exception)
@@ -10209,6 +10278,7 @@ namespace Services.Broadcast.Entities.spotcableXML
         /// Deserializes xml markup from file into an demoValue object
         /// </summary>
         /// <param name="fileName">string xml file to load and deserialize</param>
+        /// <param name="encoding"></param>
         /// <param name="obj">Output demoValue object</param>
         /// <param name="exception">output Exception value if deserialize failed</param>
         /// <returns>true if this XmlSerializer can deserialize the object; otherwise, false</returns>
@@ -10426,6 +10496,7 @@ namespace Services.Broadcast.Entities.spotcableXML
         /// Serializes current demoValueValue object into file
         /// </summary>
         /// <param name="fileName">full path of outupt xml file</param>
+        /// <param name="encoding"></param>
         /// <param name="exception">output Exception value if failed</param>
         /// <returns>true if can serialize and save into file; otherwise, false</returns>
         public virtual bool SaveToFile(string fileName, System.Text.Encoding encoding, out System.Exception exception)
@@ -10476,6 +10547,7 @@ namespace Services.Broadcast.Entities.spotcableXML
         /// Deserializes xml markup from file into an demoValueValue object
         /// </summary>
         /// <param name="fileName">string xml file to load and deserialize</param>
+        /// <param name="encoding"></param>
         /// <param name="obj">Output demoValueValue object</param>
         /// <param name="exception">output Exception value if deserialize failed</param>
         /// <returns>true if this XmlSerializer can deserialize the object; otherwise, false</returns>
@@ -10713,6 +10785,7 @@ namespace Services.Broadcast.Entities.spotcableXML
         /// Serializes current spot object into file
         /// </summary>
         /// <param name="fileName">full path of outupt xml file</param>
+        /// <param name="encoding"></param>
         /// <param name="exception">output Exception value if failed</param>
         /// <returns>true if can serialize and save into file; otherwise, false</returns>
         public virtual bool SaveToFile(string fileName, System.Text.Encoding encoding, out System.Exception exception)
