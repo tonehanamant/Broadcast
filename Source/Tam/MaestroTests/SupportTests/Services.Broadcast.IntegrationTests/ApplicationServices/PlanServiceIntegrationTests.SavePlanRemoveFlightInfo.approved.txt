@@ -4,6 +4,7 @@
   "Budget": 100.0000,
   "CampaignId": 1,
   "CPM": 12.0000,
+  "Dayparts": [],
   "Delivery": 100.0,
   "Equivalized": true,
   "FlightEndDate": null,

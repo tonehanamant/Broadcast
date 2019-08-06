@@ -76,6 +76,7 @@ namespace Services.Broadcast.Repositories
                 {
                     var plan = context.plans
                         .Include(p => p.plan_flight_hiatus)
+                        .Include(p => p.plan_dayparts)
                         .Single(p => p.id == planDto.Id, "Invalid plan id.");
                     _HydrateFromDto(plan, planDto, context);
 
@@ -91,6 +92,7 @@ namespace Services.Broadcast.Repositories
                     var entity = context.plans
                         .Include(p => p.plan_flight_hiatus)
                         .Include(p => p.plan_secondary_audiences)
+                        .Include(p => p.plan_dayparts)
                         .Single(s => s.id == planId, "Invalid plan id.");
                     return _MapToDto(entity);
                 });
@@ -124,7 +126,8 @@ namespace Services.Broadcast.Repositories
                     {
                         AudienceId = x.audience_id,
                         Type = (AudienceTypeEnum)x.audience_type
-                    }).ToList()
+                    }).ToList(),
+                Dayparts = entity.plan_dayparts.Select(_MapPlanDaypartDto).ToList()
             };
             return dto;
         }
@@ -151,6 +154,7 @@ namespace Services.Broadcast.Repositories
             _HydratePlanAudienceInfo(entity, planDto);
             _HydratePlanBudget(entity, planDto);
             _HydratePlanFlightHiatus(entity, planDto, context);
+            _HydrateDayparts(entity, planDto, context);
             _HydratePlanSecondaryAudiences(entity, planDto, context);
         }
 
@@ -170,6 +174,8 @@ namespace Services.Broadcast.Repositories
             entity.cpm = planDto.CPM;
         }
 
+        #region Flight and Hiatus
+
         private void _HydratePlanFlightHiatus(plan entity, PlanDto planDto, QueryHintBroadcastContext context)
         {
             context.plan_flight_hiatus.RemoveRange(entity.plan_flight_hiatus);
@@ -179,6 +185,37 @@ namespace Services.Broadcast.Repositories
             });
         }
 
+        #endregion // #region Flight and Hiatus
+
+        #region Plan Daypart
+
+        private PlanDaypartDto _MapPlanDaypartDto(plan_dayparts entity)
+        {
+            var dto = new PlanDaypartDto
+            {
+                Id = entity.id,
+                DaypartCodeId = entity.daypart_code_id,
+                StartTimeSeconds = entity.start_time_seconds,
+                EndTimeSeconds = entity.end_time_seconds,
+                WeightingGoalPercent = entity.weighting_goal_percent
+            };
+            return dto;
+        }
+
+        private void _HydrateDayparts(plan entity, PlanDto planDto, QueryHintBroadcastContext context)
+        {
+            context.plan_dayparts.RemoveRange(entity.plan_dayparts);
+            planDto.Dayparts.ForEach(d => entity.plan_dayparts.Add(new plan_dayparts
+                {
+                    id = d.Id,
+                    daypart_code_id = d.DaypartCodeId,
+                    start_time_seconds = d.StartTimeSeconds,
+                    end_time_seconds = d.EndTimeSeconds,
+                    weighting_goal_percent = d.WeightingGoalPercent
+                }));
+        }
+
+        #endregion // #region Plan Daypart and Daypart Type
         private void _HydratePlanSecondaryAudiences(plan entity, PlanDto planDto, QueryHintBroadcastContext context)
         {
             context.plan_secondary_audiences.RemoveRange(entity.plan_secondary_audiences);

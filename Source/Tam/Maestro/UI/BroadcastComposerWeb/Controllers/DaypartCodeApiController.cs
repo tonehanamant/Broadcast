@@ -31,5 +31,16 @@ namespace BroadcastComposerWeb.Controllers
                 _ConvertToBaseResponse(
                     () => _ApplicationServiceFactory.GetApplicationService<IDaypartCodeService>().GetAllDaypartCodes());
         }
+
+        /// <summary>
+        /// Gets the daypart code defaults.
+        /// </summary>
+        /// <returns>List of <see cref="DaypartCodeDefaultDto"/></returns>
+        [HttpGet]
+        [Route("Defaults")]
+        public BaseResponse<List<DaypartCodeDefaultDto>> GetDefaultDaypartCodes()
+        {
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IDaypartCodeService>().GetDaypartCodeDefaults());
+        }
     }
 }

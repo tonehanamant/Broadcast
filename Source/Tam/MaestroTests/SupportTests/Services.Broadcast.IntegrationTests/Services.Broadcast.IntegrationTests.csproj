@@ -244,6 +244,7 @@
     <Compile Include="ApplicationServices\AffPPServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\AffidavitValidationEngineTests.cs" />
     <Compile Include="ApplicationServices\CampaignServiceIntegrationTests.cs" />
+    <Compile Include="ApplicationServices\DaypartTypeServiceTests.cs" />
     <Compile Include="ApplicationServices\PlanServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\DaypartCodeServiceTests.cs" />
     <Compile Include="ApplicationServices\LogoServiceTests.cs" />

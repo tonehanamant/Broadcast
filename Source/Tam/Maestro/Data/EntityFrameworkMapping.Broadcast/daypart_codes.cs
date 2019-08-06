@@ -21,17 +21,22 @@ namespace EntityFrameworkMapping.Broadcast
             this.scx_generation_job_files = new HashSet<scx_generation_job_files>();
             this.scx_generation_jobs = new HashSet<scx_generation_jobs>();
             this.inventory_summary_quarter_details = new HashSet<inventory_summary_quarter_details>();
+            this.plan_dayparts = new HashSet<plan_dayparts>();
         }
     
         public int id { get; set; }
         public string code { get; set; }
         public bool is_active { get; set; }
         public string full_name { get; set; }
+        public int default_start_time_seconds { get; set; }
+        public int default_end_time_seconds { get; set; }
+        public int daypart_type { get; set; }
     
         public virtual ICollection<inventory_file_proprietary_header> inventory_file_proprietary_header { get; set; }
         public virtual ICollection<station_inventory_manifest_dayparts> station_inventory_manifest_dayparts { get; set; }
         public virtual ICollection<scx_generation_job_files> scx_generation_job_files { get; set; }
         public virtual ICollection<scx_generation_jobs> scx_generation_jobs { get; set; }
         public virtual ICollection<inventory_summary_quarter_details> inventory_summary_quarter_details { get; set; }
+        public virtual ICollection<plan_dayparts> plan_dayparts { get; set; }
     }
 }

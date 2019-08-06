@@ -1,13 +1,14 @@
 ﻿using Common.Services.Extensions;
 using Common.Services.Repositories;
+using ConfigurationService.Client;
 using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.Enums;
+using Services.Broadcast.Helpers;
 using System.Collections.Generic;
 using System.Linq;
-using ConfigurationService.Client;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
-using Tam.Maestro.Services.Clients;
 
 namespace Services.Broadcast.Repositories
 {
@@ -18,6 +19,12 @@ namespace Services.Broadcast.Repositories
         List<DaypartCodeDto> GetDaypartCodesByInventorySource(int inventorySourceId);
         List<DaypartCodeDto> GetAllActiveDaypartCodes();
         DaypartCodeDto GetDaypartCodeById(int daypartCodeId);
+
+        /// <summary>
+        /// Gets the daypart code defaults.
+        /// </summary>
+        /// <returns>List of <see cref="DaypartCodeDefaultDto"/></returns>
+        List<DaypartCodeDefaultDto> GetDaypartCodeDefaults();
     }
 
     public class DaypartCodeRepository : BroadcastRepositoryBase, IDaypartCodeRepository
@@ -85,6 +92,33 @@ namespace Services.Broadcast.Repositories
                 Code = daypartCode.code,
                 FullName = daypartCode.full_name
             };
+        }
+
+        ///<inheritdoc/>
+        public List<DaypartCodeDefaultDto> GetDaypartCodeDefaults()
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                var defaultDaypartCodes = context.daypart_codes
+                    .Where(c => c.is_active
+                                /*
+                                 * https://jira.crossmw.com/browse/PRI-7462?focusedCommentId=188000&page=com.atlassian.jira.plugin.system.issuetabpanels:comment-tabpanel#comment-188000
+                                 * There is a Tech Debt item to remove Diginet from the table.
+                                 * This filter will be in place until then.
+                                 */
+                                && c.full_name.Equals("Diginet") == false)
+                    .ToList();
+                var defaultDaypartCodeDtos = defaultDaypartCodes.Select(c => new DaypartCodeDefaultDto
+                {
+                    Id = c.id,
+                    Code = c.code,
+                    FullName = c.full_name,
+                    DaypartType = EnumHelper.GetEnum<DaypartTypeEnum>(c.daypart_type),
+                    DefaultStartTimeSeconds = c.default_start_time_seconds,
+                    DefaultEndTimeSeconds = c.default_end_time_seconds
+                }).ToList();
+                return defaultDaypartCodeDtos;
+            });
         }
     }
 }

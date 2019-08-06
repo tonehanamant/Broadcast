@@ -1,0 +1,106 @@
+﻿[
+  {
+    "Code": "EMN",
+    "DaypartType": 1,
+    "DefaultEndTimeSeconds": 79199,
+    "DefaultStartTimeSeconds": 14400,
+    "FullName": "Early Morning News",
+    "Id": 1
+  },
+  {
+    "Code": "MDN",
+    "DaypartType": 1,
+    "DefaultEndTimeSeconds": 46799,
+    "DefaultStartTimeSeconds": 39600,
+    "FullName": "Midday News",
+    "Id": 2
+  },
+  {
+    "Code": "EN",
+    "DaypartType": 1,
+    "DefaultEndTimeSeconds": 68399,
+    "DefaultStartTimeSeconds": 57600,
+    "FullName": "Evening News",
+    "Id": 3
+  },
+  {
+    "Code": "LN",
+    "DaypartType": 1,
+    "DefaultEndTimeSeconds": 86699,
+    "DefaultStartTimeSeconds": 72000,
+    "FullName": "Late News",
+    "Id": 4
+  },
+  {
+    "Code": "ENLN",
+    "DaypartType": 1,
+    "DefaultEndTimeSeconds": 86699,
+    "DefaultStartTimeSeconds": 57600,
+    "FullName": "Evening News/Late News",
+    "Id": 5
+  },
+  {
+    "Code": "EF",
+    "DaypartType": 2,
+    "DefaultEndTimeSeconds": 64799,
+    "DefaultStartTimeSeconds": 54000,
+    "FullName": "Early Fringe",
+    "Id": 6
+  },
+  {
+    "Code": "PA",
+    "DaypartType": 2,
+    "DefaultEndTimeSeconds": 71999,
+    "DefaultStartTimeSeconds": 64800,
+    "FullName": "Prime Access",
+    "Id": 7
+  },
+  {
+    "Code": "PT",
+    "DaypartType": 2,
+    "DefaultEndTimeSeconds": 82799,
+    "DefaultStartTimeSeconds": 72000,
+    "FullName": "Prime",
+    "Id": 8
+  },
+  {
+    "Code": "LF",
+    "DaypartType": 2,
+    "DefaultEndTimeSeconds": 93599,
+    "DefaultStartTimeSeconds": 82800,
+    "FullName": "Late Fringe",
+    "Id": 9
+  },
+  {
+    "Code": "SYN",
+    "DaypartType": 2,
+    "DefaultEndTimeSeconds": 93899,
+    "DefaultStartTimeSeconds": 21600,
+    "FullName": "Total Day Syndication",
+    "Id": 10
+  },
+  {
+    "Code": "OVN",
+    "DaypartType": 2,
+    "DefaultEndTimeSeconds": 21599,
+    "DefaultStartTimeSeconds": 7200,
+    "FullName": "Overnights",
+    "Id": 11
+  },
+  {
+    "Code": "DAY",
+    "DaypartType": 2,
+    "DefaultEndTimeSeconds": 57599,
+    "DefaultStartTimeSeconds": 32400,
+    "FullName": "Daytime",
+    "Id": 12
+  },
+  {
+    "Code": "EM",
+    "DaypartType": 2,
+    "DefaultEndTimeSeconds": 32399,
+    "DefaultStartTimeSeconds": 21600,
+    "FullName": "Early Morning",
+    "Id": 14
+  }
+]

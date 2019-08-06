@@ -4,7 +4,26 @@
   "Budget": 100.0000,
   "CampaignId": 1,
   "CPM": 12.0000,
-  "Dayparts": [],
+  "Dayparts": [
+    {
+      "DaypartCodeId": 3,
+      "EndTimeSeconds": 1900,
+      "StartTimeSeconds": 1200,
+      "WeightingGoalPercent": 67.0
+    },
+    {
+      "DaypartCodeId": 1,
+      "EndTimeSeconds": 4600,
+      "StartTimeSeconds": 3600,
+      "WeightingGoalPercent": 23.5
+    },
+    {
+      "DaypartCodeId": 2,
+      "EndTimeSeconds": 2400,
+      "StartTimeSeconds": 1800,
+      "WeightingGoalPercent": null
+    }
+  ],
   "Delivery": 100.0,
   "Equivalized": true,
   "FlightEndDate": "2019-07-31T00:00:00",
@@ -18,16 +37,7 @@
   "Name": "New Plan",
   "PostingType": 2,
   "ProductId": 1,
-  "SecondaryAudiences": [
-    {
-      "AudienceId": 7,
-      "Type": 1
-    },
-    {
-      "AudienceId": 6,
-      "Type": 1
-    }
-  ],
+  "SecondaryAudiences": [],
   "ShareBookId": 437,
   "SpotLengthId": 1,
   "Status": 1

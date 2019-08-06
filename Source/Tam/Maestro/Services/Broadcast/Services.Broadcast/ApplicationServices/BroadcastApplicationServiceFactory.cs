@@ -185,7 +185,7 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IPlanBudgetDeliveryCalculator, PlanBudgetDeliveryCalculator>();
 
             unityContainer.RegisterType<IEnvironmentService, EnvironmentService>();
-
+            unityContainer.RegisterType<IDaypartTypeService, DaypartTypeService>();
 
             //@todo This is temporary to control the daypart source for Broadcast
             var repoFactory = unityContainer.Resolve<IDataRepositoryFactory>();

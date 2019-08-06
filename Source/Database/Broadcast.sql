@@ -594,6 +594,105 @@ BEGIN
 END
 /*************************************** END PRI-12674 *****************************************************/
 
+/*************************************** START PRI-7462 *****************************************************/
+
+IF NOT EXISTS (SELECT 1 FROM sys.columns WHERE Name = 'daypart_type' AND Object_ID = OBJECT_ID('daypart_codes'))
+BEGIN
+	CREATE TABLE #daypart_extensions
+	(
+		daypart_code_id INT,
+		default_start_time_seconds INT,
+		default_end_time_seconds INT,
+		daypart_type INT
+	)
+
+	INSERT INTO #daypart_extensions (daypart_code_id, default_start_time_seconds, default_end_time_seconds, daypart_type) 
+		VALUES
+			(1, 14400, 79199, 1)
+			,(2, 39600, 46799, 1)
+			,(3, 57600, 68399, 1)
+			,(4, 72000, 86699, 1)
+			,(5, 57600, 86699, 1)
+			,(6, 54000, 64799, 2)
+			,(7, 64800, 71999, 2)
+			,(8, 72000, 82799, 2)
+			,(9, 82800, 93599, 2)
+			,(10, 21600, 93899, 2)
+			,(12, 32400, 57599, 2)
+			,(11, 7200, 21599, 2)
+			,(14, 21600, 32399, 2)
+			,(13,0,0,2) -- Diginet -- See TechDebt
+
+	ALTER TABLE daypart_codes
+		ADD daypart_type INT NULL
+
+	ALTER TABLE daypart_codes
+		ADD default_start_time_seconds INT NULL
+
+	ALTER TABLE daypart_codes
+		ADD default_end_time_seconds INT NULL
+
+	DECLARE @SqlExtendDaypartcodes VARCHAR(MAX) = 
+	'		
+		UPDATE d SET
+			daypart_type = e.daypart_type
+			, default_start_time_seconds = e.default_start_time_seconds
+			, default_end_time_seconds = e.default_end_time_seconds
+		FROM daypart_codes d
+		INNER JOIN #daypart_extensions e
+			ON d.id = e.daypart_code_id
+	'
+	EXEC (@SqlExtendDaypartcodes)
+	DROP TABLE #daypart_extensions
+
+	DECLARE @DaypartCodesMakeNewColumnsNotNull VARCHAR(MAX) = 
+	'
+		ALTER TABLE daypart_codes
+			ALTER COLUMN daypart_type INT NOT NULL
+
+		ALTER TABLE daypart_codes
+			ALTER COLUMN default_start_time_seconds INT NOT NULL
+
+		ALTER TABLE daypart_codes
+			ALTER COLUMN default_end_time_seconds INT NOT NULL
+	'
+
+	EXEC (@DaypartCodesMakeNewColumnsNotNull)
+
+	DROP TABLE #daypart_extensions
+END	
+
+IF OBJECT_ID('plan_dayparts') IS NULL
+BEGIN
+	CREATE TABLE [dbo].[plan_dayparts]
+	(
+		[id] [INT] IDENTITY(1,1) NOT NULL,
+		[plan_id] [INT] NOT NULL,
+		[daypart_code_id] [INT] NOT NULL,
+		[start_time_seconds] [INT] NOT NULL,
+		[end_time_seconds] [INT] NOT NULL,
+		[weighting_goal_percent] [FLOAT] NULL
+		CONSTRAINT [PK_plan_dayparts] PRIMARY KEY CLUSTERED 
+		(
+			[id] ASC
+		)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY]
+
+	ALTER TABLE [dbo].[plan_dayparts] WITH CHECK ADD CONSTRAINT [FK_plan_dayparts_plans] FOREIGN KEY ([plan_id])
+		REFERENCES [dbo].[plans] (id)
+		ON DELETE CASCADE
+
+	ALTER TABLE [dbo].[plan_dayparts] WITH CHECK ADD CONSTRAINT [FK_plan_dayparts_daypart_codes] FOREIGN KEY ([daypart_code_id])
+		REFERENCES [dbo].[daypart_codes] (id)
+
+	CREATE NONCLUSTERED INDEX [IX_plan_dayparts_plan_id] ON [dbo].[plan_dayparts] ([plan_id] ASC)
+		INCLUDE ([id])
+		WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+
+END
+
+/*************************************** END PRI-7462 *****************************************************/
+
 /*************************************** START PRI-7469 *****************************************************/
 IF NOT EXISTS(SELECT * FROM sys.columns WHERE object_id = OBJECT_ID('plans') AND name = 'budget')
 BEGIN

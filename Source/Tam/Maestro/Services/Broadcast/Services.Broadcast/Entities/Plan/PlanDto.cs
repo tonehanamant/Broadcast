@@ -138,6 +138,14 @@ namespace Services.Broadcast.Entities.Plan
         public int? HUTBookId { get; set; }
 
         /// <summary>
+        /// Gets or sets the dayparts.
+        /// </summary>
+        /// <value>
+        /// The dayparts.
+        /// </value>
+        public List<PlanDaypartDto> Dayparts { get; set; } = new List<PlanDaypartDto>();
+
+        /// <summary>
         /// Gets or sets the secondary audiences.
         /// </summary>
         /// <value>
