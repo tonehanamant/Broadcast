@@ -591,7 +591,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var now = new DateTime(2019, 02, 02);
                 var result = _InventoryService.SaveInventoryFile(request, "IntegrationTestUser", now);
                 var job = _InventoryFileRatingsJobsRepository.GetLatestJob();
-                _InventoryRatingsProcessingService.ProcessInventoryRatingsJob(job.id.Value);
+                var source = _InventoryRatingsProcessingService.ProcessInventoryRatingsJob(job.id.Value);
+                _InventorySummaryService.AggregateInventorySummaryData(new List<int> { source });
 
                 inventoryCards = _InventorySummaryService.GetInventorySummariesWithCache(requestFilter, requestDate);
                 var afterNewFileCacheSize = _InventorySummaryCache.GetItemCount(false);

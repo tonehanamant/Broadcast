@@ -61,7 +61,7 @@ namespace Services.Broadcast.Converters.InventorySummary
                 TotalStations = GetTotalStations(inventorySummaryManifests),
                 TotalDaypartCodes = totalDaypartsCodes,
                 TotalUnits = _GetTotalUnits(inventorySummaryManifests),
-                LastUpdatedDate = GetLastJobCompletedDate(inventorySummaryManifestFiles),
+                LastUpdatedDate = DateTime.Now,
                 RatesAvailableFromQuarter = GetInventorySummaryQuarter(quartersForInventoryAvailable.Item1),
                 RatesAvailableToQuarter = GetInventorySummaryQuarter(quartersForInventoryAvailable.Item2),
                 InventoryGaps = inventoryGaps,

@@ -50,7 +50,7 @@ namespace Services.Broadcast.Converters.InventorySummary
                 InventorySourceId = inventorySource.Id,
                 Quarter = GetInventorySummaryQuarter( quarterDetail),
                 TotalDaypartCodes = inventorySummaryManifests.SelectMany(x => x.DaypartCodeIds).Distinct().Count(),
-                LastUpdatedDate = GetLastJobCompletedDate(inventorySummaryManifestFiles),
+                LastUpdatedDate = DateTime.Now,
                 RatesAvailableFromQuarter = GetInventorySummaryQuarter(quartersForInventoryAvailable.Item1),
                 RatesAvailableToQuarter = GetInventorySummaryQuarter(quartersForInventoryAvailable.Item2),
                 InventoryGaps = inventoryGaps,

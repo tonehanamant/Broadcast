@@ -23,7 +23,7 @@ namespace Services.Broadcast.Repositories
         List<InventorySummaryManifestDto> GetInventorySummaryManifestsForSyndicationSources(InventorySource inventorySource, DateTime startDate, DateTime endDate);
         List<InventorySummaryManifestDto> GetInventorySummaryManifestsForDiginetSources(InventorySource inventorySource, DateTime startDate, DateTime endDate);
         List<InventorySummaryManifestFileDto> GetInventorySummaryManifestFileDtos(List<int> inventoryFileIds);
-        Dictionary<int, int> GetLatestFileIdsBySource();
+        Dictionary<int, DateTime?> GetLatestSummaryUpdatesBySource();
         /// <summary>
         /// Saves the inventory summary aggregated data for the source
         /// </summary>
@@ -244,23 +244,18 @@ namespace Services.Broadcast.Repositories
         }
 
         /// <summary>
-        /// Returns file id and job id for the latest inventory file completed by source.
+        /// Returns source id and timestamp for the latest inventory summary completed by source.
         /// Used for caching inventory data.
         /// </summary>
         /// <returns></returns>
-        public Dictionary<int, int> GetLatestFileIdsBySource()
+        public Dictionary<int, DateTime?> GetLatestSummaryUpdatesBySource()
         {
             return _InReadUncommitedTransaction(
                 context =>
                 {
-                    return (from file in context.inventory_files
-                            join job in context.inventory_file_ratings_jobs
-                            on file.id equals job.inventory_file_id into fileJobs
-                            from fileJob in fileJobs.DefaultIfEmpty()
-                            where file.status == (byte) FileStatusEnum.Loaded && (fileJob == null || fileJob.status == (byte) BackgroundJobProcessingStatus.Succeeded)
-                            select new { file, fileJob })
-                            .GroupBy(g => g.file.inventory_source_id)
-                            .ToDictionary(g => g.Key, g => g.Max(f => f.file.id));
+                    return (from source in context.inventory_summary
+                            select source)
+                            .ToDictionary(s => s.inventory_source_id, s => s.last_update_date);
                             
                 });
         }

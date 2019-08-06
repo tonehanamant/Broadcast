@@ -58,7 +58,7 @@ namespace Services.Broadcast.Converters.InventorySummary
                 TotalStations = GetTotalStations(inventorySummaryManifests),
                 TotalPrograms = GetTotalPrograms(inventorySummaryManifests),
                 TotalProjectedHouseholdImpressions = _GetHouseholdImpressions(manifests, householdAudienceId),
-                LastUpdatedDate = GetFileLastCreatedDate(inventorySummaryManifestFiles),
+                LastUpdatedDate = DateTime.Now,
                 RatesAvailableFromQuarter = GetInventorySummaryQuarter(quartersForInventoryAvailable.Item1),
                 RatesAvailableToQuarter = GetInventorySummaryQuarter(quartersForInventoryAvailable.Item2),
                 InventoryGaps = inventoryGaps,

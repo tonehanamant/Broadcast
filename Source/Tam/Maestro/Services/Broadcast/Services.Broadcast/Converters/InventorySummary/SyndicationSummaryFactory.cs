@@ -3,6 +3,7 @@ using Services.Broadcast.Cache;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.InventorySummary;
 using Services.Broadcast.Repositories;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -42,7 +43,7 @@ namespace Services.Broadcast.Converters.InventorySummary
             {
                 InventorySourceId = inventorySource.Id,
                 Quarter = GetInventorySummaryQuarter(quarterDetail),
-                LastUpdatedDate = GetLastJobCompletedDate(inventorySummaryManifestFiles),
+                LastUpdatedDate = DateTime.Now,
                 TotalPrograms = GetTotalPrograms(manifests),
                 RatesAvailableFromQuarter = GetInventorySummaryQuarter(quartersForInventoryAvailable.Item1),
                 RatesAvailableToQuarter = GetInventorySummaryQuarter(quartersForInventoryAvailable.Item2),

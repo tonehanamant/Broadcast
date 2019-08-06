@@ -129,7 +129,7 @@ namespace Services.Broadcast.ApplicationServices
         public List<InventorySummaryDto> GetInventorySummariesWithCache(InventorySummaryFilterDto inventorySummaryFilterDto, DateTime currentDate)
         {
             List<InventorySummaryDto> GetInventorySummariesFunc () => GetInventorySummaries(inventorySummaryFilterDto, currentDate);
-            inventorySummaryFilterDto.LatestInventorySourceFileIds = _InventorySummaryRepository.GetLatestFileIdsBySource();
+            inventorySummaryFilterDto.LatestInventoryUpdatesBySourceId = _InventorySummaryRepository.GetLatestSummaryUpdatesBySource();
             return _InventorySummaryCache.GetOrCreate(inventorySummaryFilterDto, GetInventorySummariesFunc);
         }
 
