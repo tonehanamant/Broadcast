@@ -30,12 +30,13 @@ namespace Services.Broadcast.ApplicationServices
         CampaignDto GetCampaignById(int campaignId);
 
         /// <summary>
-        /// Creates the campaign.
+        /// Saves the campaign.
         /// </summary>
         /// <param name="campaign">The campaign.</param>
         /// <param name="userName">Name of the user.</param>
         /// <param name="createdDate">The created date.</param>
-        void CreateCampaign(CampaignDto campaign, string userName, DateTime createdDate);
+        /// <returns>Id of the new campaign</returns>
+        int SaveCampaign(CampaignDto campaign, string userName, DateTime createdDate);
 
         /// <summary>
         /// Gets the advertisers.
@@ -114,7 +115,7 @@ namespace Services.Broadcast.ApplicationServices
         }
 
         /// <inheritdoc />
-        public void CreateCampaign(CampaignDto campaign, string createdBy, DateTime createdDate)
+        public int SaveCampaign(CampaignDto campaign, string createdBy, DateTime createdDate)
         {
             var validator = GetCampaignValidator();
             validator.Validate(campaign);
@@ -123,7 +124,7 @@ namespace Services.Broadcast.ApplicationServices
             campaign.ModifiedDate = createdDate;
 
             var data = GetCampaignServiceData();
-            data.CreateCampaign(campaign, createdBy, createdDate);
+            return data.SaveCampaign(campaign, createdBy, createdDate);
         }
 
         #endregion // #region Operations

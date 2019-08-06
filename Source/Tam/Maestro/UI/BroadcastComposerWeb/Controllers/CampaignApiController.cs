@@ -28,9 +28,9 @@ namespace BroadcastComposerWeb.Controllers
         [Route("")]
         public BaseResponse<List<CampaignDto>> GetAllCampaigns()
         {
-            var items = _ApplicationServiceFactory.GetApplicationService<ICampaignService>().GetAllCampaigns();
-            var response = _ConvertToBaseResponse(() => items);
-            return response;
+            return
+                _ConvertToBaseResponse(
+                    () => _ApplicationServiceFactory.GetApplicationService<ICampaignService>().GetAllCampaigns());
         }
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace BroadcastComposerWeb.Controllers
         /// <param name="campaignId">The campaign identifier.</param>
         /// <returns>The campaign referenced by the given id.</returns>
         [HttpGet]
-        [Route("GetCampaignById")]
+        [Route("{campaignId}")]
         public BaseResponse<CampaignDto> GetCampaignById(int campaignId)
         {
             return
@@ -53,15 +53,11 @@ namespace BroadcastComposerWeb.Controllers
         /// <param name="campaign">The object with the data for the new campaign</param>
         [HttpPost]
         [Route("")]
-        public BaseResponse CreateCampaign(CampaignDto campaign)
+        public BaseResponse<int> CreateCampaign(CampaignDto campaign)
         {
-            _ApplicationServiceFactory.GetApplicationService<ICampaignService>()
-                .CreateCampaign(campaign, Identity.Name, DateTime.Now);
-            var response = new BaseResponse
-            {
-                Success = true
-            };
-            return response;
+            return
+                _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ICampaignService>()
+                .SaveCampaign(campaign, Identity.Name, DateTime.Now));
         }
 
         /// <summary>
@@ -69,12 +65,11 @@ namespace BroadcastComposerWeb.Controllers
         /// </summary>
         /// <returns>A list of advertiser objects.</returns>
         [HttpGet]
-        [Route("GetAdvertisers")]
+        [Route("Advertisers")]
         public BaseResponse<List<AdvertiserDto>> GetAdvertisers()
         {
-            List<AdvertiserDto> items = _ApplicationServiceFactory.GetApplicationService<ICampaignService>().GetAdvertisers();
-            var response = _ConvertToBaseResponse(() => items);
-            return response;
+            return
+                _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ICampaignService>().GetAdvertisers());
         }
 
         /// <summary>
@@ -82,12 +77,11 @@ namespace BroadcastComposerWeb.Controllers
         /// </summary>
         /// <returns>A list of agency objects.</returns>
         [HttpGet]
-        [Route("GetAgencies")]
+        [Route("Agencies")]
         public BaseResponse<List<AgencyDto>> GetAgencies()
         {
-            List<AgencyDto> items = _ApplicationServiceFactory.GetApplicationService<ICampaignService>().GetAgencies();
-            var response = _ConvertToBaseResponse(() => items);
-            return response;
+            return
+               _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ICampaignService>().GetAgencies());
         }
     }
 }

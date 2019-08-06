@@ -169,7 +169,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Camp
                 .Callback(() => callCount++);
             var tc = new CampaignServiceData(campaignRepository.Object, smsClient.Object); ;
 
-            tc.CreateCampaign(campaignToSave, username, now);
+            tc.SaveCampaign(campaignToSave, username, now);
 
             Assert.AreEqual(1, callCount);
         }
@@ -199,7 +199,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Camp
                 
             var tc = new CampaignServiceData(campaignRepository.Object, smsClient.Object); ;
 
-            var caught = Assert.Throws<Exception>(() => tc.CreateCampaign(campaignToSave, username, now));
+            var caught = Assert.Throws<Exception>(() => tc.SaveCampaign(campaignToSave, username, now));
 
             Assert.IsNotNull(caught);
             Assert.AreEqual(1, callCount);

@@ -51,7 +51,29 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 var campaign = _GetValidCampaign();
 
-                _CampaignService.CreateCampaign(campaign, IntegrationTestUser, CreatedDate);
+                int campaignId = _CampaignService.SaveCampaign(campaign, IntegrationTestUser, CreatedDate);
+                Assert.IsTrue(campaignId > 0);
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void UpdateCampaignTest()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var campaign = _GetValidCampaign();
+                int campaignId = _CampaignService.SaveCampaign(campaign, IntegrationTestUser, CreatedDate);
+
+                CampaignDto foundCampaign = _CampaignService.GetCampaignById(campaignId);
+
+                foundCampaign.Name = "Updated name of Campaign1";
+                int updatedCampaignId = _CampaignService.SaveCampaign(foundCampaign, IntegrationTestUser, CreatedDate);
+                CampaignDto updatedCampaign = _CampaignService.GetCampaignById(campaignId);
+
+                Assert.AreEqual(updatedCampaign.Id, campaignId);
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(updatedCampaign, _GetJsonSettings()));
             }
         }
 
@@ -66,7 +88,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 // Invalid advertiser id.
                 campaign.AdvertiserId = 0;
 
-                var exception = Assert.Throws<InvalidOperationException>(() => _CampaignService.CreateCampaign(campaign, IntegrationTestUser, CreatedDate));
+                var exception = Assert.Throws<InvalidOperationException>(() => _CampaignService.SaveCampaign(campaign, IntegrationTestUser, CreatedDate));
 
                 Assert.That(exception.Message, Is.EqualTo(CampaignValidator.InvalidAdvertiserErrorMessage));
             }
@@ -85,7 +107,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 campaign.Name = campaignName;
 
-                var exception = Assert.Throws<InvalidOperationException>(() => _CampaignService.CreateCampaign(campaign, IntegrationTestUser, CreatedDate));
+                var exception = Assert.Throws<InvalidOperationException>(() => _CampaignService.SaveCampaign(campaign, IntegrationTestUser, CreatedDate));
 
                 Assert.That(exception.Message, Is.EqualTo(CampaignValidator.InvalidCampaignNameErrorMessage));
             }

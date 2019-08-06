@@ -37,7 +37,15 @@ namespace Services.Broadcast.Repositories
         /// <param name="campaignDto">The campaign dto.</param>
         /// <param name="createdBy">The created by.</param>
         /// <param name="createdDate">The created date.</param>
-        void CreateCampaign(CampaignDto campaignDto, string createdBy, DateTime createdDate);
+        /// <returns>Id of the new campaign</returns>
+        int CreateCampaign(CampaignDto campaignDto, string createdBy, DateTime createdDate);
+
+        /// <summary>
+        /// Updates the campaign.
+        /// </summary>
+        /// <param name="campaignDto">The campaign dto.</param>
+        /// <returns>Id of the campain updated</returns>
+        int UpdateCampaign(CampaignDto campaignDto);
     }
 
     /// <summary>
@@ -59,7 +67,7 @@ namespace Services.Broadcast.Repositories
             : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
 
         /// <inheritdoc />
-        public void CreateCampaign(CampaignDto campaignDto, string createdBy, DateTime createdDate)
+        public int CreateCampaign(CampaignDto campaignDto, string createdBy, DateTime createdDate)
         {
             var campaign = new campaign
             {
@@ -73,11 +81,31 @@ namespace Services.Broadcast.Repositories
                 modified_by = campaignDto.ModifiedBy
             };
 
-            _InReadUncommitedTransaction(
+            return _InReadUncommitedTransaction(
                context =>
                {
                    context.campaigns.Add(campaign);
                    context.SaveChanges();
+                   return campaign.id;
+               });
+        }
+
+        /// <inheritdoc />
+        public int UpdateCampaign(CampaignDto campaignDto)
+        {
+            return _InReadUncommitedTransaction(
+               context =>
+               {
+                   var existingCampaign = context.campaigns.Single(x => x.id == campaignDto.Id, "Invalid campaign id");
+                   existingCampaign.name = campaignDto.Name;
+                   existingCampaign.advertiser_id = campaignDto.AdvertiserId;
+                   existingCampaign.agency_id = campaignDto.AgencyId;
+                   existingCampaign.notes = campaignDto.Notes;
+                   existingCampaign.modified_by = campaignDto.ModifiedBy;
+                   existingCampaign.modified_date = campaignDto.ModifiedDate;
+                   
+                   context.SaveChanges();
+                   return existingCampaign.id;
                });
         }
 

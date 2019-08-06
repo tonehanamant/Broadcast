@@ -37,12 +37,13 @@ namespace Services.Broadcast.ApplicationServices.Campaigns
         CampaignDto GetCampaign(int campaignId);
 
         /// <summary>
-        /// Saves the campaign.
+        /// Creates the campaign.
         /// </summary>
         /// <param name="campaign">The campaign.</param>
         /// <param name="createdBy">The created by.</param>
         /// <param name="createdDate">The created date.</param>
-        void CreateCampaign(CampaignDto campaign, string createdBy, DateTime createdDate);
+        /// <returns>Id of the new campaign</returns>
+        int SaveCampaign(CampaignDto campaign, string createdBy, DateTime createdDate);
     }
 
     /// <summary>
@@ -126,10 +127,17 @@ namespace Services.Broadcast.ApplicationServices.Campaigns
         }
 
         /// <inheritdoc />
-        public void CreateCampaign(CampaignDto campaign, string createdBy, DateTime createdDate)
+        public int SaveCampaign(CampaignDto campaign, string createdBy, DateTime createdDate)
         {
             var repo = GetCampaignRepository();
-            repo.CreateCampaign(campaign, createdBy, createdDate);
+            if(campaign.Id == 0)
+            {
+                return repo.CreateCampaign(campaign, createdBy, createdDate);
+            }
+            else
+            {
+                return repo.UpdateCampaign(campaign);
+            }            
         }
 
         #endregion // #region Operations

@@ -219,7 +219,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
             tc.CampaignValidator = campaignValidator.Object;
             var campaignData = new Mock<ICampaignServiceData>();
             var createCampaignCalls = new List<Tuple<CampaignDto, string, DateTime>>();
-            campaignData.Setup(s => s.CreateCampaign(It.IsAny<CampaignDto>(), It.IsAny<string>(), It.IsAny<DateTime>()))
+            campaignData.Setup(s => s.SaveCampaign(It.IsAny<CampaignDto>(), It.IsAny<string>(), It.IsAny<DateTime>()))
                 .Callback<CampaignDto, string, DateTime>((c, u, d) =>
                     createCampaignCalls.Add(new Tuple<CampaignDto, string, DateTime>(c, u, d)));
             tc.CampaignServiceData = campaignData.Object;
@@ -234,7 +234,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
             var createdBy = "TestUser";
             var createdDate = new DateTime(2017,10,17,7,30,23);
 
-            tc.CreateCampaign(campaign, createdBy, createdDate);
+            tc.SaveCampaign(campaign, createdBy, createdDate);
             
             Assert.AreEqual(1, validateCalls.Count);
             Assert.AreEqual(1, createCampaignCalls.Count);
@@ -262,7 +262,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
             tc.CampaignValidator = campaignValidator.Object;
             var campaignData = new Mock<ICampaignServiceData>();
             var createCampaignCalls = new List<Tuple<CampaignDto, string, DateTime>>();
-            campaignData.Setup(s => s.CreateCampaign(It.IsAny<CampaignDto>(), It.IsAny<string>(), It.IsAny<DateTime>()))
+            campaignData.Setup(s => s.SaveCampaign(It.IsAny<CampaignDto>(), It.IsAny<string>(), It.IsAny<DateTime>()))
                 .Callback<CampaignDto, string, DateTime>((c, u, d) =>
                     createCampaignCalls.Add(new Tuple<CampaignDto, string, DateTime>(c, u, d)));
             tc.CampaignServiceData = campaignData.Object;
@@ -277,7 +277,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
             var createdBy = "TestUser";
             var createdDate = new DateTime(2017, 10, 17, 7, 30, 23);
 
-            var caught = Assert.Throws<Exception>(() => tc.CreateCampaign(campaign, createdBy, createdDate));
+            var caught = Assert.Throws<Exception>(() => tc.SaveCampaign(campaign, createdBy, createdDate));
             
             Assert.AreEqual("This is a test exception thrown from Validate.", caught.Message);
             Assert.AreEqual(0, createCampaignCalls.Count);
@@ -296,7 +296,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
             tc.CampaignValidator = campaignValidator.Object;
             var campaignData = new Mock<ICampaignServiceData>();
             var createCampaignCalls = new List<Tuple<CampaignDto, string, DateTime>>();
-            campaignData.Setup(s => s.CreateCampaign(It.IsAny<CampaignDto>(), It.IsAny<string>(), It.IsAny<DateTime>()))
+            campaignData.Setup(s => s.SaveCampaign(It.IsAny<CampaignDto>(), It.IsAny<string>(), It.IsAny<DateTime>()))
                 .Callback<CampaignDto, string, DateTime>((c, u, d) =>
                 {
                     createCampaignCalls.Add(new Tuple<CampaignDto, string, DateTime>(c, u, d));
@@ -314,7 +314,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
             var createdBy = "TestUser";
             var createdDate = new DateTime(2017, 10, 17, 7, 30, 23);
 
-            var caught = Assert.Throws<Exception>(() => tc.CreateCampaign(campaign, createdBy, createdDate));
+            var caught = Assert.Throws<Exception>(() => tc.SaveCampaign(campaign, createdBy, createdDate));
 
             Assert.AreEqual("This is a test exception thrown from CreateCampaign.", caught.Message);
             Assert.AreEqual(1, validateCalls.Count);

@@ -1,0 +1,8 @@
+﻿{
+  "AdvertiserId": 1,
+  "AgencyId": 1,
+  "ModifiedBy": "IntegrationTestUser",
+  "ModifiedDate": "2019-05-14T00:00:00",
+  "Name": "Updated name of Campaign1",
+  "Notes": "Notes for CampaignOne."
+}
