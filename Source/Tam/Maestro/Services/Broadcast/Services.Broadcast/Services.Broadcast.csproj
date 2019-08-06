@@ -243,12 +243,14 @@
     <Compile Include="ApplicationServices\PostingTypeService.cs" />
     <Compile Include="ApplicationServices\Scx\ScxFileGenerationDetailTransformer.cs" />
     <Compile Include="ApplicationServices\Scx\ScxFileGenerationHistorian.cs" />
+    <Compile Include="BusinessEngines\PlanBudgetDeliveryCalculator.cs" />
     <Compile Include="Entities\AdvertiserDto.cs" />
     <Compile Include="ApplicationServices\SpotLengthService.cs" />
     <Compile Include="Entities\AgencyDto.cs" />
     <Compile Include="Clients\ConfigurationClientSwitch.cs" />
     <Compile Include="Entities\Enums\AudienceTypeEnum.cs" />
     <Compile Include="Entities\Enums\BackgroundJobProcessingStatus.cs" />
+    <Compile Include="Entities\Enums\PlanCurrenciesEnum.cs" />
     <Compile Include="Entities\Enums\PlanStatusEnum.cs" />
     <Compile Include="Entities\InventorySummary\InventorySummaryAggregation.cs" />
     <Compile Include="Entities\InventorySummary\InventorySummaryQuarter.cs" />
@@ -257,6 +259,7 @@
     <Compile Include="Entities\ImpressionsDaypartResultForTwoBooks.cs" />
     <Compile Include="Entities\ImpressionsPointInTimeResult.cs" />
     <Compile Include="Entities\MarketPlaybackType.cs" />
+    <Compile Include="Entities\Plan\PlanBudgetDeliveryCalculator.cs" />
     <Compile Include="Entities\Plan\PlanDto.cs" />
     <Compile Include="Entities\Plan\PlanFlightDto.cs" />
     <Compile Include="Entities\ScxGenerationJob.cs" />

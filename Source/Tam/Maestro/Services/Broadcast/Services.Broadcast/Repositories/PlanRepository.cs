@@ -116,6 +116,9 @@ namespace Services.Broadcast.Repositories
                 ShareBookId = entity.share_book_id,
                 PostingType = EnumHelper.GetEnum<PostingTypeEnum>(entity.posting_type),
                 FlightHiatusDays = entity.plan_flight_hiatus.Select(h => h.hiatus_day).ToList(),
+                Budget = entity.budget,
+                Delivery = entity.delivery,
+                CPM = entity.cpm,
                 SecondaryAudiences = entity.plan_secondary_audiences
                     .Select(x => new PlanAudienceDto
                     {
@@ -145,17 +148,27 @@ namespace Services.Broadcast.Repositories
             entity.flight_end_date = planDto.FlightEndDate;
             entity.flight_notes = planDto.FlightNotes;
 
+            _HydratePlanAudienceInfo(entity, planDto);
+            _HydratePlanBudget(entity, planDto);
+            _HydratePlanFlightHiatus(entity, planDto, context);
+            _HydratePlanSecondaryAudiences(entity, planDto, context);
+        }
+
+        private static void _HydratePlanAudienceInfo(plan entity, PlanDto planDto)
+        {
             entity.audience_id = planDto.AudienceId;
             entity.audience_type = (int)planDto.AudienceType;
             entity.hut_book_id = planDto.HUTBookId;
             entity.share_book_id = planDto.ShareBookId;
             entity.posting_type = (int)planDto.PostingType;
-            
-            _HydratePlanFlightHiatus(entity, planDto, context);
-            _HydratePlanSecondaryAudiences(entity, planDto, context);
         }
 
-        #region Private methods
+        private static void _HydratePlanBudget(plan entity, PlanDto planDto)
+        {
+            entity.budget = planDto.Budget;
+            entity.delivery = planDto.Delivery;
+            entity.cpm = planDto.CPM;
+        }
 
         private void _HydratePlanFlightHiatus(plan entity, PlanDto planDto, QueryHintBroadcastContext context)
         {
@@ -178,6 +191,5 @@ namespace Services.Broadcast.Repositories
                 });
             });
         }
-        #endregion
     }
 }

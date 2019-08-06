@@ -15,9 +15,7 @@ using Services.Broadcast.Repositories;
 using Services.Broadcast.Validators;
 using Services.Broadcast.ApplicationServices.Security;
 using Tam.Maestro.Data.EntityFrameworkMapping;
-using Tam.Maestro.Services.Cable.SystemComponentParameters;
 using Tam.Maestro.Services.Clients;
-using Services.Broadcast.Entities.DTO;
 using Services.Broadcast.ApplicationServices.Helpers;
 using Services.Broadcast.Helpers;
 using Services.Broadcast.BusinessEngines.InventoryDaypartParsing;
@@ -184,6 +182,7 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IPostingTypeService, PostingTypeService>();
             unityContainer.RegisterType<IAudienceService, AudienceService>();
             unityContainer.RegisterType<IPostingBookService, PostingBookService>();
+            unityContainer.RegisterType<IPlanBudgetDeliveryCalculator, PlanBudgetDeliveryCalculator>();
 
             unityContainer.RegisterType<IEnvironmentService, EnvironmentService>();
 

@@ -309,6 +309,87 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetPlanCurrencies()
+        {
+            var deliveryTypes = _PlanService.GetPlanCurrencies();
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(deliveryTypes));
+        }
+
+        [Test]
+        public void Calculator_CPM()
+        {
+            var result = _PlanService.Calculate(new PlanDeliveryBudget {
+                Budget = 100m,
+                CPM = null,
+                Delivery = 3000d
+            });
+
+            Assert.AreEqual(30.0d, result.CPM);
+        }
+
+        [Test]
+        public void Calculator_Delivery()
+        {
+            var result = _PlanService.Calculate(new PlanDeliveryBudget
+            {
+                Budget = 100m,
+                CPM = 30m,
+                Delivery = null
+            });
+
+            Assert.AreEqual(3000, result.Delivery);
+        }
+
+        [Test]
+        public void Calculator_Budget()
+        {
+            var result = _PlanService.Calculate(new PlanDeliveryBudget
+            {
+                Budget = null,
+                CPM = 30m,
+                Delivery = 3000d
+            });
+
+            Assert.AreEqual(100, result.Budget);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void Calculator_InvalidObject()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var caught = Assert.Throws<Exception>(() => _PlanService.Calculate(new PlanDeliveryBudget
+                {
+                    Budget = null,
+                    CPM = null,
+                    Delivery = null
+                }), "Need at least 2 values for budget to calculate the third");
+
+                Assert.IsNotNull(caught);
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void Calculator_InvalidObject_NegativeValues()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var caught = Assert.Throws<Exception>(() => _PlanService.Calculate(new PlanDeliveryBudget
+                {
+                    Budget = -1,
+                    CPM = null,
+                    Delivery = null
+                }), "Invalid budget values passed");
+
+                Assert.IsNotNull(caught);
+            }
+        }
+
         private static PlanDto _GetNewPlan()
         {
             return new PlanDto
@@ -331,7 +412,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 AudienceType = Entities.Enums.AudienceTypeEnum.Nielsen,
                 HUTBookId = null,
                 PostingType = Entities.Enums.PostingTypeEnum.NTI,
-                ShareBookId = 437
+                ShareBookId = 437,
+                Budget = 100m,
+                CPM = 12m,
+                Delivery = 100d
             };
         }
 

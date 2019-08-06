@@ -1,7 +1,10 @@
 ﻿{
   "AudienceId": 31,
   "AudienceType": 1,
+  "Budget": null,
   "CampaignId": 1,
+  "CPM": null,
+  "Delivery": null,
   "Equivalized": true,
   "FlightEndDate": "1999-11-12T00:00:00",
   "FlightHiatusDays": [

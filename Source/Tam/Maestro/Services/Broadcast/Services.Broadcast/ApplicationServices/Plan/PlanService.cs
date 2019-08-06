@@ -1,9 +1,11 @@
 ﻿using Common.Services.ApplicationServices;
 using Common.Services.Extensions;
 using Common.Services.Repositories;
+using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Cache;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
+using Services.Broadcast.Helpers;
 using Services.Broadcast.Repositories;
 using Services.Broadcast.Validators;
 using System;
@@ -43,20 +45,36 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// </summary>
         /// <returns>List of LookupDto objects</returns>
         List<LookupDto> GetPlanStatuses();
+
+        /// <summary>
+        /// Gets the delivery types.
+        /// </summary>
+        /// <returns>List of LookupDto objects</returns>
+        List<LookupDto> GetPlanCurrencies();
+
+        /// <summary>
+        /// Calculates the specified plan budget.
+        /// </summary>
+        /// <param name="planBudget">The plan budget.</param>
+        /// <returns>PlanBudgetDeliveryCalculator object</returns>
+        PlanDeliveryBudget Calculate(PlanDeliveryBudget planBudget);
     }
 
     public class PlanService : IPlanService
     {
         private readonly IPlanRepository _PlanRepository;
         private readonly IPlanValidator _PlanValidator;
-        
+        private readonly IPlanBudgetDeliveryCalculator _BudgetCalculator;
+
         private readonly IBroadcastAudiencesCache _AudiencesCache;
 
         public PlanService(IDataRepositoryFactory broadcastDataRepositoryFactory
-            , IPlanValidator planValidator)
+            , IPlanValidator planValidator
+            , IPlanBudgetDeliveryCalculator planBudgetDeliveryCalculator)
         {
             _PlanRepository = broadcastDataRepositoryFactory.GetDataRepository<IPlanRepository>();
-            _PlanValidator = planValidator;            
+            _PlanValidator = planValidator;
+            _BudgetCalculator = planBudgetDeliveryCalculator;
         }
 
         ///<inheritdoc/>
@@ -95,6 +113,25 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 new LookupDto{ Id = 2, Display = "Second product"},
                 new LookupDto{ Id = 3, Display = "Third product"}
             };
+        }
+
+        ///<inheritdoc/>
+        public List<LookupDto> GetPlanCurrencies()
+        {
+            return Enum.GetValues(typeof(PlanCurrenciesEnum))
+                .Cast<PlanCurrenciesEnum>()
+                .Select(x => new LookupDto
+                {
+                    Id = (int)x,
+                    Display = x.GetDescriptionAttribute()
+                })
+                .OrderBy(x=>x.Id).ToList();
+        }
+
+        ///<inheritdoc/>
+        public PlanDeliveryBudget Calculate(PlanDeliveryBudget planBudget)
+        {
+            return _BudgetCalculator.CalculateBudget(planBudget);            
         }
     }
 }

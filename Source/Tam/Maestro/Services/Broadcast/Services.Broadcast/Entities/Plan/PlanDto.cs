@@ -144,5 +144,29 @@ namespace Services.Broadcast.Entities.Plan
         /// The secondary audiences.
         /// </value>
         public List<PlanAudienceDto> SecondaryAudiences { get; set; } = new List<PlanAudienceDto>();
+
+        /// <summary>
+        /// Gets or sets the budget.
+        /// </summary>
+        /// <value>
+        /// The budget.
+        /// </value>
+        public decimal? Budget { get; set; }
+
+        /// <summary>
+        /// Gets or sets the delivery.
+        /// </summary>
+        /// <value>
+        /// The delivery.
+        /// </value>
+        public double? Delivery { get; set; }
+
+        /// <summary>
+        /// Gets or sets the CPM.
+        /// </summary>
+        /// <value>
+        /// The CPM.
+        /// </value>
+        public decimal? CPM { get; set; }
     }
 }

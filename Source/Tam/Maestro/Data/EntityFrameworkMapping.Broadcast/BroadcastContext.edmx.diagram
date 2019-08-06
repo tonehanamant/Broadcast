@@ -299,7 +299,7 @@
         <AssociationConnector Association="BroadcastModel.FK_inventory_summary_quarter_details_inventory_summary_quarters" />
         <EntityTypeShape EntityType="BroadcastModel.plan_flight_hiatus" Width="1.5" PointX="36.125" PointY="4.875" />
         <EntityTypeShape EntityType="BroadcastModel.plan_secondary_audiences" Width="1.5" PointX="8" PointY="4.75" />
-        <EntityTypeShape EntityType="BroadcastModel.plan" Width="1.5" PointX="31.625" PointY="10.125" />
+        <EntityTypeShape EntityType="BroadcastModel.plan" Width="1.5" PointX="31.625" PointY="9.75" />
         <AssociationConnector Association="BroadcastModel.FK_plan_secondary_audiences_audiences" />
         <AssociationConnector Association="BroadcastModel.FK_plans_audiences" />
         <AssociationConnector Association="BroadcastModel.FK_plans_campaigns" />

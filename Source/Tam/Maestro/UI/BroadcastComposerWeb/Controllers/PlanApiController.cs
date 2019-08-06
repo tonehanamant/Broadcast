@@ -68,5 +68,28 @@ namespace BroadcastComposerWeb.Controllers
         {
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanService>().GetPlan(planId));
         }
+
+        /// <summary>
+        /// Gets the currencies.
+        /// </summary>
+        /// <returns>List of LookupDto objects</returns>
+        [HttpGet]
+        [Route("Currencies")]
+        public BaseResponse<List<LookupDto>> GetCurrencies()
+        {
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanService>().GetPlanCurrencies());
+        }
+
+        /// <summary>
+        /// Calculats the specified plan budget based on 2 values.
+        /// </summary>
+        /// <param name="planBudget">The plan budget.</param>
+        /// <returns>PlanDeliveryBudget object containing the calculated value</returns>
+        [HttpPost]
+        [Route("CalculateBudget")]
+        public BaseResponse<PlanDeliveryBudget> Calculator(PlanDeliveryBudget planBudget)
+        {
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanService>().Calculate(planBudget));
+        }
     }
 }

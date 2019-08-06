@@ -1,7 +1,10 @@
 ﻿{
   "AudienceId": 31,
   "AudienceType": 1,
+  "Budget": 100.0000,
   "CampaignId": 1,
+  "CPM": 12.0000,
+  "Delivery": 100.0,
   "Equivalized": true,
   "FlightEndDate": "2019-07-31T00:00:00",
   "FlightHiatusDays": [],

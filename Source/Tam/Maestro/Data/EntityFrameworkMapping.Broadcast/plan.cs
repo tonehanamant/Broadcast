@@ -37,6 +37,9 @@ namespace EntityFrameworkMapping.Broadcast
         public int audience_id { get; set; }
         public int share_book_id { get; set; }
         public Nullable<int> hut_book_id { get; set; }
+        public Nullable<decimal> budget { get; set; }
+        public Nullable<double> delivery { get; set; }
+        public Nullable<decimal> cpm { get; set; }
     
         public virtual audience audience { get; set; }
         public virtual campaign campaign { get; set; }

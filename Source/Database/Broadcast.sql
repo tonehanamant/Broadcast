@@ -594,6 +594,23 @@ BEGIN
 END
 /*************************************** END PRI-12674 *****************************************************/
 
+/*************************************** START PRI-7469 *****************************************************/
+IF NOT EXISTS(SELECT * FROM sys.columns WHERE object_id = OBJECT_ID('plans') AND name = 'budget')
+BEGIN
+	ALTER TABLE [plans] ADD [budget] [MONEY] NULL
+END
+
+IF NOT EXISTS(SELECT * FROM sys.columns WHERE object_id = OBJECT_ID('plans') AND name = 'delivery')
+BEGIN
+	ALTER TABLE [plans] ADD [delivery] [FLOAT] NULL
+END
+
+IF NOT EXISTS(SELECT * FROM sys.columns WHERE object_id = OBJECT_ID('plans') AND name = 'cpm')
+BEGIN
+	ALTER TABLE [plans] ADD [cpm] [MONEY] NULL
+END
+/*************************************** END PRI-7469 *****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version
