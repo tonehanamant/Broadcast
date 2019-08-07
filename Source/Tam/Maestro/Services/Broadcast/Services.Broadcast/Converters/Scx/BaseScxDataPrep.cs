@@ -1,137 +1,105 @@
 ﻿using Common.Services.Repositories;
 using Services.Broadcast.BusinessEngines;
-using Services.Broadcast.Entities;
-using Services.Broadcast.Entities.ProprietaryInventory;
+using Services.Broadcast.Cache;
 using Services.Broadcast.Entities.Scx;
 using Services.Broadcast.Entities.StationInventory;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Tam.Maestro.Data.Entities.DataTransferObjects;
-using static Services.Broadcast.Entities.Scx.ScxMarketDto;
-using static Services.Broadcast.Entities.Scx.ScxMarketDto.ScxStation;
-using static Services.Broadcast.Entities.Scx.ScxMarketDto.ScxStation.ScxProgram;
+using Tam.Maestro.Data.Entities;
+using static Services.Broadcast.Entities.Enums.ProposalEnums;
 
 namespace Services.Broadcast.Converters.Scx
 {
     public abstract class BaseScxDataPrep
     {
-        private readonly IInventoryRepository _InventoryRepository;
-        private readonly IMarketRepository _MarketRepository;
-        private readonly ISpotLengthEngine _SpotLengthEngine;
-        private readonly INsiMarketRepository _NsiMarketRepository;
-        private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekCache;
-        private readonly IBroadcastAudienceRepository _AudienceRepository;
         private readonly IMarketDmaMapRepository _MarketDmaMapRepository;
-        private readonly INsiUniverseRepository _NsiUniverseRepository;
-        private readonly IRatingForecastRepository _RatingForecastRepository;
-        private readonly IMarketCoverageRepository _MarketCoverageRepository;
+        private readonly IBroadcastAudiencesCache _BroadcastAudiencesCache;
+        private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekCache;
+        private readonly ISpotLengthEngine _SpotLengthEngine;
+        
+        protected readonly IInventoryRepository InventoryRepository;
 
         public BaseScxDataPrep(
             IDataRepositoryFactory broadcastDataDataRepositoryFactory, 
             ISpotLengthEngine spotLengthEngine, 
-            IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache)
+            IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
+            IBroadcastAudiencesCache broadcastAudiencesCache)
         {
-            _InventoryRepository = broadcastDataDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
-            _MarketRepository = broadcastDataDataRepositoryFactory.GetDataRepository<IMarketRepository>();
-            _NsiMarketRepository = broadcastDataDataRepositoryFactory.GetDataRepository<INsiMarketRepository>();
-            _AudienceRepository = broadcastDataDataRepositoryFactory.GetDataRepository<IBroadcastAudienceRepository>();
+            InventoryRepository = broadcastDataDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
             _MarketDmaMapRepository = broadcastDataDataRepositoryFactory.GetDataRepository<IMarketDmaMapRepository>();
-            _NsiUniverseRepository = broadcastDataDataRepositoryFactory.GetDataRepository<INsiUniverseRepository>();
-            _RatingForecastRepository = broadcastDataDataRepositoryFactory.GetDataRepository<IRatingForecastRepository>();
-            _MarketCoverageRepository = broadcastDataDataRepositoryFactory.GetDataRepository<IMarketCoverageRepository>();
             _SpotLengthEngine = spotLengthEngine;
             _MediaMonthAndWeekCache = mediaMonthAndWeekAggregateCache;
+            _BroadcastAudiencesCache = broadcastAudiencesCache;
         }
 
-        protected ScxData CreateScxData(
-            DateTime startDate,
-            DateTime endDate,
-            InventorySource inventorySource,
-            List<StationInventoryManifest> manifests,
-            int spotLength,
-            int daypartCodeId,
-            string daypartCode,
-            string unitName)
+        protected IOrderedEnumerable<MediaWeek> GetSortedMediaWeeks(DateTime startDate, DateTime endDate)
         {
-            var inventoryWeeks = manifests.SelectMany(x => x.ManifestWeeks);
+            return _MediaMonthAndWeekCache.GetMediaWeeksIntersecting(startDate, endDate).OrderBy(x => x.StartDate);
+        }
 
-            var scxData = new ScxData
+        protected string GetSpotLengthString(int spotLengthId)
+        {
+            return _SpotLengthEngine.GetSpotLengthValueById(spotLengthId).ToString();
+        }
+
+        protected Dictionary<int, string> GetDmaMarketNames(IEnumerable<StationInventoryManifest> manifests)
+        {
+            var marketCodes = manifests
+                .Where(x => x.Station.MarketCode.HasValue)
+                .Select(x => x.Station.MarketCode.Value)
+                .Distinct();
+
+            return _MarketDmaMapRepository.GetMarketMapFromMarketCodes(marketCodes)
+                                         .ToDictionary(k => (int)k.market_code, v => v.dma_mapped_value);
+        }
+
+        protected List<DemoData> _GetDemos(IEnumerable<int> audienceIds)
+        {
+            var audiences = _BroadcastAudiencesCache.GetAllEntities().Where(x => audienceIds.Contains(x.Id));
+
+            return audiences.Select((audience, index) => new DemoData
             {
-                DaypartCodeId = daypartCodeId,
-                DaypartCode = daypartCode,
-                StartDate = inventoryWeeks.Min(x => x.StartDate),
-                EndDate = inventoryWeeks.Max(x => x.EndDate),
-                SpotLength = spotLength.ToString(),
-                InventorySource = inventorySource,
-                UnitName = unitName,
-                AllSortedMediaWeeks = _MediaMonthAndWeekCache.GetMediaWeeksIntersecting(startDate, endDate).OrderBy(x => x.StartDate),
-                InventoryMarkets = manifests.GroupBy(m => m.Station.MarketCode).Select(marketManifests => new ScxMarketDto
+                DemoRank = index + 1,
+                Demo = audience
+            }).ToList();
+        }
+
+        protected string GetSurveyString(int bookingMediaMonthId, ProposalPlaybackType playbackType)
+        {
+            var bookingMediaMonth = _MediaMonthAndWeekCache.GetMediaMonthById(bookingMediaMonthId);
+            var bookingMediaMonthInfo = bookingMediaMonth.Abbreviation + bookingMediaMonth.Year.ToString().Substring(2);
+            return bookingMediaMonthInfo + " DMA Nielsen " + playbackType.ToString().Replace("Plus", "+");
+        }
+        
+        protected void CalculateTotals(List<ScxData> data)
+        {
+            var orders = data.SelectMany(x => x.Orders);
+
+            foreach (var order in orders)
+            {
+                foreach (var market in order.InventoryMarkets)
                 {
-                    MarketId = marketManifests.First().Station.MarketCode,
-                    Stations = marketManifests.GroupBy(m => m.Station.LegacyCallLetters).Select(stationManifests => new ScxStation
+                    foreach (var station in market.Stations)
                     {
-                        StationCode = stationManifests.First().Station.Code,
-                        LegacyCallLetters = stationManifests.First().Station.LegacyCallLetters,
-                        Programs = stationManifests.Select(m => new ScxProgram
+                        foreach (var program in station.Programs)
                         {
-                            ProgramId = m.Id.Value,
-                            ProgramNames = m.ManifestDayparts.Select(d => d.ProgramName).ToList(),
-                            Dayparts = m.ManifestDayparts.Select(d => new LookupDto
-                            {
-                                Id = d.Daypart.Id,
-                                Display = d.Daypart.ToString()
-                            }).ToList(),
-                            Weeks = m.ManifestWeeks.Select(w => new ScxWeek
-                            {
-                                Spots = w.Spots,
-                                MediaWeek = w.MediaWeek
-                            }).ToList()
-                        }).ToList()
-                    }).ToList()
-                }).ToList()
-            };
+                            program.TotalSpots = program.Weeks.Sum(x => x.Spots);
+                            program.TotalCost = program.SpotCost * program.TotalSpots;
+                        }
 
-            var inventoryFileId = manifests.Last().InventoryFileId.Value; // Some weird logic that must be reviewed
-            _SetScxDataProperties(inventoryFileId, scxData);
+                        station.TotalSpots = station.Programs.Sum(x => x.TotalSpots);
+                        station.TotalCost = station.Programs.Sum(x => x.TotalCost);
+                    }
 
-            return scxData;
-        }
+                    market.TotalSpots = market.Stations.Sum(x => x.TotalSpots);
+                    market.TotalCost = market.Stations.Sum(x => x.TotalCost);
+                }
 
-        private void _SetScxDataProperties(int inventoryFileId, ScxData scxData)
-        {
-            var inventoryHeader = _InventoryRepository.GetInventoryFileHeader(inventoryFileId);
-            var marketSubscribers = _NsiUniverseRepository.GetUniverseDataByAudience(inventoryHeader.ShareBookId.Value, new List<int> { inventoryHeader.Audience.Id });
-            var marketRankings = _NsiMarketRepository.GetMarketRankingsByMediaMonth(inventoryHeader.ShareBookId.Value);
-            var marketCoverages = _MarketCoverageRepository.GetLatestMarketCoverages(scxData.MarketIds).MarketCoveragesByMarketCode;
-            
-            _SetDmaMarketName(scxData.InventoryMarkets, scxData.MarketIds);
-            _SetMarketSurveyData(scxData, inventoryHeader);
-        }
-
-        private void _SetDmaMarketName(List<ScxMarketDto> inventoryMarkets, List<int> marketIds)
-        {
-            var dmaMarketNames = _MarketDmaMapRepository.GetMarketMapFromMarketCodes(marketIds)
-                                           .ToDictionary(k => (int)k.market_code, v => v.dma_mapped_value);
-            foreach (var id in marketIds)
-            {
-                inventoryMarkets.Single(x => x.MarketId == id).DmaMarketName = dmaMarketNames[id];
+                order.TotalSpots = order.InventoryMarkets.Sum(x => x.TotalSpots);
+                order.TotalCost = order.InventoryMarkets.Sum(x => x.TotalCost);
             }
-        }
-
-        private void _SetMarketSurveyData(ScxData data, ProprietaryInventoryHeader inventoryHeader)
-        {
-            var bookingMediaMonthId = inventoryHeader.HutBookId ?? inventoryHeader.ShareBookId;
-
-            var mediaMonth = _MediaMonthAndWeekCache.GetMediaMonthById(bookingMediaMonthId.Value);
-            string mediaMonthInfo = mediaMonth.Abbreviation + mediaMonth.Year.ToString().Substring(2);
-
-            var rawData = _RatingForecastRepository.GetPlaybackForMarketBy(bookingMediaMonthId.Value, inventoryHeader.PlaybackType);
-            data.MarketPlaybackTypes = rawData.Where(d => data.MarketIds.Contains(d.market_code)).ToList();
-            data.SurveyData = rawData.ToDictionary(
-                k => k.MarketId,
-                v => mediaMonthInfo + " DMA Nielsen " + v.PlaybackType.ToString().Replace("Plus", "+"));
         }
     }
 }

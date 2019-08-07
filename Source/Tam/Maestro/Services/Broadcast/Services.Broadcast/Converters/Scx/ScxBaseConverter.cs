@@ -7,7 +7,6 @@ using System.Linq;
 using Tam.Maestro.Data.Entities;
 using static Services.Broadcast.Entities.Scx.ScxMarketDto;
 using static Services.Broadcast.Entities.Scx.ScxMarketDto.ScxStation;
-using static Services.Broadcast.Entities.Scx.ScxMarketDto.ScxStation.ScxProgram;
 
 namespace Services.Broadcast.Converters.Scx
 {
@@ -45,7 +44,7 @@ namespace Services.Broadcast.Converters.Scx
             _SetScxKeys(data, camp);
             _SetScxDateRange(data, camp);
             _SetScxCompanies(camp);
-            _SetScxAdvertiser(camp, data.AdvertisersName);
+            _SetScxAdvertiser(camp);
             _SetScxProduct(camp);
             _SetScxEstimate(camp);
             _SetScxMakeGoodPolicy(camp);
@@ -57,42 +56,49 @@ namespace Services.Broadcast.Converters.Scx
 
         private void _SetScxOrders(ScxData data, campaign camp)
         {
-            camp.order = new order[data.MarketIds.Count];
+            var orders = new List<order>();
 
-            // for each market with slots create campaign.order
-            for (var orderIndex = 0; orderIndex < data.MarketIds.Count; orderIndex++)
+            foreach (var order in data.Orders)
             {
-                var marketId = data.MarketIds[orderIndex];
-                var market = data.InventoryMarkets.Single(x => x.MarketId == marketId);
-                var scxOrder = new order();
+                var markets = order.InventoryMarkets.Where(x => x.TotalSpots > 0);
 
-                if (!_SetOrderTotal(scxOrder, market))
-                    continue;
-
-                _SetScxOrderKeys(scxOrder, marketId);
-                
-                scxOrder.market = new market()
+                foreach (var market in markets)
                 {
-                    nsi_id = marketId,
-                    name = market.DmaMarketName
-                };
+                    var scxOrder = new order
+                    {
+                        comment = string.Empty,
+                        populations = new populations[0],
+                        totals = _GetTotals(market.TotalCost, market.TotalSpots)
+                    };
 
-                _SetScxOrderSurvey(scxOrder, marketId, data);
-                _SetOrderPopulations(scxOrder, data.Demos, marketId);
-                scxOrder.comment = string.Empty;
+                    _SetScxOrderKeys(scxOrder, market.MarketId);
+                    _SetMarket(scxOrder, market);
+                    _SetScxOrderSurvey(scxOrder, order);
+                    
+                    var stations = market.Stations;
 
-                var stations = market.Stations;
+                    if (stations.Any())
+                    {
+                        scxOrder.systemOrder = stations
+                            .Where(x => x.TotalSpots > 0)
+                            .Select(station => _GetSystemOrders(data, station))
+                            .ToArray();
+                    }
 
-                if (stations.Any())
-                {
-                    scxOrder.systemOrder = stations
-                        .Select(station => _GetSystemOrders(data, station, marketId))
-                        .Where(x => x != null)
-                        .ToArray();
+                    orders.Add(scxOrder);
                 }
-
-                camp.order[orderIndex] = scxOrder;
             }
+
+            camp.order = orders.ToArray();
+        }
+
+        private void _SetMarket(order sxcOrder, ScxMarketDto market)
+        {
+            sxcOrder.market = new market()
+            {
+                nsi_id = market.MarketId,
+                name = market.DmaMarketName
+            };
         }
 
         private static void _SetDocumentParts(adx xp)
@@ -105,45 +111,39 @@ namespace Services.Broadcast.Converters.Scx
             xp.document.documentType = DocType;
         }
 
-        private systemOrder _GetSystemOrders(ScxData data,
-                                             ScxStation station,
-                                             int marketId)
-        {   
-            systemOrder sysOrder = new systemOrder();
-
-            if (!_SetSystemOrderTotals(sysOrder, station))
-                return null;
-
-            _SetScxSystemOrderKeys(sysOrder);
-            _SetSystemOrderPopulations(sysOrder, data.Demos, marketId);
-            _SetSystemOrderWeekInfo(sysOrder, data.AllSortedMediaWeeks);
-
-            sysOrder.comment = "OK";
-            sysOrder.system = new system[]
+        private systemOrder _GetSystemOrders(ScxData data, ScxStation station)
+        {
+            systemOrder sysOrder = new systemOrder
             {
-                new system() { name = String.Empty, syscode = String.Empty },
+                populations = new populations[0],
+                comment = "OK",
+                totals = _GetTotals(station.TotalCost, station.TotalSpots),
+                system = new system[]
+                {
+                    new system() { name = String.Empty, syscode = String.Empty }
+                }
             };
 
+            _SetScxSystemOrderKeys(sysOrder);
+            _SetSystemOrderWeekInfo(sysOrder, data.AllSortedMediaWeeks);
+            
             var detLines = new List<detailLine>();
+            var programs = station.Programs.Where(x => x.TotalSpots > 0);
 
-            foreach (var program in station.Programs)
+            foreach (var program in programs)
             {
-                if (!_ProgramHasSpots(program))
-                    continue;
-
                 var detLine = new detailLine
                 {
-                    program = program.ProgramNames.First()
+                    program = program.ProgramName,
+                    length = $"PT{program.SpotLength}S",
+                    comment = " ",
+                    totals = _GetTotals(program.TotalCost, program.TotalSpots)
                 };
 
                 _SetDaypartInfo(detLine, program, data.DaypartCode);
-
-                detLine.length = $"PT{data.SpotLength}S";
-                detLine.comment = " ";
-
                 _SetDetailLineNetworkInfo(detLine, station);
-                _SetDetailLineDemoValue(detLine, data, station.LegacyCallLetters, program);
-                _SetDetailLineTotalsAndCost(detLine, program);
+                _SetDetailLineDemoValue(detLine, data, program);
+                _SetDetailLineCost(detLine, program);
                 _SetSpotWeekQuantities(data.AllSortedMediaWeeks, program, detLine);
 
                 detLines.Add(detLine);
@@ -155,11 +155,6 @@ namespace Services.Broadcast.Converters.Scx
             return sysOrder;
         }
 
-        private bool _ProgramHasSpots(ScxProgram program)
-        {
-            return program.Weeks.Sum(x => x.Spots) > 0;
-        }
-
         private static void _SetSpotWeekQuantities(IOrderedEnumerable<MediaWeek> weeks, ScxProgram program, detailLine detLine)
         {
             detLine.spot = weeks.Select((week, index) => new spot
@@ -169,55 +164,41 @@ namespace Services.Broadcast.Converters.Scx
             }).ToArray();
         }
 
-        private static void _SetOrderPopulations(order scxOrder, List<DemoData> demos, int marketId)
+        private void _SetDetailLineCost(detailLine detLine, ScxProgram program)
         {
-            if (demos == null)
-            {
-                scxOrder.populations = new populations[0];
-                return;
-            }
-
-            scxOrder.populations = new populations[demos.Count];
-            int populationIndexer = 0;
-
-            foreach (var demo in demos)
-            {
-                var population = new populations
-                {
-                    demoRank = demo.DemoRank
-                };
-
-                if (demo.MarketPopulations.TryGetValue((short)marketId, out double marketPopulation))
-                    population.Value = marketPopulation.ToString();
-
-                scxOrder.populations[populationIndexer] = population;
-                populationIndexer++;
-            }
-        }
-
-        private void _SetDetailLineTotalsAndCost(detailLine detLine, ScxProgram program)
-        {
-            var weeksWithSpots = program.Weeks.Where(x => x.Spots > 0).ToList();
-
-            detLine.totals = _GetTotalsFromWeeks(weeksWithSpots);
-
             detLine.spotCost = new spotCost
             {
                 currency = Currency,
-                //Value = weeksWithSpots.First().UnitCost // add the logic in the future story
+                Value = program.SpotCost
+            };
+        }
+
+        private totals _GetTotals(decimal cost, int spots)
+        {
+            return new totals
+            {
+                cost = new cost
+                {
+                    currency = Currency,
+                    Value = cost
+                },
+                spots = spots.ToString()
             };
         }
 
         private void _SetDaypartInfo(detailLine detLine, ScxProgram program, string daypartCode)
         {
+            var daypart = _DaypartCache.GetDisplayDaypart(program.DaypartId);
+
             detLine.startDay = detailLineStartDay.M;
-            var daypart = _DaypartCache.GetDisplayDaypart(program.Dayparts.First().Id);
-            DateTime lStartTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0, 0);
-            lStartTime = lStartTime.Add(new TimeSpan(0, 0, 0, daypart.StartTime, 0));
-            detLine.startTime = lStartTime;
-            DateTime lEndTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0, 0);
-            lEndTime = lEndTime.Add(new TimeSpan(0, 0, 0, daypart.EndTime + 1, 0)); // add one second to bring the time up to full hour/half-hour/etc
-            detLine.endTime = lEndTime;
+            detLine.startTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0, 0);
+            detLine.startTime = detLine.startTime.AddSeconds(daypart.StartTime);
+
+            detLine.endTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0, 0);
+
+            // add one second to bring the time up to full hour/half-hour/etc
+            detLine.endTime = detLine.endTime.AddSeconds(daypart.EndTime + 1);
+
             detLine.dayOfWeek = new dayOfWeek
             {
                 Monday = daypart.Monday ? "Y" : "N",
@@ -232,7 +213,7 @@ namespace Services.Broadcast.Converters.Scx
             detLine.daypartCode = daypartCode;
         }
 
-        private void _SetDetailLineDemoValue(detailLine detLine, ScxData data, string legacyCallLetters, ScxProgram programInfo)
+        private void _SetDetailLineDemoValue(detailLine detLine, ScxData data, ScxProgram program)
         {
             if (data.Demos == null)
             {
@@ -240,8 +221,7 @@ namespace Services.Broadcast.Converters.Scx
                 return;
             }
 
-            detLine.demoValue = new demoValue[data.Demos.Count];
-            int demoValueIndex = 0;
+            var result = new List<demoValue>();
 
             foreach (var demo in data.Demos)
             {
@@ -251,28 +231,19 @@ namespace Services.Broadcast.Converters.Scx
                     value = new demoValueValue[2]
                 };
 
-                Ratingdata ratingValue;
-                var ratingDisplay = string.Empty;
+                var impressions = program.DemoValues.SingleOrDefault(x => x.DemoRank == demo.DemoRank)?.Impressions;
+                var impressionsDisplay = impressions.HasValue && impressions.Value > 0 ?
+                    string.Format("{0:####}", impressions.Value) : 
+                    string.Empty;
 
-                if (demo.Ratings.Any())
-                {
-                    ratingValue = demo.Ratings.Single(r => programInfo.Dayparts.Any(dp => dp.Id == r.DaypartId) && r.LegacyCallLetters == legacyCallLetters);
-                    ratingDisplay = string.Format("{0:#0.00}", ratingValue.Rating);
-                }
-
-                var impressions = demo.Impressions.SingleOrDefault(i => i.Id == programInfo.ProgramId)?.Impressions;
-                var impressionsDisplay = string.Empty;
-
-                if (impressions.HasValue)
-                {
-                    impressionsDisplay = string.Format("{0:####}", impressions);
-                }
-
-                demoValue.value[0] = new demoValueValue() { type = demoValueValueType.Ratings, Value = ratingDisplay, typeSpecified = true };
+                // ratingDisplay = string.Format("{0:#0.00}", rating) - for future using
+                demoValue.value[0] = new demoValueValue() { type = demoValueValueType.Ratings, Value = string.Empty, typeSpecified = true };
                 demoValue.value[1] = new demoValueValue() { type = demoValueValueType.Impressions, Value = impressionsDisplay, typeSpecified = true };
 
-                detLine.demoValue[demoValueIndex++] = demoValue;
+                result.Add(demoValue);
             }
+            
+            detLine.demoValue = result.ToArray();
         }
 
         private void _SetDetailLineNetworkInfo(detailLine detLine, ScxStation station)
@@ -290,35 +261,13 @@ namespace Services.Broadcast.Converters.Scx
             };
         }
 
-        private static void _SetSystemOrderPopulations(systemOrder sysOrder, List<DemoData> demos, int marketId)
+        private static void _SetScxOrderSurvey(order scxOrder, OrderData order)
         {
-            if (demos == null)
-            {
-                sysOrder.populations = new populations[0];
-                return;
-            }
-
-            sysOrder.populations = demos.Select(demo =>
-            {
-                var population = new populations
-                {
-                    demoRank = demo.DemoRank
-                };
-
-                if (demo.MarketPopulations.TryGetValue((short)marketId, out double marketPopulation))
-                    population.Value = marketPopulation.ToString();
-
-                return population;
-            }).ToArray();
-        }
-
-        private static void _SetScxOrderSurvey(order scxOrder, int marketId, ScxData data)
-        {
-            scxOrder.survey = new survey() { comment = new surveyComment[1] };
+            scxOrder.survey = new survey { comment = new surveyComment[1] };
             scxOrder.survey.comment[0] = new surveyComment
             {
                 codeOwner = "Spotcable",
-                Value = data.SurveyData.Any() ? data.SurveyData[marketId] : string.Empty
+                Value = order.SurveyString
             };
             scxOrder.survey.ratingService = string.Empty;
             scxOrder.survey.geography = string.Empty;
@@ -342,50 +291,6 @@ namespace Services.Broadcast.Converters.Scx
             };
         }
 
-        private static bool _SetSystemOrderTotals(systemOrder sysOrder, ScxStation station)
-        {
-            var weeksWithSpots = station.Programs
-                .SelectMany(x => x.Weeks)
-                .Where(x => x.Spots > 0)
-                .ToList();
-
-            if (!weeksWithSpots.Any())
-                return false;
-
-            sysOrder.totals = _GetTotalsFromWeeks(weeksWithSpots);
-
-            return true;
-        }
-
-        private static bool _SetOrderTotal(order order, ScxMarketDto market)
-        {
-            var weeksWithSpots = market.Stations
-                .SelectMany(s => s.Programs)
-                .SelectMany(w => w.Weeks)
-                .Where(w => w.Spots > 0)
-                .ToList();
-
-            if (!weeksWithSpots.Any())
-                return false;
-
-            order.totals = _GetTotalsFromWeeks(weeksWithSpots);
-
-            return true;
-        }
-
-        private static totals _GetTotalsFromWeeks(List<ScxWeek> weeks)
-        {
-            return new totals
-            {
-                cost = new cost
-                {
-                    currency = Currency,
-                    //Value = weeksWithSpots.Sum(p => p.Cost) // add the logic in the future story
-                },
-                spots = weeks.Sum(p => p.Spots).ToString()
-            };
-        }
-
         private static void _SetScxSystemOrderKeys(systemOrder order)
         {
             order.key = new key[1];
@@ -402,32 +307,13 @@ namespace Services.Broadcast.Converters.Scx
 
         private void _SetScxDemographics(ScxData data, campaign camp)
         {
-            if (data.Demos == null) return; //demos for inventory scx file are not processed for the moment
-
-            var demosCount = data.Demos.Count;
-            camp.demo = new demo[demosCount];
-            camp.populations = new populations[demosCount];
-            
-            for (var i = 0; i < demosCount; i++)
+            camp.demo = data.Demos.Select(demo => new demo
             {
-                var demo = data.Demos[i];
-                var scxDemo = new demo
-                {
-                    ageFrom = demo.Demo.RangeStart.Value.ToString(),
-                    ageTo = demo.Demo.RangeEnd.Value.ToString(),
-                    demoRank = demo.DemoRank,
-                    group = _GetGroupFromAudience(demo)
-                };
-
-                camp.demo[i] = scxDemo;
-
-                var population = new populations
-                {
-                    demoRank = demo.DemoRank,
-                    Value = demo.MarketPopulations[(short)data.MarketIds.First()].ToString()
-                };
-                camp.populations[i] = population;
-            }
+                ageFrom = demo.Demo.RangeStart.Value.ToString(),
+                ageTo = demo.Demo.RangeEnd.Value.ToString(),
+                demoRank = demo.DemoRank,
+                group = _GetGroupFromAudience(demo)
+            }).ToArray();
         }
 
         private demoNameComplexTypeGroup _GetGroupFromAudience(DemoData demo)
@@ -436,7 +322,7 @@ namespace Services.Broadcast.Converters.Scx
                 return demoNameComplexTypeGroup.Households;
             if (demo.Demo.Name.Contains("Adult"))
                 return demoNameComplexTypeGroup.Adults;
-            if (demo.Demo.Name.StartsWith("Male"))
+            if (demo.Demo.Name.StartsWith("Men"))
                 return demoNameComplexTypeGroup.Men;            
             if (demo.Demo.Name.StartsWith("Women"))
                 return demoNameComplexTypeGroup.Women;
@@ -484,11 +370,11 @@ namespace Services.Broadcast.Converters.Scx
             camp.product = product;
         }
 
-        private void _SetScxAdvertiser(campaign camp, string advertiserName)
+        private void _SetScxAdvertiser(campaign camp)
         {
             var adv = new advertiser()
             {
-                name = advertiserName ?? string.Empty,
+                name = string.Empty,
                 ID = new codeComplexType[1]
             };
             adv.ID[0] = new codeComplexType

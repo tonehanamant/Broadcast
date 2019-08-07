@@ -1,6 +1,7 @@
 ﻿using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
 using Services.Broadcast.BusinessEngines;
+using Services.Broadcast.Cache;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 
@@ -16,25 +17,29 @@ namespace Services.Broadcast.Converters.Scx
         private readonly IDataRepositoryFactory _BroadcastDataRepositoryFactory;
         private readonly ISpotLengthEngine _SpotLengthEngine;
         private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekCache;
+        private readonly IBroadcastAudiencesCache _BroadcastAudiencesCache;
 
-        public InventoryScxDataPrepFactory(IDataRepositoryFactory broadcastDataRepositoryFactory,
+        public InventoryScxDataPrepFactory(
+            IDataRepositoryFactory broadcastDataRepositoryFactory,
             ISpotLengthEngine spotLengthEngine,
-            IMediaMonthAndWeekAggregateCache mediaMonthAndWeekCache)
+            IMediaMonthAndWeekAggregateCache mediaMonthAndWeekCache,
+            IBroadcastAudiencesCache broadcastAudiencesCache)
         {
             _BroadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
             _SpotLengthEngine = spotLengthEngine;
             _MediaMonthAndWeekCache = mediaMonthAndWeekCache;
+            _BroadcastAudiencesCache = broadcastAudiencesCache;
         }
 
         public IInventoryScxDataPrep GetInventoryDataPrep(InventorySourceTypeEnum inventorySourceType)
         {
             if (inventorySourceType == InventorySourceTypeEnum.ProprietaryOAndO)
             {
-                return new OAndOScxDataPrep(_BroadcastDataRepositoryFactory, _SpotLengthEngine, _MediaMonthAndWeekCache);
+                return new OAndOScxDataPrep(_BroadcastDataRepositoryFactory, _SpotLengthEngine, _MediaMonthAndWeekCache, _BroadcastAudiencesCache);
             }
             else
             {
-                return new BarterScxDataPrep(_BroadcastDataRepositoryFactory, _SpotLengthEngine, _MediaMonthAndWeekCache);
+                return new BarterScxDataPrep(_BroadcastDataRepositoryFactory, _SpotLengthEngine, _MediaMonthAndWeekCache, _BroadcastAudiencesCache);
             }
         }
     }

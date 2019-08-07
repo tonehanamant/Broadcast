@@ -8,9 +8,11 @@ using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Scx;
+using Services.Broadcast.IntegrationTests.Stubbs;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Tam.Maestro.Common.DataLayer;
 
@@ -22,11 +24,18 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         private readonly IScxGenerationJobRepository _ScxGenerationJobRepository;
         private readonly InMemoryFileServiceStubb _FileService;
         private readonly JsonSerializerSettings _JsonSettings;
+        private readonly IInventoryRatingsProcessingService _InventoryRatingsProcessingService;
+        private readonly IInventoryFileRatingsJobsRepository _InventoryFileRatingsJobsRepository;
 
         public ScxGenerationServiceTests()
         {
             _FileService = new InMemoryFileServiceStubb();
+
             IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<IFileService>(_FileService);
+            IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<IDataLakeFileService>(new DataLakeFileServiceStub());
+            
+            _InventoryRatingsProcessingService = IntegrationTestApplicationServiceFactory.GetApplicationService<IInventoryRatingsProcessingService>();
+            _InventoryFileRatingsJobsRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryFileRatingsJobsRepository>();
             _ScxGenerationService = IntegrationTestApplicationServiceFactory.GetApplicationService<IScxGenerationService>();
             _ScxGenerationJobRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IScxGenerationJobRepository>();
             var jsonResolver = new IgnorableSerializerContractResolver();
@@ -147,21 +156,34 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void ScxGenerationGetHistoryTest()
         {
-            const int inventorySourceId = 7;
+            const int inventorySourceId = 5;
             using (new TransactionScopeWrapper())
             {
+                string fileName = "Barter_A25-54_Q1 CNN.xlsx";
+                var fileSaveRequest = new FileRequest
+                {
+                    StreamData = new FileStream($@".\Files\ProprietaryDataFiles\{fileName}", FileMode.Open, FileAccess.Read),
+                    FileName = fileName
+                };
+
+                var now = new DateTime(2019, 02, 02);
+                IntegrationTestApplicationServiceFactory.GetApplicationService<IProprietaryInventoryService>().SaveProprietaryInventoryFile(fileSaveRequest, "sroibu", now);
+
+                var ratingsJob = _InventoryFileRatingsJobsRepository.GetLatestJob();
+                _InventoryRatingsProcessingService.ProcessInventoryRatingsJob(ratingsJob.id.Value);
+
                 var request = new InventoryScxDownloadRequest
                 {
-                    EndDate = new DateTime(2019, 03, 31),
-                    StartDate = new DateTime(2018, 12, 31),
-                    DaypartCodeId = 1,
+                    EndDate = new DateTime(2019, 1, 1),
+                    StartDate = new DateTime(2018, 3, 20),
+                    DaypartCodeId = 2,
                     InventorySourceId = inventorySourceId,
-                    UnitNames = new List<string> {"ExpiresGroupsTest"}
+                    UnitNames = new List<string> { "Unit 1" }
                 };
-                var currentDate = new DateTime(2019,04,17,12,30,23);
-                var jobId = _ScxGenerationService.QueueScxGenerationJob(request, "IntegrationTestUser", currentDate);
-                var job = _ScxGenerationJobRepository.GetJobById(jobId);
-                _ScxGenerationService.ProcessScxGenerationJob(job, currentDate);
+
+                var jobId = _ScxGenerationService.QueueScxGenerationJob(request, "IntegrationTestUser", now);
+                var scxGenerationJob = _ScxGenerationJobRepository.GetJobById(jobId);
+                _ScxGenerationService.ProcessScxGenerationJob(scxGenerationJob, now);
 
                 var history = _ScxGenerationService.GetScxFileGenerationHistory(inventorySourceId);
 
@@ -173,27 +195,40 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void ScxGenerationDownloadFileTest()
         {
-            const int inventorySourceId = 7;
+            const int inventorySourceId = 5;
             using (new TransactionScopeWrapper())
             {
+                string fileName = "Barter_A25-54_Q1 CNN.xlsx";
+                var fileSaveRequest = new FileRequest
+                {
+                    StreamData = new FileStream($@".\Files\ProprietaryDataFiles\{fileName}", FileMode.Open, FileAccess.Read),
+                    FileName = fileName
+                };
+
+                var now = new DateTime(2019, 02, 02);
+                IntegrationTestApplicationServiceFactory.GetApplicationService<IProprietaryInventoryService>().SaveProprietaryInventoryFile(fileSaveRequest, "sroibu", now);
+
+                var ratingsJob = _InventoryFileRatingsJobsRepository.GetLatestJob();
+                _InventoryRatingsProcessingService.ProcessInventoryRatingsJob(ratingsJob.id.Value);
+
                 var request = new InventoryScxDownloadRequest
                 {
-                    EndDate = new DateTime(2019, 03, 31),
-                    StartDate = new DateTime(2018, 12, 31),
-                    DaypartCodeId = 1,
+                    EndDate = new DateTime(2019, 1, 1),
+                    StartDate = new DateTime(2018, 3, 20),
+                    DaypartCodeId = 2,
                     InventorySourceId = inventorySourceId,
-                    UnitNames = new List<string> { "ExpiresGroupsTest" }
+                    UnitNames = new List<string> { "Unit 1" }
                 };
-                var currentDate = new DateTime(2019, 04, 17, 12, 30, 23);
-                var jobId = _ScxGenerationService.QueueScxGenerationJob(request, "IntegrationTestUser", currentDate);
+                
+                var jobId = _ScxGenerationService.QueueScxGenerationJob(request, "IntegrationTestUser", now);
                 var job = _ScxGenerationJobRepository.GetJobById(jobId);
-                _ScxGenerationService.ProcessScxGenerationJob(job, currentDate);
+                _ScxGenerationService.ProcessScxGenerationJob(job, now);
                 var history = _ScxGenerationService.GetScxFileGenerationHistory(inventorySourceId);
                 var fileId = history.First().FileId;
 
                 var result = _ScxGenerationService.DownloadGeneratedScxFile(fileId);
 
-                Assert.AreEqual(result.Item1, "LilaMax_ExpiresGroupsTest_20190210_20190217.scx");
+                Assert.AreEqual("CNN_Unit 1_20180319_20190106.scx", result.Item1);
                 Assert.IsTrue(result.Item2.Length > 0);
             }
         }

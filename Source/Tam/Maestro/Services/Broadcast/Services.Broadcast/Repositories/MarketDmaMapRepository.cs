@@ -11,7 +11,7 @@ namespace Services.Broadcast.Repositories
 {
     public interface IMarketDmaMapRepository : IDataRepository
     {
-        List<market_dma_map> GetMarketMapFromMarketCodes(List<int> marketCodes);
+        List<market_dma_map> GetMarketMapFromMarketCodes(IEnumerable<int> marketCodes);
     }
 
     public class MarketDmaMapRepository : BroadcastRepositoryBase, IMarketDmaMapRepository
@@ -21,7 +21,7 @@ namespace Services.Broadcast.Repositories
             ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient)
             : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
 
-        public List<market_dma_map> GetMarketMapFromMarketCodes(List<int> marketCodes)
+        public List<market_dma_map> GetMarketMapFromMarketCodes(IEnumerable<int> marketCodes)
         {
             return _InReadUncommitedTransaction(
                 context => (

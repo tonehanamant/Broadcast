@@ -1,6 +1,5 @@
 ﻿[
   {
-    "AdvertisersName": null,
     "AllSortedMediaWeeks": [
       {
         "_EndDate": "2019-01-06T00:00:00",
@@ -107,277 +106,1141 @@
         "IsDirty": true
       }
     ],
-    "DaypartCode": "EMN",
-    "DaypartCodeId": 1,
-    "Demos": null,
-    "EndDate": "2019-02-17T00:00:00",
-    "GuaranteedDemoId": 0,
-    "InventoryMarkets": [
+    "DaypartCode": "MDN",
+    "DaypartCodeId": 2,
+    "Demos": [
       {
-        "DmaMarketName": null,
-        "MarketId": null,
-        "Stations": [
-          {
-            "LegacyCallLetters": "WLS_UNKNOWN2",
-            "Programs": [
-              {
-                "Dayparts": [],
-                "ProgramId": 331846,
-                "ProgramNames": [],
-                "Weeks": [
-                  {
-                    "MediaWeek": {
-                      "_EndDate": "2019-02-10T00:00:00",
-                      "_Id": 789,
-                      "_MediaMonthId": 449,
-                      "_StartDate": "2019-02-04T00:00:00",
-                      "_WeekNumber": 2,
-                      "IsDirty": true
-                    },
-                    "Spots": 5
-                  },
-                  {
-                    "MediaWeek": {
-                      "_EndDate": "2019-02-17T00:00:00",
-                      "_Id": 790,
-                      "_MediaMonthId": 449,
-                      "_StartDate": "2019-02-11T00:00:00",
-                      "_WeekNumber": 3,
-                      "IsDirty": true
-                    },
-                    "Spots": 5
-                  }
-                ]
-              }
-            ],
-            "StationCode": null
-          }
-        ]
+        "Demo": {
+          "_CategoryCode": 0,
+          "_Code": "A25-54",
+          "_Custom": true,
+          "_Id": 37,
+          "_Name": "Adults 25-54",
+          "_RangeEnd": 54,
+          "_RangeStart": 25,
+          "_SubCategoryCode": "A",
+          "IsDirty": true
+        },
+        "DemoRank": 1
       }
     ],
+    "EndDate": "2019-03-31T00:00:00",
     "InventorySource": {
-      "Id": 7,
+      "Id": 5,
       "InventoryType": 2,
       "IsActive": true,
-      "Name": "LilaMax"
+      "Name": "CNN"
     },
-    "MarketIds": [],
-    "MarketPlaybackTypes": [],
-    "SecondaryDemos": [],
-    "SpotLength": "30",
-    "StartDate": "2019-02-10T00:00:00",
-    "SurveyData": {
-      "261": "Feb18 DMA Nielsen Live+3",
-      "238": "Feb18 DMA Nielsen Live+3",
-      "355": "Feb18 DMA Nielsen Live+3",
-      "192": "Feb18 DMA Nielsen Live+3",
-      "401": "Feb18 DMA Nielsen Live+3",
-      "115": "Feb18 DMA Nielsen LiveSameDay",
-      "138": "Feb18 DMA Nielsen Live+3",
-      "209": "Feb18 DMA Nielsen Live",
-      "161": "Feb18 DMA Nielsen LiveSameDay",
-      "407": "Feb18 DMA Nielsen Live",
-      "232": "Feb18 DMA Nielsen LiveSameDay",
-      "278": "Feb18 DMA Nielsen Live+3",
-      "169": "Feb18 DMA Nielsen Live+3",
-      "175": "Feb18 DMA Nielsen Live+3",
-      "324": "Feb18 DMA Nielsen Live+3",
-      "344": "Feb18 DMA Nielsen Live+3",
-      "132": "Feb18 DMA Nielsen LiveSameDay",
-      "181": "Feb18 DMA Nielsen Live+3",
-      "109": "Feb18 DMA Nielsen Live+3",
-      "158": "Feb18 DMA Nielsen Live+3",
-      "481": "Feb18 DMA Nielsen Live+3",
-      "244": "Feb18 DMA Nielsen Live+3",
-      "252": "Feb18 DMA Nielsen Live+3",
-      "146": "Feb18 DMA Nielsen Live+3",
-      "152": "Feb18 DMA Nielsen Live+3",
-      "404": "Feb18 DMA Nielsen Live+3",
-      "118": "Feb18 DMA Nielsen LiveSameDay",
-      "258": "Feb18 DMA Nielsen Live+3",
-      "212": "Feb18 DMA Nielsen Live+3",
-      "358": "Feb18 DMA Nielsen Live+3",
-      "235": "Feb18 DMA Nielsen LiveSameDay",
-      "421": "Feb18 DMA Nielsen Live+3",
-      "410": "Feb18 DMA Nielsen LiveSameDay",
-      "218": "Feb18 DMA Nielsen Live",
-      "364": "Feb18 DMA Nielsen Live+3",
-      "275": "Feb18 DMA Nielsen Live+3",
-      "318": "Feb18 DMA Nielsen Live+3",
-      "126": "Feb18 DMA Nielsen Live+3",
-      "367": "Feb18 DMA Nielsen Live+3",
-      "129": "Feb18 DMA Nielsen LiveSameDay",
-      "390": "Feb18 DMA Nielsen LiveSameDay",
-      "155": "Feb18 DMA Nielsen Live+3",
-      "106": "Feb18 DMA Nielsen Live",
-      "135": "Feb18 DMA Nielsen LiveSameDay",
-      "112": "Feb18 DMA Nielsen Live",
-      "398": "Feb18 DMA Nielsen Live+3",
-      "292": "Feb18 DMA Nielsen Live+3",
-      "241": "Feb18 DMA Nielsen LiveSameDay",
-      "347": "Feb18 DMA Nielsen Live+3",
-      "298": "Feb18 DMA Nielsen Live+3",
-      "149": "Feb18 DMA Nielsen Live+3",
-      "198": "Feb18 DMA Nielsen Live+3",
-      "213": "Feb18 DMA Nielsen Live",
-      "144": "Feb18 DMA Nielsen LiveSameDay",
-      "167": "Feb18 DMA Nielsen LiveSameDay",
-      "359": "Feb18 DMA Nielsen Live+3",
-      "353": "Feb18 DMA Nielsen Live",
-      "336": "Feb18 DMA Nielsen Live+3",
-      "236": "Feb18 DMA Nielsen Live+3",
-      "259": "Feb18 DMA Nielsen LiveSameDay",
-      "184": "Feb18 DMA Nielsen Live+3",
-      "113": "Feb18 DMA Nielsen LiveSameDay",
-      "230": "Feb18 DMA Nielsen LiveSameDay",
-      "276": "Feb18 DMA Nielsen Live+3",
-      "121": "Feb18 DMA Nielsen LiveSameDay",
-      "127": "Feb18 DMA Nielsen LiveSameDay",
-      "322": "Feb18 DMA Nielsen Live+3",
-      "173": "Feb18 DMA Nielsen Live+3",
-      "468": "Feb18 DMA Nielsen Live+3",
-      "370": "Feb18 DMA Nielsen LiveSameDay",
-      "107": "Feb18 DMA Nielsen Live+3",
-      "273": "Feb18 DMA Nielsen Live+3",
-      "250": "Feb18 DMA Nielsen LiveSameDay",
-      "156": "Feb18 DMA Nielsen LiveSameDay",
-      "130": "Feb18 DMA Nielsen Live+3",
-      "413": "Feb18 DMA Nielsen Live+3",
-      "462": "Feb18 DMA Nielsen Live",
-      "101": "Feb18 DMA Nielsen Live",
-      "256": "Feb18 DMA Nielsen Live+3",
-      "293": "Feb18 DMA Nielsen Live+3",
-      "150": "Feb18 DMA Nielsen Live+3",
-      "356": "Feb18 DMA Nielsen Live+3",
-      "141": "Feb18 DMA Nielsen Live+3",
-      "239": "Feb18 DMA Nielsen Live+3",
-      "402": "Feb18 DMA Nielsen Live+3",
-      "216": "Feb18 DMA Nielsen LiveSameDay",
-      "425": "Feb18 DMA Nielsen LiveSameDay",
-      "164": "Feb18 DMA Nielsen Live+3",
-      "287": "Feb18 DMA Nielsen Live+3",
-      "233": "Feb18 DMA Nielsen Live+3",
-      "310": "Feb18 DMA Nielsen Live+3",
-      "210": "Feb18 DMA Nielsen Live+3",
-      "279": "Feb18 DMA Nielsen Live+3",
-      "362": "Feb18 DMA Nielsen Live+3",
-      "373": "Feb18 DMA Nielsen Live+3",
-      "316": "Feb18 DMA Nielsen Live+3",
-      "270": "Feb18 DMA Nielsen Live+3",
-      "170": "Feb18 DMA Nielsen Live+3",
-      "176": "Feb18 DMA Nielsen Live+3",
-      "224": "Feb18 DMA Nielsen Live+3",
-      "124": "Feb18 DMA Nielsen Live",
-      "419": "Feb18 DMA Nielsen Live",
-      "439": "Feb18 DMA Nielsen LiveSameDay",
-      "153": "Feb18 DMA Nielsen Live+3",
-      "227": "Feb18 DMA Nielsen Live+3",
-      "204": "Feb18 DMA Nielsen Live+3",
-      "110": "Feb18 DMA Nielsen Live",
-      "133": "Feb18 DMA Nielsen LiveSameDay",
-      "196": "Feb18 DMA Nielsen Live+3",
-      "104": "Feb18 DMA Nielsen Live",
-      "147": "Feb18 DMA Nielsen Live+3",
-      "247": "Feb18 DMA Nielsen Live+3",
-      "119": "Feb18 DMA Nielsen LiveSameDay",
-      "428": "Feb18 DMA Nielsen Live+3",
-      "165": "Feb18 DMA Nielsen Live+3",
-      "142": "Feb18 DMA Nielsen LiveSameDay",
-      "211": "Feb18 DMA Nielsen Live+3",
-      "282": "Feb18 DMA Nielsen Live+3",
-      "188": "Feb18 DMA Nielsen Live+3",
-      "305": "Feb18 DMA Nielsen Live+3",
-      "311": "Feb18 DMA Nielsen Live+3",
-      "334": "Feb18 DMA Nielsen Live+3",
-      "234": "Feb18 DMA Nielsen Live+3",
-      "357": "Feb18 DMA Nielsen Live+3",
-      "125": "Feb18 DMA Nielsen Live+3",
-      "219": "Feb18 DMA Nielsen Live+3",
-      "411": "Feb18 DMA Nielsen LiveSameDay",
-      "365": "Feb18 DMA Nielsen Live+3",
-      "317": "Feb18 DMA Nielsen Live+3",
-      "171": "Feb18 DMA Nielsen LiveSameDay",
-      "420": "Feb18 DMA Nielsen Live",
-      "271": "Feb18 DMA Nielsen LiveSameDay",
-      "228": "Feb18 DMA Nielsen Live+3",
-      "105": "Feb18 DMA Nielsen Live",
-      "205": "Feb18 DMA Nielsen Live+3",
-      "136": "Feb18 DMA Nielsen Live+3",
-      "291": "Feb18 DMA Nielsen Live+3",
-      "242": "Feb18 DMA Nielsen Live+3",
-      "248": "Feb18 DMA Nielsen Live+3",
-      "148": "Feb18 DMA Nielsen LiveSameDay",
-      "262": "Feb18 DMA Nielsen Live+3",
-      "116": "Feb18 DMA Nielsen Live+3",
-      "354": "Feb18 DMA Nielsen Live+3",
-      "139": "Feb18 DMA Nielsen Live",
-      "231": "Feb18 DMA Nielsen Live+3",
-      "325": "Feb18 DMA Nielsen Live+3",
-      "122": "Feb18 DMA Nielsen Live+3",
-      "371": "Feb18 DMA Nielsen Live+3",
-      "128": "Feb18 DMA Nielsen Live",
-      "222": "Feb18 DMA Nielsen LiveSameDay",
-      "202": "Feb18 DMA Nielsen Live",
-      "225": "Feb18 DMA Nielsen Live+3",
-      "108": "Feb18 DMA Nielsen Live",
-      "251": "Feb18 DMA Nielsen Live+3",
-      "182": "Feb18 DMA Nielsen Live+3",
-      "159": "Feb18 DMA Nielsen Live+3",
-      "102": "Feb18 DMA Nielsen Live+3",
-      "337": "Feb18 DMA Nielsen Live+3",
-      "302": "Feb18 DMA Nielsen Live+3",
-      "400": "Feb18 DMA Nielsen Live+3",
-      "351": "Feb18 DMA Nielsen Live",
-      "145": "Feb18 DMA Nielsen Live+3",
-      "345": "Feb18 DMA Nielsen Live+3",
-      "309": "Feb18 DMA Nielsen Live+3",
-      "286": "Feb18 DMA Nielsen LiveSameDay",
-      "403": "Feb18 DMA Nielsen Live",
-      "117": "Feb18 DMA Nielsen Live",
-      "240": "Feb18 DMA Nielsen LiveSameDay",
-      "140": "Feb18 DMA Nielsen LiveSameDay",
-      "163": "Feb18 DMA Nielsen LiveSameDay",
-      "257": "Feb18 DMA Nielsen Live+3",
-      "455": "Feb18 DMA Nielsen LiveSameDay",
-      "217": "Feb18 DMA Nielsen LiveSameDay",
-      "223": "Feb18 DMA Nielsen Live",
-      "466": "Feb18 DMA Nielsen LiveSameDay",
-      "269": "Feb18 DMA Nielsen LiveSameDay",
-      "123": "Feb18 DMA Nielsen Live+3",
-      "226": "Feb18 DMA Nielsen Live+3",
-      "177": "Feb18 DMA Nielsen Live+3",
-      "154": "Feb18 DMA Nielsen Live+3",
-      "203": "Feb18 DMA Nielsen Live+3",
-      "134": "Feb18 DMA Nielsen Live",
-      "183": "Feb18 DMA Nielsen Live+3",
-      "111": "Feb18 DMA Nielsen Live",
-      "160": "Feb18 DMA Nielsen LiveSameDay",
-      "103": "Feb18 DMA Nielsen Live+3",
-      "340": "Feb18 DMA Nielsen Live+3",
-      "352": "Feb18 DMA Nielsen Live+3",
-      "389": "Feb18 DMA Nielsen LiveSameDay",
-      "346": "Feb18 DMA Nielsen Live+3",
-      "197": "Feb18 DMA Nielsen Live+3",
-      "143": "Feb18 DMA Nielsen Live+3",
-      "120": "Feb18 DMA Nielsen Live+3",
-      "237": "Feb18 DMA Nielsen Live+3",
-      "166": "Feb18 DMA Nielsen LiveSameDay",
-      "360": "Feb18 DMA Nielsen Live+3",
-      "114": "Feb18 DMA Nielsen LiveSameDay",
-      "366": "Feb18 DMA Nielsen Live+3",
-      "174": "Feb18 DMA Nielsen Live+3",
-      "131": "Feb18 DMA Nielsen Live+3",
-      "249": "Feb18 DMA Nielsen Live+3",
-      "206": "Feb18 DMA Nielsen Live+3",
-      "157": "Feb18 DMA Nielsen LiveSameDay",
-      "137": "Feb18 DMA Nielsen Live+3",
-      "243": "Feb18 DMA Nielsen Live+3",
-      "349": "Feb18 DMA Nielsen Live+3",
-      "151": "Feb18 DMA Nielsen Live+3",
-      "200": "Feb18 DMA Nielsen Live+3",
-      "100": "Feb18 DMA Nielsen Live+3",
-      "343": "Feb18 DMA Nielsen Live+3"
+    "Orders": [
+      {
+        "InventoryMarkets": [
+          {
+            "DmaMarketName": "New York",
+            "MarketId": 101,
+            "Stations": [
+              {
+                "LegacyCallLetters": "WCBS",
+                "Programs": [
+                  {
+                    "DaypartId": 29862,
+                    "DemoValues": [
+                      {
+                        "DemoRank": 1,
+                        "Impressions": 24007.675
+                      }
+                    ],
+                    "ProgramName": "CNN Block",
+                    "SpotCost": 15857.0693,
+                    "SpotLength": "30",
+                    "TotalCost": 190284.8316,
+                    "TotalSpots": 12,
+                    "Weeks": [
+                      {
+                        "MediaWeek": {
+                          "_EndDate": "2019-01-06T00:00:00",
+                          "_Id": 784,
+                          "_MediaMonthId": 448,
+                          "_StartDate": "2018-12-31T00:00:00",
+                          "_WeekNumber": 1,
+                          "IsDirty": true
+                        },
+                        "Spots": 1
+                      },
+                      {
+                        "MediaWeek": {
+                          "_EndDate": "2019-01-13T00:00:00",
+                          "_Id": 785,
+                          "_MediaMonthId": 448,
+                          "_StartDate": "2019-01-07T00:00:00",
+                          "_WeekNumber": 2,
+                          "IsDirty": true
+                        },
+                        "Spots": 1
+                      },
+                      {
+                        "MediaWeek": {
+                          "_EndDate": "2019-01-20T00:00:00",
+                          "_Id": 786,
+                          "_MediaMonthId": 448,
+                          "_StartDate": "2019-01-14T00:00:00",
+                          "_WeekNumber": 3,
+                          "IsDirty": true
+                        },
+                        "Spots": 1
+                      },
+                      {
+                        "MediaWeek": {
+                          "_EndDate": "2019-01-27T00:00:00",
+                          "_Id": 787,
+                          "_MediaMonthId": 448,
+                          "_StartDate": "2019-01-21T00:00:00",
+                          "_WeekNumber": 4,
+                          "IsDirty": true
+                        },
+                        "Spots": 1
+                      },
+                      {
+                        "MediaWeek": {
+                          "_EndDate": "2019-02-03T00:00:00",
+                          "_Id": 788,
+                          "_MediaMonthId": 449,
+                          "_StartDate": "2019-01-28T00:00:00",
+                          "_WeekNumber": 1,
+                          "IsDirty": true
+                        },
+                        "Spots": 1
+                      },
+                      {
+                        "MediaWeek": {
+                          "_EndDate": "2019-02-10T00:00:00",
+                          "_Id": 789,
+                          "_MediaMonthId": 449,
+                          "_StartDate": "2019-02-04T00:00:00",
+                          "_WeekNumber": 2,
+                          "IsDirty": true
+                        },
+                        "Spots": 1
+                      },
+                      {
+                        "MediaWeek": {
+                          "_EndDate": "2019-02-17T00:00:00",
+                          "_Id": 790,
+                          "_MediaMonthId": 449,
+                          "_StartDate": "2019-02-11T00:00:00",
+                          "_WeekNumber": 3,
+                          "IsDirty": true
+                        },
+                        "Spots": 1
+                      },
+                      {
+                        "MediaWeek": {
+                          "_EndDate": "2019-02-24T00:00:00",
+                          "_Id": 791,
+                          "_MediaMonthId": 449,
+                          "_StartDate": "2019-02-18T00:00:00",
+                          "_WeekNumber": 4,
+                          "IsDirty": true
+                        },
+                        "Spots": 1
+                      },
+                      {
+                        "MediaWeek": {
+                          "_EndDate": "2019-03-03T00:00:00",
+                          "_Id": 792,
+                          "_MediaMonthId": 450,
+                          "_StartDate": "2019-02-25T00:00:00",
+                          "_WeekNumber": 1,
+                          "IsDirty": true
+                        },
+                        "Spots": 1
+                      },
+                      {
+                        "MediaWeek": {
+                          "_EndDate": "2019-03-10T00:00:00",
+                          "_Id": 793,
+                          "_MediaMonthId": 450,
+                          "_StartDate": "2019-03-04T00:00:00",
+                          "_WeekNumber": 2,
+                          "IsDirty": true
+                        },
+                        "Spots": 1
+                      },
+                      {
+                        "MediaWeek": {
+                          "_EndDate": "2019-03-17T00:00:00",
+                          "_Id": 794,
+                          "_MediaMonthId": 450,
+                          "_StartDate": "2019-03-11T00:00:00",
+                          "_WeekNumber": 3,
+                          "IsDirty": true
+                        },
+                        "Spots": 1
+                      },
+                      {
+                        "MediaWeek": {
+                          "_EndDate": "2019-03-24T00:00:00",
+                          "_Id": 795,
+                          "_MediaMonthId": 450,
+                          "_StartDate": "2019-03-18T00:00:00",
+                          "_WeekNumber": 4,
+                          "IsDirty": true
+                        },
+                        "Spots": 1
+                      }
+                    ]
+                  }
+                ],
+                "StationCode": 5012,
+                "TotalCost": 190284.8316,
+                "TotalSpots": 12
+              },
+              {
+                "LegacyCallLetters": "WPIX",
+                "Programs": [
+                  {
+                    "DaypartId": 29862,
+                    "DemoValues": [
+                      {
+                        "DemoRank": 1,
+                        "Impressions": 17339.15
+                      }
+                    ],
+                    "ProgramName": "CNN Block",
+                    "SpotCost": 11452.5085,
+                    "SpotLength": "30",
+                    "TotalCost": 137430.1020,
+                    "TotalSpots": 12,
+                    "Weeks": [
+                      {
+                        "MediaWeek": {
+                          "_EndDate": "2019-01-06T00:00:00",
+                          "_Id": 784,
+                          "_MediaMonthId": 448,
+                          "_StartDate": "2018-12-31T00:00:00",
+                          "_WeekNumber": 1,
+                          "IsDirty": true
+                        },
+                        "Spots": 1
+                      },
+                      {
+                        "MediaWeek": {
+                          "_EndDate": "2019-01-13T00:00:00",
+                          "_Id": 785,
+                          "_MediaMonthId": 448,
+                          "_StartDate": "2019-01-07T00:00:00",
+                          "_WeekNumber": 2,
+                          "IsDirty": true
+                        },
+                        "Spots": 1
+                      },
+                      {
+                        "MediaWeek": {
+                          "_EndDate": "2019-01-20T00:00:00",
+                          "_Id": 786,
+                          "_MediaMonthId": 448,
+                          "_StartDate": "2019-01-14T00:00:00",
+                          "_WeekNumber": 3,
+                          "IsDirty": true
+                        },
+                        "Spots": 1
+                      },
+                      {
+                        "MediaWeek": {
+                          "_EndDate": "2019-01-27T00:00:00",
+                          "_Id": 787,
+                          "_MediaMonthId": 448,
+                          "_StartDate": "2019-01-21T00:00:00",
+                          "_WeekNumber": 4,
+                          "IsDirty": true
+                        },
+                        "Spots": 1
+                      },
+                      {
+                        "MediaWeek": {
+                          "_EndDate": "2019-02-03T00:00:00",
+                          "_Id": 788,
+                          "_MediaMonthId": 449,
+                          "_StartDate": "2019-01-28T00:00:00",
+                          "_WeekNumber": 1,
+                          "IsDirty": true
+                        },
+                        "Spots": 1
+                      },
+                      {
+                        "MediaWeek": {
+                          "_EndDate": "2019-02-10T00:00:00",
+                          "_Id": 789,
+                          "_MediaMonthId": 449,
+                          "_StartDate": "2019-02-04T00:00:00",
+                          "_WeekNumber": 2,
+                          "IsDirty": true
+                        },
+                        "Spots": 1
+                      },
+                      {
+                        "MediaWeek": {
+                          "_EndDate": "2019-02-17T00:00:00",
+                          "_Id": 790,
+                          "_MediaMonthId": 449,
+                          "_StartDate": "2019-02-11T00:00:00",
+                          "_WeekNumber": 3,
+                          "IsDirty": true
+                        },
+                        "Spots": 1
+                      },
+                      {
+                        "MediaWeek": {
+                          "_EndDate": "2019-02-24T00:00:00",
+                          "_Id": 791,
+                          "_MediaMonthId": 449,
+                          "_StartDate": "2019-02-18T00:00:00",
+                          "_WeekNumber": 4,
+                          "IsDirty": true
+                        },
+                        "Spots": 1
+                      },
+                      {
+                        "MediaWeek": {
+                          "_EndDate": "2019-03-03T00:00:00",
+                          "_Id": 792,
+                          "_MediaMonthId": 450,
+                          "_StartDate": "2019-02-25T00:00:00",
+                          "_WeekNumber": 1,
+                          "IsDirty": true
+                        },
+                        "Spots": 1
+                      },
+                      {
+                        "MediaWeek": {
+                          "_EndDate": "2019-03-10T00:00:00",
+                          "_Id": 793,
+                          "_MediaMonthId": 450,
+                          "_StartDate": "2019-03-04T00:00:00",
+                          "_WeekNumber": 2,
+                          "IsDirty": true
+                        },
+                        "Spots": 1
+                      },
+                      {
+                        "MediaWeek": {
+                          "_EndDate": "2019-03-17T00:00:00",
+                          "_Id": 794,
+                          "_MediaMonthId": 450,
+                          "_StartDate": "2019-03-11T00:00:00",
+                          "_WeekNumber": 3,
+                          "IsDirty": true
+                        },
+                        "Spots": 1
+                      },
+                      {
+                        "MediaWeek": {
+                          "_EndDate": "2019-03-24T00:00:00",
+                          "_Id": 795,
+                          "_MediaMonthId": 450,
+                          "_StartDate": "2019-03-18T00:00:00",
+                          "_WeekNumber": 4,
+                          "IsDirty": true
+                        },
+                        "Spots": 1
+                      }
+                    ]
+                  }
+                ],
+                "StationCode": 5014,
+                "TotalCost": 137430.1020,
+                "TotalSpots": 12
+              }
+            ],
+            "TotalCost": 327714.9336,
+            "TotalSpots": 24
+          },
+          {
+            "DmaMarketName": "Chicago",
+            "MarketId": 202,
+            "Stations": [
+              {
+                "LegacyCallLetters": "WBBM",
+                "Programs": [
+                  {
+                    "DaypartId": 78,
+                    "DemoValues": [
+                      {
+                        "DemoRank": 1,
+                        "Impressions": 14146.15625
+                      }
+                    ],
+                    "ProgramName": "CNN Block",
+                    "SpotCost": 9343.5362,
+                    "SpotLength": "30",
+                    "TotalCost": 112122.4344,
+                    "TotalSpots": 12,
+                    "Weeks": [
+                      {
+                        "MediaWeek": {
+                          "_EndDate": "2019-01-06T00:00:00",
+                          "_Id": 784,
+                          "_MediaMonthId": 448,
+                          "_StartDate": "2018-12-31T00:00:00",
+                          "_WeekNumber": 1,
+                          "IsDirty": true
+                        },
+                        "Spots": 1
+                      },
+                      {
+                        "MediaWeek": {
+                          "_EndDate": "2019-01-13T00:00:00",
+                          "_Id": 785,
+                          "_MediaMonthId": 448,
+                          "_StartDate": "2019-01-07T00:00:00",
+                          "_WeekNumber": 2,
+                          "IsDirty": true
+                        },
+                        "Spots": 1
+                      },
+                      {
+                        "MediaWeek": {
+                          "_EndDate": "2019-01-20T00:00:00",
+                          "_Id": 786,
+                          "_MediaMonthId": 448,
+                          "_StartDate": "2019-01-14T00:00:00",
+                          "_WeekNumber": 3,
+                          "IsDirty": true
+                        },
+                        "Spots": 1
+                      },
+                      {
+                        "MediaWeek": {
+                          "_EndDate": "2019-01-27T00:00:00",
+                          "_Id": 787,
+                          "_MediaMonthId": 448,
+                          "_StartDate": "2019-01-21T00:00:00",
+                          "_WeekNumber": 4,
+                          "IsDirty": true
+                        },
+                        "Spots": 1
+                      },
+                      {
+                        "MediaWeek": {
+                          "_EndDate": "2019-02-03T00:00:00",
+                          "_Id": 788,
+                          "_MediaMonthId": 449,
+                          "_StartDate": "2019-01-28T00:00:00",
+                          "_WeekNumber": 1,
+                          "IsDirty": true
+                        },
+                        "Spots": 1
+                      },
+                      {
+                        "MediaWeek": {
+                          "_EndDate": "2019-02-10T00:00:00",
+                          "_Id": 789,
+                          "_MediaMonthId": 449,
+                          "_StartDate": "2019-02-04T00:00:00",
+                          "_WeekNumber": 2,
+                          "IsDirty": true
+                        },
+                        "Spots": 1
+                      },
+                      {
+                        "MediaWeek": {
+                          "_EndDate": "2019-02-17T00:00:00",
+                          "_Id": 790,
+                          "_MediaMonthId": 449,
+                          "_StartDate": "2019-02-11T00:00:00",
+                          "_WeekNumber": 3,
+                          "IsDirty": true
+                        },
+                        "Spots": 1
+                      },
+                      {
+                        "MediaWeek": {
+                          "_EndDate": "2019-02-24T00:00:00",
+                          "_Id": 791,
+                          "_MediaMonthId": 449,
+                          "_StartDate": "2019-02-18T00:00:00",
+                          "_WeekNumber": 4,
+                          "IsDirty": true
+                        },
+                        "Spots": 1
+                      },
+                      {
+                        "MediaWeek": {
+                          "_EndDate": "2019-03-03T00:00:00",
+                          "_Id": 792,
+                          "_MediaMonthId": 450,
+                          "_StartDate": "2019-02-25T00:00:00",
+                          "_WeekNumber": 1,
+                          "IsDirty": true
+                        },
+                        "Spots": 1
+                      },
+                      {
+                        "MediaWeek": {
+                          "_EndDate": "2019-03-10T00:00:00",
+                          "_Id": 793,
+                          "_MediaMonthId": 450,
+                          "_StartDate": "2019-03-04T00:00:00",
+                          "_WeekNumber": 2,
+                          "IsDirty": true
+                        },
+                        "Spots": 1
+                      },
+                      {
+                        "MediaWeek": {
+                          "_EndDate": "2019-03-17T00:00:00",
+                          "_Id": 794,
+                          "_MediaMonthId": 450,
+                          "_StartDate": "2019-03-11T00:00:00",
+                          "_WeekNumber": 3,
+                          "IsDirty": true
+                        },
+                        "Spots": 1
+                      },
+                      {
+                        "MediaWeek": {
+                          "_EndDate": "2019-03-24T00:00:00",
+                          "_Id": 795,
+                          "_MediaMonthId": 450,
+                          "_StartDate": "2019-03-18T00:00:00",
+                          "_WeekNumber": 4,
+                          "IsDirty": true
+                        },
+                        "Spots": 1
+                      }
+                    ]
+                  }
+                ],
+                "StationCode": 5050,
+                "TotalCost": 112122.4344,
+                "TotalSpots": 12
+              }
+            ],
+            "TotalCost": 112122.4344,
+            "TotalSpots": 12
+          }
+        ],
+        "SurveyString": "Nov16 DMA Nielsen Live+3",
+        "TotalCost": 439837.3680,
+        "TotalSpots": 36
+      }
+    ],
+    "StartDate": "2018-12-31T00:00:00",
+    "UnitName": "Unit 4"
+  },
+  {
+    "AllSortedMediaWeeks": [
+      {
+        "_EndDate": "2019-01-06T00:00:00",
+        "_Id": 784,
+        "_MediaMonthId": 448,
+        "_StartDate": "2018-12-31T00:00:00",
+        "_WeekNumber": 1,
+        "IsDirty": true
+      },
+      {
+        "_EndDate": "2019-01-13T00:00:00",
+        "_Id": 785,
+        "_MediaMonthId": 448,
+        "_StartDate": "2019-01-07T00:00:00",
+        "_WeekNumber": 2,
+        "IsDirty": true
+      },
+      {
+        "_EndDate": "2019-01-20T00:00:00",
+        "_Id": 786,
+        "_MediaMonthId": 448,
+        "_StartDate": "2019-01-14T00:00:00",
+        "_WeekNumber": 3,
+        "IsDirty": true
+      },
+      {
+        "_EndDate": "2019-01-27T00:00:00",
+        "_Id": 787,
+        "_MediaMonthId": 448,
+        "_StartDate": "2019-01-21T00:00:00",
+        "_WeekNumber": 4,
+        "IsDirty": true
+      },
+      {
+        "_EndDate": "2019-02-03T00:00:00",
+        "_Id": 788,
+        "_MediaMonthId": 449,
+        "_StartDate": "2019-01-28T00:00:00",
+        "_WeekNumber": 1,
+        "IsDirty": true
+      },
+      {
+        "_EndDate": "2019-02-10T00:00:00",
+        "_Id": 789,
+        "_MediaMonthId": 449,
+        "_StartDate": "2019-02-04T00:00:00",
+        "_WeekNumber": 2,
+        "IsDirty": true
+      },
+      {
+        "_EndDate": "2019-02-17T00:00:00",
+        "_Id": 790,
+        "_MediaMonthId": 449,
+        "_StartDate": "2019-02-11T00:00:00",
+        "_WeekNumber": 3,
+        "IsDirty": true
+      },
+      {
+        "_EndDate": "2019-02-24T00:00:00",
+        "_Id": 791,
+        "_MediaMonthId": 449,
+        "_StartDate": "2019-02-18T00:00:00",
+        "_WeekNumber": 4,
+        "IsDirty": true
+      },
+      {
+        "_EndDate": "2019-03-03T00:00:00",
+        "_Id": 792,
+        "_MediaMonthId": 450,
+        "_StartDate": "2019-02-25T00:00:00",
+        "_WeekNumber": 1,
+        "IsDirty": true
+      },
+      {
+        "_EndDate": "2019-03-10T00:00:00",
+        "_Id": 793,
+        "_MediaMonthId": 450,
+        "_StartDate": "2019-03-04T00:00:00",
+        "_WeekNumber": 2,
+        "IsDirty": true
+      },
+      {
+        "_EndDate": "2019-03-17T00:00:00",
+        "_Id": 794,
+        "_MediaMonthId": 450,
+        "_StartDate": "2019-03-11T00:00:00",
+        "_WeekNumber": 3,
+        "IsDirty": true
+      },
+      {
+        "_EndDate": "2019-03-24T00:00:00",
+        "_Id": 795,
+        "_MediaMonthId": 450,
+        "_StartDate": "2019-03-18T00:00:00",
+        "_WeekNumber": 4,
+        "IsDirty": true
+      },
+      {
+        "_EndDate": "2019-03-31T00:00:00",
+        "_Id": 796,
+        "_MediaMonthId": 450,
+        "_StartDate": "2019-03-25T00:00:00",
+        "_WeekNumber": 5,
+        "IsDirty": true
+      }
+    ],
+    "DaypartCode": "MDN",
+    "DaypartCodeId": 2,
+    "Demos": [
+      {
+        "Demo": {
+          "_CategoryCode": 0,
+          "_Code": "A25-54",
+          "_Custom": true,
+          "_Id": 37,
+          "_Name": "Adults 25-54",
+          "_RangeEnd": 54,
+          "_RangeStart": 25,
+          "_SubCategoryCode": "A",
+          "IsDirty": true
+        },
+        "DemoRank": 1
+      }
+    ],
+    "EndDate": "2019-03-31T00:00:00",
+    "InventorySource": {
+      "Id": 5,
+      "InventoryType": 2,
+      "IsActive": true,
+      "Name": "CNN"
     },
-    "UnitName": "ExpiresGroupsTest"
+    "Orders": [
+      {
+        "InventoryMarkets": [
+          {
+            "DmaMarketName": "New York",
+            "MarketId": 101,
+            "Stations": [
+              {
+                "LegacyCallLetters": "WNBC",
+                "Programs": [
+                  {
+                    "DaypartId": 70595,
+                    "DemoValues": [
+                      {
+                        "DemoRank": 1,
+                        "Impressions": 42185.8
+                      }
+                    ],
+                    "ProgramName": "CNN Block",
+                    "SpotCost": 27863.7209,
+                    "SpotLength": "30",
+                    "TotalCost": 334364.6508,
+                    "TotalSpots": 12,
+                    "Weeks": [
+                      {
+                        "MediaWeek": {
+                          "_EndDate": "2019-01-06T00:00:00",
+                          "_Id": 784,
+                          "_MediaMonthId": 448,
+                          "_StartDate": "2018-12-31T00:00:00",
+                          "_WeekNumber": 1,
+                          "IsDirty": true
+                        },
+                        "Spots": 1
+                      },
+                      {
+                        "MediaWeek": {
+                          "_EndDate": "2019-01-13T00:00:00",
+                          "_Id": 785,
+                          "_MediaMonthId": 448,
+                          "_StartDate": "2019-01-07T00:00:00",
+                          "_WeekNumber": 2,
+                          "IsDirty": true
+                        },
+                        "Spots": 1
+                      },
+                      {
+                        "MediaWeek": {
+                          "_EndDate": "2019-01-20T00:00:00",
+                          "_Id": 786,
+                          "_MediaMonthId": 448,
+                          "_StartDate": "2019-01-14T00:00:00",
+                          "_WeekNumber": 3,
+                          "IsDirty": true
+                        },
+                        "Spots": 1
+                      },
+                      {
+                        "MediaWeek": {
+                          "_EndDate": "2019-01-27T00:00:00",
+                          "_Id": 787,
+                          "_MediaMonthId": 448,
+                          "_StartDate": "2019-01-21T00:00:00",
+                          "_WeekNumber": 4,
+                          "IsDirty": true
+                        },
+                        "Spots": 1
+                      },
+                      {
+                        "MediaWeek": {
+                          "_EndDate": "2019-02-03T00:00:00",
+                          "_Id": 788,
+                          "_MediaMonthId": 449,
+                          "_StartDate": "2019-01-28T00:00:00",
+                          "_WeekNumber": 1,
+                          "IsDirty": true
+                        },
+                        "Spots": 1
+                      },
+                      {
+                        "MediaWeek": {
+                          "_EndDate": "2019-02-10T00:00:00",
+                          "_Id": 789,
+                          "_MediaMonthId": 449,
+                          "_StartDate": "2019-02-04T00:00:00",
+                          "_WeekNumber": 2,
+                          "IsDirty": true
+                        },
+                        "Spots": 1
+                      },
+                      {
+                        "MediaWeek": {
+                          "_EndDate": "2019-02-17T00:00:00",
+                          "_Id": 790,
+                          "_MediaMonthId": 449,
+                          "_StartDate": "2019-02-11T00:00:00",
+                          "_WeekNumber": 3,
+                          "IsDirty": true
+                        },
+                        "Spots": 1
+                      },
+                      {
+                        "MediaWeek": {
+                          "_EndDate": "2019-02-24T00:00:00",
+                          "_Id": 791,
+                          "_MediaMonthId": 449,
+                          "_StartDate": "2019-02-18T00:00:00",
+                          "_WeekNumber": 4,
+                          "IsDirty": true
+                        },
+                        "Spots": 1
+                      },
+                      {
+                        "MediaWeek": {
+                          "_EndDate": "2019-03-03T00:00:00",
+                          "_Id": 792,
+                          "_MediaMonthId": 450,
+                          "_StartDate": "2019-02-25T00:00:00",
+                          "_WeekNumber": 1,
+                          "IsDirty": true
+                        },
+                        "Spots": 1
+                      },
+                      {
+                        "MediaWeek": {
+                          "_EndDate": "2019-03-10T00:00:00",
+                          "_Id": 793,
+                          "_MediaMonthId": 450,
+                          "_StartDate": "2019-03-04T00:00:00",
+                          "_WeekNumber": 2,
+                          "IsDirty": true
+                        },
+                        "Spots": 1
+                      },
+                      {
+                        "MediaWeek": {
+                          "_EndDate": "2019-03-17T00:00:00",
+                          "_Id": 794,
+                          "_MediaMonthId": 450,
+                          "_StartDate": "2019-03-11T00:00:00",
+                          "_WeekNumber": 3,
+                          "IsDirty": true
+                        },
+                        "Spots": 1
+                      },
+                      {
+                        "MediaWeek": {
+                          "_EndDate": "2019-03-24T00:00:00",
+                          "_Id": 795,
+                          "_MediaMonthId": 450,
+                          "_StartDate": "2019-03-18T00:00:00",
+                          "_WeekNumber": 4,
+                          "IsDirty": true
+                        },
+                        "Spots": 1
+                      }
+                    ]
+                  }
+                ],
+                "StationCode": 5013,
+                "TotalCost": 334364.6508,
+                "TotalSpots": 12
+              }
+            ],
+            "TotalCost": 334364.6508,
+            "TotalSpots": 12
+          }
+        ],
+        "SurveyString": "Nov16 DMA Nielsen Live+3",
+        "TotalCost": 334364.6508,
+        "TotalSpots": 12
+      }
+    ],
+    "StartDate": "2018-12-31T00:00:00",
+    "UnitName": "Unit 1"
+  },
+  {
+    "AllSortedMediaWeeks": [
+      {
+        "_EndDate": "2019-01-06T00:00:00",
+        "_Id": 784,
+        "_MediaMonthId": 448,
+        "_StartDate": "2018-12-31T00:00:00",
+        "_WeekNumber": 1,
+        "IsDirty": true
+      },
+      {
+        "_EndDate": "2019-01-13T00:00:00",
+        "_Id": 785,
+        "_MediaMonthId": 448,
+        "_StartDate": "2019-01-07T00:00:00",
+        "_WeekNumber": 2,
+        "IsDirty": true
+      },
+      {
+        "_EndDate": "2019-01-20T00:00:00",
+        "_Id": 786,
+        "_MediaMonthId": 448,
+        "_StartDate": "2019-01-14T00:00:00",
+        "_WeekNumber": 3,
+        "IsDirty": true
+      },
+      {
+        "_EndDate": "2019-01-27T00:00:00",
+        "_Id": 787,
+        "_MediaMonthId": 448,
+        "_StartDate": "2019-01-21T00:00:00",
+        "_WeekNumber": 4,
+        "IsDirty": true
+      },
+      {
+        "_EndDate": "2019-02-03T00:00:00",
+        "_Id": 788,
+        "_MediaMonthId": 449,
+        "_StartDate": "2019-01-28T00:00:00",
+        "_WeekNumber": 1,
+        "IsDirty": true
+      },
+      {
+        "_EndDate": "2019-02-10T00:00:00",
+        "_Id": 789,
+        "_MediaMonthId": 449,
+        "_StartDate": "2019-02-04T00:00:00",
+        "_WeekNumber": 2,
+        "IsDirty": true
+      },
+      {
+        "_EndDate": "2019-02-17T00:00:00",
+        "_Id": 790,
+        "_MediaMonthId": 449,
+        "_StartDate": "2019-02-11T00:00:00",
+        "_WeekNumber": 3,
+        "IsDirty": true
+      },
+      {
+        "_EndDate": "2019-02-24T00:00:00",
+        "_Id": 791,
+        "_MediaMonthId": 449,
+        "_StartDate": "2019-02-18T00:00:00",
+        "_WeekNumber": 4,
+        "IsDirty": true
+      },
+      {
+        "_EndDate": "2019-03-03T00:00:00",
+        "_Id": 792,
+        "_MediaMonthId": 450,
+        "_StartDate": "2019-02-25T00:00:00",
+        "_WeekNumber": 1,
+        "IsDirty": true
+      },
+      {
+        "_EndDate": "2019-03-10T00:00:00",
+        "_Id": 793,
+        "_MediaMonthId": 450,
+        "_StartDate": "2019-03-04T00:00:00",
+        "_WeekNumber": 2,
+        "IsDirty": true
+      },
+      {
+        "_EndDate": "2019-03-17T00:00:00",
+        "_Id": 794,
+        "_MediaMonthId": 450,
+        "_StartDate": "2019-03-11T00:00:00",
+        "_WeekNumber": 3,
+        "IsDirty": true
+      },
+      {
+        "_EndDate": "2019-03-24T00:00:00",
+        "_Id": 795,
+        "_MediaMonthId": 450,
+        "_StartDate": "2019-03-18T00:00:00",
+        "_WeekNumber": 4,
+        "IsDirty": true
+      },
+      {
+        "_EndDate": "2019-03-31T00:00:00",
+        "_Id": 796,
+        "_MediaMonthId": 450,
+        "_StartDate": "2019-03-25T00:00:00",
+        "_WeekNumber": 5,
+        "IsDirty": true
+      }
+    ],
+    "DaypartCode": "MDN",
+    "DaypartCodeId": 2,
+    "Demos": [
+      {
+        "Demo": {
+          "_CategoryCode": 0,
+          "_Code": "A25-54",
+          "_Custom": true,
+          "_Id": 37,
+          "_Name": "Adults 25-54",
+          "_RangeEnd": 54,
+          "_RangeStart": 25,
+          "_SubCategoryCode": "A",
+          "IsDirty": true
+        },
+        "DemoRank": 1
+      }
+    ],
+    "EndDate": "2019-03-31T00:00:00",
+    "InventorySource": {
+      "Id": 5,
+      "InventoryType": 2,
+      "IsActive": true,
+      "Name": "CNN"
+    },
+    "Orders": [
+      {
+        "InventoryMarkets": [
+          {
+            "DmaMarketName": "New York",
+            "MarketId": 101,
+            "Stations": [
+              {
+                "LegacyCallLetters": "WNYW",
+                "Programs": [
+                  {
+                    "DaypartId": 34478,
+                    "DemoValues": [
+                      {
+                        "DemoRank": 1,
+                        "Impressions": 40595.19642857
+                      }
+                    ],
+                    "ProgramName": "CNN Block",
+                    "SpotCost": 26813.1272,
+                    "SpotLength": "30",
+                    "TotalCost": 321757.5264,
+                    "TotalSpots": 12,
+                    "Weeks": [
+                      {
+                        "MediaWeek": {
+                          "_EndDate": "2019-01-06T00:00:00",
+                          "_Id": 784,
+                          "_MediaMonthId": 448,
+                          "_StartDate": "2018-12-31T00:00:00",
+                          "_WeekNumber": 1,
+                          "IsDirty": true
+                        },
+                        "Spots": 1
+                      },
+                      {
+                        "MediaWeek": {
+                          "_EndDate": "2019-01-13T00:00:00",
+                          "_Id": 785,
+                          "_MediaMonthId": 448,
+                          "_StartDate": "2019-01-07T00:00:00",
+                          "_WeekNumber": 2,
+                          "IsDirty": true
+                        },
+                        "Spots": 1
+                      },
+                      {
+                        "MediaWeek": {
+                          "_EndDate": "2019-01-20T00:00:00",
+                          "_Id": 786,
+                          "_MediaMonthId": 448,
+                          "_StartDate": "2019-01-14T00:00:00",
+                          "_WeekNumber": 3,
+                          "IsDirty": true
+                        },
+                        "Spots": 1
+                      },
+                      {
+                        "MediaWeek": {
+                          "_EndDate": "2019-01-27T00:00:00",
+                          "_Id": 787,
+                          "_MediaMonthId": 448,
+                          "_StartDate": "2019-01-21T00:00:00",
+                          "_WeekNumber": 4,
+                          "IsDirty": true
+                        },
+                        "Spots": 1
+                      },
+                      {
+                        "MediaWeek": {
+                          "_EndDate": "2019-02-03T00:00:00",
+                          "_Id": 788,
+                          "_MediaMonthId": 449,
+                          "_StartDate": "2019-01-28T00:00:00",
+                          "_WeekNumber": 1,
+                          "IsDirty": true
+                        },
+                        "Spots": 1
+                      },
+                      {
+                        "MediaWeek": {
+                          "_EndDate": "2019-02-10T00:00:00",
+                          "_Id": 789,
+                          "_MediaMonthId": 449,
+                          "_StartDate": "2019-02-04T00:00:00",
+                          "_WeekNumber": 2,
+                          "IsDirty": true
+                        },
+                        "Spots": 1
+                      },
+                      {
+                        "MediaWeek": {
+                          "_EndDate": "2019-02-17T00:00:00",
+                          "_Id": 790,
+                          "_MediaMonthId": 449,
+                          "_StartDate": "2019-02-11T00:00:00",
+                          "_WeekNumber": 3,
+                          "IsDirty": true
+                        },
+                        "Spots": 1
+                      },
+                      {
+                        "MediaWeek": {
+                          "_EndDate": "2019-02-24T00:00:00",
+                          "_Id": 791,
+                          "_MediaMonthId": 449,
+                          "_StartDate": "2019-02-18T00:00:00",
+                          "_WeekNumber": 4,
+                          "IsDirty": true
+                        },
+                        "Spots": 1
+                      },
+                      {
+                        "MediaWeek": {
+                          "_EndDate": "2019-03-03T00:00:00",
+                          "_Id": 792,
+                          "_MediaMonthId": 450,
+                          "_StartDate": "2019-02-25T00:00:00",
+                          "_WeekNumber": 1,
+                          "IsDirty": true
+                        },
+                        "Spots": 1
+                      },
+                      {
+                        "MediaWeek": {
+                          "_EndDate": "2019-03-10T00:00:00",
+                          "_Id": 793,
+                          "_MediaMonthId": 450,
+                          "_StartDate": "2019-03-04T00:00:00",
+                          "_WeekNumber": 2,
+                          "IsDirty": true
+                        },
+                        "Spots": 1
+                      },
+                      {
+                        "MediaWeek": {
+                          "_EndDate": "2019-03-17T00:00:00",
+                          "_Id": 794,
+                          "_MediaMonthId": 450,
+                          "_StartDate": "2019-03-11T00:00:00",
+                          "_WeekNumber": 3,
+                          "IsDirty": true
+                        },
+                        "Spots": 1
+                      },
+                      {
+                        "MediaWeek": {
+                          "_EndDate": "2019-03-24T00:00:00",
+                          "_Id": 795,
+                          "_MediaMonthId": 450,
+                          "_StartDate": "2019-03-18T00:00:00",
+                          "_WeekNumber": 4,
+                          "IsDirty": true
+                        },
+                        "Spots": 1
+                      }
+                    ]
+                  }
+                ],
+                "StationCode": 5010,
+                "TotalCost": 321757.5264,
+                "TotalSpots": 12
+              }
+            ],
+            "TotalCost": 321757.5264,
+            "TotalSpots": 12
+          }
+        ],
+        "SurveyString": "Nov16 DMA Nielsen Live+3",
+        "TotalCost": 321757.5264,
+        "TotalSpots": 12
+      }
+    ],
+    "StartDate": "2018-12-31T00:00:00",
+    "UnitName": "Unit 2"
   }
 ]

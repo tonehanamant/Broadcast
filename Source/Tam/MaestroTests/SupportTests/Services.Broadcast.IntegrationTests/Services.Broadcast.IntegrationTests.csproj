@@ -598,6 +598,9 @@
     <None Include="Files\ProprietaryDataFiles\OAndO_ValidFile3_NoHut.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Files\ProprietaryDataFiles\OAndO_ValidFile4.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Files\ProprietaryDataFiles\OAndO_WeekIsMissing.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

@@ -7,7 +7,6 @@ using ConfigurationService.Client;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Data.EntityFrameworkMapping;
-using Tam.Maestro.Services.Clients;
 using audience = EntityFrameworkMapping.Broadcast.audience;
 using audience_audiences = EntityFrameworkMapping.Broadcast.audience_audiences;
 
@@ -18,7 +17,7 @@ namespace Services.Broadcast.Repositories
         List<audience> GetAudiencesByRange(int rangeStart, int rangeEnd);
         List<audience_audiences> GetRatingsAudiencesByMaestroAudience(List<int> maestroAudiences);
         Dictionary<int, List<int>> GetMaestroAudiencesGroupedByRatingAudiences(List<int> maestroAudiences);
-        Dictionary<int, List<int>> GetRatingAudiencesGroupedByMaestroAudience(List<int> maestroAudiences);
+        Dictionary<int, List<int>> GetRatingAudiencesGroupedByMaestroAudience(IEnumerable<int> maestroAudiences);
         List<LookupDto> GetAudienceDtosById(List<int> proposalAudienceIds);
     }
 
@@ -85,7 +84,7 @@ namespace Services.Broadcast.Repositories
             }
         }
 
-        public Dictionary<int, List<int>> GetRatingAudiencesGroupedByMaestroAudience(List<int> maestroAudiences)
+        public Dictionary<int, List<int>> GetRatingAudiencesGroupedByMaestroAudience(IEnumerable<int> maestroAudiences)
         {
             using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
             {

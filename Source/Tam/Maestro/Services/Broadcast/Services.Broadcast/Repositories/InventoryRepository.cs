@@ -72,11 +72,11 @@ namespace Services.Broadcast.Repositories
         List<StationInventoryManifest> GetInventoryScxDataForOAndO(int inventorySourceId, int daypartCodeId, DateTime startDate, DateTime endDate);
         
         /// <summary>
-        /// Gets the header information for an inventory file id
+        /// Gets the header information for an inventory file ids
         /// </summary>
-        /// <param name="inventoryFileId">Inventory file id to get the data for</param>
+        /// <param name="inventoryFileIds">Inventory file ids to get the data for</param>
         /// <returns>ProprietaryInventoryHeader object containing the header data</returns>
-        ProprietaryInventoryHeader GetInventoryFileHeader(int inventoryFileId);
+        Dictionary<int, ProprietaryInventoryHeader> GetInventoryFileHeader(IEnumerable<int> inventoryFileIds);
 
         /// <summary>
         /// Adds the manifest audiences
@@ -822,27 +822,27 @@ namespace Services.Broadcast.Repositories
                 });
         }
 
-        ///<inheritdoc/>
-        public ProprietaryInventoryHeader GetInventoryFileHeader(int inventoryFileId)
+        public Dictionary<int, ProprietaryInventoryHeader> GetInventoryFileHeader(IEnumerable<int> inventoryFileIds)
         {
             return _InReadUncommitedTransaction(
                 context =>
                 {
                     var query = (from header in context.inventory_file_proprietary_header
-                                 where header.inventory_file_id == inventoryFileId
-                                 select header);
-                    return query.Select(x => new ProprietaryInventoryHeader
-                    {
-                        Audience = new BroadcastAudience { Id = x.audience_id.Value },
-                        ContractedDaypartId = x.contracted_daypart_id,
-                        Cpm = x.cpm,
-                        DaypartCode = x.daypart_codes.code,
-                        EffectiveDate = x.effective_date,
-                        EndDate = x.end_date,
-                        HutBookId = x.hut_projection_book_id,
-                        PlaybackType = (ProposalEnums.ProposalPlaybackType)x.playback_type,
-                        ShareBookId = x.share_projection_book_id
-                    }).Single();
+                                 where inventoryFileIds.Contains(header.inventory_file_id)
+                                 select header).ToList();
+
+                    return query.ToDictionary(x => x.inventory_file_id, x => new ProprietaryInventoryHeader
+                                {
+                                    Audience = new BroadcastAudience { Id = x.audience_id.Value },
+                                    ContractedDaypartId = x.contracted_daypart_id,
+                                    Cpm = x.cpm,
+                                    DaypartCode = x.daypart_codes.code,
+                                    EffectiveDate = x.effective_date,
+                                    EndDate = x.end_date,
+                                    HutBookId = x.hut_projection_book_id,
+                                    PlaybackType = (ProposalPlaybackType)x.playback_type,
+                                    ShareBookId = x.share_projection_book_id
+                                });
                 });
         }
 

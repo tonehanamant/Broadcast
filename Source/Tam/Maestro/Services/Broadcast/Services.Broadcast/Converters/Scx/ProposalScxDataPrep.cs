@@ -110,20 +110,20 @@ namespace Services.Broadcast.Converters.Scx
             }           
         }
 
-        private void _SetMarketSurveyData(ScxData data, ProposalDetailDto proposalDetailDto)
-        {
-            var bookingMediaMonthId = proposalDetailDto.HutProjectionBookId ?? proposalDetailDto.SingleProjectionBookId.Value;
+        //private void _SetMarketSurveyData(ScxData data, ProposalDetailDto proposalDetailDto)
+        //{
+        //    var bookingMediaMonthId = proposalDetailDto.HutProjectionBookId ?? proposalDetailDto.SingleProjectionBookId.Value;
 
-            var repo = _BroadcastDataRepositoryFactory.GetDataRepository<IRatingForecastRepository>();
-            var mediaMonth = _MediaMonthAndWeekCache.GetMediaMonthById(bookingMediaMonthId);
-            string mediaMonthInfo = mediaMonth.Abbreviation + mediaMonth.Year.ToString().Substring(2);
+        //    var repo = _BroadcastDataRepositoryFactory.GetDataRepository<IRatingForecastRepository>();
+        //    var mediaMonth = _MediaMonthAndWeekCache.GetMediaMonthById(bookingMediaMonthId);
+        //    string mediaMonthInfo = mediaMonth.Abbreviation + mediaMonth.Year.ToString().Substring(2);
 
-            var rawData = repo.GetPlaybackForMarketBy(bookingMediaMonthId, proposalDetailDto.ProjectionPlaybackType);
-            data.MarketPlaybackTypes = rawData.Where(d => data.MarketIds.Contains(d.market_code)).ToList();
-            data.SurveyData = rawData.ToDictionary(
-                k => k.MarketId,
-                v => mediaMonthInfo + " DMA Nielsen " + v.PlaybackType.ToString().Replace("Plus", "+"));
-        }
+        //    var rawData = repo.GetPlaybackForMarketBy(bookingMediaMonthId, proposalDetailDto.ProjectionPlaybackType);
+        //    data.MarketPlaybackTypes = rawData.Where(d => data.MarketIds.Contains(d.market_code)).ToList();
+        //    data.SurveyData = rawData.ToDictionary(
+        //        k => k.MarketId,
+        //        v => mediaMonthInfo + " DMA Nielsen " + v.PlaybackType.ToString().Replace("Plus", "+"));
+        //}
 
         //private void _SetDemos(ScxData data, ProposalDetailDto proposalDetailDto)
         //{
@@ -158,39 +158,39 @@ namespace Services.Broadcast.Converters.Scx
         //    _GetDemoRatingData(data, proposalDetailDto);
         //}
 
-        private void _GetDemoUniverseData(ScxData data, ProposalDetailDto proposalDetailDto)
-        {
-            var postingBookMonthId = proposalDetailDto.HutProjectionBookId ?? proposalDetailDto.SingleProjectionBookId;
-            if (postingBookMonthId == null)
-                postingBookMonthId = proposalDetailDto.ShareProjectionBookId.Value;
+        //private void _GetDemoUniverseData(ScxData data, ProposalDetailDto proposalDetailDto)
+        //{
+        //    var postingBookMonthId = proposalDetailDto.HutProjectionBookId ?? proposalDetailDto.SingleProjectionBookId;
+        //    if (postingBookMonthId == null)
+        //        postingBookMonthId = proposalDetailDto.ShareProjectionBookId.Value;
 
-            foreach (var demo in data.Demos)
-            {
-                var marketIds = data.MarketIds.Select(m => (short)m).Distinct().ToList();
-                var audienceUniversData =
-                    _BroadcastDataRepositoryFactory.GetDataRepository<IRatingForecastRepository>()
-                        .GetMarketUniverseDataByAudience(postingBookMonthId.Value,
-                            demo.RatingAudienceIds.Distinct().ToList(),
-                            marketIds,
-                            data.MarketPlaybackTypes
-                                .Where(pb => marketIds.Contains(pb.market_code))
-                                .Select(pb => pb.ForecastPlaybackType.ToString()).Distinct()
-                                .ToList());
+        //    foreach (var demo in data.Demos)
+        //    {
+        //        var marketIds = data.MarketIds.Select(m => (short)m).Distinct().ToList();
+        //        var audienceUniversData =
+        //            _BroadcastDataRepositoryFactory.GetDataRepository<IRatingForecastRepository>()
+        //                .GetMarketUniverseDataByAudience(postingBookMonthId.Value,
+        //                    demo.RatingAudienceIds.Distinct().ToList(),
+        //                    marketIds,
+        //                    data.MarketPlaybackTypes
+        //                        .Where(pb => marketIds.Contains(pb.market_code))
+        //                        .Select(pb => pb.ForecastPlaybackType.ToString()).Distinct()
+        //                        .ToList());
 
-                demo.MarketPopulations = new Dictionary<short, double>();
-                var marketPlaybackTypes = data.MarketPlaybackTypes;
-                marketIds.ForEach(mrkId =>
-                {
-                    double univ = 0;
-                    if (audienceUniversData.ContainsKey(mrkId))
-                        univ = audienceUniversData[mrkId].Where(
-                            u => u.playback_type == marketPlaybackTypes.Single(pb => pb.market_code == mrkId)
-                                     .ForecastPlaybackType.ToString()).Sum(u => u.universe1);
+        //        demo.MarketPopulations = new Dictionary<short, double>();
+        //        var marketPlaybackTypes = data.MarketPlaybackTypes;
+        //        marketIds.ForEach(mrkId =>
+        //        {
+        //            double univ = 0;
+        //            if (audienceUniversData.ContainsKey(mrkId))
+        //                univ = audienceUniversData[mrkId].Where(
+        //                    u => u.playback_type == marketPlaybackTypes.Single(pb => pb.market_code == mrkId)
+        //                             .ForecastPlaybackType.ToString()).Sum(u => u.universe1);
 
-                    demo.MarketPopulations.Add(mrkId, univ);
-                });
-            }
-        }
+        //            demo.MarketPopulations.Add(mrkId, univ);
+        //        });
+        //    }
+        //}
 
         //private void _GetDemoImpressionData(ScxData data, ProposalDetailDto proposalDetailDto)
         //{

@@ -599,34 +599,6 @@ namespace Services.Broadcast.Converters.RateImport
             return result;
         }
 
-        private static int _GetLastColumnIndex(ExcelWorksheet worksheet, string audienceCode, int firstColumnIndex, int audienceCodeHeaderCellRowIndex)
-        {
-            int lastColumnIndex = firstColumnIndex;
-            // let's find lastColumnIndex by looking for cell value which starts from audienceCode
-            while (true)
-            {
-                try
-                {
-                    // audienceCode cell should be after last week column
-                    var audienceCodeHeaderCell = worksheet.Cells[audienceCodeHeaderCellRowIndex, lastColumnIndex + 1].GetStringValue();
-                    var isAudienceCodeHeaderCell = !string.IsNullOrWhiteSpace(audienceCodeHeaderCell) && audienceCodeHeaderCell.StartsWith(audienceCode, StringComparison.OrdinalIgnoreCase);
-
-                    if (isAudienceCodeHeaderCell)
-                    {
-                        break;
-                    }
-
-                    firstColumnIndex++;
-                }
-                catch
-                {
-                    throw new Exception("Couldn't find last week column");
-                }
-            }
-
-            return firstColumnIndex;
-        }
-
         public override void PopulateManifests(ProprietaryInventoryFile proprietaryFile, List<DisplayBroadcastStation> stations)
         {
             proprietaryFile.InventoryManifests = _GetStationInventoryManifests(proprietaryFile, stations);
