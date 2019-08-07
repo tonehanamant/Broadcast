@@ -18,7 +18,9 @@ namespace Services.Broadcast.Entities
         public double HouseholdDeliveredImpressions { get; set; }
         public int AdvertiserId { get; set; }
         public string Advertiser { get; set; }
-        public PostingTypeEnum PostType { get; set; }
+        // The auto cast from the date from the store procedure is failing for this property.
+        // For now, we receive the raw value and cast to the enum type when using it.
+        public byte PostType { get; set; }
         public bool Equivalized { get; set; }
         public bool IsActiveThisWeek { get; set; }
         public DateTime? LastBuyDate { get; set; }

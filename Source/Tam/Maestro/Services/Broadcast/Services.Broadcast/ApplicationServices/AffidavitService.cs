@@ -697,8 +697,8 @@ namespace Services.Broadcast.ApplicationServices
             {
                 _SetPostAdvertiser(post);
                 _SetFlightWeeks(post);
-                post.PrimaryAudienceDeliveredImpressions = _GetImpressionsForAudience(proposalImpressions, post.ContractId, post.PostType, post.GuaranteedAudienceId, post.Equivalized);
-                post.HouseholdDeliveredImpressions = _GetImpressionsForAudience(proposalImpressions, post.ContractId, post.PostType, houseHoldAudienceId, post.Equivalized);
+                post.PrimaryAudienceDeliveredImpressions = _GetImpressionsForAudience(proposalImpressions, post.ContractId, (PostingTypeEnum)post.PostType, post.GuaranteedAudienceId, post.Equivalized);
+                post.HouseholdDeliveredImpressions = _GetImpressionsForAudience(proposalImpressions, post.ContractId, (PostingTypeEnum)post.PostType, houseHoldAudienceId, post.Equivalized);
                 post.PrimaryAudienceDelivery = post.PrimaryAudienceDeliveredImpressions / post.PrimaryAudienceBookedImpressions * 100;
             }
 

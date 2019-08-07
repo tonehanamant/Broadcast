@@ -252,8 +252,8 @@ namespace Services.Broadcast.ApplicationServices
                 _SetPostAdvertiser(post);
 
                 var postAudienceIds = proposalRatingAudience[post.GuaranteedAudienceId];
-                post.PrimaryAudienceDeliveredImpressions = _GetImpressionsForAudience(postData,post.ContractId, post.PostType, postAudienceIds, post.Equivalized);
-                post.HouseholdDeliveredImpressions = _GetImpressionsForAudience(postData,post.ContractId, post.PostType, new List<int>() { houseHoldAudienceId}, post.Equivalized);
+                post.PrimaryAudienceDeliveredImpressions = _GetImpressionsForAudience(postData,post.ContractId, (PostingTypeEnum)post.PostType, postAudienceIds, post.Equivalized);
+                post.HouseholdDeliveredImpressions = _GetImpressionsForAudience(postData,post.ContractId, (PostingTypeEnum)post.PostType, new List<int>() { houseHoldAudienceId}, post.Equivalized);
                 post.PrimaryAudienceDelivery = post.PrimaryAudienceDeliveredImpressions / post.PrimaryAudienceBookedImpressions * 100;
             }
 

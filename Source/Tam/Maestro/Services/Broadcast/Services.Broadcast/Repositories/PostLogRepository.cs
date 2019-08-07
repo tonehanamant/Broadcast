@@ -311,7 +311,7 @@ namespace Services.Broadcast.Repositories
                             SpotsOutOfSpec = spots.Count(s => (ScrubbingStatus)s.status == ScrubbingStatus.OutOfSpec),
                             AdvertiserId = proposalVersion.proposal.advertiser_id,
                             GuaranteedAudienceId = proposalVersion.guaranteed_audience_id,
-                            PostType = (PostingTypeEnum)proposalVersion.post_type,
+                            PostType = proposalVersion.post_type,
                             PrimaryAudienceBookedImpressions = (from proposalVersionDetail in proposalVersion.proposal_version_details
                                                                 from proposalVersionQuarters in proposalVersionDetail.proposal_version_detail_quarters
                                                                 select proposalVersionQuarters.impressions_goal).Sum(),
