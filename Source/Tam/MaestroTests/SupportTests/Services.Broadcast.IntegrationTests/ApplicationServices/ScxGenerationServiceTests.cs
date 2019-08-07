@@ -193,6 +193,57 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        public void ScxGenerationGetHistoryTestWithFailedFileGeneration()
+        {
+            const int inventorySourceId = 5;
+            using (new TransactionScopeWrapper())
+            {
+                var failingFileService = new FailingFileServiceStub();
+                IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<IFileService>(failingFileService);
+                var scxGenerationService = IntegrationTestApplicationServiceFactory.GetApplicationService<IScxGenerationService>();
+
+                string fileName = "Barter_A25-54_Q1 CNN.xlsx";
+                var fileSaveRequest = new FileRequest
+                {
+                    StreamData = new FileStream($@".\Files\ProprietaryDataFiles\{fileName}", FileMode.Open, FileAccess.Read),
+                    FileName = fileName
+                };
+
+                var now = new DateTime(2019, 02, 02);
+                IntegrationTestApplicationServiceFactory.GetApplicationService<IProprietaryInventoryService>().SaveProprietaryInventoryFile(fileSaveRequest, "sroibu", now);
+
+                var ratingsJob = _InventoryFileRatingsJobsRepository.GetLatestJob();
+                _InventoryRatingsProcessingService.ProcessInventoryRatingsJob(ratingsJob.id.Value);
+
+                var request = new InventoryScxDownloadRequest
+                {
+                    EndDate = new DateTime(2019, 1, 1),
+                    StartDate = new DateTime(2018, 3, 20),
+                    DaypartCodeId = 2,
+                    InventorySourceId = inventorySourceId,
+                    UnitNames = new List<string> { "Unit 1" }
+                };
+
+                var jobId = scxGenerationService.QueueScxGenerationJob(request, "IntegrationTestUser", now);
+                var scxGenerationJob = _ScxGenerationJobRepository.GetJobById(jobId);
+
+                try
+                {
+                    scxGenerationService.ProcessScxGenerationJob(scxGenerationJob, now);
+                }
+                catch (Exception ex)
+                {
+                    Assert.That(ex.Message, Is.EqualTo("FailingFileServiceStub never creates files"));
+                }
+
+                var history = _ScxGenerationService.GetScxFileGenerationHistory(inventorySourceId);
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(history, _GetJsonSettings()));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
         public void ScxGenerationDownloadFileTest()
         {
             const int inventorySourceId = 5;

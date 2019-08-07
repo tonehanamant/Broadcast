@@ -97,6 +97,27 @@ namespace Services.Broadcast.IntegrationTests
         }
     }
 
+    public class FailingFileServiceStub : FileServiceStubb
+    {
+        public List<string> Paths { get; set; } = new List<string>();
+        public List<Stream> Streams { get; set; } = new List<Stream>();
+
+        public override void Create(string path, Stream stream)
+        {
+            throw new Exception("FailingFileServiceStub never creates files");
+        }
+
+        public override List<string> GetFiles(string path)
+        {
+            return Paths;
+        }
+
+        public override Stream GetFileStream(string filePath)
+        {
+            return Streams.FirstOrDefault();
+        }
+    }
+
     public class FileServiceSingleFileStubb : FileServiceStubb
     {
         private readonly string _SingleFileName = "file1.txt";

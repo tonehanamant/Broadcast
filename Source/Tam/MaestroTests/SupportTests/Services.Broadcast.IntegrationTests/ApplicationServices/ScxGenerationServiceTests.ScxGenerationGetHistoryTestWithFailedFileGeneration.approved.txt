@@ -1,0 +1,42 @@
+﻿[
+  {
+    "DaypartCode": "MDN",
+    "FileName": "CNN_Unit 1_20180319_20190106.scx",
+    "GenerationRequestDateTime": "2019-02-02T00:00:00",
+    "GenerationRequestedByUsername": "IntegrationTestUser",
+    "ProcessingStatus": 4,
+    "QuarterDetails": [
+      {
+        "EndDate": "2018-03-25T23:59:59",
+        "Quarter": 1,
+        "StartDate": "2018-01-01T00:00:00",
+        "Year": 2018
+      },
+      {
+        "EndDate": "2018-06-24T23:59:59",
+        "Quarter": 2,
+        "StartDate": "2018-03-26T00:00:00",
+        "Year": 2018
+      },
+      {
+        "EndDate": "2018-09-30T23:59:59",
+        "Quarter": 3,
+        "StartDate": "2018-06-25T00:00:00",
+        "Year": 2018
+      },
+      {
+        "EndDate": "2018-12-30T23:59:59",
+        "Quarter": 4,
+        "StartDate": "2018-10-01T00:00:00",
+        "Year": 2018
+      },
+      {
+        "EndDate": "2019-03-31T23:59:59",
+        "Quarter": 1,
+        "StartDate": "2018-12-31T00:00:00",
+        "Year": 2019
+      }
+    ],
+    "UnitName": "Unit 1"
+  }
+]
