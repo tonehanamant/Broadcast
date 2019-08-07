@@ -8,7 +8,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Tam.Maestro.Common;
 using Tam.Maestro.Data.Entities;
-using Tam.Maestro.Data.Entities.DataTransferObjects;
 
 namespace Services.Broadcast.Validators
 {
@@ -38,7 +37,6 @@ namespace Services.Broadcast.Validators
         const string INVALID_AUDIENCE = "Invalid audience";
         const string INVALID_AUDIENCE_DUPLICATE = "An audience cannot appear multiple times";
         const string INVALID_SHARE_HUT_BOOKS = "HUT Book must be prior to Share Book";
-        const string INVALID_DAYPART_TIME_RANGE = "Invalid daypart time range.  End time cannot be before start time.";
         const string INVALID_DAYPART_TIMES = "Invalid daypart times.";
         const string INVALID_DAYPART_WEIGHTING_GOAL = "Invalid daypart weighting goal.";
 
@@ -150,16 +148,18 @@ namespace Services.Broadcast.Validators
 
         private void _ValidateDayparts(PlanDto plan)
         {
+            const int daySecondsMin = 0;
+            const int daySecondsMax = 86400;
             foreach (var daypart in plan.Dayparts)
             {
-                if (daypart.EndTimeSeconds < 0 || daypart.StartTimeSeconds < 0)
+                if (daypart.StartTimeSeconds < daySecondsMin || daypart.StartTimeSeconds > daySecondsMax)
                 {
                     throw new Exception(INVALID_DAYPART_TIMES);
                 }
 
-                if (daypart.EndTimeSeconds < daypart.StartTimeSeconds)
+                if (daypart.EndTimeSeconds < daySecondsMin || daypart.EndTimeSeconds > daySecondsMax)
                 {
-                    throw new Exception(INVALID_DAYPART_TIME_RANGE);
+                    throw new Exception(INVALID_DAYPART_TIMES);
                 }
 
                 const double minWeightingGoalPercent = 0.1;

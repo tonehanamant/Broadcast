@@ -312,21 +312,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        public void SavePlan_WithInvalidDaypartTimeRange()
-        {
-            using (new TransactionScopeWrapper())
-            {
-                PlanDto newPlan = _GetNewPlan();
-                newPlan.Dayparts.Add(new PlanDaypartDto { DaypartCodeId = 1, StartTimeSeconds = 8900, EndTimeSeconds = 4600, WeightingGoalPercent = 23.5 });
-
-                var caught = Assert.Throws<Exception>(() => _PlanService.SavePlan(newPlan, "integration_test",
-                    new DateTime(2019, 01, 01)), "Invalid daypart time range.  End time cannot be before start time.");
-
-                Assert.IsNotNull(caught);
-            }
-        }
-
-        [Test]
         public void SavePlan_WithInvalidWeightingGoalTooLittle()
         {
             using (new TransactionScopeWrapper())
@@ -496,7 +481,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        public void SavePlan_WithInvalidStartTime()
+        public void SavePlan_WithInvalidStartTime_TooLittle()
         {
             using (new TransactionScopeWrapper())
             {
@@ -511,12 +496,42 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        public void SavePlan_WithInvalidEndTime()
+        public void SavePlan_WithInvalidStartTime_TooMuch()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                PlanDto newPlan = _GetNewPlan();
+                newPlan.Dayparts.Add(new PlanDaypartDto { DaypartCodeId = 1, StartTimeSeconds = 999999999, EndTimeSeconds = 4600, WeightingGoalPercent = 111.0 });
+
+                var caught = Assert.Throws<Exception>(() => _PlanService.SavePlan(newPlan, "integration_test",
+                    new DateTime(2019, 01, 01)), "Invalid daypart times.");
+
+                Assert.IsNotNull(caught);
+            }
+        }
+
+        [Test]
+        public void SavePlan_WithInvalidEndTime_TooLittle()
         {
             using (new TransactionScopeWrapper())
             {
                 PlanDto newPlan = _GetNewPlan();
                 newPlan.Dayparts.Add(new PlanDaypartDto { DaypartCodeId = 1, StartTimeSeconds = 8900, EndTimeSeconds = -2, WeightingGoalPercent = 111.0 });
+
+                var caught = Assert.Throws<Exception>(() => _PlanService.SavePlan(newPlan, "integration_test",
+                    new DateTime(2019, 01, 01)), "Invalid daypart times.");
+
+                Assert.IsNotNull(caught);
+            }
+        }
+
+        [Test]
+        public void SavePlan_WithInvalidEndTime_TooMuch()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                PlanDto newPlan = _GetNewPlan();
+                newPlan.Dayparts.Add(new PlanDaypartDto { DaypartCodeId = 1, StartTimeSeconds = 8900, EndTimeSeconds = 999999999, WeightingGoalPercent = 111.0 });
 
                 var caught = Assert.Throws<Exception>(() => _PlanService.SavePlan(newPlan, "integration_test",
                     new DateTime(2019, 01, 01)), "Invalid daypart times.");

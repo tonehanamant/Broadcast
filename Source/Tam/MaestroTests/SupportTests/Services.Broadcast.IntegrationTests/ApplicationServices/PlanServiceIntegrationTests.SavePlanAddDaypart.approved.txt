@@ -6,12 +6,6 @@
   "CPM": 12.0000,
   "Dayparts": [
     {
-      "DaypartCodeId": 3,
-      "EndTimeSeconds": 1900,
-      "StartTimeSeconds": 1200,
-      "WeightingGoalPercent": 67.0
-    },
-    {
       "DaypartCodeId": 1,
       "EndTimeSeconds": 4600,
       "StartTimeSeconds": 3600,
@@ -22,6 +16,12 @@
       "EndTimeSeconds": 2400,
       "StartTimeSeconds": 1800,
       "WeightingGoalPercent": null
+    },
+    {
+      "DaypartCodeId": 3,
+      "EndTimeSeconds": 1900,
+      "StartTimeSeconds": 1200,
+      "WeightingGoalPercent": 67.0
     }
   ],
   "Delivery": 100.0,

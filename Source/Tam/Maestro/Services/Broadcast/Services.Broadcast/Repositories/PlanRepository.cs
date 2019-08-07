@@ -193,7 +193,6 @@ namespace Services.Broadcast.Repositories
         {
             var dto = new PlanDaypartDto
             {
-                Id = entity.id,
                 DaypartCodeId = entity.daypart_code_id,
                 StartTimeSeconds = entity.start_time_seconds,
                 EndTimeSeconds = entity.end_time_seconds,
@@ -207,7 +206,6 @@ namespace Services.Broadcast.Repositories
             context.plan_dayparts.RemoveRange(entity.plan_dayparts);
             planDto.Dayparts.ForEach(d => entity.plan_dayparts.Add(new plan_dayparts
                 {
-                    id = d.Id,
                     daypart_code_id = d.DaypartCodeId,
                     start_time_seconds = d.StartTimeSeconds,
                     end_time_seconds = d.EndTimeSeconds,
@@ -216,6 +214,7 @@ namespace Services.Broadcast.Repositories
         }
 
         #endregion // #region Plan Daypart and Daypart Type
+
         private void _HydratePlanSecondaryAudiences(plan entity, PlanDto planDto, QueryHintBroadcastContext context)
         {
             context.plan_secondary_audiences.RemoveRange(entity.plan_secondary_audiences);
