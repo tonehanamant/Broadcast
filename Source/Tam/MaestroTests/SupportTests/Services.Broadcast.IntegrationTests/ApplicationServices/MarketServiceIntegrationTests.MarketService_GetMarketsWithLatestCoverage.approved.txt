@@ -1,0 +1,834 @@
+﻿[
+  {
+    "Market": "Portland-Auburn",
+    "MarketCode": 100
+  },
+  {
+    "Market": "New York",
+    "MarketCode": 101
+  },
+  {
+    "Market": "Binghamton",
+    "MarketCode": 102
+  },
+  {
+    "Market": "Macon",
+    "MarketCode": 103
+  },
+  {
+    "Market": "Philadelphia",
+    "MarketCode": 104
+  },
+  {
+    "Market": "Detroit",
+    "MarketCode": 105
+  },
+  {
+    "Market": "Boston (Manchester)",
+    "MarketCode": 106
+  },
+  {
+    "Market": "Savannah",
+    "MarketCode": 107
+  },
+  {
+    "Market": "Pittsburgh",
+    "MarketCode": 108
+  },
+  {
+    "Market": "Ft. Wayne",
+    "MarketCode": 109
+  },
+  {
+    "Market": "Cleveland-Akron (Canton)",
+    "MarketCode": 110
+  },
+  {
+    "Market": "Washington, DC (Hagrstwn)",
+    "MarketCode": 111
+  },
+  {
+    "Market": "Baltimore",
+    "MarketCode": 112
+  },
+  {
+    "Market": "Flint-Saginaw-Bay City",
+    "MarketCode": 113
+  },
+  {
+    "Market": "Buffalo",
+    "MarketCode": 114
+  },
+  {
+    "Market": "Cincinnati",
+    "MarketCode": 115
+  },
+  {
+    "Market": "Erie",
+    "MarketCode": 116
+  },
+  {
+    "Market": "Charlotte",
+    "MarketCode": 117
+  },
+  {
+    "Market": "Greensboro-H.Point-W.Salem",
+    "MarketCode": 118
+  },
+  {
+    "Market": "Charleston, SC",
+    "MarketCode": 119
+  },
+  {
+    "Market": "Augusta-Aiken",
+    "MarketCode": 120
+  },
+  {
+    "Market": "Providence-New Bedford",
+    "MarketCode": 121
+  },
+  {
+    "Market": "Columbus, GA (Opelika, AL)",
+    "MarketCode": 122
+  },
+  {
+    "Market": "Burlington-Plattsburgh",
+    "MarketCode": 123
+  },
+  {
+    "Market": "Atlanta",
+    "MarketCode": 124
+  },
+  {
+    "Market": "Albany, GA",
+    "MarketCode": 125
+  },
+  {
+    "Market": "Utica",
+    "MarketCode": 126
+  },
+  {
+    "Market": "Indianapolis",
+    "MarketCode": 127
+  },
+  {
+    "Market": "Miami-Ft. Lauderdale",
+    "MarketCode": 128
+  },
+  {
+    "Market": "Louisville",
+    "MarketCode": 129
+  },
+  {
+    "Market": "Tallahassee-Thomasville",
+    "MarketCode": 130
+  },
+  {
+    "Market": "Tri-Cities, TN-VA",
+    "MarketCode": 131
+  },
+  {
+    "Market": "Albany-Schenectady-Troy",
+    "MarketCode": 132
+  },
+  {
+    "Market": "Hartford & New Haven",
+    "MarketCode": 133
+  },
+  {
+    "Market": "Orlando-Daytona Bch-Melbrn",
+    "MarketCode": 134
+  },
+  {
+    "Market": "Columbus, OH",
+    "MarketCode": 135
+  },
+  {
+    "Market": "Youngstown",
+    "MarketCode": 136
+  },
+  {
+    "Market": "Bangor",
+    "MarketCode": 137
+  },
+  {
+    "Market": "Rochester, NY",
+    "MarketCode": 138
+  },
+  {
+    "Market": "Tampa-St. Pete (Sarasota)",
+    "MarketCode": 139
+  },
+  {
+    "Market": "Traverse City-Cadillac",
+    "MarketCode": 140
+  },
+  {
+    "Market": "Lexington",
+    "MarketCode": 141
+  },
+  {
+    "Market": "Dayton",
+    "MarketCode": 142
+  },
+  {
+    "Market": "Springfield-Holyoke",
+    "MarketCode": 143
+  },
+  {
+    "Market": "Norfolk-Portsmth-Newpt Nws",
+    "MarketCode": 144
+  },
+  {
+    "Market": "Greenville-N.Bern-Washngtn",
+    "MarketCode": 145
+  },
+  {
+    "Market": "Columbia, SC",
+    "MarketCode": 146
+  },
+  {
+    "Market": "Toledo",
+    "MarketCode": 147
+  },
+  {
+    "Market": "West Palm Beach-Ft. Pierce",
+    "MarketCode": 148
+  },
+  {
+    "Market": "Watertown",
+    "MarketCode": 149
+  },
+  {
+    "Market": "Wilmington",
+    "MarketCode": 150
+  },
+  {
+    "Market": "Lansing",
+    "MarketCode": 151
+  },
+  {
+    "Market": "Presque Isle",
+    "MarketCode": 152
+  },
+  {
+    "Market": "Marquette",
+    "MarketCode": 153
+  },
+  {
+    "Market": "Wheeling-Steubenville",
+    "MarketCode": 154
+  },
+  {
+    "Market": "Syracuse",
+    "MarketCode": 155
+  },
+  {
+    "Market": "Richmond-Petersburg",
+    "MarketCode": 156
+  },
+  {
+    "Market": "Knoxville",
+    "MarketCode": 157
+  },
+  {
+    "Market": "Lima",
+    "MarketCode": 158
+  },
+  {
+    "Market": "Bluefield-Beckley-Oak Hill",
+    "MarketCode": 159
+  },
+  {
+    "Market": "Raleigh-Durham (Fayetvlle)",
+    "MarketCode": 160
+  },
+  {
+    "Market": "Jacksonville",
+    "MarketCode": 161
+  },
+  {
+    "Market": "Grand Rapids-Kalmzoo-B.Crk",
+    "MarketCode": 163
+  },
+  {
+    "Market": "Charleston-Huntington",
+    "MarketCode": 164
+  },
+  {
+    "Market": "Elmira (Corning)",
+    "MarketCode": 165
+  },
+  {
+    "Market": "Harrisburg-Lncstr-Leb-York",
+    "MarketCode": 166
+  },
+  {
+    "Market": "Greenvll-Spart-Ashevll-And",
+    "MarketCode": 167
+  },
+  {
+    "Market": "Harrisonburg",
+    "MarketCode": 169
+  },
+  {
+    "Market": "Myrtle Beach-Florence",
+    "MarketCode": 170
+  },
+  {
+    "Market": "Ft. Myers-Naples",
+    "MarketCode": 171
+  },
+  {
+    "Market": "Roanoke-Lynchburg",
+    "MarketCode": 173
+  },
+  {
+    "Market": "Johnstown-Altoona-St Colge",
+    "MarketCode": 174
+  },
+  {
+    "Market": "Chattanooga",
+    "MarketCode": 175
+  },
+  {
+    "Market": "Salisbury",
+    "MarketCode": 176
+  },
+  {
+    "Market": "Wilkes Barre-Scranton-Hztn",
+    "MarketCode": 177
+  },
+  {
+    "Market": "Terre Haute",
+    "MarketCode": 181
+  },
+  {
+    "Market": "Lafayette, IN",
+    "MarketCode": 182
+  },
+  {
+    "Market": "Alpena",
+    "MarketCode": 183
+  },
+  {
+    "Market": "Charlottesville",
+    "MarketCode": 184
+  },
+  {
+    "Market": "South Bend-Elkhart",
+    "MarketCode": 188
+  },
+  {
+    "Market": "Gainesville",
+    "MarketCode": 192
+  },
+  {
+    "Market": "Zanesville",
+    "MarketCode": 196
+  },
+  {
+    "Market": "Parkersburg",
+    "MarketCode": 197
+  },
+  {
+    "Market": "Clarksburg-Weston",
+    "MarketCode": 198
+  },
+  {
+    "Market": "Corpus Christi",
+    "MarketCode": 200
+  },
+  {
+    "Market": "Chicago",
+    "MarketCode": 202
+  },
+  {
+    "Market": "Joplin-Pittsburg",
+    "MarketCode": 203
+  },
+  {
+    "Market": "Columbia-Jefferson City",
+    "MarketCode": 204
+  },
+  {
+    "Market": "Topeka",
+    "MarketCode": 205
+  },
+  {
+    "Market": "Dothan",
+    "MarketCode": 206
+  },
+  {
+    "Market": "St. Louis",
+    "MarketCode": 209
+  },
+  {
+    "Market": "Rockford",
+    "MarketCode": 210
+  },
+  {
+    "Market": "Rochestr-Mason City-Austin",
+    "MarketCode": 211
+  },
+  {
+    "Market": "Shreveport",
+    "MarketCode": 212
+  },
+  {
+    "Market": "Minneapolis-St. Paul",
+    "MarketCode": 213
+  },
+  {
+    "Market": "Kansas City",
+    "MarketCode": 216
+  },
+  {
+    "Market": "Milwaukee",
+    "MarketCode": 217
+  },
+  {
+    "Market": "Houston",
+    "MarketCode": 218
+  },
+  {
+    "Market": "Springfield, MO",
+    "MarketCode": 219
+  },
+  {
+    "Market": "New Orleans",
+    "MarketCode": 222
+  },
+  {
+    "Market": "Dallas-Ft. Worth",
+    "MarketCode": 223
+  },
+  {
+    "Market": "Sioux City",
+    "MarketCode": 224
+  },
+  {
+    "Market": "Waco-Temple-Bryan",
+    "MarketCode": 225
+  },
+  {
+    "Market": "Victoria",
+    "MarketCode": 226
+  },
+  {
+    "Market": "Wichita Falls & Lawton",
+    "MarketCode": 227
+  },
+  {
+    "Market": "Monroe-El Dorado",
+    "MarketCode": 228
+  },
+  {
+    "Market": "Birmingham (Ann and Tusc)",
+    "MarketCode": 230
+  },
+  {
+    "Market": "Ottumwa-Kirksville",
+    "MarketCode": 231
+  },
+  {
+    "Market": "Paducah-Cape Girard-Harsbg",
+    "MarketCode": 232
+  },
+  {
+    "Market": "Odessa-Midland",
+    "MarketCode": 233
+  },
+  {
+    "Market": "Amarillo",
+    "MarketCode": 234
+  },
+  {
+    "Market": "Austin",
+    "MarketCode": 235
+  },
+  {
+    "Market": "Harlingen-Wslco-Brnsvl-Mca",
+    "MarketCode": 236
+  },
+  {
+    "Market": "Cedar Rapids-Wtrlo-IWC&Dub",
+    "MarketCode": 237
+  },
+  {
+    "Market": "St. Joseph",
+    "MarketCode": 238
+  },
+  {
+    "Market": "Jackson, TN",
+    "MarketCode": 239
+  },
+  {
+    "Market": "Memphis",
+    "MarketCode": 240
+  },
+  {
+    "Market": "San Antonio",
+    "MarketCode": 241
+  },
+  {
+    "Market": "Lafayette, LA",
+    "MarketCode": 242
+  },
+  {
+    "Market": "Lake Charles",
+    "MarketCode": 243
+  },
+  {
+    "Market": "Alexandria, LA",
+    "MarketCode": 244
+  },
+  {
+    "Market": "Greenwood-Greenville",
+    "MarketCode": 247
+  },
+  {
+    "Market": "Champaign&Sprngfld-Decatur",
+    "MarketCode": 248
+  },
+  {
+    "Market": "Evansville",
+    "MarketCode": 249
+  },
+  {
+    "Market": "Oklahoma City",
+    "MarketCode": 250
+  },
+  {
+    "Market": "Lubbock",
+    "MarketCode": 251
+  },
+  {
+    "Market": "Omaha",
+    "MarketCode": 252
+  },
+  {
+    "Market": "Panama City",
+    "MarketCode": 256
+  },
+  {
+    "Market": "Sherman-Ada",
+    "MarketCode": 257
+  },
+  {
+    "Market": "Green Bay-Appleton",
+    "MarketCode": 258
+  },
+  {
+    "Market": "Nashville",
+    "MarketCode": 259
+  },
+  {
+    "Market": "San Angelo",
+    "MarketCode": 261
+  },
+  {
+    "Market": "Abilene-Sweetwater",
+    "MarketCode": 262
+  },
+  {
+    "Market": "Madison",
+    "MarketCode": 269
+  },
+  {
+    "Market": "Ft. Smith-Fay-Sprngdl-Rgrs",
+    "MarketCode": 270
+  },
+  {
+    "Market": "Tulsa",
+    "MarketCode": 271
+  },
+  {
+    "Market": "Columbus-Tupelo-W Pnt-Hstn",
+    "MarketCode": 273
+  },
+  {
+    "Market": "Peoria-Bloomington",
+    "MarketCode": 275
+  },
+  {
+    "Market": "Duluth-Superior",
+    "MarketCode": 276
+  },
+  {
+    "Market": "Wichita-Hutchinson Plus",
+    "MarketCode": 278
+  },
+  {
+    "Market": "Des Moines-Ames",
+    "MarketCode": 279
+  },
+  {
+    "Market": "Davenport-R.Island-Moline",
+    "MarketCode": 282
+  },
+  {
+    "Market": "Mobile-Pensacola (Ft Walt)",
+    "MarketCode": 286
+  },
+  {
+    "Market": "Minot-Bsmrck-Dcknsn(Wlstn)",
+    "MarketCode": 287
+  },
+  {
+    "Market": "Huntsville-Decatur (Flor)",
+    "MarketCode": 291
+  },
+  {
+    "Market": "Beaumont-Port Arthur",
+    "MarketCode": 292
+  },
+  {
+    "Market": "Little Rock-Pine Bluff",
+    "MarketCode": 293
+  },
+  {
+    "Market": "Montgomery-Selma",
+    "MarketCode": 298
+  },
+  {
+    "Market": "La Crosse-Eau Claire",
+    "MarketCode": 302
+  },
+  {
+    "Market": "Wausau-Rhinelander",
+    "MarketCode": 305
+  },
+  {
+    "Market": "Tyler-Longview(Lfkn&Ncgd)",
+    "MarketCode": 309
+  },
+  {
+    "Market": "Hattiesburg-Laurel",
+    "MarketCode": 310
+  },
+  {
+    "Market": "Meridian",
+    "MarketCode": 311
+  },
+  {
+    "Market": "Baton Rouge",
+    "MarketCode": 316
+  },
+  {
+    "Market": "Quincy-Hannibal-Keokuk",
+    "MarketCode": 317
+  },
+  {
+    "Market": "Jackson, MS",
+    "MarketCode": 318
+  },
+  {
+    "Market": "Lincoln & Hastings-Krny",
+    "MarketCode": 322
+  },
+  {
+    "Market": "Sioux Falls(Mitchell)",
+    "MarketCode": 325
+  },
+  {
+    "Market": "Jonesboro",
+    "MarketCode": 334
+  },
+  {
+    "Market": "Bowling Green",
+    "MarketCode": 336
+  },
+  {
+    "Market": "Mankato",
+    "MarketCode": 337
+  },
+  {
+    "Market": "North Platte",
+    "MarketCode": 340
+  },
+  {
+    "Market": "Anchorage",
+    "MarketCode": 343
+  },
+  {
+    "Market": "Honolulu",
+    "MarketCode": 344
+  },
+  {
+    "Market": "Fairbanks",
+    "MarketCode": 345
+  },
+  {
+    "Market": "Biloxi-Gulfport",
+    "MarketCode": 346
+  },
+  {
+    "Market": "Juneau",
+    "MarketCode": 347
+  },
+  {
+    "Market": "Laredo",
+    "MarketCode": 349
+  },
+  {
+    "Market": "Denver",
+    "MarketCode": 351
+  },
+  {
+    "Market": "Colorado Springs-Pueblo",
+    "MarketCode": 352
+  },
+  {
+    "Market": "Phoenix (Prescott)",
+    "MarketCode": 353
+  },
+  {
+    "Market": "Butte-Bozeman",
+    "MarketCode": 354
+  },
+  {
+    "Market": "Great Falls",
+    "MarketCode": 355
+  },
+  {
+    "Market": "Billings",
+    "MarketCode": 356
+  },
+  {
+    "Market": "Boise",
+    "MarketCode": 357
+  },
+  {
+    "Market": "Idaho Fals-Pocatllo(Jcksn)",
+    "MarketCode": 358
+  },
+  {
+    "Market": "Twin Falls",
+    "MarketCode": 360
+  },
+  {
+    "Market": "Missoula",
+    "MarketCode": 362
+  },
+  {
+    "Market": "Rapid City",
+    "MarketCode": 364
+  },
+  {
+    "Market": "El Paso (Las Cruces)",
+    "MarketCode": 365
+  },
+  {
+    "Market": "Helena",
+    "MarketCode": 366
+  },
+  {
+    "Market": "Casper-Riverton",
+    "MarketCode": 367
+  },
+  {
+    "Market": "Salt Lake City",
+    "MarketCode": 370
+  },
+  {
+    "Market": "Yuma-El Centro",
+    "MarketCode": 371
+  },
+  {
+    "Market": "Grand Junction-Montrose",
+    "MarketCode": 373
+  },
+  {
+    "Market": "Tucson (Sierra Vista)",
+    "MarketCode": 389
+  },
+  {
+    "Market": "Albuquerque-Santa Fe",
+    "MarketCode": 390
+  },
+  {
+    "Market": "Glendive",
+    "MarketCode": 398
+  },
+  {
+    "Market": "Bakersfield",
+    "MarketCode": 400
+  },
+  {
+    "Market": "Eugene",
+    "MarketCode": 401
+  },
+  {
+    "Market": "Eureka",
+    "MarketCode": 402
+  },
+  {
+    "Market": "Los Angeles",
+    "MarketCode": 403
+  },
+  {
+    "Market": "Palm Springs",
+    "MarketCode": 404
+  },
+  {
+    "Market": "San Francisco-Oak-San Jose",
+    "MarketCode": 407
+  },
+  {
+    "Market": "Yakima-Pasco-Rchlnd-Knnwck",
+    "MarketCode": 410
+  },
+  {
+    "Market": "Reno",
+    "MarketCode": 411
+  },
+  {
+    "Market": "Medford-Klamath Falls",
+    "MarketCode": 413
+  },
+  {
+    "Market": "Seattle-Tacoma",
+    "MarketCode": 419
+  },
+  {
+    "Market": "Portland, OR",
+    "MarketCode": 420
+  },
+  {
+    "Market": "Bend, OR",
+    "MarketCode": 421
+  },
+  {
+    "Market": "San Diego",
+    "MarketCode": 425
+  },
+  {
+    "Market": "Monterey-Salinas",
+    "MarketCode": 428
+  },
+  {
+    "Market": "Las Vegas",
+    "MarketCode": 439
+  },
+  {
+    "Market": "Santabarbra-Sanmar-Sanluob",
+    "MarketCode": 455
+  },
+  {
+    "Market": "Sacramnto-Stkton-Modesto",
+    "MarketCode": 462
+  },
+  {
+    "Market": "Fresno-Visalia",
+    "MarketCode": 466
+  },
+  {
+    "Market": "Chico-Redding",
+    "MarketCode": 468
+  },
+  {
+    "Market": "Spokane",
+    "MarketCode": 481
+  }
+]

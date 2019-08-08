@@ -262,9 +262,12 @@
     <Compile Include="Entities\ImpressionsPointInTimeResult.cs" />
     <Compile Include="Entities\MarketPlaybackType.cs" />
     <Compile Include="Entities\DaypartCodeDefaultDto.cs" />
+    <Compile Include="Entities\Plan\PlanAvailableMarketDto.cs" />
     <Compile Include="Entities\Plan\PlanDaypartDto.cs" />
     <Compile Include="Entities\Plan\PlanBudgetDeliveryCalculator.cs" />
     <Compile Include="Entities\Plan\PlanDto.cs" />
+    <Compile Include="Entities\Plan\PlanBlackoutMarketDto.cs" />
+    <Compile Include="Entities\Plan\PlanMarketDto.cs" />
     <Compile Include="Entities\ScxGenerationJob.cs" />
     <Compile Include="Entities\Scx\ScxFileGenerationDetailDto.cs" />
     <Compile Include="Entities\Scx\ScxFileGenerationDetail.cs" />

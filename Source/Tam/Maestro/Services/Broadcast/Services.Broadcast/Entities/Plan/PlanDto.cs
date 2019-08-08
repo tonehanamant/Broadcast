@@ -176,5 +176,29 @@ namespace Services.Broadcast.Entities.Plan
         /// The CPM.
         /// </value>
         public decimal? CPM { get; set; }
+
+        /// <summary>
+        /// Gets or sets the coverage goal percent.
+        /// </summary>
+        /// <value>
+        /// The coverage goal percent.
+        /// </value>
+        public double? CoverageGoalPercent { get; set; }
+
+        /// <summary>
+        /// The list of markets blacked out for the plan.
+        /// </summary>
+        /// <value>
+        /// The blackout markets.
+        /// </value>
+        public List<PlanBlackoutMarketDto> BlackoutMarkets { get; set; } = new List<PlanBlackoutMarketDto>();
+
+        /// <summary>
+        /// The lst of markets available for a plan.
+        /// </summary>
+        /// <value>
+        /// The lst of markets available for a plan.
+        /// </value>
+        public List<PlanAvailableMarketDto> AvailableMarkets { get; set; } = new List<PlanAvailableMarketDto>();
     }
 }

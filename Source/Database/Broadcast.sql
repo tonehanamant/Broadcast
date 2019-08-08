@@ -708,6 +708,79 @@ BEGIN
 END
 /*************************************** END PRI-7469 *****************************************************/
 
+/*************************************** START PRI-7458 *****************************************************/
+
+IF NOT EXISTS (SELECT 1 FROM sys.columns WHERE Name = 'coverage_goal_percent' AND Object_ID = OBJECT_ID('plans'))
+BEGIN
+	ALTER TABLE plans
+		ADD coverage_goal_percent FLOAT NULL
+END
+
+IF OBJECT_ID('plan_available_markets') IS NULL
+BEGIN 
+	CREATE TABLE [dbo].[plan_available_markets]
+	(
+		[id] [INT] IDENTITY(1,1) NOT NULL,
+		[plan_id] [INT] NOT NULL,
+		[market_code] [SMALLINT] NOT NULL,
+		[market_coverage_File_id] [INT] NOT NULL,
+		[rank] [INT] NOT NULL,
+		[percentage_of_us] [FLOAT] NOT NULL,
+		[share_of_voice_percent] [FLOAT] NULL,
+		CONSTRAINT [PK_plan_available_markets] PRIMARY KEY CLUSTERED 
+		(
+			[id] ASC
+		)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY]
+
+	ALTER TABLE [dbo].[plan_available_markets] WITH CHECK ADD CONSTRAINT [FK_plan_available_markets_plans] FOREIGN KEY ([plan_id])
+		REFERENCES [dbo].[plans] (id)
+		ON DELETE CASCADE
+
+	ALTER TABLE [dbo].[plan_available_markets] WITH CHECK ADD CONSTRAINT [FK_plan_available_markets_markets] FOREIGN KEY ([market_code])
+		REFERENCES [dbo].[markets] (market_code)
+
+	ALTER TABLE [dbo].[plan_available_markets] WITH CHECK ADD CONSTRAINT [FK_plan_available_markets_market_coverage_file] FOREIGN KEY ([market_coverage_file_id])
+		REFERENCES [dbo].[market_coverage_files] (id)
+
+	CREATE NONCLUSTERED INDEX [IX_plan_available_markets_plan_id] ON [dbo].[plan_available_markets] ([plan_id] ASC)
+		INCLUDE ([id])
+		WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+END
+
+IF OBJECT_ID('plan_blackout_markets') IS NULL
+BEGIN
+	CREATE TABLE [dbo].[plan_blackout_markets]
+	(
+		[id] [INT] IDENTITY(1,1) NOT NULL,
+		[plan_id] [INT] NOT NULL,
+		[market_code] [SMALLINT] NOT NULL,
+		[market_coverage_file_id] [INT] NOT NULL,
+		[rank] [INT] NOT NULL,
+		[percentage_of_us] [FLOAT] NOT NULL,
+		CONSTRAINT [PK_plan_blackout_markets] PRIMARY KEY CLUSTERED 
+		(
+			[id] ASC
+		)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY]
+
+	ALTER TABLE [dbo].[plan_blackout_markets] WITH CHECK ADD CONSTRAINT [FK_plan_blackout_markets_plans] FOREIGN KEY ([plan_id])
+		REFERENCES [dbo].[plans] (id)
+		ON DELETE CASCADE
+
+	ALTER TABLE [dbo].[plan_blackout_markets] WITH CHECK ADD CONSTRAINT [FK_plan_blackout_markets_markets] FOREIGN KEY ([market_code])
+		REFERENCES [dbo].[markets] (market_code)
+
+	ALTER TABLE [dbo].[plan_blackout_markets] WITH CHECK ADD CONSTRAINT [FK_plan_blackout_markets_market_coverage_file] FOREIGN KEY ([market_coverage_file_id])
+		REFERENCES [dbo].[market_coverage_files] (id)
+
+	CREATE NONCLUSTERED INDEX [IX_plan_blackout_markets_plan_id] ON [dbo].[plan_blackout_markets] ([plan_id] ASC)
+		INCLUDE ([id])
+		WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+END
+
+/*************************************** END PRI-7458 *****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

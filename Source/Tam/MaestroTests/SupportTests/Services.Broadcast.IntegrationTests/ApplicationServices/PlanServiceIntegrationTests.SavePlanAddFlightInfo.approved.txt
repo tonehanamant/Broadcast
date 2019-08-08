@@ -1,8 +1,11 @@
 ﻿{
   "AudienceId": 31,
   "AudienceType": 1,
+  "AvailableMarkets": [],
+  "BlackoutMarkets": [],
   "Budget": null,
   "CampaignId": 1,
+  "CoverageGoalPercent": null,
   "CPM": null,
   "Dayparts": [],
   "Delivery": null,

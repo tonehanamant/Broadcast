@@ -39,6 +39,8 @@ namespace Services.Broadcast.Validators
         const string INVALID_SHARE_HUT_BOOKS = "HUT Book must be prior to Share Book";
         const string INVALID_DAYPART_TIMES = "Invalid daypart times.";
         const string INVALID_DAYPART_WEIGHTING_GOAL = "Invalid daypart weighting goal.";
+        private const string INVALID_COVERAGE_GOAL = "Invalid coverage goal value.";
+        private const string INVALID_MARKET_SHARE_OF_VOICE = "Invalid share of voice for market.";
 
         #endregion
 
@@ -74,6 +76,8 @@ namespace Services.Broadcast.Validators
             _ValidateDayparts(plan);
             _ValidatePrimaryAudience(plan);
             _ValidateSecondaryAudiences(plan.SecondaryAudiences, plan.AudienceId);
+            _ValidateOptionalPercentage(plan.CoverageGoalPercent, INVALID_COVERAGE_GOAL);
+            _ValidateMarkets(plan);
         }
 
         #region Helpers
@@ -125,7 +129,7 @@ namespace Services.Broadcast.Validators
                 {
                     throw new Exception(INVALID_SHARE_HUT_BOOKS);
                 }
-            }            
+            }
         }
 
         private void _ValidateSecondaryAudiences(List<PlanAudienceDto> secondaryAudiences, int primaryAudienceId)
@@ -170,6 +174,20 @@ namespace Services.Broadcast.Validators
                 {
                     throw new Exception(INVALID_DAYPART_WEIGHTING_GOAL);
                 }
+            }
+        }
+
+        private void _ValidateMarkets(PlanDto plan)
+        {
+            plan.AvailableMarkets.ForEach(m => _ValidateOptionalPercentage(m.ShareOfVoicePercent, INVALID_MARKET_SHARE_OF_VOICE));
+        }
+
+        private void _ValidateOptionalPercentage(double? candidate, string errorMessage)
+        {
+            if (candidate.HasValue &&
+                (candidate < 0.1 || candidate > 100.0))
+            {
+                throw new Exception(errorMessage);
             }
         }
 

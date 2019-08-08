@@ -22,6 +22,8 @@ namespace EntityFrameworkMapping.Broadcast
             this.station_inventory_spot_snapshots = new HashSet<station_inventory_spot_snapshots>();
             this.schedules = new HashSet<schedule>();
             this.stations = new HashSet<station>();
+            this.plan_available_markets = new HashSet<plan_available_markets>();
+            this.plan_blackout_markets = new HashSet<plan_blackout_markets>();
         }
     
         public short market_code { get; set; }
@@ -34,5 +36,7 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<station_inventory_spot_snapshots> station_inventory_spot_snapshots { get; set; }
         public virtual ICollection<schedule> schedules { get; set; }
         public virtual ICollection<station> stations { get; set; }
+        public virtual ICollection<plan_available_markets> plan_available_markets { get; set; }
+        public virtual ICollection<plan_blackout_markets> plan_blackout_markets { get; set; }
     }
 }

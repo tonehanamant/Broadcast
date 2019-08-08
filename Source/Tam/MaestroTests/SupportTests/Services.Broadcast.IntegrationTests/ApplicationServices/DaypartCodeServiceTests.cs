@@ -27,9 +27,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var daypartDetaults = _DaypartCodeService.GetDaypartCodeDefaults();
+                var daypartDefaults = _DaypartCodeService.GetDaypartCodeDefaults();
 
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(daypartDetaults));
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(daypartDefaults));
             }
         }
     }

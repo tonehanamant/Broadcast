@@ -17,20 +17,7 @@
       "ShareOfVoicePercent": 34.5
     }
   ],
-  "BlackoutMarkets": [
-    {
-      "MarketCode": 123,
-      "MarketCoverageFileId": 1,
-      "PercentageOfUs": 5.5,
-      "Rank": 5
-    },
-    {
-      "MarketCode": 234,
-      "MarketCoverageFileId": 1,
-      "PercentageOfUs": 2.5,
-      "Rank": 8
-    }
-  ],
+  "BlackoutMarkets": [],
   "Budget": 100.0000,
   "CampaignId": 1,
   "CoverageGoalPercent": 80.5,
@@ -38,14 +25,17 @@
   "Dayparts": [],
   "Delivery": 100.0,
   "Equivalized": true,
-  "FlightEndDate": null,
-  "FlightHiatusDays": [],
-  "FlightNotes": null,
-  "FlightStartDate": null,
+  "FlightEndDate": "2019-07-31T00:00:00",
+  "FlightHiatusDays": [
+    "2019-01-28T00:00:00",
+    "2019-06-04T00:00:00"
+  ],
+  "FlightNotes": "Changed the flight notes",
+  "FlightStartDate": "2019-01-01T00:00:00",
   "HUTBookId": null,
-  "Name": "New Plan",
+  "Name": "Renamed Plan",
   "PostingType": 2,
-  "ProductId": 1,
+  "ProductId": 2,
   "SecondaryAudiences": [],
   "ShareBookId": 437,
   "SpotLengthId": 1,

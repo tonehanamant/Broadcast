@@ -9,6 +9,7 @@ using Services.Broadcast.Entities;
 using Services.Broadcast.Repositories;
 using System;
 using System.IO;
+using System.Linq;
 using Tam.Maestro.Common.DataLayer;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
@@ -73,11 +74,40 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             _MarketService.LoadCoverages(new FileStream(wrongFileName, FileMode.Open, FileAccess.Read), wrongFileName, "IntegrationTestUser", new DateTime(2018, 12, 18));
         }
 
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void MarketService_GetMarketsWithLatestCoverage()
+        {
+            var coverages = _MarketService.GetMarketsWithLatestCoverage();
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(coverages, _GetJsonSerializerSettingsForMarketsWithLatestCoverages()));
+
+            Assert.IsFalse(coverages.Any(s => s.MarketCoverageFileId == 0), "MarketCoverageFileId should not be 0");
+            Assert.IsFalse(coverages.Any(s => s.PercentageOfUS == 0.0), "PercentageOfUS should not be 0");
+            Assert.IsFalse(coverages.Any(s => s.Rank == 0), "Rank should not be 0");
+            Assert.IsFalse(coverages.Any(s => s.TVHomes == 0), "TVHomes should not be 0");
+        }
+
         private JsonSerializerSettings _GetJsonSerializerSettingsForMarketCoverages()
         {
             var jsonResolver = new IgnorableSerializerContractResolver();
             jsonResolver.Ignore(typeof(market_coverages), "market");
             jsonResolver.Ignore(typeof(MarketCoverage), "MarketCoverageFileId");
+
+            return new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                ContractResolver = jsonResolver
+            };
+        }
+
+        private JsonSerializerSettings _GetJsonSerializerSettingsForMarketsWithLatestCoverages()
+        {
+            var jsonResolver = new IgnorableSerializerContractResolver();
+            jsonResolver.Ignore(typeof(MarketCoverage), "MarketCoverageFileId");
+            jsonResolver.Ignore(typeof(MarketCoverage), "PercentageOfUS");
+            jsonResolver.Ignore(typeof(MarketCoverage), "Rank");
+            jsonResolver.Ignore(typeof(MarketCoverage), "TVHomes");
 
             return new JsonSerializerSettings()
             {

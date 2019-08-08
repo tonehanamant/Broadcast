@@ -526,6 +526,159 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void SavePlan_WithEmptyCoverageGoal()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                // generate a plan for test
+                PlanDto newPlan = _GetNewPlan();
+                newPlan.CoverageGoalPercent = null;
+                var newPlanId = _PlanService.SavePlan(newPlan, "integration_test", new System.DateTime(2019, 01, 01));
+                // modify the plan
+                PlanDto testPlan = _PlanService.GetPlan(newPlanId);
+                testPlan.Name = "Renamed Plan";
+                testPlan.ProductId = 2;
+                // modify the flight.
+                testPlan.FlightNotes = "Changed the flight notes";
+                testPlan.FlightHiatusDays = new List<DateTime>
+                {
+                    new DateTime(2019, 1, 28),
+                    new DateTime(2019, 6, 4)
+                };
+
+                var modifedPlanId = _PlanService.SavePlan(testPlan, "integration_test", new System.DateTime(2019, 01, 15));
+                PlanDto finalPlan = _PlanService.GetPlan(modifedPlanId);
+
+                Assert.IsTrue(modifedPlanId > 0);
+                Assert.AreEqual(newPlanId, modifedPlanId);
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(finalPlan, _GetJsonSettings()));
+            }
+        }
+
+        [Test]
+        public void SavePlan_WithInvalidCoverageGoalTooSmall()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                PlanDto newPlan = _GetNewPlan();
+                newPlan.CoverageGoalPercent = -1;
+
+                var caught = Assert.Throws<Exception>(() => _PlanService.SavePlan(newPlan, "integration_test",
+                    new DateTime(2019, 01, 01)), "Invalid coverage goal value.");
+
+                Assert.IsNotNull(caught);
+            }
+        }
+
+        [Test]
+        public void SavePlan_WithInvalidCoverageGoalTooBig()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                PlanDto newPlan = _GetNewPlan();
+                newPlan.CoverageGoalPercent = 120;
+
+                var caught = Assert.Throws<Exception>(() => _PlanService.SavePlan(newPlan, "integration_test",
+                    new DateTime(2019, 01, 01)), "Invalid coverage goal value.");
+
+                Assert.IsNotNull(caught);
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void SavePlan_WithEmptyBlackoutMarkets()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                // generate a plan for test
+                PlanDto newPlan = _GetNewPlan();
+                newPlan.BlackoutMarkets.Clear();
+                var newPlanId = _PlanService.SavePlan(newPlan, "integration_test", new System.DateTime(2019, 01, 01));
+                // modify the plan
+                PlanDto testPlan = _PlanService.GetPlan(newPlanId);
+                testPlan.Name = "Renamed Plan";
+                testPlan.ProductId = 2;
+                // modify the flight.
+                testPlan.FlightNotes = "Changed the flight notes";
+                testPlan.FlightHiatusDays = new List<DateTime>
+                {
+                    new DateTime(2019, 1, 28),
+                    new DateTime(2019, 6, 4)
+                };
+
+                var modifedPlanId = _PlanService.SavePlan(testPlan, "integration_test", new System.DateTime(2019, 01, 15));
+                PlanDto finalPlan = _PlanService.GetPlan(modifedPlanId);
+
+                Assert.IsTrue(modifedPlanId > 0);
+                Assert.AreEqual(newPlanId, modifedPlanId);
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(finalPlan, _GetJsonSettings()));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void SavePlan_WithEmptyAvailableMarkets()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                // generate a plan for test
+                PlanDto newPlan = _GetNewPlan();
+                newPlan.AvailableMarkets.Clear();
+                var newPlanId = _PlanService.SavePlan(newPlan, "integration_test", new System.DateTime(2019, 01, 01));
+                // modify the plan
+                PlanDto testPlan = _PlanService.GetPlan(newPlanId);
+                testPlan.Name = "Renamed Plan";
+                testPlan.ProductId = 2;
+                // modify the flight.
+                testPlan.FlightNotes = "Changed the flight notes";
+                testPlan.FlightHiatusDays = new List<DateTime>
+                {
+                    new DateTime(2019, 1, 28),
+                    new DateTime(2019, 6, 4)
+                };
+
+                var modifedPlanId = _PlanService.SavePlan(testPlan, "integration_test", new System.DateTime(2019, 01, 15));
+                PlanDto finalPlan = _PlanService.GetPlan(modifedPlanId);
+
+                Assert.IsTrue(modifedPlanId > 0);
+                Assert.AreEqual(newPlanId, modifedPlanId);
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(finalPlan, _GetJsonSettings()));
+            }
+        }
+
+        [Test]
+        public void SavePlan_WithInvalidAvailableMarketShareOfVoiceTooSmall()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                PlanDto newPlan = _GetNewPlan();
+                newPlan.AvailableMarkets[0].ShareOfVoicePercent = -1;
+
+                var caught = Assert.Throws<Exception>(() => _PlanService.SavePlan(newPlan, "integration_test",
+                    new DateTime(2019, 01, 01)), "Invalid share of voice for market.");
+
+                Assert.IsNotNull(caught);
+            }
+        }
+
+        [Test]
+        public void SavePlan_WithInvalidAvailableMarketShareOfVoiceTooBig()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                PlanDto newPlan = _GetNewPlan();
+                newPlan.AvailableMarkets[0].ShareOfVoicePercent = 120;
+
+                var caught = Assert.Throws<Exception>(() => _PlanService.SavePlan(newPlan, "integration_test",
+                    new DateTime(2019, 01, 01)), "Invalid share of voice for market.");
+
+                Assert.IsNotNull(caught);
+            }
+        }
+
+        [Test]
         public void SavePlan_WithInvalidEndTime_TooMuch()
         {
             using (new TransactionScopeWrapper())
@@ -565,7 +718,18 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 ShareBookId = 437,
                 Budget = 100m,
                 CPM = 12m,
-                Delivery = 100d
+                Delivery = 100d,
+                CoverageGoalPercent = 80.5,
+                AvailableMarkets = new List<PlanAvailableMarketDto>
+                {
+                    new PlanAvailableMarketDto { MarketCode = 100, MarketCoverageFileId = 1, PercentageOfUs = 20, Rank = 1, ShareOfVoicePercent = 22.2},
+                    new PlanAvailableMarketDto { MarketCode = 101, MarketCoverageFileId = 1, PercentageOfUs = 32.5, Rank = 2, ShareOfVoicePercent = 34.5}
+                },
+                BlackoutMarkets = new List<PlanBlackoutMarketDto>
+                {
+                    new PlanBlackoutMarketDto {MarketCode = 123, MarketCoverageFileId = 1, PercentageOfUs = 5.5, Rank = 5 },
+                    new PlanBlackoutMarketDto {MarketCode = 234, MarketCoverageFileId = 1, PercentageOfUs = 2.5, Rank = 8 },
+                }
             };
         }
 
@@ -593,6 +757,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             jsonResolver.Ignore(typeof(PlanDto), "Id");
             jsonResolver.Ignore(typeof(PlanDaypartDto), "Id");
+            jsonResolver.Ignore(typeof(PlanMarketDto), "Id");
 
             return new JsonSerializerSettings
             {

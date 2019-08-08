@@ -25,6 +25,12 @@ namespace Services.Broadcast.ApplicationServices
         /// <param name="userName">The name of the current user</param>
         /// <param name="createdDate">Created date</param>
         void LoadCoverages(Stream fileStream, string fileName, string userName, DateTime createdDate);
+
+        /// <summary>
+        /// Gets the latest market coverages.
+        /// </summary>
+        /// <returns></returns>
+        List<MarketCoverage> GetMarketsWithLatestCoverage();
     }
 
     public class MarketService : IMarketService
@@ -72,6 +78,13 @@ namespace Services.Broadcast.ApplicationServices
             marketCoverageFile.MarketCoverages.AddRange(marketCoverages);
 
             _MarketCoverageRepository.SaveMarketCoverageFile(marketCoverageFile);
+        }
+
+        /// <inheritdoc />
+        public List<MarketCoverage> GetMarketsWithLatestCoverage()
+        {
+            var latest = _MarketCoverageRepository.GetMarketsWithLatestCoverage();
+            return latest;
         }
 
         private void _CheckIfFileAlreadyUploaded(string fileHash)

@@ -308,6 +308,14 @@
         <AssociationConnector Association="BroadcastModel.FK_plan_flight_hiatus_plans" />
         <AssociationConnector Association="BroadcastModel.FK_plan_secondary_audiences_plans" />
         <AssociationConnector Association="BroadcastModel.FK_plans_spot_lengths" />
+        <EntityTypeShape EntityType="BroadcastModel.plan_available_markets" Width="1.5" PointX="37.875" PointY="18.625" />
+        <EntityTypeShape EntityType="BroadcastModel.plan_blackout_markets" Width="1.5" PointX="36.875" PointY="11.75" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_available_markets_markets" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_blackout_markets_markets" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_available_markets_plans" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_blackout_markets_plans" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_available_markets_market_coverage_file" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_blackout_markets_market_coverage_file" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

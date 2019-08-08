@@ -148,5 +148,7 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<plan_flight_hiatus> plan_flight_hiatus { get; set; }
         public virtual DbSet<plan_dayparts> plan_dayparts { get; set; }
         public virtual DbSet<plan_secondary_audiences> plan_secondary_audiences { get; set; }
+        public virtual DbSet<plan_available_markets> plan_available_markets { get; set; }
+        public virtual DbSet<plan_blackout_markets> plan_blackout_markets { get; set; }
     }
 }

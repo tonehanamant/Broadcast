@@ -1,8 +1,39 @@
 ﻿{
   "AudienceId": 31,
   "AudienceType": 1,
+  "AvailableMarkets": [
+    {
+      "MarketCode": 100,
+      "MarketCoverageFileId": 1,
+      "PercentageOfUs": 20.0,
+      "Rank": 1,
+      "ShareOfVoicePercent": 22.2
+    },
+    {
+      "MarketCode": 101,
+      "MarketCoverageFileId": 1,
+      "PercentageOfUs": 32.5,
+      "Rank": 2,
+      "ShareOfVoicePercent": 34.5
+    }
+  ],
+  "BlackoutMarkets": [
+    {
+      "MarketCode": 123,
+      "MarketCoverageFileId": 1,
+      "PercentageOfUs": 5.5,
+      "Rank": 5
+    },
+    {
+      "MarketCode": 234,
+      "MarketCoverageFileId": 1,
+      "PercentageOfUs": 2.5,
+      "Rank": 8
+    }
+  ],
   "Budget": 100.0000,
   "CampaignId": 1,
+  "CoverageGoalPercent": 80.5,
   "CPM": 12.0000,
   "Dayparts": [],
   "Delivery": 100.0,

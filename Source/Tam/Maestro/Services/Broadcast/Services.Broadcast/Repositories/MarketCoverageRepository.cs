@@ -26,7 +26,13 @@ namespace Services.Broadcast.Repositories
         List<MarketCoverage> GetAll();
 
         bool HasFile(string fileHash);
-        
+
+        /// <summary>
+        /// Gets the market coverages most recently loaded into the database.
+        /// </summary>
+        /// <returns>List of <see cref="MarketCoverage"/></returns>
+        List<MarketCoverage> GetMarketsWithLatestCoverage();
+
         /// <summary>
         /// Returns a dictionary of market code and percentage coverage based on the market ids sent.
         /// </summary>
@@ -193,6 +199,34 @@ namespace Services.Broadcast.Repositories
                         Id = x.id,
                         CreatedDate = x.created_date
                     }).ToList();                    
+                });
+        }
+
+        /// <inheritdoc />
+        public List<MarketCoverage> GetMarketsWithLatestCoverage()
+        {
+            return _InReadUncommitedTransaction(
+                context =>
+                {
+                    var latestFileId = context.market_coverage_files.OrderByDescending(f => f.created_date)
+                        .Select(f => f.id)
+                        .FirstOrDefault();
+                    
+                    var coverages = context.market_coverages
+                        .Include(c => c.market)
+                        .Where(c => c.market_coverage_file_id == latestFileId)
+                        .Select(s => new MarketCoverage
+                        {
+                            MarketCoverageFileId = s.market_coverage_file_id,
+                            Rank = s.rank,
+                            Market = s.market.geography_name,
+                            TVHomes = s.tv_homes,
+                            PercentageOfUS = s.percentage_of_us,
+                            MarketCode = s.market_code
+                        })
+                        .ToList();
+
+                    return coverages;
                 });
         }
 

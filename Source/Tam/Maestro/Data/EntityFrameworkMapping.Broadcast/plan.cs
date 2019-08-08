@@ -19,6 +19,8 @@ namespace EntityFrameworkMapping.Broadcast
             this.plan_flight_hiatus = new HashSet<plan_flight_hiatus>();
             this.plan_dayparts = new HashSet<plan_dayparts>();
             this.plan_secondary_audiences = new HashSet<plan_secondary_audiences>();
+            this.plan_available_markets = new HashSet<plan_available_markets>();
+            this.plan_blackout_markets = new HashSet<plan_blackout_markets>();
         }
     
         public int id { get; set; }
@@ -41,6 +43,7 @@ namespace EntityFrameworkMapping.Broadcast
         public Nullable<decimal> budget { get; set; }
         public Nullable<double> delivery { get; set; }
         public Nullable<decimal> cpm { get; set; }
+        public Nullable<double> coverage_goal_percent { get; set; }
     
         public virtual campaign campaign { get; set; }
         public virtual spot_lengths spot_lengths { get; set; }
@@ -50,5 +53,7 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual media_months media_months1 { get; set; }
         public virtual ICollection<plan_dayparts> plan_dayparts { get; set; }
         public virtual ICollection<plan_secondary_audiences> plan_secondary_audiences { get; set; }
+        public virtual ICollection<plan_available_markets> plan_available_markets { get; set; }
+        public virtual ICollection<plan_blackout_markets> plan_blackout_markets { get; set; }
     }
 }

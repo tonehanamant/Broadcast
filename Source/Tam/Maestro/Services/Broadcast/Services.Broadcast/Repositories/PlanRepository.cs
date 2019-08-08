@@ -93,6 +93,8 @@ namespace Services.Broadcast.Repositories
                         .Include(p => p.plan_flight_hiatus)
                         .Include(p => p.plan_secondary_audiences)
                         .Include(p => p.plan_dayparts)
+                        .Include(p => p.plan_available_markets)
+                        .Include(p => p.plan_blackout_markets)
                         .Single(s => s.id == planId, "Invalid plan id.");
                     return _MapToDto(entity);
                 });
@@ -127,7 +129,10 @@ namespace Services.Broadcast.Repositories
                         AudienceId = x.audience_id,
                         Type = (AudienceTypeEnum)x.audience_type
                     }).ToList(),
-                Dayparts = entity.plan_dayparts.Select(_MapPlanDaypartDto).ToList()
+                Dayparts = entity.plan_dayparts.Select(_MapPlanDaypartDto).ToList(),
+                CoverageGoalPercent = entity.coverage_goal_percent,
+                AvailableMarkets = entity.plan_available_markets.Select(_MapAvailableMarketDto).ToList(),
+                BlackoutMarkets = entity.plan_blackout_markets.Select(_MapBlackoutMarketDto).ToList()
             };
             return dto;
         }
@@ -151,11 +156,14 @@ namespace Services.Broadcast.Repositories
             entity.flight_end_date = planDto.FlightEndDate;
             entity.flight_notes = planDto.FlightNotes;
 
+            entity.coverage_goal_percent = planDto.CoverageGoalPercent;
+
             _HydratePlanAudienceInfo(entity, planDto);
             _HydratePlanBudget(entity, planDto);
             _HydratePlanFlightHiatus(entity, planDto, context);
             _HydrateDayparts(entity, planDto, context);
             _HydratePlanSecondaryAudiences(entity, planDto, context);
+            _HydratePlanMarkets(entity, planDto, context);
         }
 
         private static void _HydratePlanAudienceInfo(plan entity, PlanDto planDto)
@@ -174,8 +182,6 @@ namespace Services.Broadcast.Repositories
             entity.cpm = planDto.CPM;
         }
 
-        #region Flight and Hiatus
-
         private void _HydratePlanFlightHiatus(plan entity, PlanDto planDto, QueryHintBroadcastContext context)
         {
             context.plan_flight_hiatus.RemoveRange(entity.plan_flight_hiatus);
@@ -184,8 +190,6 @@ namespace Services.Broadcast.Repositories
                 entity.plan_flight_hiatus.Add(new plan_flight_hiatus { hiatus_day = d });
             });
         }
-
-        #endregion // #region Flight and Hiatus
 
         #region Plan Daypart
 
@@ -227,5 +231,66 @@ namespace Services.Broadcast.Repositories
                 });
             });
         }
+
+        #region Markets
+
+        private static void _HydratePlanMarkets(plan entity, PlanDto planDto, QueryHintBroadcastContext context)
+        {
+            context.plan_available_markets.RemoveRange(entity.plan_available_markets);
+            context.plan_blackout_markets.RemoveRange(entity.plan_blackout_markets);
+
+            planDto.AvailableMarkets.ForEach(m =>
+            {
+                entity.plan_available_markets.Add(new plan_available_markets
+                    {
+                        market_code = m.MarketCode,
+                        market_coverage_file_id = m.MarketCoverageFileId,
+                        rank = m.Rank,
+                        percentage_of_us = m.PercentageOfUs,
+                        share_of_voice_percent = m.ShareOfVoicePercent
+                    }
+                );
+            });
+
+            planDto.BlackoutMarkets.ForEach(m =>
+            {
+                entity.plan_blackout_markets.Add(new plan_blackout_markets()
+                {
+                    market_code = m.MarketCode,
+                    market_coverage_file_id = m.MarketCoverageFileId,
+                    rank = m.Rank,
+                    percentage_of_us = m.PercentageOfUs,
+                });
+            });
+        }
+
+        private static PlanAvailableMarketDto _MapAvailableMarketDto(plan_available_markets entity)
+        {
+            var dto = new PlanAvailableMarketDto
+            {
+                Id = entity.id,
+                MarketCode = entity.market_code,
+                MarketCoverageFileId = entity.market_coverage_file_id,
+                Rank = entity.rank,
+                PercentageOfUs = entity.percentage_of_us,
+                ShareOfVoicePercent = entity.share_of_voice_percent
+            };
+            return dto;
+        }
+
+        private static PlanBlackoutMarketDto _MapBlackoutMarketDto(plan_blackout_markets entity)
+        {
+            var dto = new PlanBlackoutMarketDto
+            {
+                Id = entity.id,
+                MarketCode = entity.market_code,
+                MarketCoverageFileId = entity.market_coverage_file_id,
+                Rank = entity.rank,
+                PercentageOfUs = entity.percentage_of_us,
+            };
+            return dto;
+        }
+
+        #endregion // #region Markets
     }
 }

@@ -107,17 +107,17 @@ namespace Services.Broadcast.Repositories
                                  * This filter will be in place until then.
                                  */
                                 && c.full_name.Equals("Diginet") == false)
+                    .Select(c => new DaypartCodeDefaultDto
+                    {
+                        Id = c.id,
+                        Code = c.code,
+                        FullName = c.full_name,
+                        DaypartType = (DaypartTypeEnum)c.daypart_type,
+                        DefaultStartTimeSeconds = c.default_start_time_seconds,
+                        DefaultEndTimeSeconds = c.default_end_time_seconds
+                    })
                     .ToList();
-                var defaultDaypartCodeDtos = defaultDaypartCodes.Select(c => new DaypartCodeDefaultDto
-                {
-                    Id = c.id,
-                    Code = c.code,
-                    FullName = c.full_name,
-                    DaypartType = EnumHelper.GetEnum<DaypartTypeEnum>(c.daypart_type),
-                    DefaultStartTimeSeconds = c.default_start_time_seconds,
-                    DefaultEndTimeSeconds = c.default_end_time_seconds
-                }).ToList();
-                return defaultDaypartCodeDtos;
+                return defaultDaypartCodes;
             });
         }
     }
