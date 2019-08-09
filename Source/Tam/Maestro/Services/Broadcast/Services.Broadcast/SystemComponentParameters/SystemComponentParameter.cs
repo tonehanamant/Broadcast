@@ -480,6 +480,12 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.DefaultNtiConversionFactor); }
         }
 	 
+		public static bool DisplayCampaignLink  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<bool>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.DisplayCampaignLink); }
+        }
+	 
 		public static string EmailFrom  
 		{
             get { return SystemComponentParameterHelper.GetPropertyValue<string>
@@ -1032,7 +1038,7 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 					(MaestroSchemaSystemParameterNames.ComponentID , MaestroSchemaSystemParameterNames.SchemaVersion); }
         }
 	}
-	 
+	
 	public static class MaterialsServiceSystemParameter 
 	{ 
 		public static string CopyImportDirectory  
@@ -2249,7 +2255,7 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 	}
 	 
 	public static class TrafficComposerWebSystemParameter 
-	{ 
+	{
 		public static int CancellationNotificationCriticalTime  
 		{
             get { return SystemComponentParameterHelper.GetPropertyValue<int>

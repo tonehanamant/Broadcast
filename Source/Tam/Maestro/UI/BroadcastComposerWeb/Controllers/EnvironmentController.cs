@@ -9,6 +9,7 @@ using Tam.Maestro.Services.Clients;
 using Tam.Maestro.Web.Common;
 using Services.Broadcast.ApplicationServices;
 using System.Collections.Generic;
+using Services.Broadcast.Entities.DTO;
 
 namespace BroadcastComposerWeb.Controllers
 {
@@ -44,6 +45,15 @@ namespace BroadcastComposerWeb.Controllers
         public BaseResponse<string> GetSystemEnvironment()
         {
             return _ConvertToBaseResponse(() => new AppSettings().Environment.ToString());
+        }
+
+        /// <summary>
+        /// Get environment information
+        /// </summary>
+        [Route("~/api/v1/environment")]
+        public BaseResponse<EnvironmentDto> GetSystemEnvironment_v1()
+        {
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IEnvironmentService>().GetEnvironmentInfo());
         }
 
         [Route("dbinfo")]

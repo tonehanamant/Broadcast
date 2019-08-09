@@ -437,6 +437,11 @@ namespace Tam.Maestro.Common.SystemComponentParameter
             get { return "DefaultNtiConversionFactor"; }
         }
 	 
+		public static string DisplayCampaignLink  
+		{
+            get { return "DisplayCampaignLink"; }
+        }
+	 
 		public static string EmailFrom  
 		{
             get { return "EmailFrom"; }
@@ -952,7 +957,7 @@ namespace Tam.Maestro.Common.SystemComponentParameter
             get { return "SchemaVersion"; }
         }
 	}
-	 
+	
 	public static class MaterialsServiceSystemParameterNames
 	{
 		public static string ComponentID
@@ -2054,7 +2059,7 @@ namespace Tam.Maestro.Common.SystemComponentParameter
         {
             get { return "TrafficComposerWeb" ; }
         }
-	  
+	 
 		public static string CancellationNotificationCriticalTime  
 		{
             get { return "CancellationNotificationCriticalTime"; }

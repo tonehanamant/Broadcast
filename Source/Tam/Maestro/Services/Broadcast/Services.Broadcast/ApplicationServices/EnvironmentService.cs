@@ -1,17 +1,17 @@
 ﻿using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
+using Services.Broadcast.Entities.DTO;
 using Services.Broadcast.Repositories;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Tam.Maestro.Services.Cable.SystemComponentParameters;
+using Tam.Maestro.Services.Clients;
 
 namespace Services.Broadcast.ApplicationServices
 {
     public interface IEnvironmentService : IApplicationService
     {
         Dictionary<string, string> GetDbInfo();
+        EnvironmentDto GetEnvironmentInfo();
     }
     public class EnvironmentService: IEnvironmentService
     {
@@ -31,5 +31,16 @@ namespace Services.Broadcast.ApplicationServices
             return result;
         }
 
+        public EnvironmentDto GetEnvironmentInfo()
+        {
+            var appSettings = new AppSettings();
+            var environment = appSettings.Environment.ToString();
+
+            return new EnvironmentDto
+            {
+                Environment = environment,
+                DisplayCampaignLink = BroadcastServiceSystemParameter.DisplayCampaignLink
+            };
+        }
     }
 }
