@@ -84,7 +84,7 @@ namespace Services.Broadcast.Repositories
         /// <param name="manifests">List of manifests containing audiences</param>
         void AddInventoryAudiencesForManifests(List<StationInventoryManifest> manifests);
 
-        DateRange GetInventoryStartAndEndDates(int inventorySourceId, int daypartCodeId);
+        List<StationInventoryManifestWeek> GetStationInventoryManifestWeeks(int inventorySourceId, int daypartCodeId);
 
         /// <summary>
         /// Returns all the weeks for a station, program name and daypart that need to be expired
@@ -978,7 +978,7 @@ namespace Services.Broadcast.Repositories
         }
 
         ///<inheritdoc/>
-        public DateRange GetInventoryStartAndEndDates(int inventorySourceId, int daypartCodeId)
+        public List<StationInventoryManifestWeek> GetStationInventoryManifestWeeks(int inventorySourceId, int daypartCodeId)
         {
             return _InReadUncommitedTransaction(
                context =>
@@ -987,17 +987,18 @@ namespace Services.Broadcast.Repositories
                                 join manifest in context.station_inventory_manifest on week.station_inventory_manifest_id equals manifest.id
                                 join inventoryFile in context.inventory_files on manifest.file_id equals inventoryFile.id
                                 join inventoryFileHeader in context.inventory_file_proprietary_header on inventoryFile.id equals inventoryFileHeader.inventory_file_id
-                                where manifest.inventory_source_id == inventorySourceId && inventoryFileHeader.daypart_code_id == daypartCodeId
+                                join ratingProcessingJob in context.inventory_file_ratings_jobs on inventoryFile.id equals ratingProcessingJob.inventory_file_id
+                                where manifest.inventory_source_id == inventorySourceId &&
+                                      inventoryFileHeader.daypart_code_id == daypartCodeId &&
+                                      week.spots > 0 &&
+                                      ratingProcessingJob.status == (int)BackgroundJobProcessingStatus.Succeeded
                                 group week by week.id into weekGroup
-                                select weekGroup.FirstOrDefault()).ToList();
-                   
-                   if (!weeks.Any())
-                       return new DateRange(null, null);
-                   
-                   var start = weeks.Min(x => x.start_date);
-                   var end = weeks.Max(x => x.end_date);
+                                select weekGroup.FirstOrDefault())
+                                .ToList()
+                                .Select(_MapToInventoryManifestWeek)
+                                .ToList();
 
-                   return new DateRange(start, end);
+                   return weeks;
                });
         }
 
@@ -1012,9 +1013,12 @@ namespace Services.Broadcast.Repositories
                                       join manifestGroup in context.station_inventory_group on manifest.station_inventory_group_id equals manifestGroup.id
                                       join inventoryFile in context.inventory_files on manifest.file_id equals inventoryFile.id
                                       join inventoryFileHeader in context.inventory_file_proprietary_header on inventoryFile.id equals inventoryFileHeader.inventory_file_id
+                                      join ratingProcessingJob in context.inventory_file_ratings_jobs on inventoryFile.id equals ratingProcessingJob.inventory_file_id
                                       where manifest.inventory_source_id == inventorySourceId &&
-                                            inventoryFileHeader.daypart_code_id== daypartCodeId &&
-                                            week.start_date <= endDate && week.end_date >= startDate
+                                            inventoryFileHeader.daypart_code_id == daypartCodeId &&
+                                            week.start_date <= endDate && week.end_date >= startDate &&
+                                            week.spots > 0 &&
+                                            ratingProcessingJob.status == (int)BackgroundJobProcessingStatus.Succeeded
                                       group manifestGroup by manifestGroup.id into manifestGroupGrouping
                                       select manifestGroupGrouping.FirstOrDefault()).ToList();
 

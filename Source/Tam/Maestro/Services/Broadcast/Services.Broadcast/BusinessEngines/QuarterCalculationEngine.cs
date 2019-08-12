@@ -13,7 +13,6 @@ namespace Services.Broadcast.BusinessEngines
         QuarterDetailDto GetQuarterRangeByDate(DateTime? currentDate);
         QuarterDetailDto GetQuarterRangeByDate(DateTime currentDate, int quarterShift);
         List<QuarterDetailDto> GetAllQuartersBetweenDates(DateTime startDate, DateTime endDate);
-        List<QuarterDetailDto> GetAllQuartersForDateRange(DateRange dateRange);
         QuarterDetailDto GetQuarterDetail(int quarter, int year);
     }
 
@@ -174,13 +173,6 @@ namespace Services.Broadcast.BusinessEngines
                 quarters.Add(GetQuarterRangeByDate(startDate, quarterShift));
 
             return quarters;
-        }
-
-        public List<QuarterDetailDto> GetAllQuartersForDateRange(DateRange dateRange)
-        {
-            return dateRange.IsEmpty() ? 
-                new List<QuarterDetailDto>() : 
-                GetAllQuartersBetweenDates(dateRange.Start.Value, dateRange.End.Value);
         }
     }
 }

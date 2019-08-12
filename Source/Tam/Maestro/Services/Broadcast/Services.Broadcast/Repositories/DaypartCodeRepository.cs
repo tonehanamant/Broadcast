@@ -49,7 +49,10 @@ namespace Services.Broadcast.Repositories
                              join inventoryFile in context.inventory_files on manifest.file_id equals inventoryFile.id
                              join inventoryFileHeader in context.inventory_file_proprietary_header on inventoryFile.id equals inventoryFileHeader.inventory_file_id
                              join daypartCode in context.daypart_codes on inventoryFileHeader.daypart_code_id equals daypartCode.id
-                             where manifest.inventory_source_id == inventorySourceId
+                             join ratingProcessingJob in context.inventory_file_ratings_jobs on inventoryFile.id equals ratingProcessingJob.inventory_file_id
+                             where manifest.inventory_source_id == inventorySourceId &&
+                                   week.spots > 0 &&
+                                   ratingProcessingJob.status == (int)BackgroundJobProcessingStatus.Succeeded
                              group daypartCode by daypartCode.id into daypartCodeGroup
                              select daypartCodeGroup.FirstOrDefault());
                 

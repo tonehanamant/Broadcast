@@ -100,8 +100,15 @@ namespace Services.Broadcast.ApplicationServices
 
         public InventoryQuartersDto GetInventoryQuarters(int inventorySourceId, int daypartCodeId)
         {
-            var dateRange = _InventoryRepository.GetInventoryStartAndEndDates(inventorySourceId, daypartCodeId);
-            return new InventoryQuartersDto { Quarters = _QuarterCalculationEngine.GetAllQuartersForDateRange(dateRange) };
+            var weeks = _InventoryRepository.GetStationInventoryManifestWeeks(inventorySourceId, daypartCodeId);
+            var mediaMonthIds = weeks.Select(x => x.MediaWeek.MediaMonthId).Distinct();
+            var mediaMonths = _MediaMonthAndWeekAggregateCache.GetMediaMonthsByIds(mediaMonthIds);
+            var quarters = mediaMonths
+                .GroupBy(x => new { x.Quarter, x.Year }) // take unique quarters
+                .Select(x => _QuarterCalculationEngine.GetQuarterDetail(x.Key.Quarter, x.Key.Year))
+                .ToList();
+            
+            return new InventoryQuartersDto { Quarters = quarters };
         }
 
         public List<InventorySummaryDto> GetInventorySummaries(InventorySummaryFilterDto inventorySummaryFilterDto, DateTime currentDate)

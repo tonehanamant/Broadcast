@@ -2,10 +2,16 @@
   "DefaultQuarter": null,
   "Quarters": [
     {
-      "EndDate": "2019-03-31T23:59:59",
+      "EndDate": "2021-03-28T23:59:59",
       "Quarter": 1,
-      "StartDate": "2018-12-31T00:00:00",
-      "Year": 2019
+      "StartDate": "2020-12-28T00:00:00",
+      "Year": 2021
+    },
+    {
+      "EndDate": "2022-06-26T23:59:59",
+      "Quarter": 2,
+      "StartDate": "2022-03-28T00:00:00",
+      "Year": 2022
     }
   ]
 }

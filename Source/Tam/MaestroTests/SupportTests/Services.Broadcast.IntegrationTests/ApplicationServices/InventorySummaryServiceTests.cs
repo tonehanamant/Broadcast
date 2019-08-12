@@ -18,6 +18,7 @@ using Microsoft.Practices.Unity;
 using Services.Broadcast.Extensions;
 using System.Collections.Generic;
 using Services.Broadcast.Cache;
+using Services.Broadcast.IntegrationTests.Helpers;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
@@ -29,11 +30,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         private readonly IInventorySummaryCache _InventorySummaryCache = IntegrationTestApplicationServiceFactory.Instance.Resolve<IInventorySummaryCache>();
         private readonly IInventoryRepository _InventoryRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
         private readonly IDaypartCodeRepository _DaypartCodeRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IDaypartCodeRepository>();
-        private IProprietaryInventoryService _ProprietaryService;
-        private IInventoryRepository _IInventoryRepository;
-        private IInventoryRatingsProcessingService _InventoryRatingsProcessingService;
-        private IInventoryFileRatingsJobsRepository _InventoryFileRatingsJobsRepository;
-        private IInventoryService _InventoryService;
+        private InventoryFileTestHelper _InventoryFileTestHelper;
         private int nbcOAndO_InventorySourceId = 0;
 
         [TestFixtureSetUp]
@@ -42,12 +39,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             try
             {
                 IntegrationTestApplicationServiceFactory.Instance.RegisterType<IFileService, FileServiceDataLakeStubb>();
-                _ProprietaryService = IntegrationTestApplicationServiceFactory.GetApplicationService<IProprietaryInventoryService>();
-                _IInventoryRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
-                _InventoryRatingsProcessingService = IntegrationTestApplicationServiceFactory.GetApplicationService<IInventoryRatingsProcessingService>();
-                _InventoryFileRatingsJobsRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryFileRatingsJobsRepository>();
-                _InventoryService = IntegrationTestApplicationServiceFactory.GetApplicationService<IInventoryService>();
                 nbcOAndO_InventorySourceId = _InventoryRepository.GetInventorySourceByName("NBC O&O").Id;
+                _InventoryFileTestHelper = new InventoryFileTestHelper();
             }
             catch (Exception e)
             {
@@ -215,11 +208,17 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void GetInventoryQuartersBySourceAndDaypartCodeTest()
         {
-            var daypartCodeId = _DaypartCodeRepository.GetDaypartCodeByCode("EMN").Id;
+            using (new TransactionScopeWrapper())
+            {
+                _InventoryFileTestHelper.UploadProprietaryInventoryFile("OAndO_2021_Q1.xlsx");
+                _InventoryFileTestHelper.UploadProprietaryInventoryFile("OAndO_2022_Q2.xlsx");
 
-            var quarters = _InventorySummaryService.GetInventoryQuarters(nbcOAndO_InventorySourceId, daypartCodeId);
+                var daypartCodeId = _DaypartCodeRepository.GetDaypartCodeByCode("OVN").Id;
 
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(quarters));
+                var quarters = _InventorySummaryService.GetInventoryQuarters(nbcOAndO_InventorySourceId, daypartCodeId);
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(quarters));
+            }
         }
 
         [Test]
@@ -448,22 +447,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void ProprietaryOAndO_CanAggregateData_HutIsNull()
         {
-
-            string file = @"ProprietaryDataFiles\O&O ABC O&O 3Q2021.xlsx";
-
             using (var trx = new TransactionScopeWrapper())
             {
-                var request = new InventoryFileSaveRequest
-                {
-                    StreamData = new FileStream($@".\Files\{file}", FileMode.Open, FileAccess.Read),
-                    FileName = file
-                };
-
-                _ProprietaryService.SaveProprietaryInventoryFile(request, "IntegrationTestUser", new DateTime(2019, 07, 20));
-
-                //process the imported data
-                var job = _InventoryFileRatingsJobsRepository.GetLatestJob();
-                _InventoryRatingsProcessingService.ProcessInventoryRatingsJob(job.id.Value);
+                _InventoryFileTestHelper.UploadProprietaryInventoryFile("O&O ABC O&O 3Q2021.xlsx", new DateTime(2019, 07, 20));
 
                 //aggregate the data
                 _InventorySummaryService.AggregateInventorySummaryData(new List<int> { 10 });
@@ -581,19 +567,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 inventoryCards = _InventorySummaryService.GetInventorySummariesWithCache(requestFilter, requestDate);
                 var reusedCacheSize = _InventorySummaryCache.GetItemCount(false);
 
-                //Load and process a new inventory file
-                const string fileName = @"ImportingRateData\Open Market projected imps.xml";
-                var request = new InventoryFileSaveRequest
-                {
-                    StreamData = new FileStream($@".\Files\{fileName}", FileMode.Open, FileAccess.Read),
-                    FileName = fileName
-                };
+                _InventoryFileTestHelper.UploadOpenMarketInventoryFile("Open Market projected imps.xml");
 
-                var now = new DateTime(2019, 02, 02);
-                var result = _InventoryService.SaveInventoryFile(request, "IntegrationTestUser", now);
-                var job = _InventoryFileRatingsJobsRepository.GetLatestJob();
-                var source = _InventoryRatingsProcessingService.ProcessInventoryRatingsJob(job.id.Value);
-                _InventorySummaryService.AggregateInventorySummaryData(new List<int> { source });
+                _InventorySummaryService.AggregateInventorySummaryData(new List<int> { inventorySourceId });
 
                 inventoryCards = _InventorySummaryService.GetInventorySummariesWithCache(requestFilter, requestDate);
                 var afterNewFileCacheSize = _InventorySummaryCache.GetItemCount(false);
