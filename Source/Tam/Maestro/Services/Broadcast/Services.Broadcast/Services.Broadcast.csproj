@@ -253,7 +253,7 @@
     <Compile Include="Entities\Enums\AudienceTypeEnum.cs" />
     <Compile Include="Entities\Enums\BackgroundJobProcessingStatus.cs" />
     <Compile Include="Entities\Enums\DaypartTypeEnum.cs" />
-    <Compile Include="Entities\Enums\DeliveryTypesEnum.cs" />
+    <Compile Include="Entities\Enums\PlanGloalBreakdownTypeEnum.cs" />
     <Compile Include="Entities\Enums\PlanCurrenciesEnum.cs" />
     <Compile Include="Entities\Enums\PlanStatusEnum.cs" />
     <Compile Include="Entities\InventorySummary\InventorySummaryAggregation.cs" />
