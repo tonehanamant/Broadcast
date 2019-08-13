@@ -113,7 +113,6 @@ namespace Services.Broadcast.ApplicationServices
 
         public List<InventorySummaryDto> GetInventorySummaries(InventorySummaryFilterDto inventorySummaryFilterDto, DateTime currentDate)
         {
-
             var inventorySummaryDtos = new List<InventorySummaryDto>();
 
             if (inventorySummaryFilterDto.InventorySourceId != null)
@@ -128,6 +127,7 @@ namespace Services.Broadcast.ApplicationServices
             if (inventorySummaryDtos.Any(x => x.InventorySourceId != 0))   //if there is summary data in the result set
             {
                 _SetHasLogo(inventorySummaryDtos);
+                _SetHasInventoryForSource(inventorySummaryDtos, inventorySummaryFilterDto.LatestInventoryUpdatesBySourceId);
             }
 
             return inventorySummaryDtos;
@@ -237,6 +237,22 @@ namespace Services.Broadcast.ApplicationServices
             foreach (var inventorySummaryDto in inventorySummaryDtos)
             {
                 inventorySummaryDto.HasLogo = inventorySourcesWithLogo.Contains(inventorySummaryDto.InventorySourceId);
+            }
+        }
+
+        private void _SetHasInventoryForSource(List<InventorySummaryDto> inventorySummaryDtos, Dictionary<int, DateTime?> latestInventoryUpdatesBySourceId)
+        {
+            foreach (var inventorySummaryDto in inventorySummaryDtos)
+            {
+                if (latestInventoryUpdatesBySourceId.TryGetValue(inventorySummaryDto.InventorySourceId, out var latestInventoryUpdateDate) &&
+                    latestInventoryUpdateDate.HasValue)
+                {
+                    inventorySummaryDto.HasInventoryForSource = true;
+                }
+                else
+                {
+                    inventorySummaryDto.HasInventoryForSource = false;
+                }
             }
         }
 

@@ -1,6 +1,7 @@
 ﻿[
   {
     "Details": null,
+    "HasInventoryForSource": false,
     "HasInventoryGaps": true,
     "HasLogo": false,
     "HasRatesAvailableForQuarter": true,
@@ -243,6 +244,7 @@
   },
   {
     "Details": null,
+    "HasInventoryForSource": false,
     "HasInventoryGaps": false,
     "HasLogo": false,
     "HasRatesAvailableForQuarter": false,
@@ -268,6 +270,7 @@
   },
   {
     "Details": null,
+    "HasInventoryForSource": false,
     "HasInventoryGaps": false,
     "HasLogo": false,
     "HasRatesAvailableForQuarter": false,
@@ -293,6 +296,7 @@
   },
   {
     "Details": null,
+    "HasInventoryForSource": false,
     "HasInventoryGaps": true,
     "HasLogo": false,
     "HasRatesAvailableForQuarter": true,
@@ -496,6 +500,7 @@
   },
   {
     "Details": null,
+    "HasInventoryForSource": false,
     "HasInventoryGaps": true,
     "HasLogo": false,
     "HasRatesAvailableForQuarter": true,
@@ -664,6 +669,7 @@
   },
   {
     "Details": null,
+    "HasInventoryForSource": false,
     "HasInventoryGaps": true,
     "HasLogo": false,
     "HasRatesAvailableForQuarter": true,
@@ -817,6 +823,7 @@
   },
   {
     "Details": null,
+    "HasInventoryForSource": false,
     "HasInventoryGaps": true,
     "HasLogo": false,
     "HasRatesAvailableForQuarter": true,
@@ -970,6 +977,7 @@
   },
   {
     "Details": null,
+    "HasInventoryForSource": false,
     "HasInventoryGaps": true,
     "HasLogo": false,
     "HasRatesAvailableForQuarter": true,
@@ -1108,6 +1116,7 @@
   },
   {
     "Details": null,
+    "HasInventoryForSource": false,
     "HasInventoryGaps": true,
     "HasLogo": false,
     "HasRatesAvailableForQuarter": true,
@@ -1223,6 +1232,7 @@
   },
   {
     "Details": null,
+    "HasInventoryForSource": false,
     "HasInventoryGaps": true,
     "HasLogo": false,
     "HasRatesAvailableForQuarter": true,
@@ -1323,6 +1333,7 @@
   },
   {
     "Details": null,
+    "HasInventoryForSource": false,
     "HasInventoryGaps": true,
     "HasLogo": false,
     "HasRatesAvailableForQuarter": true,
@@ -1408,6 +1419,7 @@
   },
   {
     "Details": null,
+    "HasInventoryForSource": false,
     "HasInventoryGaps": false,
     "HasLogo": false,
     "HasRatesAvailableForQuarter": false,
@@ -1433,6 +1445,7 @@
   },
   {
     "Details": null,
+    "HasInventoryForSource": false,
     "HasInventoryGaps": false,
     "HasLogo": false,
     "HasRatesAvailableForQuarter": false,
@@ -1458,6 +1471,7 @@
   },
   {
     "Details": null,
+    "HasInventoryForSource": false,
     "HasInventoryGaps": false,
     "HasLogo": false,
     "HasRatesAvailableForQuarter": false,
@@ -1483,6 +1497,7 @@
   },
   {
     "Details": null,
+    "HasInventoryForSource": false,
     "HasInventoryGaps": true,
     "HasLogo": false,
     "HasRatesAvailableForQuarter": true,

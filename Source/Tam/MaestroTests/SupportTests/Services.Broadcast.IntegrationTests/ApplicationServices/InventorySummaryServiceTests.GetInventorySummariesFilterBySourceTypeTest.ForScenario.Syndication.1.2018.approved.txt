@@ -2,6 +2,7 @@
   {
     "DaypartCode": "SYN",
     "Details": null,
+    "HasInventoryForSource": false,
     "HasInventoryGaps": true,
     "HasLogo": false,
     "HasRatesAvailableForQuarter": true,
@@ -54,6 +55,7 @@
   {
     "DaypartCode": "SYN",
     "Details": null,
+    "HasInventoryForSource": false,
     "HasInventoryGaps": true,
     "HasLogo": false,
     "HasRatesAvailableForQuarter": true,
@@ -106,6 +108,7 @@
   {
     "DaypartCode": "SYN",
     "Details": null,
+    "HasInventoryForSource": false,
     "HasInventoryGaps": true,
     "HasLogo": false,
     "HasRatesAvailableForQuarter": true,
@@ -158,6 +161,7 @@
   {
     "DaypartCode": "SYN",
     "Details": null,
+    "HasInventoryForSource": false,
     "HasInventoryGaps": true,
     "HasLogo": false,
     "HasRatesAvailableForQuarter": true,

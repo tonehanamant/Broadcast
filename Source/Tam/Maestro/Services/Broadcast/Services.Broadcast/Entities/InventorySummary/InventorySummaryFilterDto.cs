@@ -10,6 +10,6 @@ namespace Services.Broadcast.Entities.InventorySummary
         public InventorySummaryQuarter Quarter { get; set; }
         public int? DaypartCodeId { get; set; }
         public InventorySourceTypeEnum? InventorySourceType { get; set; }
-        public Dictionary<int, DateTime?> LatestInventoryUpdatesBySourceId {get; set;}
+        public Dictionary<int, DateTime?> LatestInventoryUpdatesBySourceId { get; set; } = new Dictionary<int, DateTime?>();
     }
 }

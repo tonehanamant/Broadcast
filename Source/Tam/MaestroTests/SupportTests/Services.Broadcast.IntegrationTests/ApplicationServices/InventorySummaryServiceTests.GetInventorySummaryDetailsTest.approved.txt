@@ -10,6 +10,7 @@
         "TotalUnits": 8
       }
     ],
+    "HasInventoryForSource": false,
     "HasInventoryGaps": false,
     "HasLogo": false,
     "HasRatesAvailableForQuarter": true,

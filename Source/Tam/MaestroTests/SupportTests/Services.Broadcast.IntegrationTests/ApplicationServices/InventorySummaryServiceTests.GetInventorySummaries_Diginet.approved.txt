@@ -38,6 +38,7 @@
         "HouseholdImpressions": 21927.74583727252
       }
     ],
+    "HasInventoryForSource": false,
     "HasInventoryGaps": true,
     "HasLogo": false,
     "HasRatesAvailableForQuarter": true,

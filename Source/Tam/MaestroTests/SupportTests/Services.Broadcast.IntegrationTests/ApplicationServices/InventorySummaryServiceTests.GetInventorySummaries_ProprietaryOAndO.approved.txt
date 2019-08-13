@@ -12,6 +12,7 @@
         "TotalPrograms": 3
       }
     ],
+    "HasInventoryForSource": false,
     "HasInventoryGaps": true,
     "HasLogo": false,
     "HasRatesAvailableForQuarter": true,

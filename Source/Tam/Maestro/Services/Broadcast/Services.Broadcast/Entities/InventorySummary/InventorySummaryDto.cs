@@ -21,6 +21,7 @@ namespace Services.Broadcast.Entities.InventorySummary
         public MediaMonthDto HutBook { get; set; }
         public List<InventoryGapDetail> InventoryGaps { get; set; } = new List<InventoryGapDetail>();
         public bool HasLogo { get; set; } = false;
+        public bool HasInventoryForSource { get; set; }
     }
 
     public class BarterInventorySummaryDto : InventorySummaryDto

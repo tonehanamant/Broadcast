@@ -1,6 +1,7 @@
 ﻿[
   {
     "Details": null,
+    "HasInventoryForSource": false,
     "HasInventoryGaps": true,
     "HasLogo": false,
     "HasRatesAvailableForQuarter": true,
@@ -139,6 +140,7 @@
   },
   {
     "Details": [],
+    "HasInventoryForSource": false,
     "HasInventoryGaps": false,
     "HasLogo": false,
     "HasRatesAvailableForQuarter": false,
@@ -165,6 +167,7 @@
   },
   {
     "Details": [],
+    "HasInventoryForSource": false,
     "HasInventoryGaps": false,
     "HasLogo": false,
     "HasRatesAvailableForQuarter": false,
@@ -191,6 +194,7 @@
   },
   {
     "Details": [],
+    "HasInventoryForSource": false,
     "HasInventoryGaps": false,
     "HasLogo": false,
     "HasRatesAvailableForQuarter": false,
@@ -217,6 +221,7 @@
   },
   {
     "Details": [],
+    "HasInventoryForSource": false,
     "HasInventoryGaps": false,
     "HasLogo": false,
     "HasRatesAvailableForQuarter": false,
@@ -243,6 +248,7 @@
   },
   {
     "Details": [],
+    "HasInventoryForSource": false,
     "HasInventoryGaps": false,
     "HasLogo": false,
     "HasRatesAvailableForQuarter": false,
@@ -269,6 +275,7 @@
   },
   {
     "Details": [],
+    "HasInventoryForSource": false,
     "HasInventoryGaps": false,
     "HasLogo": false,
     "HasRatesAvailableForQuarter": false,
@@ -295,6 +302,7 @@
   },
   {
     "Details": [],
+    "HasInventoryForSource": false,
     "HasInventoryGaps": false,
     "HasLogo": false,
     "HasRatesAvailableForQuarter": false,
@@ -321,6 +329,7 @@
   },
   {
     "Details": [],
+    "HasInventoryForSource": false,
     "HasInventoryGaps": false,
     "HasLogo": false,
     "HasRatesAvailableForQuarter": false,
@@ -347,6 +356,7 @@
   },
   {
     "Details": [],
+    "HasInventoryForSource": false,
     "HasInventoryGaps": false,
     "HasLogo": false,
     "HasRatesAvailableForQuarter": false,
@@ -373,6 +383,7 @@
   },
   {
     "Details": [],
+    "HasInventoryForSource": false,
     "HasInventoryGaps": false,
     "HasLogo": false,
     "HasRatesAvailableForQuarter": false,
@@ -400,6 +411,7 @@
   {
     "DaypartCode": "SYN",
     "Details": null,
+    "HasInventoryForSource": false,
     "HasInventoryGaps": true,
     "HasLogo": false,
     "HasRatesAvailableForQuarter": true,
@@ -452,6 +464,7 @@
   {
     "DaypartCode": "SYN",
     "Details": null,
+    "HasInventoryForSource": false,
     "HasInventoryGaps": true,
     "HasLogo": false,
     "HasRatesAvailableForQuarter": true,
@@ -504,6 +517,7 @@
   {
     "DaypartCode": "SYN",
     "Details": null,
+    "HasInventoryForSource": false,
     "HasInventoryGaps": true,
     "HasLogo": false,
     "HasRatesAvailableForQuarter": true,
@@ -556,6 +570,7 @@
   {
     "DaypartCode": "SYN",
     "Details": null,
+    "HasInventoryForSource": false,
     "HasInventoryGaps": true,
     "HasLogo": false,
     "HasRatesAvailableForQuarter": true,
@@ -608,6 +623,7 @@
   {
     "CPM": null,
     "Details": [],
+    "HasInventoryForSource": false,
     "HasInventoryGaps": false,
     "HasLogo": false,
     "HasRatesAvailableForQuarter": false,
@@ -634,6 +650,7 @@
   {
     "CPM": null,
     "Details": [],
+    "HasInventoryForSource": false,
     "HasInventoryGaps": false,
     "HasLogo": false,
     "HasRatesAvailableForQuarter": false,
@@ -660,6 +677,7 @@
   {
     "CPM": null,
     "Details": [],
+    "HasInventoryForSource": false,
     "HasInventoryGaps": false,
     "HasLogo": false,
     "HasRatesAvailableForQuarter": false,
@@ -686,6 +704,7 @@
   {
     "CPM": null,
     "Details": [],
+    "HasInventoryForSource": false,
     "HasInventoryGaps": false,
     "HasLogo": false,
     "HasRatesAvailableForQuarter": false,
@@ -712,6 +731,7 @@
   {
     "CPM": null,
     "Details": [],
+    "HasInventoryForSource": false,
     "HasInventoryGaps": false,
     "HasLogo": false,
     "HasRatesAvailableForQuarter": false,
@@ -738,6 +758,7 @@
   {
     "CPM": null,
     "Details": [],
+    "HasInventoryForSource": false,
     "HasInventoryGaps": false,
     "HasLogo": false,
     "HasRatesAvailableForQuarter": false,
@@ -764,6 +785,7 @@
   {
     "CPM": null,
     "Details": [],
+    "HasInventoryForSource": false,
     "HasInventoryGaps": false,
     "HasLogo": false,
     "HasRatesAvailableForQuarter": false,
@@ -790,6 +812,7 @@
   {
     "CPM": null,
     "Details": [],
+    "HasInventoryForSource": false,
     "HasInventoryGaps": false,
     "HasLogo": false,
     "HasRatesAvailableForQuarter": false,
@@ -816,6 +839,7 @@
   {
     "CPM": null,
     "Details": [],
+    "HasInventoryForSource": false,
     "HasInventoryGaps": false,
     "HasLogo": false,
     "HasRatesAvailableForQuarter": false,

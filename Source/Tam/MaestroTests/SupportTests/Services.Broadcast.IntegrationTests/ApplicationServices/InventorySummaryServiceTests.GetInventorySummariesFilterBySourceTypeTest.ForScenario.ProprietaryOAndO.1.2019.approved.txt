@@ -1,6 +1,7 @@
 ﻿[
   {
     "Details": [],
+    "HasInventoryForSource": false,
     "HasInventoryGaps": false,
     "HasLogo": false,
     "HasRatesAvailableForQuarter": false,
@@ -27,6 +28,7 @@
   },
   {
     "Details": [],
+    "HasInventoryForSource": false,
     "HasInventoryGaps": false,
     "HasLogo": false,
     "HasRatesAvailableForQuarter": false,
@@ -64,6 +66,7 @@
         "TotalPrograms": 3
       }
     ],
+    "HasInventoryForSource": false,
     "HasInventoryGaps": true,
     "HasLogo": false,
     "HasRatesAvailableForQuarter": true,
@@ -128,6 +131,7 @@
   },
   {
     "Details": [],
+    "HasInventoryForSource": false,
     "HasInventoryGaps": false,
     "HasLogo": false,
     "HasRatesAvailableForQuarter": false,

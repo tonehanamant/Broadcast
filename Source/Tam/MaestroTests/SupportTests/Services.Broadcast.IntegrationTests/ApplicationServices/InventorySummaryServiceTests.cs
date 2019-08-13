@@ -169,6 +169,34 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        public void GetInventorySummaries_ProprietaryOAndO_WithCache()
+        {
+            const int inventorySourceId = 10;
+
+            using (new TransactionScopeWrapper())
+            {
+                _InventoryFileTestHelper.UploadProprietaryInventoryFile("O&O ABC O&O 3Q2021.xlsx", new DateTime(2019, 07, 20));
+                _InventorySummaryService.AggregateInventorySummaryData(new List<int> { inventorySourceId });
+
+                var inventoryCards = _InventorySummaryService.GetInventorySummariesWithCache(new InventorySummaryFilterDto
+                {
+                    InventorySourceId = inventorySourceId,
+                }, new DateTime(2019, 07, 01));
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(InventorySummaryDto), "LastUpdatedDate");
+                var jsonSerializerSettings = new JsonSerializerSettings
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(inventoryCards, jsonSerializerSettings));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
         public void GetInventorySummaryDetailsTest()
         {
             using (new TransactionScopeWrapper())

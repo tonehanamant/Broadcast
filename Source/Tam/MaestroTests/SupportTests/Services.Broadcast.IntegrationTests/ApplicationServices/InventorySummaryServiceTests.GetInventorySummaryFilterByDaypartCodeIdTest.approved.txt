@@ -10,6 +10,7 @@
         "TotalUnits": 1
       }
     ],
+    "HasInventoryForSource": false,
     "HasInventoryGaps": true,
     "HasLogo": false,
     "HasRatesAvailableForQuarter": true,
@@ -85,6 +86,7 @@
         "TotalPrograms": 3
       }
     ],
+    "HasInventoryForSource": false,
     "HasInventoryGaps": true,
     "HasLogo": false,
     "HasRatesAvailableForQuarter": true,

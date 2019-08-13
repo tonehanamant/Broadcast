@@ -1,6 +1,7 @@
 ﻿[
   {
     "Details": null,
+    "HasInventoryForSource": false,
     "HasInventoryGaps": true,
     "HasLogo": false,
     "HasRatesAvailableForQuarter": true,
@@ -138,6 +139,7 @@
   },
   {
     "Details": null,
+    "HasInventoryForSource": false,
     "HasInventoryGaps": true,
     "HasLogo": false,
     "HasRatesAvailableForQuarter": true,

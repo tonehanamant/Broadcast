@@ -10,6 +10,7 @@
         "TotalUnits": 1
       }
     ],
+    "HasInventoryForSource": false,
     "HasInventoryGaps": true,
     "HasLogo": false,
     "HasRatesAvailableForQuarter": true,
@@ -79,6 +80,7 @@
         "TotalUnits": 8
       }
     ],
+    "HasInventoryForSource": false,
     "HasInventoryGaps": false,
     "HasLogo": false,
     "HasRatesAvailableForQuarter": true,
@@ -119,6 +121,7 @@
   },
   {
     "Details": [],
+    "HasInventoryForSource": false,
     "HasInventoryGaps": false,
     "HasLogo": false,
     "HasRatesAvailableForQuarter": false,
@@ -145,6 +148,7 @@
   },
   {
     "Details": [],
+    "HasInventoryForSource": false,
     "HasInventoryGaps": false,
     "HasLogo": false,
     "HasRatesAvailableForQuarter": false,
@@ -171,6 +175,7 @@
   },
   {
     "Details": [],
+    "HasInventoryForSource": false,
     "HasInventoryGaps": false,
     "HasLogo": false,
     "HasRatesAvailableForQuarter": false,
@@ -197,6 +202,7 @@
   },
   {
     "Details": [],
+    "HasInventoryForSource": false,
     "HasInventoryGaps": false,
     "HasLogo": false,
     "HasRatesAvailableForQuarter": false,
