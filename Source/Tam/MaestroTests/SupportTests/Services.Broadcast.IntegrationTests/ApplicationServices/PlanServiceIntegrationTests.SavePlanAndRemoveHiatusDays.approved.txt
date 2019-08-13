@@ -42,6 +42,7 @@
   "FlightHiatusDays": [],
   "FlightNotes": "Changed the flight notes",
   "FlightStartDate": "2019-01-01T00:00:00",
+  "GoalBreakdownType": 1,
   "HUTBookId": null,
   "Name": "Renamed Plan",
   "PostingType": 2,
@@ -49,5 +50,8 @@
   "SecondaryAudiences": [],
   "ShareBookId": 437,
   "SpotLengthId": 1,
-  "Status": 1
+  "Status": 1,
+  "TotalActiveDays": 0,
+  "TotalShareOfVoice": 0.0,
+  "WeeklyBreakdownWeeks": []
 }

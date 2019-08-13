@@ -95,6 +95,8 @@ namespace Services.Broadcast.Repositories
                         .Include(p => p.plan_dayparts)
                         .Include(p => p.plan_available_markets)
                         .Include(p => p.plan_blackout_markets)
+                        .Include(p => p.plan_weeks)
+                        .Include(p => p.plan_weeks.Select(x=>x.media_weeks))
                         .Single(s => s.id == planId, "Invalid plan id.");
                     return _MapToDto(entity);
                 });
@@ -123,18 +125,38 @@ namespace Services.Broadcast.Repositories
                 Budget = entity.budget,
                 Delivery = entity.delivery,
                 CPM = entity.cpm,
-                SecondaryAudiences = entity.plan_secondary_audiences
-                    .Select(x => new PlanAudienceDto
-                    {
-                        AudienceId = x.audience_id,
-                        Type = (AudienceTypeEnum)x.audience_type
-                    }).ToList(),
+                GoalBreakdownType = EnumHelper.GetEnum<PlanGloalBreakdownTypeEnum>(entity.goal_breakdown_type),
+                SecondaryAudiences = entity.plan_secondary_audiences.Select(_MapSecondatAudiences).ToList(),
                 Dayparts = entity.plan_dayparts.Select(_MapPlanDaypartDto).ToList(),
                 CoverageGoalPercent = entity.coverage_goal_percent,
                 AvailableMarkets = entity.plan_available_markets.Select(_MapAvailableMarketDto).ToList(),
-                BlackoutMarkets = entity.plan_blackout_markets.Select(_MapBlackoutMarketDto).ToList()
+                BlackoutMarkets = entity.plan_blackout_markets.Select(_MapBlackoutMarketDto).ToList(),
+                WeeklyBreakdownWeeks = entity.plan_weeks.Select(_MapWeeklyBreakdownWeeks).ToList()
             };
             return dto;
+        }
+
+        private WeeklyBreakdownWeek _MapWeeklyBreakdownWeeks(plan_weeks arg)
+        {
+            return new WeeklyBreakdownWeek
+            {
+                ActiveDays = arg.active_days_label,
+                EndDate = arg.media_weeks.end_date,
+                Impressions = arg.impressions,
+                NumberOfActiveDays = arg.number_active_days,
+                ShareOfVoice = arg.share_of_voice,
+                StartDate = arg.media_weeks.start_date,
+                MediaWeekId = arg.media_weeks.id
+            };
+        }
+
+        private static PlanAudienceDto _MapSecondatAudiences(plan_secondary_audiences x)
+        {
+            return new PlanAudienceDto
+            {
+                AudienceId = x.audience_id,
+                Type = (AudienceTypeEnum)x.audience_type
+            };
         }
 
         /// <summary>
@@ -157,6 +179,7 @@ namespace Services.Broadcast.Repositories
             entity.flight_notes = planDto.FlightNotes;
 
             entity.coverage_goal_percent = planDto.CoverageGoalPercent;
+            entity.goal_breakdown_type = (int)planDto.GoalBreakdownType;
 
             _HydratePlanAudienceInfo(entity, planDto);
             _HydratePlanBudget(entity, planDto);
@@ -164,6 +187,23 @@ namespace Services.Broadcast.Repositories
             _HydrateDayparts(entity, planDto, context);
             _HydratePlanSecondaryAudiences(entity, planDto, context);
             _HydratePlanMarkets(entity, planDto, context);
+            _HydrateWeeklyBreakdown(entity, planDto, context);
+        }
+
+        private void _HydrateWeeklyBreakdown(plan entity, PlanDto planDto, QueryHintBroadcastContext context)
+        {
+            context.plan_weeks.RemoveRange(entity.plan_weeks);
+            planDto.WeeklyBreakdownWeeks.ForEach(d =>
+            {
+                entity.plan_weeks.Add(new plan_weeks
+                {
+                    active_days_label = d.ActiveDays,
+                    number_active_days = d.NumberOfActiveDays,
+                    impressions = d.Impressions,
+                    share_of_voice = d.ShareOfVoice,
+                    media_week_id = d.MediaWeekId
+                });
+            });
         }
 
         private static void _HydratePlanAudienceInfo(plan entity, PlanDto planDto)
@@ -191,8 +231,6 @@ namespace Services.Broadcast.Repositories
             });
         }
 
-        #region Plan Daypart
-
         private PlanDaypartDto _MapPlanDaypartDto(plan_dayparts entity)
         {
             var dto = new PlanDaypartDto
@@ -209,16 +247,14 @@ namespace Services.Broadcast.Repositories
         {
             context.plan_dayparts.RemoveRange(entity.plan_dayparts);
             planDto.Dayparts.ForEach(d => entity.plan_dayparts.Add(new plan_dayparts
-                {
-                    daypart_code_id = d.DaypartCodeId,
-                    start_time_seconds = d.StartTimeSeconds,
-                    end_time_seconds = d.EndTimeSeconds,
-                    weighting_goal_percent = d.WeightingGoalPercent
-                }));
+            {
+                daypart_code_id = d.DaypartCodeId,
+                start_time_seconds = d.StartTimeSeconds,
+                end_time_seconds = d.EndTimeSeconds,
+                weighting_goal_percent = d.WeightingGoalPercent
+            }));
         }
-
-        #endregion // #region Plan Daypart and Daypart Type
-
+        
         private void _HydratePlanSecondaryAudiences(plan entity, PlanDto planDto, QueryHintBroadcastContext context)
         {
             context.plan_secondary_audiences.RemoveRange(entity.plan_secondary_audiences);
@@ -232,8 +268,6 @@ namespace Services.Broadcast.Repositories
             });
         }
 
-        #region Markets
-
         private static void _HydratePlanMarkets(plan entity, PlanDto planDto, QueryHintBroadcastContext context)
         {
             context.plan_available_markets.RemoveRange(entity.plan_available_markets);
@@ -242,13 +276,13 @@ namespace Services.Broadcast.Repositories
             planDto.AvailableMarkets.ForEach(m =>
             {
                 entity.plan_available_markets.Add(new plan_available_markets
-                    {
-                        market_code = m.MarketCode,
-                        market_coverage_file_id = m.MarketCoverageFileId,
-                        rank = m.Rank,
-                        percentage_of_us = m.PercentageOfUs,
-                        share_of_voice_percent = m.ShareOfVoicePercent
-                    }
+                {
+                    market_code = m.MarketCode,
+                    market_coverage_file_id = m.MarketCoverageFileId,
+                    rank = m.Rank,
+                    percentage_of_us = m.PercentageOfUs,
+                    share_of_voice_percent = m.ShareOfVoicePercent
+                }
                 );
             });
 
@@ -290,7 +324,5 @@ namespace Services.Broadcast.Repositories
             };
             return dto;
         }
-
-        #endregion // #region Markets
     }
 }

@@ -1,0 +1,10 @@
+﻿[
+  {
+    "Display": "Even",
+    "Id": 1
+  },
+  {
+    "Display": "Custom",
+    "Id": 2
+  }
+]

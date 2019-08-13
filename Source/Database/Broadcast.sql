@@ -781,6 +781,46 @@ END
 
 /*************************************** END PRI-7458 *****************************************************/
 
+/*************************************** START PRI-7471 *****************************************************/
+IF OBJECT_ID('plan_weeks', 'U') IS NULL
+BEGIN	
+	CREATE TABLE [dbo].[plan_weeks](
+		[id] [int] IDENTITY(1,1) NOT NULL,
+		[plan_id] [INT] NOT NULL,
+		[media_week_id] [INT] NOT NULL,
+		[number_active_days] [INT] NOT NULL,
+		[active_days_label] [VARCHAR](20) NULL,
+		[impressions] [FLOAT] NOT NULL,
+		[share_of_voice] [FLOAT] NOT NULL
+	 CONSTRAINT [PK_plan_weeks] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY]
+
+	ALTER TABLE [dbo].[plan_weeks] ADD CONSTRAINT [FK_plan_weeks_plans] FOREIGN KEY([plan_id])
+	REFERENCES [dbo].[plans] ([id]) ON DELETE CASCADE
+	CREATE NONCLUSTERED INDEX [IX_plan_weeks_plan_id]  ON [dbo].[plan_weeks] ([plan_id] ASC)
+	INCLUDE ([id]) 
+	WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+
+	ALTER TABLE [dbo].[plan_weeks] ADD CONSTRAINT [FK_plan_weeks_media_weeks] FOREIGN KEY([media_week_id])
+	REFERENCES [dbo].[media_weeks] ([id])
+	CREATE NONCLUSTERED INDEX [FK_plan_weeks_media_weeks]  ON [dbo].[plan_weeks] ([media_week_id] ASC)
+	INCLUDE ([id]) 
+	WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+END
+
+IF NOT EXISTS (SELECT 1 FROM sys.columns WHERE Name = 'goal_breakdown_type' AND Object_ID = OBJECT_ID('plans'))
+BEGIN
+	ALTER TABLE [plans] ADD [goal_breakdown_type] [INT] NULL
+
+	DECLARE @SqlUpdateDeliveryType VARCHAR(64) = 'UPDATE [plans] SET goal_breakdown_type = 0'
+	EXEC (@SqlUpdateDeliveryType)
+	ALTER TABLE [plans] ALTER COLUMN [goal_breakdown_type] [INT] NOT NULL
+END
+/*************************************** END PRI-7471 *****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

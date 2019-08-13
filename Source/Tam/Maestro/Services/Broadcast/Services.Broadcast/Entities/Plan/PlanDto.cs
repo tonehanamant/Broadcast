@@ -200,5 +200,37 @@ namespace Services.Broadcast.Entities.Plan
         /// The lst of markets available for a plan.
         /// </value>
         public List<PlanAvailableMarketDto> AvailableMarkets { get; set; } = new List<PlanAvailableMarketDto>();
+
+        /// <summary>
+        /// Gets or sets the type of the goal breakdown.
+        /// </summary>
+        /// <value>
+        /// The type of the goal breakdown.
+        /// </value>
+        public PlanGloalBreakdownTypeEnum GoalBreakdownType { get; set; }
+
+        /// <summary>
+        /// Gets or sets the weekly breakdown weeks.
+        /// </summary>
+        /// <value>
+        /// The weekly breakdown weeks.
+        /// </value>
+        public List<WeeklyBreakdownWeek> WeeklyBreakdownWeeks { get; set; } = new List<WeeklyBreakdownWeek>();
+
+        /// <summary>
+        /// Gets or sets the total active days.
+        /// </summary>
+        /// <value>
+        /// The total active days.
+        /// </value>
+        public int TotalActiveDays { get; set; }
+
+        /// <summary>
+        /// Gets or sets the total share of voice.
+        /// </summary>
+        /// <value>
+        /// The total share of voice.
+        /// </value>
+        public double TotalShareOfVoice { get; set; }
     }
 }

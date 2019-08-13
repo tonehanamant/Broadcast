@@ -91,5 +91,28 @@ namespace BroadcastComposerWeb.Controllers
         {
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanService>().Calculate(planBudget));
         }
+
+        /// <summary>
+        /// Gets the delivery types.
+        /// </summary>
+        /// <returns>List of LookupDto objects</returns>
+        [HttpGet]
+        [Route("GloalBreakdownTypes")]
+        public BaseResponse<List<LookupDto>> GetDeliveryTypes()
+        {
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanService>().PlanGloalBreakdownTypes());
+        }
+
+        /// <summary>
+        /// Calculates the weekly breakdown.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <returns>WeeklyBreakdownResponse object containing the weekly breakdown</returns>
+        [HttpPost]
+        [Route("WeeklyBreakdown")]
+        public BaseResponse<WeeklyBreakdownResponseDto> CalculateWeeklyBreakdown(WeeklyBreakdownRequest request)
+        {
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanService>().CalculatePlanWeeklyGoalBreakdown(request));
+        }
     }
 }

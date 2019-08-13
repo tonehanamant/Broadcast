@@ -638,6 +638,18 @@
           <Property Name="audience_type" Type="int" Nullable="false" />
           <Property Name="audience_id" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="plan_weeks">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="plan_id" Type="int" Nullable="false" />
+          <Property Name="media_week_id" Type="int" Nullable="false" />
+          <Property Name="number_active_days" Type="int" Nullable="false" />
+          <Property Name="active_days_label" Type="varchar" MaxLength="20" />
+          <Property Name="impressions" Type="float" Nullable="false" />
+          <Property Name="share_of_voice" Type="float" Nullable="false" />
+        </EntityType>
         <EntityType Name="plans">
           <Key>
             <PropertyRef Name="id" />
@@ -663,6 +675,7 @@
           <Property Name="delivery" Type="float" />
           <Property Name="cpm" Type="money" />
           <Property Name="coverage_goal_percent" Type="float" />
+          <Property Name="goal_breakdown_type" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="post_file_demos">
           <Key>
@@ -2368,6 +2381,32 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="plan_secondary_audiences">
+              <PropertyRef Name="plan_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_weeks_media_weeks">
+          <End Role="media_weeks" Type="Self.media_weeks" Multiplicity="1" />
+          <End Role="plan_weeks" Type="Self.plan_weeks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="media_weeks">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_weeks">
+              <PropertyRef Name="media_week_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_weeks_plans">
+          <End Role="plans" Type="Self.plans" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="plan_weeks" Type="Self.plan_weeks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="plans">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_weeks">
               <PropertyRef Name="plan_id" />
             </Dependent>
           </ReferentialConstraint>
@@ -4136,6 +4175,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySet Name="plan_dayparts" EntityType="Self.plan_dayparts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="plan_flight_hiatus" EntityType="Self.plan_flight_hiatus" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="plan_secondary_audiences" EntityType="Self.plan_secondary_audiences" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="plan_weeks" EntityType="Self.plan_weeks" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="plans" EntityType="Self.plans" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="post_file_demos" EntityType="Self.post_file_demos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="post_file_detail_impressions" EntityType="Self.post_file_detail_impressions" Schema="dbo" store:Type="Tables" />
@@ -4466,6 +4506,14 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <AssociationSet Name="FK_plan_secondary_audiences_plans" Association="Self.FK_plan_secondary_audiences_plans">
             <End Role="plans" EntitySet="plans" />
             <End Role="plan_secondary_audiences" EntitySet="plan_secondary_audiences" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_weeks_media_weeks" Association="Self.FK_plan_weeks_media_weeks">
+            <End Role="media_weeks" EntitySet="media_weeks" />
+            <End Role="plan_weeks" EntitySet="plan_weeks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_weeks_plans" Association="Self.FK_plan_weeks_plans">
+            <End Role="plans" EntitySet="plans" />
+            <End Role="plan_weeks" EntitySet="plan_weeks" />
           </AssociationSet>
           <AssociationSet Name="FK_plans_audiences" Association="Self.FK_plans_audiences">
             <End Role="audiences" EntitySet="audiences" />
@@ -5886,6 +5934,15 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="market_coverage_files" EntitySet="market_coverage_files" />
             <End Role="plan_blackout_markets" EntitySet="plan_blackout_markets" />
           </AssociationSet>
+          <EntitySet Name="plan_weeks" EntityType="BroadcastModel.plan_weeks" />
+          <AssociationSet Name="FK_plan_weeks_media_weeks" Association="BroadcastModel.FK_plan_weeks_media_weeks">
+            <End Role="media_weeks" EntitySet="media_weeks" />
+            <End Role="plan_weeks" EntitySet="plan_weeks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_weeks_plans" Association="BroadcastModel.FK_plan_weeks_plans">
+            <End Role="plan" EntitySet="plans" />
+            <End Role="plan_weeks" EntitySet="plan_weeks" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="audience_audiences">
           <Key>
@@ -6083,6 +6140,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="station_inventory_manifest_generation" Relationship="BroadcastModel.FK_station_inventory_manifest_generation_media_weeks" FromRole="media_weeks" ToRole="station_inventory_manifest_generation" />
           <NavigationProperty Name="proposal_buy_file_detail_weeks" Relationship="BroadcastModel.FK_proposal_buy_file_detail_weeks_media_weeks" FromRole="media_weeks" ToRole="proposal_buy_file_detail_weeks" />
           <NavigationProperty Name="station_inventory_manifest_weeks" Relationship="BroadcastModel.FK_station_inventory_manifest_weeks_media_weeks" FromRole="media_weeks" ToRole="station_inventory_manifest_weeks" />
+          <NavigationProperty Name="plan_weeks" Relationship="BroadcastModel.FK_plan_weeks_media_weeks" FromRole="media_weeks" ToRole="plan_weeks" />
         </EntityType>
         <EntityType Name="post_file_demos">
           <Key>
@@ -10029,6 +10087,8 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="coverage_goal_percent" Type="Double" />
           <NavigationProperty Name="plan_available_markets" Relationship="BroadcastModel.FK_plan_available_markets_plans" FromRole="plan" ToRole="plan_available_markets" />
           <NavigationProperty Name="plan_blackout_markets" Relationship="BroadcastModel.FK_plan_blackout_markets_plans" FromRole="plan" ToRole="plan_blackout_markets" />
+          <Property Name="goal_breakdown_type" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="plan_weeks" Relationship="BroadcastModel.FK_plan_weeks_plans" FromRole="plan" ToRole="plan_weeks" />
         </EntityType>
         <Association Name="FK_plans_campaigns">
           <End Type="BroadcastModel.campaign" Role="campaign" Multiplicity="1" />
@@ -10295,6 +10355,46 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Principal>
             <Dependent Role="plan_blackout_markets">
               <PropertyRef Name="market_coverage_file_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="plan_weeks">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="plan_id" Type="Int32" Nullable="false" />
+          <Property Name="media_week_id" Type="Int32" Nullable="false" />
+          <Property Name="number_active_days" Type="Int32" Nullable="false" />
+          <Property Name="active_days_label" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="impressions" Type="Double" Nullable="false" />
+          <Property Name="share_of_voice" Type="Double" Nullable="false" />
+          <NavigationProperty Name="media_weeks" Relationship="BroadcastModel.FK_plan_weeks_media_weeks" FromRole="plan_weeks" ToRole="media_weeks" />
+          <NavigationProperty Name="plan" Relationship="BroadcastModel.FK_plan_weeks_plans" FromRole="plan_weeks" ToRole="plan" />
+        </EntityType>
+        <Association Name="FK_plan_weeks_media_weeks">
+          <End Type="BroadcastModel.media_weeks" Role="media_weeks" Multiplicity="1" />
+          <End Type="BroadcastModel.plan_weeks" Role="plan_weeks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="media_weeks">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_weeks">
+              <PropertyRef Name="media_week_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_weeks_plans">
+          <End Type="BroadcastModel.plan" Role="plan" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BroadcastModel.plan_weeks" Role="plan_weeks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="plan">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_weeks">
+              <PropertyRef Name="plan_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -11951,6 +12051,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="plans">
             <EntityTypeMapping TypeName="BroadcastModel.plan">
               <MappingFragment StoreEntitySet="plans">
+                <ScalarProperty Name="goal_breakdown_type" ColumnName="goal_breakdown_type" />
                 <ScalarProperty Name="coverage_goal_percent" ColumnName="coverage_goal_percent" />
                 <ScalarProperty Name="cpm" ColumnName="cpm" />
                 <ScalarProperty Name="delivery" ColumnName="delivery" />
@@ -12026,6 +12127,19 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
                 <ScalarProperty Name="rank" ColumnName="rank" />
                 <ScalarProperty Name="market_coverage_file_id" ColumnName="market_coverage_file_id" />
                 <ScalarProperty Name="market_code" ColumnName="market_code" />
+                <ScalarProperty Name="plan_id" ColumnName="plan_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="plan_weeks">
+            <EntityTypeMapping TypeName="BroadcastModel.plan_weeks">
+              <MappingFragment StoreEntitySet="plan_weeks">
+                <ScalarProperty Name="share_of_voice" ColumnName="share_of_voice" />
+                <ScalarProperty Name="impressions" ColumnName="impressions" />
+                <ScalarProperty Name="active_days_label" ColumnName="active_days_label" />
+                <ScalarProperty Name="number_active_days" ColumnName="number_active_days" />
+                <ScalarProperty Name="media_week_id" ColumnName="media_week_id" />
                 <ScalarProperty Name="plan_id" ColumnName="plan_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>

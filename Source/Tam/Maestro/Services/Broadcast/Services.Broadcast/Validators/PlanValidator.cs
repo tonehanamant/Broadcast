@@ -18,6 +18,12 @@ namespace Services.Broadcast.Validators
         /// </summary>
         /// <param name="plan">The plan.</param>
         void ValidatePlan(PlanDto plan);
+
+        /// <summary>
+        /// Validates the weekly breakdown.
+        /// </summary>
+        /// <param name="request">WeeklyBreakdownRequest request object.</param>
+        void ValidateWeeklyBreakdown(WeeklyBreakdownRequest request);
     }
 
     public class PlanValidator : IPlanValidator
@@ -33,14 +39,19 @@ namespace Services.Broadcast.Validators
         const string INVALID_SHARE_BOOK = "Invalid share book";
         const string INVALID_HUT_BOOK = "Invalid HUT boook.";
         const string INVALID_FLIGHT_DATES = "Invalid flight dates.  The end date cannot be before the start date.";
+        const string INVALID_FLIGHT_DATE = "Invalid flight start/end date.";
         const string INVALID_FLIGHT_HIATUS_DAY = "Invalid flight hiatus day.  All days must be within the flight date range.";
         const string INVALID_AUDIENCE = "Invalid audience";
         const string INVALID_AUDIENCE_DUPLICATE = "An audience cannot appear multiple times";
         const string INVALID_SHARE_HUT_BOOKS = "HUT Book must be prior to Share Book";
         const string INVALID_DAYPART_TIMES = "Invalid daypart times.";
         const string INVALID_DAYPART_WEIGHTING_GOAL = "Invalid daypart weighting goal.";
-        private const string INVALID_COVERAGE_GOAL = "Invalid coverage goal value.";
-        private const string INVALID_MARKET_SHARE_OF_VOICE = "Invalid share of voice for market.";
+        const string INVALID_COVERAGE_GOAL = "Invalid coverage goal value.";
+        const string INVALID_MARKET_SHARE_OF_VOICE = "Invalid share of voice for market.";
+        const string INVALID_REQUEST = "Invalid request";
+        const string INVALID_WEEKS_FOR_CUSTOM_DELIVERY = "For custom delivery you have to provide the weeks values";
+        const string INVALID_IMPRESSIONS_COUNT = "The impressions count is different betweek the delivery and the weekly breakdown";
+        const string INVALID_SOV_COUNT = "The share of voice count is not equat to 100%";
 
         #endregion
 
@@ -78,6 +89,44 @@ namespace Services.Broadcast.Validators
             _ValidateSecondaryAudiences(plan.SecondaryAudiences, plan.AudienceId);
             _ValidateOptionalPercentage(plan.CoverageGoalPercent, INVALID_COVERAGE_GOAL);
             _ValidateMarkets(plan);
+            _ValidateWeeklyBreakdownWeeks(plan);
+        }
+
+        private void _ValidateWeeklyBreakdownWeeks(PlanDto plan)
+        {
+            if (!plan.WeeklyBreakdownWeeks.Any())
+            {
+                return;
+            }
+            if(plan.Delivery != plan.WeeklyBreakdownWeeks.Select(x => x.Impressions).Sum())
+            {
+                throw new Exception(INVALID_IMPRESSIONS_COUNT);
+            }
+            if(100 != plan.WeeklyBreakdownWeeks.Select(x => x.ShareOfVoice).Sum())
+            {
+                throw new Exception(INVALID_SOV_COUNT);
+            }
+        }
+
+        ///<inheritdoc/>
+        public void ValidateWeeklyBreakdown(WeeklyBreakdownRequest request)
+        {
+            if(request == null)
+            {
+                throw new Exception(INVALID_REQUEST);
+            }
+            if(request.FlightEndDate.Equals(DateTime.MinValue) || request.FlightStartDate.Equals(DateTime.MinValue))
+            {
+                throw new Exception(INVALID_FLIGHT_DATE);
+            }
+            if (request.FlightEndDate < request.FlightStartDate)
+            {
+                throw new Exception(INVALID_FLIGHT_DATES);
+            }
+            if (request.DeliveryType.Equals(PlanGloalBreakdownTypeEnum.Custom) && !request.Weeks.Any())
+            {
+                throw new Exception(INVALID_WEEKS_FOR_CUSTOM_DELIVERY);
+            }
         }
 
         #region Helpers
@@ -190,7 +239,6 @@ namespace Services.Broadcast.Validators
                 throw new Exception(errorMessage);
             }
         }
-
         #endregion // #region Helpers
     }
 }

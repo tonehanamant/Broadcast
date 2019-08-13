@@ -258,8 +258,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 PlanDto newPlan = _GetNewPlan();
-                newPlan.Dayparts.Add(new PlanDaypartDto { DaypartCodeId = 1, StartTimeSeconds = 3600, EndTimeSeconds = 4600, WeightingGoalPercent = 25.5});
-                newPlan.Dayparts.Add(new PlanDaypartDto { DaypartCodeId = 2, StartTimeSeconds = 1800, EndTimeSeconds = 2400, WeightingGoalPercent = 67});
+                newPlan.Dayparts.Add(new PlanDaypartDto { DaypartCodeId = 1, StartTimeSeconds = 3600, EndTimeSeconds = 4600, WeightingGoalPercent = 25.5 });
+                newPlan.Dayparts.Add(new PlanDaypartDto { DaypartCodeId = 2, StartTimeSeconds = 1800, EndTimeSeconds = 2400, WeightingGoalPercent = 67 });
 
                 var planId = _PlanService.SavePlan(newPlan, "integration_test", new System.DateTime(2019, 01, 15));
                 PlanDto finalPlan = _PlanService.GetPlan(planId);
@@ -276,11 +276,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 PlanDto newPlan = _GetNewPlan();
-                newPlan.Dayparts.Add(new PlanDaypartDto { DaypartCodeId = 1, StartTimeSeconds = 3600, EndTimeSeconds = 4600, WeightingGoalPercent = 23.5});
+                newPlan.Dayparts.Add(new PlanDaypartDto { DaypartCodeId = 1, StartTimeSeconds = 3600, EndTimeSeconds = 4600, WeightingGoalPercent = 23.5 });
                 newPlan.Dayparts.Add(new PlanDaypartDto { DaypartCodeId = 2, StartTimeSeconds = 1800, EndTimeSeconds = 2400 });
                 var planId = _PlanService.SavePlan(newPlan, "integration_test", new System.DateTime(2019, 01, 15));
                 PlanDto modifiedPlan = _PlanService.GetPlan(planId);
-                modifiedPlan.Dayparts.Add(new PlanDaypartDto { DaypartCodeId = 3, StartTimeSeconds = 1200, EndTimeSeconds = 1900, WeightingGoalPercent = 67});
+                modifiedPlan.Dayparts.Add(new PlanDaypartDto { DaypartCodeId = 3, StartTimeSeconds = 1200, EndTimeSeconds = 1900, WeightingGoalPercent = 67 });
 
                 var modifiedPlanId = _PlanService.SavePlan(modifiedPlan, "integration_test", new System.DateTime(2019, 01, 15));
                 PlanDto finalPlan = _PlanService.GetPlan(modifiedPlanId);
@@ -391,7 +391,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     new PlanAudienceDto {AudienceId = 31, Type = Entities.Enums.AudienceTypeEnum.Nielsen},
                 };
 
-                var caught = Assert.Throws<Exception>(() => 
+                var caught = Assert.Throws<Exception>(() =>
                 _PlanService.SavePlan(newPlan, "integration_test", new DateTime(2019, 01, 01)),
                 "An audience cannot appear multiple times");
 
@@ -403,7 +403,16 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void GetPlanCurrencies()
         {
-            var deliveryTypes = _PlanService.GetPlanCurrencies();
+            var currencies = _PlanService.GetPlanCurrencies();
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(currencies));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetPlanDeliveryTypes()
+        {
+            var deliveryTypes = _PlanService.PlanGloalBreakdownTypes();
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(deliveryTypes));
         }
@@ -411,7 +420,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         public void Calculator_CPM()
         {
-            var result = _PlanService.Calculate(new PlanDeliveryBudget {
+            var result = _PlanService.Calculate(new PlanDeliveryBudget
+            {
                 Budget = 100m,
                 CPM = null,
                 Delivery = 3000d
@@ -720,6 +730,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 CPM = 12m,
                 Delivery = 100d,
                 CoverageGoalPercent = 80.5,
+                GoalBreakdownType = Entities.Enums.PlanGloalBreakdownTypeEnum.Even,
                 AvailableMarkets = new List<PlanAvailableMarketDto>
                 {
                     new PlanAvailableMarketDto { MarketCode = 100, MarketCoverageFileId = 1, PercentageOfUs = 20, Rank = 1, ShareOfVoicePercent = 22.2},
@@ -731,6 +742,122 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     new PlanBlackoutMarketDto {MarketCode = 234, MarketCoverageFileId = 1, PercentageOfUs = 2.5, Rank = 8 },
                 }
             };
+        }
+
+        [Test]
+        public void Plan_WeeklyBreakdown_InvalidRequest()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var caught = Assert.Throws<Exception>(() => _PlanService.CalculatePlanWeeklyGoalBreakdown(null), "Invalid request.");
+
+                Assert.IsNotNull(caught);
+            }
+        }
+
+        [Test]
+        public void Plan_WeeklyBreakdown_InvalidFlight()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var caught = Assert.Throws<Exception>(() => _PlanService.CalculatePlanWeeklyGoalBreakdown(new WeeklyBreakdownRequest
+                {
+                    FlightEndDate = default,
+                    FlightStartDate = default
+                }), "Invalid flight start/end date.");
+
+                Assert.IsNotNull(caught);
+            }
+        }
+
+        [Test]
+        public void Plan_WeeklyBreakdown_InvalidFlightStartDate()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var caught = Assert.Throws<Exception>(() => _PlanService.CalculatePlanWeeklyGoalBreakdown(new WeeklyBreakdownRequest
+                {
+                    FlightEndDate = default,
+                    FlightStartDate = new DateTime(2019, 01, 01)
+                }), "Invalid flight dates.  The end date cannot be before the start date.");
+
+                Assert.IsNotNull(caught);
+            }
+        }
+
+        [Test]
+        public void Plan_WeeklyBreakdown_InvalidCustomDeliveryRequest()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var caught = Assert.Throws<Exception>(() => _PlanService.CalculatePlanWeeklyGoalBreakdown(new WeeklyBreakdownRequest
+                {
+                    FlightEndDate = new DateTime(2019, 01, 05),
+                    FlightStartDate = new DateTime(2019, 01, 01),
+                    DeliveryType = Entities.Enums.PlanGloalBreakdownTypeEnum.Custom
+                }), "For custom delivery you have to provide the weeks values");
+
+                Assert.IsNotNull(caught);
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void Plan_WeeklyBreakdown_OneHiatusDay()
+        {
+            var result = _PlanService.CalculatePlanWeeklyGoalBreakdown(new WeeklyBreakdownRequest
+            {
+                DeliveryType = Entities.Enums.PlanGloalBreakdownTypeEnum.Even,
+                FlightStartDate = new DateTime(2019, 08, 03),
+                FlightEndDate = new DateTime(2019, 08, 27),
+                FlightHiatusDays = new List<DateTime> { new DateTime(2019, 8, 15) },
+                TotalImpressions = 1000
+            });
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void Plan_WeeklyBreakdown_OneWeekHiatus()
+        {
+            var result = _PlanService.CalculatePlanWeeklyGoalBreakdown(new WeeklyBreakdownRequest
+            {
+                DeliveryType = Entities.Enums.PlanGloalBreakdownTypeEnum.Even,
+                FlightStartDate = new DateTime(2019, 08, 01),
+                FlightEndDate = new DateTime(2019, 08, 31),
+                FlightHiatusDays = new List<DateTime> { new DateTime(2019, 8, 5), new DateTime(2019, 8, 6), new DateTime(2019, 8, 7), new DateTime(2019, 8, 8),
+                                                        new DateTime(2019, 8, 9), new DateTime(2019, 8, 10), new DateTime(2019, 8, 11)},
+                TotalImpressions = 1000
+            });
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void Plan_WeeklyBreakdown_CustomDelivery()
+        {
+            var result = _PlanService.CalculatePlanWeeklyGoalBreakdown(new WeeklyBreakdownRequest
+            {
+                DeliveryType = Entities.Enums.PlanGloalBreakdownTypeEnum.Custom,
+                FlightStartDate = new DateTime(2019, 08, 03),
+                FlightEndDate = new DateTime(2019, 08, 20),
+                FlightHiatusDays = new List<DateTime> { new DateTime(2019, 8, 15) },
+                TotalImpressions = 1000,
+                Weeks = new List<WeeklyBreakdownWeek> { new WeeklyBreakdownWeek {
+                      ActiveDays= "Sa,Su",
+                      EndDate= new DateTime(2019,08,4),
+                      Impressions= 200.0,
+                      MediaWeekId= 814,
+                      NumberOfActiveDays= 2,
+                      ShareOfVoice= 20.0,
+                      StartDate= new DateTime(2019,07,29),
+                      WeekNumber= 1
+                }}
+            });
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
 
         private static PlanDto _GetNewPlanWithoutFlightInfo()
@@ -747,7 +874,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 AudienceType = Entities.Enums.AudienceTypeEnum.Nielsen,
                 HUTBookId = null,
                 PostingType = Entities.Enums.PostingTypeEnum.NTI,
-                ShareBookId = 437
+                ShareBookId = 437,
+                GoalBreakdownType = Entities.Enums.PlanGloalBreakdownTypeEnum.Even
             };
         }
 
