@@ -6,5 +6,9 @@
   {
     "Display": "Entertainment/Non-News",
     "Id": 2
+  },
+  {
+    "Display": "ROS",
+    "Id": 3
   }
 ]

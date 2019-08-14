@@ -17,6 +17,12 @@ namespace Services.Broadcast.Entities.Enums
         /// The type for Entertainment \ Non-News
         /// </summary>
         [Description("Entertainment/Non-News")]
-        EntertainmentNonNews = 2
+        EntertainmentNonNews = 2,
+
+        /// <summary>
+        /// The type for ROS
+        /// </summary>
+        [Description("ROS")]
+        ROS = 3
     }
 }
