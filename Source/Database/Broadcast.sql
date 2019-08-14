@@ -815,7 +815,7 @@ IF NOT EXISTS (SELECT 1 FROM sys.columns WHERE Name = 'goal_breakdown_type' AND 
 BEGIN
 	ALTER TABLE [plans] ADD [goal_breakdown_type] [INT] NULL
 
-	DECLARE @SqlUpdateDeliveryType VARCHAR(64) = 'UPDATE [plans] SET goal_breakdown_type = 0'
+	DECLARE @SqlUpdateDeliveryType VARCHAR(64) = 'UPDATE [plans] SET goal_breakdown_type = 1'
 	EXEC (@SqlUpdateDeliveryType)
 	ALTER TABLE [plans] ALTER COLUMN [goal_breakdown_type] [INT] NOT NULL
 END
