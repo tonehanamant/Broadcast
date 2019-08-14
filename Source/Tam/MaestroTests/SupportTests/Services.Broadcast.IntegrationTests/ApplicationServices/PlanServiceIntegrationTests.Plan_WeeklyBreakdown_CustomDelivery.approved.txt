@@ -10,7 +10,7 @@
       "NumberOfActiveDays": 2,
       "ShareOfVoice": 20.0,
       "StartDate": "2019-07-29T00:00:00",
-      "WeekNumber": 0
+      "WeekNumber": 1
     },
     {
       "ActiveDays": "",
@@ -20,7 +20,7 @@
       "NumberOfActiveDays": 7,
       "ShareOfVoice": 0.0,
       "StartDate": "2019-08-05T00:00:00",
-      "WeekNumber": 1
+      "WeekNumber": 2
     },
     {
       "ActiveDays": "M-W,F-Su",
@@ -30,7 +30,7 @@
       "NumberOfActiveDays": 6,
       "ShareOfVoice": 0.0,
       "StartDate": "2019-08-12T00:00:00",
-      "WeekNumber": 2
+      "WeekNumber": 3
     },
     {
       "ActiveDays": "M,Tu",
@@ -40,7 +40,7 @@
       "NumberOfActiveDays": 2,
       "ShareOfVoice": 0.0,
       "StartDate": "2019-08-19T00:00:00",
-      "WeekNumber": 3
+      "WeekNumber": 4
     }
   ]
 }

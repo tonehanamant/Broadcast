@@ -273,7 +273,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
         private void _SetWeekNumber(IEnumerable<WeeklyBreakdownWeek> weeks)
         {
-            int i = 0;
+            int i = 1;
             foreach(var week in weeks)
             {
                 week.WeekNumber = i++;
