@@ -821,6 +821,13 @@ BEGIN
 END
 /*************************************** END PRI-7471 *****************************************************/
 
+/*************************************** START PRI-7471 *****************************************************/
+IF EXISTS (SELECT 1 FROM plans WHERE goal_breakdown_type = 0)
+BEGIN
+	UPDATE [plans] SET goal_breakdown_type = 1
+END
+/*************************************** END PRI-7471 update script for existing plans  *********************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version
