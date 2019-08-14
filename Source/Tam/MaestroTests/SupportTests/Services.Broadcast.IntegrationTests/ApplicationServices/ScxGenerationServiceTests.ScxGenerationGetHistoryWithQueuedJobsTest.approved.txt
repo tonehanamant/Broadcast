@@ -1,0 +1,12 @@
+﻿[
+  {
+    "DaypartCode": null,
+    "FileId": null,
+    "FileName": null,
+    "GenerationRequestDateTime": "2019-07-11T00:00:00",
+    "GenerationRequestedByUsername": "IntegrationTestUser",
+    "ProcessingStatus": 1,
+    "QuarterDetails": [],
+    "UnitName": null
+  }
+]

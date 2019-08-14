@@ -277,10 +277,34 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var history = _ScxGenerationService.GetScxFileGenerationHistory(inventorySourceId);
                 var fileId = history.First().FileId;
 
-                var result = _ScxGenerationService.DownloadGeneratedScxFile(fileId);
+                var result = _ScxGenerationService.DownloadGeneratedScxFile(fileId.Value);
 
                 Assert.AreEqual("CNN_Unit 1_20180319_20190106.scx", result.Item1);
                 Assert.IsTrue(result.Item2.Length > 0);
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void ScxGenerationGetHistoryWithQueuedJobsTest()
+        {
+            const int inventorySourceId = 7;
+            using (new TransactionScopeWrapper())
+            {
+                var request = new InventoryScxDownloadRequest
+                {
+                    EndDate = new DateTime(2019, 03, 31),
+                    StartDate = new DateTime(2018, 12, 31),
+                    DaypartCodeId = 1,
+                    InventorySourceId = inventorySourceId,
+                    UnitNames = new List<string> { "ExpiresGroupsTest" }
+                };
+
+                var jobId = _ScxGenerationService.QueueScxGenerationJob(request, "IntegrationTestUser", new DateTime(2019, 7, 11));
+
+                var history = _ScxGenerationService.GetScxFileGenerationHistory(inventorySourceId);
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(history, _JsonSettings));
             }
         }
 

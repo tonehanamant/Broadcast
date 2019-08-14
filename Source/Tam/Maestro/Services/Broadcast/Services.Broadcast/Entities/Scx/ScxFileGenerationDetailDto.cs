@@ -30,7 +30,7 @@ namespace Services.Broadcast.Entities.Scx
         /// <value>
         /// The file identifier.
         /// </value>
-        public int FileId { get; set; }
+        public int? FileId { get; set; }
 
         /// <summary>
         /// Gets or sets the filename.
@@ -62,7 +62,7 @@ namespace Services.Broadcast.Entities.Scx
         /// <value>
         /// The start date time.
         /// </value>
-        public DateTime StartDateTime { get; set; }
+        public DateTime? StartDateTime { get; set; }
 
         /// <summary>
         /// Gets or sets the end date time.
@@ -70,7 +70,7 @@ namespace Services.Broadcast.Entities.Scx
         /// <value>
         /// The end date time.
         /// </value>
-        public DateTime EndDateTime { get; set; }
+        public DateTime? EndDateTime { get; set; }
 
         /// <summary>
         /// Gets or sets the processing status identifier.

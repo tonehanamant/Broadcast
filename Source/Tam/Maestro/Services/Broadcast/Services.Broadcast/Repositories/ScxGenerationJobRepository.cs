@@ -179,10 +179,12 @@ namespace Services.Broadcast.Repositories
 
         private static List<ScxFileGenerationDetailDto> GetGenerationDetails(BroadcastContext context, int inventorySourceId)
         {
-            var details = (from f in context.scx_generation_job_files
-                    join j in context.scx_generation_jobs on f.scx_generation_job_id equals j.id
-                    join d in context.daypart_codes on f.daypart_code_id equals d.id
-                    where f.inventory_source_id.Equals(inventorySourceId)
+            var details = (from j in context.scx_generation_jobs 
+                    join f in context.scx_generation_job_files on j.id equals f.scx_generation_job_id into fs
+                    from f in fs.DefaultIfEmpty()
+                    join d in context.daypart_codes on f.daypart_code_id equals d.id into ds
+                    from d in ds.DefaultIfEmpty()
+                    where j.inventory_source_id.Equals(inventorySourceId)
                     select new ScxFileGenerationDetailDto
                     {
                         GenerationRequestDateTime = j.queued_at,

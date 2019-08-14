@@ -63,7 +63,7 @@ namespace Services.Broadcast.Entities.Scx
         /// <value>
         /// The file identifier.
         /// </value>
-        public int FileId { get; set; }
+        public int? FileId { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the file.
