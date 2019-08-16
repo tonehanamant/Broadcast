@@ -92,7 +92,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var setInProgressTime = setStatusCalls[0].Item3;
             var summarySavedTime = saveSummaryCalls[0].Item3;
             Assert.IsTrue(planSavedTime <= setInProgressTime, "Plan should have been saved before aggregation started.");
-            Assert.IsTrue(setInProgressTime < summarySavedTime, "Aggregation started should be set before summary saved");
+            Assert.IsTrue(setInProgressTime <= summarySavedTime, "Aggregation started should be set before summary saved");
         }
         
         [Test]
