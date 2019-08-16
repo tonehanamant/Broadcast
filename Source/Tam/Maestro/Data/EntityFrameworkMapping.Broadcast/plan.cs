@@ -22,6 +22,8 @@ namespace EntityFrameworkMapping.Broadcast
             this.plan_available_markets = new HashSet<plan_available_markets>();
             this.plan_blackout_markets = new HashSet<plan_blackout_markets>();
             this.plan_weeks = new HashSet<plan_weeks>();
+            this.plan_weekly_breakdown = new HashSet<plan_weekly_breakdown>();
+            this.plan_summary = new HashSet<plan_summary>();
         }
     
         public int id { get; set; }
@@ -45,6 +47,8 @@ namespace EntityFrameworkMapping.Broadcast
         public Nullable<double> delivery { get; set; }
         public Nullable<decimal> cpm { get; set; }
         public Nullable<double> coverage_goal_percent { get; set; }
+        public string modified_by { get; set; }
+        public System.DateTime modified_date { get; set; }
         public int goal_breakdown_type { get; set; }
     
         public virtual campaign campaign { get; set; }
@@ -58,5 +62,7 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<plan_available_markets> plan_available_markets { get; set; }
         public virtual ICollection<plan_blackout_markets> plan_blackout_markets { get; set; }
         public virtual ICollection<plan_weeks> plan_weeks { get; set; }
+        public virtual ICollection<plan_weekly_breakdown> plan_weekly_breakdown { get; set; }
+        public virtual ICollection<plan_summary> plan_summary { get; set; }
     }
 }

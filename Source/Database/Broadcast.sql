@@ -828,6 +828,92 @@ BEGIN
 END
 /*************************************** END PRI-7471 update script for existing plans  *********************/
 
+/*************************************** START PRI-11829 *****************************************************/
+
+IF NOT EXISTS(SELECT * FROM sys.columns WHERE object_id = OBJECT_ID('plans') AND name = 'modified_by')
+BEGIN 
+	ALTER TABLE [plans] 
+		ADD modified_by [VARCHAR](63) NULL
+
+	ALTER TABLE [plans] 
+		ADD modified_date [DATETIME] NULL
+
+	DECLARE @PlansUpdateModifiedBySql VARCHAR(MAX) = 
+	'
+		UPDATE plans SET
+			modified_by = created_by,
+			modified_date = created_date
+		WHERE modified_by is null
+	'
+	EXEC (@PlansUpdateModifiedBySql)
+
+	DECLARE @PlansMakeModifyedByNullSql VARCHAR(MAX) = 
+	'
+		ALTER TABLE plans
+			ALTER COLUMN modified_by [VARCHAR](63) NOT NULL
+
+		ALTER TABLE plans
+			ALTER COLUMN modified_date [DATETIME] NOT NULL
+	'
+	EXEC (@PlansMakeModifyedByNullSql)
+END
+
+IF OBJECT_ID('plan_summary') IS NULL
+BEGIN 
+	CREATE TABLE [plan_summary]
+	(
+		[id] [INT] IDENTITY(1,1) NOT NULL,
+		[plan_id] [INT] NOT NULL,
+		[processing_status] [INT] NOT NULL,		
+		[hiatus_days_count] [INT] NULL,
+		[active_day_count] [INT] NULL,
+		[available_market_count] [INT] NULL,
+		[available_market_total_us_coverage_percent] [FLOAT] NULL,
+		[blackout_market_count] [INT] NULL,
+		[blackout_market_total_us_coverage_percent] [FLOAT] NULL,	
+		[product_name] [VARCHAR] (256) NULL,
+		[audience_name] [VARCHAR] (256) NULL,
+		CONSTRAINT [PK_plan_summary] PRIMARY KEY CLUSTERED 
+		(
+			[id] ASC
+		)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY]
+
+	ALTER TABLE [dbo].[plan_summary] WITH CHECK ADD CONSTRAINT [FK_plan_summary_plans] FOREIGN KEY ([plan_id])
+		REFERENCES [dbo].[plans] (id)
+		ON DELETE CASCADE
+
+	CREATE NONCLUSTERED INDEX [IX_plan_summary_plan_id] ON [dbo].[plan_summary] ([plan_id] ASC)
+		INCLUDE ([id])
+		WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+END 
+
+IF OBJECT_ID('plan_summary_quarters') IS NULL
+BEGIN
+	CREATE TABLE [plan_summary_quarters]
+	(
+		[id] [INT] IDENTITY(1,1) NOT NULL,
+		[plan_summary_id] [INT] NOT NULL,		
+		[quarter] [INT] NOT NULL,
+		[year] [INT] NOT NULL,
+		CONSTRAINT [PK_plan_summary_quarters] PRIMARY KEY CLUSTERED 
+		(
+			[id] ASC
+		)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY]
+
+	ALTER TABLE [dbo].[plan_summary_quarters] WITH CHECK ADD CONSTRAINT [FK_plan_summary_quarters_plan_summary] FOREIGN KEY ([plan_summary_id])
+		REFERENCES [dbo].[plan_summary] (id)
+		ON DELETE CASCADE
+
+	CREATE NONCLUSTERED INDEX [IX_plan_summary_quarters_plan_summary_id] ON [dbo].[plan_summary_quarters] ([plan_summary_id] ASC)
+		INCLUDE ([id])
+		WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+
+END
+
+/*************************************** END PRI-11829 *****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

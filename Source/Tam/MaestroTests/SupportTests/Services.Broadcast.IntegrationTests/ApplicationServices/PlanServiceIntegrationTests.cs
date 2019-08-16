@@ -7,6 +7,8 @@ using Services.Broadcast.ApplicationServices.Plan;
 using Services.Broadcast.Entities.Plan;
 using System;
 using System.Collections.Generic;
+using System.Threading;
+using Services.Broadcast.Entities.Enums;
 using Tam.Maestro.Common.DataLayer;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
@@ -258,8 +260,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 PlanDto newPlan = _GetNewPlan();
-                newPlan.Dayparts.Add(new PlanDaypartDto { DaypartCodeId = 1, StartTimeSeconds = 3600, EndTimeSeconds = 4600, WeightingGoalPercent = 25.5 });
-                newPlan.Dayparts.Add(new PlanDaypartDto { DaypartCodeId = 2, StartTimeSeconds = 1800, EndTimeSeconds = 2400, WeightingGoalPercent = 67 });
 
                 var planId = _PlanService.SavePlan(newPlan, "integration_test", new System.DateTime(2019, 01, 15));
                 PlanDto finalPlan = _PlanService.GetPlan(planId);
@@ -276,8 +276,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 PlanDto newPlan = _GetNewPlan();
-                newPlan.Dayparts.Add(new PlanDaypartDto { DaypartCodeId = 1, StartTimeSeconds = 3600, EndTimeSeconds = 4600, WeightingGoalPercent = 23.5 });
-                newPlan.Dayparts.Add(new PlanDaypartDto { DaypartCodeId = 2, StartTimeSeconds = 1800, EndTimeSeconds = 2400 });
                 var planId = _PlanService.SavePlan(newPlan, "integration_test", new System.DateTime(2019, 01, 15));
                 PlanDto modifiedPlan = _PlanService.GetPlan(planId);
                 modifiedPlan.Dayparts.Add(new PlanDaypartDto { DaypartCodeId = 3, StartTimeSeconds = 1200, EndTimeSeconds = 1900, WeightingGoalPercent = 67 });
@@ -297,8 +295,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 PlanDto newPlan = _GetNewPlan();
-                newPlan.Dayparts.Add(new PlanDaypartDto { DaypartCodeId = 1, StartTimeSeconds = 3600, EndTimeSeconds = 4600, WeightingGoalPercent = 23.5 });
-                newPlan.Dayparts.Add(new PlanDaypartDto { DaypartCodeId = 2, StartTimeSeconds = 1800, EndTimeSeconds = 2400 });
                 var planId = _PlanService.SavePlan(newPlan, "integration_test", new System.DateTime(2019, 01, 15));
                 PlanDto modifiedPlan = _PlanService.GetPlan(planId);
                 modifiedPlan.Dayparts.RemoveAt(modifiedPlan.Dayparts.Count - 1);
@@ -740,6 +736,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     new PlanBlackoutMarketDto {MarketCode = 123, MarketCoverageFileId = 1, PercentageOfUs = 5.5, Rank = 5 },
                     new PlanBlackoutMarketDto {MarketCode = 234, MarketCoverageFileId = 1, PercentageOfUs = 2.5, Rank = 8 },
+                },
+                ModifiedBy = "Test User",
+                ModifiedDate = new DateTime(2019,01,12, 12, 30, 29),
+                Dayparts = new List<PlanDaypartDto>
+                {
+                    new PlanDaypartDto{ DaypartCodeId = 2, StartTimeSeconds = 0, EndTimeSeconds = 2000, WeightingGoalPercent = 28.0 },
+                    new PlanDaypartDto{ DaypartCodeId = 11, StartTimeSeconds = 1500, EndTimeSeconds = 2788, WeightingGoalPercent = 33.2 }
                 }
             };
         }
@@ -886,6 +889,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             jsonResolver.Ignore(typeof(PlanDto), "Id");
             jsonResolver.Ignore(typeof(PlanDaypartDto), "Id");
             jsonResolver.Ignore(typeof(PlanMarketDto), "Id");
+            jsonResolver.Ignore(typeof(PlanSummaryDto), "PlanId");
 
             return new JsonSerializerSettings
             {

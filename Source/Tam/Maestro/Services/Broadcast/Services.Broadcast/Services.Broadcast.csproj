@@ -232,6 +232,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicationServices\Plan\PlanAggregator.cs" />
     <Compile Include="Aggregates\SchedulesAggregate.cs" />
     <Compile Include="ApplicationServices\AudienceService.cs" />
     <Compile Include="ApplicationServices\Campaigns\CampaignServiceData.cs" />
@@ -253,6 +254,7 @@
     <Compile Include="Entities\Enums\AudienceTypeEnum.cs" />
     <Compile Include="Entities\Enums\BackgroundJobProcessingStatus.cs" />
     <Compile Include="Entities\Enums\DaypartTypeEnum.cs" />
+    <Compile Include="Entities\Enums\PlanAggregationProcessingStatusEnum.cs" />
     <Compile Include="Entities\Enums\PlanGloalBreakdownTypeEnum.cs" />
     <Compile Include="Entities\Enums\PlanCurrenciesEnum.cs" />
     <Compile Include="Entities\Enums\PlanStatusEnum.cs" />
@@ -270,14 +272,17 @@
     <Compile Include="Entities\Plan\PlanDto.cs" />
     <Compile Include="Entities\Plan\PlanBlackoutMarketDto.cs" />
     <Compile Include="Entities\Plan\PlanMarketDto.cs" />
+    <Compile Include="Entities\Plan\PlanSummaryQuarterDto.cs" />
     <Compile Include="Entities\Plan\WeeklyBreakdownRequest.cs" />
     <Compile Include="Entities\Plan\WeeklyBreakdownResponse.cs" />
     <Compile Include="Entities\Plan\WeeklyBreakdownWeek.cs" />
+    <Compile Include="Entities\Plan\PlanSummaryDto.cs" />
     <Compile Include="Entities\ScxGenerationJob.cs" />
     <Compile Include="Entities\Scx\ScxFileGenerationDetailDto.cs" />
     <Compile Include="Entities\Scx\ScxFileGenerationDetail.cs" />
     <Compile Include="Helpers\SystemComponentParameterHelper.cs" />
     <Compile Include="Repositories\PlanRepository.cs" />
+    <Compile Include="Repositories\PlanSummaryRepository.cs" />
     <Compile Include="Repositories\ScxGenerationJobRepository.cs" />
     <Compile Include="ApplicationServices\ScxGenerationService.cs" />
     <Compile Include="BusinessEngines\InventorySummaryRatesGapEngine.cs" />

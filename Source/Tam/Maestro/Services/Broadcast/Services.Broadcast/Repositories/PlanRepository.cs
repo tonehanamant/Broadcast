@@ -28,9 +28,7 @@ namespace Services.Broadcast.Repositories
         /// Saves the plan.
         /// </summary>
         /// <param name="planDto">The plan.</param>
-        /// <param name="modifiedBy">The modified by.</param>
-        /// <param name="modifiedDate">The modified date.</param>
-        void SavePlan(PlanDto planDto, string modifiedBy, DateTime modifiedDate);
+        void SavePlan(PlanDto planDto);
 
         /// <summary>
         /// Gets the plan.
@@ -69,7 +67,7 @@ namespace Services.Broadcast.Repositories
         }
 
         /// <inheritdoc />
-        public void SavePlan(PlanDto planDto, string modifiedBy, DateTime modifiedDate)
+        public void SavePlan(PlanDto planDto)
         {
             _InReadUncommitedTransaction(
                 context =>
@@ -131,7 +129,9 @@ namespace Services.Broadcast.Repositories
                 CoverageGoalPercent = entity.coverage_goal_percent,
                 AvailableMarkets = entity.plan_available_markets.Select(_MapAvailableMarketDto).ToList(),
                 BlackoutMarkets = entity.plan_blackout_markets.Select(_MapBlackoutMarketDto).ToList(),
-                WeeklyBreakdownWeeks = entity.plan_weeks.Select(_MapWeeklyBreakdownWeeks).ToList()
+                WeeklyBreakdownWeeks = entity.plan_weeks.Select(_MapWeeklyBreakdownWeeks).ToList(),
+                ModifiedBy = entity.modified_by,
+                ModifiedDate = entity.modified_date
             };
             return dto;
         }
@@ -180,6 +180,9 @@ namespace Services.Broadcast.Repositories
 
             entity.coverage_goal_percent = planDto.CoverageGoalPercent;
             entity.goal_breakdown_type = (int)planDto.GoalBreakdownType;
+
+            entity.modified_by = planDto.ModifiedBy;
+            entity.modified_date = planDto.ModifiedDate;
 
             _HydratePlanAudienceInfo(entity, planDto);
             _HydratePlanBudget(entity, planDto);

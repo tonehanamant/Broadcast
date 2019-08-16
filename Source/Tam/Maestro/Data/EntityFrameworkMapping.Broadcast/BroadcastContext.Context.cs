@@ -151,5 +151,8 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<plan_available_markets> plan_available_markets { get; set; }
         public virtual DbSet<plan_blackout_markets> plan_blackout_markets { get; set; }
         public virtual DbSet<plan_weeks> plan_weeks { get; set; }
+        public virtual DbSet<plan_weekly_breakdown> plan_weekly_breakdown { get; set; }
+        public virtual DbSet<plan_summary> plan_summary { get; set; }
+        public virtual DbSet<plan_summary_quarters> plan_summary_quarters { get; set; }
     }
 }

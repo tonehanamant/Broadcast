@@ -232,5 +232,21 @@ namespace Services.Broadcast.Entities.Plan
         /// The total share of voice.
         /// </value>
         public double TotalShareOfVoice { get; set; }
+
+        /// <summary>
+        /// Gets or sets the modified by.
+        /// </summary>
+        /// <value>
+        /// The modified by.
+        /// </value>
+        public string ModifiedBy { get; set; }
+
+        /// <summary>
+        /// Gets or sets the modified date.
+        /// </summary>
+        /// <value>
+        /// The modified date.
+        /// </value>
+        public DateTime ModifiedDate { get; set; }
     }
 }

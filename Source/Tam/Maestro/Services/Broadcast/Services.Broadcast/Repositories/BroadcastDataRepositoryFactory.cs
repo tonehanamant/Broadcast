@@ -86,6 +86,7 @@ namespace Services.Broadcast.Repositories
             instance.RegisterType<IInventoryLogoRepository, InventoryLogoRepository>();
             instance.RegisterType<IScxGenerationJobRepository, ScxGenerationJobRepository>();
             instance.RegisterType<IPlanRepository, PlanRepository>();
+            instance.RegisterType<IPlanSummaryRepository, PlanSummaryRepository>();
             WasRegistered = true;
         }
     }

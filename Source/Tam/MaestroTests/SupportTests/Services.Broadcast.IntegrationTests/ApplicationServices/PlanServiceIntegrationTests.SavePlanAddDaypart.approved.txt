@@ -37,16 +37,16 @@
   "CPM": 12.0000,
   "Dayparts": [
     {
-      "DaypartCodeId": 1,
-      "EndTimeSeconds": 4600,
-      "StartTimeSeconds": 3600,
-      "WeightingGoalPercent": 23.5
+      "DaypartCodeId": 2,
+      "EndTimeSeconds": 2000,
+      "StartTimeSeconds": 0,
+      "WeightingGoalPercent": 28.0
     },
     {
-      "DaypartCodeId": 2,
-      "EndTimeSeconds": 2400,
-      "StartTimeSeconds": 1800,
-      "WeightingGoalPercent": null
+      "DaypartCodeId": 11,
+      "EndTimeSeconds": 2788,
+      "StartTimeSeconds": 1500,
+      "WeightingGoalPercent": 33.2
     },
     {
       "DaypartCodeId": 3,
@@ -66,6 +66,8 @@
   "FlightStartDate": "2019-01-01T00:00:00",
   "GoalBreakdownType": 1,
   "HUTBookId": null,
+  "ModifiedBy": "integration_test",
+  "ModifiedDate": "2019-01-15T00:00:00",
   "Name": "New Plan",
   "PostingType": 2,
   "ProductId": 1,

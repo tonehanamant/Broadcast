@@ -19,6 +19,8 @@
   "FlightStartDate": "1966-01-01T00:00:00",
   "GoalBreakdownType": 1,
   "HUTBookId": null,
+  "ModifiedBy": "integration_test",
+  "ModifiedDate": "2019-01-15T00:00:00",
   "Name": "New Plan",
   "PostingType": 2,
   "ProductId": 1,

@@ -3,7 +3,6 @@ using Common.Services.Extensions;
 using Common.Services.Repositories;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Cache;
-using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
 using Services.Broadcast.Extensions;
@@ -13,6 +12,7 @@ using Services.Broadcast.Validators;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.ContractInterfaces.Common;
 
@@ -82,29 +82,43 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private readonly IPlanBudgetDeliveryCalculator _BudgetCalculator;
         private readonly IMediaMonthAndWeekAggregateCache _MediaWeekCache;
         private readonly IBroadcastAudiencesCache _AudiencesCache;
+        private readonly IPlanAggregator _PlanAggregator;
+        private readonly IPlanSummaryRepository _PlanSummaryRepository;
 
         public PlanService(IDataRepositoryFactory broadcastDataRepositoryFactory
             , IPlanValidator planValidator
             , IPlanBudgetDeliveryCalculator planBudgetDeliveryCalculator
-            , IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache)
+            , IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache
+            , IPlanAggregator planAggregator)
         {
-            _PlanRepository = broadcastDataRepositoryFactory.GetDataRepository<IPlanRepository>();
             _MediaWeekCache = mediaMonthAndWeekAggregateCache;
             _PlanValidator = planValidator;
             _BudgetCalculator = planBudgetDeliveryCalculator;
+
+            _PlanRepository = broadcastDataRepositoryFactory.GetDataRepository<IPlanRepository>();
+            _PlanSummaryRepository = broadcastDataRepositoryFactory.GetDataRepository<IPlanSummaryRepository>();
+            _PlanAggregator = planAggregator;
         }
 
         ///<inheritdoc/>
         public int SavePlan(PlanDto plan, string modifiedBy, DateTime modifiedDate)
         {
+            plan.ModifiedBy = modifiedBy;
+            plan.ModifiedDate = modifiedDate;
             _PlanValidator.ValidatePlan(plan);
 
             if (plan.Id == 0)
             {
-                return _PlanRepository.SaveNewPlan(plan, modifiedBy, modifiedDate);
+                var planId = _PlanRepository.SaveNewPlan(plan, modifiedBy, modifiedDate);
+                plan.Id = planId;
+            }
+            else
+            {
+                _PlanRepository.SavePlan(plan);
             }
 
-            _PlanRepository.SavePlan(plan, modifiedBy, modifiedDate);
+            DispatchPlanAggregation(plan);
+
             return plan.Id;
         }
 
@@ -336,6 +350,32 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
             //number of active days this week is 7 minus number of hiatus days
             return 7 - hiatusDaysInWeek.Count();
+        }
+
+        private void DispatchPlanAggregation(PlanDto plan)
+        {
+            _PlanSummaryRepository.SetProcessingStatusForPlanSummary(plan.Id, PlanAggregationProcessingStatusEnum.InProgress);
+            Task.Factory.StartNew(() => AggregatePlan(plan));
+        }
+
+        private void AggregatePlan(object context)
+        {
+            var plan = (PlanDto)context;
+            try
+            {
+                // TODO: remove this after PRI-11436 is implemented	
+                var productsList = GetProducts();
+                _PlanAggregator.SetProducts(productsList);
+                // END Block to Remove
+
+                var summary = _PlanAggregator.Aggregate(plan);
+                summary.ProcessingStatus = PlanAggregationProcessingStatusEnum.Idle;
+                _PlanSummaryRepository.SaveSummary(summary);
+            }
+            catch (Exception)
+            {
+                _PlanSummaryRepository.SetProcessingStatusForPlanSummary(plan.Id, PlanAggregationProcessingStatusEnum.Error);
+            }
         }
     }
 }

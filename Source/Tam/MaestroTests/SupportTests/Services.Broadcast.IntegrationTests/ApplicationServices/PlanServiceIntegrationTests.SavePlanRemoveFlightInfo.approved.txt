@@ -35,7 +35,20 @@
   "CampaignId": 1,
   "CoverageGoalPercent": 80.5,
   "CPM": 12.0000,
-  "Dayparts": [],
+  "Dayparts": [
+    {
+      "DaypartCodeId": 2,
+      "EndTimeSeconds": 2000,
+      "StartTimeSeconds": 0,
+      "WeightingGoalPercent": 28.0
+    },
+    {
+      "DaypartCodeId": 11,
+      "EndTimeSeconds": 2788,
+      "StartTimeSeconds": 1500,
+      "WeightingGoalPercent": 33.2
+    }
+  ],
   "Delivery": 100.0,
   "Equivalized": true,
   "FlightEndDate": null,
@@ -44,6 +57,8 @@
   "FlightStartDate": null,
   "GoalBreakdownType": 1,
   "HUTBookId": null,
+  "ModifiedBy": "integration_test",
+  "ModifiedDate": "2019-01-15T00:00:00",
   "Name": "New Plan",
   "PostingType": 2,
   "ProductId": 1,

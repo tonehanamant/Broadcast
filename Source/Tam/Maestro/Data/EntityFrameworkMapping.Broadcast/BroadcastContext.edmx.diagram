@@ -319,6 +319,12 @@
         <EntityTypeShape EntityType="BroadcastModel.plan_weeks" Width="1.5" PointX="39.875" PointY="10" />
         <AssociationConnector Association="BroadcastModel.FK_plan_weeks_media_weeks" />
         <AssociationConnector Association="BroadcastModel.FK_plan_weeks_plans" />
+        <EntityTypeShape EntityType="BroadcastModel.plan_weekly_breakdown" Width="1.5" PointX="33.875" PointY="0.75" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_weekly_breakdown_plans" />
+        <EntityTypeShape EntityType="BroadcastModel.plan_summary" Width="1.5" PointX="33.875" PointY="29" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_summary_plans" />
+        <EntityTypeShape EntityType="BroadcastModel.plan_summary_quarters" Width="1.5" PointX="36.125" PointY="30" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_summary_quarters_plan_summary" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

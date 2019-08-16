@@ -4,6 +4,7 @@ using Common.Services.Repositories;
 using ConfigurationService.Client;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.InterceptionExtension;
+using Services.Broadcast.Aggregates;
 using Services.Broadcast.ApplicationServices.Inventory;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Converters;
@@ -183,6 +184,7 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IAudienceService, AudienceService>();
             unityContainer.RegisterType<IPostingBookService, PostingBookService>();
             unityContainer.RegisterType<IPlanBudgetDeliveryCalculator, PlanBudgetDeliveryCalculator>();
+            unityContainer.RegisterType<IPlanAggregator, PlanAggregator>();
 
             unityContainer.RegisterType<IEnvironmentService, EnvironmentService>();
             unityContainer.RegisterType<IDaypartTypeService, DaypartTypeService>();
