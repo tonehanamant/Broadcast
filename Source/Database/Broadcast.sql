@@ -353,6 +353,12 @@ BEGIN
 		ALTER COLUMN modified_by varchar(63) NOT NULL
 END
 
+IF EXISTS (SELECT 1 FROM information_schema.columns  WHERE table_name = 'campaigns' AND column_name ='name' AND CHARACTER_MAXIMUM_LENGTH <> 255)
+BEGIN
+	ALTER TABLE campaigns
+		ALTER COLUMN name VARCHAR(255) NOT NULL
+END
+
 /*************************************** END PRI-7402 *****************************************************/
 
 /*************************************** START PRI-10832 Part 2 *****************************************************/

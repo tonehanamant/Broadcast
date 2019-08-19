@@ -295,6 +295,7 @@
     <Compile Include="ApplicationServices\AffidavitMatchingEngineTests.cs" />
     <Compile Include="ApplicationServices\BroadcastAudienceCacheIntegrationTests.cs" />
     <Compile Include="Helpers\InventoryFileTestHelper.cs" />
+    <Compile Include="Helpers\StringHelper.cs" />
     <Compile Include="MediaMonthCrunchCacheTest.cs" />
     <Compile Include="Repositories\PlanSummaryRepositoryTests.cs" />
     <Compile Include="Repositories\RatingForcastRepositoryTests.cs" />

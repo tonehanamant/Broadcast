@@ -26,6 +26,7 @@ namespace Services.Broadcast.ApplicationServices.Campaigns
         public const string InvalidAdvertiserErrorMessage = "The advertiser id is invalid, please provide a valid and active id";
         public const string InvalidAgencyErrorMessage = "The agency id is invalid, please provide a valid and active id";
         public const string InvalidCampaignNameErrorMessage = "The campaign name is invalid, please provide a valid name";
+        public const string InvalidCampaignNotesErrorMessage = "The campaign notes are invalid";
 
         #endregion // #region Constants
 
@@ -56,6 +57,7 @@ namespace Services.Broadcast.ApplicationServices.Campaigns
             _ValidateCampaignName(campaign);
             _ValidateAdvertiser(campaign);
             _ValidateAgency(campaign);
+            _ValidateNotes(campaign);
         }
 
         #endregion // #region Operations
@@ -74,6 +76,12 @@ namespace Services.Broadcast.ApplicationServices.Campaigns
         private void _ValidateCampaignName(CampaignDto campaign)
         {
             if (string.IsNullOrWhiteSpace(campaign.Name))
+            {
+                throw new InvalidOperationException(InvalidCampaignNameErrorMessage);
+            }
+
+            const int nameMaxLength = 255;
+            if (campaign.Name.Length > nameMaxLength)
             {
                 throw new InvalidOperationException(InvalidCampaignNameErrorMessage);
             }
@@ -98,6 +106,15 @@ namespace Services.Broadcast.ApplicationServices.Campaigns
             if (found == false)
             {
                 throw new InvalidOperationException(InvalidAgencyErrorMessage);
+            }
+        }
+
+        private void _ValidateNotes(CampaignDto campaign)
+        {
+            const int notesMaxLength = 1024;
+            if ((campaign.Notes?.Length ?? 0) > notesMaxLength)
+            {
+                throw new InvalidOperationException(InvalidCampaignNotesErrorMessage);
             }
         }
 

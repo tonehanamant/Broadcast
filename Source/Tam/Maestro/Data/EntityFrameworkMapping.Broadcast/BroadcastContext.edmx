@@ -240,7 +240,7 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="name" Type="varchar" MaxLength="127" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="advertiser_id" Type="int" Nullable="false" />
           <Property Name="agency_id" Type="int" Nullable="false" />
           <Property Name="created_date" Type="datetime" Nullable="false" />
@@ -9765,7 +9765,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" Nullable="false" MaxLength="127" FixedLength="false" Unicode="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="advertiser_id" Type="Int32" Nullable="false" />
           <Property Name="agency_id" Type="Int32" Nullable="false" />
           <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />

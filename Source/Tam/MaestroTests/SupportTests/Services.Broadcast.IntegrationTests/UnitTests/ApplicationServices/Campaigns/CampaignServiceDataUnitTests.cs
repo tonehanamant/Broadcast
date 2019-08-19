@@ -5,7 +5,6 @@ using Services.Broadcast.Entities;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
-using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.Clients;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Campaigns

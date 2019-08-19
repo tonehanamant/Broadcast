@@ -6,8 +6,8 @@ using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.ApplicationServices.Campaigns;
 using Services.Broadcast.Entities;
+using Services.Broadcast.IntegrationTests.Helpers;
 using System;
-using System.Linq;
 using Tam.Maestro.Common.DataLayer;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
@@ -50,6 +50,36 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 var campaign = _GetValidCampaign();
+
+                int campaignId = _CampaignService.SaveCampaign(campaign, IntegrationTestUser, CreatedDate);
+                Assert.IsTrue(campaignId > 0);
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void CreateCampaignNameMaxLengthTest()
+        {
+            const int maxNameLength = 255;
+            using (new TransactionScopeWrapper())
+            {
+                var campaign = _GetValidCampaign();
+                campaign.Name = StringHelper.CreateStringOfLength(maxNameLength);
+
+                int campaignId = _CampaignService.SaveCampaign(campaign, IntegrationTestUser, CreatedDate);
+                Assert.IsTrue(campaignId > 0);
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void CreateCampaignNotesMaxLengthTest()
+        {
+            const int maxNotesLength = 1024;
+            using (new TransactionScopeWrapper())
+            {
+                var campaign = _GetValidCampaign();
+                campaign.Notes = StringHelper.CreateStringOfLength(maxNotesLength);
 
                 int campaignId = _CampaignService.SaveCampaign(campaign, IntegrationTestUser, CreatedDate);
                 Assert.IsTrue(campaignId > 0);
