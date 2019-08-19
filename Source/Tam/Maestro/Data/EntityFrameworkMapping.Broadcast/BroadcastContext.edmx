@@ -326,7 +326,7 @@
           <Property Name="hut_projection_book_id" Type="int" />
           <Property Name="playback_type" Type="int" />
           <Property Name="nti_to_nsi_increase" Type="decimal" Precision="18" Scale="10" />
-          <Property Name="daypart_code_id" Type="int" Nullable="false" />
+          <Property Name="daypart_code_id" Type="int" />
         </EntityType>
         <EntityType Name="inventory_file_ratings_jobs">
           <Key>
@@ -1967,7 +1967,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_inventory_file_proprietary_header_daypart_codes">
-          <End Role="daypart_codes" Type="Self.daypart_codes" Multiplicity="1" />
+          <End Role="daypart_codes" Type="Self.daypart_codes" Multiplicity="0..1" />
           <End Role="inventory_file_proprietary_header" Type="Self.inventory_file_proprietary_header" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="daypart_codes">
@@ -9674,7 +9674,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="inventory_files" Relationship="BroadcastModel.FK_inventory_file_proprietary_header_inventory_files" FromRole="inventory_file_proprietary_header" ToRole="inventory_files" />
           <NavigationProperty Name="share_media_months" Relationship="BroadcastModel.FK_inventory_file_proprietary_header_media_months" FromRole="inventory_file_proprietary_header" ToRole="media_months" />
           <NavigationProperty Name="hut_media_months" Relationship="BroadcastModel.FK_inventory_file_proprietary_header_media_months_hut_book" FromRole="inventory_file_proprietary_header" ToRole="media_months" />
-          <Property Name="daypart_code_id" Type="Int32" Nullable="false" />
+          <Property Name="daypart_code_id" Type="Int32" />
           <NavigationProperty Name="daypart_codes" Relationship="BroadcastModel.FK_inventory_file_proprietary_header_daypart_codes" FromRole="inventory_file_proprietary_header" ToRole="daypart_codes" />
         </EntityType>
         <Association Name="FK_inventory_file_proprietary_header_audiences">
@@ -9827,7 +9827,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="daypart_type" Type="Int32" Nullable="false" />
         </EntityType>
         <Association Name="FK_inventory_file_proprietary_header_daypart_codes">
-          <End Type="BroadcastModel.daypart_codes" Role="daypart_codes" Multiplicity="1" />
+          <End Type="BroadcastModel.daypart_codes" Role="daypart_codes" Multiplicity="0..1" />
           <End Type="BroadcastModel.inventory_file_proprietary_header" Role="inventory_file_proprietary_header" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="daypart_codes">

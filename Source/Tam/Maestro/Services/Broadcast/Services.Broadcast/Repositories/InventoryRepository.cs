@@ -296,7 +296,7 @@ namespace Services.Broadcast.Repositories
                          select m).ToList();
 
                     return manifests
-                        .Select(manifest => _MapToInventoryManifest(manifest, manifest.inventory_files.inventory_file_proprietary_header.SingleOrDefault()?.daypart_codes.code))
+                        .Select(manifest => _MapToInventoryManifest(manifest, manifest.inventory_files.inventory_file_proprietary_header.SingleOrDefault()?.daypart_codes?.code))
                         .ToList();
                 });
         }

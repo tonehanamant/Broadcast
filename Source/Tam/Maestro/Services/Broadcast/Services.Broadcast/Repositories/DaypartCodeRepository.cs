@@ -103,13 +103,7 @@ namespace Services.Broadcast.Repositories
             return _InReadUncommitedTransaction(context =>
             {
                 var defaultDaypartCodes = context.daypart_codes
-                    .Where(c => c.is_active
-                                /*
-                                 * https://jira.crossmw.com/browse/PRI-7462?focusedCommentId=188000&page=com.atlassian.jira.plugin.system.issuetabpanels:comment-tabpanel#comment-188000
-                                 * There is a Tech Debt item to remove Diginet from the table.
-                                 * This filter will be in place until then.
-                                 */
-                                && c.full_name.Equals("Diginet") == false)
+                    .Where(c => c.is_active)
                     .Select(c => new DaypartCodeDefaultDto
                     {
                         Id = c.id,

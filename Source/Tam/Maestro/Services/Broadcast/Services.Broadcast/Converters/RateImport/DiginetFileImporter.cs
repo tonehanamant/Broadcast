@@ -25,7 +25,6 @@ namespace Services.Broadcast.Converters.RateImport
         private readonly FileCell EFFECTIVE_DATE_CELL = new FileCell { ColumnLetter = "B", RowIndex = 4 };
         private readonly FileCell END_DATE_CELL = new FileCell { ColumnLetter = "B", RowIndex = 5 };
         private readonly FileCell NTI_TO_NSI_INCREASE_CELL = new FileCell { ColumnLetter = "B", RowIndex = 6 };
-        private const string DEFAULT_DAYPART_CODE = "DIGI";
 
         private readonly IDaypartCache _DaypartCache;
         private readonly IImpressionAdjustmentEngine _ImpressionAdjustmentEngine;
@@ -58,7 +57,7 @@ namespace Services.Broadcast.Converters.RateImport
 
         public override void LoadAndValidateHeaderData(ExcelWorksheet worksheet, ProprietaryInventoryFile proprietaryFile)
         {
-            var header = new ProprietaryInventoryHeader { DaypartCode = DEFAULT_DAYPART_CODE };
+            var header = new ProprietaryInventoryHeader();
             var validationProblems = new List<string>();
 
             _ValidateAndSetEffectiveAndEndDates(worksheet, validationProblems, header);
@@ -351,7 +350,6 @@ namespace Services.Broadcast.Converters.RateImport
                     InventorySourceId = proprietaryFile.InventorySource.Id,
                     InventoryFileId = proprietaryFile.Id,
                     SpotLengthId = defaultSpotLengthId,
-                    DaypartCode = fileHeader.DaypartCode,
                     ManifestDayparts = x.Dayparts.Select(d => new StationInventoryManifestDaypart
                     {
                         Daypart = d,

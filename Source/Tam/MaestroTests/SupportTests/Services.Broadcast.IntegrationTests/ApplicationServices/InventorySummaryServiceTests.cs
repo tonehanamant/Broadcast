@@ -251,17 +251,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void GetInventoryQuartersBySourceAndDaypartCodeTest_NoData()
-        {
-            var daypartCodeId = _DaypartCodeRepository.GetDaypartCodeByCode("DIGI").Id;
-
-            var quarters = _InventorySummaryService.GetInventoryQuarters(nbcOAndO_InventorySourceId, daypartCodeId);
-
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(quarters));
-        }
-
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
         public void GetDaypartCodesTest()
         {
             var daypartCodes = _InventorySummaryService.GetDaypartCodes(nbcOAndO_InventorySourceId);

@@ -1,7 +1,7 @@
 ﻿[
   {
     "Comment": null,
-    "DaypartCode": "DIGI",
+    "DaypartCode": null,
     "InventorySourceId": 23,
     "ManifestAudiences": [],
     "ManifestAudiencesReferences": [
@@ -99,7 +99,7 @@
   },
   {
     "Comment": null,
-    "DaypartCode": "DIGI",
+    "DaypartCode": null,
     "InventorySourceId": 23,
     "ManifestAudiences": [],
     "ManifestAudiencesReferences": [
@@ -197,7 +197,7 @@
   },
   {
     "Comment": null,
-    "DaypartCode": "DIGI",
+    "DaypartCode": null,
     "InventorySourceId": 23,
     "ManifestAudiences": [],
     "ManifestAudiencesReferences": [
@@ -295,7 +295,7 @@
   },
   {
     "Comment": null,
-    "DaypartCode": "DIGI",
+    "DaypartCode": null,
     "InventorySourceId": 23,
     "ManifestAudiences": [],
     "ManifestAudiencesReferences": [
@@ -393,7 +393,7 @@
   },
   {
     "Comment": null,
-    "DaypartCode": "DIGI",
+    "DaypartCode": null,
     "InventorySourceId": 23,
     "ManifestAudiences": [],
     "ManifestAudiencesReferences": [
@@ -491,7 +491,7 @@
   },
   {
     "Comment": null,
-    "DaypartCode": "DIGI",
+    "DaypartCode": null,
     "InventorySourceId": 23,
     "ManifestAudiences": [],
     "ManifestAudiencesReferences": [
@@ -589,7 +589,7 @@
   },
   {
     "Comment": null,
-    "DaypartCode": "DIGI",
+    "DaypartCode": null,
     "InventorySourceId": 23,
     "ManifestAudiences": [],
     "ManifestAudiencesReferences": [
@@ -687,7 +687,7 @@
   },
   {
     "Comment": null,
-    "DaypartCode": "DIGI",
+    "DaypartCode": null,
     "InventorySourceId": 23,
     "ManifestAudiences": [],
     "ManifestAudiencesReferences": [
@@ -760,7 +760,7 @@
   },
   {
     "Comment": null,
-    "DaypartCode": "DIGI",
+    "DaypartCode": null,
     "InventorySourceId": 23,
     "ManifestAudiences": [],
     "ManifestAudiencesReferences": [

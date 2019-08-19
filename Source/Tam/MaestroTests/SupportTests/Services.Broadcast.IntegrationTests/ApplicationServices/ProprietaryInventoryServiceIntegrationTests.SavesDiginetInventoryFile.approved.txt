@@ -8,7 +8,7 @@
     "Audience": null,
     "ContractedDaypartId": null,
     "Cpm": null,
-    "DaypartCode": "DIGI",
+    "DaypartCode": null,
     "EffectiveDate": "2018-10-10T00:00:00",
     "EndDate": "2018-10-17T00:00:00",
     "HutBookId": null,

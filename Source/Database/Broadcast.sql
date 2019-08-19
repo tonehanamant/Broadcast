@@ -914,6 +914,16 @@ END
 
 /*************************************** END PRI-11829 *****************************************************/
 
+/*************************************** START PRI-12666 *****************************************************/
+ALTER TABLE inventory_file_proprietary_header ALTER COLUMN daypart_code_id INT NULL
+
+update inventory_file_proprietary_header 
+set daypart_code_id = null
+where daypart_code_id = (select top 1 id from daypart_codes where daypart_codes.code = 'DIGI')
+
+delete from daypart_codes where code = 'DIGI'
+/*************************************** END PRI-12666 *****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version
