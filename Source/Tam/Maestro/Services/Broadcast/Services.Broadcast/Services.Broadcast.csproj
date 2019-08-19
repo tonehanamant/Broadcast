@@ -113,11 +113,11 @@
     <LangVersion>7.3</LangVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ConfigurationService.Client, Version=1.0.0.34, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\ConfigurationService.Client.1.0.0.34\lib\net45\ConfigurationService.Client.dll</HintPath>
+    <Reference Include="ConfigurationService.Client, Version=1.0.0.40, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\ConfigurationService.Client.1.0.0.41\lib\net45\ConfigurationService.Client.dll</HintPath>
     </Reference>
-    <Reference Include="ConfigurationService.Interfaces, Version=1.0.0.34, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\ConfigurationService.Interfaces.1.0.0.35\lib\net45\ConfigurationService.Interfaces.dll</HintPath>
+    <Reference Include="ConfigurationService.Interfaces, Version=1.0.0.40, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\ConfigurationService.Interfaces.1.0.0.41\lib\net45\ConfigurationService.Interfaces.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
