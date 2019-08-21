@@ -159,6 +159,7 @@ namespace BroadcastComposerWeb.Controllers
 
         [HttpPost]
         [Route("InventoryFile")]
+        [Authorize]
         public BaseResponse<InventoryFileSaveResult> UploadInventoryFile(FileRequest saveRequest)
         {
             try
