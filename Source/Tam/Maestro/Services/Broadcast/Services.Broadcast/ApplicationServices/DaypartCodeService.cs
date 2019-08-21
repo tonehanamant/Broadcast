@@ -3,6 +3,7 @@ using Common.Services.Repositories;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Repositories;
 using System.Collections.Generic;
+using Services.Broadcast.Helpers;
 
 namespace Services.Broadcast.ApplicationServices
 {
@@ -35,6 +36,7 @@ namespace Services.Broadcast.ApplicationServices
         public List<DaypartCodeDefaultDto> GetDaypartCodeDefaults()
         {
             List<DaypartCodeDefaultDto> defaultDaypartDtos = _DaypartCodeRepository.GetDaypartCodeDefaults();
+            DaypartTimeHelper.AddOneSecondToEndTime(defaultDaypartDtos);
             return defaultDaypartDtos;
         }
     }

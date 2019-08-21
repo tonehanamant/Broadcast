@@ -319,6 +319,7 @@
     <Compile Include="UnitTests\ApplicationServices\Plans\PlansServiceUnitTests.cs" />
     <Compile Include="UnitTests\BaseMemoryCacheTests.cs" />
     <Compile Include="UnitTests\CampaignServiceUnitTests.cs" />
+    <Compile Include="UnitTests\DaypartTimeHelperUnitTests.cs" />
     <Compile Include="UnitTests\EnumHelperUnitTests.cs" />
     <Compile Include="UnitTests\FtpServiceTester.cs" />
     <Compile Include="UnitTests\PlanAggregation\PlanAggregatorUnitTestClass.cs" />

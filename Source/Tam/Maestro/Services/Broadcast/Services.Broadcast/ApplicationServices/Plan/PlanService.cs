@@ -105,6 +105,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
         {
             plan.ModifiedBy = modifiedBy;
             plan.ModifiedDate = modifiedDate;
+            DaypartTimeHelper.SubtractOneSecondToEndTime(plan.Dayparts);
+
             _PlanValidator.ValidatePlan(plan);
 
             if (plan.Id == 0)
@@ -127,6 +129,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
         {
             PlanDto plan = _PlanRepository.GetPlan(planId);
             _SetWeekNumber(plan.WeeklyBreakdownWeeks);
+            DaypartTimeHelper.AddOneSecondToEndTime(plan.Dayparts);
+
             plan.TotalActiveDays = plan.WeeklyBreakdownWeeks.Select(x => x.NumberOfActiveDays).Sum();
             plan.TotalShareOfVoice = plan.WeeklyBreakdownWeeks.Select(x => x.ShareOfVoice).Sum();
             return plan;

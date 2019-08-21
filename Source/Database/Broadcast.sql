@@ -604,31 +604,6 @@ END
 
 IF NOT EXISTS (SELECT 1 FROM sys.columns WHERE Name = 'daypart_type' AND Object_ID = OBJECT_ID('daypart_codes'))
 BEGIN
-	CREATE TABLE #daypart_extensions
-	(
-		daypart_code_id INT,
-		default_start_time_seconds INT,
-		default_end_time_seconds INT,
-		daypart_type INT
-	)
-
-	INSERT INTO #daypart_extensions (daypart_code_id, default_start_time_seconds, default_end_time_seconds, daypart_type) 
-		VALUES
-			(1, 14400, 79199, 1)
-			,(2, 39600, 46799, 1)
-			,(3, 57600, 68399, 1)
-			,(4, 72000, 300, 1)
-			,(5, 57600, 300, 1)
-			,(6, 54000, 64799, 2)
-			,(7, 64800, 71999, 2)
-			,(8, 72000, 82799, 2)
-			,(9, 82800, 7200, 2)
-			,(10, 21600, 7500, 2)
-			,(12, 32400, 57599, 2)
-			,(11, 7200, 21599, 2)
-			,(14, 21600, 32399, 2)
-			,(13,0,0,2) -- Diginet -- See TechDebt
-
 	ALTER TABLE daypart_codes
 		ADD daypart_type INT NULL
 
@@ -638,18 +613,14 @@ BEGIN
 	ALTER TABLE daypart_codes
 		ADD default_end_time_seconds INT NULL
 
-	DECLARE @SqlExtendDaypartcodes VARCHAR(MAX) = 
+	DECLARE @SqlSetDefaultDaypartCodeInfo VARCHAR(MAX) = 
 	'		
-		UPDATE d SET
-			daypart_type = e.daypart_type
-			, default_start_time_seconds = e.default_start_time_seconds
-			, default_end_time_seconds = e.default_end_time_seconds
-		FROM daypart_codes d
-		INNER JOIN #daypart_extensions e
-			ON d.id = e.daypart_code_id
+		UPDATE daypart_codes SET
+			daypart_type = 1
+			, default_start_time_seconds = 1
+			, default_end_time_seconds = 1
 	'
-	EXEC (@SqlExtendDaypartcodes)
-	DROP TABLE #daypart_extensions
+	EXEC (@SqlSetDefaultDaypartCodeInfo)
 
 	DECLARE @DaypartCodesMakeNewColumnsNotNull VARCHAR(MAX) = 
 	'
@@ -662,9 +633,45 @@ BEGIN
 		ALTER TABLE daypart_codes
 			ALTER COLUMN default_end_time_seconds INT NOT NULL
 	'
-
 	EXEC (@DaypartCodesMakeNewColumnsNotNull)	
 END	
+
+CREATE TABLE #daypart_extensions
+(
+	daypart_code_id INT,
+	default_start_time_seconds INT,
+	default_end_time_seconds INT,
+	daypart_type INT
+)
+
+INSERT INTO #daypart_extensions (daypart_code_id, default_start_time_seconds, default_end_time_seconds, daypart_type) 
+	VALUES
+		(1, 14400, 35999, 1)
+		,(2, 39600, 46799, 1)
+		,(3, 57600, 68399, 1)
+		,(4, 72000, 299, 1)
+		,(5, 57600, 299, 1)
+		,(6, 54000, 64799, 2)
+		,(7, 64800, 71999, 2)
+		,(8, 72000, 82799, 2)
+		,(9, 82800, 7199, 2)
+		,(10, 21600, 7499, 2)
+		,(12, 32400, 57599, 2)
+		,(11, 7200, 21599, 2)
+		,(14, 21600, 32399, 2)
+
+DECLARE @SqlExtendDaypartcodes VARCHAR(MAX) = 
+'		
+	UPDATE d SET
+		daypart_type = e.daypart_type
+		, default_start_time_seconds = e.default_start_time_seconds
+		, default_end_time_seconds = e.default_end_time_seconds
+	FROM daypart_codes d
+	INNER JOIN #daypart_extensions e
+		ON d.id = e.daypart_code_id
+'
+EXEC (@SqlExtendDaypartcodes)
+DROP TABLE #daypart_extensions
 
 IF OBJECT_ID('plan_dayparts') IS NULL
 BEGIN

@@ -7,8 +7,6 @@ using Services.Broadcast.ApplicationServices.Plan;
 using Services.Broadcast.Entities.Plan;
 using System;
 using System.Collections.Generic;
-using System.Threading;
-using Services.Broadcast.Entities.Enums;
 using Tam.Maestro.Common.DataLayer;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
