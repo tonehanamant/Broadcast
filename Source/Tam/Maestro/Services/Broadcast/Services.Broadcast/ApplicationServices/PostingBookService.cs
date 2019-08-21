@@ -1,4 +1,5 @@
 ﻿using Common.Services.ApplicationServices;
+using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Extensions;
 using System;
@@ -29,25 +30,29 @@ namespace Services.Broadcast.ApplicationServices
         /// <summary>
         /// Gets the hut books available based on the selected share book.
         /// </summary>
-        /// <param name="shareBookId">The share book identifier.</param>
+        /// <param name="startDate">The start date of the flight.</param>
         /// <returns>List of LookupDto objects</returns>
-        List<LookupDto> GetHUTBooks(int shareBookId);
+        List<LookupDto> GetHUTBooks(DateTime startDate);
     }
 
     public class PostingBookService : IPostingBookService
     {
         private readonly List<MediaMonth> _PostingBooks;
         private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekAggregateCache;
+        private readonly IQuarterCalculationEngine _QuartersEngine;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PostingBookService"/> class.
         /// </summary>
         /// <param name="ratingForecastService">The rating forecast service.</param>
         /// <param name="mediaMonthAndWeekAggregateCache">The media month and week aggregate cache.</param>
+        /// <param name="quarterCalculationEngine">The quarter calculation engine</param>
         public PostingBookService(IRatingForecastService ratingForecastService
-            , IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache)
+            , IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache
+            , IQuarterCalculationEngine quarterCalculationEngine)
         {
             _MediaMonthAndWeekAggregateCache = mediaMonthAndWeekAggregateCache;
+            _QuartersEngine = quarterCalculationEngine;
             _PostingBooks = ratingForecastService.GetMediaMonthCrunchStatuses()
                         .Where(a => a.Crunched == CrunchStatusEnum.Crunched)
                         .Select(m => m.MediaMonth)
@@ -61,10 +66,15 @@ namespace Services.Broadcast.ApplicationServices
         }
 
         ///<inheritdoc/>
-        public List<LookupDto> GetHUTBooks(int shareBookId)
+        public List<LookupDto> GetHUTBooks(DateTime startDate)
         {
-            var selectedShareBook = _PostingBooks.Single(x => x.Id == shareBookId);
-            return _ToLookupDto(_PostingBooks.Where(x => x.EndDate <= selectedShareBook.StartDate));
+            var currentQuarter = _QuartersEngine.GetQuarterRangeByDate(startDate);
+            var lastYearQuarter = _QuartersEngine.GetQuarterDetail(currentQuarter.Quarter, startDate.Year - 1);
+           
+            //HUT book must be last in the flight quarter but from last year
+            var hutBooks = _PostingBooks
+                .Where(x => x.EndDate <= lastYearQuarter.EndDate);
+            return _ToLookupDto(hutBooks);
         }
 
         ///<inheritdoc/>

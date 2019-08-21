@@ -15,7 +15,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void GetShareBooks()
         {
-            var shareBooks = _PostingBookService.GetShareBooks(new DateTime(2019,07,31));
+            var shareBooks = _PostingBookService.GetShareBooks(new DateTime(2019,12,31));
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(shareBooks));
         }
@@ -24,7 +24,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void GetHUTBooks()
         {
-            var shareBooks = _PostingBookService.GetHUTBooks(437);
+            var shareBooks = _PostingBookService.GetHUTBooks(new DateTime(2019, 12, 31));
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(shareBooks));
         }
