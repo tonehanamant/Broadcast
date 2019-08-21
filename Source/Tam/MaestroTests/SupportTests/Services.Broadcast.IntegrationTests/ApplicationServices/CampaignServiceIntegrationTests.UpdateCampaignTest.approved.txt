@@ -1,8 +1,18 @@
 ﻿{
   "AdvertiserId": 1,
   "AgencyId": 1,
+  "Budget": null,
+  "CPM": null,
+  "FlightActiveDays": null,
+  "FlightEndDate": null,
+  "FlightHiatusDays": null,
+  "FlightStartDate": null,
+  "HasHiatus": null,
+  "HasPlans": false,
+  "Impressions": null,
   "ModifiedBy": "IntegrationTestUser",
   "ModifiedDate": "2019-05-14T00:00:00",
   "Name": "Updated name of Campaign1",
-  "Notes": "Notes for CampaignOne."
+  "Notes": "Notes for CampaignOne.",
+  "Rating": null
 }

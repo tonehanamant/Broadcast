@@ -1,0 +1,18 @@
+﻿{
+  "AdvertiserId": 1,
+  "AgencyId": 1,
+  "Budget": 150.0,
+  "CPM": 11.0,
+  "FlightActiveDays": 44,
+  "FlightEndDate": "2019-06-02T00:00:00",
+  "FlightHiatusDays": 5,
+  "FlightStartDate": "2019-04-15T00:00:00",
+  "HasHiatus": true,
+  "HasPlans": true,
+  "Impressions": 13637.0,
+  "ModifiedBy": "IntegrationTestUser",
+  "ModifiedDate": "2019-05-14T00:00:00",
+  "Name": "Campaign1",
+  "Notes": "Notes for CampaignOne.",
+  "Rating": 11.46
+}

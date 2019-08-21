@@ -123,6 +123,12 @@ namespace Services.Broadcast.ApplicationServices.Campaigns
         {
             var repo = GetCampaignRepository();
             var campaign = repo.GetCampaign(campaignId);
+
+            if (campaign.HasPlans)
+            {
+                _SetCampaignStubData(campaign);
+            }
+
             return campaign;
         }
 
@@ -143,6 +149,19 @@ namespace Services.Broadcast.ApplicationServices.Campaigns
         #endregion // #region Operations
 
         #region Helpers
+
+        private void _SetCampaignStubData(CampaignDto campaign)
+        {
+            campaign.FlightStartDate = new DateTime(2019, 4, 15);
+            campaign.FlightEndDate = new DateTime(2019, 6, 2);
+            campaign.FlightHiatusDays = 5;
+            campaign.FlightActiveDays = 44;
+            campaign.HasHiatus = true;
+            campaign.Budget = 150;
+            campaign.CPM = 11;
+            campaign.Impressions = 13637;
+            campaign.Rating = 11.46;
+        }
 
         /// <summary>
         /// Gets the SMS client.

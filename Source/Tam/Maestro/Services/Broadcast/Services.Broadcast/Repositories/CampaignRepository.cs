@@ -6,6 +6,7 @@ using Services.Broadcast.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Data.Entity;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
 using Tam.Maestro.Services.Clients;
@@ -124,7 +125,11 @@ namespace Services.Broadcast.Repositories
                 context =>
                 {
                     var found = context.campaigns.Single(c => c.id.Equals(campaignId), $"Could not find existing campaign with id '{campaignId}'");
+
                     var result = _MapToDto(found);
+
+                    result.HasPlans = found.plans.Any();
+
                     return result;
                 });
         }
