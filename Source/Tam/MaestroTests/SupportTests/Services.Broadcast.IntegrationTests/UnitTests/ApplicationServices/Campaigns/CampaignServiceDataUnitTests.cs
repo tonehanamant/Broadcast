@@ -204,7 +204,67 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Camp
             Assert.AreEqual(1, callCount);
             Assert.IsTrue(caught.Message.Contains("This is a test exception thrown from CreateCampaign."));
         }
-
         #endregion // #region CreateCampaign
+
+        #region UpdateCampaign
+        [Test]
+        public void SaveCampaignUpdateWithValidResult()
+        {
+            var campaignToSave = new CampaignDto
+            {
+                Id = 1,
+                Name = "Campaign1",
+                AdvertiserId = 1,
+                AgencyId = 1,
+                Notes = "Notes for CampaignOne."
+            };
+            var username = "TestUser";
+            var now = new DateTime(2017, 10, 17);
+            var smsClient = new Mock<ISMSClient>();
+            var campaignRepository = new Mock<ICampaignRepository>();
+            var callCount = 0;
+            campaignRepository.Setup(s =>
+                    s.UpdateCampaign(It.IsAny<CampaignDto>()))
+                .Callback(() => callCount++);
+            var tc = new CampaignServiceData(campaignRepository.Object, smsClient.Object); ;
+
+            tc.SaveCampaign(campaignToSave, username, now);
+
+            Assert.AreEqual(1, callCount);
+        }
+
+        [Test]
+        public void SaveCampaignUpdateWithException()
+        {
+            var campaignToSave = new CampaignDto
+            {
+                Id = 1,
+                Name = "Campaign1",
+                AdvertiserId = 1,
+                AgencyId = 1,
+                Notes = "Notes for CampaignOne."
+            };
+            var username = "TestUser";
+            var now = new DateTime(2017, 10, 17);
+            var smsClient = new Mock<ISMSClient>();
+            var campaignRepository = new Mock<ICampaignRepository>();
+            var callCount = 0;
+            campaignRepository.Setup(s =>
+                    s.UpdateCampaign(It.IsAny<CampaignDto>()))
+                .Callback(() =>
+                {
+                    callCount++;
+                    throw new Exception("This is a test exception thrown from UpdateCampaign.");
+                });
+
+            var tc = new CampaignServiceData(campaignRepository.Object, smsClient.Object); ;
+
+            var caught = Assert.Throws<Exception>(() => tc.SaveCampaign(campaignToSave, username, now));
+
+            Assert.IsNotNull(caught);
+            Assert.AreEqual(1, callCount);
+            Assert.IsTrue(caught.Message.Contains("This is a test exception thrown from UpdateCampaign."));
+        }
+        #endregion // #region UpdateCampaign
     }
 }
