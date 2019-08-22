@@ -1,10 +1,9 @@
 ﻿using NUnit.Framework;
 using Services.Broadcast.Entities;
-using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
 using Services.Broadcast.Helpers;
+using Services.Broadcast.IntegrationTests.Helpers;
 using System;
-using System.Collections.Generic;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests
 {
@@ -12,117 +11,51 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
     public class DaypartTimeHelperUnitTests
     {
         [Test]
-        public void AddOneSecondToEndTime_WithDaypartCodeDefaultDto()
+        [TestCase(nameof(DaypartTimeHelper.AddOneSecondToEndTime), typeof(PlanDaypartDto), nameof(PlanDaypartDto.EndTimeSeconds), 400, 401)]
+        [TestCase(nameof(DaypartTimeHelper.AddOneSecondToEndTime), typeof(PlanDaypartDto), nameof(PlanDaypartDto.StartTimeSeconds), 400, 400)]
+        [TestCase(nameof(DaypartTimeHelper.AddOneSecondToEndTime), typeof(DaypartCodeDefaultDto), nameof(DaypartCodeDefaultDto.DefaultEndTimeSeconds), 400, 401)]
+        [TestCase(nameof(DaypartTimeHelper.AddOneSecondToEndTime), typeof(DaypartCodeDefaultDto), nameof(DaypartCodeDefaultDto.DefaultStartTimeSeconds), 400, 400)]
+        [TestCase(nameof(DaypartTimeHelper.SubtractOneSecondToEndTime), typeof(PlanDaypartDto), nameof(PlanDaypartDto.EndTimeSeconds), 400, 399)]
+        [TestCase(nameof(DaypartTimeHelper.SubtractOneSecondToEndTime), typeof(PlanDaypartDto), nameof(PlanDaypartDto.StartTimeSeconds), 400, 400)]
+        [TestCase(nameof(DaypartTimeHelper.SubtractOneSecondToEndTime), typeof(DaypartCodeDefaultDto), nameof(DaypartCodeDefaultDto.DefaultEndTimeSeconds), 400, 399)]
+        [TestCase(nameof(DaypartTimeHelper.SubtractOneSecondToEndTime), typeof(DaypartCodeDefaultDto), nameof(DaypartCodeDefaultDto.DefaultStartTimeSeconds), 400, 400)]
+        public void InvokeMethodAndCheckProperty(string methodName, Type t, string propertyName, int testValue, int expectedValue)
         {
-            var candidates = new List<DaypartCodeDefaultDto>
-            {
-                new DaypartCodeDefaultDto
-                {
-                    Id = 1, Code = "DP1", FullName = "Daypart1", DaypartType = DaypartTypeEnum.EntertainmentNonNews,
-                    DefaultStartTimeSeconds = 300, DefaultEndTimeSeconds = 400
-                },
-                new DaypartCodeDefaultDto
-                {
-                    Id = 2, Code = "DP2", FullName = "Daypart2", DaypartType = DaypartTypeEnum.EntertainmentNonNews,
-                    DefaultStartTimeSeconds = 300, DefaultEndTimeSeconds = 400
-                },
-            };
+            var candidates = ReflectionTestHelper.CreateGenericList(t);
+            candidates.Add(ReflectionTestHelper.CreateInstanceAndSetProperty(t, propertyName, testValue));
+            candidates.Add(ReflectionTestHelper.CreateInstanceAndSetProperty(t, propertyName, testValue));
+            var genericMethod = ReflectionTestHelper.GetGenericMethod(t, typeof(DaypartTimeHelper), methodName);
 
-            DaypartTimeHelper.AddOneSecondToEndTime(candidates);
+            genericMethod.Invoke(null, new object[] { candidates });
 
             Assert.AreEqual(2, candidates.Count);
-            Assert.AreEqual(300, candidates[0].DefaultStartTimeSeconds);
-            Assert.AreEqual(401, candidates[0].DefaultEndTimeSeconds);
-            Assert.AreEqual(300, candidates[1].DefaultStartTimeSeconds);
-            Assert.AreEqual(401, candidates[1].DefaultEndTimeSeconds);
+            Assert.AreEqual(expectedValue, (int)t.GetProperty(propertyName).GetValue(candidates[0]));
+            Assert.AreEqual(expectedValue, (int)t.GetProperty(propertyName).GetValue(candidates[1]));
         }
 
         [Test]
-        public void AddOneSecondToEndTime_WithPlanDaypartDto()
+        [TestCase(nameof(DaypartTimeHelper.AddOneSecondToEndTime))]
+        [TestCase(nameof(DaypartTimeHelper.SubtractOneSecondToEndTime))]
+        public void AddOrSubtractWithInvalid(string methodName)
         {
-            var candidates = new List<PlanDaypartDto>
+            Type t = typeof(object);
+            var candidates = ReflectionTestHelper.CreateGenericList(t);
+            var genericMethod = ReflectionTestHelper.GetGenericMethod(t, typeof(DaypartTimeHelper), methodName);
+            Exception caught = null;
+
+            try
             {
-                new PlanDaypartDto {DaypartCodeId = 1, StartTimeSeconds = 300, EndTimeSeconds = 400},
-                new PlanDaypartDto {DaypartCodeId = 2, StartTimeSeconds = 300, EndTimeSeconds = 400},
-            };
-
-            DaypartTimeHelper.AddOneSecondToEndTime(candidates);
-
-            Assert.AreEqual(2, candidates.Count);
-            Assert.AreEqual(300, candidates[0].StartTimeSeconds);
-            Assert.AreEqual(401, candidates[0].EndTimeSeconds);
-            Assert.AreEqual(300, candidates[1].StartTimeSeconds);
-            Assert.AreEqual(401, candidates[1].EndTimeSeconds);
-        }
-
-        [Test]
-        public void AddOneSecondToEndTime_WithInvalid()
-        {
-            var candidates = new List<PlanDto>
+                genericMethod.Invoke(null, new object[] {candidates});
+            }
+            catch (Exception e)
             {
-                new PlanDto(),
-                new PlanDto()
-            };
+                caught = e;
+            }
 
-            var caught = Assert.Throws<InvalidOperationException>(() => DaypartTimeHelper.AddOneSecondToEndTime(candidates));
-            Assert.AreEqual(caught.Message, "Invalid type provided in list.");
-        }
-
-        [Test]
-        public void SubtractOneSecondToEndTime_WithDaypartCodeDefaultDto()
-        {
-            var candidates = new List<DaypartCodeDefaultDto>
-            {
-                new DaypartCodeDefaultDto
-                {
-                    Id = 1, Code = "DP1", FullName = "Daypart1", DaypartType = DaypartTypeEnum.EntertainmentNonNews,
-                    DefaultStartTimeSeconds = 300, DefaultEndTimeSeconds = 400
-                },
-                new DaypartCodeDefaultDto
-                {
-                    Id = 2, Code = "DP2", FullName = "Daypart2", DaypartType = DaypartTypeEnum.EntertainmentNonNews,
-                    DefaultStartTimeSeconds = 300, DefaultEndTimeSeconds = 400
-                },
-            };
-
-            DaypartTimeHelper.SubtractOneSecondToEndTime(candidates);
-
-            Assert.AreEqual(2, candidates.Count);
-            Assert.AreEqual(300, candidates[0].DefaultStartTimeSeconds);
-            Assert.AreEqual(399, candidates[0].DefaultEndTimeSeconds);
-            Assert.AreEqual(300, candidates[1].DefaultStartTimeSeconds);
-            Assert.AreEqual(399, candidates[1].DefaultEndTimeSeconds);
-        }
-
-        [Test]
-        public void SubtractOneSecondToEndTime_WithPlanDaypartDto()
-        {
-            var candidates = new List<PlanDaypartDto>
-            {
-                new PlanDaypartDto {DaypartCodeId = 1, StartTimeSeconds = 300, EndTimeSeconds = 400},
-                new PlanDaypartDto {DaypartCodeId = 2, StartTimeSeconds = 300, EndTimeSeconds = 400},
-            };
-
-            DaypartTimeHelper.SubtractOneSecondToEndTime(candidates);
-
-            Assert.AreEqual(2, candidates.Count);
-            Assert.AreEqual(300, candidates[0].StartTimeSeconds);
-            Assert.AreEqual(399, candidates[0].EndTimeSeconds);
-            Assert.AreEqual(300, candidates[1].StartTimeSeconds);
-            Assert.AreEqual(399, candidates[1].EndTimeSeconds);
-        }
-
-        [Test]
-        public void SubtractOneSecondToEndTime_WithInvalid()
-        {
-            var candidates = new List<PlanDto>
-            {
-                new PlanDto(),
-                new PlanDto()
-            };
-
-            var caught = Assert.Throws<InvalidOperationException>(() => DaypartTimeHelper.SubtractOneSecondToEndTime(candidates));
-            Assert.AreEqual(caught.Message, "Invalid type provided in list.");
+            Assert.IsNotNull(caught);
+            Assert.IsNotNull(caught.InnerException);
+            Assert.IsTrue(caught.InnerException is InvalidOperationException);
+            Assert.AreEqual(caught.InnerException.Message, "Invalid type provided in list.");
         }
     }
 }
