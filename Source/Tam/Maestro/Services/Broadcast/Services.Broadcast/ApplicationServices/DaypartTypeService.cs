@@ -11,7 +11,7 @@ namespace Services.Broadcast.ApplicationServices
     /// <summary>
     /// Operations for DaypartType data.
     /// </summary>
-    /// <seealso cref="Common.Services.ApplicationServices.IApplicationService" />
+    /// <seealso cref="IApplicationService" />
     public interface IDaypartTypeService : IApplicationService
     {
         /// <summary>
@@ -22,9 +22,9 @@ namespace Services.Broadcast.ApplicationServices
     }
 
     /// <summary>
-    /// Operations for DaypartType data.
+    /// Daypart type service
     /// </summary>
-    /// <seealso cref="Services.Broadcast.ApplicationServices.IDaypartTypeService" />
+    /// <seealso cref="IDaypartTypeService" />
     public class DaypartTypeService : IDaypartTypeService
     {
         ///<inheritdoc/>
@@ -36,7 +36,9 @@ namespace Services.Broadcast.ApplicationServices
                 {
                     Id = (int)e,
                     Display = e.GetDescriptionAttribute()
-                }).ToList();
+                })
+                .OrderBy(x=>x.Display)
+                .ToList();
             return types;
         }
     }

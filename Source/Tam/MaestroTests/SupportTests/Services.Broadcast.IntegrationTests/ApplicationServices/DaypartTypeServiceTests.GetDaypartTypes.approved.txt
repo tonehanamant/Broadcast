@@ -1,11 +1,11 @@
 ﻿[
   {
-    "Display": "News",
-    "Id": 1
-  },
-  {
     "Display": "Entertainment/Non-News",
     "Id": 2
+  },
+  {
+    "Display": "News",
+    "Id": 1
   },
   {
     "Display": "ROS",

@@ -80,7 +80,7 @@ namespace Services.Broadcast.Repositories
         {
             return _InReadUncommitedTransaction(context =>
             {
-                return context.daypart_codes.Where(d => d.is_active).Select(_MapToDaypartCode).ToList();
+                return context.daypart_codes.Where(d => d.is_active).Select(_MapToDaypartCode).OrderBy(x=>x.Code).ToList();
             });
         }
 

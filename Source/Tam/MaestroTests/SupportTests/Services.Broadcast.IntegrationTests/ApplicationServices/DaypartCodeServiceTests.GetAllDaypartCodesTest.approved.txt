@@ -1,13 +1,23 @@
 ﻿[
   {
+    "Code": "DAY",
+    "FullName": "Daytime",
+    "Id": 12
+  },
+  {
+    "Code": "EF",
+    "FullName": "Early Fringe",
+    "Id": 6
+  },
+  {
+    "Code": "EM",
+    "FullName": "Early Morning",
+    "Id": 14
+  },
+  {
     "Code": "EMN",
     "FullName": "Early Morning News",
     "Id": 1
-  },
-  {
-    "Code": "MDN",
-    "FullName": "Midday News",
-    "Id": 2
   },
   {
     "Code": "EN",
@@ -15,19 +25,29 @@
     "Id": 3
   },
   {
-    "Code": "LN",
-    "FullName": "Late News",
-    "Id": 4
-  },
-  {
     "Code": "ENLN",
     "FullName": "Evening News/Late News",
     "Id": 5
   },
   {
-    "Code": "EF",
-    "FullName": "Early Fringe",
-    "Id": 6
+    "Code": "LF",
+    "FullName": "Late Fringe",
+    "Id": 9
+  },
+  {
+    "Code": "LN",
+    "FullName": "Late News",
+    "Id": 4
+  },
+  {
+    "Code": "MDN",
+    "FullName": "Midday News",
+    "Id": 2
+  },
+  {
+    "Code": "OVN",
+    "FullName": "Overnights",
+    "Id": 11
   },
   {
     "Code": "PA",
@@ -40,28 +60,8 @@
     "Id": 8
   },
   {
-    "Code": "LF",
-    "FullName": "Late Fringe",
-    "Id": 9
-  },
-  {
     "Code": "SYN",
     "FullName": "Total Day Syndication",
     "Id": 10
-  },
-  {
-    "Code": "OVN",
-    "FullName": "Overnights",
-    "Id": 11
-  },
-  {
-    "Code": "DAY",
-    "FullName": "Daytime",
-    "Id": 12
-  },
-  {
-    "Code": "EM",
-    "FullName": "Early Morning",
-    "Id": 14
   }
 ]
