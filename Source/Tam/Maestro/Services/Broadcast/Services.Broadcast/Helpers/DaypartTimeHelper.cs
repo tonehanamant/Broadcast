@@ -10,6 +10,12 @@ namespace Services.Broadcast.Helpers
     /// </summary>
     public static class DaypartTimeHelper
     {
+        private static readonly Dictionary<Type,string> _RegisteredTypesAndProperties = new Dictionary<Type, string>
+        {
+            {typeof(DaypartCodeDefaultDto), nameof(DaypartCodeDefaultDto.DefaultEndTimeSeconds)},
+            {typeof(PlanDaypartDto), nameof(PlanDaypartDto.EndTimeSeconds)}
+        };
+
         /// <summary>
         /// Transforms the given candidates from their stored state for display.
         /// </summary>
@@ -17,21 +23,13 @@ namespace Services.Broadcast.Helpers
         public static void AddOneSecondToEndTime<T>(List<T> candidates)
         {
             var incomingType = typeof(T);
-            if (incomingType == typeof(DaypartCodeDefaultDto))
+            if (_RegisteredTypesAndProperties.ContainsKey(incomingType) == false)
             {
-                var items = candidates as List<DaypartCodeDefaultDto>;
-                items.ForEach(c => c.DefaultEndTimeSeconds++);
-                return;
+                throw new InvalidOperationException("Invalid type provided in list.");
             }
 
-            if (incomingType == typeof(PlanDaypartDto))
-            {
-                var items = candidates as List<PlanDaypartDto>;
-                items.ForEach(c => c.EndTimeSeconds++);
-                return;
-            }
-
-            throw new InvalidOperationException("Invalid type provided in list.");
+            var pi = incomingType.GetProperty(_RegisteredTypesAndProperties[incomingType]);
+            candidates.ForEach(c => pi.SetValue(c, (int)pi.GetValue(c) + 1));
         }
 
         /// <summary>
@@ -43,21 +41,13 @@ namespace Services.Broadcast.Helpers
         public static void SubtractOneSecondToEndTime<T>(List<T> candidates)
         {
             var incomingType = typeof(T);
-            if (incomingType == typeof(DaypartCodeDefaultDto))
+            if (_RegisteredTypesAndProperties.ContainsKey(incomingType) == false)
             {
-                var items = candidates as List<DaypartCodeDefaultDto>;
-                items.ForEach(c => c.DefaultEndTimeSeconds--);
-                return;
+                throw new InvalidOperationException("Invalid type provided in list.");
             }
 
-            if (incomingType == typeof(PlanDaypartDto))
-            {
-                var items = candidates as List<PlanDaypartDto>;
-                items.ForEach(c => c.EndTimeSeconds--);
-                return;
-            }
-
-            throw new InvalidOperationException("Invalid type provided in list.");
+            var pi = incomingType.GetProperty(_RegisteredTypesAndProperties[incomingType]);
+            candidates.ForEach(c => pi.SetValue(c, (int)pi.GetValue(c) - 1));
         }
     }
 }
