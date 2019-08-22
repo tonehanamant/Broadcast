@@ -1,5 +1,6 @@
 ﻿using System.Runtime.Serialization;
 using System.Collections.Generic;
+using System.DirectoryServices.AccountManagement;
 using System.Security.Principal;
 using Tam.Maestro.Web.Common;
 using System.Web;
@@ -28,5 +29,7 @@ namespace BroadcastComposerWeb.Controllers
         {
             get { return HttpContext.Current.Request.LogonUserIdentity; }
         }
+
+        public string DisplayName => UserPrincipal.Current.DisplayName;
     }
 }

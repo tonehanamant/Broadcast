@@ -165,7 +165,7 @@ namespace BroadcastComposerWeb.Controllers
             try
             {
                 var result = _ApplicationServiceFactory.GetApplicationService<IInventoryService>().IsProprietaryFile(saveRequest.FileName)
-                    ? _ApplicationServiceFactory.GetApplicationService<IProprietaryInventoryService>().SaveProprietaryInventoryFile(saveRequest, Identity.Name, DateTime.Now)
+                    ? _ApplicationServiceFactory.GetApplicationService<IProprietaryInventoryService>().SaveProprietaryInventoryFile(saveRequest, DisplayName, DateTime.Now)
                     : _ApplicationServiceFactory.GetApplicationService<IInventoryService>().SaveInventoryFile(
                         new InventoryFileSaveRequest
                         {
@@ -173,7 +173,7 @@ namespace BroadcastComposerWeb.Controllers
                             StreamData = saveRequest.StreamData,
                             InventorySource = "Open Market"
                         },
-                        Identity.Name, DateTime.Now);
+                        DisplayName, DateTime.Now);
 
                 return new BaseResponse<InventoryFileSaveResult>()
                 {
