@@ -144,7 +144,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<inventory_summary_gaps> inventory_summary_gaps { get; set; }
         public virtual DbSet<inventory_summary_quarters> inventory_summary_quarters { get; set; }
         public virtual DbSet<inventory_summary_quarter_details> inventory_summary_quarter_details { get; set; }
-        public virtual DbSet<plan> plans { get; set; }
         public virtual DbSet<plan_flight_hiatus> plan_flight_hiatus { get; set; }
         public virtual DbSet<plan_dayparts> plan_dayparts { get; set; }
         public virtual DbSet<plan_secondary_audiences> plan_secondary_audiences { get; set; }
@@ -154,5 +153,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<plan_weekly_breakdown> plan_weekly_breakdown { get; set; }
         public virtual DbSet<plan_summary> plan_summary { get; set; }
         public virtual DbSet<plan_summary_quarters> plan_summary_quarters { get; set; }
+        public virtual DbSet<plan> plans { get; set; }
     }
 }

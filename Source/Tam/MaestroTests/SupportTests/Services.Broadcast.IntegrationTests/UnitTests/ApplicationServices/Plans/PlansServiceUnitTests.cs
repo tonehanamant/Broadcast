@@ -184,7 +184,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 ShareBookId = 437,
                 Budget = 100m,
                 CPM = 12m,
-                Delivery = 100d,
+                DeliveryImpressions = 100d,
                 CoverageGoalPercent = 80.5,
                 AvailableMarkets = new List<PlanAvailableMarketDto>
                 {

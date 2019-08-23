@@ -35,6 +35,8 @@
   "CampaignId": 1,
   "CoverageGoalPercent": null,
   "CPM": 12.0000,
+  "CPP": 12.0000,
+  "Currency": 1,
   "Dayparts": [
     {
       "DaypartCodeId": 2,
@@ -49,7 +51,8 @@
       "WeightingGoalPercent": 33.2
     }
   ],
-  "Delivery": 100.0,
+  "DeliveryImpressions": 100.0,
+  "DeliveryRatingPoints": 100.0,
   "Equivalized": true,
   "FlightEndDate": "2019-07-31T00:00:00",
   "FlightHiatusDays": [

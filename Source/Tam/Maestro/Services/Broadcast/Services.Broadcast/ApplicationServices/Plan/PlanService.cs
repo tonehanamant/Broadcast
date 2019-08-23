@@ -119,7 +119,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 _PlanRepository.SavePlan(plan);
             }
 
-            DispatchPlanAggregation(plan);
+            _DispatchPlanAggregation(plan);
 
             return plan.Id;
         }
@@ -356,15 +356,14 @@ namespace Services.Broadcast.ApplicationServices.Plan
             return 7 - hiatusDaysInWeek.Count();
         }
 
-        private void DispatchPlanAggregation(PlanDto plan)
+        private void _DispatchPlanAggregation(PlanDto plan)
         {
             _PlanSummaryRepository.SetProcessingStatusForPlanSummary(plan.Id, PlanAggregationProcessingStatusEnum.InProgress);
-            Task.Factory.StartNew(() => AggregatePlan(plan));
+            Task.Factory.StartNew(() => _AggregatePlan(plan));
         }
 
-        private void AggregatePlan(object context)
+        private void _AggregatePlan(PlanDto plan)
         {
-            var plan = (PlanDto)context;
             try
             {
                 // TODO: remove this after PRI-11436 is implemented	

@@ -9,7 +9,6 @@ namespace Services.Broadcast.Entities.Plan
         public double? DeliveryRatingPoints { get; set; }
         public decimal? CPM { get; set; }
         public decimal? CPP { get; set; }
-        public PlanCurrenciesEnum Currency { get; set; }
         public int AudienceId { get; set; }
         public int MediaMonthId { get; set; }
     }

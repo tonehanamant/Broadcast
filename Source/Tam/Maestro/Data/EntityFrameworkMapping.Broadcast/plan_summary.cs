@@ -31,7 +31,7 @@ namespace EntityFrameworkMapping.Broadcast
         public string product_name { get; set; }
         public string audience_name { get; set; }
     
-        public virtual plan plan { get; set; }
         public virtual ICollection<plan_summary_quarters> plan_summary_quarters { get; set; }
+        public virtual plan plan { get; set; }
     }
 }

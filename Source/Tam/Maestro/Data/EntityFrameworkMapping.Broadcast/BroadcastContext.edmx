@@ -711,12 +711,15 @@
           <Property Name="share_book_id" Type="int" Nullable="false" />
           <Property Name="hut_book_id" Type="int" />
           <Property Name="budget" Type="money" />
-          <Property Name="delivery" Type="float" />
+          <Property Name="delivery_impressions" Type="float" />
           <Property Name="cpm" Type="money" />
           <Property Name="coverage_goal_percent" Type="float" />
           <Property Name="goal_breakdown_type" Type="int" Nullable="false" />
           <Property Name="modified_by" Type="varchar" MaxLength="63" Nullable="false" />
           <Property Name="modified_date" Type="datetime" Nullable="false" />
+          <Property Name="delivery_rating_points" Type="float" />
+          <Property Name="cpp" Type="money" />
+          <Property Name="currency" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="post_file_demos">
           <Key>
@@ -5962,48 +5965,15 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="inventory_summary_quarters" EntitySet="inventory_summary_quarters" />
             <End Role="inventory_summary_quarter_details" EntitySet="inventory_summary_quarter_details" />
           </AssociationSet>
-          <EntitySet Name="plans" EntityType="BroadcastModel.plan" />
-          <AssociationSet Name="FK_plans_campaigns" Association="BroadcastModel.FK_plans_campaigns">
-            <End Role="campaign" EntitySet="campaigns" />
-            <End Role="plan" EntitySet="plans" />
-          </AssociationSet>
-          <AssociationSet Name="FK_plans_spot_lengths" Association="BroadcastModel.FK_plans_spot_lengths">
-            <End Role="spot_lengths" EntitySet="spot_lengths" />
-            <End Role="plan" EntitySet="plans" />
-          </AssociationSet>
           <EntitySet Name="plan_flight_hiatus" EntityType="BroadcastModel.plan_flight_hiatus" />
-          <AssociationSet Name="FK_plan_flight_hiatus_plans" Association="BroadcastModel.FK_plan_flight_hiatus_plans">
-            <End Role="plan" EntitySet="plans" />
-            <End Role="plan_flight_hiatus" EntitySet="plan_flight_hiatus" />
-          </AssociationSet>
-          <AssociationSet Name="FK_plans_audiences" Association="BroadcastModel.FK_plans_audiences">
-            <End Role="audience" EntitySet="audiences" />
-            <End Role="plan" EntitySet="plans" />
-          </AssociationSet>
-          <AssociationSet Name="FK_plans_media_months" Association="BroadcastModel.FK_plans_media_months">
-            <End Role="media_months" EntitySet="media_months" />
-            <End Role="plan" EntitySet="plans" />
-          </AssociationSet>
           <EntitySet Name="plan_dayparts" EntityType="BroadcastModel.plan_dayparts" />
           <AssociationSet Name="FK_plan_dayparts_daypart_codes" Association="BroadcastModel.FK_plan_dayparts_daypart_codes">
             <End Role="daypart_codes" EntitySet="daypart_codes" />
             <End Role="plan_dayparts" EntitySet="plan_dayparts" />
           </AssociationSet>
-          <AssociationSet Name="FK_plans_media_months_hut" Association="BroadcastModel.FK_plans_media_months_hut">
-            <End Role="media_months" EntitySet="media_months" />
-            <End Role="plan" EntitySet="plans" />
-          </AssociationSet>
-          <AssociationSet Name="FK_plan_dayparts_plans" Association="BroadcastModel.FK_plan_dayparts_plans">
-            <End Role="plan" EntitySet="plans" />
-            <End Role="plan_dayparts" EntitySet="plan_dayparts" />
-          </AssociationSet>
           <EntitySet Name="plan_secondary_audiences" EntityType="BroadcastModel.plan_secondary_audiences" />
           <AssociationSet Name="FK_plan_secondary_audiences_audiences" Association="BroadcastModel.FK_plan_secondary_audiences_audiences">
             <End Role="audience" EntitySet="audiences" />
-            <End Role="plan_secondary_audiences" EntitySet="plan_secondary_audiences" />
-          </AssociationSet>
-          <AssociationSet Name="FK_plan_secondary_audiences_plans" Association="BroadcastModel.FK_plan_secondary_audiences_plans">
-            <End Role="plan" EntitySet="plans" />
             <End Role="plan_secondary_audiences" EntitySet="plan_secondary_audiences" />
           </AssociationSet>
           <EntitySet Name="plan_available_markets" EntityType="BroadcastModel.plan_available_markets" />
@@ -6014,14 +5984,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           </AssociationSet>
           <AssociationSet Name="FK_plan_blackout_markets_markets" Association="BroadcastModel.FK_plan_blackout_markets_markets">
             <End Role="market" EntitySet="markets" />
-            <End Role="plan_blackout_markets" EntitySet="plan_blackout_markets" />
-          </AssociationSet>
-          <AssociationSet Name="FK_plan_available_markets_plans" Association="BroadcastModel.FK_plan_available_markets_plans">
-            <End Role="plan" EntitySet="plans" />
-            <End Role="plan_available_markets" EntitySet="plan_available_markets" />
-          </AssociationSet>
-          <AssociationSet Name="FK_plan_blackout_markets_plans" Association="BroadcastModel.FK_plan_blackout_markets_plans">
-            <End Role="plan" EntitySet="plans" />
             <End Role="plan_blackout_markets" EntitySet="plan_blackout_markets" />
           </AssociationSet>
           <AssociationSet Name="FK_plan_available_markets_market_coverage_file" Association="BroadcastModel.FK_plan_available_markets_market_coverage_file">
@@ -6037,24 +5999,65 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="media_weeks" EntitySet="media_weeks" />
             <End Role="plan_weeks" EntitySet="plan_weeks" />
           </AssociationSet>
-          <AssociationSet Name="FK_plan_weeks_plans" Association="BroadcastModel.FK_plan_weeks_plans">
-            <End Role="plan" EntitySet="plans" />
-            <End Role="plan_weeks" EntitySet="plan_weeks" />
-          </AssociationSet>
           <EntitySet Name="plan_weekly_breakdown" EntityType="BroadcastModel.plan_weekly_breakdown" />
-          <AssociationSet Name="FK_plan_weekly_breakdown_plans" Association="BroadcastModel.FK_plan_weekly_breakdown_plans">
-            <End Role="plan" EntitySet="plans" />
-            <End Role="plan_weekly_breakdown" EntitySet="plan_weekly_breakdown" />
-          </AssociationSet>
           <EntitySet Name="plan_summary" EntityType="BroadcastModel.plan_summary" />
-          <AssociationSet Name="FK_plan_summary_plans" Association="BroadcastModel.FK_plan_summary_plans">
-            <End Role="plan" EntitySet="plans" />
-            <End Role="plan_summary" EntitySet="plan_summary" />
-          </AssociationSet>
           <EntitySet Name="plan_summary_quarters" EntityType="BroadcastModel.plan_summary_quarters" />
           <AssociationSet Name="FK_plan_summary_quarters_plan_summary" Association="BroadcastModel.FK_plan_summary_quarters_plan_summary">
             <End Role="plan_summary" EntitySet="plan_summary" />
             <End Role="plan_summary_quarters" EntitySet="plan_summary_quarters" />
+          </AssociationSet>
+          <EntitySet Name="plans" EntityType="BroadcastModel.plan" />
+          <AssociationSet Name="FK_plans_audiences" Association="BroadcastModel.FK_plans_audiences">
+            <End Role="audience" EntitySet="audiences" />
+            <End Role="plan" EntitySet="plans" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plans_campaigns" Association="BroadcastModel.FK_plans_campaigns">
+            <End Role="campaign" EntitySet="campaigns" />
+            <End Role="plan" EntitySet="plans" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plans_media_months" Association="BroadcastModel.FK_plans_media_months">
+            <End Role="media_months" EntitySet="media_months" />
+            <End Role="plan" EntitySet="plans" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plans_media_months_hut" Association="BroadcastModel.FK_plans_media_months_hut">
+            <End Role="media_months" EntitySet="media_months" />
+            <End Role="plan" EntitySet="plans" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_available_markets_plans" Association="BroadcastModel.FK_plan_available_markets_plans">
+            <End Role="plan" EntitySet="plans" />
+            <End Role="plan_available_markets" EntitySet="plan_available_markets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_blackout_markets_plans" Association="BroadcastModel.FK_plan_blackout_markets_plans">
+            <End Role="plan" EntitySet="plans" />
+            <End Role="plan_blackout_markets" EntitySet="plan_blackout_markets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_dayparts_plans" Association="BroadcastModel.FK_plan_dayparts_plans">
+            <End Role="plan" EntitySet="plans" />
+            <End Role="plan_dayparts" EntitySet="plan_dayparts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_flight_hiatus_plans" Association="BroadcastModel.FK_plan_flight_hiatus_plans">
+            <End Role="plan" EntitySet="plans" />
+            <End Role="plan_flight_hiatus" EntitySet="plan_flight_hiatus" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_secondary_audiences_plans" Association="BroadcastModel.FK_plan_secondary_audiences_plans">
+            <End Role="plan" EntitySet="plans" />
+            <End Role="plan_secondary_audiences" EntitySet="plan_secondary_audiences" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_summary_plans" Association="BroadcastModel.FK_plan_summary_plans">
+            <End Role="plan" EntitySet="plans" />
+            <End Role="plan_summary" EntitySet="plan_summary" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_weekly_breakdown_plans" Association="BroadcastModel.FK_plan_weekly_breakdown_plans">
+            <End Role="plan" EntitySet="plans" />
+            <End Role="plan_weekly_breakdown" EntitySet="plan_weekly_breakdown" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_weeks_plans" Association="BroadcastModel.FK_plan_weeks_plans">
+            <End Role="plan" EntitySet="plans" />
+            <End Role="plan_weeks" EntitySet="plan_weeks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plans_spot_lengths" Association="BroadcastModel.FK_plans_spot_lengths">
+            <End Role="spot_lengths" EntitySet="spot_lengths" />
+            <End Role="plan" EntitySet="plans" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="audience_audiences">
@@ -6099,8 +6102,8 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="station_inventory_manifest_audiences" Relationship="BroadcastModel.FK_station_inventory_manifest_audiences_audiences" FromRole="audience" ToRole="station_inventory_manifest_audiences" />
           <NavigationProperty Name="inventory_file_proprietary_header" Relationship="BroadcastModel.FK_inventory_file_proprietary_header_audiences" FromRole="audience" ToRole="inventory_file_proprietary_header" />
           <NavigationProperty Name="audience_maps" Relationship="BroadcastModel.FK_audience_maps_audiences" FromRole="audience" ToRole="audience_maps" />
-          <NavigationProperty Name="plans" Relationship="BroadcastModel.FK_plans_audiences" FromRole="audience" ToRole="plan" />
           <NavigationProperty Name="plan_secondary_audiences" Relationship="BroadcastModel.FK_plan_secondary_audiences_audiences" FromRole="audience" ToRole="plan_secondary_audiences" />
+          <NavigationProperty Name="plans" Relationship="BroadcastModel.FK_plans_audiences" FromRole="audience" ToRole="plan" />
         </EntityType>
         <EntityType Name="bvs_file_details">
           <Key>
@@ -10165,72 +10168,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="plan">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="campaign_id" Type="Int32" Nullable="false" />
-          <Property Name="name" Type="String" MaxLength="265" FixedLength="false" Unicode="true" />
-          <Property Name="product_id" Type="Int32" Nullable="false" />
-          <Property Name="spot_length_id" Type="Int32" Nullable="false" />
-          <Property Name="equivalized" Type="Boolean" Nullable="false" />
-          <Property Name="status" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="campaign" Relationship="BroadcastModel.FK_plans_campaigns" FromRole="plan" ToRole="campaign" />
-          <NavigationProperty Name="spot_lengths" Relationship="BroadcastModel.FK_plans_spot_lengths" FromRole="plan" ToRole="spot_lengths" />
-          <Property Name="created_by" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
-          <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="flight_start_date" Type="DateTime" Precision="3" />
-          <Property Name="flight_end_date" Type="DateTime" Precision="3" />
-          <Property Name="flight_notes" Type="String" MaxLength="1024" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="plan_flight_hiatus" Relationship="BroadcastModel.FK_plan_flight_hiatus_plans" FromRole="plan" ToRole="plan_flight_hiatus" />
-          <Property Name="audience_id" Type="Int32" Nullable="false" />
-          <Property Name="share_book_id" Type="Int32" Nullable="false" />
-          <Property Name="audience_type" Type="Int32" Nullable="false" />
-          <Property Name="posting_type" Type="Int32" Nullable="false" />
-          <Property Name="hut_book_id" Type="Int32" />
-          <Property Name="budget" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="delivery" Type="Double" />
-          <Property Name="cpm" Type="Decimal" Precision="19" Scale="4" />
-          <NavigationProperty Name="audience" Relationship="BroadcastModel.FK_plans_audiences" FromRole="plan" ToRole="audience" />
-          <NavigationProperty Name="media_months" Relationship="BroadcastModel.FK_plans_media_months" FromRole="plan" ToRole="media_months" />
-          <NavigationProperty Name="media_months1" Relationship="BroadcastModel.FK_plans_media_months_hut" FromRole="plan" ToRole="media_months" />
-          <NavigationProperty Name="plan_dayparts" Relationship="BroadcastModel.FK_plan_dayparts_plans" FromRole="plan" ToRole="plan_dayparts" />
-          <NavigationProperty Name="plan_secondary_audiences" Relationship="BroadcastModel.FK_plan_secondary_audiences_plans" FromRole="plan" ToRole="plan_secondary_audiences" />
-          <Property Name="coverage_goal_percent" Type="Double" />
-          <NavigationProperty Name="plan_available_markets" Relationship="BroadcastModel.FK_plan_available_markets_plans" FromRole="plan" ToRole="plan_available_markets" />
-          <NavigationProperty Name="plan_blackout_markets" Relationship="BroadcastModel.FK_plan_blackout_markets_plans" FromRole="plan" ToRole="plan_blackout_markets" />
-          <Property Name="modified_by" Type="String" Nullable="false" MaxLength="63" Unicode="false" FixedLength="false" />
-          <Property Name="modified_date" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="goal_breakdown_type" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="plan_weeks" Relationship="BroadcastModel.FK_plan_weeks_plans" FromRole="plan" ToRole="plan_weeks" />
-          <NavigationProperty Name="plan_weekly_breakdown" Relationship="BroadcastModel.FK_plan_weekly_breakdown_plans" FromRole="plan" ToRole="plan_weekly_breakdown" />
-          <NavigationProperty Name="plan_summary" Relationship="BroadcastModel.FK_plan_summary_plans" FromRole="plan" ToRole="plan_summary" />
-        </EntityType>
-        <Association Name="FK_plans_campaigns">
-          <End Type="BroadcastModel.campaign" Role="campaign" Multiplicity="1" />
-          <End Type="BroadcastModel.plan" Role="plan" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="campaign">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="plan">
-              <PropertyRef Name="campaign_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_plans_spot_lengths">
-          <End Type="BroadcastModel.spot_lengths" Role="spot_lengths" Multiplicity="1" />
-          <End Type="BroadcastModel.plan" Role="plan" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="spot_lengths">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="plan">
-              <PropertyRef Name="spot_length_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="plan_flight_hiatus">
           <Key>
             <PropertyRef Name="id" />
@@ -10240,48 +10177,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="plan_id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="plan" Relationship="BroadcastModel.FK_plan_flight_hiatus_plans" FromRole="plan_flight_hiatus" ToRole="plan" />
         </EntityType>
-        <Association Name="FK_plan_flight_hiatus_plans">
-          <End Type="BroadcastModel.plan" Role="plan" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="BroadcastModel.plan_flight_hiatus" Role="plan_flight_hiatus" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="plan">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="plan_flight_hiatus">
-              <PropertyRef Name="plan_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_plans_audiences">
-          <End Type="BroadcastModel.audience" Role="audience" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="BroadcastModel.plan" Role="plan" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="audience">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="plan">
-              <PropertyRef Name="audience_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_plans_media_months">
-          <End Type="BroadcastModel.media_months" Role="media_months" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="BroadcastModel.plan" Role="plan" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="media_months">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="plan">
-              <PropertyRef Name="share_book_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="plan_dayparts">
           <Key>
             <PropertyRef Name="id" />
@@ -10304,32 +10199,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Principal>
             <Dependent Role="plan_dayparts">
               <PropertyRef Name="daypart_code_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_plans_media_months_hut">
-          <End Type="BroadcastModel.media_months" Role="media_months" Multiplicity="0..1" />
-          <End Type="BroadcastModel.plan" Role="plan" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="media_months">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="plan">
-              <PropertyRef Name="hut_book_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_plan_dayparts_plans">
-          <End Type="BroadcastModel.plan" Role="plan" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="BroadcastModel.plan_dayparts" Role="plan_dayparts" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="plan">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="plan_dayparts">
-              <PropertyRef Name="plan_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -10356,20 +10225,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_plan_secondary_audiences_plans">
-          <End Type="BroadcastModel.plan" Role="plan" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="BroadcastModel.plan_secondary_audiences" Role="plan_secondary_audiences" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="plan">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="plan_secondary_audiences">
-              <PropertyRef Name="plan_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="plan_available_markets">
           <Key>
             <PropertyRef Name="id" />
@@ -10379,11 +10234,11 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="market_code" Type="Int16" Nullable="false" />
           <Property Name="share_of_voice_percent" Type="Double" />
           <NavigationProperty Name="market" Relationship="BroadcastModel.FK_plan_available_markets_markets" FromRole="plan_available_markets" ToRole="market" />
-          <NavigationProperty Name="plan" Relationship="BroadcastModel.FK_plan_available_markets_plans" FromRole="plan_available_markets" ToRole="plan" />
           <Property Name="market_coverage_file_id" Type="Int32" Nullable="false" />
           <Property Name="rank" Type="Int32" Nullable="false" />
           <Property Name="percentage_of_us" Type="Double" Nullable="false" />
           <NavigationProperty Name="market_coverage_files" Relationship="BroadcastModel.FK_plan_available_markets_market_coverage_file" FromRole="plan_available_markets" ToRole="market_coverage_files" />
+          <NavigationProperty Name="plan" Relationship="BroadcastModel.FK_plan_available_markets_plans" FromRole="plan_available_markets" ToRole="plan" />
         </EntityType>
         <EntityType Name="plan_blackout_markets">
           <Key>
@@ -10393,11 +10248,11 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="plan_id" Type="Int32" Nullable="false" />
           <Property Name="market_code" Type="Int16" Nullable="false" />
           <NavigationProperty Name="market" Relationship="BroadcastModel.FK_plan_blackout_markets_markets" FromRole="plan_blackout_markets" ToRole="market" />
-          <NavigationProperty Name="plan" Relationship="BroadcastModel.FK_plan_blackout_markets_plans" FromRole="plan_blackout_markets" ToRole="plan" />
           <Property Name="market_coverage_file_id" Type="Int32" Nullable="false" />
           <Property Name="rank" Type="Int32" Nullable="false" />
           <Property Name="percentage_of_us" Type="Double" Nullable="false" />
           <NavigationProperty Name="market_coverage_files" Relationship="BroadcastModel.FK_plan_blackout_markets_market_coverage_file" FromRole="plan_blackout_markets" ToRole="market_coverage_files" />
+          <NavigationProperty Name="plan" Relationship="BroadcastModel.FK_plan_blackout_markets_plans" FromRole="plan_blackout_markets" ToRole="plan" />
         </EntityType>
         <Association Name="FK_plan_available_markets_markets">
           <End Type="BroadcastModel.market" Role="market" Multiplicity="1" />
@@ -10420,34 +10275,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Principal>
             <Dependent Role="plan_blackout_markets">
               <PropertyRef Name="market_code" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_plan_available_markets_plans">
-          <End Type="BroadcastModel.plan" Role="plan" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="BroadcastModel.plan_available_markets" Role="plan_available_markets" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="plan">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="plan_available_markets">
-              <PropertyRef Name="plan_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_plan_blackout_markets_plans">
-          <End Type="BroadcastModel.plan" Role="plan" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="BroadcastModel.plan_blackout_markets" Role="plan_blackout_markets" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="plan">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="plan_blackout_markets">
-              <PropertyRef Name="plan_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -10501,20 +10328,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_plan_weeks_plans">
-          <End Type="BroadcastModel.plan" Role="plan" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="BroadcastModel.plan_weeks" Role="plan_weeks" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="plan">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="plan_weeks">
-              <PropertyRef Name="plan_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="plan_weekly_breakdown">
           <Key>
             <PropertyRef Name="id" />
@@ -10530,20 +10343,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="share_of_voice" Type="Double" Nullable="false" />
           <NavigationProperty Name="plan" Relationship="BroadcastModel.FK_plan_weekly_breakdown_plans" FromRole="plan_weekly_breakdown" ToRole="plan" />
         </EntityType>
-        <Association Name="FK_plan_weekly_breakdown_plans">
-          <End Type="BroadcastModel.plan" Role="plan" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="BroadcastModel.plan_weekly_breakdown" Role="plan_weekly_breakdown" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="plan">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="plan_weekly_breakdown">
-              <PropertyRef Name="plan_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="plan_summary">
           <Key>
             <PropertyRef Name="id" />
@@ -10559,23 +10358,9 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="blackout_market_total_us_coverage_percent" Type="Double" />
           <Property Name="product_name" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
           <Property Name="audience_name" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="plan" Relationship="BroadcastModel.FK_plan_summary_plans" FromRole="plan_summary" ToRole="plan" />
           <NavigationProperty Name="plan_summary_quarters" Relationship="BroadcastModel.FK_plan_summary_quarters_plan_summary" FromRole="plan_summary" ToRole="plan_summary_quarters" />
+          <NavigationProperty Name="plan" Relationship="BroadcastModel.FK_plan_summary_plans" FromRole="plan_summary" ToRole="plan" />
         </EntityType>
-        <Association Name="FK_plan_summary_plans">
-          <End Type="BroadcastModel.plan" Role="plan" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="BroadcastModel.plan_summary" Role="plan_summary" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="plan">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="plan_summary">
-              <PropertyRef Name="plan_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="plan_summary_quarters">
           <Key>
             <PropertyRef Name="id" />
@@ -10597,6 +10382,225 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Principal>
             <Dependent Role="plan_summary_quarters">
               <PropertyRef Name="plan_summary_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="plan">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="campaign_id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="265" FixedLength="false" Unicode="true" />
+          <Property Name="product_id" Type="Int32" Nullable="false" />
+          <Property Name="spot_length_id" Type="Int32" Nullable="false" />
+          <Property Name="equivalized" Type="Boolean" Nullable="false" />
+          <Property Name="status" Type="Int32" Nullable="false" />
+          <Property Name="created_by" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
+          <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="flight_start_date" Type="DateTime" Precision="3" />
+          <Property Name="flight_end_date" Type="DateTime" Precision="3" />
+          <Property Name="flight_notes" Type="String" MaxLength="1024" FixedLength="false" Unicode="true" />
+          <Property Name="audience_type" Type="Int32" Nullable="false" />
+          <Property Name="posting_type" Type="Int32" Nullable="false" />
+          <Property Name="audience_id" Type="Int32" Nullable="false" />
+          <Property Name="share_book_id" Type="Int32" Nullable="false" />
+          <Property Name="hut_book_id" Type="Int32" />
+          <Property Name="budget" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="delivery_impressions" Type="Double" />
+          <Property Name="cpm" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="coverage_goal_percent" Type="Double" />
+          <Property Name="goal_breakdown_type" Type="Int32" Nullable="false" />
+          <Property Name="modified_by" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
+          <Property Name="modified_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="delivery_rating_points" Type="Double" />
+          <Property Name="cpp" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="currency" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="audience" Relationship="BroadcastModel.FK_plans_audiences" FromRole="plan" ToRole="audience" />
+          <NavigationProperty Name="campaign" Relationship="BroadcastModel.FK_plans_campaigns" FromRole="plan" ToRole="campaign" />
+          <NavigationProperty Name="media_months" Relationship="BroadcastModel.FK_plans_media_months" FromRole="plan" ToRole="media_months" />
+          <NavigationProperty Name="media_months1" Relationship="BroadcastModel.FK_plans_media_months_hut" FromRole="plan" ToRole="media_months" />
+          <NavigationProperty Name="plan_available_markets" Relationship="BroadcastModel.FK_plan_available_markets_plans" FromRole="plan" ToRole="plan_available_markets" />
+          <NavigationProperty Name="plan_blackout_markets" Relationship="BroadcastModel.FK_plan_blackout_markets_plans" FromRole="plan" ToRole="plan_blackout_markets" />
+          <NavigationProperty Name="plan_dayparts" Relationship="BroadcastModel.FK_plan_dayparts_plans" FromRole="plan" ToRole="plan_dayparts" />
+          <NavigationProperty Name="plan_flight_hiatus" Relationship="BroadcastModel.FK_plan_flight_hiatus_plans" FromRole="plan" ToRole="plan_flight_hiatus" />
+          <NavigationProperty Name="plan_secondary_audiences" Relationship="BroadcastModel.FK_plan_secondary_audiences_plans" FromRole="plan" ToRole="plan_secondary_audiences" />
+          <NavigationProperty Name="plan_summary" Relationship="BroadcastModel.FK_plan_summary_plans" FromRole="plan" ToRole="plan_summary" />
+          <NavigationProperty Name="plan_weekly_breakdown" Relationship="BroadcastModel.FK_plan_weekly_breakdown_plans" FromRole="plan" ToRole="plan_weekly_breakdown" />
+          <NavigationProperty Name="plan_weeks" Relationship="BroadcastModel.FK_plan_weeks_plans" FromRole="plan" ToRole="plan_weeks" />
+          <NavigationProperty Name="spot_lengths" Relationship="BroadcastModel.FK_plans_spot_lengths" FromRole="plan" ToRole="spot_lengths" />
+        </EntityType>
+        <Association Name="FK_plans_audiences">
+          <End Type="BroadcastModel.audience" Role="audience" Multiplicity="1" />
+          <End Type="BroadcastModel.plan" Role="plan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="audience">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan">
+              <PropertyRef Name="audience_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plans_campaigns">
+          <End Type="BroadcastModel.campaign" Role="campaign" Multiplicity="1" />
+          <End Type="BroadcastModel.plan" Role="plan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="campaign">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan">
+              <PropertyRef Name="campaign_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plans_media_months">
+          <End Type="BroadcastModel.media_months" Role="media_months" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BroadcastModel.plan" Role="plan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="media_months">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan">
+              <PropertyRef Name="share_book_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plans_media_months_hut">
+          <End Type="BroadcastModel.media_months" Role="media_months" Multiplicity="0..1" />
+          <End Type="BroadcastModel.plan" Role="plan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="media_months">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan">
+              <PropertyRef Name="hut_book_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_available_markets_plans">
+          <End Type="BroadcastModel.plan" Role="plan" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BroadcastModel.plan_available_markets" Role="plan_available_markets" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="plan">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_available_markets">
+              <PropertyRef Name="plan_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_blackout_markets_plans">
+          <End Type="BroadcastModel.plan" Role="plan" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BroadcastModel.plan_blackout_markets" Role="plan_blackout_markets" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="plan">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_blackout_markets">
+              <PropertyRef Name="plan_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_dayparts_plans">
+          <End Type="BroadcastModel.plan" Role="plan" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BroadcastModel.plan_dayparts" Role="plan_dayparts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="plan">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_dayparts">
+              <PropertyRef Name="plan_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_flight_hiatus_plans">
+          <End Type="BroadcastModel.plan" Role="plan" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BroadcastModel.plan_flight_hiatus" Role="plan_flight_hiatus" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="plan">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_flight_hiatus">
+              <PropertyRef Name="plan_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_secondary_audiences_plans">
+          <End Type="BroadcastModel.plan" Role="plan" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BroadcastModel.plan_secondary_audiences" Role="plan_secondary_audiences" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="plan">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_secondary_audiences">
+              <PropertyRef Name="plan_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_summary_plans">
+          <End Type="BroadcastModel.plan" Role="plan" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BroadcastModel.plan_summary" Role="plan_summary" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="plan">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_summary">
+              <PropertyRef Name="plan_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_weekly_breakdown_plans">
+          <End Type="BroadcastModel.plan" Role="plan" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BroadcastModel.plan_weekly_breakdown" Role="plan_weekly_breakdown" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="plan">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_weekly_breakdown">
+              <PropertyRef Name="plan_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_weeks_plans">
+          <End Type="BroadcastModel.plan" Role="plan" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BroadcastModel.plan_weeks" Role="plan_weeks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="plan">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_weeks">
+              <PropertyRef Name="plan_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plans_spot_lengths">
+          <End Type="BroadcastModel.spot_lengths" Role="spot_lengths" Multiplicity="1" />
+          <End Type="BroadcastModel.plan" Role="plan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="spot_lengths">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan">
+              <PropertyRef Name="spot_length_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -12250,36 +12254,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="plans">
-            <EntityTypeMapping TypeName="BroadcastModel.plan">
-              <MappingFragment StoreEntitySet="plans">
-                <ScalarProperty Name="modified_date" ColumnName="modified_date" />
-                <ScalarProperty Name="modified_by" ColumnName="modified_by" />
-                <ScalarProperty Name="goal_breakdown_type" ColumnName="goal_breakdown_type" />
-                <ScalarProperty Name="coverage_goal_percent" ColumnName="coverage_goal_percent" />
-                <ScalarProperty Name="cpm" ColumnName="cpm" />
-                <ScalarProperty Name="delivery" ColumnName="delivery" />
-                <ScalarProperty Name="budget" ColumnName="budget" />
-                <ScalarProperty Name="hut_book_id" ColumnName="hut_book_id" />
-                <ScalarProperty Name="posting_type" ColumnName="posting_type" />
-                <ScalarProperty Name="audience_type" ColumnName="audience_type" />
-                <ScalarProperty Name="share_book_id" ColumnName="share_book_id" />
-                <ScalarProperty Name="audience_id" ColumnName="audience_id" />
-                <ScalarProperty Name="flight_notes" ColumnName="flight_notes" />
-                <ScalarProperty Name="flight_end_date" ColumnName="flight_end_date" />
-                <ScalarProperty Name="flight_start_date" ColumnName="flight_start_date" />
-                <ScalarProperty Name="created_date" ColumnName="created_date" />
-                <ScalarProperty Name="created_by" ColumnName="created_by" />
-                <ScalarProperty Name="status" ColumnName="status" />
-                <ScalarProperty Name="equivalized" ColumnName="equivalized" />
-                <ScalarProperty Name="spot_length_id" ColumnName="spot_length_id" />
-                <ScalarProperty Name="product_id" ColumnName="product_id" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="campaign_id" ColumnName="campaign_id" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="plan_flight_hiatus">
             <EntityTypeMapping TypeName="BroadcastModel.plan_flight_hiatus">
               <MappingFragment StoreEntitySet="plan_flight_hiatus">
@@ -12387,6 +12361,39 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
                 <ScalarProperty Name="year" ColumnName="year" />
                 <ScalarProperty Name="quarter" ColumnName="quarter" />
                 <ScalarProperty Name="plan_summary_id" ColumnName="plan_summary_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="plans">
+            <EntityTypeMapping TypeName="BroadcastModel.plan">
+              <MappingFragment StoreEntitySet="plans">
+                <ScalarProperty Name="currency" ColumnName="currency" />
+                <ScalarProperty Name="cpp" ColumnName="cpp" />
+                <ScalarProperty Name="delivery_rating_points" ColumnName="delivery_rating_points" />
+                <ScalarProperty Name="modified_date" ColumnName="modified_date" />
+                <ScalarProperty Name="modified_by" ColumnName="modified_by" />
+                <ScalarProperty Name="goal_breakdown_type" ColumnName="goal_breakdown_type" />
+                <ScalarProperty Name="coverage_goal_percent" ColumnName="coverage_goal_percent" />
+                <ScalarProperty Name="cpm" ColumnName="cpm" />
+                <ScalarProperty Name="delivery_impressions" ColumnName="delivery_impressions" />
+                <ScalarProperty Name="budget" ColumnName="budget" />
+                <ScalarProperty Name="hut_book_id" ColumnName="hut_book_id" />
+                <ScalarProperty Name="share_book_id" ColumnName="share_book_id" />
+                <ScalarProperty Name="audience_id" ColumnName="audience_id" />
+                <ScalarProperty Name="posting_type" ColumnName="posting_type" />
+                <ScalarProperty Name="audience_type" ColumnName="audience_type" />
+                <ScalarProperty Name="flight_notes" ColumnName="flight_notes" />
+                <ScalarProperty Name="flight_end_date" ColumnName="flight_end_date" />
+                <ScalarProperty Name="flight_start_date" ColumnName="flight_start_date" />
+                <ScalarProperty Name="created_date" ColumnName="created_date" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="equivalized" ColumnName="equivalized" />
+                <ScalarProperty Name="spot_length_id" ColumnName="spot_length_id" />
+                <ScalarProperty Name="product_id" ColumnName="product_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="campaign_id" ColumnName="campaign_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

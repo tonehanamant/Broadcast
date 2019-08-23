@@ -7,8 +7,18 @@
   "CampaignId": 1,
   "CoverageGoalPercent": null,
   "CPM": null,
-  "Dayparts": [],
-  "Delivery": null,
+  "CPP": null,
+  "Currency": 1,
+  "Dayparts": [
+    {
+      "DaypartCodeId": 2,
+      "EndTimeSeconds": 2000,
+      "StartTimeSeconds": 0,
+      "WeightingGoalPercent": 28.0
+    }
+  ],
+  "DeliveryImpressions": null,
+  "DeliveryRatingPoints": null,
   "Equivalized": true,
   "FlightEndDate": "1999-11-12T00:00:00",
   "FlightHiatusDays": [

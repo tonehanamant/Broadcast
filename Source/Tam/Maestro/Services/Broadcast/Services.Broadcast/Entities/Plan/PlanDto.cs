@@ -167,7 +167,23 @@ namespace Services.Broadcast.Entities.Plan
         /// <value>
         /// The delivery.
         /// </value>
-        public double? Delivery { get; set; }
+        public double? DeliveryImpressions { get; set; }
+
+        /// <summary>
+        /// Gets or sets the delivery rating points.
+        /// </summary>
+        /// <value>
+        /// The delivery rating points.
+        /// </value>
+        public double? DeliveryRatingPoints { get; set; }
+
+        /// <summary>
+        /// Gets or sets the CPP.
+        /// </summary>
+        /// <value>
+        /// The CPP.
+        /// </value>
+        public decimal? CPP { get; set; }
 
         /// <summary>
         /// Gets or sets the CPM.
@@ -176,6 +192,14 @@ namespace Services.Broadcast.Entities.Plan
         /// The CPM.
         /// </value>
         public decimal? CPM { get; set; }
+
+        /// <summary>
+        /// Gets or sets the currency.
+        /// </summary>
+        /// <value>
+        /// The currency.
+        /// </value>
+        public PlanCurrenciesEnum Currency { get; set; }
 
         /// <summary>
         /// Gets or sets the coverage goal percent.

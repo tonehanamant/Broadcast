@@ -42,6 +42,7 @@ namespace Services.Broadcast.Validators
         const string INVALID_FLIGHT_DATE = "Invalid flight start/end date.";
         const string INVALID_FLIGHT_HIATUS_DAY = "Invalid flight hiatus day.  All days must be within the flight date range.";
         const string INVALID_AUDIENCE = "Invalid audience";
+        const string INVALID_AUDIENCE_NUMBER = "Invalid audiences. There should be at least one daypart selected.";
         const string INVALID_AUDIENCE_DUPLICATE = "An audience cannot appear multiple times";
         const string INVALID_SHARE_HUT_BOOKS = "HUT Book must be prior to Share Book";
         const string INVALID_DAYPART_TIMES = "Invalid daypart times.";
@@ -98,7 +99,7 @@ namespace Services.Broadcast.Validators
             {
                 return;
             }
-            if(plan.Delivery != plan.WeeklyBreakdownWeeks.Select(x => x.Impressions).Sum())
+            if(plan.DeliveryImpressions != plan.WeeklyBreakdownWeeks.Select(x => x.Impressions).Sum())
             {
                 throw new Exception(INVALID_IMPRESSIONS_COUNT);
             }
@@ -203,6 +204,10 @@ namespace Services.Broadcast.Validators
         {
             const int daySecondsMin = 0;
             const int daySecondsMax = 86400;
+            if (!plan.Dayparts.Any())
+            {
+                throw new Exception(INVALID_AUDIENCE_NUMBER);
+            }
             foreach (var daypart in plan.Dayparts)
             {
                 if (daypart.StartTimeSeconds < daySecondsMin || daypart.StartTimeSeconds > daySecondsMax)

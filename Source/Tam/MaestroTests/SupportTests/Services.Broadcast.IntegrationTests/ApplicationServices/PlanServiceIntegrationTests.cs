@@ -420,7 +420,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Budget = 100m,
                 DeliveryImpressions = 3000d,
                 AudienceId = 31,
-                Currency = Entities.Enums.PlanCurrenciesEnum.Impressions,
                 MediaMonthId = 437
             });
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
@@ -435,7 +434,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 CPM = 100m,
                 DeliveryImpressions = 3000d,
                 AudienceId = 31,
-                Currency = Entities.Enums.PlanCurrenciesEnum.Impressions,
                 MediaMonthId = 437
             });
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
@@ -450,7 +448,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 CPM = 100m,
                 Budget = 3000m,
                 AudienceId = 31,
-                Currency = Entities.Enums.PlanCurrenciesEnum.Impressions,
                 MediaMonthId = 437
             });
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
@@ -465,7 +462,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 CPP = 100m,
                 Budget = 3000m,
                 AudienceId = 31,
-                Currency = Entities.Enums.PlanCurrenciesEnum.Impressions,
                 MediaMonthId = 437
             });
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
@@ -480,7 +476,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 CPP = 100m,
                 DeliveryRatingPoints = 3000d,
                 AudienceId = 31,
-                Currency = Entities.Enums.PlanCurrenciesEnum.Impressions,
                 MediaMonthId = 437
             });
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
@@ -495,7 +490,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Budget = 100m,
                 DeliveryRatingPoints = 3000d,
                 AudienceId = 31,
-                Currency = Entities.Enums.PlanCurrenciesEnum.Impressions,
                 MediaMonthId = 437
             });
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
@@ -764,54 +758,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        private static PlanDto _GetNewPlan()
-        {
-            return new PlanDto
-            {
-                CampaignId = 1,
-                Equivalized = true,
-                Name = "New Plan",
-                ProductId = 1,
-                SpotLengthId = 1,
-                Status = Entities.Enums.PlanStatusEnum.Working,
-                FlightStartDate = new DateTime(2019, 1, 1),
-                FlightEndDate = new DateTime(2019, 7, 31),
-                FlightNotes = "Sample notes",
-                FlightHiatusDays = new List<DateTime>
-                {
-                    new DateTime(2019,1,20),
-                    new DateTime(2019,4,15)
-                },
-                AudienceId = 31,        //HH
-                AudienceType = Entities.Enums.AudienceTypeEnum.Nielsen,
-                HUTBookId = null,
-                PostingType = Entities.Enums.PostingTypeEnum.NTI,
-                ShareBookId = 437,
-                Budget = 100m,
-                CPM = 12m,
-                Delivery = 100d,
-                CoverageGoalPercent = 80.5,
-                GoalBreakdownType = Entities.Enums.PlanGloalBreakdownTypeEnum.Even,
-                AvailableMarkets = new List<PlanAvailableMarketDto>
-                {
-                    new PlanAvailableMarketDto { MarketCode = 100, MarketCoverageFileId = 1, PercentageOfUs = 20, Rank = 1, ShareOfVoicePercent = 22.2},
-                    new PlanAvailableMarketDto { MarketCode = 101, MarketCoverageFileId = 1, PercentageOfUs = 32.5, Rank = 2, ShareOfVoicePercent = 34.5}
-                },
-                BlackoutMarkets = new List<PlanBlackoutMarketDto>
-                {
-                    new PlanBlackoutMarketDto {MarketCode = 123, MarketCoverageFileId = 1, PercentageOfUs = 5.5, Rank = 5 },
-                    new PlanBlackoutMarketDto {MarketCode = 234, MarketCoverageFileId = 1, PercentageOfUs = 2.5, Rank = 8 },
-                },
-                ModifiedBy = "Test User",
-                ModifiedDate = new DateTime(2019,01,12, 12, 30, 29),
-                Dayparts = new List<PlanDaypartDto>
-                {
-                    new PlanDaypartDto{ DaypartCodeId = 2, StartTimeSeconds = 0, EndTimeSeconds = 2000, WeightingGoalPercent = 28.0 },
-                    new PlanDaypartDto{ DaypartCodeId = 11, StartTimeSeconds = 1500, EndTimeSeconds = 2788, WeightingGoalPercent = 33.2 }
-                }
-            };
-        }
-
         [Test]
         public void Plan_WeeklyBreakdown_InvalidRequest()
         {
@@ -943,9 +889,66 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 HUTBookId = null,
                 PostingType = Entities.Enums.PostingTypeEnum.NTI,
                 ShareBookId = 437,
-                GoalBreakdownType = Entities.Enums.PlanGloalBreakdownTypeEnum.Even
+                Currency = Entities.Enums.PlanCurrenciesEnum.Impressions,
+                GoalBreakdownType = Entities.Enums.PlanGloalBreakdownTypeEnum.Even,
+                Dayparts = new List<PlanDaypartDto>
+                {
+                    new PlanDaypartDto{ DaypartCodeId = 2, StartTimeSeconds = 0, EndTimeSeconds = 2000, WeightingGoalPercent = 28.0 }
+                }
             };
         }
+
+        private static PlanDto _GetNewPlan()
+        {
+            return new PlanDto
+            {
+                CampaignId = 1,
+                Equivalized = true,
+                Name = "New Plan",
+                ProductId = 1,
+                SpotLengthId = 1,
+                Status = Entities.Enums.PlanStatusEnum.Working,
+                FlightStartDate = new DateTime(2019, 1, 1),
+                FlightEndDate = new DateTime(2019, 7, 31),
+                FlightNotes = "Sample notes",
+                FlightHiatusDays = new List<DateTime>
+                {
+                    new DateTime(2019,1,20),
+                    new DateTime(2019,4,15)
+                },
+                AudienceId = 31,        //HH
+                AudienceType = Entities.Enums.AudienceTypeEnum.Nielsen,
+                HUTBookId = null,
+                PostingType = Entities.Enums.PostingTypeEnum.NTI,
+                ShareBookId = 437,
+                Budget = 100m,
+                CPM = 12m,
+                DeliveryImpressions = 100d,
+                CPP = 12m,
+                Currency = Entities.Enums.PlanCurrenciesEnum.Impressions,
+                DeliveryRatingPoints = 100d,
+                CoverageGoalPercent = 80.5,
+                GoalBreakdownType = Entities.Enums.PlanGloalBreakdownTypeEnum.Even,
+                AvailableMarkets = new List<PlanAvailableMarketDto>
+                {
+                    new PlanAvailableMarketDto { MarketCode = 100, MarketCoverageFileId = 1, PercentageOfUs = 20, Rank = 1, ShareOfVoicePercent = 22.2},
+                    new PlanAvailableMarketDto { MarketCode = 101, MarketCoverageFileId = 1, PercentageOfUs = 32.5, Rank = 2, ShareOfVoicePercent = 34.5}
+                },
+                BlackoutMarkets = new List<PlanBlackoutMarketDto>
+                {
+                    new PlanBlackoutMarketDto {MarketCode = 123, MarketCoverageFileId = 1, PercentageOfUs = 5.5, Rank = 5 },
+                    new PlanBlackoutMarketDto {MarketCode = 234, MarketCoverageFileId = 1, PercentageOfUs = 2.5, Rank = 8 },
+                },
+                ModifiedBy = "Test User",
+                ModifiedDate = new DateTime(2019, 01, 12, 12, 30, 29),
+                Dayparts = new List<PlanDaypartDto>
+                {
+                    new PlanDaypartDto{ DaypartCodeId = 2, StartTimeSeconds = 0, EndTimeSeconds = 2000, WeightingGoalPercent = 28.0 },
+                    new PlanDaypartDto{ DaypartCodeId = 11, StartTimeSeconds = 1500, EndTimeSeconds = 2788, WeightingGoalPercent = 33.2 }
+                }
+            };
+        }
+
 
         private JsonSerializerSettings _GetJsonSettings()
         {

@@ -937,6 +937,27 @@ where daypart_code_id = (select top 1 id from daypart_codes where daypart_codes.
 delete from daypart_codes where code = 'DIGI'
 /*************************************** END PRI-12666 *****************************************************/
 
+/*************************************** START PRI-12236 *****************************************************/
+IF EXISTS (SELECT 1 FROM sys.columns WHERE Name = 'delivery' AND Object_ID = OBJECT_ID('plans'))
+BEGIN
+	EXEC sp_rename 'dbo.plans.delivery', 'delivery_impressions', 'COLUMN';
+END
+IF NOT EXISTS (SELECT 1 FROM sys.columns WHERE Name = 'delivery_rating_points' AND Object_ID = OBJECT_ID('plans'))
+BEGIN
+	ALTER TABLE [plans] ADD [delivery_rating_points] [FLOAT] NULL
+END
+IF NOT EXISTS (SELECT 1 FROM sys.columns WHERE Name = 'cpp' AND Object_ID = OBJECT_ID('plans'))
+BEGIN
+	ALTER TABLE [plans] ADD [cpp] [MONEY] NULL
+END
+IF NOT EXISTS (SELECT 1 FROM sys.columns WHERE Name = 'currency' AND Object_ID = OBJECT_ID('plans'))
+BEGIN
+	ALTER TABLE [plans] ADD [currency] [SMALLINT] NULL
+	EXEC ('UPDATE [plans] SET currency = 1')
+	ALTER TABLE [plans] ALTER COLUMN [currency] [INT] NOT NULL
+END
+/*************************************** END PRI-12236 *****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

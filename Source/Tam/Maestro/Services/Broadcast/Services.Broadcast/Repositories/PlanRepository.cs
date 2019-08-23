@@ -121,8 +121,11 @@ namespace Services.Broadcast.Repositories
                 PostingType = EnumHelper.GetEnum<PostingTypeEnum>(entity.posting_type),
                 FlightHiatusDays = entity.plan_flight_hiatus.Select(h => h.hiatus_day).ToList(),
                 Budget = entity.budget,
-                Delivery = entity.delivery,
+                DeliveryImpressions = entity.delivery_impressions,
                 CPM = entity.cpm,
+                DeliveryRatingPoints = entity.delivery_rating_points,
+                CPP = entity.cpp,
+                Currency = EnumHelper.GetEnum<PlanCurrenciesEnum>(entity.currency),
                 GoalBreakdownType = EnumHelper.GetEnum<PlanGloalBreakdownTypeEnum>(entity.goal_breakdown_type),
                 SecondaryAudiences = entity.plan_secondary_audiences.Select(_MapSecondatAudiences).ToList(),
                 Dayparts = entity.plan_dayparts.Select(_MapPlanDaypartDto).ToList(),
@@ -221,8 +224,11 @@ namespace Services.Broadcast.Repositories
         private static void _HydratePlanBudget(plan entity, PlanDto planDto)
         {
             entity.budget = planDto.Budget;
-            entity.delivery = planDto.Delivery;
+            entity.delivery_impressions = planDto.DeliveryImpressions;
             entity.cpm = planDto.CPM;
+            entity.delivery_rating_points = planDto.DeliveryRatingPoints;
+            entity.cpp = planDto.CPP;
+            entity.currency = (int)planDto.Currency;
         }
 
         private void _HydratePlanFlightHiatus(plan entity, PlanDto planDto, QueryHintBroadcastContext context)

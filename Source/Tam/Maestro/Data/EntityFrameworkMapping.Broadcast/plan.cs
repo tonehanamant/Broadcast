@@ -16,14 +16,14 @@ namespace EntityFrameworkMapping.Broadcast
     {
         public plan()
         {
-            this.plan_flight_hiatus = new HashSet<plan_flight_hiatus>();
-            this.plan_dayparts = new HashSet<plan_dayparts>();
-            this.plan_secondary_audiences = new HashSet<plan_secondary_audiences>();
             this.plan_available_markets = new HashSet<plan_available_markets>();
             this.plan_blackout_markets = new HashSet<plan_blackout_markets>();
-            this.plan_weeks = new HashSet<plan_weeks>();
-            this.plan_weekly_breakdown = new HashSet<plan_weekly_breakdown>();
+            this.plan_dayparts = new HashSet<plan_dayparts>();
+            this.plan_flight_hiatus = new HashSet<plan_flight_hiatus>();
+            this.plan_secondary_audiences = new HashSet<plan_secondary_audiences>();
             this.plan_summary = new HashSet<plan_summary>();
+            this.plan_weekly_breakdown = new HashSet<plan_weekly_breakdown>();
+            this.plan_weeks = new HashSet<plan_weeks>();
         }
     
         public int id { get; set; }
@@ -38,31 +38,34 @@ namespace EntityFrameworkMapping.Broadcast
         public Nullable<System.DateTime> flight_start_date { get; set; }
         public Nullable<System.DateTime> flight_end_date { get; set; }
         public string flight_notes { get; set; }
-        public int audience_id { get; set; }
-        public int share_book_id { get; set; }
         public int audience_type { get; set; }
         public int posting_type { get; set; }
+        public int audience_id { get; set; }
+        public int share_book_id { get; set; }
         public Nullable<int> hut_book_id { get; set; }
         public Nullable<decimal> budget { get; set; }
-        public Nullable<double> delivery { get; set; }
+        public Nullable<double> delivery_impressions { get; set; }
         public Nullable<decimal> cpm { get; set; }
         public Nullable<double> coverage_goal_percent { get; set; }
+        public int goal_breakdown_type { get; set; }
         public string modified_by { get; set; }
         public System.DateTime modified_date { get; set; }
-        public int goal_breakdown_type { get; set; }
+        public Nullable<double> delivery_rating_points { get; set; }
+        public Nullable<decimal> cpp { get; set; }
+        public int currency { get; set; }
     
-        public virtual campaign campaign { get; set; }
-        public virtual spot_lengths spot_lengths { get; set; }
-        public virtual ICollection<plan_flight_hiatus> plan_flight_hiatus { get; set; }
         public virtual audience audience { get; set; }
+        public virtual campaign campaign { get; set; }
         public virtual media_months media_months { get; set; }
         public virtual media_months media_months1 { get; set; }
-        public virtual ICollection<plan_dayparts> plan_dayparts { get; set; }
-        public virtual ICollection<plan_secondary_audiences> plan_secondary_audiences { get; set; }
         public virtual ICollection<plan_available_markets> plan_available_markets { get; set; }
         public virtual ICollection<plan_blackout_markets> plan_blackout_markets { get; set; }
-        public virtual ICollection<plan_weeks> plan_weeks { get; set; }
-        public virtual ICollection<plan_weekly_breakdown> plan_weekly_breakdown { get; set; }
+        public virtual ICollection<plan_dayparts> plan_dayparts { get; set; }
+        public virtual ICollection<plan_flight_hiatus> plan_flight_hiatus { get; set; }
+        public virtual ICollection<plan_secondary_audiences> plan_secondary_audiences { get; set; }
         public virtual ICollection<plan_summary> plan_summary { get; set; }
+        public virtual ICollection<plan_weekly_breakdown> plan_weekly_breakdown { get; set; }
+        public virtual ICollection<plan_weeks> plan_weeks { get; set; }
+        public virtual spot_lengths spot_lengths { get; set; }
     }
 }
