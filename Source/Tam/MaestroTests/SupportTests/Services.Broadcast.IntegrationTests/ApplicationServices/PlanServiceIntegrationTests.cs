@@ -412,46 +412,96 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        public void Calculator_CPM()
+        [UseReporter(typeof(DiffReporter))]
+        public void Calculator_TestCase1()
         {
             var result = _PlanService.Calculate(new PlanDeliveryBudget
             {
                 Budget = 100m,
-                CPM = null,
-                Delivery = 3000d
+                DeliveryImpressions = 3000d,
+                AudienceId = 31,
+                Currency = Entities.Enums.PlanCurrenciesEnum.Impressions,
+                MediaMonthId = 437
             });
-
-            Assert.AreEqual(30.0d, result.CPM);
-        }
-
-        [Test]
-        public void Calculator_Delivery()
-        {
-            var result = _PlanService.Calculate(new PlanDeliveryBudget
-            {
-                Budget = 100m,
-                CPM = 30m,
-                Delivery = null
-            });
-
-            Assert.AreEqual(3000, result.Delivery);
-        }
-
-        [Test]
-        public void Calculator_Budget()
-        {
-            var result = _PlanService.Calculate(new PlanDeliveryBudget
-            {
-                Budget = null,
-                CPM = 30m,
-                Delivery = 3000d
-            });
-
-            Assert.AreEqual(100, result.Budget);
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        public void Calculator_TestCase2()
+        {
+            var result = _PlanService.Calculate(new PlanDeliveryBudget
+            {
+                CPM = 100m,
+                DeliveryImpressions = 3000d,
+                AudienceId = 31,
+                Currency = Entities.Enums.PlanCurrenciesEnum.Impressions,
+                MediaMonthId = 437
+            });
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void Calculator_TestCase3()
+        {
+            var result = _PlanService.Calculate(new PlanDeliveryBudget
+            {
+                CPM = 100m,
+                Budget = 3000m,
+                AudienceId = 31,
+                Currency = Entities.Enums.PlanCurrenciesEnum.Impressions,
+                MediaMonthId = 437
+            });
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void Calculator_TestCase4()
+        {
+            var result = _PlanService.Calculate(new PlanDeliveryBudget
+            {
+                CPP = 100m,
+                Budget = 3000m,
+                AudienceId = 31,
+                Currency = Entities.Enums.PlanCurrenciesEnum.Impressions,
+                MediaMonthId = 437
+            });
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void Calculator_TestCase5()
+        {
+            var result = _PlanService.Calculate(new PlanDeliveryBudget
+            {
+                CPP = 100m,
+                DeliveryRatingPoints = 3000d,
+                AudienceId = 31,
+                Currency = Entities.Enums.PlanCurrenciesEnum.Impressions,
+                MediaMonthId = 437
+            });
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void Calculator_TestCase6()
+        {
+            var result = _PlanService.Calculate(new PlanDeliveryBudget
+            {
+                Budget = 100m,
+                DeliveryRatingPoints = 3000d,
+                AudienceId = 31,
+                Currency = Entities.Enums.PlanCurrenciesEnum.Impressions,
+                MediaMonthId = 437
+            });
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
         public void Calculator_InvalidObject()
         {
             using (new TransactionScopeWrapper())
@@ -460,8 +510,25 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     Budget = null,
                     CPM = null,
-                    Delivery = null
-                }), "Need at least 2 values for budget to calculate the third");
+                    DeliveryImpressions = null
+                }), "At least 2 values needed to calculate goal amount");
+
+                Assert.IsNotNull(caught);
+            }
+        }
+
+        [Test]
+        public void Calculator_InvalidObject2()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var caught = Assert.Throws<Exception>(() => _PlanService.Calculate(new PlanDeliveryBudget
+                {
+                    Budget = 1,
+                    CPM = 1,
+                    DeliveryImpressions = 1,
+                    AudienceId = 0
+                }), "Cannot calculate goal without media month and audience");
 
                 Assert.IsNotNull(caught);
             }
@@ -477,7 +544,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     Budget = -1,
                     CPM = null,
-                    Delivery = null
+                    DeliveryImpressions = null
                 }), "Invalid budget values passed");
 
                 Assert.IsNotNull(caught);
