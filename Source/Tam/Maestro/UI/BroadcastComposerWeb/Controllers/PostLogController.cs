@@ -78,6 +78,7 @@ namespace BroadcastComposerWeb.Controllers
 
         [HttpPost]
         [Route("ScrubUnlinkedIsci")]
+        [Authorize]
         public BaseResponse<bool> ScrubUnlinkedIsci(ScrubIsciRequest request)
         {
             return
@@ -87,6 +88,7 @@ namespace BroadcastComposerWeb.Controllers
 
         [HttpPost]
         [Route("ArchiveUnlinkedIsci")]
+        [Authorize]
         public BaseResponse<bool> ArchiveUnlinkedIsci(List<string> iscis)
         {
             return _ConvertToBaseResponse(() =>
@@ -95,6 +97,7 @@ namespace BroadcastComposerWeb.Controllers
 
         [HttpPost]
         [Route("UndoArchiveIsci")]
+        [Authorize]
         public BaseResponse<bool> UndoArchiveUnlinkedIsci(List<long> FileDetailsIds)
         {
             return _ConvertToBaseResponse(() =>
@@ -111,6 +114,7 @@ namespace BroadcastComposerWeb.Controllers
 
         [HttpPost]
         [Route("MapIsci")]
+        [Authorize]
         public BaseResponse<bool> MapIsci(MapIsciDto mapIsciDto)
         {
             return _ConvertToBaseResponse(() =>
@@ -119,6 +123,7 @@ namespace BroadcastComposerWeb.Controllers
 
         [HttpPost]
         [Route("SwapProposalDetail")]
+        [Authorize]
         public BaseResponse<bool> SwapProposalDetail(SwapProposalDetailRequest requestData)
         {
             return _ConvertToBaseResponse(

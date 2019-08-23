@@ -31,6 +31,7 @@ namespace BroadcastComposerWeb.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("")]
+        [Authorize]
         public BaseResponse<int> SavePlan(PlanDto newPlan)
         {
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanService>().SavePlan(newPlan, Identity.Name, DateTime.Now));

@@ -53,6 +53,7 @@ namespace BroadcastComposerWeb.Controllers
         /// <param name="campaign">The object with the data for the new campaign</param>
         [HttpPost]
         [Route("")]
+        [Authorize]
         public BaseResponse<int> CreateCampaign(CampaignDto campaign)
         {
             return

@@ -51,6 +51,7 @@ namespace BroadcastComposerWeb.Controllers
 
         [HttpPost]
         [Route("Contacts")]
+        [Authorize]
         public BaseResponse<bool> SaveStationContact(StationContact stationContact)
         {
             return
@@ -62,6 +63,7 @@ namespace BroadcastComposerWeb.Controllers
 
         [HttpDelete]
         [Route("{inventorySource}/Contacts/{stationContactId}")]
+        [Authorize]
         public BaseResponse<bool> DeleteStationContact(string inventorySource, int stationContactId)
         {
             return
@@ -72,6 +74,7 @@ namespace BroadcastComposerWeb.Controllers
 
         [HttpPost]
         [Route("UploadInventoryFile")]
+        [Authorize]
         public BaseResponse<InventoryFileSaveResult> UploadInventoryFile(HttpRequestMessage saveRequest)
         {
             if (saveRequest == null)
@@ -168,7 +171,8 @@ namespace BroadcastComposerWeb.Controllers
 
         [HttpDelete]
         [Route("{inventorySourceString}/{stationCode}/Programs/{programId}")]
-        public BaseResponse<bool> DeleteProgra(string inventorySourceString, int stationCode, int programId)
+        [Authorize]
+        public BaseResponse<bool> DeleteProgram(string inventorySourceString, int stationCode, int programId)
         {
             return
                 _ConvertToBaseResponse(

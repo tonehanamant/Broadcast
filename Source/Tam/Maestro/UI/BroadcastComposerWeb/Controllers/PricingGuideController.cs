@@ -33,6 +33,7 @@ namespace BroadcastComposerWeb.Controllers
 
         [HttpPost]
         [Route("Save")]
+        [Authorize]
         public BaseResponse<bool> SavePricingGuideModel(ProposalDetailPricingGuideSaveRequestDto model)
         {
             return

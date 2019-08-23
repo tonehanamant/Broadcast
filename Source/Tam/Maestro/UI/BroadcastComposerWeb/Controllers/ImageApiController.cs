@@ -80,6 +80,7 @@ namespace BroadcastComposerWeb.Controllers
         [HttpPost]
         [Route("logo")]
         [InvalidateCacheOutput("GetInventoryLogo")]
+        [Authorize]
         public BaseResponse UploadInventoryLogo([FromUri] int inventorySourceId, [FromBody] FileRequest saveRequest)
         {
             try

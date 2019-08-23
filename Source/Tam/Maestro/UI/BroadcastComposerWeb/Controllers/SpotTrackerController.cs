@@ -28,6 +28,7 @@ namespace BroadcastComposerWeb.Controllers
         
         [HttpPost]
         [Route("UploadExtendedSigmaFile")]
+        [Authorize]
         public BaseResponse<List<string>> UploadSigmaFile(HttpRequestMessage saveRequest)
         {
             if (saveRequest == null)

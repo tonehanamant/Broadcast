@@ -25,6 +25,7 @@ namespace BroadcastComposerWeb.Controllers
 
         [HttpPost]
         [Route("SaveAffidavit")]
+        [Authorize]
         public BaseResponse<WWTVSaveResult> SaveAffidavit(InboundFileSaveRequest saveRequest)
         {
             return
