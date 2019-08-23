@@ -26,11 +26,18 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void GetAllCampaignsTest()
+        public void GetCampaignsTest()
         {
             using (new TransactionScopeWrapper())
             {
-                var campaigns = _CampaignService.GetAllCampaigns();
+                var campaigns = _CampaignService.GetCampaigns(new CampaignFilterDto
+                {
+                    Quarter = new QuarterDto
+                    {
+                        Quarter = 2,
+                        Year = 2019
+                    }
+                }, new DateTime(2019, 04, 01));
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(campaigns));
             }
         }
@@ -144,6 +151,17 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var exception = Assert.Throws<InvalidOperationException>(() => _CampaignService.SaveCampaign(campaign, IntegrationTestUser, CreatedDate));
 
                 Assert.That(exception.Message, Is.EqualTo(CampaignValidator.InvalidAdvertiserErrorMessage));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetQuartersTest()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var campaigns = _CampaignService.GetQuarters(new DateTime(2019, 5, 1));
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(campaigns));
             }
         }
 

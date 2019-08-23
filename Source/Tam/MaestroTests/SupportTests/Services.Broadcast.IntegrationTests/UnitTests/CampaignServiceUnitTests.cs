@@ -2,6 +2,7 @@
 using Moq;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices.Campaigns;
+using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
 using Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Campaigns;
 using System;
@@ -19,22 +20,26 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
         {
             var dataRepoFactory = new Mock<IDataRepositoryFactory>();
             var smsClient = new Mock<ISMSClient>();
+            var mediaAggregateCache = new Mock<IMediaMonthAndWeekAggregateCache>();
+            var quarterCalculationEngine = new Mock<IQuarterCalculationEngine>();
 
-            var tc = new CampaignServiceUnitTestClass(dataRepoFactory.Object, smsClient.Object);
+            var tc = new CampaignServiceUnitTestClass(dataRepoFactory.Object, smsClient.Object, mediaAggregateCache.Object, quarterCalculationEngine.Object);
 
             Assert.IsNotNull(tc);
         }
 
         #endregion // #region Constructor
 
-        #region GetAllCampaigns
+        #region GetCampaigns
 
         [Test]
-        public void GetAllCampaigns()
+        public void GetCampaigns()
         {
             var dataRepoFactory = new Mock<IDataRepositoryFactory>();
             var smsClient = new Mock<ISMSClient>();
-            var tc = new CampaignServiceUnitTestClass(dataRepoFactory.Object, smsClient.Object);
+            var mediaAggregateCache = new Mock<IMediaMonthAndWeekAggregateCache>();
+            var quarterCalculationEngine = IntegrationTestApplicationServiceFactory.GetApplicationService<IQuarterCalculationEngine>();
+            var tc = new CampaignServiceUnitTestClass(dataRepoFactory.Object, smsClient.Object, mediaAggregateCache.Object, quarterCalculationEngine);
             var campaignData = new Mock<ICampaignServiceData>();
             var getAllCampaignsCallCount = 0;
             var getAllCampaignsReturn = new List<CampaignDto>
@@ -43,12 +48,20 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
                 new CampaignDto{Id = 2, Name = "CampaignTwo", AgencyId = 2, AdvertiserId = 2, Notes = "Notes for CampaignTwo.", ModifiedBy = "TestUser", ModifiedDate = new DateTime(2017,10,17)},
                 new CampaignDto{Id = 3, Name = "CampaignThree", AgencyId = 3, AdvertiserId = 3, Notes = "Notes for CampaignThree.", ModifiedBy = "TestUser", ModifiedDate = new DateTime(2017,10,17)}
             };
-            campaignData.Setup(s => s.GetAllCampaigns())
+            var filter = new CampaignFilterDto
+            {
+                Quarter = new QuarterDto
+                {
+                    Quarter = 3,
+                    Year = 2019
+                }
+            };
+            campaignData.Setup(s => s.GetCampaigns(It.Is<QuarterDetailDto>(p => p.Quarter == 3 && p.Year == 2019)))
                 .Callback(() => getAllCampaignsCallCount++)
                 .Returns(getAllCampaignsReturn);
             tc.CampaignServiceData = campaignData.Object;
 
-            var items = tc.GetAllCampaigns();
+            var items = tc.GetCampaigns(filter, new DateTime(2019, 04, 01));
 
             Assert.AreEqual(1, getAllCampaignsCallCount);
             Assert.IsNotNull(items);
@@ -56,11 +69,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
         }
 
         [Test]
-        public void GetAllCampaignsWithException()
+        public void GetCampaignsWithException()
         {
             var dataRepoFactory = new Mock<IDataRepositoryFactory>();
             var smsClient = new Mock<ISMSClient>();
-            var tc = new CampaignServiceUnitTestClass(dataRepoFactory.Object, smsClient.Object);
+            var mediaAggregateCache = new Mock<IMediaMonthAndWeekAggregateCache>();
+            var quarterCalculationEngine = IntegrationTestApplicationServiceFactory.GetApplicationService<IQuarterCalculationEngine>();
+            var tc = new CampaignServiceUnitTestClass(dataRepoFactory.Object, smsClient.Object, mediaAggregateCache.Object, quarterCalculationEngine);
             var campaignData = new Mock<ICampaignServiceData>();
             var getAllCampaignsCallCount = 0;
             var getAllCampaignsReturn = new List<CampaignDto>
@@ -69,7 +84,15 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
                 new CampaignDto{Id = 2, Name = "CampaignTwo", AgencyId = 2, AdvertiserId = 2, Notes = "Notes for CampaignTwo.", ModifiedBy = "TestUser", ModifiedDate = new DateTime(2017,10,17)},
                 new CampaignDto{Id = 3, Name = "CampaignThree", AgencyId = 3, AdvertiserId = 3, Notes = "Notes for CampaignThree.", ModifiedBy = "TestUser", ModifiedDate = new DateTime(2017,10,17)}
             };
-            campaignData.Setup(s => s.GetAllCampaigns())
+            var filter = new CampaignFilterDto
+            {
+                Quarter = new QuarterDto
+                {
+                    Quarter = 3,
+                    Year = 2019
+                }
+            };
+            campaignData.Setup(s => s.GetCampaigns(It.Is<QuarterDetailDto>(p => p.Quarter == 3 && p.Year == 2019)))
                 .Callback(() =>
                 {
                     getAllCampaignsCallCount++;
@@ -78,13 +101,78 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
                 .Returns(getAllCampaignsReturn);
             tc.CampaignServiceData = campaignData.Object;
 
-            var caught = Assert.Throws<Exception>(() => tc.GetAllCampaigns());
+            var caught = Assert.Throws<Exception>(() => tc.GetCampaigns(filter, new DateTime(2019, 04, 01)));
 
             Assert.AreEqual(1, getAllCampaignsCallCount);
             Assert.IsTrue(caught.Message.Contains("This is a test exception thrown from GetAllCampaigns."));
         }
 
-        #endregion // #region GetAllCampaigns
+        [Test]
+        public void GetCampaignsWithFilter()
+        {
+            var dataRepoFactory = new Mock<IDataRepositoryFactory>();
+            var smsClient = new Mock<ISMSClient>();
+            var mediaAggregateCache = new Mock<IMediaMonthAndWeekAggregateCache>();
+            var quarterCalculationEngine = IntegrationTestApplicationServiceFactory.GetApplicationService<IQuarterCalculationEngine>();
+            var tc = new CampaignServiceUnitTestClass(dataRepoFactory.Object, smsClient.Object, mediaAggregateCache.Object, quarterCalculationEngine);
+            var campaignData = new Mock<ICampaignServiceData>();
+            var getAllCampaignsCallCount = 0;
+            var getAllCampaignsReturn = new List<CampaignDto>
+            {
+                new CampaignDto{Id = 1, Name = "CampaignOne", AgencyId = 1, AdvertiserId = 1, Notes = "Notes for CampaignOne.", ModifiedBy = "TestUser", ModifiedDate = new DateTime(2017,10,17)},
+                new CampaignDto{Id = 2, Name = "CampaignTwo", AgencyId = 2, AdvertiserId = 2, Notes = "Notes for CampaignTwo.", ModifiedBy = "TestUser", ModifiedDate = new DateTime(2017,10,17)},
+                new CampaignDto{Id = 3, Name = "CampaignThree", AgencyId = 3, AdvertiserId = 3, Notes = "Notes for CampaignThree.", ModifiedBy = "TestUser", ModifiedDate = new DateTime(2017,10,17)}
+            };
+            var filter = new CampaignFilterDto
+            {
+                Quarter = new QuarterDto
+                {
+                    Quarter = 3,
+                    Year = 2019
+                }
+            };
+
+            campaignData.Setup(s => s.GetCampaigns(It.Is<QuarterDetailDto>(p => p.Quarter == 3 && p.Year == 2019)))
+                .Callback(() => getAllCampaignsCallCount++)
+                .Returns(getAllCampaignsReturn);
+            tc.CampaignServiceData = campaignData.Object;
+
+            var items = tc.GetCampaigns(filter, new DateTime(2019, 04, 01));
+
+            Assert.AreEqual(1, getAllCampaignsCallCount);
+            Assert.IsNotNull(items);
+            Assert.AreEqual(getAllCampaignsReturn.Count, items.Count);
+        }
+
+        [Test]
+        public void GetCampaignsWithNullFilter()
+        {
+            var dataRepoFactory = new Mock<IDataRepositoryFactory>();
+            var smsClient = new Mock<ISMSClient>();
+            var mediaAggregateCache = new Mock<IMediaMonthAndWeekAggregateCache>();
+            var quarterCalculationEngine = IntegrationTestApplicationServiceFactory.GetApplicationService<IQuarterCalculationEngine>();
+            var tc = new CampaignServiceUnitTestClass(dataRepoFactory.Object, smsClient.Object, mediaAggregateCache.Object, quarterCalculationEngine);
+            var campaignData = new Mock<ICampaignServiceData>();
+            var getAllCampaignsReturn = new List<CampaignDto>
+            {
+                new CampaignDto{Id = 1, Name = "CampaignOne", AgencyId = 1, AdvertiserId = 1, Notes = "Notes for CampaignOne.", ModifiedBy = "TestUser", ModifiedDate = new DateTime(2017,10,17)},
+                new CampaignDto{Id = 2, Name = "CampaignTwo", AgencyId = 2, AdvertiserId = 2, Notes = "Notes for CampaignTwo.", ModifiedBy = "TestUser", ModifiedDate = new DateTime(2017,10,17)},
+                new CampaignDto{Id = 3, Name = "CampaignThree", AgencyId = 3, AdvertiserId = 3, Notes = "Notes for CampaignThree.", ModifiedBy = "TestUser", ModifiedDate = new DateTime(2017,10,17)}
+            };
+
+            campaignData.Setup(s => s.GetCampaigns(It.Is<QuarterDetailDto>(p => p.Quarter == 3 && p.Year == 2019)))
+                .Returns(getAllCampaignsReturn);
+            tc.CampaignServiceData = campaignData.Object;
+
+            var items = tc.GetCampaigns(null, new DateTime(2019, 08, 01));
+
+            campaignData.Verify(x => x.GetCampaigns(It.Is<QuarterDetailDto>(p => p.Quarter == 3 && p.Year == 2019)), Times.Once);
+
+            Assert.IsNotNull(items);
+            Assert.AreEqual(getAllCampaignsReturn.Count, items.Count);
+        }
+
+        #endregion // #region GetCampaigns
 
         #region GetAdvertisers
 
@@ -93,7 +181,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
         {
             var dataRepoFactory = new Mock<IDataRepositoryFactory>();
             var smsClient = new Mock<ISMSClient>();
-            var tc = new CampaignServiceUnitTestClass(dataRepoFactory.Object, smsClient.Object);
+            var mediaAggregateCache = new Mock<IMediaMonthAndWeekAggregateCache>();
+            var quarterCalculationEngine = new Mock<IQuarterCalculationEngine>();
+            var tc = new CampaignServiceUnitTestClass(dataRepoFactory.Object, smsClient.Object, mediaAggregateCache.Object, quarterCalculationEngine.Object);
             var campaignData = new Mock<ICampaignServiceData>();
             var getAdvertisersCallCount = 0;
             var getAdvertisersReturn = new List<AdvertiserDto>
@@ -119,7 +209,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
         {
             var dataRepoFactory = new Mock<IDataRepositoryFactory>();
             var smsClient = new Mock<ISMSClient>();
-            var tc = new CampaignServiceUnitTestClass(dataRepoFactory.Object, smsClient.Object);
+            var mediaAggregateCache = new Mock<IMediaMonthAndWeekAggregateCache>();
+            var quarterCalculationEngine = new Mock<IQuarterCalculationEngine>();
+            var tc = new CampaignServiceUnitTestClass(dataRepoFactory.Object, smsClient.Object, mediaAggregateCache.Object, quarterCalculationEngine.Object);
             var campaignData = new Mock<ICampaignServiceData>();
             var getAdvertisersCallCount = 0;
             var getAdvertisersReturn = new List<AdvertiserDto>
@@ -152,7 +244,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
         {
             var dataRepoFactory = new Mock<IDataRepositoryFactory>();
             var smsClient = new Mock<ISMSClient>();
-            var tc = new CampaignServiceUnitTestClass(dataRepoFactory.Object, smsClient.Object);
+            var mediaAggregateCache = new Mock<IMediaMonthAndWeekAggregateCache>();
+            var quarterCalculationEngine = new Mock<IQuarterCalculationEngine>();
+            var tc = new CampaignServiceUnitTestClass(dataRepoFactory.Object, smsClient.Object, mediaAggregateCache.Object, quarterCalculationEngine.Object);
             var campaignData = new Mock<ICampaignServiceData>();
             var getAgenciesCallCount = 0;
             var getAgenciesReturn = new List<AgencyDto>
@@ -178,7 +272,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
         {
             var dataRepoFactory = new Mock<IDataRepositoryFactory>();
             var smsClient = new Mock<ISMSClient>();
-            var tc = new CampaignServiceUnitTestClass(dataRepoFactory.Object, smsClient.Object);
+            var mediaAggregateCache = new Mock<IMediaMonthAndWeekAggregateCache>();
+            var quarterCalculationEngine = new Mock<IQuarterCalculationEngine>();
+            var tc = new CampaignServiceUnitTestClass(dataRepoFactory.Object, smsClient.Object, mediaAggregateCache.Object, quarterCalculationEngine.Object);
             var campaignData = new Mock<ICampaignServiceData>();
             var getAgenciesCallCount = 0;
             var getAgenciesReturn = new List<AgencyDto>
@@ -204,6 +300,59 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
 
         #endregion // #region GetAgencies
 
+        #region GetQuarters
+
+        [Test]
+        public void GetQuarters()
+        {
+            var dataRepoFactory = new Mock<IDataRepositoryFactory>();
+            var smsClient = new Mock<ISMSClient>();
+            var mediaAggregateCache = IntegrationTestApplicationServiceFactory.MediaMonthAndWeekAggregateCache;
+            var quarterCalculationEngine = IntegrationTestApplicationServiceFactory.GetApplicationService<IQuarterCalculationEngine>();
+            var tc = new CampaignServiceUnitTestClass(dataRepoFactory.Object, smsClient.Object, mediaAggregateCache, quarterCalculationEngine);
+            var campaignData = new Mock<ICampaignServiceData>();
+            var getCampaignsDateRangesReturn = new List<DateRange>
+            {
+                new DateRange(null, null),
+                new DateRange(new DateTime(2019, 1, 1), null),
+                new DateRange(new DateTime(2019, 2, 1), new DateTime(2019, 9, 1))
+            };
+            campaignData.Setup(s => s.GetCampaignsDateRanges())
+                .Returns(getCampaignsDateRangesReturn);
+            tc.CampaignServiceData = campaignData.Object;
+
+            var campaignQuarters = tc.GetQuarters(new DateTime(2019, 8, 20));
+
+            Assert.IsNotNull(campaignQuarters);
+            Assert.AreEqual(3, campaignQuarters.Quarters.Count);
+            Assert.AreEqual(3, campaignQuarters.DefaultQuarter.Quarter);
+            Assert.AreEqual(2019, campaignQuarters.DefaultQuarter.Year);
+        }
+
+        [Test]
+        public void GetQuartersDefaultQuarter()
+        {
+            var dataRepoFactory = new Mock<IDataRepositoryFactory>();
+            var smsClient = new Mock<ISMSClient>();
+            var mediaAggregateCache = IntegrationTestApplicationServiceFactory.MediaMonthAndWeekAggregateCache;
+            var quarterCalculationEngine = IntegrationTestApplicationServiceFactory.GetApplicationService<IQuarterCalculationEngine>();
+            var tc = new CampaignServiceUnitTestClass(dataRepoFactory.Object, smsClient.Object, mediaAggregateCache, quarterCalculationEngine);
+            var campaignData = new Mock<ICampaignServiceData>();
+            var getCampaignsDateRangesReturn = new List<DateRange>();
+            campaignData.Setup(s => s.GetCampaignsDateRanges())
+                .Returns(getCampaignsDateRangesReturn);
+            tc.CampaignServiceData = campaignData.Object;
+
+            var campaignQuarters = tc.GetQuarters(new DateTime(2019, 8, 20));
+
+            Assert.IsNotNull(campaignQuarters);
+            Assert.AreEqual(1, campaignQuarters.Quarters.Count);
+            Assert.AreEqual(3, campaignQuarters.DefaultQuarter.Quarter);
+            Assert.AreEqual(2019, campaignQuarters.DefaultQuarter.Year);
+        }
+
+        #endregion // #region GetQuarters
+
         #region CreateCampaign
 
         [Test]
@@ -211,7 +360,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
         {
             var dataRepoFactory = new Mock<IDataRepositoryFactory>();
             var smsClient = new Mock<ISMSClient>();
-            var tc = new CampaignServiceUnitTestClass(dataRepoFactory.Object, smsClient.Object);
+            var mediaAggregateCache = new Mock<IMediaMonthAndWeekAggregateCache>();
+            var quarterCalculationEngine = new Mock<IQuarterCalculationEngine>();
+            var tc = new CampaignServiceUnitTestClass(dataRepoFactory.Object, smsClient.Object, mediaAggregateCache.Object, quarterCalculationEngine.Object);
             var campaignValidator = new Mock<ICampaignValidator>();
             var validateCalls = new List<CampaignDto>();
             campaignValidator.Setup(s => s.Validate(It.IsAny<CampaignDto>()))
@@ -250,7 +401,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
         {
             var dataRepoFactory = new Mock<IDataRepositoryFactory>();
             var smsClient = new Mock<ISMSClient>();
-            var tc = new CampaignServiceUnitTestClass(dataRepoFactory.Object, smsClient.Object);
+            var mediaAggregateCache = new Mock<IMediaMonthAndWeekAggregateCache>();
+            var quarterCalculationEngine = new Mock<IQuarterCalculationEngine>();
+            var tc = new CampaignServiceUnitTestClass(dataRepoFactory.Object, smsClient.Object, mediaAggregateCache.Object, quarterCalculationEngine.Object);
             var campaignValidator = new Mock<ICampaignValidator>();
             var validateCalls = new List<CampaignDto>();
             campaignValidator.Setup(s => s.Validate(It.IsAny<CampaignDto>()))
@@ -288,7 +441,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
         {
             var dataRepoFactory = new Mock<IDataRepositoryFactory>();
             var smsClient = new Mock<ISMSClient>();
-            var tc = new CampaignServiceUnitTestClass(dataRepoFactory.Object, smsClient.Object);
+            var mediaAggregateCache = new Mock<IMediaMonthAndWeekAggregateCache>();
+            var quarterCalculationEngine = new Mock<IQuarterCalculationEngine>();
+            var tc = new CampaignServiceUnitTestClass(dataRepoFactory.Object, smsClient.Object, mediaAggregateCache.Object, quarterCalculationEngine.Object);
             var campaignValidator = new Mock<ICampaignValidator>();
             var validateCalls = new List<CampaignDto>();
             campaignValidator.Setup(s => s.Validate(It.IsAny<CampaignDto>()))

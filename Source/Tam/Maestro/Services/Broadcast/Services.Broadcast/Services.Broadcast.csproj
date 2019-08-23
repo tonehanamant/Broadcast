@@ -232,6 +232,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entities\CampaignFilterDto.cs" />
     <Compile Include="ApplicationServices\Plan\PlanAggregator.cs" />
     <Compile Include="Aggregates\SchedulesAggregate.cs" />
     <Compile Include="ApplicationServices\AudienceService.cs" />
@@ -250,6 +251,7 @@
     <Compile Include="ApplicationServices\SpotLengthService.cs" />
     <Compile Include="Entities\AgencyDto.cs" />
     <Compile Include="Clients\ConfigurationClientSwitch.cs" />
+    <Compile Include="Entities\CampaignQuarterDto.cs" />
     <Compile Include="Entities\DTO\EnvironmentDto.cs" />
     <Compile Include="Entities\Enums\AudienceTypeEnum.cs" />
     <Compile Include="Entities\Enums\BackgroundJobProcessingStatus.cs" />
@@ -259,7 +261,7 @@
     <Compile Include="Entities\Enums\PlanCurrenciesEnum.cs" />
     <Compile Include="Entities\Enums\PlanStatusEnum.cs" />
     <Compile Include="Entities\InventorySummary\InventorySummaryAggregation.cs" />
-    <Compile Include="Entities\InventorySummary\InventorySummaryQuarter.cs" />
+    <Compile Include="Entities\QuarterDto.cs" />
     <Compile Include="Entities\Plan\PlanAudienceDto.cs" />
     <Compile Include="Entities\ImpressionsDaypartResultForSingleBook.cs" />
     <Compile Include="Entities\ImpressionsDaypartResultForTwoBooks.cs" />

@@ -70,9 +70,9 @@ namespace Services.Broadcast.Converters.InventorySummary
             return _QuarterCalculationEngine.GetQuarterDetail(quarterNumber, year);
         }
 
-        protected InventorySummaryQuarter GetInventorySummaryQuarter(QuarterDetailDto quarterDetail)
+        protected QuarterDto GetInventorySummaryQuarter(QuarterDetailDto quarterDetail)
         {
-            return new InventorySummaryQuarter
+            return new QuarterDto
             {
                 Quarter = quarterDetail.Quarter,
                 Year = quarterDetail.Year

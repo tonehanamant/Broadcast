@@ -104,7 +104,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             return _InventorySummaryService.GetInventorySummaries(
                 new InventorySummaryFilterDto
                 {
-                    Quarter = new InventorySummaryQuarter { Year = year, Quarter = quarter }
+                    Quarter = new QuarterDto { Year = year, Quarter = quarter }
                 }, new DateTime(2018, 1, 15))
                 .Where(x => x.InventorySourceId == 1);
         }
@@ -314,7 +314,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             var inventoryCards = _InventorySummaryService.GetInventorySummaries(new InventorySummaryFilterDto
             {
-                Quarter = new InventorySummaryQuarter
+                Quarter = new QuarterDto
                 {
                     Quarter = 1,
                     Year = 2019
@@ -330,7 +330,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             var request = new InventorySummaryFilterDto
             {
-                Quarter = new InventorySummaryQuarter
+                Quarter = new QuarterDto
                 {
                     Quarter = 1,
                     Year = 2018
@@ -350,7 +350,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var request = new InventorySummaryFilterDto
             {
                 InventorySourceId = 1,  //open market
-                Quarter = new InventorySummaryQuarter
+                Quarter = new QuarterDto
                 {
                     Quarter = 1,
                     Year = 2018
@@ -369,7 +369,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             var request = new InventorySummaryFilterDto
             {
-                Quarter = new InventorySummaryQuarter
+                Quarter = new QuarterDto
                 {
                     Quarter = 1,
                     Year = 2018
@@ -395,7 +395,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var request = new InventorySummaryFilterDto
                 {
                     InventorySourceId = inventorySource.Id,
-                    Quarter = new InventorySummaryQuarter
+                    Quarter = new QuarterDto
                     {
                         Quarter = 1,
                         Year = 2018
@@ -415,7 +415,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             var inventoryCards = _InventorySummaryService.GetInventorySummaries(new InventorySummaryFilterDto
             {
-                Quarter = new InventorySummaryQuarter
+                Quarter = new QuarterDto
                 {
                     Quarter = 1,
                     Year = 2019
@@ -448,7 +448,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 var inventoryCards = _InventorySummaryService.GetInventorySummaries(new InventorySummaryFilterDto
                 {
-                    Quarter = new InventorySummaryQuarter
+                    Quarter = new QuarterDto
                     {
                         Quarter = quarterNumber,
                         Year = quarterYear

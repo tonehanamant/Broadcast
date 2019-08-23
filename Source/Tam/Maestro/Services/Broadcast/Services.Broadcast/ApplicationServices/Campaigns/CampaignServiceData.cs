@@ -27,7 +27,7 @@ namespace Services.Broadcast.ApplicationServices.Campaigns
         /// Gets all campaigns.
         /// </summary>
         /// <returns></returns>
-        List<CampaignDto> GetAllCampaigns();
+        List<CampaignDto> GetCampaigns(QuarterDetailDto quarter);
 
         /// <summary>
         /// Gets the campaign.
@@ -44,6 +44,12 @@ namespace Services.Broadcast.ApplicationServices.Campaigns
         /// <param name="createdDate">The created date.</param>
         /// <returns>Id of the new campaign</returns>
         int SaveCampaign(CampaignDto campaign, string createdBy, DateTime createdDate);
+
+        /// <summary>
+        /// Gets the date ranges based on the plans for the campaigns.
+        /// </summary>
+        /// <returns></returns>
+        List<DateRange> GetCampaignsDateRanges();
     }
 
     /// <summary>
@@ -111,10 +117,10 @@ namespace Services.Broadcast.ApplicationServices.Campaigns
         }
 
         /// <inheritdoc />
-        public List<CampaignDto> GetAllCampaigns()
+        public List<CampaignDto> GetCampaigns(QuarterDetailDto quarterDetailDto)
         {
             var repo = GetCampaignRepository();
-            List<CampaignDto> campaigns = repo.GetAllCampaigns();
+            List<CampaignDto> campaigns = repo.GetCampaigns(quarterDetailDto);
             return campaigns;
         }
 
@@ -144,6 +150,14 @@ namespace Services.Broadcast.ApplicationServices.Campaigns
             {
                 return repo.UpdateCampaign(campaign);
             }            
+        }
+
+        public List<DateRange> GetCampaignsDateRanges()
+        {
+            var repo = GetCampaignRepository();
+            var campaignsDates = repo.GetCampaignsDateRanges();
+
+            return campaignsDates;
         }
 
         #endregion // #region Operations

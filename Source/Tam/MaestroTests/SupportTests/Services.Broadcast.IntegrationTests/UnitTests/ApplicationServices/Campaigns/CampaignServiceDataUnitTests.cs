@@ -92,12 +92,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Camp
                     ModifiedBy = "TestUser", ModifiedDate = new DateTime(2107, 10, 17)
                 }
             };
-            campaignRepository.Setup(s => s.GetAllCampaigns())
+            campaignRepository.Setup(s => s.GetCampaigns(null))
                 .Callback(() => callCount++)
                 .Returns(callReturn);
             var tc = new CampaignServiceData(campaignRepository.Object, smsClient.Object);;
 
-            var result = tc.GetAllCampaigns();
+            var result = tc.GetCampaigns(null);
 
             Assert.IsNotNull(result);
             Assert.AreEqual(1, callCount);
@@ -128,7 +128,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Camp
                     ModifiedBy = "TestUser", ModifiedDate = new DateTime(2107, 10, 17)
                 }
             };
-            campaignRepository.Setup(s => s.GetAllCampaigns())
+            campaignRepository.Setup(s => s.GetCampaigns(null))
                 .Callback(() =>
                 {
                     callCount++;
@@ -137,7 +137,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Camp
                 .Returns(callReturn);
             var tc = new CampaignServiceData(campaignRepository.Object, smsClient.Object); ;
 
-            var caught = Assert.Throws<Exception>(() => tc.GetAllCampaigns());
+            var caught = Assert.Throws<Exception>(() => tc.GetCampaigns(null));
 
             Assert.IsNotNull(caught);
             Assert.AreEqual(1, callCount);

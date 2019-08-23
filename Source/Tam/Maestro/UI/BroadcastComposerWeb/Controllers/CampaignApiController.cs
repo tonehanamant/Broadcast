@@ -21,16 +21,16 @@ namespace BroadcastComposerWeb.Controllers
         }
 
         /// <summary>
-        /// Endpoint for listing all the campaigns in the system
+        /// Endpoint for listing the campaigns in the system
         /// </summary>
         /// <returns>List of campaigns</returns>
         [HttpGet]
         [Route("")]
-        public BaseResponse<List<CampaignDto>> GetAllCampaigns()
+        public BaseResponse<List<CampaignDto>> GetCampaigns(CampaignFilterDto campaignFilter)
         {
             return
                 _ConvertToBaseResponse(
-                    () => _ApplicationServiceFactory.GetApplicationService<ICampaignService>().GetAllCampaigns());
+                    () => _ApplicationServiceFactory.GetApplicationService<ICampaignService>().GetCampaigns(campaignFilter, DateTime.Now));
         }
 
         /// <summary>
@@ -83,6 +83,18 @@ namespace BroadcastComposerWeb.Controllers
         {
             return
                _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ICampaignService>().GetAgencies());
+        }
+
+        /// <summary>
+        /// Gets the quarters.
+        /// </summary>
+        /// <returns>An object with a list of quarters and the current quarter.</returns>
+        [HttpGet]
+        [Route("Quarters")]
+        public BaseResponse<CampaignQuartersDto> GetQuarters()
+        {
+            return
+               _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ICampaignService>().GetQuarters(DateTime.Now));
         }
     }
 }

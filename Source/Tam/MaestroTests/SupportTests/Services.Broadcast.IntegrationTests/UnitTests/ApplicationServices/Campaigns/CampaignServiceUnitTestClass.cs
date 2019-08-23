@@ -1,6 +1,7 @@
 ﻿using Common.Services.Repositories;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.ApplicationServices.Campaigns;
+using Services.Broadcast.BusinessEngines;
 using Tam.Maestro.Services.Clients;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Campaigns
@@ -12,8 +13,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Camp
 
         public ICampaignServiceData CampaignServiceData { get; set; }
 
-        public CampaignServiceUnitTestClass(IDataRepositoryFactory dataRepositoryFactory, ISMSClient smsClient)
-            : base(dataRepositoryFactory, smsClient)
+        public CampaignServiceUnitTestClass(IDataRepositoryFactory dataRepositoryFactory, 
+                                            ISMSClient smsClient, 
+                                            IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache, 
+                                            IQuarterCalculationEngine quarterCalculationEngine)
+            : base(dataRepositoryFactory, smsClient, mediaMonthAndWeekAggregateCache, quarterCalculationEngine)
         {
         }
 

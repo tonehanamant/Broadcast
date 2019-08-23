@@ -7,15 +7,15 @@ namespace Services.Broadcast.Entities.InventorySummary
     {
         public int InventorySourceId { get; set; }
         public string InventorySourceName { get; set; }
-        public InventorySummaryQuarter Quarter { get; internal set; }
+        public QuarterDto Quarter { get; internal set; }
         public bool HasRatesAvailableForQuarter { get; set; }
         public int TotalMarkets { get; set; }
         public int TotalStations { get; set; }
         public double? TotalProjectedHouseholdImpressions { get; set; }
         public DateTime? LastUpdatedDate { get; set; }
         public bool IsUpdating { get; set; }
-        public InventorySummaryQuarter RatesAvailableFromQuarter { get; set; }
-        public InventorySummaryQuarter RatesAvailableToQuarter { get; set; }
+        public QuarterDto RatesAvailableFromQuarter { get; set; }
+        public QuarterDto RatesAvailableToQuarter { get; set; }
         public bool? HasInventoryGaps { get; set; }
         public int? ShareBookId { get; set; }
         public int? HutBookId { get; set; }

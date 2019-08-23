@@ -1,4 +1,5 @@
-﻿using Common.Services.Repositories;
+﻿using Common.Services.ApplicationServices;
+using Common.Services.Repositories;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
@@ -7,7 +8,7 @@ using System.Collections.Generic;
 
 namespace Services.Broadcast.BusinessEngines
 {
-    public interface IQuarterCalculationEngine
+    public interface IQuarterCalculationEngine : IApplicationService
     {
         Tuple<DateTime, DateTime> GetDatesForTimeframe(RatesTimeframe timeFrameValue, DateTime currentDate);
         QuarterDetailDto GetQuarterRangeByDate(DateTime? currentDate);

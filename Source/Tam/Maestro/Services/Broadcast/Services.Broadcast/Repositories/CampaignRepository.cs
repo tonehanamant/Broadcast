@@ -23,7 +23,7 @@ namespace Services.Broadcast.Repositories
         /// Gets all campaigns.
         /// </summary>
         /// <returns></returns>
-        List<CampaignDto> GetAllCampaigns();
+        List<CampaignDto> GetCampaigns(QuarterDetailDto quarter);
 
         /// <summary>
         /// Gets the campaign.
@@ -47,6 +47,12 @@ namespace Services.Broadcast.Repositories
         /// <param name="campaignDto">The campaign dto.</param>
         /// <returns>Id of the campain updated</returns>
         int UpdateCampaign(CampaignDto campaignDto);
+
+        /// <summary>
+        /// Gets the list of all date ranges for campaign's plans
+        /// </summary>
+        /// <returns>A list of date ranges.</returns>
+        List<DateRange> GetCampaignsDateRanges();
     }
 
     /// <summary>
@@ -98,6 +104,7 @@ namespace Services.Broadcast.Repositories
                context =>
                {
                    var existingCampaign = context.campaigns.Single(x => x.id == campaignDto.Id, "Invalid campaign id");
+
                    existingCampaign.name = campaignDto.Name;
                    existingCampaign.advertiser_id = campaignDto.AdvertiserId;
                    existingCampaign.agency_id = campaignDto.AgencyId;
@@ -106,16 +113,41 @@ namespace Services.Broadcast.Repositories
                    existingCampaign.modified_date = campaignDto.ModifiedDate;
                    
                    context.SaveChanges();
+
                    return existingCampaign.id;
                });
         }
 
         /// <inheritdoc />
-        public List<CampaignDto> GetAllCampaigns()
+        public List<CampaignDto> GetCampaigns(QuarterDetailDto quarter)
         {
             return _InReadUncommitedTransaction(
                 context => (from c in context.campaigns
-                            select c).Select(_MapToDto).ToList());
+                            from p in c.plans.DefaultIfEmpty()
+                            // If there are no plans, we filter by campaign created date.
+                            where (p == null && 
+                                   c.created_date >= quarter.StartDate && 
+                                   c.created_date <= quarter.EndDate) ||
+                                   // Has a plan, but without start date.
+                                   (p != null &&
+                                   p.flight_start_date == null &&
+                                   c.created_date >= quarter.StartDate &&
+                                   c.created_date <= quarter.EndDate) ||
+                                   // Plan only has a start date.                                    
+                                   (p != null && 
+                                    p.flight_start_date != null &&
+                                    p.flight_end_date == null &&
+                                    p.flight_start_date >= quarter.StartDate &&
+                                    p.flight_start_date <= quarter.EndDate) ||
+                                   // Plan has start and end date, intersect the dates.
+                                   (p != null &&
+                                    p.flight_start_date != null &&
+                                    p.flight_end_date != null &&
+                                    p.flight_start_date <= quarter.EndDate &&
+                                    p.flight_end_date >= quarter.StartDate)
+                            orderby c.modified_date
+                            group c by c.id into campaign
+                            select campaign.FirstOrDefault()).Select(_MapToDto).ToList());
         }
 
         /// <inheritdoc />
@@ -132,6 +164,31 @@ namespace Services.Broadcast.Repositories
 
                     return result;
                 });
+        }
+
+        /// <inheritdoc />
+        public List<DateRange> GetCampaignsDateRanges()
+        {
+            return _InReadUncommitedTransaction(
+                context =>
+                {
+                    var campaignsWithValidPlans = (from p in context.plans
+                                                   where p.flight_start_date != null
+                                                   select p.campaign_id).Distinct().ToList();
+
+                    var campaignsDates = (from c in context.campaigns
+                                          where !campaignsWithValidPlans.Contains(c.id)
+                                          select c.created_date).ToList();
+
+                    var plansDateRanges = (from c in context.campaigns
+                                           from p in c.plans
+                                           where campaignsWithValidPlans.Contains(c.id)
+                                           select new { p.flight_start_date, p.flight_end_date }).ToList();
+
+                    return campaignsDates
+                            .Select(c => new DateRange(c, null))
+                            .Concat(plansDateRanges.Select(c => new DateRange(c.flight_start_date, c.flight_end_date))).ToList();
+                 });
         }
 
         private CampaignDto _MapToDto(campaign c)

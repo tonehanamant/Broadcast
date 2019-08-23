@@ -340,8 +340,8 @@ namespace Services.Broadcast.Repositories
                 var summaryAggregationData = new InventorySummaryAggregation
                 {
                     LastUpdatedDate = summaryData.last_update_date,
-                    RatesAvailableFromQuarter = new InventorySummaryQuarter { Quarter = summaryData.first_quarter_number, Year = summaryData.first_quarter_year },
-                    RatesAvailableToQuarter = new InventorySummaryQuarter { Quarter = summaryData.last_quarter_number, Year = summaryData.last_quarter_year },
+                    RatesAvailableFromQuarter = new QuarterDto { Quarter = summaryData.first_quarter_number, Year = summaryData.first_quarter_year },
+                    RatesAvailableToQuarter = new QuarterDto { Quarter = summaryData.last_quarter_number, Year = summaryData.last_quarter_year },
                     InventorySourceId = inventorySource.Id,
                     InventorySourceName = inventorySource.Name,
                     TotalProjectedHouseholdImpressions = quarterData.total_projected_impressions,
@@ -353,7 +353,7 @@ namespace Services.Broadcast.Repositories
                     TotalPrograms = quarterData.total_programs,
                     TotalUnits = quarterData.total_units,
                     CPM = quarterData.cpm,
-                    Quarter = new InventorySummaryQuarter { Quarter = quarterData.quarter_number, Year = quarterData.quarter_year },
+                    Quarter = new QuarterDto { Quarter = quarterData.quarter_number, Year = quarterData.quarter_year },
                     InventoryGaps = _MapInventorySummaryGapsData(quarterData.inventory_summary_gaps),
                     IsUpdating = (from file in context.inventory_files
                                   from job in file.inventory_file_ratings_jobs
