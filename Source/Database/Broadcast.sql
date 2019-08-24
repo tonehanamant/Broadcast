@@ -938,9 +938,10 @@ delete from daypart_codes where code = 'DIGI'
 /*************************************** END PRI-12666 *****************************************************/
 
 /*************************************** START PRI-12236 *****************************************************/
-IF EXISTS (SELECT 1 FROM sys.columns WHERE Name = 'delivery' AND Object_ID = OBJECT_ID('plans'))
+IF EXISTS (SELECT 1 from sys.columns where name = 'delivery' and object_name(object_id) = 'plans') 
+AND NOT EXISTS (SELECT 1 from sys.columns where name = 'delivery_impressions' and object_name(object_id) = 'plans')
 BEGIN
-	EXEC sp_rename 'plans.delivery', 'delivery_impressions', 'COLUMN';
+	EXEC sp_RENAME 'dbo.plans.delivery', 'delivery_impressions', 'COLUMN'
 END
 IF NOT EXISTS (SELECT 1 FROM sys.columns WHERE Name = 'delivery_rating_points' AND Object_ID = OBJECT_ID('plans'))
 BEGIN
