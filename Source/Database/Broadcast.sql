@@ -940,7 +940,7 @@ delete from daypart_codes where code = 'DIGI'
 /*************************************** START PRI-12236 *****************************************************/
 IF EXISTS (SELECT 1 FROM sys.columns WHERE Name = 'delivery' AND Object_ID = OBJECT_ID('plans'))
 BEGIN
-	EXEC sp_rename 'dbo.plans.delivery', 'delivery_impressions', 'COLUMN';
+	EXEC sp_rename 'plans.delivery', 'delivery_impressions', 'COLUMN';
 END
 IF NOT EXISTS (SELECT 1 FROM sys.columns WHERE Name = 'delivery_rating_points' AND Object_ID = OBJECT_ID('plans'))
 BEGIN
@@ -957,6 +957,13 @@ BEGIN
 	ALTER TABLE [plans] ALTER COLUMN [currency] [INT] NOT NULL
 END
 /*************************************** END PRI-12236 *****************************************************/
+
+/*************************************** START PRI-7471 *****************************************************/
+IF EXISTS (SELECT 1 FROM plans WHERE goal_breakdown_type = 0)
+BEGIN
+	UPDATE [plans] SET goal_breakdown_type = 1
+END
+/*************************************** END PRI-7471 update script for existing plans  *********************/
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
