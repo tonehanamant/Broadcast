@@ -88,6 +88,10 @@ namespace Services.Broadcast.ApplicationServices
                 throw new ApplicationException($"Job with id {job.Id} already has status {job.Status}");
             }
 
+            job.Status = BackgroundJobProcessingStatus.Processing;
+            var repo = GetScxGenerationJobRepository();
+            repo.UpdateJob(job);
+
             Exception caught = null;
 
             using (var transaction = new TransactionScopeWrapper())
@@ -95,7 +99,7 @@ namespace Services.Broadcast.ApplicationServices
                 try
                 {
                     var files = _ProprietaryInventoryService.GenerateScxFiles(job.InventoryScxDownloadRequest);
-                    _ScxGenerationJobRepository.SaveScxJobFiles(files, job);
+                    repo.SaveScxJobFiles(files, job);
                     _SaveToFolder(files);
                     job.Complete(currentDate);
                 }
@@ -105,7 +109,7 @@ namespace Services.Broadcast.ApplicationServices
                     caught = ex;
                 }
 
-                _ScxGenerationJobRepository.UpdateJob(job);
+                repo.UpdateJob(job);
 
                 transaction.Complete();
 

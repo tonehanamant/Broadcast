@@ -10,6 +10,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using ApprovalTests.Wpf;
+using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Repositories;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.ScxFileGeneration
@@ -211,5 +213,43 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ScxFileGeneration
         }
 
         #endregion // #region DownloadGeneratedScxFile
+
+        #region ProcessScxGenerationJob
+        [Test]
+        public void ProcessScxGenerationJobUpdatesStatus()
+        {
+            var dataRepoFactory = new Mock<IDataRepositoryFactory>();
+            var proprietaryInventoryService = new Mock<IProprietaryInventoryService>();
+            var fileService = new Mock<IFileService>();
+            var dropFolder = "thisFolder";
+            var historian = new Mock<IScxFileGenerationHistorian>();
+            var scxRepo = new Mock<IScxGenerationJobRepository>();
+            var tc = new ScxGenerationServiceUnitTestClass(dataRepoFactory.Object,
+                proprietaryInventoryService.Object,
+                fileService.Object)
+            {
+                DropFolderPath = dropFolder,
+                ScxFileGenerationHistorian = historian.Object,
+                ScxGenerationJobRepository = scxRepo.Object
+            };
+
+            var updateJobCallCount = 0;
+            var testJob = new Mock<ScxGenerationJob>();
+            testJob.Object.Status = BackgroundJobProcessingStatus.Queued;
+
+            var testFiles = new Mock<List<InventoryScxFile>>();
+
+            proprietaryInventoryService.Setup(x => x.GenerateScxFiles(testJob.Object.InventoryScxDownloadRequest))
+                .Returns(testFiles.Object);
+
+            scxRepo.Setup(x => x.UpdateJob(testJob.Object))
+                .Callback(() => updateJobCallCount++);
+
+            tc.ProcessScxGenerationJob(testJob.Object, new DateTime(2019, 8, 23));
+
+            Assert.AreEqual(2, updateJobCallCount);
+            Assert.AreEqual(BackgroundJobProcessingStatus.Succeeded, testJob.Object.Status);
+        }
+        #endregion
     }
 }
