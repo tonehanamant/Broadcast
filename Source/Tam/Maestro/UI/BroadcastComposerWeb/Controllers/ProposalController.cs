@@ -254,6 +254,7 @@ namespace BroadcastComposerWeb.Controllers
 
         [HttpPost]
         [Route("UploadProposalDetailBuy")]
+        [Authorize]
         public BaseResponse<List<string>> UploadProposalDetailBuy(HttpRequestMessage proposalBuy)
         {
             var response = _ConvertToBaseResponse(() =>

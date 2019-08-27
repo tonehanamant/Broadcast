@@ -124,6 +124,7 @@ namespace BroadcastComposerWeb.Controllers
         /// <returns>Success or failure to create a new job to generate the SCX files</returns>
         [HttpGet]
         [Route("ScxDownloadJob")]
+        [Authorize]
         public BaseResponse GenerateScxArchiveJob([FromUri(Name = "")]InventoryScxDownloadRequest request)
         {
             _ApplicationServiceFactory.GetApplicationService<IScxGenerationService>().QueueScxGenerationJob(request, Identity.Name, DateTime.Now);
