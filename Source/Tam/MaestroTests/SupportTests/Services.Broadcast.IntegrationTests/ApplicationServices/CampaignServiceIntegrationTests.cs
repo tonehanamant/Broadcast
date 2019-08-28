@@ -4,15 +4,17 @@ using IntegrationTests.Common;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
-using Services.Broadcast.ApplicationServices.Campaigns;
 using Services.Broadcast.ApplicationServices.Plan;
 using Services.Broadcast.Entities;
 using Services.Broadcast.IntegrationTests.Helpers;
 using Services.Broadcast.Entities.Plan;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Tam.Maestro.Common.DataLayer;
+using Services.Broadcast.Clients;
+using Services.Broadcast.IntegrationTests.Stubbs;
+using Microsoft.Practices.Unity;
+using Services.Broadcast.Validators;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
@@ -21,8 +23,16 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
     {
         private const string IntegrationTestUser = "IntegrationTestUser";
         private readonly DateTime CreatedDate = new DateTime(2019, 5, 14);
-        private readonly ICampaignService _CampaignService = IntegrationTestApplicationServiceFactory.GetApplicationService<ICampaignService>();
-        private readonly IPlanService _PlanService = IntegrationTestApplicationServiceFactory.GetApplicationService<IPlanService>();
+        private ICampaignService _CampaignService;
+        private IPlanService _PlanService;
+
+        [TestFixtureSetUp]
+        public void SetUp()
+        {
+            IntegrationTestApplicationServiceFactory.Instance.RegisterType<ITrafficApiClient, TrafficApiClientStub>();
+            _CampaignService = IntegrationTestApplicationServiceFactory.GetApplicationService<ICampaignService>();
+            _PlanService = IntegrationTestApplicationServiceFactory.GetApplicationService<IPlanService>();
+        }
 
         [Test]
         [UseReporter(typeof(DiffReporter))]

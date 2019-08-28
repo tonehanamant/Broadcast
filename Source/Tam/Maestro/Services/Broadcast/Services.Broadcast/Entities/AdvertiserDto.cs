@@ -20,5 +20,13 @@
         /// The name.
         /// </value>
         public string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets the identifier of the agency which the advertiser belongs to
+        /// </summary>
+        /// <value>
+        /// The agency id.
+        /// </value>
+        public int AgencyId { get; set; }
     }
 }

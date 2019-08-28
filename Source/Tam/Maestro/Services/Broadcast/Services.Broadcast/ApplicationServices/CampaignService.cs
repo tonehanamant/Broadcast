@@ -1,17 +1,13 @@
 ﻿using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
-using Services.Broadcast.ApplicationServices.Campaigns;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Repositories;
+using Services.Broadcast.Validators;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using Tam.Maestro.Data.Entities;
-using Tam.Maestro.Services.Clients;
-using Tam.Maestro.Services.ContractInterfaces.Common;
-using static Services.Broadcast.ApplicationServices.CampaignService;
 
 namespace Services.Broadcast.ApplicationServices
 {
@@ -42,19 +38,6 @@ namespace Services.Broadcast.ApplicationServices
         /// <param name="createdDate">The created date.</param>
         /// <returns>Id of the new campaign</returns>
         int SaveCampaign(CampaignDto campaign, string userName, DateTime createdDate);
-
-        /// <summary>
-        /// Gets the advertisers.
-        /// </summary>
-        /// <returns></returns>
-        List<AdvertiserDto> GetAdvertisers();
-
-        /// <summary>
-        /// Gets the agencies.
-        /// </summary>
-        /// <returns></returns>
-        List<AgencyDto> GetAgencies();
-
         /// <summary>
         /// Gets the quarters.
         /// </summary>
@@ -69,93 +52,88 @@ namespace Services.Broadcast.ApplicationServices
     /// <seealso cref="ICampaignService" />
     public class CampaignService : ICampaignService
     {
-        #region Fields
-
-        private readonly ICampaignServiceData _CampaignData;
         private readonly ICampaignValidator _CampaignValidator;
+        private readonly ICampaignRepository _CampaignRepository;
         private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekAggregateCache;
         private readonly IQuarterCalculationEngine _QuarterCalculationEngine;
-
-        #endregion // #region Fields
-
-        #region Constructor
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CampaignService"/> class.
         /// </summary>
         /// <param name="dataRepositoryFactory">The data repository factory.</param>
-        /// <param name="smsClient">The SMS client.</param>
-        /// <param name="mediaMonthAndWeekAggregateCache">The media month and week aggregate cache.</param>
-        /// <param name="quarterCalculationEngine">The quarter calculation engine</param>
-        public CampaignService(IDataRepositoryFactory dataRepositoryFactory, 
-                               ISMSClient smsClient, 
-                               IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
-                               IQuarterCalculationEngine quarterCalculationEngine)
+        /// <param name="campaignValidator">The class which contains validation logic for campaigns</param>
+        /// <param name="mediaMonthAndWeekAggregateCache">The class which contains cached in memory media monts and media weeks</param>
+        /// <param name="quarterCalculationEngine">The engine that does quarter calculations</param>
+        public CampaignService(
+            IDataRepositoryFactory dataRepositoryFactory,
+            ICampaignValidator campaignValidator,
+            IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
+            IQuarterCalculationEngine quarterCalculationEngine)
         {
-            var campaignRepository = dataRepositoryFactory.GetDataRepository<ICampaignRepository>();
-            _CampaignData = new CampaignServiceData(campaignRepository, smsClient);
-            _CampaignValidator = new CampaignValidator(_CampaignData);
+            _CampaignRepository = dataRepositoryFactory.GetDataRepository<ICampaignRepository>();
+            _CampaignValidator = campaignValidator;
             _MediaMonthAndWeekAggregateCache = mediaMonthAndWeekAggregateCache;
             _QuarterCalculationEngine = quarterCalculationEngine;
         }
-
-        #endregion // #region Constructor
-
-        #region Operations
 
         /// <inheritdoc />
         public List<CampaignDto> GetCampaigns(CampaignFilterDto filter, DateTime currentDate)
         {
             if (!_IsFilterValid(filter))
                 filter = _GetDefaultFilter(currentDate);
-            var data = GetCampaignServiceData();
             var quarterDetail = _QuarterCalculationEngine.GetQuarterDetail(filter.Quarter.Quarter, filter.Quarter.Year);
-            var campaigns = data.GetCampaigns(quarterDetail);
+            var campaigns = _CampaignRepository.GetCampaigns(quarterDetail);
             return campaigns;
         }
 
         /// <inheritdoc />
         public CampaignDto GetCampaignById(int campaignId)
         {
-            var data = GetCampaignServiceData();
-            var campaign = data.GetCampaign(campaignId);
+            var campaign = _CampaignRepository.GetCampaign(campaignId);
+
+            if (campaign.HasPlans)
+            {
+                _SetCampaignStubData(campaign);
+            }
+
             return campaign;
         }
 
-        /// <inheritdoc />
-        public List<AdvertiserDto> GetAdvertisers()
+        private void _SetCampaignStubData(CampaignDto campaign)
         {
-            var data = GetCampaignServiceData();
-            var items = data.GetAdvertisers();
-            return items;
-        }
-
-        /// <inheritdoc />
-        public List<AgencyDto> GetAgencies()
-        {
-            var data = GetCampaignServiceData();
-            var items = data.GetAgencies();
-            return items;
+            campaign.FlightStartDate = new DateTime(2019, 4, 15);
+            campaign.FlightEndDate = new DateTime(2019, 6, 2);
+            campaign.FlightHiatusDays = 5;
+            campaign.FlightActiveDays = 44;
+            campaign.HasHiatus = true;
+            campaign.Budget = 150;
+            campaign.CPM = 11;
+            campaign.Impressions = 13637;
+            campaign.Rating = 11.46;
         }
 
         /// <inheritdoc />
         public int SaveCampaign(CampaignDto campaign, string createdBy, DateTime createdDate)
         {
-            var validator = GetCampaignValidator();
-            validator.Validate(campaign);
+            _CampaignValidator.Validate(campaign);
 
             campaign.ModifiedBy = createdBy;
             campaign.ModifiedDate = createdDate;
 
-            var data = GetCampaignServiceData();
-            return data.SaveCampaign(campaign, createdBy, createdDate);
+            if (campaign.Id == 0)
+            {
+                return _CampaignRepository.CreateCampaign(campaign, createdBy, createdDate);
+            }
+            else
+            {
+                return _CampaignRepository.UpdateCampaign(campaign);
+            }
         }
 
         /// <inheritdoc />
         public CampaignQuartersDto GetQuarters(DateTime currentDate)
         {
-            var data = GetCampaignServiceData();
-            var dates = data.GetCampaignsDateRanges();
+            var dates = _CampaignRepository.GetCampaignsDateRanges();
             var validDateRanges = _ValidateDateRanges(dates);
             var allMediaMonths = new List<MediaMonth>();
 
@@ -171,7 +149,7 @@ namespace Services.Broadcast.ApplicationServices
 
             var currentQuarter = _QuarterCalculationEngine.GetQuarterRangeByDate(currentDate);
 
-            if (!quarters.Any(x => x.Quarter == currentQuarter.Quarter && 
+            if (!quarters.Any(x => x.Quarter == currentQuarter.Quarter &&
                                    x.Year == currentQuarter.Year))
                 quarters.Add(currentQuarter);
 
@@ -180,28 +158,6 @@ namespace Services.Broadcast.ApplicationServices
                 DefaultQuarter = currentQuarter,
                 Quarters = quarters.OrderByDescending(x => x.Year).ThenByDescending(x => x.Quarter).ToList()
             };
-        }
-
-        #endregion // #region Operations
-
-        #region Helpers
-
-        /// <summary>
-        /// Gets the campaign data.
-        /// </summary>
-        /// <returns></returns>
-        protected virtual ICampaignServiceData GetCampaignServiceData()
-        {
-            return _CampaignData;
-        }
-
-        /// <summary>
-        /// Gets the campaign validator.
-        /// </summary>
-        /// <returns></returns>
-        protected virtual ICampaignValidator GetCampaignValidator()
-        {
-            return _CampaignValidator;
         }
 
         private List<DateRange> _ValidateDateRanges(List<DateRange> dateRanges)
@@ -237,8 +193,6 @@ namespace Services.Broadcast.ApplicationServices
                 }
             };
         }
-
-        #endregion // #region Helpers
     }
 }
 

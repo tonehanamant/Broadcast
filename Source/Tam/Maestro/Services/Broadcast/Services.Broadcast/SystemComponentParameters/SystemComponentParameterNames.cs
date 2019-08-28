@@ -957,7 +957,20 @@ namespace Tam.Maestro.Common.SystemComponentParameter
             get { return "SchemaVersion"; }
         }
 	}
-	
+	 
+	public static class MarryWizardWebSystemParameterNames
+	{
+		public static string ComponentID
+        {
+            get { return "MarryWizardWeb" ; }
+        }
+	  
+		public static string DisablePastFlightWeeks  
+		{
+            get { return "DisablePastFlightWeeks"; }
+        }
+	}
+	 
 	public static class MaterialsServiceSystemParameterNames
 	{
 		public static string ComponentID
@@ -2058,6 +2071,11 @@ namespace Tam.Maestro.Common.SystemComponentParameter
 		public static string ComponentID
         {
             get { return "TrafficComposerWeb" ; }
+        }
+	  
+		public static string BaseTrafficURL  
+		{
+            get { return "BaseTrafficURL"; }
         }
 	 
 		public static string CancellationNotificationCriticalTime  

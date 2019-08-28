@@ -245,7 +245,9 @@
     <Compile Include="App_Start\Startup.cs" />
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="BroadcastWebLogger.cs" />
+    <Compile Include="Controllers\AdvertiserApiController.cs" />
     <Compile Include="Controllers\AffidavitUploadApiController.cs" />
+    <Compile Include="Controllers\AgencyApiController.cs" />
     <Compile Include="Controllers\AudienceTypesApiController.cs" />
     <Compile Include="Controllers\BroadcastControllerBase.cs" />
     <Compile Include="Controllers\CampaignApiController.cs" />
@@ -258,6 +260,7 @@
     <Compile Include="Controllers\MarketsApiController.cs" />
     <Compile Include="Controllers\PostingTypeApiController.cs" />
     <Compile Include="Controllers\PostingBooksApiController.cs" />
+    <Compile Include="Controllers\ProductApiController.cs" />
     <Compile Include="Controllers\SpotLengthApiController.cs" />
     <Compile Include="Controllers\PlanApiController.cs" />
     <Compile Include="Controllers\MaintenanceController.cs" />

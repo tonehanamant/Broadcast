@@ -1,8 +1,9 @@
-﻿using Services.Broadcast.Entities;
+﻿using Services.Broadcast.Clients;
+using Services.Broadcast.Entities;
 using System;
 using System.Linq;
 
-namespace Services.Broadcast.ApplicationServices.Campaigns
+namespace Services.Broadcast.Validators
 {
     /// <summary>
     /// Validates the fields of a Campaign.
@@ -32,7 +33,7 @@ namespace Services.Broadcast.ApplicationServices.Campaigns
 
         #region Fields
 
-        private readonly ICampaignServiceData _CampaignServiceData;
+        private readonly ITrafficApiClient _TrafficApiClient;
 
         #endregion // #region Fields
 
@@ -41,10 +42,10 @@ namespace Services.Broadcast.ApplicationServices.Campaigns
         /// <summary>
         /// Initializes a new instance of the <see cref="CampaignValidator"/> class.
         /// </summary>
-        /// <param name="data">The data.</param>
-        public CampaignValidator(ICampaignServiceData data)
+        /// <param name="trafficApiClient">The client to access web API of the traffic project</param>
+        public CampaignValidator(ITrafficApiClient trafficApiClient)
         {
-            _CampaignServiceData = data;
+            _TrafficApiClient = trafficApiClient;
         }
 
         #endregion // #region Constructor
@@ -55,23 +56,14 @@ namespace Services.Broadcast.ApplicationServices.Campaigns
         public void Validate(CampaignDto campaign)
         {
             _ValidateCampaignName(campaign);
-            _ValidateAdvertiser(campaign);
             _ValidateAgency(campaign);
+            _ValidateAdvertiser(campaign);
             _ValidateNotes(campaign);
         }
 
         #endregion // #region Operations
 
         #region Helpers
-
-        /// <summary>
-        /// Gets the campaign service data.
-        /// </summary>
-        /// <returns></returns>
-        protected ICampaignServiceData GetCampaignServiceData()
-        {
-            return _CampaignServiceData;
-        }
 
         private void _ValidateCampaignName(CampaignDto campaign)
         {
@@ -86,12 +78,12 @@ namespace Services.Broadcast.ApplicationServices.Campaigns
                 throw new InvalidOperationException(InvalidCampaignNameErrorMessage);
             }
         }
-        
+
         private void _ValidateAdvertiser(CampaignDto campaign)
         {
-            var data = GetCampaignServiceData();
-            var advertisers = data.GetAdvertisers();
+            var advertisers = _TrafficApiClient.GetAdvertisersByAgencyId(campaign.AgencyId);
             var found = advertisers.Any(a => a.Id.Equals(campaign.AdvertiserId));
+
             if (found == false)
             {
                 throw new InvalidOperationException(InvalidAdvertiserErrorMessage);
@@ -100,9 +92,9 @@ namespace Services.Broadcast.ApplicationServices.Campaigns
 
         private void _ValidateAgency(CampaignDto campaign)
         {
-            var data = GetCampaignServiceData();
-            var agencies = data.GetAgencies();
+            var agencies = _TrafficApiClient.GetAgencies();
             var found = agencies.Any(a => a.Id.Equals(campaign.AgencyId));
+
             if (found == false)
             {
                 throw new InvalidOperationException(InvalidAgencyErrorMessage);

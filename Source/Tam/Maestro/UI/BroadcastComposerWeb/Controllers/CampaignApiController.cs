@@ -60,31 +60,6 @@ namespace BroadcastComposerWeb.Controllers
                 _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ICampaignService>()
                 .SaveCampaign(campaign, Identity.Name, DateTime.Now));
         }
-
-        /// <summary>
-        /// Gets the advertisers.
-        /// </summary>
-        /// <returns>A list of advertiser objects.</returns>
-        [HttpGet]
-        [Route("Advertisers")]
-        public BaseResponse<List<AdvertiserDto>> GetAdvertisers()
-        {
-            return
-                _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ICampaignService>().GetAdvertisers());
-        }
-
-        /// <summary>
-        /// Gets the agencies.
-        /// </summary>
-        /// <returns>A list of agency objects.</returns>
-        [HttpGet]
-        [Route("Agencies")]
-        public BaseResponse<List<AgencyDto>> GetAgencies()
-        {
-            return
-               _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ICampaignService>().GetAgencies());
-        }
-
         /// <summary>
         /// Gets the quarters.
         /// </summary>

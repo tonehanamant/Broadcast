@@ -232,27 +232,30 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicationServices\AdvertiserService.cs" />
+    <Compile Include="ApplicationServices\AgencyService.cs" />
     <Compile Include="Entities\CampaignFilterDto.cs" />
     <Compile Include="ApplicationServices\Plan\PlanAggregator.cs" />
     <Compile Include="Aggregates\SchedulesAggregate.cs" />
     <Compile Include="ApplicationServices\AudienceService.cs" />
-    <Compile Include="ApplicationServices\Campaigns\CampaignServiceData.cs" />
-    <Compile Include="ApplicationServices\Campaigns\CampaignValidator.cs" />
     <Compile Include="ApplicationServices\DaypartCodeService.cs" />
     <Compile Include="ApplicationServices\DaypartTypeService.cs" />
     <Compile Include="ApplicationServices\Plan\PlanService.cs" />
     <Compile Include="ApplicationServices\EnvironmentService.cs" />
     <Compile Include="ApplicationServices\PostingBookService.cs" />
     <Compile Include="ApplicationServices\PostingTypeService.cs" />
+    <Compile Include="ApplicationServices\ProductService.cs" />
     <Compile Include="ApplicationServices\Scx\ScxFileGenerationDetailTransformer.cs" />
     <Compile Include="ApplicationServices\Scx\ScxFileGenerationHistorian.cs" />
     <Compile Include="BusinessEngines\PlanBudgetDeliveryCalculator.cs" />
+    <Compile Include="Clients\TrafficApiClient.cs" />
     <Compile Include="Entities\AdvertiserDto.cs" />
     <Compile Include="ApplicationServices\SpotLengthService.cs" />
     <Compile Include="Entities\AgencyDto.cs" />
     <Compile Include="Clients\ConfigurationClientSwitch.cs" />
     <Compile Include="Entities\CampaignQuarterDto.cs" />
     <Compile Include="Entities\DTO\EnvironmentDto.cs" />
+    <Compile Include="Entities\DTO\ProductDto.cs" />
     <Compile Include="Entities\Enums\AudienceTypeEnum.cs" />
     <Compile Include="Entities\Enums\BackgroundJobProcessingStatus.cs" />
     <Compile Include="Entities\Enums\DaypartTypeEnum.cs" />
@@ -779,6 +782,7 @@
       <DependentUpon>SystemComponentParameterNames.tt</DependentUpon>
     </Compile>
     <Compile Include="TAMResource.cs" />
+    <Compile Include="Validators\CampaignValidator.cs" />
     <Compile Include="Validators\InventoryFileValidator.cs" />
     <Compile Include="Validators\PlanValidator.cs" />
   </ItemGroup>

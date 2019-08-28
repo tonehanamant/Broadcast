@@ -23,6 +23,7 @@ using Services.Broadcast.BusinessEngines.InventoryDaypartParsing;
 using Services.Broadcast.Converters.Scx;
 using Services.Broadcast.Cache;
 using Services.Broadcast.ApplicationServices.Plan;
+using Services.Broadcast.Clients;
 
 namespace Services.Broadcast.ApplicationServices
 {
@@ -172,7 +173,12 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IInventoryGapCalculationEngine, InventoryGapCalculationEngine>();
 
             unityContainer.RegisterType<ICampaignService, CampaignService>();
+            unityContainer.RegisterType<ICampaignValidator, CampaignValidator>();
 
+            unityContainer.RegisterType<IAgencyService, AgencyService>();
+            unityContainer.RegisterType<IAdvertiserService, AdvertiserService>();
+            unityContainer.RegisterType<IProductService, ProductService>();
+            
             unityContainer.RegisterType<IDaypartCodeService, DaypartCodeService>();
 
             unityContainer.RegisterType<IScxGenerationService, ScxGenerationService>();
@@ -188,6 +194,8 @@ namespace Services.Broadcast.ApplicationServices
 
             unityContainer.RegisterType<IEnvironmentService, EnvironmentService>();
             unityContainer.RegisterType<IDaypartTypeService, DaypartTypeService>();
+
+            unityContainer.RegisterType<ITrafficApiClient, TrafficApiClient>();
 
             //@todo This is temporary to control the daypart source for Broadcast
             var repoFactory = unityContainer.Resolve<IDataRepositoryFactory>();

@@ -1038,7 +1038,16 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 					(MaestroSchemaSystemParameterNames.ComponentID , MaestroSchemaSystemParameterNames.SchemaVersion); }
         }
 	}
-	
+	 
+	public static class MarryWizardWebSystemParameter 
+	{ 
+		public static bool DisablePastFlightWeeks  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<bool>
+					(MarryWizardWebSystemParameterNames.ComponentID , MarryWizardWebSystemParameterNames.DisablePastFlightWeeks); }
+        }
+	}
+	 
 	public static class MaterialsServiceSystemParameter 
 	{ 
 		public static string CopyImportDirectory  
@@ -2255,7 +2264,13 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 	}
 	 
 	public static class TrafficComposerWebSystemParameter 
-	{
+	{ 
+		public static string BaseTrafficURL  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<string>
+					(TrafficComposerWebSystemParameterNames.ComponentID , TrafficComposerWebSystemParameterNames.BaseTrafficURL); }
+        }
+	 
 		public static int CancellationNotificationCriticalTime  
 		{
             get { return SystemComponentParameterHelper.GetPropertyValue<int>
