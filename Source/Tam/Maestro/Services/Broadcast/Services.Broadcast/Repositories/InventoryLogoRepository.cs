@@ -5,7 +5,6 @@ using Services.Broadcast.Entities.Enums;
 using System.Linq;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
-using Tam.Maestro.Services.Clients;
 using System.Data.Entity;
 using System.Collections.Generic;
 using ConfigurationService.Client;
@@ -22,7 +21,6 @@ namespace Services.Broadcast.Repositories
     public class InventoryLogoRepository : BroadcastRepositoryBase, IInventoryLogoRepository
     {
         public InventoryLogoRepository(
-            ISMSClient pSmsClient,
             IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
             ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient)
                 : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient)

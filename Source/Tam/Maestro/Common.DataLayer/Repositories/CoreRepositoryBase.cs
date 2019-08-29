@@ -11,8 +11,6 @@ using System.Threading;
 using ConfigurationService.Client;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
-using Tam.Maestro.Services.Clients;
-using Tam.Maestro.Services.ContractInterfaces;
 
 namespace Common.Services.Repositories
 {

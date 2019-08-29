@@ -11,7 +11,6 @@ using System.Linq;
 using ConfigurationService.Client;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
-using Tam.Maestro.Services.Clients;
 using Tam.Maestro.Services.ContractInterfaces.Common;
 
 namespace Services.Broadcast.Repositories
@@ -26,7 +25,6 @@ namespace Services.Broadcast.Repositories
         private readonly IStationProcessingEngine _StationProcessingEngine;
 
         public ScheduleAggregateRepository(
-            ISMSClient pSmsClient,
             IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
             ITransactionHelper pTransactionHelper,
             IStationProcessingEngine stationProcessingEngine, IConfigurationWebApiClient pConfigurationWebApiClient)

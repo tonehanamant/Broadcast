@@ -9,7 +9,6 @@ using System.Linq;
 using System.Data.Entity;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
-using Tam.Maestro.Services.Clients;
 
 namespace Services.Broadcast.Repositories
 {
@@ -65,11 +64,11 @@ namespace Services.Broadcast.Repositories
         /// <summary>
         /// Initializes a new instance of the <see cref="CampaignRepository"/> class.
         /// </summary>
-        /// <param name="pSmsClient">The p SMS client.</param>
         /// <param name="pBroadcastContextFactory">The p broadcast context factory.</param>
         /// <param name="pTransactionHelper">The p transaction helper.</param>
         /// <param name="pConfigurationWebApiClient">The p configuration web API client.</param>
-        public CampaignRepository(ISMSClient pSmsClient, IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
+        public CampaignRepository(
+            IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
             ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient)
             : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
 

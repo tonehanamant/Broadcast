@@ -1,6 +1,5 @@
 ﻿using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.InterceptionExtension;
-using Tam.Maestro.Services.Clients;
 
 namespace Common.Services.Repositories
 {
@@ -30,11 +29,6 @@ namespace Common.Services.Repositories
         }
 
         public abstract void RegisterTypes(UnityContainer instance);
-
-        public void RebindSms(ISMSClient smsClient)
-        {
-            Instance.RegisterInstance<ISMSClient>(smsClient);
-        }
 
         public UnityContainer GetUnityContainer()
         {

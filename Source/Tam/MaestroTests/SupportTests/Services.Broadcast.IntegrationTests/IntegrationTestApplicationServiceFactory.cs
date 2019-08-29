@@ -41,7 +41,7 @@ namespace Services.Broadcast.IntegrationTests
 
                     var stubbedSmsClient = new StubbedSMSClient();
                     var stubbedConfigurationClient = new StubbedConfigurationWebApiClient();
-                    BroadcastDataRepositoryFactory.RebindSms(stubbedSmsClient);
+
                     _instance.RegisterInstance<IDataRepositoryFactory>(BroadcastDataRepositoryFactory);
                     _instance.RegisterInstance<IConfigurationWebApiClient>(stubbedConfigurationClient);
 
