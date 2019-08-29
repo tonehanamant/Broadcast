@@ -1,0 +1,25 @@
+﻿{
+  "AudienceName": "AudienceThree",
+  "AvailableMarketCount": 12,
+  "AvailableMarketTotalUsCoveragePercent": 68.7,
+  "BlackoutMarketCount": 3,
+  "BlackoutMarketTotalUsCoveragePercent": 13.8,
+  "PlanSummaryQuarters": [
+    {
+      "Quarter": 1,
+      "Year": 2017
+    },
+    {
+      "Quarter": 2,
+      "Year": 2017
+    },
+    {
+      "Quarter": 3,
+      "Year": 2017
+    }
+  ],
+  "ProcessingStatus": 3,
+  "ProductName": "ProductTwo",
+  "TotalActiveDays": 20,
+  "TotalHiatusDays": 2
+}

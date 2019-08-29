@@ -67,6 +67,28 @@ namespace Services.Broadcast.IntegrationTests.Repositories
             }
         }
 
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void ChangeSummaryAggregationStatus()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var planId = _CreateAndSavePlan();
+                var dtoToSave = _GetPlanSummaryDto(planId);
+                _PlanSummaryRepository.SaveSummary(dtoToSave);
+                var startSummaryDto = _PlanSummaryRepository.GetSummaryForPlan(planId);
+                var beforeStatus = startSummaryDto.ProcessingStatus;
+
+                _PlanSummaryRepository.SetProcessingStatusForPlanSummary(planId, PlanAggregationProcessingStatusEnum.Error);
+
+                var afterSummaryDto = _PlanSummaryRepository.GetSummaryForPlan(planId);
+                var afterStatus = afterSummaryDto.ProcessingStatus;
+                Assert.AreEqual(PlanAggregationProcessingStatusEnum.Idle, beforeStatus);
+                Assert.AreEqual(PlanAggregationProcessingStatusEnum.Error, afterStatus);
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(afterSummaryDto, _GetJsonSettings()));
+            }
+        }
+
         #region Helpers
 
         private int _CreateAndSavePlan()

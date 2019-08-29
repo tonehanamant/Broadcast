@@ -70,6 +70,7 @@ namespace Services.Broadcast.Repositories
                     context.plan_summary.Add(entity);
                 }
 
+                entity.processing_status = (int) processingStatus;
                 context.SaveChanges();
             });
         }

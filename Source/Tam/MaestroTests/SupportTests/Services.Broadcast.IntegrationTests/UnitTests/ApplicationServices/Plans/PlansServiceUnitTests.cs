@@ -93,6 +93,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var summarySavedTime = saveSummaryCalls[0].Item3;
             Assert.IsTrue(planSavedTime <= setInProgressTime, "Plan should have been saved before aggregation started.");
             Assert.IsTrue(setInProgressTime <= summarySavedTime, "Aggregation started should be set before summary saved");
+            Assert.AreEqual(PlanAggregationProcessingStatusEnum.InProgress, setStatusCalls[0].Item2);
+            Assert.AreEqual(PlanAggregationProcessingStatusEnum.Idle, saveSummaryCalls[0].Item2.ProcessingStatus);
         }
         
         [Test]
@@ -153,6 +155,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             Assert.IsTrue(planSavedTime <= setInProgressTime, "Plan should have been saved before aggregation started.");
             Assert.IsTrue(setInProgressTime <= finalStatusSavedTime, "Aggregation started should be set before summary saved");
             Assert.AreNotEqual(currentThreadId, setStatusCalls[1].Item3, "PlanSave and PlanAggregate should be on separate threads.");
+            Assert.AreEqual(PlanAggregationProcessingStatusEnum.InProgress, setStatusCalls[0].Item2);
+            Assert.AreEqual(PlanAggregationProcessingStatusEnum.Error, setStatusCalls[1].Item2);
         }
         
         #endregion // #region Dispatch Aggregation
