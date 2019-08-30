@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Services.Broadcast.Entities.Enums;
 
 namespace Services.Broadcast.Entities.Plan
@@ -95,5 +96,37 @@ namespace Services.Broadcast.Entities.Plan
         /// The plan summary quarters.
         /// </value>
         public List<PlanSummaryQuarterDto> PlanSummaryQuarters { get; set; } = new List<PlanSummaryQuarterDto>();
+
+        public PostingTypeEnum PostingType { get; set; }
+
+        public PlanStatusEnum Status { get; set; }
+
+        public string Name { get; set; }
+
+        public int SpotLength { get; set; }
+
+        public DateTime? FlightStartDate { get; set; }
+
+        public DateTime? FlightEndDate { get; set; }
+
+        public decimal? TargetCPM { get; set; }
+
+        public decimal? HHCPM { get; set; }
+
+        public decimal? Budget { get; set; }
+
+        public bool Equivalized { get; set; }
+
+        public List<string> Dayparts { get; set; }
+
+        public DateTime LastUpdated { get; set; }
+
+        public double? TargetImpressions { get; set; }
+
+        public double? HHImpressions { get; set; }
+
+        public double? TRP { get; set; }
+
+        public bool HasHiatus { get; set; }
     }
 }

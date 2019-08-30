@@ -9,6 +9,9 @@ using System.Linq;
 using System.Data.Entity;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
+using Tam.Maestro.Services.Clients;
+using Services.Broadcast.Entities.Plan;
+using Services.Broadcast.Entities.Enums;
 
 namespace Services.Broadcast.Repositories
 {
@@ -155,13 +158,65 @@ namespace Services.Broadcast.Repositories
             return _InReadUncommitedTransaction(
                 context =>
                 {
-                    var found = context.campaigns.Single(c => c.id.Equals(campaignId), $"Could not find existing campaign with id '{campaignId}'");
+                    var campaign = context.campaigns
+                        .Include(x => x.plans)
+                        .Include(x => x.plans.Select(p => p.spot_lengths))
+                        .Include(x => x.plans.Select(p => p.plan_dayparts))
+                        .Include(x => x.plans.Select(p => p.plan_dayparts.Select(d => d.daypart_codes)))
+                        .Include(x => x.plans.Select(p => p.plan_summary))
+                        .Include(x => x.plans.Select(p => p.plan_summary.Select(s => s.plan_summary_quarters)))
+                        .Single(c => c.id.Equals(campaignId), $"Could not find existing campaign with id '{campaignId}'");
 
-                    var result = _MapToDto(found);
+                    var campaignDto = new CampaignDto
+                    {
+                        Id = campaign.id,
+                        Name = campaign.name,
+                        AdvertiserId = campaign.advertiser_id,
+                        AgencyId = campaign.agency_id,
+                        Notes = campaign.notes,
+                        ModifiedDate = campaign.modified_date,
+                        ModifiedBy = campaign.modified_by,
+                        Plans = campaign.plans
+                            .Where(x => x.plan_summary.Any(s => s.processing_status == (int)PlanAggregationProcessingStatusEnum.Idle))
+                            .Select(plan =>
+                            {
+                                var summary = plan.plan_summary.Single();
 
-                    result.HasPlans = found.plans.Any();
+                                return new PlanSummaryDto
+                                {
+                                    ProductName = summary.product_name,
+                                    AudienceName = summary.audience_name,
+                                    PostingType = (PostingTypeEnum)plan.posting_type,
+                                    Status = (PlanStatusEnum)plan.status,
+                                    Name = plan.name,
+                                    SpotLength = plan.spot_lengths.length,
+                                    FlightStartDate = plan.flight_start_date,
+                                    FlightEndDate = plan.flight_end_date,
+                                    TargetCPM = plan.cpm,
+                                    Budget = plan.budget,
+                                    Equivalized = plan.equivalized,
+                                    AvailableMarketCount = summary.available_market_count,
+                                    AvailableMarketTotalUsCoveragePercent = summary.available_market_total_us_coverage_percent,
+                                    PlanId = plan.id,
+                                    LastUpdated = plan.modified_date,
+                                    Dayparts = plan.plan_dayparts.Select(d => d.daypart_codes.code).ToList(),
+                                    TargetImpressions = plan.delivery_impressions,
+                                    TRP = plan.delivery_rating_points,
+                                    TotalActiveDays = summary.active_day_count,
+                                    TotalHiatusDays = summary.hiatus_days_count,
+                                    HasHiatus = summary.hiatus_days_count.HasValue && summary.hiatus_days_count.Value > 0,
+                                    PlanSummaryQuarters = summary.plan_summary_quarters.Select(q => new PlanSummaryQuarterDto
+                                    {
+                                        Quarter = q.quarter,
+                                        Year = q.year
+                                    }).ToList()
+                                };
+                            }).ToList()
+                    };
 
-                    return result;
+                    campaignDto.HasPlans = campaignDto.Plans.Any();
+
+                    return campaignDto;
                 });
         }
 

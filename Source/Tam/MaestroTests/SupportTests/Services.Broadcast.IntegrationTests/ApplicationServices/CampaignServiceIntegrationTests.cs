@@ -64,8 +64,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var campaignId = _CampaignService.SaveCampaign(campaign, IntegrationTestUser, CreatedDate);
                 var plan = _GetNewPlan();
                 plan.CampaignId = campaignId;
-                _PlanService.SavePlan(plan, "integration_test", new DateTime(2019, 01, 01));
 
+                _PlanService.SavePlan(plan, "integration_test", new DateTime(2019, 01, 01), aggregatePlanSynchronously: true);
+                
                 var foundCampaign = _CampaignService.GetCampaignById(campaignId);
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(foundCampaign, _GetJsonSettings()));
@@ -199,6 +200,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var jsonResolver = new IgnorableSerializerContractResolver();
 
             jsonResolver.Ignore(typeof(CampaignDto), "Id");
+            jsonResolver.Ignore(typeof(PlanSummaryDto), "PlanId");
 
             return new JsonSerializerSettings
             {
@@ -233,6 +235,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Budget = 100m,
                 CPM = 12m,
                 DeliveryImpressions = 100d,
+                DeliveryRatingPoints = 6d,
                 CoverageGoalPercent = 80.5,
                 GoalBreakdownType = Entities.Enums.PlanGloalBreakdownTypeEnum.Even,
                 AvailableMarkets = new List<PlanAvailableMarketDto>

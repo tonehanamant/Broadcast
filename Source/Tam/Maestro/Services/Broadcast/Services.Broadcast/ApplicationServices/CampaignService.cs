@@ -94,6 +94,7 @@ namespace Services.Broadcast.ApplicationServices
             if (campaign.HasPlans)
             {
                 _SetCampaignStubData(campaign);
+                _SetPlansStubData(campaign);
             }
 
             return campaign;
@@ -110,6 +111,15 @@ namespace Services.Broadcast.ApplicationServices
             campaign.CPM = 11;
             campaign.Impressions = 13637;
             campaign.Rating = 11.46;
+        }
+
+        private void _SetPlansStubData(CampaignDto campaign)
+        {
+            foreach (var plan in campaign.Plans)
+            {
+                plan.HHImpressions = 10543.78d;
+                plan.HHCPM = 46.3m;
+            }
         }
 
         /// <inheritdoc />

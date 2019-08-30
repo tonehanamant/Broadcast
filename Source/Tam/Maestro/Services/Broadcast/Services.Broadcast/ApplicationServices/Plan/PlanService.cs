@@ -26,8 +26,12 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// <param name="plan">The plan.</param>
         /// <param name="modifiedBy">The modified by.</param>
         /// <param name="modifiedDate">The modified date.</param>
+        /// <param name="aggregatePlanSynchronously">
+        /// Synchronous execution is required for tests 
+        /// because the transaction scope locks DB and summary data can not be saved from another thread
+        /// </param>
         /// <returns></returns>
-        int SavePlan(PlanDto plan, string modifiedBy, DateTime modifiedDate);
+        int SavePlan(PlanDto plan, string modifiedBy, DateTime modifiedDate, bool aggregatePlanSynchronously = false);
 
         /// <summary>
         /// Gets the plan.
@@ -95,7 +99,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         }
 
         ///<inheritdoc/>
-        public int SavePlan(PlanDto plan, string modifiedBy, DateTime modifiedDate)
+        public int SavePlan(PlanDto plan, string modifiedBy, DateTime modifiedDate, bool aggregatePlanSynchronously = false)
         {
             plan.ModifiedBy = modifiedBy;
             plan.ModifiedDate = modifiedDate;
@@ -113,7 +117,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 _PlanRepository.SavePlan(plan);
             }
 
-            _DispatchPlanAggregation(plan);
+            _DispatchPlanAggregation(plan, aggregatePlanSynchronously);
 
             return plan.Id;
         }
@@ -338,10 +342,18 @@ namespace Services.Broadcast.ApplicationServices.Plan
             return 7 - hiatusDaysInWeek.Count();
         }
 
-        private void _DispatchPlanAggregation(PlanDto plan)
+        private void _DispatchPlanAggregation(PlanDto plan, bool aggregatePlanSynchronously)
         {
             _PlanSummaryRepository.SetProcessingStatusForPlanSummary(plan.Id, PlanAggregationProcessingStatusEnum.InProgress);
-            Task.Factory.StartNew(() => _AggregatePlan(plan));
+
+            if (aggregatePlanSynchronously)
+            {
+                _AggregatePlan(plan);
+            }
+            else
+            {
+                Task.Factory.StartNew(() => _AggregatePlan(plan));
+            }
         }
 
         private void _AggregatePlan(PlanDto plan)

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Services.Broadcast.Entities.Plan;
+using System;
+using System.Collections.Generic;
 
 namespace Services.Broadcast.Entities
 {
@@ -82,5 +84,7 @@ namespace Services.Broadcast.Entities
         public double? Rating { get; set; }
 
         public bool HasPlans { get; set; }
+
+        public List<PlanSummaryDto> Plans { get; set; }
     }
 }

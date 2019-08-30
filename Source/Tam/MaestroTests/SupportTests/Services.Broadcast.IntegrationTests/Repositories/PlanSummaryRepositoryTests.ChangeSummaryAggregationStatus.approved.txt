@@ -4,6 +4,16 @@
   "AvailableMarketTotalUsCoveragePercent": 68.7,
   "BlackoutMarketCount": 3,
   "BlackoutMarketTotalUsCoveragePercent": 13.8,
+  "Budget": null,
+  "Dayparts": null,
+  "Equivalized": false,
+  "FlightEndDate": null,
+  "FlightStartDate": null,
+  "HasHiatus": false,
+  "HHCPM": null,
+  "HHImpressions": null,
+  "LastUpdated": "0001-01-01T00:00:00",
+  "Name": null,
   "PlanSummaryQuarters": [
     {
       "Quarter": 1,
@@ -18,8 +28,14 @@
       "Year": 2017
     }
   ],
+  "PostingType": 0,
   "ProcessingStatus": 3,
   "ProductName": "ProductTwo",
+  "SpotLength": 0,
+  "Status": 0,
+  "TargetCPM": null,
+  "TargetImpressions": null,
   "TotalActiveDays": 20,
-  "TotalHiatusDays": 2
+  "TotalHiatusDays": 2,
+  "TRP": null
 }
