@@ -245,8 +245,6 @@
     <Compile Include="ApplicationServices\PostingBookService.cs" />
     <Compile Include="ApplicationServices\PostingTypeService.cs" />
     <Compile Include="ApplicationServices\ProductService.cs" />
-    <Compile Include="ApplicationServices\Scx\ScxFileGenerationDetailTransformer.cs" />
-    <Compile Include="ApplicationServices\Scx\ScxFileGenerationHistorian.cs" />
     <Compile Include="BusinessEngines\PlanBudgetDeliveryCalculator.cs" />
     <Compile Include="Clients\TrafficApiClient.cs" />
     <Compile Include="Entities\AdvertiserDto.cs" />

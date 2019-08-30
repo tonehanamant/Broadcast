@@ -348,8 +348,6 @@
     <Compile Include="UnitTests\ProposalMathTests.cs" />
     <Compile Include="UnitTests\ProposalTotalsCalculationEngineTests.cs" />
     <Compile Include="UnitTests\InventoryFileValidatorUnitTests.cs" />
-    <Compile Include="UnitTests\ScxFileGeneration\ScxFileGenerationDetailTransformerTests.cs" />
-    <Compile Include="UnitTests\ScxFileGeneration\ScxFileGenerationHistorianUnitTests.cs" />
     <Compile Include="UnitTests\ScxFileGeneration\ScxGenerationServiceUnitTestClass.cs" />
     <Compile Include="UnitTests\ScxFileGeneration\ScxGenerationServiceUnitTests.cs" />
   </ItemGroup>

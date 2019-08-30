@@ -1,29 +1,23 @@
 ﻿using Common.Services;
 using Common.Services.Repositories;
 using Services.Broadcast.ApplicationServices;
-using Services.Broadcast.ApplicationServices.Scx;
-using Services.Broadcast.Repositories;
+using Services.Broadcast.BusinessEngines;
+using Services.Broadcast.Entities.Scx;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.ScxFileGeneration
 {
     public class ScxGenerationServiceUnitTestClass : ScxGenerationService
     {
-        public IScxFileGenerationHistorian ScxFileGenerationHistorian { get; set; }
         public string DropFolderPath { get; set; }
-        public IScxGenerationJobRepository ScxGenerationJobRepository { get; set; }
 
         public ScxGenerationServiceUnitTestClass(
             IDataRepositoryFactory broadcastDataRepositoryFactory,
             IProprietaryInventoryService proprietaryInventoryService,
-            IFileService fileService)
+            IFileService fileService,
+            IQuarterCalculationEngine quarterCalculationEngine)
             : base(broadcastDataRepositoryFactory, 
-                proprietaryInventoryService, fileService)
+                proprietaryInventoryService, fileService, quarterCalculationEngine)
         {
-        }
-
-        protected override IScxFileGenerationHistorian GetScxFileGenerationHistorian()
-        {
-            return ScxFileGenerationHistorian;
         }
 
         protected override string GetDropFolderPath()
@@ -31,9 +25,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ScxFileGeneration
             return DropFolderPath;
         }
 
-        protected override IScxGenerationJobRepository GetScxGenerationJobRepository()
+        public ScxFileGenerationDetail UT_TransformFromDtoToEntity(ScxFileGenerationDetailDto dto)
         {
-            return ScxGenerationJobRepository;
+            return TransformFromDtoToEntity(dto);
         }
     }
 }

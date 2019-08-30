@@ -1,7 +1,6 @@
 using Common.Services;
 using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
-using Services.Broadcast.ApplicationServices.Scx;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
@@ -13,6 +12,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web;
+using Services.Broadcast.Helpers;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 
@@ -46,16 +46,17 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IScxGenerationJobRepository _ScxGenerationJobRepository;
         private readonly IProprietaryInventoryService _ProprietaryInventoryService;
         private readonly IFileService _FileService;
-        private readonly IDataRepositoryFactory _BroadcastDataRepositoryFactory;
+        private readonly IQuarterCalculationEngine _QuarterCalculationEngine;
 
         public ScxGenerationService(IDataRepositoryFactory broadcastDataRepositoryFactory, 
             IProprietaryInventoryService proprietaryInventoryService, 
-            IFileService fileService)
+            IFileService fileService,
+            IQuarterCalculationEngine quarterCalculationEngine)
         {
             _ScxGenerationJobRepository = broadcastDataRepositoryFactory.GetDataRepository<IScxGenerationJobRepository>();
             _ProprietaryInventoryService = proprietaryInventoryService;
             _FileService = fileService;
-            _BroadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
+            _QuarterCalculationEngine = quarterCalculationEngine;
         }
 
         public int QueueScxGenerationJob(InventoryScxDownloadRequest inventoryScxDownloadRequest, string userName, DateTime currentDate)
@@ -89,8 +90,7 @@ namespace Services.Broadcast.ApplicationServices
             }
 
             job.Status = BackgroundJobProcessingStatus.Processing;
-            var repo = GetScxGenerationJobRepository();
-            repo.UpdateJob(job);
+            _ScxGenerationJobRepository.UpdateJob(job);
 
             Exception caught = null;
 
@@ -99,7 +99,7 @@ namespace Services.Broadcast.ApplicationServices
                 try
                 {
                     var files = _ProprietaryInventoryService.GenerateScxFiles(job.InventoryScxDownloadRequest);
-                    repo.SaveScxJobFiles(files, job);
+                    _ScxGenerationJobRepository.SaveScxJobFiles(files, job);
                     _SaveToFolder(files);
                     job.Complete(currentDate);
                 }
@@ -109,7 +109,7 @@ namespace Services.Broadcast.ApplicationServices
                     caught = ex;
                 }
 
-                repo.UpdateJob(job);
+                _ScxGenerationJobRepository.UpdateJob(job);
 
                 transaction.Complete();
 
@@ -138,62 +138,22 @@ namespace Services.Broadcast.ApplicationServices
         /// <inheritdoc />
         public List<ScxFileGenerationDetail> GetScxFileGenerationHistory(int sourceId)
         {
-            var historian = GetScxFileGenerationHistorian();
-            var results = historian.GetScxFileGenerationHistory(sourceId);
-            return results;
+            var detailDtos = _ScxGenerationJobRepository.GetScxFileGenerationDetails(sourceId);
+            var details = TransformFromDtoToEntities(detailDtos);
+            return details;
         }
 
-        /// <summary>
-        /// Gets the SCX file generation historian.
-        /// </summary>
-        /// <returns></returns>
-        protected virtual IScxFileGenerationHistorian GetScxFileGenerationHistorian()
+        private List<ScxFileGenerationDetail> TransformFromDtoToEntities(List<ScxFileGenerationDetailDto> dtos)
         {
-            var repo = GetScxGenerationJobRepository();
-            var quarterCalculationEngine = GetQuarterCalculationEngine();
-            var dropFolderPath = GetDropFolderPath();
-            var historian = new ScxFileGenerationHistorian(repo, quarterCalculationEngine, dropFolderPath);
-            return historian;
-        }
+            var entities = dtos.Select<ScxFileGenerationDetailDto, ScxFileGenerationDetail>(d =>
+                {
+                    var entity = TransformFromDtoToEntity(d);
+                    return entity;
+                })
+                .OrderByDescending(s => s.GenerationRequestDateTime)
+                .ToList();
 
-        /// <summary>
-        /// Gets the quarter calculation engine.
-        /// </summary>
-        /// <returns></returns>
-        protected virtual IQuarterCalculationEngine GetQuarterCalculationEngine()
-        {
-            var repoFactory = GetBroadcastDataRepositoryFactory();
-            var aggCache = new MediaMonthAndWeekAggregateCache(repoFactory);
-            var engine = new QuarterCalculationEngine(repoFactory, aggCache);
-            return engine;
-        }
-
-        /// <summary>
-        /// Gets the broadcast data repository factory.
-        /// </summary>
-        /// <returns></returns>
-        protected IDataRepositoryFactory GetBroadcastDataRepositoryFactory()
-        {
-            return _BroadcastDataRepositoryFactory;
-        }
-
-        /// <summary>
-        /// Gets the drop folder path.
-        /// </summary>
-        /// <returns></returns>
-        protected virtual string GetDropFolderPath()
-        {
-            var result = BroadcastServiceSystemParameter.ScxGenerationFolder;
-            return result;
-        }
-
-        /// <summary>
-        /// Gets the SCX generation job repository.
-        /// </summary>
-        /// <returns></returns>
-        protected virtual IScxGenerationJobRepository GetScxGenerationJobRepository()
-        {
-            return _ScxGenerationJobRepository;
+            return entities;
         }
 
         #endregion // #region ScxFileGenerationHistory
@@ -206,14 +166,13 @@ namespace Services.Broadcast.ApplicationServices
                 throw new Exception("No file id was supplied!");
             }
 
-            var repo = GetScxGenerationJobRepository();
-            var fileName = repo.GetScxFileName(fileId);
+            var fileName = _ScxGenerationJobRepository.GetScxFileName(fileId);
 
             var dropFolderPath = GetDropFolderPath();
 
             var filePaths = _FileService.GetFiles(dropFolderPath);
             var filePath = filePaths.FirstOrDefault(x => Path.GetFileName(x) == fileName);
-            if (string.IsNullOrWhiteSpace(filePath))
+            if (String.IsNullOrWhiteSpace(filePath))
             {
                 throw new Exception($"File not found!");
             }
@@ -236,5 +195,45 @@ namespace Services.Broadcast.ApplicationServices
                 _FileService.Create(path, scxFile.ScxStream);
             }
         }
+
+        #region Helpers
+
+        /// <summary>
+        /// Gets the drop folder path.
+        /// </summary>
+        /// <returns></returns>
+        protected virtual string GetDropFolderPath()
+        {
+            var result = BroadcastServiceSystemParameter.ScxGenerationFolder;
+            return result;
+        }
+
+        /// <summary>
+        /// Transforms from dto to entity.
+        /// </summary>
+        /// <param name="dto">The dto.</param>
+        /// <returns><see cref="ScxFileGenerationDetail"/></returns>
+        protected ScxFileGenerationDetail TransformFromDtoToEntity(ScxFileGenerationDetailDto dto)
+        {
+            var processingStatus = EnumHelper.GetEnum<BackgroundJobProcessingStatus>(dto.ProcessingStatusId);
+            var quarters = new List<QuarterDetailDto>();
+            if (dto.StartDateTime.HasValue && dto.EndDateTime.HasValue)
+                quarters = _QuarterCalculationEngine.GetAllQuartersBetweenDates(dto.StartDateTime.Value, dto.EndDateTime.Value);
+
+            var item = new ScxFileGenerationDetail
+            {
+                GenerationRequestDateTime = dto.GenerationRequestDateTime,
+                GenerationRequestedByUsername = dto.GenerationRequestedByUsername,
+                UnitName = dto.UnitName,
+                DaypartCode = dto.DaypartCode,
+                QuarterDetails = quarters,
+                ProcessingStatus = processingStatus,
+                FileId = dto.FileId,
+                FileName = dto.Filename
+            };
+            return item;
+        }
+
+        #endregion // #region Helpers
     }
 }
