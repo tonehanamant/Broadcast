@@ -2,9 +2,11 @@
 using Moq;
 using NUnit.Framework;
 using Services.Broadcast.BusinessEngines;
+using Services.Broadcast.Clients;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
+using Services.Broadcast.IntegrationTests.Stubbs;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
@@ -16,6 +18,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanAggregation
     [TestFixture]
     public class PlanAggregatorUnitTests
     {
+        private readonly ITrafficApiClient trafficApiClientStub = new TrafficApiClientStub();
+
         [Test]
         public void ConstructorTest()
         {
@@ -299,7 +303,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanAggregation
 
             tc.UT_AggregateProduct(plan, summary);
 
-            Assert.AreEqual("Second product", summary.ProductName, "Invalid ProductName");
+            Assert.AreEqual("Product2", summary.ProductName, "Invalid ProductName");
         }
 
         [Test]
@@ -331,6 +335,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanAggregation
             var tc = new PlanAggregatorUnitTestClass(
                 broadcastDataRepositoryFactory.Object
                 , quarterCalculationEngine.Object
+                , trafficApiClientStub
             );
 
             return tc;
@@ -349,6 +354,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanAggregation
             var tc = new PlanAggregatorUnitTestClass(
                 broadcastDataRepositoryFactory.Object
                 , quarterCalculationEngine.Object
+                , trafficApiClientStub
             );
             var getAudiencesByIdsReturn = new List<LookupDto> { new LookupDto(1, "AudienceOne") };
             audienceRepository.Setup(s => s.GetAudiencesByIds(It.IsAny<List<int>>()))
@@ -364,13 +370,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanAggregation
                 .Setup(s => s.GetAllQuartersBetweenDates(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Callback(() => tc.GetAllQuartersBetweenDatesCalledCount++)
                 .Returns(getQuartersReturn);
-            var products = new List<LookupDto>()
-            {
-                new LookupDto{ Id = 1, Display = "First product"},
-                new LookupDto{ Id = 2, Display = "Second product"},
-                new LookupDto{ Id = 3, Display = "Third product"}
-            };
-            tc.SetProducts(products);
 
             return tc;
         }
@@ -388,6 +387,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanAggregation
             var tc = new PlanAggregatorUnitTestClass(
                 broadcastDataRepositoryFactory.Object
                 , quarterCalculationEngine.Object
+                , trafficApiClientStub
             );
 
             var getAudiencesByIdsReturn = new List<LookupDto> { new LookupDto(1, "AudienceOne") };
@@ -411,6 +411,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanAggregation
             var tc = new PlanAggregatorUnitTestClass(
                 broadcastDataRepositoryFactory.Object
                 , quarterCalculationEngine.Object
+                , trafficApiClientStub
             );
 
             quarterCalculationEngine
@@ -434,15 +435,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanAggregation
             var tc = new PlanAggregatorUnitTestClass(
                 broadcastDataRepositoryFactory.Object
                 , quarterCalculationEngine.Object
+                , trafficApiClientStub
             );
-
-            var products = new List<LookupDto>()
-            {
-                new LookupDto{ Id = 1, Display = "First product"},
-                new LookupDto{ Id = 2, Display = "Second product"},
-                new LookupDto{ Id = 3, Display = "Third product"}
-            };
-            tc.SetProducts(products);
 
             return tc;
         }
@@ -482,7 +476,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanAggregation
             Assert.AreEqual(TEST_SELECTED_BLACKOUT_MARKET_COUNT, summary.BlackoutMarketCount, "Invalid summary.BlackoutMarketCount");
             Assert.AreEqual(TEST_SELECTED_BLACKOUT_MARKET_TOTAL_US_COVERAGE_PERCENT, summary.BlackoutMarketTotalUsCoveragePercent, "Invalid summary.BlackoutMarketTotalUsCoveragePercent");
             Assert.AreEqual("AudienceOne", summary.AudienceName, "Invalid AudienceName");
-            Assert.AreEqual("Second product", summary.ProductName, "Invalid ProductName");
+            Assert.AreEqual("Product2", summary.ProductName, "Invalid ProductName");
             Assert.AreEqual(3, summary.PlanSummaryQuarters.Count, "Invalid summary quarters count.");
             Assert.AreEqual(4, summary.PlanSummaryQuarters[0].Quarter, "Invalid quarter.");
             Assert.AreEqual(2018, summary.PlanSummaryQuarters[0].Year, "Invalid quarter year.");

@@ -13,6 +13,7 @@ using Services.Broadcast.IntegrationTests.Stubbs;
 using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 using Tam.Maestro.Services.Clients;
+using Services.Broadcast.Clients;
 
 namespace Services.Broadcast.IntegrationTests
 {
@@ -51,6 +52,8 @@ namespace Services.Broadcast.IntegrationTests
                     _instance.RegisterInstance<ISMSClient>(stubbedSmsClient);
                     BroadcastApplicationServiceFactory.RegisterApplicationServices(_instance);
                     MediaMonthAndWeekAggregateCache = _instance.Resolve<IMediaMonthAndWeekAggregateCache>();
+
+                    _instance.RegisterType<ITrafficApiClient, TrafficApiClientStub>();
                 }
             }
         }

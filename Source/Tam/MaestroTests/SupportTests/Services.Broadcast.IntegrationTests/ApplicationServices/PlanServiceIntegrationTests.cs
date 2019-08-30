@@ -18,15 +18,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void GetAllProducts()
-        {
-            var products = _PlanService.GetProducts();
-
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(products));
-        }
-
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
         public void GetPlanStatuses()
         {
             var statuses = _PlanService.GetPlanStatuses();
@@ -73,6 +64,22 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var exception = Assert.Throws<Exception>(() => _PlanService.SavePlan(newPlan, "integration_test", new System.DateTime(2019, 01, 01)));
 
                 Assert.That(exception.Message, Is.EqualTo("Invalid product"));
+            }
+        }
+
+        [Test]
+        public void CreatePlan_NotExistingProduct()
+        {
+            const int notExistingProductId = 666;
+
+            using (new TransactionScopeWrapper())
+            {
+                PlanDto newPlan = _GetNewPlan();
+                newPlan.ProductId = notExistingProductId;
+
+                var exception = Assert.Throws<Exception>(() => _PlanService.SavePlan(newPlan, "integration_test", new DateTime(2019, 01, 01)));
+
+                Assert.That(exception.Message, Is.EqualTo($"Cannot fetch data of the product {notExistingProductId}"));
             }
         }
 

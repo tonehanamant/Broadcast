@@ -38,17 +38,6 @@ namespace BroadcastComposerWeb.Controllers
         }
 
         /// <summary>
-        /// Gets the products.
-        /// </summary>
-        /// <returns>List of LookupDto objects</returns>
-        [HttpGet]
-        [Route("Products")]
-        public BaseResponse<List<LookupDto>> GetProducts()
-        {
-            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanService>().GetProducts());
-        }
-
-        /// <summary>
         /// Gets the plan statuses.
         /// </summary>
         /// <returns>List of LookupDto objects</returns>

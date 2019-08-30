@@ -1,6 +1,7 @@
 ﻿using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Cache;
+using Services.Broadcast.Clients;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
 using System;
@@ -31,6 +32,7 @@ namespace Services.Broadcast.Validators
         private readonly ISpotLengthEngine _SpotLengthEngine;
         private readonly IBroadcastAudiencesCache _AudienceCache;
         private readonly List<MediaMonth> _PostingBooks;
+        private readonly ITrafficApiClient _TrafficApiClient;
 
         #region Error Messages
         const string INVALID_PLAN_NAME = "Invalid plan name";
@@ -58,10 +60,12 @@ namespace Services.Broadcast.Validators
 
         public PlanValidator(ISpotLengthEngine spotLengthEngine
             , IBroadcastAudiencesCache broadcastAudiencesCache
-            , IRatingForecastService ratingForecastService)
+            , IRatingForecastService ratingForecastService
+            , ITrafficApiClient trafficApiClient)
         {
             _SpotLengthEngine = spotLengthEngine;
             _AudienceCache = broadcastAudiencesCache;
+            _TrafficApiClient = trafficApiClient;
 
             _PostingBooks = ratingForecastService.GetMediaMonthCrunchStatuses()
                        .Where(a => a.Crunched == CrunchStatusEnum.Crunched)
@@ -79,11 +83,8 @@ namespace Services.Broadcast.Validators
             {
                 throw new Exception(INVALID_SPOT_LENGTH);
             }
-            if (plan.ProductId <= 0)
-            {
-                throw new Exception(INVALID_PRODUCT);
-            }
 
+            _ValidateProduct(plan);
             _ValidateFlightAndHiatusDates(plan);
             _ValidateDayparts(plan);
             _ValidatePrimaryAudience(plan);
@@ -91,6 +92,17 @@ namespace Services.Broadcast.Validators
             _ValidateOptionalPercentage(plan.CoverageGoalPercent, INVALID_COVERAGE_GOAL);
             _ValidateMarkets(plan);
             _ValidateWeeklyBreakdownWeeks(plan);
+        }
+
+        private void _ValidateProduct(PlanDto plan)
+        {
+            if (plan.ProductId <= 0)
+            {
+                throw new Exception(INVALID_PRODUCT);
+            }
+
+            // This will throw an exception if the product doesn`t exist
+            _TrafficApiClient.GetProduct(plan.ProductId);
         }
 
         private void _ValidateWeeklyBreakdownWeeks(PlanDto plan)

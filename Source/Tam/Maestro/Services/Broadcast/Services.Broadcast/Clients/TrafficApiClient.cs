@@ -12,6 +12,7 @@ namespace Services.Broadcast.Clients
         List<AgencyDto> GetAgencies();
         List<AdvertiserDto> GetAdvertisersByAgencyId(int agencyId);
         List<ProductDto> GetProductsByAdvertiserId(int advertiserId);
+        ProductDto GetProduct(int productId);
     }
 
     public class TrafficApiClient : ITrafficApiClient
@@ -70,6 +71,22 @@ namespace Services.Broadcast.Clients
             catch (Exception ex)
             {
                 throw new Exception("Cannot fetch products data", ex);
+            }
+        }
+
+        public ProductDto GetProduct(int productId)
+        {
+            var url = $"{_BaseTrafficCompanyURL}/product/{productId}";
+
+            try
+            {
+                var product = _Get<ProductDto>(url);
+
+                return product;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Cannot fetch data of the product {productId}", ex);
             }
         }
 

@@ -37,12 +37,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
         PlanDto GetPlan(int planId);
 
         /// <summary>
-        /// Gets the products.
-        /// </summary>
-        /// <returns>List of LookupDto objects</returns>
-        List<LookupDto> GetProducts();
-
-        /// <summary>
         /// Gets the plan statuses.
         /// </summary>
         /// <returns>List of LookupDto objects</returns>
@@ -140,18 +134,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
         public List<LookupDto> GetPlanStatuses()
         {
             return EnumExtensions.ToLookupDtoList<PlanStatusEnum>(); ;
-        }
-
-        ///<inheritdoc/>
-        public List<LookupDto> GetProducts()
-        {
-            // PRI-12431 will update this code to return the correct data
-            return new List<LookupDto>()
-            {
-                new LookupDto{ Id = 1, Display = "First product"},
-                new LookupDto{ Id = 2, Display = "Second product"},
-                new LookupDto{ Id = 3, Display = "Third product"}
-            };
         }
 
         ///<inheritdoc/>
@@ -366,11 +348,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
         {
             try
             {
-                // TODO: remove this after PRI-11436 is implemented	
-                var productsList = GetProducts();
-                _PlanAggregator.SetProducts(productsList);
-                // END Block to Remove
-
                 var summary = _PlanAggregator.Aggregate(plan);
                 summary.ProcessingStatus = PlanAggregationProcessingStatusEnum.Idle;
                 _PlanSummaryRepository.SaveSummary(summary);

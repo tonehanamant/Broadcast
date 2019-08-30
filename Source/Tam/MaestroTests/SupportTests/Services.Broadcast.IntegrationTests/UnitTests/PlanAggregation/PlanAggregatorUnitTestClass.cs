@@ -1,6 +1,7 @@
 ﻿using Common.Services.Repositories;
 using Services.Broadcast.ApplicationServices.Plan;
 using Services.Broadcast.BusinessEngines;
+using Services.Broadcast.Clients;
 using Services.Broadcast.Entities.Plan;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.PlanAggregation
@@ -8,8 +9,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanAggregation
     public class PlanAggregatorUnitTestClass : PlanAggregator
     {
         public PlanAggregatorUnitTestClass(IDataRepositoryFactory broadcastDataRepositoryFactory
-            , IQuarterCalculationEngine quarterCalculationEngine)
-        : base(broadcastDataRepositoryFactory, quarterCalculationEngine)
+            , IQuarterCalculationEngine quarterCalculationEngine
+            , ITrafficApiClient trafficApiClient)
+        : base(broadcastDataRepositoryFactory, quarterCalculationEngine, trafficApiClient)
         {
         }
 

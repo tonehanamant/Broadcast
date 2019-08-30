@@ -1,13 +1,13 @@
 ﻿using Common.Services.Extensions;
 using Common.Services.Repositories;
 using Services.Broadcast.BusinessEngines;
+using Services.Broadcast.Clients;
 using Services.Broadcast.Entities.Plan;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Tam.Maestro.Data.Entities.DataTransferObjects;
 
 namespace Services.Broadcast.ApplicationServices.Plan
 {
@@ -17,10 +17,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
     public interface IPlanAggregator
     {
         PlanSummaryDto Aggregate(PlanDto plan);
-
-        // TODO: remove this after PRI-11436 is implemented	
-        void SetProducts(List<LookupDto> products);
-        // END Block to Remove
     }
 
     /// <summary>
@@ -33,6 +29,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private readonly IDaypartCodeRepository _DaypartCodeRepository;
         private readonly IAudienceRepository _AudienceRepository;
         private readonly IQuarterCalculationEngine _QuarterCalculationEngine;
+        private readonly ITrafficApiClient _TrafficApiClient;
 
         #endregion // #region Fields
 
@@ -44,24 +41,18 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// <param name="broadcastDataRepositoryFactory">The broadcast data repository factory.</param>
         /// <param name="quarterCalculationEngine">The quarter calculation engine.</param>
         public PlanAggregator(IDataRepositoryFactory broadcastDataRepositoryFactory
-            , IQuarterCalculationEngine quarterCalculationEngine)
+            , IQuarterCalculationEngine quarterCalculationEngine
+            , ITrafficApiClient trafficApiClient)
         {
             _DaypartCodeRepository = broadcastDataRepositoryFactory.GetDataRepository<IDaypartCodeRepository>();
             _AudienceRepository = broadcastDataRepositoryFactory.GetDataRepository<IAudienceRepository>();
             _QuarterCalculationEngine = quarterCalculationEngine;
+            _TrafficApiClient = trafficApiClient;
         }
 
         #endregion // #region Constructor
 
         #region Operations
-
-        // TODO: remove this after PRI-11436 is implemented
-        private List<LookupDto> _Products;
-        public void SetProducts(List<LookupDto> products)
-        {
-            _Products = products;
-        }
-        // END Block to Remove
 
         /// <inheritdoc/>
         public PlanSummaryDto Aggregate(PlanDto plan)
@@ -204,9 +195,9 @@ namespace Services.Broadcast.ApplicationServices.Plan
             {
                 return;
             }
-
-            var found = _Products.Single(p => p.Id == plan.ProductId, "Product not found.");
-            summary.ProductName = found.Display;
+            
+            var product = _TrafficApiClient.GetProduct(plan.ProductId);
+            summary.ProductName = product.Name;
         }
 
         #endregion // #region AggregationFunctions

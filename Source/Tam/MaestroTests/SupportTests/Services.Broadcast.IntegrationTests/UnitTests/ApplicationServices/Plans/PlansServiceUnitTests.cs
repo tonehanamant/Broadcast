@@ -70,7 +70,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             planAggregator.Setup(s => s.Aggregate(It.IsAny<PlanDto>()))
                 .Callback(() => aggregateCallCount++)
                 .Returns(aggregateReturn);
-            planAggregator.Setup(s => s.SetProducts(It.IsAny<List<LookupDto>>()));
             var tc = new PlanService(broadcastDataRepositoryFactory.Object, planValidator.Object,
                 planBudgetDeliveryCalculator.Object, mediaMonthAndWeekAggregateCache.Object, planAggregator.Object);
             var plan = _GetNewPlan();
@@ -132,7 +131,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     throw new Exception("Test exception thrown during aggregation.");
                 })
                 .Returns(aggregateReturn);
-            planAggregator.Setup(s => s.SetProducts(It.IsAny<List<LookupDto>>()));
             var tc = new PlanService(broadcastDataRepositoryFactory.Object, planValidator.Object,
                 planBudgetDeliveryCalculator.Object, mediaMonthAndWeekAggregateCache.Object, planAggregator.Object);
             var plan = _GetNewPlan();
