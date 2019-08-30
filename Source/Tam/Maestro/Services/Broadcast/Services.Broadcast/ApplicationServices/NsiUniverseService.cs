@@ -51,17 +51,23 @@ namespace Services.Broadcast.ApplicationServices
         /// <inheritdoc/>
         public double GetAudienceUniverseForMediaMonth(int mediaMonthId, int audienceId)
         {
-            var currentKey = Tuple.Create(mediaMonthId, audienceId);
-            if (UniversesValues.ContainsKey(currentKey))
+            double universeValue = 0;
+            var ratingsAudiences = _AudienceRepository.GetRatingsAudiencesByMaestroAudience(new List<int> { audienceId });
+            foreach (var ratingsAudience in ratingsAudiences)
             {
-                return UniversesValues[currentKey];
+                var currentKey = Tuple.Create(mediaMonthId, ratingsAudience.rating_audience_id);
+                if (UniversesValues.ContainsKey(currentKey))
+                {
+                    universeValue += UniversesValues[currentKey];
+                }
+                else
+                {
+                    var audienceUniverseValue = _NsiUniverseRepository.GetAudienceUniverseForMediaMonth(mediaMonthId, ratingsAudience.rating_audience_id, ProposalEnums.ProposalPlaybackType.LivePlus3);
+                    UniversesValues.Add(currentKey, audienceUniverseValue);
+                    universeValue += audienceUniverseValue;
+                }
             }
-            else
-            {
-                double universeValue = _NsiUniverseRepository.GetAudienceUniverseForMediaMonth(mediaMonthId, audienceId, ProposalEnums.ProposalPlaybackType.LivePlus3);
-                UniversesValues.Add(currentKey, universeValue);
-                return universeValue;
-            }
+            return universeValue;
         }
     }
 }

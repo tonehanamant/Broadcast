@@ -503,6 +503,21 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void Calculator_TestCase7()
+        {
+            var result = _PlanService.Calculate(new PlanDeliveryBudget
+            {
+                Budget = 1000,
+                DeliveryRatingPoints = 0,
+                DeliveryImpressions = 25000,
+                AudienceId = 34,
+                MediaMonthId = 437
+            });
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
         public void Calculator_InvalidObject()
         {
             using (new TransactionScopeWrapper())
