@@ -3,6 +3,7 @@ using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Cache;
+using Services.Broadcast.Clients;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Plan;
 using Services.Broadcast.IntegrationTests.Helpers;
@@ -50,7 +51,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
         [Test]
         public void ValidateSucces()
         {
-            var item = new PlanDto {
+            var item = new PlanDto
+            {
                 Id = 1,
                 Name = "New Plan",
                 ProductId = _validProductId,
@@ -62,7 +64,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             var sut = new PlanValidator(
                 _GetMockSpotLengthEngine().Object,
                 _GetMockBroadcastAudiencesCache().Object,
-                _GetMockRatingForecastService().Object);
+                _GetMockRatingForecastService().Object,
+                _GetMockTrafficApiClient().Object);
 
             Assert.DoesNotThrow(() => sut.ValidatePlan(item));
         }
@@ -86,7 +89,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             var sut = new PlanValidator(
                 _GetMockSpotLengthEngine().Object,
                 _GetMockBroadcastAudiencesCache().Object,
-                _GetMockRatingForecastService().Object);
+                _GetMockRatingForecastService().Object,
+                _GetMockTrafficApiClient().Object);
 
             var caughtException = Assert.Throws<Exception>(() => sut.ValidatePlan(item));
 
@@ -108,7 +112,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             var sut = new PlanValidator(
                 _GetMockSpotLengthEngine().Object,
                 _GetMockBroadcastAudiencesCache().Object,
-                _GetMockRatingForecastService().Object);
+                _GetMockRatingForecastService().Object,
+                _GetMockTrafficApiClient().Object);
 
             var caughtException = Assert.Throws<Exception>(() => sut.ValidatePlan(item));
 
@@ -147,7 +152,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             var sut = new PlanValidator(
                 _GetMockSpotLengthEngine().Object,
                 _GetMockBroadcastAudiencesCache().Object,
-                _GetMockRatingForecastService().Object);
+                _GetMockRatingForecastService().Object,
+                _GetMockTrafficApiClient().Object);
 
             if (shouldThrow)
             {
@@ -178,8 +184,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             var sut = new PlanValidator(
                 _GetMockSpotLengthEngine().Object,
                 _GetMockBroadcastAudiencesCache().Object,
-                _GetMockRatingForecastService().Object);
-            
+                _GetMockRatingForecastService().Object,
+                _GetMockTrafficApiClient().Object);
+
             if (shouldThrow)
             {
                 var caughtException = Assert.Throws<Exception>(() => sut.ValidatePlan(item));
@@ -228,6 +235,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
                         new MediaMonthCrunchStatus(ratingsForecastStatus, 1)
                     });
             return mockRatingForecastService;
+        }
+
+        private Mock<ITrafficApiClient> _GetMockTrafficApiClient()
+        {
+            var mockTrafficApiClient = new Mock<ITrafficApiClient>();
+            return mockTrafficApiClient;
         }
         #endregion
     }
