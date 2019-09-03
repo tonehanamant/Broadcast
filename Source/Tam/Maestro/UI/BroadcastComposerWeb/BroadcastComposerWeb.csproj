@@ -213,6 +213,9 @@
     <Reference Include="Tam.Maestro.Common.Systems, Version=18.4.1.12, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\Tam.Maestro.Common.Systems.18.4.1.12\lib\net45\Tam.Maestro.Common.Systems.dll</HintPath>
     </Reference>
+    <Reference Include="Tam.Maestro.Web.Common, Version=18.4.1.12, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\Tam.Maestro.Web.Common.18.4.1.12\lib\net45\Tam.Maestro.Web.Common.dll</HintPath>
+    </Reference>
     <Reference Include="WebActivatorEx, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\WebActivatorEx.2.0\lib\net40\WebActivatorEx.dll</HintPath>
     </Reference>
@@ -550,10 +553,6 @@
     <ProjectReference Include="..\..\Services\Broadcast\Services.Broadcast\Services.Broadcast.csproj">
       <Project>{ba718c31-1f25-4df1-a2af-eea92da4dab6}</Project>
       <Name>Services.Broadcast</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Web.Common\Web.Common\Web.Common.csproj">
-      <Project>{2b9ace28-a6b6-4c1a-bd92-707bdeb2ad68}</Project>
-      <Name>Web.Common</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
