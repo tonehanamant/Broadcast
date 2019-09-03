@@ -350,6 +350,7 @@
     <Compile Include="UnitTests\InventoryFileValidatorUnitTests.cs" />
     <Compile Include="UnitTests\ScxFileGeneration\ScxGenerationServiceUnitTestClass.cs" />
     <Compile Include="UnitTests\ScxFileGeneration\ScxGenerationServiceUnitTests.cs" />
+    <Compile Include="UnitTests\Validators\PlanValidatorUnitTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
