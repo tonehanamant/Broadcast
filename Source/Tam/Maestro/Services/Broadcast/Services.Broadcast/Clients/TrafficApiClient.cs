@@ -10,6 +10,8 @@ namespace Services.Broadcast.Clients
     public interface ITrafficApiClient
     {
         List<AgencyDto> GetAgencies();
+        AgencyDto GetAgency(int agencyId);
+        AdvertiserDto GetAdvertiser(int advertiserId);
         List<AdvertiserDto> GetAdvertisersByAgencyId(int agencyId);
         List<ProductDto> GetProductsByAdvertiserId(int advertiserId);
         ProductDto GetProduct(int productId);
@@ -90,9 +92,45 @@ namespace Services.Broadcast.Clients
             }
         }
 
+        public AgencyDto GetAgency(int agencyId)
+        {
+            var url = $"{_BaseTrafficCompanyURL}/agency/{agencyId}";
+
+            try
+            {
+                var agency = _Get<AgencyDto>(url);
+
+                return agency;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Cannot fetch data of the agency {agencyId}", ex);
+            }
+        }
+
+        public AdvertiserDto GetAdvertiser(int advertiserId)
+        {
+            var url = $"{_BaseTrafficCompanyURL}/advertiser/{advertiserId}";
+
+            try
+            {
+                var advertiser = _Get<AdvertiserDto>(url);
+
+                return advertiser;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Cannot fetch data of the advertiser {advertiserId}", ex);
+            }
+        }
+
         private T _Get<T>(string url)
         {
             var response = _HttpClient.GetAsync(url).GetAwaiter().GetResult();
+
+            if (!response.IsSuccessStatusCode)
+                throw new Exception(response.ReasonPhrase);
+
             return response.Content.ReadAsAsync<T>().GetAwaiter().GetResult();
         }
     }

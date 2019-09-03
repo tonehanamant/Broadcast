@@ -146,7 +146,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var campaign = _GetValidCampaign();
 
                 // Invalid advertiser id.
-                campaign.AdvertiserId = 0;
+                campaign.Advertiser = new AdvertiserDto { Id = 666 };
 
                 var exception = Assert.Throws<InvalidOperationException>(() => _CampaignService.SaveCampaign(campaign, IntegrationTestUser, CreatedDate));
 
@@ -189,8 +189,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             return new CampaignDto
             {
                 Name = "Campaign1",
-                AdvertiserId = 1,
-                AgencyId = 1,
+                Advertiser = new AdvertiserDto { Id = 1 },
+                Agency = new AgencyDto { Id = 1 },
                 Notes = "Notes for CampaignOne."
             };
         }

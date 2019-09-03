@@ -1,6 +1,13 @@
 ﻿{
-  "AdvertiserId": 2,
-  "AgencyId": 9,
+  "Advertiser": {
+    "AgencyId": 1,
+    "Id": 2,
+    "Name": "Name2"
+  },
+  "Agency": {
+    "Id": 9,
+    "Name": "Name9"
+  },
   "Budget": null,
   "CPM": null,
   "FlightActiveDays": null,

@@ -1,12 +1,16 @@
 ﻿using Common.Services.ApplicationServices;
+using Common.Services.Extensions;
 using Common.Services.Repositories;
 using Services.Broadcast.BusinessEngines;
+using Services.Broadcast.Cache;
+using Services.Broadcast.Clients;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Repositories;
 using Services.Broadcast.Validators;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Caching;
 using Tam.Maestro.Data.Entities;
 
 namespace Services.Broadcast.ApplicationServices
@@ -56,6 +60,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly ICampaignRepository _CampaignRepository;
         private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekAggregateCache;
         private readonly IQuarterCalculationEngine _QuarterCalculationEngine;
+        private readonly ITrafficApiClient _TrafficApiClient;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CampaignService"/> class.
@@ -68,12 +73,14 @@ namespace Services.Broadcast.ApplicationServices
             IDataRepositoryFactory dataRepositoryFactory,
             ICampaignValidator campaignValidator,
             IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
-            IQuarterCalculationEngine quarterCalculationEngine)
+            IQuarterCalculationEngine quarterCalculationEngine,
+            ITrafficApiClient trafficApiClient)
         {
             _CampaignRepository = dataRepositoryFactory.GetDataRepository<ICampaignRepository>();
             _CampaignValidator = campaignValidator;
             _MediaMonthAndWeekAggregateCache = mediaMonthAndWeekAggregateCache;
             _QuarterCalculationEngine = quarterCalculationEngine;
+            _TrafficApiClient = trafficApiClient;
         }
 
         /// <inheritdoc />
@@ -83,13 +90,56 @@ namespace Services.Broadcast.ApplicationServices
                 filter = _GetDefaultFilter(currentDate);
             var quarterDetail = _QuarterCalculationEngine.GetQuarterDetail(filter.Quarter.Quarter, filter.Quarter.Year);
             var campaigns = _CampaignRepository.GetCampaigns(quarterDetail);
+
+            _SetAgencies(campaigns);
+            _SetAdvertisers(campaigns);
+
             return campaigns;
+        }
+
+        private void _SetAgencies(List<CampaignDto> campaigns)
+        {
+            const int cachingDurationInSeconds = 300;
+
+            var cache = new BaseMemoryCache<AgencyDto>("localAgenciesCache");
+            
+            foreach (var campaign in campaigns)
+            {
+                // Let`s cache agencies to reduce the number of requests to the traffic API
+                campaign.Agency = cache.GetOrCreate(
+                    campaign.Agency.Id.ToString(), 
+                    () => _TrafficApiClient.GetAgency(campaign.Agency.Id),
+                    new CacheItemPolicy { AbsoluteExpiration = DateTime.Now.AddSeconds(cachingDurationInSeconds) });
+            }
+        }
+
+        private void _SetAdvertisers(List<CampaignDto> campaigns)
+        {
+            const int cachingDurationInSeconds = 300;
+
+            var cache = new BaseMemoryCache<List<AdvertiserDto>>("localAdvertisersCache");
+
+            foreach (var campaign in campaigns)
+            {
+                // Let`s cache advertisers to reduce the number of requests to the traffic API
+                var advertisers = cache.GetOrCreate(
+                    campaign.Agency.Id.ToString(),
+                    () => _TrafficApiClient.GetAdvertisersByAgencyId(campaign.Agency.Id),
+                    new CacheItemPolicy { AbsoluteExpiration = DateTime.Now.AddSeconds(cachingDurationInSeconds) });
+
+                campaign.Advertiser = advertisers.Single(
+                    x => x.Id == campaign.Advertiser.Id, 
+                    "Cannot find an advertiser with id: " + campaign.Advertiser.Id);
+            }
         }
 
         /// <inheritdoc />
         public CampaignDto GetCampaignById(int campaignId)
         {
             var campaign = _CampaignRepository.GetCampaign(campaignId);
+
+            campaign.Agency = _TrafficApiClient.GetAgency(campaign.Agency.Id);
+            campaign.Advertiser = _TrafficApiClient.GetAdvertiser(campaign.Advertiser.Id);
 
             if (campaign.HasPlans)
             {

@@ -8,11 +8,25 @@ namespace Services.Broadcast.IntegrationTests.Stubbs
 {
     public class TrafficApiClientStub : ITrafficApiClient
     {
+        public AdvertiserDto GetAdvertiser(int advertiserId)
+        {
+            // imitates the client behavior when not existing advertiser id is passed
+            if (advertiserId == 666)
+            {
+                throw new Exception($"Cannot fetch data of the advertiser {advertiserId}");
+            }
+
+            return new AdvertiserDto { Id = advertiserId, Name = "Name" + advertiserId, AgencyId = 1 };
+        }
+
         public List<AdvertiserDto> GetAdvertisersByAgencyId(int agencyId)
         {
             return new List<AdvertiserDto>
             {
-                new AdvertiserDto { Id = 1, Name = "Name1", AgencyId = 1 }
+                new AdvertiserDto { Id = 1, Name = "Name1", AgencyId = agencyId },
+                new AdvertiserDto { Id = 2, Name = "Name1", AgencyId = agencyId },
+                new AdvertiserDto { Id = 3, Name = "Name1", AgencyId = agencyId },
+                new AdvertiserDto { Id = 4, Name = "Name1", AgencyId = agencyId }
             };
         }
 
@@ -22,6 +36,11 @@ namespace Services.Broadcast.IntegrationTests.Stubbs
             {
                 new AgencyDto { Id = 1, Name = "Name1" }
             };
+        }
+
+        public AgencyDto GetAgency(int agencyId)
+        {
+            return new AgencyDto { Id = agencyId, Name = "Name" + agencyId };
         }
 
         public ProductDto GetProduct(int productId)

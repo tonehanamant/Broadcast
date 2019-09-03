@@ -81,8 +81,8 @@ namespace Services.Broadcast.Repositories
             var campaign = new campaign
             {
                 name = campaignDto.Name,
-                advertiser_id = campaignDto.AdvertiserId,
-                agency_id = campaignDto.AgencyId,
+                advertiser_id = campaignDto.Advertiser.Id,
+                agency_id = campaignDto.Agency.Id,
                 notes = campaignDto.Notes,
                 created_by = createdBy,
                 created_date = createdDate,
@@ -108,8 +108,8 @@ namespace Services.Broadcast.Repositories
                    var existingCampaign = context.campaigns.Single(x => x.id == campaignDto.Id, "Invalid campaign id");
 
                    existingCampaign.name = campaignDto.Name;
-                   existingCampaign.advertiser_id = campaignDto.AdvertiserId;
-                   existingCampaign.agency_id = campaignDto.AgencyId;
+                   existingCampaign.advertiser_id = campaignDto.Advertiser.Id;
+                   existingCampaign.agency_id = campaignDto.Agency.Id;
                    existingCampaign.notes = campaignDto.Notes;
                    existingCampaign.modified_by = campaignDto.ModifiedBy;
                    existingCampaign.modified_date = campaignDto.ModifiedDate;
@@ -124,11 +124,12 @@ namespace Services.Broadcast.Repositories
         public List<CampaignDto> GetCampaigns(QuarterDetailDto quarter)
         {
             return _InReadUncommitedTransaction(
-                context => (from c in context.campaigns
+                context => {
+                    return (from c in context.campaigns
                             from p in c.plans.DefaultIfEmpty()
-                            // If there are no plans, we filter by campaign created date.
-                            where (p == null && 
-                                   c.created_date >= quarter.StartDate && 
+                                // If there are no plans, we filter by campaign created date.
+                            where (p == null &&
+                                   c.created_date >= quarter.StartDate &&
                                    c.created_date <= quarter.EndDate) ||
                                    // Has a plan, but without start date.
                                    (p != null &&
@@ -136,7 +137,7 @@ namespace Services.Broadcast.Repositories
                                    c.created_date >= quarter.StartDate &&
                                    c.created_date <= quarter.EndDate) ||
                                    // Plan only has a start date.                                    
-                                   (p != null && 
+                                   (p != null &&
                                     p.flight_start_date != null &&
                                     p.flight_end_date == null &&
                                     p.flight_start_date >= quarter.StartDate &&
@@ -149,7 +150,8 @@ namespace Services.Broadcast.Repositories
                                     p.flight_end_date >= quarter.StartDate)
                             orderby c.modified_date
                             group c by c.id into campaign
-                            select campaign.FirstOrDefault()).Select(_MapToDto).ToList());
+                            select campaign.FirstOrDefault()).Select(_MapToDto).ToList();
+                });
         }
 
         /// <inheritdoc />
@@ -171,8 +173,8 @@ namespace Services.Broadcast.Repositories
                     {
                         Id = campaign.id,
                         Name = campaign.name,
-                        AdvertiserId = campaign.advertiser_id,
-                        AgencyId = campaign.agency_id,
+                        Advertiser = new AdvertiserDto { Id = campaign.advertiser_id },
+                        Agency = new AgencyDto { Id = campaign.agency_id },
                         Notes = campaign.notes,
                         ModifiedDate = campaign.modified_date,
                         ModifiedBy = campaign.modified_by,
@@ -251,8 +253,8 @@ namespace Services.Broadcast.Repositories
             {
                 Id = c.id,
                 Name = c.name,
-                AdvertiserId = c.advertiser_id,
-                AgencyId = c.agency_id,
+                Advertiser = new AdvertiserDto { Id = c.advertiser_id },
+                Agency = new AgencyDto { Id = c.agency_id },
                 Notes = c.notes,
                 ModifiedDate = c.modified_date,
                 ModifiedBy = c.modified_by

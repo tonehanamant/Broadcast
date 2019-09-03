@@ -4,7 +4,9 @@ using Moq;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.BusinessEngines;
+using Services.Broadcast.Clients;
 using Services.Broadcast.Entities;
+using Services.Broadcast.IntegrationTests.Stubbs;
 using Services.Broadcast.Repositories;
 using Services.Broadcast.Validators;
 using System;
@@ -16,6 +18,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
     {
         private const string _CreatedBy = "TestUser";
         private readonly DateTime _CreatedDate = new DateTime(2017, 10, 17, 7, 30, 23);
+        private readonly ITrafficApiClient _TrafficApiClient = new TrafficApiClientStub();
 
         [Test]
         public void ReturnsFilteredCampaigns()
@@ -26,14 +29,46 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             var campaignValidatorMock = new Mock<ICampaignValidator>();
             var mediaMonthAndWeekAggregateCache = new Mock<IMediaMonthAndWeekAggregateCache>();
             var quarterCalculationEngineMock = new Mock<IQuarterCalculationEngine>();
+            var trafficApiClientMock = new Mock<ITrafficApiClient>();
+            var agency = new AgencyDto { Id = 1, Name = "Name1" };
+            var advertiser = new AdvertiserDto { Id = 2, Name = "Name2", AgencyId = 1 };
             var getCampaignsReturn = new List<CampaignDto>
             {
-                new CampaignDto { Id = 1, Name = "CampaignOne", AgencyId = 1, AdvertiserId = 1, Notes = "Notes for CampaignOne.", ModifiedBy = "TestUser", ModifiedDate = new DateTime(2017,10,17) },
-                new CampaignDto { Id = 2, Name = "CampaignTwo", AgencyId = 2, AdvertiserId = 2, Notes = "Notes for CampaignTwo.", ModifiedBy = "TestUser", ModifiedDate = new DateTime(2017,10,17) },
-                new CampaignDto { Id = 3, Name = "CampaignThree", AgencyId = 3, AdvertiserId = 3, Notes = "Notes for CampaignThree.", ModifiedBy = "TestUser", ModifiedDate = new DateTime(2017,10,17) }
+                new CampaignDto
+                {
+                    Id = 1,
+                    Name = "CampaignOne",
+                    Agency = agency,
+                    Advertiser = advertiser,
+                    Notes = "Notes for CampaignOne.",
+                    ModifiedBy = "TestUser",
+                    ModifiedDate = new DateTime(2017,10,17)
+                },
+                new CampaignDto
+                {
+                    Id = 2,
+                    Name = "CampaignTwo",
+                    Agency = agency,
+                    Advertiser = advertiser,
+                    Notes = "Notes for CampaignTwo.",
+                    ModifiedBy = "TestUser",
+                    ModifiedDate = new DateTime(2017,10,17)
+                },
+                new CampaignDto
+                {
+                    Id = 3,
+                    Name = "CampaignThree",
+                    Agency = agency,
+                    Advertiser = advertiser,
+                    Notes = "Notes for CampaignThree.",
+                    ModifiedBy = "TestUser",
+                    ModifiedDate = new DateTime(2017,10,17)
+                }
             };
             var expectedResult = IntegrationTestHelper.ConvertToJson(getCampaignsReturn);
 
+            trafficApiClientMock.Setup(x => x.GetAgency(It.IsAny<int>())).Returns(agency);
+            trafficApiClientMock.Setup(x => x.GetAdvertisersByAgencyId(It.IsAny<int>())).Returns(new List<AdvertiserDto> { advertiser });
             campaignRepositoryMock.Setup(x => x.GetCampaigns(It.Is<QuarterDetailDto>(p => p.Quarter == 2 && p.Year == 2019))).Returns(getCampaignsReturn);
             quarterCalculationEngineMock.Setup(x => x.GetQuarterDetail(2, 2019)).Returns(new QuarterDetailDto
             {
@@ -46,7 +81,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 dataRepositoryFactoryMock.Object, 
                 campaignValidatorMock.Object, 
                 mediaMonthAndWeekAggregateCache.Object,
-                quarterCalculationEngineMock.Object);
+                quarterCalculationEngineMock.Object,
+                trafficApiClientMock.Object);
 
             // Act
             var result = tc.GetCampaigns(new CampaignFilterDto
@@ -72,14 +108,46 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             var campaignValidatorMock = new Mock<ICampaignValidator>();
             var mediaMonthAndWeekAggregateCache = new Mock<IMediaMonthAndWeekAggregateCache>();
             var quarterCalculationEngineMock = new Mock<IQuarterCalculationEngine>();
+            var trafficApiClientMock = new Mock<ITrafficApiClient>();
+            var agency = new AgencyDto { Id = 1, Name = "Name1" };
+            var advertiser = new AdvertiserDto { Id = 2, Name = "Name2", AgencyId = 1 };
             var getCampaignsReturn = new List<CampaignDto>
             {
-                new CampaignDto { Id = 1, Name = "CampaignOne", AgencyId = 1, AdvertiserId = 1, Notes = "Notes for CampaignOne.", ModifiedBy = "TestUser", ModifiedDate = new DateTime(2017,10,17) },
-                new CampaignDto { Id = 2, Name = "CampaignTwo", AgencyId = 2, AdvertiserId = 2, Notes = "Notes for CampaignTwo.", ModifiedBy = "TestUser", ModifiedDate = new DateTime(2017,10,17) },
-                new CampaignDto { Id = 3, Name = "CampaignThree", AgencyId = 3, AdvertiserId = 3, Notes = "Notes for CampaignThree.", ModifiedBy = "TestUser", ModifiedDate = new DateTime(2017,10,17) }
+                new CampaignDto
+                {
+                    Id = 1,
+                    Name = "CampaignOne",
+                    Agency = agency,
+                    Advertiser = advertiser,
+                    Notes = "Notes for CampaignOne.",
+                    ModifiedBy = "TestUser",
+                    ModifiedDate = new DateTime(2017,10,17)
+                },
+                new CampaignDto
+                {
+                    Id = 2,
+                    Name = "CampaignTwo",
+                    Agency = agency,
+                    Advertiser = advertiser,
+                    Notes = "Notes for CampaignTwo.",
+                    ModifiedBy = "TestUser",
+                    ModifiedDate = new DateTime(2017,10,17)
+                },
+                new CampaignDto
+                {
+                    Id = 3,
+                    Name = "CampaignThree",
+                    Agency = agency,
+                    Advertiser = advertiser,
+                    Notes = "Notes for CampaignThree.",
+                    ModifiedBy = "TestUser",
+                    ModifiedDate = new DateTime(2017,10,17)
+                }
             };
             var expectedResult = IntegrationTestHelper.ConvertToJson(getCampaignsReturn);
 
+            trafficApiClientMock.Setup(x => x.GetAgency(It.IsAny<int>())).Returns(agency);
+            trafficApiClientMock.Setup(x => x.GetAdvertisersByAgencyId(It.IsAny<int>())).Returns(new List<AdvertiserDto> { advertiser });
             campaignRepositoryMock.Setup(x => x.GetCampaigns(It.Is<QuarterDetailDto>(p => p.Quarter == 2 && p.Year == 2019))).Returns(getCampaignsReturn);
             quarterCalculationEngineMock.Setup(x => x.GetQuarterRangeByDate(_CreatedDate)).Returns(new QuarterDetailDto
             {
@@ -97,14 +165,16 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 dataRepositoryFactoryMock.Object,
                 campaignValidatorMock.Object,
                 mediaMonthAndWeekAggregateCache.Object,
-                quarterCalculationEngineMock.Object);
+                quarterCalculationEngineMock.Object,
+                trafficApiClientMock.Object);
 
             // Act
             var result = tc.GetCampaigns(null, _CreatedDate);
 
             // Assert
             campaignRepositoryMock.Verify(x => x.GetCampaigns(It.Is<QuarterDetailDto>(q => q.Year == 2019 && q.Quarter == 2)), Times.Once);
-            Assert.AreEqual(expectedResult, IntegrationTestHelper.ConvertToJson(result));
+            var actualResult = IntegrationTestHelper.ConvertToJson(result);
+            Assert.AreEqual(expectedResult, actualResult);
         }
 
         [Test]
@@ -130,7 +200,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 dataRepositoryFactoryMock.Object,
                 campaignValidatorMock.Object,
                 mediaMonthAndWeekAggregateCache.Object,
-                quarterCalculationEngineMock.Object);
+                quarterCalculationEngineMock.Object,
+                _TrafficApiClient);
 
             // Act
             var caught = Assert.Throws<Exception>(() => tc.GetCampaigns(It.IsAny<CampaignFilterDto>(), _CreatedDate));
@@ -152,8 +223,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             {
                 Id = campaignId,
                 Name = campaignName,
-                AdvertiserId = advertiserId,
-                AgencyId = agencyId,
+                Advertiser = new AdvertiserDto { Id = advertiserId },
+                Agency = new AgencyDto { Id = agencyId },
                 Notes = campaignNotes
             };
             
@@ -169,7 +240,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 dataRepositoryFactoryMock.Object,
                 campaignValidatorMock.Object,
                 mediaMonthAndWeekAggregateCache.Object,
-                quarterCalculationEngineMock.Object);
+                quarterCalculationEngineMock.Object,
+                _TrafficApiClient);
 
             // Act
             tc.SaveCampaign(campaign, _CreatedBy, _CreatedDate);
@@ -179,8 +251,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 It.Is<CampaignDto>(c => c.Id == campaignId &&
                                         c.Name == campaignName &&
                                         c.Notes == campaignNotes &&
-                                        c.AdvertiserId == advertiserId &&
-                                        campaign.AgencyId == agencyId)), Times.Once);
+                                        c.Advertiser.Id == advertiserId &&
+                                        campaign.Agency.Id == agencyId)), Times.Once);
         }
 
         [Test]
@@ -196,8 +268,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             {
                 Id = campaignId,
                 Name = campaignName,
-                AdvertiserId = advertiserId,
-                AgencyId = agencyId,
+                Advertiser = new AdvertiserDto { Id = advertiserId },
+                Agency = new AgencyDto { Id = agencyId },
                 Notes = campaignNotes
             };
 
@@ -213,7 +285,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 dataRepositoryFactoryMock.Object,
                 campaignValidatorMock.Object,
                 mediaMonthAndWeekAggregateCache.Object,
-                quarterCalculationEngineMock.Object);
+                quarterCalculationEngineMock.Object,
+                _TrafficApiClient);
 
             // Act
             tc.SaveCampaign(campaign, _CreatedBy, _CreatedDate);
@@ -223,8 +296,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 It.Is<CampaignDto>(c => c.Id == campaignId &&
                                         c.Name == campaignName &&
                                         c.Notes == campaignNotes &&
-                                        c.AdvertiserId == advertiserId &&
-                                        campaign.AgencyId == agencyId),
+                                        c.Advertiser.Id == advertiserId &&
+                                        campaign.Agency.Id == agencyId),
                 _CreatedBy,
                 _CreatedDate), Times.Once);
         }
@@ -243,8 +316,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             {
                 Id = campaignId,
                 Name = campaignName,
-                AdvertiserId = advertiserId,
-                AgencyId = agencyId,
+                Advertiser = new AdvertiserDto { Id = advertiserId },
+                Agency = new AgencyDto { Id = agencyId },
                 Notes = campaignNotes
             };
 
@@ -262,7 +335,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 dataRepositoryFactoryMock.Object,
                 campaignValidatorMock.Object,
                 mediaMonthAndWeekAggregateCache.Object,
-                quarterCalculationEngineMock.Object);
+                quarterCalculationEngineMock.Object,
+                _TrafficApiClient);
 
             // Act
             var caught = Assert.Throws<Exception>(() => tc.SaveCampaign(campaign, _CreatedBy, _CreatedDate));
@@ -272,8 +346,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 It.Is<CampaignDto>(c => c.Id == campaignId &&
                                         c.Name == campaignName &&
                                         c.Notes == campaignNotes &&
-                                        c.AdvertiserId == advertiserId &&
-                                        campaign.AgencyId == agencyId)), Times.Once);
+                                        c.Advertiser.Id == advertiserId &&
+                                        campaign.Agency.Id == agencyId)), Times.Once);
             campaignRepositoryMock.Verify(x => x.CreateCampaign(It.IsAny<CampaignDto>(), _CreatedBy, _CreatedDate), Times.Never);
             Assert.AreEqual(expectedMessage, caught.Message);
         }
@@ -292,8 +366,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             {
                 Id = campaignId,
                 Name = campaignName,
-                AdvertiserId = advertiserId,
-                AgencyId = agencyId,
+                Advertiser = new AdvertiserDto { Id = advertiserId },
+                Agency = new AgencyDto { Id = agencyId },
                 Notes = campaignNotes
             };
 
@@ -312,7 +386,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 dataRepositoryFactoryMock.Object,
                 campaignValidatorMock.Object,
                 mediaMonthAndWeekAggregateCache.Object,
-                quarterCalculationEngineMock.Object);
+                quarterCalculationEngineMock.Object,
+                _TrafficApiClient);
 
             // Act
             var caught = Assert.Throws<Exception>(() => tc.SaveCampaign(campaign, _CreatedBy, _CreatedDate));
@@ -322,8 +397,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 It.Is<CampaignDto>(c => c.Id == campaignId &&
                                         c.Name == campaignName &&
                                         c.Notes == campaignNotes &&
-                                        c.AdvertiserId == advertiserId &&
-                                        campaign.AgencyId == agencyId),
+                                        c.Advertiser.Id == advertiserId &&
+                                        campaign.Agency.Id == agencyId),
                 _CreatedBy,
                 _CreatedDate), Times.Once);
             Assert.AreEqual(expectedMessage, caught.Message);
@@ -352,7 +427,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 dataRepositoryFactoryMock.Object,
                 campaignValidatorMock.Object,
                 mediaAggregateCache,
-                quarterCalculationEngine);
+                quarterCalculationEngine,
+                _TrafficApiClient);
 
             // Act
             var campaignQuarters = tc.GetQuarters(new DateTime(2019, 8, 20));
@@ -382,7 +458,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 dataRepositoryFactoryMock.Object,
                 campaignValidatorMock.Object,
                 mediaAggregateCache,
-                quarterCalculationEngine);
+                quarterCalculationEngine,
+                _TrafficApiClient);
 
             // Act
             var campaignQuarters = tc.GetQuarters(new DateTime(2019, 8, 20));

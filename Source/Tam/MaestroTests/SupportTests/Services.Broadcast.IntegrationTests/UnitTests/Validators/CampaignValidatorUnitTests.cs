@@ -14,20 +14,41 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
     {
         [Test]
         [TestCase("", 1, 1, CampaignValidator.InvalidCampaignNameErrorMessage)]
-        [TestCase("Campaign1", 0, 1, CampaignValidator.InvalidAdvertiserErrorMessage)]
-        [TestCase("Campaign1", 23, 1, CampaignValidator.InvalidAdvertiserErrorMessage)]
         [TestCase("Campaign1", 1, 0, CampaignValidator.InvalidAgencyErrorMessage)]
         [TestCase("Campaign1", 1, 23, CampaignValidator.InvalidAgencyErrorMessage)]
-        public void ValidateFailure(string campaignName, int advertiserId, int agencyId, string expectedMessage)
+        public void ValidateFailure_WhenAgencyIsInvalid(string campaignName, int advertiserId, int agencyId, string expectedMessage)
         {
             var item = new CampaignDto
             {
                 Name = campaignName,
-                AdvertiserId = advertiserId,
-                AgencyId = agencyId
+                Advertiser = new AdvertiserDto { Id = advertiserId },
+                Agency = new AgencyDto { Id = agencyId }
             };
 
             var trafficApiClientMock = _GetTrafficApiClientMock();
+            trafficApiClientMock.Setup(x => x.GetAgency(It.IsAny<int>())).Throws(new Exception());
+            var tc = new CampaignValidator(trafficApiClientMock.Object);
+
+            var caughtException = Assert.Throws<InvalidOperationException>(() => tc.Validate(item));
+
+            Assert.AreEqual(expectedMessage, caughtException.Message);
+        }
+
+        [Test]
+        [TestCase("Campaign1", 0, 1, CampaignValidator.InvalidAdvertiserErrorMessage)]
+        [TestCase("Campaign1", 23, 1, CampaignValidator.InvalidAdvertiserErrorMessage)]
+        public void ValidateFailure_WhenAdvertiserIsInvalid(string campaignName, int advertiserId, int agencyId, string expectedMessage)
+        {
+            var item = new CampaignDto
+            {
+                Name = campaignName,
+                Advertiser = new AdvertiserDto { Id = advertiserId },
+                Agency = new AgencyDto { Id = agencyId }
+            };
+
+            var trafficApiClientMock = _GetTrafficApiClientMock();
+            trafficApiClientMock.Setup(x => x.GetAgency(It.IsAny<int>())).Returns(new AgencyDto());
+            trafficApiClientMock.Setup(x => x.GetAdvertiser(It.IsAny<int>())).Throws(new Exception());
             var tc = new CampaignValidator(trafficApiClientMock.Object);
 
             var caughtException = Assert.Throws<InvalidOperationException>(() => tc.Validate(item));
@@ -54,6 +75,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             
             var trafficApiClientMock = new Mock<ITrafficApiClient>();
 
+            trafficApiClientMock.Setup(s => s.GetAdvertisersByAgencyId(It.IsAny<int>())).Returns(getAdvertisersByAgencyIdReturn);
             trafficApiClientMock.Setup(s => s.GetAgencies()).Returns(getAgenciesReturn);
             trafficApiClientMock.Setup(s => s.GetAdvertisersByAgencyId(It.IsAny<int>())).Returns(getAdvertisersByAgencyIdReturn);
 
@@ -67,8 +89,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             var item = new CampaignDto
             {
                 Name = campaignName,
-                AdvertiserId = advertiserId,
-                AgencyId = agencyId
+                Advertiser = new AdvertiserDto { Id = advertiserId },
+                Agency = new AgencyDto { Id = agencyId }
             };
 
             var trafficApiClientMock = _GetTrafficApiClientMock();
@@ -86,8 +108,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             var item = new CampaignDto
             {
                 Name = campaignName,
-                AdvertiserId = 1,
-                AgencyId = 1
+                Advertiser = new AdvertiserDto { Id = 1 },
+                Agency = new AgencyDto { Id = 1 }
             };
 
             var trafficApiClientMock = _GetTrafficApiClientMock();
@@ -114,8 +136,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             var item = new CampaignDto
             {
                 Name = "Campaign1",
-                AdvertiserId = 1,
-                AgencyId = 1,
+                Advertiser = new AdvertiserDto { Id = 1 },
+                Agency = new AgencyDto { Id = 1 },
                 Notes = campaignNotes
             };
 

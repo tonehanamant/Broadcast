@@ -1,7 +1,14 @@
 ﻿[
   {
-    "AdvertiserId": 1,
-    "AgencyId": 5,
+    "Advertiser": {
+      "AgencyId": 5,
+      "Id": 1,
+      "Name": "Name1"
+    },
+    "Agency": {
+      "Id": 5,
+      "Name": "Name5"
+    },
     "Budget": null,
     "CPM": null,
     "FlightActiveDays": null,
@@ -20,8 +27,15 @@
     "Rating": null
   },
   {
-    "AdvertiserId": 2,
-    "AgencyId": 9,
+    "Advertiser": {
+      "AgencyId": 9,
+      "Id": 2,
+      "Name": "Name1"
+    },
+    "Agency": {
+      "Id": 9,
+      "Name": "Name9"
+    },
     "Budget": null,
     "CPM": null,
     "FlightActiveDays": null,
@@ -40,8 +54,15 @@
     "Rating": null
   },
   {
-    "AdvertiserId": 4,
-    "AgencyId": 3,
+    "Advertiser": {
+      "AgencyId": 3,
+      "Id": 4,
+      "Name": "Name1"
+    },
+    "Agency": {
+      "Id": 3,
+      "Name": "Name3"
+    },
     "Budget": null,
     "CPM": null,
     "FlightActiveDays": null,

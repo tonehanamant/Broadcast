@@ -81,23 +81,25 @@ namespace Services.Broadcast.Validators
 
         private void _ValidateAdvertiser(CampaignDto campaign)
         {
-            var advertisers = _TrafficApiClient.GetAdvertisersByAgencyId(campaign.AgencyId);
-            var found = advertisers.Any(a => a.Id.Equals(campaign.AdvertiserId));
-
-            if (found == false)
+            try
             {
-                throw new InvalidOperationException(InvalidAdvertiserErrorMessage);
+                _TrafficApiClient.GetAdvertiser(campaign.Advertiser.Id);
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException(InvalidAdvertiserErrorMessage, ex);
             }
         }
 
         private void _ValidateAgency(CampaignDto campaign)
         {
-            var agencies = _TrafficApiClient.GetAgencies();
-            var found = agencies.Any(a => a.Id.Equals(campaign.AgencyId));
-
-            if (found == false)
+            try
             {
-                throw new InvalidOperationException(InvalidAgencyErrorMessage);
+                _TrafficApiClient.GetAgency(campaign.Agency.Id);
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException(InvalidAgencyErrorMessage, ex);
             }
         }
 

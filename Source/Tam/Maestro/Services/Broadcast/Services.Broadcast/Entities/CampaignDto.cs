@@ -25,21 +25,9 @@ namespace Services.Broadcast.Entities
         /// </value>
         public string Name { get; set; }
 
-        /// <summary>
-        /// Gets or sets the advertiser identifier.
-        /// </summary>
-        /// <value>
-        /// The advertiser identifier.
-        /// </value>
-        public int AdvertiserId { get; set; }
+        public AdvertiserDto Advertiser { get; set; }
 
-        /// <summary>
-        /// Gets or sets the agency identifier.
-        /// </summary>
-        /// <value>
-        /// The agency identifier.
-        /// </value>
-        public int AgencyId { get; set; }
+        public AgencyDto Agency { get;set; }
 
         /// <summary>
         /// Gets or sets the notes.
