@@ -105,7 +105,10 @@ namespace Services.Broadcast.ApplicationServices.Plan
             plan.ModifiedBy = modifiedBy;
             plan.ModifiedDate = modifiedDate;
             DaypartTimeHelper.SubtractOneSecondToEndTime(plan.Dayparts);
-            
+
+            // TODO: remove this line when the PRI-14347 is done
+            plan.Vpvh = 0.001;
+
             _PlanValidator.ValidatePlan(plan);
 
             if (plan.Id == 0)
