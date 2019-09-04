@@ -5,6 +5,7 @@ using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Cache;
 using Services.Broadcast.Clients;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Helpers;
 using Services.Broadcast.Repositories;
 using Services.Broadcast.Validators;
 using System;
@@ -61,6 +62,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekAggregateCache;
         private readonly IQuarterCalculationEngine _QuarterCalculationEngine;
         private readonly ITrafficApiClient _TrafficApiClient;
+        private readonly ILockingManagerApplicationService _LockingManagerApplicationService;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CampaignService"/> class.
@@ -74,13 +76,15 @@ namespace Services.Broadcast.ApplicationServices
             ICampaignValidator campaignValidator,
             IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
             IQuarterCalculationEngine quarterCalculationEngine,
-            ITrafficApiClient trafficApiClient)
+            ITrafficApiClient trafficApiClient,
+            ILockingManagerApplicationService lockingManagerApplicationService)
         {
             _CampaignRepository = dataRepositoryFactory.GetDataRepository<ICampaignRepository>();
             _CampaignValidator = campaignValidator;
             _MediaMonthAndWeekAggregateCache = mediaMonthAndWeekAggregateCache;
             _QuarterCalculationEngine = quarterCalculationEngine;
             _TrafficApiClient = trafficApiClient;
+            _LockingManagerApplicationService = lockingManagerApplicationService;
         }
 
         /// <inheritdoc />
@@ -186,7 +190,17 @@ namespace Services.Broadcast.ApplicationServices
             }
             else
             {
-                return _CampaignRepository.UpdateCampaign(campaign);
+                var key = KeyHelper.GetCampaignLockingKey(campaign.Id);
+                var lockingResult = _LockingManagerApplicationService.LockObject(key);
+
+                if (lockingResult.Success)
+                {
+                    return _CampaignRepository.UpdateCampaign(campaign);
+                }
+                else
+                {
+                    throw new Exception($"The chosen campaign has been locked by {lockingResult.LockedUserName}");
+                }
             }
         }
 

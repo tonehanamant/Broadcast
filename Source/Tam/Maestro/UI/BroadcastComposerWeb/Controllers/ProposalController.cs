@@ -5,6 +5,7 @@ using Newtonsoft.Json.Converters;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.DTO;
+using Services.Broadcast.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -192,7 +193,7 @@ namespace BroadcastComposerWeb.Controllers
         [RestrictedAccess(RequiredRole = RoleType.Broadcast_Proposer)]
         public BaseResponse<LockResponse> LockProposal(int proposalId)
         {
-            var key = string.Format("broadcast_proposal : {0}", proposalId);
+            var key = KeyHelper.GetProposalLockingKey(proposalId);
             return _ConvertToBaseResponse(
                 () => _ApplicationServiceFactory.GetApplicationService<ILockingManagerApplicationService>()
                     .LockObject(key));
@@ -203,7 +204,7 @@ namespace BroadcastComposerWeb.Controllers
         [RestrictedAccess(RequiredRole = RoleType.Broadcast_Proposer)]
         public BaseResponse<ReleaseLockResponse> UnlockProposal(int proposalId)
         {
-            var key = string.Format("broadcast_proposal : {0}", proposalId);
+            var key = KeyHelper.GetProposalLockingKey(proposalId);
             return _ConvertToBaseResponse(
                 () => _ApplicationServiceFactory.GetApplicationService<ILockingManagerApplicationService>()
                     .ReleaseObject(key));

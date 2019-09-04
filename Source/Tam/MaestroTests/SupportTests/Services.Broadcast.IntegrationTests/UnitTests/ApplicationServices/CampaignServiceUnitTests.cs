@@ -1,4 +1,5 @@
-﻿using Common.Services.Repositories;
+﻿using Common.Services.ApplicationServices;
+using Common.Services.Repositories;
 using IntegrationTests.Common;
 using Moq;
 using NUnit.Framework;
@@ -19,6 +20,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         private const string _CreatedBy = "TestUser";
         private readonly DateTime _CreatedDate = new DateTime(2017, 10, 17, 7, 30, 23);
         private readonly ITrafficApiClient _TrafficApiClient = new TrafficApiClientStub();
+        private readonly Mock<ILockingManagerApplicationService> _LockingManagerApplicationServiceMock = new Mock<ILockingManagerApplicationService>();
 
         [Test]
         public void ReturnsFilteredCampaigns()
@@ -82,7 +84,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 campaignValidatorMock.Object, 
                 mediaMonthAndWeekAggregateCache.Object,
                 quarterCalculationEngineMock.Object,
-                trafficApiClientMock.Object);
+                trafficApiClientMock.Object,
+                _LockingManagerApplicationServiceMock.Object);
 
             // Act
             var result = tc.GetCampaigns(new CampaignFilterDto
@@ -166,7 +169,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 campaignValidatorMock.Object,
                 mediaMonthAndWeekAggregateCache.Object,
                 quarterCalculationEngineMock.Object,
-                trafficApiClientMock.Object);
+                trafficApiClientMock.Object,
+                _LockingManagerApplicationServiceMock.Object);
 
             // Act
             var result = tc.GetCampaigns(null, _CreatedDate);
@@ -201,7 +205,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 campaignValidatorMock.Object,
                 mediaMonthAndWeekAggregateCache.Object,
                 quarterCalculationEngineMock.Object,
-                _TrafficApiClient);
+                _TrafficApiClient,
+                _LockingManagerApplicationServiceMock.Object);
 
             // Act
             var caught = Assert.Throws<Exception>(() => tc.GetCampaigns(It.IsAny<CampaignFilterDto>(), _CreatedDate));
@@ -241,7 +246,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 campaignValidatorMock.Object,
                 mediaMonthAndWeekAggregateCache.Object,
                 quarterCalculationEngineMock.Object,
-                _TrafficApiClient);
+                _TrafficApiClient,
+                _LockingManagerApplicationServiceMock.Object);
 
             // Act
             tc.SaveCampaign(campaign, _CreatedBy, _CreatedDate);
@@ -286,7 +292,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 campaignValidatorMock.Object,
                 mediaMonthAndWeekAggregateCache.Object,
                 quarterCalculationEngineMock.Object,
-                _TrafficApiClient);
+                _TrafficApiClient,
+                _LockingManagerApplicationServiceMock.Object);
 
             // Act
             tc.SaveCampaign(campaign, _CreatedBy, _CreatedDate);
@@ -336,7 +343,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 campaignValidatorMock.Object,
                 mediaMonthAndWeekAggregateCache.Object,
                 quarterCalculationEngineMock.Object,
-                _TrafficApiClient);
+                _TrafficApiClient,
+                _LockingManagerApplicationServiceMock.Object);
 
             // Act
             var caught = Assert.Throws<Exception>(() => tc.SaveCampaign(campaign, _CreatedBy, _CreatedDate));
@@ -387,7 +395,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 campaignValidatorMock.Object,
                 mediaMonthAndWeekAggregateCache.Object,
                 quarterCalculationEngineMock.Object,
-                _TrafficApiClient);
+                _TrafficApiClient,
+                _LockingManagerApplicationServiceMock.Object);
 
             // Act
             var caught = Assert.Throws<Exception>(() => tc.SaveCampaign(campaign, _CreatedBy, _CreatedDate));
@@ -428,7 +437,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 campaignValidatorMock.Object,
                 mediaAggregateCache,
                 quarterCalculationEngine,
-                _TrafficApiClient);
+                _TrafficApiClient,
+                _LockingManagerApplicationServiceMock.Object);
 
             // Act
             var campaignQuarters = tc.GetQuarters(new DateTime(2019, 8, 20));
@@ -459,7 +469,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 campaignValidatorMock.Object,
                 mediaAggregateCache,
                 quarterCalculationEngine,
-                _TrafficApiClient);
+                _TrafficApiClient,
+                _LockingManagerApplicationServiceMock.Object);
 
             // Act
             var campaignQuarters = tc.GetQuarters(new DateTime(2019, 8, 20));

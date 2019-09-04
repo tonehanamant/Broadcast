@@ -1,10 +1,13 @@
-﻿using Common.Services.WebComponents;
+﻿using Common.Services.ApplicationServices;
+using Common.Services.WebComponents;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Web.Http;
 using Tam.Maestro.Services.Cable.Entities;
+using Tam.Maestro.Services.ContractInterfaces;
 using Tam.Maestro.Web.Common;
 
 namespace BroadcastComposerWeb.Controllers
@@ -70,6 +73,22 @@ namespace BroadcastComposerWeb.Controllers
         {
             return
                _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ICampaignService>().GetQuarters(DateTime.Now));
+        }
+
+        [HttpGet]
+        [Route("{campaignId}/Lock")]
+        public BaseResponse<LockResponse> LockCampaign(int campaignId)
+        {
+            var key = KeyHelper.GetCampaignLockingKey(campaignId);
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ILockingManagerApplicationService>().LockObject(key));
+        }
+
+        [HttpGet]
+        [Route("{campaignId}/Unlock")]
+        public BaseResponse<ReleaseLockResponse> UnlockCampaign(int campaignId)
+        {
+            var key = KeyHelper.GetCampaignLockingKey(campaignId);
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ILockingManagerApplicationService>().ReleaseObject(key));
         }
     }
 }

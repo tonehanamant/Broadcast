@@ -1,6 +1,7 @@
 ﻿using Common.Services;
 using Common.Services.ApplicationServices;
 using Common.Systems.LockTokens;
+using Services.Broadcast.Helpers;
 using System;
 using System.Collections.Generic;
 using Tam.Maestro.Services.Clients;
@@ -68,12 +69,14 @@ namespace Services.Broadcast.BusinessEngines
 
         public LockResponse LockStation(int stationId)
         {
-            return _LockingManager.LockObject($"broadcast_station : {stationId}");
+            var key = KeyHelper.GetStationLockingKey(stationId);
+            return _LockingManager.LockObject(key);
         }
 
         public ReleaseLockResponse UnlockStation(int stationId)
         {
-            return _LockingManager.ReleaseObject($"broadcast_station : {stationId}");
+            var key = KeyHelper.GetStationLockingKey(stationId);
+            return _LockingManager.ReleaseObject(key);
         }
     }
 }

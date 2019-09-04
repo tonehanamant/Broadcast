@@ -12,6 +12,13 @@ using System;
 using System.Collections.Generic;
 using Tam.Maestro.Common.DataLayer;
 using Services.Broadcast.Validators;
+using Common.Services.ApplicationServices;
+using Microsoft.Practices.Unity;
+using Moq;
+using Common.Services.Repositories;
+using Services.Broadcast.BusinessEngines;
+using Services.Broadcast.Clients;
+using Tam.Maestro.Services.ContractInterfaces;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
@@ -83,6 +90,38 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 int campaignId = _CampaignService.SaveCampaign(campaign, IntegrationTestUser, CreatedDate);
                 Assert.IsTrue(campaignId > 0);
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void CanNotUpdateLockedCampaign()
+        {
+            const string expectedMessage = "The chosen campaign has been locked by IntegrationUser";
+
+            using (new TransactionScopeWrapper())
+            {
+                var lockingManagerApplicationServiceMock = new Mock<ILockingManagerApplicationService>();
+                lockingManagerApplicationServiceMock.Setup(x => x.LockObject(It.IsAny<string>())).Returns(new LockResponse
+                {
+                    Success = false,
+                    LockedUserName = "IntegrationUser"
+                });
+
+                var service = new CampaignService(
+                    IntegrationTestApplicationServiceFactory.Instance.Resolve<IDataRepositoryFactory>(),
+                    IntegrationTestApplicationServiceFactory.Instance.Resolve<ICampaignValidator>(),
+                    IntegrationTestApplicationServiceFactory.Instance.Resolve<IMediaMonthAndWeekAggregateCache>(),
+                    IntegrationTestApplicationServiceFactory.Instance.Resolve<IQuarterCalculationEngine>(),
+                    IntegrationTestApplicationServiceFactory.Instance.Resolve<ITrafficApiClient>(),
+                    lockingManagerApplicationServiceMock.Object);
+
+                var campaign = _GetValidCampaign();
+                campaign.Id = 1;
+
+                var exception = Assert.Throws<Exception>(() => service.SaveCampaign(campaign, IntegrationTestUser, CreatedDate));
+
+                Assert.AreEqual(expectedMessage, exception.Message);
             }
         }
 
