@@ -159,6 +159,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         
         #endregion // #region Dispatch Aggregation
 
+
         #region Helpers
 
         private static PlanDto _GetNewPlan()
@@ -204,7 +205,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 {
                     new PlanDaypartDto{ DaypartCodeId = 2, StartTimeSeconds = 0, EndTimeSeconds = 2000, WeightingGoalPercent = 28.0 },
                     new PlanDaypartDto{ DaypartCodeId = 11, StartTimeSeconds = 1500, EndTimeSeconds = 2788, WeightingGoalPercent = 33.2 }
-                }
+                },
+                Vpvh = 0.234543
             };
         }
 

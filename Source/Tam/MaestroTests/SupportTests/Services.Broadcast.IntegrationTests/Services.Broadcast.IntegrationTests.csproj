@@ -360,6 +360,7 @@
     </None>
     <None Include="EnvironmentSpecificSettings.config.development">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </None>
     <None Include="EnvironmentSpecificSettings.config.release">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

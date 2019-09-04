@@ -39,7 +39,7 @@ namespace Services.Broadcast.Validators
         const string INVALID_SPOT_LENGTH = "Invalid spot length";
         const string INVALID_PRODUCT = "Invalid product";
         const string INVALID_SHARE_BOOK = "Invalid share book";
-        const string INVALID_HUT_BOOK = "Invalid HUT boook.";
+        const string INVALID_HUT_BOOK = "Invalid HUT book.";
         const string INVALID_FLIGHT_DATES = "Invalid flight dates.  The end date cannot be before the start date.";
         const string INVALID_FLIGHT_DATE = "Invalid flight start/end date.";
         const string INVALID_FLIGHT_HIATUS_DAY = "Invalid flight hiatus day.  All days must be within the flight date range.";
@@ -55,6 +55,7 @@ namespace Services.Broadcast.Validators
         const string INVALID_WEEKS_FOR_CUSTOM_DELIVERY = "For custom delivery you have to provide the weeks values";
         const string INVALID_IMPRESSIONS_COUNT = "The impressions count is different betweek the delivery and the weekly breakdown";
         const string INVALID_SOV_COUNT = "The share of voice count is not equat to 100%";
+        const string INVALID_VPVH = "Invalid VPVH. The value must be between 0.001 and 1.";
 
         #endregion
 
@@ -92,34 +93,10 @@ namespace Services.Broadcast.Validators
             _ValidateOptionalPercentage(plan.CoverageGoalPercent, INVALID_COVERAGE_GOAL);
             _ValidateMarkets(plan);
             _ValidateWeeklyBreakdownWeeks(plan);
+            _ValidateVPVH(plan);
         }
 
-        private void _ValidateProduct(PlanDto plan)
-        {
-            if (plan.ProductId <= 0)
-            {
-                throw new Exception(INVALID_PRODUCT);
-            }
-
-            // This will throw an exception if the product doesn`t exist
-            _TrafficApiClient.GetProduct(plan.ProductId);
-        }
-
-        private void _ValidateWeeklyBreakdownWeeks(PlanDto plan)
-        {
-            if (!plan.WeeklyBreakdownWeeks.Any())
-            {
-                return;
-            }
-            if(plan.DeliveryImpressions != plan.WeeklyBreakdownWeeks.Select(x => x.Impressions).Sum())
-            {
-                throw new Exception(INVALID_IMPRESSIONS_COUNT);
-            }
-            if(100 != plan.WeeklyBreakdownWeeks.Select(x => x.ShareOfVoice).Sum())
-            {
-                throw new Exception(INVALID_SOV_COUNT);
-            }
-        }
+        
 
         ///<inheritdoc/>
         public void ValidateWeeklyBreakdown(WeeklyBreakdownRequest request)
@@ -146,7 +123,7 @@ namespace Services.Broadcast.Validators
 
         private void _ValidateFlightAndHiatusDates(PlanDto plan)
         {
-            if (plan.FlightStartDate.HasValue == false || plan.FlightEndDate.HasValue == false)
+            if (!plan.FlightStartDate.HasValue || !plan.FlightEndDate.HasValue)
             {
                 return;
             }
@@ -256,6 +233,40 @@ namespace Services.Broadcast.Validators
                 throw new Exception(errorMessage);
             }
         }
+
+        private void _ValidateVPVH(PlanDto plan)
+        {
+            if (plan.Vpvh < 0.001 || plan.Vpvh > 1)
+                throw new Exception(INVALID_VPVH);
+        }
+
+        private void _ValidateWeeklyBreakdownWeeks(PlanDto plan)
+        {
+            if (!plan.WeeklyBreakdownWeeks.Any())
+            {
+                return;
+            }
+            if (plan.DeliveryImpressions != plan.WeeklyBreakdownWeeks.Select(x => x.Impressions).Sum())
+            {
+                throw new Exception(INVALID_IMPRESSIONS_COUNT);
+            }
+            if (100 != plan.WeeklyBreakdownWeeks.Select(x => x.ShareOfVoice).Sum())
+            {
+                throw new Exception(INVALID_SOV_COUNT);
+            }
+        }
+
+        private void _ValidateProduct(PlanDto plan)
+        {
+            if (plan.ProductId <= 0)
+            {
+                throw new Exception(INVALID_PRODUCT);
+            }
+
+            // This will throw an exception if the product doesn`t exist
+            _TrafficApiClient.GetProduct(plan.ProductId);
+        }
+
         #endregion // #region Helpers
     }
 }

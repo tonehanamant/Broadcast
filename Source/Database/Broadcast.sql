@@ -51,6 +51,18 @@ GO
 /*************************************** START UPDATE SCRIPT *****************************************************/
 
 
+/*************************************** START PRI-13777 add vpvh in plans *****************************************************/
+
+IF NOT EXISTS(SELECT * FROM INFORMATION_SCHEMA.COLUMNS 
+				WHERE TABLE_NAME = 'plans'
+					AND COLUMN_NAME = 'vpvh')
+BEGIN
+	ALTER TABLE plans ADD vpvh FLOAT NOT NULL
+END
+GO
+
+/*************************************** END PRI-13777 add vpvh in plans  *****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

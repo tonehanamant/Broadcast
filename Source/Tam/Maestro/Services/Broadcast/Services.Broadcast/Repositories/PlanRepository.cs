@@ -134,7 +134,8 @@ namespace Services.Broadcast.Repositories
                 BlackoutMarkets = entity.plan_blackout_markets.Select(_MapBlackoutMarketDto).ToList(),
                 WeeklyBreakdownWeeks = entity.plan_weeks.Select(_MapWeeklyBreakdownWeeks).ToList(),
                 ModifiedBy = entity.modified_by,
-                ModifiedDate = entity.modified_date
+                ModifiedDate = entity.modified_date,
+                Vpvh = entity.vpvh
             };
             return dto;
         }
@@ -186,6 +187,8 @@ namespace Services.Broadcast.Repositories
 
             entity.modified_by = planDto.ModifiedBy;
             entity.modified_date = planDto.ModifiedDate;
+
+            entity.vpvh = planDto.Vpvh;
 
             _HydratePlanAudienceInfo(entity, planDto);
             _HydratePlanBudget(entity, planDto);

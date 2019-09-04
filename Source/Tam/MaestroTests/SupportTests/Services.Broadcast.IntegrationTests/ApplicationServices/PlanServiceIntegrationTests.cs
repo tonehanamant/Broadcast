@@ -916,7 +916,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Dayparts = new List<PlanDaypartDto>
                 {
                     new PlanDaypartDto{ DaypartCodeId = 2, StartTimeSeconds = 0, EndTimeSeconds = 2000, WeightingGoalPercent = 28.0 }
-                }
+                },
+                Vpvh = 0.12
             };
         }
 
@@ -967,7 +968,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     new PlanDaypartDto{ DaypartCodeId = 2, StartTimeSeconds = 0, EndTimeSeconds = 2000, WeightingGoalPercent = 28.0 },
                     new PlanDaypartDto{ DaypartCodeId = 11, StartTimeSeconds = 1500, EndTimeSeconds = 2788, WeightingGoalPercent = 33.2 }
-                }
+                },
+                Vpvh = 0.012
             };
         }
 

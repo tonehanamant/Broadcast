@@ -272,5 +272,13 @@ namespace Services.Broadcast.Entities.Plan
         /// The modified date.
         /// </value>
         public DateTime ModifiedDate { get; set; }
+
+        /// <summary>
+        /// Gets or sets the VPVH.
+        /// </summary>
+        /// <value>
+        /// The VPVH.
+        /// </value>
+        public double Vpvh { get; set; }
     }
 }

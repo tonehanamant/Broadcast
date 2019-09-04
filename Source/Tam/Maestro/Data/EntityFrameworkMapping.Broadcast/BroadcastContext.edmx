@@ -720,6 +720,7 @@
           <Property Name="delivery_rating_points" Type="float" />
           <Property Name="cpp" Type="money" />
           <Property Name="currency" Type="int" Nullable="false" />
+          <Property Name="vpvh" Type="float" Nullable="false" />
         </EntityType>
         <EntityType Name="post_file_demos">
           <Key>
@@ -10416,6 +10417,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="delivery_rating_points" Type="Double" />
           <Property Name="cpp" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="currency" Type="Int32" Nullable="false" />
+          <Property Name="vpvh" Type="Double" Nullable="false" />
           <NavigationProperty Name="audience" Relationship="BroadcastModel.FK_plans_audiences" FromRole="plan" ToRole="audience" />
           <NavigationProperty Name="campaign" Relationship="BroadcastModel.FK_plans_campaigns" FromRole="plan" ToRole="campaign" />
           <NavigationProperty Name="media_months" Relationship="BroadcastModel.FK_plans_media_months" FromRole="plan" ToRole="media_months" />
@@ -12368,6 +12370,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="plans">
             <EntityTypeMapping TypeName="BroadcastModel.plan">
               <MappingFragment StoreEntitySet="plans">
+                <ScalarProperty Name="vpvh" ColumnName="vpvh" />
                 <ScalarProperty Name="currency" ColumnName="currency" />
                 <ScalarProperty Name="cpp" ColumnName="cpp" />
                 <ScalarProperty Name="delivery_rating_points" ColumnName="delivery_rating_points" />

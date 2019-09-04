@@ -13,6 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Services.Broadcast.Extensions;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.ContractInterfaces.Common;
 
@@ -104,13 +105,12 @@ namespace Services.Broadcast.ApplicationServices.Plan
             plan.ModifiedBy = modifiedBy;
             plan.ModifiedDate = modifiedDate;
             DaypartTimeHelper.SubtractOneSecondToEndTime(plan.Dayparts);
-
+            
             _PlanValidator.ValidatePlan(plan);
 
             if (plan.Id == 0)
             {
-                var planId = _PlanRepository.SaveNewPlan(plan, modifiedBy, modifiedDate);
-                plan.Id = planId;
+                plan.Id = _PlanRepository.SaveNewPlan(plan, modifiedBy, modifiedDate);
             }
             else
             {

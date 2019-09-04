@@ -312,7 +312,7 @@
         <EntityTypeShape EntityType="BroadcastModel.plan_summary" Width="1.5" PointX="33.875" PointY="29" />
         <EntityTypeShape EntityType="BroadcastModel.plan_summary_quarters" Width="1.5" PointX="36.125" PointY="30" />
         <AssociationConnector Association="BroadcastModel.FK_plan_summary_quarters_plan_summary" />
-        <EntityTypeShape EntityType="BroadcastModel.plan" Width="1.5" PointX="31.625" PointY="7.75" />
+        <EntityTypeShape EntityType="BroadcastModel.plan" Width="1.5" PointX="31.625" PointY="7.5" />
         <AssociationConnector Association="BroadcastModel.FK_plans_audiences" />
         <AssociationConnector Association="BroadcastModel.FK_plans_campaigns" />
         <AssociationConnector Association="BroadcastModel.FK_plans_media_months" />
