@@ -7,6 +7,7 @@ using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Clients;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.IntegrationTests.Stubbs;
 using Services.Broadcast.Repositories;
 using Services.Broadcast.Validators;
@@ -71,7 +72,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 
             trafficApiClientMock.Setup(x => x.GetAgency(It.IsAny<int>())).Returns(agency);
             trafficApiClientMock.Setup(x => x.GetAdvertisersByAgencyId(It.IsAny<int>())).Returns(new List<AdvertiserDto> { advertiser });
-            campaignRepositoryMock.Setup(x => x.GetCampaigns(It.Is<QuarterDetailDto>(p => p.Quarter == 2 && p.Year == 2019))).Returns(getCampaignsReturn);
+            campaignRepositoryMock.Setup(x => x.GetCampaigns(It.IsAny<DateTime>(), It.IsAny<DateTime>(), It.IsAny<PlanStatusEnum>())).Returns(getCampaignsReturn);
             quarterCalculationEngineMock.Setup(x => x.GetQuarterDetail(2, 2019)).Returns(new QuarterDetailDto
             {
                 Year = 2019,
@@ -94,11 +95,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 {
                     Year = 2019,
                     Quarter = 2
-                }
+                }, 
+                PlanStatus = PlanStatusEnum.ClientApproval
             }, _CreatedDate);
 
             // Assert
-            campaignRepositoryMock.Verify(x => x.GetCampaigns(It.Is<QuarterDetailDto>(q => q.Year == 2019 && q.Quarter == 2)), Times.Once);
+            campaignRepositoryMock.Verify(x => x.GetCampaigns(It.IsAny<DateTime>(), It.IsAny<DateTime>(), It.IsAny<PlanStatusEnum>()), Times.Once);
             Assert.AreEqual(expectedResult, IntegrationTestHelper.ConvertToJson(result));
         }
 
@@ -151,7 +153,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 
             trafficApiClientMock.Setup(x => x.GetAgency(It.IsAny<int>())).Returns(agency);
             trafficApiClientMock.Setup(x => x.GetAdvertisersByAgencyId(It.IsAny<int>())).Returns(new List<AdvertiserDto> { advertiser });
-            campaignRepositoryMock.Setup(x => x.GetCampaigns(It.Is<QuarterDetailDto>(p => p.Quarter == 2 && p.Year == 2019))).Returns(getCampaignsReturn);
+            campaignRepositoryMock.Setup(x => x.GetCampaigns(It.IsAny<DateTime>(), It.IsAny<DateTime>(), null)).Returns(getCampaignsReturn);
             quarterCalculationEngineMock.Setup(x => x.GetQuarterRangeByDate(_CreatedDate)).Returns(new QuarterDetailDto
             {
                 Year = 2019,
@@ -176,7 +178,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             var result = tc.GetCampaigns(null, _CreatedDate);
 
             // Assert
-            campaignRepositoryMock.Verify(x => x.GetCampaigns(It.Is<QuarterDetailDto>(q => q.Year == 2019 && q.Quarter == 2)), Times.Once);
+            campaignRepositoryMock.Verify(x => x.GetCampaigns(It.IsAny<DateTime>(), It.IsAny<DateTime>(), null), Times.Once);
             var actualResult = IntegrationTestHelper.ConvertToJson(result);
             Assert.AreEqual(expectedResult, actualResult);
         }
@@ -196,7 +198,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             quarterCalculationEngineMock.Setup(x => x.GetQuarterDetail(It.IsAny<int>(), It.IsAny<int>())).Returns(new QuarterDetailDto());
             quarterCalculationEngineMock.Setup(x => x.GetQuarterRangeByDate(_CreatedDate)).Returns(new QuarterDetailDto());
             campaignRepositoryMock
-                .Setup(x => x.GetCampaigns(It.IsAny<QuarterDetailDto>()))
+                .Setup(x => x.GetCampaigns(It.IsAny<DateTime>(), It.IsAny<DateTime>(), null))
                 .Callback(() => throw new Exception(expectedMessage));
             dataRepositoryFactoryMock.Setup(s => s.GetDataRepository<ICampaignRepository>()).Returns(campaignRepositoryMock.Object);
 
@@ -430,7 +432,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             };
             
             dataRepositoryFactoryMock.Setup(x => x.GetDataRepository<ICampaignRepository>()).Returns(campaignRepositoryMock.Object);
-            campaignRepositoryMock.Setup(x => x.GetCampaignsDateRanges()).Returns(getCampaignsDateRangesReturn);
+            campaignRepositoryMock.Setup(x => x.GetCampaignsDateRanges(null)).Returns(getCampaignsDateRangesReturn);
             
             var tc = new CampaignService(
                 dataRepositoryFactoryMock.Object,
@@ -441,7 +443,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 _LockingManagerApplicationServiceMock.Object);
 
             // Act
-            var campaignQuarters = tc.GetQuarters(new DateTime(2019, 8, 20));
+            var campaignQuarters = tc.GetQuarters(null, new DateTime(2019, 8, 20));
 
             // Assert
             Assert.IsNotNull(campaignQuarters);
@@ -462,7 +464,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             var getCampaignsDateRangesReturn = new List<DateRange>();
 
             dataRepositoryFactoryMock.Setup(x => x.GetDataRepository<ICampaignRepository>()).Returns(campaignRepositoryMock.Object);
-            campaignRepositoryMock.Setup(x => x.GetCampaignsDateRanges()).Returns(getCampaignsDateRangesReturn);
+            campaignRepositoryMock.Setup(x => x.GetCampaignsDateRanges(null)).Returns(getCampaignsDateRangesReturn);
 
             var tc = new CampaignService(
                 dataRepositoryFactoryMock.Object,
@@ -473,7 +475,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 _LockingManagerApplicationServiceMock.Object);
 
             // Act
-            var campaignQuarters = tc.GetQuarters(new DateTime(2019, 8, 20));
+            var campaignQuarters = tc.GetQuarters(null, new DateTime(2019, 8, 20));
 
             // Assert
             Assert.IsNotNull(campaignQuarters);

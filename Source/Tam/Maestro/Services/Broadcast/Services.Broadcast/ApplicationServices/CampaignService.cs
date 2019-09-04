@@ -6,13 +6,16 @@ using Services.Broadcast.Cache;
 using Services.Broadcast.Clients;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Helpers;
+using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Repositories;
 using Services.Broadcast.Validators;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Caching;
+using Tam.Maestro.Common;
 using Tam.Maestro.Data.Entities;
+using Tam.Maestro.Data.Entities.DataTransferObjects;
 
 namespace Services.Broadcast.ApplicationServices
 {
@@ -43,12 +46,20 @@ namespace Services.Broadcast.ApplicationServices
         /// <param name="createdDate">The created date.</param>
         /// <returns>Id of the new campaign</returns>
         int SaveCampaign(CampaignDto campaign, string userName, DateTime createdDate);
+
         /// <summary>
         /// Gets the quarters.
-        /// </summary>
+        /// <param name="planStatus">The status to filter quarter by</param>
         /// <param name="currentDate">The date for the default quarter.</param>
         /// <returns></returns>
-        CampaignQuartersDto GetQuarters(DateTime currentDate);
+        CampaignQuartersDto GetQuarters(PlanStatusEnum? planStatus, DateTime currentDate);
+
+        /// <summary>
+        /// Gets the statuses based on the quarter.
+        /// </summary>
+        /// <param name="quarter">The quarter</param>
+        /// <returns></returns>
+        List<LookupDto> GetStatuses(QuarterDto quarter);
     }
 
     /// <summary>
@@ -93,7 +104,7 @@ namespace Services.Broadcast.ApplicationServices
             if (!_IsFilterValid(filter))
                 filter = _GetDefaultFilter(currentDate);
             var quarterDetail = _QuarterCalculationEngine.GetQuarterDetail(filter.Quarter.Quarter, filter.Quarter.Year);
-            var campaigns = _CampaignRepository.GetCampaigns(quarterDetail);
+            var campaigns = _CampaignRepository.GetCampaigns(quarterDetail.StartDate, quarterDetail.EndDate, filter.PlanStatus);
 
             _SetAgencies(campaigns);
             _SetAdvertisers(campaigns);
@@ -205,9 +216,9 @@ namespace Services.Broadcast.ApplicationServices
         }
 
         /// <inheritdoc />
-        public CampaignQuartersDto GetQuarters(DateTime currentDate)
+        public CampaignQuartersDto GetQuarters(PlanStatusEnum? planStatus, DateTime currentDate)
         {
-            var dates = _CampaignRepository.GetCampaignsDateRanges();
+            var dates = _CampaignRepository.GetCampaignsDateRanges(planStatus);
             var validDateRanges = _ValidateDateRanges(dates);
             var allMediaMonths = new List<MediaMonth>();
 
@@ -234,6 +245,23 @@ namespace Services.Broadcast.ApplicationServices
             };
         }
 
+        public List<LookupDto> GetStatuses(QuarterDto quarter)
+        {
+            DateTime? startDate = null;
+            DateTime? endDate = null;
+
+            if (quarter != null)
+            {
+                var quarterDetail = _QuarterCalculationEngine.GetQuarterDetail(quarter.Quarter, quarter.Year);
+                startDate = quarterDetail.StartDate;
+                endDate = quarterDetail.EndDate;
+            }
+
+            var statuses = _CampaignRepository.GetCampaignsPlanStatuses(startDate, endDate);
+
+            return statuses.Select(x => new LookupDto { Id = (int)x, Display = x.Description() }).OrderBy(x => x.Id).ToList(); ;
+        }                
+
         private List<DateRange> _ValidateDateRanges(List<DateRange> dateRanges)
         {
             var nonEmptyRanges = dateRanges.Where(x => !x.IsEmpty());
@@ -251,7 +279,7 @@ namespace Services.Broadcast.ApplicationServices
 
         private bool _IsFilterValid(CampaignFilterDto filter)
         {
-            return filter != null && filter.Quarter != null;
+            return filter != null && (filter.Quarter != null || filter.PlanStatus != null);
         }
 
         private CampaignFilterDto _GetDefaultFilter(DateTime currentDate)
@@ -264,7 +292,8 @@ namespace Services.Broadcast.ApplicationServices
                 {
                     Quarter = quarter.Quarter,
                     Year = quarter.Year
-                }
+                },
+                PlanStatus = null
             };
         }
     }

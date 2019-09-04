@@ -3,9 +3,11 @@ using Common.Services.WebComponents;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Helpers;
+using Services.Broadcast.Entities.Enums;
 using System;
 using System.Collections.Generic;
 using System.Web.Http;
+using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.Cable.Entities;
 using Tam.Maestro.Services.ContractInterfaces;
 using Tam.Maestro.Web.Common;
@@ -69,10 +71,22 @@ namespace BroadcastComposerWeb.Controllers
         /// <returns>An object with a list of quarters and the current quarter.</returns>
         [HttpGet]
         [Route("Quarters")]
-        public BaseResponse<CampaignQuartersDto> GetQuarters()
+        public BaseResponse<CampaignQuartersDto> GetQuarters(PlanStatusEnum? planStatusEnum)
         {
             return
-               _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ICampaignService>().GetQuarters(DateTime.Now));
+               _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ICampaignService>().GetQuarters(planStatusEnum, DateTime.Now));
+        }
+
+        /// <summary>
+        /// Gets the statuses.
+        /// </summary>
+        /// <returns>A list of statuses for the selected quarter.</returns>
+        [HttpGet]
+        [Route("Statuses")]
+        public BaseResponse<List<LookupDto>> GetStatuses(QuarterDto quarter)
+        {
+            return
+               _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ICampaignService>().GetStatuses(quarter));
         }
 
         [HttpGet]

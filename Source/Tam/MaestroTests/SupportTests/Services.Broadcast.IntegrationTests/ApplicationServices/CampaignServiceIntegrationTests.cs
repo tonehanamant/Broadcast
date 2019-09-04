@@ -19,6 +19,7 @@ using Common.Services.Repositories;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Clients;
 using Tam.Maestro.Services.ContractInterfaces;
+using Services.Broadcast.Entities.Enums;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
@@ -199,7 +200,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var campaigns = _CampaignService.GetQuarters(new DateTime(2019, 5, 1));
+                var campaigns = _CampaignService.GetQuarters(null, new DateTime(2019, 5, 1));
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(campaigns));
             }
         }
@@ -220,6 +221,58 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var exception = Assert.Throws<InvalidOperationException>(() => _CampaignService.SaveCampaign(campaign, IntegrationTestUser, CreatedDate));
 
                 Assert.That(exception.Message, Is.EqualTo(CampaignValidator.InvalidCampaignNameErrorMessage));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetCampaignsWithFilters()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var campaign = _GetValidCampaign();
+                var campaignId = _CampaignService.SaveCampaign(campaign, IntegrationTestUser, CreatedDate);
+                var plan = _GetNewPlan();
+                plan.CampaignId = campaignId;
+
+                var secondCampaign = _GetValidCampaign();
+                var secondCampaignId = _CampaignService.SaveCampaign(secondCampaign, IntegrationTestUser, CreatedDate);
+                var secondPlan = _GetNewPlan();
+                secondPlan.Status = PlanStatusEnum.ClientApproval;
+                secondPlan.CampaignId = secondCampaignId;
+
+                _PlanService.SavePlan(plan, "integration_test", new DateTime(2019, 01, 01), aggregatePlanSynchronously: true);
+                _PlanService.SavePlan(secondPlan, "integration_test", new DateTime(2019, 01, 01), aggregatePlanSynchronously: true);
+
+                var filter = new CampaignFilterDto
+                {
+                    PlanStatus = PlanStatusEnum.ClientApproval,
+                    Quarter = new QuarterDto
+                    {
+                        Quarter = 2,
+                        Year = 2019
+                    }
+                };
+
+                var campaigns = _CampaignService.GetCampaigns(filter, new DateTime(2019, 02, 01));
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(campaigns, _GetJsonSettings()));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetStatusesTest()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var campaign = _GetValidCampaign();
+                var campaignId = _CampaignService.SaveCampaign(campaign, IntegrationTestUser, CreatedDate);
+                var plan = _GetNewPlan();
+                plan.CampaignId = campaignId;
+                _PlanService.SavePlan(plan, "integration_test", new DateTime(2019, 01, 01), aggregatePlanSynchronously: true);
+                var campaigns = _CampaignService.GetStatuses(new QuarterDto { Quarter = 2, Year = 2019 });
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(campaigns));
             }
         }
 

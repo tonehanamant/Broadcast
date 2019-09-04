@@ -262,6 +262,7 @@
     <Compile Include="Entities\Enums\PlanCurrenciesEnum.cs" />
     <Compile Include="Entities\Enums\PlanStatusEnum.cs" />
     <Compile Include="Entities\InventorySummary\InventorySummaryAggregation.cs" />
+    <Compile Include="Entities\PlanStatusDto.cs" />
     <Compile Include="Entities\QuarterDto.cs" />
     <Compile Include="Entities\Plan\PlanAudienceDto.cs" />
     <Compile Include="Entities\ImpressionsDaypartResultForSingleBook.cs" />

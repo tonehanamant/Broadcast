@@ -9,6 +9,7 @@
     "Name": "Name1"
   },
   "Budget": null,
+  "CampaignStatus": null,
   "CPM": null,
   "FlightActiveDays": null,
   "FlightEndDate": null,
@@ -22,5 +23,6 @@
   "Name": "Updated name of Campaign1",
   "Notes": "Notes for CampaignOne.",
   "Plans": [],
+  "PlanStatuses": null,
   "Rating": null
 }

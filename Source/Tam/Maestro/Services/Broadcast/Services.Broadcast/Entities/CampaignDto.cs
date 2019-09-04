@@ -1,4 +1,5 @@
-﻿using Services.Broadcast.Entities.Plan;
+﻿using Services.Broadcast.Entities.Enums;
+using Services.Broadcast.Entities.Plan;
 using System;
 using System.Collections.Generic;
 
@@ -74,5 +75,9 @@ namespace Services.Broadcast.Entities
         public bool HasPlans { get; set; }
 
         public List<PlanSummaryDto> Plans { get; set; }
+
+        public PlanStatusEnum? CampaignStatus { get; set; }
+
+        public List<PlanStatusDto> PlanStatuses { get; set; }
     }
 }
