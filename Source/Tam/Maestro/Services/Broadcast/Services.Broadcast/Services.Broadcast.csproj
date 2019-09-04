@@ -131,6 +131,9 @@
       <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\EPPlus.4.1.0\lib\net40\EPPlus.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Hangfire.Core, Version=1.7.6.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\Hangfire.Core.1.7.6\lib\net46\Hangfire.Core.dll</HintPath>
+    </Reference>
     <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\log4net.1.2.10\lib\2.0\log4net.dll</HintPath>
       <Private>True</Private>
@@ -168,6 +171,9 @@
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
     </Reference>
     <Reference Include="protobuf-net, Version=2.0.0.480, Culture=neutral, PublicKeyToken=257b51d87d2e4d67, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\protobuf-net.2.0.0.480\lib\net40\protobuf-net.dll</HintPath>
@@ -234,6 +240,7 @@
   <ItemGroup>
     <Compile Include="ApplicationServices\AdvertiserService.cs" />
     <Compile Include="ApplicationServices\AgencyService.cs" />
+    <Compile Include="Attributes\DisableConcurrentExecutionAttribute.cs" />
     <Compile Include="Entities\CampaignFilterDto.cs" />
     <Compile Include="ApplicationServices\Plan\PlanAggregator.cs" />
     <Compile Include="Aggregates\SchedulesAggregate.cs" />
@@ -261,6 +268,7 @@
     <Compile Include="Entities\Enums\PlanGloalBreakdownTypeEnum.cs" />
     <Compile Include="Entities\Enums\PlanCurrenciesEnum.cs" />
     <Compile Include="Entities\Enums\PlanStatusEnum.cs" />
+    <Compile Include="Entities\Enums\QueueEnum.cs" />
     <Compile Include="Entities\InventorySummary\InventorySummaryAggregation.cs" />
     <Compile Include="Entities\PlanStatusDto.cs" />
     <Compile Include="Entities\QuarterDto.cs" />
