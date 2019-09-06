@@ -83,7 +83,7 @@ namespace Services.Broadcast.Validators
         {
             try
             {
-                _TrafficApiClient.GetAdvertiser(campaign.Advertiser.Id);
+                _TrafficApiClient.GetAdvertiser(campaign.AdvertiserId);
             }
             catch (Exception ex)
             {
@@ -95,7 +95,7 @@ namespace Services.Broadcast.Validators
         {
             try
             {
-                _TrafficApiClient.GetAgency(campaign.Agency.Id);
+                _TrafficApiClient.GetAgency(campaign.AgencyId);
             }
             catch (Exception ex)
             {

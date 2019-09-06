@@ -21,8 +21,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             var item = new CampaignDto
             {
                 Name = campaignName,
-                Advertiser = new AdvertiserDto { Id = advertiserId },
-                Agency = new AgencyDto { Id = agencyId }
+                AdvertiserId = advertiserId,
+                AgencyId = agencyId
             };
 
             var trafficApiClientMock = _GetTrafficApiClientMock();
@@ -42,8 +42,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             var item = new CampaignDto
             {
                 Name = campaignName,
-                Advertiser = new AdvertiserDto { Id = advertiserId },
-                Agency = new AgencyDto { Id = agencyId }
+                AdvertiserId = advertiserId,
+                AgencyId = agencyId
             };
 
             var trafficApiClientMock = _GetTrafficApiClientMock();
@@ -89,8 +89,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             var item = new CampaignDto
             {
                 Name = campaignName,
-                Advertiser = new AdvertiserDto { Id = advertiserId },
-                Agency = new AgencyDto { Id = agencyId }
+                AdvertiserId = advertiserId,
+                AgencyId = agencyId
             };
 
             var trafficApiClientMock = _GetTrafficApiClientMock();
@@ -108,8 +108,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             var item = new CampaignDto
             {
                 Name = campaignName,
-                Advertiser = new AdvertiserDto { Id = 1 },
-                Agency = new AgencyDto { Id = 1 }
+                AdvertiserId = 1,
+                AgencyId = 1
             };
 
             var trafficApiClientMock = _GetTrafficApiClientMock();
@@ -136,8 +136,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             var item = new CampaignDto
             {
                 Name = "Campaign1",
-                Advertiser = new AdvertiserDto { Id = 1 },
-                Agency = new AgencyDto { Id = 1 },
+                AdvertiserId = 1,
+                AgencyId = 1,
                 Notes = campaignNotes
             };
 

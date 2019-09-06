@@ -1,14 +1,8 @@
 ﻿{
-  "Advertiser": {
-    "AgencyId": 1,
-    "Id": 1,
-    "Name": "Name1"
-  },
-  "Agency": {
-    "Id": 1,
-    "Name": "Name1"
-  },
+  "AdvertiserId": 1,
+  "AgencyId": 1,
   "Budget": 150.0,
+  "CampaignStatus": null,
   "CPM": 11.0,
   "FlightActiveDays": 44,
   "FlightEndDate": "2019-06-02T00:00:00",
@@ -67,5 +61,6 @@
       "TRP": 6.0
     }
   ],
+  "PlanStatuses": null,
   "Rating": 11.46
 }

@@ -186,7 +186,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var campaign = _GetValidCampaign();
 
                 // Invalid advertiser id.
-                campaign.Advertiser = new AdvertiserDto { Id = 666 };
+                campaign.AdvertiserId = 666;
 
                 var exception = Assert.Throws<InvalidOperationException>(() => _CampaignService.SaveCampaign(campaign, IntegrationTestUser, CreatedDate));
 
@@ -281,8 +281,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             return new CampaignDto
             {
                 Name = "Campaign1",
-                Advertiser = new AdvertiserDto { Id = 1 },
-                Agency = new AgencyDto { Id = 1 },
+                AdvertiserId = 1,
+                AgencyId = 1,
                 Notes = "Notes for CampaignOne."
             };
         }
@@ -292,6 +292,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var jsonResolver = new IgnorableSerializerContractResolver();
 
             jsonResolver.Ignore(typeof(CampaignDto), "Id");
+            jsonResolver.Ignore(typeof(CampaignListItemDto), "Id");
             jsonResolver.Ignore(typeof(PlanSummaryDto), "PlanId");
 
             return new JsonSerializerSettings

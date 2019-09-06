@@ -8,7 +8,7 @@ namespace Services.Broadcast.Entities
     /// <summary>
     /// Dto for Campaign data.
     /// </summary>
-    public class CampaignDto
+    public class CampaignListItemDto
     {
         /// <summary>
         /// Gets or sets the identifier.
@@ -26,9 +26,9 @@ namespace Services.Broadcast.Entities
         /// </value>
         public string Name { get; set; }
 
-        public int AdvertiserId { get; set; }
+        public AdvertiserDto Advertiser { get; set; }
 
-        public int AgencyId { get;set; }
+        public AgencyDto Agency { get; set; }
 
         /// <summary>
         /// Gets or sets the notes.

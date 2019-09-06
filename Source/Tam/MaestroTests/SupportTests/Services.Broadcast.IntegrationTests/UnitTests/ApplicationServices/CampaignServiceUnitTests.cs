@@ -35,9 +35,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             var trafficApiClientMock = new Mock<ITrafficApiClient>();
             var agency = new AgencyDto { Id = 1, Name = "Name1" };
             var advertiser = new AdvertiserDto { Id = 2, Name = "Name2", AgencyId = 1 };
-            var getCampaignsReturn = new List<CampaignDto>
+            var getCampaignsReturn = new List<CampaignListItemDto>
             {
-                new CampaignDto
+                new CampaignListItemDto
                 {
                     Id = 1,
                     Name = "CampaignOne",
@@ -47,7 +47,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     ModifiedBy = "TestUser",
                     ModifiedDate = new DateTime(2017,10,17)
                 },
-                new CampaignDto
+                new CampaignListItemDto
                 {
                     Id = 2,
                     Name = "CampaignTwo",
@@ -57,7 +57,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     ModifiedBy = "TestUser",
                     ModifiedDate = new DateTime(2017,10,17)
                 },
-                new CampaignDto
+                new CampaignListItemDto
                 {
                     Id = 3,
                     Name = "CampaignThree",
@@ -116,9 +116,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             var trafficApiClientMock = new Mock<ITrafficApiClient>();
             var agency = new AgencyDto { Id = 1, Name = "Name1" };
             var advertiser = new AdvertiserDto { Id = 2, Name = "Name2", AgencyId = 1 };
-            var getCampaignsReturn = new List<CampaignDto>
+            var getCampaignsReturn = new List<CampaignListItemDto>
             {
-                new CampaignDto
+                new CampaignListItemDto
                 {
                     Id = 1,
                     Name = "CampaignOne",
@@ -128,7 +128,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     ModifiedBy = "TestUser",
                     ModifiedDate = new DateTime(2017,10,17)
                 },
-                new CampaignDto
+                new CampaignListItemDto
                 {
                     Id = 2,
                     Name = "CampaignTwo",
@@ -138,7 +138,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     ModifiedBy = "TestUser",
                     ModifiedDate = new DateTime(2017,10,17)
                 },
-                new CampaignDto
+                new CampaignListItemDto
                 {
                     Id = 3,
                     Name = "CampaignThree",
@@ -230,8 +230,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             {
                 Id = campaignId,
                 Name = campaignName,
-                Advertiser = new AdvertiserDto { Id = advertiserId },
-                Agency = new AgencyDto { Id = agencyId },
+                AdvertiserId = advertiserId,
+                AgencyId = agencyId,
                 Notes = campaignNotes
             };
             
@@ -259,8 +259,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 It.Is<CampaignDto>(c => c.Id == campaignId &&
                                         c.Name == campaignName &&
                                         c.Notes == campaignNotes &&
-                                        c.Advertiser.Id == advertiserId &&
-                                        campaign.Agency.Id == agencyId)), Times.Once);
+                                        c.AdvertiserId == advertiserId &&
+                                        campaign.AgencyId == agencyId)), Times.Once);
         }
 
         [Test]
@@ -276,8 +276,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             {
                 Id = campaignId,
                 Name = campaignName,
-                Advertiser = new AdvertiserDto { Id = advertiserId },
-                Agency = new AgencyDto { Id = agencyId },
+                AdvertiserId = advertiserId,
+                AgencyId = agencyId,
                 Notes = campaignNotes
             };
 
@@ -305,8 +305,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 It.Is<CampaignDto>(c => c.Id == campaignId &&
                                         c.Name == campaignName &&
                                         c.Notes == campaignNotes &&
-                                        c.Advertiser.Id == advertiserId &&
-                                        campaign.Agency.Id == agencyId),
+                                        c.AdvertiserId == advertiserId &&
+                                        campaign.AgencyId == agencyId),
                 _CreatedBy,
                 _CreatedDate), Times.Once);
         }
@@ -325,8 +325,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             {
                 Id = campaignId,
                 Name = campaignName,
-                Advertiser = new AdvertiserDto { Id = advertiserId },
-                Agency = new AgencyDto { Id = agencyId },
+                AdvertiserId = advertiserId,
+                AgencyId = agencyId,
                 Notes = campaignNotes
             };
 
@@ -356,8 +356,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 It.Is<CampaignDto>(c => c.Id == campaignId &&
                                         c.Name == campaignName &&
                                         c.Notes == campaignNotes &&
-                                        c.Advertiser.Id == advertiserId &&
-                                        campaign.Agency.Id == agencyId)), Times.Once);
+                                        c.AdvertiserId == advertiserId &&
+                                        campaign.AgencyId == agencyId)), Times.Once);
             campaignRepositoryMock.Verify(x => x.CreateCampaign(It.IsAny<CampaignDto>(), _CreatedBy, _CreatedDate), Times.Never);
             Assert.AreEqual(expectedMessage, caught.Message);
         }
@@ -376,8 +376,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             {
                 Id = campaignId,
                 Name = campaignName,
-                Advertiser = new AdvertiserDto { Id = advertiserId },
-                Agency = new AgencyDto { Id = agencyId },
+                AdvertiserId =advertiserId,
+                AgencyId = agencyId,
                 Notes = campaignNotes
             };
 
@@ -408,8 +408,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 It.Is<CampaignDto>(c => c.Id == campaignId &&
                                         c.Name == campaignName &&
                                         c.Notes == campaignNotes &&
-                                        c.Advertiser.Id == advertiserId &&
-                                        campaign.Agency.Id == agencyId),
+                                        c.AdvertiserId == advertiserId &&
+                                        campaign.AgencyId == agencyId),
                 _CreatedBy,
                 _CreatedDate), Times.Once);
             Assert.AreEqual(expectedMessage, caught.Message);

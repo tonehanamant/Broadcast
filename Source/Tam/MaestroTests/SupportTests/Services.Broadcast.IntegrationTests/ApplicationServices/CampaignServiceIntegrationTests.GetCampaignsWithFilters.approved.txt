@@ -10,6 +10,7 @@
       "Name": "Name5"
     },
     "Budget": null,
+    "CampaignStatus": null,
     "CPM": null,
     "FlightActiveDays": null,
     "FlightEndDate": null,
@@ -23,6 +24,7 @@
     "Name": "Test Campaign 1",
     "Notes": null,
     "Plans": null,
+    "PlanStatuses": null,
     "Rating": null
   },
   {
@@ -36,6 +38,7 @@
       "Name": "Name9"
     },
     "Budget": null,
+    "CampaignStatus": null,
     "CPM": null,
     "FlightActiveDays": null,
     "FlightEndDate": null,
@@ -49,6 +52,7 @@
     "Name": "Test Campaign 2",
     "Notes": "This is a test note for a test campaign.",
     "Plans": null,
+    "PlanStatuses": null,
     "Rating": null
   },
   {
@@ -62,6 +66,7 @@
       "Name": "Name1"
     },
     "Budget": null,
+    "CampaignStatus": null,
     "CPM": null,
     "FlightActiveDays": null,
     "FlightEndDate": null,
@@ -75,6 +80,7 @@
     "Name": "Campaign1",
     "Notes": "Notes for CampaignOne.",
     "Plans": null,
+    "PlanStatuses": null,
     "Rating": null
   },
   {
@@ -88,6 +94,7 @@
       "Name": "Name3"
     },
     "Budget": null,
+    "CampaignStatus": null,
     "CPM": null,
     "FlightActiveDays": null,
     "FlightEndDate": null,
@@ -101,6 +108,7 @@
     "Name": "Test Campaign 4",
     "Notes": null,
     "Plans": null,
+    "PlanStatuses": null,
     "Rating": null
   }
 ]

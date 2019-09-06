@@ -1,13 +1,6 @@
 ﻿{
-  "Advertiser": {
-    "AgencyId": 1,
-    "Id": 1,
-    "Name": "Name1"
-  },
-  "Agency": {
-    "Id": 1,
-    "Name": "Name1"
-  },
+  "AdvertiserId": 1,
+  "AgencyId": 1,
   "Budget": null,
   "CampaignStatus": null,
   "CPM": null,

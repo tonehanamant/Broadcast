@@ -258,6 +258,7 @@
     <Compile Include="ApplicationServices\SpotLengthService.cs" />
     <Compile Include="Entities\AgencyDto.cs" />
     <Compile Include="Clients\ConfigurationClientSwitch.cs" />
+    <Compile Include="Entities\CampaignListItemDto.cs" />
     <Compile Include="Entities\CampaignQuarterDto.cs" />
     <Compile Include="Entities\DTO\EnvironmentDto.cs" />
     <Compile Include="Entities\DTO\ProductDto.cs" />

@@ -28,7 +28,7 @@ namespace Services.Broadcast.Repositories
         /// <param name="endDate">The end  date to filter the campaigns by</param>
         /// <param name="planStatus">The plan status to filter the campaigns by</param>
         /// <returns></returns>
-        List<CampaignDto> GetCampaigns(DateTime? startDate, DateTime? endDate, PlanStatusEnum? planStatus);
+        List<CampaignListItemDto> GetCampaigns(DateTime? startDate, DateTime? endDate, PlanStatusEnum? planStatus);
 
         /// <summary>
         /// Gets the campaign.
@@ -93,8 +93,8 @@ namespace Services.Broadcast.Repositories
             var campaign = new campaign
             {
                 name = campaignDto.Name,
-                advertiser_id = campaignDto.Advertiser.Id,
-                agency_id = campaignDto.Agency.Id,
+                advertiser_id = campaignDto.AdvertiserId,
+                agency_id = campaignDto.AgencyId,
                 notes = campaignDto.Notes,
                 created_by = createdBy,
                 created_date = createdDate,
@@ -120,8 +120,8 @@ namespace Services.Broadcast.Repositories
                    var existingCampaign = context.campaigns.Single(x => x.id == campaignDto.Id, "Invalid campaign id");
 
                    existingCampaign.name = campaignDto.Name;
-                   existingCampaign.advertiser_id = campaignDto.Advertiser.Id;
-                   existingCampaign.agency_id = campaignDto.Agency.Id;
+                   existingCampaign.advertiser_id = campaignDto.AdvertiserId;
+                   existingCampaign.agency_id = campaignDto.AgencyId;
                    existingCampaign.notes = campaignDto.Notes;
                    existingCampaign.modified_by = campaignDto.ModifiedBy;
                    existingCampaign.modified_date = campaignDto.ModifiedDate;
@@ -133,7 +133,7 @@ namespace Services.Broadcast.Repositories
         }
 
         /// <inheritdoc />
-        public List<CampaignDto> GetCampaigns(DateTime? startDate, DateTime? endDate, PlanStatusEnum? planStatus)
+        public List<CampaignListItemDto> GetCampaigns(DateTime? startDate, DateTime? endDate, PlanStatusEnum? planStatus)
         {
             return _InReadUncommitedTransaction(
                 context =>
@@ -149,7 +149,7 @@ namespace Services.Broadcast.Repositories
                     return (from c in context.campaigns
                             where campaignsIds.Contains(c.id)
                             orderby c.modified_date
-                            select c).Select(_MapToDto).ToList();
+                            select c).Select(_MapToCampaignListItemDto).ToList();
                 });
         }
 
@@ -172,8 +172,8 @@ namespace Services.Broadcast.Repositories
                     {
                         Id = campaign.id,
                         Name = campaign.name,
-                        Advertiser = new AdvertiserDto { Id = campaign.advertiser_id },
-                        Agency = new AgencyDto { Id = campaign.agency_id },
+                        AdvertiserId = campaign.advertiser_id,
+                        AgencyId =campaign.agency_id,
                         Notes = campaign.notes,
                         ModifiedDate = campaign.modified_date,
                         ModifiedBy = campaign.modified_by,
@@ -344,9 +344,9 @@ namespace Services.Broadcast.Repositories
             return plansCampaignIds;
         }
 
-        private CampaignDto _MapToDto(campaign c)
+        private CampaignListItemDto _MapToCampaignListItemDto(campaign c)
         {
-            return new CampaignDto
+            return new CampaignListItemDto
             {
                 Id = c.id,
                 Name = c.name,

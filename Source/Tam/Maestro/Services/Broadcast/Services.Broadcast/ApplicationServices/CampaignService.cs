@@ -29,7 +29,7 @@ namespace Services.Broadcast.ApplicationServices
         /// Gets all campaigns.
         /// </summary>
         /// <returns></returns>
-        List<CampaignDto> GetCampaigns(CampaignFilterDto filter, DateTime currentDate);
+        List<CampaignListItemDto> GetCampaigns(CampaignFilterDto filter, DateTime currentDate);
 
         /// <summary>
         /// Gets the campaign.
@@ -99,7 +99,7 @@ namespace Services.Broadcast.ApplicationServices
         }
 
         /// <inheritdoc />
-        public List<CampaignDto> GetCampaigns(CampaignFilterDto filter, DateTime currentDate)
+        public List<CampaignListItemDto> GetCampaigns(CampaignFilterDto filter, DateTime currentDate)
         {
             if (!_IsFilterValid(filter))
                 filter = _GetDefaultFilter(currentDate);
@@ -112,7 +112,7 @@ namespace Services.Broadcast.ApplicationServices
             return campaigns;
         }
 
-        private void _SetAgencies(List<CampaignDto> campaigns)
+        private void _SetAgencies(List<CampaignListItemDto> campaigns)
         {
             const int cachingDurationInSeconds = 300;
 
@@ -128,7 +128,7 @@ namespace Services.Broadcast.ApplicationServices
             }
         }
 
-        private void _SetAdvertisers(List<CampaignDto> campaigns)
+        private void _SetAdvertisers(List<CampaignListItemDto> campaigns)
         {
             const int cachingDurationInSeconds = 300;
 
@@ -152,9 +152,6 @@ namespace Services.Broadcast.ApplicationServices
         public CampaignDto GetCampaignById(int campaignId)
         {
             var campaign = _CampaignRepository.GetCampaign(campaignId);
-
-            campaign.Agency = _TrafficApiClient.GetAgency(campaign.Agency.Id);
-            campaign.Advertiser = _TrafficApiClient.GetAdvertiser(campaign.Advertiser.Id);
 
             if (campaign.HasPlans)
             {
