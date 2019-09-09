@@ -73,7 +73,7 @@ namespace Services.Broadcast.ApplicationServices
         /// Processes the campaign aggregation.
         /// </summary>
         /// <param name="campaignId">The campaign identifier.</param>
-        [Queue("campaign_aggregation")]
+        [Queue("campaignaggregation")]
         void ProcessCampaignAggregation(int campaignId);
     }
 
