@@ -99,17 +99,17 @@ BEGIN
 		[campaign_status] [INT],
 		[components_modified] [DATETIME],
 		[last_aggregated] [DATETIME]
-		CONSTRAINT [PK_campaign_summary] PRIMARY KEY CLUSTERED
+		CONSTRAINT [PK_campaign_summaries] PRIMARY KEY CLUSTERED
 		(
 			[id] ASC
 		)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
 	) ON [PRIMARY]
 
-	ALTER TABLE [dbo].[campaign_summary] WITH CHECK ADD CONSTRAINT [FK_campaign_summary_campaign] FOREIGN KEY ([campaign_id])
+	ALTER TABLE [dbo].[campaign_summaries] WITH CHECK ADD CONSTRAINT [FK_campaign_summaries_campaign] FOREIGN KEY ([campaign_id])
 		REFERENCES [dbo].[campaigns] (id)
 		ON DELETE CASCADE
 
-	CREATE NONCLUSTERED INDEX [IX_campaign_summary_campaign_id] ON [dbo].[campaign_summary] ([campaign_id] ASC)
+	CREATE NONCLUSTERED INDEX [IX_campaign_summaries_campaign_id] ON [dbo].[campaign_summaries] ([campaign_id] ASC)
 		INCLUDE ([id])
 		WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 END
