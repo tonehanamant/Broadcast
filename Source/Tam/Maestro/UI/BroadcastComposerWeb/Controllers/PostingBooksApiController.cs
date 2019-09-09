@@ -46,15 +46,16 @@ namespace BroadcastComposerWeb.Controllers
         }
 
         /// <summary>
-        /// Gets the hut books avaible based on share book id.
+        /// Gets the hut books avaible either based on share book id or by the start date of the flight.
         /// </summary>
         /// <param name="startDate">The start date of the flight.</param>
+        /// <param name="shareBookId">Id of selected share book</param>
         /// <returns>List of LookupDto objects</returns>
         [HttpGet]
         [Route("HUT")]
-        public BaseResponse<List<LookupDto>> GetHutBooks(DateTime startDate)
+        public BaseResponse<List<LookupDto>> GetHutBooks(DateTime? startDate = null, int? shareBookId = null)
         {
-            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPostingBookService>().GetHUTBooks(startDate));
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPostingBookService>().GetHUTBooks(startDate, shareBookId));
         }
     }
 }

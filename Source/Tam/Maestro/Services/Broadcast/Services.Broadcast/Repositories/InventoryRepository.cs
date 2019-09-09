@@ -1100,6 +1100,8 @@ namespace Services.Broadcast.Repositories
                              .Include("inventory_file_proprietary_header.share_media_months")
                              .Include("inventory_file_proprietary_header.hut_media_months")
                              .Include("station_inventory_manifest.station_inventory_manifest_weeks")
+                             .Include("station_inventory_manifest.station_inventory_manifest_dayparts.daypart_codes")
+                             .Include("inventory_sources")
                              .Include(f => f.inventory_file_ratings_jobs)
                              .Where(x => x.inventory_source_id == inventorySourceId)
                              .OrderByDescending(x => x.id);
@@ -1120,7 +1122,14 @@ namespace Services.Broadcast.Repositories
                         if(file.inventory_file_proprietary_header.Any()) //Proprietary Inventory file
                         {
                             var header = file.inventory_file_proprietary_header.SingleOrDefault();
-                            fileHistory.DaypartCode = header.daypart_codes.code;
+                            if(file.inventory_sources.inventory_source_type == (int)InventorySourceTypeEnum.Diginet)
+                            {
+                                fileHistory.DaypartCodes = _GetDistinctDaypartCodesFromManifests(file.station_inventory_manifest);
+                            }
+                            else {
+                                fileHistory.DaypartCodes = new List<String>() { header.daypart_codes.code };
+                            }
+                            
                             fileHistory.EffectiveDate = header.effective_date;
                             fileHistory.EndDate = header.end_date;
 
@@ -1166,5 +1175,17 @@ namespace Services.Broadcast.Repositories
                 });
         }
 
+        private List<string> _GetDistinctDaypartCodesFromManifests(ICollection<station_inventory_manifest> manifests)
+        {
+            var result = new List<string>();
+
+            if(manifests != null && manifests.Count > 0)
+            {
+                result = manifests.SelectMany(m => m.station_inventory_manifest_dayparts.Select(d => d.daypart_codes.code)).Distinct().ToList();
+            }
+
+            return result;
+
+        }
     }
 }

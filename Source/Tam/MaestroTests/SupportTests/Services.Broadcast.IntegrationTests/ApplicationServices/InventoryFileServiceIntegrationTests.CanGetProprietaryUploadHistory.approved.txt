@@ -1,6 +1,8 @@
 ﻿[
   {
-    "DaypartCode": "EMN",
+    "DaypartCodes": [
+      "EMN"
+    ],
     "EffectiveDate": "2019-04-10T00:00:00",
     "EndDate": "2019-04-25T00:00:00",
     "FileLoadStatus": 2,
@@ -18,7 +20,9 @@
     "Username": "IntegrationTestUser"
   },
   {
-    "DaypartCode": "EMN",
+    "DaypartCodes": [
+      "EMN"
+    ],
     "EffectiveDate": "2019-04-01T00:00:00",
     "EndDate": "2019-06-30T00:00:00",
     "FileLoadStatus": 2,

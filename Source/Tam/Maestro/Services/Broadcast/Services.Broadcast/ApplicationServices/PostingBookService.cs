@@ -32,7 +32,7 @@ namespace Services.Broadcast.ApplicationServices
         /// </summary>
         /// <param name="startDate">The start date of the flight.</param>
         /// <returns>List of LookupDto objects</returns>
-        List<LookupDto> GetHUTBooks(DateTime startDate);
+        List<LookupDto> GetHUTBooks(DateTime? startDate, int? shareBookId);
     }
 
     public class PostingBookService : IPostingBookService
@@ -66,15 +66,33 @@ namespace Services.Broadcast.ApplicationServices
         }
 
         ///<inheritdoc/>
-        public List<LookupDto> GetHUTBooks(DateTime startDate)
+        public List<LookupDto> GetHUTBooks(DateTime? flightStartDate, int? shareBookId)
         {
-            var currentQuarter = _QuartersEngine.GetQuarterRangeByDate(startDate);
-            var lastYearQuarter = _QuartersEngine.GetQuarterDetail(currentQuarter.Quarter, startDate.Year - 1);
-           
+
+            if(!flightStartDate.HasValue && !shareBookId.HasValue)
+            {
+                return _ToLookupDto(_PostingBooks);
+            }
+
+            DateTime shareBookDate;
+
+            if (shareBookId.HasValue)
+            {
+                shareBookDate = _PostingBooks.Where(b => b.Id == shareBookId).Select(b => b.StartDate).Single();
+            }
+            else //shareBookStartDate.HasValue
+            {
+                shareBookDate = flightStartDate.Value;
+            }
+
+            var currentQuarter = _QuartersEngine.GetQuarterRangeByDate(shareBookDate);
+            var lastYearQuarter = _QuartersEngine.GetQuarterDetail(currentQuarter.Quarter, shareBookDate.Year - 1);
+
             //HUT book must be last in the flight quarter but from last year
             var hutBooks = _PostingBooks
                 .Where(x => x.EndDate <= lastYearQuarter.EndDate);
             return _ToLookupDto(hutBooks);
+
         }
 
         ///<inheritdoc/>

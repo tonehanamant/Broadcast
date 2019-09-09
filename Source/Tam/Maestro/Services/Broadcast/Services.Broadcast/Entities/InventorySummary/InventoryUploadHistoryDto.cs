@@ -14,7 +14,7 @@ namespace Services.Broadcast.Entities.InventorySummary
         public DateTime UploadDateTime { get; set; }
         public String Username { get; set; }
         public String Filename { get; set; }
-        public String DaypartCode { get; set; }
+        public List<string> DaypartCodes { get; set; }
         public DateTime? EffectiveDate { get; set; }
         public DateTime? EndDate { get; set; }
         public MediaMonthDto HutBook { get; set; }

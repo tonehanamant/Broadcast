@@ -285,7 +285,8 @@
     <Compile Include="Controllers\RatesController.cs" />
     <Compile Include="Controllers\PlanningController.cs" />
     <Compile Include="Controllers\TrackerController.cs" />
-    <Compile Include="Filters\HangfireAuthorizationFilter.cs" />
+    <Compile Include="Controllers\ViewControllerBase.cs" />
+	<Compile Include="Filters\HangfireAuthorizationFilter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

@@ -518,6 +518,62 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void Calculator_TestCase8()
+        {
+            var result = _PlanService.Calculate(new PlanDeliveryBudget
+            {
+                CPM = 13.45m,
+                DeliveryImpressions = 13.456d,
+                AudienceId = 31,
+                MediaMonthId = 437
+            });
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void Calculator_TestCase9()
+        {
+            var result = _PlanService.Calculate(new PlanDeliveryBudget
+            {
+                Budget = 3000,
+                DeliveryImpressions = 3000d,
+                AudienceId = 31,
+                MediaMonthId = 437
+            });
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void Calculator_TestCase10()
+        {
+            var result = _PlanService.Calculate(new PlanDeliveryBudget
+            {
+                CPM = 1,
+                DeliveryImpressions = 3000d,
+                AudienceId = 31,
+                MediaMonthId = 437
+            });
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void Calculator_TestCase11()
+        {
+            var result = _PlanService.Calculate(new PlanDeliveryBudget
+            {
+                CPM = 1,
+                Budget = 3000,
+                AudienceId = 31,
+                MediaMonthId = 437
+            });
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
         public void Calculator_InvalidObject()
         {
             using (new TransactionScopeWrapper())

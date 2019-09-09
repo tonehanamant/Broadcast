@@ -22,9 +22,18 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void GetHUTBooks()
+        public void GetHUTBooksByFlightStartDate()
         {
-            var shareBooks = _PostingBookService.GetHUTBooks(new DateTime(2019, 12, 31));
+            var shareBooks = _PostingBookService.GetHUTBooks(new DateTime(2019, 12, 31), null);
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(shareBooks));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetHUTBooksByShareBookId()
+        {
+            var shareBooks = _PostingBookService.GetHUTBooks(null, 437);
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(shareBooks));
         }

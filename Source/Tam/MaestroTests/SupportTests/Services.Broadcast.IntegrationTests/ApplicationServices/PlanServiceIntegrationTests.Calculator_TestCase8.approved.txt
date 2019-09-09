@@ -1,0 +1,9 @@
+﻿{
+  "AudienceId": 31,
+  "Budget": 180.98320,
+  "CPM": 13.45,
+  "CPP": 178331633.37499989700042757471,
+  "DeliveryImpressions": 13.456,
+  "DeliveryRatingPoints": 1.0148687396331093E-06,
+  "MediaMonthId": 437
+}

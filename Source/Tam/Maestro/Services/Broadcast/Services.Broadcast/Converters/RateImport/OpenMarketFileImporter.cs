@@ -318,12 +318,10 @@ namespace Services.Broadcast.Converters.RateImport
                     manifestAudience.Audience = audience;
                     manifestAudience.IsReference = true;
                 }
-
-                if (demoValue.Value <= 0)
+                if (demoValue.Value < 0)
                 {
-                    throw new Exception($"Demo value must be more than 0. Audience: '{audience.AudienceString}', demo type: '{demo.DemoType}'");
+                    throw new Exception($"Demo value cannot be negative. Audience: '{audience.AudienceString}', demo type: '{demo.DemoType}'");
                 }
-
                 switch (demo.DemoType)
                 {
                     case "Impression":

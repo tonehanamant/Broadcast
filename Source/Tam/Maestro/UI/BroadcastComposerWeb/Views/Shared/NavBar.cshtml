@@ -14,18 +14,22 @@
         </div>
         <div id="broadcast_navbar_navs" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Inventory" ? "active" : "")"><a href="/broadcastreact/inventory">Inventory</a></li>
-                <li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Campaigns" ? "active" : "")"><a href="/broadcastreact/campaigns">Campaigns</a></li>
-                <li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Planning" ? "active" : "")"><a href="/broadcastreact/planning">Planning</a></li>
-                <li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Traffic" ? "active" : "")">@Html.ActionLink("Traffic", "Index", "Traffic")</li>
-                <li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Post" ? "active" : "")"><a href="/broadcastreact/tracker">Tracker</a></li>
-                <li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Home" ? "active" : "")">@Html.ActionLink("Tracker Pre Posting", "TrackerPrePosting", "Home")</li>
-                <!--<li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Post" ? "active" : "")">@Html.ActionLink("Post", "Index", "Post")</li>-->
-                <!--<li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "LegacyPost" ? "active" : "")">@Html.ActionLink("Post", "Index", "PostPrePosting")</li>-->
-                <li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Post" ? "active" : "")"><a href="/broadcastreact/post-pre-posting">Post Pre Posting</a></li>
-                <li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Post" ? "active" : "")"><a href="/broadcastreact/post">Post</a></li>
+                @* We don't need to track active class for React links, as they have their own tracking for the active tab. *@
+                <li><a href="/broadcastreact/inventory">Inventory</a></li>
+                @* Campaigns link is displayed according to system parameter. *@
+                @if (ViewBag.DisplayCampaignLink != null && ViewBag.DisplayCampaignLink)
+                {
+                <li class="@(ViewContext.RouteData.Values["Controller"].ToString().ToLowerInvariant() == "campaigns" ? "active" : "")"><a href="/broadcastreact/campaigns">Campaigns</a></li>
+                }
+                <li><a href="/broadcastreact/planning">Planning</a></li>
+                @* Comparing using lowercase because in some cases the framework sends the controller name in lowercase. *@
+                <li class="@(ViewContext.RouteData.Values["Controller"].ToString().ToLowerInvariant() == "traffic" ? "active" : "")">@Html.ActionLink("Traffic", "Index", "Traffic")</li>
+                <li><a href="/broadcastreact/tracker">Tracker</a></li>
+                <li><a href="/broadcastreact/post">Post</a></li>
+                @* Tracker Pre Posting controller is called HomeController. *@
+                <li class="@(ViewContext.RouteData.Values["Controller"].ToString().ToLowerInvariant() == "home" ? "active" : "")">@Html.ActionLink("Tracker Pre Posting", "TrackerPrePosting", "Home")</li>
+                <li><a href="/broadcastreact/post-pre-posting">Post Pre Posting</a></li>
             </ul>
-
             <ul class="nav navbar-nav navbar-right">
                 <li id="app_title_info">
                     <a href="#" style="pointer-events: none; cursor: default;">
@@ -44,11 +48,9 @@
                             <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                         </button>
                     </span>
-
                     <input type="number" class="form-control" placeholder="Search Proposal ID" data-bind="value: proposalSearchId, valueUpdate: 'afterkeydown', event: { keypress: proposalSearchKeypress }" />
                 </div>
             </form>
-           
         </div>
     </div>
 </nav>

@@ -2,6 +2,7 @@
 using Common.Services.WebComponents;
 using Microsoft.Practices.EnterpriseLibrary.SemanticLogging;
 using Microsoft.Practices.Unity;
+using Services.Broadcast.ApplicationServices;
 using System;
 using System.Configuration;
 using System.Web.Configuration;
@@ -36,6 +37,10 @@ namespace BroadcastComposerWeb
             DependencyResolver.SetResolver(new UnityWebMvcResolver(_container));
 
             AreaRegistration.RegisterAllAreas();
+
+            // Initialize BroadcastApplicationServiceFactory UnityContainer instance so it's available
+            // on method OnActionExecuting for the ViewControllerBase.
+            var instance = BroadcastApplicationServiceFactory.Instance;
 
             //Enable CORS
             string[] allowedOrigins = { "http://localhost", "https://localhost", "http://localhost:9015", "https://localhost:9015", "http://localhost:9016", "https://localhost:9016", "http://localhost:9017", "https://localhost:9017", "http://localhost:9018", "https://localhost:9018", "http://localhost:9019", "https://localhost:9019", "http://localhost:9020", "https://localhost:9020" };

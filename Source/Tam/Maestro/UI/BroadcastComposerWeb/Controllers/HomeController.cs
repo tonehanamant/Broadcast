@@ -1,8 +1,9 @@
 ﻿using System.Web.Mvc;
+using Services.Broadcast.ApplicationServices;
 
 namespace BroadcastComposerWeb.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : ViewControllerBase
     {
         public ActionResult Index()
         {

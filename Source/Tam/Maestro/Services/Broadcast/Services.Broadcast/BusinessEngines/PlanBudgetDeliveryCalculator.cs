@@ -107,7 +107,7 @@ namespace Services.Broadcast.BusinessEngines
 
         private static decimal _CalculateBudgetByCPM(double? deliveryImpressions, decimal? CPM)
         {
-            return CPM.Value == 0 ? 0 : (decimal)deliveryImpressions.Value / CPM.Value;
+            return (decimal)deliveryImpressions.Value * CPM.Value;
         }
 
         private static decimal _CalculateCPP(decimal? budget, double? deliveryRatingPoints)
@@ -117,7 +117,7 @@ namespace Services.Broadcast.BusinessEngines
 
         private double? _CalculateDeliveryImpressionsByCPM(decimal? budget, decimal? CPM)
         {
-            return (double)(CPM.Value * budget.Value);
+            return CPM.Value == 0 ? 0 : (double)(budget.Value / CPM.Value);
         }
 
         private static double? _CalculateDeliveryImpressionsByUniverse(double? deliveryRatingPoints, double universe)
