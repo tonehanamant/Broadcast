@@ -1,12 +1,13 @@
 ﻿using Common.Services.ApplicationServices;
 using Common.Services.Extensions;
 using Common.Services.Repositories;
+using Hangfire;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Cache;
 using Services.Broadcast.Clients;
 using Services.Broadcast.Entities;
-using Services.Broadcast.Helpers;
 using Services.Broadcast.Entities.Enums;
+using Services.Broadcast.Helpers;
 using Services.Broadcast.Repositories;
 using Services.Broadcast.Validators;
 using System;
@@ -60,6 +61,20 @@ namespace Services.Broadcast.ApplicationServices
         /// <param name="quarter">The quarter</param>
         /// <returns></returns>
         List<LookupDto> GetStatuses(QuarterDto quarter);
+
+        /// <summary>
+        /// Triggers the campaign aggregation job.
+        /// </summary>
+        /// <param name="campaignId">The campaign identifier.</param>
+        /// <param name="queuedBy">The queued by.</param>
+        string TriggerCampaignAggregationJob(int campaignId, string queuedBy);
+
+        /// <summary>
+        /// Processes the campaign aggregation.
+        /// </summary>
+        /// <param name="campaignId">The campaign identifier.</param>
+        [Queue("campaign_aggregation")]
+        void ProcessCampaignAggregation(int campaignId);
     }
 
     /// <summary>
@@ -74,21 +89,30 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IQuarterCalculationEngine _QuarterCalculationEngine;
         private readonly ITrafficApiClient _TrafficApiClient;
         private readonly ILockingManagerApplicationService _LockingManagerApplicationService;
+        private readonly ICampaignAggregator _CampaignAggregator;
+        private readonly ICampaignSummaryRepository _CampaignSummaryRepository;
+        private readonly ICampaignAggregationJobTrigger _CampaignAggregationJobTrigger;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CampaignService"/> class.
         /// </summary>
         /// <param name="dataRepositoryFactory">The data repository factory.</param>
-        /// <param name="campaignValidator">The class which contains validation logic for campaigns</param>
-        /// <param name="mediaMonthAndWeekAggregateCache">The class which contains cached in memory media monts and media weeks</param>
-        /// <param name="quarterCalculationEngine">The engine that does quarter calculations</param>
+        /// <param name="campaignValidator">The campaign validator.</param>
+        /// <param name="mediaMonthAndWeekAggregateCache">The media month and week aggregate cache.</param>
+        /// <param name="quarterCalculationEngine">The quarter calculation engine.</param>
+        /// <param name="trafficApiClient">The traffic API client.</param>
+        /// <param name="lockingManagerApplicationService">The locking manager application service.</param>
+        /// <param name="campaignAggregator">The campaign aggregator.</param>
+        /// <param name="campaignAggregationJobTrigger">The campaign aggregation job trigger.</param>
         public CampaignService(
             IDataRepositoryFactory dataRepositoryFactory,
             ICampaignValidator campaignValidator,
             IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
             IQuarterCalculationEngine quarterCalculationEngine,
             ITrafficApiClient trafficApiClient,
-            ILockingManagerApplicationService lockingManagerApplicationService)
+            ILockingManagerApplicationService lockingManagerApplicationService,
+            ICampaignAggregator campaignAggregator,
+            ICampaignAggregationJobTrigger campaignAggregationJobTrigger)
         {
             _CampaignRepository = dataRepositoryFactory.GetDataRepository<ICampaignRepository>();
             _CampaignValidator = campaignValidator;
@@ -96,6 +120,9 @@ namespace Services.Broadcast.ApplicationServices
             _QuarterCalculationEngine = quarterCalculationEngine;
             _TrafficApiClient = trafficApiClient;
             _LockingManagerApplicationService = lockingManagerApplicationService;
+            _CampaignAggregator = campaignAggregator;
+            _CampaignSummaryRepository = dataRepositoryFactory.GetDataRepository<ICampaignSummaryRepository>();
+            _CampaignAggregationJobTrigger = campaignAggregationJobTrigger;
         }
 
         /// <inheritdoc />
@@ -152,27 +179,54 @@ namespace Services.Broadcast.ApplicationServices
         public CampaignDto GetCampaignById(int campaignId)
         {
             var campaign = _CampaignRepository.GetCampaign(campaignId);
+            var summary = _CampaignSummaryRepository.GetSummaryForCampaign(campaignId);
 
-            if (campaign.HasPlans)
-            {
-                _SetCampaignStubData(campaign);
-                _SetPlansStubData(campaign);
-            }
+            _HydrateCampaignWithSummary(campaign, summary);
+
+            _SetPlansStubData(campaign);
 
             return campaign;
         }
 
-        private void _SetCampaignStubData(CampaignDto campaign)
+        private void _HydrateCampaignWithSummary(CampaignDto campaign, CampaignSummaryDto summary)
         {
-            campaign.FlightStartDate = new DateTime(2019, 4, 15);
-            campaign.FlightEndDate = new DateTime(2019, 6, 2);
-            campaign.FlightHiatusDays = 5;
-            campaign.FlightActiveDays = 44;
-            campaign.HasHiatus = true;
-            campaign.Budget = 150;
-            campaign.CPM = 11;
-            campaign.Impressions = 13637;
-            campaign.Rating = 11.46;
+            if (summary == null)
+            {
+                return;
+            }
+            campaign.FlightStartDate = summary.FlightStartDate;
+            campaign.FlightEndDate = summary.FlightEndDate;
+            campaign.FlightHiatusDays = summary.FlightHiatusDays;
+            campaign.FlightActiveDays = summary.FlightActiveDays;
+            campaign.HasHiatus = campaign.FlightHiatusDays > 0;
+
+            campaign.Budget = summary.Budget;
+            campaign.CPM = summary.CPM;
+            campaign.Impressions = summary.Impressions;
+            campaign.Rating = summary.Rating;
+
+            campaign.CampaignStatus = summary.CampaignStatus;
+            campaign.PlanStatuses = _MapToPlanStatuses(summary);
+        }
+
+        private List<PlansStatusCountDto> _MapToPlanStatuses(CampaignSummaryDto summary)
+        {
+            var statuses = new List<PlansStatusCountDto>();
+            EvaluateAndAddPlanStatus(statuses, PlanStatusEnum.Working, summary.PlanStatusCountWorking);
+            EvaluateAndAddPlanStatus(statuses, PlanStatusEnum.Reserved, summary.PlanStatusCountReserved);
+            EvaluateAndAddPlanStatus(statuses, PlanStatusEnum.ClientApproval, summary.PlanStatusCountClientApproval);
+            EvaluateAndAddPlanStatus(statuses, PlanStatusEnum.Contracted, summary.PlanStatusCountContracted);
+            EvaluateAndAddPlanStatus(statuses, PlanStatusEnum.Live, summary.PlanStatusCountLive);
+            EvaluateAndAddPlanStatus(statuses, PlanStatusEnum.Complete, summary.PlanStatusCountComplete);
+            return statuses;
+        }
+
+        private void EvaluateAndAddPlanStatus(List<PlansStatusCountDto> planStatuses, PlanStatusEnum status, int? candidate)
+        {
+            if (candidate > 0)
+            {
+                planStatuses.Add(new PlansStatusCountDto { PlanStatus = status, Count = candidate.Value });
+            }
         }
 
         private void _SetPlansStubData(CampaignDto campaign)
@@ -257,7 +311,39 @@ namespace Services.Broadcast.ApplicationServices
             var statuses = _CampaignRepository.GetCampaignsPlanStatuses(startDate, endDate);
 
             return statuses.Select(x => new LookupDto { Id = (int)x, Display = x.Description() }).OrderBy(x => x.Id).ToList(); ;
-        }                
+        }
+
+        /// <inheritdoc />
+        public string TriggerCampaignAggregationJob(int campaignId, string queuedBy)
+        {
+            return _CampaignAggregationJobTrigger.TriggerJob(campaignId, queuedBy);
+        }
+
+        /// <summary>
+        /// Processes the campaign aggregation.
+        /// </summary>
+        /// <remarks>
+        /// Called by an external process.
+        /// Let the exceptions bubble out so they are recorded by the external processor.
+        /// </remarks>
+        /// <param name="campaignId">The campaign identifier.</param>
+        public void ProcessCampaignAggregation(int campaignId)
+        {
+            try
+            {
+                var summary = _CampaignAggregator.Aggregate(campaignId);
+                summary.ProcessingStatus = CampaignAggregationProcessingStatusEnum.Completed;
+                summary.LastAggregated = DateTime.Now;
+                summary.ProcessingErrorMessage = null;
+                _CampaignSummaryRepository.SaveSummary(summary);
+            }
+            catch (Exception e)
+            {
+                _CampaignSummaryRepository.SetSummaryProcessingStatusToError(campaignId, $"Exception caught during processing : {e.Message}");
+                // re-throw so that the caller can track the failure.
+                throw e;
+            }
+        }
 
         private List<DateRange> _ValidateDateRanges(List<DateRange> dateRanges)
         {

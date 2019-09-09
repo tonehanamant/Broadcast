@@ -1,6 +1,8 @@
 ﻿using Common.Services.Repositories;
+using Microsoft.Practices.Unity;
 using Moq;
 using NUnit.Framework;
+using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.ApplicationServices.Plan;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities.Enums;
@@ -10,7 +12,6 @@ using Services.Broadcast.Validators;
 using System;
 using System.Collections.Generic;
 using System.Threading;
-using Tam.Maestro.Data.Entities.DataTransferObjects;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plans
 {
@@ -29,7 +30,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var planAggregator = new Mock<IPlanAggregator>();
 
             var tc = new PlanService(broadcastDataRepositoryFactory.Object, planValidator.Object,
-                planBudgetDeliveryCalculator.Object, mediaMonthAndWeekAggregateCache.Object, planAggregator.Object);
+                planBudgetDeliveryCalculator.Object, mediaMonthAndWeekAggregateCache.Object, planAggregator.Object,
+                IntegrationTestApplicationServiceFactory.Instance.Resolve<ICampaignAggregationJobTrigger>());
 
             Assert.IsNotNull(tc);
         }
@@ -70,9 +72,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             planAggregator.Setup(s => s.Aggregate(It.IsAny<PlanDto>()))
                 .Callback(() => aggregateCallCount++)
                 .Returns(aggregateReturn);
+            var campaignAggJobTrigger = new Mock<ICampaignAggregationJobTrigger>();
             var tc = new PlanService(broadcastDataRepositoryFactory.Object, planValidator.Object,
-                planBudgetDeliveryCalculator.Object, mediaMonthAndWeekAggregateCache.Object, planAggregator.Object);
+                planBudgetDeliveryCalculator.Object, mediaMonthAndWeekAggregateCache.Object, planAggregator.Object,
+                campaignAggJobTrigger.Object);
+
             var plan = _GetNewPlan();
+            var campaignId = plan.CampaignId;
             var modifiedWho = "ModificationUser";
             var modifiedWhen = new DateTime(2019,08,12, 12, 31, 27);
             var currentThreadId = Thread.CurrentThread.ManagedThreadId;
@@ -94,6 +100,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             Assert.IsTrue(setInProgressTime <= summarySavedTime, "Aggregation started should be set before summary saved");
             Assert.AreEqual(PlanAggregationProcessingStatusEnum.InProgress, setStatusCalls[0].Item2);
             Assert.AreEqual(PlanAggregationProcessingStatusEnum.Idle, saveSummaryCalls[0].Item2.ProcessingStatus);
+            campaignAggJobTrigger.Verify(s => s.TriggerJob(campaignId, modifiedWho), Times.Once);
         }
         
         [Test]
@@ -111,6 +118,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IPlanRepository>())
                 .Returns(planRepository.Object);
             var planSummaryRepo = new Mock<IPlanSummaryRepository>();
+            
             var setStatusCalls = new List<Tuple<int, PlanAggregationProcessingStatusEnum, int, DateTime>>();
             planSummaryRepo.Setup(s =>
                     s.SetProcessingStatusForPlanSummary(It.IsAny<int>(), It.IsAny<PlanAggregationProcessingStatusEnum>()))
@@ -131,9 +139,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     throw new Exception("Test exception thrown during aggregation.");
                 })
                 .Returns(aggregateReturn);
+            var campaignAggJobTrigger = new Mock<ICampaignAggregationJobTrigger>();
             var tc = new PlanService(broadcastDataRepositoryFactory.Object, planValidator.Object,
-                planBudgetDeliveryCalculator.Object, mediaMonthAndWeekAggregateCache.Object, planAggregator.Object);
+                planBudgetDeliveryCalculator.Object, mediaMonthAndWeekAggregateCache.Object, planAggregator.Object,
+                campaignAggJobTrigger.Object);
             var plan = _GetNewPlan();
+            var campaignId = plan.CampaignId;
             var modifiedWho = "ModificationUser";
             var modifiedWhen = new DateTime(2019, 08, 12, 12, 31, 27);
             var currentThreadId = Thread.CurrentThread.ManagedThreadId;
@@ -155,11 +166,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             Assert.AreNotEqual(currentThreadId, setStatusCalls[1].Item3, "PlanSave and PlanAggregate should be on separate threads.");
             Assert.AreEqual(PlanAggregationProcessingStatusEnum.InProgress, setStatusCalls[0].Item2);
             Assert.AreEqual(PlanAggregationProcessingStatusEnum.Error, setStatusCalls[1].Item2);
+            campaignAggJobTrigger.Verify(s => s.TriggerJob(campaignId, modifiedWho), Times.Once);
         }
         
         #endregion // #region Dispatch Aggregation
-
-
+        
         #region Helpers
 
         private static PlanDto _GetNewPlan()

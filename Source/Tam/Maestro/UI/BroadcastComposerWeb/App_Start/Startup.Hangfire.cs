@@ -24,15 +24,15 @@ namespace BroadcastComposerWeb
 
             BroadcastApplicationServiceFactory.Instance.Resolve<ISMSClient>();
 
-            //Sets Hangfire to use the Ioc container
-            GlobalConfiguration.Configuration.UseActivator(new HangfireJobActivator(container));
-
             //Set Hangfire to use SQL Server for job persistence
             var connectionString = GetConnectionString();
             GlobalConfiguration.Configuration.UseSqlServerStorage(@connectionString, new SqlServerStorageOptions
             {
                 QueuePollInterval = TimeSpan.FromMilliseconds(double.Parse(ConfigurationManager.AppSettings["HangfirePollingInterval"]))
             });
+
+            //Sets Hangfire to use the Ioc container
+            GlobalConfiguration.Configuration.UseActivator(new HangfireJobActivator(container));
 
             //Configure Hangfire Dashboard and Dashboard Authorization
             app.UseHangfireDashboard("/jobs", new DashboardOptions()

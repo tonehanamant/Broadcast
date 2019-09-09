@@ -8,9 +8,11 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Runtime.Caching;
 using System.Threading;
+using System.Transactions;
 using ConfigurationService.Client;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
+using IsolationLevel = System.Data.IsolationLevel;
 
 namespace Common.Services.Repositories
 {
@@ -117,6 +119,23 @@ namespace Common.Services.Repositories
                 context.Database.CommandTimeout = _Timeout;
                 pFunc(context, lTransaction);
                 lTransaction.Complete();
+            }
+        }
+
+        protected T _InReadCommittedTransaction<T>(Func<CT, T> pFunc)
+        {
+            using (var context = CreateDBContext(false))
+            using (var trx = _TransactionHelper.BeginTransaction(context, TransactionScopeOption.RequiresNew,
+                System.Data.IsolationLevel.ReadCommitted))
+            {
+                var trx2 = context.Database.BeginTransaction(IsolationLevel.ReadCommitted);
+
+                context.Database.CommandTimeout = _Timeout;
+                var ret = pFunc(context);
+
+                trx2.Commit();
+                trx.Complete();
+                return ret;
             }
         }
 

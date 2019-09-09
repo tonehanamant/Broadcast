@@ -1,0 +1,22 @@
+﻿{
+  "AdvertiserId": 0,
+  "AgencyId": 0,
+  "Budget": null,
+  "CampaignStatus": null,
+  "CPM": null,
+  "FlightActiveDays": null,
+  "FlightEndDate": null,
+  "FlightHiatusDays": null,
+  "FlightStartDate": null,
+  "HasHiatus": false,
+  "HasPlans": false,
+  "Id": 3,
+  "Impressions": null,
+  "ModifiedBy": "IntegrationTestUser",
+  "ModifiedDate": "2017-06-05T00:00:00",
+  "Name": "Test Campaign 3",
+  "Notes": null,
+  "Plans": [],
+  "PlanStatuses": [],
+  "Rating": null
+}

@@ -70,6 +70,52 @@ GO
 
 /*************************************** END PRI-13777 add vpvh in plans  *****************************************************/
 
+/*************************************** START PRI-12842 *****************************************************/
+
+IF OBJECT_ID('campaign_summaries') IS NULL
+BEGIN
+	CREATE TABLE [campaign_summaries]
+	(
+		[id] [INT] IDENTITY(1,1) NOT NULL,
+		[campaign_id] [INT] NOT NULL,
+		[processing_status] [INT] NOT NULL,
+		[processing_status_error_msg] [NVARCHAR](2000),
+		[queued_at] [DATETIME] NOT NULL,
+		[queued_by] [VARCHAR](50) NOT NULL,
+		[flight_start_Date] [DATETIME],
+		[flight_end_Date] [DATETIME],
+		[flight_hiatus_days] [INT],
+		[flight_active_days] [INT],
+		[budget] [FLOAT],
+		[cpm] [FLOAT],
+		[impressions] [FLOAT],
+		[rating] [FLOAT],
+		[plan_status_count_working] [INT],
+		[plan_status_count_reserved] [INT],
+		[plan_status_count_client_approval] [INT],
+		[plan_status_count_contracted] [INT],
+		[plan_status_count_live] [INT],
+		[plan_status_count_complete] [INT],
+		[campaign_status] [INT],
+		[components_modified] [DATETIME],
+		[last_aggregated] [DATETIME]
+		CONSTRAINT [PK_campaign_summary] PRIMARY KEY CLUSTERED
+		(
+			[id] ASC
+		)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY]
+
+	ALTER TABLE [dbo].[campaign_summary] WITH CHECK ADD CONSTRAINT [FK_campaign_summary_campaign] FOREIGN KEY ([campaign_id])
+		REFERENCES [dbo].[campaigns] (id)
+		ON DELETE CASCADE
+
+	CREATE NONCLUSTERED INDEX [IX_campaign_summary_campaign_id] ON [dbo].[campaign_summary] ([campaign_id] ASC)
+		INCLUDE ([id])
+		WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+END
+
+/*************************************** END PRI-12842  *****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

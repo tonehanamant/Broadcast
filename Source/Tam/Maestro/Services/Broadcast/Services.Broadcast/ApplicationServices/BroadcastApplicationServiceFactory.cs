@@ -2,28 +2,32 @@
 using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
 using ConfigurationService.Client;
+using Hangfire;
+using Hangfire.Client;
+using Hangfire.Common;
+using Hangfire.States;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.InterceptionExtension;
-using Services.Broadcast.Aggregates;
+using Services.Broadcast.ApplicationServices.Helpers;
 using Services.Broadcast.ApplicationServices.Inventory;
+using Services.Broadcast.ApplicationServices.Plan;
+using Services.Broadcast.ApplicationServices.Security;
 using Services.Broadcast.BusinessEngines;
+using Services.Broadcast.BusinessEngines.InventoryDaypartParsing;
+using Services.Broadcast.Cache;
+using Services.Broadcast.Clients;
 using Services.Broadcast.Converters;
 using Services.Broadcast.Converters.Post;
 using Services.Broadcast.Converters.RateImport;
+using Services.Broadcast.Converters.Scx;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Helpers;
 using Services.Broadcast.ReportGenerators;
 using Services.Broadcast.Repositories;
 using Services.Broadcast.Validators;
-using Services.Broadcast.ApplicationServices.Security;
+using Tam.Maestro.Common;
 using Tam.Maestro.Data.EntityFrameworkMapping;
 using Tam.Maestro.Services.Clients;
-using Services.Broadcast.ApplicationServices.Helpers;
-using Services.Broadcast.Helpers;
-using Services.Broadcast.BusinessEngines.InventoryDaypartParsing;
-using Services.Broadcast.Converters.Scx;
-using Services.Broadcast.Cache;
-using Services.Broadcast.ApplicationServices.Plan;
-using Services.Broadcast.Clients;
 
 namespace Services.Broadcast.ApplicationServices
 {
@@ -46,6 +50,13 @@ namespace Services.Broadcast.ApplicationServices
                         _instance.RegisterType<ILockingManagerApplicationService, LockingManagerApplicationService>();
                         _instance.RegisterInstance<IConfigurationWebApiClient>(ConfigurationClientSwitch.Handler);
                         _instance.RegisterType<IDataRepositoryFactory, BroadcastDataDataRepositoryFactory>();
+
+                        _instance.RegisterType<JobStorage>(new InjectionFactory(c => JobStorage.Current));
+                        _instance.RegisterType<IJobFilterProvider, JobFilterAttributeFilterProvider>(new InjectionConstructor(true));
+                        _instance.RegisterType<IBackgroundJobFactory, BackgroundJobFactory>();
+                        _instance.RegisterType<IRecurringJobManager, RecurringJobManager>();
+                        _instance.RegisterType<IBackgroundJobClient, BackgroundJobClient>();
+                        _instance.RegisterType<IBackgroundJobStateChanger, BackgroundJobStateChanger>();
 
                         SystemComponentParameterHelper.SetConfigurationClient(ConfigurationClientSwitch.Handler);
                         RegisterApplicationServices(_instance);
@@ -196,6 +207,8 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IDaypartTypeService, DaypartTypeService>();
 
             unityContainer.RegisterType<ITrafficApiClient, TrafficApiClient>();
+            unityContainer.RegisterType<ICampaignAggregator, CampaignAggregator>();
+            unityContainer.RegisterType<ICampaignAggregationJobTrigger, CampaignAggregationJobTrigger>();
 
             //@todo This is temporary to control the daypart source for Broadcast
             var repoFactory = unityContainer.Resolve<IDataRepositoryFactory>();

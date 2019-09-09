@@ -1,4 +1,5 @@
-﻿using Common.Services.Extensions;
+﻿using System.Data.Entity;
+using Common.Services.Extensions;
 using Common.Services.Repositories;
 using ConfigurationService.Client;
 using EntityFrameworkMapping.Broadcast;
@@ -82,6 +83,7 @@ namespace Services.Broadcast.Repositories
             {
                 var entity = context.plan_summary
                                  .Where(s => s.plan_id == summary.PlanId)
+                                 .Include(s => s.plan_summary_quarters)
                                  .SingleOrDefault($"More than one summary found for plan id {summary.PlanId}.")
                              ?? new plan_summary { plan_id = summary.PlanId };
 
@@ -104,6 +106,7 @@ namespace Services.Broadcast.Repositories
                 {
                     var entity = context.plan_summary
                         .Where(s => s.plan_id == planId)
+                        .Include(s => s.plan_summary_quarters)
                         .Single($"No summary found for {planId}.");
                     var dto = _MapToDto(entity);
                     return dto;

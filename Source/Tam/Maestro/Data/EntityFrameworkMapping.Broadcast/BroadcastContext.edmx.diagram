@@ -325,6 +325,8 @@
         <AssociationConnector Association="BroadcastModel.FK_plan_weekly_breakdown_plans" />
         <AssociationConnector Association="BroadcastModel.FK_plan_weeks_plans" />
         <AssociationConnector Association="BroadcastModel.FK_plans_spot_lengths" />
+        <EntityTypeShape EntityType="BroadcastModel.campaign_summaries" Width="1.5" PointX="30.625" PointY="48.375" />
+        <AssociationConnector Association="BroadcastModel.FK_campaign_summaries_campaign" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

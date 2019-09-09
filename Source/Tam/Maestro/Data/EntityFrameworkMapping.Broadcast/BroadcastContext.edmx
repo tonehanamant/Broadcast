@@ -235,6 +235,34 @@
           <Property Name="delivery" Type="float" Nullable="false" />
           <Property Name="audience_rank" Type="int" />
         </EntityType>
+        <EntityType Name="campaign_summaries">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="campaign_id" Type="int" Nullable="false" />
+          <Property Name="processing_status" Type="int" Nullable="false" />
+          <Property Name="processing_status_error_msg" Type="nvarchar" MaxLength="2000" />
+          <Property Name="queued_at" Type="datetime" Nullable="false" />
+          <Property Name="queued_by" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="flight_start_Date" Type="datetime" />
+          <Property Name="flight_end_Date" Type="datetime" />
+          <Property Name="flight_hiatus_days" Type="int" />
+          <Property Name="flight_active_days" Type="int" />
+          <Property Name="budget" Type="float" />
+          <Property Name="cpm" Type="float" />
+          <Property Name="impressions" Type="float" />
+          <Property Name="rating" Type="float" />
+          <Property Name="plan_status_count_working" Type="int" />
+          <Property Name="plan_status_count_reserved" Type="int" />
+          <Property Name="plan_status_count_client_approval" Type="int" />
+          <Property Name="plan_status_count_contracted" Type="int" />
+          <Property Name="plan_status_count_live" Type="int" />
+          <Property Name="plan_status_count_complete" Type="int" />
+          <Property Name="campaign_status" Type="int" />
+          <Property Name="components_modified" Type="datetime" />
+          <Property Name="last_aggregated" Type="datetime" />
+        </EntityType>
         <EntityType Name="campaigns">
           <Key>
             <PropertyRef Name="id" />
@@ -720,6 +748,7 @@
           <Property Name="delivery_rating_points" Type="float" />
           <Property Name="cpp" Type="money" />
           <Property Name="currency" Type="int" Nullable="false" />
+          <Property Name="delivery" Type="float" />
           <Property Name="vpvh" Type="float" Nullable="false" />
         </EntityType>
         <EntityType Name="post_file_demos">
@@ -1919,6 +1948,20 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Principal>
             <Dependent Role="bvs_post_details">
               <PropertyRef Name="bvs_file_detail_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_campaign_summaries_campaign">
+          <End Role="campaigns" Type="Self.campaigns" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="campaign_summaries" Type="Self.campaign_summaries" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="campaigns">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="campaign_summaries">
+              <PropertyRef Name="campaign_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -4226,6 +4269,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySet Name="bvs_map_types" EntityType="Self.bvs_map_types" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="bvs_maps" EntityType="Self.bvs_maps" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="bvs_post_details" EntityType="Self.bvs_post_details" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="campaign_summaries" EntityType="Self.campaign_summaries" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="campaigns" EntityType="Self.campaigns" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="daypart_codes" EntityType="Self.daypart_codes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="daypart_days" EntityType="Self.daypart_days" Schema="dbo" store:Type="Tables" />
@@ -4436,6 +4480,10 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <AssociationSet Name="FK_bvs_post_details_bvs_file_details" Association="Self.FK_bvs_post_details_bvs_file_details">
             <End Role="bvs_file_details" EntitySet="bvs_file_details" />
             <End Role="bvs_post_details" EntitySet="bvs_post_details" />
+          </AssociationSet>
+          <AssociationSet Name="FK_campaign_summaries_campaign" Association="Self.FK_campaign_summaries_campaign">
+            <End Role="campaigns" EntitySet="campaigns" />
+            <End Role="campaign_summaries" EntitySet="campaign_summaries" />
           </AssociationSet>
           <AssociationSet Name="FK_daypart_days_dayparts" Association="Self.FK_daypart_days_dayparts">
             <End Role="dayparts" EntitySet="dayparts" />
@@ -6059,6 +6107,11 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <AssociationSet Name="FK_plans_spot_lengths" Association="BroadcastModel.FK_plans_spot_lengths">
             <End Role="spot_lengths" EntitySet="spot_lengths" />
             <End Role="plan" EntitySet="plans" />
+          </AssociationSet>
+          <EntitySet Name="campaign_summaries" EntityType="BroadcastModel.campaign_summaries" />
+          <AssociationSet Name="FK_campaign_summaries_campaign" Association="BroadcastModel.FK_campaign_summaries_campaign">
+            <End Role="campaign" EntitySet="campaigns" />
+            <End Role="campaign_summaries" EntitySet="campaign_summaries" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="audience_audiences">
@@ -9779,6 +9832,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="proposals" Relationship="BroadcastModel.FK_proposals_campaigns" FromRole="campaign" ToRole="proposal" />
           <Property Name="notes" Type="String" MaxLength="1024" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="plans" Relationship="BroadcastModel.FK_plans_campaigns" FromRole="campaign" ToRole="plan" />
+          <NavigationProperty Name="campaign_summaries" Relationship="BroadcastModel.FK_campaign_summaries_campaign" FromRole="campaign" ToRole="campaign_summaries" />
         </EntityType>
         <EntityType Name="station_inventory_manifest_weeks_history">
           <Key>
@@ -10431,6 +10485,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="plan_weekly_breakdown" Relationship="BroadcastModel.FK_plan_weekly_breakdown_plans" FromRole="plan" ToRole="plan_weekly_breakdown" />
           <NavigationProperty Name="plan_weeks" Relationship="BroadcastModel.FK_plan_weeks_plans" FromRole="plan" ToRole="plan_weeks" />
           <NavigationProperty Name="spot_lengths" Relationship="BroadcastModel.FK_plans_spot_lengths" FromRole="plan" ToRole="spot_lengths" />
+          <Property Name="delivery" Type="Double" />
         </EntityType>
         <Association Name="FK_plans_audiences">
           <End Type="BroadcastModel.audience" Role="audience" Multiplicity="1" />
@@ -10603,6 +10658,49 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Principal>
             <Dependent Role="plan">
               <PropertyRef Name="spot_length_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="campaign_summaries">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="campaign_id" Type="Int32" Nullable="false" />
+          <Property Name="processing_status" Type="Int32" Nullable="false" />
+          <Property Name="processing_status_error_msg" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="queued_at" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="queued_by" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="flight_start_Date" Type="DateTime" Precision="3" />
+          <Property Name="flight_end_Date" Type="DateTime" Precision="3" />
+          <Property Name="flight_hiatus_days" Type="Int32" />
+          <Property Name="flight_active_days" Type="Int32" />
+          <Property Name="budget" Type="Double" />
+          <Property Name="cpm" Type="Double" />
+          <Property Name="impressions" Type="Double" />
+          <Property Name="rating" Type="Double" />
+          <Property Name="plan_status_count_working" Type="Int32" />
+          <Property Name="plan_status_count_reserved" Type="Int32" />
+          <Property Name="plan_status_count_client_approval" Type="Int32" />
+          <Property Name="plan_status_count_contracted" Type="Int32" />
+          <Property Name="plan_status_count_live" Type="Int32" />
+          <Property Name="plan_status_count_complete" Type="Int32" />
+          <Property Name="campaign_status" Type="Int32" />
+          <Property Name="components_modified" Type="DateTime" Precision="3" />
+          <Property Name="last_aggregated" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="campaign" Relationship="BroadcastModel.FK_campaign_summaries_campaign" FromRole="campaign_summaries" ToRole="campaign" />
+        </EntityType>
+        <Association Name="FK_campaign_summaries_campaign">
+          <End Type="BroadcastModel.campaign" Role="campaign" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BroadcastModel.campaign_summaries" Role="campaign_summaries" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="campaign">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="campaign_summaries">
+              <PropertyRef Name="campaign_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -12370,6 +12468,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="plans">
             <EntityTypeMapping TypeName="BroadcastModel.plan">
               <MappingFragment StoreEntitySet="plans">
+                <ScalarProperty Name="delivery" ColumnName="delivery" />
                 <ScalarProperty Name="vpvh" ColumnName="vpvh" />
                 <ScalarProperty Name="currency" ColumnName="currency" />
                 <ScalarProperty Name="cpp" ColumnName="cpp" />
@@ -12396,6 +12495,35 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
                 <ScalarProperty Name="spot_length_id" ColumnName="spot_length_id" />
                 <ScalarProperty Name="product_id" ColumnName="product_id" />
                 <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="campaign_id" ColumnName="campaign_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="campaign_summaries">
+            <EntityTypeMapping TypeName="BroadcastModel.campaign_summaries">
+              <MappingFragment StoreEntitySet="campaign_summaries">
+                <ScalarProperty Name="last_aggregated" ColumnName="last_aggregated" />
+                <ScalarProperty Name="components_modified" ColumnName="components_modified" />
+                <ScalarProperty Name="campaign_status" ColumnName="campaign_status" />
+                <ScalarProperty Name="plan_status_count_complete" ColumnName="plan_status_count_complete" />
+                <ScalarProperty Name="plan_status_count_live" ColumnName="plan_status_count_live" />
+                <ScalarProperty Name="plan_status_count_contracted" ColumnName="plan_status_count_contracted" />
+                <ScalarProperty Name="plan_status_count_client_approval" ColumnName="plan_status_count_client_approval" />
+                <ScalarProperty Name="plan_status_count_reserved" ColumnName="plan_status_count_reserved" />
+                <ScalarProperty Name="plan_status_count_working" ColumnName="plan_status_count_working" />
+                <ScalarProperty Name="rating" ColumnName="rating" />
+                <ScalarProperty Name="impressions" ColumnName="impressions" />
+                <ScalarProperty Name="cpm" ColumnName="cpm" />
+                <ScalarProperty Name="budget" ColumnName="budget" />
+                <ScalarProperty Name="flight_active_days" ColumnName="flight_active_days" />
+                <ScalarProperty Name="flight_hiatus_days" ColumnName="flight_hiatus_days" />
+                <ScalarProperty Name="flight_end_Date" ColumnName="flight_end_Date" />
+                <ScalarProperty Name="flight_start_Date" ColumnName="flight_start_Date" />
+                <ScalarProperty Name="queued_by" ColumnName="queued_by" />
+                <ScalarProperty Name="queued_at" ColumnName="queued_at" />
+                <ScalarProperty Name="processing_status_error_msg" ColumnName="processing_status_error_msg" />
+                <ScalarProperty Name="processing_status" ColumnName="processing_status" />
                 <ScalarProperty Name="campaign_id" ColumnName="campaign_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>

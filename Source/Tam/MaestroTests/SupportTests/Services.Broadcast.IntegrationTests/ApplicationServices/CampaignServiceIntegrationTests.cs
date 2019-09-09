@@ -1,25 +1,26 @@
 ﻿using ApprovalTests;
 using ApprovalTests.Reporters;
+using Common.Services.ApplicationServices;
+using Common.Services.Repositories;
 using IntegrationTests.Common;
+using Microsoft.Practices.Unity;
+using Moq;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.ApplicationServices.Plan;
+using Services.Broadcast.BusinessEngines;
+using Services.Broadcast.Clients;
 using Services.Broadcast.Entities;
-using Services.Broadcast.IntegrationTests.Helpers;
+using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
+using Services.Broadcast.IntegrationTests.Helpers;
+using Services.Broadcast.Repositories;
+using Services.Broadcast.Validators;
 using System;
 using System.Collections.Generic;
 using Tam.Maestro.Common.DataLayer;
-using Services.Broadcast.Validators;
-using Common.Services.ApplicationServices;
-using Microsoft.Practices.Unity;
-using Moq;
-using Common.Services.Repositories;
-using Services.Broadcast.BusinessEngines;
-using Services.Broadcast.Clients;
 using Tam.Maestro.Services.ContractInterfaces;
-using Services.Broadcast.Entities.Enums;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
@@ -30,6 +31,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         private readonly DateTime CreatedDate = new DateTime(2019, 5, 14);
         private readonly ICampaignService _CampaignService = IntegrationTestApplicationServiceFactory.GetApplicationService<ICampaignService>();
         private readonly IPlanService _PlanService = IntegrationTestApplicationServiceFactory.GetApplicationService<IPlanService>();
+        private readonly ICampaignSummaryRepository _CampaignSummaryRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<ICampaignSummaryRepository>();
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
@@ -53,6 +55,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void GetCampaignById()
         {
+            // Data already exists for campaign id 2 : campaign, summary, plan
             var campaignId = 2;
             using (new TransactionScopeWrapper())
             {
@@ -61,20 +64,15 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(foundCampaign, _GetJsonSettings()));
             }
         }
-        
+
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void GetCampaignById_WithPlans()
+        public void GetCampaignById_WithoutPlans()
         {
+            // Data already exists for campaign id 5 : campaign
+            var campaignId = 5;
             using (new TransactionScopeWrapper())
             {
-                var campaign = _GetValidCampaign();
-                var campaignId = _CampaignService.SaveCampaign(campaign, IntegrationTestUser, CreatedDate);
-                var plan = _GetNewPlan();
-                plan.CampaignId = campaignId;
-
-                _PlanService.SavePlan(plan, "integration_test", new DateTime(2019, 01, 01), aggregatePlanSynchronously: true);
-                
                 var foundCampaign = _CampaignService.GetCampaignById(campaignId);
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(foundCampaign, _GetJsonSettings()));
@@ -100,7 +98,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             const string expectedMessage = "The chosen campaign has been locked by IntegrationUser";
 
-            using (new TransactionScopeWrapper())
+            using (new TransactionScopeWrapper(System.Transactions.IsolationLevel.ReadCommitted))
             {
                 var lockingManagerApplicationServiceMock = new Mock<ILockingManagerApplicationService>();
                 lockingManagerApplicationServiceMock.Setup(x => x.LockObject(It.IsAny<string>())).Returns(new LockResponse
@@ -115,7 +113,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     IntegrationTestApplicationServiceFactory.Instance.Resolve<IMediaMonthAndWeekAggregateCache>(),
                     IntegrationTestApplicationServiceFactory.Instance.Resolve<IQuarterCalculationEngine>(),
                     IntegrationTestApplicationServiceFactory.Instance.Resolve<ITrafficApiClient>(),
-                    lockingManagerApplicationServiceMock.Object);
+                    lockingManagerApplicationServiceMock.Object,
+                    IntegrationTestApplicationServiceFactory.Instance.Resolve<ICampaignAggregator>(),
+                    IntegrationTestApplicationServiceFactory.Instance.Resolve<ICampaignAggregationJobTrigger>()
+                    );
 
                 var campaign = _GetValidCampaign();
                 campaign.Id = 1;
@@ -165,16 +166,45 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var campaign = _GetValidCampaign();
                 int campaignId = _CampaignService.SaveCampaign(campaign, IntegrationTestUser, CreatedDate);
 
+                _CampaignSummaryRepository.SaveSummary(GetSummary(campaignId, IntegrationTestUser, CreatedDate));
                 CampaignDto foundCampaign = _CampaignService.GetCampaignById(campaignId);
 
                 foundCampaign.Name = "Updated name of Campaign1";
                 int updatedCampaignId = _CampaignService.SaveCampaign(foundCampaign, IntegrationTestUser, CreatedDate);
-                CampaignDto updatedCampaign = _CampaignService.GetCampaignById(campaignId);
+                CampaignDto updatedCampaign = _CampaignService.GetCampaignById(updatedCampaignId);
 
                 Assert.AreEqual(updatedCampaign.Id, campaignId);
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(updatedCampaign, _GetJsonSettings()));
             }
+        }
+
+        private CampaignSummaryDto GetSummary(int campaignId, string createdBy, DateTime createdDate)
+        {
+            return new CampaignSummaryDto
+            {
+                QueuedBy = createdBy,
+                QueuedAt = createdDate,
+                ProcessingStatus = CampaignAggregationProcessingStatusEnum.Completed,
+                LastAggregated = new DateTime(2019,09,04,16,41,0),
+                CampaignId = campaignId,
+                CampaignStatus = PlanStatusEnum.Contracted,
+                Budget = 1500.0m,
+                CPM = 2500.0m,
+                Rating = 23.0,
+                Impressions = 5500.0,
+                FlightStartDate = new DateTime(2019, 08, 01),
+                FlightEndDate = new DateTime(2019, 08, 30),
+                FlightActiveDays = 26,
+                FlightHiatusDays = 4,
+                PlanStatusCountWorking = 0,
+                PlanStatusCountReserved =0,
+                PlanStatusCountClientApproval = 1,
+                PlanStatusCountContracted = 1,
+                PlanStatusCountLive = 0,
+                PlanStatusCountComplete = 0,
+                ComponentsModified = new DateTime(2019, 08, 28, 12, 30, 32)
+            };
         }
 
         [Test]
@@ -244,6 +274,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 _PlanService.SavePlan(plan, "integration_test", new DateTime(2019, 01, 01), aggregatePlanSynchronously: true);
                 _PlanService.SavePlan(secondPlan, "integration_test", new DateTime(2019, 01, 01), aggregatePlanSynchronously: true);
 
+                _CampaignSummaryRepository.SaveSummary(GetSummary(campaignId, IntegrationTestUser, CreatedDate));
+                _CampaignSummaryRepository.SaveSummary(GetSummary(secondCampaignId, IntegrationTestUser, CreatedDate));
+
                 var filter = new CampaignFilterDto
                 {
                     PlanStatus = PlanStatusEnum.ClientApproval,
@@ -271,8 +304,66 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var plan = _GetNewPlan();
                 plan.CampaignId = campaignId;
                 _PlanService.SavePlan(plan, "integration_test", new DateTime(2019, 01, 01), aggregatePlanSynchronously: true);
+
                 var campaigns = _CampaignService.GetStatuses(new QuarterDto { Quarter = 2, Year = 2019 });
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(campaigns));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void TriggerCampaignAggregation()
+        {
+            // Data already exists for campaign id 2 : campaign, summary, plan
+            const int campaignId = 2;
+            using (new TransactionScopeWrapper())
+            {
+                _CampaignService.TriggerCampaignAggregationJob(campaignId, IntegrationTestUser);
+                var summary = _CampaignSummaryRepository.GetSummaryForCampaign(campaignId);
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(summary));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void ProcessCampaignAggregation()
+        {
+            // Data already exists for campaign id 2 : campaign, summary, plan
+            const int campaignId = 2;
+            using (new TransactionScopeWrapper())
+            {
+                _CampaignService.ProcessCampaignAggregation(campaignId);
+                var fullCampaign = _CampaignService.GetCampaignById(campaignId);
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(fullCampaign));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void ProcessCampaignAggregation_WithoutPlans()
+        {
+            // Data already exists for campaign id 3 : campaign, summary
+            const int campaignId = 3;
+            using (new TransactionScopeWrapper())
+            {
+                _CampaignService.ProcessCampaignAggregation(campaignId);
+                var fullCampaign = _CampaignService.GetCampaignById(campaignId);
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(fullCampaign));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void ProcessAggregation_WithError()
+        {
+            // this ID should have no backing data.
+            const int campaignId = int.MaxValue;
+            using (new TransactionScopeWrapper())
+            {
+                Assert.Throws<Exception>(() => _CampaignService.ProcessCampaignAggregation(campaignId));
             }
         }
 
@@ -330,6 +421,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 DeliveryImpressions = 100d,
                 DeliveryRatingPoints = 6d,
                 CoverageGoalPercent = 80.5,
+                Currency = PlanCurrenciesEnum.Impressions,
                 GoalBreakdownType = Entities.Enums.PlanGloalBreakdownTypeEnum.Even,
                 AvailableMarkets = new List<PlanAvailableMarketDto>
                 {
@@ -347,7 +439,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     new PlanDaypartDto{ DaypartCodeId = 2, StartTimeSeconds = 0, EndTimeSeconds = 2000, WeightingGoalPercent = 28.0 },
                     new PlanDaypartDto{ DaypartCodeId = 11, StartTimeSeconds = 1500, EndTimeSeconds = 2788, WeightingGoalPercent = 33.2 }
-                }
+                },
+                Vpvh = 0.101
             };
         }
     }

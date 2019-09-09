@@ -6,6 +6,7 @@ using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
 using Services.Broadcast.Helpers;
 using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using Tam.Maestro.Common.DataLayer;
@@ -36,6 +37,13 @@ namespace Services.Broadcast.Repositories
         /// <param name="planId">The plan identifier.</param>
         /// <returns></returns>
         PlanDto GetPlan(int planId);
+
+        /// <summary>
+        /// Gets the campaign plans.
+        /// </summary>
+        /// <param name="campaignId">The campaign identifier.</param>
+        /// <returns></returns>
+        List<PlanDto> GetPlansForCampaign(int campaignId);
     }
 
     public class PlanRepository : BroadcastRepositoryBase, IPlanRepository
@@ -98,6 +106,26 @@ namespace Services.Broadcast.Repositories
                         .Single(s => s.id == planId, "Invalid plan id.");
                     return _MapToDto(entity);
                 });
+        }
+
+        /// <inheritdoc />
+        public List<PlanDto> GetPlansForCampaign(int campaignId)
+        {
+            return _InReadCommittedTransaction(context =>
+            {
+                var entitiesRaw = context.plans
+                    .Include(p => p.plan_flight_hiatus)
+                    .Include(p => p.plan_secondary_audiences)
+                    .Include(p => p.plan_dayparts)
+                    .Include(p => p.plan_available_markets)
+                    .Include(p => p.plan_blackout_markets)
+                    .Include(p => p.plan_weeks)
+                    .Include(p => p.plan_weeks.Select(x => x.media_weeks))
+                    .Where(p => p.campaign_id == campaignId)
+                    .ToList();
+
+                return entitiesRaw.Select(_MapToDto).ToList();
+            });
         }
 
         private PlanDto _MapToDto(plan entity)

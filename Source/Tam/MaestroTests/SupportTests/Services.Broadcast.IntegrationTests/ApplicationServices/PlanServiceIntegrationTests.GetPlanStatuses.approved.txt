@@ -4,7 +4,23 @@
     "Id": 1
   },
   {
-    "Display": "Contracted",
+    "Display": "Reserved",
     "Id": 2
+  },
+  {
+    "Display": "Client Approval",
+    "Id": 3
+  },
+  {
+    "Display": "Contracted",
+    "Id": 4
+  },
+  {
+    "Display": "Live",
+    "Id": 5
+  },
+  {
+    "Display": "Complete",
+    "Id": 6
   }
 ]

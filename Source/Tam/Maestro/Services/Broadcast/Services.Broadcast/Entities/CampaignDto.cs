@@ -78,6 +78,6 @@ namespace Services.Broadcast.Entities
 
         public PlanStatusEnum? CampaignStatus { get; set; }
 
-        public List<PlanStatusDto> PlanStatuses { get; set; }
+        public List<PlansStatusCountDto> PlanStatuses { get; set; }
     }
 }

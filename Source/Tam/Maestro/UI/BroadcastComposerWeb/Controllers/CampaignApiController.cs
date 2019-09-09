@@ -104,5 +104,13 @@ namespace BroadcastComposerWeb.Controllers
             var key = KeyHelper.GetCampaignLockingKey(campaignId);
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ILockingManagerApplicationService>().ReleaseObject(key));
         }
+
+        [HttpPost]
+        [Route("Aggregate")]
+        [Authorize]
+        public BaseResponse<string> TriggerCampaignAggregation(int campaignId)
+        {
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ICampaignService>().TriggerCampaignAggregationJob(campaignId, Identity.Name));
+        }
     }
 }

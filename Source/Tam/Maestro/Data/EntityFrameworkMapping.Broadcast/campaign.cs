@@ -18,6 +18,7 @@ namespace EntityFrameworkMapping.Broadcast
         {
             this.proposals = new HashSet<proposal>();
             this.plans = new HashSet<plan>();
+            this.campaign_summaries = new HashSet<campaign_summaries>();
         }
     
         public int id { get; set; }
@@ -32,5 +33,6 @@ namespace EntityFrameworkMapping.Broadcast
     
         public virtual ICollection<proposal> proposals { get; set; }
         public virtual ICollection<plan> plans { get; set; }
+        public virtual ICollection<campaign_summaries> campaign_summaries { get; set; }
     }
 }

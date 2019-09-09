@@ -239,6 +239,9 @@
   <ItemGroup>
     <Compile Include="ApplicationServices\AdvertiserService.cs" />
     <Compile Include="ApplicationServices\AgencyService.cs" />
+    <Compile Include="ApplicationServices\CampaignAggregationJobTrigger.cs" />
+    <Compile Include="ApplicationServices\CampaignAggregator.cs" />
+    <Compile Include="Entities\CampaignSummaryDto.cs" />
     <Compile Include="Attributes\DisableConcurrentExecutionAttribute.cs" />
     <Compile Include="Entities\CampaignFilterDto.cs" />
     <Compile Include="ApplicationServices\Plan\PlanAggregator.cs" />
@@ -264,13 +267,14 @@
     <Compile Include="Entities\Enums\AudienceTypeEnum.cs" />
     <Compile Include="Entities\Enums\BackgroundJobProcessingStatus.cs" />
     <Compile Include="Entities\Enums\DaypartTypeEnum.cs" />
+    <Compile Include="Entities\Enums\CampaignAggregationProcessingStatusEnum.cs" />
     <Compile Include="Entities\Enums\PlanAggregationProcessingStatusEnum.cs" />
     <Compile Include="Entities\Enums\PlanGloalBreakdownTypeEnum.cs" />
     <Compile Include="Entities\Enums\PlanCurrenciesEnum.cs" />
     <Compile Include="Entities\Enums\PlanStatusEnum.cs" />
     <Compile Include="Entities\Enums\QueueEnum.cs" />
     <Compile Include="Entities\InventorySummary\InventorySummaryAggregation.cs" />
-    <Compile Include="Entities\PlanStatusDto.cs" />
+    <Compile Include="Entities\PlansStatusCountDto.cs" />
     <Compile Include="Entities\QuarterDto.cs" />
     <Compile Include="Entities\Plan\PlanAudienceDto.cs" />
     <Compile Include="Entities\ImpressionsDaypartResultForSingleBook.cs" />
@@ -295,6 +299,7 @@
     <Compile Include="Helpers\DaypartTimeHelper.cs" />
     <Compile Include="Helpers\KeyHelper.cs" />
     <Compile Include="Helpers\SystemComponentParameterHelper.cs" />
+    <Compile Include="Repositories\CampaignSummaryRepository.cs" />
     <Compile Include="Repositories\PlanRepository.cs" />
     <Compile Include="Repositories\PlanSummaryRepository.cs" />
     <Compile Include="Repositories\ScxGenerationJobRepository.cs" />

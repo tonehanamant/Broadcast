@@ -17,22 +17,6 @@ namespace Services.Broadcast.IntegrationTests.Repositories
     {
         private readonly IPlanRepository _PlanRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IPlanRepository>();
         private readonly IPlanSummaryRepository _PlanSummaryRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IPlanSummaryRepository>();
-        
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
-        public void SaveAndGetPlanSummary()
-        {
-            using (new TransactionScopeWrapper())
-            {
-                var planId = _CreateAndSavePlan();
-                var dtoToSave = _GetPlanSummaryDto(planId);
-
-                _PlanSummaryRepository.SaveSummary(dtoToSave);
-                var savedSummary = _PlanSummaryRepository.GetSummaryForPlan(planId);
-
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(savedSummary, _GetJsonSettings()));
-            }
-        }
 
         [Test]
         [UseReporter(typeof(DiffReporter))]

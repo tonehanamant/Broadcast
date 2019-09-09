@@ -1,19 +1,21 @@
 ﻿using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
+using ConfigurationService.Client;
+using Hangfire;
+using IntegrationTests.Common;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.InterceptionExtension;
 using Moq;
 using Services.Broadcast.ApplicationServices;
-using Services.Broadcast.Repositories;
-using System;
-using ConfigurationService.Client;
-using IntegrationTests.Common;
+using Services.Broadcast.Clients;
 using Services.Broadcast.Helpers;
 using Services.Broadcast.IntegrationTests.Stubbs;
+using Services.Broadcast.IntegrationTests.UnitTests;
+using Services.Broadcast.Repositories;
+using System;
+using Tam.Maestro.Common;
 using Tam.Maestro.Data.Entities;
-using Tam.Maestro.Services.Cable.SystemComponentParameters;
 using Tam.Maestro.Services.Clients;
-using Services.Broadcast.Clients;
 
 namespace Services.Broadcast.IntegrationTests
 {
@@ -24,6 +26,8 @@ namespace Services.Broadcast.IntegrationTests
 
         public static readonly BroadcastDataDataRepositoryFactory BroadcastDataRepositoryFactory;
         public static IMediaMonthAndWeekAggregateCache MediaMonthAndWeekAggregateCache;
+
+        public static  IBackgroundJobClient BackgroundJobClient;
 
         static IntegrationTestApplicationServiceFactory()
         {
@@ -42,9 +46,15 @@ namespace Services.Broadcast.IntegrationTests
 
                     var stubbedSmsClient = new StubbedSMSClient();
                     var stubbedConfigurationClient = new StubbedConfigurationWebApiClient();
+                    var connectionString = ConnectionStringHelper.BuildConnectionString(
+                        stubbedConfigurationClient.GetResource(TAMResource.BroadcastConnectionString.ToString()), 
+                        System.Diagnostics.Process.GetCurrentProcess().ProcessName);
+                    GlobalConfiguration.Configuration.UseSqlServerStorage(connectionString);
+                    BackgroundJobClient = new BackgroundJobClient(JobStorage.Current);
 
                     _instance.RegisterInstance<IDataRepositoryFactory>(BroadcastDataRepositoryFactory);
                     _instance.RegisterInstance<IConfigurationWebApiClient>(stubbedConfigurationClient);
+                    _instance.RegisterInstance<IBackgroundJobClient>(BackgroundJobClient);
 
                     SystemComponentParameterHelper.SetConfigurationClient(stubbedConfigurationClient);
                     
@@ -53,6 +63,7 @@ namespace Services.Broadcast.IntegrationTests
                     BroadcastApplicationServiceFactory.RegisterApplicationServices(_instance);
                     MediaMonthAndWeekAggregateCache = _instance.Resolve<IMediaMonthAndWeekAggregateCache>();
 
+                    _instance.RegisterType<ICampaignAggregator, CampaignAggregator>();
                     _instance.RegisterType<ITrafficApiClient, TrafficApiClientStub>();
                 }
             }

@@ -3,12 +3,12 @@
     /// <summary>
     /// Indicates the status of processing.
     /// </summary>
-    public enum PlanAggregationProcessingStatusEnum
+    public enum CampaignAggregationProcessingStatusEnum
     {
         /// <summary>
-        /// The process is idle.
+        /// The process has completed.
         /// </summary>
-        Idle = 1,
+        Completed = 1,
 
         /// <summary>
         /// The process is in progress.

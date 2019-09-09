@@ -9,6 +9,9 @@ namespace Tam.Maestro.Data.EntityFrameworkMapping
     public interface ITransactionHelper
     {
         ITransactionScopeWrapper BeginTransaction(DbContext pMaestroContext, IsolationLevel pIsolationLevel);
+
+        ITransactionScopeWrapper BeginTransaction(DbContext pMaestroContext, TransactionScopeOption pScopeOption,
+            IsolationLevel pIsolationLevel);
     }
 
     public class TransactionHelper : ITransactionHelper
@@ -29,6 +32,30 @@ namespace Tam.Maestro.Data.EntityFrameworkMapping
             }
 
             var transactionScope = new TransactionScope(TransactionScopeOption.Required,
+                new TransactionOptions()
+                {
+                    IsolationLevel = isolationLevel,
+                    Timeout = new System.TimeSpan(1, 0, 0)
+                });
+            return new TransactionScopeWrapper(transactionScope);
+        }
+
+        public ITransactionScopeWrapper BeginTransaction(DbContext pMaestroContext, TransactionScopeOption pScopeOption, IsolationLevel pIsolationLevel)
+        {
+            var isolationLevel = System.Transactions.IsolationLevel.ReadCommitted;
+            switch (pIsolationLevel)
+            {
+                case IsolationLevel.ReadCommitted:
+                    isolationLevel = System.Transactions.IsolationLevel.ReadCommitted;
+                    break;
+                case IsolationLevel.ReadUncommitted:
+                    isolationLevel = System.Transactions.IsolationLevel.ReadUncommitted;
+                    break;
+                default:
+                    throw new Exception("Unsupported isolation level: " + pIsolationLevel);
+            }
+
+            var transactionScope = new TransactionScope(pScopeOption,
                 new TransactionOptions()
                 {
                     IsolationLevel = isolationLevel,

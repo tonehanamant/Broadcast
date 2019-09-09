@@ -96,8 +96,6 @@ namespace Services.Broadcast.Validators
             _ValidateVPVH(plan);
         }
 
-        
-
         ///<inheritdoc/>
         public void ValidateWeeklyBreakdown(WeeklyBreakdownRequest request)
         {

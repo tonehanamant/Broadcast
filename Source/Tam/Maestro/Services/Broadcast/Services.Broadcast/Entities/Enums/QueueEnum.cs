@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Services.Broadcast.Entities.Enums
 {
     //Order is important because jobs are prioritized by the order of the queues
     public enum QueueEnum
     {
-        [Display(Name = "campaignaggregation")]
+        [Display(Name = "campaign_aggregation")]
         CampaignAggregation,
         [Display(Name = "default")]
         Default

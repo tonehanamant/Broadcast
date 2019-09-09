@@ -10,6 +10,7 @@
   "FlightStartDate": "2019-08-01T00:00:00",
   "HasHiatus": true,
   "HasPlans": true,
+  "Id": 2,
   "Impressions": 5500.0,
   "ModifiedBy": "CROSSMW\\bbotelho",
   "ModifiedDate": "2019-05-13T00:00:00",
@@ -35,6 +36,7 @@
       "HHImpressions": 10543.78,
       "LastUpdated": "2019-05-14T00:00:00",
       "Name": "New Plan",
+      "PlanId": 523,
       "PlanSummaryQuarters": [
         {
           "Quarter": 1,
@@ -79,6 +81,7 @@
       "HHImpressions": 10543.78,
       "LastUpdated": "2019-05-14T00:00:00",
       "Name": "New Plan",
+      "PlanId": 524,
       "PlanSummaryQuarters": [
         {
           "Quarter": 1,

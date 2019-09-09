@@ -13,7 +13,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Services.Broadcast.Extensions;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.ContractInterfaces.Common;
 
@@ -83,12 +82,14 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private readonly IBroadcastAudiencesCache _AudiencesCache;
         private readonly IPlanAggregator _PlanAggregator;
         private readonly IPlanSummaryRepository _PlanSummaryRepository;
+        private readonly ICampaignAggregationJobTrigger _CampaignAggregationJobTrigger;
 
         public PlanService(IDataRepositoryFactory broadcastDataRepositoryFactory
             , IPlanValidator planValidator
             , IPlanBudgetDeliveryCalculator planBudgetDeliveryCalculator
             , IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache
-            , IPlanAggregator planAggregator)
+            , IPlanAggregator planAggregator,
+            ICampaignAggregationJobTrigger campaignAggregationJobTrigger)
         {
             _MediaWeekCache = mediaMonthAndWeekAggregateCache;
             _PlanValidator = planValidator;
@@ -97,6 +98,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _PlanRepository = broadcastDataRepositoryFactory.GetDataRepository<IPlanRepository>();
             _PlanSummaryRepository = broadcastDataRepositoryFactory.GetDataRepository<IPlanSummaryRepository>();
             _PlanAggregator = planAggregator;
+            _CampaignAggregationJobTrigger = campaignAggregationJobTrigger;
         }
 
         ///<inheritdoc/>
@@ -118,6 +120,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
 
             _DispatchPlanAggregation(plan, aggregatePlanSynchronously);
+            _CampaignAggregationJobTrigger.TriggerJob(plan.CampaignId, modifiedBy);
 
             return plan.Id;
         }

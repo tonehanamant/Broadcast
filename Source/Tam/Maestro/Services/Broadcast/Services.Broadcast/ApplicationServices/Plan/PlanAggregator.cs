@@ -26,7 +26,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
     {
         #region Fields
 
-        private readonly IDaypartCodeRepository _DaypartCodeRepository;
         private readonly IAudienceRepository _AudienceRepository;
         private readonly IQuarterCalculationEngine _QuarterCalculationEngine;
         private readonly ITrafficApiClient _TrafficApiClient;
@@ -44,7 +43,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
             , IQuarterCalculationEngine quarterCalculationEngine
             , ITrafficApiClient trafficApiClient)
         {
-            _DaypartCodeRepository = broadcastDataRepositoryFactory.GetDataRepository<IDaypartCodeRepository>();
             _AudienceRepository = broadcastDataRepositoryFactory.GetDataRepository<IAudienceRepository>();
             _QuarterCalculationEngine = quarterCalculationEngine;
             _TrafficApiClient = trafficApiClient;

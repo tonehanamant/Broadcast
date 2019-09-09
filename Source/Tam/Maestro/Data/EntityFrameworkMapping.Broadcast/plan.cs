@@ -54,6 +54,7 @@ namespace EntityFrameworkMapping.Broadcast
         public Nullable<decimal> cpp { get; set; }
         public int currency { get; set; }
         public double vpvh { get; set; }
+        public Nullable<double> delivery { get; set; }
     
         public virtual audience audience { get; set; }
         public virtual campaign campaign { get; set; }
