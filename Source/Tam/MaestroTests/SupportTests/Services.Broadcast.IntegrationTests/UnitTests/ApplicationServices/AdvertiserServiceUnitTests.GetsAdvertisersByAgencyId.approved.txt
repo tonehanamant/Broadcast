@@ -1,0 +1,17 @@
+﻿[
+  {
+    "AgencyId": 1,
+    "Id": 1,
+    "Name": "AdvertiserOne"
+  },
+  {
+    "AgencyId": 1,
+    "Id": 2,
+    "Name": "AdvertiserTwo"
+  },
+  {
+    "AgencyId": 1,
+    "Id": 3,
+    "Name": "AdvertiserThree"
+  }
+]

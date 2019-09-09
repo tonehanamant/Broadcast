@@ -1,0 +1,89 @@
+﻿[
+  {
+    "Advertiser": {
+      "AgencyId": 1,
+      "Id": 2,
+      "Name": "Name2"
+    },
+    "Agency": {
+      "Id": 1,
+      "Name": "Name1"
+    },
+    "Budget": null,
+    "CampaignStatus": null,
+    "CPM": null,
+    "FlightActiveDays": null,
+    "FlightEndDate": null,
+    "FlightHiatusDays": null,
+    "FlightStartDate": null,
+    "HasHiatus": null,
+    "HasPlans": false,
+    "Id": 1,
+    "Impressions": null,
+    "ModifiedBy": "TestUser",
+    "ModifiedDate": "2017-10-17T00:00:00",
+    "Name": "CampaignOne",
+    "Notes": "Notes for CampaignOne.",
+    "Plans": null,
+    "PlanStatuses": null,
+    "Rating": null
+  },
+  {
+    "Advertiser": {
+      "AgencyId": 1,
+      "Id": 2,
+      "Name": "Name2"
+    },
+    "Agency": {
+      "Id": 1,
+      "Name": "Name1"
+    },
+    "Budget": null,
+    "CampaignStatus": null,
+    "CPM": null,
+    "FlightActiveDays": null,
+    "FlightEndDate": null,
+    "FlightHiatusDays": null,
+    "FlightStartDate": null,
+    "HasHiatus": null,
+    "HasPlans": false,
+    "Id": 2,
+    "Impressions": null,
+    "ModifiedBy": "TestUser",
+    "ModifiedDate": "2017-10-17T00:00:00",
+    "Name": "CampaignTwo",
+    "Notes": "Notes for CampaignTwo.",
+    "Plans": null,
+    "PlanStatuses": null,
+    "Rating": null
+  },
+  {
+    "Advertiser": {
+      "AgencyId": 1,
+      "Id": 2,
+      "Name": "Name2"
+    },
+    "Agency": {
+      "Id": 1,
+      "Name": "Name1"
+    },
+    "Budget": null,
+    "CampaignStatus": null,
+    "CPM": null,
+    "FlightActiveDays": null,
+    "FlightEndDate": null,
+    "FlightHiatusDays": null,
+    "FlightStartDate": null,
+    "HasHiatus": null,
+    "HasPlans": false,
+    "Id": 3,
+    "Impressions": null,
+    "ModifiedBy": "TestUser",
+    "ModifiedDate": "2017-10-17T00:00:00",
+    "Name": "CampaignThree",
+    "Notes": "Notes for CampaignThree.",
+    "Plans": null,
+    "PlanStatuses": null,
+    "Rating": null
+  }
+]

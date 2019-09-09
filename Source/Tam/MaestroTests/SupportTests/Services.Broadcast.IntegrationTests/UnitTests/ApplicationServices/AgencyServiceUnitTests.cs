@@ -1,4 +1,6 @@
-﻿using IntegrationTests.Common;
+﻿using ApprovalTests;
+using ApprovalTests.Reporters;
+using IntegrationTests.Common;
 using Moq;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
@@ -12,6 +14,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
     public class AgencyServiceUnitTests
     {
         [Test]
+        [UseReporter(typeof(DiffReporter))]
         public void GetsAgencies()
         {
             // Arrange
@@ -22,7 +25,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 new AgencyDto { Id = 2, Name = "AgencyTwo" },
                 new AgencyDto { Id = 3, Name = "AgencyThree" }
             };
-            var expectedResult = IntegrationTestHelper.ConvertToJson(getAgenciesReturn);
 
             trafficApiClientMock.Setup(x => x.GetAgencies()).Returns(getAgenciesReturn);
 
@@ -33,7 +35,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 
             // Assert
             trafficApiClientMock.Verify(x => x.GetAgencies(), Times.Once);
-            Assert.AreEqual(expectedResult, IntegrationTestHelper.ConvertToJson(result));
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
 
         [Test]

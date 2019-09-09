@@ -21,7 +21,7 @@ namespace Services.Broadcast.IntegrationTests.Helpers
             _InventoryService = IntegrationTestApplicationServiceFactory.GetApplicationService<IInventoryService>();
         }
 
-        public void UploadProprietaryInventoryFile(string fileName, DateTime? date = null)
+        public void UploadProprietaryInventoryFile(string fileName, DateTime? date = null, bool processInventoryRatings = true)
         {
             var request = new FileRequest
             {
@@ -32,8 +32,11 @@ namespace Services.Broadcast.IntegrationTests.Helpers
             var now = date ?? new DateTime(2019, 02, 02);
             _ProprietaryInventoryService.SaveProprietaryInventoryFile(request, "IntegrationTestUser", now);
 
-            var job = _InventoryFileRatingsJobsRepository.GetLatestJob();
-            _InventoryRatingsProcessingService.ProcessInventoryRatingsJob(job.id.Value);
+            if (processInventoryRatings)
+            {
+                var job = _InventoryFileRatingsJobsRepository.GetLatestJob();
+                _InventoryRatingsProcessingService.ProcessInventoryRatingsJob(job.id.Value);
+            }
         }
 
         public void UploadOpenMarketInventoryFile(string fileName, DateTime? date = null)

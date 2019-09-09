@@ -72,7 +72,7 @@ namespace Services.Broadcast.Converters.Scx
             // skip manifests with unknown stations
             manifests = manifests.Where(x => x.Station.MarketCode.HasValue);
 
-            // skip manifests without spot cost, spot cost may be not calculated yet or maybe there is bad data
+            // skip manifests without spot cost, maybe there is bad data
             manifests = manifests.Where(x => x.ManifestRates.Any(r => r.SpotLengthId == x.SpotLengthId));
 
             return manifests;

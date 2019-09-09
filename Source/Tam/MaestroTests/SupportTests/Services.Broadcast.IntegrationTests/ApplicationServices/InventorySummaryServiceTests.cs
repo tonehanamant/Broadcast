@@ -234,6 +234,64 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        public void ReturnsUnits_WhenRatingsAreProcessed()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                _InventoryFileTestHelper.UploadProprietaryInventoryFile("Barter_Q1_2025.xlsx", processInventoryRatings: true);
+
+                var inventorySourceId = 4; // TTWN
+                var daypartCodeId = 1; // EMN
+                var startDate = new DateTime(2025, 1, 1);
+                var endDate = new DateTime(2025, 3, 31);
+
+                var units = _InventorySummaryService.GetInventoryUnits(inventorySourceId, daypartCodeId, startDate, endDate);
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(units));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void DoesNotReturnUnits_WhenRatingsAreNotProcessed()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                _InventoryFileTestHelper.UploadProprietaryInventoryFile("Barter_Q1_2025.xlsx", processInventoryRatings: false);
+
+                var inventorySourceId = 4; // TTWN
+                var daypartCodeId = 1; // EMN
+                var startDate = new DateTime(2025, 1, 1);
+                var endDate = new DateTime(2025, 3, 31);
+
+                var units = _InventorySummaryService.GetInventoryUnits(inventorySourceId, daypartCodeId, startDate, endDate);
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(units));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void DoesNotReturnUnits_WhenTwoFilesAreUploaded_ButLastOneWithoutRatingsProcessed()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                _InventoryFileTestHelper.UploadProprietaryInventoryFile("Barter_Q1_2025.xlsx", processInventoryRatings: true);
+                _InventoryFileTestHelper.UploadProprietaryInventoryFile("Barter_Q1_2025_2.xlsx", processInventoryRatings: false);
+
+                var inventorySourceId = 4; // TTWN
+                var daypartCodeId = 1; // EMN
+                var startDate = new DateTime(2025, 1, 1);
+                var endDate = new DateTime(2025, 3, 31);
+
+                var units = _InventorySummaryService.GetInventoryUnits(inventorySourceId, daypartCodeId, startDate, endDate);
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(units));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
         public void GetInventoryQuartersBySourceAndDaypartCodeTest()
         {
             using (new TransactionScopeWrapper())

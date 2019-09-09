@@ -1,4 +1,6 @@
-﻿using IntegrationTests.Common;
+﻿using ApprovalTests;
+using ApprovalTests.Reporters;
+using IntegrationTests.Common;
 using Moq;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
@@ -12,6 +14,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
     public class ProductServiceUnitTests
     {
         [Test]
+        [UseReporter(typeof(DiffReporter))]
         public void GetsProductsByAdvertiserId()
         {
             // Arrange
@@ -22,7 +25,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 new ProductDto { Id = 2, Name = "ProductTwo", AdvertiserId = 1 },
                 new ProductDto { Id = 3, Name = "ProductThree", AdvertiserId = 1 }
             };
-            var expectedResult = IntegrationTestHelper.ConvertToJson(getProductsByAdvertiserIdReturn);
 
             trafficApiClientMock.Setup(s => s.GetProductsByAdvertiserId(It.IsAny<int>())).Returns(getProductsByAdvertiserIdReturn);
 
@@ -33,7 +35,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 
             // Assert
             trafficApiClientMock.Verify(x => x.GetProductsByAdvertiserId(1), Times.Once);
-            Assert.AreEqual(expectedResult, IntegrationTestHelper.ConvertToJson(result));
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
 
         [Test]

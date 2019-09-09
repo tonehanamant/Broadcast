@@ -436,6 +436,12 @@
     <None Include="Files\ProprietaryDataFiles\Barter_invalid6.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Files\ProprietaryDataFiles\Barter_Q1_2025.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\ProprietaryDataFiles\Barter_Q1_2025_2.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Files\ProprietaryDataFiles\Barter_SingleDataColumn.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

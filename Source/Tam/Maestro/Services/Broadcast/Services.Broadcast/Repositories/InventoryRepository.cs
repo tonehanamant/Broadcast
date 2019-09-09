@@ -761,9 +761,10 @@ namespace Services.Broadcast.Repositories
                         .SelectMany(x => x.station_inventory_manifest)
                         .SelectMany(x => x.station_inventory_manifest_weeks)
                         .Where(x => x.start_date <= endDate && x.end_date >= startDate) //filter by start/end date
-                        .Where(x=> unitNames.Contains(x.station_inventory_manifest.station_inventory_group.name))   //filter by units name
+                        .Where(x => unitNames.Contains(x.station_inventory_manifest.station_inventory_group.name))   //filter by units name
                         .Where(x => x.station_inventory_manifest.inventory_files.inventory_source_id == inventorySourceId)   //filter by source
                         .Where(x => x.station_inventory_manifest.inventory_files.inventory_file_proprietary_header.FirstOrDefault().daypart_code_id == daypartCodeId) //filter by daypart code
+                        .Where(x => x.station_inventory_manifest.inventory_files.inventory_file_ratings_jobs.FirstOrDefault().status == (int)BackgroundJobProcessingStatus.Succeeded) // take only weeks with ratings calculated
                         .GroupBy(x => x.station_inventory_manifest.station_inventory_group_id)
                         .Select(x => x.FirstOrDefault().station_inventory_manifest.station_inventory_group)
                         .Include(x => x.station_inventory_manifest)
@@ -801,6 +802,7 @@ namespace Services.Broadcast.Repositories
                     var manifests = context.station_inventory_manifest
                         .Where(x => x.inventory_source_id == inventorySourceId)
                         .Where(x => x.inventory_files.inventory_file_proprietary_header.FirstOrDefault().daypart_code_id == daypartCodeId)
+                        .Where(x => x.inventory_files.inventory_file_ratings_jobs.FirstOrDefault().status == (int)BackgroundJobProcessingStatus.Succeeded) // take only manifests with ratings calculated
                         .Include(x => x.station_inventory_manifest_audiences)
                         .Include(x => x.station_inventory_manifest_weeks)
                         .Include(x => x.station_inventory_manifest_rates)

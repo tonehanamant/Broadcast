@@ -1,4 +1,6 @@
-﻿using Common.Services.ApplicationServices;
+﻿using ApprovalTests;
+using ApprovalTests.Reporters;
+using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
 using IntegrationTests.Common;
 using Moq;
@@ -24,6 +26,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         private readonly Mock<ILockingManagerApplicationService> _LockingManagerApplicationServiceMock = new Mock<ILockingManagerApplicationService>();
 
         [Test]
+        [UseReporter(typeof(DiffReporter))]
         public void ReturnsFilteredCampaigns()
         {
             // Arrange
@@ -68,7 +71,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     ModifiedDate = new DateTime(2017,10,17)
                 }
             };
-            var expectedResult = IntegrationTestHelper.ConvertToJson(getCampaignsReturn);
 
             trafficApiClientMock.Setup(x => x.GetAgency(It.IsAny<int>())).Returns(agency);
             trafficApiClientMock.Setup(x => x.GetAdvertisersByAgencyId(It.IsAny<int>())).Returns(new List<AdvertiserDto> { advertiser });
@@ -101,10 +103,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 
             // Assert
             campaignRepositoryMock.Verify(x => x.GetCampaigns(It.IsAny<DateTime>(), It.IsAny<DateTime>(), It.IsAny<PlanStatusEnum>()), Times.Once);
-            Assert.AreEqual(expectedResult, IntegrationTestHelper.ConvertToJson(result));
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
 
         [Test]
+        [UseReporter(typeof(DiffReporter))]
         public void ReturnsCampaignsFilteredUsingDefaultFilter()
         {
             // Arrange
@@ -149,7 +152,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     ModifiedDate = new DateTime(2017,10,17)
                 }
             };
-            var expectedResult = IntegrationTestHelper.ConvertToJson(getCampaignsReturn);
 
             trafficApiClientMock.Setup(x => x.GetAgency(It.IsAny<int>())).Returns(agency);
             trafficApiClientMock.Setup(x => x.GetAdvertisersByAgencyId(It.IsAny<int>())).Returns(new List<AdvertiserDto> { advertiser });
@@ -179,8 +181,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 
             // Assert
             campaignRepositoryMock.Verify(x => x.GetCampaigns(It.IsAny<DateTime>(), It.IsAny<DateTime>(), null), Times.Once);
-            var actualResult = IntegrationTestHelper.ConvertToJson(result);
-            Assert.AreEqual(expectedResult, actualResult);
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
 
         [Test]

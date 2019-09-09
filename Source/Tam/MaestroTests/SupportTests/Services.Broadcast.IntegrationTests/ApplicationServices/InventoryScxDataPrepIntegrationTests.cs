@@ -81,6 +81,47 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        public void DoesNotReturnData_ForInventoryWithoutRatings()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var inventoryScxDataPrep = _InventoryScxDataPrepFactory.GetInventoryDataPrep(Entities.Enums.InventorySourceTypeEnum.Barter);
+
+                string fileName = "Barter_A25-54_Q1 CNN.xlsx";
+                var request = new FileRequest
+                {
+                    StreamData = new FileStream($@".\Files\ProprietaryDataFiles\{fileName}", FileMode.Open, FileAccess.Read),
+                    FileName = fileName
+                };
+
+                var now = new DateTime(2019, 02, 02);
+                IntegrationTestApplicationServiceFactory.GetApplicationService<IProprietaryInventoryService>().SaveProprietaryInventoryFile(request, "sroibu", now);
+
+                var scxRequest = new InventoryScxDownloadRequest()
+                {
+                    StartDate = new DateTime(2019, 01, 01),
+                    EndDate = new DateTime(2019, 03, 31),
+                    InventorySourceId = 5,
+                    UnitNames = new List<string> { "Unit 1", "Unit 2", "Unit 3", "Unit 4" },
+                    DaypartCodeId = 2
+                };
+                var result = inventoryScxDataPrep.GetInventoryScxData(scxRequest.InventorySourceId, scxRequest.DaypartCodeId, scxRequest.StartDate, scxRequest.EndDate, scxRequest.UnitNames);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(ScxProgram), "ProgramId");
+                jsonResolver.Ignore(typeof(InventoryWeekProgram), "ProgramId");
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
         public void InventoryScxFile_ValidateSingleUnitScxObject()
         {
             using (new TransactionScopeWrapper())
