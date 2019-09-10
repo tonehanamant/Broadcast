@@ -52,10 +52,9 @@ GO
 
 
 /*************************************** START PRI-13777 add vpvh in plans *****************************************************/
-
-IF NOT EXISTS(SELECT * FROM INFORMATION_SCHEMA.COLUMNS 
-				WHERE TABLE_NAME = 'plans'
-					AND COLUMN_NAME = 'vpvh')
+IF NOT EXISTS(SELECT 1 FROM sys.COLUMNS 
+				WHERE object_id = OBJECT_ID('plans')
+					AND name = 'vpvh')
 BEGIN
 	ALTER TABLE plans ADD vpvh FLOAT NULL
 

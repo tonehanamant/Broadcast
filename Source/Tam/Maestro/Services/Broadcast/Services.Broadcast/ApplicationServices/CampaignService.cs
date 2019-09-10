@@ -93,6 +93,8 @@ namespace Services.Broadcast.ApplicationServices
         private readonly ICampaignSummaryRepository _CampaignSummaryRepository;
         private readonly ICampaignAggregationJobTrigger _CampaignAggregationJobTrigger;
 
+        private const int _cachingDurationInSeconds = 300;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="CampaignService"/> class.
         /// </summary>
@@ -133,46 +135,40 @@ namespace Services.Broadcast.ApplicationServices
             var quarterDetail = _QuarterCalculationEngine.GetQuarterDetail(filter.Quarter.Quarter, filter.Quarter.Year);
             var campaigns = _CampaignRepository.GetCampaigns(quarterDetail.StartDate, quarterDetail.EndDate, filter.PlanStatus);
 
-            _SetAgencies(campaigns);
-            _SetAdvertisers(campaigns);
+            var cacheAgencies = new BaseMemoryCache<AgencyDto>("localAgenciesCache");
+            var cacheAdvertisers = new BaseMemoryCache<List<AdvertiserDto>>("localAdvertisersCache");
+            foreach (var campaign in campaigns)
+            {
+                var summary = _CampaignSummaryRepository.GetSummaryForCampaign(campaign.Id);
+                _HydrateCampaignListItemWithSummary(campaign, summary);
+
+                _SetAgency(campaign, cacheAgencies);
+                _SetAdvertiser(campaign, cacheAdvertisers);
+            }
 
             return campaigns;
         }
 
-        private void _SetAgencies(List<CampaignListItemDto> campaigns)
+        private void _SetAgency(CampaignListItemDto campaign, BaseMemoryCache<AgencyDto> cache)
         {
-            const int cachingDurationInSeconds = 300;
-
-            var cache = new BaseMemoryCache<AgencyDto>("localAgenciesCache");
-            
-            foreach (var campaign in campaigns)
-            {
-                // Let`s cache agencies to reduce the number of requests to the traffic API
-                campaign.Agency = cache.GetOrCreate(
-                    campaign.Agency.Id.ToString(), 
-                    () => _TrafficApiClient.GetAgency(campaign.Agency.Id),
-                    new CacheItemPolicy { AbsoluteExpiration = DateTime.Now.AddSeconds(cachingDurationInSeconds) });
-            }
+            // Let`s cache agencies to reduce the number of requests to the traffic API
+            campaign.Agency = cache.GetOrCreate(
+                campaign.Agency.Id.ToString(),
+                () => _TrafficApiClient.GetAgency(campaign.Agency.Id),
+                new CacheItemPolicy { AbsoluteExpiration = DateTime.Now.AddSeconds(_cachingDurationInSeconds) });
         }
 
-        private void _SetAdvertisers(List<CampaignListItemDto> campaigns)
+        private void _SetAdvertiser(CampaignListItemDto campaign, BaseMemoryCache<List<AdvertiserDto>> cache)
         {
-            const int cachingDurationInSeconds = 300;
+            // Let`s cache advertisers to reduce the number of requests to the traffic API
+            var advertisers = cache.GetOrCreate(
+                campaign.Agency.Id.ToString(),
+                () => _TrafficApiClient.GetAdvertisersByAgencyId(campaign.Agency.Id),
+                new CacheItemPolicy { AbsoluteExpiration = DateTime.Now.AddSeconds(_cachingDurationInSeconds) });
 
-            var cache = new BaseMemoryCache<List<AdvertiserDto>>("localAdvertisersCache");
-
-            foreach (var campaign in campaigns)
-            {
-                // Let`s cache advertisers to reduce the number of requests to the traffic API
-                var advertisers = cache.GetOrCreate(
-                    campaign.Agency.Id.ToString(),
-                    () => _TrafficApiClient.GetAdvertisersByAgencyId(campaign.Agency.Id),
-                    new CacheItemPolicy { AbsoluteExpiration = DateTime.Now.AddSeconds(cachingDurationInSeconds) });
-
-                campaign.Advertiser = advertisers.Single(
-                    x => x.Id == campaign.Advertiser.Id, 
-                    "Cannot find an advertiser with id: " + campaign.Advertiser.Id);
-            }
+            campaign.Advertiser = advertisers.Single(
+                x => x.Id == campaign.Advertiser.Id,
+                "Cannot find an advertiser with id: " + campaign.Advertiser.Id);
         }
 
         /// <inheritdoc />
@@ -188,12 +184,33 @@ namespace Services.Broadcast.ApplicationServices
             return campaign;
         }
 
+        private void _HydrateCampaignListItemWithSummary(CampaignListItemDto campaign, CampaignSummaryDto summary)
+        {
+            if (summary == null)
+                return;
+
+            campaign.FlightStartDate = summary.FlightStartDate;
+            campaign.FlightEndDate = summary.FlightEndDate;
+            campaign.FlightHiatusDays = summary.FlightHiatusDays;
+            campaign.FlightActiveDays = summary.FlightActiveDays;
+            campaign.HasHiatus = campaign.FlightHiatusDays > 0;
+
+            campaign.Budget = summary.Budget;
+            campaign.CPM = summary.CPM;
+            campaign.Impressions = summary.Impressions;
+            campaign.Rating = summary.Rating;
+
+            campaign.CampaignStatus = summary.CampaignStatus;
+            campaign.PlanStatuses = _MapToPlanStatuses(summary);
+        }
+
         private void _HydrateCampaignWithSummary(CampaignDto campaign, CampaignSummaryDto summary)
         {
             if (summary == null)
             {
                 return;
             }
+
             campaign.FlightStartDate = summary.FlightStartDate;
             campaign.FlightEndDate = summary.FlightEndDate;
             campaign.FlightHiatusDays = summary.FlightHiatusDays;

@@ -9,24 +9,41 @@
       "Id": 5,
       "Name": "Name5"
     },
-    "Budget": null,
-    "CampaignStatus": null,
-    "CPM": null,
-    "FlightActiveDays": null,
-    "FlightEndDate": null,
-    "FlightHiatusDays": null,
-    "FlightStartDate": null,
-    "HasHiatus": null,
+    "Budget": 1500.0,
+    "CampaignStatus": 4,
+    "CPM": 2500.0,
+    "FlightActiveDays": 26,
+    "FlightEndDate": "2019-08-30T00:00:00",
+    "FlightHiatusDays": 4,
+    "FlightStartDate": "2019-08-01T00:00:00",
+    "HasHiatus": true,
     "HasPlans": false,
     "Id": 1,
-    "Impressions": null,
+    "Impressions": 5500.0,
     "ModifiedBy": "IntegrationTestUser",
     "ModifiedDate": "2019-05-09T00:00:00",
     "Name": "Test Campaign 1",
     "Notes": null,
     "Plans": null,
-    "PlanStatuses": null,
-    "Rating": null
+    "PlanStatuses": [
+      {
+        "Count": 1,
+        "PlanStatus": 1
+      },
+      {
+        "Count": 3,
+        "PlanStatus": 3
+      },
+      {
+        "Count": 1,
+        "PlanStatus": 5
+      },
+      {
+        "Count": 2,
+        "PlanStatus": 6
+      }
+    ],
+    "Rating": 23.5
   },
   {
     "Advertiser": {
@@ -38,24 +55,41 @@
       "Id": 9,
       "Name": "Name9"
     },
-    "Budget": null,
-    "CampaignStatus": null,
-    "CPM": null,
-    "FlightActiveDays": null,
-    "FlightEndDate": null,
-    "FlightHiatusDays": null,
-    "FlightStartDate": null,
-    "HasHiatus": null,
+    "Budget": 1500.0,
+    "CampaignStatus": 4,
+    "CPM": 2500.0,
+    "FlightActiveDays": 26,
+    "FlightEndDate": "2019-08-30T00:00:00",
+    "FlightHiatusDays": 4,
+    "FlightStartDate": "2019-08-01T00:00:00",
+    "HasHiatus": true,
     "HasPlans": false,
     "Id": 2,
-    "Impressions": null,
+    "Impressions": 5500.0,
     "ModifiedBy": "CROSSMW\\bbotelho",
     "ModifiedDate": "2019-05-13T00:00:00",
     "Name": "Test Campaign 2",
     "Notes": "This is a test note for a test campaign.",
     "Plans": null,
-    "PlanStatuses": null,
-    "Rating": null
+    "PlanStatuses": [
+      {
+        "Count": 1,
+        "PlanStatus": 1
+      },
+      {
+        "Count": 3,
+        "PlanStatus": 3
+      },
+      {
+        "Count": 1,
+        "PlanStatus": 5
+      },
+      {
+        "Count": 2,
+        "PlanStatus": 6
+      }
+    ],
+    "Rating": 23.5
   },
   {
     "Advertiser": {
@@ -67,23 +101,40 @@
       "Id": 3,
       "Name": "Name3"
     },
-    "Budget": null,
-    "CampaignStatus": null,
-    "CPM": null,
-    "FlightActiveDays": null,
-    "FlightEndDate": null,
-    "FlightHiatusDays": null,
-    "FlightStartDate": null,
-    "HasHiatus": null,
+    "Budget": 1500.0,
+    "CampaignStatus": 4,
+    "CPM": 2500.0,
+    "FlightActiveDays": 26,
+    "FlightEndDate": "2019-08-30T00:00:00",
+    "FlightHiatusDays": 4,
+    "FlightStartDate": "2019-08-01T00:00:00",
+    "HasHiatus": true,
     "HasPlans": false,
     "Id": 4,
-    "Impressions": null,
+    "Impressions": 5500.0,
     "ModifiedBy": "CROSSMW\\bbotelho",
     "ModifiedDate": "2019-08-27T00:00:00",
     "Name": "Test Campaign 4",
     "Notes": null,
     "Plans": null,
-    "PlanStatuses": null,
-    "Rating": null
+    "PlanStatuses": [
+      {
+        "Count": 1,
+        "PlanStatus": 1
+      },
+      {
+        "Count": 3,
+        "PlanStatus": 3
+      },
+      {
+        "Count": 1,
+        "PlanStatus": 5
+      },
+      {
+        "Count": 2,
+        "PlanStatus": 6
+      }
+    ],
+    "Rating": 23.5
   }
 ]
