@@ -16,14 +16,8 @@ namespace BroadcastComposerWeb
 {
     public partial class Startup
     {
-        private UnityContainer container;
         public void ConfigureHangfire(IAppBuilder app)
         {
-            container = new UnityContainer();
-            UnityConfig.RegisterTypes(container);
-
-            BroadcastApplicationServiceFactory.Instance.Resolve<ISMSClient>();
-
             //Set Hangfire to use SQL Server for job persistence
             var connectionString = GetConnectionString();
             GlobalConfiguration.Configuration.UseSqlServerStorage(@connectionString, new SqlServerStorageOptions
@@ -32,7 +26,7 @@ namespace BroadcastComposerWeb
             });
 
             //Sets Hangfire to use the Ioc container
-            GlobalConfiguration.Configuration.UseActivator(new HangfireJobActivator(container));
+            GlobalConfiguration.Configuration.UseActivator(new HangfireJobActivator(BroadcastApplicationServiceFactory.Instance));
 
             //Configure Hangfire Dashboard and Dashboard Authorization
             app.UseHangfireDashboard("/jobs", new DashboardOptions()
