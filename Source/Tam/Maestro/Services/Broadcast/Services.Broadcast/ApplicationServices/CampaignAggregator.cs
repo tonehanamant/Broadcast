@@ -100,6 +100,14 @@ namespace Services.Broadcast.ApplicationServices
 
         protected void AggregateBudgetAndGoalsInfo(List<PlanDto> plans, CampaignSummaryDto summary)
         {
+            // TODO: Remove this once full validation has been implemented
+            // invalid nulls have been introduced during product evolution.
+            // validate now to make sure cannot divide by zero
+            if (plans.Any(p => p.DeliveryImpressions == null))
+            {
+                return;
+            }
+
             summary.Budget = plans.Sum(p => p.Budget);
             summary.Impressions = plans.Sum(p => p.DeliveryImpressions);
             summary.CPM = plans.Sum(p => p.Budget) / Convert.ToDecimal(plans.Sum(p => p.DeliveryImpressions));
