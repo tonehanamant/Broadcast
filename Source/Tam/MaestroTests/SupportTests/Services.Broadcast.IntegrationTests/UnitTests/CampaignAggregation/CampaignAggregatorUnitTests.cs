@@ -64,11 +64,35 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.CampaignAggregation
             var dataRepositoryFactory = new Mock<IDataRepositoryFactory>();
             dataRepositoryFactory.Setup(d => d.GetDataRepository<IPlanRepository>()).Returns(planRepository.Object);
             var tc = new CampaignAggregatorUnitTestClass(dataRepositoryFactory.Object);
+            var serExpectedSummary = IntegrationTestHelper.ConvertToJson(new CampaignSummaryDto
+            {
+                Budget = 1500.0m,
+                CampaignId = 666,
+                CampaignStatus = (PlanStatusEnum)4,
+                ComponentsModified = new DateTime(2019, 08, 28, 12, 30, 32),
+                CPM = 0.2727272727272727272727272727m,
+                FlightActiveDays = 26,
+                FlightEndDate = new DateTime(2019, 08, 30),
+                FlightHiatusDays = 4,
+                FlightStartDate = new DateTime(2019, 08, 01),
+                Impressions = 5500.0,
+                PlanStatusCountClientApproval = 1,
+                PlanStatusCountComplete = 0,
+                PlanStatusCountContracted = 1,
+                PlanStatusCountLive = 0,
+                PlanStatusCountReserved = 0,
+                PlanStatusCountWorking = 0,
+                ProcessingStatus = 0,
+                Rating = 4500.0
+            });
 
             var summary = tc.Aggregate(campaignId);
 
             planRepository.Verify(c => c.GetPlansForCampaign(campaignId), Times.Once());
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(summary));
+            // TODO: Bring this back.  Fails on CD test run build.
+            //Approvals.Verify(IntegrationTestHelper.ConvertToJson(summary));
+            // TODO: When bring that back remove this 
+            Assert.AreEqual(serExpectedSummary, IntegrationTestHelper.ConvertToJson(summary));
         }
 
         [Test]
@@ -81,11 +105,18 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.CampaignAggregation
             var dataRepositoryFactory = new Mock<IDataRepositoryFactory>();
             dataRepositoryFactory.Setup(d => d.GetDataRepository<IPlanRepository>()).Returns(planRepository.Object);
             var tc = new CampaignAggregatorUnitTestClass(dataRepositoryFactory.Object);
+            var serExpectedSummary = IntegrationTestHelper.ConvertToJson(new CampaignSummaryDto
+            {
+                CampaignId = 666
+            });
 
             var summary = tc.Aggregate(campaignId);
 
             planRepository.Verify(c => c.GetPlansForCampaign(campaignId), Times.Once());
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(summary));
+            // TODO: Bring this back.  Fails on CD test run build.
+            //Approvals.Verify(IntegrationTestHelper.ConvertToJson(summary));
+            // TODO: When bring that back remove this 
+            Assert.AreEqual(serExpectedSummary, IntegrationTestHelper.ConvertToJson(summary));
         }
 
         [Test]
@@ -126,10 +157,21 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.CampaignAggregation
                 }
             };
             var summary = new CampaignSummaryDto { CampaignId = campaignId };
+            var serExpectedSummary = IntegrationTestHelper.ConvertToJson(new CampaignSummaryDto
+            {
+                CampaignId = 666,
+                FlightActiveDays = 30,
+                FlightEndDate = new DateTime(2019, 08, 30),
+                FlightHiatusDays = 0,
+                FlightStartDate = new DateTime(2019, 08, 01),
+            });
 
             tc.UT_AggregateFlightInfo(plans, summary);
 
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(summary));
+            // TODO: Bring this back.  Fails on CD test run build.
+            //Approvals.Verify(IntegrationTestHelper.ConvertToJson(summary));
+            // TODO: When bring that back remove this 
+            Assert.AreEqual(serExpectedSummary, IntegrationTestHelper.ConvertToJson(summary));
         }
 
         [Test]
@@ -153,10 +195,21 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.CampaignAggregation
                 }
             };
             var summary = new CampaignSummaryDto { CampaignId = campaignId };
+            var serExpectedSummary = IntegrationTestHelper.ConvertToJson(new CampaignSummaryDto
+            {
+                CampaignId = 666,
+                FlightActiveDays = 30,
+                FlightEndDate = new DateTime(2019, 08, 30),
+                FlightHiatusDays = 0,
+                FlightStartDate = new DateTime(2019, 08, 01)
+            });
 
             tc.UT_AggregateFlightInfo(plans, summary);
 
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(summary));
+            // TODO: Bring this back.  Fails on CD test run build.
+            //Approvals.Verify(IntegrationTestHelper.ConvertToJson(summary));
+            // TODO: When bring that back remove this 
+            Assert.AreEqual(serExpectedSummary, IntegrationTestHelper.ConvertToJson(summary));
         }
 
         [Test]
@@ -190,10 +243,21 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.CampaignAggregation
                 }
             };
             var summary = new CampaignSummaryDto { CampaignId = campaignId };
+            var serExpectedSummary = IntegrationTestHelper.ConvertToJson(new CampaignSummaryDto
+            {
+                CampaignId = 666,
+                FlightActiveDays = 26,
+                FlightEndDate = new DateTime(2019, 08, 30),
+                FlightHiatusDays = 4,
+                FlightStartDate = new DateTime(2019, 08, 01)
+            });
 
             tc.UT_AggregateFlightInfo(plans, summary);
 
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(summary));
+            // TODO: Bring this back.  Fails on CD test run build.
+            //Approvals.Verify(IntegrationTestHelper.ConvertToJson(summary));
+            // TODO: When bring that back remove this 
+            Assert.AreEqual(serExpectedSummary, IntegrationTestHelper.ConvertToJson(summary));
         }
     }
 }

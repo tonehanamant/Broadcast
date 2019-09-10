@@ -43,7 +43,7 @@ namespace Services.Broadcast.ApplicationServices
         public string TriggerJob(int campaignId, string queuedBy)
         {
             _CampaignSummaryRepository.SetSummaryProcessingStatusToInProgress(campaignId, queuedBy, DateTime.Now);
-            return _BackgroundJobClient.Enqueue<ICampaignService>(x => x.ProcessCampaignAggregation(campaignId));
+            return _BackgroundJobClient.Enqueue<CampaignService>(x => x.ProcessCampaignAggregation(campaignId));
         }
     }
 }

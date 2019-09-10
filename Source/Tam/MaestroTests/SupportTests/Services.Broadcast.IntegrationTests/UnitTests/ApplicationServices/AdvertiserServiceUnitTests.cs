@@ -29,13 +29,17 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             trafficApiClientMock.Setup(s => s.GetAdvertisersByAgencyId(It.IsAny<int>())).Returns(getAdvertisersByAgencyIdReturn);
             
             var tc = new AdvertiserService(trafficApiClientMock.Object);
+            var serExpectedResult = IntegrationTestHelper.ConvertToJson(getAdvertisersByAgencyIdReturn);
 
             // Act
             var result = tc.GetAdvertisersByAgencyId(agencyId: 1);
 
             // Assert
             trafficApiClientMock.Verify(x => x.GetAdvertisersByAgencyId(1), Times.Once);
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+            // TODO: Bring this back.  Fails on CD test run build.
+            //Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+            // TODO: When bring that back remove this 
+            Assert.AreEqual(serExpectedResult, IntegrationTestHelper.ConvertToJson(result));
         }
 
         [Test]
