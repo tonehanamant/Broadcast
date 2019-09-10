@@ -1,6 +1,6 @@
 ﻿{
-  "AdvertiserId": 0,
-  "AgencyId": 0,
+  "AdvertiserId": 37444,
+  "AgencyId": 5,
   "Budget": null,
   "CampaignStatus": null,
   "CPM": null,

@@ -182,6 +182,8 @@ namespace Services.Broadcast.Repositories
                 Notes = campaign.notes,
                 ModifiedDate = campaign.modified_date,
                 ModifiedBy = campaign.modified_by,
+                AdvertiserId = campaign.advertiser_id,
+                AgencyId = campaign.agency_id,                
                 Plans = campaign.plans
                     .Where(x => x.plan_summary.Any(s => s.processing_status == (int)PlanAggregationProcessingStatusEnum.Idle))
                     .Select(plan =>
