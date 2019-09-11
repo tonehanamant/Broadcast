@@ -26,10 +26,24 @@ namespace BroadcastComposerWeb.Controllers
         }
 
         /// <summary>
-        /// Endpoint for listing the campaigns in the system
+        /// Endpoint for listing the campaigns in the system, temporary until the FE is merged.
+        /// Will be removed after.
         /// </summary>
         /// <returns>List of campaigns</returns>
         [HttpGet]
+        [Route("")]
+        public BaseResponse<List<CampaignListItemDto>> GetCampaignsGet(CampaignFilterDto campaignFilter)
+        {
+            return
+                _ConvertToBaseResponse(
+                    () => _ApplicationServiceFactory.GetApplicationService<ICampaignService>().GetCampaigns(campaignFilter, DateTime.Now));
+        }
+
+        /// <summary>
+        /// Endpoint for listing the campaigns in the system
+        /// </summary>
+        /// <returns>List of campaigns</returns>
+        [HttpPost]
         [Route("")]
         public BaseResponse<List<CampaignListItemDto>> GetCampaigns(CampaignFilterDto campaignFilter)
         {
@@ -71,10 +85,10 @@ namespace BroadcastComposerWeb.Controllers
         /// <returns>An object with a list of quarters and the current quarter.</returns>
         [HttpGet]
         [Route("Quarters")]
-        public BaseResponse<CampaignQuartersDto> GetQuarters(PlanStatusEnum? planStatusEnum)
+        public BaseResponse<CampaignQuartersDto> GetQuarters(PlanStatusEnum? planStatus = null)
         {
             return
-               _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ICampaignService>().GetQuarters(planStatusEnum, DateTime.Now));
+               _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ICampaignService>().GetQuarters(planStatus, DateTime.Now));
         }
 
         /// <summary>
