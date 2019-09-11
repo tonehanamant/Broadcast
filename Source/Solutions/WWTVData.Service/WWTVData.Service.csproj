@@ -141,8 +141,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="InventoryRatingsSchedulerService.cs" />
-    <Compile Include="ScxGenerationSchedulerService.cs" />
     <Compile Include="WWTVInboundService.cs" />
     <Compile Include="WWTVInboundErrorService.cs" />
     <Compile Include="WWTVOutboundService.cs" />

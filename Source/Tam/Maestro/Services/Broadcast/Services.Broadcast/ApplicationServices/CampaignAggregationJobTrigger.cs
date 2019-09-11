@@ -15,6 +15,8 @@ namespace Services.Broadcast.ApplicationServices
         /// </summary>
         /// <param name="campaignId">The campaign identifier.</param>
         /// <param name="queuedBy">The queued by.</param>
+        [Queue("campaignaggregation")]
+        [DisableConcurrentExecution(300)]
         string TriggerJob(int campaignId, string queuedBy);
     }
 

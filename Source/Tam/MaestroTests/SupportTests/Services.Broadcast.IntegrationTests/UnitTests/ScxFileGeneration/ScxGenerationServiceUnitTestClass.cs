@@ -1,5 +1,6 @@
 ﻿using Common.Services;
 using Common.Services.Repositories;
+using Hangfire;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities.Scx;
@@ -14,9 +15,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ScxFileGeneration
             IDataRepositoryFactory broadcastDataRepositoryFactory,
             IProprietaryInventoryService proprietaryInventoryService,
             IFileService fileService,
-            IQuarterCalculationEngine quarterCalculationEngine)
+            IQuarterCalculationEngine quarterCalculationEngine,
+            IBackgroundJobClient backgroundJobClient)
             : base(broadcastDataRepositoryFactory, 
-                proprietaryInventoryService, fileService, quarterCalculationEngine)
+                proprietaryInventoryService, fileService, quarterCalculationEngine, backgroundJobClient)
         {
         }
 

@@ -13,6 +13,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using ApprovalTests.Wpf;
+using Hangfire;
+using Hangfire.Common;
+using Hangfire.States;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Repositories;
@@ -30,9 +33,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ScxFileGeneration
             var proprietaryInventoryService = new Mock<IProprietaryInventoryService>();
             var fileService = new Mock<IFileService>();
             var quartersCalculationEngine = new Mock<IQuarterCalculationEngine>();
+            var backgroundJobClient = new Mock<IBackgroundJobClient>();
 
             var tc = new ScxGenerationServiceUnitTestClass(dataRepoFactory.Object, 
-                proprietaryInventoryService.Object, fileService.Object, quartersCalculationEngine.Object);
+                proprietaryInventoryService.Object, fileService.Object, quartersCalculationEngine.Object,
+                backgroundJobClient.Object);
 
             Assert.IsNotNull(tc);
         }
@@ -52,6 +57,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ScxFileGeneration
             var proprietaryInventoryService = new Mock<IProprietaryInventoryService>();
             var fileService = new Mock<IFileService>();
             var quartersCalculationEngine = new Mock<IQuarterCalculationEngine>();
+            var backgroundJobClient = new Mock<IBackgroundJobClient>();
             var dropFolder = "thisFolder";
             var getHistoryCalls = new List<int>();
             var getHistoryReturn = new List<ScxFileGenerationDetailDto>
@@ -64,7 +70,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ScxFileGeneration
                 .Callback<int>((s) => getHistoryCalls.Add(s))
                 .Returns(getHistoryReturn);
             var tc = new ScxGenerationServiceUnitTestClass(dataRepoFactory.Object,
-                proprietaryInventoryService.Object, fileService.Object, quartersCalculationEngine.Object)
+                proprietaryInventoryService.Object, fileService.Object, quartersCalculationEngine.Object,
+                backgroundJobClient.Object)
             {
                 DropFolderPath = dropFolder
             };
@@ -87,6 +94,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ScxFileGeneration
             var proprietaryInventoryService = new Mock<IProprietaryInventoryService>();
             var fileService = new Mock<IFileService>();
             var quartersCalculationEngine = new Mock<IQuarterCalculationEngine>();
+            var backgroundJobClient = new Mock<IBackgroundJobClient>();
             var dropFolder = "thisFolder";
             var getHistoryCalls = new List<int>();
             var getHistoryReturn = new List<ScxFileGenerationDetailDto>
@@ -104,7 +112,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ScxFileGeneration
                 .Returns(getHistoryReturn);
 
             var tc = new ScxGenerationServiceUnitTestClass(dataRepoFactory.Object,
-                proprietaryInventoryService.Object, fileService.Object, quartersCalculationEngine.Object)
+                proprietaryInventoryService.Object, fileService.Object, quartersCalculationEngine.Object,
+                backgroundJobClient.Object)
             {
                 DropFolderPath = dropFolder
             };
@@ -134,6 +143,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ScxFileGeneration
             var proprietaryInventoryService = new Mock<IProprietaryInventoryService>();
             var fileService = new Mock<IFileService>();
             var quartersCalculationEngine = new Mock<IQuarterCalculationEngine>();
+            var backgroundJobClient = new Mock<IBackgroundJobClient>();
             var dropFolder = "thisFolder";
             var getHistoryCalls = new List<int>();
             var getHistoryReturn = new List<ScxFileGenerationDetailDto>();
@@ -141,7 +151,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ScxFileGeneration
                 .Callback<int>((s) => getHistoryCalls.Add(s))
                 .Returns(getHistoryReturn);
             var tc = new ScxGenerationServiceUnitTestClass(dataRepoFactory.Object,
-                proprietaryInventoryService.Object, fileService.Object, quartersCalculationEngine.Object)
+                proprietaryInventoryService.Object, fileService.Object, quartersCalculationEngine.Object,
+                backgroundJobClient.Object)
             {
                 DropFolderPath = dropFolder
             };
@@ -164,6 +175,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ScxFileGeneration
             var proprietaryInventoryService = new Mock<IProprietaryInventoryService>();
             var fileService = new Mock<IFileService>();
             var quartersCalculationEngine = new Mock<IQuarterCalculationEngine>();
+            var backgroundJobClient = new Mock<IBackgroundJobClient>();
             var dropFolder = "thisFolder";
             var getHistoryCalls = new List<int>();
             var getHistoryReturn = new List<ScxFileGenerationDetailDto>
@@ -176,7 +188,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ScxFileGeneration
                 .Callback<int>((s) => getHistoryCalls.Add(s))
                 .Returns(getHistoryReturn);
             var tc = new ScxGenerationServiceUnitTestClass(dataRepoFactory.Object,
-                proprietaryInventoryService.Object, fileService.Object, quartersCalculationEngine.Object)
+                proprietaryInventoryService.Object, fileService.Object, quartersCalculationEngine.Object,
+                backgroundJobClient.Object)
             {
                 DropFolderPath = dropFolder
             };
@@ -204,9 +217,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ScxFileGeneration
             var fileService = new Mock<IFileService>();
             var dropFolder = "thisFolder";
             var quartersCalculationEngine = new Mock<IQuarterCalculationEngine>();
-            
+            var backgroundJobClient = new Mock<IBackgroundJobClient>();
+
             var tc = new ScxGenerationServiceUnitTestClass(dataRepoFactory.Object,
-                proprietaryInventoryService.Object, fileService.Object, quartersCalculationEngine.Object)
+                proprietaryInventoryService.Object, fileService.Object, quartersCalculationEngine.Object,
+                backgroundJobClient.Object)
             {
                 DropFolderPath = dropFolder,
             };
@@ -251,8 +266,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ScxFileGeneration
             var fileService = new Mock<IFileService>();
             var dropFolder = "thisFolder";
             var quartersCalculationEngine = new Mock<IQuarterCalculationEngine>();
+            var backgroundJobClient = new Mock<IBackgroundJobClient>();
             var tc = new ScxGenerationServiceUnitTestClass(dataRepoFactory.Object,
-                proprietaryInventoryService.Object, fileService.Object, quartersCalculationEngine.Object)
+                proprietaryInventoryService.Object, fileService.Object, quartersCalculationEngine.Object,
+                backgroundJobClient.Object)
             {
                 DropFolderPath = dropFolder
             };
@@ -296,6 +313,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ScxFileGeneration
             var proprietaryInventoryService = new Mock<IProprietaryInventoryService>();
             var fileService = new Mock<IFileService>();
             var quartersCalculationEngine = new Mock<IQuarterCalculationEngine>();
+            var backgroundJobClient = new Mock<IBackgroundJobClient>();
             var dropFolder = "thisFolder";
             var updateJobCallCount = 0;
             var testJob = new Mock<ScxGenerationJob>();
@@ -303,7 +321,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ScxFileGeneration
             scxGenerationJobRepository.Setup(x => x.UpdateJob(testJob.Object))
                 .Callback(() => updateJobCallCount++);
             var tc = new ScxGenerationServiceUnitTestClass(dataRepoFactory.Object,
-                proprietaryInventoryService.Object, fileService.Object, quartersCalculationEngine.Object)
+                proprietaryInventoryService.Object, fileService.Object, quartersCalculationEngine.Object,
+                backgroundJobClient.Object)
             {
                 DropFolderPath = dropFolder
             };
@@ -315,6 +334,44 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ScxFileGeneration
 
             Assert.AreEqual(2, updateJobCallCount);
             Assert.AreEqual(BackgroundJobProcessingStatus.Succeeded, testJob.Object.Status);
+        }
+        #endregion
+
+        #region Ensure ProcessScxGenerationJob Enqueued
+        [Test]
+        public void ProcessScxGenerationJobEnqueued()
+        {
+            var scxGenerationJobRepository = new Mock<IScxGenerationJobRepository>();
+            var dataRepoFactory = new Mock<IDataRepositoryFactory>();
+            dataRepoFactory.Setup(s => s.GetDataRepository<IScxGenerationJobRepository>())
+                .Returns(scxGenerationJobRepository.Object);
+            var proprietaryInventoryService = new Mock<IProprietaryInventoryService>();
+            var fileService = new Mock<IFileService>();
+            var quartersCalculationEngine = new Mock<IQuarterCalculationEngine>();
+            var backgroundJobClient = new Mock<IBackgroundJobClient>();
+            var dropFolder = "thisFolder";
+            var updateJobCallCount = 0;
+            var testJob = new Mock<ScxGenerationJob>();
+            testJob.Object.Status = BackgroundJobProcessingStatus.Queued;
+            scxGenerationJobRepository.Setup(x => x.UpdateJob(testJob.Object))
+                .Callback(() => updateJobCallCount++);
+            var tc = new ScxGenerationServiceUnitTestClass(dataRepoFactory.Object,
+                proprietaryInventoryService.Object, fileService.Object, quartersCalculationEngine.Object,
+                backgroundJobClient.Object)
+            {
+                DropFolderPath = dropFolder
+            };
+            var testFiles = new Mock<List<InventoryScxFile>>();
+            proprietaryInventoryService.Setup(x => x.GenerateScxFiles(testJob.Object.InventoryScxDownloadRequest))
+                .Returns(testFiles.Object);
+
+            var inventoryScxDownloadRequest = new Mock<InventoryScxDownloadRequest>();
+
+            tc.QueueScxGenerationJob(inventoryScxDownloadRequest.Object, "UnitTestUser", DateTime.Now);
+
+            backgroundJobClient.Verify(x => x.Create(
+                It.Is<Job>(job => job.Method.Name == "ProcessScxGenerationJob"),
+                It.IsAny<EnqueuedState>()));
         }
         #endregion
 
@@ -330,9 +387,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ScxFileGeneration
             var proprietaryInventoryService = new Mock<IProprietaryInventoryService>();
             var fileService = new Mock<IFileService>();
             var quartersCalculationEngine = new Mock<IQuarterCalculationEngine>();
+            var backgroundJobClient = new Mock<IBackgroundJobClient>();
             var dropFolder = "thisFolder";
             var tc = new ScxGenerationServiceUnitTestClass(dataRepoFactory.Object,
-                proprietaryInventoryService.Object, fileService.Object, quartersCalculationEngine.Object)
+                proprietaryInventoryService.Object, fileService.Object, quartersCalculationEngine.Object,
+                backgroundJobClient.Object)
             {
                 DropFolderPath = dropFolder
             };
@@ -371,9 +430,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ScxFileGeneration
             var proprietaryInventoryService = new Mock<IProprietaryInventoryService>();
             var fileService = new Mock<IFileService>();
             var calculator = new Mock<IQuarterCalculationEngine>();
+            var backgroundJobClient = new Mock<IBackgroundJobClient>();
             var dropFolder = "thisFolder";
             var tc = new ScxGenerationServiceUnitTestClass(dataRepoFactory.Object,
-                proprietaryInventoryService.Object, fileService.Object, calculator.Object)
+                proprietaryInventoryService.Object, fileService.Object, calculator.Object,
+                backgroundJobClient.Object)
             {
                 DropFolderPath = dropFolder
             };

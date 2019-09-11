@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web;
+using Hangfire;
 using Services.Broadcast.Helpers;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
@@ -21,7 +22,9 @@ namespace Services.Broadcast.ApplicationServices
     public interface IScxGenerationService : IApplicationService
     {
         int QueueScxGenerationJob(InventoryScxDownloadRequest inventoryScxDownloadRequest, string userName, DateTime currentDate);
-        void ProcessScxGenerationJob(int jobId, DateTime currentDate);
+        [Queue("scxfilegeneration")]
+        [DisableConcurrentExecution(300)]
+        void ProcessScxGenerationJob(int jobId);
         void ProcessScxGenerationJob(ScxGenerationJob job, DateTime currentDate);
         List<ScxGenerationJob> GetQueuedJobs(int limit);
         void ResetJobStatusToQueued(int jobId);
@@ -47,16 +50,19 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IProprietaryInventoryService _ProprietaryInventoryService;
         private readonly IFileService _FileService;
         private readonly IQuarterCalculationEngine _QuarterCalculationEngine;
+        private readonly IBackgroundJobClient _BackgroundJobClient;
 
         public ScxGenerationService(IDataRepositoryFactory broadcastDataRepositoryFactory, 
             IProprietaryInventoryService proprietaryInventoryService, 
             IFileService fileService,
-            IQuarterCalculationEngine quarterCalculationEngine)
+            IQuarterCalculationEngine quarterCalculationEngine,
+            IBackgroundJobClient backgroundJobClient)
         {
             _ScxGenerationJobRepository = broadcastDataRepositoryFactory.GetDataRepository<IScxGenerationJobRepository>();
             _ProprietaryInventoryService = proprietaryInventoryService;
             _FileService = fileService;
             _QuarterCalculationEngine = quarterCalculationEngine;
+            _BackgroundJobClient = backgroundJobClient;
         }
 
         public int QueueScxGenerationJob(InventoryScxDownloadRequest inventoryScxDownloadRequest, string userName, DateTime currentDate)
@@ -72,14 +78,18 @@ namespace Services.Broadcast.ApplicationServices
             if (job.InventoryScxDownloadRequest.UnitNames == null)
                 job.InventoryScxDownloadRequest.UnitNames = new List<string>();
 
-            return _ScxGenerationJobRepository.AddJob(job);
+            var jobId = _ScxGenerationJobRepository.AddJob(job);
+
+            _BackgroundJobClient.Enqueue<IScxGenerationService>(x => x.ProcessScxGenerationJob(jobId));
+
+            return jobId;
         }
 
-        public void ProcessScxGenerationJob(int jobId, DateTime currentDate)
+        public void ProcessScxGenerationJob(int jobId)
         {
             var job = _ScxGenerationJobRepository.GetJobById(jobId);
 
-            ProcessScxGenerationJob(job, currentDate);
+            ProcessScxGenerationJob(job, DateTime.Now);
         }
 
         public void ProcessScxGenerationJob(ScxGenerationJob job, DateTime currentDate)

@@ -7,6 +7,7 @@ using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hangfire;
 using static Services.Broadcast.Entities.Enums.ProposalEnums;
 
 namespace Services.Broadcast.ApplicationServices
@@ -38,6 +39,8 @@ namespace Services.Broadcast.ApplicationServices
         /// or
         /// Job with id {jobId} already has status {job.Status}
         /// </exception>
+        [Queue("inventoryrating")]
+        [DisableConcurrentExecution(300)]
         int ProcessInventoryRatingsJob(int jobId);
         
         void ResetJobStatusToQueued(int jobId);
@@ -53,13 +56,15 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IInventoryFileRepository _InventoryFileRepository;
         private readonly INsiPostingBookService _NsiPostingBookService;
         private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekAggregateCache;
+        private readonly IBackgroundJobClient _BackgroundJobClient;
 
         public InventoryRatingsProcessingService(
             IDataRepositoryFactory broadcastDataRepositoryFactory,
             IImpressionsService impressionsService,
             IProprietarySpotCostCalculationEngine proprietarySpotCostCalculationEngine,
             INsiPostingBookService nsiPostingBookService,
-            IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache)
+            IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
+            IBackgroundJobClient backgroundJobClient)
         {
             _InventoryFileRatingsJobsRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryFileRatingsJobsRepository>();
             _ProprietaryRepository = broadcastDataRepositoryFactory
@@ -70,6 +75,7 @@ namespace Services.Broadcast.ApplicationServices
             _InventoryFileRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryFileRepository>();
             _NsiPostingBookService = nsiPostingBookService;
             _MediaMonthAndWeekAggregateCache = mediaMonthAndWeekAggregateCache;
+            _BackgroundJobClient = backgroundJobClient;
         }
 
         public List<InventoryFileRatingsProcessingJob> GetQueuedJobs(int limit)
@@ -91,10 +97,16 @@ namespace Services.Broadcast.ApplicationServices
                 QueuedAt = DateTime.Now
             };
 
-            _InventoryFileRatingsJobsRepository.AddJob(job);            
+            _InventoryFileRatingsJobsRepository.AddJob(job);
+
+            if (job.id.HasValue)
+            {
+                _BackgroundJobClient.Enqueue<IInventoryRatingsProcessingService>(x =>
+                    x.ProcessInventoryRatingsJob(job.id.Value));
+            }
         }
 
-        /// <inheritdoc/>        
+        /// <inheritdoc/>
         public int ProcessInventoryRatingsJob(int jobId)
         {
             const ProposalPlaybackType defaultOpenMarketPlaybackType = ProposalPlaybackType.LivePlus3;

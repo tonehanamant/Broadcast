@@ -123,7 +123,7 @@ namespace BroadcastComposerWeb.Controllers
             try
             {
                 var service = _ApplicationServiceFactory.GetApplicationService<IScxGenerationService>();
-                service.ProcessScxGenerationJob(jobId, DateTime.Now);
+                service.ProcessScxGenerationJob(jobId);
                 ViewBag.Message = "Job Processed";
             }
             catch (Exception e)
