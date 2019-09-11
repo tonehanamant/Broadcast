@@ -32,7 +32,7 @@ namespace BroadcastComposerWeb.Controllers
         /// <returns>List of campaigns</returns>
         [HttpGet]
         [Route("")]
-        public BaseResponse<List<CampaignListItemDto>> GetCampaignsGet(CampaignFilterDto campaignFilter)
+        public BaseResponse<List<CampaignListItemDto>> GetCampaigns(CampaignFilterDto campaignFilter)
         {
             return
                 _ConvertToBaseResponse(
@@ -40,12 +40,12 @@ namespace BroadcastComposerWeb.Controllers
         }
 
         /// <summary>
-        /// Endpoint for listing the campaigns in the system
+        /// Endpoint for listing the campaigns in the system.
         /// </summary>
         /// <returns>List of campaigns</returns>
         [HttpPost]
-        [Route("")]
-        public BaseResponse<List<CampaignListItemDto>> GetCampaigns(CampaignFilterDto campaignFilter)
+        [Route("Filter")]
+        public BaseResponse<List<CampaignListItemDto>> GetCampaignsWithFilter(CampaignFilterDto campaignFilter)
         {
             return
                 _ConvertToBaseResponse(
