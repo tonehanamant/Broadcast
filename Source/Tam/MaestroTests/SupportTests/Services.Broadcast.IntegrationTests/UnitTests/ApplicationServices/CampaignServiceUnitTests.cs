@@ -40,6 +40,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             var agency = new AgencyDto { Id = 1, Name = "Name1" };
             var advertiser = new AdvertiserDto { Id = 2, Name = "Name2", AgencyId = 1 };
             var campaignAggregator = new Mock<ICampaignAggregator>();
+            var campaignSummaryRepository = new Mock<ICampaignSummaryRepository>();
             var getCampaignsReturn = new List<CampaignListItemDto>
             {
                 new CampaignListItemDto
@@ -77,12 +78,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             trafficApiClientMock.Setup(x => x.GetAgency(It.IsAny<int>())).Returns(agency);
             trafficApiClientMock.Setup(x => x.GetAdvertisersByAgencyId(It.IsAny<int>())).Returns(new List<AdvertiserDto> { advertiser });
             campaignRepositoryMock.Setup(x => x.GetCampaigns(It.IsAny<DateTime>(), It.IsAny<DateTime>(), It.IsAny<PlanStatusEnum>())).Returns(getCampaignsReturn);
+            campaignSummaryRepository.Setup(x => x.GetSummaryForCampaign(It.IsAny<int>())).Returns((CampaignSummaryDto) null);
             quarterCalculationEngineMock.Setup(x => x.GetQuarterDetail(2, 2019)).Returns(new QuarterDetailDto
             {
                 Year = 2019,
                 Quarter = 2
             });
             dataRepositoryFactoryMock.Setup(s => s.GetDataRepository<ICampaignRepository>()).Returns(campaignRepositoryMock.Object);
+            dataRepositoryFactoryMock.Setup(s => s.GetDataRepository<ICampaignSummaryRepository>()).Returns(campaignSummaryRepository.Object);
 
             var tc = new CampaignService(
                 dataRepositoryFactoryMock.Object, 
@@ -108,6 +111,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 
             // Assert
             campaignRepositoryMock.Verify(x => x.GetCampaigns(It.IsAny<DateTime>(), It.IsAny<DateTime>(), It.IsAny<PlanStatusEnum>()), Times.Once);
+            campaignSummaryRepository.Verify(x => x.GetSummaryForCampaign(It.IsAny<int>()), Times.Exactly(3));
             // TODO: Bring this back.  Fails on CD test run build.
             //Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
             // TODO: When bring that back remove this 
@@ -128,6 +132,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             var agency = new AgencyDto { Id = 1, Name = "Name1" };
             var advertiser = new AdvertiserDto { Id = 2, Name = "Name2", AgencyId = 1 };
             var campaignAggregator = new Mock<ICampaignAggregator>();
+            var campaignSummaryRepository = new Mock<ICampaignSummaryRepository>();
             var getCampaignsReturn = new List<CampaignListItemDto>
             {
                 new CampaignListItemDto
@@ -165,6 +170,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             trafficApiClientMock.Setup(x => x.GetAgency(It.IsAny<int>())).Returns(agency);
             trafficApiClientMock.Setup(x => x.GetAdvertisersByAgencyId(It.IsAny<int>())).Returns(new List<AdvertiserDto> { advertiser });
             campaignRepositoryMock.Setup(x => x.GetCampaigns(It.IsAny<DateTime>(), It.IsAny<DateTime>(), null)).Returns(getCampaignsReturn);
+            campaignSummaryRepository.Setup(x => x.GetSummaryForCampaign(It.IsAny<int>())).Returns((CampaignSummaryDto)null);
             quarterCalculationEngineMock.Setup(x => x.GetQuarterRangeByDate(_CreatedDate)).Returns(new QuarterDetailDto
             {
                 Year = 2019,
@@ -176,7 +182,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 Quarter = 2
             });
             dataRepositoryFactoryMock.Setup(s => s.GetDataRepository<ICampaignRepository>()).Returns(campaignRepositoryMock.Object);
-
+            dataRepositoryFactoryMock.Setup(s => s.GetDataRepository<ICampaignSummaryRepository>()).Returns(campaignSummaryRepository.Object);
             var tc = new CampaignService(
                 dataRepositoryFactoryMock.Object,
                 campaignValidatorMock.Object,
@@ -193,6 +199,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 
             // Assert
             campaignRepositoryMock.Verify(x => x.GetCampaigns(It.IsAny<DateTime>(), It.IsAny<DateTime>(), null), Times.Once);
+            campaignSummaryRepository.Verify(x => x.GetSummaryForCampaign(It.IsAny<int>()), Times.Exactly(3));
             // TODO: Bring this back.  Fails on CD test run build.
             //Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
             // TODO: When bring that back remove this 
