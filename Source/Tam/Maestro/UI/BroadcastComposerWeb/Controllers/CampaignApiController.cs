@@ -126,5 +126,16 @@ namespace BroadcastComposerWeb.Controllers
         {
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ICampaignService>().TriggerCampaignAggregationJob(campaignId, Identity.Name));
         }
+
+        /// <summary>
+        /// Gets the campaign defaults.
+        /// </summary>
+        /// <returns>Gets the default values for creating a campaign in the form of <see cref="CampaignDefaultsDto"/></returns>
+        [HttpGet]
+        [Route("Defaults")]
+        public BaseResponse<CampaignDefaultsDto> GetCampaignDefaults()
+        {
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ICampaignService>().GetCampaignDefaults());
+        }
     }
 }

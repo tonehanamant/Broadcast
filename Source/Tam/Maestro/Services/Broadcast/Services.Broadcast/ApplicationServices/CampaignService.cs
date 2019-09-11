@@ -75,6 +75,12 @@ namespace Services.Broadcast.ApplicationServices
         /// <param name="campaignId">The campaign identifier.</param>
         [Queue("campaignaggregation")]
         void ProcessCampaignAggregation(int campaignId);
+
+        /// <summary>
+        /// Gets the campaign defaults.
+        /// </summary>
+        /// <returns>Gets the default values for creating a campaign in the form of <see cref="CampaignDefaultsDto"/></returns>
+        CampaignDefaultsDto GetCampaignDefaults();
     }
 
     /// <summary>
@@ -395,6 +401,21 @@ namespace Services.Broadcast.ApplicationServices
                 },
                 PlanStatus = null
             };
+        }
+
+        /// <inheritdoc />
+        public CampaignDefaultsDto GetCampaignDefaults()
+        {
+            // return a blank object now, until requirements get updated
+            var campaignDefaultValues = new CampaignDefaultsDto
+            {
+                Name = string.Empty,
+                AgencyId = null,
+                AdvertiserId = null,
+                Notes = string.Empty
+            };
+
+            return campaignDefaultValues;
         }
     }
 }

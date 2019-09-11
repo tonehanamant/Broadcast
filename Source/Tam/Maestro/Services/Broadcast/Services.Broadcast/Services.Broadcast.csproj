@@ -241,6 +241,7 @@
     <Compile Include="ApplicationServices\AgencyService.cs" />
     <Compile Include="ApplicationServices\CampaignAggregationJobTrigger.cs" />
     <Compile Include="ApplicationServices\CampaignAggregator.cs" />
+    <Compile Include="Entities\CampaignDefaultsDto.cs" />
     <Compile Include="Entities\CampaignSummaryDto.cs" />
     <Compile Include="Attributes\DisableConcurrentExecutionAttribute.cs" />
     <Compile Include="Entities\CampaignFilterDto.cs" />
