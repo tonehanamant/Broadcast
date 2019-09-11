@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Globalization;
-using Newtonsoft.Json;
 
 namespace Tam.Maestro.Common.Utilities.Logging
 {
@@ -21,18 +20,12 @@ namespace Tam.Maestro.Common.Utilities.Logging
         /// <summary>
         /// log 4 net Logger
         /// </summary>
-        public static log4net.ILog Logger
-        {
-            get { return log; }
-        }
+        public static log4net.ILog Logger => log;
 
         /// <summary>
         /// Log helper instance
         /// </summary>
-        public static LogHelper Log
-        {
-            get { return new LogHelper(); }
-        }
+        public static LogHelper Log => new LogHelper();
 
         /// <summary>
         /// Logs Info as Service call has started
@@ -51,7 +44,7 @@ namespace Tam.Maestro.Common.Utilities.Logging
                 , { nameof(userName), userName }
                 , { "action", "Service has started" }
             };
-            Logger.Info(_GetJsonFormatedString(logInfo));
+            Logger.Info(logInfo);
         }
 
         /// <summary>
@@ -71,7 +64,7 @@ namespace Tam.Maestro.Common.Utilities.Logging
                 , { nameof(userName), userName }
                 , { "action", "Service has stopped" }
             };
-            Logger.Warn(_GetJsonFormatedString(logWarning));
+            Logger.Warn(logWarning);
         }
 
         /// <summary>
@@ -92,7 +85,7 @@ namespace Tam.Maestro.Common.Utilities.Logging
                 , { nameof(totalSeconds), totalSeconds.ToString(CultureInfo.InvariantCulture) }
                 , { nameof(userName), userName }
             };
-            Logger.Info(_GetJsonFormatedString(logInfo));
+            Logger.Info(logInfo);
         }
 
         /// <summary>
@@ -113,7 +106,7 @@ namespace Tam.Maestro.Common.Utilities.Logging
                 , { nameof(callStack), callStack }
                 , { nameof(userName), userName }
             };
-            Logger.Error(_GetJsonFormatedString(logError));
+            Logger.Error(logError);
         }
 
         /// <summary>
@@ -132,7 +125,7 @@ namespace Tam.Maestro.Common.Utilities.Logging
                 , { "exceptionMessage", message }
                 , { nameof(userName), userName }
             };
-            Logger.Error(_GetJsonFormatedString(logError));
+            Logger.Error(logError);
         }
 
         /// <summary>
@@ -152,7 +145,7 @@ namespace Tam.Maestro.Common.Utilities.Logging
                 , { nameof(userName), userName }
                 , { "action", "Service is started" }
             };
-            Logger.Info(_GetJsonFormatedString(logInfo));
+            Logger.Info(logInfo);
         }
 
         /// <summary>
@@ -168,7 +161,7 @@ namespace Tam.Maestro.Common.Utilities.Logging
                 , { nameof(entryState), entryState }
                 , {"action", "Error in Entity name" }
             };
-            Logger.Error(_GetJsonFormatedString(logError));
+            Logger.Error(logError);
         }
 
         /// <summary>
@@ -184,14 +177,7 @@ namespace Tam.Maestro.Common.Utilities.Logging
                 , { nameof(error), error }
                 , {"action", "Error in Property" }
             };
-            Logger.Error(_GetJsonFormatedString(logError));
+            Logger.Error(logError);
         }
-
-        #region Private methods
-        private static string _GetJsonFormatedString(Dictionary<string, string> data)
-        {
-            return JsonConvert.SerializeObject(data);
-        } 
-        #endregion
     }
 }
