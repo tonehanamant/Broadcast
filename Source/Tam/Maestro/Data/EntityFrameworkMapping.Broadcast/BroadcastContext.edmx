@@ -665,6 +665,7 @@
           <Property Name="plan_id" Type="int" Nullable="false" />
           <Property Name="audience_type" Type="int" Nullable="false" />
           <Property Name="audience_id" Type="int" Nullable="false" />
+          <Property Name="vpvh" Type="float" Nullable="false" />
         </EntityType>
         <EntityType Name="plan_summary">
           <Key>
@@ -10267,6 +10268,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="audience_id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="audience" Relationship="BroadcastModel.FK_plan_secondary_audiences_audiences" FromRole="plan_secondary_audiences" ToRole="audience" />
           <NavigationProperty Name="plan" Relationship="BroadcastModel.FK_plan_secondary_audiences_plans" FromRole="plan_secondary_audiences" ToRole="plan" />
+          <Property Name="vpvh" Type="Double" Nullable="false" />
         </EntityType>
         <Association Name="FK_plan_secondary_audiences_audiences">
           <End Type="BroadcastModel.audience" Role="audience" Multiplicity="1" />
@@ -12378,6 +12380,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="plan_secondary_audiences">
             <EntityTypeMapping TypeName="BroadcastModel.plan_secondary_audiences">
               <MappingFragment StoreEntitySet="plan_secondary_audiences">
+                <ScalarProperty Name="vpvh" ColumnName="vpvh" />
                 <ScalarProperty Name="audience_id" ColumnName="audience_id" />
                 <ScalarProperty Name="audience_type" ColumnName="audience_type" />
                 <ScalarProperty Name="plan_id" ColumnName="plan_id" />

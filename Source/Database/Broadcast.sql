@@ -67,6 +67,21 @@ BEGIN
 END
 GO
 
+IF NOT EXISTS(SELECT 1 FROM sys.COLUMNS 
+				WHERE object_id = OBJECT_ID('plan_secondary_audiences')
+					AND name = 'vpvh')
+BEGIN
+	ALTER TABLE plan_secondary_audiences ADD vpvh FLOAT NULL
+
+	EXEC('UPDATE plan_secondary_audiences
+	SET vpvh = 0.001
+	WHERE vpvh IS NULL')
+
+	ALTER TABLE plan_secondary_audiences
+	ALTER COLUMN vpvh FLOAT NOT NULL
+END
+GO
+
 /*************************************** END PRI-13777 add vpvh in plans  *****************************************************/
 
 /*************************************** START PRI-12842 *****************************************************/

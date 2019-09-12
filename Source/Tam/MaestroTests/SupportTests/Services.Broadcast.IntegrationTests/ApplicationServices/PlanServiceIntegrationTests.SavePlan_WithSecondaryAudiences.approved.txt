@@ -71,11 +71,13 @@
   "SecondaryAudiences": [
     {
       "AudienceId": 7,
-      "Type": 1
+      "Type": 1,
+      "Vpvh": 0.435
     },
     {
       "AudienceId": 6,
-      "Type": 1
+      "Type": 1,
+      "Vpvh": 0.635
     }
   ],
   "ShareBookId": 437,

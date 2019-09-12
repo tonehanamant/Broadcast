@@ -18,6 +18,7 @@ namespace EntityFrameworkMapping.Broadcast
         public int plan_id { get; set; }
         public int audience_type { get; set; }
         public int audience_id { get; set; }
+        public double vpvh { get; set; }
     
         public virtual audience audience { get; set; }
         public virtual plan plan { get; set; }

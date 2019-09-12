@@ -6,5 +6,6 @@ namespace Services.Broadcast.Entities.Plan
     {
         public AudienceTypeEnum Type { get; set; }
         public int AudienceId { get; set; }
+        public double Vpvh { get; set; }
     }
 }

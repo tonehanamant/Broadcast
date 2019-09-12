@@ -187,7 +187,8 @@ namespace Services.Broadcast.Repositories
             return new PlanAudienceDto
             {
                 AudienceId = x.audience_id,
-                Type = (AudienceTypeEnum)x.audience_type
+                Type = (AudienceTypeEnum)x.audience_type,
+                Vpvh = x.vpvh
             };
         }
 
@@ -303,7 +304,8 @@ namespace Services.Broadcast.Repositories
                 entity.plan_secondary_audiences.Add(new plan_secondary_audiences
                 {
                     audience_id = d.AudienceId,
-                    audience_type = (int)d.Type
+                    audience_type = (int)d.Type,
+                    vpvh = d.Vpvh
                 });
             });
         }

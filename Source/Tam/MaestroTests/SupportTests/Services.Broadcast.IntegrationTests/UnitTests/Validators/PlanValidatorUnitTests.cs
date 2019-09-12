@@ -39,121 +39,94 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
         }
 
         [Test]
-        public void PlanValidator_ValidatePlan_EmptyName()
+        public void ValidatePlan_EmptyName()
         {
-            var plan = new PlanDto();
+            var plan = _GetPlan();
+            plan.Name = string.Empty;
 
             Assert.That(() => _planValidator.ValidatePlan(plan), Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid plan name"));
         }
 
         [Test]
-        public void PlanValidator_ValidatePlan_NameLargerThan255()
+        public void ValidatePlan_NameLargerThan255()
         {
-            var plan = new PlanDto
-            {
-                Name = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque blandit ex sed purus auctor rhoncus. Mauris lobortis nisi eget sollicitudin ultrices. Duis mollis blandit nisi id ultrices. Suspendisse molestie urna in enim egestas vehicula. Nulla facilisi."
-            };
+            var plan = _GetPlan();
+            plan.Name = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque blandit ex sed purus auctor rhoncus. Mauris lobortis nisi eget sollicitudin ultrices. Duis mollis blandit nisi id ultrices. Suspendisse molestie urna in enim egestas vehicula. Nulla facilisi.";
 
             Assert.That(() => _planValidator.ValidatePlan(plan), Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid plan name"));
         }
 
         [Test]
-        public void PlanValidator_ValidatePlan_SpotLengthIdExistsDoesntExist()
+        public void ValidatePlan_SpotLengthIdExistsReturnsFalse()
         {
             _spotLengthEngineMock.Setup(s => s.SpotLengthIdExists(It.IsAny<int>())).Returns(false);
-            var plan = new PlanDto
-            {
-                Name = "Lorem ipsum"
-            };
+
+            var plan = _GetPlan();
 
             Assert.That(() => _planValidator.ValidatePlan(plan), Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid spot length"));
         }
 
         [Test]
-        public void PlanValidator_ValidatePlan_InvalidProductId()
+        public void ValidatePlan_InvalidProductId()
         {
             _ConfigureSpotLenghtEngineMockToReturnTrue();
-            var plan = new PlanDto
-            {
-                Name = "Lorem ipsum"
-            };
+
+            var plan = _GetPlan();
+            plan.ProductId = 0;
 
             Assert.That(() => _planValidator.ValidatePlan(plan), Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid product"));
         }
 
         [Test]
-        public void PlanValidator_ValidatePlan_FlightStartBiggerThanFlightEnd()
+        public void ValidatePlan_FlightStartBiggerThanFlightEnd()
         {
             _ConfigureSpotLenghtEngineMockToReturnTrue();
-            var plan = new PlanDto
-            {
-                Name = "Lorem ipsum",
-                ProductId = 20,
-                FlightStartDate = new DateTime(2019, 8, 1),
-                FlightEndDate = new DateTime(2019, 7, 1)
-            };
+
+            var plan = _GetPlan();
+            plan.FlightStartDate = new DateTime(2019, 8, 1);
+            plan.FlightEndDate = new DateTime(2019, 7, 1);
 
             Assert.That(() => _planValidator.ValidatePlan(plan), Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid flight dates.  The end date cannot be before the start date."));
         }
 
         [Test]
-        public void PlanValidator_ValidatePlan_InvalidFligthHiatusDay()
+        public void ValidatePlan_InvalidFligthHiatusDay()
         {
             _ConfigureSpotLenghtEngineMockToReturnTrue();
-            var plan = new PlanDto
+
+            var plan = _GetPlan();
+            plan.FlightStartDate = new DateTime(2019, 8, 1);
+            plan.FlightEndDate = new DateTime(2019, 9, 1);
+            plan.FlightHiatusDays = new List<DateTime>
             {
-                Name = "Lorem ipsum",
-                ProductId = 20,
-                FlightStartDate = new DateTime(2019, 8, 1),
-                FlightEndDate = new DateTime(2019, 9, 1),
-                FlightHiatusDays = new List<DateTime>
-                {
-                    new DateTime(2018,7,1)
-                }
+                new DateTime(2018,7,1)
             };
 
             Assert.That(() => _planValidator.ValidatePlan(plan), Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid flight hiatus day.  All days must be within the flight date range."));
         }
 
         [Test]
-        public void PlanValidator_ValidatePlan_WithoutDayparts()
+        public void ValidatePlan_WithoutDayparts()
         {
             _ConfigureSpotLenghtEngineMockToReturnTrue();
-            var plan = new PlanDto
-            {
-                Name = "Lorem ipsum",
-                ProductId = 20,
-                FlightStartDate = new DateTime(2019, 8, 1),
-                FlightEndDate = new DateTime(2019, 9, 1),
-                FlightHiatusDays = new List<DateTime>
-                {
-                    new DateTime(2019,8,17)
-                },
-            };
+
+            var plan = _GetPlan();
+            plan.Dayparts = null;
 
             Assert.That(() => _planValidator.ValidatePlan(plan), Throws.TypeOf<Exception>().With.Message.EqualTo("There should be at least one daypart selected."));
         }
 
         [Test]
-        public void PlanValidator_ValidatePlan_DayPartStartLessThanSecondsMinimum()
+        public void ValidatePlan_DayPartStartLessThanSecondsMinimum()
         {
             _ConfigureSpotLenghtEngineMockToReturnTrue();
-            var plan = new PlanDto
+
+            var plan = _GetPlan();
+            plan.Dayparts = new List<PlanDaypartDto>
             {
-                Name = "Lorem ipsum",
-                ProductId = 20,
-                FlightStartDate = new DateTime(2019, 8, 1),
-                FlightEndDate = new DateTime(2019, 9, 1),
-                FlightHiatusDays = new List<DateTime>
+                new PlanDaypartDto
                 {
-                    new DateTime(2019,8,17)
-                },
-                Dayparts = new List<PlanDaypartDto>
-                {
-                    new PlanDaypartDto
-                    {
-                        StartTimeSeconds = -1
-                    }
+                    StartTimeSeconds = -1
                 }
             };
 
@@ -161,25 +134,16 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
         }
 
         [Test]
-        public void PlanValidator_ValidatePlan_DayPartStartLargerThanSecondsMaximum()
+        public void ValidatePlan_DayPartStartLargerThanSecondsMaximum()
         {
             _ConfigureSpotLenghtEngineMockToReturnTrue();
-            var plan = new PlanDto
+
+            var plan = _GetPlan();
+            plan.Dayparts = new List<PlanDaypartDto>
             {
-                Name = "Lorem ipsum",
-                ProductId = 20,
-                FlightStartDate = new DateTime(2019, 8, 1),
-                FlightEndDate = new DateTime(2019, 9, 1),
-                FlightHiatusDays = new List<DateTime>
+                new PlanDaypartDto
                 {
-                    new DateTime(2019,8,17)
-                },
-                Dayparts = new List<PlanDaypartDto>
-                {
-                    new PlanDaypartDto
-                    {
-                        StartTimeSeconds = 86420
-                    }
+                    StartTimeSeconds = 86420
                 }
             };
 
@@ -187,26 +151,17 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
         }
 
         [Test]
-        public void PlanValidator_ValidatePlan_DayPartEndLessThanSecondsMinimum()
+        public void ValidatePlan_DayPartEndLessThanSecondsMinimum()
         {
             _ConfigureSpotLenghtEngineMockToReturnTrue();
-            var plan = new PlanDto
+
+            var plan = _GetPlan();
+            plan.Dayparts = new List<PlanDaypartDto>
             {
-                Name = "Lorem ipsum",
-                ProductId = 20,
-                FlightStartDate = new DateTime(2019, 8, 1),
-                FlightEndDate = new DateTime(2019, 9, 1),
-                FlightHiatusDays = new List<DateTime>
+                new PlanDaypartDto
                 {
-                    new DateTime(2019,8,17)
-                },
-                Dayparts = new List<PlanDaypartDto>
-                {
-                    new PlanDaypartDto
-                    {
-                        StartTimeSeconds = 50,
-                        EndTimeSeconds = -1
-                    }
+                    StartTimeSeconds = 50,
+                    EndTimeSeconds = -1
                 }
             };
 
@@ -214,26 +169,17 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
         }
 
         [Test]
-        public void PlanValidator_ValidatePlan_DayPartEndLargerThanSecondsMaximum()
+        public void ValidatePlan_DayPartEndLargerThanSecondsMaximum()
         {
             _ConfigureSpotLenghtEngineMockToReturnTrue();
-            var plan = new PlanDto
+
+            var plan = _GetPlan();
+            plan.Dayparts = new List<PlanDaypartDto>
             {
-                Name = "Lorem ipsum",
-                ProductId = 20,
-                FlightStartDate = new DateTime(2019, 8, 1),
-                FlightEndDate = new DateTime(2019, 9, 1),
-                FlightHiatusDays = new List<DateTime>
+                new PlanDaypartDto
                 {
-                    new DateTime(2019,8,17)
-                },
-                Dayparts = new List<PlanDaypartDto>
-                {
-                    new PlanDaypartDto
-                    {
-                        StartTimeSeconds = 50,
-                        EndTimeSeconds = 86420
-                    }
+                    StartTimeSeconds = 50,
+                    EndTimeSeconds = 86420
                 }
             };
 
@@ -241,27 +187,17 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
         }
 
         [Test]
-        public void PlanValidator_ValidatePlan_WeightingGoalPercentLessThanMinimum()
+        public void ValidatePlan_WeightingGoalPercentLessThanMinimum()
         {
             _ConfigureSpotLenghtEngineMockToReturnTrue();
-            var plan = new PlanDto
+            var plan = _GetPlan();
+            plan.Dayparts = new List<PlanDaypartDto>
             {
-                Name = "Lorem ipsum",
-                ProductId = 20,
-                FlightStartDate = new DateTime(2019, 8, 1),
-                FlightEndDate = new DateTime(2019, 9, 1),
-                FlightHiatusDays = new List<DateTime>
+                new PlanDaypartDto
                 {
-                    new DateTime(2019,8,17)
-                },
-                Dayparts = new List<PlanDaypartDto>
-                {
-                    new PlanDaypartDto
-                    {
-                        StartTimeSeconds = 50,
-                        EndTimeSeconds = 70,
-                        WeightingGoalPercent = -1
-                    }
+                    StartTimeSeconds = 50,
+                    EndTimeSeconds = 70,
+                    WeightingGoalPercent = -1
                 }
             };
 
@@ -269,27 +205,17 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
         }
 
         [Test]
-        public void PlanValidator_ValidatePlan_WeightingGoalLargerThanMaximum()
+        public void ValidatePlan_WeightingGoalLargerThanMaximum()
         {
             _ConfigureSpotLenghtEngineMockToReturnTrue();
-            var plan = new PlanDto
+            var plan = _GetPlan();
+            plan.Dayparts = new List<PlanDaypartDto>
             {
-                Name = "Lorem ipsum",
-                ProductId = 20,
-                FlightStartDate = new DateTime(2019, 8, 1),
-                FlightEndDate = new DateTime(2019, 9, 1),
-                FlightHiatusDays = new List<DateTime>
+                new PlanDaypartDto
                 {
-                    new DateTime(2019,8,17)
-                },
-                Dayparts = new List<PlanDaypartDto>
-                {
-                    new PlanDaypartDto
-                    {
-                        StartTimeSeconds = 50,
-                        EndTimeSeconds = 70,
-                        WeightingGoalPercent = 110
-                    }
+                    StartTimeSeconds = 50,
+                    EndTimeSeconds = 70,
+                    WeightingGoalPercent = 110
                 }
             };
 
@@ -297,194 +223,96 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
         }
 
         [Test]
-        public void PlanValidator_ValidatePlan_IsValidAudienceTrue()
+        public void ValidatePlan_IsValidAudienceTrue()
         {
             _ConfigureSpotLenghtEngineMockToReturnTrue();
 
-            var plan = new PlanDto
-            {
-                Name = "Lorem ipsum",
-                ProductId = 20,
-                FlightStartDate = new DateTime(2019, 8, 1),
-                FlightEndDate = new DateTime(2019, 9, 1),
-                FlightHiatusDays = new List<DateTime>
-                {
-                    new DateTime(2019,8,17)
-                },
-                Dayparts = new List<PlanDaypartDto>
-                {
-                    new PlanDaypartDto
-                    {
-                        StartTimeSeconds = 50,
-                        EndTimeSeconds = 70,
-                        WeightingGoalPercent = 50
-                    }
-                }
-            };
+            var plan = _GetPlan();
+            plan.AudienceId = 0;
 
             Assert.That(() => _planValidator.ValidatePlan(plan), Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid audience"));
         }
 
         [Test]
-        public void PlanValidator_ValidatePlan_InvalidShareBookId()
+        public void ValidatePlan_InvalidShareBookId()
         {
-            _ConfigureSpotLenghtEngineMockToReturnTrue();
-            _ConfigureBroadcastAudiencesCacheMockToReturnTrue();
+            _ConfigureMocksToReturnTrue();
 
-            var plan = new PlanDto
-            {
-                Name = "Lorem ipsum",
-                ProductId = 20,
-                FlightStartDate = new DateTime(2019, 8, 1),
-                FlightEndDate = new DateTime(2019, 9, 1),
-                FlightHiatusDays = new List<DateTime>
-                {
-                    new DateTime(2019,8,17)
-                },
-                Dayparts = new List<PlanDaypartDto>
-                {
-                    new PlanDaypartDto
-                    {
-                        StartTimeSeconds = 50,
-                        EndTimeSeconds = 70,
-                        WeightingGoalPercent = 50
-                    }
-                }
-            };
+            var plan = _GetPlan();
+            plan.ShareBookId = 0;
 
             Assert.That(() => _planValidator.ValidatePlan(plan), Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid share book"));
         }
 
         [Test]
-        public void PlanValidator_ValidatePlan_HUTBookIdNegative()
+        public void ValidatePlan_HUTBookIdNegative()
         {
-            _ConfigureSpotLenghtEngineMockToReturnTrue();
-            _ConfigureBroadcastAudiencesCacheMockToReturnTrue();
+            _ConfigureMocksToReturnTrue();
 
-            var plan = new PlanDto
-            {
-                Name = "Lorem ipsum",
-                ProductId = 20,
-                FlightStartDate = new DateTime(2019, 8, 1),
-                FlightEndDate = new DateTime(2019, 9, 1),
-                FlightHiatusDays = new List<DateTime>
-                {
-                    new DateTime(2019,8,17)
-                },
-                Dayparts = new List<PlanDaypartDto>
-                {
-                    new PlanDaypartDto
-                    {
-                        StartTimeSeconds = 50,
-                        EndTimeSeconds = 70,
-                        WeightingGoalPercent = 50
-                    }
-                },
-                ShareBookId = SHARE_BOOK_ID,
-                HUTBookId = -1
-            };
+            var plan = _GetPlan();
+            plan.HUTBookId = -1;
 
             Assert.That(() => _planValidator.ValidatePlan(plan), Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid HUT book."));
         }
 
         [Test]
-        public void PlanValidator_ValidatePlan_HUTBookIdDoesntExistInPostingBooks()
+        public void ValidatePlan_HUTBookIdDoesntExistInPostingBooks()
         {
-            _ConfigureSpotLenghtEngineMockToReturnTrue();
-            _ConfigureBroadcastAudiencesCacheMockToReturnTrue();
+            _ConfigureMocksToReturnTrue();
 
-            var plan = new PlanDto
-            {
-                Name = "Lorem ipsum",
-                ProductId = 20,
-                FlightStartDate = new DateTime(2019, 8, 1),
-                FlightEndDate = new DateTime(2019, 9, 1),
-                FlightHiatusDays = new List<DateTime>
-                {
-                    new DateTime(2019,8,17)
-                },
-                Dayparts = new List<PlanDaypartDto>
-                {
-                    new PlanDaypartDto
-                    {
-                        StartTimeSeconds = 50,
-                        EndTimeSeconds = 70,
-                        WeightingGoalPercent = 50
-                    }
-                },
-                ShareBookId = SHARE_BOOK_ID,
-                HUTBookId = 51
-            };
+            var plan = _GetPlan();
+            plan.HUTBookId = 51;
 
             Assert.That(() => _planValidator.ValidatePlan(plan), Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid HUT book."));
         }
 
         [Test]
-        public void PlanValidator_ValidatePlan_HUTStartDateBiggerThanShareStartDate()
+        public void ValidatePlan_HUTStartDateBiggerThanShareStartDate()
         {
-            _ConfigureSpotLenghtEngineMockToReturnTrue();
-            _ConfigureBroadcastAudiencesCacheMockToReturnTrue();
+            _ConfigureMocksToReturnTrue();
 
-            var plan = new PlanDto
-            {
-                Name = "Lorem ipsum",
-                ProductId = 20,
-                FlightStartDate = new DateTime(2019, 8, 1),
-                FlightEndDate = new DateTime(2019, 9, 1),
-                FlightHiatusDays = new List<DateTime>
-                {
-                    new DateTime(2019,8,17)
-                },
-                Dayparts = new List<PlanDaypartDto>
-                {
-                    new PlanDaypartDto
-                    {
-                        StartTimeSeconds = 50,
-                        EndTimeSeconds = 70,
-                        WeightingGoalPercent = 50
-                    }
-                },
-                ShareBookId = SHARE_BOOK_ID,
-                HUTBookId = 21
-            };
+            var plan = _GetPlan();
+            plan.HUTBookId = 21;
 
             Assert.That(() => _planValidator.ValidatePlan(plan), Throws.TypeOf<Exception>().With.Message.EqualTo("HUT Book must be prior to Share Book"));
         }
 
         [Test]
-        public void PlanValidator_ValidatePlan_InvalidSecondaryAudience()
+        public void ValidatePlan_PrimaryAudienceVPVHLessThanMinimum()
+        {
+            _ConfigureMocksToReturnTrue();
+
+            var plan = _GetPlan();
+            plan.Vpvh = 0.0001;
+
+            Assert.That(() => _planValidator.ValidatePlan(plan), Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid VPVH. The value must be between 0.001 and 1."));
+        }
+
+        [Test]
+        public void ValidatePlan_PrimaryAudienceVPVHBiggerThanMaximum()
+        {
+            _ConfigureMocksToReturnTrue();
+
+            var plan = _GetPlan();
+            plan.Vpvh = 2;
+
+            Assert.That(() => _planValidator.ValidatePlan(plan), Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid VPVH. The value must be between 0.001 and 1."));
+        }
+
+        [Test]
+        public void ValidatePlan_InvalidSecondaryAudience()
         {
             _ConfigureSpotLenghtEngineMockToReturnTrue();
             _broadcastAudiencesCacheMock.Setup(b => b.IsValidAudience(0)).Returns(true);
             _broadcastAudiencesCacheMock.Setup(b => b.IsValidAudience(21)).Returns(false);
 
-            var plan = new PlanDto
+            var plan = _GetPlan();
+            plan.SecondaryAudiences = new List<PlanAudienceDto>
             {
-                Name = "Lorem ipsum",
-                ProductId = 20,
-                FlightStartDate = new DateTime(2019, 8, 1),
-                FlightEndDate = new DateTime(2019, 9, 1),
-                FlightHiatusDays = new List<DateTime>
+                new PlanAudienceDto
                 {
-                    new DateTime(2019,8,17)
-                },
-                Dayparts = new List<PlanDaypartDto>
-                {
-                    new PlanDaypartDto
-                    {
-                        StartTimeSeconds = 50,
-                        EndTimeSeconds = 70,
-                        WeightingGoalPercent = 50
-                    }
-                },
-                ShareBookId = SHARE_BOOK_ID,
-                HUTBookId = HUT_BOOK_ID,
-                SecondaryAudiences = new List<PlanAudienceDto>
-                {
-                    new PlanAudienceDto
-                    {
-                        AudienceId = 11
-                    }
+                    AudienceId = 11,
+                    Vpvh = 0.35
                 }
             };
 
@@ -492,42 +320,22 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
         }
 
         [Test]
-        public void PlanValidator_ValidatePlan_DuplicateSecondaryAudience()
+        public void ValidatePlan_DuplicateSecondaryAudience()
         {
-            _ConfigureSpotLenghtEngineMockToReturnTrue();
-            _ConfigureBroadcastAudiencesCacheMockToReturnTrue();
+            _ConfigureMocksToReturnTrue();
 
-            var plan = new PlanDto
+            var plan = _GetPlan();
+            plan.SecondaryAudiences = new List<PlanAudienceDto>
             {
-                Name = "Lorem ipsum",
-                ProductId = 20,
-                FlightStartDate = new DateTime(2019, 8, 1),
-                FlightEndDate = new DateTime(2019, 9, 1),
-                FlightHiatusDays = new List<DateTime>
+                new PlanAudienceDto
                 {
-                    new DateTime(2019,8,17)
+                    AudienceId = 11,
+                    Vpvh = 0.18
                 },
-                Dayparts = new List<PlanDaypartDto>
+                new PlanAudienceDto
                 {
-                    new PlanDaypartDto
-                    {
-                        StartTimeSeconds = 50,
-                        EndTimeSeconds = 70,
-                        WeightingGoalPercent = 50
-                    }
-                },
-                ShareBookId = SHARE_BOOK_ID,
-                HUTBookId = HUT_BOOK_ID,
-                SecondaryAudiences = new List<PlanAudienceDto>
-                {
-                    new PlanAudienceDto
-                    {
-                        AudienceId = 11
-                    },
-                    new PlanAudienceDto
-                    {
-                        AudienceId = 11
-                    }
+                    AudienceId = 11,
+                    Vpvh = 0.18
                 }
             };
 
@@ -535,414 +343,130 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
         }
 
         [Test]
-        public void PlanValidator_ValidatePlan_CoverageGoalPercenteLessThanMinimum()
+        public void ValidatePlan_SecondaryAudienceVPVHLessThanMinimum()
         {
-            _ConfigureSpotLenghtEngineMockToReturnTrue();
-            _ConfigureBroadcastAudiencesCacheMockToReturnTrue();
+            _ConfigureMocksToReturnTrue();
 
-            var plan = new PlanDto
-            {
-                Name = "Lorem ipsum",
-                ProductId = 20,
-                FlightStartDate = new DateTime(2019, 8, 1),
-                FlightEndDate = new DateTime(2019, 9, 1),
-                FlightHiatusDays = new List<DateTime>
-                {
-                    new DateTime(2019,8,17)
-                },
-                Dayparts = new List<PlanDaypartDto>
-                {
-                    new PlanDaypartDto
-                    {
-                        StartTimeSeconds = 50,
-                        EndTimeSeconds = 70,
-                        WeightingGoalPercent = 50
-                    }
-                },
-                ShareBookId = SHARE_BOOK_ID,
-                HUTBookId = HUT_BOOK_ID,
-                SecondaryAudiences = new List<PlanAudienceDto>
+            var plan = _GetPlan();
+            plan.SecondaryAudiences = new List<PlanAudienceDto>
                 {
                     new PlanAudienceDto
                     {
-                        AudienceId = 11
+                        AudienceId = 11,
+                        Vpvh = -1
                     },
+                };
+
+            Assert.That(() => _planValidator.ValidatePlan(plan), Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid VPVH. The value must be between 0.001 and 1."));
+        }
+
+        [Test]
+        public void ValidatePlan_SecondaryAudienceVPVHBiggerThanMaximum()
+        {
+            _ConfigureMocksToReturnTrue();
+
+            var plan = _GetPlan();
+            plan.SecondaryAudiences = new List<PlanAudienceDto>
+            {
+                new PlanAudienceDto
+                {
+                    AudienceId = 11, Vpvh = 1.5
                 },
-                CoverageGoalPercent = 0
             };
+
+            Assert.That(() => _planValidator.ValidatePlan(plan), Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid VPVH. The value must be between 0.001 and 1."));
+        }
+
+        [Test]
+        public void ValidatePlan_CoverageGoalPercenteLessThanMinimum()
+        {
+            _ConfigureMocksToReturnTrue();
+
+            var plan = _GetPlan();
+            plan.CoverageGoalPercent = 0;
 
             Assert.That(() => _planValidator.ValidatePlan(plan), Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid coverage goal value."));
         }
 
         [Test]
-        public void PlanValidator_ValidatePlan_CoverageGoalPercenteBiggerThanMaximum()
+        public void ValidatePlan_CoverageGoalPercenteBiggerThanMaximum()
         {
-            _ConfigureSpotLenghtEngineMockToReturnTrue();
-            _ConfigureBroadcastAudiencesCacheMockToReturnTrue();
+            _ConfigureMocksToReturnTrue();
 
-            var plan = new PlanDto
-            {
-                Name = "Lorem ipsum",
-                ProductId = 20,
-                FlightStartDate = new DateTime(2019, 8, 1),
-                FlightEndDate = new DateTime(2019, 9, 1),
-                FlightHiatusDays = new List<DateTime>
-                {
-                    new DateTime(2019,8,17)
-                },
-                Dayparts = new List<PlanDaypartDto>
-                {
-                    new PlanDaypartDto
-                    {
-                        StartTimeSeconds = 50,
-                        EndTimeSeconds = 70,
-                        WeightingGoalPercent = 50
-                    }
-                },
-                ShareBookId = SHARE_BOOK_ID,
-                HUTBookId = HUT_BOOK_ID,
-                SecondaryAudiences = new List<PlanAudienceDto>
-                {
-                    new PlanAudienceDto
-                    {
-                        AudienceId = 11
-                    },
-                },
-                CoverageGoalPercent = 230
-            };
+            var plan = _GetPlan();
+            plan.CoverageGoalPercent = 230;
 
             Assert.That(() => _planValidator.ValidatePlan(plan), Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid coverage goal value."));
         }
 
         [Test]
-        public void PlanValidator_ValidatePlan_ShareOfVoicePercentLessThanMinimum()
+        public void ValidatePlan_ShareOfVoicePercentLessThanMinimum()
         {
-            _ConfigureSpotLenghtEngineMockToReturnTrue();
-            _ConfigureBroadcastAudiencesCacheMockToReturnTrue();
+            _ConfigureMocksToReturnTrue();
 
-            var plan = new PlanDto
+            var plan = _GetPlan();
+            plan.AvailableMarkets = new List<PlanAvailableMarketDto>
             {
-                Name = "Lorem ipsum",
-                ProductId = 20,
-                FlightStartDate = new DateTime(2019, 8, 1),
-                FlightEndDate = new DateTime(2019, 9, 1),
-                FlightHiatusDays = new List<DateTime>
-                {
-                    new DateTime(2019,8,17)
-                },
-                Dayparts = new List<PlanDaypartDto>
-                {
-                    new PlanDaypartDto
-                    {
-                        StartTimeSeconds = 50,
-                        EndTimeSeconds = 70,
-                        WeightingGoalPercent = 50
-                    }
-                },
-                ShareBookId = SHARE_BOOK_ID,
-                HUTBookId = HUT_BOOK_ID,
-                SecondaryAudiences = new List<PlanAudienceDto>
-                {
-                    new PlanAudienceDto
-                    {
-                        AudienceId = 11
-                    },
-                },
-                CoverageGoalPercent = 50,
-                AvailableMarkets = new List<PlanAvailableMarketDto> { new PlanAvailableMarketDto { ShareOfVoicePercent = 0 } }
+                new PlanAvailableMarketDto { ShareOfVoicePercent = 0 }
             };
 
             Assert.That(() => _planValidator.ValidatePlan(plan), Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid share of voice for market."));
         }
 
         [Test]
-        public void PlanValidator_ValidatePlan_ShareOfVoicePercentBiggerThanMaximum()
+        public void ValidatePlan_ShareOfVoicePercentBiggerThanMaximum()
         {
-            _ConfigureSpotLenghtEngineMockToReturnTrue();
-            _ConfigureBroadcastAudiencesCacheMockToReturnTrue();
+            _ConfigureMocksToReturnTrue();
 
-            var plan = new PlanDto
+            var plan = _GetPlan();
+            plan.AvailableMarkets = new List<PlanAvailableMarketDto>
             {
-                Name = "Lorem ipsum",
-                ProductId = 20,
-                FlightStartDate = new DateTime(2019, 8, 1),
-                FlightEndDate = new DateTime(2019, 9, 1),
-                FlightHiatusDays = new List<DateTime>
-                {
-                    new DateTime(2019,8,17)
-                },
-                Dayparts = new List<PlanDaypartDto>
-                {
-                    new PlanDaypartDto
-                    {
-                        StartTimeSeconds = 50,
-                        EndTimeSeconds = 70,
-                        WeightingGoalPercent = 50
-                    }
-                },
-                ShareBookId = SHARE_BOOK_ID,
-                HUTBookId = HUT_BOOK_ID,
-                SecondaryAudiences = new List<PlanAudienceDto>
-                {
-                    new PlanAudienceDto
-                    {
-                        AudienceId = 11
-                    },
-                },
-                CoverageGoalPercent = 50,
-                AvailableMarkets = new List<PlanAvailableMarketDto> { new PlanAvailableMarketDto { ShareOfVoicePercent = 150 } }
+                new PlanAvailableMarketDto { ShareOfVoicePercent = 150 }
             };
 
             Assert.That(() => _planValidator.ValidatePlan(plan), Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid share of voice for market."));
         }
 
         [Test]
-        public void PlanValidator_ValidatePlan_SumOfWeeklyBreakdownWeeksDifferentFromDeliveryImpressions()
+        public void ValidatePlan_SumOfWeeklyBreakdownWeeksDifferentFromDeliveryImpressions()
         {
-            _ConfigureSpotLenghtEngineMockToReturnTrue();
-            _ConfigureBroadcastAudiencesCacheMockToReturnTrue();
+            _ConfigureMocksToReturnTrue();
 
-            var plan = new PlanDto
+            var plan = _GetPlan();
+            plan.DeliveryImpressions = 100;
+            plan.WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>
             {
-                Name = "Lorem ipsum",
-                ProductId = 20,
-                FlightStartDate = new DateTime(2019, 8, 1),
-                FlightEndDate = new DateTime(2019, 9, 1),
-                FlightHiatusDays = new List<DateTime>
-                {
-                    new DateTime(2019,8,17)
-                },
-                Dayparts = new List<PlanDaypartDto>
-                {
-                    new PlanDaypartDto
-                    {
-                        StartTimeSeconds = 50,
-                        EndTimeSeconds = 70,
-                        WeightingGoalPercent = 50
-                    }
-                },
-                ShareBookId = SHARE_BOOK_ID,
-                HUTBookId = HUT_BOOK_ID,
-                SecondaryAudiences = new List<PlanAudienceDto>
-                {
-                    new PlanAudienceDto
-                    {
-                        AudienceId = 11
-                    },
-                },
-                CoverageGoalPercent = 50,
-                AvailableMarkets = new List<PlanAvailableMarketDto> { new PlanAvailableMarketDto { ShareOfVoicePercent = 40 } },
-                DeliveryImpressions = 100,
-                WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>
-                {
                     new WeeklyBreakdownWeek{ Impressions = 20},
                     new WeeklyBreakdownWeek{ Impressions = 30}
-                }
             };
 
             Assert.That(() => _planValidator.ValidatePlan(plan), Throws.TypeOf<Exception>().With.Message.EqualTo("The impressions count is different betweek the delivery and the weekly breakdown"));
         }
 
         [Test]
-        public void PlanValidator_ValidatePlan_SumOfShareOfVoiceDifferentFrom100()
+        public void ValidatePlan_SumOfShareOfVoiceDifferentFrom100()
         {
-            _ConfigureSpotLenghtEngineMockToReturnTrue();
-            _ConfigureBroadcastAudiencesCacheMockToReturnTrue();
+            _ConfigureMocksToReturnTrue();
 
-            var plan = new PlanDto
-            {
-                Name = "Lorem ipsum",
-                ProductId = 20,
-                FlightStartDate = new DateTime(2019, 8, 1),
-                FlightEndDate = new DateTime(2019, 9, 1),
-                FlightHiatusDays = new List<DateTime>
-                {
-                    new DateTime(2019,8,17)
-                },
-                Dayparts = new List<PlanDaypartDto>
-                {
-                    new PlanDaypartDto
-                    {
-                        StartTimeSeconds = 50,
-                        EndTimeSeconds = 70,
-                        WeightingGoalPercent = 50
-                    }
-                },
-                ShareBookId = SHARE_BOOK_ID,
-                HUTBookId = HUT_BOOK_ID,
-                SecondaryAudiences = new List<PlanAudienceDto>
-                {
-                    new PlanAudienceDto
-                    {
-                        AudienceId = 11
-                    },
-                },
-                CoverageGoalPercent = 50,
-                AvailableMarkets = new List<PlanAvailableMarketDto> { new PlanAvailableMarketDto { ShareOfVoicePercent = 40 } },
-                DeliveryImpressions = 50,
-                WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>
+            var plan = _GetPlan();
+            plan.DeliveryImpressions = 50;
+            plan.WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>
                 {
                     new WeeklyBreakdownWeek{ Impressions = 20, ShareOfVoice = 20},
                     new WeeklyBreakdownWeek{ Impressions = 30, ShareOfVoice = 20}
-                }
-            };
+                };
 
             Assert.That(() => _planValidator.ValidatePlan(plan), Throws.TypeOf<Exception>().With.Message.EqualTo("The share of voice count is not equat to 100%"));
         }
 
         [Test]
-        public void PlanValidator_ValidatePlan_VPVHLessThanMinimum()
-        {
-            _ConfigureSpotLenghtEngineMockToReturnTrue();
-            _ConfigureBroadcastAudiencesCacheMockToReturnTrue();
-
-            var plan = new PlanDto
-            {
-                Name = "Lorem ipsum",
-                ProductId = 20,
-                FlightStartDate = new DateTime(2019, 8, 1),
-                FlightEndDate = new DateTime(2019, 9, 1),
-                FlightHiatusDays = new List<DateTime>
-                {
-                    new DateTime(2019,8,17)
-                },
-                Dayparts = new List<PlanDaypartDto>
-                {
-                    new PlanDaypartDto
-                    {
-                        StartTimeSeconds = 50,
-                        EndTimeSeconds = 70,
-                        WeightingGoalPercent = 50
-                    }
-                },
-                ShareBookId = SHARE_BOOK_ID,
-                HUTBookId = HUT_BOOK_ID,
-                SecondaryAudiences = new List<PlanAudienceDto>
-                {
-                    new PlanAudienceDto
-                    {
-                        AudienceId = 11
-                    },
-                },
-                CoverageGoalPercent = 50,
-                AvailableMarkets = new List<PlanAvailableMarketDto> { new PlanAvailableMarketDto { ShareOfVoicePercent = 40 } },
-                DeliveryImpressions = 50,
-                WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>
-                {
-                    new WeeklyBreakdownWeek{ Impressions = 20, ShareOfVoice = 30},
-                    new WeeklyBreakdownWeek{ Impressions = 30, ShareOfVoice = 70}
-                },
-                Vpvh = 0.0001
-            };
-
-            Assert.That(() => _planValidator.ValidatePlan(plan), Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid VPVH. The value must be between 0.001 and 1."));
-        }
-
-        [Test]
-        public void PlanValidator_ValidatePlan_VPVHBiggerThanMaximum()
-        {
-            _ConfigureSpotLenghtEngineMockToReturnTrue();
-            _ConfigureBroadcastAudiencesCacheMockToReturnTrue();
-
-            var plan = new PlanDto
-            {
-                Name = "Lorem ipsum",
-                ProductId = 20,
-                FlightStartDate = new DateTime(2019, 8, 1),
-                FlightEndDate = new DateTime(2019, 9, 1),
-                FlightHiatusDays = new List<DateTime>
-                {
-                    new DateTime(2019,8,17)
-                },
-                Dayparts = new List<PlanDaypartDto>
-                {
-                    new PlanDaypartDto
-                    {
-                        StartTimeSeconds = 50,
-                        EndTimeSeconds = 70,
-                        WeightingGoalPercent = 50
-                    }
-                },
-                ShareBookId = SHARE_BOOK_ID,
-                HUTBookId = HUT_BOOK_ID,
-                SecondaryAudiences = new List<PlanAudienceDto>
-                {
-                    new PlanAudienceDto
-                    {
-                        AudienceId = 11
-                    },
-                },
-                CoverageGoalPercent = 50,
-                AvailableMarkets = new List<PlanAvailableMarketDto> { new PlanAvailableMarketDto { ShareOfVoicePercent = 40 } },
-                DeliveryImpressions = 50,
-                WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>
-                {
-                    new WeeklyBreakdownWeek{ Impressions = 20, ShareOfVoice = 30},
-                    new WeeklyBreakdownWeek{ Impressions = 30, ShareOfVoice = 70}
-                },
-                Vpvh = 2
-            };
-
-            Assert.That(() => _planValidator.ValidatePlan(plan), Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid VPVH. The value must be between 0.001 and 1."));
-        }
-
-        [Test]
-        public void PlanValidator_ValidatePlan_ValidProductId()
-        {
-            _ConfigureSpotLenghtEngineMockToReturnTrue();
-            _ConfigureBroadcastAudiencesCacheMockToReturnTrue();
-
-            var plan = new PlanDto
-            {
-                Name = "Lorem ipsum",
-                ProductId = 0,
-                FlightStartDate = new DateTime(2019, 8, 1),
-                FlightEndDate = new DateTime(2019, 9, 1),
-                FlightHiatusDays = new List<DateTime>
-                {
-                    new DateTime(2019,8,17)
-                },
-                Dayparts = new List<PlanDaypartDto>
-                {
-                    new PlanDaypartDto
-                    {
-                        StartTimeSeconds = 50,
-                        EndTimeSeconds = 70,
-                        WeightingGoalPercent = 50
-                    }
-                },
-                ShareBookId = SHARE_BOOK_ID,
-                HUTBookId = HUT_BOOK_ID,
-                SecondaryAudiences = new List<PlanAudienceDto>
-                {
-                    new PlanAudienceDto
-                    {
-                        AudienceId = 11
-                    },
-                },
-                CoverageGoalPercent = 50,
-                AvailableMarkets = new List<PlanAvailableMarketDto> { new PlanAvailableMarketDto { ShareOfVoicePercent = 40 } },
-                DeliveryImpressions = 50,
-                WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>
-                {
-                    new WeeklyBreakdownWeek{ Impressions = 20, ShareOfVoice = 30},
-                    new WeeklyBreakdownWeek{ Impressions = 30, ShareOfVoice = 70}
-                },
-                Vpvh = 1,
-                
-            };
-
-            Assert.That(() => _planValidator.ValidatePlan(plan), Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid product"));
-        }
-
-        [Test]
-        public void PlanValidator_ValidateWeeklyBreakdown_RequestNull()
+        public void ValidateWeeklyBreakdown_RequestNull()
         {
             Assert.That(() => _planValidator.ValidateWeeklyBreakdown(null), Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid request"));
         }
 
         [Test]
-        public void PlanValidator_ValidateWeeklyBreakdown_EmptyFlightStartDate()
+        public void ValidateWeeklyBreakdown_EmptyFlightStartDate()
         {
             var request = new WeeklyBreakdownRequest
             {
@@ -954,7 +478,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
         }
 
         [Test]
-        public void PlanValidator_ValidateWeeklyBreakdown_EmptyFlightEndDate()
+        public void ValidateWeeklyBreakdown_EmptyFlightEndDate()
         {
             var request = new WeeklyBreakdownRequest
             {
@@ -965,9 +489,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             Assert.That(() => _planValidator.ValidateWeeklyBreakdown(request), Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid flight start/end date."));
         }
 
-
         [Test]
-        public void PlanValidator_ValidateWeeklyBreakdown_FlightStartBiggerThanFlightEnd()
+        public void ValidateWeeklyBreakdown_FlightStartBiggerThanFlightEnd()
         {
             var request = new WeeklyBreakdownRequest
             {
@@ -979,7 +502,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
         }
 
         [Test]
-        public void PlanValidator_ValidateWeeklyBreakdown_InvalidWeeksForcustomDelivery()
+        public void ValidateWeeklyBreakdown_InvalidWeeksForcustomDelivery()
         {
             var request = new WeeklyBreakdownRequest
             {
@@ -991,14 +514,35 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             Assert.That(() => _planValidator.ValidateWeeklyBreakdown(request), Throws.TypeOf<Exception>().With.Message.EqualTo("For custom delivery you have to provide the weeks values"));
         }
 
-        private void _ConfigureSpotLenghtEngineMockToReturnTrue()
-        {
+        private void _ConfigureSpotLenghtEngineMockToReturnTrue() =>
             _spotLengthEngineMock.Setup(s => s.SpotLengthIdExists(It.IsAny<int>())).Returns(true);
+
+        private void _ConfigureBroadcastAudiencesCacheMockToReturnTrue() =>
+            _broadcastAudiencesCacheMock.Setup(b => b.IsValidAudience(It.IsAny<int>())).Returns(true);
+
+        private void _ConfigureMocksToReturnTrue()
+        {
+            _ConfigureSpotLenghtEngineMockToReturnTrue();
+            _ConfigureBroadcastAudiencesCacheMockToReturnTrue();
         }
 
-        private void _ConfigureBroadcastAudiencesCacheMockToReturnTrue()
-        {
-            _broadcastAudiencesCacheMock.Setup(b => b.IsValidAudience(It.IsAny<int>())).Returns(true);
-        }
+        private PlanDto _GetPlan() =>
+           new PlanDto
+           {
+               Name = "Lorem ipsum",
+               ProductId = 20,
+               Dayparts = new List<PlanDaypartDto>
+               {
+                    new PlanDaypartDto
+                    {
+                        StartTimeSeconds = 50,
+                        EndTimeSeconds = 70,
+                        WeightingGoalPercent = 50
+                    }
+               },
+               ShareBookId = SHARE_BOOK_ID,
+               HUTBookId = HUT_BOOK_ID,
+               Vpvh = 0.35
+           };
     }
 }

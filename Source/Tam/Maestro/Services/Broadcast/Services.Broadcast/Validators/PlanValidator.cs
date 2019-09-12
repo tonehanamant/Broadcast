@@ -93,17 +93,16 @@ namespace Services.Broadcast.Validators
             _ValidateOptionalPercentage(plan.CoverageGoalPercent, INVALID_COVERAGE_GOAL);
             _ValidateMarkets(plan);
             _ValidateWeeklyBreakdownWeeks(plan);
-            _ValidateVPVH(plan);
         }
 
         ///<inheritdoc/>
         public void ValidateWeeklyBreakdown(WeeklyBreakdownRequest request)
         {
-            if(request == null)
+            if (request == null)
             {
                 throw new Exception(INVALID_REQUEST);
             }
-            if(request.FlightEndDate.Equals(DateTime.MinValue) || request.FlightStartDate.Equals(DateTime.MinValue))
+            if (request.FlightEndDate.Equals(DateTime.MinValue) || request.FlightStartDate.Equals(DateTime.MinValue))
             {
                 throw new Exception(INVALID_FLIGHT_DATE);
             }
@@ -167,31 +166,32 @@ namespace Services.Broadcast.Validators
                     throw new Exception(INVALID_SHARE_HUT_BOOKS);
                 }
             }
+
+            _ValidateVPVH(plan.Vpvh);
         }
 
         private void _ValidateSecondaryAudiences(List<PlanAudienceDto> secondaryAudiences, int primaryAudienceId)
         {
             var distinctAudiences = new List<int> { primaryAudienceId };
-            secondaryAudiences.Select(x => x.AudienceId)
-                .ForEach(audienceId =>
-                {
-                    if (!_AudienceCache.IsValidAudience(audienceId))
-                    {
-                        throw new Exception(INVALID_AUDIENCE);
-                    }
-                    if (distinctAudiences.Contains(audienceId))
-                    {
-                        throw new Exception(INVALID_AUDIENCE_DUPLICATE);
-                    }
-                    distinctAudiences.Add(audienceId);
-                });
+            foreach (var secondaryAudience in secondaryAudiences)
+            {
+                if (!_AudienceCache.IsValidAudience(secondaryAudience.AudienceId))
+                    throw new Exception(INVALID_AUDIENCE);
+
+                if (distinctAudiences.Contains(secondaryAudience.AudienceId))
+                    throw new Exception(INVALID_AUDIENCE_DUPLICATE);
+
+                distinctAudiences.Add(secondaryAudience.AudienceId);
+
+                _ValidateVPVH(secondaryAudience.Vpvh);
+            }
         }
 
         private void _ValidateDayparts(PlanDto plan)
         {
             const int daySecondsMin = 0;
             const int daySecondsMax = 86400;
-            if (!plan.Dayparts.Any())
+            if (plan.Dayparts?.Any() != true)
             {
                 throw new Exception(INVALID_DAYPART_NUMBER);
             }
@@ -232,9 +232,9 @@ namespace Services.Broadcast.Validators
             }
         }
 
-        private void _ValidateVPVH(PlanDto plan)
+        private void _ValidateVPVH(double value)
         {
-            if (plan.Vpvh < 0.001 || plan.Vpvh > 1)
+            if (value < 0.001 || value > 1)
                 throw new Exception(INVALID_VPVH);
         }
 
