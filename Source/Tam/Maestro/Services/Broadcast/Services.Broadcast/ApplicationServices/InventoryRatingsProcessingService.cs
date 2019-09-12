@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Hangfire;
 using static Services.Broadcast.Entities.Enums.ProposalEnums;
+using System.Diagnostics;
 
 namespace Services.Broadcast.ApplicationServices
 {
@@ -31,6 +32,7 @@ namespace Services.Broadcast.ApplicationServices
         /// Process the specified job returning a list of Summary data required for the inventory aggregation process
         /// </summary>
         /// <param name="jobId">Job id to process</param>
+        /// <param name="ignoreStatus"></param>
         /// <returns>
         /// Inventory source id required for the inventory aggregation process
         /// </returns>
@@ -39,10 +41,12 @@ namespace Services.Broadcast.ApplicationServices
         /// or
         /// Job with id {jobId} already has status {job.Status}
         /// </exception>
+        int ProcessInventoryRatingsJob(int jobId, bool ignoreStatus);
+
         [Queue("inventoryrating")]
         [DisableConcurrentExecution(300)]
         int ProcessInventoryRatingsJob(int jobId);
-        
+
         void ResetJobStatusToQueued(int jobId);
     }
 
@@ -109,6 +113,11 @@ namespace Services.Broadcast.ApplicationServices
         /// <inheritdoc/>
         public int ProcessInventoryRatingsJob(int jobId)
         {
+            return ProcessInventoryRatingsJob(jobId, false);
+        }
+        /// <inheritdoc/>        
+        public int ProcessInventoryRatingsJob(int jobId, bool ignoreStatus=false)
+        {
             const ProposalPlaybackType defaultOpenMarketPlaybackType = ProposalPlaybackType.LivePlus3;
 
             var job = _InventoryFileRatingsJobsRepository.GetJobById(jobId);
@@ -118,7 +127,7 @@ namespace Services.Broadcast.ApplicationServices
                 throw new ApplicationException($"Job with id {jobId} was not found");
             }
 
-            if(job.Status != BackgroundJobProcessingStatus.Queued)
+            if(!ignoreStatus && job.Status != BackgroundJobProcessingStatus.Queued)
             {
                 throw new ApplicationException($"Job with id {jobId} already has status {job.Status}");
             }
@@ -197,7 +206,7 @@ namespace Services.Broadcast.ApplicationServices
                             quarter = allMediaMonths.Single(m => m.Id == x.ManifestWeeks.First().MediaWeek.MediaMonthId).QuarterAndYearText
                         })
                         .GroupBy(x => x.quarter);
-
+                    //var sw = Stopwatch.StartNew();
                     foreach (var manifestsGroup in manifestsGroupedByQuarter)
                     {
                         var quarterManifests = manifestsGroup.Select(x => x.manifest).ToList();
@@ -208,9 +217,14 @@ namespace Services.Broadcast.ApplicationServices
 
                         _ImpressionsService.AddProjectedImpressionsForComponentsToManifests(quarterManifests, defaultOpenMarketPlaybackType, postingBook);                       
                     }
+                    //sw.Stop();
+                    //Debug.WriteLine($"=====> Completed impression calculation in {sw.Elapsed}ms");
 
                     // save all changes to DB
+                    //sw.Restart();
                     _InventoryRepository.UpdateInventoryManifests(manifests);
+                    //sw.Stop();
+                    //Debug.WriteLine($"=====> Done saving manifest audiences in {sw.Elapsed}ms");
 
                     job.Status = BackgroundJobProcessingStatus.Succeeded;
                     job.CompletedAt = DateTime.Now;
@@ -219,14 +233,16 @@ namespace Services.Broadcast.ApplicationServices
                 {
                     // Failed for unsupported types
                     job.Status = BackgroundJobProcessingStatus.Failed;
+                    job.CompletedAt = DateTime.Now;
                 }
                 _InventoryFileRatingsJobsRepository.UpdateJob(job);
 
                 return inventoryFile.InventorySource.Id;
             }
-            catch
+            catch(Exception ex)
             {
                 job.Status = BackgroundJobProcessingStatus.Failed;
+                job.CompletedAt = DateTime.Now;
                 _InventoryFileRatingsJobsRepository.UpdateJob(job);
                 throw;
             }

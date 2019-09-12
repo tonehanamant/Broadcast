@@ -106,7 +106,7 @@ namespace BroadcastComposerWeb.Controllers
             try
             {
                 var service = _ApplicationServiceFactory.GetApplicationService<IInventoryRatingsProcessingService>();
-                service.ProcessInventoryRatingsJob(jobId);
+                service.ProcessInventoryRatingsJob(jobId, true);
                 ViewBag.Message = "Job Processed";
             }
             catch (Exception e)

@@ -57,20 +57,35 @@ namespace Services.Broadcast.ApplicationServices
         /// </summary>
         /// <param name="fileRequest">FileRequest object for the file to save</param>
         public void Save(FileRequest fileRequest)
-        {            
+        {
+            //This is to prevent errors in Debug/Development sessions writing to CD environment
+            if (System.Diagnostics.Debugger.IsAttached)
+            {
+                System.Diagnostics.Debug.WriteLine("Running in debug mode. Skipping data lake file save");
+                return;
+            }
+
             var filePath = Path.Combine(_DataLakeFolder, fileRequest.FileName);
 
-            _ImpersonateUser.Impersonate(string.Empty, _DataLakeUsername, _DataLakePassword, delegate
+            try
             {
-                try
+                if (String.IsNullOrEmpty(_DataLakeUsername))
                 {
                     _FileService.Copy(fileRequest.StreamData, filePath, true);
                 }
-                catch(Exception exception)
+                else
                 {
-                    _SendErrorEmail(filePath, exception.Message);
+                    _ImpersonateUser.Impersonate(string.Empty, _DataLakeUsername, _DataLakePassword, delegate
+                    {
+                            _FileService.Copy(fileRequest.StreamData, filePath, true);                        
+                    });
                 }
-            });
+            }
+            catch (Exception exception)
+            {
+                _SendErrorEmail(filePath, exception.Message);
+            }
+
         }
 
         /// <summary>

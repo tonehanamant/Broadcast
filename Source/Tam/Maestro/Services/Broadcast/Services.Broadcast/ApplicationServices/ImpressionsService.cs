@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 using Tam.Maestro.Services.ContractInterfaces.AudienceAndRatingsBusinessObjects;
@@ -278,56 +279,68 @@ namespace Services.Broadcast.ApplicationServices
             ProposalPlaybackType? playbackType,
             int marketCode)
         {
-            List<StationInventoryManifestAudience> result = new List<StationInventoryManifestAudience>();
+            var taskList = new List<Task<StationInventoryManifestAudience>>();
 
             foreach (var component in componentAudiences)
             {
-                List<StationImpressions> stationImpressions;
-                ProposalPlaybackType? usedHutPlaybackType = null;
-                ProposalPlaybackType? usedSharePlaybackType = null;
-
-                if (hutBook.HasValue)
+                taskList.Add(Task.Run(() =>
                 {
-                    var impressionsTwoBooksResult = _RatingsRepository.GetImpressionsDaypart(
-                            (short)hutBook.Value, 
-                            (short)shareBook,
-                            new List<int> { component.Id }, 
-                            new List<ManifestDetailDaypart> { stationDetail }, 
-                            playbackType);
-
-                    stationImpressions = impressionsTwoBooksResult.Impressions;
-
-                    if (stationImpressions.Any())
-                    {
-                        usedHutPlaybackType = impressionsTwoBooksResult.UsedHutMarketPlaybackTypes.Single(x => x.MarketCode == marketCode).PlaybackType;
-                        usedSharePlaybackType = impressionsTwoBooksResult.UsedShareMarketPlaybackTypes.Single(x => x.MarketCode == marketCode).PlaybackType;
-                    }
-                }
-                else
-                {
-                    var impressionsSingleBookResult = _RatingsRepository.GetImpressionsDaypart(
-                            shareBook,
-                            new List<int> { component.Id },
-                            new List<ManifestDetailDaypart> { stationDetail },
-                            playbackType);
-
-                    stationImpressions = impressionsSingleBookResult.Impressions.Select(x => (StationImpressions)x).ToList();
-
-                    if (stationImpressions.Any())
-                    {
-                        usedSharePlaybackType = impressionsSingleBookResult.UsedMarketPlaybackTypes.Single(x => x.MarketCode == marketCode).PlaybackType;
-                    }
-                }
-
-                result.Add(new StationInventoryManifestAudience
-                {
-                    Audience = new DisplayAudience { Id = component.Id },
-                    Impressions = stationImpressions.Sum(x => x.Impressions),
-                    IsReference = false,
-                    SharePlaybackType = usedSharePlaybackType,
-                    HutPlaybackType = usedHutPlaybackType
-                });
+                    return _GetImpressionsForAudience(stationDetail, hutBook, shareBook, playbackType, marketCode, component);
+                }));                
             }
+
+            var result = Task.WhenAll(taskList).Result.ToList();
+
+            return result;
+        }
+
+        private StationInventoryManifestAudience _GetImpressionsForAudience(ManifestDetailDaypart stationDetail, int? hutBook, int shareBook, ProposalPlaybackType? playbackType, int marketCode, BroadcastAudience component)
+        {
+            List<StationImpressions> stationImpressions;
+            ProposalPlaybackType? usedHutPlaybackType = null;
+            ProposalPlaybackType? usedSharePlaybackType = null;
+
+            if (hutBook.HasValue)
+            {
+                var impressionsTwoBooksResult = _RatingsRepository.GetImpressionsDaypart(
+                        (short)hutBook.Value,
+                        (short)shareBook,
+                        new List<int> { component.Id },
+                        new List<ManifestDetailDaypart> { stationDetail },
+                        playbackType);
+
+                stationImpressions = impressionsTwoBooksResult.Impressions;
+
+                if (stationImpressions.Any())
+                {
+                    usedHutPlaybackType = impressionsTwoBooksResult.UsedHutMarketPlaybackTypes.Single(x => x.MarketCode == marketCode).PlaybackType;
+                    usedSharePlaybackType = impressionsTwoBooksResult.UsedShareMarketPlaybackTypes.Single(x => x.MarketCode == marketCode).PlaybackType;
+                }
+            }
+            else
+            {
+                var impressionsSingleBookResult = _RatingsRepository.GetImpressionsDaypart(
+                        shareBook,
+                        new List<int> { component.Id },
+                        new List<ManifestDetailDaypart> { stationDetail },
+                        playbackType);
+
+                stationImpressions = impressionsSingleBookResult.Impressions.Select(x => (StationImpressions)x).ToList();
+
+                if (stationImpressions.Any())
+                {
+                    usedSharePlaybackType = impressionsSingleBookResult.UsedMarketPlaybackTypes.Single(x => x.MarketCode == marketCode).PlaybackType;
+                }
+            }
+
+            var result = new StationInventoryManifestAudience
+            {
+                Audience = new DisplayAudience { Id = component.Id },
+                Impressions = stationImpressions.Sum(x => x.Impressions),
+                IsReference = false,
+                SharePlaybackType = usedSharePlaybackType,
+                HutPlaybackType = usedHutPlaybackType
+            };
 
             return result;
         }
