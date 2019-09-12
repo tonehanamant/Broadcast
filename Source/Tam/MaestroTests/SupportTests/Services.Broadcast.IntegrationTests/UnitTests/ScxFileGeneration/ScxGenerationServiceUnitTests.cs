@@ -350,11 +350,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ScxFileGeneration
             var quartersCalculationEngine = new Mock<IQuarterCalculationEngine>();
             var backgroundJobClient = new Mock<IBackgroundJobClient>();
             var dropFolder = "thisFolder";
-            var updateJobCallCount = 0;
             var testJob = new Mock<ScxGenerationJob>();
             testJob.Object.Status = BackgroundJobProcessingStatus.Queued;
-            scxGenerationJobRepository.Setup(x => x.UpdateJob(testJob.Object))
-                .Callback(() => updateJobCallCount++);
+            const int jobId = 5;
+            scxGenerationJobRepository.Setup(x => x.AddJob(It.IsAny<ScxGenerationJob>())).Returns(jobId);
             var tc = new ScxGenerationServiceUnitTestClass(dataRepoFactory.Object,
                 proprietaryInventoryService.Object, fileService.Object, quartersCalculationEngine.Object,
                 backgroundJobClient.Object)
@@ -370,7 +369,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ScxFileGeneration
             tc.QueueScxGenerationJob(inventoryScxDownloadRequest.Object, "UnitTestUser", DateTime.Now);
 
             backgroundJobClient.Verify(x => x.Create(
-                It.Is<Job>(job => job.Method.Name == "ProcessScxGenerationJob"),
+                It.Is<Job>(job => job.Method.Name == "ProcessScxGenerationJob" && 
+                                  job.Args[0].ToString().Equals(jobId.ToString(), StringComparison.OrdinalIgnoreCase)),
                 It.IsAny<EnqueuedState>()));
         }
         #endregion

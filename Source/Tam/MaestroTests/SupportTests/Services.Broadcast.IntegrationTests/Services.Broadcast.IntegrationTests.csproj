@@ -323,6 +323,8 @@
     <Compile Include="UnitTests\CampaignAggregation\CampaignAggregationJobTriggerUnitTests.cs" />
     <Compile Include="UnitTests\CampaignAggregation\CampaignAggregatorUnitTestClass.cs" />
     <Compile Include="UnitTests\CampaignAggregation\CampaignAggregatorUnitTests.cs" />
+    <Compile Include="UnitTests\InventoryRatingsProcessing\InventoryRatingsProcessingServiceUnitTestClass.cs" />
+    <Compile Include="UnitTests\InventoryRatingsProcessing\InventoryRatingsProcessingServiceUnitTests.cs" />
     <Compile Include="UnitTests\MockedHangfireBackgroundJobClient.cs" />
     <Compile Include="UnitTests\Validators\CampaignValidatorUnitTests.cs" />
     <Compile Include="UnitTests\ApplicationServices\Plans\PlansServiceUnitTests.cs" />

@@ -101,13 +101,10 @@ namespace Services.Broadcast.ApplicationServices
                 QueuedAt = DateTime.Now
             };
 
-            _InventoryFileRatingsJobsRepository.AddJob(job);
+            var jobId = _InventoryFileRatingsJobsRepository.AddJob(job);
 
-            if (job.id.HasValue)
-            {
-                _BackgroundJobClient.Enqueue<IInventoryRatingsProcessingService>(x =>
-                    x.ProcessInventoryRatingsJob(job.id.Value));
-            }
+            _BackgroundJobClient.Enqueue<IInventoryRatingsProcessingService>(x =>
+                x.ProcessInventoryRatingsJob(jobId));
         }
 
         /// <inheritdoc/>
