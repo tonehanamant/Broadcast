@@ -226,9 +226,6 @@
     </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="Tam.Maestro.Common.Clients, Version=18.4.1.17, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\Tam.Maestro.Common.Clients.18.4.1.17\lib\net45\Tam.Maestro.Common.Clients.dll</HintPath>
-    </Reference>
     <Reference Include="Tam.Maestro.Common.Logging, Version=18.4.1.10, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\Tam.Maestro.Common.Logging.18.4.1.10\lib\net45\Tam.Maestro.Common.Logging.dll</HintPath>
     </Reference>
@@ -813,6 +810,10 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Common.Clients\Common.Clients.csproj">
+      <Project>{b984aaac-0379-4ddc-9a55-ef7f047d2103}</Project>
+      <Name>Common.Clients</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\Common.DataLayer\Common.DataLayer.csproj">
       <Project>{ee3106ac-43d6-4ea7-b439-0ca5f06f9ba7}</Project>
       <Name>Common.DataLayer</Name>
