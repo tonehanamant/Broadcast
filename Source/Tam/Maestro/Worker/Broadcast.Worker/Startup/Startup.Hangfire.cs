@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Configuration;
 using Broadcast.Worker.Filters;
 using Hangfire;
@@ -11,7 +10,6 @@ using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Entities.Enums;
 using Tam.Maestro.Common;
 using Tam.Maestro.Services.Clients;
-using Tam.Maestro.Web.Common.AppStart;
 
 namespace Broadcast.Worker
 {
