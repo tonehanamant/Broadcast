@@ -74,6 +74,7 @@ namespace Services.Broadcast.ApplicationServices
         /// </summary>
         /// <param name="campaignId">The campaign identifier.</param>
         [Queue("campaignaggregation")]
+        [DisableConcurrentExecution(300)]
         void ProcessCampaignAggregation(int campaignId);
 
         /// <summary>

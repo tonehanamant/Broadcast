@@ -15,8 +15,6 @@ namespace Services.Broadcast.ApplicationServices
         /// </summary>
         /// <param name="campaignId">The campaign identifier.</param>
         /// <param name="queuedBy">The queued by.</param>
-        [Queue("campaignaggregation")]
-        [DisableConcurrentExecution(300)]
         string TriggerJob(int campaignId, string queuedBy);
     }
 
@@ -45,7 +43,7 @@ namespace Services.Broadcast.ApplicationServices
         public string TriggerJob(int campaignId, string queuedBy)
         {
             _CampaignSummaryRepository.SetSummaryProcessingStatusToInProgress(campaignId, queuedBy, DateTime.Now);
-            return _BackgroundJobClient.Enqueue<CampaignService>(x => x.ProcessCampaignAggregation(campaignId));
+            return _BackgroundJobClient.Enqueue<ICampaignService>(x => x.ProcessCampaignAggregation(campaignId));
         }
     }
 }
