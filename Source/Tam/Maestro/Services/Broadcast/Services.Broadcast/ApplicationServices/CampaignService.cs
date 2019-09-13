@@ -59,8 +59,9 @@ namespace Services.Broadcast.ApplicationServices
         /// Gets the statuses based on the quarter.
         /// </summary>
         /// <param name="quarter">The quarter</param>
+        /// <param name="year">The year</param>
         /// <returns></returns>
-        List<LookupDto> GetStatuses(QuarterDto quarter);
+        List<LookupDto> GetStatuses(int? quarter, int? year);
 
         /// <summary>
         /// Triggers the campaign aggregation job.
@@ -320,14 +321,14 @@ namespace Services.Broadcast.ApplicationServices
             };
         }
 
-        public List<LookupDto> GetStatuses(QuarterDto quarter)
+        public List<LookupDto> GetStatuses(int? quarter, int? year)
         {
             DateTime? startDate = null;
             DateTime? endDate = null;
 
-            if (quarter != null)
+            if (quarter.HasValue && year.HasValue)
             {
-                var quarterDetail = _QuarterCalculationEngine.GetQuarterDetail(quarter.Quarter, quarter.Year);
+                var quarterDetail = _QuarterCalculationEngine.GetQuarterDetail(quarter.Value, year.Value);
                 startDate = quarterDetail.StartDate;
                 endDate = quarterDetail.EndDate;
             }

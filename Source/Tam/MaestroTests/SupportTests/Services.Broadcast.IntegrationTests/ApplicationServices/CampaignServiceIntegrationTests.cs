@@ -305,7 +305,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 plan.CampaignId = campaignId;
                 _PlanService.SavePlan(plan, "integration_test", new DateTime(2019, 01, 01), aggregatePlanSynchronously: true);
 
-                var campaigns = _CampaignService.GetStatuses(new QuarterDto { Quarter = 2, Year = 2019 });
+                var campaigns = _CampaignService.GetStatuses(2, 2019);
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(campaigns));
             }
         }

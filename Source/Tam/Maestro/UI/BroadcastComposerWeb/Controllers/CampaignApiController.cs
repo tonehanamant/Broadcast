@@ -97,10 +97,10 @@ namespace BroadcastComposerWeb.Controllers
         /// <returns>A list of statuses for the selected quarter.</returns>
         [HttpGet]
         [Route("Statuses")]
-        public BaseResponse<List<LookupDto>> GetStatuses(QuarterDto quarter)
+        public BaseResponse<List<LookupDto>> GetStatuses(int? quarter = null, int? year = null)
         {
             return
-               _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ICampaignService>().GetStatuses(quarter));
+               _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ICampaignService>().GetStatuses(quarter, year));
         }
 
         [HttpGet]
