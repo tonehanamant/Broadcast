@@ -127,8 +127,8 @@ namespace Services.Broadcast.BusinessEngines
 
         private static decimal _CalculateCPM(decimal? budget, double? deliveryImpressions)
         {
-            //delivery impressions is the raw number, but CPM is cost per 1000
-            return deliveryImpressions.Value == 0 ? 0 : (budget.Value / (decimal)deliveryImpressions.Value) * 1000;
+            //delivery impressions is already in tousands (is the user entered value)
+            return deliveryImpressions.Value == 0 ? 0 : (budget.Value / (decimal)deliveryImpressions.Value);
         }
 
         private static double _CalculateDeliveryRatingPointsByCPP(decimal? budget, decimal? cpp)

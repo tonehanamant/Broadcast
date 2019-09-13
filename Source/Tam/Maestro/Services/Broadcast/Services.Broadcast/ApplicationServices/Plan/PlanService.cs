@@ -110,6 +110,13 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
             _PlanValidator.ValidatePlan(plan);
 
+            if (plan.DeliveryImpressions.HasValue)
+            {
+                //the UI is sending the user entered value instead of the raw value. BE needs to adjust
+                double rawDeliveryImpressions = plan.DeliveryImpressions.Value * 1000;
+                plan.DeliveryImpressions = rawDeliveryImpressions;
+            }
+
             if (plan.Id == 0)
             {
                 plan.Id = _PlanRepository.SaveNewPlan(plan, modifiedBy, modifiedDate);

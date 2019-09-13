@@ -51,7 +51,7 @@
       "WeightingGoalPercent": 33.2
     }
   ],
-  "DeliveryImpressions": 100.0,
+  "DeliveryImpressions": 100000.0,
   "DeliveryRatingPoints": 100.0,
   "Equivalized": true,
   "FlightEndDate": "2019-07-31T00:00:00",
