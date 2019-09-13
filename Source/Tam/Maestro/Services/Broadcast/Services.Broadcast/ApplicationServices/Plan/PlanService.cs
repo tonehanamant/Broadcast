@@ -141,6 +141,9 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
             plan.TotalActiveDays = plan.WeeklyBreakdownWeeks.Select(x => x.NumberOfActiveDays).Sum();
             plan.TotalShareOfVoice = plan.WeeklyBreakdownWeeks.Select(x => x.ShareOfVoice).Sum();
+
+            //format delivery impressions
+            plan.DeliveryImpressions = plan.DeliveryImpressions / 1000;
             return plan;
         }
 

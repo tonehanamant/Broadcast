@@ -159,9 +159,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 // modify the plan
                 PlanDto testPlan = _PlanService.GetPlan(newPlanId);
 
-                //adjust the impressions to the formatted number
-                testPlan.DeliveryImpressions = testPlan.DeliveryImpressions / 1000;
-
                 testPlan.Name = "Renamed Plan";
                 testPlan.ProductId = 2;
                 // modify the flight.
@@ -213,9 +210,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 PlanDto newPlan = _GetNewPlan();
                 var newPlanId = _PlanService.SavePlan(newPlan, "integration_test", new System.DateTime(2019, 01, 01));
                 PlanDto testPlan = _PlanService.GetPlan(newPlanId);
-                
-                //adjust the impressions to the formatted number
-                testPlan.DeliveryImpressions = testPlan.DeliveryImpressions / 1000;
 
                 // remove the flight
                 testPlan.FlightEndDate = null;
@@ -281,10 +275,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var planId = _PlanService.SavePlan(newPlan, "integration_test", new System.DateTime(2019, 01, 15));
                 PlanDto finalPlan = _PlanService.GetPlan(planId);
 
-                //adjust the impressions to the formatted number
-                finalPlan.DeliveryImpressions = finalPlan.DeliveryImpressions / 1000;
-
-
                 Assert.AreEqual(2, finalPlan.Dayparts.Count);
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(finalPlan, _GetJsonSettings()));
             }
@@ -300,10 +290,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var planId = _PlanService.SavePlan(newPlan, "integration_test", new System.DateTime(2019, 01, 15));
                 PlanDto modifiedPlan = _PlanService.GetPlan(planId);
                 modifiedPlan.Dayparts.Add(new PlanDaypartDto { DaypartCodeId = 3, StartTimeSeconds = 1200, EndTimeSeconds = 1900, WeightingGoalPercent = 67 });
-
-                //adjust the impressions to the formatted number
-                modifiedPlan.DeliveryImpressions = modifiedPlan.DeliveryImpressions / 1000;
-
 
                 var modifiedPlanId = _PlanService.SavePlan(modifiedPlan, "integration_test", new System.DateTime(2019, 01, 15));
                 PlanDto finalPlan = _PlanService.GetPlan(modifiedPlanId);
@@ -323,9 +309,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var planId = _PlanService.SavePlan(newPlan, "integration_test", new System.DateTime(2019, 01, 15));
                 PlanDto modifiedPlan = _PlanService.GetPlan(planId);
                 modifiedPlan.Dayparts.RemoveAt(modifiedPlan.Dayparts.Count - 1);
-
-                //adjust the impressions to the formatted number
-                modifiedPlan.DeliveryImpressions = modifiedPlan.DeliveryImpressions / 1000;
 
 
                 var modifiedPlanId = _PlanService.SavePlan(modifiedPlan, "integration_test", new System.DateTime(2019, 01, 15));
@@ -705,9 +688,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 // modify the plan
                 PlanDto testPlan = _PlanService.GetPlan(newPlanId);
 
-                //adjust the impressions to the formatted number
-                testPlan.DeliveryImpressions = testPlan.DeliveryImpressions / 1000;
-
                 testPlan.Name = "Renamed Plan";
                 testPlan.ProductId = 2;
                 // modify the flight.
@@ -770,9 +750,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 // modify the plan
                 PlanDto testPlan = _PlanService.GetPlan(newPlanId);
 
-                //adjust the impressions to the formatted number
-                testPlan.DeliveryImpressions = testPlan.DeliveryImpressions / 1000;
-
                 testPlan.Name = "Renamed Plan";
                 testPlan.ProductId = 2;
                 // modify the flight.
@@ -804,10 +781,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var newPlanId = _PlanService.SavePlan(newPlan, "integration_test", new System.DateTime(2019, 01, 01));
                 // modify the plan
                 PlanDto testPlan = _PlanService.GetPlan(newPlanId);
-
-                //adjust the impressions to the formatted number
-                testPlan.DeliveryImpressions = testPlan.DeliveryImpressions / 1000;
-
+                
                 testPlan.Name = "Renamed Plan";
                 testPlan.ProductId = 2;
                 // modify the flight.
