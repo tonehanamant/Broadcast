@@ -26,7 +26,8 @@ namespace Services.Broadcast.IntegrationTests.Stubbs
                 new AdvertiserDto { Id = 1, Name = "Name1", AgencyId = agencyId },
                 new AdvertiserDto { Id = 2, Name = "Name1", AgencyId = agencyId },
                 new AdvertiserDto { Id = 3, Name = "Name1", AgencyId = agencyId },
-                new AdvertiserDto { Id = 4, Name = "Name1", AgencyId = agencyId }
+                new AdvertiserDto { Id = 4, Name = "Name1", AgencyId = agencyId },
+                new AdvertiserDto { Id = 37444, Name = "Leagas Delaney", AgencyId = agencyId }
             };
         }
 

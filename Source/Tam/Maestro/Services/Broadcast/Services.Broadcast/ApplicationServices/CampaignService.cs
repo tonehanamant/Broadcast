@@ -140,16 +140,17 @@ namespace Services.Broadcast.ApplicationServices
         {
             if (!_IsFilterValid(filter))
                 filter = _GetDefaultFilter(currentDate);
-            var quarterDetail = _QuarterCalculationEngine.GetQuarterDetail(filter.Quarter.Quarter, filter.Quarter.Year);
-            var campaigns = _CampaignRepository.GetCampaigns(quarterDetail.StartDate, quarterDetail.EndDate, filter.PlanStatus);
 
+            var dateRange = _GetQuarterDateRange(filter.Quarter);
+            var campaigns = _CampaignRepository.GetCampaigns(dateRange.Start, dateRange.End, filter.PlanStatus);
             var cacheAgencies = new BaseMemoryCache<AgencyDto>("localAgenciesCache");
             var cacheAdvertisers = new BaseMemoryCache<List<AdvertiserDto>>("localAdvertisersCache");
+
             foreach (var campaign in campaigns)
             {
                 var summary = _CampaignSummaryRepository.GetSummaryForCampaign(campaign.Id);
-                _HydrateCampaignListItemWithSummary(campaign, summary);
 
+                _HydrateCampaignListItemWithSummary(campaign, summary);
                 _SetAgency(campaign, cacheAgencies);
                 _SetAdvertiser(campaign, cacheAdvertisers);
             }
@@ -321,21 +322,33 @@ namespace Services.Broadcast.ApplicationServices
             };
         }
 
+        /// <inheritdoc />
         public List<LookupDto> GetStatuses(int? quarter, int? year)
         {
-            DateTime? startDate = null;
-            DateTime? endDate = null;
+            QuarterDto quarterDto = null;
 
             if (quarter.HasValue && year.HasValue)
             {
-                var quarterDetail = _QuarterCalculationEngine.GetQuarterDetail(quarter.Value, year.Value);
-                startDate = quarterDetail.StartDate;
-                endDate = quarterDetail.EndDate;
+                quarterDto = new QuarterDto
+                {
+                    Quarter = quarter.Value,
+                    Year = year.Value
+                };
             }
 
-            var statuses = _CampaignRepository.GetCampaignsPlanStatuses(startDate, endDate);
+            var dateRange = _GetQuarterDateRange(quarterDto);
+
+            var statuses = _CampaignRepository.GetCampaignsPlanStatuses(dateRange.Start, dateRange.End);
 
             return statuses.Select(x => new LookupDto { Id = (int)x, Display = x.Description() }).OrderBy(x => x.Id).ToList(); ;
+        }
+
+        private DateRange _GetQuarterDateRange(QuarterDto quarterDto)
+        {
+            if (quarterDto == null)
+                return new DateRange(null, null);
+            var quarterDetail = _QuarterCalculationEngine.GetQuarterDetail(quarterDto.Quarter, quarterDto.Year);
+            return new DateRange(quarterDetail.StartDate, quarterDetail.EndDate);
         }
 
         /// <inheritdoc />

@@ -137,10 +137,11 @@ namespace Services.Broadcast.Repositories
             return _InReadUncommitedTransaction(
                 context =>
                 {
-                    var filteredPlansCampaignIds = _GetCampaignIdsForFilteredPlansWithDates(startDate, endDate, planStatus, context);
+                    var filteredPlans = _GetFilteredPlansWithDates(startDate, endDate, planStatus, context);
+                    var plansCampaignIds = filteredPlans.Select(p => p.campaign_id).ToList();
                     var campaignIdsWithNoPlans = _GetFilteredCampaignIds(startDate, endDate, planStatus, context);
 
-                    var campaignsIds = filteredPlansCampaignIds
+                    var campaignsIds = plansCampaignIds
                         .Concat(campaignIdsWithNoPlans)
                         .Distinct();
 
@@ -263,7 +264,8 @@ namespace Services.Broadcast.Repositories
             return _InReadUncommitedTransaction(
                 context =>
                 {
-                    var plansIds = _GetCampaignIdsForFilteredPlansWithDates(startDate, endDate, null, context);
+                    var filteredPlans = _GetFilteredPlansWithDates(startDate, endDate, null, context);
+                    var plansIds = filteredPlans.Select(p => p.id).ToList();
                     var campaignsIds = _GetFilteredCampaignIds(startDate, endDate, null, context);
 
                     var plans = (from p in context.plans
@@ -326,7 +328,7 @@ namespace Services.Broadcast.Repositories
             return campaignsIdsPlansNoStartDate;
         }
 
-        private List<int> _GetCampaignIdsForFilteredPlansWithDates(DateTime? startDate, DateTime? endDate, PlanStatusEnum? planStatus, QueryHintBroadcastContext context)
+        private List<plan> _GetFilteredPlansWithDates(DateTime? startDate, DateTime? endDate, PlanStatusEnum? planStatus, QueryHintBroadcastContext context)
         {
             var plansWithStartDate = (from p in context.plans
                                       where p.flight_start_date != null
@@ -351,10 +353,7 @@ namespace Services.Broadcast.Repositories
                 plansWithStartDate = plansWithStartDate.Where(p => p.status == (byte)planStatus);
             }
 
-            var plansCampaignIds = plansWithStartDate
-                                    .Select(p => p.campaign_id)
-                                    .ToList();
-            return plansCampaignIds;
+            return plansWithStartDate.ToList();
         }
 
         private CampaignListItemDto _MapToCampaignListItemDto(campaign c)

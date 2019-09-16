@@ -53,6 +53,20 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        public void GetCampaignsFilteredByStatusTest()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var campaigns = _CampaignService.GetCampaigns(new CampaignFilterDto
+                {
+                    PlanStatus = PlanStatusEnum.Working
+                }, new DateTime(2019, 04, 01));
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(campaigns));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
         public void GetCampaignById()
         {
             // Data already exists for campaign id 2 : campaign, summary, plan
