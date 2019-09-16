@@ -238,6 +238,9 @@ namespace Services.Broadcast.ApplicationServices
                 }
                 _InventoryFileRatingsJobsRepository.UpdateJob(job);
 
+                _BackgroundJobClient.Enqueue<IInventorySummaryService>(
+                    x => x.AggregateInventorySummaryData(new List<int> { inventorySource.Id }));
+
                 return inventoryFile.InventorySource.Id;
             }
             catch(Exception ex)
