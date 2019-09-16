@@ -23,7 +23,6 @@ namespace Services.Broadcast.ApplicationServices
     {
         int QueueScxGenerationJob(InventoryScxDownloadRequest inventoryScxDownloadRequest, string userName, DateTime currentDate);
         [Queue("scxfilegeneration")]
-        [DisableConcurrentExecution(300)]
         void ProcessScxGenerationJob(int jobId);
         void ProcessScxGenerationJob(ScxGenerationJob job, DateTime currentDate);
         List<ScxGenerationJob> GetQueuedJobs(int limit);

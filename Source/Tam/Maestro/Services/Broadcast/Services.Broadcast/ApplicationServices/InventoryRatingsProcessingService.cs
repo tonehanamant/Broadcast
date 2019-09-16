@@ -44,7 +44,6 @@ namespace Services.Broadcast.ApplicationServices
         int ProcessInventoryRatingsJob(int jobId, bool ignoreStatus);
 
         [Queue("inventoryrating")]
-        [DisableConcurrentExecution(300)]
         int ProcessInventoryRatingsJob(int jobId);
 
         void ResetJobStatusToQueued(int jobId);
@@ -103,8 +102,13 @@ namespace Services.Broadcast.ApplicationServices
 
             var jobId = _InventoryFileRatingsJobsRepository.AddJob(job);
 
-            _BackgroundJobClient.Enqueue<IInventoryRatingsProcessingService>(x =>
+            var processJob = _BackgroundJobClient.Enqueue<IInventoryRatingsProcessingService>(x =>
                 x.ProcessInventoryRatingsJob(jobId));
+
+            var inventoryFile = _InventoryFileRepository.GetInventoryFileById(job.InventoryFileId);
+
+            _BackgroundJobClient.ContinueJobWith<IInventorySummaryService>(processJob,
+                x => x.AggregateInventorySummaryData(new List<int> {inventoryFile.InventorySource.Id}));
         }
 
         /// <inheritdoc/>
