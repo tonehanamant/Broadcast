@@ -45,7 +45,7 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                 };
 
                 _PlanSummaryRepository.SaveSummary(dtoToSave);
-                var modifiedSummary = _PlanSummaryRepository.GetSummaryForPlan(planId);
+                PlanSummaryDto modifiedSummary = _PlanSummaryRepository.GetSummaryForPlan(planId);
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(modifiedSummary, _GetJsonSettings()));
             }
@@ -65,7 +65,7 @@ namespace Services.Broadcast.IntegrationTests.Repositories
 
                 _PlanSummaryRepository.SetProcessingStatusForPlanSummary(planId, PlanAggregationProcessingStatusEnum.Error);
 
-                var afterSummaryDto = _PlanSummaryRepository.GetSummaryForPlan(planId);
+                PlanSummaryDto afterSummaryDto = _PlanSummaryRepository.GetSummaryForPlan(planId);
                 var afterStatus = afterSummaryDto.ProcessingStatus;
                 Assert.AreEqual(PlanAggregationProcessingStatusEnum.Idle, beforeStatus);
                 Assert.AreEqual(PlanAggregationProcessingStatusEnum.Error, afterStatus);

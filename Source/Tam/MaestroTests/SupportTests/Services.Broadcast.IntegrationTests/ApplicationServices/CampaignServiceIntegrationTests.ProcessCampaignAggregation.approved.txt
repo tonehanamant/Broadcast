@@ -34,7 +34,8 @@
       "HasHiatus": true,
       "HHCPM": 46.3,
       "HHImpressions": 10543.78,
-      "LastUpdated": "2019-05-14T00:00:00",
+      "ModifiedBy": "IntegrationTestUser",
+      "ModifiedDate": "2019-05-14T00:00:00",
       "Name": "New Plan",
       "PlanId": 523,
       "PlanSummaryQuarters": [
@@ -79,7 +80,8 @@
       "HasHiatus": true,
       "HHCPM": 46.3,
       "HHImpressions": 10543.78,
-      "LastUpdated": "2019-05-14T00:00:00",
+      "ModifiedBy": "IntegrationTestUser",
+      "ModifiedDate": "2019-05-14T00:00:00",
       "Name": "New Plan",
       "PlanId": 524,
       "PlanSummaryQuarters": [

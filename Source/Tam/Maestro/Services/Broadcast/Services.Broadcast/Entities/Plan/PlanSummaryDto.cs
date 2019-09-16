@@ -119,8 +119,6 @@ namespace Services.Broadcast.Entities.Plan
 
         public List<string> Dayparts { get; set; }
 
-        public DateTime LastUpdated { get; set; }
-
         public double? TargetImpressions { get; set; }
 
         public double? HHImpressions { get; set; }
@@ -128,5 +126,15 @@ namespace Services.Broadcast.Entities.Plan
         public double? TRP { get; set; }
 
         public bool HasHiatus { get; set; }
+
+        /// <summary>
+        /// The last time this entity was modified.
+        /// </summary>
+        public DateTime? ModifiedDate { get; set; }
+
+        /// <summary>
+        /// The last user who modified this entity.
+        /// </summary>
+        public string ModifiedBy { get; set; }
     }
 }
