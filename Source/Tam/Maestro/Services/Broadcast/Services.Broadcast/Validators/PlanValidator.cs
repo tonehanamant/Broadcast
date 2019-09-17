@@ -56,8 +56,11 @@ namespace Services.Broadcast.Validators
         const string INVALID_IMPRESSIONS_COUNT = "The impressions count is different betweek the delivery and the weekly breakdown";
         const string INVALID_SOV_COUNT = "The share of voice count is not equat to 100%";
         const string INVALID_VPVH = "Invalid VPVH. The value must be between 0.001 and 1.";
+        const string STOP_WORD_DETECTED = "Stop word detected in plan name";
 
         #endregion
+
+        const string STOP_WORD = "eOm3wgvfm0dq4rI3srL2";
 
         public PlanValidator(ISpotLengthEngine spotLengthEngine
             , IBroadcastAudiencesCache broadcastAudiencesCache
@@ -93,6 +96,17 @@ namespace Services.Broadcast.Validators
             _ValidateOptionalPercentage(plan.CoverageGoalPercent, INVALID_COVERAGE_GOAL);
             _ValidateMarkets(plan);
             _ValidateWeeklyBreakdownWeeks(plan);
+
+            // PRI-14012 We'll use a stop word so QA can trigger an error 
+            _ValidateStopWord(plan);
+        }
+
+        private void _ValidateStopWord(PlanDto plan)
+        {
+            if (plan.Name.Contains(STOP_WORD))
+            {
+                throw new Exception(STOP_WORD_DETECTED);
+            }
         }
 
         ///<inheritdoc/>

@@ -96,7 +96,7 @@ namespace Tam.Maestro.Common.Utilities.Logging
         /// <param name="callStack">Exception call stack</param>
         /// <param name="userName">logged in user name</param>
         /// <param name="environment">Current environment</param>
-        public void ServiceError(string serviceName, string message, string callStack, string userName, string environment)
+        public void ServiceError(string serviceName, string message, string callStack, string userName, string environment, string requestURL = "")
         {
             var logError = new Dictionary<string, string>
             {
@@ -105,6 +105,7 @@ namespace Tam.Maestro.Common.Utilities.Logging
                 , { "exceptionMessage", message }
                 , { nameof(callStack), callStack }
                 , { nameof(userName), userName }
+                , { nameof(requestURL), requestURL }
             };
             Logger.Error(logError);
         }

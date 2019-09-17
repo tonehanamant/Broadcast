@@ -7,7 +7,7 @@ namespace Common.Services.WebComponents
     {
         void LogEventInformation(string message, String serviceName);
         void LogException(string message, Exception exception, string serviceName);
-        void LogExceptionWithServiceName(Exception exception, String serviceName);
+        void LogExceptionWithServiceName(Exception exception, String serviceName, String requestURL = "");
     }
 
     public class WebLogger : IWebLogger
@@ -19,22 +19,23 @@ namespace Common.Services.WebComponents
             _config = config;
         }
 
-        public void LogEventInformation(string message, String serviceName)
+        public void LogEventInformation(string message, string serviceName)
         {
             TamMaestroEventSource.Log.ServiceEvent(serviceName, message, Environment.UserName, _config.EnvironmentName);
         }
 
-        public void LogExceptionWithServiceName(Exception exception, String serviceName)
+        public void LogExceptionWithServiceName(Exception exception, string serviceName, string requestURL = "")
         {
-            TamMaestroEventSource.Log.ServiceError(serviceName, exception.Message, exception.ToString(), Environment.UserName, _config.EnvironmentName);
+            var fullMessage = string.IsNullOrEmpty(requestURL) ? exception.Message : $"{exception.Message} - RequestUrl: {requestURL}";
+            TamMaestroEventSource.Log.ServiceError(serviceName, fullMessage, exception.ToString(), Environment.UserName, _config.EnvironmentName);
         }
 
         public void LogException(string message, Exception exception, string serviceName)
         {
             // LogException with custom error message
-            String exceptionMessage = String.Empty;
+            string exceptionMessage = string.Empty;
 
-            if (!String.IsNullOrEmpty(message))
+            if (!string.IsNullOrEmpty(message))
             {
                 exceptionMessage += message + " - ";
             }

@@ -14,22 +14,22 @@ namespace BroadcastComposerWeb
             _config = config;
         }
 
-        public void LogEventInformation(string message, String serviceName)
+        public void LogEventInformation(string message, string serviceName)
         {
             LogHelper.Log.ServiceEvent(serviceName, message, Environment.UserName, _config.EnvironmentName);
         }
 
-        public void LogExceptionWithServiceName(Exception exception, String serviceName)
+        public void LogExceptionWithServiceName(Exception exception, string serviceName, string requestURL = "")
         {
-            LogHelper.Log.ServiceError(serviceName, exception.Message, exception.ToString(), Environment.UserName, _config.EnvironmentName);
+            LogHelper.Log.ServiceError(serviceName, exception.Message, exception.ToString(), Environment.UserName, _config.EnvironmentName, requestURL);
         }
 
         public void LogException(string message, Exception exception, string serviceName)
         {
             // LogException with custom error message
-            String exceptionMessage = String.Empty;
+            string exceptionMessage = string.Empty;
 
-            if (!String.IsNullOrEmpty(message))
+            if (!string.IsNullOrEmpty(message))
             {
                 exceptionMessage += message + " - ";
             }

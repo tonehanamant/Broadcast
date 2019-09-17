@@ -1,5 +1,6 @@
 ﻿using Common.Services.WebComponents;
 using System;
+using System.Web;
 using System.Web.Http;
 using Tam.Maestro.Services.Cable.Entities;
 
@@ -54,7 +55,7 @@ namespace Tam.Maestro.Web.Common
             }
             catch (Exception e)
             {
-                _Logger.LogExceptionWithServiceName(e, _ControllerNameRetriever._GetControllerName());
+                _Logger.LogExceptionWithServiceName(e, _ControllerNameRetriever._GetControllerName(), HttpContext.Current.Request.RawUrl);
 
                 return (new BaseResponse<T>
                 {
