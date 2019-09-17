@@ -43,7 +43,7 @@ namespace BroadcastComposerWeb
             var instance = BroadcastApplicationServiceFactory.Instance;
 
             //Enable CORS
-            string[] allowedOrigins = { "http://localhost", "https://localhost", "http://localhost:9015", "https://localhost:9015", "http://localhost:9016", "https://localhost:9016", "http://localhost:9017", "https://localhost:9017", "http://localhost:9018", "https://localhost:9018", "http://localhost:9019", "https://localhost:9019", "http://localhost:9020", "https://localhost:9020" };
+            string[] allowedOrigins = { "http://localhost", "https://localhost", "http://localhost:9015", "https://localhost:9015", "http://localhost:9016", "https://localhost:9016", "http://localhost:9017", "https://localhost:9017", "http://localhost:9018", "https://localhost:9018", "http://localhost:9019", "https://localhost:9019", "http://localhost:9020", "https://localhost:9020", "http://localhost:8080", "https://localhost:8080" };
             string[] allowedHeaders = { "Origin", "Content-Type", "Accept" };
             string[] allowedMethods = {"GET", "POST", "PUT", "DELETE", "OPTIONS"};
             var cors = new EnableCorsAttribute(
