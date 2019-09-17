@@ -104,13 +104,8 @@ namespace Services.Broadcast.ApplicationServices
 
             if (TemporalApplicationSettings.ProcessRatingsAutomatically)
             {
-                var processJob = _BackgroundJobClient.Enqueue<IInventoryRatingsProcessingService>(x =>
+                _BackgroundJobClient.Enqueue<IInventoryRatingsProcessingService>(x =>
                     x.ProcessInventoryRatingsJob(jobId));
-
-                var inventoryFile = _InventoryFileRepository.GetInventoryFileById(job.InventoryFileId);
-
-                _BackgroundJobClient.ContinueJobWith<IInventorySummaryService>(processJob,
-                    x => x.AggregateInventorySummaryData(new List<int> {inventoryFile.InventorySource.Id}));
             }
         }
 
