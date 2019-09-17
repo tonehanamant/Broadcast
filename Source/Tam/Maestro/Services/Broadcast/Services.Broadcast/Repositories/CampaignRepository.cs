@@ -336,7 +336,7 @@ namespace Services.Broadcast.Repositories
 
             if (startDate.HasValue && endDate.HasValue)
             {
-                plansWithStartDate.Where(p =>
+                plansWithStartDate = plansWithStartDate.Where(p =>
                                             (p.flight_start_date != null &&
                                              p.flight_end_date == null &&
                                              p.flight_start_date >= startDate &&

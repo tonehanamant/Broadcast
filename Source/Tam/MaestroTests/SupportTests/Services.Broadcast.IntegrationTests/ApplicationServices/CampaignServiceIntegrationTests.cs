@@ -276,12 +276,15 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 var campaign = _GetValidCampaign();
                 var campaignId = _CampaignService.SaveCampaign(campaign, IntegrationTestUser, CreatedDate);
-                var plan = _GetNewPlan();
+                var plan = _GetNewPlan();                
+                plan.Status = PlanStatusEnum.ClientApproval;
                 plan.CampaignId = campaignId;
 
                 var secondCampaign = _GetValidCampaign();
                 var secondCampaignId = _CampaignService.SaveCampaign(secondCampaign, IntegrationTestUser, CreatedDate);
                 var secondPlan = _GetNewPlan();
+                secondPlan.FlightStartDate = new DateTime(2018, 01, 01);
+                secondPlan.FlightEndDate = null;
                 secondPlan.Status = PlanStatusEnum.ClientApproval;
                 secondPlan.CampaignId = secondCampaignId;
 
