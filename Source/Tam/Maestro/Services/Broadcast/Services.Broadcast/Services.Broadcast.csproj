@@ -783,6 +783,7 @@
     <Compile Include="Service\ScheduledServiceMethod.cs" />
     <Compile Include="Service\ScheduledWindowsServiceMethodRunner.cs" />
     <Compile Include="Service\WindowsServiceBase.cs" />
+    <Compile Include="TemporalApplicationSettings.cs" />
     <Compile Include="SystemComponentParameters\SystemComponentParameter.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

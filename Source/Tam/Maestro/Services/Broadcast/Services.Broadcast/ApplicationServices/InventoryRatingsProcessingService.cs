@@ -102,13 +102,16 @@ namespace Services.Broadcast.ApplicationServices
 
             var jobId = _InventoryFileRatingsJobsRepository.AddJob(job);
 
-            var processJob = _BackgroundJobClient.Enqueue<IInventoryRatingsProcessingService>(x =>
-                x.ProcessInventoryRatingsJob(jobId));
+            if (TemporalApplicationSettings.ProcessRatingsAutomatically)
+            {
+                var processJob = _BackgroundJobClient.Enqueue<IInventoryRatingsProcessingService>(x =>
+                    x.ProcessInventoryRatingsJob(jobId));
 
-            var inventoryFile = _InventoryFileRepository.GetInventoryFileById(job.InventoryFileId);
+                var inventoryFile = _InventoryFileRepository.GetInventoryFileById(job.InventoryFileId);
 
-            _BackgroundJobClient.ContinueJobWith<IInventorySummaryService>(processJob,
-                x => x.AggregateInventorySummaryData(new List<int> {inventoryFile.InventorySource.Id}));
+                _BackgroundJobClient.ContinueJobWith<IInventorySummaryService>(processJob,
+                    x => x.AggregateInventorySummaryData(new List<int> {inventoryFile.InventorySource.Id}));
+            }
         }
 
         /// <inheritdoc/>

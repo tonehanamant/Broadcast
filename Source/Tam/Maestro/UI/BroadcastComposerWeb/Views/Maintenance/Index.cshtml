@@ -126,5 +126,14 @@
         }
     </div>
 
+    <div>
+        <h1>Temporal Application Settings</h1>
+        <div>
+            @using (Html.BeginForm("SwitchProcessRatingsAutomatically", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <input type="submit" value="Switch ProcessRatingsAutomatically flag" id="submit" />
+            }
+        </div>
+    </div>
 </body>
 </html>

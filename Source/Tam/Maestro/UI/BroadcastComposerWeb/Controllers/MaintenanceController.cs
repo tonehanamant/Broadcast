@@ -5,6 +5,7 @@ using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
 using Common.Services;
+using Services.Broadcast;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.ApplicationServices.Helpers;
 using Services.Broadcast.Entities;
@@ -182,6 +183,14 @@ namespace BroadcastComposerWeb.Controllers
                 ViewBag.Message = "Error Processing Job: " + e.Message;
             }
 
+            return View("Index");
+        }
+
+        [HttpPost]
+        public ActionResult SwitchProcessRatingsAutomatically()
+        {
+            TemporalApplicationSettings.ProcessRatingsAutomatically = !TemporalApplicationSettings.ProcessRatingsAutomatically;
+            ViewBag.Message = $"ProcessRatingsAutomatically is set to {TemporalApplicationSettings.ProcessRatingsAutomatically}";
             return View("Index");
         }
 
