@@ -1,6 +1,6 @@
 ﻿{
   "TotalActiveDays": 11,
-  "TotalShareOfVoice": 99.0,
+  "TotalShareOfVoice": 100.0,
   "Weeks": [
     {
       "ActiveDays": "Su",
@@ -8,7 +8,7 @@
       "Impressions": 6698386133.3333321,
       "MediaWeekId": 822,
       "NumberOfActiveDays": 1,
-      "ShareOfVoice": 33.0,
+      "ShareOfVoice": 33.33333333,
       "StartDate": "2019-09-23T00:00:00",
       "WeekNumber": 1
     },
@@ -18,7 +18,7 @@
       "Impressions": 6698386133.3333321,
       "MediaWeekId": 823,
       "NumberOfActiveDays": 5,
-      "ShareOfVoice": 33.0,
+      "ShareOfVoice": 33.33333333,
       "StartDate": "2019-09-30T00:00:00",
       "WeekNumber": 2
     },
@@ -28,7 +28,7 @@
       "Impressions": 6698386133.3333321,
       "MediaWeekId": 824,
       "NumberOfActiveDays": 5,
-      "ShareOfVoice": 33.0,
+      "ShareOfVoice": 33.33333333,
       "StartDate": "2019-10-07T00:00:00",
       "WeekNumber": 3
     }

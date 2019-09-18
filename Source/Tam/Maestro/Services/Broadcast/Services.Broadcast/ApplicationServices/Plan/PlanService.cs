@@ -310,7 +310,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             foreach(var week in activeWeeks)
             {
                 week.Impressions = totalImpressions / activeWeeks.Count();
-                week.ShareOfVoice = 100 / activeWeeks.Count();
+                week.ShareOfVoice = (double)100 / activeWeeks.Count();
             }
         }
 

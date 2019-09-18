@@ -440,7 +440,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
                     new WeeklyBreakdownWeek{ Impressions = 30}
             };
 
-            Assert.That(() => _planValidator.ValidatePlan(plan), Throws.TypeOf<Exception>().With.Message.EqualTo("The impressions count is different betweek the delivery and the weekly breakdown"));
+            Assert.That(() => _planValidator.ValidatePlan(plan), Throws.TypeOf<Exception>().With.Message.EqualTo("The impressions count is different between the delivery and the weekly breakdown"));
         }
 
         [Test]
@@ -456,7 +456,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
                     new WeeklyBreakdownWeek{ Impressions = 30, ShareOfVoice = 20}
                 };
 
-            Assert.That(() => _planValidator.ValidatePlan(plan), Throws.TypeOf<Exception>().With.Message.EqualTo("The share of voice count is not equat to 100%"));
+            Assert.That(() => _planValidator.ValidatePlan(plan), Throws.TypeOf<Exception>().With.Message.EqualTo("The share of voice count is not equal to 100%"));
         }
 
         [Test]
