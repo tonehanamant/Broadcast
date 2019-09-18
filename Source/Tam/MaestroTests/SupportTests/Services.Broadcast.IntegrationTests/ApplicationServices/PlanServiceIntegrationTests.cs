@@ -921,6 +921,22 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        public void Plan_WeeklyBreakdown_PRI15094()
+        {
+            var result = _PlanService.CalculatePlanWeeklyGoalBreakdown(new WeeklyBreakdownRequest
+            {
+                DeliveryType = Entities.Enums.PlanGloalBreakdownTypeEnum.Even,
+                FlightStartDate = new DateTime(2019, 09, 29),
+                FlightEndDate = new DateTime(2019, 10, 13),
+                FlightHiatusDays = new List<DateTime> { new DateTime(2019, 10, 10), new DateTime(2019, 10, 12), new DateTime(2019, 10, 4), new DateTime(2019, 10, 2) },
+                TotalImpressions = 20095158400
+            });
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
         public void Plan_WeeklyBreakdown_OneWeekHiatus()
         {
             var result = _PlanService.CalculatePlanWeeklyGoalBreakdown(new WeeklyBreakdownRequest

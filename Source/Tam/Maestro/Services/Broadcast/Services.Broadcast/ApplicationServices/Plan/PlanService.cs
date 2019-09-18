@@ -336,21 +336,21 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
             //group the active days that are not null
             var groupOfActiveDays = daysOfWeek.GroupConnected((a) => string.IsNullOrWhiteSpace(a));
-
+            List<string> activeDaysList = new List<string>();
             foreach (var group in groupOfActiveDays.Where(x=>x.Count() > 0))
             {
                 //if the group contains 1 or 2 elements, join them by comma
                 if (group.Count() == 1 || group.Count() == 2)
                 {
-                    activeDaysString += string.Join(",", group);
+                    activeDaysList.Add(string.Join(",", group));
                 }
                 else  //if the group contains more then 3 elements, join the first and the last one with "-"
                 {
-                    activeDaysString += string.IsNullOrWhiteSpace(activeDaysString) ? "" : ",";
-                    activeDaysString += $"{group.First()}-{group.Last()}";
+                    activeDaysList.Add($"{group.First()}-{group.Last()}");
                 }
             }
 
+            activeDaysString = string.Join(",", activeDaysList);
             //number of active days this week is 7 minus number of hiatus days
             return 7 - hiatusDaysInWeek.Count();
         }
