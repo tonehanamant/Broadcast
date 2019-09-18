@@ -283,8 +283,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var secondCampaign = _GetValidCampaign();
                 var secondCampaignId = _CampaignService.SaveCampaign(secondCampaign, IntegrationTestUser, CreatedDate);
                 var secondPlan = _GetNewPlan();
-                secondPlan.FlightStartDate = new DateTime(2018, 01, 01);
-                secondPlan.FlightEndDate = null;
+                secondPlan.FlightStartDate = new DateTime(2018, 02, 01);
+                secondPlan.FlightEndDate = new DateTime(2018, 08, 31);
+                secondPlan.FlightHiatusDays = new List<DateTime>
+                {
+                    new DateTime(2018, 3, 20),
+                    new DateTime(2018, 4, 15)
+                };
                 secondPlan.Status = PlanStatusEnum.ClientApproval;
                 secondPlan.CampaignId = secondCampaignId;
 
@@ -435,6 +440,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 ShareBookId = 437,
                 Budget = 100m,
                 CPM = 12m,
+                CPP = 200951583.9999m,
                 DeliveryImpressions = 100d,
                 DeliveryRatingPoints = 6d,
                 CoverageGoalPercent = 80.5,
@@ -442,7 +448,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 GoalBreakdownType = Entities.Enums.PlanGloalBreakdownTypeEnum.Even,
                 AvailableMarkets = new List<PlanAvailableMarketDto>
                 {
-                    new PlanAvailableMarketDto { MarketCode = 100, MarketCoverageFileId = 1, PercentageOfUs = 20, Rank = 1, ShareOfVoicePercent = 22.2},
+                    new PlanAvailableMarketDto { MarketCode = 100, MarketCoverageFileId = 1, PercentageOfUs = 48, Rank = 1, ShareOfVoicePercent = 22.2},
                     new PlanAvailableMarketDto { MarketCode = 101, MarketCoverageFileId = 1, PercentageOfUs = 32.5, Rank = 2, ShareOfVoicePercent = 34.5}
                 },
                 BlackoutMarkets = new List<PlanBlackoutMarketDto>
@@ -464,7 +470,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 HouseholdRatingPoints = 1,
                 HouseholdCPP = 10000,
                 Universe = 3000000,
-                CPP = 2,
             };
         }
     }

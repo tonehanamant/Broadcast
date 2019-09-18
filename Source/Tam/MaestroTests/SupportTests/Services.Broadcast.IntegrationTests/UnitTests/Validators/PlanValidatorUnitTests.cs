@@ -8,6 +8,7 @@ using Services.Broadcast.Entities.Plan;
 using Services.Broadcast.Validators;
 using System;
 using System.Collections.Generic;
+using Services.Broadcast.Entities.Enums;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
 {
@@ -30,12 +31,36 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             _ratingForecastServiceMock = new Mock<IRatingForecastService>();
             _broadcastAudiencesCacheMock = new Mock<IBroadcastAudiencesCache>();
             _traffiApiClientMock = new Mock<ITrafficApiClient>();
-            _ratingForecastServiceMock.Setup(r => r.GetMediaMonthCrunchStatuses()).Returns(new List<Entities.MediaMonthCrunchStatus> {
-                new Entities.MediaMonthCrunchStatus(new Entities.RatingsForecastStatus{ UniverseMarkets = 10, MediaMonth = new Tam.Maestro.Data.Entities.MediaMonth {  Id = HUT_BOOK_ID, StartDate = new DateTime(2019,8,11) }, UsageMarkets = 10, ViewerMarkets = 10 }, 10),
-                new Entities.MediaMonthCrunchStatus(new Entities.RatingsForecastStatus{ UniverseMarkets = 10, MediaMonth = new Tam.Maestro.Data.Entities.MediaMonth {  Id = SHARE_BOOK_ID, StartDate = new DateTime(2019,8,13) }, UsageMarkets = 10, ViewerMarkets = 10 }, 10),
-                new Entities.MediaMonthCrunchStatus(new Entities.RatingsForecastStatus{ UniverseMarkets = 10, MediaMonth = new Tam.Maestro.Data.Entities.MediaMonth {  Id = 21, StartDate = new DateTime(2019,8,19) }, UsageMarkets = 10, ViewerMarkets = 10 }, 10),
-            });
-            _planValidator = new PlanValidator(_spotLengthEngineMock.Object, _broadcastAudiencesCacheMock.Object, _ratingForecastServiceMock.Object, _traffiApiClientMock.Object);
+            _ratingForecastServiceMock.Setup(r => r.GetMediaMonthCrunchStatuses()).Returns(
+                new List<Entities.MediaMonthCrunchStatus>
+                {
+                    new Entities.MediaMonthCrunchStatus(
+                        new Entities.RatingsForecastStatus
+                        {
+                            UniverseMarkets = 10,
+                            MediaMonth = new Tam.Maestro.Data.Entities.MediaMonth
+                                {Id = HUT_BOOK_ID, StartDate = new DateTime(2019, 8, 11)},
+                            UsageMarkets = 10, ViewerMarkets = 10
+                        }, 10),
+                    new Entities.MediaMonthCrunchStatus(
+                        new Entities.RatingsForecastStatus
+                        {
+                            UniverseMarkets = 10,
+                            MediaMonth = new Tam.Maestro.Data.Entities.MediaMonth
+                                {Id = SHARE_BOOK_ID, StartDate = new DateTime(2019, 8, 13)},
+                            UsageMarkets = 10, ViewerMarkets = 10
+                        }, 10),
+                    new Entities.MediaMonthCrunchStatus(
+                        new Entities.RatingsForecastStatus
+                        {
+                            UniverseMarkets = 10,
+                            MediaMonth = new Tam.Maestro.Data.Entities.MediaMonth
+                                {Id = 21, StartDate = new DateTime(2019, 8, 19)},
+                            UsageMarkets = 10, ViewerMarkets = 10
+                        }, 10),
+                });
+            _planValidator = new PlanValidator(_spotLengthEngineMock.Object, _broadcastAudiencesCacheMock.Object,
+                _ratingForecastServiceMock.Object, _traffiApiClientMock.Object);
         }
 
         [Test]
@@ -44,16 +69,19 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             var plan = _GetPlan();
             plan.Name = string.Empty;
 
-            Assert.That(() => _planValidator.ValidatePlan(plan), Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid plan name"));
+            Assert.That(() => _planValidator.ValidatePlan(plan),
+                Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid plan name"));
         }
 
         [Test]
         public void ValidatePlan_NameLargerThan255()
         {
             var plan = _GetPlan();
-            plan.Name = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque blandit ex sed purus auctor rhoncus. Mauris lobortis nisi eget sollicitudin ultrices. Duis mollis blandit nisi id ultrices. Suspendisse molestie urna in enim egestas vehicula. Nulla facilisi.";
+            plan.Name =
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque blandit ex sed purus auctor rhoncus. Mauris lobortis nisi eget sollicitudin ultrices. Duis mollis blandit nisi id ultrices. Suspendisse molestie urna in enim egestas vehicula. Nulla facilisi.";
 
-            Assert.That(() => _planValidator.ValidatePlan(plan), Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid plan name"));
+            Assert.That(() => _planValidator.ValidatePlan(plan),
+                Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid plan name"));
         }
 
         [Test]
@@ -63,7 +91,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
 
             var plan = _GetPlan();
 
-            Assert.That(() => _planValidator.ValidatePlan(plan), Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid spot length"));
+            Assert.That(() => _planValidator.ValidatePlan(plan),
+                Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid spot length"));
         }
 
         [Test]
@@ -74,7 +103,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             var plan = _GetPlan();
             plan.ProductId = 0;
 
-            Assert.That(() => _planValidator.ValidatePlan(plan), Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid product"));
+            Assert.That(() => _planValidator.ValidatePlan(plan),
+                Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid product"));
         }
 
         [Test]
@@ -86,7 +116,31 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             plan.FlightStartDate = new DateTime(2019, 8, 1);
             plan.FlightEndDate = new DateTime(2019, 7, 1);
 
-            Assert.That(() => _planValidator.ValidatePlan(plan), Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid flight dates.  The end date cannot be before the start date."));
+            Assert.That(() => _planValidator.ValidatePlan(plan),
+                Throws.TypeOf<Exception>().With.Message
+                    .EqualTo("Invalid flight dates.  The end date cannot be before the start date."));
+        }
+
+        [Test]
+        public void ValidatePlan_WithEmptyFlightStartDate()
+        {
+            _ConfigureMocksToReturnTrue();
+            var plan = _GetPlan();
+            plan.FlightStartDate = null;
+
+            Assert.That(() => _planValidator.ValidatePlan(plan)
+                , Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid flight start/end date."));
+        }
+
+        [Test]
+        public void ValidatePlan_WithEmptyFlightEndDate()
+        {
+            _ConfigureMocksToReturnTrue();
+            var plan = _GetPlan();
+            plan.FlightEndDate = null;
+
+            Assert.That(() => _planValidator.ValidatePlan(plan)
+                , Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid flight start/end date."));
         }
 
         [Test]
@@ -99,10 +153,76 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             plan.FlightEndDate = new DateTime(2019, 9, 1);
             plan.FlightHiatusDays = new List<DateTime>
             {
-                new DateTime(2018,7,1)
+                new DateTime(2018, 7, 1)
             };
 
-            Assert.That(() => _planValidator.ValidatePlan(plan), Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid flight hiatus day.  All days must be within the flight date range."));
+            Assert.That(() => _planValidator.ValidatePlan(plan),
+                Throws.TypeOf<Exception>().With.Message
+                    .EqualTo("Invalid flight hiatus day.  All days must be within the flight date range."));
+        }
+
+        [Test]
+        [TestCase(null)]
+        [TestCase(0)]
+        [TestCase(-25)]
+        // have to use int? because the attribute requires a constant.
+        public void ValidatePlan_WithInvalidBudget(int? candidate)
+        {
+            _ConfigureMocksToReturnTrue();
+
+            var plan = _GetPlan();
+            plan.Budget = candidate;
+
+            Assert.That(() => _planValidator.ValidatePlan(plan),
+                Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid budget."));
+        }
+
+        [Test]
+        [TestCase(null)]
+        [TestCase(0)]
+        [TestCase(-25)]
+        // have to use int? because the attribute requires a constant.
+        public void ValidatePlan_WithInvalidCpm(int? candidate)
+        {
+            _ConfigureMocksToReturnTrue();
+
+            var plan = _GetPlan();
+            plan.CPM = candidate;
+
+            Assert.That(() => _planValidator.ValidatePlan(plan),
+                Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid CPM."));
+        }
+
+        [Test]
+        [TestCase(null)]
+        [TestCase(0)]
+        [TestCase(-25)]
+        // have to use int? because the attribute requires a constant.
+        public void ValidatePlan_WithInvalidCpp(int? candidate)
+        {
+            _ConfigureMocksToReturnTrue();
+
+            var plan = _GetPlan();
+            plan.CPP = candidate;
+
+            Assert.That(() => _planValidator.ValidatePlan(plan),
+                Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid CPP."));
+        }
+
+        [Test]
+        [TestCase(null)]
+        [TestCase(0)]
+        [TestCase(-25)]
+        // have to use int? because the attribute requires a constant.
+        public void ValidatePlan_WithInvalidDeliveryImpressions(int? candidate)
+        {
+            _ConfigureMocksToReturnTrue();
+
+            var plan = _GetPlan();
+            plan.DeliveryImpressions = candidate;
+
+            Assert.That(() => _planValidator.ValidatePlan(plan),
+                Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid Delivery Impressions."));
         }
 
         [Test]
@@ -113,7 +233,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             var plan = _GetPlan();
             plan.Dayparts = null;
 
-            Assert.That(() => _planValidator.ValidatePlan(plan), Throws.TypeOf<Exception>().With.Message.EqualTo("There should be at least one daypart selected."));
+            Assert.That(() => _planValidator.ValidatePlan(plan),
+                Throws.TypeOf<Exception>().With.Message.EqualTo("There should be at least one daypart selected."));
         }
 
         [Test]
@@ -130,7 +251,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
                 }
             };
 
-            Assert.That(() => _planValidator.ValidatePlan(plan), Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid daypart times."));
+            Assert.That(() => _planValidator.ValidatePlan(plan),
+                Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid daypart times."));
         }
 
         [Test]
@@ -147,7 +269,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
                 }
             };
 
-            Assert.That(() => _planValidator.ValidatePlan(plan), Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid daypart times."));
+            Assert.That(() => _planValidator.ValidatePlan(plan),
+                Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid daypart times."));
         }
 
         [Test]
@@ -165,7 +288,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
                 }
             };
 
-            Assert.That(() => _planValidator.ValidatePlan(plan), Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid daypart times."));
+            Assert.That(() => _planValidator.ValidatePlan(plan),
+                Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid daypart times."));
         }
 
         [Test]
@@ -183,7 +307,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
                 }
             };
 
-            Assert.That(() => _planValidator.ValidatePlan(plan), Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid daypart times."));
+            Assert.That(() => _planValidator.ValidatePlan(plan),
+                Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid daypart times."));
         }
 
         [Test]
@@ -201,7 +326,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
                 }
             };
 
-            Assert.That(() => _planValidator.ValidatePlan(plan), Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid daypart weighting goal."));
+            Assert.That(() => _planValidator.ValidatePlan(plan),
+                Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid daypart weighting goal."));
         }
 
         [Test]
@@ -219,7 +345,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
                 }
             };
 
-            Assert.That(() => _planValidator.ValidatePlan(plan), Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid daypart weighting goal."));
+            Assert.That(() => _planValidator.ValidatePlan(plan),
+                Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid daypart weighting goal."));
         }
 
         [Test]
@@ -230,7 +357,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             var plan = _GetPlan();
             plan.AudienceId = 0;
 
-            Assert.That(() => _planValidator.ValidatePlan(plan), Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid audience"));
+            Assert.That(() => _planValidator.ValidatePlan(plan),
+                Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid audience"));
         }
 
         [Test]
@@ -241,7 +369,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             var plan = _GetPlan();
             plan.ShareBookId = 0;
 
-            Assert.That(() => _planValidator.ValidatePlan(plan), Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid share book"));
+            Assert.That(() => _planValidator.ValidatePlan(plan),
+                Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid share book"));
         }
 
         [Test]
@@ -252,7 +381,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             var plan = _GetPlan();
             plan.HUTBookId = -1;
 
-            Assert.That(() => _planValidator.ValidatePlan(plan), Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid HUT book."));
+            Assert.That(() => _planValidator.ValidatePlan(plan),
+                Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid HUT book."));
         }
 
         [Test]
@@ -263,7 +393,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             var plan = _GetPlan();
             plan.HUTBookId = 51;
 
-            Assert.That(() => _planValidator.ValidatePlan(plan), Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid HUT book."));
+            Assert.That(() => _planValidator.ValidatePlan(plan),
+                Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid HUT book."));
         }
 
         [Test]
@@ -274,7 +405,21 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             var plan = _GetPlan();
             plan.HUTBookId = 21;
 
-            Assert.That(() => _planValidator.ValidatePlan(plan), Throws.TypeOf<Exception>().With.Message.EqualTo("HUT Book must be prior to Share Book"));
+            Assert.That(() => _planValidator.ValidatePlan(plan),
+                Throws.TypeOf<Exception>().With.Message.EqualTo("HUT Book must be prior to Share Book"));
+        }
+
+        [Test]
+        public void ValidatePlan_PrimaryAudienceVPVHWithDefault()
+        {
+            _ConfigureMocksToReturnTrue();
+
+            var plan = _GetPlan();
+            plan.Vpvh = default;
+
+            Assert.That(() => _planValidator.ValidatePlan(plan),
+                Throws.TypeOf<Exception>().With.Message
+                    .EqualTo("Invalid VPVH. The value must be between 0.001 and 1."));
         }
 
         [Test]
@@ -285,7 +430,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             var plan = _GetPlan();
             plan.Vpvh = 0.0001;
 
-            Assert.That(() => _planValidator.ValidatePlan(plan), Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid VPVH. The value must be between 0.001 and 1."));
+            Assert.That(() => _planValidator.ValidatePlan(plan),
+                Throws.TypeOf<Exception>().With.Message
+                    .EqualTo("Invalid VPVH. The value must be between 0.001 and 1."));
         }
 
         [Test]
@@ -296,7 +443,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             var plan = _GetPlan();
             plan.Vpvh = 2;
 
-            Assert.That(() => _planValidator.ValidatePlan(plan), Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid VPVH. The value must be between 0.001 and 1."));
+            Assert.That(() => _planValidator.ValidatePlan(plan),
+                Throws.TypeOf<Exception>().With.Message
+                    .EqualTo("Invalid VPVH. The value must be between 0.001 and 1."));
         }
 
         [Test]
@@ -316,7 +465,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
                 }
             };
 
-            Assert.That(() => _planValidator.ValidatePlan(plan), Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid audience"));
+            Assert.That(() => _planValidator.ValidatePlan(plan),
+                Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid audience"));
         }
 
         [Test]
@@ -339,7 +489,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
                 }
             };
 
-            Assert.That(() => _planValidator.ValidatePlan(plan), Throws.TypeOf<Exception>().With.Message.EqualTo("An audience cannot appear multiple times"));
+            Assert.That(() => _planValidator.ValidatePlan(plan),
+                Throws.TypeOf<Exception>().With.Message.EqualTo("An audience cannot appear multiple times"));
         }
 
         [Test]
@@ -349,15 +500,17 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
 
             var plan = _GetPlan();
             plan.SecondaryAudiences = new List<PlanAudienceDto>
+            {
+                new PlanAudienceDto
                 {
-                    new PlanAudienceDto
-                    {
-                        AudienceId = 11,
-                        Vpvh = -1
-                    },
-                };
+                    AudienceId = 11,
+                    Vpvh = -1
+                },
+            };
 
-            Assert.That(() => _planValidator.ValidatePlan(plan), Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid VPVH. The value must be between 0.001 and 1."));
+            Assert.That(() => _planValidator.ValidatePlan(plan),
+                Throws.TypeOf<Exception>().With.Message
+                    .EqualTo("Invalid VPVH. The value must be between 0.001 and 1."));
         }
 
         [Test]
@@ -374,29 +527,58 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
                 },
             };
 
-            Assert.That(() => _planValidator.ValidatePlan(plan), Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid VPVH. The value must be between 0.001 and 1."));
+            Assert.That(() => _planValidator.ValidatePlan(plan),
+                Throws.TypeOf<Exception>().With.Message
+                    .EqualTo("Invalid VPVH. The value must be between 0.001 and 1."));
         }
 
         [Test]
-        public void ValidatePlan_CoverageGoalPercenteLessThanMinimum()
+        [TestCase(null)]
+        [TestCase(0)]
+        [TestCase(-25)]
+        [TestCase(230)]
+        [TestCase(101)]
+        // have to use int? because the attribute requires a constant.
+        public void ValidatePlan_WithInvalidCoverageGoalPercentage(int? candidate)
         {
             _ConfigureMocksToReturnTrue();
 
             var plan = _GetPlan();
-            plan.CoverageGoalPercent = 0;
+            plan.CoverageGoalPercent = candidate;
 
-            Assert.That(() => _planValidator.ValidatePlan(plan), Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid coverage goal value."));
+            Assert.That(() => _planValidator.ValidatePlan(plan),
+                Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid coverage goal value."));
         }
 
         [Test]
-        public void ValidatePlan_CoverageGoalPercenteBiggerThanMaximum()
+        public void ValidatePlan_WithInvalidMarketCoverage()
         {
             _ConfigureMocksToReturnTrue();
-
             var plan = _GetPlan();
-            plan.CoverageGoalPercent = 230;
+            plan.CoverageGoalPercent = 80.5;
+            plan.AvailableMarkets = new List<PlanAvailableMarketDto>
+            {
+                new PlanAvailableMarketDto {PercentageOfUs = 50,}, new PlanAvailableMarketDto {PercentageOfUs = 20.5}
+            };
 
-            Assert.That(() => _planValidator.ValidatePlan(plan), Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid coverage goal value."));
+            Assert.That(() => _planValidator.ValidatePlan(plan),
+                Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid total market coverage."));
+        }
+
+        [Test]
+        [TestCase(80.5)]
+        [TestCase(70.5)]
+        public void ValidatePlan_WithValidMarketCoverage(double candidate)
+        {
+            _ConfigureMocksToReturnTrue();
+            var plan = _GetPlan();
+            plan.CoverageGoalPercent = candidate;
+            plan.AvailableMarkets = new List<PlanAvailableMarketDto>
+            {
+                new PlanAvailableMarketDto {PercentageOfUs = 50,}, new PlanAvailableMarketDto {PercentageOfUs = 30.5}
+            };
+
+            Assert.DoesNotThrow(() => _planValidator.ValidatePlan(plan));
         }
 
         [Test]
@@ -407,10 +589,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             var plan = _GetPlan();
             plan.AvailableMarkets = new List<PlanAvailableMarketDto>
             {
-                new PlanAvailableMarketDto { ShareOfVoicePercent = 0 }
+                new PlanAvailableMarketDto {ShareOfVoicePercent = 0}
             };
 
-            Assert.That(() => _planValidator.ValidatePlan(plan), Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid share of voice for market."));
+            Assert.That(() => _planValidator.ValidatePlan(plan),
+                Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid share of voice for market."));
         }
 
         [Test]
@@ -421,10 +604,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             var plan = _GetPlan();
             plan.AvailableMarkets = new List<PlanAvailableMarketDto>
             {
-                new PlanAvailableMarketDto { ShareOfVoicePercent = 150 }
+                new PlanAvailableMarketDto {ShareOfVoicePercent = 150}
             };
 
-            Assert.That(() => _planValidator.ValidatePlan(plan), Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid share of voice for market."));
+            Assert.That(() => _planValidator.ValidatePlan(plan),
+                Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid share of voice for market."));
         }
 
         [Test]
@@ -436,8 +620,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             plan.DeliveryImpressions = 100;
             plan.WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>
             {
-                    new WeeklyBreakdownWeek{ Impressions = 20},
-                    new WeeklyBreakdownWeek{ Impressions = 30}
+                new WeeklyBreakdownWeek {Impressions = 20},
+                new WeeklyBreakdownWeek {Impressions = 30}
             };
 
             Assert.That(() => _planValidator.ValidatePlan(plan), Throws.TypeOf<Exception>().With.Message.EqualTo("The impressions count is different between the delivery and the weekly breakdown"));
@@ -451,10 +635,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             var plan = _GetPlan();
             plan.DeliveryImpressions = 50;
             plan.WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>
-                {
-                    new WeeklyBreakdownWeek{ Impressions = 20, ShareOfVoice = 20},
-                    new WeeklyBreakdownWeek{ Impressions = 30, ShareOfVoice = 20}
-                };
+            {
+                new WeeklyBreakdownWeek {Impressions = 20, ShareOfVoice = 20},
+                new WeeklyBreakdownWeek {Impressions = 30, ShareOfVoice = 20}
+            };
 
             Assert.That(() => _planValidator.ValidatePlan(plan), Throws.TypeOf<Exception>().With.Message.EqualTo("The share of voice count is not equal to 100%"));
         }
@@ -462,7 +646,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
         [Test]
         public void ValidateWeeklyBreakdown_RequestNull()
         {
-            Assert.That(() => _planValidator.ValidateWeeklyBreakdown(null), Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid request"));
+            Assert.That(() => _planValidator.ValidateWeeklyBreakdown(null),
+                Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid request"));
         }
 
         [Test]
@@ -474,7 +659,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
                 FlightStartDate = new DateTime()
             };
 
-            Assert.That(() => _planValidator.ValidateWeeklyBreakdown(request), Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid flight start/end date."));
+            Assert.That(() => _planValidator.ValidateWeeklyBreakdown(request),
+                Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid flight start/end date."));
         }
 
         [Test]
@@ -486,7 +672,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
                 FlightStartDate = new DateTime(2019, 8, 1)
             };
 
-            Assert.That(() => _planValidator.ValidateWeeklyBreakdown(request), Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid flight start/end date."));
+            Assert.That(() => _planValidator.ValidateWeeklyBreakdown(request),
+                Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid flight start/end date."));
         }
 
         [Test]
@@ -498,7 +685,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
                 FlightStartDate = new DateTime(2019, 9, 1)
             };
 
-            Assert.That(() => _planValidator.ValidateWeeklyBreakdown(request), Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid flight dates.  The end date cannot be before the start date."));
+            Assert.That(() => _planValidator.ValidateWeeklyBreakdown(request),
+                Throws.TypeOf<Exception>().With.Message
+                    .EqualTo("Invalid flight dates.  The end date cannot be before the start date."));
         }
 
         [Test]
@@ -511,7 +700,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
                 DeliveryType = Entities.Enums.PlanGloalBreakdownTypeEnum.Custom
             };
 
-            Assert.That(() => _planValidator.ValidateWeeklyBreakdown(request), Throws.TypeOf<Exception>().With.Message.EqualTo("For custom delivery you have to provide the weeks values"));
+            Assert.That(() => _planValidator.ValidateWeeklyBreakdown(request),
+                Throws.TypeOf<Exception>().With.Message
+                    .EqualTo("For custom delivery you have to provide the weeks values"));
         }
 
         private void _ConfigureSpotLenghtEngineMockToReturnTrue() =>
@@ -527,22 +718,46 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
         }
 
         private PlanDto _GetPlan() =>
-           new PlanDto
-           {
-               Name = "Lorem ipsum",
-               ProductId = 20,
-               Dayparts = new List<PlanDaypartDto>
-               {
+            new PlanDto
+            {
+                Name = "Lorem ipsum",
+                ProductId = 20,
+                Dayparts = new List<PlanDaypartDto>
+                {
                     new PlanDaypartDto
                     {
                         StartTimeSeconds = 50,
                         EndTimeSeconds = 70,
                         WeightingGoalPercent = 50
                     }
-               },
-               ShareBookId = SHARE_BOOK_ID,
-               HUTBookId = HUT_BOOK_ID,
-               Vpvh = 0.35
-           };
+                },
+                ShareBookId = SHARE_BOOK_ID,
+                HUTBookId = HUT_BOOK_ID,
+                Vpvh = 0.35,
+                SpotLengthId = 1,
+                Equivalized = true,
+                Status = PlanStatusEnum.Working,
+                ModifiedBy = "UnitTestUser",
+                ModifiedDate = new DateTime(2019, 9, 16, 12, 31, 33),
+                FlightStartDate = new DateTime(2019, 08, 01),
+                FlightEndDate = new DateTime(2019, 09, 01),
+                FlightNotes = "Notes for this flight.",
+                AudienceType = AudienceTypeEnum.Nielsen,
+                PostingType = PostingTypeEnum.NSI,
+                AudienceId = 31,
+                Budget = 100.00m,
+                DeliveryImpressions = 100,
+                CPM = 12.00m,
+                GoalBreakdownType = PlanGloalBreakdownTypeEnum.Custom,
+                DeliveryRatingPoints = 6,
+                CPP = 200951583.9999m,
+                Currency = PlanCurrenciesEnum.Impressions,
+                CoverageGoalPercent = 80.5,
+                AvailableMarkets = new List<PlanAvailableMarketDto>
+                {
+                    new PlanAvailableMarketDto { PercentageOfUs = 30 },
+                    new PlanAvailableMarketDto { PercentageOfUs = 50.5 },
+                }
+            };
     }
 }

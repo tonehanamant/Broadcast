@@ -34,25 +34,25 @@ namespace EntityFrameworkMapping.Broadcast
         public int status { get; set; }
         public string created_by { get; set; }
         public System.DateTime created_date { get; set; }
-        public Nullable<System.DateTime> flight_start_date { get; set; }
-        public Nullable<System.DateTime> flight_end_date { get; set; }
+        public System.DateTime flight_start_date { get; set; }
+        public System.DateTime flight_end_date { get; set; }
         public string flight_notes { get; set; }
         public int audience_type { get; set; }
         public int posting_type { get; set; }
         public int audience_id { get; set; }
         public int share_book_id { get; set; }
-        public Nullable<int> hut_book_id { get; set; }
-        public Nullable<decimal> budget { get; set; }
-        public Nullable<double> delivery_impressions { get; set; }
-        public Nullable<decimal> cpm { get; set; }
-        public Nullable<double> coverage_goal_percent { get; set; }
+        public int hut_book_id { get; set; }
+        public decimal budget { get; set; }
+        public double delivery_impressions { get; set; }
+        public decimal cpm { get; set; }
+        public double coverage_goal_percent { get; set; }
         public int goal_breakdown_type { get; set; }
         public string modified_by { get; set; }
         public System.DateTime modified_date { get; set; }
-        public Nullable<double> delivery_rating_points { get; set; }
-        public Nullable<decimal> cpp { get; set; }
+        public double delivery_rating_points { get; set; }
+        public decimal cpp { get; set; }
         public int currency { get; set; }
-        public Nullable<double> delivery { get; set; }
+        public double delivery { get; set; }
         public double vpvh { get; set; }
         public decimal household_cpm { get; set; }
         public double household_universe { get; set; }

@@ -208,7 +208,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 },
                 AudienceId = 31,        //HH
                 AudienceType = Entities.Enums.AudienceTypeEnum.Nielsen,
-                HUTBookId = null,
+                HUTBookId = 436,
                 PostingType = Entities.Enums.PostingTypeEnum.NTI,
                 ShareBookId = 437,
                 Budget = 100m,

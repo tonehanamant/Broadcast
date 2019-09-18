@@ -7,7 +7,6 @@ using Services.Broadcast.Entities.Plan;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Tam.Maestro.Common;
 using Tam.Maestro.Data.Entities;
 
 namespace Services.Broadcast.Validators
@@ -35,6 +34,7 @@ namespace Services.Broadcast.Validators
         private readonly ITrafficApiClient _TrafficApiClient;
 
         #region Error Messages
+
         const string INVALID_PLAN_NAME = "Invalid plan name";
         const string INVALID_SPOT_LENGTH = "Invalid spot length";
         const string INVALID_PRODUCT = "Invalid product";
@@ -42,7 +42,10 @@ namespace Services.Broadcast.Validators
         const string INVALID_HUT_BOOK = "Invalid HUT book.";
         const string INVALID_FLIGHT_DATES = "Invalid flight dates.  The end date cannot be before the start date.";
         const string INVALID_FLIGHT_DATE = "Invalid flight start/end date.";
-        const string INVALID_FLIGHT_HIATUS_DAY = "Invalid flight hiatus day.  All days must be within the flight date range.";
+
+        const string INVALID_FLIGHT_HIATUS_DAY =
+            "Invalid flight hiatus day.  All days must be within the flight date range.";
+
         const string INVALID_AUDIENCE = "Invalid audience";
         const string INVALID_AUDIENCE_DUPLICATE = "An audience cannot appear multiple times";
         const string INVALID_SHARE_HUT_BOOKS = "HUT Book must be prior to Share Book";
@@ -50,6 +53,7 @@ namespace Services.Broadcast.Validators
         const string INVALID_DAYPART_TIMES = "Invalid daypart times.";
         const string INVALID_DAYPART_WEIGHTING_GOAL = "Invalid daypart weighting goal.";
         const string INVALID_COVERAGE_GOAL = "Invalid coverage goal value.";
+        const string INVALID_TOTAL_MARKET_COVERAGE = "Invalid total market coverage.";
         const string INVALID_MARKET_SHARE_OF_VOICE = "Invalid share of voice for market.";
         const string INVALID_REQUEST = "Invalid request";
         const string INVALID_WEEKS_FOR_CUSTOM_DELIVERY = "For custom delivery you have to provide the weeks values";
@@ -57,6 +61,11 @@ namespace Services.Broadcast.Validators
         const string INVALID_SOV_COUNT = "The share of voice count is not equal to 100%";
         const string INVALID_VPVH = "Invalid VPVH. The value must be between 0.001 and 1.";
         const string STOP_WORD_DETECTED = "Stop word detected in plan name";
+
+        const string INVALID_BUDGET = "Invalid budget.";
+        const string INVALID_CPM = "Invalid CPM.";
+        const string INVALID_CPP = "Invalid CPP.";
+        const string INVALID_DELIVERY_IMPRESSIONS = "Invalid Delivery Impressions.";
 
         #endregion
 
@@ -72,9 +81,9 @@ namespace Services.Broadcast.Validators
             _TrafficApiClient = trafficApiClient;
 
             _PostingBooks = ratingForecastService.GetMediaMonthCrunchStatuses()
-                       .Where(a => a.Crunched == CrunchStatusEnum.Crunched)
-                       .Select(m => m.MediaMonth)
-                       .ToList();
+                .Where(a => a.Crunched == CrunchStatusEnum.Crunched)
+                .Select(m => m.MediaMonth)
+                .ToList();
         }
 
         public void ValidatePlan(PlanDto plan)
@@ -83,6 +92,7 @@ namespace Services.Broadcast.Validators
             {
                 throw new Exception(INVALID_PLAN_NAME);
             }
+
             if (!_SpotLengthEngine.SpotLengthIdExists(plan.SpotLengthId))
             {
                 throw new Exception(INVALID_SPOT_LENGTH);
@@ -93,9 +103,9 @@ namespace Services.Broadcast.Validators
             _ValidateDayparts(plan);
             _ValidatePrimaryAudience(plan);
             _ValidateSecondaryAudiences(plan.SecondaryAudiences, plan.AudienceId);
-            _ValidateOptionalPercentage(plan.CoverageGoalPercent, INVALID_COVERAGE_GOAL);
             _ValidateMarkets(plan);
             _ValidateWeeklyBreakdownWeeks(plan);
+            _ValidateBudgetAndDelivery(plan);
 
             // PRI-14012 We'll use a stop word so QA can trigger an error 
             _ValidateStopWord(plan);
@@ -116,27 +126,28 @@ namespace Services.Broadcast.Validators
             {
                 throw new Exception(INVALID_REQUEST);
             }
+
             if (request.FlightEndDate.Equals(DateTime.MinValue) || request.FlightStartDate.Equals(DateTime.MinValue))
             {
                 throw new Exception(INVALID_FLIGHT_DATE);
             }
+
             if (request.FlightEndDate < request.FlightStartDate)
             {
                 throw new Exception(INVALID_FLIGHT_DATES);
             }
+
             if (request.DeliveryType.Equals(PlanGloalBreakdownTypeEnum.Custom) && !request.Weeks.Any())
             {
                 throw new Exception(INVALID_WEEKS_FOR_CUSTOM_DELIVERY);
             }
         }
 
-        #region Helpers
-
         private void _ValidateFlightAndHiatusDates(PlanDto plan)
         {
             if (!plan.FlightStartDate.HasValue || !plan.FlightEndDate.HasValue)
             {
-                return;
+                throw new Exception(INVALID_FLIGHT_DATE);
             }
 
             if (plan.FlightStartDate > plan.FlightEndDate)
@@ -161,6 +172,7 @@ namespace Services.Broadcast.Validators
             {
                 throw new Exception(INVALID_AUDIENCE);
             }
+
             if (!_PostingBooks.Any(x => x.Id == plan.ShareBookId))
             {
                 throw new Exception(INVALID_SHARE_BOOK);
@@ -171,6 +183,7 @@ namespace Services.Broadcast.Validators
             {
                 throw new Exception(INVALID_HUT_BOOK);
             }
+
             if (plan.HUTBookId.HasValue)
             {
                 var shareBook = _PostingBooks.Single(x => x.Id == plan.ShareBookId);
@@ -186,7 +199,7 @@ namespace Services.Broadcast.Validators
 
         private void _ValidateSecondaryAudiences(List<PlanAudienceDto> secondaryAudiences, int primaryAudienceId)
         {
-            var distinctAudiences = new List<int> { primaryAudienceId };
+            var distinctAudiences = new List<int> {primaryAudienceId};
             foreach (var secondaryAudience in secondaryAudiences)
             {
                 if (!_AudienceCache.IsValidAudience(secondaryAudience.AudienceId))
@@ -209,6 +222,7 @@ namespace Services.Broadcast.Validators
             {
                 throw new Exception(INVALID_DAYPART_NUMBER);
             }
+
             foreach (var daypart in plan.Dayparts)
             {
                 if (daypart.StartTimeSeconds < daySecondsMin || daypart.StartTimeSeconds > daySecondsMax)
@@ -225,7 +239,7 @@ namespace Services.Broadcast.Validators
                 const double maxWeightingGoalPercent = 100.0;
                 if (daypart.WeightingGoalPercent.HasValue &&
                     (daypart.WeightingGoalPercent.Value < minWeightingGoalPercent
-                    || daypart.WeightingGoalPercent.Value > maxWeightingGoalPercent))
+                     || daypart.WeightingGoalPercent.Value > maxWeightingGoalPercent))
                 {
                     throw new Exception(INVALID_DAYPART_WEIGHTING_GOAL);
                 }
@@ -234,7 +248,21 @@ namespace Services.Broadcast.Validators
 
         private void _ValidateMarkets(PlanDto plan)
         {
-            plan.AvailableMarkets.ForEach(m => _ValidateOptionalPercentage(m.ShareOfVoicePercent, INVALID_MARKET_SHARE_OF_VOICE));
+            if (!plan.CoverageGoalPercent.HasValue
+                || plan.CoverageGoalPercent.Value < 0.1
+                || plan.CoverageGoalPercent.Value > 100.0)
+            {
+                throw new Exception(INVALID_COVERAGE_GOAL);
+            }
+
+            plan.AvailableMarkets.ForEach(m =>
+                _ValidateOptionalPercentage(m.ShareOfVoicePercent, INVALID_MARKET_SHARE_OF_VOICE));
+
+            var totalMarketCoverage = plan.AvailableMarkets.Sum(m => m.PercentageOfUs);
+            if (totalMarketCoverage < plan.CoverageGoalPercent.Value)
+            {
+                throw new Exception(INVALID_TOTAL_MARKET_COVERAGE);
+            }
         }
 
         private void _ValidateOptionalPercentage(double? candidate, string errorMessage)
@@ -249,7 +277,9 @@ namespace Services.Broadcast.Validators
         private void _ValidateVPVH(double value)
         {
             if (value < 0.001 || value > 1)
+            {
                 throw new Exception(INVALID_VPVH);
+            }
         }
 
         private void _ValidateWeeklyBreakdownWeeks(PlanDto plan)
@@ -258,10 +288,12 @@ namespace Services.Broadcast.Validators
             {
                 return;
             }
+
             if (plan.DeliveryImpressions != plan.WeeklyBreakdownWeeks.Select(x => x.Impressions).Sum())
             {
                 throw new Exception(INVALID_IMPRESSIONS_COUNT);
             }
+
             if (100 != plan.WeeklyBreakdownWeeks.Select(x => x.ShareOfVoice).Sum())
             {
                 throw new Exception(INVALID_SOV_COUNT);
@@ -279,6 +311,27 @@ namespace Services.Broadcast.Validators
             _TrafficApiClient.GetProduct(plan.ProductId);
         }
 
-        #endregion // #region Helpers
+        private void _ValidateBudgetAndDelivery(PlanDto plan)
+        {
+            if (!plan.Budget.HasValue || plan.Budget < 1m)
+            {
+                throw new Exception(INVALID_BUDGET);
+            }
+
+            if (!plan.CPM.HasValue || plan.CPM < 1m)
+            {
+                throw new Exception(INVALID_CPM);
+            }
+
+            if (!plan.CPP.HasValue || plan.CPP < 1m)
+            {
+                throw new Exception(INVALID_CPP);
+            }
+
+            if (!plan.DeliveryImpressions.HasValue || plan.DeliveryImpressions < 1d)
+            {
+                throw new Exception(INVALID_DELIVERY_IMPRESSIONS);
+            }
+        }
     }
 }

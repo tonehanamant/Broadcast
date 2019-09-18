@@ -89,11 +89,20 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                 AudienceType = AudienceTypeEnum.Nielsen,
                 AudienceId = 31,
                 ShareBookId = 437,
+                HUTBookId = 437,
                 PostingType = PostingTypeEnum.NSI,
                 Status = PlanStatusEnum.Working,
                 ModifiedBy = modifiedUser,
                 ModifiedDate = modifiedDateTime,
-                GoalBreakdownType = PlanGloalBreakdownTypeEnum.Even
+                GoalBreakdownType = PlanGloalBreakdownTypeEnum.Even,
+                FlightStartDate = new DateTime(2019, 8, 1),
+                FlightEndDate = new DateTime(2019,9,1),
+                Budget = 500000m,
+                DeliveryImpressions = 50000000,
+                CPM = 10m,
+                CoverageGoalPercent = 60,
+                DeliveryRatingPoints = 0.00248816152650979,
+                CPP = 200951583.9999m
             };
             var planId = _PlanRepository.SaveNewPlan(planDto, modifiedUser, modifiedDateTime);
             return planId;

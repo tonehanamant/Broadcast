@@ -263,6 +263,39 @@ GO
 
 /*************************************** END PRI-14334  *****************************************************/
 
+/*************************************** START PRI-12723 *****************************************************/
+
+IF 1 = (SELECT COLUMNPROPERTY(OBJECT_ID('dbo.plans', 'U'), 'Name', 'AllowsNull'))
+BEGIN
+	/* Begin pre-prod data cleanup for these now non-nullable columns */
+	UPDATE Plans SET [name] = 'Plan ' + CAST(ID AS VARCHAR(15)) WHERE [name] IS NULL
+	UPDATE Plans SET [flight_start_date] = '2019-08-01' WHERE [flight_start_date] IS NULL
+	UPDATE Plans SET [flight_end_date] = '2019-09-01' WHERE [flight_end_date] IS NULL
+	UPDATE Plans SET [share_book_id] = 430, hut_book_id = 428 WHERE hut_book_id IS NULL
+	UPDATE Plans SET [budget] = 500000.00 WHERE [budget] IS NULL
+	UPDATE Plans SET [delivery_impressions] = 50000000 WHERE [delivery_impressions] IS NULL
+	UPDATE Plans SET [cpm] = 10.00 WHERE [cpm] IS NULL
+	UPDATE Plans SET [coverage_goal_percent] = 60 WHERE [coverage_goal_percent] IS NULL
+	UPDATE Plans SET [delivery_rating_points] = 0.00248816152650979 WHERE [delivery_rating_points] IS NULL
+	UPDATE Plans SET [cpp] = 200951583.9999 WHERE [cpp] IS NULL
+	UPDATE Plans SET [delivery] = 150000.00 WHERE [delivery] IS NULL
+	/* End pre-prod data cleanup for these now non-nullable columns */
+
+	ALTER TABLE dbo.plans ALTER COLUMN [name] [nvarchar](265) NOT NULL
+	ALTER TABLE dbo.plans ALTER COLUMN [flight_start_date] [datetime] NOT NULL
+	ALTER TABLE dbo.plans ALTER COLUMN [flight_end_date] [datetime] NOT NULL
+	ALTER TABLE dbo.plans ALTER COLUMN [hut_book_id] [int] NOT NULL
+	ALTER TABLE dbo.plans ALTER COLUMN [budget] [money] NOT NULL
+	ALTER TABLE dbo.plans ALTER COLUMN [delivery_impressions] [float] NOT NULL
+	ALTER TABLE dbo.plans ALTER COLUMN [cpm] [money] NOT NULL
+	ALTER TABLE dbo.plans ALTER COLUMN [coverage_goal_percent] [float] NOT NULL
+	ALTER TABLE dbo.plans ALTER COLUMN [delivery_rating_points] [float] NOT NULL
+	ALTER TABLE dbo.plans ALTER COLUMN [cpp] [money] NOT NULL
+	ALTER TABLE dbo.plans ALTER COLUMN [delivery] [float] NOT NULL
+END
+
+/*************************************** END PRI-12723  *****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

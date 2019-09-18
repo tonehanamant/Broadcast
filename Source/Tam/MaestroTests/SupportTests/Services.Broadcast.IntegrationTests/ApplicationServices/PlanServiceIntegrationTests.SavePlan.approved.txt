@@ -5,7 +5,7 @@
     {
       "MarketCode": 100,
       "MarketCoverageFileId": 1,
-      "PercentageOfUs": 20.0,
+      "PercentageOfUs": 48.0,
       "Rank": 1,
       "ShareOfVoicePercent": 22.2
     },
@@ -51,7 +51,7 @@
       "WeightingGoalPercent": 33.2
     }
   ],
-  "DeliveryImpressions": 0.1,
+  "DeliveryImpressions": 100.0,
   "DeliveryRatingPoints": 100.0,
   "Equivalized": true,
   "FlightEndDate": "2019-07-31T00:00:00",
@@ -62,10 +62,10 @@
   "FlightNotes": "Changed the flight notes",
   "FlightStartDate": "2019-01-01T00:00:00",
   "GoalBreakdownType": 1,
-  "HouseholdCPM": 11.9999,
-  "HouseholdCPP": 159106.2899,
-  "HouseholdDeliveryImpressions": 8333.33333333,
-  "HouseholdRatingPoints": 0.00062851,
+  "HouseholdCPM": 0.0120,
+  "HouseholdCPP": 159.1062,
+  "HouseholdDeliveryImpressions": 8333333.33333333,
+  "HouseholdRatingPoints": 0.62851066,
   "HouseholdUniverse": 1325885750.0,
   "HUTBookId": 437,
   "ModifiedBy": "integration_test",

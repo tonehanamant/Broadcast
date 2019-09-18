@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using Services.Broadcast.Extensions;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
 
@@ -213,11 +214,11 @@ namespace Services.Broadcast.Repositories
             entity.status = (int)planDto.Status;
             entity.campaign_id = planDto.CampaignId;
 
-            entity.flight_start_date = planDto.FlightStartDate;
-            entity.flight_end_date = planDto.FlightEndDate;
+            entity.flight_start_date = planDto.FlightStartDate.GetValueOrThrow();
+            entity.flight_end_date = planDto.FlightEndDate.GetValueOrThrow();
             entity.flight_notes = planDto.FlightNotes;
 
-            entity.coverage_goal_percent = planDto.CoverageGoalPercent;
+            entity.coverage_goal_percent = planDto.CoverageGoalPercent.GetValueOrThrow();
             entity.goal_breakdown_type = (int)planDto.GoalBreakdownType;
 
             entity.modified_by = planDto.ModifiedBy;
@@ -261,18 +262,18 @@ namespace Services.Broadcast.Repositories
         {
             entity.audience_id = planDto.AudienceId;
             entity.audience_type = (int)planDto.AudienceType;
-            entity.hut_book_id = planDto.HUTBookId;
+            entity.hut_book_id = planDto.HUTBookId.GetValueOrThrow();
             entity.share_book_id = planDto.ShareBookId;
             entity.posting_type = (int)planDto.PostingType;
         }
 
         private static void _HydratePlanBudget(plan entity, PlanDto planDto)
         {
-            entity.budget = planDto.Budget;
-            entity.delivery_impressions = planDto.DeliveryImpressions;
-            entity.cpm = planDto.CPM;
-            entity.delivery_rating_points = planDto.DeliveryRatingPoints;
-            entity.cpp = planDto.CPP;
+            entity.budget = planDto.Budget.GetValueOrThrow();
+            entity.delivery_impressions = planDto.DeliveryImpressions.GetValueOrThrow();
+            entity.cpm = planDto.CPM.GetValueOrThrow();
+            entity.delivery_rating_points = planDto.DeliveryRatingPoints.GetValueOrThrow();
+            entity.cpp = planDto.CPP.GetValueOrThrow();
             entity.currency = (int)planDto.Currency;
         }
 

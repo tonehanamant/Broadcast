@@ -5,7 +5,7 @@
     {
       "MarketCode": 100,
       "MarketCoverageFileId": 1,
-      "PercentageOfUs": 20.0,
+      "PercentageOfUs": 48.0,
       "Rank": 1,
       "ShareOfVoicePercent": 22.2
     },
