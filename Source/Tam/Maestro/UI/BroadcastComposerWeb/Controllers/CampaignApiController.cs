@@ -103,7 +103,8 @@ namespace BroadcastComposerWeb.Controllers
                _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ICampaignService>().GetStatuses(quarter, year));
         }
 
-        [HttpGet]
+        // navigator.sendBeacon doesn`t support GET type that`s why we have to use Post
+        [HttpPost]
         [Route("{campaignId}/Lock")]
         public BaseResponse<LockResponse> LockCampaign(int campaignId)
         {
@@ -111,7 +112,7 @@ namespace BroadcastComposerWeb.Controllers
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ILockingManagerApplicationService>().LockObject(key));
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("{campaignId}/Unlock")]
         public BaseResponse<ReleaseLockResponse> UnlockCampaign(int campaignId)
         {
