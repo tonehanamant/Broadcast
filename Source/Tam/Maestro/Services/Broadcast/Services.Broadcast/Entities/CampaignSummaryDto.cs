@@ -61,19 +61,19 @@ namespace Services.Broadcast.Entities
         public decimal? Budget { get; set; }
 
         /// <summary>
-        /// The CPM.
+        /// The household CPM.
         /// </summary>
-        public decimal? CPM { get; set; }
+        public decimal? HouseholdCPM { get; set; }
 
         /// <summary>
-        /// The impressions.
+        /// The household impressions.
         /// </summary>
-        public double? Impressions { get; set; }
+        public double? HouseholdDeliveryImpressions { get; set; }
 
         /// <summary>
-        /// The Rating.
+        /// The household rating points.
         /// </summary>
-        public double? Rating { get; set; }
+        public double? HouseholdRatingPoints { get; set; }
 
         /// <summary>
         /// The campaign status.

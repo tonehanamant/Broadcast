@@ -19,6 +19,6 @@ namespace EntityFrameworkMapping.Broadcast
         public int quarter { get; set; }
         public int year { get; set; }
     
-        public virtual plan_summary plan_summary { get; set; }
+        public virtual plan_summaries plan_summaries { get; set; }
     }
 }

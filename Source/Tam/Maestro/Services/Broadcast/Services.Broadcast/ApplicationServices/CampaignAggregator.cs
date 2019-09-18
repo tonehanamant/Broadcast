@@ -43,8 +43,7 @@ namespace Services.Broadcast.ApplicationServices
         public CampaignSummaryDto Aggregate(int campaignId)
         {
             var plans = _PlanRepository.GetPlansForCampaign(campaignId);
-            var summary = PerformAggregations(campaignId, plans);
-            return summary;
+            return PerformAggregations(campaignId, plans);
         }
 
         protected CampaignSummaryDto PerformAggregations(int campaignId, List<PlanDto> plans, bool runParallelAggregations = true)
@@ -80,7 +79,7 @@ namespace Services.Broadcast.ApplicationServices
                 AggregateBudgetAndGoalsInfo,
                 AggregateCampaignStatus,
                 AggregatePlansStatuses,
-                AggregateComponentsModifiedTime
+                AggregateComponentsModifiedTime,
             };
         }
 
@@ -89,7 +88,7 @@ namespace Services.Broadcast.ApplicationServices
             summary.FlightStartDate = plans.Min(p => p.FlightStartDate);
             summary.FlightEndDate = plans.Max(p => p.FlightEndDate);
 
-            if (summary.FlightStartDate.HasValue == false || summary.FlightEndDate.HasValue == false)
+            if (!summary.FlightStartDate.HasValue || !summary.FlightEndDate.HasValue)
             {
                 return;
             }
@@ -109,9 +108,9 @@ namespace Services.Broadcast.ApplicationServices
             }
 
             summary.Budget = plans.Sum(p => p.Budget);
-            summary.Impressions = plans.Sum(p => p.DeliveryImpressions);
-            summary.CPM = plans.Sum(p => p.Budget) / Convert.ToDecimal(plans.Sum(p => p.DeliveryImpressions));
-            summary.Rating = plans.Sum(p => p.DeliveryRatingPoints);
+            summary.HouseholdDeliveryImpressions = plans.Sum(p => p.HouseholdDeliveryImpressions);
+            summary.HouseholdCPM = (plans.Sum(p => p.Budget) / Convert.ToDecimal(summary.HouseholdDeliveryImpressions)) * 1000;
+            summary.HouseholdRatingPoints = plans.Sum(p => p.HouseholdRatingPoints);
         }
 
         protected void AggregateCampaignStatus(List<PlanDto> plans, CampaignSummaryDto summary)

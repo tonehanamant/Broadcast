@@ -163,7 +163,13 @@ namespace Services.Broadcast.Repositories
                 WeeklyBreakdownWeeks = entity.plan_weeks.Select(_MapWeeklyBreakdownWeeks).ToList(),
                 ModifiedBy = entity.modified_by,
                 ModifiedDate = entity.modified_date,
-                Vpvh = entity.vpvh
+                Vpvh = entity.vpvh,
+                Universe = entity.universe,
+                HouseholdCPM = entity.household_cpm,
+                HouseholdCPP = entity.household_cpp,
+                HouseholdDeliveryImpressions = entity.household_delivery_impressions,
+                HouseholdRatingPoints = entity.household_rating_points,
+                HouseholdUniverse = entity.household_universe
             };
             return dto;
         }
@@ -218,6 +224,13 @@ namespace Services.Broadcast.Repositories
             entity.modified_date = planDto.ModifiedDate;
 
             entity.vpvh = planDto.Vpvh;
+
+            entity.universe = planDto.Universe;
+            entity.household_cpm = planDto.HouseholdCPM;
+            entity.household_cpp = planDto.HouseholdCPP;
+            entity.household_delivery_impressions = planDto.HouseholdDeliveryImpressions;
+            entity.household_rating_points = planDto.HouseholdRatingPoints;
+            entity.household_universe = planDto.HouseholdUniverse;
 
             _HydratePlanAudienceInfo(entity, planDto);
             _HydratePlanBudget(entity, planDto);

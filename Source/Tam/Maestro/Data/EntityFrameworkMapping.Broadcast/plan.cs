@@ -21,8 +21,7 @@ namespace EntityFrameworkMapping.Broadcast
             this.plan_dayparts = new HashSet<plan_dayparts>();
             this.plan_flight_hiatus = new HashSet<plan_flight_hiatus>();
             this.plan_secondary_audiences = new HashSet<plan_secondary_audiences>();
-            this.plan_summary = new HashSet<plan_summary>();
-            this.plan_weekly_breakdown = new HashSet<plan_weekly_breakdown>();
+            this.plan_summaries = new HashSet<plan_summaries>();
             this.plan_weeks = new HashSet<plan_weeks>();
         }
     
@@ -53,8 +52,14 @@ namespace EntityFrameworkMapping.Broadcast
         public Nullable<double> delivery_rating_points { get; set; }
         public Nullable<decimal> cpp { get; set; }
         public int currency { get; set; }
-        public double vpvh { get; set; }
         public Nullable<double> delivery { get; set; }
+        public double vpvh { get; set; }
+        public decimal household_cpm { get; set; }
+        public double household_universe { get; set; }
+        public decimal household_cpp { get; set; }
+        public double household_rating_points { get; set; }
+        public double universe { get; set; }
+        public double household_delivery_impressions { get; set; }
     
         public virtual audience audience { get; set; }
         public virtual campaign campaign { get; set; }
@@ -65,8 +70,7 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<plan_dayparts> plan_dayparts { get; set; }
         public virtual ICollection<plan_flight_hiatus> plan_flight_hiatus { get; set; }
         public virtual ICollection<plan_secondary_audiences> plan_secondary_audiences { get; set; }
-        public virtual ICollection<plan_summary> plan_summary { get; set; }
-        public virtual ICollection<plan_weekly_breakdown> plan_weekly_breakdown { get; set; }
+        public virtual ICollection<plan_summaries> plan_summaries { get; set; }
         public virtual ICollection<plan_weeks> plan_weeks { get; set; }
         public virtual spot_lengths spot_lengths { get; set; }
     }

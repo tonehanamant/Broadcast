@@ -5,6 +5,7 @@ using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.ApplicationServices.Plan;
 using Services.Broadcast.BusinessEngines;
+using Services.Broadcast.Cache;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
 using Services.Broadcast.Repositories;
@@ -28,10 +29,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var planBudgetDeliveryCalculator = new Mock<IPlanBudgetDeliveryCalculator>();
             var mediaMonthAndWeekAggregateCache = new Mock<IMediaMonthAndWeekAggregateCache>();
             var planAggregator = new Mock<IPlanAggregator>();
+            var nsiUniverseService = new Mock<INsiUniverseService>();
+            var broadcastAudienceCacheMock = new Mock<IBroadcastAudiencesCache>();
 
             var tc = new PlanService(broadcastDataRepositoryFactory.Object, planValidator.Object,
                 planBudgetDeliveryCalculator.Object, mediaMonthAndWeekAggregateCache.Object, planAggregator.Object,
-                IntegrationTestApplicationServiceFactory.Instance.Resolve<ICampaignAggregationJobTrigger>());
+                IntegrationTestApplicationServiceFactory.Instance.Resolve<ICampaignAggregationJobTrigger>(),
+                nsiUniverseService.Object, broadcastAudienceCacheMock.Object);
 
             Assert.IsNotNull(tc);
         }
@@ -62,7 +66,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Callback<int, PlanAggregationProcessingStatusEnum>((i, s) => setStatusCalls.Add(new Tuple<int, PlanAggregationProcessingStatusEnum, DateTime>(i, s, DateTime.Now)));
             var saveSummaryCalls = new List<Tuple<int, PlanSummaryDto, DateTime>>();
             planSummaryRepo.Setup(s => s.SaveSummary(It.IsAny<PlanSummaryDto>()))
-                .Callback<PlanSummaryDto>((s) => saveSummaryCalls.Add(new Tuple<int, PlanSummaryDto, DateTime>(Thread.CurrentThread.ManagedThreadId,s, DateTime.Now)))
+                .Callback<PlanSummaryDto>((s) => saveSummaryCalls.Add(new Tuple<int, PlanSummaryDto, DateTime>(Thread.CurrentThread.ManagedThreadId, s, DateTime.Now)))
                 .Returns(3);
             broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IPlanSummaryRepository>())
                 .Returns(planSummaryRepo.Object);
@@ -73,14 +77,19 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Callback(() => aggregateCallCount++)
                 .Returns(aggregateReturn);
             var campaignAggJobTrigger = new Mock<ICampaignAggregationJobTrigger>();
+            var nsiUniverseService = new Mock<INsiUniverseService>();
+            nsiUniverseService.Setup(n => n.GetAudienceUniverseForMediaMonth(It.IsAny<int>(), It.IsAny<int>())).Returns(1000000);
+            var broadcastAudienceCacheMock = new Mock<IBroadcastAudiencesCache>();
+            broadcastAudienceCacheMock.Setup(a => a.GetDefaultAudience()).Returns(new Entities.BroadcastAudience());
+
             var tc = new PlanService(broadcastDataRepositoryFactory.Object, planValidator.Object,
                 planBudgetDeliveryCalculator.Object, mediaMonthAndWeekAggregateCache.Object, planAggregator.Object,
-                campaignAggJobTrigger.Object);
+                campaignAggJobTrigger.Object, nsiUniverseService.Object, broadcastAudienceCacheMock.Object);
 
             var plan = _GetNewPlan();
             var campaignId = plan.CampaignId;
             var modifiedWho = "ModificationUser";
-            var modifiedWhen = new DateTime(2019,08,12, 12, 31, 27);
+            var modifiedWhen = new DateTime(2019, 08, 12, 12, 31, 27);
             var currentThreadId = Thread.CurrentThread.ManagedThreadId;
 
             tc.SavePlan(plan, modifiedWho, modifiedWhen);
@@ -102,7 +111,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             Assert.AreEqual(PlanAggregationProcessingStatusEnum.Idle, saveSummaryCalls[0].Item2.ProcessingStatus);
             campaignAggJobTrigger.Verify(s => s.TriggerJob(campaignId, modifiedWho), Times.Once);
         }
-        
+
         [Test]
         public void DispatchAggregation_WithAggregationError()
         {
@@ -118,7 +127,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IPlanRepository>())
                 .Returns(planRepository.Object);
             var planSummaryRepo = new Mock<IPlanSummaryRepository>();
-            
+
             var setStatusCalls = new List<Tuple<int, PlanAggregationProcessingStatusEnum, int, DateTime>>();
             planSummaryRepo.Setup(s =>
                     s.SetProcessingStatusForPlanSummary(It.IsAny<int>(), It.IsAny<PlanAggregationProcessingStatusEnum>()))
@@ -140,9 +149,15 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 })
                 .Returns(aggregateReturn);
             var campaignAggJobTrigger = new Mock<ICampaignAggregationJobTrigger>();
+            var nsiUniverseService = new Mock<INsiUniverseService>();
+            nsiUniverseService.Setup(n => n.GetAudienceUniverseForMediaMonth(It.IsAny<int>(), It.IsAny<int>())).Returns(1000000);
+
+            var broadcastAudienceCacheMock = new Mock<IBroadcastAudiencesCache>();
+            broadcastAudienceCacheMock.Setup(a => a.GetDefaultAudience()).Returns(new Entities.BroadcastAudience());
+
             var tc = new PlanService(broadcastDataRepositoryFactory.Object, planValidator.Object,
                 planBudgetDeliveryCalculator.Object, mediaMonthAndWeekAggregateCache.Object, planAggregator.Object,
-                campaignAggJobTrigger.Object);
+                campaignAggJobTrigger.Object, nsiUniverseService.Object, broadcastAudienceCacheMock.Object);
             var plan = _GetNewPlan();
             var campaignId = plan.CampaignId;
             var modifiedWho = "ModificationUser";
@@ -168,9 +183,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             Assert.AreEqual(PlanAggregationProcessingStatusEnum.Error, setStatusCalls[1].Item2);
             campaignAggJobTrigger.Verify(s => s.TriggerJob(campaignId, modifiedWho), Times.Once);
         }
-        
+
         #endregion // #region Dispatch Aggregation
-        
+
         #region Helpers
 
         private static PlanDto _GetNewPlan()

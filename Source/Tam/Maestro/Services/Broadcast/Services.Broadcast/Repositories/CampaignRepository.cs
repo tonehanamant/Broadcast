@@ -163,8 +163,8 @@ namespace Services.Broadcast.Repositories
                         .Include(x => x.plans.Select(p => p.spot_lengths))
                         .Include(x => x.plans.Select(p => p.plan_dayparts))
                         .Include(x => x.plans.Select(p => p.plan_dayparts.Select(d => d.daypart_codes)))
-                        .Include(x => x.plans.Select(p => p.plan_summary))
-                        .Include(x => x.plans.Select(p => p.plan_summary.Select(s => s.plan_summary_quarters)))
+                        .Include(x => x.plans.Select(p => p.plan_summaries))
+                        .Include(x => x.plans.Select(p => p.plan_summaries.Select(s => s.plan_summary_quarters)))
                         .Single(c => c.id.Equals(campaignId), $"Could not find existing campaign with id '{campaignId}'");
 
                     var campaignDto = _MapToDto(campaign);
@@ -185,10 +185,10 @@ namespace Services.Broadcast.Repositories
                 AdvertiserId = campaign.advertiser_id,
                 AgencyId = campaign.agency_id,                
                 Plans = campaign.plans
-                    .Where(x => x.plan_summary.Any(s => s.processing_status == (int)PlanAggregationProcessingStatusEnum.Idle))
+                    .Where(x => x.plan_summaries.Any(s => s.processing_status == (int)PlanAggregationProcessingStatusEnum.Idle))
                     .Select(plan =>
                     {
-                        var summary = plan.plan_summary.Single();
+                        var summary = plan.plan_summaries.Single();
 
                         return new PlanSummaryDto
                         {

@@ -38,7 +38,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.CampaignAggregation
                         new DateTime(2019, 8, 17)
                     },
                     ModifiedDate = new DateTime(2019, 08, 28, 12, 30, 23),
-                    ModifiedBy = "TestUserOne"
+                    ModifiedBy = "TestUserOne",
+                    HouseholdDeliveryImpressions = 10000,
+                    HouseholdUniverse = 1000000,
+                    HouseholdCPM = 0.05m,
+                    HouseholdRatingPoints = 2,
+                    HouseholdCPP = 1,
+                    Universe = 2000000
                 },
                 new PlanDto
                 {
@@ -56,7 +62,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.CampaignAggregation
                         new DateTime(2019, 8, 19)
                     },
                     ModifiedDate = new DateTime(2019, 08, 28, 12, 30, 32),
-                    ModifiedBy = "TestUserTwo"
+                    ModifiedBy = "TestUserTwo",
+                    HouseholdDeliveryImpressions = 10000,
+                    HouseholdUniverse = 1000000,
+                    HouseholdCPM = 0.05m,
+                    HouseholdRatingPoints = 50,
+                    HouseholdCPP = 1,
+                    Universe = 2000000
                 }
             };
             var planRepository = new Mock<IPlanRepository>();
@@ -70,12 +82,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.CampaignAggregation
                 CampaignId = 666,
                 CampaignStatus = (PlanStatusEnum)4,
                 ComponentsModified = new DateTime(2019, 08, 28, 12, 30, 32),
-                CPM = 0.2727272727272727272727272727m,
                 FlightActiveDays = 26,
                 FlightEndDate = new DateTime(2019, 08, 30),
                 FlightHiatusDays = 4,
                 FlightStartDate = new DateTime(2019, 08, 01),
-                Impressions = 5500.0,
                 PlanStatusCountClientApproval = 1,
                 PlanStatusCountComplete = 0,
                 PlanStatusCountContracted = 1,
@@ -83,7 +93,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.CampaignAggregation
                 PlanStatusCountReserved = 0,
                 PlanStatusCountWorking = 0,
                 ProcessingStatus = 0,
-                Rating = 4500.0
+                HouseholdCPM = 75.000m,
+                HouseholdDeliveryImpressions = 20000,
+                HouseholdRatingPoints= 52,
             });
 
             var summary = tc.Aggregate(campaignId);

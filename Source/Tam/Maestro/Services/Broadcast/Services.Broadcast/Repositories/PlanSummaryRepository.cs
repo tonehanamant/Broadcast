@@ -61,14 +61,14 @@ namespace Services.Broadcast.Repositories
         {
             _InReadUncommitedTransaction(context =>
             {
-                var entity = context.plan_summary
+                var entity = context.plan_summaries
                                  .Where(s => s.plan_id == planId)
                                  .SingleOrDefault($"More than one summary found for plan id {planId}.")
-                             ?? new plan_summary { plan_id = planId, processing_status = (int)processingStatus};
+                             ?? new plan_summaries { plan_id = planId, processing_status = (int)processingStatus};
 
                 if (entity.id <= 0)
                 {
-                    context.plan_summary.Add(entity);
+                    context.plan_summaries.Add(entity);
                 }
 
                 entity.processing_status = (int) processingStatus;
@@ -81,17 +81,17 @@ namespace Services.Broadcast.Repositories
         {
             return _InReadUncommitedTransaction(context =>
             {
-                var entity = context.plan_summary
+                var entity = context.plan_summaries
                                  .Where(s => s.plan_id == summary.PlanId)
                                  .Include(s => s.plan_summary_quarters)
                                  .SingleOrDefault($"More than one summary found for plan id {summary.PlanId}.")
-                             ?? new plan_summary { plan_id = summary.PlanId };
+                             ?? new plan_summaries { plan_id = summary.PlanId };
 
                     _HydrateFromDto(entity, summary, context);
 
                     if (entity.id <= 0)
                     {
-                        context.plan_summary.Add(entity);
+                        context.plan_summaries.Add(entity);
                     }
 
                     context.SaveChanges();
@@ -104,7 +104,7 @@ namespace Services.Broadcast.Repositories
         {
             return _InReadUncommitedTransaction(context =>
                 {
-                    var entity = context.plan_summary
+                    var entity = context.plan_summaries
                         .Where(s => s.plan_id == planId)
                         .Include(s => s.plan_summary_quarters)
                         .Single($"No summary found for {planId}.");
@@ -113,7 +113,7 @@ namespace Services.Broadcast.Repositories
                 });
         }
 
-        private void _HydrateFromDto(plan_summary entity, PlanSummaryDto dto, QueryHintBroadcastContext context)
+        private void _HydrateFromDto(plan_summaries entity, PlanSummaryDto dto, QueryHintBroadcastContext context)
         {
             entity.plan_id = dto.PlanId;
             entity.hiatus_days_count = dto.TotalHiatusDays;
@@ -128,13 +128,13 @@ namespace Services.Broadcast.Repositories
             _HydrateQuartersFromDto(entity, dto, context);
         }
 
-        private void _HydrateQuartersFromDto(plan_summary entity, PlanSummaryDto dto, QueryHintBroadcastContext context)
+        private void _HydrateQuartersFromDto(plan_summaries entity, PlanSummaryDto dto, QueryHintBroadcastContext context)
         {
             context.plan_summary_quarters.RemoveRange(entity.plan_summary_quarters);
             dto.PlanSummaryQuarters.ForEach(q => entity.plan_summary_quarters.Add(new plan_summary_quarters { quarter = q.Quarter, year = q.Year }));
         }
 
-        private PlanSummaryDto _MapToDto(plan_summary entity)
+        private PlanSummaryDto _MapToDto(plan_summaries entity)
         {
             var dto = new PlanSummaryDto
             {

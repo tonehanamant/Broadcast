@@ -62,7 +62,12 @@
   "FlightNotes": "Sample notes",
   "FlightStartDate": "2019-01-01T00:00:00",
   "GoalBreakdownType": 1,
-  "HUTBookId": null,
+  "HouseholdCPM": 0.0120,
+  "HouseholdCPP": 159.1062,
+  "HouseholdDeliveryImpressions": 8333333.33333333,
+  "HouseholdRatingPoints": 0.62851066,
+  "HouseholdUniverse": 1325885750.0,
+  "HUTBookId": 437,
   "ModifiedBy": "integration_test",
   "ModifiedDate": "2019-01-01T00:00:00",
   "Name": "New Plan",
@@ -74,6 +79,7 @@
   "Status": 1,
   "TotalActiveDays": 0,
   "TotalShareOfVoice": 0.0,
+  "Universe": 1325885750.0,
   "Vpvh": 0.012,
   "WeeklyBreakdownWeeks": []
 }

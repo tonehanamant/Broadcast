@@ -204,9 +204,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 CampaignId = campaignId,
                 CampaignStatus = PlanStatusEnum.Contracted,
                 Budget = 1500.0m,
-                CPM = 2500.0m,
-                Rating = 23.0,
-                Impressions = 5500.0,
+                HouseholdCPM = 2500.0m,
+                HouseholdRatingPoints = 23.0,
+                HouseholdDeliveryImpressions = 5500.0,
                 FlightStartDate = new DateTime(2019, 08, 01),
                 FlightEndDate = new DateTime(2019, 08, 30),
                 FlightActiveDays = 26,
@@ -430,7 +430,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 },
                 AudienceId = 31,        //HH
                 AudienceType = Entities.Enums.AudienceTypeEnum.Nielsen,
-                HUTBookId = null,
+                HUTBookId = 437,
                 PostingType = Entities.Enums.PostingTypeEnum.NTI,
                 ShareBookId = 437,
                 Budget = 100m,
@@ -457,7 +457,14 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     new PlanDaypartDto{ DaypartCodeId = 2, StartTimeSeconds = 0, EndTimeSeconds = 2000, WeightingGoalPercent = 28.0 },
                     new PlanDaypartDto{ DaypartCodeId = 11, StartTimeSeconds = 1500, EndTimeSeconds = 2788, WeightingGoalPercent = 33.2 }
                 },
-                Vpvh = 0.101
+                Vpvh = 0.101,
+                HouseholdUniverse = 1000000,
+                HouseholdDeliveryImpressions = 10000,
+                HouseholdCPM = 0.01m,
+                HouseholdRatingPoints = 1,
+                HouseholdCPP = 10000,
+                Universe = 3000000,
+                CPP = 2,
             };
         }
     }

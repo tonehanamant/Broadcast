@@ -25,9 +25,9 @@ namespace EntityFrameworkMapping.Broadcast
         public Nullable<int> flight_hiatus_days { get; set; }
         public Nullable<int> flight_active_days { get; set; }
         public Nullable<double> budget { get; set; }
-        public Nullable<double> cpm { get; set; }
-        public Nullable<double> impressions { get; set; }
-        public Nullable<double> rating { get; set; }
+        public Nullable<double> household_cpm { get; set; }
+        public Nullable<double> household_delivery_impressions { get; set; }
+        public Nullable<double> household_rating_points { get; set; }
         public Nullable<int> plan_status_count_working { get; set; }
         public Nullable<int> plan_status_count_reserved { get; set; }
         public Nullable<int> plan_status_count_client_approval { get; set; }

@@ -79,17 +79,20 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private readonly IPlanValidator _PlanValidator;
         private readonly IPlanBudgetDeliveryCalculator _BudgetCalculator;
         private readonly IMediaMonthAndWeekAggregateCache _MediaWeekCache;
-        private readonly IBroadcastAudiencesCache _AudiencesCache;
         private readonly IPlanAggregator _PlanAggregator;
         private readonly IPlanSummaryRepository _PlanSummaryRepository;
         private readonly ICampaignAggregationJobTrigger _CampaignAggregationJobTrigger;
+        private readonly INsiUniverseService _NsiUniverseService;
+        private readonly IBroadcastAudiencesCache _BroadcastAudiencesCache;
 
         public PlanService(IDataRepositoryFactory broadcastDataRepositoryFactory
             , IPlanValidator planValidator
             , IPlanBudgetDeliveryCalculator planBudgetDeliveryCalculator
             , IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache
-            , IPlanAggregator planAggregator,
-            ICampaignAggregationJobTrigger campaignAggregationJobTrigger)
+            , IPlanAggregator planAggregator
+            , ICampaignAggregationJobTrigger campaignAggregationJobTrigger
+            , INsiUniverseService nsiUniverseService
+            , IBroadcastAudiencesCache broadcastAudiencesCache)
         {
             _MediaWeekCache = mediaMonthAndWeekAggregateCache;
             _PlanValidator = planValidator;
@@ -99,6 +102,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _PlanSummaryRepository = broadcastDataRepositoryFactory.GetDataRepository<IPlanSummaryRepository>();
             _PlanAggregator = planAggregator;
             _CampaignAggregationJobTrigger = campaignAggregationJobTrigger;
+            _NsiUniverseService = nsiUniverseService;
+            _BroadcastAudiencesCache = broadcastAudiencesCache;
         }
 
         ///<inheritdoc/>
@@ -113,10 +118,12 @@ namespace Services.Broadcast.ApplicationServices.Plan
             if (plan.DeliveryImpressions.HasValue)
             {
                 //the UI is sending the user entered value instead of the raw value. BE needs to adjust
-                double rawDeliveryImpressions = plan.DeliveryImpressions.Value * 1000;
-                plan.DeliveryImpressions = rawDeliveryImpressions;
+                plan.DeliveryImpressions = plan.DeliveryImpressions.Value * 1000;
             }
 
+            plan.Universe = _NsiUniverseService.GetAudienceUniverseForMediaMonth(plan.ShareBookId, plan.AudienceId);
+            _CalculateHouseholdSummaryData(plan);
+            
             if (plan.Id == 0)
             {
                 plan.Id = _PlanRepository.SaveNewPlan(plan, modifiedBy, modifiedDate);
@@ -381,6 +388,15 @@ namespace Services.Broadcast.ApplicationServices.Plan
             {
                 _PlanSummaryRepository.SetProcessingStatusForPlanSummary(plan.Id, PlanAggregationProcessingStatusEnum.Error);
             }
+        }
+
+        private void _CalculateHouseholdSummaryData(PlanDto plan)
+        {
+            plan.HouseholdUniverse = _NsiUniverseService.GetAudienceUniverseForMediaMonth(plan.ShareBookId, _BroadcastAudiencesCache.GetDefaultAudience().Id);
+            plan.HouseholdDeliveryImpressions = plan.DeliveryImpressions.Value / plan.Vpvh;
+            plan.HouseholdCPM = (plan.Budget.Value / Convert.ToDecimal(plan.HouseholdDeliveryImpressions)) * 1000;
+            plan.HouseholdRatingPoints = (plan.HouseholdDeliveryImpressions / plan.HouseholdUniverse) * 100;
+            plan.HouseholdCPP = plan.Budget.Value / Convert.ToDecimal(plan.HouseholdRatingPoints);
         }
     }
 }

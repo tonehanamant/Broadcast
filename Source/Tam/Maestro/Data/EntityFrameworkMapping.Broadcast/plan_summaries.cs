@@ -12,9 +12,9 @@ namespace EntityFrameworkMapping.Broadcast
     using System;
     using System.Collections.Generic;
     
-    public partial class plan_summary
+    public partial class plan_summaries
     {
-        public plan_summary()
+        public plan_summaries()
         {
             this.plan_summary_quarters = new HashSet<plan_summary_quarters>();
         }
@@ -31,7 +31,7 @@ namespace EntityFrameworkMapping.Broadcast
         public string product_name { get; set; }
         public string audience_name { get; set; }
     
-        public virtual ICollection<plan_summary_quarters> plan_summary_quarters { get; set; }
         public virtual plan plan { get; set; }
+        public virtual ICollection<plan_summary_quarters> plan_summary_quarters { get; set; }
     }
 }

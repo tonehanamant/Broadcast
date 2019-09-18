@@ -280,5 +280,53 @@ namespace Services.Broadcast.Entities.Plan
         /// The VPVH.
         /// </value>
         public double Vpvh { get; set; }
+
+        /// <summary>
+        /// Gets or sets the household CPM.
+        /// </summary>
+        /// <value>
+        /// The household CPM.
+        /// </value>
+        public decimal HouseholdCPM { get; set; }
+
+        /// <summary>
+        /// Gets or sets the household universe.
+        /// </summary>
+        /// <value>
+        /// The household universe.
+        /// </value>
+        public double HouseholdUniverse { get; set; }
+
+        /// <summary>
+        /// Gets or sets the household CPP.
+        /// </summary>
+        /// <value>
+        /// The household CPP.
+        /// </value>
+        public decimal HouseholdCPP { get; set; }
+
+        /// <summary>
+        /// Gets or sets the household rating points.
+        /// </summary>
+        /// <value>
+        /// The household rating points.
+        /// </value>
+        public double HouseholdRatingPoints { get; set; }
+
+        /// <summary>
+        /// Gets or sets the universe.
+        /// </summary>
+        /// <value>
+        /// The universe.
+        /// </value>
+        public double Universe { get; set; }
+
+        /// <summary>
+        /// Gets or sets the household delivery impressions.
+        /// </summary>
+        /// <value>
+        /// The household delivery impressions.
+        /// </value>
+        public double HouseholdDeliveryImpressions { get; set; }
     }
 }

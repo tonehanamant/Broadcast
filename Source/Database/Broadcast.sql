@@ -130,6 +130,139 @@ END
 
 /*************************************** END PRI-12842  *****************************************************/
 
+
+/*************************************** START PRI-14334  *****************************************************/
+--plans
+IF NOT EXISTS(SELECT 1 FROM sys.COLUMNS 
+				WHERE object_id = OBJECT_ID('plans')
+					AND name = 'household_delivery_impressions')
+BEGIN
+	ALTER TABLE plans 
+	ADD household_delivery_impressions FLOAT NULL
+
+	EXEC('UPDATE plans
+	SET household_delivery_impressions = 0
+	WHERE household_delivery_impressions IS NULL')
+
+	ALTER TABLE plans
+	ALTER COLUMN household_delivery_impressions FLOAT NOT NULL
+END
+GO
+
+IF NOT EXISTS(SELECT 1 FROM sys.COLUMNS 
+				WHERE object_id = OBJECT_ID('plans')
+					AND name = 'household_cpm')
+BEGIN
+	ALTER TABLE plans 
+	ADD household_cpm MONEY NULL
+
+	EXEC('UPDATE plans
+	SET household_cpm = 0
+	WHERE household_cpm IS NULL')
+
+	ALTER TABLE plans
+	ALTER COLUMN household_cpm MONEY NOT NULL
+END
+GO
+
+IF NOT EXISTS(SELECT 1 FROM sys.COLUMNS 
+				WHERE object_id = OBJECT_ID('plans')
+					AND name = 'household_universe')
+BEGIN
+	ALTER TABLE plans 
+	ADD household_universe FLOAT NULL
+
+	EXEC('UPDATE plans
+	SET household_universe = 0
+	WHERE household_universe IS NULL')
+
+	ALTER TABLE plans
+	ALTER COLUMN household_universe FLOAT NOT NULL
+END
+GO
+
+IF NOT EXISTS(SELECT 1 FROM sys.COLUMNS 
+				WHERE object_id = OBJECT_ID('plans')
+					AND name = 'household_cpp')
+BEGIN
+	ALTER TABLE plans 
+	ADD household_cpp MONEY NULL
+
+	EXEC('UPDATE plans
+	SET household_cpp = 0
+	WHERE household_cpp IS NULL')
+
+	ALTER TABLE plans
+	ALTER COLUMN household_cpp MONEY NOT NULL
+END
+GO
+
+IF NOT EXISTS(SELECT 1 FROM sys.COLUMNS 
+				WHERE object_id = OBJECT_ID('plans')
+					AND name = 'household_rating_points')
+BEGIN
+	ALTER TABLE plans 
+	ADD household_rating_points FLOAT NULL
+
+	EXEC('UPDATE plans
+	SET household_rating_points = 0
+	WHERE household_rating_points IS NULL')
+
+	ALTER TABLE plans
+	ALTER COLUMN household_rating_points FLOAT NOT NULL
+END
+GO
+
+IF NOT EXISTS(SELECT 1 FROM sys.COLUMNS 
+				WHERE object_id = OBJECT_ID('plans')
+					AND name = 'universe')
+BEGIN
+	ALTER TABLE plans 
+	ADD universe FLOAT NULL
+
+	EXEC('UPDATE plans
+	SET universe = 0
+	WHERE universe IS NULL')
+
+	ALTER TABLE plans
+	ALTER COLUMN universe FLOAT NOT NULL
+END
+GO
+
+-- plan_summary
+IF EXISTS(SELECT 1 FROM sys.tables WHERE object_id = OBJECT_ID('plan_summary'))
+BEGIN
+    EXEC sp_rename 'plan_summary', 'plan_summaries';
+END
+GO
+
+-- campaign_summaries
+IF EXISTS(SELECT 1 FROM sys.COLUMNS 
+				WHERE object_id = OBJECT_ID('campaign_summaries')
+					AND name = 'impressions')
+BEGIN
+    EXEC sp_rename 'campaign_summaries.impressions', 'household_delivery_impressions', 'COLUMN';
+END
+GO
+
+IF EXISTS(SELECT 1 FROM sys.COLUMNS 
+				WHERE object_id = OBJECT_ID('campaign_summaries')
+					AND name = 'cpm')
+BEGIN
+    EXEC sp_rename 'campaign_summaries.cpm', 'household_cpm', 'COLUMN';
+END
+GO
+
+IF EXISTS(SELECT 1 FROM sys.COLUMNS 
+				WHERE object_id = OBJECT_ID('campaign_summaries')
+					AND name = 'rating')
+BEGIN
+    EXEC sp_rename 'campaign_summaries.rating', 'household_rating_points', 'COLUMN';
+END
+GO
+
+/*************************************** END PRI-14334  *****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

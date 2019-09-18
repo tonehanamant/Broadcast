@@ -3,7 +3,7 @@
   "AudienceType": 1,
   "AvailableMarkets": [],
   "BlackoutMarkets": [],
-  "Budget": null,
+  "Budget": 100.0000,
   "CampaignId": 1,
   "CoverageGoalPercent": null,
   "CPM": null,
@@ -17,7 +17,7 @@
       "WeightingGoalPercent": 28.0
     }
   ],
-  "DeliveryImpressions": null,
+  "DeliveryImpressions": 100.0,
   "DeliveryRatingPoints": null,
   "Equivalized": true,
   "FlightEndDate": "1999-11-12T00:00:00",
@@ -28,6 +28,11 @@
   "FlightNotes": "Notes for this flight.",
   "FlightStartDate": "1966-01-01T00:00:00",
   "GoalBreakdownType": 1,
+  "HouseholdCPM": 0.1199,
+  "HouseholdCPP": 1591.0628,
+  "HouseholdDeliveryImpressions": 833333.33333333,
+  "HouseholdRatingPoints": 0.06285107,
+  "HouseholdUniverse": 1325885750.0,
   "HUTBookId": null,
   "ModifiedBy": "integration_test",
   "ModifiedDate": "2019-01-15T00:00:00",
@@ -40,6 +45,7 @@
   "Status": 1,
   "TotalActiveDays": 0,
   "TotalShareOfVoice": 0.0,
+  "Universe": 1325885750.0,
   "Vpvh": 0.12,
   "WeeklyBreakdownWeeks": []
 }

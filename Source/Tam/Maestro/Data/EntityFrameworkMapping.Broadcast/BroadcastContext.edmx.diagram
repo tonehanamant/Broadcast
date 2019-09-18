@@ -268,9 +268,7 @@
         <AssociationConnector Association="BroadcastModel.FK_inventory_file_proprietary_header_inventory_files" />
         <AssociationConnector Association="BroadcastModel.FK_inventory_file_proprietary_header_media_months" />
         <AssociationConnector Association="BroadcastModel.FK_inventory_file_proprietary_header_media_months_hut_book" />
-        <EntityTypeShape EntityType="BroadcastModel.campaign" Width="1.5" PointX="28.375" PointY="0.75" />
         <EntityTypeShape EntityType="BroadcastModel.station_inventory_manifest_weeks_history" Width="1.5" PointX="30.375" PointY="0.75" />
-        <AssociationConnector Association="BroadcastModel.FK_proposals_campaigns" />
         <AssociationConnector Association="BroadcastModel.FK_inventory_file_proprietary_header_daypart_codes" />
         <EntityTypeShape EntityType="BroadcastModel.inventory_source_logos" Width="1.5" PointX="2.75" PointY="37.125" />
         <AssociationConnector Association="BroadcastModel.FK_inventory_source_logos_inventory_sources" />
@@ -308,13 +306,12 @@
         <AssociationConnector Association="BroadcastModel.FK_plan_blackout_markets_market_coverage_file" />
         <EntityTypeShape EntityType="BroadcastModel.plan_weeks" Width="1.5" PointX="39.875" PointY="10" />
         <AssociationConnector Association="BroadcastModel.FK_plan_weeks_media_weeks" />
-        <EntityTypeShape EntityType="BroadcastModel.plan_weekly_breakdown" Width="1.5" PointX="33.875" PointY="0.75" />
-        <EntityTypeShape EntityType="BroadcastModel.plan_summary" Width="1.5" PointX="33.875" PointY="29" />
-        <EntityTypeShape EntityType="BroadcastModel.plan_summary_quarters" Width="1.5" PointX="36.125" PointY="30" />
-        <AssociationConnector Association="BroadcastModel.FK_plan_summary_quarters_plan_summary" />
-        <EntityTypeShape EntityType="BroadcastModel.plan" Width="1.5" PointX="31.625" PointY="7.5" />
+        <EntityTypeShape EntityType="BroadcastModel.campaign" Width="1.5" PointX="0.75" PointY="25.375" />
+        <EntityTypeShape EntityType="BroadcastModel.plan_summaries" Width="1.5" PointX="16.5" PointY="59.375" />
+        <EntityTypeShape EntityType="BroadcastModel.plan" Width="1.5" PointX="14.25" PointY="0.75" />
         <AssociationConnector Association="BroadcastModel.FK_plans_audiences" />
         <AssociationConnector Association="BroadcastModel.FK_plans_campaigns" />
+        <AssociationConnector Association="BroadcastModel.FK_proposals_campaigns" />
         <AssociationConnector Association="BroadcastModel.FK_plans_media_months" />
         <AssociationConnector Association="BroadcastModel.FK_plans_media_months_hut" />
         <AssociationConnector Association="BroadcastModel.FK_plan_available_markets_plans" />
@@ -322,11 +319,12 @@
         <AssociationConnector Association="BroadcastModel.FK_plan_flight_hiatus_plans" />
         <AssociationConnector Association="BroadcastModel.FK_plan_secondary_audiences_plans" />
         <AssociationConnector Association="BroadcastModel.FK_plan_summary_plans" />
-        <AssociationConnector Association="BroadcastModel.FK_plan_weekly_breakdown_plans" />
         <AssociationConnector Association="BroadcastModel.FK_plan_weeks_plans" />
         <AssociationConnector Association="BroadcastModel.FK_plans_spot_lengths" />
-        <EntityTypeShape EntityType="BroadcastModel.campaign_summaries" Width="1.5" PointX="30.625" PointY="48.375" />
+        <EntityTypeShape EntityType="BroadcastModel.campaign_summaries" Width="1.5" PointX="3" PointY="62.875" />
+        <EntityTypeShape EntityType="BroadcastModel.plan_summary_quarters" Width="1.5" PointX="18.75" PointY="60.75" />
         <AssociationConnector Association="BroadcastModel.FK_campaign_summaries_campaign" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_summary_quarters_plan_summary" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

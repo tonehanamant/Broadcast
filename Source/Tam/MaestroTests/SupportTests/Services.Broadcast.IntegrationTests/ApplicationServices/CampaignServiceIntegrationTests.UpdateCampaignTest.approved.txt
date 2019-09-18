@@ -3,14 +3,15 @@
   "AgencyId": 1,
   "Budget": 1500.0,
   "CampaignStatus": 4,
-  "CPM": 2500.0,
   "FlightActiveDays": 26,
   "FlightEndDate": "2019-08-30T00:00:00",
   "FlightHiatusDays": 4,
   "FlightStartDate": "2019-08-01T00:00:00",
   "HasHiatus": true,
   "HasPlans": false,
-  "Impressions": 5500.0,
+  "HouseholdCPM": 2500.0,
+  "HouseholdImpressions": 5500.0,
+  "HouseholdRatingPoints": 23.0,
   "ModifiedBy": "IntegrationTestUser",
   "ModifiedDate": "2019-05-14T00:00:00",
   "Name": "Updated name of Campaign1",
@@ -25,6 +26,5 @@
       "Count": 1,
       "PlanStatus": 4
     }
-  ],
-  "Rating": 23.0
+  ]
 }

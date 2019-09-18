@@ -92,9 +92,9 @@ namespace Services.Broadcast.Repositories
                     FlightHiatusDays = entity.flight_hiatus_days,
                     FlightActiveDays = entity.flight_active_days,
                     Budget = _ToNullableDecimal(entity.budget),
-                    CPM = _ToNullableDecimal(entity.cpm),
-                    Impressions = entity.impressions,
-                    Rating = entity.rating,
+                    HouseholdCPM = _ToNullableDecimal(entity.household_cpm),
+                    HouseholdDeliveryImpressions = entity.household_delivery_impressions,
+                    HouseholdRatingPoints = entity.household_rating_points,
                     CampaignStatus = (PlanStatusEnum?) entity.campaign_status,
                     PlanStatusCountWorking = entity.plan_status_count_working,
                     PlanStatusCountReserved = entity.plan_status_count_reserved,
@@ -173,7 +173,7 @@ namespace Services.Broadcast.Repositories
                     return entity.id;
                 }
 
-                _HydrateFromDto(entity, summary, context);
+                _HydrateFromDto(entity, summary);
 
                 if (entity.id <= 0)
                 {
@@ -213,7 +213,7 @@ namespace Services.Broadcast.Repositories
             return message;
         }
 
-        private void _HydrateFromDto(campaign_summaries entity, CampaignSummaryDto dto, QueryHintBroadcastContext context)
+        private void _HydrateFromDto(campaign_summaries entity, CampaignSummaryDto dto)
         {
             entity.processing_status = (int) dto.ProcessingStatus;
             entity.processing_status_error_msg = dto.ProcessingErrorMessage;
@@ -222,9 +222,9 @@ namespace Services.Broadcast.Repositories
             entity.flight_hiatus_days = dto.FlightHiatusDays;
             entity.flight_active_days = dto.FlightActiveDays;
             entity.budget = _ToNullableDouble(dto.Budget);
-            entity.cpm = _ToNullableDouble(dto.CPM);
-            entity.impressions = dto.Impressions;
-            entity.rating = dto.Rating;
+            entity.household_cpm = _ToNullableDouble(dto.HouseholdCPM);
+            entity.household_delivery_impressions = dto.HouseholdDeliveryImpressions;
+            entity.household_rating_points = dto.HouseholdRatingPoints;
             entity.campaign_status = (int?) dto.CampaignStatus;
             entity.components_modified = dto.ComponentsModified;
             entity.last_aggregated = dto.LastAggregated;

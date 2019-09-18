@@ -132,7 +132,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<inventory_file_ratings_jobs> inventory_file_ratings_jobs { get; set; }
         public virtual DbSet<daypart_codes> daypart_codes { get; set; }
         public virtual DbSet<inventory_file_proprietary_header> inventory_file_proprietary_header { get; set; }
-        public virtual DbSet<campaign> campaigns { get; set; }
         public virtual DbSet<station_inventory_manifest_weeks_history> station_inventory_manifest_weeks_history { get; set; }
         public virtual DbSet<inventory_source_logos> inventory_source_logos { get; set; }
         public virtual DbSet<audience_maps> audience_maps { get; set; }
@@ -150,10 +149,10 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<plan_available_markets> plan_available_markets { get; set; }
         public virtual DbSet<plan_blackout_markets> plan_blackout_markets { get; set; }
         public virtual DbSet<plan_weeks> plan_weeks { get; set; }
-        public virtual DbSet<plan_weekly_breakdown> plan_weekly_breakdown { get; set; }
-        public virtual DbSet<plan_summary> plan_summary { get; set; }
-        public virtual DbSet<plan_summary_quarters> plan_summary_quarters { get; set; }
+        public virtual DbSet<campaign> campaigns { get; set; }
+        public virtual DbSet<plan_summaries> plan_summaries { get; set; }
         public virtual DbSet<plan> plans { get; set; }
         public virtual DbSet<campaign_summaries> campaign_summaries { get; set; }
+        public virtual DbSet<plan_summary_quarters> plan_summary_quarters { get; set; }
     }
 }

@@ -995,6 +995,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 ShareBookId = 437,
                 Currency = Entities.Enums.PlanCurrenciesEnum.Impressions,
                 GoalBreakdownType = Entities.Enums.PlanGloalBreakdownTypeEnum.Even,
+                DeliveryImpressions = 100d,
+                Budget = 100m,
                 Dayparts = new List<PlanDaypartDto>
                 {
                     new PlanDaypartDto{ DaypartCodeId = 2, StartTimeSeconds = 0, EndTimeSeconds = 2000, WeightingGoalPercent = 28.0 }
@@ -1023,7 +1025,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 },
                 AudienceId = 31,        //HH
                 AudienceType = Entities.Enums.AudienceTypeEnum.Nielsen,
-                HUTBookId = null,
+                HUTBookId = 437,
                 PostingType = Entities.Enums.PostingTypeEnum.NTI,
                 ShareBookId = 437,
                 Budget = 100m,
