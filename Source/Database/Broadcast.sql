@@ -296,6 +296,15 @@ END
 
 /*************************************** END PRI-12723  *****************************************************/
 
+/*************************************** START PRI-15016 *****************************************************/
+
+/*Begin pre-prod data cleanup for non-nullable Currency value */
+UPDATE dbo.plans
+SET Currency = 1 WHERE Currency = 0
+/*End pre-prod data cleanup for non-nullable Currency value */
+
+/*************************************** END PRI-15016  *****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version
