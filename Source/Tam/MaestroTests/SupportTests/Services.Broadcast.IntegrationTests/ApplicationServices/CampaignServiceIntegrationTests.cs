@@ -354,7 +354,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 _CampaignService.TriggerCampaignAggregationJob(campaignId, IntegrationTestUser);
                 var summary = _CampaignSummaryRepository.GetSummaryForCampaign(campaignId);
 
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(summary));
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(summary, _GetJsonSettings()));
             }
         }
 
@@ -418,6 +418,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             jsonResolver.Ignore(typeof(CampaignDto), "Id");
             jsonResolver.Ignore(typeof(CampaignListItemDto), "Id");
             jsonResolver.Ignore(typeof(PlanSummaryDto), "PlanId");
+            jsonResolver.Ignore(typeof(CampaignSummaryDto), "QueuedAt");
 
             return new JsonSerializerSettings
             {

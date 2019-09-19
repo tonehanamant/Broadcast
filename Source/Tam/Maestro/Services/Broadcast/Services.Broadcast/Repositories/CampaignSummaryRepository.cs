@@ -5,10 +5,7 @@ using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 using System;
-using System.Data.Entity;
 using System.Linq;
-using System.Management.Automation;
-using System.Web.Mvc.Html;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Common.Utilities.Logging;
 using Tam.Maestro.Data.EntityFrameworkMapping;
@@ -127,6 +124,8 @@ namespace Services.Broadcast.Repositories
 
                 entity.processing_status = (int)CampaignAggregationProcessingStatusEnum.InProgress;
                 entity.processing_status_error_msg = null;
+                entity.queued_at = queuedAt;
+                entity.queued_by = queuedBy;
 
                 if (entity.id < 1)
                 {
