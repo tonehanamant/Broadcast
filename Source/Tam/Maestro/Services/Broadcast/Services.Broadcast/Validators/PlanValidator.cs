@@ -313,35 +313,25 @@ namespace Services.Broadcast.Validators
 
         private void _ValidateBudgetAndDelivery(PlanDto plan)
         {
-            if (!_HasPositiveValue(plan.Budget))
+            if (!(plan.Budget.HasValue && plan.Budget.Value > 0m))
             {
                 throw new Exception(INVALID_BUDGET);
             }
 
-            if (!_HasPositiveValue(plan.CPM))
+            if (!(plan.CPM.HasValue && plan.CPM.Value > 0m))
             {
                 throw new Exception(INVALID_CPM);
             }
 
-            if (!_HasPositiveValue(plan.CPP))
+            if (!(plan.CPP.HasValue && plan.CPP.Value > 0m))
             {
                 throw new Exception(INVALID_CPP);
             }
 
-            if (!_HasPositiveValue(plan.DeliveryImpressions))
+            if (!(plan.DeliveryImpressions.HasValue && plan.DeliveryImpressions.Value > 0d))
             {
                 throw new Exception(INVALID_DELIVERY_IMPRESSIONS);
             }
-        }
-
-        private static bool _HasPositiveValue(decimal? item)
-        {
-            return item.HasValue && item.Value > 0m;
-        }
-
-        private static bool _HasPositiveValue(double? item)
-        {
-            return item.HasValue && item.Value > 0d;
         }
     }
 }

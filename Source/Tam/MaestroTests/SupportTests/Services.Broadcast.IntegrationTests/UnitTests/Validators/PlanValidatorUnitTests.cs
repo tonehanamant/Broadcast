@@ -194,6 +194,20 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
         }
 
         [Test]
+        public void ValidatePlan_WithLowButValidGoalValues()
+        {
+            _ConfigureMocksToReturnTrue();
+
+            var plan = _GetPlan();
+            plan.Budget = 0.0000001m;
+            plan.CPP = 0.0000001m;
+            plan.CPM = 0.0000001m;
+            plan.DeliveryImpressions = 0.0000001;
+
+            Assert.DoesNotThrow(() => _planValidator.ValidatePlan(plan));
+        }
+
+        [Test]
         [TestCase(null)]
         [TestCase(0)]
         [TestCase(-25)]
