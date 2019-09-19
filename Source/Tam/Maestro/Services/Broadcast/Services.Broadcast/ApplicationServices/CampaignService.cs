@@ -205,9 +205,9 @@ namespace Services.Broadcast.ApplicationServices
             campaign.HasHiatus = campaign.FlightHiatusDays > 0;
 
             campaign.Budget = summary.Budget;
-            campaign.CPM = summary.HouseholdCPM;
-            campaign.Impressions = summary.HouseholdDeliveryImpressions;
-            campaign.Rating = summary.HouseholdRatingPoints;
+            campaign.HouseholdCPM = summary.HouseholdCPM;
+            campaign.HouseholdImpressions = summary.HouseholdImpressions;
+            campaign.HouseholdRatingPoints = summary.HouseholdRatingPoints;
 
             campaign.CampaignStatus = summary.CampaignStatus;
             campaign.PlanStatuses = _MapToPlanStatuses(summary);
@@ -228,7 +228,7 @@ namespace Services.Broadcast.ApplicationServices
 
             campaign.Budget = summary.Budget;
             campaign.HouseholdCPM = summary.HouseholdCPM;
-            campaign.HouseholdImpressions = summary.HouseholdDeliveryImpressions;
+            campaign.HouseholdImpressions = summary.HouseholdImpressions;
             campaign.HouseholdRatingPoints = summary.HouseholdRatingPoints;
 
             campaign.CampaignStatus = summary.CampaignStatus;

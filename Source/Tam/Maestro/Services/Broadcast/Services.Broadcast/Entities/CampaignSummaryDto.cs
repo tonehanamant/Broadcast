@@ -68,7 +68,7 @@ namespace Services.Broadcast.Entities
         /// <summary>
         /// The household impressions.
         /// </summary>
-        public double? HouseholdDeliveryImpressions { get; set; }
+        public double? HouseholdImpressions { get; set; }
 
         /// <summary>
         /// The household rating points.

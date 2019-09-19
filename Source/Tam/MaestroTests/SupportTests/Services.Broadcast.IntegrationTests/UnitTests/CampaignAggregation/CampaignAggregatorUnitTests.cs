@@ -94,7 +94,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.CampaignAggregation
                 PlanStatusCountWorking = 0,
                 ProcessingStatus = 0,
                 HouseholdCPM = 75.000m,
-                HouseholdDeliveryImpressions = 20000,
+                HouseholdImpressions = 20000,
                 HouseholdRatingPoints= 52,
             });
 

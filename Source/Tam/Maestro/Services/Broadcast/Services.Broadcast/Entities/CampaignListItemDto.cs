@@ -66,11 +66,11 @@ namespace Services.Broadcast.Entities
 
         public decimal? Budget { get; set; }
 
-        public decimal? CPM { get; set; }
+        public decimal? HouseholdCPM { get; set; }
 
-        public double? Impressions { get; set; }
+        public double? HouseholdImpressions { get; set; }
 
-        public double? Rating { get; set; }
+        public double? HouseholdRatingPoints { get; set; }
 
         public bool HasPlans { get; set; }
 

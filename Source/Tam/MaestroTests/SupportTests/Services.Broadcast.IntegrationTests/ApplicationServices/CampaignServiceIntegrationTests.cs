@@ -206,7 +206,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Budget = 1500.0m,
                 HouseholdCPM = 2500.0m,
                 HouseholdRatingPoints = 23.0,
-                HouseholdDeliveryImpressions = 5500.0,
+                HouseholdImpressions = 5500.0,
                 FlightStartDate = new DateTime(2019, 08, 01),
                 FlightEndDate = new DateTime(2019, 08, 30),
                 FlightActiveDays = 26,

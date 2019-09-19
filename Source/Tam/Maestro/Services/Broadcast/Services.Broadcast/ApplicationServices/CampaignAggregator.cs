@@ -108,8 +108,8 @@ namespace Services.Broadcast.ApplicationServices
             }
 
             summary.Budget = plans.Sum(p => p.Budget);
-            summary.HouseholdDeliveryImpressions = plans.Sum(p => p.HouseholdDeliveryImpressions);
-            summary.HouseholdCPM = (plans.Sum(p => p.Budget) / Convert.ToDecimal(summary.HouseholdDeliveryImpressions)) * 1000;
+            summary.HouseholdImpressions = plans.Sum(p => p.HouseholdDeliveryImpressions);
+            summary.HouseholdCPM = (plans.Sum(p => p.Budget) / Convert.ToDecimal(summary.HouseholdImpressions)) * 1000;
             summary.HouseholdRatingPoints = plans.Sum(p => p.HouseholdRatingPoints);
         }
 

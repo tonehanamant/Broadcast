@@ -11,15 +11,16 @@
     },
     "Budget": 1500.0,
     "CampaignStatus": 4,
-    "CPM": 2500.0,
     "FlightActiveDays": 26,
     "FlightEndDate": "2019-08-30T00:00:00",
     "FlightHiatusDays": 4,
     "FlightStartDate": "2019-08-01T00:00:00",
     "HasHiatus": true,
     "HasPlans": false,
+    "HouseholdCPM": 2500.0,
+    "HouseholdImpressions": 5500.0,
+    "HouseholdRatingPoints": 23.5,
     "Id": 4,
-    "Impressions": 5500.0,
     "ModifiedBy": "CROSSMW\\bbotelho",
     "ModifiedDate": "2019-08-27T00:00:00",
     "Name": "Test Campaign 4",
@@ -42,8 +43,7 @@
         "Count": 2,
         "PlanStatus": 6
       }
-    ],
-    "Rating": 23.5
+    ]
   },
   {
     "Advertiser": {
@@ -57,15 +57,16 @@
     },
     "Budget": 1500.0,
     "CampaignStatus": 4,
-    "CPM": 2500.0,
     "FlightActiveDays": 26,
     "FlightEndDate": "2019-08-30T00:00:00",
     "FlightHiatusDays": 4,
     "FlightStartDate": "2019-08-01T00:00:00",
     "HasHiatus": true,
     "HasPlans": false,
+    "HouseholdCPM": 2500.0,
+    "HouseholdImpressions": 5500.0,
+    "HouseholdRatingPoints": 23.5,
     "Id": 2,
-    "Impressions": 5500.0,
     "ModifiedBy": "CROSSMW\\bbotelho",
     "ModifiedDate": "2019-05-13T00:00:00",
     "Name": "Test Campaign 2",
@@ -88,8 +89,7 @@
         "Count": 2,
         "PlanStatus": 6
       }
-    ],
-    "Rating": 23.5
+    ]
   },
   {
     "Advertiser": {
@@ -103,15 +103,16 @@
     },
     "Budget": 1500.0,
     "CampaignStatus": 4,
-    "CPM": 2500.0,
     "FlightActiveDays": 26,
     "FlightEndDate": "2019-08-30T00:00:00",
     "FlightHiatusDays": 4,
     "FlightStartDate": "2019-08-01T00:00:00",
     "HasHiatus": true,
     "HasPlans": false,
+    "HouseholdCPM": 2500.0,
+    "HouseholdImpressions": 5500.0,
+    "HouseholdRatingPoints": 23.5,
     "Id": 1,
-    "Impressions": 5500.0,
     "ModifiedBy": "IntegrationTestUser",
     "ModifiedDate": "2019-05-09T00:00:00",
     "Name": "Test Campaign 1",
@@ -134,8 +135,7 @@
         "Count": 2,
         "PlanStatus": 6
       }
-    ],
-    "Rating": 23.5
+    ]
   },
   {
     "Advertiser": {
@@ -149,22 +149,22 @@
     },
     "Budget": null,
     "CampaignStatus": null,
-    "CPM": null,
     "FlightActiveDays": null,
     "FlightEndDate": null,
     "FlightHiatusDays": null,
     "FlightStartDate": null,
     "HasHiatus": null,
     "HasPlans": false,
+    "HouseholdCPM": null,
+    "HouseholdImpressions": null,
+    "HouseholdRatingPoints": null,
     "Id": 5,
-    "Impressions": null,
     "ModifiedBy": "IntegrationTestUser",
     "ModifiedDate": "2018-01-01T00:00:00",
     "Name": "Test Campaign 5",
     "Notes": "This is a test note for a test campaign.",
     "Plans": null,
-    "PlanStatuses": null,
-    "Rating": null
+    "PlanStatuses": null
   },
   {
     "Advertiser": {
@@ -178,15 +178,16 @@
     },
     "Budget": 1500.0,
     "CampaignStatus": 4,
-    "CPM": 2500.0,
     "FlightActiveDays": 26,
     "FlightEndDate": "2019-08-30T00:00:00",
     "FlightHiatusDays": 4,
     "FlightStartDate": "2019-08-01T00:00:00",
     "HasHiatus": true,
     "HasPlans": false,
+    "HouseholdCPM": 2500.0,
+    "HouseholdImpressions": 5500.0,
+    "HouseholdRatingPoints": 23.5,
     "Id": 3,
-    "Impressions": 5500.0,
     "ModifiedBy": "IntegrationTestUser",
     "ModifiedDate": "2017-06-05T00:00:00",
     "Name": "Test Campaign 3",
@@ -209,7 +210,6 @@
         "Count": 2,
         "PlanStatus": 6
       }
-    ],
-    "Rating": 23.5
+    ]
   }
 ]

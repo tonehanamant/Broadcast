@@ -93,7 +93,7 @@ namespace Services.Broadcast.Repositories
                     FlightActiveDays = entity.flight_active_days,
                     Budget = _ToNullableDecimal(entity.budget),
                     HouseholdCPM = _ToNullableDecimal(entity.household_cpm),
-                    HouseholdDeliveryImpressions = entity.household_delivery_impressions,
+                    HouseholdImpressions = entity.household_delivery_impressions,
                     HouseholdRatingPoints = entity.household_rating_points,
                     CampaignStatus = (PlanStatusEnum?) entity.campaign_status,
                     PlanStatusCountWorking = entity.plan_status_count_working,
@@ -223,7 +223,7 @@ namespace Services.Broadcast.Repositories
             entity.flight_active_days = dto.FlightActiveDays;
             entity.budget = _ToNullableDouble(dto.Budget);
             entity.household_cpm = _ToNullableDouble(dto.HouseholdCPM);
-            entity.household_delivery_impressions = dto.HouseholdDeliveryImpressions;
+            entity.household_delivery_impressions = dto.HouseholdImpressions;
             entity.household_rating_points = dto.HouseholdRatingPoints;
             entity.campaign_status = (int?) dto.CampaignStatus;
             entity.components_modified = dto.ComponentsModified;
