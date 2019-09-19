@@ -783,7 +783,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     FlightEndDate = new DateTime(2019, 01, 05),
                     FlightStartDate = new DateTime(2019, 01, 01),
-                    DeliveryType = Entities.Enums.PlanGloalBreakdownTypeEnum.Custom
+                    DeliveryType = Entities.Enums.PlanGoalBreakdownTypeEnum.Custom
                 }), "For custom delivery you have to provide the weeks values");
             }
         }
@@ -794,7 +794,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             var result = _PlanService.CalculatePlanWeeklyGoalBreakdown(new WeeklyBreakdownRequest
             {
-                DeliveryType = Entities.Enums.PlanGloalBreakdownTypeEnum.Even,
+                DeliveryType = Entities.Enums.PlanGoalBreakdownTypeEnum.Even,
                 FlightStartDate = new DateTime(2019, 08, 03),
                 FlightEndDate = new DateTime(2019, 08, 27),
                 FlightHiatusDays = new List<DateTime> { new DateTime(2019, 8, 15) },
@@ -810,7 +810,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             var result = _PlanService.CalculatePlanWeeklyGoalBreakdown(new WeeklyBreakdownRequest
             {
-                DeliveryType = Entities.Enums.PlanGloalBreakdownTypeEnum.Even,
+                DeliveryType = Entities.Enums.PlanGoalBreakdownTypeEnum.Even,
                 FlightStartDate = new DateTime(2019, 09, 29),
                 FlightEndDate = new DateTime(2019, 10, 13),
                 FlightHiatusDays = new List<DateTime> { new DateTime(2019, 10, 10), new DateTime(2019, 10, 12), new DateTime(2019, 10, 4), new DateTime(2019, 10, 2) },
@@ -826,7 +826,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             var result = _PlanService.CalculatePlanWeeklyGoalBreakdown(new WeeklyBreakdownRequest
             {
-                DeliveryType = Entities.Enums.PlanGloalBreakdownTypeEnum.Even,
+                DeliveryType = Entities.Enums.PlanGoalBreakdownTypeEnum.Even,
                 FlightStartDate = new DateTime(2019, 08, 01),
                 FlightEndDate = new DateTime(2019, 08, 31),
                 FlightHiatusDays = new List<DateTime> { new DateTime(2019, 8, 5), new DateTime(2019, 8, 6), new DateTime(2019, 8, 7), new DateTime(2019, 8, 8),
@@ -843,7 +843,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             var result = _PlanService.CalculatePlanWeeklyGoalBreakdown(new WeeklyBreakdownRequest
             {
-                DeliveryType = Entities.Enums.PlanGloalBreakdownTypeEnum.Custom,
+                DeliveryType = Entities.Enums.PlanGoalBreakdownTypeEnum.Custom,
                 FlightStartDate = new DateTime(2019, 08, 03),
                 FlightEndDate = new DateTime(2019, 08, 20),
                 FlightHiatusDays = new List<DateTime> { new DateTime(2019, 8, 15) },
@@ -861,6 +861,15 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             });
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void PlanServiceGetPlanDefaultsTest()
+        {
+            var defaults = _PlanService.GetPlanDefaults();
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(defaults));
         }
 
         private static PlanDto _GetNewPlan()
@@ -893,7 +902,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Currency = Entities.Enums.PlanCurrenciesEnum.Impressions,
                 DeliveryRatingPoints = 100d,
                 CoverageGoalPercent = 80.5,
-                GoalBreakdownType = Entities.Enums.PlanGloalBreakdownTypeEnum.Even,
+                GoalBreakdownType = Entities.Enums.PlanGoalBreakdownTypeEnum.Even,
                 AvailableMarkets = new List<PlanAvailableMarketDto>
                 {
                     new PlanAvailableMarketDto { MarketCode = 100, MarketCoverageFileId = 1, PercentageOfUs = 48, Rank = 1, ShareOfVoicePercent = 22.2},

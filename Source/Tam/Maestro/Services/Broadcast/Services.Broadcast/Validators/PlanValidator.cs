@@ -137,7 +137,7 @@ namespace Services.Broadcast.Validators
                 throw new Exception(INVALID_FLIGHT_DATES);
             }
 
-            if (request.DeliveryType.Equals(PlanGloalBreakdownTypeEnum.Custom) && !request.Weeks.Any())
+            if (request.DeliveryType.Equals(PlanGoalBreakdownTypeEnum.Custom) && !request.Weeks.Any())
             {
                 throw new Exception(INVALID_WEEKS_FOR_CUSTOM_DELIVERY);
             }

@@ -104,5 +104,16 @@ namespace BroadcastComposerWeb.Controllers
         {
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanService>().CalculatePlanWeeklyGoalBreakdown(request));
         }
+
+        /// <summary>
+        /// Gets the plan defaults.
+        /// </summary>
+        /// <returns>Gets the default values for creating a campaign in the form of <see cref="CampaignDefaultsDto"/></returns>
+        [HttpGet]
+        [Route("Defaults")]
+        public BaseResponse<PlanDefaultsDto> GetPlanDefaults()
+        {
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanService>().GetPlanDefaults());
+        }
     }
 }

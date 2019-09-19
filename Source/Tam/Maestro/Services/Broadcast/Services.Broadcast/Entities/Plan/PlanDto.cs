@@ -231,7 +231,7 @@ namespace Services.Broadcast.Entities.Plan
         /// <value>
         /// The type of the goal breakdown.
         /// </value>
-        public PlanGloalBreakdownTypeEnum GoalBreakdownType { get; set; }
+        public PlanGoalBreakdownTypeEnum GoalBreakdownType { get; set; }
 
         /// <summary>
         /// Gets or sets the weekly breakdown weeks.

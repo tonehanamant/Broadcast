@@ -272,6 +272,7 @@
     <Compile Include="Entities\Enums\PlanStatusEnum.cs" />
     <Compile Include="Entities\Enums\QueueEnum.cs" />
     <Compile Include="Entities\InventorySummary\InventorySummaryAggregation.cs" />
+    <Compile Include="Entities\Plan\PlanDefaultsDto.cs" />
     <Compile Include="Entities\PlansStatusCountDto.cs" />
     <Compile Include="Entities\QuarterDto.cs" />
     <Compile Include="Entities\Plan\PlanAudienceDto.cs" />

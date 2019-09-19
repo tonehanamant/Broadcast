@@ -445,7 +445,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 DeliveryRatingPoints = 6d,
                 CoverageGoalPercent = 80.5,
                 Currency = PlanCurrenciesEnum.Impressions,
-                GoalBreakdownType = Entities.Enums.PlanGloalBreakdownTypeEnum.Even,
+                GoalBreakdownType = Entities.Enums.PlanGoalBreakdownTypeEnum.Even,
                 AvailableMarkets = new List<PlanAvailableMarketDto>
                 {
                     new PlanAvailableMarketDto { MarketCode = 100, MarketCoverageFileId = 1, PercentageOfUs = 48, Rank = 1, ShareOfVoicePercent = 22.2},

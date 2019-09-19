@@ -697,7 +697,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             {
                 FlightEndDate = new DateTime(2019, 8, 1),
                 FlightStartDate = new DateTime(2019, 7, 1),
-                DeliveryType = Entities.Enums.PlanGloalBreakdownTypeEnum.Custom
+                DeliveryType = Entities.Enums.PlanGoalBreakdownTypeEnum.Custom
             };
 
             Assert.That(() => _planValidator.ValidateWeeklyBreakdown(request),
@@ -748,7 +748,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
                 Budget = 100.00m,
                 DeliveryImpressions = 100,
                 CPM = 12.00m,
-                GoalBreakdownType = PlanGloalBreakdownTypeEnum.Custom,
+                GoalBreakdownType = PlanGoalBreakdownTypeEnum.Custom,
                 DeliveryRatingPoints = 6,
                 CPP = 200951583.9999m,
                 Currency = PlanCurrenciesEnum.Impressions,

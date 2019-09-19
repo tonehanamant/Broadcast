@@ -155,7 +155,7 @@ namespace Services.Broadcast.Repositories
                 DeliveryRatingPoints = entity.delivery_rating_points,
                 CPP = entity.cpp,
                 Currency = EnumHelper.GetEnum<PlanCurrenciesEnum>(entity.currency),
-                GoalBreakdownType = EnumHelper.GetEnum<PlanGloalBreakdownTypeEnum>(entity.goal_breakdown_type),
+                GoalBreakdownType = EnumHelper.GetEnum<PlanGoalBreakdownTypeEnum>(entity.goal_breakdown_type),
                 SecondaryAudiences = entity.plan_secondary_audiences.Select(_MapSecondatAudiences).ToList(),
                 Dayparts = entity.plan_dayparts.Select(_MapPlanDaypartDto).ToList(),
                 CoverageGoalPercent = entity.coverage_goal_percent,

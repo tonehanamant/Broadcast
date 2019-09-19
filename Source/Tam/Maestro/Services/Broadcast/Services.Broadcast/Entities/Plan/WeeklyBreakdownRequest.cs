@@ -9,7 +9,7 @@ namespace Services.Broadcast.Entities.Plan
         public DateTime FlightStartDate { get; set; }
         public DateTime FlightEndDate { get; set; }
         public List<DateTime> FlightHiatusDays { get; set; }
-        public PlanGloalBreakdownTypeEnum DeliveryType { get; set; }
+        public PlanGoalBreakdownTypeEnum DeliveryType { get; set; }
         public double TotalImpressions { get; set; }        
         public List<WeeklyBreakdownWeek> Weeks { get; set; } = new List<WeeklyBreakdownWeek>();
         //add primary audience and calculate also for  HH

@@ -71,6 +71,12 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// <param name="request">The request.</param>
         /// <returns>WeeklyBreakdownResponse object</returns>
         WeeklyBreakdownResponseDto CalculatePlanWeeklyGoalBreakdown(WeeklyBreakdownRequest request);
+
+        /// <summary>
+        /// Gets the plan defaults.
+        /// </summary>
+        /// <returns></returns>
+        PlanDefaultsDto GetPlanDefaults();
     }
 
     public class PlanService : IPlanService
@@ -84,6 +90,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private readonly ICampaignAggregationJobTrigger _CampaignAggregationJobTrigger;
         private readonly INsiUniverseService _NsiUniverseService;
         private readonly IBroadcastAudiencesCache _BroadcastAudiencesCache;
+        private readonly ISpotLengthEngine _SpotLengthEngine;
 
         public PlanService(IDataRepositoryFactory broadcastDataRepositoryFactory
             , IPlanValidator planValidator
@@ -92,7 +99,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
             , IPlanAggregator planAggregator
             , ICampaignAggregationJobTrigger campaignAggregationJobTrigger
             , INsiUniverseService nsiUniverseService
-            , IBroadcastAudiencesCache broadcastAudiencesCache)
+            , IBroadcastAudiencesCache broadcastAudiencesCache
+            , ISpotLengthEngine spotLengthEngine)
         {
             _MediaWeekCache = mediaMonthAndWeekAggregateCache;
             _PlanValidator = planValidator;
@@ -104,6 +112,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _CampaignAggregationJobTrigger = campaignAggregationJobTrigger;
             _NsiUniverseService = nsiUniverseService;
             _BroadcastAudiencesCache = broadcastAudiencesCache;
+            _SpotLengthEngine = spotLengthEngine;
         }
 
         ///<inheritdoc/>
@@ -182,7 +191,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         ///<inheritdoc/>
         public List<LookupDto> PlanGloalBreakdownTypes()
         {
-            return EnumExtensions.ToLookupDtoList<PlanGloalBreakdownTypeEnum>(); ;
+            return EnumExtensions.ToLookupDtoList<PlanGoalBreakdownTypeEnum>(); ;
         }
 
         /// <inheritdoc/>
@@ -197,7 +206,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             //add all the days outside of the flight for the first and last week as hiatus days
             request.FlightHiatusDays.AddRange(_GetDaysOutsideOfTheFlight(request.FlightStartDate, request.FlightEndDate, weeks));
 
-            if (request.DeliveryType.Equals(PlanGloalBreakdownTypeEnum.Even))
+            if (request.DeliveryType.Equals(PlanGoalBreakdownTypeEnum.Even))
             {
                 response = _CalculateEvenPlanWeeklyGoalBreakdown(request, weeks);
             }
@@ -388,6 +397,27 @@ namespace Services.Broadcast.ApplicationServices.Plan
             {
                 _PlanSummaryRepository.SetProcessingStatusForPlanSummary(plan.Id, PlanAggregationProcessingStatusEnum.Error);
             }
+        }        
+        public PlanDefaultsDto GetPlanDefaults()
+        {
+            const int defaultSpotLength = 30;
+            var householdAudienceId = _BroadcastAudiencesCache.GetDefaultAudience();
+            var defaultSpotLengthId = _SpotLengthEngine.GetSpotLengthIdByValue(defaultSpotLength);
+
+            return new PlanDefaultsDto
+            {
+                AudienceId = householdAudienceId.Id,
+                SpotLengthId = defaultSpotLengthId,
+                Equivalized = true,
+                EnableHiatus = false,
+                AudienceType = AudienceTypeEnum.Nielsen,
+                PostingType = PostingTypeEnum.NTI,
+                PlanStatus = PlanStatusEnum.Working,
+                Currency = PlanCurrenciesEnum.Impressions,
+                PlanGoalBreakdownType = PlanGoalBreakdownTypeEnum.Even,
+                CampaignGoalPercent = 80d,
+                DaypartTypeEnum = DaypartTypeEnum.EntertainmentNonNews
+            };
         }
 
         private void _CalculateHouseholdSummaryData(PlanDto plan)

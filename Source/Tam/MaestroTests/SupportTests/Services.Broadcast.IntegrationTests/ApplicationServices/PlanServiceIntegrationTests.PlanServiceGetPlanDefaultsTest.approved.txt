@@ -1,0 +1,13 @@
+﻿{
+  "AudienceId": 31,
+  "AudienceType": 1,
+  "CampaignGoalPercent": 80.0,
+  "Currency": 1,
+  "DaypartTypeEnum": 2,
+  "EnableHiatus": false,
+  "Equivalized": true,
+  "PlanGoalBreakdownType": 1,
+  "PlanStatus": 1,
+  "PostingType": 2,
+  "SpotLengthId": 1
+}
