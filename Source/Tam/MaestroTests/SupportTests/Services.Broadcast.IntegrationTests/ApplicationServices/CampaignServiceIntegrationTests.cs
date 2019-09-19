@@ -249,6 +249,17 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetQuartersWithPlanStatusTest()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var campaigns = _CampaignService.GetQuarters(PlanStatusEnum.ClientApproval, new DateTime(2019, 5, 1));
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(campaigns));
+            }
+        }
+
         [TestCase(null)]
         [TestCase("")]
         [TestCase("      ")]

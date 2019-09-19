@@ -139,7 +139,8 @@ namespace Services.Broadcast.Repositories
                 {
                     var filteredPlans = _GetFilteredPlansWithDates(startDate, endDate, planStatus, context);
                     var plansCampaignIds = filteredPlans.Select(p => p.campaign_id).ToList();
-                    var campaignIdsWithNoPlans = _GetFilteredCampaignIds(startDate, endDate, planStatus, context);
+                    var campaigns = _GetFilteredCampaignsWithoutValidPlans(startDate, endDate, planStatus, context);
+                    var campaignIdsWithNoPlans = campaigns.Select(c => c.id).ToList();
 
                     var campaignsIds = plansCampaignIds
                         .Concat(campaignIdsWithNoPlans)
@@ -233,28 +234,13 @@ namespace Services.Broadcast.Repositories
             return _InReadUncommitedTransaction(
                 context =>
                 {
-                    var campaignsWithValidPlans = (from p in context.plans
-                                                   where p.flight_start_date != null
-                                                   select p.campaign_id).Distinct().ToList();
-
-                    var campaignsDates = (from c in context.campaigns
-                                          where !campaignsWithValidPlans.Contains(c.id)
-                                          select c.created_date).ToList();
-
-                    var plans = (from c in context.campaigns
-                                 from p in c.plans
-                                 where campaignsWithValidPlans.Contains(c.id)
-                                 select p);
-
-                    if (planStatus.HasValue)
-                    {
-                        plans.Where(p => p.status == (byte)planStatus);
-                    }
+                    var campaigns = _GetFilteredCampaignsWithoutValidPlans(null, null, planStatus, context);
+                    var plans = _GetFilteredPlansWithDates(null, null, planStatus, context);
 
                     var plansDateRanges = plans.Select(p => new { p.flight_start_date, p.flight_end_date }).ToList();
 
-                    return campaignsDates
-                            .Select(c => new DateRange(c, null))
+                    return campaigns
+                            .Select(c => new DateRange(c.created_date, null))
                             .Concat(plansDateRanges.Select(c => new DateRange(c.flight_start_date, c.flight_end_date))).ToList();
                  });
         }
@@ -266,7 +252,8 @@ namespace Services.Broadcast.Repositories
                 {
                     var filteredPlans = _GetFilteredPlansWithDates(startDate, endDate, null, context);
                     var plansIds = filteredPlans.Select(p => p.id).ToList();
-                    var campaignsIds = _GetFilteredCampaignIds(startDate, endDate, null, context);
+                    var campaigns = _GetFilteredCampaignsWithoutValidPlans(startDate, endDate, null, context);
+                    var campaignsIds = campaigns.Select(c => c.id).ToList();
 
                     var plans = (from p in context.plans
                                  where plansIds.Contains(p.id)
@@ -283,15 +270,19 @@ namespace Services.Broadcast.Repositories
                 });
         }
 
-        private List<int> _GetFilteredCampaignIds(DateTime? startDate, DateTime? endDate, PlanStatusEnum? planStatus, QueryHintBroadcastContext context)
+        private IEnumerable<campaign> _GetFilteredCampaignsWithoutValidPlans(DateTime? startDate, DateTime? endDate, PlanStatusEnum? planStatus, QueryHintBroadcastContext context)
         {
             // Campaigns without plans are considered to be in Working status.
             if (planStatus.HasValue && planStatus != PlanStatusEnum.Working)
             {
-                return new List<int>();
+                return new List<campaign>();
             }
 
-            var campaignsIdsPlansNoStartDate = _GetCampaignIdsForFilteredPlansWithoutDates(planStatus, context);
+            var plansWithoutStartDate = _GetFilteredPlansWithoutDates(planStatus, context);
+
+            var campaignsIdsPlansNoStartDate = plansWithoutStartDate
+                                                .Select(p => p.campaign_id)
+                                                .ToList();
 
             var campaigns = (from c in context.campaigns
                              from p in c.plans.DefaultIfEmpty()
@@ -306,10 +297,10 @@ namespace Services.Broadcast.Repositories
                                                  c.created_date <= endDate);
             }
 
-            return campaigns.Select(c => c.id).ToList();
+            return campaigns;
         }
 
-        private List<int> _GetCampaignIdsForFilteredPlansWithoutDates(PlanStatusEnum? planStatus, QueryHintBroadcastContext context)
+        private IEnumerable<plan> _GetFilteredPlansWithoutDates(PlanStatusEnum? planStatus, QueryHintBroadcastContext context)
         {
             var plansWithoutStartDate = (from p in context.plans
                                          where p.flight_start_date == null
@@ -321,14 +312,10 @@ namespace Services.Broadcast.Repositories
                                             .Where(p => p.status == (byte)planStatus);
             }
 
-            var campaignsIdsPlansNoStartDate = plansWithoutStartDate
-                                                .Select(p => p.campaign_id)
-                                                .ToList();
-
-            return campaignsIdsPlansNoStartDate;
+            return plansWithoutStartDate;
         }
 
-        private List<plan> _GetFilteredPlansWithDates(DateTime? startDate, DateTime? endDate, PlanStatusEnum? planStatus, QueryHintBroadcastContext context)
+        private IEnumerable<plan> _GetFilteredPlansWithDates(DateTime? startDate, DateTime? endDate, PlanStatusEnum? planStatus, QueryHintBroadcastContext context)
         {
             var plansWithStartDate = (from p in context.plans
                                       where p.flight_start_date != null
@@ -353,7 +340,7 @@ namespace Services.Broadcast.Repositories
                 plansWithStartDate = plansWithStartDate.Where(p => p.status == (byte)planStatus);
             }
 
-            return plansWithStartDate.ToList();
+            return plansWithStartDate;
         }
 
         private CampaignListItemDto _MapToCampaignListItemDto(campaign c)

@@ -1,0 +1,16 @@
+﻿{
+  "DefaultQuarter": {
+    "EndDate": "2019-06-30T23:59:59",
+    "Quarter": 2,
+    "StartDate": "2019-04-01T00:00:00",
+    "Year": 2019
+  },
+  "Quarters": [
+    {
+      "EndDate": "2019-06-30T23:59:59",
+      "Quarter": 2,
+      "StartDate": "2019-04-01T00:00:00",
+      "Year": 2019
+    }
+  ]
+}
