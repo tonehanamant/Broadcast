@@ -295,7 +295,6 @@
     <Compile Include="Entities\ScxGenerationJob.cs" />
     <Compile Include="Entities\Scx\ScxFileGenerationDetailDto.cs" />
     <Compile Include="Entities\Scx\ScxFileGenerationDetail.cs" />
-    <Compile Include="Extensions\NullableExtensions.cs" />
     <Compile Include="Helpers\DaypartTimeHelper.cs" />
     <Compile Include="Helpers\KeyHelper.cs" />
     <Compile Include="Helpers\SystemComponentParameterHelper.cs" />

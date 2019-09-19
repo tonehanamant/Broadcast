@@ -307,31 +307,41 @@ namespace Services.Broadcast.Validators
                 throw new Exception(INVALID_PRODUCT);
             }
 
-            // This will throw an exception if the product doesn`t exist
+            // This will throw an exception if the product doesn't exist
             _TrafficApiClient.GetProduct(plan.ProductId);
         }
 
         private void _ValidateBudgetAndDelivery(PlanDto plan)
         {
-            if (!plan.Budget.HasValue || plan.Budget < 1m)
+            if (!_HasPositiveValue(plan.Budget))
             {
                 throw new Exception(INVALID_BUDGET);
             }
 
-            if (!plan.CPM.HasValue || plan.CPM < 1m)
+            if (!_HasPositiveValue(plan.CPM))
             {
                 throw new Exception(INVALID_CPM);
             }
 
-            if (!plan.CPP.HasValue || plan.CPP < 1m)
+            if (!_HasPositiveValue(plan.CPP))
             {
                 throw new Exception(INVALID_CPP);
             }
 
-            if (!plan.DeliveryImpressions.HasValue || plan.DeliveryImpressions < 1d)
+            if (!_HasPositiveValue(plan.DeliveryImpressions))
             {
                 throw new Exception(INVALID_DELIVERY_IMPRESSIONS);
             }
+        }
+
+        private static bool _HasPositiveValue(decimal? item)
+        {
+            return item.HasValue && item.Value > 0m;
+        }
+
+        private static bool _HasPositiveValue(double? item)
+        {
+            return item.HasValue && item.Value > 0d;
         }
     }
 }
