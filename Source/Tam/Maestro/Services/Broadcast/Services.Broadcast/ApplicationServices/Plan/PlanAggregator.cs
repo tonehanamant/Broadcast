@@ -136,7 +136,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
 
             var availableMarketCount = plan.AvailableMarkets.Count;
-            var availableMarketCoverage = plan.AvailableMarkets.Sum(s => s.PercentageOfUs);
+            var availableMarketCoverage = plan.AvailableMarkets.Sum(s => s.PercentageOfUS);
 
             summary.AvailableMarketCount = availableMarketCount;
             summary.AvailableMarketTotalUsCoveragePercent = availableMarketCoverage;
@@ -150,7 +150,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
 
             var blackoutMarketCount = plan.BlackoutMarkets.Count;
-            var blackoutMarketCoverage = plan.BlackoutMarkets.Sum(s => s.PercentageOfUs);
+            var blackoutMarketCoverage = plan.BlackoutMarkets.Sum(s => s.PercentageOfUS);
 
             summary.BlackoutMarketCount = blackoutMarketCount;
             summary.BlackoutMarketTotalUsCoveragePercent = blackoutMarketCoverage;

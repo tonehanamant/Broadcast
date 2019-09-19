@@ -3,31 +3,35 @@
   "AudienceType": 1,
   "AvailableMarkets": [
     {
+      "Market": "Portland-Auburn",
       "MarketCode": 100,
       "MarketCoverageFileId": 1,
-      "PercentageOfUs": 48.0,
+      "PercentageOfUS": 48.0,
       "Rank": 1,
       "ShareOfVoicePercent": 22.2
     },
     {
+      "Market": "New York",
       "MarketCode": 101,
       "MarketCoverageFileId": 1,
-      "PercentageOfUs": 32.5,
+      "PercentageOfUS": 32.5,
       "Rank": 2,
       "ShareOfVoicePercent": 34.5
     }
   ],
   "BlackoutMarkets": [
     {
+      "Market": "Burlington-Plattsburgh",
       "MarketCode": 123,
       "MarketCoverageFileId": 1,
-      "PercentageOfUs": 5.5,
+      "PercentageOfUS": 5.5,
       "Rank": 5
     },
     {
+      "Market": "Amarillo",
       "MarketCode": 234,
       "MarketCoverageFileId": 1,
-      "PercentageOfUs": 2.5,
+      "PercentageOfUS": 2.5,
       "Rank": 8
     }
   ],

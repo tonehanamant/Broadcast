@@ -498,7 +498,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanAggregation
                     MarketCode = 1,
                     MarketCoverageFileId = 1,
                     Rank = 1,
-                    PercentageOfUs = 29.5,
+                    PercentageOfUS = 29.5,
                     ShareOfVoicePercent = 20.0
                 },
                 new PlanAvailableMarketDto
@@ -507,7 +507,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanAggregation
                     MarketCode = 2,
                     MarketCoverageFileId = 1,
                     Rank = 2,
-                    PercentageOfUs = 30.5,
+                    PercentageOfUS = 30.5,
                     ShareOfVoicePercent = 29.5
                 },
                 new PlanAvailableMarketDto
@@ -516,7 +516,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanAggregation
                     MarketCode = 3,
                     MarketCoverageFileId = 1,
                     Rank = 3,
-                    PercentageOfUs = 38.5,
+                    PercentageOfUS = 38.5,
                     ShareOfVoicePercent = 60.5
                 }
             };
@@ -536,7 +536,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanAggregation
                     MarketCode = 1,
                     MarketCoverageFileId = 1,
                     Rank = 1,
-                    PercentageOfUs = 11.0
+                    PercentageOfUS = 11.0,
+                    Market = "MarketOne"
                 },
                 new PlanBlackoutMarketDto
                 {
@@ -544,7 +545,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanAggregation
                     MarketCode = 2,
                     MarketCoverageFileId = 1,
                     Rank = 2,
-                    PercentageOfUs = 11.0
+                    PercentageOfUS = 11.0,
+                    Market = "MarketTwo"
                 },
                 new PlanBlackoutMarketDto
                 {
@@ -552,7 +554,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanAggregation
                     MarketCode = 3,
                     MarketCoverageFileId = 1,
                     Rank = 3,
-                    PercentageOfUs = 0.2
+                    PercentageOfUS = 0.2,
+                    Market = "MarketThree"
                 }
             };
 

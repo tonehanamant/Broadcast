@@ -558,7 +558,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             plan.CoverageGoalPercent = 80.5;
             plan.AvailableMarkets = new List<PlanAvailableMarketDto>
             {
-                new PlanAvailableMarketDto {PercentageOfUs = 50,}, new PlanAvailableMarketDto {PercentageOfUs = 20.5}
+                new PlanAvailableMarketDto {PercentageOfUS = 50,}, new PlanAvailableMarketDto {PercentageOfUS = 20.5}
             };
 
             Assert.That(() => _planValidator.ValidatePlan(plan),
@@ -575,7 +575,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             plan.CoverageGoalPercent = candidate;
             plan.AvailableMarkets = new List<PlanAvailableMarketDto>
             {
-                new PlanAvailableMarketDto {PercentageOfUs = 50,}, new PlanAvailableMarketDto {PercentageOfUs = 30.5}
+                new PlanAvailableMarketDto {PercentageOfUS = 50,}, new PlanAvailableMarketDto {PercentageOfUS = 30.5}
             };
 
             Assert.DoesNotThrow(() => _planValidator.ValidatePlan(plan));
@@ -755,8 +755,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
                 CoverageGoalPercent = 80.5,
                 AvailableMarkets = new List<PlanAvailableMarketDto>
                 {
-                    new PlanAvailableMarketDto { PercentageOfUs = 30 },
-                    new PlanAvailableMarketDto { PercentageOfUs = 50.5 },
+                    new PlanAvailableMarketDto { PercentageOfUS = 30 },
+                    new PlanAvailableMarketDto { PercentageOfUS = 50.5 },
                 }
             };
     }

@@ -905,13 +905,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 GoalBreakdownType = Entities.Enums.PlanGoalBreakdownTypeEnum.Even,
                 AvailableMarkets = new List<PlanAvailableMarketDto>
                 {
-                    new PlanAvailableMarketDto { MarketCode = 100, MarketCoverageFileId = 1, PercentageOfUs = 48, Rank = 1, ShareOfVoicePercent = 22.2},
-                    new PlanAvailableMarketDto { MarketCode = 101, MarketCoverageFileId = 1, PercentageOfUs = 32.5, Rank = 2, ShareOfVoicePercent = 34.5}
+                    new PlanAvailableMarketDto { MarketCode = 100, MarketCoverageFileId = 1, PercentageOfUS = 48, Rank = 1, ShareOfVoicePercent = 22.2, Market = "Portland-Auburn"},
+                    new PlanAvailableMarketDto { MarketCode = 101, MarketCoverageFileId = 1, PercentageOfUS = 32.5, Rank = 2, ShareOfVoicePercent = 34.5, Market = "New York"}
                 },
                 BlackoutMarkets = new List<PlanBlackoutMarketDto>
                 {
-                    new PlanBlackoutMarketDto {MarketCode = 123, MarketCoverageFileId = 1, PercentageOfUs = 5.5, Rank = 5 },
-                    new PlanBlackoutMarketDto {MarketCode = 234, MarketCoverageFileId = 1, PercentageOfUs = 2.5, Rank = 8 },
+                    new PlanBlackoutMarketDto {MarketCode = 123, MarketCoverageFileId = 1, PercentageOfUS = 5.5, Rank = 5, Market = "Burlington-Plattsburgh" },
+                    new PlanBlackoutMarketDto {MarketCode = 234, MarketCoverageFileId = 1, PercentageOfUS = 2.5, Rank = 8, Market = "Amarillo" },
                 },
                 ModifiedBy = "Test User",
                 ModifiedDate = new DateTime(2019, 01, 12, 12, 30, 29),
@@ -923,7 +923,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Vpvh = 0.012
             };
         }
-
 
         private JsonSerializerSettings _GetJsonSettings()
         {

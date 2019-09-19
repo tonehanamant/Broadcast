@@ -96,6 +96,7 @@ namespace Services.Broadcast.Repositories
         {
             return _InReadUncommitedTransaction(context =>
                 {
+                    var markets = context.markets.ToList();
                     var entity = context.plans
                         .Include(p => p.plan_flight_hiatus)
                         .Include(p => p.plan_secondary_audiences)
@@ -105,7 +106,7 @@ namespace Services.Broadcast.Repositories
                         .Include(p => p.plan_weeks)
                         .Include(p => p.plan_weeks.Select(x=>x.media_weeks))
                         .Single(s => s.id == planId, "Invalid plan id.");
-                    return _MapToDto(entity);
+                    return _MapToDto(entity, markets);
                 });
         }
 
@@ -114,6 +115,7 @@ namespace Services.Broadcast.Repositories
         {
             return _InReadCommittedTransaction(context =>
             {
+                var markets = context.markets.ToList();
                 var entitiesRaw = context.plans
                     .Include(p => p.plan_flight_hiatus)
                     .Include(p => p.plan_secondary_audiences)
@@ -125,11 +127,11 @@ namespace Services.Broadcast.Repositories
                     .Where(p => p.campaign_id == campaignId)
                     .ToList();
 
-                return entitiesRaw.Select(_MapToDto).ToList();
+                return entitiesRaw.Select(e => _MapToDto(e, markets)).ToList();
             });
         }
 
-        private PlanDto _MapToDto(plan entity)
+        private PlanDto _MapToDto(plan entity, List<market> markets)
         {
             var dto = new PlanDto
             {
@@ -159,8 +161,8 @@ namespace Services.Broadcast.Repositories
                 SecondaryAudiences = entity.plan_secondary_audiences.Select(_MapSecondatAudiences).ToList(),
                 Dayparts = entity.plan_dayparts.Select(_MapPlanDaypartDto).ToList(),
                 CoverageGoalPercent = entity.coverage_goal_percent,
-                AvailableMarkets = entity.plan_available_markets.Select(_MapAvailableMarketDto).ToList(),
-                BlackoutMarkets = entity.plan_blackout_markets.Select(_MapBlackoutMarketDto).ToList(),
+                AvailableMarkets = entity.plan_available_markets.Select(e => _MapAvailableMarketDto(e, markets)).ToList(),
+                BlackoutMarkets = entity.plan_blackout_markets.Select(e => _MapBlackoutMarketDto(e, markets)).ToList(),
                 WeeklyBreakdownWeeks = entity.plan_weeks.Select(_MapWeeklyBreakdownWeeks).ToList(),
                 ModifiedBy = entity.modified_by,
                 ModifiedDate = entity.modified_date,
@@ -336,7 +338,7 @@ namespace Services.Broadcast.Repositories
                     market_code = m.MarketCode,
                     market_coverage_file_id = m.MarketCoverageFileId,
                     rank = m.Rank,
-                    percentage_of_us = m.PercentageOfUs,
+                    percentage_of_us = m.PercentageOfUS,
                     share_of_voice_percent = m.ShareOfVoicePercent
                 }
                 );
@@ -349,34 +351,42 @@ namespace Services.Broadcast.Repositories
                     market_code = m.MarketCode,
                     market_coverage_file_id = m.MarketCoverageFileId,
                     rank = m.Rank,
-                    percentage_of_us = m.PercentageOfUs,
+                    percentage_of_us = m.PercentageOfUS,
                 });
             });
         }
 
-        private static PlanAvailableMarketDto _MapAvailableMarketDto(plan_available_markets entity)
+        private static PlanAvailableMarketDto _MapAvailableMarketDto(plan_available_markets entity, List<market> markets)
         {
+            var marketName = markets.Where(s => s.market_code == entity.market_code).Select(s => s.geography_name)
+                .Single($"More than one market found with code '{entity.market_code}'.");
+
             var dto = new PlanAvailableMarketDto
             {
                 Id = entity.id,
                 MarketCode = entity.market_code,
+                Market = marketName,
                 MarketCoverageFileId = entity.market_coverage_file_id,
                 Rank = entity.rank,
-                PercentageOfUs = entity.percentage_of_us,
-                ShareOfVoicePercent = entity.share_of_voice_percent
+                PercentageOfUS = entity.percentage_of_us,
+                ShareOfVoicePercent = entity.share_of_voice_percent,
             };
             return dto;
         }
 
-        private static PlanBlackoutMarketDto _MapBlackoutMarketDto(plan_blackout_markets entity)
+        private static PlanBlackoutMarketDto _MapBlackoutMarketDto(plan_blackout_markets entity, List<market> markets)
         {
+            var marketName = markets.Where(s => s.market_code == entity.market_code).Select(s => s.geography_name)
+                .Single($"More than one market found with code '{entity.market_code}'.");
+
             var dto = new PlanBlackoutMarketDto
             {
                 Id = entity.id,
                 MarketCode = entity.market_code,
+                Market = marketName,
                 MarketCoverageFileId = entity.market_coverage_file_id,
                 Rank = entity.rank,
-                PercentageOfUs = entity.percentage_of_us,
+                PercentageOfUS = entity.percentage_of_us,
             };
             return dto;
         }

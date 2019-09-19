@@ -258,7 +258,7 @@ namespace Services.Broadcast.Validators
             plan.AvailableMarkets.ForEach(m =>
                 _ValidateOptionalPercentage(m.ShareOfVoicePercent, INVALID_MARKET_SHARE_OF_VOICE));
 
-            var totalMarketCoverage = plan.AvailableMarkets.Sum(m => m.PercentageOfUs);
+            var totalMarketCoverage = plan.AvailableMarkets.Sum(m => m.PercentageOfUS);
             if (totalMarketCoverage < plan.CoverageGoalPercent.Value)
             {
                 throw new Exception(INVALID_TOTAL_MARKET_COVERAGE);

@@ -43,6 +43,11 @@
         /// <value>
         /// The percentage coverage of the USA of the market at time of selection.
         /// </value>
-        public double PercentageOfUs { get; set; }
+        public double PercentageOfUS { get; set; }
+
+        /// <summary>
+        /// The market name.
+        /// </summary>
+        public string Market { get; set; }
     }
 }
