@@ -35,7 +35,7 @@ namespace Services.Broadcast.IntegrationTests.Helpers
             if (processInventoryRatings)
             {
                 var job = _InventoryFileRatingsJobsRepository.GetLatestJob();
-                _InventoryRatingsProcessingService.ProcessInventoryRatingsJob(job.id.Value);
+                _InventoryRatingsProcessingService.ProcessInventoryRatingsJob(job.Id);
             }
         }
 
@@ -52,7 +52,7 @@ namespace Services.Broadcast.IntegrationTests.Helpers
             var result = _InventoryService.SaveInventoryFile(request, "IntegrationTestUser", now);
 
             var job = _InventoryFileRatingsJobsRepository.GetLatestJob();
-            var source = _InventoryRatingsProcessingService.ProcessInventoryRatingsJob(job.id.Value);
+            var source = _InventoryRatingsProcessingService.ProcessInventoryRatingsJob(job.Id);
         }
     }
 }

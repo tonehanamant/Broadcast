@@ -62,7 +62,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var now = new DateTime(2019, 02, 02);
                 var result = _InventoryService.SaveInventoryFile(request, "IntegrationTestUser", now);
                 var job = _InventoryFileRatingsJobsRepository.GetLatestJob();
-                _InventoryRatingsProcessingService.ProcessInventoryRatingsJob(job.id.Value);
+                _InventoryRatingsProcessingService.ProcessInventoryRatingsJob(job.Id);
 
                 _VerifyFileInventoryManifests(result.FileId);
             }
@@ -85,7 +85,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var now = new DateTime(2019, 02, 02);
                 var result = _ProprietaryService.SaveProprietaryInventoryFile(request, "IntegrationTestUser", now);
                 var job = _InventoryFileRatingsJobsRepository.GetLatestJob();
-                _InventoryRatingsProcessingService.ProcessInventoryRatingsJob(job.id.Value);
+                _InventoryRatingsProcessingService.ProcessInventoryRatingsJob(job.Id);
 
                 _VerifyFileInventoryManifests(result.FileId);
             }
@@ -108,7 +108,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var now = new DateTime(2019, 02, 02);
                 var result = _ProprietaryService.SaveProprietaryInventoryFile(request, "IntegrationTestUser", now);
                 var job = _InventoryFileRatingsJobsRepository.GetLatestJob();
-                _InventoryRatingsProcessingService.ProcessInventoryRatingsJob(job.id.Value);
+                _InventoryRatingsProcessingService.ProcessInventoryRatingsJob(job.Id);
 
                 _VerifyFileInventoryManifests(result.FileId);
             }
@@ -131,7 +131,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var now = new DateTime(2019, 02, 02);
                 var result = _ProprietaryService.SaveProprietaryInventoryFile(request, "IntegrationTestUser", now);
                 var job = _InventoryFileRatingsJobsRepository.GetLatestJob();
-                _InventoryRatingsProcessingService.ProcessInventoryRatingsJob(job.id.Value);
+                _InventoryRatingsProcessingService.ProcessInventoryRatingsJob(job.Id);
 
                 _VerifyFileInventoryManifests(result.FileId);
             }
@@ -154,7 +154,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var now = new DateTime(2019, 02, 02);
                 var result = _ProprietaryService.SaveProprietaryInventoryFile(request, "IntegrationTestUser", now);
                 var job = _InventoryFileRatingsJobsRepository.GetLatestJob();
-                _InventoryRatingsProcessingService.ProcessInventoryRatingsJob(job.id.Value);
+                _InventoryRatingsProcessingService.ProcessInventoryRatingsJob(job.Id);
 
                 _VerifyFileInventoryManifests(result.FileId);
             }

@@ -1,16 +1,13 @@
 ﻿using Common.Services.Repositories;
 using EntityFrameworkMapping.Broadcast;
-using Services.Broadcast.ApplicationServices;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ConfigurationService.Client;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
-using Tam.Maestro.Services.Clients;
 using Services.Broadcast.Entities.Enums;
+using Services.Broadcast.Entities;
+using System;
 
 namespace Services.Broadcast.Repositories
 {
@@ -22,12 +19,28 @@ namespace Services.Broadcast.Repositories
         InventoryFileRatingsProcessingJob GetJobById(int jobId);
         void UpdateJob(InventoryFileRatingsProcessingJob job);
         InventoryFileRatingsProcessingJob GetJobByFileId(int fileId);
+        void AddJobNote(int jobId, InventoryFileRatingsProcessingJob.Note note);
     }
     public class InventoryFileRatingsJobsRepository : BroadcastRepositoryBase, IInventoryFileRatingsJobsRepository
     {
         public InventoryFileRatingsJobsRepository(IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
             ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient)
             : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
+
+        public void AddJobNote(int jobId, InventoryFileRatingsProcessingJob.Note note)
+        {
+            _InReadUncommitedTransaction(
+                context =>
+                {
+                    context.inventory_file_ratings_job_notes.Add(new inventory_file_ratings_job_notes
+                    {
+                        inventory_file_ratings_job_id = jobId,
+                        text = note.Text,
+                        created_at = note.CreatedAt
+                    });
+                    context.SaveChanges();
+                });
+        }
 
         public int AddJob(InventoryFileRatingsProcessingJob job)
         {
@@ -38,7 +51,12 @@ namespace Services.Broadcast.Repositories
                     {
                         inventory_file_id = job.InventoryFileId,
                         status = (int) job.Status,
-                        queued_at = job.QueuedAt
+                        queued_at = job.QueuedAt,
+                        inventory_file_ratings_job_notes = job.Notes.Select(x => new inventory_file_ratings_job_notes
+                        {
+                            text = x.Text,
+                            created_at = x.CreatedAt
+                        }).ToList()
                     };
 
                     context.inventory_file_ratings_jobs.Add(fileJob);
@@ -57,7 +75,7 @@ namespace Services.Broadcast.Repositories
                         .Where(j => j.id == jobId)
                         .Select(j => new InventoryFileRatingsProcessingJob
                         {
-                            id = j.id,
+                            Id = j.id,
                             InventoryFileId = j.inventory_file_id,
                             Status = (BackgroundJobProcessingStatus)j.status,
                             QueuedAt = j.queued_at,
@@ -78,7 +96,7 @@ namespace Services.Broadcast.Repositories
                         .OrderBy(j => j.queued_at)
                         .Select(j => new InventoryFileRatingsProcessingJob
                         {
-                            id = j.id,
+                            Id = j.id,
                             InventoryFileId = j.inventory_file_id,
                             Status = (BackgroundJobProcessingStatus)j.status,
                             QueuedAt = j.queued_at,
@@ -99,7 +117,7 @@ namespace Services.Broadcast.Repositories
                         .OrderBy(j => j.queued_at).Take(limit)
                         .Select(j => new InventoryFileRatingsProcessingJob
                         {
-                            id = j.id,
+                            Id = j.id,
                             InventoryFileId = j.inventory_file_id,
                             Status = (BackgroundJobProcessingStatus)j.status,
                             QueuedAt = j.queued_at,
@@ -115,7 +133,7 @@ namespace Services.Broadcast.Repositories
             _InReadUncommitedTransaction(
                 context =>
                 {
-                    var fileJob = context.inventory_file_ratings_jobs.Find(job.id);
+                    var fileJob = context.inventory_file_ratings_jobs.Find(job.Id);
                     fileJob.status = (int)job.Status;
                     fileJob.completed_at = job.CompletedAt;
 
@@ -135,7 +153,7 @@ namespace Services.Broadcast.Repositories
                     
                     return job == null ? null : new InventoryFileRatingsProcessingJob
                     {
-                        id = job.id,
+                        Id = job.id,
                         InventoryFileId = job.inventory_file_id,
                         Status = (BackgroundJobProcessingStatus)job.status,
                         QueuedAt = job.queued_at,

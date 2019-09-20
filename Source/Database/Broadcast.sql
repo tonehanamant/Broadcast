@@ -305,6 +305,30 @@ SET Currency = 1 WHERE Currency = 0
 
 /*************************************** END PRI-15016  *****************************************************/
 
+/*************************************** START tracking_ratings_service  *****************************************************/
+IF OBJECT_ID('inventory_file_ratings_job_notes') IS NULL
+BEGIN
+	CREATE TABLE [inventory_file_ratings_job_notes]
+	(
+		[id] [INT] IDENTITY(1,1) NOT NULL,
+		[inventory_file_ratings_job_id] INT NOT NULL,
+		[text] VARCHAR(MAX) NOT NULL,
+		[created_at] DATETIME2 NOT NULL
+
+		CONSTRAINT [PK_inventory_file_ratings_job_notes] PRIMARY KEY CLUSTERED
+		(
+			[id] ASC
+		) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY]
+
+	ALTER TABLE [dbo].[inventory_file_ratings_job_notes] WITH CHECK ADD CONSTRAINT [FK_inventory_file_ratings_job_notes_inventory_file_ratings_jobs] FOREIGN KEY ([inventory_file_ratings_job_id])
+	REFERENCES [dbo].[inventory_file_ratings_jobs] (id)
+	ALTER TABLE [dbo].[inventory_file_ratings_job_notes] CHECK CONSTRAINT [FK_inventory_file_ratings_job_notes_inventory_file_ratings_jobs]
+
+	CREATE NONCLUSTERED INDEX [IX_inventory_file_ratings_job_notes_inventory_file_ratings_job_id] ON [dbo].[inventory_file_ratings_job_notes] ([inventory_file_ratings_job_id])
+END
+/*************************************** END tracking_ratings_service  *****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

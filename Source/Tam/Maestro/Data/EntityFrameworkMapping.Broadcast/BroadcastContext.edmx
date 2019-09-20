@@ -356,6 +356,15 @@
           <Property Name="nti_to_nsi_increase" Type="decimal" Precision="18" Scale="10" />
           <Property Name="daypart_code_id" Type="int" />
         </EntityType>
+        <EntityType Name="inventory_file_ratings_job_notes">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="inventory_file_ratings_job_id" Type="int" Nullable="false" />
+          <Property Name="text" Type="varchar(max)" Nullable="false" />
+          <Property Name="created_at" Type="datetime2" Precision="7" Nullable="false" />
+        </EntityType>
         <EntityType Name="inventory_file_ratings_jobs">
           <Key>
             <PropertyRef Name="id" />
@@ -2063,6 +2072,18 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Principal>
             <Dependent Role="inventory_file_proprietary_header">
               <PropertyRef Name="hut_projection_book_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_inventory_file_ratings_job_notes_inventory_file_ratings_jobs">
+          <End Role="inventory_file_ratings_jobs" Type="Self.inventory_file_ratings_jobs" Multiplicity="1" />
+          <End Role="inventory_file_ratings_job_notes" Type="Self.inventory_file_ratings_job_notes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="inventory_file_ratings_jobs">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="inventory_file_ratings_job_notes">
+              <PropertyRef Name="inventory_file_ratings_job_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -4257,6 +4278,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySet Name="genres" EntityType="Self.genres" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="inventory_file_problems" EntityType="Self.inventory_file_problems" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="inventory_file_proprietary_header" EntityType="Self.inventory_file_proprietary_header" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="inventory_file_ratings_job_notes" EntityType="Self.inventory_file_ratings_job_notes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="inventory_file_ratings_jobs" EntityType="Self.inventory_file_ratings_jobs" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="inventory_files" EntityType="Self.inventory_files" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="inventory_source_logos" EntityType="Self.inventory_source_logos" Schema="dbo" store:Type="Tables" />
@@ -4498,6 +4520,10 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <AssociationSet Name="FK_inventory_file_proprietary_header_media_months_hut_book" Association="Self.FK_inventory_file_proprietary_header_media_months_hut_book">
             <End Role="media_months" EntitySet="media_months" />
             <End Role="inventory_file_proprietary_header" EntitySet="inventory_file_proprietary_header" />
+          </AssociationSet>
+          <AssociationSet Name="FK_inventory_file_ratings_job_notes_inventory_file_ratings_jobs" Association="Self.FK_inventory_file_ratings_job_notes_inventory_file_ratings_jobs">
+            <End Role="inventory_file_ratings_jobs" EntitySet="inventory_file_ratings_jobs" />
+            <End Role="inventory_file_ratings_job_notes" EntitySet="inventory_file_ratings_job_notes" />
           </AssociationSet>
           <AssociationSet Name="FK_inventory_file_ratings_jobs_inventory_files" Association="Self.FK_inventory_file_ratings_jobs_inventory_files">
             <End Role="inventory_files" EntitySet="inventory_files" />
@@ -6081,6 +6107,11 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <AssociationSet Name="FK_plan_summary_quarters_plan_summary" Association="BroadcastModel.FK_plan_summary_quarters_plan_summary">
             <End Role="plan_summaries" EntitySet="plan_summaries" />
             <End Role="plan_summary_quarters" EntitySet="plan_summary_quarters" />
+          </AssociationSet>
+          <EntitySet Name="inventory_file_ratings_job_notes" EntityType="BroadcastModel.inventory_file_ratings_job_notes" />
+          <AssociationSet Name="FK_inventory_file_ratings_job_notes_inventory_file_ratings_jobs" Association="BroadcastModel.FK_inventory_file_ratings_job_notes_inventory_file_ratings_jobs">
+            <End Role="inventory_file_ratings_jobs" EntitySet="inventory_file_ratings_jobs" />
+            <End Role="inventory_file_ratings_job_notes" EntitySet="inventory_file_ratings_job_notes" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="audience_audiences">
@@ -9773,6 +9804,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="queued_at" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="completed_at" Type="DateTime" Precision="3" />
           <NavigationProperty Name="inventory_files" Relationship="BroadcastModel.FK_inventory_file_ratings_jobs_inventory_files" FromRole="inventory_file_ratings_jobs" ToRole="inventory_files" />
+          <NavigationProperty Name="inventory_file_ratings_job_notes" Relationship="BroadcastModel.FK_inventory_file_ratings_job_notes_inventory_file_ratings_jobs" FromRole="inventory_file_ratings_jobs" ToRole="inventory_file_ratings_job_notes" />
         </EntityType>
         <Association Name="FK_inventory_file_ratings_jobs_inventory_files">
           <End Type="BroadcastModel.inventory_files" Role="inventory_files" Multiplicity="1" />
@@ -10647,6 +10679,28 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Principal>
             <Dependent Role="plan_summary_quarters">
               <PropertyRef Name="plan_summary_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="inventory_file_ratings_job_notes">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="inventory_file_ratings_job_id" Type="Int32" Nullable="false" />
+          <Property Name="text" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="created_at" Type="DateTime" Nullable="false" Precision="7" />
+          <NavigationProperty Name="inventory_file_ratings_jobs" Relationship="BroadcastModel.FK_inventory_file_ratings_job_notes_inventory_file_ratings_jobs" FromRole="inventory_file_ratings_job_notes" ToRole="inventory_file_ratings_jobs" />
+        </EntityType>
+        <Association Name="FK_inventory_file_ratings_job_notes_inventory_file_ratings_jobs">
+          <End Type="BroadcastModel.inventory_file_ratings_jobs" Role="inventory_file_ratings_jobs" Multiplicity="1" />
+          <End Type="BroadcastModel.inventory_file_ratings_job_notes" Role="inventory_file_ratings_job_notes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="inventory_file_ratings_jobs">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="inventory_file_ratings_job_notes">
+              <PropertyRef Name="inventory_file_ratings_job_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -12463,6 +12517,16 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
                 <ScalarProperty Name="year" ColumnName="year" />
                 <ScalarProperty Name="quarter" ColumnName="quarter" />
                 <ScalarProperty Name="plan_summary_id" ColumnName="plan_summary_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="inventory_file_ratings_job_notes">
+            <EntityTypeMapping TypeName="BroadcastModel.inventory_file_ratings_job_notes">
+              <MappingFragment StoreEntitySet="inventory_file_ratings_job_notes">
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="text" ColumnName="text" />
+                <ScalarProperty Name="inventory_file_ratings_job_id" ColumnName="inventory_file_ratings_job_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

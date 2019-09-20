@@ -170,7 +170,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 IntegrationTestApplicationServiceFactory.GetApplicationService<IProprietaryInventoryService>().SaveProprietaryInventoryFile(fileSaveRequest, "sroibu", now);
 
                 var ratingsJob = _InventoryFileRatingsJobsRepository.GetLatestJob();
-                _InventoryRatingsProcessingService.ProcessInventoryRatingsJob(ratingsJob.id.Value);
+                _InventoryRatingsProcessingService.ProcessInventoryRatingsJob(ratingsJob.Id);
 
                 var request = new InventoryScxDownloadRequest
                 {
@@ -213,7 +213,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 IntegrationTestApplicationServiceFactory.GetApplicationService<IProprietaryInventoryService>().SaveProprietaryInventoryFile(fileSaveRequest, "sroibu", now);
 
                 var ratingsJob = _InventoryFileRatingsJobsRepository.GetLatestJob();
-                _InventoryRatingsProcessingService.ProcessInventoryRatingsJob(ratingsJob.id.Value);
+                _InventoryRatingsProcessingService.ProcessInventoryRatingsJob(ratingsJob.Id);
 
                 var request = new InventoryScxDownloadRequest
                 {
@@ -260,7 +260,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 IntegrationTestApplicationServiceFactory.GetApplicationService<IProprietaryInventoryService>().SaveProprietaryInventoryFile(fileSaveRequest, "sroibu", now);
 
                 var ratingsJob = _InventoryFileRatingsJobsRepository.GetLatestJob();
-                _InventoryRatingsProcessingService.ProcessInventoryRatingsJob(ratingsJob.id.Value);
+                _InventoryRatingsProcessingService.ProcessInventoryRatingsJob(ratingsJob.Id);
 
                 var request = new InventoryScxDownloadRequest
                 {

@@ -54,7 +54,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 IntegrationTestApplicationServiceFactory.GetApplicationService<IProprietaryInventoryService>().SaveProprietaryInventoryFile(request, "sroibu", now);
 
                 var job = _InventoryFileRatingsJobsRepository.GetLatestJob();
-                _InventoryRatingsProcessingService.ProcessInventoryRatingsJob(job.id.Value);
+                _InventoryRatingsProcessingService.ProcessInventoryRatingsJob(job.Id);
 
                 var scxRequest = new InventoryScxDownloadRequest()
                 {
@@ -139,7 +139,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 IntegrationTestApplicationServiceFactory.GetApplicationService<IProprietaryInventoryService>().SaveProprietaryInventoryFile(request, "sroibu", now);
 
                 var job = _InventoryFileRatingsJobsRepository.GetLatestJob();
-                _InventoryRatingsProcessingService.ProcessInventoryRatingsJob(job.id.Value);
+                _InventoryRatingsProcessingService.ProcessInventoryRatingsJob(job.Id);
 
                 var scxRequest = new InventoryScxDownloadRequest()
                 {
@@ -213,7 +213,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 IntegrationTestApplicationServiceFactory.GetApplicationService<IProprietaryInventoryService>().SaveProprietaryInventoryFile(fileSaveRequest, "sroibu", now);
 
                 var job = _InventoryFileRatingsJobsRepository.GetLatestJob();
-                _InventoryRatingsProcessingService.ProcessInventoryRatingsJob(job.id.Value);
+                _InventoryRatingsProcessingService.ProcessInventoryRatingsJob(job.Id);
 
                 var inventoryScxDataPrep = _InventoryScxDataPrepFactory.GetInventoryDataPrep(Entities.Enums.InventorySourceTypeEnum.ProprietaryOAndO);
 
@@ -254,7 +254,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 IntegrationTestApplicationServiceFactory.GetApplicationService<IProprietaryInventoryService>().SaveProprietaryInventoryFile(fileSaveRequest, "sroibu", now);
 
                 var job = _InventoryFileRatingsJobsRepository.GetLatestJob();
-                _InventoryRatingsProcessingService.ProcessInventoryRatingsJob(job.id.Value);
+                _InventoryRatingsProcessingService.ProcessInventoryRatingsJob(job.Id);
 
                 var inventoryScxDataPrep = _InventoryScxDataPrepFactory.GetInventoryDataPrep(Entities.Enums.InventorySourceTypeEnum.ProprietaryOAndO);
 

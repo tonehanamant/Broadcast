@@ -1,7 +1,6 @@
 ﻿using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
 using Services.Broadcast.BusinessEngines;
-using Services.Broadcast.Entities.InventorySummary;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Repositories;
 using System;
@@ -9,19 +8,13 @@ using System.Collections.Generic;
 using System.Linq;
 using Hangfire;
 using static Services.Broadcast.Entities.Enums.ProposalEnums;
+using Services.Broadcast.Entities;
+using System.Net;
+using System.Net.Sockets;
 using System.Diagnostics;
 
 namespace Services.Broadcast.ApplicationServices
 {
-    public class InventoryFileRatingsProcessingJob
-    {
-        public int? id;
-        public int InventoryFileId;
-        public BackgroundJobProcessingStatus Status;
-        public DateTime QueuedAt;
-        public DateTime? CompletedAt;
-    }
-
     public interface IInventoryRatingsProcessingService : IApplicationService
     {
         void QueueInventoryFileRatingsJob(int inventoryFileId);
@@ -97,7 +90,15 @@ namespace Services.Broadcast.ApplicationServices
             {
                 InventoryFileId = inventoryFileId,
                 Status = BackgroundJobProcessingStatus.Queued,
-                QueuedAt = DateTime.Now
+                QueuedAt = DateTime.Now,
+                Notes = new List<InventoryFileRatingsProcessingJob.Note>
+                {
+                    new InventoryFileRatingsProcessingJob.Note
+                    {
+                        Text = $"Automatic ratings processing is turned {(TemporalApplicationSettings.ProcessRatingsAutomatically ? "on" : "off")}",
+                        CreatedAt = DateTime.Now
+                    }
+                }
             };
 
             var jobId = _InventoryFileRatingsJobsRepository.AddJob(job);
@@ -121,21 +122,24 @@ namespace Services.Broadcast.ApplicationServices
 
             var job = _InventoryFileRatingsJobsRepository.GetJobById(jobId);
 
-            if(job == null)
+            if (job == null)
             {
                 throw new ApplicationException($"Job with id {jobId} was not found");
             }
 
-            if(!ignoreStatus && job.Status != BackgroundJobProcessingStatus.Queued)
+            if (!ignoreStatus && job.Status != BackgroundJobProcessingStatus.Queued)
             {
-                throw new ApplicationException($"Job with id {jobId} already has status {job.Status}");
+                var message = $"Job with id {jobId} already has status {job.Status}";
+                _AddJobNote(jobId, message);
+                throw new ApplicationException(message);
             }
 
             try
             {
                 job.Status = BackgroundJobProcessingStatus.Processing;
                 _InventoryFileRatingsJobsRepository.UpdateJob(job);
-                
+                _AddJobNote(jobId, $"Started processing. Machine info: {_GetMachineInfo()}");
+
                 var inventoryFile = _InventoryFileRepository.GetInventoryFileById(job.InventoryFileId);
                 var inventorySource = inventoryFile.InventorySource;
                 
@@ -233,6 +237,7 @@ namespace Services.Broadcast.ApplicationServices
                     // Failed for unsupported types
                     job.Status = BackgroundJobProcessingStatus.Failed;
                     job.CompletedAt = DateTime.Now;
+                    _AddJobNote(jobId, $"Cannot process unsupported type: {inventorySource.InventoryType}");
                 }
                 _InventoryFileRatingsJobsRepository.UpdateJob(job);
 
@@ -246,6 +251,7 @@ namespace Services.Broadcast.ApplicationServices
                 job.Status = BackgroundJobProcessingStatus.Failed;
                 job.CompletedAt = DateTime.Now;
                 _InventoryFileRatingsJobsRepository.UpdateJob(job);
+                _AddJobNote(jobId, ex.ToString());
                 throw;
             }
         }
@@ -256,6 +262,35 @@ namespace Services.Broadcast.ApplicationServices
             job.Status = BackgroundJobProcessingStatus.Queued;
             job.CompletedAt = null;
             _InventoryFileRatingsJobsRepository.UpdateJob(job);
+        }
+
+        private void _AddJobNote(int jobId, string text)
+        {
+            _InventoryFileRatingsJobsRepository.AddJobNote(jobId, new InventoryFileRatingsProcessingJob.Note
+            {
+                Text = text,
+                CreatedAt = DateTime.Now
+            });
+        }
+
+        private static string _GetMachineInfo()
+        {
+            return $"Name: {Environment.MachineName}, local IPAddress: {GetLocalIPAddress()}, process id: {Process.GetCurrentProcess().Id}";
+        }
+
+        private static string GetLocalIPAddress()
+        {
+            var host = Dns.GetHostEntry(Dns.GetHostName());
+
+            foreach (var ip in host.AddressList)
+            {
+                if (ip.AddressFamily == AddressFamily.InterNetwork)
+                {
+                    return ip.ToString();
+                }
+            }
+
+            return "No network adapters with an IPv4 address in the system!";
         }
     }
 }
