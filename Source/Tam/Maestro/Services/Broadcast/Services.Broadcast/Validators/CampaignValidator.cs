@@ -2,6 +2,7 @@
 using Services.Broadcast.Entities;
 using System;
 using System.Linq;
+using Services.Broadcast.Cache;
 
 namespace Services.Broadcast.Validators
 {
@@ -22,35 +23,24 @@ namespace Services.Broadcast.Validators
     /// </summary>
     public class CampaignValidator : ICampaignValidator
     {
-        #region Constants
-
         public const string InvalidAdvertiserErrorMessage = "The advertiser id is invalid, please provide a valid and active id";
         public const string InvalidAgencyErrorMessage = "The agency id is invalid, please provide a valid and active id";
         public const string InvalidCampaignNameErrorMessage = "The campaign name is invalid, please provide a valid name";
         public const string InvalidCampaignNotesErrorMessage = "The campaign notes are invalid";
 
-        #endregion // #region Constants
-
-        #region Fields
-
         private readonly ITrafficApiClient _TrafficApiClient;
-
-        #endregion // #region Fields
-
-        #region Constructor
+        private readonly IAgencyCache _AgencyCache;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CampaignValidator"/> class.
         /// </summary>
-        /// <param name="trafficApiClient">The client to access web API of the traffic project</param>
-        public CampaignValidator(ITrafficApiClient trafficApiClient)
+        /// <param name="trafficApiClient">The traffic API client.</param>
+        /// <param name="agencyCache">The agency cache.</param>
+        public CampaignValidator(ITrafficApiClient trafficApiClient, IAgencyCache agencyCache)
         {
             _TrafficApiClient = trafficApiClient;
+            _AgencyCache = agencyCache;
         }
-
-        #endregion // #region Constructor
-
-        #region Operations
 
         /// <inheritdoc />
         public void Validate(CampaignDto campaign)
@@ -60,10 +50,6 @@ namespace Services.Broadcast.Validators
             _ValidateAdvertiser(campaign);
             _ValidateNotes(campaign);
         }
-
-        #endregion // #region Operations
-
-        #region Helpers
 
         private void _ValidateCampaignName(CampaignDto campaign)
         {
@@ -95,7 +81,7 @@ namespace Services.Broadcast.Validators
         {
             try
             {
-                _TrafficApiClient.GetAgency(campaign.AgencyId);
+                _AgencyCache.GetAgency(campaign.AgencyId);
             }
             catch (Exception ex)
             {
@@ -111,7 +97,5 @@ namespace Services.Broadcast.Validators
                 throw new InvalidOperationException(InvalidCampaignNotesErrorMessage);
             }
         }
-
-        #endregion // #region Helpers
     }
 }

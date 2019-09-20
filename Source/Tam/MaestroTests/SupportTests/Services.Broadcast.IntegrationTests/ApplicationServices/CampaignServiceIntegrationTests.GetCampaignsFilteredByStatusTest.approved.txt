@@ -7,7 +7,7 @@
     },
     "Agency": {
       "Id": 3,
-      "Name": "Name3"
+      "Name": "!_Name_3"
     },
     "Budget": 1500.0,
     "CampaignStatus": 4,
@@ -53,7 +53,7 @@
     },
     "Agency": {
       "Id": 9,
-      "Name": "Name9"
+      "Name": "#_Name_9"
     },
     "Budget": 1500.0,
     "CampaignStatus": 4,
@@ -99,7 +99,7 @@
     },
     "Agency": {
       "Id": 5,
-      "Name": "Name5"
+      "Name": "\"_Name_5"
     },
     "Budget": 1500.0,
     "CampaignStatus": 4,
@@ -145,7 +145,7 @@
     },
     "Agency": {
       "Id": 5,
-      "Name": "Name5"
+      "Name": "\"_Name_5"
     },
     "Budget": null,
     "CampaignStatus": null,
@@ -174,7 +174,7 @@
     },
     "Agency": {
       "Id": 18,
-      "Name": "Name18"
+      "Name": "&amp;_Name_18"
     },
     "Budget": 1500.0,
     "CampaignStatus": 4,

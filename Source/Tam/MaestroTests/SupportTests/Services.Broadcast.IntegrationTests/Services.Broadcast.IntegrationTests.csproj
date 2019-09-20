@@ -317,6 +317,7 @@
     <Compile Include="ApplicationServices\EmailerServiceTests.cs" />
     <Compile Include="ApplicationServices\ProgramScrubbingEngineTests.cs" />
     <Compile Include="Stubbs\TrafficApiClientStub.cs" />
+    <Compile Include="UnitTests\AgencyCacheTests.cs" />
     <Compile Include="UnitTests\ApplicationServices\AdvertiserServiceUnitTests.cs" />
     <Compile Include="UnitTests\ApplicationServices\AgencyServiceUnitTests.cs" />
     <Compile Include="UnitTests\ApplicationServices\ProductServiceUnitTests.cs" />

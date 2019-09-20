@@ -100,6 +100,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly ICampaignAggregator _CampaignAggregator;
         private readonly ICampaignSummaryRepository _CampaignSummaryRepository;
         private readonly ICampaignAggregationJobTrigger _CampaignAggregationJobTrigger;
+        private readonly IAgencyCache _AgencyCache;
 
         private const int _cachingDurationInSeconds = 300;
 
@@ -122,7 +123,8 @@ namespace Services.Broadcast.ApplicationServices
             ITrafficApiClient trafficApiClient,
             ILockingManagerApplicationService lockingManagerApplicationService,
             ICampaignAggregator campaignAggregator,
-            ICampaignAggregationJobTrigger campaignAggregationJobTrigger)
+            ICampaignAggregationJobTrigger campaignAggregationJobTrigger,
+            IAgencyCache agencyCache)
         {
             _CampaignRepository = dataRepositoryFactory.GetDataRepository<ICampaignRepository>();
             _CampaignValidator = campaignValidator;
@@ -133,6 +135,7 @@ namespace Services.Broadcast.ApplicationServices
             _CampaignAggregator = campaignAggregator;
             _CampaignSummaryRepository = dataRepositoryFactory.GetDataRepository<ICampaignSummaryRepository>();
             _CampaignAggregationJobTrigger = campaignAggregationJobTrigger;
+            _AgencyCache = agencyCache;
         }
 
         /// <inheritdoc />
@@ -143,7 +146,6 @@ namespace Services.Broadcast.ApplicationServices
 
             var dateRange = _GetQuarterDateRange(filter.Quarter);
             var campaigns = _CampaignRepository.GetCampaigns(dateRange.Start, dateRange.End, filter.PlanStatus);
-            var cacheAgencies = new BaseMemoryCache<AgencyDto>("localAgenciesCache");
             var cacheAdvertisers = new BaseMemoryCache<List<AdvertiserDto>>("localAdvertisersCache");
 
             foreach (var campaign in campaigns)
@@ -151,20 +153,12 @@ namespace Services.Broadcast.ApplicationServices
                 var summary = _CampaignSummaryRepository.GetSummaryForCampaign(campaign.Id);
 
                 _HydrateCampaignListItemWithSummary(campaign, summary);
-                _SetAgency(campaign, cacheAgencies);
+
+                campaign.Agency = _AgencyCache.GetAgency(campaign.Agency.Id);
                 _SetAdvertiser(campaign, cacheAdvertisers);
             }
 
             return campaigns;
-        }
-
-        private void _SetAgency(CampaignListItemDto campaign, BaseMemoryCache<AgencyDto> cache)
-        {
-            // Let`s cache agencies to reduce the number of requests to the traffic API
-            campaign.Agency = cache.GetOrCreate(
-                campaign.Agency.Id.ToString(),
-                () => _TrafficApiClient.GetAgency(campaign.Agency.Id),
-                new CacheItemPolicy { AbsoluteExpiration = DateTime.Now.AddSeconds(_cachingDurationInSeconds) });
         }
 
         private void _SetAdvertiser(CampaignListItemDto campaign, BaseMemoryCache<List<AdvertiserDto>> cache)

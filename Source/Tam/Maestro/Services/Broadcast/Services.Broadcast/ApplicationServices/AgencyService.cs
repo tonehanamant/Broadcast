@@ -1,5 +1,5 @@
 ﻿using Common.Services.ApplicationServices;
-using Services.Broadcast.Clients;
+using Services.Broadcast.Cache;
 using Services.Broadcast.Entities;
 using System.Collections.Generic;
 
@@ -12,16 +12,16 @@ namespace Services.Broadcast.ApplicationServices
 
     public class AgencyService : IAgencyService
     {
-        private readonly ITrafficApiClient _TrafficApiClient;
+        private readonly IAgencyCache _AgencyCache;
 
-        public AgencyService(ITrafficApiClient trafficApiClient)
+        public AgencyService(IAgencyCache agencyCache)
         {
-            _TrafficApiClient = trafficApiClient;
+            _AgencyCache = agencyCache;
         }
         
         public List<AgencyDto> GetAgencies()
         {
-            return _TrafficApiClient.GetAgencies();
+            return _AgencyCache.GetAgencies();
         }
     }
 }

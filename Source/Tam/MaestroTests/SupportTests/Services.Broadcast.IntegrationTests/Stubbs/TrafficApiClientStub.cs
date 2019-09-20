@@ -64,5 +64,25 @@ namespace Services.Broadcast.IntegrationTests.Stubbs
         {
             throw new System.NotImplementedException();
         }
+
+        private int _agenciesListId = 0;
+
+        public List<AgencyDto> GetFilteredAgencies(string filter)
+        {
+            // imitates the client behavior when not existing advertiser id is passed
+            if (filter == "666")
+            {
+                throw new Exception($"Cannot fetch agencies data with filter '{filter}'.");
+            }
+
+            var agencies = new List<AgencyDto>
+            {
+                new AgencyDto { Id = ++_agenciesListId, Name = $"{filter}_Name_{_agenciesListId}"},
+                new AgencyDto { Id = ++_agenciesListId, Name = $"{filter}_Name_{_agenciesListId}"},
+                new AgencyDto { Id = ++_agenciesListId, Name = $"{filter}_Name_{_agenciesListId}"}
+            };
+
+            return agencies;
+        }
     }
 }

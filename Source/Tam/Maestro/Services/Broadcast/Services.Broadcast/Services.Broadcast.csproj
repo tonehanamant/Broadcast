@@ -238,6 +238,7 @@
     <Compile Include="ApplicationServices\AgencyService.cs" />
     <Compile Include="ApplicationServices\CampaignAggregationJobTrigger.cs" />
     <Compile Include="ApplicationServices\CampaignAggregator.cs" />
+    <Compile Include="Cache\AgencyCache.cs" />
     <Compile Include="Entities\CampaignDefaultsDto.cs" />
     <Compile Include="Entities\CampaignSummaryDto.cs" />
     <Compile Include="Attributes\DisableConcurrentExecutionAttribute.cs" />
@@ -296,6 +297,7 @@
     <Compile Include="Entities\ScxGenerationJob.cs" />
     <Compile Include="Entities\Scx\ScxFileGenerationDetailDto.cs" />
     <Compile Include="Entities\Scx\ScxFileGenerationDetail.cs" />
+    <Compile Include="Extensions\HttpExtensions.cs" />
     <Compile Include="Helpers\DaypartTimeHelper.cs" />
     <Compile Include="Helpers\KeyHelper.cs" />
     <Compile Include="Helpers\SystemComponentParameterHelper.cs" />

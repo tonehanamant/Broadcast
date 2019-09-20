@@ -1,5 +1,6 @@
 ﻿using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.DTO;
+using Services.Broadcast.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -9,8 +10,7 @@ namespace Services.Broadcast.Clients
 {
     public interface ITrafficApiClient
     {
-        List<AgencyDto> GetAgencies();
-        AgencyDto GetAgency(int agencyId);
+        List<AgencyDto> GetFilteredAgencies(string filter);
         AdvertiserDto GetAdvertiser(int advertiserId);
         List<AdvertiserDto> GetAdvertisersByAgencyId(int agencyId);
         List<ProductDto> GetProductsByAdvertiserId(int advertiserId);
@@ -28,35 +28,33 @@ namespace Services.Broadcast.Clients
             _HttpClient = new HttpClient();
         }
 
+        public List<AgencyDto> GetFilteredAgencies(string filter)
+        {
+            var url = $"{_BaseTrafficCompanyURL}/agency?filter={Uri.EscapeDataString(filter)}";
+
+            try
+            {
+                return _HttpClient.Get<List<AgencyDto>>(url);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Cannot fetch agencies data with filter '{filter}'.", ex);
+            }
+        }
+
         public List<AdvertiserDto> GetAdvertisersByAgencyId(int agencyId)
         {
             var url = $"{_BaseTrafficCompanyURL}/agency/{agencyId}/advertisers";
 
             try
             {
-                var advertisers = _Get<List<AdvertiserDto>>(url);
+                var advertisers = _HttpClient.Get<List<AdvertiserDto>>(url);
 
                 return advertisers;
             }
             catch (Exception ex)
             {
-                throw new Exception("Cannot fetch advertisers data", ex);
-            }
-        }
-
-        public List<AgencyDto> GetAgencies()
-        {
-            var url = $"{_BaseTrafficCompanyURL}/agency";
-
-            try
-            {
-                var agencies = _Get<List<AgencyDto>>(url);
-
-                return agencies;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Cannot fetch agencies data", ex);
+                throw new Exception($"Cannot fetch advertisers data for agency {agencyId}.", ex);
             }
         }
 
@@ -66,13 +64,13 @@ namespace Services.Broadcast.Clients
 
             try
             {
-                var products = _Get<List<ProductDto>>(url);
+                var products = _HttpClient.Get<List<ProductDto>>(url);
 
                 return products;
             }
             catch (Exception ex)
             {
-                throw new Exception("Cannot fetch products data", ex);
+                throw new Exception($"Cannot fetch products data for advertiser {advertiserId}.", ex);
             }
         }
 
@@ -82,7 +80,7 @@ namespace Services.Broadcast.Clients
 
             try
             {
-                var product = _Get<ProductDto>(url);
+                var product = _HttpClient.Get<ProductDto>(url);
 
                 return product;
             }
@@ -92,29 +90,13 @@ namespace Services.Broadcast.Clients
             }
         }
 
-        public AgencyDto GetAgency(int agencyId)
-        {
-            var url = $"{_BaseTrafficCompanyURL}/agency/{agencyId}";
-
-            try
-            {
-                var agency = _Get<AgencyDto>(url);
-
-                return agency;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception($"Cannot fetch data of the agency {agencyId}", ex);
-            }
-        }
-
         public AdvertiserDto GetAdvertiser(int advertiserId)
         {
             var url = $"{_BaseTrafficCompanyURL}/advertiser/{advertiserId}";
 
             try
             {
-                var advertiser = _Get<AdvertiserDto>(url);
+                var advertiser = _HttpClient.Get<AdvertiserDto>(url);
 
                 return advertiser;
             }
@@ -122,16 +104,6 @@ namespace Services.Broadcast.Clients
             {
                 throw new Exception($"Cannot fetch data of the advertiser {advertiserId}", ex);
             }
-        }
-
-        private T _Get<T>(string url)
-        {
-            var response = _HttpClient.GetAsync(url).GetAwaiter().GetResult();
-
-            if (!response.IsSuccessStatusCode)
-                throw new Exception(response.ReasonPhrase);
-
-            return response.Content.ReadAsAsync<T>().GetAwaiter().GetResult();
         }
     }
 }

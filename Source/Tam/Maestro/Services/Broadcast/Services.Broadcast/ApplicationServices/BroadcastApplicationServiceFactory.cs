@@ -25,7 +25,6 @@ using Services.Broadcast.Helpers;
 using Services.Broadcast.ReportGenerators;
 using Services.Broadcast.Repositories;
 using Services.Broadcast.Validators;
-using Tam.Maestro.Common;
 using Tam.Maestro.Data.EntityFrameworkMapping;
 using Tam.Maestro.Services.Clients;
 
@@ -218,6 +217,8 @@ namespace Services.Broadcast.ApplicationServices
 
             MediaMonthCrunchCache.MediaMonthCrunchCacheInstance = new MediaMonthCrunchCache(repoFactory, unityContainer.Resolve<IMediaMonthAndWeekAggregateCache>());
             unityContainer.RegisterInstance<IMediaMonthCrunchCache>(MediaMonthCrunchCache.MediaMonthCrunchCacheInstance);
+
+            unityContainer.RegisterType<IAgencyCache, AgencyCache>(new ContainerControlledLifetimeManager()); // singleton
         }
 
         public T GetApplicationService<T>() where T : class, IApplicationService

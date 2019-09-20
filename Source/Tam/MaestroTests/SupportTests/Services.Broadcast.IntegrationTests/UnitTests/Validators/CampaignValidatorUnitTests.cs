@@ -3,9 +3,12 @@ using NUnit.Framework;
 using Services.Broadcast.Entities;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using Services.Broadcast.Cache;
 using Services.Broadcast.IntegrationTests.Helpers;
 using Services.Broadcast.Validators;
 using Services.Broadcast.Clients;
+using Common.Services.Extensions;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
 {
@@ -13,7 +16,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
     public class CampaignValidatorUnitTests
     {
         [Test]
-        [TestCase("", 1, 1, CampaignValidator.InvalidCampaignNameErrorMessage)]
         [TestCase("Campaign1", 1, 0, CampaignValidator.InvalidAgencyErrorMessage)]
         [TestCase("Campaign1", 1, 23, CampaignValidator.InvalidAgencyErrorMessage)]
         public void ValidateFailure_WhenAgencyIsInvalid(string campaignName, int advertiserId, int agencyId, string expectedMessage)
@@ -26,11 +28,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             };
 
             var trafficApiClientMock = _GetTrafficApiClientMock();
-            trafficApiClientMock.Setup(x => x.GetAgency(It.IsAny<int>())).Throws(new Exception());
-            var tc = new CampaignValidator(trafficApiClientMock.Object);
+            var agencyCache = _GetAgencyCacheMock();
+
+            var tc = new CampaignValidator(trafficApiClientMock.Object, agencyCache.Object);
 
             var caughtException = Assert.Throws<InvalidOperationException>(() => tc.Validate(item));
 
+            agencyCache.Verify(s => s.GetAgency(It.IsAny<int>()), Times.Once);
             Assert.AreEqual(expectedMessage, caughtException.Message);
         }
 
@@ -47,9 +51,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             };
 
             var trafficApiClientMock = _GetTrafficApiClientMock();
-            trafficApiClientMock.Setup(x => x.GetAgency(It.IsAny<int>())).Returns(new AgencyDto());
             trafficApiClientMock.Setup(x => x.GetAdvertiser(It.IsAny<int>())).Throws(new Exception());
-            var tc = new CampaignValidator(trafficApiClientMock.Object);
+            var agencyCache = _GetAgencyCacheMock();
+            agencyCache.Setup(x => x.GetAgency(It.IsAny<int>())).Returns(new AgencyDto());
+            
+            var tc = new CampaignValidator(trafficApiClientMock.Object, agencyCache.Object);
 
             var caughtException = Assert.Throws<InvalidOperationException>(() => tc.Validate(item));
 
@@ -58,14 +64,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
 
         private Mock<ITrafficApiClient> _GetTrafficApiClientMock()
         {
-            var getAgenciesReturn = new List<AgencyDto>
-            {
-                new AgencyDto{ Id = 1, Name = "AgencyOne"},
-                new AgencyDto{ Id = 2, Name = "AgencyTwo"},
-                new AgencyDto{ Id = 3, Name = "AgencyThree"}
-
-            };
-            
             var getAdvertisersByAgencyIdReturn = new List<AdvertiserDto>
             {
                 new AdvertiserDto {Id = 1, Name = "AdvertiserOne"},
@@ -76,10 +74,26 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             var trafficApiClientMock = new Mock<ITrafficApiClient>();
 
             trafficApiClientMock.Setup(s => s.GetAdvertisersByAgencyId(It.IsAny<int>())).Returns(getAdvertisersByAgencyIdReturn);
-            trafficApiClientMock.Setup(s => s.GetAgencies()).Returns(getAgenciesReturn);
             trafficApiClientMock.Setup(s => s.GetAdvertisersByAgencyId(It.IsAny<int>())).Returns(getAdvertisersByAgencyIdReturn);
 
             return trafficApiClientMock;
+        }
+
+        private Mock<IAgencyCache> _GetAgencyCacheMock()
+        {
+            var agencies = new List<AgencyDto>
+            {
+                new AgencyDto{ Id = 1, Name = "AgencyOne"},
+                new AgencyDto{ Id = 2, Name = "AgencyTwo"},
+                new AgencyDto{ Id = 3, Name = "AgencyThree"}
+            };
+
+            var agencyCache = new Mock<IAgencyCache>();
+
+            agencyCache.Setup(s => s.GetAgency(It.IsAny<int>()))
+                .Returns<int>((i) => agencies.Single(a => a.Id == i, "Agency not found"));
+
+            return agencyCache;
         }
 
         [Test]
@@ -94,12 +108,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             };
 
             var trafficApiClientMock = _GetTrafficApiClientMock();
-            var tc = new CampaignValidator(trafficApiClientMock.Object);
+            var agencyCache = _GetAgencyCacheMock();
+            var tc = new CampaignValidator(trafficApiClientMock.Object, agencyCache.Object);
 
             Assert.DoesNotThrow(() => tc.Validate(item));
         }
 
         [Test]
+        [TestCase(0, true, "The campaign name is invalid, please provide a valid name")]
         [TestCase(255, false, null)]
         [TestCase(256, true, "The campaign name is invalid, please provide a valid name")]
         public void ValidateCampaignNameBounds(int length, bool throws, string expectedMessage)
@@ -113,7 +129,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             };
 
             var trafficApiClientMock = _GetTrafficApiClientMock();
-            var tc = new CampaignValidator(trafficApiClientMock.Object);
+            var agencyCache = _GetAgencyCacheMock();
+            var tc = new CampaignValidator(trafficApiClientMock.Object, agencyCache.Object);
 
             if (throws)
             {
@@ -142,7 +159,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             };
 
             var trafficApiClientMock = _GetTrafficApiClientMock();
-            var tc = new CampaignValidator(trafficApiClientMock.Object);
+            var agencyCache = _GetAgencyCacheMock();
+            var tc = new CampaignValidator(trafficApiClientMock.Object, agencyCache.Object);
 
             if (throws)
             {

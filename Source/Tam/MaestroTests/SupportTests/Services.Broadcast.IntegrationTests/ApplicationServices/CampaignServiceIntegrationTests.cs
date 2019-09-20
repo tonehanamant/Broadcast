@@ -19,6 +19,7 @@ using Services.Broadcast.Repositories;
 using Services.Broadcast.Validators;
 using System;
 using System.Collections.Generic;
+using Services.Broadcast.Cache;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Services.ContractInterfaces;
 
@@ -129,7 +130,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     IntegrationTestApplicationServiceFactory.Instance.Resolve<ITrafficApiClient>(),
                     lockingManagerApplicationServiceMock.Object,
                     IntegrationTestApplicationServiceFactory.Instance.Resolve<ICampaignAggregator>(),
-                    IntegrationTestApplicationServiceFactory.Instance.Resolve<ICampaignAggregationJobTrigger>()
+                    IntegrationTestApplicationServiceFactory.Instance.Resolve<ICampaignAggregationJobTrigger>(),
+                    IntegrationTestApplicationServiceFactory.Instance.Resolve<IAgencyCache>()
                     );
 
                 var campaign = _GetValidCampaign();
