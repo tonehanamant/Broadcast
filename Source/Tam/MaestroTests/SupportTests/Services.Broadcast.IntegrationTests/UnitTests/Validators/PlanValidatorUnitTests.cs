@@ -642,6 +642,22 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
         }
 
         [Test]
+        public void ValidatePlan_WeeklyBreakdown_RoundImpressions()
+        {
+            _ConfigureMocksToReturnTrue();
+
+            var plan = _GetPlan();
+            plan.DeliveryImpressions = 100;
+            plan.WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>
+            {
+                new WeeklyBreakdownWeek {Impressions = 50, ShareOfVoice=50},
+                new WeeklyBreakdownWeek {Impressions = 49.99, ShareOfVoice = 50}
+            };
+
+            Assert.DoesNotThrow(() => _planValidator.ValidatePlan(plan));
+        }
+
+        [Test]
         public void ValidatePlan_SumOfShareOfVoiceDifferentFrom100()
         {
             _ConfigureMocksToReturnTrue();

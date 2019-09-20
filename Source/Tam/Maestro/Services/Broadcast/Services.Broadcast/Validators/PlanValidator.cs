@@ -289,7 +289,7 @@ namespace Services.Broadcast.Validators
                 return;
             }
 
-            if (plan.DeliveryImpressions != plan.WeeklyBreakdownWeeks.Select(x => x.Impressions).Sum())
+            if (plan.DeliveryImpressions != Math.Round(plan.WeeklyBreakdownWeeks.Select(x => x.Impressions).Sum()))
             {
                 throw new Exception(INVALID_IMPRESSIONS_COUNT);
             }
