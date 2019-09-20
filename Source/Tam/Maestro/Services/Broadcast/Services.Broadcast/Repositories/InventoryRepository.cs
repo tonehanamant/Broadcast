@@ -1,24 +1,22 @@
-﻿using System.Data.Entity;
+﻿using Common.Services;
 using Common.Services.Repositories;
+using ConfigurationService.Client;
 using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using Common.Services;
-using ConfigurationService.Client;
-using Tam.Maestro.Common.DataLayer;
-using Tam.Maestro.Data.EntityFrameworkMapping;
-using Tam.Maestro.Services.Clients;
-using Tam.Maestro.Services.ContractInterfaces.AudienceAndRatingsBusinessObjects;
-using Tam.Maestro.Services.ContractInterfaces.Common;
-using Tam.Maestro.Data.Entities.DataTransferObjects;
-using Services.Broadcast.Entities.StationInventory;
-using Tam.Maestro.Data.Entities;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.InventorySummary;
-using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Entities.ProprietaryInventory;
+using Services.Broadcast.Entities.StationInventory;
+using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
+using Tam.Maestro.Common.DataLayer;
+using Tam.Maestro.Data.Entities;
+using Tam.Maestro.Data.Entities.DataTransferObjects;
+using Tam.Maestro.Data.EntityFrameworkMapping;
+using Tam.Maestro.Services.ContractInterfaces.AudienceAndRatingsBusinessObjects;
+using Tam.Maestro.Services.ContractInterfaces.Common;
 using static Services.Broadcast.Entities.Enums.ProposalEnums;
 
 namespace Services.Broadcast.Repositories
@@ -70,7 +68,7 @@ namespace Services.Broadcast.Repositories
         List<StationInventoryGroup> GetInventoryScxDataForBarter(int inventorySourceId, int daypartCodeId, DateTime startDate, DateTime endDate, List<string> unitNames);
 
         List<StationInventoryManifest> GetInventoryScxDataForOAndO(int inventorySourceId, int daypartCodeId, DateTime startDate, DateTime endDate);
-        
+
         /// <summary>
         /// Gets the header information for an inventory file ids
         /// </summary>
@@ -834,17 +832,17 @@ namespace Services.Broadcast.Repositories
                                  select header).ToList();
 
                     return query.ToDictionary(x => x.inventory_file_id, x => new ProprietaryInventoryHeader
-                                {
-                                    Audience = new BroadcastAudience { Id = x.audience_id.Value },
-                                    ContractedDaypartId = x.contracted_daypart_id,
-                                    Cpm = x.cpm,
-                                    DaypartCode = x.daypart_codes.code,
-                                    EffectiveDate = x.effective_date,
-                                    EndDate = x.end_date,
-                                    HutBookId = x.hut_projection_book_id,
-                                    PlaybackType = (ProposalPlaybackType)x.playback_type,
-                                    ShareBookId = x.share_projection_book_id
-                                });
+                    {
+                        Audience = new BroadcastAudience { Id = x.audience_id.Value },
+                        ContractedDaypartId = x.contracted_daypart_id,
+                        Cpm = x.cpm,
+                        DaypartCode = x.daypart_codes.code,
+                        EffectiveDate = x.effective_date,
+                        EndDate = x.end_date,
+                        HutBookId = x.hut_projection_book_id,
+                        PlaybackType = (ProposalPlaybackType)x.playback_type,
+                        ShareBookId = x.share_projection_book_id
+                    });
                 });
         }
 
@@ -921,8 +919,7 @@ namespace Services.Broadcast.Repositories
                {
                    var weeks = context.station_inventory_manifest
                         .Where(x => x.inventory_source_id == inventorySourceId && (FileStatusEnum)x.inventory_files.status == FileStatusEnum.Loaded)
-                        .SelectMany(x => x.station_inventory_manifest_weeks)
-                        .ToList();
+                        .SelectMany(x => x.station_inventory_manifest_weeks);
 
                    return _GetMinMaxDateRange(weeks);
                });
@@ -931,20 +928,20 @@ namespace Services.Broadcast.Repositories
         ///<inheritdoc/>
         public DateRange GetAllInventoriesDateRange()
         {
-            return _InReadUncommitedTransaction(context => _GetMinMaxDateRange(context.station_inventory_manifest_weeks.ToList()));
+            return _InReadUncommitedTransaction(context =>
+                _GetMinMaxDateRange(context.station_inventory_manifest_weeks)
+         );
         }
 
-        private DateRange _GetMinMaxDateRange(List<station_inventory_manifest_weeks> weeks)
+        private DateRange _GetMinMaxDateRange(IQueryable<station_inventory_manifest_weeks> weeks)
         {
-            if (weeks.Any())
-            {
-                var minDate = weeks.Min(x => x.start_date);
-                var maxDate = weeks.Max(x => x.end_date);
+            if (!weeks.Any())
+                return new DateRange(null, null);
 
-                return new DateRange(minDate, maxDate);
-            }
+            var minDate = weeks.Min(x => x.start_date);
+            var maxDate = weeks.Max(x => x.end_date);
 
-            return new DateRange(null, null);
+            return new DateRange(minDate, maxDate);
         }
 
         ///<inheritdoc/>
@@ -1108,7 +1105,7 @@ namespace Services.Broadcast.Repositories
 
                     var result = new List<InventoryUploadHistoryDto>();
 
-                    foreach(var file in files)
+                    foreach (var file in files)
                     {
                         var fileHistory = new InventoryUploadHistoryDto()
                         {
@@ -1119,21 +1116,22 @@ namespace Services.Broadcast.Repositories
                             Rows = file.rows_processed ?? 0
                         };
 
-                        if(file.inventory_file_proprietary_header.Any()) //Proprietary Inventory file
+                        if (file.inventory_file_proprietary_header.Any()) //Proprietary Inventory file
                         {
                             var header = file.inventory_file_proprietary_header.SingleOrDefault();
-                            if(file.inventory_sources.inventory_source_type == (int)InventorySourceTypeEnum.Diginet)
+                            if (file.inventory_sources.inventory_source_type == (int)InventorySourceTypeEnum.Diginet)
                             {
                                 fileHistory.DaypartCodes = _GetDistinctDaypartCodesFromManifests(file.station_inventory_manifest);
                             }
-                            else {
+                            else
+                            {
                                 fileHistory.DaypartCodes = new List<String>() { header.daypart_codes.code };
                             }
-                            
+
                             fileHistory.EffectiveDate = header.effective_date;
                             fileHistory.EndDate = header.end_date;
 
-                            if(header.hut_media_months != null)
+                            if (header.hut_media_months != null)
                             {
                                 fileHistory.HutBook = new MediaMonthDto
                                 {
@@ -1153,7 +1151,8 @@ namespace Services.Broadcast.Repositories
                                 };
                             }
 
-                        } else if (file.station_inventory_manifest.Any(m => m.station_inventory_manifest_weeks.Any())) //Open Market Inventory file
+                        }
+                        else if (file.station_inventory_manifest.Any(m => m.station_inventory_manifest_weeks.Any())) //Open Market Inventory file
                         {
                             fileHistory.EffectiveDate = file.station_inventory_manifest.SelectMany(m => m.station_inventory_manifest_weeks.Select(w => w.start_date)).Min();
                             fileHistory.EndDate = file.station_inventory_manifest.SelectMany(m => m.station_inventory_manifest_weeks.Select(w => w.end_date)).Max();
@@ -1170,7 +1169,7 @@ namespace Services.Broadcast.Repositories
 
                     }
 
-                    return result; 
+                    return result;
 
                 });
         }
@@ -1179,7 +1178,7 @@ namespace Services.Broadcast.Repositories
         {
             var result = new List<string>();
 
-            if(manifests != null && manifests.Count > 0)
+            if (manifests != null && manifests.Count > 0)
             {
                 result = manifests.SelectMany(m => m.station_inventory_manifest_dayparts.Select(d => d.daypart_codes.code)).Distinct().ToList();
             }
