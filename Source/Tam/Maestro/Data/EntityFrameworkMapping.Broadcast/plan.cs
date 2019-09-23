@@ -52,7 +52,6 @@ namespace EntityFrameworkMapping.Broadcast
         public double delivery_rating_points { get; set; }
         public decimal cpp { get; set; }
         public int currency { get; set; }
-        public double delivery { get; set; }
         public double vpvh { get; set; }
         public decimal household_cpm { get; set; }
         public double household_universe { get; set; }

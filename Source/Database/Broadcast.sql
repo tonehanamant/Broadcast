@@ -278,7 +278,6 @@ BEGIN
 	UPDATE Plans SET [coverage_goal_percent] = 60 WHERE [coverage_goal_percent] IS NULL
 	UPDATE Plans SET [delivery_rating_points] = 0.00248816152650979 WHERE [delivery_rating_points] IS NULL
 	UPDATE Plans SET [cpp] = 200951583.9999 WHERE [cpp] IS NULL
-	UPDATE Plans SET [delivery] = 150000.00 WHERE [delivery] IS NULL
 	/* End pre-prod data cleanup for these now non-nullable columns */
 
 	ALTER TABLE dbo.plans ALTER COLUMN [name] [nvarchar](265) NOT NULL
@@ -291,7 +290,6 @@ BEGIN
 	ALTER TABLE dbo.plans ALTER COLUMN [coverage_goal_percent] [float] NOT NULL
 	ALTER TABLE dbo.plans ALTER COLUMN [delivery_rating_points] [float] NOT NULL
 	ALTER TABLE dbo.plans ALTER COLUMN [cpp] [money] NOT NULL
-	ALTER TABLE dbo.plans ALTER COLUMN [delivery] [float] NOT NULL
 END
 
 /*************************************** END PRI-12723  *****************************************************/
@@ -328,6 +326,17 @@ BEGIN
 	CREATE NONCLUSTERED INDEX [IX_inventory_file_ratings_job_notes_inventory_file_ratings_job_id] ON [dbo].[inventory_file_ratings_job_notes] ([inventory_file_ratings_job_id])
 END
 /*************************************** END tracking_ratings_service  *****************************************************/
+
+/*************************************** START BUILD FIX  *****************************************************/
+IF EXISTS(SELECT 1 FROM sys.COLUMNS 
+				WHERE object_id = OBJECT_ID('plans')
+					AND name = 'delivery')
+BEGIN
+	ALTER TABLE plans
+	DROP COLUMN delivery
+END
+GO
+/*************************************** END BUILD FIX  *****************************************************/
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 

@@ -744,7 +744,6 @@
           <Property Name="delivery_rating_points" Type="float" Nullable="false" />
           <Property Name="cpp" Type="money" Nullable="false" />
           <Property Name="currency" Type="int" Nullable="false" />
-          <Property Name="delivery" Type="float" Nullable="false" />
           <Property Name="vpvh" Type="float" Nullable="false" />
           <Property Name="household_delivery_impressions" Type="float" Nullable="false" />
           <Property Name="household_cpm" Type="money" Nullable="false" />
@@ -10422,7 +10421,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="delivery_rating_points" Type="Double" Nullable="false" />
           <Property Name="cpp" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
           <Property Name="currency" Type="Int32" Nullable="false" />
-          <Property Name="delivery" Type="Double" Nullable="false" />
           <Property Name="vpvh" Type="Double" Nullable="false" />
           <Property Name="household_cpm" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
           <Property Name="household_universe" Type="Double" Nullable="false" />
@@ -12451,7 +12449,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
                 <ScalarProperty Name="household_universe" ColumnName="household_universe" />
                 <ScalarProperty Name="household_cpm" ColumnName="household_cpm" />
                 <ScalarProperty Name="vpvh" ColumnName="vpvh" />
-                <ScalarProperty Name="delivery" ColumnName="delivery" />
                 <ScalarProperty Name="currency" ColumnName="currency" />
                 <ScalarProperty Name="cpp" ColumnName="cpp" />
                 <ScalarProperty Name="delivery_rating_points" ColumnName="delivery_rating_points" />
