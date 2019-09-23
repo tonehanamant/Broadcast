@@ -146,7 +146,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
 
         [Test]
         [TestCase(1024, false, null)]
-        [TestCase(1025, true, "The campaign notes are invalid")]
+        [TestCase(1025, true, "Campaign notes cannot be longer than 1024 characters")]
         public void ValidateCampaignNotesBounds(int length, bool throws, string expectedMessage)
         {
             var campaignNotes = StringHelper.CreateStringOfLength(length);

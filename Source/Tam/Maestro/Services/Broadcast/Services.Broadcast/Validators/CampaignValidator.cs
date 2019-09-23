@@ -26,7 +26,7 @@ namespace Services.Broadcast.Validators
         public const string InvalidAdvertiserErrorMessage = "The advertiser id is invalid, please provide a valid and active id";
         public const string InvalidAgencyErrorMessage = "The agency id is invalid, please provide a valid and active id";
         public const string InvalidCampaignNameErrorMessage = "The campaign name is invalid, please provide a valid name";
-        public const string InvalidCampaignNotesErrorMessage = "The campaign notes are invalid";
+        public const string InvalidCampaignNotesErrorMessage = "Campaign notes cannot be longer than 1024 characters";
 
         private readonly ITrafficApiClient _TrafficApiClient;
         private readonly IAgencyCache _AgencyCache;
