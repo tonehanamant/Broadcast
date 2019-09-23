@@ -246,7 +246,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 PlanDto newPlan = _GetNewPlan();
                 var planId = _PlanService.SavePlan(newPlan, "integration_test", new System.DateTime(2019, 01, 15));
                 PlanDto modifiedPlan = _PlanService.GetPlan(planId);
-                modifiedPlan.Dayparts.Add(new PlanDaypartDto { DaypartCodeId = 3, StartTimeSeconds = 1200, EndTimeSeconds = 1900, WeightingGoalPercent = 67 });
+                modifiedPlan.Dayparts.Add(new PlanDaypartDto { DaypartCodeId = 3, StartTimeSeconds = 1200, EndTimeSeconds = 1900, WeightingGoalPercent = 27 });
 
                 var modifiedPlanId = _PlanService.SavePlan(modifiedPlan, "integration_test", new System.DateTime(2019, 01, 15));
                 PlanDto finalPlan = _PlanService.GetPlan(modifiedPlanId);

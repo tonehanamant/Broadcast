@@ -52,10 +52,10 @@
   "FlightStartDate": "2019-01-01T00:00:00",
   "GoalBreakdownType": 1,
   "HouseholdCPM": 0.0120,
-  "HouseholdCPP": 159.1062,
+  "HouseholdCPP": 13.4572,
   "HouseholdDeliveryImpressions": 8333333.33333333,
-  "HouseholdRatingPoints": 0.62851066,
-  "HouseholdUniverse": 1325885750.0,
+  "HouseholdRatingPoints": 7.4309248,
+  "HouseholdUniverse": 112143960.0,
   "HUTBookId": 437,
   "ModifiedBy": "integration_test",
   "ModifiedDate": "2019-01-15T00:00:00",
@@ -68,7 +68,7 @@
   "Status": 1,
   "TotalActiveDays": 0,
   "TotalShareOfVoice": 0.0,
-  "Universe": 1325885750.0,
+  "Universe": 112143960.0,
   "Vpvh": 0.012,
   "WeeklyBreakdownWeeks": []
 }

@@ -77,7 +77,7 @@ namespace Services.Broadcast.Repositories
                                 FROM nsi.universes AS t1
                                 INNER JOIN (SELECT * FROM nsi.udf_GetMinPlaybackTypes(@media_month_id,@min_playback_type)) AS t2
                                 ON t1.market_code = t2.market_code AND t1.playback_type = t2.available_playback_type
-                                WHERE t1.audience_id = @audience_id";
+                                WHERE t1.audience_id = @audience_id AND t1.media_month_id = @media_month_id";
                 return _InReadUncommitedTransaction(context =>
                 {
                     var mediaMonth = new System.Data.SqlClient.SqlParameter("media_month_id", SqlDbType.SmallInt) { Value = mediaMonthId };
