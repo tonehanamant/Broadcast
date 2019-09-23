@@ -61,6 +61,7 @@ namespace Services.Broadcast.Validators
         const string INVALID_SOV_COUNT = "The share of voice count is not equal to 100%";
         const string INVALID_VPVH = "Invalid VPVH. The value must be between 0.001 and 1.";
         const string STOP_WORD_DETECTED = "Stop word detected in plan name";
+        const string SUM_OF_DAYPART_WEIGHTINGS_EXCEEDS_LIMIT = "Sum of weighting is greater than 100%";
 
         const string INVALID_BUDGET = "Invalid budget.";
         const string INVALID_CPM = "Invalid CPM.";
@@ -243,6 +244,12 @@ namespace Services.Broadcast.Validators
                 {
                     throw new Exception(INVALID_DAYPART_WEIGHTING_GOAL);
                 }
+            }
+
+            var sumOfDaypartWeighting = plan.Dayparts.Aggregate(0d, (sumOfWeighting, dayPart) => sumOfWeighting + dayPart.WeightingGoalPercent.GetValueOrDefault());
+            if (sumOfDaypartWeighting > 100)
+            {
+                throw new Exception(SUM_OF_DAYPART_WEIGHTINGS_EXCEEDS_LIMIT);
             }
         }
 

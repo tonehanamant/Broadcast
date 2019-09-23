@@ -364,6 +364,66 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
         }
 
         [Test]
+        public void ValidatePlan_SumofWeightingGoalPercentsExceeds100()
+        {
+            _ConfigureSpotLenghtEngineMockToReturnTrue();
+            var plan = _GetPlan();
+            plan.Dayparts = new List<PlanDaypartDto>
+            {
+                new PlanDaypartDto
+                {
+                    StartTimeSeconds = 54000,
+                    EndTimeSeconds = 50000,
+                    WeightingGoalPercent = 80
+                },
+                new PlanDaypartDto
+                {
+                    StartTimeSeconds = 54000,
+                    EndTimeSeconds = 50000,
+                    WeightingGoalPercent = 90
+                }
+            };
+
+            Assert.That(() => _planValidator.ValidatePlan(plan),
+                Throws.TypeOf<Exception>().With.Message.EqualTo("Sum of weighting is greater than 100%"));
+        }
+
+        [Test]
+        public void ValidatePlan_SumofWeightingGoalPercentsIsInBounds()
+        {
+            _ConfigureMocksToReturnTrue();
+            var plan = _GetPlan();
+            plan.Dayparts = new List<PlanDaypartDto>
+            {
+                new PlanDaypartDto
+                {
+                    StartTimeSeconds = 54000,
+                    EndTimeSeconds = 50000,
+                    WeightingGoalPercent = 20
+                },
+                new PlanDaypartDto
+                {
+                    StartTimeSeconds = 54000,
+                    EndTimeSeconds = 50000,
+                },
+                new PlanDaypartDto
+                {
+                    StartTimeSeconds = 54000,
+                    EndTimeSeconds = 50000,
+                    WeightingGoalPercent = 25
+                },
+                new PlanDaypartDto
+                {
+                    StartTimeSeconds = 54000,
+                    EndTimeSeconds = 50000,
+                    WeightingGoalPercent = 50
+                },
+            };
+
+            Assert.DoesNotThrow(() => _planValidator.ValidatePlan(plan));
+        }
+
+        [Test]
         public void ValidatePlan_IsValidAudienceTrue()
         {
             _ConfigureSpotLenghtEngineMockToReturnTrue();
