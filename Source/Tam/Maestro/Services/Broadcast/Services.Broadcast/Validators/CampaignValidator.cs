@@ -15,7 +15,7 @@ namespace Services.Broadcast.Validators
         /// Validates the specified campaign.
         /// </summary>
         /// <param name="campaign">The campaign.</param>
-        void Validate(CampaignDto campaign);
+        void Validate(SaveCampaignDto campaign);
     }
 
     /// <summary>
@@ -43,7 +43,7 @@ namespace Services.Broadcast.Validators
         }
 
         /// <inheritdoc />
-        public void Validate(CampaignDto campaign)
+        public void Validate(SaveCampaignDto campaign)
         {
             _ValidateCampaignName(campaign);
             _ValidateAgency(campaign);
@@ -51,7 +51,7 @@ namespace Services.Broadcast.Validators
             _ValidateNotes(campaign);
         }
 
-        private void _ValidateCampaignName(CampaignDto campaign)
+        private void _ValidateCampaignName(SaveCampaignDto campaign)
         {
             if (string.IsNullOrWhiteSpace(campaign.Name))
             {
@@ -65,7 +65,7 @@ namespace Services.Broadcast.Validators
             }
         }
 
-        private void _ValidateAdvertiser(CampaignDto campaign)
+        private void _ValidateAdvertiser(SaveCampaignDto campaign)
         {
             try
             {
@@ -77,7 +77,7 @@ namespace Services.Broadcast.Validators
             }
         }
 
-        private void _ValidateAgency(CampaignDto campaign)
+        private void _ValidateAgency(SaveCampaignDto campaign)
         {
             try
             {
@@ -89,7 +89,7 @@ namespace Services.Broadcast.Validators
             }
         }
 
-        private void _ValidateNotes(CampaignDto campaign)
+        private void _ValidateNotes(SaveCampaignDto campaign)
         {
             const int notesMaxLength = 1024;
             if ((campaign.Notes?.Length ?? 0) > notesMaxLength)

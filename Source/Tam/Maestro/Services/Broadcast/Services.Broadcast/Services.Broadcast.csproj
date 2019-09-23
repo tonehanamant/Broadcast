@@ -261,6 +261,7 @@
     <Compile Include="Clients\ConfigurationClientSwitch.cs" />
     <Compile Include="Entities\CampaignListItemDto.cs" />
     <Compile Include="Entities\CampaignQuarterDto.cs" />
+    <Compile Include="Entities\SaveCampaignDto.cs" />
     <Compile Include="Entities\DTO\EnvironmentDto.cs" />
     <Compile Include="Entities\DTO\ProductDto.cs" />
     <Compile Include="Entities\Enums\AudienceTypeEnum.cs" />

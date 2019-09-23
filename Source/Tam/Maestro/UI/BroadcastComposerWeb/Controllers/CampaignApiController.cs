@@ -73,7 +73,7 @@ namespace BroadcastComposerWeb.Controllers
         [HttpPost]
         [Route("")]
         [Authorize]
-        public BaseResponse<int> CreateCampaign(CampaignDto campaign)
+        public BaseResponse<int> CreateCampaign(SaveCampaignDto campaign)
         {
             return
                 _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ICampaignService>()

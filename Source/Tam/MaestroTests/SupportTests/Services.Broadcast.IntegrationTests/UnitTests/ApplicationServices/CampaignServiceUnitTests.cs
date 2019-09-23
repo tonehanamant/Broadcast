@@ -258,7 +258,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             const string campaignNotes = "Notes for CampaignOne.";
             const int advertiserId = 1;
             const int agencyId = 1;
-            var campaign = new CampaignDto
+            var campaign = new SaveCampaignDto
             {
                 Id = campaignId,
                 Name = campaignName,
@@ -295,7 +295,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 
             // Assert
             campaignValidatorMock.Verify(x => x.Validate(
-                It.Is<CampaignDto>(c => c.Id == campaignId &&
+                It.Is<SaveCampaignDto>(c => c.Id == campaignId &&
                                         c.Name == campaignName &&
                                         c.Notes == campaignNotes &&
                                         c.AdvertiserId == advertiserId &&
@@ -311,7 +311,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             const string campaignNotes = "Notes for CampaignOne.";
             const int advertiserId = 1;
             const int agencyId = 1;
-            var campaign = new CampaignDto
+            var campaign = new SaveCampaignDto
             {
                 Id = campaignId,
                 Name = campaignName,
@@ -349,7 +349,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 
             // Assert
             campaignRepositoryMock.Verify(x => x.CreateCampaign(
-                It.Is<CampaignDto>(c => c.Id == campaignId &&
+                It.Is<SaveCampaignDto>(c => c.Id == campaignId &&
                                         c.Name == campaignName &&
                                         c.Notes == campaignNotes &&
                                         c.AdvertiserId == advertiserId &&
@@ -368,7 +368,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             const string campaignNotes = "Notes for CampaignOne.";
             const int advertiserId = 1;
             const int agencyId = 1;
-            var campaign = new CampaignDto
+            var campaign = new SaveCampaignDto
             {
                 Id = campaignId,
                 Name = campaignName,
@@ -386,8 +386,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             var agencyCache = new Mock<IAgencyCache>();
 
             campaignValidatorMock
-                .Setup(s => s.Validate(It.IsAny<CampaignDto>()))
-                .Callback<CampaignDto>(x => throw new Exception(expectedMessage));
+                .Setup(s => s.Validate(It.IsAny<SaveCampaignDto>()))
+                .Callback<SaveCampaignDto>(x => throw new Exception(expectedMessage));
 
             var tc = new CampaignService(
                 dataRepositoryFactoryMock.Object,
@@ -405,12 +405,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 
             // Assert
             campaignValidatorMock.Verify(x => x.Validate(
-                It.Is<CampaignDto>(c => c.Id == campaignId &&
+                It.Is<SaveCampaignDto>(c => c.Id == campaignId &&
                                         c.Name == campaignName &&
                                         c.Notes == campaignNotes &&
                                         c.AdvertiserId == advertiserId &&
                                         campaign.AgencyId == agencyId)), Times.Once);
-            campaignRepositoryMock.Verify(x => x.CreateCampaign(It.IsAny<CampaignDto>(), _CreatedBy, _CreatedDate), Times.Never);
+            campaignRepositoryMock.Verify(x => x.CreateCampaign(It.IsAny<SaveCampaignDto>(), _CreatedBy, _CreatedDate), Times.Never);
             Assert.AreEqual(expectedMessage, caught.Message);
         }
 
@@ -424,7 +424,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             const string campaignNotes = "Notes for CampaignOne.";
             const int advertiserId = 1;
             const int agencyId = 1;
-            var campaign = new CampaignDto
+            var campaign = new SaveCampaignDto
             {
                 Id = campaignId,
                 Name = campaignName,
@@ -442,7 +442,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             var agencyCache = new Mock<IAgencyCache>();
 
             campaignRepositoryMock
-                .Setup(s => s.CreateCampaign(It.IsAny<CampaignDto>(), It.IsAny<string>(), It.IsAny<DateTime>()))
+                .Setup(s => s.CreateCampaign(It.IsAny<SaveCampaignDto>(), It.IsAny<string>(), It.IsAny<DateTime>()))
                 .Callback(() => throw new Exception(expectedMessage));
             dataRepositoryFactoryMock.Setup(s => s.GetDataRepository<ICampaignRepository>()).Returns(campaignRepositoryMock.Object);
 
@@ -462,7 +462,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 
             // Assert
             campaignRepositoryMock.Verify(x => x.CreateCampaign(
-                It.Is<CampaignDto>(c => c.Id == campaignId &&
+                It.Is<SaveCampaignDto>(c => c.Id == campaignId &&
                                         c.Name == campaignName &&
                                         c.Notes == campaignNotes &&
                                         c.AdvertiserId == advertiserId &&
@@ -554,7 +554,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         public void SaveDoesNotTriggersAggregation()
         {
             const int newCampaignId = 1;
-            var campaign = new CampaignDto
+            var campaign = new SaveCampaignDto
             {
                 Id = 0,
                 Name = "CampaignOne",
@@ -574,7 +574,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             dataRepositoryFactoryMock.Setup(x => x.GetDataRepository<ICampaignRepository>()).Returns(campaignRepositoryMock.Object);
             dataRepositoryFactoryMock.Setup(x => x.GetDataRepository<ICampaignSummaryRepository>()).Returns(campaignSummaryRepository.Object);
             campaignRepositoryMock
-                .Setup(x => x.CreateCampaign(It.IsAny<CampaignDto>(), It.IsAny<string>(), It.IsAny<DateTime>()))
+                .Setup(x => x.CreateCampaign(It.IsAny<SaveCampaignDto>(), It.IsAny<string>(), It.IsAny<DateTime>()))
                 .Returns(newCampaignId);
             campaignRepositoryMock.Setup(x => x.GetCampaignsDateRanges(It.IsAny<PlanStatusEnum?>())).Returns(getCampaignsDateRangesReturn);
             campaignSummaryRepository.Setup(s => s.SaveSummary(It.IsAny<CampaignSummaryDto>())).Returns(1);

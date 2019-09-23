@@ -100,7 +100,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var campaign = _GetValidCampaign();
+                var campaign = _GetValidCampaignForSave();
 
                 int campaignId = _CampaignService.SaveCampaign(campaign, IntegrationTestUser, CreatedDate);
                 Assert.IsTrue(campaignId > 0);
@@ -134,7 +134,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     IntegrationTestApplicationServiceFactory.Instance.Resolve<IAgencyCache>()
                     );
 
-                var campaign = _GetValidCampaign();
+                var campaign = _GetValidCampaignForSave();
                 campaign.Id = 1;
 
                 var exception = Assert.Throws<Exception>(() => service.SaveCampaign(campaign, IntegrationTestUser, CreatedDate));
@@ -150,7 +150,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             const int maxNameLength = 255;
             using (new TransactionScopeWrapper())
             {
-                var campaign = _GetValidCampaign();
+                var campaign = _GetValidCampaignForSave();
                 campaign.Name = StringHelper.CreateStringOfLength(maxNameLength);
 
                 int campaignId = _CampaignService.SaveCampaign(campaign, IntegrationTestUser, CreatedDate);
@@ -165,7 +165,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             const int maxNotesLength = 1024;
             using (new TransactionScopeWrapper())
             {
-                var campaign = _GetValidCampaign();
+                var campaign = _GetValidCampaignForSave();
                 campaign.Notes = StringHelper.CreateStringOfLength(maxNotesLength);
 
                 int campaignId = _CampaignService.SaveCampaign(campaign, IntegrationTestUser, CreatedDate);
@@ -179,14 +179,24 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var campaign = _GetValidCampaign();
+                var campaign = _GetValidCampaignForSave();
                 int campaignId = _CampaignService.SaveCampaign(campaign, IntegrationTestUser, CreatedDate);
 
                 _CampaignSummaryRepository.SaveSummary(GetSummary(campaignId, IntegrationTestUser, CreatedDate));
                 CampaignDto foundCampaign = _CampaignService.GetCampaignById(campaignId);
+                var campaignToSave = new SaveCampaignDto
+                {
+                    Id = foundCampaign.Id,
+                    Name = foundCampaign.Name,
+                    AgencyId = foundCampaign.AgencyId,
+                    AdvertiserId = foundCampaign.AdvertiserId,
+                    Notes = foundCampaign.Notes,
+                    ModifiedBy = foundCampaign.ModifiedBy,
+                    ModifiedDate = foundCampaign.ModifiedDate
+                };
 
-                foundCampaign.Name = "Updated name of Campaign1";
-                int updatedCampaignId = _CampaignService.SaveCampaign(foundCampaign, IntegrationTestUser, CreatedDate);
+                campaignToSave.Name = "Updated name of Campaign1";
+                int updatedCampaignId = _CampaignService.SaveCampaign(campaignToSave, IntegrationTestUser, CreatedDate);
                 CampaignDto updatedCampaign = _CampaignService.GetCampaignById(updatedCampaignId);
 
                 Assert.AreEqual(updatedCampaign.Id, campaignId);
@@ -229,7 +239,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var campaign = _GetValidCampaign();
+                var campaign = _GetValidCampaignForSave();
 
                 // Invalid advertiser id.
                 campaign.AdvertiserId = 666;
@@ -271,7 +281,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var campaign = _GetValidCampaign();
+                var campaign = _GetValidCampaignForSave();
 
                 campaign.Name = campaignName;
 
@@ -287,13 +297,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var campaign = _GetValidCampaign();
+                var campaign = _GetValidCampaignForSave();
                 var campaignId = _CampaignService.SaveCampaign(campaign, IntegrationTestUser, CreatedDate);
                 var plan = _GetNewPlan();                
                 plan.Status = PlanStatusEnum.ClientApproval;
                 plan.CampaignId = campaignId;
 
-                var secondCampaign = _GetValidCampaign();
+                var secondCampaign = _GetValidCampaignForSave();
                 var secondCampaignId = _CampaignService.SaveCampaign(secondCampaign, IntegrationTestUser, CreatedDate);
                 var secondPlan = _GetNewPlan();
                 secondPlan.FlightStartDate = new DateTime(2018, 02, 01);
@@ -334,7 +344,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var campaign = _GetValidCampaign();
+                var campaign = _GetValidCampaignForSave();
                 var campaignId = _CampaignService.SaveCampaign(campaign, IntegrationTestUser, CreatedDate);
                 var plan = _GetNewPlan();
                 plan.CampaignId = campaignId;
@@ -402,9 +412,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        private CampaignDto _GetValidCampaign()
+        private SaveCampaignDto _GetValidCampaignForSave()
         {
-            return new CampaignDto
+            return new SaveCampaignDto
             {
                 Name = "Campaign1",
                 AdvertiserId = 1,

@@ -20,7 +20,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
         [TestCase("Campaign1", 1, 23, CampaignValidator.InvalidAgencyErrorMessage)]
         public void ValidateFailure_WhenAgencyIsInvalid(string campaignName, int advertiserId, int agencyId, string expectedMessage)
         {
-            var item = new CampaignDto
+            var item = new SaveCampaignDto
             {
                 Name = campaignName,
                 AdvertiserId = advertiserId,
@@ -43,7 +43,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
         [TestCase("Campaign1", 23, 1, CampaignValidator.InvalidAdvertiserErrorMessage)]
         public void ValidateFailure_WhenAdvertiserIsInvalid(string campaignName, int advertiserId, int agencyId, string expectedMessage)
         {
-            var item = new CampaignDto
+            var item = new SaveCampaignDto
             {
                 Name = campaignName,
                 AdvertiserId = advertiserId,
@@ -100,7 +100,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
         [TestCase("Campaign1", 1, 1)]
         public void ValidateSuccess(string campaignName, int advertiserId, int agencyId)
         {
-            var item = new CampaignDto
+            var item = new SaveCampaignDto
             {
                 Name = campaignName,
                 AdvertiserId = advertiserId,
@@ -121,7 +121,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
         public void ValidateCampaignNameBounds(int length, bool throws, string expectedMessage)
         {
             var campaignName = StringHelper.CreateStringOfLength(length);
-            var item = new CampaignDto
+            var item = new SaveCampaignDto
             {
                 Name = campaignName,
                 AdvertiserId = 1,
@@ -150,7 +150,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
         public void ValidateCampaignNotesBounds(int length, bool throws, string expectedMessage)
         {
             var campaignNotes = StringHelper.CreateStringOfLength(length);
-            var item = new CampaignDto
+            var item = new SaveCampaignDto
             {
                 Name = "Campaign1",
                 AdvertiserId = 1,

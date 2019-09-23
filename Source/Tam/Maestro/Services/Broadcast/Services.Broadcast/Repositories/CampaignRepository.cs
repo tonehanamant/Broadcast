@@ -43,14 +43,14 @@ namespace Services.Broadcast.Repositories
         /// <param name="createdBy">The created by.</param>
         /// <param name="createdDate">The created date.</param>
         /// <returns>Id of the new campaign</returns>
-        int CreateCampaign(CampaignDto campaignDto, string createdBy, DateTime createdDate);
+        int CreateCampaign(SaveCampaignDto campaignDto, string createdBy, DateTime createdDate);
 
         /// <summary>
         /// Updates the campaign.
         /// </summary>
         /// <param name="campaignDto">The campaign dto.</param>
-        /// <returns>Id of the campain updated</returns>
-        int UpdateCampaign(CampaignDto campaignDto);
+        /// <returns>Id of the campaign updated</returns>
+        int UpdateCampaign(SaveCampaignDto campaignDto);
 
         /// <summary>
         /// Gets the list of all date ranges for campaign's plans
@@ -87,7 +87,7 @@ namespace Services.Broadcast.Repositories
             : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
 
         /// <inheritdoc />
-        public int CreateCampaign(CampaignDto campaignDto, string createdBy, DateTime createdDate)
+        public int CreateCampaign(SaveCampaignDto campaignDto, string createdBy, DateTime createdDate)
         {
             var campaign = new campaign
             {
@@ -111,7 +111,7 @@ namespace Services.Broadcast.Repositories
         }
 
         /// <inheritdoc />
-        public int UpdateCampaign(CampaignDto campaignDto)
+        public int UpdateCampaign(SaveCampaignDto campaignDto)
         {
             return _InReadUncommitedTransaction(
                context =>

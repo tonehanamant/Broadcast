@@ -46,7 +46,7 @@ namespace Services.Broadcast.ApplicationServices
         /// <param name="userName">Name of the user.</param>
         /// <param name="createdDate">The created date.</param>
         /// <returns>Id of the new campaign</returns>
-        int SaveCampaign(CampaignDto campaign, string userName, DateTime createdDate);
+        int SaveCampaign(SaveCampaignDto campaign, string userName, DateTime createdDate);
 
         /// <summary>
         /// Gets the quarters.
@@ -259,7 +259,7 @@ namespace Services.Broadcast.ApplicationServices
         }
 
         /// <inheritdoc />
-        public int SaveCampaign(CampaignDto campaign, string createdBy, DateTime createdDate)
+        public int SaveCampaign(SaveCampaignDto campaign, string createdBy, DateTime createdDate)
         {
             _CampaignValidator.Validate(campaign);
 
