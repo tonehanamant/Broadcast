@@ -117,7 +117,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
         [Test]
         [TestCase(0, true, "The campaign name is invalid, please provide a valid name")]
         [TestCase(255, false, null)]
-        [TestCase(256, true, "The campaign name is invalid, please provide a valid name")]
+        [TestCase(256, true, "Campaign name cannot be longer than 255 characters.")]
         public void ValidateCampaignNameBounds(int length, bool throws, string expectedMessage)
         {
             var campaignName = StringHelper.CreateStringOfLength(length);

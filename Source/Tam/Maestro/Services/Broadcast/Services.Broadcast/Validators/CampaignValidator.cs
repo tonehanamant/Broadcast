@@ -26,6 +26,7 @@ namespace Services.Broadcast.Validators
         public const string InvalidAdvertiserErrorMessage = "The advertiser id is invalid, please provide a valid and active id";
         public const string InvalidAgencyErrorMessage = "The agency id is invalid, please provide a valid and active id";
         public const string InvalidCampaignNameErrorMessage = "The campaign name is invalid, please provide a valid name";
+        public const string InvalidCampaignNameLengthErrorMessage = "Campaign name cannot be longer than 255 characters.";
         public const string InvalidCampaignNotesErrorMessage = "Campaign notes cannot be longer than 1024 characters";
 
         private readonly ITrafficApiClient _TrafficApiClient;
@@ -61,7 +62,7 @@ namespace Services.Broadcast.Validators
             const int nameMaxLength = 255;
             if (campaign.Name.Length > nameMaxLength)
             {
-                throw new InvalidOperationException(InvalidCampaignNameErrorMessage);
+                throw new InvalidOperationException(InvalidCampaignNameLengthErrorMessage);
             }
         }
 
