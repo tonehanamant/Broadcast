@@ -108,16 +108,39 @@ namespace BroadcastComposerWeb.Controllers
         [Route("{campaignId}/Lock")]
         public BaseResponse<LockResponse> LockCampaign(int campaignId)
         {
-            var key = KeyHelper.GetCampaignLockingKey(campaignId);
-            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ILockingManagerApplicationService>().LockObject(key));
+            // commenting it out until the issue with ILockingManagerApplicationService is not resolved
+            // var key = KeyHelper.GetCampaignLockingKey(campaignId);
+            // return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ILockingManagerApplicationService>().LockObject(key));
+
+            var response = new LockResponse
+            {
+                Key = "Stub key",
+                Success = true,
+                LockTimeoutInSeconds = 900,
+                LockedUserId = null,
+                LockedUserName = null,
+                Error = null
+            };
+
+            return _ConvertToBaseResponse(() => response);
         }
 
         [HttpPost]
         [Route("{campaignId}/Unlock")]
         public BaseResponse<ReleaseLockResponse> UnlockCampaign(int campaignId)
         {
-            var key = KeyHelper.GetCampaignLockingKey(campaignId);
-            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ILockingManagerApplicationService>().ReleaseObject(key));
+            // commenting it out until the issue with ILockingManagerApplicationService is not resolved
+            // var key = KeyHelper.GetCampaignLockingKey(campaignId);
+            // return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ILockingManagerApplicationService>().ReleaseObject(key));
+
+            var response = new ReleaseLockResponse
+            {
+                Key = "Stub key",
+                Success = true,
+                Error = null
+            };
+
+            return _ConvertToBaseResponse(() => response);
         }
 
         [HttpPost]
