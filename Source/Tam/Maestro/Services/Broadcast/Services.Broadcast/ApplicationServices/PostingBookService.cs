@@ -21,18 +21,18 @@ namespace Services.Broadcast.ApplicationServices
         List<LookupDto> GetAllPostingBooks();
 
         /// <summary>
-        /// Gets the share books available based on the flight start date.
+        /// Gets the default share book id based on the flight start date.
         /// </summary>
         /// <param name="startDate">The start date of the flight.</param>
-        /// <returns>List of LookupDto objects</returns>
-        List<LookupDto> GetShareBooks(DateTime startDate);
+        /// <returns>The default share book id</returns>
+        int GetDefaultShareBookId(DateTime startDate);
 
         /// <summary>
         /// Gets the hut books available based on the selected share book.
         /// </summary>
-        /// <param name="startDate">The start date of the flight.</param>
+        /// <param name="shareBookId">The share book id.</param>
         /// <returns>List of LookupDto objects</returns>
-        List<LookupDto> GetHUTBooks(DateTime? startDate, int? shareBookId);
+        List<LookupDto> GetHUTBooks(int shareBookId);
     }
 
     public class PostingBookService : IPostingBookService
@@ -62,28 +62,16 @@ namespace Services.Broadcast.ApplicationServices
         ///<inheritdoc/>
         public List<LookupDto> GetAllPostingBooks()
         {
-            return _ToLookupDto(_PostingBooks);                
+            return _ToLookupDto(_PostingBooks);
         }
 
         ///<inheritdoc/>
-        public List<LookupDto> GetHUTBooks(DateTime? flightStartDate, int? shareBookId)
+        public List<LookupDto> GetHUTBooks(int shareBookId)
         {
-
-            if(!flightStartDate.HasValue && !shareBookId.HasValue)
-            {
-                return _ToLookupDto(_PostingBooks);
-            }
-
-            DateTime shareBookDate;
-
-            if (shareBookId.HasValue)
-            {
-                shareBookDate = _PostingBooks.Where(b => b.Id == shareBookId).Select(b => b.StartDate).Single();
-            }
-            else //shareBookStartDate.HasValue
-            {
-                shareBookDate = flightStartDate.Value;
-            }
+            var shareBookDate = _PostingBooks
+                                    .Where(b => b.Id == shareBookId)
+                                    .Select(b => b.StartDate)
+                                    .Single();
 
             var currentQuarter = _QuartersEngine.GetQuarterRangeByDate(shareBookDate);
             var lastYearQuarter = _QuartersEngine.GetQuarterDetail(currentQuarter.Quarter, shareBookDate.Year - 1);
@@ -92,13 +80,12 @@ namespace Services.Broadcast.ApplicationServices
             var hutBooks = _PostingBooks
                 .Where(x => x.EndDate <= lastYearQuarter.EndDate);
             return _ToLookupDto(hutBooks);
-
         }
 
         ///<inheritdoc/>
-        public List<LookupDto> GetShareBooks(DateTime startDate)
+        public int GetDefaultShareBookId(DateTime startDate)
         {
-            return _ToLookupDto(_PostingBooks.Where(x => x.StartDate <= startDate));
+            return _PostingBooks.Find(x => x.StartDate <= startDate).Id;
         }
 
         #region Private methods

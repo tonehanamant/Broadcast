@@ -34,28 +34,27 @@ namespace BroadcastComposerWeb.Controllers
         }
 
         /// <summary>
-        /// Gets the share books.
+        /// Gets the default share book id.
         /// </summary>
         /// <param name="startDate">The start date of the flight.</param>
-        /// <returns>List of LookupDto objects</returns>
+        /// <returns>The default share book id</returns>
         [HttpGet]
         [Route("Share")]
-        public BaseResponse<List<LookupDto>> GetShareBooks(DateTime startDate)
+        public BaseResponse<int> GetShareBooks(DateTime startDate)
         {
-            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPostingBookService>().GetShareBooks(startDate));
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPostingBookService>().GetDefaultShareBookId(startDate));
         }
 
         /// <summary>
-        /// Gets the hut books avaible either based on share book id or by the start date of the flight.
+        /// Gets the hut books avaible based on share book id.
         /// </summary>
-        /// <param name="startDate">The start date of the flight.</param>
         /// <param name="shareBookId">Id of selected share book</param>
         /// <returns>List of LookupDto objects</returns>
         [HttpGet]
         [Route("HUT")]
-        public BaseResponse<List<LookupDto>> GetHutBooks(DateTime? startDate = null, int? shareBookId = null)
+        public BaseResponse<List<LookupDto>> GetHutBooks(int shareBookId)
         {
-            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPostingBookService>().GetHUTBooks(startDate, shareBookId));
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPostingBookService>().GetHUTBooks(shareBookId));
         }
     }
 }

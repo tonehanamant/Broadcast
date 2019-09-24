@@ -109,7 +109,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [UseReporter(typeof(DiffReporter))]
         public void CanNotUpdateLockedCampaign()
         {
             const string expectedMessage = "The chosen campaign has been locked by IntegrationUser";

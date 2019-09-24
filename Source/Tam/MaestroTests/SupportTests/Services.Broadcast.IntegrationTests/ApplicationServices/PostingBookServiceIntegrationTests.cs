@@ -12,28 +12,18 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         private readonly IPostingBookService _PostingBookService = IntegrationTestApplicationServiceFactory.GetApplicationService<IPostingBookService>();
 
         [Test]
-        [UseReporter(typeof(DiffReporter))]
         public void GetShareBooks()
         {
-            var shareBooks = _PostingBookService.GetShareBooks(new DateTime(2019,12,31));
+            var shareBookId = _PostingBookService.GetDefaultShareBookId(new DateTime(2019,12,31));
 
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(shareBooks));
+            Assert.AreEqual(437, shareBookId);
         }
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void GetHUTBooksByFlightStartDate()
+        public void GetHUTBooks()
         {
-            var shareBooks = _PostingBookService.GetHUTBooks(new DateTime(2019, 12, 31), null);
-
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(shareBooks));
-        }
-
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
-        public void GetHUTBooksByShareBookId()
-        {
-            var shareBooks = _PostingBookService.GetHUTBooks(null, 437);
+            var shareBooks = _PostingBookService.GetHUTBooks(437);
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(shareBooks));
         }

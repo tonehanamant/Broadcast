@@ -218,6 +218,9 @@ namespace Services.Broadcast.IntegrationTests.Stubbs
                 case "InventorySummaryCacheAbsoluteExpirationSeconds":
                     result = "600";
                     break;
+                case "EnableCampaignsLocking":
+                    result = "True";
+                    break;
                 default:
                     throw new Exception("Unknown SystemComponentParameter: " + parameterId);
             }
