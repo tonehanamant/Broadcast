@@ -155,6 +155,22 @@ namespace BroadcastComposerWeb.Controllers
         }
 
         [HttpPost]
+        [Route("LockTest/{campaignId}/Lock")]
+        public BaseResponse<LockResponse> LockTestLockCampaign(int campaignId)
+        {
+            var key = KeyHelper.GetCampaignLockingKey(campaignId);
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ILockingManagerApplicationService>().LockObject(key));
+        }
+
+        [HttpPost]
+        [Route("LockTest/{campaignId}/Unlock")]
+        public BaseResponse<ReleaseLockResponse> LockTestUnlockCampaign(int campaignId)
+        {
+            var key = KeyHelper.GetCampaignLockingKey(campaignId);
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ILockingManagerApplicationService>().ReleaseObject(key));
+        }
+
+        [HttpPost]
         [Route("Aggregate")]
         [Authorize]
         public BaseResponse<string> TriggerCampaignAggregation(int campaignId)
