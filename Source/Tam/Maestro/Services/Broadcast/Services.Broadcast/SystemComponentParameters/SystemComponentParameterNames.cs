@@ -472,6 +472,11 @@ namespace Tam.Maestro.Common.SystemComponentParameter
             get { return "EmailWhiteList"; }
         }
 	 
+		public static string EnableCampaignsLocking  
+		{
+            get { return "EnableCampaignsLocking"; }
+        }
+	 
 		public static string InventoryRatingsJobIntervalSeconds  
 		{
             get { return "InventoryRatingsJobIntervalSeconds"; }

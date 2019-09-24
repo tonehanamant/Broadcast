@@ -9,6 +9,7 @@ using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Helpers;
 using Services.Broadcast.Repositories;
+using Services.Broadcast.SystemComponentParameters;
 using Services.Broadcast.Validators;
 using System;
 using System.Collections.Generic;
@@ -272,17 +273,24 @@ namespace Services.Broadcast.ApplicationServices
             }
             else
             {
-                //var key = KeyHelper.GetCampaignLockingKey(campaign.Id);
-                //var lockingResult = _LockingManagerApplicationService.LockObject(key);
+                if (SafeBroadcastServiceSystemParameter.EnableCampaignsLocking)
+                {
+                    var key = KeyHelper.GetCampaignLockingKey(campaign.Id);
+                    var lockingResult = _LockingManagerApplicationService.LockObject(key);
 
-                //if (lockingResult.Success)
-                //{
-                return _CampaignRepository.UpdateCampaign(campaign);
-                //}
-                //else
-                //{
-                //    throw new Exception($"The chosen campaign has been locked by {lockingResult.LockedUserName}");
-                //}
+                    if (lockingResult.Success)
+                    {
+                        return _CampaignRepository.UpdateCampaign(campaign);
+                    }
+                    else
+                    {
+                        throw new Exception($"The chosen campaign has been locked by {lockingResult.LockedUserName}");
+                    }
+                }
+                else
+                {
+                    return _CampaignRepository.UpdateCampaign(campaign);
+                }
             }
         }
 

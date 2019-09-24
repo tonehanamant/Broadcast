@@ -522,6 +522,12 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.EmailWhiteList); }
         }
 	 
+		public static bool EnableCampaignsLocking  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<bool>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.EnableCampaignsLocking); }
+        }
+	 
 		public static int InventoryRatingsJobIntervalSeconds  
 		{
             get { return SystemComponentParameterHelper.GetPropertyValue<int>
