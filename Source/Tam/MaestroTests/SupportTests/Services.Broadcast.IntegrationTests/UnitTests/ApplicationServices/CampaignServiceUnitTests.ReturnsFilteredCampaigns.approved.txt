@@ -10,7 +10,7 @@
       "Name": "!_Name_1"
     },
     "Budget": null,
-    "CampaignStatus": null,
+    "CampaignStatus": 1,
     "FlightActiveDays": null,
     "FlightEndDate": null,
     "FlightHiatusDays": null,
@@ -39,7 +39,7 @@
       "Name": "!_Name_1"
     },
     "Budget": null,
-    "CampaignStatus": null,
+    "CampaignStatus": 1,
     "FlightActiveDays": null,
     "FlightEndDate": null,
     "FlightHiatusDays": null,
@@ -68,7 +68,7 @@
       "Name": "!_Name_1"
     },
     "Budget": null,
-    "CampaignStatus": null,
+    "CampaignStatus": 1,
     "FlightActiveDays": null,
     "FlightEndDate": null,
     "FlightHiatusDays": null,
