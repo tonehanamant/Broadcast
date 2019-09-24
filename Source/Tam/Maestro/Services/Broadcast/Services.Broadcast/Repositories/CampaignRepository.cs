@@ -237,6 +237,8 @@ namespace Services.Broadcast.Repositories
                             TotalActiveDays = summary.active_day_count,
                             TotalHiatusDays = summary.hiatus_days_count,
                             HasHiatus = summary.hiatus_days_count.HasValue && summary.hiatus_days_count.Value > 0,
+                            HHImpressions = plan.household_delivery_impressions,
+                            HHCPM = plan.household_cpm,
                             PlanSummaryQuarters = summary.plan_summary_quarters.Select(q => new PlanSummaryQuarterDto
                             {
                                 Quarter = q.quarter,

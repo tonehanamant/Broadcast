@@ -184,8 +184,6 @@ namespace Services.Broadcast.ApplicationServices
 
             _HydrateCampaignWithSummary(campaign, summary);
 
-            _SetPlansStubData(campaign);
-
             return campaign;
         }
 
@@ -228,15 +226,6 @@ namespace Services.Broadcast.ApplicationServices
             if (candidate > 0)
             {
                 planStatuses.Add(new PlansStatusCountDto { PlanStatus = status, Count = candidate.Value });
-            }
-        }
-
-        private void _SetPlansStubData(CampaignDto campaign)
-        {
-            foreach (var plan in campaign.Plans)
-            {
-                plan.HHImpressions = 10543.78d;
-                plan.HHCPM = 46.3m;
             }
         }
 
