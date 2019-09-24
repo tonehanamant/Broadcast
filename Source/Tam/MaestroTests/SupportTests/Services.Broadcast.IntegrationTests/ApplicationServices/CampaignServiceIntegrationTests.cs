@@ -44,9 +44,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     Quarter = new QuarterDto
                     {
-                        Quarter = 2,
+                        Quarter = 3,
                         Year = 2019
-                    }
+                    },
+                    PlanStatus = PlanStatusEnum.Contracted
                 }, new DateTime(2019, 04, 01));
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(campaigns));
             }
@@ -60,7 +61,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 var campaigns = _CampaignService.GetCampaigns(new CampaignFilterDto
                 {
-                    PlanStatus = PlanStatusEnum.Working
+                    PlanStatus = PlanStatusEnum.Contracted
                 }, new DateTime(2019, 04, 01));
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(campaigns));
             }
@@ -297,37 +298,12 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var campaign = _GetValidCampaignForSave();
-                var campaignId = _CampaignService.SaveCampaign(campaign, IntegrationTestUser, CreatedDate);
-                var plan = _GetNewPlan();                
-                plan.Status = PlanStatusEnum.ClientApproval;
-                plan.CampaignId = campaignId;
-
-                var secondCampaign = _GetValidCampaignForSave();
-                var secondCampaignId = _CampaignService.SaveCampaign(secondCampaign, IntegrationTestUser, CreatedDate);
-                var secondPlan = _GetNewPlan();
-                secondPlan.FlightStartDate = new DateTime(2018, 02, 01);
-                secondPlan.FlightEndDate = new DateTime(2018, 08, 31);
-                secondPlan.FlightHiatusDays = new List<DateTime>
-                {
-                    new DateTime(2018, 3, 20),
-                    new DateTime(2018, 4, 15)
-                };
-                secondPlan.Status = PlanStatusEnum.ClientApproval;
-                secondPlan.CampaignId = secondCampaignId;
-
-                _PlanService.SavePlan(plan, "integration_test", new DateTime(2019, 01, 01), aggregatePlanSynchronously: true);
-                _PlanService.SavePlan(secondPlan, "integration_test", new DateTime(2019, 01, 01), aggregatePlanSynchronously: true);
-
-                _CampaignSummaryRepository.SaveSummary(GetSummary(campaignId, IntegrationTestUser, CreatedDate));
-                _CampaignSummaryRepository.SaveSummary(GetSummary(secondCampaignId, IntegrationTestUser, CreatedDate));
-
                 var filter = new CampaignFilterDto
                 {
-                    PlanStatus = PlanStatusEnum.ClientApproval,
+                    PlanStatus = PlanStatusEnum.Contracted,
                     Quarter = new QuarterDto
                     {
-                        Quarter = 2,
+                        Quarter = 3,
                         Year = 2019
                     }
                 };
@@ -389,8 +365,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void ProcessCampaignAggregation_WithoutPlans()
         {
-            // Data already exists for campaign id 3 : campaign, summary
-            const int campaignId = 3;
+            // Data already exists for campaign id 2 : campaign, summary
+            const int campaignId = 2;
             using (new TransactionScopeWrapper())
             {
                 _CampaignService.ProcessCampaignAggregation(campaignId);

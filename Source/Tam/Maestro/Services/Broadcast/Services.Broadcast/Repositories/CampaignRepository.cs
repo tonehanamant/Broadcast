@@ -132,25 +132,47 @@ namespace Services.Broadcast.Repositories
         }
 
         /// <inheritdoc />
-        public List<CampaignListItemDto> GetCampaigns(DateTime? startDate, DateTime? endDate, PlanStatusEnum? planStatus)
+        public List<CampaignListItemDto> GetCampaigns(DateTime? startDate, DateTime? endDate, PlanStatusEnum? campaignStatus)
         {
             return _InReadUncommitedTransaction(
                 context =>
                 {
-                    var filteredPlans = _GetFilteredPlansWithDates(startDate, endDate, planStatus, context);
-                    var plansCampaignIds = filteredPlans.Select(p => p.campaign_id).ToList();
-                    var campaigns = _GetFilteredCampaignsWithoutValidPlans(startDate, endDate, planStatus, context);
-                    var campaignIdsWithNoPlans = campaigns.Select(c => c.id).ToList();
+                    var getCampaignsWithSummeries = (from c in context.campaigns
+                                                     join campaign_summaries in context.campaign_summaries on c.id equals campaign_summaries.campaign_id into gj
+                                                     from summary in gj.DefaultIfEmpty()
+                                                     orderby c.modified_date descending
+                                                     select new { campaign = c, summary });
 
-                    var campaignsIds = plansCampaignIds
-                        .Concat(campaignIdsWithNoPlans)
-                        .Distinct();
+                    if (startDate.HasValue && endDate.HasValue)
+                    {
+                        getCampaignsWithSummeries = getCampaignsWithSummeries.Where(item =>
+                            (item.summary == null && 
+                             item.campaign.created_date >= startDate.Value && 
+                             item.campaign.created_date <= endDate) ||
+                            
+                            (item.summary.flight_start_Date != null &&
+                             item.summary.flight_end_Date == null &&
+                             item.summary.flight_start_Date >= startDate &&
+                             item.summary.flight_start_Date <= endDate) ||
 
-                    return (from c in context.campaigns
-                            where campaignsIds.Contains(c.id)
-                            orderby c.modified_date descending
-                            select c).Select(_MapToCampaignListItemDto).ToList();
+                            (item.summary.flight_start_Date != null &&
+                             item.summary.flight_end_Date != null &&
+                             item.summary.flight_start_Date <= endDate &&
+                             item.summary.flight_end_Date >= startDate));
+                    }
+
+                    if (campaignStatus.HasValue)
+                    {
+                        getCampaignsWithSummeries = getCampaignsWithSummeries.Where(p => p.summary.campaign_status == (byte)campaignStatus);
+                    }
+
+                    return getCampaignsWithSummeries.ToList().Select(x => _MapToCampaignAndCampaignSummaryListItemDto(x.campaign, x.summary)).ToList();
                 });
+        }
+
+        private decimal? _ToNullableDecimal(double? candidate)
+        {
+            return candidate.HasValue ? Convert.ToDecimal(candidate) : (decimal?)null;
         }
 
         /// <inheritdoc />
@@ -342,10 +364,10 @@ namespace Services.Broadcast.Repositories
 
             return plansWithStartDate;
         }
-
-        private CampaignListItemDto _MapToCampaignListItemDto(campaign c)
+        
+        private CampaignListItemDto _MapToCampaignAndCampaignSummaryListItemDto(campaign c, campaign_summaries summary)
         {
-            return new CampaignListItemDto
+            var campaign = new CampaignListItemDto
             {
                 Id = c.id,
                 Name = c.name,
@@ -355,6 +377,24 @@ namespace Services.Broadcast.Repositories
                 ModifiedDate = c.modified_date,
                 ModifiedBy = c.modified_by
             };
+
+            if (summary != null)
+            {
+                campaign.FlightStartDate = summary.flight_start_Date;
+                campaign.FlightEndDate = summary.flight_end_Date;
+                campaign.FlightHiatusDays = summary.flight_hiatus_days;
+                campaign.FlightActiveDays = summary.flight_active_days;
+                campaign.HasHiatus = summary.flight_hiatus_days > 0;
+
+                campaign.Budget = (decimal?)summary.budget;
+                campaign.HouseholdCPM = (decimal?)summary.household_cpm;
+                campaign.HouseholdImpressions = summary.household_delivery_impressions;
+                campaign.HouseholdRatingPoints = summary.household_rating_points;
+                campaign.CampaignStatus = (PlanStatusEnum?)summary.campaign_status;
+            }
+
+            return campaign;
         }
+
     }
 }

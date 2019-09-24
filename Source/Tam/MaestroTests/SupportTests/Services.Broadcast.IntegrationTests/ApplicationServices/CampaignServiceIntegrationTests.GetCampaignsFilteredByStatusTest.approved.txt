@@ -26,24 +26,7 @@
     "Name": "Test Campaign 4",
     "Notes": null,
     "Plans": null,
-    "PlanStatuses": [
-      {
-        "Count": 1,
-        "PlanStatus": 1
-      },
-      {
-        "Count": 3,
-        "PlanStatus": 3
-      },
-      {
-        "Count": 1,
-        "PlanStatus": 5
-      },
-      {
-        "Count": 2,
-        "PlanStatus": 6
-      }
-    ]
+    "PlanStatuses": null
   },
   {
     "Advertiser": {
@@ -72,24 +55,7 @@
     "Name": "Test Campaign 2",
     "Notes": "This is a test note for a test campaign.",
     "Plans": null,
-    "PlanStatuses": [
-      {
-        "Count": 1,
-        "PlanStatus": 1
-      },
-      {
-        "Count": 3,
-        "PlanStatus": 3
-      },
-      {
-        "Count": 1,
-        "PlanStatus": 5
-      },
-      {
-        "Count": 2,
-        "PlanStatus": 6
-      }
-    ]
+    "PlanStatuses": null
   },
   {
     "Advertiser": {
@@ -117,52 +83,6 @@
     "ModifiedDate": "2019-05-09T00:00:00",
     "Name": "Test Campaign 1",
     "Notes": null,
-    "Plans": null,
-    "PlanStatuses": [
-      {
-        "Count": 1,
-        "PlanStatus": 1
-      },
-      {
-        "Count": 3,
-        "PlanStatus": 3
-      },
-      {
-        "Count": 1,
-        "PlanStatus": 5
-      },
-      {
-        "Count": 2,
-        "PlanStatus": 6
-      }
-    ]
-  },
-  {
-    "Advertiser": {
-      "AgencyId": 5,
-      "Id": 37444,
-      "Name": "Leagas Delaney"
-    },
-    "Agency": {
-      "Id": 5,
-      "Name": "\"_Name_5"
-    },
-    "Budget": null,
-    "CampaignStatus": null,
-    "FlightActiveDays": null,
-    "FlightEndDate": null,
-    "FlightHiatusDays": null,
-    "FlightStartDate": null,
-    "HasHiatus": null,
-    "HasPlans": false,
-    "HouseholdCPM": null,
-    "HouseholdImpressions": null,
-    "HouseholdRatingPoints": null,
-    "Id": 5,
-    "ModifiedBy": "IntegrationTestUser",
-    "ModifiedDate": "2018-01-01T00:00:00",
-    "Name": "Test Campaign 5",
-    "Notes": "This is a test note for a test campaign.",
     "Plans": null,
     "PlanStatuses": null
   },
@@ -193,23 +113,6 @@
     "Name": "Test Campaign 3",
     "Notes": null,
     "Plans": null,
-    "PlanStatuses": [
-      {
-        "Count": 1,
-        "PlanStatus": 1
-      },
-      {
-        "Count": 3,
-        "PlanStatus": 3
-      },
-      {
-        "Count": 1,
-        "PlanStatus": 5
-      },
-      {
-        "Count": 2,
-        "PlanStatus": 6
-      }
-    ]
+    "PlanStatuses": null
   }
 ]

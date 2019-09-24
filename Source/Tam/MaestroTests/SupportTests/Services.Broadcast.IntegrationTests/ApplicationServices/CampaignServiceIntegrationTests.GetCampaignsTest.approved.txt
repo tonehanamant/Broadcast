@@ -26,24 +26,7 @@
     "Name": "Test Campaign 4",
     "Notes": null,
     "Plans": null,
-    "PlanStatuses": [
-      {
-        "Count": 1,
-        "PlanStatus": 1
-      },
-      {
-        "Count": 3,
-        "PlanStatus": 3
-      },
-      {
-        "Count": 1,
-        "PlanStatus": 5
-      },
-      {
-        "Count": 2,
-        "PlanStatus": 6
-      }
-    ]
+    "PlanStatuses": null
   },
   {
     "Advertiser": {
@@ -72,24 +55,7 @@
     "Name": "Test Campaign 2",
     "Notes": "This is a test note for a test campaign.",
     "Plans": null,
-    "PlanStatuses": [
-      {
-        "Count": 1,
-        "PlanStatus": 1
-      },
-      {
-        "Count": 3,
-        "PlanStatus": 3
-      },
-      {
-        "Count": 1,
-        "PlanStatus": 5
-      },
-      {
-        "Count": 2,
-        "PlanStatus": 6
-      }
-    ]
+    "PlanStatuses": null
   },
   {
     "Advertiser": {
@@ -118,23 +84,35 @@
     "Name": "Test Campaign 1",
     "Notes": null,
     "Plans": null,
-    "PlanStatuses": [
-      {
-        "Count": 1,
-        "PlanStatus": 1
-      },
-      {
-        "Count": 3,
-        "PlanStatus": 3
-      },
-      {
-        "Count": 1,
-        "PlanStatus": 5
-      },
-      {
-        "Count": 2,
-        "PlanStatus": 6
-      }
-    ]
+    "PlanStatuses": null
+  },
+  {
+    "Advertiser": {
+      "AgencyId": 18,
+      "Id": 3,
+      "Name": "Name1"
+    },
+    "Agency": {
+      "Id": 18,
+      "Name": "&amp;_Name_18"
+    },
+    "Budget": 1500.0,
+    "CampaignStatus": 4,
+    "FlightActiveDays": 26,
+    "FlightEndDate": "2019-08-30T00:00:00",
+    "FlightHiatusDays": 4,
+    "FlightStartDate": "2019-08-01T00:00:00",
+    "HasHiatus": true,
+    "HasPlans": false,
+    "HouseholdCPM": 2500.0,
+    "HouseholdImpressions": 5500.0,
+    "HouseholdRatingPoints": 23.5,
+    "Id": 3,
+    "ModifiedBy": "IntegrationTestUser",
+    "ModifiedDate": "2017-06-05T00:00:00",
+    "Name": "Test Campaign 3",
+    "Notes": null,
+    "Plans": null,
+    "PlanStatuses": null
   }
 ]

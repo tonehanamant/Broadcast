@@ -151,9 +151,10 @@ namespace Services.Broadcast.ApplicationServices
 
             foreach (var campaign in campaigns)
             {
-                var summary = _CampaignSummaryRepository.GetSummaryForCampaign(campaign.Id);
-
-                _HydrateCampaignListItemWithSummary(campaign, summary);
+                if (!campaign.CampaignStatus.HasValue)
+                {
+                    campaign.CampaignStatus = PlanStatusEnum.Working;
+                }
 
                 campaign.Agency = _AgencyCache.GetAgency(campaign.Agency.Id);
                 _SetAdvertiser(campaign, cacheAdvertisers);
@@ -186,26 +187,6 @@ namespace Services.Broadcast.ApplicationServices
             _SetPlansStubData(campaign);
 
             return campaign;
-        }
-
-        private void _HydrateCampaignListItemWithSummary(CampaignListItemDto campaign, CampaignSummaryDto summary)
-        {
-            if (summary == null)
-                return;
-
-            campaign.FlightStartDate = summary.FlightStartDate;
-            campaign.FlightEndDate = summary.FlightEndDate;
-            campaign.FlightHiatusDays = summary.FlightHiatusDays;
-            campaign.FlightActiveDays = summary.FlightActiveDays;
-            campaign.HasHiatus = campaign.FlightHiatusDays > 0;
-
-            campaign.Budget = summary.Budget;
-            campaign.HouseholdCPM = summary.HouseholdCPM;
-            campaign.HouseholdImpressions = summary.HouseholdImpressions;
-            campaign.HouseholdRatingPoints = summary.HouseholdRatingPoints;
-
-            campaign.CampaignStatus = summary.CampaignStatus;
-            campaign.PlanStatuses = _MapToPlanStatuses(summary);
         }
 
         private void _HydrateCampaignWithSummary(CampaignDto campaign, CampaignSummaryDto summary)

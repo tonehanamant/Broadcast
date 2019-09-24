@@ -22,7 +22,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 {
     public class CampaignServiceUnitTests
     {
-        private const string _CreatedBy = "TestUser";
+        private const string _CreatedBy = "UnitTest_User";
         private readonly DateTime _CreatedDate = new DateTime(2017, 10, 17, 7, 30, 23);
         private readonly ITrafficApiClient _TrafficApiClient = new TrafficApiClientStub();
         private readonly Mock<ILockingManagerApplicationService> _LockingManagerApplicationServiceMock = new Mock<ILockingManagerApplicationService>();
@@ -43,39 +43,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             var campaignAggregator = new Mock<ICampaignAggregator>();
             var campaignSummaryRepository = new Mock<ICampaignSummaryRepository>();
             var agencyCache = new Mock<IAgencyCache>();
-            var getCampaignsReturn = new List<CampaignListItemDto>
-            {
-                new CampaignListItemDto
-                {
-                    Id = 1,
-                    Name = "CampaignOne",
-                    Agency = agency,
-                    Advertiser = advertiser,
-                    Notes = "Notes for CampaignOne.",
-                    ModifiedBy = "TestUser",
-                    ModifiedDate = new DateTime(2017,10,17)
-                },
-                new CampaignListItemDto
-                {
-                    Id = 2,
-                    Name = "CampaignTwo",
-                    Agency = agency,
-                    Advertiser = advertiser,
-                    Notes = "Notes for CampaignTwo.",
-                    ModifiedBy = "TestUser",
-                    ModifiedDate = new DateTime(2017,10,17)
-                },
-                new CampaignListItemDto
-                {
-                    Id = 3,
-                    Name = "CampaignThree",
-                    Agency = agency,
-                    Advertiser = advertiser,
-                    Notes = "Notes for CampaignThree.",
-                    ModifiedBy = "TestUser",
-                    ModifiedDate = new DateTime(2017,10,17)
-                }
-            };
+            var getCampaignsReturn = _GetCampaignsReturn(agency, advertiser);
 
             agencyCache.Setup(x => x.GetAgency(It.IsAny<int>())).Returns(agency);
             trafficApiClientMock.Setup(x => x.GetAdvertisersByAgencyId(It.IsAny<int>())).Returns(new List<AdvertiserDto> { advertiser });
@@ -114,7 +82,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 
             // Assert
             campaignRepositoryMock.Verify(x => x.GetCampaigns(It.IsAny<DateTime>(), It.IsAny<DateTime>(), It.IsAny<PlanStatusEnum>()), Times.Once);
-            campaignSummaryRepository.Verify(x => x.GetSummaryForCampaign(It.IsAny<int>()), Times.Exactly(3));
             // TODO: Bring this back.  Fails on CD test run build.
             //Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
             // TODO: When bring that back remove this 
@@ -137,39 +104,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             var campaignAggregator = new Mock<ICampaignAggregator>();
             var campaignSummaryRepository = new Mock<ICampaignSummaryRepository>();
             var agencyCache = new Mock<IAgencyCache>();
-            var getCampaignsReturn = new List<CampaignListItemDto>
-            {
-                new CampaignListItemDto
-                {
-                    Id = 1,
-                    Name = "CampaignOne",
-                    Agency = agency,
-                    Advertiser = advertiser,
-                    Notes = "Notes for CampaignOne.",
-                    ModifiedBy = "TestUser",
-                    ModifiedDate = new DateTime(2017,10,17)
-                },
-                new CampaignListItemDto
-                {
-                    Id = 2,
-                    Name = "CampaignTwo",
-                    Agency = agency,
-                    Advertiser = advertiser,
-                    Notes = "Notes for CampaignTwo.",
-                    ModifiedBy = "TestUser",
-                    ModifiedDate = new DateTime(2017,10,17)
-                },
-                new CampaignListItemDto
-                {
-                    Id = 3,
-                    Name = "CampaignThree",
-                    Agency = agency,
-                    Advertiser = advertiser,
-                    Notes = "Notes for CampaignThree.",
-                    ModifiedBy = "TestUser",
-                    ModifiedDate = new DateTime(2017,10,17)
-                }
-            };
+            List<CampaignListItemDto> getCampaignsReturn = _GetCampaignsReturn(agency, advertiser);
 
             agencyCache.Setup(x => x.GetAgency(It.IsAny<int>())).Returns(agency);
             trafficApiClientMock.Setup(x => x.GetAdvertisersByAgencyId(It.IsAny<int>())).Returns(new List<AdvertiserDto> { advertiser });
@@ -204,11 +139,50 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 
             // Assert
             campaignRepositoryMock.Verify(x => x.GetCampaigns(It.IsAny<DateTime>(), It.IsAny<DateTime>(), null), Times.Once);
-            campaignSummaryRepository.Verify(x => x.GetSummaryForCampaign(It.IsAny<int>()), Times.Exactly(3));
             // TODO: Bring this back.  Fails on CD test run build.
             //Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
             // TODO: When bring that back remove this 
             Assert.AreEqual(serExpectedResult, IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        private static List<CampaignListItemDto> _GetCampaignsReturn(AgencyDto agency, AdvertiserDto advertiser)
+        {
+            return new List<CampaignListItemDto>
+            {
+                new CampaignListItemDto
+                {
+                    Id = 1,
+                    Name = "CampaignOne",
+                    Agency = agency,
+                    Advertiser = advertiser,
+                    Notes = "Notes for CampaignOne.",
+                    ModifiedBy = "TestUser",
+                    ModifiedDate = new DateTime(2017,10,17),
+                    CampaignStatus = PlanStatusEnum.Working
+                },
+                new CampaignListItemDto
+                {
+                    Id = 2,
+                    Name = "CampaignTwo",
+                    Agency = agency,
+                    Advertiser = advertiser,
+                    Notes = "Notes for CampaignTwo.",
+                    ModifiedBy = "TestUser",
+                    ModifiedDate = new DateTime(2017,10,17),
+                    CampaignStatus = PlanStatusEnum.Working
+                },
+                new CampaignListItemDto
+                {
+                    Id = 3,
+                    Name = "CampaignThree",
+                    Agency = agency,
+                    Advertiser = advertiser,
+                    Notes = "Notes for CampaignThree.",
+                    ModifiedBy = "TestUser",
+                    ModifiedDate = new DateTime(2017,10,17),
+                    CampaignStatus = PlanStatusEnum.Working
+                }
+            };
         }
 
         [Test]

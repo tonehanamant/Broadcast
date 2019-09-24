@@ -113,7 +113,7 @@ namespace Services.Broadcast.Repositories
         /// <inheritdoc />
         public List<PlanDto> GetPlansForCampaign(int campaignId)
         {
-            return _InReadCommittedTransaction(context =>
+            return _InReadUncommitedTransaction(context =>
             {
                 var markets = context.markets.ToList();
                 var entitiesRaw = context.plans
