@@ -60,6 +60,7 @@ namespace Services.Broadcast.Validators
         const string INVALID_IMPRESSIONS_COUNT = "The impressions count is different between the delivery and the weekly breakdown";
         const string INVALID_SOV_COUNT = "The share of voice count is not equal to 100%";
         const string INVALID_VPVH = "Invalid VPVH. The value must be between 0.001 and 1.";
+        const string INVALID_FLIGHT_NOTES = "Flight notes cannot be longer than 1024 characters.";
         const string STOP_WORD_DETECTED = "Stop word detected in plan name";
         const string SUM_OF_DAYPART_WEIGHTINGS_EXCEEDS_LIMIT = "Sum of weighting is greater than 100%";
 
@@ -100,7 +101,7 @@ namespace Services.Broadcast.Validators
             }
 
             _ValidateProduct(plan);
-            _ValidateFlightAndHiatusDates(plan);
+            _ValidateFlightAndHiatus(plan);
             _ValidateDayparts(plan);
             _ValidatePrimaryAudience(plan);
             _ValidateSecondaryAudiences(plan.SecondaryAudiences, plan.AudienceId);
@@ -144,7 +145,7 @@ namespace Services.Broadcast.Validators
             }
         }
 
-        private void _ValidateFlightAndHiatusDates(PlanDto plan)
+        private void _ValidateFlightAndHiatus(PlanDto plan)
         {
             if (!plan.FlightStartDate.HasValue || !plan.FlightEndDate.HasValue)
             {
@@ -165,6 +166,9 @@ namespace Services.Broadcast.Validators
                     throw new Exception(INVALID_FLIGHT_HIATUS_DAY);
                 }
             }
+
+            if (!string.IsNullOrEmpty(plan.FlightNotes) && plan.FlightNotes.Length > 1024)
+                throw new Exception(INVALID_FLIGHT_NOTES);
         }
 
         private void _ValidatePrimaryAudience(PlanDto plan)

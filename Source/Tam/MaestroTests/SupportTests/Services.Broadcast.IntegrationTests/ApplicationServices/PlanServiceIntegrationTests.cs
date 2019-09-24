@@ -26,7 +26,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [UseReporter(typeof(DiffReporter))]
         public void CreateNewPlan()
         {
             using (new TransactionScopeWrapper())
@@ -172,7 +171,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [UseReporter(typeof(DiffReporter))]
         public void SavePlan_WithoutFlightInfo()
         {
             using (new TransactionScopeWrapper())
@@ -183,13 +181,12 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 testPlan.FlightNotes = null;
                 testPlan.FlightHiatusDays.Clear();
 
-                Assert.Throws<Exception>(() => _PlanService.SavePlan(testPlan, "integration_test",
-                    new DateTime(2019, 01, 01)), "Invalid flight start/end date.");
+                Assert.That(() => _PlanService.SavePlan(testPlan, "integration_test",
+                    new DateTime(2019, 01, 01)), Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid flight start/end date."));
             }
         }
 
         [Test]
-        [UseReporter(typeof(DiffReporter))]
         public void SavePlan_WithInvalidFlightDays()
         {
             using (new TransactionScopeWrapper())
@@ -198,13 +195,12 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 newPlan.FlightStartDate = new DateTime(2019, 10, 1);
                 newPlan.FlightEndDate = new DateTime(2018, 01, 01);
 
-                Assert.Throws<Exception>(() => _PlanService.SavePlan(newPlan, "integration_test",
-                    new DateTime(2019, 01, 01)), "Invalid flight dates.  The end date cannot be before the start date.");
+                Assert.That(() => _PlanService.SavePlan(newPlan, "integration_test",
+                    new DateTime(2019, 01, 01)), Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid flight dates.  The end date cannot be before the start date."));
             }
         }
 
         [Test]
-        [UseReporter(typeof(DiffReporter))]
         public void SavePlan_WithInvalidHiatusDays()
         {
             using (new TransactionScopeWrapper())
@@ -216,8 +212,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     new DateTime(1976, 6, 4)
                 };
 
-                Assert.Throws<Exception>(() => _PlanService.SavePlan(newPlan, "integration_test",
-                    new DateTime(2019, 01, 01)), "Invalid flight hiatus day.  All days must be within the flight date range.");
+                Assert.That(() => _PlanService.SavePlan(newPlan, "integration_test",
+                    new DateTime(2019, 01, 01)), Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid flight hiatus day.  All days must be within the flight date range."));
             }
         }
 
@@ -297,8 +293,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 PlanDto newPlan = _GetNewPlan();
                 newPlan.Dayparts.Add(new PlanDaypartDto { DaypartCodeId = 1, StartTimeSeconds = 8900, EndTimeSeconds = 4600, WeightingGoalPercent = 111.0 });
 
-                Assert.Throws<Exception>(() => _PlanService.SavePlan(newPlan, "integration_test",
-                    new DateTime(2019, 01, 01)), "Invalid daypart weighting goal.");
+                Assert.That(() => _PlanService.SavePlan(newPlan, "integration_test",
+                    new DateTime(2019, 01, 01)), Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid daypart weighting goal."));
             }
         }
 
@@ -322,7 +318,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [UseReporter(typeof(DiffReporter))]
         public void SavePlan_WithInvalidSecondaryAudience()
         {
             using (new TransactionScopeWrapper())
@@ -333,13 +328,12 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     new PlanAudienceDto {AudienceId = 0, Type = Entities.Enums.AudienceTypeEnum.Nielsen},
                 };
 
-                Assert.Throws<Exception>(() => _PlanService.SavePlan(newPlan, "integration_test",
-                new DateTime(2019, 01, 01)), "Invalid audience");
+                Assert.That(() => _PlanService.SavePlan(newPlan, "integration_test",
+                    new DateTime(2019, 01, 01)), Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid audience"));
             }
         }
 
         [Test]
-        [UseReporter(typeof(DiffReporter))]
         public void SavePlan_WithInvalidSecondaryAudienceDuplicate()
         {
             using (new TransactionScopeWrapper())
@@ -350,9 +344,21 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     new PlanAudienceDto {AudienceId = 31, Type = Entities.Enums.AudienceTypeEnum.Nielsen},
                 };
 
-                Assert.Throws<Exception>(() =>
-                _PlanService.SavePlan(newPlan, "integration_test", new DateTime(2019, 01, 01)),
-                "An audience cannot appear multiple times");
+                Assert.That(() => _PlanService.SavePlan(newPlan, "integration_test",
+                    new DateTime(2019, 01, 01)), Throws.TypeOf<Exception>().With.Message.EqualTo("An audience cannot appear multiple times"));
+            }
+        }
+
+        [Test]
+        public void SavePlan_WitInvalidFlightNotes()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                PlanDto testPlan = _GetNewPlan();
+                testPlan.FlightNotes = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque porttitor tellus at ante tempus vehicula ac at sapien. Pellentesque lorem velit, sodales in ex quis, laoreet dictum risus. Quisque odio sapien, dignissim a lacus et, dignissim auctor urna. Vestibulum tempus dui tortor, nec fermentum massa pharetra sit amet. Morbi fermentum ornare scelerisque. Proin ut lectus in nisl vulputate mattis in in ex. Nam erat sem, convallis condimentum velit blandit, scelerisque condimentum dolor. Maecenas fermentum feugiat lectus. Phasellus et sem in velit hendrerit sodales. Suspendisse porta nec felis ac blandit. In eu nisi ut dui tristique mattis. Vivamus vulputate, elit sit amet porta molestie, justo mauris cursus ipsum, et rhoncus arcu odio id enim. Pellentesque elementum posuere nibh ac rutrum. Donec eget erat nec lorem feugiat ornare vel congue nibh. Nulla cursus bibendum sollicitudin. Quisque viverra ante massa, sed molestie augue rutrum sed. Aenean tempus vitae purus sed lobortis. Sed cursus tempor erat ac pulvinar.";
+
+                Assert.That(() => _PlanService.SavePlan(testPlan, "integration_test",
+                    new DateTime(2019, 01, 01)), Throws.TypeOf<Exception>().With.Message.EqualTo("Flight notes cannot be longer than 1024 characters."));
             }
         }
 
@@ -530,16 +536,48 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        public void Calculator_WithoutMediaMonthId()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                Assert.That(() => _PlanService.Calculate(new PlanDeliveryBudget
+                {
+                    Budget = null,
+                    CPM = null,
+                    DeliveryImpressions = null,
+                    AudienceId = 5
+                }), Throws.TypeOf<Exception>().With.Message.EqualTo("Cannot calculate goal without media month and audience"));
+            }
+        }
+
+        [Test]
+        public void Calculator_WithoutAudienceId()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                Assert.That(() => _PlanService.Calculate(new PlanDeliveryBudget
+                {
+                    Budget = null,
+                    CPM = null,
+                    DeliveryImpressions = null,
+                    MediaMonthId = 437,
+                }), Throws.TypeOf<Exception>().With.Message.EqualTo("Cannot calculate goal without media month and audience"));
+            }
+        }
+
+        [Test]
         public void Calculator_InvalidObject()
         {
             using (new TransactionScopeWrapper())
             {
-                Assert.Throws<Exception>(() => _PlanService.Calculate(new PlanDeliveryBudget
+                Assert.That(() => _PlanService.Calculate(new PlanDeliveryBudget
                 {
                     Budget = null,
                     CPM = null,
-                    DeliveryImpressions = null
-                }), "At least 2 values needed to calculate goal amount");
+                    DeliveryImpressions = null,
+                    MediaMonthId = 437,
+                    AudienceId = 5
+                }), Throws.TypeOf<Exception>().With.Message.EqualTo("At least 2 values needed to calculate goal amount"));
             }
         }
 
@@ -548,28 +586,27 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                Assert.Throws<Exception>(() => _PlanService.Calculate(new PlanDeliveryBudget
+                Assert.That(() => _PlanService.Calculate(new PlanDeliveryBudget
                 {
                     Budget = 1,
                     CPM = 1,
                     DeliveryImpressions = 1,
                     AudienceId = 0
-                }), "Cannot calculate goal without media month and audience");
+                }), Throws.TypeOf<Exception>().With.Message.EqualTo("Cannot calculate goal without media month and audience"));
             }
         }
 
         [Test]
-        [UseReporter(typeof(DiffReporter))]
         public void Calculator_InvalidObject_NegativeValues()
         {
             using (new TransactionScopeWrapper())
             {
-                Assert.Throws<Exception>(() => _PlanService.Calculate(new PlanDeliveryBudget
+                Assert.That(() => _PlanService.Calculate(new PlanDeliveryBudget
                 {
                     Budget = -1,
                     CPM = null,
                     DeliveryImpressions = null
-                }), "Invalid budget values passed");
+                }), Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid budget values passed"));
             }
         }
 
@@ -581,8 +618,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 PlanDto newPlan = _GetNewPlan();
                 newPlan.Dayparts.Add(new PlanDaypartDto { DaypartCodeId = 1, StartTimeSeconds = -2, EndTimeSeconds = 4600, WeightingGoalPercent = 111.0 });
 
-                Assert.Throws<Exception>(() => _PlanService.SavePlan(newPlan, "integration_test",
-                    new DateTime(2019, 01, 01)), "Invalid daypart times.");
+                Assert.That(() => _PlanService.SavePlan(newPlan, "integration_test",
+                    new DateTime(2019, 01, 01)), Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid daypart times."));
             }
         }
 
@@ -594,8 +631,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 PlanDto newPlan = _GetNewPlan();
                 newPlan.Dayparts.Add(new PlanDaypartDto { DaypartCodeId = 1, StartTimeSeconds = 999999999, EndTimeSeconds = 4600, WeightingGoalPercent = 111.0 });
 
-                Assert.Throws<Exception>(() => _PlanService.SavePlan(newPlan, "integration_test",
-                    new DateTime(2019, 01, 01)), "Invalid daypart times.");
+                Assert.That(() => _PlanService.SavePlan(newPlan, "integration_test",
+                    new DateTime(2019, 01, 01)), Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid daypart times."));
             }
         }
 
@@ -607,8 +644,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 PlanDto newPlan = _GetNewPlan();
                 newPlan.Dayparts.Add(new PlanDaypartDto { DaypartCodeId = 1, StartTimeSeconds = 8900, EndTimeSeconds = -2, WeightingGoalPercent = 111.0 });
 
-                Assert.Throws<Exception>(() => _PlanService.SavePlan(newPlan, "integration_test",
-                    new DateTime(2019, 01, 01)), "Invalid daypart times.");
+                Assert.That(() => _PlanService.SavePlan(newPlan, "integration_test",
+                    new DateTime(2019, 01, 01)), Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid daypart times."));
             }
         }
 
@@ -621,8 +658,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 // generate a plan for test
                 PlanDto newPlan = _GetNewPlan();
                 newPlan.CoverageGoalPercent = null;
-                Assert.Throws<Exception>(() => _PlanService.SavePlan(newPlan, "integration_test",
-                    new DateTime(2019, 01, 01)), "Invalid daypart times.", "Invalid coverage goal value.");
+
+                Assert.That(() => _PlanService.SavePlan(newPlan, "integration_test",
+                    new DateTime(2019, 01, 01)), Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid coverage goal value."));
             }
         }
 
@@ -634,8 +672,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 PlanDto newPlan = _GetNewPlan();
                 newPlan.CoverageGoalPercent = -1;
 
-                Assert.Throws<Exception>(() => _PlanService.SavePlan(newPlan, "integration_test",
-                    new DateTime(2019, 01, 01)), "Invalid coverage goal value.");
+                Assert.That(() => _PlanService.SavePlan(newPlan, "integration_test",
+                    new DateTime(2019, 01, 01)), Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid coverage goal value."));
             }
         }
 
@@ -647,8 +685,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 PlanDto newPlan = _GetNewPlan();
                 newPlan.CoverageGoalPercent = 120;
 
-                Assert.Throws<Exception>(() => _PlanService.SavePlan(newPlan, "integration_test",
-                    new DateTime(2019, 01, 01)), "Invalid coverage goal value.");
+                Assert.That(() => _PlanService.SavePlan(newPlan, "integration_test",
+                    new DateTime(2019, 01, 01)), Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid coverage goal value."));
             }
         }
 
@@ -685,7 +723,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [UseReporter(typeof(DiffReporter))]
         public void SavePlan_WithEmptyAvailableMarkets()
         {
             using (new TransactionScopeWrapper())
@@ -694,9 +731,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 PlanDto newPlan = _GetNewPlan();
                 newPlan.AvailableMarkets.Clear();
 
-                Assert.Throws<Exception>(
-                    () => _PlanService.SavePlan(newPlan, "integration_test", new DateTime(2019, 01, 01))
-                    , "Invalid total market coverage.");
+                Assert.That(() => _PlanService.SavePlan(newPlan, "integration_test",
+                    new DateTime(2019, 01, 01)), Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid total market coverage."));
             }
         }
 
@@ -708,8 +744,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 PlanDto newPlan = _GetNewPlan();
                 newPlan.AvailableMarkets[0].ShareOfVoicePercent = -1;
 
-                Assert.Throws<Exception>(() => _PlanService.SavePlan(newPlan, "integration_test",
-                    new DateTime(2019, 01, 01)), "Invalid share of voice for market.");
+                Assert.That(() => _PlanService.SavePlan(newPlan, "integration_test",
+                    new DateTime(2019, 01, 01)), Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid share of voice for market."));
             }
         }
 
@@ -721,8 +757,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 PlanDto newPlan = _GetNewPlan();
                 newPlan.AvailableMarkets[0].ShareOfVoicePercent = 120;
 
-                Assert.Throws<Exception>(() => _PlanService.SavePlan(newPlan, "integration_test",
-                    new DateTime(2019, 01, 01)), "Invalid share of voice for market.");
+                Assert.That(() => _PlanService.SavePlan(newPlan, "integration_test",
+                    new DateTime(2019, 01, 01)), Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid share of voice for market."));
             }
         }
 
@@ -734,8 +770,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 PlanDto newPlan = _GetNewPlan();
                 newPlan.Dayparts.Add(new PlanDaypartDto { DaypartCodeId = 1, StartTimeSeconds = 8900, EndTimeSeconds = 999999999, WeightingGoalPercent = 111.0 });
 
-                Assert.Throws<Exception>(() => _PlanService.SavePlan(newPlan, "integration_test",
-                    new DateTime(2019, 01, 01)), "Invalid daypart times.");
+                Assert.That(() => _PlanService.SavePlan(newPlan, "integration_test",
+                    new DateTime(2019, 01, 01)), Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid daypart times."));
             }
         }
 
@@ -744,7 +780,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                Assert.Throws<Exception>(() => _PlanService.CalculatePlanWeeklyGoalBreakdown(null), "Invalid request.");
+                Assert.That(() => _PlanService.CalculatePlanWeeklyGoalBreakdown(null), Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid request"));
             }
         }
 
@@ -753,11 +789,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                Assert.Throws<Exception>(() => _PlanService.CalculatePlanWeeklyGoalBreakdown(new WeeklyBreakdownRequest
+                Assert.That(() => _PlanService.CalculatePlanWeeklyGoalBreakdown(new WeeklyBreakdownRequest
                 {
                     FlightEndDate = default,
                     FlightStartDate = default
-                }), "Invalid flight start/end date.");
+                }), Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid flight start/end date."));
             }
         }
 
@@ -766,11 +802,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                Assert.Throws<Exception>(() => _PlanService.CalculatePlanWeeklyGoalBreakdown(new WeeklyBreakdownRequest
+                Assert.That(() => _PlanService.CalculatePlanWeeklyGoalBreakdown(new WeeklyBreakdownRequest
                 {
                     FlightEndDate = default,
                     FlightStartDate = new DateTime(2019, 01, 01)
-                }), "Invalid flight dates.  The end date cannot be before the start date.");
+                }), Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid flight start/end date."));
             }
         }
 
@@ -779,12 +815,12 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                Assert.Throws<Exception>(() => _PlanService.CalculatePlanWeeklyGoalBreakdown(new WeeklyBreakdownRequest
+                Assert.That(() => _PlanService.CalculatePlanWeeklyGoalBreakdown(new WeeklyBreakdownRequest
                 {
                     FlightEndDate = new DateTime(2019, 01, 05),
                     FlightStartDate = new DateTime(2019, 01, 01),
                     DeliveryType = Entities.Enums.PlanGoalBreakdownTypeEnum.Custom
-                }), "For custom delivery you have to provide the weeks values");
+                }), Throws.TypeOf<Exception>().With.Message.EqualTo("For custom delivery you have to provide the weeks values"));
             }
         }
 
