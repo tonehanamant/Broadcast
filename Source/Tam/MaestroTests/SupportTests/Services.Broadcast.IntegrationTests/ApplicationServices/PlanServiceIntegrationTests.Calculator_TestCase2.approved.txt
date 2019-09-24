@@ -2,8 +2,8 @@
   "AudienceId": 31,
   "Budget": 300000.0,
   "CPM": 100.0,
-  "CPP": 1325885750.0000018471245854688,
+  "CPP": 112143960.00000001165041171648,
   "DeliveryImpressions": 3000.0,
-  "DeliveryRatingPoints": 0.00022626383909775031,
+  "DeliveryRatingPoints": 0.0026751329273551603,
   "MediaMonthId": 437
 }
