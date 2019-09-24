@@ -27,14 +27,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
                 AgencyId = agencyId
             };
 
-            var trafficApiClientMock = _GetTrafficApiClientMock();
-            var agencyCache = _GetAgencyCacheMock();
+            var trafficApiCacheMock = _GetTrafficApiCacheMock();
 
-            var tc = new CampaignValidator(trafficApiClientMock.Object, agencyCache.Object);
+            var tc = new CampaignValidator(trafficApiCacheMock.Object);
 
             var caughtException = Assert.Throws<InvalidOperationException>(() => tc.Validate(item));
 
-            agencyCache.Verify(s => s.GetAgency(It.IsAny<int>()), Times.Once);
+            trafficApiCacheMock.Verify(s => s.GetAgency(It.IsAny<int>()), Times.Once);
             Assert.AreEqual(expectedMessage, caughtException.Message);
         }
 
@@ -50,36 +49,18 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
                 AgencyId = agencyId
             };
 
-            var trafficApiClientMock = _GetTrafficApiClientMock();
-            trafficApiClientMock.Setup(x => x.GetAdvertiser(It.IsAny<int>())).Throws(new Exception());
-            var agencyCache = _GetAgencyCacheMock();
-            agencyCache.Setup(x => x.GetAgency(It.IsAny<int>())).Returns(new AgencyDto());
+            var trafficApiCacheMock = _GetTrafficApiCacheMock();
+            trafficApiCacheMock.Setup(x => x.GetAdvertiser(It.IsAny<int>())).Throws(new Exception());
+            trafficApiCacheMock.Setup(x => x.GetAgency(It.IsAny<int>())).Returns(new AgencyDto());
             
-            var tc = new CampaignValidator(trafficApiClientMock.Object, agencyCache.Object);
+            var tc = new CampaignValidator(trafficApiCacheMock.Object);
 
             var caughtException = Assert.Throws<InvalidOperationException>(() => tc.Validate(item));
 
             Assert.AreEqual(expectedMessage, caughtException.Message);
         }
 
-        private Mock<ITrafficApiClient> _GetTrafficApiClientMock()
-        {
-            var getAdvertisersByAgencyIdReturn = new List<AdvertiserDto>
-            {
-                new AdvertiserDto {Id = 1, Name = "AdvertiserOne"},
-                new AdvertiserDto {Id = 2, Name = "AdvertiserTwo"},
-                new AdvertiserDto {Id = 3, Name = "AdvertiserThree"}
-            };
-            
-            var trafficApiClientMock = new Mock<ITrafficApiClient>();
-
-            trafficApiClientMock.Setup(s => s.GetAdvertisersByAgencyId(It.IsAny<int>())).Returns(getAdvertisersByAgencyIdReturn);
-            trafficApiClientMock.Setup(s => s.GetAdvertisersByAgencyId(It.IsAny<int>())).Returns(getAdvertisersByAgencyIdReturn);
-
-            return trafficApiClientMock;
-        }
-
-        private Mock<IAgencyCache> _GetAgencyCacheMock()
+        private Mock<ITrafficApiCache> _GetTrafficApiCacheMock()
         {
             var agencies = new List<AgencyDto>
             {
@@ -87,13 +68,22 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
                 new AgencyDto{ Id = 2, Name = "AgencyTwo"},
                 new AgencyDto{ Id = 3, Name = "AgencyThree"}
             };
+            var getAdvertisersByAgencyIdReturn = new List<AdvertiserDto>
+            {
+                new AdvertiserDto {Id = 1, Name = "AdvertiserOne"},
+                new AdvertiserDto {Id = 2, Name = "AdvertiserTwo"},
+                new AdvertiserDto {Id = 3, Name = "AdvertiserThree"}
+            };
 
-            var agencyCache = new Mock<IAgencyCache>();
+            var trafficApiCacheMock = new Mock<ITrafficApiCache>();
 
-            agencyCache.Setup(s => s.GetAgency(It.IsAny<int>()))
+            trafficApiCacheMock.Setup(s => s.GetAgency(It.IsAny<int>()))
                 .Returns<int>((i) => agencies.Single(a => a.Id == i, "Agency not found"));
 
-            return agencyCache;
+            trafficApiCacheMock.Setup(s => s.GetAdvertisersByAgencyId(It.IsAny<int>())).Returns(getAdvertisersByAgencyIdReturn);
+            trafficApiCacheMock.Setup(s => s.GetAdvertisersByAgencyId(It.IsAny<int>())).Returns(getAdvertisersByAgencyIdReturn);
+
+            return trafficApiCacheMock;
         }
 
         [Test]
@@ -107,9 +97,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
                 AgencyId = agencyId
             };
 
-            var trafficApiClientMock = _GetTrafficApiClientMock();
-            var agencyCache = _GetAgencyCacheMock();
-            var tc = new CampaignValidator(trafficApiClientMock.Object, agencyCache.Object);
+            var trafficApiClientMock = _GetTrafficApiCacheMock();
+            var tc = new CampaignValidator(trafficApiClientMock.Object);
 
             Assert.DoesNotThrow(() => tc.Validate(item));
         }
@@ -128,9 +117,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
                 AgencyId = 1
             };
 
-            var trafficApiClientMock = _GetTrafficApiClientMock();
-            var agencyCache = _GetAgencyCacheMock();
-            var tc = new CampaignValidator(trafficApiClientMock.Object, agencyCache.Object);
+            var trafficApiClientMock = _GetTrafficApiCacheMock();
+            var tc = new CampaignValidator(trafficApiClientMock.Object);
 
             if (throws)
             {
@@ -158,9 +146,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
                 Notes = campaignNotes
             };
 
-            var trafficApiClientMock = _GetTrafficApiClientMock();
-            var agencyCache = _GetAgencyCacheMock();
-            var tc = new CampaignValidator(trafficApiClientMock.Object, agencyCache.Object);
+            var trafficApiClientMock = _GetTrafficApiCacheMock();
+            var agencyCache = _GetTrafficApiCacheMock();
+            var tc = new CampaignValidator(trafficApiClientMock.Object);
 
             if (throws)
             {

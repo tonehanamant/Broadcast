@@ -12,16 +12,16 @@ namespace Services.Broadcast.ApplicationServices
 
     public class AgencyService : IAgencyService
     {
-        private readonly IAgencyCache _AgencyCache;
+        private readonly ITrafficApiCache _TrafficApiCache;
 
-        public AgencyService(IAgencyCache agencyCache)
+        public AgencyService(ITrafficApiCache trafficApiCache)
         {
-            _AgencyCache = agencyCache;
+            _TrafficApiCache = trafficApiCache;
         }
         
         public List<AgencyDto> GetAgencies()
         {
-            return _AgencyCache.GetAgencies();
+            return _TrafficApiCache.GetAgencies();
         }
     }
 }

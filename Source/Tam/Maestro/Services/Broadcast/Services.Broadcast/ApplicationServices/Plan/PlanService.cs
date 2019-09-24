@@ -18,18 +18,23 @@ using Tam.Maestro.Services.ContractInterfaces.Common;
 
 namespace Services.Broadcast.ApplicationServices.Plan
 {
+    /// <summary>
+    /// Saves the plan.
+    /// </summary>
+    /// <param name="plan">The plan.</param>
+    /// <param name="modifiedBy">The modified by.</param>
+    /// <param name="modifiedDate">The modified date.</param>
+    /// <param name="aggregatePlanSynchronously">
+    /// Synchronous execution is required for tests 
+    /// because the transaction scope locks DB and summary data can not be saved from another thread
+    /// </param>
+    /// <returns></returns>
     public interface IPlanService : IApplicationService
     {
         /// <summary>
-        /// Saves the plan.
+        /// Gets the plan.
         /// </summary>
-        /// <param name="plan">The plan.</param>
-        /// <param name="modifiedBy">The modified by.</param>
-        /// <param name="modifiedDate">The modified date.</param>
-        /// <param name="aggregatePlanSynchronously">
-        /// Synchronous execution is required for tests 
-        /// because the transaction scope locks DB and summary data can not be saved from another thread
-        /// </param>
+        /// <param name="planId">The plan identifier.</param>
         /// <returns></returns>
         int SavePlan(PlanDto plan, string modifiedBy, DateTime modifiedDate, bool aggregatePlanSynchronously = false);
 
@@ -60,10 +65,10 @@ namespace Services.Broadcast.ApplicationServices.Plan
         PlanDeliveryBudget Calculate(PlanDeliveryBudget planBudget);
 
         /// <summary>
-        /// Gets the delivery types.
+        /// Gets the delivery spread for the weekly breakdown.
         /// </summary>
         /// <returns>List of LookupDto objects</returns>
-        List<LookupDto> PlanGloalBreakdownTypes();
+        List<LookupDto> PlanGoalBreakdownTypes();
 
         /// <summary>
         /// Calculates the weekly breakdown.
@@ -189,12 +194,12 @@ namespace Services.Broadcast.ApplicationServices.Plan
         }
 
         ///<inheritdoc/>
-        public List<LookupDto> PlanGloalBreakdownTypes()
+        public List<LookupDto> PlanGoalBreakdownTypes()
         {
             return EnumExtensions.ToLookupDtoList<PlanGoalBreakdownTypeEnum>(); ;
         }
 
-        /// <inheritdoc/>
+        ///<inheritdoc/>
         public WeeklyBreakdownResponseDto CalculatePlanWeeklyGoalBreakdown(WeeklyBreakdownRequest request)
         {
             WeeklyBreakdownResponseDto response = new WeeklyBreakdownResponseDto();

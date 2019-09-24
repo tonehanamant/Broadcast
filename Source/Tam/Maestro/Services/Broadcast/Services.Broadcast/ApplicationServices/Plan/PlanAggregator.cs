@@ -1,7 +1,7 @@
 ﻿using Common.Services.Extensions;
 using Common.Services.Repositories;
 using Services.Broadcast.BusinessEngines;
-using Services.Broadcast.Clients;
+using Services.Broadcast.Cache;
 using Services.Broadcast.Entities.Plan;
 using Services.Broadcast.Repositories;
 using System;
@@ -24,15 +24,9 @@ namespace Services.Broadcast.ApplicationServices.Plan
     /// </summary>
     public class PlanAggregator : IPlanAggregator
     {
-        #region Fields
-
         private readonly IAudienceRepository _AudienceRepository;
         private readonly IQuarterCalculationEngine _QuarterCalculationEngine;
-        private readonly ITrafficApiClient _TrafficApiClient;
-
-        #endregion // #region Fields
-
-        #region Constructor
+        private readonly ITrafficApiCache _TrafficApiCache;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PlanAggregator"/> class.
@@ -41,16 +35,12 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// <param name="quarterCalculationEngine">The quarter calculation engine.</param>
         public PlanAggregator(IDataRepositoryFactory broadcastDataRepositoryFactory
             , IQuarterCalculationEngine quarterCalculationEngine
-            , ITrafficApiClient trafficApiClient)
+            , ITrafficApiCache trafficApiCache)
         {
             _AudienceRepository = broadcastDataRepositoryFactory.GetDataRepository<IAudienceRepository>();
             _QuarterCalculationEngine = quarterCalculationEngine;
-            _TrafficApiClient = trafficApiClient;
+            _TrafficApiCache = trafficApiCache;
         }
-
-        #endregion // #region Constructor
-
-        #region Operations
 
         /// <inheritdoc/>
         public PlanSummaryDto Aggregate(PlanDto plan)
@@ -59,10 +49,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
             PerformAggregations(plan, summary);
             return summary;
         }
-
-        #endregion // #region Operations
-
-        #region Helpers
 
         /// <summary>
         /// Performs the aggregations.
@@ -85,10 +71,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 aggF(plan, summary);
             }
         }
-
-        #endregion Helpers
-
-        #region AggregationFunctions
 
         private delegate void AggregationFunction(PlanDto plan, PlanSummaryDto summary);
 
@@ -193,11 +175,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
             {
                 return;
             }
-            
-            var product = _TrafficApiClient.GetProduct(plan.ProductId);
-            summary.ProductName = product.Name;
-        }
 
-        #endregion // #region AggregationFunctions
+            summary.ProductName = _TrafficApiCache.GetProduct(plan.ProductId).Name;
+        }
     }
 }

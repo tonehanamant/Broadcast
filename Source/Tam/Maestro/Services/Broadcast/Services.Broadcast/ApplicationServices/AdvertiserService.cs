@@ -1,5 +1,5 @@
 ﻿using Common.Services.ApplicationServices;
-using Services.Broadcast.Clients;
+using Services.Broadcast.Cache;
 using Services.Broadcast.Entities;
 using System.Collections.Generic;
 
@@ -15,17 +15,17 @@ namespace Services.Broadcast.ApplicationServices
 
     public class AdvertiserService : IAdvertiserService
     {
-        private readonly ITrafficApiClient _TrafficApiClient;
+        private readonly ITrafficApiCache _TrafficApiCache;
 
-        public AdvertiserService(ITrafficApiClient trafficApiClient)
+        public AdvertiserService(ITrafficApiCache trafficApiCache)
         {
-            _TrafficApiClient = trafficApiClient;
+            _TrafficApiCache = trafficApiCache;
         }
 
         /// <inheritdoc />
         public List<AdvertiserDto> GetAdvertisersByAgencyId(int agencyId)
         {
-            return _TrafficApiClient.GetAdvertisersByAgencyId(agencyId);
+            return _TrafficApiCache.GetAdvertisersByAgencyId(agencyId);
         }
     }
 }

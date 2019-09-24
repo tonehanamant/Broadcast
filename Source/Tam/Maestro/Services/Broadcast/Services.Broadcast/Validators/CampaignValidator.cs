@@ -1,8 +1,6 @@
-﻿using Services.Broadcast.Clients;
+﻿using Services.Broadcast.Cache;
 using Services.Broadcast.Entities;
 using System;
-using System.Linq;
-using Services.Broadcast.Cache;
 
 namespace Services.Broadcast.Validators
 {
@@ -29,18 +27,15 @@ namespace Services.Broadcast.Validators
         public const string InvalidCampaignNameLengthErrorMessage = "Campaign name cannot be longer than 255 characters.";
         public const string InvalidCampaignNotesErrorMessage = "Campaign notes cannot be longer than 1024 characters";
 
-        private readonly ITrafficApiClient _TrafficApiClient;
-        private readonly IAgencyCache _AgencyCache;
+        private readonly ITrafficApiCache _TrafficApiCache;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CampaignValidator"/> class.
         /// </summary>
-        /// <param name="trafficApiClient">The traffic API client.</param>
-        /// <param name="agencyCache">The agency cache.</param>
-        public CampaignValidator(ITrafficApiClient trafficApiClient, IAgencyCache agencyCache)
+        /// <param name="trafficApiCache">The traffic API data cache.</param>
+        public CampaignValidator(ITrafficApiCache trafficApiCache)
         {
-            _TrafficApiClient = trafficApiClient;
-            _AgencyCache = agencyCache;
+            _TrafficApiCache = trafficApiCache;
         }
 
         /// <inheritdoc />
@@ -70,7 +65,7 @@ namespace Services.Broadcast.Validators
         {
             try
             {
-                _TrafficApiClient.GetAdvertiser(campaign.AdvertiserId);
+                _TrafficApiCache.GetAdvertiser(campaign.AdvertiserId);
             }
             catch (Exception ex)
             {
@@ -82,7 +77,7 @@ namespace Services.Broadcast.Validators
         {
             try
             {
-                _AgencyCache.GetAgency(campaign.AgencyId);
+                _TrafficApiCache.GetAgency(campaign.AgencyId);
             }
             catch (Exception ex)
             {

@@ -3,12 +3,13 @@
   "CampaignId": 666,
   "CampaignStatus": null,
   "ComponentsModified": null,
-  "CPM": null,
   "FlightActiveDays": null,
   "FlightEndDate": null,
   "FlightHiatusDays": null,
   "FlightStartDate": null,
-  "Impressions": null,
+  "HouseholdCPM": null,
+  "HouseholdImpressions": null,
+  "HouseholdRatingPoints": null,
   "LastAggregated": null,
   "PlanStatusCountClientApproval": null,
   "PlanStatusCountComplete": null,
@@ -19,6 +20,5 @@
   "ProcessingErrorMessage": null,
   "ProcessingStatus": 0,
   "QueuedAt": "0001-01-01T00:00:00",
-  "QueuedBy": null,
-  "Rating": null
+  "QueuedBy": null
 }

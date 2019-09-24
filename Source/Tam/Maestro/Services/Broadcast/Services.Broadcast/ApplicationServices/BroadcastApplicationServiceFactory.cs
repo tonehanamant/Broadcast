@@ -218,7 +218,7 @@ namespace Services.Broadcast.ApplicationServices
             MediaMonthCrunchCache.MediaMonthCrunchCacheInstance = new MediaMonthCrunchCache(repoFactory, unityContainer.Resolve<IMediaMonthAndWeekAggregateCache>());
             unityContainer.RegisterInstance<IMediaMonthCrunchCache>(MediaMonthCrunchCache.MediaMonthCrunchCacheInstance);
 
-            unityContainer.RegisterType<IAgencyCache, AgencyCache>(new ContainerControlledLifetimeManager()); // singleton
+            unityContainer.RegisterType<ITrafficApiCache, TrafficApiCache>(new ContainerControlledLifetimeManager()); // singleton
         }
 
         public T GetApplicationService<T>() where T : class, IApplicationService

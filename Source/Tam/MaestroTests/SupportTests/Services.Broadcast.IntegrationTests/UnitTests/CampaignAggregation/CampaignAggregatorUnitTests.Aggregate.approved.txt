@@ -3,12 +3,13 @@
   "CampaignId": 666,
   "CampaignStatus": 4,
   "ComponentsModified": "2019-08-28T12:30:32",
-  "CPM": 0.2727272727272727272727272727,
   "FlightActiveDays": 26,
   "FlightEndDate": "2019-08-30T00:00:00",
   "FlightHiatusDays": 4,
   "FlightStartDate": "2019-08-01T00:00:00",
-  "Impressions": 5500.0,
+  "HouseholdCPM": 75.000,
+  "HouseholdImpressions": 20000.0,
+  "HouseholdRatingPoints": 52.0,
   "LastAggregated": null,
   "PlanStatusCountClientApproval": 1,
   "PlanStatusCountComplete": 0,
@@ -19,6 +20,5 @@
   "ProcessingErrorMessage": null,
   "ProcessingStatus": 0,
   "QueuedAt": "0001-01-01T00:00:00",
-  "QueuedBy": null,
-  "Rating": 4500.0
+  "QueuedBy": null
 }

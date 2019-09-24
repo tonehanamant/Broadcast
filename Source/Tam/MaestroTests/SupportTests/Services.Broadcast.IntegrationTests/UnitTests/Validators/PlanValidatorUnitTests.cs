@@ -8,7 +8,9 @@ using Services.Broadcast.Entities.Plan;
 using Services.Broadcast.Validators;
 using System;
 using System.Collections.Generic;
+using Services.Broadcast.Entities.DTO;
 using Services.Broadcast.Entities.Enums;
+using Services.Broadcast.IntegrationTests.Stubbs;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
 {
@@ -19,7 +21,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
         private Mock<IRatingForecastService> _ratingForecastServiceMock;
         private Mock<ISpotLengthEngine> _spotLengthEngineMock;
         private Mock<IBroadcastAudiencesCache> _broadcastAudiencesCacheMock;
-        private Mock<ITrafficApiClient> _traffiApiClientMock;
 
         private const int HUT_BOOK_ID = 55;
         private const int SHARE_BOOK_ID = 79;
@@ -30,7 +31,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             _spotLengthEngineMock = new Mock<ISpotLengthEngine>();
             _ratingForecastServiceMock = new Mock<IRatingForecastService>();
             _broadcastAudiencesCacheMock = new Mock<IBroadcastAudiencesCache>();
-            _traffiApiClientMock = new Mock<ITrafficApiClient>();
             _ratingForecastServiceMock.Setup(r => r.GetMediaMonthCrunchStatuses()).Returns(
                 new List<Entities.MediaMonthCrunchStatus>
                 {
@@ -60,7 +60,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
                         }, 10),
                 });
             _planValidator = new PlanValidator(_spotLengthEngineMock.Object, _broadcastAudiencesCacheMock.Object,
-                _ratingForecastServiceMock.Object, _traffiApiClientMock.Object);
+                _ratingForecastServiceMock.Object, new TrafficApiCache(new TrafficApiClientStub()));
         }
 
         [Test]
@@ -98,10 +98,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
         [Test]
         public void ValidatePlan_InvalidProductId()
         {
-            _ConfigureSpotLenghtEngineMockToReturnTrue();
+            _ConfigureMocksToReturnTrue();
 
             var plan = _GetPlan();
-            plan.ProductId = 0;
+            plan.ProductId = 666;
 
             Assert.That(() => _planValidator.ValidatePlan(plan),
                 Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid product"));

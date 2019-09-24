@@ -54,20 +54,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        public void CreatePlan_InvalidProductId()
-        {
-            using (new TransactionScopeWrapper())
-            {
-                PlanDto newPlan = _GetNewPlan();
-                newPlan.ProductId = 0;
-
-                var exception = Assert.Throws<Exception>(() => _PlanService.SavePlan(newPlan, "integration_test", new System.DateTime(2019, 01, 01)));
-
-                Assert.That(exception.Message, Is.EqualTo("Invalid product"));
-            }
-        }
-
-        [Test]
         public void CreatePlan_NotExistingProduct()
         {
             const int notExistingProductId = 666;
@@ -77,9 +63,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 PlanDto newPlan = _GetNewPlan();
                 newPlan.ProductId = notExistingProductId;
 
-                var exception = Assert.Throws<Exception>(() => _PlanService.SavePlan(newPlan, "integration_test", new DateTime(2019, 01, 01)));
-
-                Assert.That(exception.Message, Is.EqualTo($"Cannot fetch data of the product {notExistingProductId}"));
+                Assert.That(() => _PlanService.SavePlan(newPlan, "integration_test", new DateTime(2019, 01, 01)),
+                    Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid product"));
             }
         }
 
@@ -376,7 +361,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void GetPlanDeliveryTypes()
         {
-            var deliveryTypes = _PlanService.PlanGloalBreakdownTypes();
+            var deliveryTypes = _PlanService.PlanGoalBreakdownTypes();
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(deliveryTypes));
         }

@@ -1,0 +1,5 @@
+﻿{
+  "AdvertiserId": 1,
+  "Id": 2,
+  "Name": "Product2"
+}

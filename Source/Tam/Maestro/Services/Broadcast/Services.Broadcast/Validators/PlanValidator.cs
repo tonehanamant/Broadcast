@@ -31,9 +31,7 @@ namespace Services.Broadcast.Validators
         private readonly ISpotLengthEngine _SpotLengthEngine;
         private readonly IBroadcastAudiencesCache _AudienceCache;
         private readonly List<MediaMonth> _PostingBooks;
-        private readonly ITrafficApiClient _TrafficApiClient;
-
-        #region Error Messages
+        private readonly ITrafficApiCache _TrafficApiCache;
 
         const string INVALID_PLAN_NAME = "Invalid plan name";
         const string INVALID_SPOT_LENGTH = "Invalid spot length";
@@ -69,18 +67,16 @@ namespace Services.Broadcast.Validators
         const string INVALID_CPP = "Invalid CPP.";
         const string INVALID_DELIVERY_IMPRESSIONS = "Invalid Delivery Impressions.";
 
-        #endregion
-
         const string STOP_WORD = "eOm3wgvfm0dq4rI3srL2";
 
         public PlanValidator(ISpotLengthEngine spotLengthEngine
             , IBroadcastAudiencesCache broadcastAudiencesCache
             , IRatingForecastService ratingForecastService
-            , ITrafficApiClient trafficApiClient)
+            , ITrafficApiCache trafficApiCache)
         {
             _SpotLengthEngine = spotLengthEngine;
             _AudienceCache = broadcastAudiencesCache;
-            _TrafficApiClient = trafficApiClient;
+            _TrafficApiCache = trafficApiCache;
 
             _PostingBooks = ratingForecastService.GetMediaMonthCrunchStatuses()
                 .Where(a => a.Crunched == CrunchStatusEnum.Crunched)
@@ -313,13 +309,14 @@ namespace Services.Broadcast.Validators
 
         private void _ValidateProduct(PlanDto plan)
         {
-            if (plan.ProductId <= 0)
+            try
             {
-                throw new Exception(INVALID_PRODUCT);
+                _TrafficApiCache.GetProduct(plan.ProductId);
             }
-
-            // This will throw an exception if the product doesn't exist
-            _TrafficApiClient.GetProduct(plan.ProductId);
+            catch (Exception ex)
+            {
+                throw new Exception(INVALID_PRODUCT, ex);
+            }
         }
 
         private void _ValidateBudgetAndDelivery(PlanDto plan)

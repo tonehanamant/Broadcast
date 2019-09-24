@@ -7,26 +7,26 @@
     },
     "Agency": {
       "Id": 1,
-      "Name": "Name1"
+      "Name": "!_Name_1"
     },
     "Budget": null,
     "CampaignStatus": null,
-    "CPM": null,
     "FlightActiveDays": null,
     "FlightEndDate": null,
     "FlightHiatusDays": null,
     "FlightStartDate": null,
     "HasHiatus": null,
     "HasPlans": false,
+    "HouseholdCPM": null,
+    "HouseholdImpressions": null,
+    "HouseholdRatingPoints": null,
     "Id": 1,
-    "Impressions": null,
     "ModifiedBy": "TestUser",
     "ModifiedDate": "2017-10-17T00:00:00",
     "Name": "CampaignOne",
     "Notes": "Notes for CampaignOne.",
     "Plans": null,
-    "PlanStatuses": null,
-    "Rating": null
+    "PlanStatuses": null
   },
   {
     "Advertiser": {
@@ -36,26 +36,26 @@
     },
     "Agency": {
       "Id": 1,
-      "Name": "Name1"
+      "Name": "!_Name_1"
     },
     "Budget": null,
     "CampaignStatus": null,
-    "CPM": null,
     "FlightActiveDays": null,
     "FlightEndDate": null,
     "FlightHiatusDays": null,
     "FlightStartDate": null,
     "HasHiatus": null,
     "HasPlans": false,
+    "HouseholdCPM": null,
+    "HouseholdImpressions": null,
+    "HouseholdRatingPoints": null,
     "Id": 2,
-    "Impressions": null,
     "ModifiedBy": "TestUser",
     "ModifiedDate": "2017-10-17T00:00:00",
     "Name": "CampaignTwo",
     "Notes": "Notes for CampaignTwo.",
     "Plans": null,
-    "PlanStatuses": null,
-    "Rating": null
+    "PlanStatuses": null
   },
   {
     "Advertiser": {
@@ -65,25 +65,25 @@
     },
     "Agency": {
       "Id": 1,
-      "Name": "Name1"
+      "Name": "!_Name_1"
     },
     "Budget": null,
     "CampaignStatus": null,
-    "CPM": null,
     "FlightActiveDays": null,
     "FlightEndDate": null,
     "FlightHiatusDays": null,
     "FlightStartDate": null,
     "HasHiatus": null,
     "HasPlans": false,
+    "HouseholdCPM": null,
+    "HouseholdImpressions": null,
+    "HouseholdRatingPoints": null,
     "Id": 3,
-    "Impressions": null,
     "ModifiedBy": "TestUser",
     "ModifiedDate": "2017-10-17T00:00:00",
     "Name": "CampaignThree",
     "Notes": "Notes for CampaignThree.",
     "Plans": null,
-    "PlanStatuses": null,
-    "Rating": null
+    "PlanStatuses": null
   }
 ]

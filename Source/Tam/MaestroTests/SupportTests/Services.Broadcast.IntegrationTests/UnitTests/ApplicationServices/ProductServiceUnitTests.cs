@@ -8,6 +8,7 @@ using Services.Broadcast.Clients;
 using Services.Broadcast.Entities.DTO;
 using System;
 using System.Collections.Generic;
+using Services.Broadcast.Cache;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 {
@@ -18,7 +19,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         public void GetsProductsByAdvertiserId()
         {
             // Arrange
-            var trafficApiClientMock = new Mock<ITrafficApiClient>();
+            var trafficApiCacheMock = new Mock<ITrafficApiCache>();
             var getProductsByAdvertiserIdReturn = new List<ProductDto>
             {
                 new ProductDto { Id = 1, Name = "ProductOne", AdvertiserId = 1 },
@@ -26,20 +27,16 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 new ProductDto { Id = 3, Name = "ProductThree", AdvertiserId = 1 }
             };
 
-            trafficApiClientMock.Setup(s => s.GetProductsByAdvertiserId(It.IsAny<int>())).Returns(getProductsByAdvertiserIdReturn);
+            trafficApiCacheMock.Setup(s => s.GetProductsByAdvertiserId(It.IsAny<int>())).Returns(getProductsByAdvertiserIdReturn);
 
-            var tc = new ProductService(trafficApiClientMock.Object);
-            var serExpectedResult = IntegrationTestHelper.ConvertToJson(getProductsByAdvertiserIdReturn);
+            var tc = new ProductService(trafficApiCacheMock.Object);
 
             // Act
             var result = tc.GetProductsByAdvertiserId(advertiserId: 1);
 
             // Assert
-            trafficApiClientMock.Verify(x => x.GetProductsByAdvertiserId(1), Times.Once);
-            // TODO: Bring this back.  Fails on CD test run build.
-            //Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
-            // TODO: When bring that back remove this 
-            Assert.AreEqual(serExpectedResult, IntegrationTestHelper.ConvertToJson(result));
+            trafficApiCacheMock.Verify(x => x.GetProductsByAdvertiserId(1), Times.Once);
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
 
         [Test]
@@ -48,13 +45,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             // Arrange
             const string expectedMessage = "This is a test exception thrown from GetProductsByAdvertiserId";
 
-            var trafficApiClientMock = new Mock<ITrafficApiClient>();
+            var trafficApiCacheMock = new Mock<ITrafficApiCache>();
 
-            trafficApiClientMock
+            trafficApiCacheMock
                 .Setup(s => s.GetProductsByAdvertiserId(It.IsAny<int>()))
                 .Callback(() => throw new Exception(expectedMessage));
 
-            var tc = new ProductService(trafficApiClientMock.Object);
+            var tc = new ProductService(trafficApiCacheMock.Object);
 
             // Act
             var caught = Assert.Throws<Exception>(() => tc.GetProductsByAdvertiserId(advertiserId: 1));

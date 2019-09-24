@@ -10,7 +10,7 @@ using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.ApplicationServices.Plan;
 using Services.Broadcast.BusinessEngines;
-using Services.Broadcast.Clients;
+using Services.Broadcast.Cache;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
@@ -19,7 +19,6 @@ using Services.Broadcast.Repositories;
 using Services.Broadcast.Validators;
 using System;
 using System.Collections.Generic;
-using Services.Broadcast.Cache;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Services.ContractInterfaces;
 
@@ -127,11 +126,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     IntegrationTestApplicationServiceFactory.Instance.Resolve<ICampaignValidator>(),
                     IntegrationTestApplicationServiceFactory.Instance.Resolve<IMediaMonthAndWeekAggregateCache>(),
                     IntegrationTestApplicationServiceFactory.Instance.Resolve<IQuarterCalculationEngine>(),
-                    IntegrationTestApplicationServiceFactory.Instance.Resolve<ITrafficApiClient>(),
                     lockingManagerApplicationServiceMock.Object,
                     IntegrationTestApplicationServiceFactory.Instance.Resolve<ICampaignAggregator>(),
                     IntegrationTestApplicationServiceFactory.Instance.Resolve<ICampaignAggregationJobTrigger>(),
-                    IntegrationTestApplicationServiceFactory.Instance.Resolve<IAgencyCache>()
+                    IntegrationTestApplicationServiceFactory.Instance.Resolve<ITrafficApiCache>()
                     );
 
                 var campaign = _GetValidCampaignForSave();
@@ -365,7 +363,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         public void ProcessCampaignAggregation_WithoutPlans()
         {
             // Data already exists for campaign id 2 : campaign, summary
-            const int campaignId = 2;
+            // the intent is to run for a campaign that has no plans.
+            const int campaignId = 1;
             using (new TransactionScopeWrapper())
             {
                 _CampaignService.ProcessCampaignAggregation(campaignId);

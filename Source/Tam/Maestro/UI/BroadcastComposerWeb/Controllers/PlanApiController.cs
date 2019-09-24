@@ -90,7 +90,7 @@ namespace BroadcastComposerWeb.Controllers
         [Route("GloalBreakdownTypes")]
         public BaseResponse<List<LookupDto>> GetDeliveryTypes()
         {
-            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanService>().PlanGloalBreakdownTypes());
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanService>().PlanGoalBreakdownTypes());
         }
 
         /// <summary>

@@ -2,15 +2,16 @@
 using Moq;
 using NUnit.Framework;
 using Services.Broadcast.BusinessEngines;
-using Services.Broadcast.Clients;
+using Services.Broadcast.Cache;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
-using Services.Broadcast.IntegrationTests.Stubbs;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq.Expressions;
+using Services.Broadcast.IntegrationTests.Stubbs;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.PlanAggregation
@@ -18,8 +19,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanAggregation
     [TestFixture]
     public class PlanAggregatorUnitTests
     {
-        private readonly ITrafficApiClient trafficApiClientStub = new TrafficApiClientStub();
-
         [Test]
         public void ConstructorTest()
         {
@@ -327,6 +326,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanAggregation
             var daypartCodeRepository = new Mock<IDaypartCodeRepository>();
             var audienceRepository = new Mock<IAudienceRepository>();
             var broadcastDataRepositoryFactory = new Mock<IDataRepositoryFactory>();
+            var trafficApiCache = new TrafficApiCache(new TrafficApiClientStub());
             broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IDaypartCodeRepository>())
                 .Returns(daypartCodeRepository.Object);
             broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IAudienceRepository>())
@@ -335,7 +335,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanAggregation
             var tc = new PlanAggregatorUnitTestClass(
                 broadcastDataRepositoryFactory.Object
                 , quarterCalculationEngine.Object
-                , trafficApiClientStub
+                , trafficApiCache
             );
 
             return tc;
@@ -346,6 +346,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanAggregation
             var daypartCodeRepository = new Mock<IDaypartCodeRepository>();
             var audienceRepository = new Mock<IAudienceRepository>();
             var broadcastDataRepositoryFactory = new Mock<IDataRepositoryFactory>();
+            var trafficApiCache = new TrafficApiCache(new TrafficApiClientStub());
             broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IDaypartCodeRepository>())
                 .Returns(daypartCodeRepository.Object);
             broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IAudienceRepository>())
@@ -354,7 +355,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanAggregation
             var tc = new PlanAggregatorUnitTestClass(
                 broadcastDataRepositoryFactory.Object
                 , quarterCalculationEngine.Object
-                , trafficApiClientStub
+                , trafficApiCache
             );
             var getAudiencesByIdsReturn = new List<LookupDto> { new LookupDto(1, "AudienceOne") };
             audienceRepository.Setup(s => s.GetAudiencesByIds(It.IsAny<List<int>>()))
@@ -379,6 +380,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanAggregation
             var daypartCodeRepository = new Mock<IDaypartCodeRepository>();
             var audienceRepository = new Mock<IAudienceRepository>();
             var broadcastDataRepositoryFactory = new Mock<IDataRepositoryFactory>();
+            var trafficApiCache = new TrafficApiCache(new TrafficApiClientStub());
             broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IDaypartCodeRepository>())
                 .Returns(daypartCodeRepository.Object);
             broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IAudienceRepository>())
@@ -387,7 +389,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanAggregation
             var tc = new PlanAggregatorUnitTestClass(
                 broadcastDataRepositoryFactory.Object
                 , quarterCalculationEngine.Object
-                , trafficApiClientStub
+                , trafficApiCache
             );
 
             var getAudiencesByIdsReturn = new List<LookupDto> { new LookupDto(1, "AudienceOne") };
@@ -403,6 +405,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanAggregation
             var daypartCodeRepository = new Mock<IDaypartCodeRepository>();
             var audienceRepository = new Mock<IAudienceRepository>();
             var broadcastDataRepositoryFactory = new Mock<IDataRepositoryFactory>();
+            var trafficApiCache = new TrafficApiCache(new TrafficApiClientStub());
             broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IDaypartCodeRepository>())
                 .Returns(daypartCodeRepository.Object);
             broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IAudienceRepository>())
@@ -411,7 +414,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanAggregation
             var tc = new PlanAggregatorUnitTestClass(
                 broadcastDataRepositoryFactory.Object
                 , quarterCalculationEngine.Object
-                , trafficApiClientStub
+                , trafficApiCache
             );
 
             quarterCalculationEngine
@@ -427,6 +430,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanAggregation
             var daypartCodeRepository = new Mock<IDaypartCodeRepository>();
             var audienceRepository = new Mock<IAudienceRepository>();
             var broadcastDataRepositoryFactory = new Mock<IDataRepositoryFactory>();
+            var trafficApiCache = new TrafficApiCache(new TrafficApiClientStub());
             broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IDaypartCodeRepository>())
                 .Returns(daypartCodeRepository.Object);
             broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IAudienceRepository>())
@@ -435,7 +439,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanAggregation
             var tc = new PlanAggregatorUnitTestClass(
                 broadcastDataRepositoryFactory.Object
                 , quarterCalculationEngine.Object
-                , trafficApiClientStub
+                , trafficApiCache
             );
 
             return tc;

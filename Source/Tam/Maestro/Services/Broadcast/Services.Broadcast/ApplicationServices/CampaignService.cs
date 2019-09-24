@@ -4,7 +4,6 @@ using Common.Services.Repositories;
 using Hangfire;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Cache;
-using Services.Broadcast.Clients;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Helpers;
@@ -14,7 +13,6 @@ using Services.Broadcast.Validators;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Caching;
 using Tam.Maestro.Common;
 using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
@@ -96,47 +94,31 @@ namespace Services.Broadcast.ApplicationServices
         private readonly ICampaignRepository _CampaignRepository;
         private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekAggregateCache;
         private readonly IQuarterCalculationEngine _QuarterCalculationEngine;
-        private readonly ITrafficApiClient _TrafficApiClient;
         private readonly ILockingManagerApplicationService _LockingManagerApplicationService;
         private readonly ICampaignAggregator _CampaignAggregator;
         private readonly ICampaignSummaryRepository _CampaignSummaryRepository;
         private readonly ICampaignAggregationJobTrigger _CampaignAggregationJobTrigger;
-        private readonly IAgencyCache _AgencyCache;
+        private readonly ITrafficApiCache _TrafficApiCache;
 
-        private const int _cachingDurationInSeconds = 300;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CampaignService"/> class.
-        /// </summary>
-        /// <param name="dataRepositoryFactory">The data repository factory.</param>
-        /// <param name="campaignValidator">The campaign validator.</param>
-        /// <param name="mediaMonthAndWeekAggregateCache">The media month and week aggregate cache.</param>
-        /// <param name="quarterCalculationEngine">The quarter calculation engine.</param>
-        /// <param name="trafficApiClient">The traffic API client.</param>
-        /// <param name="lockingManagerApplicationService">The locking manager application service.</param>
-        /// <param name="campaignAggregator">The campaign aggregator.</param>
-        /// <param name="campaignAggregationJobTrigger">The campaign aggregation job trigger.</param>
         public CampaignService(
             IDataRepositoryFactory dataRepositoryFactory,
             ICampaignValidator campaignValidator,
             IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
             IQuarterCalculationEngine quarterCalculationEngine,
-            ITrafficApiClient trafficApiClient,
             ILockingManagerApplicationService lockingManagerApplicationService,
             ICampaignAggregator campaignAggregator,
             ICampaignAggregationJobTrigger campaignAggregationJobTrigger,
-            IAgencyCache agencyCache)
+            ITrafficApiCache trafficApiCache)
         {
             _CampaignRepository = dataRepositoryFactory.GetDataRepository<ICampaignRepository>();
             _CampaignValidator = campaignValidator;
             _MediaMonthAndWeekAggregateCache = mediaMonthAndWeekAggregateCache;
             _QuarterCalculationEngine = quarterCalculationEngine;
-            _TrafficApiClient = trafficApiClient;
             _LockingManagerApplicationService = lockingManagerApplicationService;
             _CampaignAggregator = campaignAggregator;
             _CampaignSummaryRepository = dataRepositoryFactory.GetDataRepository<ICampaignSummaryRepository>();
             _CampaignAggregationJobTrigger = campaignAggregationJobTrigger;
-            _AgencyCache = agencyCache;
+            _TrafficApiCache = trafficApiCache;
         }
 
         /// <inheritdoc />
@@ -147,7 +129,6 @@ namespace Services.Broadcast.ApplicationServices
 
             var dateRange = _GetQuarterDateRange(filter.Quarter);
             var campaigns = _CampaignRepository.GetCampaigns(dateRange.Start, dateRange.End, filter.PlanStatus);
-            var cacheAdvertisers = new BaseMemoryCache<List<AdvertiserDto>>("localAdvertisersCache");
 
             foreach (var campaign in campaigns)
             {
@@ -156,24 +137,11 @@ namespace Services.Broadcast.ApplicationServices
                     campaign.CampaignStatus = PlanStatusEnum.Working;
                 }
 
-                campaign.Agency = _AgencyCache.GetAgency(campaign.Agency.Id);
-                _SetAdvertiser(campaign, cacheAdvertisers);
+                campaign.Agency = _TrafficApiCache.GetAgency(campaign.Agency.Id);
+                campaign.Advertiser = _TrafficApiCache.GetAdvertiser(campaign.Advertiser.Id);
             }
 
             return campaigns;
-        }
-
-        private void _SetAdvertiser(CampaignListItemDto campaign, BaseMemoryCache<List<AdvertiserDto>> cache)
-        {
-            // Let`s cache advertisers to reduce the number of requests to the traffic API
-            var advertisers = cache.GetOrCreate(
-                campaign.Agency.Id.ToString(),
-                () => _TrafficApiClient.GetAdvertisersByAgencyId(campaign.Agency.Id),
-                new CacheItemPolicy { AbsoluteExpiration = DateTime.Now.AddSeconds(_cachingDurationInSeconds) });
-
-            campaign.Advertiser = advertisers.Single(
-                x => x.Id == campaign.Advertiser.Id,
-                "Cannot find an advertiser with id: " + campaign.Advertiser.Id);
         }
 
         /// <inheritdoc />
