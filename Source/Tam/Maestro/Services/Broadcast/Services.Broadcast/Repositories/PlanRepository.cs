@@ -293,6 +293,7 @@ namespace Services.Broadcast.Repositories
             var dto = new PlanDaypartDto
             {
                 DaypartCodeId = entity.daypart_code_id,
+                DaypartTypeId = EnumHelper.GetEnum<DaypartTypeEnum>(entity.daypart_type),
                 StartTimeSeconds = entity.start_time_seconds,
                 EndTimeSeconds = entity.end_time_seconds,
                 WeightingGoalPercent = entity.weighting_goal_percent
@@ -306,6 +307,7 @@ namespace Services.Broadcast.Repositories
             planDto.Dayparts.ForEach(d => entity.plan_dayparts.Add(new plan_dayparts
             {
                 daypart_code_id = d.DaypartCodeId,
+                daypart_type = (int)d.DaypartTypeId,
                 start_time_seconds = d.StartTimeSeconds,
                 end_time_seconds = d.EndTimeSeconds,
                 weighting_goal_percent = d.WeightingGoalPercent

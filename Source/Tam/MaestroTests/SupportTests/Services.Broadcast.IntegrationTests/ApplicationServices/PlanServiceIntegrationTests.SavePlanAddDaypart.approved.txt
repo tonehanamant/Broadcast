@@ -44,21 +44,31 @@
   "Dayparts": [
     {
       "DaypartCodeId": 2,
+      "DaypartTypeId": 2,
       "EndTimeSeconds": 2000,
       "StartTimeSeconds": 0,
       "WeightingGoalPercent": 28.0
     },
     {
       "DaypartCodeId": 11,
+      "DaypartTypeId": 1,
       "EndTimeSeconds": 2788,
       "StartTimeSeconds": 1500,
       "WeightingGoalPercent": 33.2
     },
     {
       "DaypartCodeId": 3,
+      "DaypartTypeId": 3,
+      "EndTimeSeconds": 3000,
+      "StartTimeSeconds": 1550,
+      "WeightingGoalPercent": 25.0
+    },
+    {
+      "DaypartCodeId": 3,
+      "DaypartTypeId": 2,
       "EndTimeSeconds": 1900,
       "StartTimeSeconds": 1200,
-      "WeightingGoalPercent": 27.0
+      "WeightingGoalPercent": 13.8
     }
   ],
   "DeliveryImpressions": 100.0,

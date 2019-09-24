@@ -657,6 +657,7 @@
           <Property Name="start_time_seconds" Type="int" Nullable="false" />
           <Property Name="end_time_seconds" Type="int" Nullable="false" />
           <Property Name="weighting_goal_percent" Type="float" />
+          <Property Name="daypart_type" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="plan_flight_hiatus">
           <Key>
@@ -10215,6 +10216,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="weighting_goal_percent" Type="Double" />
           <NavigationProperty Name="daypart_codes" Relationship="BroadcastModel.FK_plan_dayparts_daypart_codes" FromRole="plan_dayparts" ToRole="daypart_codes" />
           <NavigationProperty Name="plan" Relationship="BroadcastModel.FK_plan_dayparts_plans" FromRole="plan_dayparts" ToRole="plan" />
+          <Property Name="daypart_type" Type="Int32" Nullable="false" />
         </EntityType>
         <Association Name="FK_plan_dayparts_daypart_codes">
           <End Type="BroadcastModel.daypart_codes" Role="daypart_codes" Multiplicity="1" />
@@ -12349,6 +12351,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="plan_dayparts">
             <EntityTypeMapping TypeName="BroadcastModel.plan_dayparts">
               <MappingFragment StoreEntitySet="plan_dayparts">
+                <ScalarProperty Name="daypart_type" ColumnName="daypart_type" />
                 <ScalarProperty Name="weighting_goal_percent" ColumnName="weighting_goal_percent" />
                 <ScalarProperty Name="end_time_seconds" ColumnName="end_time_seconds" />
                 <ScalarProperty Name="start_time_seconds" ColumnName="start_time_seconds" />

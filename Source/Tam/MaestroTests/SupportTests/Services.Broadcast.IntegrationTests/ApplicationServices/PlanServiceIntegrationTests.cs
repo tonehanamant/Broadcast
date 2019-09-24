@@ -4,6 +4,7 @@ using IntegrationTests.Common;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices.Plan;
+using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
 using System;
 using System.Collections.Generic;
@@ -228,7 +229,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var planId = _PlanService.SavePlan(newPlan, "integration_test", new System.DateTime(2019, 01, 15));
                 PlanDto finalPlan = _PlanService.GetPlan(planId);
 
-                Assert.AreEqual(2, finalPlan.Dayparts.Count);
+                Assert.AreEqual(3, finalPlan.Dayparts.Count);
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(finalPlan, _GetJsonSettings()));
             }
         }
@@ -242,12 +243,12 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 PlanDto newPlan = _GetNewPlan();
                 var planId = _PlanService.SavePlan(newPlan, "integration_test", new System.DateTime(2019, 01, 15));
                 PlanDto modifiedPlan = _PlanService.GetPlan(planId);
-                modifiedPlan.Dayparts.Add(new PlanDaypartDto { DaypartCodeId = 3, StartTimeSeconds = 1200, EndTimeSeconds = 1900, WeightingGoalPercent = 27 });
+                modifiedPlan.Dayparts.Add(new PlanDaypartDto { DaypartCodeId = 3, DaypartTypeId = DaypartTypeEnum.EntertainmentNonNews, StartTimeSeconds = 1200, EndTimeSeconds = 1900, WeightingGoalPercent = 13.8 });
 
                 var modifiedPlanId = _PlanService.SavePlan(modifiedPlan, "integration_test", new System.DateTime(2019, 01, 15));
                 PlanDto finalPlan = _PlanService.GetPlan(modifiedPlanId);
 
-                Assert.AreEqual(3, finalPlan.Dayparts.Count);
+                Assert.AreEqual(4, finalPlan.Dayparts.Count);
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(finalPlan, _GetJsonSettings()));
             }
         }
@@ -267,7 +268,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var modifiedPlanId = _PlanService.SavePlan(modifiedPlan, "integration_test", new System.DateTime(2019, 01, 15));
                 PlanDto finalPlan = _PlanService.GetPlan(modifiedPlanId);
 
-                Assert.AreEqual(1, finalPlan.Dayparts.Count);
+                Assert.AreEqual(2, finalPlan.Dayparts.Count);
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(finalPlan, _GetJsonSettings()));
             }
         }
@@ -953,8 +954,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 ModifiedDate = new DateTime(2019, 01, 12, 12, 30, 29),
                 Dayparts = new List<PlanDaypartDto>
                 {
-                    new PlanDaypartDto{ DaypartCodeId = 2, StartTimeSeconds = 0, EndTimeSeconds = 2000, WeightingGoalPercent = 28.0 },
-                    new PlanDaypartDto{ DaypartCodeId = 11, StartTimeSeconds = 1500, EndTimeSeconds = 2788, WeightingGoalPercent = 33.2 }
+                    new PlanDaypartDto{ DaypartCodeId = 2, DaypartTypeId = DaypartTypeEnum.EntertainmentNonNews, StartTimeSeconds = 0, EndTimeSeconds = 2000, WeightingGoalPercent = 28.0 },
+                    new PlanDaypartDto{ DaypartCodeId = 11, DaypartTypeId = DaypartTypeEnum.News, StartTimeSeconds = 1500, EndTimeSeconds = 2788, WeightingGoalPercent = 33.2 },
+                    new PlanDaypartDto{ DaypartCodeId = 3, DaypartTypeId = DaypartTypeEnum.ROS, StartTimeSeconds = 1550, EndTimeSeconds = 3000, WeightingGoalPercent = 25 }
                 },
                 Vpvh = 0.012
             };

@@ -338,6 +338,26 @@ END
 GO
 /*************************************** END BUILD FIX  *****************************************************/
 
+/*************************************** PRI-15376 ******************************************************/
+
+IF NOT EXISTS (SELECT COLUMN_NAME
+               FROM INFORMATION_SCHEMA.COLUMNS
+               WHERE TABLE_NAME = 'plan_dayparts'
+               And COLUMN_NAME = 'daypart_type')
+BEGIN
+	ALTER TABLE plan_dayparts
+	ADD daypart_type INT NULL
+
+	EXEC('UPDATE plan_dayparts
+	      SET daypart_type = 1')
+
+	ALTER TABLE plan_dayparts
+	ALTER COLUMN daypart_type INT NOT NULL
+END
+
+/*************************************** END - PRI-15376  *****************************************************/
+
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

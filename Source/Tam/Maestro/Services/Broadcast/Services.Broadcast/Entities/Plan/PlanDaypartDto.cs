@@ -1,4 +1,6 @@
-﻿namespace Services.Broadcast.Entities.Plan
+﻿using Services.Broadcast.Entities.Enums;
+
+namespace Services.Broadcast.Entities.Plan
 {
     /// <summary>
     /// The user defined daypart for the plan.
@@ -12,6 +14,14 @@
         /// The daypart code identifier.
         /// </value>
         public int DaypartCodeId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the daypart type identifier.
+        /// </summary>
+        /// <value>
+        /// The daypart type identifier.
+        /// </value>
+        public DaypartTypeEnum DaypartTypeId { get; set; }
 
         /// <summary>
         /// Gets or sets the start time seconds from midnight ET.
