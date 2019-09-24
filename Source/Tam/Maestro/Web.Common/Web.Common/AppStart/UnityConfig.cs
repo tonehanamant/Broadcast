@@ -21,7 +21,6 @@ namespace Tam.Maestro.Web.Common.AppStart
             // container.LoadConfiguration();
 
             // TODO: Register your types here
-            container.RegisterType<IWebLogger, WebLogger>();
             container.RegisterType<IConfiguration, FileBasedConfiguration>();
 
             // null registrations to prevnent resolution failed exceptions from being thrown

@@ -3,7 +3,7 @@ using System;
 using System.ServiceModel;
 using System.ServiceModel.Description;
 using System.Text;
-using Tam.Maestro.Common.Logging;
+using Tam.Maestro.Common.Utilities.Logging;
 using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Services.ContractInterfaces;
 
@@ -90,14 +90,14 @@ namespace Tam.Maestro.Services.Clients
                     }
                     catch(Exception e)
                     {
-                        TamMaestroEventSource.Log.ServiceError("Proxy", e.Message, e.ToString(), "", "");
+                        LogHelper.Log.ServiceError("Proxy", e.Message, e.ToString(), "", "");
                         this._ChannelFactory.Abort();
                     }
                 }
             }
             catch (Exception e)
             {
-                TamMaestroEventSource.Log.ServiceError("Proxy", e.Message, e.ToString(), "", "");
+                LogHelper.Log.ServiceError("Proxy", e.Message, e.ToString(), "", "");
                 lReturn = ServiceStatus.Closed;
             }
             return lReturn;
@@ -113,7 +113,7 @@ namespace Tam.Maestro.Services.Clients
             }
             catch (Exception ex)
             {
-                TamMaestroEventSource.Log.ServiceError("Proxy", ex.Message, ex.ToString(), "", "");
+                LogHelper.Log.ServiceError("Proxy", ex.Message, ex.ToString(), "", "");
                 Log.Warn("Error disposing _ChannelChecker", ex);
             }
 
@@ -125,7 +125,7 @@ namespace Tam.Maestro.Services.Clients
             }
             catch (Exception ex2)
             {
-                TamMaestroEventSource.Log.ServiceError("Proxy", ex2.Message, ex2.ToString(), "", "");
+                LogHelper.Log.ServiceError("Proxy", ex2.Message, ex2.ToString(), "", "");
                 Log.Warn("Error disposing _MyContractChannel.", ex2);
             }
 
@@ -135,7 +135,7 @@ namespace Tam.Maestro.Services.Clients
             }
             catch (Exception ex3)
             {
-                TamMaestroEventSource.Log.ServiceError("Proxy", ex3.Message, ex3.ToString(), "", "");
+                LogHelper.Log.ServiceError("Proxy", ex3.Message, ex3.ToString(), "", "");
                 Log.Warn("Error closing _Context", ex3);
             }
 
@@ -146,7 +146,7 @@ namespace Tam.Maestro.Services.Clients
             }
             catch (Exception ex4)
             {
-                TamMaestroEventSource.Log.ServiceError("Proxy", ex4.Message, ex4.ToString(), "", "");
+                LogHelper.Log.ServiceError("Proxy", ex4.Message, ex4.ToString(), "", "");
                 Log.Warn("Error closing _ChannelFactory.", ex4);
             }
         }
@@ -169,7 +169,7 @@ namespace Tam.Maestro.Services.Clients
             }
             catch (Exception ex)
             {
-                TamMaestroEventSource.Log.ServiceError("Proxy", ex.Message, ex.ToString(), "", "");
+                LogHelper.Log.ServiceError("Proxy", ex.Message, ex.ToString(), "", "");
                 Log.Warn("Error closing channel.", ex);
             }
         }
