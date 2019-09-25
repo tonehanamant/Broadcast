@@ -54,7 +54,6 @@ namespace Services.Broadcast.Validators
         const string INVALID_TOTAL_MARKET_COVERAGE = "Invalid total market coverage.";
         const string INVALID_MARKET_SHARE_OF_VOICE = "Invalid share of voice for market.";
         const string INVALID_REQUEST = "Invalid request";
-        const string INVALID_WEEKS_FOR_CUSTOM_DELIVERY = "For custom delivery you have to provide the weeks values";
         const string INVALID_IMPRESSIONS_COUNT = "The impressions count is different between the delivery and the weekly breakdown";
         const string INVALID_SOV_COUNT = "The share of voice count is not equal to 100%";
         const string INVALID_VPVH = "Invalid VPVH. The value must be between 0.001 and 1.";
@@ -133,11 +132,6 @@ namespace Services.Broadcast.Validators
             if (request.FlightEndDate < request.FlightStartDate)
             {
                 throw new Exception(INVALID_FLIGHT_DATES);
-            }
-
-            if (request.DeliveryType.Equals(PlanGoalBreakdownTypeEnum.Custom) && !request.Weeks.Any())
-            {
-                throw new Exception(INVALID_WEEKS_FOR_CUSTOM_DELIVERY);
             }
         }
 

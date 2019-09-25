@@ -807,21 +807,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
                     .EqualTo("Invalid flight dates.  The end date cannot be before the start date."));
         }
 
-        [Test]
-        public void ValidateWeeklyBreakdown_InvalidWeeksForcustomDelivery()
-        {
-            var request = new WeeklyBreakdownRequest
-            {
-                FlightEndDate = new DateTime(2019, 8, 1),
-                FlightStartDate = new DateTime(2019, 7, 1),
-                DeliveryType = Entities.Enums.PlanGoalBreakdownTypeEnum.Custom
-            };
-
-            Assert.That(() => _planValidator.ValidateWeeklyBreakdown(request),
-                Throws.TypeOf<Exception>().With.Message
-                    .EqualTo("For custom delivery you have to provide the weeks values"));
-        }
-
         private void _ConfigureSpotLenghtEngineMockToReturnTrue() =>
             _spotLengthEngineMock.Setup(s => s.SpotLengthIdExists(It.IsAny<int>())).Returns(true);
 

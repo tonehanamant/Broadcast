@@ -1,0 +1,66 @@
+﻿{
+  "TotalActiveDays": 33,
+  "TotalShareOfVoice": 100.0,
+  "Weeks": [
+    {
+      "ActiveDays": "F-Su",
+      "EndDate": "2019-02-03T00:00:00",
+      "Impressions": 1666.66666667,
+      "MediaWeekId": 788,
+      "NumberOfActiveDays": 3,
+      "ShareOfVoice": 16.66666667,
+      "StartDate": "2019-01-28T00:00:00",
+      "WeekNumber": 1
+    },
+    {
+      "ActiveDays": "",
+      "EndDate": "2019-02-10T00:00:00",
+      "Impressions": 1666.66666667,
+      "MediaWeekId": 789,
+      "NumberOfActiveDays": 7,
+      "ShareOfVoice": 16.66666667,
+      "StartDate": "2019-02-04T00:00:00",
+      "WeekNumber": 2
+    },
+    {
+      "ActiveDays": "",
+      "EndDate": "2019-02-17T00:00:00",
+      "Impressions": 1666.66666667,
+      "MediaWeekId": 790,
+      "NumberOfActiveDays": 7,
+      "ShareOfVoice": 16.66666667,
+      "StartDate": "2019-02-11T00:00:00",
+      "WeekNumber": 3
+    },
+    {
+      "ActiveDays": "",
+      "EndDate": "2019-02-24T00:00:00",
+      "Impressions": 1666.66666667,
+      "MediaWeekId": 791,
+      "NumberOfActiveDays": 7,
+      "ShareOfVoice": 16.66666667,
+      "StartDate": "2019-02-18T00:00:00",
+      "WeekNumber": 4
+    },
+    {
+      "ActiveDays": "",
+      "EndDate": "2019-03-03T00:00:00",
+      "Impressions": 1666.66666667,
+      "MediaWeekId": 792,
+      "NumberOfActiveDays": 7,
+      "ShareOfVoice": 16.66666667,
+      "StartDate": "2019-02-25T00:00:00",
+      "WeekNumber": 5
+    },
+    {
+      "ActiveDays": "M,Tu",
+      "EndDate": "2019-03-10T00:00:00",
+      "Impressions": 1666.66666667,
+      "MediaWeekId": 793,
+      "NumberOfActiveDays": 2,
+      "ShareOfVoice": 16.66666667,
+      "StartDate": "2019-03-04T00:00:00",
+      "WeekNumber": 6
+    }
+  ]
+}

@@ -797,16 +797,20 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        public void Plan_WeeklyBreakdown_InvalidCustomDeliveryRequest()
+        [UseReporter(typeof(DiffReporter))]
+        public void Plan_WeeklyBreakdown_CustomDelivery_InitialRequest()
         {
             using (new TransactionScopeWrapper())
             {
-                Assert.That(() => _PlanService.CalculatePlanWeeklyGoalBreakdown(new WeeklyBreakdownRequest
+                var result = _PlanService.CalculatePlanWeeklyGoalBreakdown(new WeeklyBreakdownRequest
                 {
-                    FlightEndDate = new DateTime(2019, 01, 05),
-                    FlightStartDate = new DateTime(2019, 01, 01),
-                    DeliveryType = Entities.Enums.PlanGoalBreakdownTypeEnum.Custom
-                }), Throws.TypeOf<Exception>().With.Message.EqualTo("For custom delivery you have to provide the weeks values"));
+                    FlightEndDate = new DateTime(2019, 03, 05),
+                    FlightStartDate = new DateTime(2019, 02, 01),
+                    DeliveryType = PlanGoalBreakdownTypeEnum.Custom,
+                    FlightHiatusDays = new List<DateTime>(),
+                    TotalImpressions = 10000
+                });
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
             }
         }
 

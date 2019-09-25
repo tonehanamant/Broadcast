@@ -211,7 +211,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             //add all the days outside of the flight for the first and last week as hiatus days
             request.FlightHiatusDays.AddRange(_GetDaysOutsideOfTheFlight(request.FlightStartDate, request.FlightEndDate, weeks));
 
-            if (request.DeliveryType.Equals(PlanGoalBreakdownTypeEnum.Even))
+            if (request.DeliveryType.Equals(PlanGoalBreakdownTypeEnum.Even) || (request.DeliveryType.Equals(PlanGoalBreakdownTypeEnum.Custom) && !request.Weeks.Any()))
             {
                 response = _CalculateEvenPlanWeeklyGoalBreakdown(request, weeks);
             }
