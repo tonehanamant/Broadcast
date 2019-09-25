@@ -12,6 +12,7 @@ using Tam.Maestro.Services.Cable.Entities;
 using Tam.Maestro.Services.ContractInterfaces;
 using Tam.Maestro.Web.Common;
 using Services.Broadcast.SystemComponentParameters;
+using System.DirectoryServices.AccountManagement;
 
 namespace BroadcastComposerWeb.Controllers
 {
@@ -78,7 +79,7 @@ namespace BroadcastComposerWeb.Controllers
         {
             return
                 _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ICampaignService>()
-                .SaveCampaign(campaign, Identity.Name, DateTime.Now));
+                .SaveCampaign(campaign, UserPrincipal.Current.DisplayName, DateTime.Now));
         }
         /// <summary>
         /// Gets the quarters.
