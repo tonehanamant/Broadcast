@@ -30,6 +30,14 @@ namespace BroadcastComposerWeb.Controllers
             get { return HttpContext.Current.Request.LogonUserIdentity; }
         }
 
-        public string DisplayName => UserPrincipal.Current.DisplayName;
+        public string FullName
+        {
+            get
+            {
+                PrincipalContext ctx = new PrincipalContext(ContextType.Domain);
+                UserPrincipal user = UserPrincipal.FindByIdentity(ctx, User.Identity.Name);
+                return user.DisplayName;
+            }
+        }
     }
 }

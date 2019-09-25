@@ -12,7 +12,6 @@ using Tam.Maestro.Services.Cable.Entities;
 using Tam.Maestro.Services.ContractInterfaces;
 using Tam.Maestro.Web.Common;
 using Services.Broadcast.SystemComponentParameters;
-using System.DirectoryServices.AccountManagement;
 
 namespace BroadcastComposerWeb.Controllers
 {
@@ -77,11 +76,9 @@ namespace BroadcastComposerWeb.Controllers
         [Authorize]
         public BaseResponse<int> CreateCampaign(SaveCampaignDto campaign)
         {
-            PrincipalContext ctx = new PrincipalContext(ContextType.Domain);
-            UserPrincipal user = UserPrincipal.FindByIdentity(ctx, User.Identity.Name);
             return
                 _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ICampaignService>()
-                .SaveCampaign(campaign, user.DisplayName, DateTime.Now));
+                .SaveCampaign(campaign, FullName, DateTime.Now));
         }
         /// <summary>
         /// Gets the quarters.
