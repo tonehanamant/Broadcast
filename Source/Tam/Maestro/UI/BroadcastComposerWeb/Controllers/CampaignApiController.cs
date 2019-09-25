@@ -77,9 +77,11 @@ namespace BroadcastComposerWeb.Controllers
         [Authorize]
         public BaseResponse<int> CreateCampaign(SaveCampaignDto campaign)
         {
+            PrincipalContext ctx = new PrincipalContext(ContextType.Domain);
+            UserPrincipal user = UserPrincipal.FindByIdentity(ctx, User.Identity.Name);
             return
                 _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ICampaignService>()
-                .SaveCampaign(campaign, UserPrincipal.Current.DisplayName, DateTime.Now));
+                .SaveCampaign(campaign, user.DisplayName, DateTime.Now));
         }
         /// <summary>
         /// Gets the quarters.
