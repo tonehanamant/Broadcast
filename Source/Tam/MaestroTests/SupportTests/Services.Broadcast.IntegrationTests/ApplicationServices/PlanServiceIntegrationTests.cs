@@ -820,9 +820,25 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             var result = _PlanService.CalculatePlanWeeklyGoalBreakdown(new WeeklyBreakdownRequest
             {
-                DeliveryType = Entities.Enums.PlanGoalBreakdownTypeEnum.Even,
+                DeliveryType = PlanGoalBreakdownTypeEnum.Even,
                 FlightStartDate = new DateTime(2019, 08, 03),
                 FlightEndDate = new DateTime(2019, 08, 27),
+                FlightHiatusDays = new List<DateTime> { new DateTime(2019, 8, 15) },
+                TotalImpressions = 1000
+            });
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void Plan_WeeklyBreakdown_RoundShareOfVoiceTotal()
+        {
+            var result = _PlanService.CalculatePlanWeeklyGoalBreakdown(new WeeklyBreakdownRequest
+            {
+                DeliveryType = PlanGoalBreakdownTypeEnum.Even,
+                FlightStartDate = new DateTime(2019, 08, 05),
+                FlightEndDate = new DateTime(2019, 09, 19),
                 FlightHiatusDays = new List<DateTime> { new DateTime(2019, 8, 15) },
                 TotalImpressions = 1000
             });

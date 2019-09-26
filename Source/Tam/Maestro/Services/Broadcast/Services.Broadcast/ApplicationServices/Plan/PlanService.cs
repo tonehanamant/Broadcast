@@ -18,6 +18,7 @@ using Tam.Maestro.Services.ContractInterfaces.Common;
 
 namespace Services.Broadcast.ApplicationServices.Plan
 {
+    
     /// <summary>
     /// Saves the plan.
     /// </summary>
@@ -299,7 +300,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private static void _CalculateWeeklyGoalBreakdownTotals(WeeklyBreakdownResponseDto result)
         {
             result.TotalActiveDays = result.Weeks.Select(x => x.NumberOfActiveDays).Sum();
-            result.TotalShareOfVoice = result.Weeks.Select(x => x.ShareOfVoice).Sum();
+            result.TotalShareOfVoice = Math.Round(result.Weeks.Select(x => x.ShareOfVoice).Sum(), 2);
         }
 
         private void _RemoveDeletedWeeks(List<WeeklyBreakdownWeek> requestWeeks, List<DisplayMediaWeek> flightWeeks)
