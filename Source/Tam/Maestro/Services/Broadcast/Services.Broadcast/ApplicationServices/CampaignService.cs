@@ -239,10 +239,17 @@ namespace Services.Broadcast.ApplicationServices
             var validDateRanges = _ValidateDateRanges(dates);
             var allMediaMonths = new List<MediaMonth>();
 
-            foreach (var range in validDateRanges)
+            if (validDateRanges.Any())
             {
-                var mediaMonths = _MediaMonthAndWeekAggregateCache.GetMediaMonthsBetweenDatesInclusive(range.Start.Value, range.End.Value);
-                allMediaMonths.AddRange(mediaMonths);
+                var min = validDateRanges.Min(x => x.Start.Value);
+                var max = validDateRanges.Max(x => x.End.Value);
+                var mediaMonths = _MediaMonthAndWeekAggregateCache.GetMediaMonthsBetweenDatesInclusive(min, max);
+
+                foreach (var range in validDateRanges)
+                {
+                    var mediaMonthsForRange = mediaMonths.Where(x => x.StartDate <= range.End.Value && x.EndDate >= range.Start.Value);
+                    allMediaMonths.AddRange(mediaMonthsForRange);
+                }
             }
 
             var quarters = allMediaMonths.GroupBy(x => new { x.Quarter, x.Year })

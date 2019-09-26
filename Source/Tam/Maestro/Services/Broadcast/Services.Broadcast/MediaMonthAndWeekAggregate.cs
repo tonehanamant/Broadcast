@@ -253,10 +253,10 @@ namespace Services.Broadcast
         {
             return _MediaMonths.Where(x => (x.StartDate >= startDate && x.EndDate <= endDate)).ToList();
         }
+
         public List<MediaMonth> GetMediaMonthsBetweenDatesInclusive(DateTime startDate, DateTime endDate)
         {
-            return _MediaMonths.Where(x => (x.Id >= GetMediaMonthContainingDate(startDate).Id  && 
-                                                x.Id <= GetMediaMonthContainingDate(endDate).Id)).ToList();
+            return _MediaMonths.Where(x => x.StartDate <= endDate && x.EndDate >= startDate).ToList();
         }
-       }
+    }
 }
