@@ -17,6 +17,7 @@ using Services.Broadcast.Validators;
 using System;
 using System.Collections.Generic;
 using Services.Broadcast.Cache;
+using Services.Broadcast.Entities.Campaign;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 {
@@ -74,7 +75,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 }
             };
 
-            campaignRepositoryMock.Setup(x => x.GetCampaigns(It.IsAny<DateTime>(), It.IsAny<DateTime>(), It.IsAny<PlanStatusEnum>())).Returns(getCampaignsReturn);
+            campaignRepositoryMock.Setup(x => x.GetCampaignsWithSummary(It.IsAny<DateTime>(), It.IsAny<DateTime>(), It.IsAny<PlanStatusEnum>())).Returns(_GetCampaignWithsummeriesReturn(agency, advertiser));
             quarterCalculationEngineMock.Setup(x => x.GetQuarterDetail(2, 2019)).Returns(new QuarterDetailDto
             {
                 Year = 2019,
@@ -105,7 +106,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             }, _CreatedDate);
 
             // Assert
-            campaignRepositoryMock.Verify(x => x.GetCampaigns(It.IsAny<DateTime>(), It.IsAny<DateTime>(), It.IsAny<PlanStatusEnum>()), Times.Once);
+            campaignRepositoryMock.Verify(x => x.GetCampaignsWithSummary(It.IsAny<DateTime>(), It.IsAny<DateTime>(), It.IsAny<PlanStatusEnum>()), Times.Once);
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
 
@@ -156,8 +157,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     ModifiedDate = new DateTime(2017,10,17)
                 }
             };
-
-            campaignRepositoryMock.Setup(x => x.GetCampaigns(It.IsAny<DateTime>(), It.IsAny<DateTime>(), null)).Returns(getCampaignsReturn);
+            
+            campaignRepositoryMock.Setup(x => x.GetCampaignsWithSummary(It.IsAny<DateTime>(), It.IsAny<DateTime>(), null)).Returns(_GetCampaignWithsummeriesReturn(agency, advertiser));
             quarterCalculationEngineMock.Setup(x => x.GetQuarterRangeByDate(_CreatedDate)).Returns(new QuarterDetailDto
             {
                 Year = 2019,
@@ -183,9 +184,58 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             var result = tc.GetCampaigns(null, _CreatedDate);
 
             // Assert
-            campaignRepositoryMock.Verify(x => x.GetCampaigns(It.IsAny<DateTime>(), It.IsAny<DateTime>(), null), Times.Once);
+            campaignRepositoryMock.Verify(x => x.GetCampaignsWithSummary(It.IsAny<DateTime>(), It.IsAny<DateTime>(), null), Times.Once);
             //campaignSummaryRepository.Verify(x => x.GetSummaryForCampaign(It.IsAny<int>()), Times.Exactly(3));
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        private static List<CampaignWithSummary> _GetCampaignWithsummeriesReturn(AgencyDto agency, AdvertiserDto advertiser)
+        {
+            return new List<CampaignWithSummary>
+            {
+                new CampaignWithSummary
+                {
+                    Campaign = new CampaignDto
+                    {
+                        Id = 1,
+                        Name = "CampaignOne",
+                        AgencyId = agency.Id,
+                        AdvertiserId = advertiser.Id,
+                        Notes = "Notes for CampaignOne.",
+                        ModifiedBy = "TestUser",
+                        ModifiedDate = new DateTime(2017,10,17),
+                        CampaignStatus = PlanStatusEnum.Working
+                    },
+                },
+                new CampaignWithSummary
+                {
+                    Campaign = new CampaignDto
+                    {
+                        Id = 2,
+                        Name = "CampaignTwo",
+                        AgencyId = agency.Id,
+                        AdvertiserId = advertiser.Id,
+                        Notes = "Notes for CampaignTwo.",
+                        ModifiedBy = "TestUser",
+                        ModifiedDate = new DateTime(2017,10,17),
+                        CampaignStatus = PlanStatusEnum.Working
+                    }
+                },
+                new CampaignWithSummary
+                {
+                    Campaign = new CampaignDto
+                    {
+                        Id = 3,
+                        Name = "CampaignThree",
+                        AgencyId = agency.Id,
+                        AdvertiserId = advertiser.Id,
+                        Notes = "Notes for CampaignThree.",
+                        ModifiedBy = "TestUser",
+                        ModifiedDate = new DateTime(2017,10,17),
+                        CampaignStatus = PlanStatusEnum.Working
+                    }
+                }
+            };
         }
 
         private static List<CampaignListItemDto> _GetCampaignsReturn(AgencyDto agency, AdvertiserDto advertiser)
@@ -244,7 +294,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             quarterCalculationEngineMock.Setup(x => x.GetQuarterDetail(It.IsAny<int>(), It.IsAny<int>())).Returns(new QuarterDetailDto());
             quarterCalculationEngineMock.Setup(x => x.GetQuarterRangeByDate(_CreatedDate)).Returns(new QuarterDetailDto());
             campaignRepositoryMock
-                .Setup(x => x.GetCampaigns(It.IsAny<DateTime>(), It.IsAny<DateTime>(), null))
+                .Setup(x => x.GetCampaignsWithSummary(It.IsAny<DateTime>(), It.IsAny<DateTime>(), null))
                 .Callback(() => throw new Exception(expectedMessage));
             dataRepositoryFactoryMock.Setup(s => s.GetDataRepository<ICampaignRepository>()).Returns(campaignRepositoryMock.Object);
 

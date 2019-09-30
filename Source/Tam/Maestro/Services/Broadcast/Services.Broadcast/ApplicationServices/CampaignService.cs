@@ -5,6 +5,7 @@ using Hangfire;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Cache;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.Campaign;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Helpers;
 using Services.Broadcast.Repositories;
@@ -128,7 +129,9 @@ namespace Services.Broadcast.ApplicationServices
                 filter = _GetDefaultFilter(currentDate);
 
             var dateRange = _GetQuarterDateRange(filter.Quarter);
-            var campaigns = _CampaignRepository.GetCampaigns(dateRange.Start, dateRange.End, filter.PlanStatus);
+            var campaigns = _CampaignRepository.GetCampaignsWithSummary(dateRange.Start, dateRange.End, filter.PlanStatus)
+                .Select(x => _MapToCampaignListItemDto(x)).ToList();
+            var cacheAdvertisers = new BaseMemoryCache<List<AdvertiserDto>>("localAdvertisersCache");
 
             foreach (var campaign in campaigns)
             {
@@ -176,20 +179,60 @@ namespace Services.Broadcast.ApplicationServices
             campaign.CampaignStatus = summary.CampaignStatus;
             campaign.PlanStatuses = _MapToPlanStatuses(summary);
         }
+        
+        private CampaignListItemDto _MapToCampaignListItemDto(CampaignWithSummary campaignAndCampaignSummary)
+        {
+            var campaign = new CampaignListItemDto
+            {
+                Id = campaignAndCampaignSummary.Campaign.Id,
+                Name = campaignAndCampaignSummary.Campaign.Name,
+                Advertiser = new AdvertiserDto { Id = campaignAndCampaignSummary.Campaign.AdvertiserId },
+                Agency = new AgencyDto { Id = campaignAndCampaignSummary.Campaign.AgencyId },
+                Notes = campaignAndCampaignSummary.Campaign.Notes,
+                ModifiedDate = campaignAndCampaignSummary.Campaign.ModifiedDate,
+                ModifiedBy = campaignAndCampaignSummary.Campaign.ModifiedBy,
 
+                HasPlans = campaignAndCampaignSummary.Campaign.Plans != null &&
+                    campaignAndCampaignSummary.Campaign.Plans.Any(),
+                Plans = campaignAndCampaignSummary.Campaign.Plans,
+            };
+            campaign.Plans?.ForEach(plan => plan.HasHiatus = plan.TotalHiatusDays.HasValue && plan.TotalHiatusDays.Value > 0);
+
+            if (campaignAndCampaignSummary.CampaignSummary != null)
+            {
+                campaign.FlightStartDate = campaignAndCampaignSummary.CampaignSummary.FlightStartDate;
+                campaign.FlightEndDate = campaignAndCampaignSummary.CampaignSummary.FlightEndDate;
+                campaign.FlightHiatusDays = campaignAndCampaignSummary.CampaignSummary.FlightHiatusDays;
+                campaign.FlightActiveDays = campaignAndCampaignSummary.CampaignSummary.FlightActiveDays;
+                campaign.HasHiatus = 
+                    campaignAndCampaignSummary.CampaignSummary.FlightHiatusDays.HasValue && 
+                    campaignAndCampaignSummary.CampaignSummary.FlightHiatusDays.Value > 0;
+
+                campaign.Budget = campaignAndCampaignSummary.CampaignSummary.Budget;
+                campaign.HouseholdCPM = campaignAndCampaignSummary.CampaignSummary.HouseholdCPM;
+                campaign.HouseholdImpressions = campaignAndCampaignSummary.CampaignSummary.HouseholdImpressions;
+                campaign.HouseholdRatingPoints = campaignAndCampaignSummary.CampaignSummary.HouseholdRatingPoints;
+                campaign.CampaignStatus = campaignAndCampaignSummary.CampaignSummary.CampaignStatus;
+
+                campaign.PlanStatuses = _MapToPlanStatuses(campaignAndCampaignSummary.CampaignSummary);
+            }
+
+            return campaign;
+        }
+        
         private List<PlansStatusCountDto> _MapToPlanStatuses(CampaignSummaryDto summary)
         {
             var statuses = new List<PlansStatusCountDto>();
-            EvaluateAndAddPlanStatus(statuses, PlanStatusEnum.Working, summary.PlanStatusCountWorking);
-            EvaluateAndAddPlanStatus(statuses, PlanStatusEnum.Reserved, summary.PlanStatusCountReserved);
-            EvaluateAndAddPlanStatus(statuses, PlanStatusEnum.ClientApproval, summary.PlanStatusCountClientApproval);
-            EvaluateAndAddPlanStatus(statuses, PlanStatusEnum.Contracted, summary.PlanStatusCountContracted);
-            EvaluateAndAddPlanStatus(statuses, PlanStatusEnum.Live, summary.PlanStatusCountLive);
-            EvaluateAndAddPlanStatus(statuses, PlanStatusEnum.Complete, summary.PlanStatusCountComplete);
+            _EvaluateAndAddPlanStatus(statuses, PlanStatusEnum.Working, summary.PlanStatusCountWorking);
+            _EvaluateAndAddPlanStatus(statuses, PlanStatusEnum.Reserved, summary.PlanStatusCountReserved);
+            _EvaluateAndAddPlanStatus(statuses, PlanStatusEnum.ClientApproval, summary.PlanStatusCountClientApproval);
+            _EvaluateAndAddPlanStatus(statuses, PlanStatusEnum.Contracted, summary.PlanStatusCountContracted);
+            _EvaluateAndAddPlanStatus(statuses, PlanStatusEnum.Live, summary.PlanStatusCountLive);
+            _EvaluateAndAddPlanStatus(statuses, PlanStatusEnum.Complete, summary.PlanStatusCountComplete);
             return statuses;
         }
 
-        private void EvaluateAndAddPlanStatus(List<PlansStatusCountDto> planStatuses, PlanStatusEnum status, int? candidate)
+        private void _EvaluateAndAddPlanStatus(List<PlansStatusCountDto> planStatuses, PlanStatusEnum status, int? candidate)
         {
             if (candidate > 0)
             {

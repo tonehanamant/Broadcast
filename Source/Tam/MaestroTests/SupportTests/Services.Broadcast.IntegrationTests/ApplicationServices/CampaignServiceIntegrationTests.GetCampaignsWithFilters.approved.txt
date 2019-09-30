@@ -24,8 +24,25 @@
     "ModifiedDate": "2019-08-27T00:00:00",
     "Name": "Test Campaign 4",
     "Notes": null,
-    "Plans": null,
-    "PlanStatuses": null
+    "Plans": [],
+    "PlanStatuses": [
+      {
+        "Count": 1,
+        "PlanStatus": 1
+      },
+      {
+        "Count": 3,
+        "PlanStatus": 3
+      },
+      {
+        "Count": 1,
+        "PlanStatus": 5
+      },
+      {
+        "Count": 2,
+        "PlanStatus": 6
+      }
+    ]
   },
   {
     "Advertiser": {
@@ -44,7 +61,7 @@
     "FlightHiatusDays": 4,
     "FlightStartDate": "2019-08-01T00:00:00",
     "HasHiatus": true,
-    "HasPlans": false,
+    "HasPlans": true,
     "HouseholdCPM": 2500.0,
     "HouseholdImpressions": 5500.0,
     "HouseholdRatingPoints": 23.5,
@@ -52,8 +69,116 @@
     "ModifiedDate": "2019-05-13T00:00:00",
     "Name": "Test Campaign 2",
     "Notes": "This is a test note for a test campaign.",
-    "Plans": null,
-    "PlanStatuses": null
+    "Plans": [
+      {
+        "AudienceName": "House Holds",
+        "AvailableMarketCount": 2,
+        "AvailableMarketTotalUsCoveragePercent": 52.5,
+        "BlackoutMarketCount": null,
+        "BlackoutMarketTotalUsCoveragePercent": null,
+        "Budget": 100.0000,
+        "Dayparts": [
+          "MDN",
+          "OVN"
+        ],
+        "Equivalized": true,
+        "FlightEndDate": "2019-07-31T00:00:00",
+        "FlightStartDate": "2019-01-01T00:00:00",
+        "HasHiatus": true,
+        "HHCPM": 10.0000,
+        "HHImpressions": 10000.0,
+        "ModifiedBy": "IntegrationTestUser",
+        "ModifiedDate": "2019-05-14T00:00:00",
+        "Name": "New Plan",
+        "PlanSummaryQuarters": [
+          {
+            "Quarter": 1,
+            "Year": 2019
+          },
+          {
+            "Quarter": 2,
+            "Year": 2019
+          },
+          {
+            "Quarter": 3,
+            "Year": 2019
+          }
+        ],
+        "PostingType": 2,
+        "ProcessingStatus": 0,
+        "ProductName": "Product1",
+        "SpotLength": 30,
+        "Status": 1,
+        "TargetCPM": 12.0000,
+        "TargetImpressions": 100.0,
+        "TotalActiveDays": 210,
+        "TotalHiatusDays": 2,
+        "TRP": 6.0
+      },
+      {
+        "AudienceName": "House Holds",
+        "AvailableMarketCount": 2,
+        "AvailableMarketTotalUsCoveragePercent": 52.5,
+        "BlackoutMarketCount": null,
+        "BlackoutMarketTotalUsCoveragePercent": null,
+        "Budget": 100.0000,
+        "Dayparts": [
+          "MDN",
+          "OVN"
+        ],
+        "Equivalized": true,
+        "FlightEndDate": "2019-07-31T00:00:00",
+        "FlightStartDate": "2019-01-01T00:00:00",
+        "HasHiatus": true,
+        "HHCPM": 10.0000,
+        "HHImpressions": 10000.0,
+        "ModifiedBy": "IntegrationTestUser",
+        "ModifiedDate": "2019-05-14T00:00:00",
+        "Name": "New Plan",
+        "PlanSummaryQuarters": [
+          {
+            "Quarter": 1,
+            "Year": 2019
+          },
+          {
+            "Quarter": 2,
+            "Year": 2019
+          },
+          {
+            "Quarter": 3,
+            "Year": 2019
+          }
+        ],
+        "PostingType": 2,
+        "ProcessingStatus": 0,
+        "ProductName": "Product1",
+        "SpotLength": 30,
+        "Status": 1,
+        "TargetCPM": 12.0000,
+        "TargetImpressions": 100.0,
+        "TotalActiveDays": 210,
+        "TotalHiatusDays": 2,
+        "TRP": 6.0
+      }
+    ],
+    "PlanStatuses": [
+      {
+        "Count": 1,
+        "PlanStatus": 1
+      },
+      {
+        "Count": 3,
+        "PlanStatus": 3
+      },
+      {
+        "Count": 1,
+        "PlanStatus": 5
+      },
+      {
+        "Count": 2,
+        "PlanStatus": 6
+      }
+    ]
   },
   {
     "Advertiser": {
@@ -80,8 +205,25 @@
     "ModifiedDate": "2019-05-09T00:00:00",
     "Name": "Test Campaign 1",
     "Notes": null,
-    "Plans": null,
-    "PlanStatuses": null
+    "Plans": [],
+    "PlanStatuses": [
+      {
+        "Count": 1,
+        "PlanStatus": 1
+      },
+      {
+        "Count": 3,
+        "PlanStatus": 3
+      },
+      {
+        "Count": 1,
+        "PlanStatus": 5
+      },
+      {
+        "Count": 2,
+        "PlanStatus": 6
+      }
+    ]
   },
   {
     "Advertiser": {
@@ -108,7 +250,24 @@
     "ModifiedDate": "2017-06-05T00:00:00",
     "Name": "Test Campaign 3",
     "Notes": null,
-    "Plans": null,
-    "PlanStatuses": null
+    "Plans": [],
+    "PlanStatuses": [
+      {
+        "Count": 1,
+        "PlanStatus": 1
+      },
+      {
+        "Count": 3,
+        "PlanStatus": 3
+      },
+      {
+        "Count": 1,
+        "PlanStatus": 5
+      },
+      {
+        "Count": 2,
+        "PlanStatus": 6
+      }
+    ]
   }
 ]

@@ -3,6 +3,7 @@ using Common.Services.Repositories;
 using ConfigurationService.Client;
 using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.Campaign;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
 using System;
@@ -27,7 +28,7 @@ namespace Services.Broadcast.Repositories
         /// <param name="endDate">The end  date to filter the campaigns by</param>
         /// <param name="planStatus">The plan status to filter the campaigns by</param>
         /// <returns></returns>
-        List<CampaignListItemDto> GetCampaigns(DateTime? startDate, DateTime? endDate, PlanStatusEnum? planStatus);
+        List<CampaignWithSummary> GetCampaignsWithSummary(DateTime? startDate, DateTime? endDate, PlanStatusEnum? planStatus);
 
         /// <summary>
         /// Gets the campaign.
@@ -132,20 +133,26 @@ namespace Services.Broadcast.Repositories
         }
 
         /// <inheritdoc />
-        public List<CampaignListItemDto> GetCampaigns(DateTime? startDate, DateTime? endDate, PlanStatusEnum? campaignStatus)
+        public List<CampaignWithSummary> GetCampaignsWithSummary(DateTime? startDate, DateTime? endDate, PlanStatusEnum? campaignStatus)
         {
             return _InReadUncommitedTransaction(
                 context =>
                 {
-                    var getCampaignsWithSummeries = (from c in context.campaigns
-                                                     join campaign_summaries in context.campaign_summaries on c.id equals campaign_summaries.campaign_id into gj
-                                                     from summary in gj.DefaultIfEmpty()
-                                                     orderby c.modified_date descending
-                                                     select new { campaign = c, summary });
+                    var campaignsWithSummary = context.campaigns
+                        .Include(campaign => campaign.plans)
+                        .Include(campaign => campaign.plans.Select(p => p.plan_summaries))
+                        .Include(campaign => campaign.plans.Select(p => p.plan_dayparts))
+                        .Include(campaign => campaign.plans.Select(p => p.spot_lengths))
+                        .GroupJoin(
+                            context.campaign_summaries,
+                            campaigns => campaigns.id,
+                            campaign_summaries => campaign_summaries.campaign_id,
+                            (campaign, summary) => new { campaign, summaries = summary.DefaultIfEmpty() })
+                         .Select(item => new { item.campaign, summary = item.summaries.FirstOrDefault() });
 
                     if (startDate.HasValue && endDate.HasValue)
                     {
-                        getCampaignsWithSummeries = getCampaignsWithSummeries.Where(item =>
+                        campaignsWithSummary = campaignsWithSummary.Where(item =>
                             (item.summary == null && 
                              item.campaign.created_date >= startDate.Value && 
                              item.campaign.created_date <= endDate) ||
@@ -163,16 +170,52 @@ namespace Services.Broadcast.Repositories
 
                     if (campaignStatus.HasValue)
                     {
-                        getCampaignsWithSummeries = getCampaignsWithSummeries.Where(p => p.summary.campaign_status == (byte)campaignStatus);
+                        campaignsWithSummary = campaignsWithSummary.Where(p => p.summary.campaign_status == (byte)campaignStatus);
                     }
 
-                    return getCampaignsWithSummeries.ToList().Select(x => _MapToCampaignAndCampaignSummaryListItemDto(x.campaign, x.summary)).ToList();
+                    return campaignsWithSummary.ToList()
+                        .Select(x => _MapToCampaignAndCampaignSummary(x.campaign, x.summary))
+                        .OrderByDescending(item => item.Campaign.ModifiedDate)
+                        .ToList();
                 });
         }
 
-        private decimal? _ToNullableDecimal(double? candidate)
+        private CampaignWithSummary _MapToCampaignAndCampaignSummary(campaign campaign, campaign_summaries summary)
         {
-            return candidate.HasValue ? Convert.ToDecimal(candidate) : (decimal?)null;
+            var item = new CampaignWithSummary
+            {
+                Campaign = _MapToDto(campaign)
+            };
+            if (summary != null)
+            {
+                item.CampaignSummary = new CampaignSummaryDto
+                {
+                    ProcessingStatus = (CampaignAggregationProcessingStatusEnum)summary.processing_status,
+                    ProcessingErrorMessage = summary.processing_status_error_msg,
+                    CampaignId = summary.campaign_id,
+                    QueuedAt = summary.queued_at,
+                    QueuedBy = summary.queued_by,
+                    FlightStartDate = summary.flight_start_Date,
+                    FlightEndDate = summary.flight_end_Date,
+                    FlightHiatusDays = summary.flight_hiatus_days,
+                    FlightActiveDays = summary.flight_active_days,
+                    Budget = (decimal?)summary.budget,
+                    HouseholdCPM = (decimal?)summary.household_cpm,
+                    HouseholdImpressions = summary.household_delivery_impressions,
+                    HouseholdRatingPoints = summary.household_rating_points,
+                    CampaignStatus = (PlanStatusEnum?)summary.campaign_status,
+                    PlanStatusCountWorking = summary.plan_status_count_working,
+                    PlanStatusCountReserved = summary.plan_status_count_reserved,
+                    PlanStatusCountClientApproval = summary.plan_status_count_client_approval,
+                    PlanStatusCountContracted = summary.plan_status_count_contracted,
+                    PlanStatusCountLive = summary.plan_status_count_live,
+                    PlanStatusCountComplete = summary.plan_status_count_complete,
+                    ComponentsModified = summary.components_modified,
+                    LastAggregated = summary.last_aggregated
+                };
+            }
+
+            return item;
         }
 
         /// <inheritdoc />
@@ -365,37 +408,6 @@ namespace Services.Broadcast.Repositories
             }
 
             return plansWithStartDate;
-        }
-        
-        private CampaignListItemDto _MapToCampaignAndCampaignSummaryListItemDto(campaign c, campaign_summaries summary)
-        {
-            var campaign = new CampaignListItemDto
-            {
-                Id = c.id,
-                Name = c.name,
-                Advertiser = new AdvertiserDto { Id = c.advertiser_id },
-                Agency = new AgencyDto { Id = c.agency_id },
-                Notes = c.notes,
-                ModifiedDate = c.modified_date,
-                ModifiedBy = c.modified_by
-            };
-
-            if (summary != null)
-            {
-                campaign.FlightStartDate = summary.flight_start_Date;
-                campaign.FlightEndDate = summary.flight_end_Date;
-                campaign.FlightHiatusDays = summary.flight_hiatus_days;
-                campaign.FlightActiveDays = summary.flight_active_days;
-                campaign.HasHiatus = summary.flight_hiatus_days > 0;
-
-                campaign.Budget = (decimal?)summary.budget;
-                campaign.HouseholdCPM = (decimal?)summary.household_cpm;
-                campaign.HouseholdImpressions = summary.household_delivery_impressions;
-                campaign.HouseholdRatingPoints = summary.household_rating_points;
-                campaign.CampaignStatus = (PlanStatusEnum?)summary.campaign_status;
-            }
-
-            return campaign;
         }
 
     }

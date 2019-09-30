@@ -19,23 +19,18 @@ using Tam.Maestro.Services.ContractInterfaces.Common;
 namespace Services.Broadcast.ApplicationServices.Plan
 {
     
-    /// <summary>
-    /// Saves the plan.
-    /// </summary>
-    /// <param name="plan">The plan.</param>
-    /// <param name="modifiedBy">The modified by.</param>
-    /// <param name="modifiedDate">The modified date.</param>
-    /// <param name="aggregatePlanSynchronously">
-    /// Synchronous execution is required for tests 
-    /// because the transaction scope locks DB and summary data can not be saved from another thread
-    /// </param>
-    /// <returns></returns>
     public interface IPlanService : IApplicationService
     {
         /// <summary>
-        /// Gets the plan.
+        /// Saves the plan.
         /// </summary>
-        /// <param name="planId">The plan identifier.</param>
+        /// <param name="plan">The plan.</param>
+        /// <param name="modifiedBy">The modified by.</param>
+        /// <param name="modifiedDate">The modified date.</param>
+        /// <param name="aggregatePlanSynchronously">
+        /// Synchronous execution is required for tests 
+        /// because the transaction scope locks DB and summary data can not be saved from another thread
+        /// </param>
         /// <returns></returns>
         int SavePlan(PlanDto plan, string modifiedBy, DateTime modifiedDate, bool aggregatePlanSynchronously = false);
 
