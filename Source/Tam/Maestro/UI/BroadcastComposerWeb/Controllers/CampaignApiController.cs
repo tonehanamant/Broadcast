@@ -112,7 +112,8 @@ namespace BroadcastComposerWeb.Controllers
         [RestrictedAccess(RequiredRole = RoleType.Broadcast_Proposer)]
         public BaseResponse<LockResponse> LockCampaign(int campaignId)
         {
-            if (SafeBroadcastServiceSystemParameter.EnableCampaignsLocking)
+            //if (SafeBroadcastServiceSystemParameter.EnableCampaignsLocking)
+            if (true)
             {
                 var key = KeyHelper.GetCampaignLockingKey(campaignId);
                 return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ILockingManagerApplicationService>().LockObject(key));
@@ -139,7 +140,8 @@ namespace BroadcastComposerWeb.Controllers
         [RestrictedAccess(RequiredRole = RoleType.Broadcast_Proposer)]
         public BaseResponse<ReleaseLockResponse> UnlockCampaign(int campaignId)
         {
-            if (SafeBroadcastServiceSystemParameter.EnableCampaignsLocking)
+            //if (SafeBroadcastServiceSystemParameter.EnableCampaignsLocking)
+            if (true)
             {
                 var key = KeyHelper.GetCampaignLockingKey(campaignId);
                 return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ILockingManagerApplicationService>().ReleaseObject(key));

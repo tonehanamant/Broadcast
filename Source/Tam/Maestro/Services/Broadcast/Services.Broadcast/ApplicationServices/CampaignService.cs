@@ -254,7 +254,8 @@ namespace Services.Broadcast.ApplicationServices
             }
             else
             {
-                if (SafeBroadcastServiceSystemParameter.EnableCampaignsLocking)
+                //if (SafeBroadcastServiceSystemParameter.EnableCampaignsLocking)
+                if (true)
                 {
                     var key = KeyHelper.GetCampaignLockingKey(campaign.Id);
                     var lockingResult = _LockingManagerApplicationService.LockObject(key);
