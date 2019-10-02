@@ -12,6 +12,8 @@ using Tam.Maestro.Services.Cable.Entities;
 using Tam.Maestro.Services.ContractInterfaces;
 using Tam.Maestro.Web.Common;
 using Services.Broadcast.SystemComponentParameters;
+using Tam.Maestro.Data.Entities;
+using Tam.Maestro.Services.Cable.Security;
 
 namespace BroadcastComposerWeb.Controllers
 {
@@ -156,6 +158,7 @@ namespace BroadcastComposerWeb.Controllers
 
         [HttpPost]
         [Route("LockTest/{campaignId}/Lock")]
+        [RestrictedAccess(RequiredRole = RoleType.Broadcast_Proposer)]
         public BaseResponse<LockResponse> LockTestLockCampaign(int campaignId)
         {
             var key = KeyHelper.GetCampaignLockingKey(campaignId);
@@ -164,6 +167,7 @@ namespace BroadcastComposerWeb.Controllers
 
         [HttpPost]
         [Route("LockTest/{campaignId}/Unlock")]
+        [RestrictedAccess(RequiredRole = RoleType.Broadcast_Proposer)]
         public BaseResponse<ReleaseLockResponse> LockTestUnlockCampaign(int campaignId)
         {
             var key = KeyHelper.GetCampaignLockingKey(campaignId);

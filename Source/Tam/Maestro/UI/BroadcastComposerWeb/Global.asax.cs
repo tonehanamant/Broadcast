@@ -78,6 +78,7 @@ namespace BroadcastComposerWeb
             }
 
             _logger.LogEventInformation("Broadcast Web Application Initialized.", "BroadcastController");
+            _logger.LogEventInformation($"DisableSecurity: {ConfigurationManager.AppSettings["DisableSecurity"]}", "BroadcastController");
         }
     }
 }
