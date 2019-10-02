@@ -75,7 +75,7 @@ namespace BroadcastComposerWeb.Controllers
         /// <param name="campaign">The object with the data for the new campaign</param>
         [HttpPost]
         [Route("")]
-        [Authorize]
+        [RestrictedAccess(RequiredRole = RoleType.Broadcast_Proposer)]
         public BaseResponse<int> CreateCampaign(SaveCampaignDto campaign)
         {
             return
@@ -109,6 +109,7 @@ namespace BroadcastComposerWeb.Controllers
         // navigator.sendBeacon doesn`t support GET type that`s why we have to use Post
         [HttpPost]
         [Route("{campaignId}/Lock")]
+        [RestrictedAccess(RequiredRole = RoleType.Broadcast_Proposer)]
         public BaseResponse<LockResponse> LockCampaign(int campaignId)
         {
             if (SafeBroadcastServiceSystemParameter.EnableCampaignsLocking)
@@ -135,6 +136,7 @@ namespace BroadcastComposerWeb.Controllers
 
         [HttpPost]
         [Route("{campaignId}/Unlock")]
+        [RestrictedAccess(RequiredRole = RoleType.Broadcast_Proposer)]
         public BaseResponse<ReleaseLockResponse> UnlockCampaign(int campaignId)
         {
             if (SafeBroadcastServiceSystemParameter.EnableCampaignsLocking)
