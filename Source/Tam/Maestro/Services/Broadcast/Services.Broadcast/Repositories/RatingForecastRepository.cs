@@ -200,6 +200,7 @@ namespace Services.Broadcast.Repositories
                     command.Parameters.Add(ratingsRequest);
                     command.Parameters.Add(minPlaybackType);
                     command.Parameters.Add(audienceId);
+                    command.CommandTimeout = 0; // This makes it infinite so it will just use the transaction's timeout
 
                     var reader = command.ExecuteReader();
                     var impressions = new List<StationImpressionsWithAudience>();
@@ -300,6 +301,7 @@ namespace Services.Broadcast.Repositories
                     command.Parameters.Add(ratingsRequest);
                     command.Parameters.Add(minPlaybackType);
                     command.Parameters.Add(audienceId);
+                    command.CommandTimeout = 0; // This makes it infinite so it will just use the transaction's timeout
 
                     var reader = command.ExecuteReader();
                     var impressions = new List<StationImpressions>();
