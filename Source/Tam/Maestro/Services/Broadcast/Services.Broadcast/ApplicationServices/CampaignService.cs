@@ -329,9 +329,9 @@ namespace Services.Broadcast.ApplicationServices
 
             var dateRange = _GetQuarterDateRange(quarterDto);
 
-            var statuses = _CampaignRepository.GetCampaignsPlanStatuses(dateRange.Start, dateRange.End);
+            var statuses = _CampaignRepository.GetCampaignsStatuses(dateRange.Start, dateRange.End);
 
-            return statuses.Select(x => new LookupDto { Id = (int)x, Display = x.Description() }).OrderBy(x => x.Id).ToList(); ;
+            return statuses.Select(x => new LookupDto { Id = (int)x, Display = x.Description() }).OrderBy(x => x.Id).ToList();
         }
 
         private DateRange _GetQuarterDateRange(QuarterDto quarterDto)

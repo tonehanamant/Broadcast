@@ -317,16 +317,25 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
+                var campaigns = _CampaignService.GetStatuses(3, 2019);
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(campaigns));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetStatusesTest_CampaignWithoutSummary()
+        {
+            using (new TransactionScopeWrapper())
+            {
                 var campaign = _GetValidCampaignForSave();
                 var campaignId = _CampaignService.SaveCampaign(campaign, IntegrationTestUser, CreatedDate);
-                var plan = _GetNewPlan();
-                plan.CampaignId = campaignId;
-                _PlanService.SavePlan(plan, "integration_test", new DateTime(2019, 01, 01), aggregatePlanSynchronously: true);
 
                 var campaigns = _CampaignService.GetStatuses(2, 2019);
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(campaigns));
             }
         }
+
 
         [Test]
         [UseReporter(typeof(DiffReporter))]

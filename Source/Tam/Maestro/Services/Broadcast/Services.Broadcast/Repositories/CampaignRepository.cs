@@ -61,12 +61,12 @@ namespace Services.Broadcast.Repositories
         List<DateRange> GetCampaignsDateRanges(PlanStatusEnum? planStatus);
 
         /// <summary>
-        /// Gets the list of all statuses of the plans for the campaigns listing
+        /// Gets the list of all statuses of the campaigns for the campaigns listing
         /// </summary>
         /// <param name="startDate">The start date to filter statuses by</param>
         /// <param name="endDate">The end  date to filter the statuses by</param>
         /// <returns></returns>
-        List<PlanStatusEnum> GetCampaignsPlanStatuses(DateTime? startDate, DateTime? endDate);
+        List<PlanStatusEnum> GetCampaignsStatuses(DateTime? startDate, DateTime? endDate);
     }
 
     /// <summary>
@@ -125,7 +125,7 @@ namespace Services.Broadcast.Repositories
                    existingCampaign.notes = campaignDto.Notes;
                    existingCampaign.modified_by = campaignDto.ModifiedBy;
                    existingCampaign.modified_date = campaignDto.ModifiedDate;
-                   
+
                    context.SaveChanges();
 
                    return existingCampaign.id;
@@ -156,7 +156,7 @@ namespace Services.Broadcast.Repositories
                             (item.summary == null && 
                              item.campaign.created_date >= startDate.Value && 
                              item.campaign.created_date <= endDate) ||
-                            
+
                             (item.summary.flight_start_Date != null &&
                              item.summary.flight_end_Date == null &&
                              item.summary.flight_start_Date >= startDate &&
@@ -249,7 +249,7 @@ namespace Services.Broadcast.Repositories
                 ModifiedDate = campaign.modified_date,
                 ModifiedBy = campaign.modified_by,
                 AdvertiserId = campaign.advertiser_id,
-                AgencyId = campaign.agency_id,                
+                AgencyId = campaign.agency_id,
                 Plans = campaign.plans
                     .Where(x => x.plan_summaries.Any(s => s.processing_status == (int)PlanAggregationProcessingStatusEnum.Idle))
                     .Select(plan =>
@@ -309,31 +309,37 @@ namespace Services.Broadcast.Repositories
                     return campaigns
                             .Select(c => new DateRange(c.created_date, null))
                             .Concat(plansDateRanges.Select(c => new DateRange(c.flight_start_date, c.flight_end_date))).ToList();
-                 });
+                });
         }
 
-        public List<PlanStatusEnum> GetCampaignsPlanStatuses(DateTime? startDate, DateTime? endDate)
+        public List<PlanStatusEnum> GetCampaignsStatuses(DateTime? startDate, DateTime? endDate)
         {
             return _InReadUncommitedTransaction(
                 context =>
                 {
-                    var filteredPlans = _GetFilteredPlansWithDates(startDate, endDate, null, context);
-                    var plansIds = filteredPlans.Select(p => p.id).ToList();
-                    var campaigns = _GetFilteredCampaignsWithoutValidPlans(startDate, endDate, null, context);
-                    var campaignsIds = campaigns.Select(c => c.id).ToList();
+                    var campaignStatuses = context.campaign_summaries.Where(s =>
+                        (s.flight_start_Date != null
+                         && s.flight_end_Date == null
+                         && s.flight_start_Date >= startDate
+                         && s.flight_start_Date <= endDate) ||
 
-                    var plans = (from p in context.plans
-                                 where plansIds.Contains(p.id)
-                                 select p);
+                         (s.flight_start_Date != null
+                         && s.flight_end_Date != null
+                         && s.flight_start_Date <= endDate
+                         && s.flight_end_Date >= startDate))
+                         .Select(s => (PlanStatusEnum)s.campaign_status.Value)
+                         .Distinct().ToList();
 
-                    var planStatuses = plans.Select(p => (PlanStatusEnum)p.status).Distinct().ToList();
-
-                    if (campaignsIds.Any() && !planStatuses.Contains(PlanStatusEnum.Working))
+                    if(!campaignStatuses.Contains(PlanStatusEnum.Working))
                     {
-                        planStatuses.Add(PlanStatusEnum.Working);
+                        var campaignsWithoutValidPlans = _GetFilteredCampaignsWithoutValidPlans(startDate, endDate, null, context);
+                        if (campaignsWithoutValidPlans.Any())
+                        {
+                            campaignStatuses.Add(PlanStatusEnum.Working);
+                        }
                     }
 
-                    return planStatuses;
+                    return campaignStatuses;
                 });
         }
 
