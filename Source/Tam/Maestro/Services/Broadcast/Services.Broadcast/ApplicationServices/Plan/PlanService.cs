@@ -133,7 +133,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
             plan.Universe = _NsiUniverseService.GetAudienceUniverseForMediaMonth(plan.ShareBookId, plan.AudienceId);
             _CalculateHouseholdSummaryData(plan);
-            
+
             if (plan.Id == 0)
             {
                 plan.Id = _PlanRepository.SaveNewPlan(plan, modifiedBy, modifiedDate);
@@ -218,58 +218,64 @@ namespace Services.Broadcast.ApplicationServices.Plan
             return response;
         }
 
-        private WeeklyBreakdownResponseDto _CalculateEvenPlanWeeklyGoalBreakdown(WeeklyBreakdownRequest request, List<DisplayMediaWeek> weeks)
+        private void _AddMissingWeeks(WeeklyBreakdownResponseDto result, List<DisplayMediaWeek> weeks, List<DateTime> flightHiatusDays, bool isCustom = false)
         {
-            var result = new WeeklyBreakdownResponseDto();
-            int weekNumber = 1;
+            var weekNumber = 1;
             foreach (DisplayMediaWeek week in weeks)
             {
-                int activeDays = _CalculateActiveDays(week, request.FlightHiatusDays, out string activeDaysString);
-                result.Weeks.Add(new WeeklyBreakdownWeek
+                var activeDays = _CalculateActiveDays(week, flightHiatusDays, out string activeDaysString);
+                var weeklyBreakdown = new WeeklyBreakdownWeek
                 {
                     ActiveDays = activeDaysString,
                     NumberOfActiveDays = activeDays,
                     StartDate = week.WeekStartDate,
                     EndDate = week.WeekEndDate,
-                    WeekNumber = weekNumber++,
                     MediaWeekId = week.Id
-                });
+                };
+
+                if (!isCustom)
+                    weeklyBreakdown.WeekNumber = weekNumber++;
+
+                result.Weeks.Add(weeklyBreakdown);
             }
+        }
+
+        private WeeklyBreakdownResponseDto _CalculateEvenPlanWeeklyGoalBreakdown(WeeklyBreakdownRequest request, List<DisplayMediaWeek> weeks)
+        {
+            var result = new WeeklyBreakdownResponseDto();
+            _AddMissingWeeks(result, weeks, request.FlightHiatusDays);
+
             _CalculateImpressionsAndShareOfVoice(result.Weeks, request.TotalImpressions);
             _CalculateWeeklyGoalBreakdownTotals(result);
             return result;
         }
-                
+
         private WeeklyBreakdownResponseDto _CalculateCustomPlanWeeklyGoalBreakdown(WeeklyBreakdownRequest request, List<DisplayMediaWeek> weeks)
         {
             var result = new WeeklyBreakdownResponseDto();
-            int weekNumber = request.Weeks.Count();
 
             //remove deleted weeks
             _RemoveDeletedWeeks(request.Weeks, weeks);
-            
+
             //add the remain weeks
             result.Weeks.AddRange(request.Weeks);
 
-            //add the missing weeks
-            foreach (DisplayMediaWeek week in weeks.Where(x=> !request.Weeks.Select(y => y.StartDate).Contains(x.WeekStartDate)))
+            //update ActiveDays reamin weeks
+            foreach (var week in result.Weeks)
             {
-                int activeDays = _CalculateActiveDays(week, request.FlightHiatusDays, out string activeDaysString);
-                result.Weeks.Add(new WeeklyBreakdownWeek
-                {
-                    ActiveDays = activeDaysString,
-                    NumberOfActiveDays = activeDays,
-                    StartDate = week.WeekStartDate,
-                    EndDate = week.WeekEndDate,
-                    MediaWeekId = week.Id
-                });
+                week.NumberOfActiveDays = _CalculateActiveDays(week, request.FlightHiatusDays, out string activeDaysString);
+                week.ActiveDays = activeDaysString;
             }
+
+            //add the missing weeks
+            _AddMissingWeeks(result, weeks.Where(x => !request.Weeks.Select(y => y.StartDate).Contains(x.WeekStartDate)).ToList(), request.FlightHiatusDays, true);
+
             _CalculateWeeklyGoalBreakdownTotals(result);
 
             //the order of the weeks might be incorect, so do the order
             result.Weeks = result.Weeks.OrderBy(x => x.StartDate).ToList();
             _SetWeekNumber(result.Weeks);
-            
+
             return result;
         }
 
@@ -308,7 +314,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private void _SetWeekNumber(IEnumerable<WeeklyBreakdownWeek> weeks)
         {
             int i = 1;
-            foreach(var week in weeks)
+            foreach (var week in weeks)
             {
                 week.WeekNumber = i++;
             }
@@ -317,35 +323,36 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private void _CalculateImpressionsAndShareOfVoice(List<WeeklyBreakdownWeek> weeks, double totalImpressions)
         {
             var activeWeeks = weeks.Where(x => x.NumberOfActiveDays > 0);
-            foreach(var week in activeWeeks)
+            foreach (var week in activeWeeks)
             {
                 week.Impressions = totalImpressions / activeWeeks.Count();
                 week.ShareOfVoice = (double)100 / activeWeeks.Count();
             }
         }
 
-        private int _CalculateActiveDays(DisplayMediaWeek week, List<DateTime> hiatusDays, out string activeDaysString)
+        private int _CalculateActiveDays(DateTime weekStartDate, DateTime weekEndDate, List<DateTime> hiatusDays, out string activeDaysString)
         {
-            List<string> daysOfWeek = new List<string> { "M", "Tu", "W", "Th", "F", "Sa", "Su" };
+            var daysOfWeek = new List<string> { "M", "Tu", "W", "Th", "F", "Sa", "Su" };
             activeDaysString = string.Empty;
-            var hiatusDaysInWeek = hiatusDays.Where(x => week.WeekStartDate <= x && week.WeekEndDate >= x).ToList();
+            var hiatusDaysInWeek = hiatusDays.Where(x => weekStartDate <= x && weekEndDate >= x).ToList();
 
             //if there are no hiatus days in this week just return 7 active days
             if (!hiatusDaysInWeek.Any())
             {
+                activeDaysString = "M-Su";
                 return 7;
             }
             //if all the week is hiatus, return 0 active days
-            if (hiatusDaysInWeek.Count() == 7)
+            if (hiatusDaysInWeek.Count == 7)
             {
                 return 0;
             }
 
             //construct the active days string
             //null the hiatus days in the week
-            for (int i = 0; i < daysOfWeek.Count(); i++)
+            for (int i = 0; i < daysOfWeek.Count; i++)
             {
-                if (hiatusDaysInWeek.Contains(week.WeekStartDate.AddDays(i)))
+                if (hiatusDaysInWeek.Contains(weekStartDate.AddDays(i)))
                 {
                     daysOfWeek[i] = null;
                 }
@@ -353,8 +360,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
             //group the active days that are not null
             var groupOfActiveDays = daysOfWeek.GroupConnected((a) => string.IsNullOrWhiteSpace(a));
-            List<string> activeDaysList = new List<string>();
-            foreach (var group in groupOfActiveDays.Where(x=>x.Count() > 0))
+            var activeDaysList = new List<string>();
+            foreach (var group in groupOfActiveDays.Where(x => x.Count() > 0))
             {
                 //if the group contains 1 or 2 elements, join them by comma
                 if (group.Count() == 1 || group.Count() == 2)
@@ -370,6 +377,16 @@ namespace Services.Broadcast.ApplicationServices.Plan
             activeDaysString = string.Join(",", activeDaysList);
             //number of active days this week is 7 minus number of hiatus days
             return 7 - hiatusDaysInWeek.Count();
+        }
+
+        private int _CalculateActiveDays(DisplayMediaWeek week, List<DateTime> hiatusDays, out string activeDaysString)
+        {
+            return _CalculateActiveDays(week.WeekStartDate, week.WeekEndDate, hiatusDays, out activeDaysString);
+        }
+
+        private int _CalculateActiveDays(WeeklyBreakdownWeek week, List<DateTime> hiatusDays, out string activeDaysString)
+        {
+            return _CalculateActiveDays(week.StartDate, week.EndDate, hiatusDays, out activeDaysString);
         }
 
         private void _DispatchPlanAggregation(PlanDto plan, bool aggregatePlanSynchronously)
@@ -398,7 +415,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             {
                 _PlanSummaryRepository.SetProcessingStatusForPlanSummary(plan.Id, PlanAggregationProcessingStatusEnum.Error);
             }
-        }        
+        }
         public PlanDefaultsDto GetPlanDefaults()
         {
             const int defaultSpotLength = 30;

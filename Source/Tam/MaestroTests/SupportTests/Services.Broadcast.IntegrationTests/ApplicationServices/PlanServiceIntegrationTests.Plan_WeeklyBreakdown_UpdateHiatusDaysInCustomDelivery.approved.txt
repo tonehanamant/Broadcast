@@ -1,0 +1,26 @@
+﻿{
+  "TotalActiveDays": 13,
+  "TotalShareOfVoice": 100.0,
+  "Weeks": [
+    {
+      "ActiveDays": "M,Tu,Th-Su",
+      "EndDate": "2019-10-06T00:00:00",
+      "Impressions": 500.0,
+      "MediaWeekId": 814,
+      "NumberOfActiveDays": 6,
+      "ShareOfVoice": 50.0,
+      "StartDate": "2019-09-30T00:00:00",
+      "WeekNumber": 1
+    },
+    {
+      "ActiveDays": "M-Su",
+      "EndDate": "2019-10-13T00:00:00",
+      "Impressions": 500.0,
+      "MediaWeekId": 814,
+      "NumberOfActiveDays": 7,
+      "ShareOfVoice": 50.0,
+      "StartDate": "2019-10-07T00:00:00",
+      "WeekNumber": 2
+    }
+  ]
+}

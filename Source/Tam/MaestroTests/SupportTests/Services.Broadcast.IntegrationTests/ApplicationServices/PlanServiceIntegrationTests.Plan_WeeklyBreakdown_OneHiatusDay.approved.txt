@@ -13,7 +13,7 @@
       "WeekNumber": 1
     },
     {
-      "ActiveDays": "",
+      "ActiveDays": "M-Su",
       "EndDate": "2019-08-11T00:00:00",
       "Impressions": 200.0,
       "MediaWeekId": 815,
@@ -33,7 +33,7 @@
       "WeekNumber": 3
     },
     {
-      "ActiveDays": "",
+      "ActiveDays": "M-Su",
       "EndDate": "2019-08-25T00:00:00",
       "Impressions": 200.0,
       "MediaWeekId": 817,

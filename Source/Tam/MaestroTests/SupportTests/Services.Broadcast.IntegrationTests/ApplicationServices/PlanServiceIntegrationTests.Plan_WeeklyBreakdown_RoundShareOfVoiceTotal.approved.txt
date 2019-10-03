@@ -3,7 +3,7 @@
   "TotalShareOfVoice": 100.0,
   "Weeks": [
     {
-      "ActiveDays": "",
+      "ActiveDays": "M-Su",
       "EndDate": "2019-08-11T00:00:00",
       "Impressions": 142.85714286,
       "MediaWeekId": 815,
@@ -23,7 +23,7 @@
       "WeekNumber": 2
     },
     {
-      "ActiveDays": "",
+      "ActiveDays": "M-Su",
       "EndDate": "2019-08-25T00:00:00",
       "Impressions": 142.85714286,
       "MediaWeekId": 817,
@@ -33,7 +33,7 @@
       "WeekNumber": 3
     },
     {
-      "ActiveDays": "",
+      "ActiveDays": "M-Su",
       "EndDate": "2019-09-01T00:00:00",
       "Impressions": 142.85714286,
       "MediaWeekId": 818,
@@ -43,7 +43,7 @@
       "WeekNumber": 4
     },
     {
-      "ActiveDays": "",
+      "ActiveDays": "M-Su",
       "EndDate": "2019-09-08T00:00:00",
       "Impressions": 142.85714286,
       "MediaWeekId": 819,
@@ -53,7 +53,7 @@
       "WeekNumber": 5
     },
     {
-      "ActiveDays": "",
+      "ActiveDays": "M-Su",
       "EndDate": "2019-09-15T00:00:00",
       "Impressions": 142.85714286,
       "MediaWeekId": 820,

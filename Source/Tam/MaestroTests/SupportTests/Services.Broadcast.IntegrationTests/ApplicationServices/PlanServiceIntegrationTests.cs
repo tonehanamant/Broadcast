@@ -907,6 +907,44 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        public void Plan_WeeklyBreakdown_UpdateHiatusDaysInCustomDelivery()
+        {
+            var result = _PlanService.CalculatePlanWeeklyGoalBreakdown(new WeeklyBreakdownRequest
+            {
+                DeliveryType = PlanGoalBreakdownTypeEnum.Custom,
+                FlightStartDate = new DateTime(2019, 09, 30),
+                FlightEndDate = new DateTime(2019, 10, 13),
+                FlightHiatusDays = new List<DateTime> { new DateTime(2019, 10, 2) },
+                TotalImpressions = 1000,
+                Weeks = new List<WeeklyBreakdownWeek> {
+                    new WeeklyBreakdownWeek {
+                      ActiveDays= "",
+                      EndDate= new DateTime(2019,10,6),
+                      Impressions= 500,
+                      MediaWeekId= 814,
+                      NumberOfActiveDays= 7,
+                      ShareOfVoice= 50,
+                      StartDate= new DateTime(2019,09,30),
+                      WeekNumber= 1
+                    },
+                    new WeeklyBreakdownWeek {
+                      ActiveDays= "",
+                      EndDate= new DateTime(2019,10,13),
+                      Impressions= 500,
+                      MediaWeekId= 814,
+                      NumberOfActiveDays= 7,
+                      ShareOfVoice= 50,
+                      StartDate= new DateTime(2019,10,7),
+                      WeekNumber= 2
+                    },
+                }
+            });
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
         public void PlanServiceGetPlanDefaultsTest()
         {
             var defaults = _PlanService.GetPlanDefaults();

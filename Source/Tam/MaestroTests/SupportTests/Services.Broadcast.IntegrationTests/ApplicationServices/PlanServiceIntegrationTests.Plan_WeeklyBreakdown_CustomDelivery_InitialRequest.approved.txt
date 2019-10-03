@@ -13,7 +13,7 @@
       "WeekNumber": 1
     },
     {
-      "ActiveDays": "",
+      "ActiveDays": "M-Su",
       "EndDate": "2019-02-10T00:00:00",
       "Impressions": 1666.66666667,
       "MediaWeekId": 789,
@@ -23,7 +23,7 @@
       "WeekNumber": 2
     },
     {
-      "ActiveDays": "",
+      "ActiveDays": "M-Su",
       "EndDate": "2019-02-17T00:00:00",
       "Impressions": 1666.66666667,
       "MediaWeekId": 790,
@@ -33,7 +33,7 @@
       "WeekNumber": 3
     },
     {
-      "ActiveDays": "",
+      "ActiveDays": "M-Su",
       "EndDate": "2019-02-24T00:00:00",
       "Impressions": 1666.66666667,
       "MediaWeekId": 791,
@@ -43,7 +43,7 @@
       "WeekNumber": 4
     },
     {
-      "ActiveDays": "",
+      "ActiveDays": "M-Su",
       "EndDate": "2019-03-03T00:00:00",
       "Impressions": 1666.66666667,
       "MediaWeekId": 792,
