@@ -30,7 +30,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         private const string IntegrationTestUser = "IntegrationTestUser";
         private readonly DateTime CreatedDate = new DateTime(2019, 5, 14);
         private readonly ICampaignService _CampaignService = IntegrationTestApplicationServiceFactory.GetApplicationService<ICampaignService>();
-        private readonly IPlanService _PlanService = IntegrationTestApplicationServiceFactory.GetApplicationService<IPlanService>();
         private readonly ICampaignSummaryRepository _CampaignSummaryRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<ICampaignSummaryRepository>();
 
         [Test]
@@ -313,7 +312,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void GetStatusesTest()
+        public void GetStatuses()
         {
             using (new TransactionScopeWrapper())
             {
@@ -324,14 +323,22 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void GetStatusesTest_CampaignWithoutSummary()
+        public void GetStatuses_CampaignWithoutSummary()
         {
             using (new TransactionScopeWrapper())
             {
-                var campaign = _GetValidCampaignForSave();
-                var campaignId = _CampaignService.SaveCampaign(campaign, IntegrationTestUser, CreatedDate);
+                var campaigns = _CampaignService.GetStatuses(3, 2019);
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(campaigns));
+            }
+        }
 
-                var campaigns = _CampaignService.GetStatuses(2, 2019);
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetStatuses_WithoutParams()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var campaigns = _CampaignService.GetStatuses(null,null);
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(campaigns));
             }
         }

@@ -317,7 +317,11 @@ namespace Services.Broadcast.Repositories
             return _InReadUncommitedTransaction(
                 context =>
                 {
-                    var campaignStatuses = context.campaign_summaries.Where(s =>
+                    IQueryable<campaign_summaries> campaignSummaries = context.campaign_summaries;
+
+                    if (startDate.HasValue && endDate.HasValue)
+                    {
+                        campaignSummaries = campaignSummaries.Where(s =>
                         (s.flight_start_Date != null
                          && s.flight_end_Date == null
                          && s.flight_start_Date >= startDate
@@ -326,11 +330,13 @@ namespace Services.Broadcast.Repositories
                          (s.flight_start_Date != null
                          && s.flight_end_Date != null
                          && s.flight_start_Date <= endDate
-                         && s.flight_end_Date >= startDate))
-                         .Select(s => (PlanStatusEnum)s.campaign_status.Value)
-                         .Distinct().ToList();
+                         && s.flight_end_Date >= startDate));
+                    }
+                    var campaignStatuses = campaignSummaries
+                     .Select(s => (PlanStatusEnum)s.campaign_status.Value)
+                     .Distinct().ToList();
 
-                    if(!campaignStatuses.Contains(PlanStatusEnum.Working))
+                    if (!campaignStatuses.Contains(PlanStatusEnum.Working))
                     {
                         var campaignsWithoutValidPlans = _GetFilteredCampaignsWithoutValidPlans(startDate, endDate, null, context);
                         if (campaignsWithoutValidPlans.Any())
