@@ -676,6 +676,11 @@
           <Property Name="audience_type" Type="int" Nullable="false" />
           <Property Name="audience_id" Type="int" Nullable="false" />
           <Property Name="vpvh" Type="float" Nullable="false" />
+          <Property Name="delivery_rating_points" Type="float" Nullable="false" />
+          <Property Name="delivery_impressions" Type="float" Nullable="false" />
+          <Property Name="cpm" Type="money" Nullable="false" />
+          <Property Name="cpp" Type="float" Nullable="false" />
+          <Property Name="universe" Type="float" Nullable="false" />
         </EntityType>
         <EntityType Name="plan_summaries">
           <Key>
@@ -10241,6 +10246,11 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="audience" Relationship="BroadcastModel.FK_plan_secondary_audiences_audiences" FromRole="plan_secondary_audiences" ToRole="audience" />
           <Property Name="vpvh" Type="Double" Nullable="false" />
           <NavigationProperty Name="plan" Relationship="BroadcastModel.FK_plan_secondary_audiences_plans" FromRole="plan_secondary_audiences" ToRole="plan" />
+          <Property Name="delivery_rating_points" Type="Double" Nullable="false" />
+          <Property Name="cpm" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="cpp" Type="Double" Nullable="false" />
+          <Property Name="universe" Type="Double" Nullable="false" />
+          <Property Name="delivery_impressions" Type="Double" Nullable="false" />
         </EntityType>
         <Association Name="FK_plan_secondary_audiences_audiences">
           <End Type="BroadcastModel.audience" Role="audience" Multiplicity="1" />
@@ -12364,6 +12374,11 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="plan_secondary_audiences">
             <EntityTypeMapping TypeName="BroadcastModel.plan_secondary_audiences">
               <MappingFragment StoreEntitySet="plan_secondary_audiences">
+                <ScalarProperty Name="delivery_impressions" ColumnName="delivery_impressions" />
+                <ScalarProperty Name="universe" ColumnName="universe" />
+                <ScalarProperty Name="cpp" ColumnName="cpp" />
+                <ScalarProperty Name="cpm" ColumnName="cpm" />
+                <ScalarProperty Name="delivery_rating_points" ColumnName="delivery_rating_points" />
                 <ScalarProperty Name="vpvh" ColumnName="vpvh" />
                 <ScalarProperty Name="audience_id" ColumnName="audience_id" />
                 <ScalarProperty Name="audience_type" ColumnName="audience_type" />

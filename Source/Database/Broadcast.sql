@@ -50,6 +50,70 @@ GO
 
 /*************************************** START UPDATE SCRIPT *****************************************************/
 
+/*************************************** START PRI-15991 BE_Calculate Contract Details for Secondary Audiences *****************************************************/
+
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('plan_secondary_audiences') AND name = 'delivery_rating_points')
+BEGIN
+	ALTER TABLE [plan_secondary_audiences] ADD [delivery_rating_points] [FLOAT] NULL
+
+	EXEC('UPDATE plan_secondary_audiences
+	SET delivery_rating_points = 0
+	WHERE delivery_rating_points IS NULL')
+
+	ALTER TABLE [plan_secondary_audiences]
+	ALTER COLUMN [delivery_rating_points] [FLOAT] NOT NULL
+END
+
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('plan_secondary_audiences') AND name = 'delivery_impressions')
+BEGIN
+	ALTER TABLE [plan_secondary_audiences] ADD [delivery_impressions] [FLOAT] NULL
+
+	EXEC('UPDATE plan_secondary_audiences
+	SET delivery_impressions = 0
+	WHERE delivery_impressions IS NULL')
+
+	ALTER TABLE [plan_secondary_audiences]
+	ALTER COLUMN [delivery_impressions] [FLOAT] NOT NULL
+END
+
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('plan_secondary_audiences') AND name = 'cpm')
+BEGIN
+	ALTER TABLE [plan_secondary_audiences] ADD [cpm] [MONEY] NULL
+
+	EXEC('UPDATE plan_secondary_audiences
+	SET cpm = 0
+	WHERE cpm IS NULL')
+
+	ALTER TABLE [plan_secondary_audiences]
+	ALTER COLUMN [cpm] [MONEY] NOT NULL
+END
+
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('plan_secondary_audiences') AND name = 'cpp')
+BEGIN
+	ALTER TABLE [plan_secondary_audiences] ADD [cpp] [FLOAT] NULL
+	
+	EXEC('UPDATE plan_secondary_audiences
+	SET cpp = 0
+	WHERE cpp IS NULL')
+
+	ALTER TABLE [plan_secondary_audiences]
+	ALTER COLUMN [cpp] [FLOAT] NOT NULL
+END
+
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('plan_secondary_audiences') AND name = 'universe')
+BEGIN
+	ALTER TABLE [plan_secondary_audiences] ADD [universe] [FLOAT] NULL
+
+	EXEC('UPDATE plan_secondary_audiences
+	SET universe = 0
+	WHERE universe IS NULL')
+
+	ALTER TABLE [plan_secondary_audiences]
+	ALTER COLUMN [universe] FLOAT NOT NULL
+END
+
+/*************************************** END PRI-15991 BE_Calculate Contract Details for Secondary Audiences *******************************************************/
+
 
 /*************************************** START - PRI-15494 ****************************************************/
 UPDATE plan_weeks

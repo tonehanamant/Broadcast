@@ -5,5 +5,6 @@
   "CPP": 0.0333333333333333333333333333,
   "DeliveryImpressions": 3364318800.0,
   "DeliveryRatingPoints": 3000.0,
-  "MediaMonthId": 437
+  "MediaMonthId": 437,
+  "Universe": 112143960.0
 }

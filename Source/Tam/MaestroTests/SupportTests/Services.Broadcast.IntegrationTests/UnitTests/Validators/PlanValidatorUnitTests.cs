@@ -391,14 +391,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             {
                 new PlanDaypartDto
                 {
-                    StartTimeSeconds = 54000,
-                    EndTimeSeconds = 50000,
+                    StartTimeSeconds = 50000,
+                    EndTimeSeconds = 54000,
                     WeightingGoalPercent = 80
                 },
                 new PlanDaypartDto
                 {
-                    StartTimeSeconds = 54000,
-                    EndTimeSeconds = 50000,
+                    StartTimeSeconds = 50000,
+                    EndTimeSeconds = 54000,
                     WeightingGoalPercent = 90
                 }
             };
@@ -416,25 +416,25 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             {
                 new PlanDaypartDto
                 {
-                    StartTimeSeconds = 54000,
-                    EndTimeSeconds = 50000,
+                    StartTimeSeconds = 50000,
+                    EndTimeSeconds = 54000,
                     WeightingGoalPercent = 20
                 },
                 new PlanDaypartDto
                 {
-                    StartTimeSeconds = 54000,
-                    EndTimeSeconds = 50000,
+                    StartTimeSeconds = 50000,
+                    EndTimeSeconds = 54000,
                 },
                 new PlanDaypartDto
                 {
-                    StartTimeSeconds = 54000,
-                    EndTimeSeconds = 50000,
+                    StartTimeSeconds = 50000,
+                    EndTimeSeconds = 54000,
                     WeightingGoalPercent = 25
                 },
                 new PlanDaypartDto
                 {
-                    StartTimeSeconds = 54000,
-                    EndTimeSeconds = 50000,
+                    StartTimeSeconds = 50000,
+                    EndTimeSeconds = 54000,
                     WeightingGoalPercent = 50
                 },
             };

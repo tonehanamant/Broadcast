@@ -158,7 +158,7 @@ namespace Services.Broadcast.Repositories
                 CPP = entity.cpp,
                 Currency = EnumHelper.GetEnum<PlanCurrenciesEnum>(entity.currency),
                 GoalBreakdownType = EnumHelper.GetEnum<PlanGoalBreakdownTypeEnum>(entity.goal_breakdown_type),
-                SecondaryAudiences = entity.plan_secondary_audiences.Select(_MapSecondatAudiences).ToList(),
+                SecondaryAudiences = entity.plan_secondary_audiences.Select(_MapSecondaryAudiences).ToList(),
                 Dayparts = entity.plan_dayparts.Select(_MapPlanDaypartDto).ToList(),
                 CoverageGoalPercent = entity.coverage_goal_percent,
                 AvailableMarkets = entity.plan_available_markets.Select(e => _MapAvailableMarketDto(e, markets)).ToList(),
@@ -191,13 +191,18 @@ namespace Services.Broadcast.Repositories
             };
         }
 
-        private static PlanAudienceDto _MapSecondatAudiences(plan_secondary_audiences x)
+        private static PlanAudienceDto _MapSecondaryAudiences(plan_secondary_audiences x)
         {
             return new PlanAudienceDto
             {
                 AudienceId = x.audience_id,
                 Type = (AudienceTypeEnum)x.audience_type,
-                Vpvh = x.vpvh
+                Vpvh = x.vpvh,
+                DeliveryRatingPoints = x.delivery_rating_points,
+                DeliveryImpressions = x.delivery_impressions,
+                CPM = x.cpm,
+                CPP = (decimal?)x.cpp,
+                Universe = x.universe
             };
         }
 
@@ -323,7 +328,12 @@ namespace Services.Broadcast.Repositories
                 {
                     audience_id = d.AudienceId,
                     audience_type = (int)d.Type,
-                    vpvh = d.Vpvh
+                    vpvh = d.Vpvh,
+                    delivery_rating_points = d.DeliveryRatingPoints.Value,
+                    delivery_impressions = d.DeliveryImpressions.Value,
+                    cpm = d.CPM.Value,
+                    cpp = (double)d.CPP.Value,
+                    universe = d.Universe
                 });
             });
         }

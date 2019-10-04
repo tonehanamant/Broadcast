@@ -89,12 +89,22 @@
   "SecondaryAudiences": [
     {
       "AudienceId": 7,
+      "CPM": 0.0275,
+      "CPP": 1.93387255172414,
+      "DeliveryImpressions": 3625000.0,
+      "DeliveryRatingPoints": 51.709715777725542,
       "Type": 1,
+      "Universe": 7010288.0,
       "Vpvh": 0.435
     },
     {
       "AudienceId": 6,
+      "CPM": 0.0188,
+      "CPP": 1.11806721259843,
+      "DeliveryImpressions": 5291666.666666667,
+      "DeliveryRatingPoints": 89.440061271090045,
       "Type": 1,
+      "Universe": 5916439.0,
       "Vpvh": 0.635
     }
   ],

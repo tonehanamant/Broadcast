@@ -132,7 +132,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
 
             plan.Universe = _NsiUniverseService.GetAudienceUniverseForMediaMonth(plan.ShareBookId, plan.AudienceId);
-            _CalculateHouseholdSummaryData(plan);
+            _CalculateHouseholdDeliveryData(plan);
+            _CalculateSecondaryAudiencesDeliveryData(plan);
 
             if (plan.Id == 0)
             {
@@ -438,13 +439,41 @@ namespace Services.Broadcast.ApplicationServices.Plan
             };
         }
 
-        private void _CalculateHouseholdSummaryData(PlanDto plan)
+        private void _CalculateHouseholdDeliveryData(PlanDto plan)
         {
-            plan.HouseholdUniverse = _NsiUniverseService.GetAudienceUniverseForMediaMonth(plan.ShareBookId, _BroadcastAudiencesCache.GetDefaultAudience().Id);
-            plan.HouseholdDeliveryImpressions = plan.DeliveryImpressions.Value / plan.Vpvh;
-            plan.HouseholdCPM = (plan.Budget.Value / Convert.ToDecimal(plan.HouseholdDeliveryImpressions)) * 1000;
-            plan.HouseholdRatingPoints = (plan.HouseholdDeliveryImpressions / plan.HouseholdUniverse) * 100;
-            plan.HouseholdCPP = plan.Budget.Value / Convert.ToDecimal(plan.HouseholdRatingPoints);
+            var householdPlanDeliveryBudget = _BudgetCalculator.CalculateBudget(new PlanDeliveryBudget
+            {
+                DeliveryImpressions = plan.DeliveryImpressions.Value / plan.Vpvh,
+                AudienceId = _BroadcastAudiencesCache.GetDefaultAudience().Id,
+                MediaMonthId = plan.ShareBookId,
+                Budget = plan.Budget
+            });
+
+            plan.HouseholdUniverse = householdPlanDeliveryBudget.Universe.Value;
+            plan.HouseholdDeliveryImpressions = householdPlanDeliveryBudget.DeliveryImpressions.Value;
+            plan.HouseholdCPM = householdPlanDeliveryBudget.CPM.Value * 1000;
+            plan.HouseholdRatingPoints = householdPlanDeliveryBudget.DeliveryRatingPoints.Value;
+            plan.HouseholdCPP = householdPlanDeliveryBudget.CPP.Value;
+        }
+
+        private void _CalculateSecondaryAudiencesDeliveryData(PlanDto plan)
+        {
+            Parallel.ForEach(plan.SecondaryAudiences, (planAudience) =>
+            {
+                var planDeliveryBudget = _BudgetCalculator.CalculateBudget(new PlanDeliveryBudget
+                {
+                    DeliveryImpressions = plan.HouseholdDeliveryImpressions * planAudience.Vpvh,
+                    AudienceId = planAudience.AudienceId,
+                    MediaMonthId = plan.ShareBookId,
+                    Budget = plan.Budget
+                });
+
+                planAudience.DeliveryImpressions = planDeliveryBudget.DeliveryImpressions;
+                planAudience.DeliveryRatingPoints = planDeliveryBudget.DeliveryRatingPoints;
+                planAudience.CPM = planDeliveryBudget.CPM * 1000;
+                planAudience.CPP = planDeliveryBudget.CPP;
+                planAudience.Universe = planDeliveryBudget.Universe.Value;
+            });
         }
     }
 }

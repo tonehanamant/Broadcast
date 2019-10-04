@@ -41,14 +41,14 @@ namespace Services.Broadcast.BusinessEngines
                 throw new Exception("Cannot calculate goal without media month and audience");
             }
 
-            double universe = _NsiUniverseService.GetAudienceUniverseForMediaMonth(input.MediaMonthId, input.AudienceId);
+            input.Universe = _NsiUniverseService.GetAudienceUniverseForMediaMonth(input.MediaMonthId, input.AudienceId);
 
             var result = input;
 
             if (input.DeliveryImpressions.HasValue && input.Budget.HasValue)
             {
                 result.CPM = _CalculateCPM(input.Budget, input.DeliveryImpressions);
-                result.DeliveryRatingPoints = _CalculateDeliveryRatingPoints(input.DeliveryImpressions, universe);
+                result.DeliveryRatingPoints = _CalculateDeliveryRatingPoints(input.DeliveryImpressions, input.Universe.Value);
                 result.CPP = _CalculateCPP(input.Budget, result.DeliveryRatingPoints);
                 return result;
             }
@@ -56,7 +56,7 @@ namespace Services.Broadcast.BusinessEngines
             if (input.DeliveryImpressions.HasValue && input.CPM.HasValue)
             {
                 result.Budget = _CalculateBudgetByCPM(input.DeliveryImpressions, input.CPM);
-                result.DeliveryRatingPoints = _CalculateDeliveryRatingPoints(input.DeliveryImpressions, universe);
+                result.DeliveryRatingPoints = _CalculateDeliveryRatingPoints(input.DeliveryImpressions, input.Universe.Value);
                 result.CPP = _CalculateCPP(result.Budget, result.DeliveryRatingPoints);
                 return result;
             }
@@ -64,14 +64,14 @@ namespace Services.Broadcast.BusinessEngines
             if (input.Budget.HasValue && input.CPM.HasValue)
             {
                 result.DeliveryImpressions = _CalculateDeliveryImpressionsByCPM(input.Budget, input.CPM);
-                result.DeliveryRatingPoints = _CalculateDeliveryRatingPoints(input.DeliveryImpressions, universe);
+                result.DeliveryRatingPoints = _CalculateDeliveryRatingPoints(input.DeliveryImpressions, input.Universe.Value);
                 result.CPP = _CalculateCPP(result.Budget, result.DeliveryRatingPoints);
                 return result;
             }
 
             if (input.DeliveryRatingPoints.HasValue && input.Budget.HasValue)
             {
-                result.DeliveryImpressions = _CalculateDeliveryImpressionsByUniverse(input.DeliveryRatingPoints, universe);
+                result.DeliveryImpressions = _CalculateDeliveryImpressionsByUniverse(input.DeliveryRatingPoints, input.Universe.Value);
                 result.CPM = _CalculateCPM(input.Budget, result.DeliveryImpressions);
                 result.CPP = _CalculateCPP(input.Budget, input.DeliveryRatingPoints);
                 return result;
@@ -80,7 +80,7 @@ namespace Services.Broadcast.BusinessEngines
             if (input.DeliveryRatingPoints.HasValue && input.CPP.HasValue)
             {
                 result.Budget = _CalculateBudgetByCPP(input.DeliveryRatingPoints, input.CPP);
-                result.DeliveryImpressions = _CalculateDeliveryImpressionsByUniverse(input.DeliveryRatingPoints, universe);
+                result.DeliveryImpressions = _CalculateDeliveryImpressionsByUniverse(input.DeliveryRatingPoints, input.Universe.Value);
                 result.CPM = _CalculateCPM(result.Budget, result.DeliveryImpressions);
                 return result;
             }
@@ -88,7 +88,7 @@ namespace Services.Broadcast.BusinessEngines
             if (input.Budget.HasValue && input.CPP.HasValue)
             {
                 result.DeliveryRatingPoints = _CalculateDeliveryRatingPointsByCPP(input.Budget, input.CPP);
-                result.DeliveryImpressions = _CalculateDeliveryImpressionsByUniverse(input.DeliveryRatingPoints, universe);
+                result.DeliveryImpressions = _CalculateDeliveryImpressionsByUniverse(input.DeliveryRatingPoints, input.Universe.Value);
                 result.CPM = _CalculateCPM(input.Budget, result.DeliveryImpressions);
                 return result;
             }

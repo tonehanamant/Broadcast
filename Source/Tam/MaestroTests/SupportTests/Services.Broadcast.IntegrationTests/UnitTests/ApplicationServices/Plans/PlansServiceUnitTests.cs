@@ -57,6 +57,18 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var spotLengthEngine = new Mock<ISpotLengthEngine>();
 
             var saveNewPlanCalls = new List<DateTime>();
+            planBudgetDeliveryCalculator.Setup(s => s.CalculateBudget(It.IsAny<PlanDeliveryBudget>()))
+                .Returns(new PlanDeliveryBudget
+                {
+                    AudienceId = 31,
+                    Budget = 100.0M,
+                    CPM = 0.0333333333333333333333333333M,
+                    CPP = 37381.32000000000388347057216M,
+                    DeliveryImpressions = 3000.0,
+                    DeliveryRatingPoints = 0.0026751329273551603,
+                    MediaMonthId = 437,
+                    Universe = 112143960.0
+                });
             planRepository.Setup(s => s.SaveNewPlan(It.IsAny<PlanDto>(), It.IsAny<string>(), It.IsAny<DateTime>()))
                 .Callback(() => saveNewPlanCalls.Add(DateTime.Now))
                 .Returns(2);
@@ -126,6 +138,18 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var audiencesCache = new Mock<IBroadcastAudiencesCache>();
             var spotLengthEngine = new Mock<ISpotLengthEngine>();
             var saveNewPlanCalls = new List<DateTime>();
+            planBudgetDeliveryCalculator.Setup(s => s.CalculateBudget(It.IsAny<PlanDeliveryBudget>()))
+                .Returns(new PlanDeliveryBudget
+                {
+                    AudienceId = 31,
+                    Budget = 100.0M,
+                    CPM = 0.0333333333333333333333333333M,
+                    CPP = 37381.32000000000388347057216M,
+                    DeliveryImpressions = 3000.0,
+                    DeliveryRatingPoints = 0.0026751329273551603,
+                    MediaMonthId = 437,
+                    Universe = 112143960.0
+                });
             planRepository.Setup(s => s.SaveNewPlan(It.IsAny<PlanDto>(), It.IsAny<string>(), It.IsAny<DateTime>()))
                 .Callback(() => saveNewPlanCalls.Add(DateTime.Now))
                 .Returns(2);
