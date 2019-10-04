@@ -24,396 +24,6 @@
         },
         "CPM": null,
         "HutPlaybackType": null,
-        "Impressions": 71.8875,
-        "IsReference": false,
-        "Rating": null,
-        "SharePlaybackType": 4,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
-          "AudienceString": "Women 18-20",
-          "Id": 6
-        },
-        "CPM": null,
-        "HutPlaybackType": null,
-        "Impressions": 60.8,
-        "IsReference": false,
-        "Rating": null,
-        "SharePlaybackType": 4,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
-          "AudienceString": "Women 21-24",
-          "Id": 7
-        },
-        "CPM": null,
-        "HutPlaybackType": null,
-        "Impressions": 78.5875,
-        "IsReference": false,
-        "Rating": null,
-        "SharePlaybackType": 4,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
-          "AudienceString": "Women 50-54",
-          "Id": 13
-        },
-        "CPM": null,
-        "HutPlaybackType": null,
-        "Impressions": 522.8,
-        "IsReference": false,
-        "Rating": null,
-        "SharePlaybackType": 4,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
-          "AudienceString": "Women 55-64",
-          "Id": 14
-        },
-        "CPM": null,
-        "HutPlaybackType": null,
-        "Impressions": 4128.5625,
-        "IsReference": false,
-        "Rating": null,
-        "SharePlaybackType": 4,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
-          "AudienceString": "Women 65+",
-          "Id": 15
-        },
-        "CPM": null,
-        "HutPlaybackType": null,
-        "Impressions": 7470.4749999999995,
-        "IsReference": false,
-        "Rating": null,
-        "SharePlaybackType": 4,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
-          "AudienceString": "Men 12-14",
-          "Id": 19
-        },
-        "CPM": null,
-        "HutPlaybackType": null,
-        "Impressions": 0.0,
-        "IsReference": false,
-        "Rating": null,
-        "SharePlaybackType": 4,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
-          "AudienceString": "Men 15-17",
-          "Id": 20
-        },
-        "CPM": null,
-        "HutPlaybackType": null,
-        "Impressions": 0.0,
-        "IsReference": false,
-        "Rating": null,
-        "SharePlaybackType": 4,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
-          "AudienceString": "Men 18-20",
-          "Id": 21
-        },
-        "CPM": null,
-        "HutPlaybackType": null,
-        "Impressions": 155.48749999999998,
-        "IsReference": false,
-        "Rating": null,
-        "SharePlaybackType": 4,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
-          "AudienceString": "Men 21-24",
-          "Id": 22
-        },
-        "CPM": null,
-        "HutPlaybackType": null,
-        "Impressions": 0.0,
-        "IsReference": false,
-        "Rating": null,
-        "SharePlaybackType": 4,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
-          "AudienceString": "Men 50-54",
-          "Id": 28
-        },
-        "CPM": null,
-        "HutPlaybackType": null,
-        "Impressions": 269.15,
-        "IsReference": false,
-        "Rating": null,
-        "SharePlaybackType": 4,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
-          "AudienceString": "Men 55-64",
-          "Id": 29
-        },
-        "CPM": null,
-        "HutPlaybackType": null,
-        "Impressions": 2995.425,
-        "IsReference": false,
-        "Rating": null,
-        "SharePlaybackType": 4,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
-          "AudienceString": "Men 65+",
-          "Id": 30
-        },
-        "CPM": null,
-        "HutPlaybackType": null,
-        "Impressions": 5322.825,
-        "IsReference": false,
-        "Rating": null,
-        "SharePlaybackType": 4,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
-          "AudienceString": "House Holds",
-          "Id": 31
-        },
-        "CPM": null,
-        "HutPlaybackType": null,
-        "Impressions": 21341.025,
-        "IsReference": false,
-        "Rating": null,
-        "SharePlaybackType": 4,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
-          "AudienceString": "Children 6-11",
-          "Id": 46
-        },
-        "CPM": null,
-        "HutPlaybackType": null,
-        "Impressions": 119.41250000000001,
-        "IsReference": false,
-        "Rating": null,
-        "SharePlaybackType": 4,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
-          "AudienceString": "Men 25-34",
-          "Id": 284
-        },
-        "CPM": null,
-        "HutPlaybackType": null,
-        "Impressions": 27.85,
-        "IsReference": false,
-        "Rating": null,
-        "SharePlaybackType": 4,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
-          "AudienceString": "Men 35-49",
-          "Id": 290
-        },
-        "CPM": null,
-        "HutPlaybackType": null,
-        "Impressions": 630.9375,
-        "IsReference": false,
-        "Rating": null,
-        "SharePlaybackType": 4,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
-          "AudienceString": "Children 2-5",
-          "Id": 339
-        },
-        "CPM": null,
-        "HutPlaybackType": null,
-        "Impressions": 14.7125,
-        "IsReference": false,
-        "Rating": null,
-        "SharePlaybackType": 4,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
-          "AudienceString": "Women 35-49",
-          "Id": 347
-        },
-        "CPM": null,
-        "HutPlaybackType": null,
-        "Impressions": 2179.475,
-        "IsReference": false,
-        "Rating": null,
-        "SharePlaybackType": 4,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
-          "AudienceString": "Women 25-34",
-          "Id": 348
-        },
-        "CPM": null,
-        "HutPlaybackType": null,
-        "Impressions": 231.925,
-        "IsReference": false,
-        "Rating": null,
-        "SharePlaybackType": 4,
-        "Vpvh": null
-      }
-    ],
-    "ManifestAudiencesReferences": [
-      {
-        "Audience": {
-          "AudienceString": "House Holds",
-          "Id": 31
-        },
-        "CPM": null,
-        "HutPlaybackType": null,
-        "Impressions": null,
-        "IsReference": true,
-        "Rating": 1.0,
-        "SharePlaybackType": null,
-        "Vpvh": null
-      }
-    ],
-    "ManifestDayparts": [
-      {
-        "Daypart": {
-          "_Code": "CUS",
-          "_EndTime": 46799,
-          "_Friday": true,
-          "_Id": 1617,
-          "_Is24Hour": false,
-          "_LastEndTime": 0,
-          "_LastStartTime": 0,
-          "_Monday": true,
-          "_Name": "Custom",
-          "_Saturday": false,
-          "_StartTime": 43200,
-          "_Sunday": false,
-          "_Thursday": true,
-          "_Tuesday": true,
-          "_Wednesday": true
-        },
-        "DaypartCode": null,
-        "Genres": [],
-        "ProgramName": "News 10 @ Noon"
-      }
-    ],
-    "ManifestRates": [
-      {
-        "SpotCost": 75.0000,
-        "SpotLengthId": 1
-      },
-      {
-        "SpotCost": 150.0000,
-        "SpotLengthId": 2
-      },
-      {
-        "SpotCost": 48.7500,
-        "SpotLengthId": 3
-      },
-      {
-        "SpotCost": 300.0000,
-        "SpotLengthId": 4
-      },
-      {
-        "SpotCost": 450.0000,
-        "SpotLengthId": 5
-      },
-      {
-        "SpotCost": 750.0000,
-        "SpotLengthId": 6
-      },
-      {
-        "SpotCost": 225.0000,
-        "SpotLengthId": 7
-      },
-      {
-        "SpotCost": 112.5000,
-        "SpotLengthId": 8
-      },
-      {
-        "SpotCost": 22.5000,
-        "SpotLengthId": 9
-      },
-      {
-        "SpotCost": 375.0000,
-        "SpotLengthId": 10
-      }
-    ],
-    "ManifestWeeks": [
-      {
-        "EndDate": "2018-03-25T00:00:00",
-        "MediaWeek": {
-          "_EndDate": "2018-03-25T00:00:00",
-          "_MediaMonthId": 438,
-          "_StartDate": "2018-03-19T00:00:00",
-          "_WeekNumber": 4,
-          "IsDirty": true
-        },
-        "Spots": 0,
-        "StartDate": "2018-03-25T00:00:00"
-      }
-    ],
-    "ProjectedStationImpressions": [],
-    "SpotLengthId": 1,
-    "SpotsPerDay": null,
-    "SpotsPerWeek": null,
-    "Station": {
-      "Affiliation": "ABC",
-      "CallLetters": "WTEN 10.1",
-      "Code": 428,
-      "LegacyCallLetters": "WTEN",
-      "ManifestMaxEndDate": null,
-      "MarketCode": 132,
-      "ModifiedDate": null,
-      "OriginMarket": null,
-      "RateDataThrough": null
-    }
-  },
-  {
-    "Comment": null,
-    "DaypartCode": null,
-    "InventorySourceId": 1,
-    "ManifestAudiences": [
-      {
-        "Audience": {
-          "AudienceString": "Women 12-14",
-          "Id": 4
-        },
-        "CPM": null,
-        "HutPlaybackType": null,
-        "Impressions": 0.0,
-        "IsReference": false,
-        "Rating": null,
-        "SharePlaybackType": 4,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
-          "AudienceString": "Women 15-17",
-          "Id": 5
-        },
-        "CPM": null,
-        "HutPlaybackType": null,
         "Impressions": 0.0,
         "IsReference": false,
         "Rating": null,
@@ -809,6 +419,396 @@
         },
         "Spots": 0,
         "StartDate": "2018-04-23T00:00:00"
+      }
+    ],
+    "ProjectedStationImpressions": [],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": {
+      "Affiliation": "ABC",
+      "CallLetters": "WTEN 10.1",
+      "Code": 428,
+      "LegacyCallLetters": "WTEN",
+      "ManifestMaxEndDate": null,
+      "MarketCode": 132,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "RateDataThrough": null
+    }
+  },
+  {
+    "Comment": null,
+    "DaypartCode": null,
+    "InventorySourceId": 1,
+    "ManifestAudiences": [
+      {
+        "Audience": {
+          "AudienceString": "Women 12-14",
+          "Id": 4
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "SharePlaybackType": 4,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Women 15-17",
+          "Id": 5
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 71.8875,
+        "IsReference": false,
+        "Rating": null,
+        "SharePlaybackType": 4,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Women 18-20",
+          "Id": 6
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 60.8,
+        "IsReference": false,
+        "Rating": null,
+        "SharePlaybackType": 4,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Women 21-24",
+          "Id": 7
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 78.5875,
+        "IsReference": false,
+        "Rating": null,
+        "SharePlaybackType": 4,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Women 50-54",
+          "Id": 13
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 522.8,
+        "IsReference": false,
+        "Rating": null,
+        "SharePlaybackType": 4,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Women 55-64",
+          "Id": 14
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 4128.5625,
+        "IsReference": false,
+        "Rating": null,
+        "SharePlaybackType": 4,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Women 65+",
+          "Id": 15
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 7470.4749999999995,
+        "IsReference": false,
+        "Rating": null,
+        "SharePlaybackType": 4,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Men 12-14",
+          "Id": 19
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "SharePlaybackType": 4,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Men 15-17",
+          "Id": 20
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "SharePlaybackType": 4,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Men 18-20",
+          "Id": 21
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 155.48749999999998,
+        "IsReference": false,
+        "Rating": null,
+        "SharePlaybackType": 4,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Men 21-24",
+          "Id": 22
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 0.0,
+        "IsReference": false,
+        "Rating": null,
+        "SharePlaybackType": 4,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Men 50-54",
+          "Id": 28
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 269.15,
+        "IsReference": false,
+        "Rating": null,
+        "SharePlaybackType": 4,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Men 55-64",
+          "Id": 29
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 2995.425,
+        "IsReference": false,
+        "Rating": null,
+        "SharePlaybackType": 4,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Men 65+",
+          "Id": 30
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 5322.825,
+        "IsReference": false,
+        "Rating": null,
+        "SharePlaybackType": 4,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "House Holds",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 21341.025,
+        "IsReference": false,
+        "Rating": null,
+        "SharePlaybackType": 4,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Children 6-11",
+          "Id": 46
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 119.41250000000001,
+        "IsReference": false,
+        "Rating": null,
+        "SharePlaybackType": 4,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Men 25-34",
+          "Id": 284
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 27.85,
+        "IsReference": false,
+        "Rating": null,
+        "SharePlaybackType": 4,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Men 35-49",
+          "Id": 290
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 630.9375,
+        "IsReference": false,
+        "Rating": null,
+        "SharePlaybackType": 4,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Children 2-5",
+          "Id": 339
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 14.7125,
+        "IsReference": false,
+        "Rating": null,
+        "SharePlaybackType": 4,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Women 35-49",
+          "Id": 347
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 2179.475,
+        "IsReference": false,
+        "Rating": null,
+        "SharePlaybackType": 4,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Women 25-34",
+          "Id": 348
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 231.925,
+        "IsReference": false,
+        "Rating": null,
+        "SharePlaybackType": 4,
+        "Vpvh": null
+      }
+    ],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "House Holds",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": null,
+        "IsReference": true,
+        "Rating": 1.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 46799,
+          "_Friday": true,
+          "_Id": 1617,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 43200,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "DaypartCode": null,
+        "Genres": [],
+        "ProgramName": "News 10 @ Noon"
+      }
+    ],
+    "ManifestRates": [
+      {
+        "SpotCost": 75.0000,
+        "SpotLengthId": 1
+      },
+      {
+        "SpotCost": 150.0000,
+        "SpotLengthId": 2
+      },
+      {
+        "SpotCost": 48.7500,
+        "SpotLengthId": 3
+      },
+      {
+        "SpotCost": 300.0000,
+        "SpotLengthId": 4
+      },
+      {
+        "SpotCost": 450.0000,
+        "SpotLengthId": 5
+      },
+      {
+        "SpotCost": 750.0000,
+        "SpotLengthId": 6
+      },
+      {
+        "SpotCost": 225.0000,
+        "SpotLengthId": 7
+      },
+      {
+        "SpotCost": 112.5000,
+        "SpotLengthId": 8
+      },
+      {
+        "SpotCost": 22.5000,
+        "SpotLengthId": 9
+      },
+      {
+        "SpotCost": 375.0000,
+        "SpotLengthId": 10
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "EndDate": "2018-03-25T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-03-25T00:00:00",
+          "_MediaMonthId": 438,
+          "_StartDate": "2018-03-19T00:00:00",
+          "_WeekNumber": 4,
+          "IsDirty": true
+        },
+        "Spots": 0,
+        "StartDate": "2018-03-25T00:00:00"
       }
     ],
     "ProjectedStationImpressions": [],

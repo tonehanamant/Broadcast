@@ -1111,6 +1111,12 @@
     <Content Include="Files\ImportingRateData\4Q18\4Q18 Baltimore-WMAR-SYN.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Files\ImportingRateData\Cadent Q2 Entertainment.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Files\ImportingRateData\Cadent Q2 News.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Files\ImportingRateData\Open Market negative demo value.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

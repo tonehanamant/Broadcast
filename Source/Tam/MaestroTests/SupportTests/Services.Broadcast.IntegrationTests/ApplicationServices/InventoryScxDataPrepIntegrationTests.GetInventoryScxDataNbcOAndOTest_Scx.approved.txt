@@ -352,13 +352,13 @@
                 ],
                 "spotCost": {
                   "currency": "USD",
-                  "Value": 599.9928
+                  "Value": 600.0016
                 },
                 "startDay": 0,
                 "totals": {
                   "cost": {
                     "currency": "USD",
-                    "Value": 1199.9856
+                    "Value": 1200.0032
                   },
                   "spots": "2"
                 }
@@ -1131,7 +1131,7 @@
             "totals": {
               "cost": {
                 "currency": "USD",
-                "Value": 82399.6704
+                "Value": 82399.6880
               },
               "spots": "56"
             },
@@ -1181,7 +1181,7 @@
         "totals": {
           "cost": {
             "currency": "USD",
-            "Value": 82399.6704
+            "Value": 82399.6880
           },
           "spots": "56"
         }
@@ -1358,13 +1358,13 @@
                 ],
                 "spotCost": {
                   "currency": "USD",
-                  "Value": 599.9928
+                  "Value": 600.0016
                 },
                 "startDay": 0,
                 "totals": {
                   "cost": {
                     "currency": "USD",
-                    "Value": 1199.9856
+                    "Value": 1200.0032
                   },
                   "spots": "2"
                 }
@@ -1765,7 +1765,7 @@
             "totals": {
               "cost": {
                 "currency": "USD",
-                "Value": 21799.9856
+                "Value": 21800.0032
               },
               "spots": "23"
             },
@@ -1815,7 +1815,7 @@
         "totals": {
           "cost": {
             "currency": "USD",
-            "Value": 21799.9856
+            "Value": 21800.0032
           },
           "spots": "23"
         }

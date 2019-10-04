@@ -122,27 +122,22 @@ namespace Services.Broadcast.Repositories
                 context =>
                 {
                     var timestamp = DateTime.Now;
-                    foreach (var stationContact in stationContacts)
+                    context.station_contacts.AddRange(stationContacts.Select(x => new station_contacts()
                     {
-                        var dbContact = new station_contacts()
-                        {
-                            name = stationContact.Name,
-                            phone = stationContact.Phone,
-                            fax = stationContact.Fax,
-                            email = stationContact.Email,
-                            company = stationContact.Company,
-                            type = (byte)stationContact.Type,
-                            station_id = stationContact.StationId,
-                            created_by = user,
-                            created_date = timestamp,
-                            modified_by = user,
-                            modified_date = timestamp,
-                            created_file_id = fileId
-                        };
-                        context.station_contacts.Add(dbContact);
-                    }
+                        name = x.Name,
+                        phone = x.Phone,
+                        fax = x.Fax,
+                        email = x.Email,
+                        company = x.Company,
+                        type = (byte)x.Type,
+                        station_id = x.StationId,
+                        created_by = user,
+                        created_date = timestamp,
+                        modified_by = user,
+                        modified_date = timestamp,
+                        created_file_id = fileId
+                    }));                    
                     context.SaveChanges();
-
                 });
         }
 

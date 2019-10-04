@@ -20,8 +20,6 @@ namespace EntityFrameworkMapping.Broadcast
         public int spots { get; set; }
         public System.DateTime start_date { get; set; }
         public System.DateTime end_date { get; set; }
-        public System.DateTime sys_start_date { get; set; }
-        public System.DateTime sys_end_date { get; set; }
     
         public virtual media_weeks media_weeks { get; set; }
         public virtual station_inventory_manifest station_inventory_manifest { get; set; }

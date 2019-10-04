@@ -118,9 +118,9 @@
                       }
                     ],
                     "ProgramName": "Eyewitness News at 430a",
-                    "SpotCost": 599.9928,
+                    "SpotCost": 600.0016,
                     "SpotLength": "30",
-                    "TotalCost": 1199.9856,
+                    "TotalCost": 1200.0032,
                     "TotalSpots": 2,
                     "Weeks": [
                       {
@@ -421,11 +421,11 @@
                   }
                 ],
                 "StationCode": 5282,
-                "TotalCost": 82399.6704,
+                "TotalCost": 82399.6880,
                 "TotalSpots": 56
               }
             ],
-            "TotalCost": 82399.6704,
+            "TotalCost": 82399.6880,
             "TotalSpots": 56
           },
           {
@@ -444,9 +444,9 @@
                       }
                     ],
                     "ProgramName": "Eyewitness News at 430a",
-                    "SpotCost": 599.9928,
+                    "SpotCost": 600.0016,
                     "SpotLength": "30",
-                    "TotalCost": 1199.9856,
+                    "TotalCost": 1200.0032,
                     "TotalSpots": 2,
                     "Weeks": [
                       {
@@ -578,16 +578,16 @@
                   }
                 ],
                 "StationCode": 5015,
-                "TotalCost": 21799.9856,
+                "TotalCost": 21800.0032,
                 "TotalSpots": 23
               }
             ],
-            "TotalCost": 21799.9856,
+            "TotalCost": 21800.0032,
             "TotalSpots": 23
           }
         ],
         "SurveyString": "Sept18 DMA Nielsen Live+1",
-        "TotalCost": 104199.6560,
+        "TotalCost": 104199.6912,
         "TotalSpots": 79
       }
     ],

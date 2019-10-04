@@ -11,13 +11,14 @@ using Common.Services;
 using Tam.Maestro.Common.DataLayer;
 using Services.Broadcast.Entities.StationInventory;
 using Services.Broadcast.Cache;
+using System.Threading.Tasks;
 
 namespace Services.Broadcast.ApplicationServices
 {
 
     public interface IStationInventoryGroupService : IApplicationService
     {
-        void AddNewStationInventoryGroups(InventoryFileBase inventoryFile);
+        void AddNewStationInventoryOpenMarket(InventoryFileBase inventoryFile);
         void AddNewStationInventory(InventoryFileBase inventoryFile, int? contractedDaypartId = null);
         List<StationInventoryGroup> GetStationInventoryGroupsByFileId(int fileId);
     }
@@ -41,15 +42,15 @@ namespace Services.Broadcast.ApplicationServices
             _MediaMonthAndWeekAggregateCache = mediaMonthAndWeekAggregateCache;
         }
 
-        public void AddNewStationInventoryGroups(InventoryFileBase inventoryFile)
+        public void AddNewStationInventoryOpenMarket(InventoryFileBase inventoryFile)
         {
             if (inventoryFile.InventorySource == null || !inventoryFile.InventorySource.IsActive)
                 throw new Exception(string.Format("The selected source type is invalid or inactive."));
-            
+
             _ExpireExistingInventoryManifestWeeks(inventoryFile);
-            _inventoryRepository.AddNewInventory(inventoryFile);
+            _AddNewManifests(inventoryFile);
         }
-        
+
         public List<StationInventoryGroup> GetStationInventoryGroupsByFileId(int fileId)
         {
             using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
@@ -64,15 +65,19 @@ namespace Services.Broadcast.ApplicationServices
         private void _SetInventoryGroupsAudiences(List<StationInventoryGroup> stationInventoryGroups)
         {
             var audiences = stationInventoryGroups.SelectMany(m => m.Manifests.SelectMany(d => d.ManifestAudiences));
-
-            audiences.ForEach(a => a.Audience = _audiencesCache.GetDisplayAudienceById(a.Audience.Id));
+            Parallel.ForEach(audiences, (a) =>
+            {
+                a.Audience = _audiencesCache.GetDisplayAudienceById(a.Audience.Id);
+            });
         }
 
         private void _SetInventoryGroupsDayparts(List<StationInventoryGroup> stationInventoryGroups)
         {
             var dayparts = stationInventoryGroups.SelectMany(ig => ig.Manifests.SelectMany(m => m.ManifestDayparts.Select(md => md.Daypart)));
-
-            dayparts.ForEach(d => d = _daypartCache.GetDisplayDaypart(d.Id));
+            Parallel.ForEach(dayparts, (d) =>
+            {
+                d = _daypartCache.GetDisplayDaypart(d.Id);
+            });
         }
 
         public void AddNewStationInventory(InventoryFileBase inventoryFile, int? contractedDaypartId)
@@ -89,7 +94,15 @@ namespace Services.Broadcast.ApplicationServices
                 _ExpireExistingInventoryManifestWeeksByManifestDayparts(inventoryFile);
             }
 
-            _inventoryRepository.AddNewInventory(inventoryFile);
+            _inventoryRepository.AddNewInventoryGroups(inventoryFile);
+            _AddNewManifests(inventoryFile);
+        }
+
+        private void _AddNewManifests(InventoryFileBase inventoryFile)
+        {            
+            var newManifests = inventoryFile.InventoryManifests.Where(m => m.Id == null);
+
+            _inventoryRepository.AddNewManifests(newManifests, inventoryFile.Id, inventoryFile.InventorySource.Id);
         }
 
         private void _ExpireExistingInventoryManifestWeeks(InventoryFileBase inventoryFile, int contractedDaypartId)
@@ -118,35 +131,51 @@ namespace Services.Broadcast.ApplicationServices
                 .Select(x => x.MediaWeek.Id)
                 .Distinct();
 
+            var taskList = new List<Task<List<StationInventoryManifestWeek>>>();
+
             // match manifest weeks by contracted dayparts and media weeks
             foreach (var manifest in existingInventoryManifests)
             {
-                var contractedDaypartIds = manifest.ManifestDayparts.Select(x => x.Daypart.Id).OrderBy(x => x);
-
-                if (manifestContractedDaypartSets.Any(x => contractedDaypartIds.SequenceEqual(x)))
+                taskList.Add(Task.Run(() =>
                 {
-                    var manifestWeeksToExpire = manifest.ManifestWeeks.Where(w => allManifestMediaWeekIds.Contains(w.MediaWeek.Id));
-                    weeksToExpire.AddRange(manifestWeeksToExpire);
-                }
-            }
+                    var contractedDaypartIds = manifest.ManifestDayparts.Select(x => x.Daypart.Id).OrderBy(x => x);
 
-            _inventoryRepository.RemoveManifestWeeks(weeksToExpire);
+                    if (manifestContractedDaypartSets.Any(x => contractedDaypartIds.SequenceEqual(x)))
+                    {
+                        return manifest.ManifestWeeks.Where(w => allManifestMediaWeekIds.Contains(w.MediaWeek.Id)).ToList();
+                    }
+                    return new List<StationInventoryManifestWeek>();
+                }));
+
+            }
+            weeksToExpire = Task.WhenAll(taskList).Result.SelectMany(x => x).Where(x => x != null).Distinct().ToList();
+            if (weeksToExpire.Any())
+            {
+                _inventoryRepository.RemoveManifestWeeks(weeksToExpire);
+            }
         }
 
         private void _ExpireExistingInventoryManifestWeeks(InventoryFileBase inventoryFile)
-        {            
+        {
             List<StationInventoryManifestWeek> weeksToExpire = new List<StationInventoryManifestWeek>();
 
-            foreach (var manifest in inventoryFile.GetAllManifests().ToList())
+            var taskList = new List<Task<List<StationInventoryManifestWeek>>>();
+            var count = inventoryFile.GetAllManifests().Count();
+            foreach (var manifest in inventoryFile.GetAllManifests())
             {
-                var allManifestMediaWeekIds = manifest.ManifestWeeks.Select(x => x.MediaWeek.Id).Distinct();
-                var daypart = manifest.ManifestDayparts.SingleOrDefault();  //open market has only 1 daypart
+                taskList.Add(Task.Run(() =>
+                {
+                    var allManifestMediaWeekIds = manifest.ManifestWeeks.Select(x => x.MediaWeek.Id).Distinct();
+                    var daypart = manifest.ManifestDayparts.SingleOrDefault();  //open market has only 1 daypart
 
-                var weeks = _inventoryRepository.GetStationInventoryManifestWeeksForOpenMarket(manifest.Station.Id, daypart.ProgramName, daypart.Daypart.Id);
-                weeksToExpire.AddRange(weeks.Where(w => allManifestMediaWeekIds.Contains(w.MediaWeek.Id)));                
+                    var weeks = _inventoryRepository.GetStationInventoryManifestWeeksForOpenMarket(manifest.Station.Id, daypart.ProgramName, daypart.Daypart.Id);
+                    return weeks.Where(w => allManifestMediaWeekIds.Contains(w.MediaWeek.Id)).ToList();
+                }));
+
             }
-            
-            _inventoryRepository.RemoveManifestWeeks(weeksToExpire.Distinct().ToList());
+
+            weeksToExpire = Task.WhenAll(taskList).Result.SelectMany(x => x).Distinct().ToList();
+            _inventoryRepository.RemoveManifestWeeks(weeksToExpire);
         }
     }
 }

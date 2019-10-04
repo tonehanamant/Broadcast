@@ -20,7 +20,13 @@ namespace Services.Broadcast.Repositories
         DisplayBroadcastStation GetBroadcastStationByLegacyCallLetters(string callLetters);
         DisplayBroadcastStation GetBroadcastStationByCallLetters(string stationCallLetters);
         List<DisplayBroadcastStation> GetBroadcastStationListByLegacyCallLetters(List<string> stationNameList);
+
+        /// <summary>
+        /// Gets all the broadcast stations.
+        /// </summary>
+        /// <returns>List of DisplayBroadcastStation objects</returns>
         List<DisplayBroadcastStation> GetBroadcastStations();
+
         int GetBroadcastStationCodeByContactId(int stationContactId);
         void UpdateStation(int code, string user, DateTime timeStamp, int inventorySourceId);
         void UpdateStationList(List<int> stationIds, string user, DateTime timeStamp, int inventorySourceId);
@@ -130,6 +136,7 @@ namespace Services.Broadcast.Repositories
                 });
         }
 
+        /// <inheritdoc/>
         public List<DisplayBroadcastStation> GetBroadcastStations()
         {
             return _InReadUncommitedTransaction(

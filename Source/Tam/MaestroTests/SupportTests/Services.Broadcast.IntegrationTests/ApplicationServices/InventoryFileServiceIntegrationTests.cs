@@ -1572,5 +1572,40 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void OpenMarket_SaveLargeFile()
+        {
+            const string fileName = @"Cadent Q2 News.xml";
+            //const string fileName = @"Cadent Q2 Entertainment.xml";
+            var inventorySource = new InventorySource { InventoryType = InventorySourceTypeEnum.OpenMarket, Name = "Open Market", Id = 1 };
+            var fileImporter = IntegrationTestApplicationServiceFactory.Instance.Resolve<IOpenMarketFileImporter>();
+
+            using (new TransactionScopeWrapper())
+            {
+                var request = new InventoryFileSaveRequest
+                {
+                    StreamData = new FileStream($@".\Files\ImportingRateData\{fileName}", FileMode.Open, FileAccess.Read),
+                    FileName = fileName,
+                    InventorySource = "Open Market"
+                };
+
+                var now = new DateTime(2019, 02, 02);
+                var result = _InventoryService.SaveInventoryFile(request, "IntegrationTestUser", now);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(InventoryFileSaveResult), "FileId");
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                var fileJson = IntegrationTestHelper.ConvertToJson(result, jsonSettings);
+
+                Assert.IsTrue(result.FileId > 0);
+                Approvals.Verify(fileJson);
+            }
+        }
     }
 }

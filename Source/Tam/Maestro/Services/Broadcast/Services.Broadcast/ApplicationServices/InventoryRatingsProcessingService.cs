@@ -19,7 +19,6 @@ namespace Services.Broadcast.ApplicationServices
     {
         void QueueInventoryFileRatingsJob(int inventoryFileId);
         List<InventoryFileRatingsProcessingJob> GetQueuedJobs(int limit);
-        InventoryFileRatingsProcessingJob GetJobByFileId(int fileId);
 
         /// <summary>
         /// Process the specified job returning a list of Summary data required for the inventory aggregation process
@@ -77,11 +76,6 @@ namespace Services.Broadcast.ApplicationServices
         public List<InventoryFileRatingsProcessingJob> GetQueuedJobs(int limit)
         {
             return _InventoryFileRatingsJobsRepository.GetJobsBatch(limit);
-        }
-
-        public InventoryFileRatingsProcessingJob GetJobByFileId(int fileId)
-        {
-            return _InventoryFileRatingsJobsRepository.GetJobByFileId(fileId);
         }
 
         public void QueueInventoryFileRatingsJob(int inventoryFileId)

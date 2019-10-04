@@ -105,10 +105,7 @@ namespace Services.Broadcast.Repositories
 
         private ResultForTimespan _GetExistingTimespan(DisplayDaypart pDaypart)
         {
-            using (
-                var scope = new TransactionScopeWrapper(
-                    System.Transactions.TransactionScopeOption.Suppress,
-                    System.Transactions.IsolationLevel.ReadUncommitted))
+            using (var scope = new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
             {
                 return _InReadUncommitedTransaction(
                     context =>
@@ -124,10 +121,7 @@ namespace Services.Broadcast.Repositories
 
         private ResultForDaypart _GetExistingDaypart(DisplayDaypart pDaypart)
         {
-            using (
-                var scope = new TransactionScopeWrapper(
-                    System.Transactions.TransactionScopeOption.Suppress,
-                    System.Transactions.IsolationLevel.ReadUncommitted))
+            using (var scope = new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
             {
                 return _InReadUncommitedTransaction(
                     context =>
@@ -192,6 +186,11 @@ namespace Services.Broadcast.Repositories
             return _InReadUncommitedTransaction(
                 context =>
                 {
+                    var existingDaypart = context.dayparts.Where(x => x.daypart_text.Equals(daypart.Preview)).SingleOrDefault();
+                    if (existingDaypart != null){
+                        return existingDaypart.id;
+                    }
+
                     var newDaypart = context.dayparts.Create();
                     newDaypart.timespan_id = timespanId;
                     newDaypart.code = daypart.Code;

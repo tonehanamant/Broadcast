@@ -607,13 +607,13 @@
                 ],
                 "spotCost": {
                   "currency": "USD",
-                  "Value": 11452.5085
+                  "Value": 11452.5086
                 },
                 "startDay": 0,
                 "totals": {
                   "cost": {
                     "currency": "USD",
-                    "Value": 137430.1020
+                    "Value": 137430.1032
                   },
                   "spots": "12"
                 }
@@ -642,7 +642,7 @@
             "totals": {
               "cost": {
                 "currency": "USD",
-                "Value": 137430.1020
+                "Value": 137430.1032
               },
               "spots": "12"
             },
@@ -708,7 +708,7 @@
         "totals": {
           "cost": {
             "currency": "USD",
-            "Value": 327714.9336
+            "Value": 327714.9348
           },
           "spots": "24"
         }

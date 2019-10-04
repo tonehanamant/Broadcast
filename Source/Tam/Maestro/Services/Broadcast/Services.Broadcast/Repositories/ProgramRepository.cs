@@ -5,13 +5,12 @@ using System.Linq;
 using ConfigurationService.Client;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
-using Tam.Maestro.Services.Clients;
 
 namespace Services.Broadcast.Repositories
 {
     public interface IProgramRepository : IDataRepository
     {
-        List<string> GetUniqueProgramNamesByManifests(List<int> manifestIds);
+        List<string> GetTotalUniqueProgramNamesByManifests(List<int> manifestIds);
     }
 
     public class ProgramRepository : BroadcastRepositoryBase, IProgramRepository
@@ -20,7 +19,7 @@ namespace Services.Broadcast.Repositories
             ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient)
             : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
 
-        public List<string> GetUniqueProgramNamesByManifests(List<int> manifestIds)
+        public List<string> GetTotalUniqueProgramNamesByManifests(List<int> manifestIds)
         {
             return _InReadUncommitedTransaction(
                 context =>

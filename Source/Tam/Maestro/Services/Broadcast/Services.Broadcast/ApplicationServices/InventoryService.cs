@@ -239,7 +239,7 @@ namespace Services.Broadcast.ApplicationServices
                         _LockingEngine.LockStations(fileStationsDict, lockedStationIds, stationLocks);
 
                         _EnsureInventoryDaypartIds(inventoryFile);
-                        _StationInventoryGroupService.AddNewStationInventoryGroups(inventoryFile);
+                        _StationInventoryGroupService.AddNewStationInventoryOpenMarket(inventoryFile);
 
                         _SaveInventoryFileContacts(userName, inventoryFile);
                         _StationRepository.UpdateStationList(fileStationsDict.Keys.ToList(), userName, nowDate, inventorySource.Id);
@@ -262,7 +262,6 @@ namespace Services.Broadcast.ApplicationServices
             }
             catch (Exception e)
             {
-
                 // Try to update the status of the file if possible.
                 try
                 {
@@ -333,7 +332,7 @@ namespace Services.Broadcast.ApplicationServices
         private void _CreateUnknownStationsAndPopulate(InventoryFile inventoryFile, string userName)
         {
             var now = DateTime.Now;
-            var manifestsWithUnknownStations = inventoryFile.GetAllManifests().Where(x => x.Station.Id == 0);
+            var manifestsWithUnknownStations = inventoryFile.GetAllManifests().Where(x => x.Station?.Id == 0);
             var contactsWithUnknownStations = inventoryFile.StationContacts.Where(x => x.StationId == 0);
             var unknownStations = manifestsWithUnknownStations
                 .Select(x => x.Station.CallLetters)

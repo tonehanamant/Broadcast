@@ -156,10 +156,18 @@ namespace Services.Broadcast.Converters.InventorySummary
 
         protected int GetTotalPrograms(IEnumerable<InventorySummaryManifestDto> manifests)
         {
+            const int batchSize = 10000;
+            int index = 0;
+            List<string> totalPrograms = new List<string>();
+
             var manifestIds = manifests.Select(x => x.ManifestId).ToList();
-            return _ProgramRepository.GetUniqueProgramNamesByManifests(manifestIds)
-                                     .Distinct(StringComparer.OrdinalIgnoreCase)
-                                     .Count();
+            
+            while (index < manifestIds.Count())
+            {
+                totalPrograms.AddRange(_ProgramRepository.GetTotalUniqueProgramNamesByManifests(manifestIds.Skip(index).Take(batchSize).ToList()));
+                index = index + batchSize;
+            }
+            return totalPrograms.Distinct(StringComparer.OrdinalIgnoreCase).Count();
         }
 
         protected int GetTotalPrograms(IEnumerable<StationInventoryManifest> manifests)

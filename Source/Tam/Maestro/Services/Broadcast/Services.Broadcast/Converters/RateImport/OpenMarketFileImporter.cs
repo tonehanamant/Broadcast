@@ -23,6 +23,9 @@ using Common.Services;
 using Services.Broadcast.Exceptions;
 using Services.Broadcast.BusinessEngines.InventoryDaypartParsing;
 using Services.Broadcast.Cache;
+using System.Threading.Tasks;
+using System.Collections.Concurrent;
+using Services.Broadcast.BusinessEngines;
 
 namespace Services.Broadcast.Converters.RateImport
 {
@@ -50,18 +53,23 @@ namespace Services.Broadcast.Converters.RateImport
         private readonly IDaypartCache _DaypartCache;
         private readonly IInventoryDaypartParsingEngine _InventoryDaypartParsingEngine;
         private readonly IBroadcastAudiencesCache _AudienceCache;
+        private readonly StationProcessingEngine _StationEngine;
+        private readonly List<DisplayBroadcastStation> _AvailableStations;
 
         public OpenMarketFileImporter(IDataRepositoryFactory dataRepositoryFactory
             , IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache
             , IDaypartCache daypartCache
             , IInventoryDaypartParsingEngine inventoryDaypartParsingEngine
-            , IBroadcastAudiencesCache broadcastAudiencesCache)
+            , IBroadcastAudiencesCache broadcastAudiencesCache
+            , StationProcessingEngine stationProcessingEngine)
         {
             _BroadcastDataRepositoryFactory = dataRepositoryFactory;
             _MediaMonthAndWeekAggregateCache = mediaMonthAndWeekAggregateCache;
             _DaypartCache = daypartCache;
             _InventoryDaypartParsingEngine = inventoryDaypartParsingEngine;
             _AudienceCache = broadcastAudiencesCache;
+            _StationEngine = stationProcessingEngine;
+            _AvailableStations = dataRepositoryFactory.GetDataRepository<IStationRepository>().GetBroadcastStations();
         }
 
         /// <summary>
@@ -113,37 +121,50 @@ namespace Services.Broadcast.Converters.RateImport
             inventoryFile.StartDate = proposal.startDate;
             inventoryFile.EndDate = proposal.endDate;
 
-            _PopulateStationProgramList(message.Proposal, inventoryFile, ref rowsProcessed);
+            rowsProcessed = _PopulateStationProgramList(message.Proposal, inventoryFile);
 
             if (inventoryFile.ValidationProblems.Any()) return;
 
             inventoryFile.StationContacts = _ExtractContactData(message);
         }
 
-        private void _PopulateStationProgramList(AAAAMessageProposal proposal, InventoryFile inventoryFile, ref int rowsProcessed)
+        private int _PopulateStationProgramList(AAAAMessageProposal proposal, InventoryFile inventoryFile)
         {
             if (!IsValid(proposal.AvailList))
             {
                 inventoryFile.ValidationProblems.Add("Can't find XML elements in order to build station programs from.");
-                return;
+                return 0;
             }
+
+            var results = new ConcurrentBag<StationInventoryManifest>();
+            var taskList = new List<Task<int>>();
 
             foreach (var availList in proposal.AvailList)
             {
-                var availLines = new List<AvailLineWithPeriods>();
-
-                if (availList.AvailLineWithDetailedPeriods != null)
+                taskList.Add(Task.Run(() =>
                 {
-                    availLines.AddRange(availList.AvailLineWithDetailedPeriods.Select(_Map));
-                }
+                    var availLines = new List<AvailLineWithPeriods>();
 
-                if (availList.AvailLineWithPeriods != null)
-                {
-                    availLines.AddRange(availList.AvailLineWithPeriods.Select(_Map));
-                }
+                    if (availList.AvailLineWithDetailedPeriods != null)
+                    {
+                        availLines.AddRange(availList.AvailLineWithDetailedPeriods.Select(_Map));
+                    }
 
-                _PopulateProgramsFromAvailLineWithPeriods(proposal, availList, availLines, inventoryFile, FileProblems, ref rowsProcessed);
+                    if (availList.AvailLineWithPeriods != null)
+                    {
+                        availLines.AddRange(availList.AvailLineWithPeriods.Select(_Map));
+                    }
+
+                    var processed = _PopulateProgramsFromAvailLineWithPeriods(proposal, availList, availLines, FileProblems, results);
+                    return processed;
+                }));
             }
+
+            var totalRowsProcessed = Task.WhenAll(taskList).GetAwaiter().GetResult().Sum();
+
+            inventoryFile.InventoryManifests = results.ToList();
+
+            return totalRowsProcessed;
         }
 
         private bool IsValid(AAAAMessageProposalAvailList[] availLists)
@@ -204,18 +225,17 @@ namespace Services.Broadcast.Converters.RateImport
             return manifestRates;
         }
 
-        private void _PopulateProgramsFromAvailLineWithPeriods(
+        private int _PopulateProgramsFromAvailLineWithPeriods(
             AAAAMessageProposal proposal,
             AAAAMessageProposalAvailList availList,
             List<AvailLineWithPeriods> availLines,
-            InventoryFile inventoryFile,
             List<InventoryFileProblem> fileProblems,
-            ref int rowsProcessed)
+            ConcurrentBag<StationInventoryManifest> results)
         {
             var audienceMap = _GetAudienceMap(availList.DemoCategories);
             var allStationNames = proposal.Outlets.Select(o => o.callLetters).Distinct().ToList();
             var foundStations = FindStations(allStationNames);
-
+            int rowsProcessed = 0;
             foreach (var availLine in availLines)
             {
                 var programName = availLine.AvailName;
@@ -263,7 +283,7 @@ namespace Services.Broadcast.Converters.RateImport
 
                         foreach (var weeksGroup in weeksGroupedByQuarter)
                         {
-                            inventoryFile.InventoryManifests.Add(new StationInventoryManifest
+                            results.Add(new StationInventoryManifest
                             {
                                 Station = manifestStation,
                                 DaypartCode = availLine.DaypartName,
@@ -277,13 +297,14 @@ namespace Services.Broadcast.Converters.RateImport
 
                         if (weeksGroupedByQuarter.Any())
                             rowsProcessed++;
-                    }
+                    }                    
                 }
                 catch (Exception e)
                 {
                     fileProblems.Add(new InventoryFileProblem($"Error while processing {availLine.AvailName} on {availList.Name}: {e.Message}"));
                 }
             }
+            return rowsProcessed;
         }
 
         private List<StationInventoryManifestWeek> _GetManifestWeeksForAvailLine(DateTime startDate, DateTime endDate)
@@ -373,35 +394,44 @@ namespace Services.Broadcast.Converters.RateImport
                 CreatedDate = nowDate
             };
         }
-
-        private DisplayBroadcastStation _GetDisplayBroadcastStation(string stationName)
-        {
-            var _stationRepository = _BroadcastDataRepositoryFactory.GetDataRepository<IStationRepository>();
-            return _stationRepository.GetBroadcastStationByLegacyCallLetters(stationName) ??
-                   _stationRepository.GetBroadcastStationByCallLetters(stationName);
-        }
-
+        
         protected virtual DisplayBroadcastStation ParseStationCallLetters(string stationName)
-        {
-            stationName = stationName.Replace("-TV", "").Trim();
-            return _GetDisplayBroadcastStation(stationName);
+        {            
+            stationName = _StationEngine.StripStationSuffix(stationName).Trim();
+            if (_AvailableStations.Any(x => x.LegacyCallLetters.Equals(stationName)))
+            {
+                return _AvailableStations.Single(x => x.LegacyCallLetters.Equals(stationName));
+            }
+            if (_AvailableStations.Any(x => x.CallLetters.Equals(stationName)))
+            {
+                return _AvailableStations.Single(x => x.CallLetters.Equals(stationName));
+            }
+            return null;
         }
 
         protected Dictionary<string, DisplayBroadcastStation> FindStations(List<string> stationNameList)
         {
-            var foundStations = new Dictionary<string, DisplayBroadcastStation>(StringComparer.OrdinalIgnoreCase);
+            var foundStations = new ConcurrentDictionary<string, DisplayBroadcastStation>(StringComparer.OrdinalIgnoreCase);
+
+            var taskList = new List<Task>();
 
             foreach (var stationName in stationNameList)
             {
-                var station = ParseStationCallLetters(stationName);
-
-                if (station != null)
+                taskList.Add(Task.Run(() =>
                 {
-                    foundStations.Add(stationName, station);
-                }
+                    var station = ParseStationCallLetters(stationName);
+
+                    if (station != null)
+                    {
+                        foundStations.TryAdd(stationName, station);
+                    }
+                }));
             }
 
-            return foundStations;
+            //wait for all the tasks to complete
+            Task.WaitAll(taskList.ToArray());
+
+            return foundStations.ToDictionary(kvp => kvp.Key, kvp => kvp.Value, StringComparer.OrdinalIgnoreCase);
         }
         
         private Dictionary<int, double> _GetSpotLengthAndMultipliers()
@@ -504,21 +534,23 @@ namespace Services.Broadcast.Converters.RateImport
 
         private DisplayDaypart _GetDisplayDaypartForProgram(AvailLineWithPeriods availLine)
         {
-            DisplayDaypart daypart = new DisplayDaypart();
+            DisplayDaypart daypart = new DisplayDaypart
+            {
 
-            //TODO: Need updated file to be able to handle multiple dayparts?
-            daypart.Monday = availLine.DayTimes.DayTime.Days.Monday.ToUpper().Equals("Y");
-            daypart.Tuesday = availLine.DayTimes.DayTime.Days.Tuesday.ToUpper().Equals("Y");
-            daypart.Wednesday = availLine.DayTimes.DayTime.Days.Wednesday.ToUpper().Equals("Y");
-            daypart.Thursday = availLine.DayTimes.DayTime.Days.Thursday.ToUpper().Equals("Y");
-            daypart.Friday = availLine.DayTimes.DayTime.Days.Friday.ToUpper().Equals("Y");
-            daypart.Saturday = availLine.DayTimes.DayTime.Days.Saturday.ToUpper().Equals("Y");
-            daypart.Sunday = availLine.DayTimes.DayTime.Days.Sunday.ToUpper().Equals("Y");
+                //TODO: Need updated file to be able to handle multiple dayparts?
+                Monday = availLine.DayTimes.DayTime.Days.Monday.ToUpper().Equals("Y"),
+                Tuesday = availLine.DayTimes.DayTime.Days.Tuesday.ToUpper().Equals("Y"),
+                Wednesday = availLine.DayTimes.DayTime.Days.Wednesday.ToUpper().Equals("Y"),
+                Thursday = availLine.DayTimes.DayTime.Days.Thursday.ToUpper().Equals("Y"),
+                Friday = availLine.DayTimes.DayTime.Days.Friday.ToUpper().Equals("Y"),
+                Saturday = availLine.DayTimes.DayTime.Days.Saturday.ToUpper().Equals("Y"),
+                Sunday = availLine.DayTimes.DayTime.Days.Sunday.ToUpper().Equals("Y"),
 
-            daypart.StartTime = _GetTimeInSecondsFrom24HourTimeString(availLine.DayTimes.DayTime.StartTime);
+                StartTime = _GetTimeInSecondsFrom24HourTimeString(availLine.DayTimes.DayTime.StartTime),
 
-            // We substract 1 second because the end is not included in the daypart/timespan
-            daypart.EndTime = _GetTimeInSecondsFrom24HourTimeString(availLine.DayTimes.DayTime.EndTime) - 1;
+                // We substract 1 second because the end is not included in the daypart/timespan
+                EndTime = _GetTimeInSecondsFrom24HourTimeString(availLine.DayTimes.DayTime.EndTime) - 1
+            };
 
             if (daypart.EndTime < 0)
             {
@@ -551,57 +583,64 @@ namespace Services.Broadcast.Converters.RateImport
 
         private List<StationContact> _ExtractContactData(AAAAMessage message)
         {
-            var contacts = new List<StationContact>();
             var stationLetters = message.Proposal.Outlets.Select(s => s.callLetters).ToList();
-            var proposalStations = _BroadcastDataRepositoryFactory.GetDataRepository<IStationRepository>().GetBroadcastStationListByLegacyCallLetters(stationLetters);
+            var proposalStations = _AvailableStations.Where(x => stationLetters.Contains(x.LegacyCallLetters)).ToList();
             var repTeamNames = _BroadcastDataRepositoryFactory.GetDataRepository<IStationContactsRepository>().GetRepTeamNames();
+
+            var taskList = new List<Task<StationContact>>();
 
             foreach (var station in message.Proposal.Outlets)
             {
-                var proposalStation = proposalStations.SingleOrDefault(ps => ps.LegacyCallLetters == station.callLetters);
-                var stationContact = new StationContact();
-                stationContact.Company = message.Proposal.Seller.companyName;
-                stationContact.Name = message.Proposal.Seller.Salesperson.name;
-                stationContact.Email = (message.Proposal.Seller.Salesperson != null && message.Proposal.Seller.Salesperson.Email != null) ?
-                    message.Proposal.Seller.Salesperson.Email.Where(e => e.type.Equals("primary"))
-                        .Select(e => e.Value)
-                        .FirstOrDefault() : null;
-                stationContact.Phone = (message.Proposal.Seller.Salesperson != null && message.Proposal.Seller.Salesperson.Phone != null) ?
-                    message.Proposal.Seller.Salesperson.Phone.Where(p => p.type == "voice")
-                        .Select(p => p.Value)
-                        .FirstOrDefault() : null;
-                stationContact.Fax = (message.Proposal.Seller.Salesperson != null && message.Proposal.Seller.Salesperson.Phone != null) ?
-                    message.Proposal.Seller.Salesperson.Phone.Where(p => p.type == "fax")
-                        .Select(p => p.Value)
-                        .FirstOrDefault() : null;
-
-                if (proposalStation == null)
+                taskList.Add(Task.Run(() =>
                 {
-                    // station should be created next
-                    stationContact.StationCallLetters = station.callLetters;
-                    stationContact.Type = StationContact.StationContactType.Station;
-                }
-                else
-                {
-                    stationContact.StationId = proposalStation.Id;
-
-                    if (proposalStations.Any(x => x.LegacyCallLetters.Equals(stationContact.Company.Trim(), StringComparison.OrdinalIgnoreCase)))
+                    var proposalStation = proposalStations.SingleOrDefault(ps => ps.LegacyCallLetters == station.callLetters);
+                    var stationContact = new StationContact
                     {
+                        Company = message.Proposal.Seller.companyName,
+                        Name = message.Proposal.Seller.Salesperson.name,
+                        Email = (message.Proposal.Seller.Salesperson != null && message.Proposal.Seller.Salesperson.Email != null) ?
+                        message.Proposal.Seller.Salesperson.Email.Where(e => e.type.Equals("primary"))
+                            .Select(e => e.Value)
+                            .FirstOrDefault() : null,
+                        Phone = (message.Proposal.Seller.Salesperson != null && message.Proposal.Seller.Salesperson.Phone != null) ?
+                        message.Proposal.Seller.Salesperson.Phone.Where(p => p.type == "voice")
+                            .Select(p => p.Value)
+                            .FirstOrDefault() : null,
+                        Fax = (message.Proposal.Seller.Salesperson != null && message.Proposal.Seller.Salesperson.Phone != null) ?
+                        message.Proposal.Seller.Salesperson.Phone.Where(p => p.type == "fax")
+                            .Select(p => p.Value)
+                            .FirstOrDefault() : null
+                    };
+
+                    if (proposalStation == null)
+                    {
+                        // station should be created next
+                        stationContact.StationCallLetters = station.callLetters;
                         stationContact.Type = StationContact.StationContactType.Station;
-                    }
-                    else if (_IsContactARep(repTeamNames, stationContact))
-                    {
-                        stationContact.Type = StationContact.StationContactType.Rep;
                     }
                     else
                     {
-                        stationContact.Type = StationContact.StationContactType.Traffic;
-                    }
-                }
+                        stationContact.StationId = proposalStation.Id;
 
-                contacts.Add(stationContact);
+                        if (proposalStations.Any(x => x.LegacyCallLetters.Equals(stationContact.Company.Trim(), StringComparison.OrdinalIgnoreCase)))
+                        {
+                            stationContact.Type = StationContact.StationContactType.Station;
+                        }
+                        else if (_IsContactARep(repTeamNames, stationContact))
+                        {
+                            stationContact.Type = StationContact.StationContactType.Rep;
+                        }
+                        else
+                        {
+                            stationContact.Type = StationContact.StationContactType.Traffic;
+                        }
+                    }
+                    return stationContact;
+                }));
             }
 
+            List<StationContact> contacts = Task.WhenAll(taskList).Result.ToList();
+            
             return contacts;
         }
 

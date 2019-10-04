@@ -306,9 +306,9 @@
                       }
                     ],
                     "ProgramName": "CNN Block",
-                    "SpotCost": 11452.5085,
+                    "SpotCost": 11452.5086,
                     "SpotLength": "30",
-                    "TotalCost": 137430.1020,
+                    "TotalCost": 137430.1032,
                     "TotalSpots": 12,
                     "Weeks": [
                       {
@@ -447,11 +447,11 @@
                   }
                 ],
                 "StationCode": 5014,
-                "TotalCost": 137430.1020,
+                "TotalCost": 137430.1032,
                 "TotalSpots": 12
               }
             ],
-            "TotalCost": 327714.9336,
+            "TotalCost": 327714.9348,
             "TotalSpots": 24
           },
           {
@@ -620,7 +620,7 @@
           }
         ],
         "SurveyString": "Nov16 DMA Nielsen Live+3",
-        "TotalCost": 439837.3680,
+        "TotalCost": 439837.3692,
         "TotalSpots": 36
       }
     ],

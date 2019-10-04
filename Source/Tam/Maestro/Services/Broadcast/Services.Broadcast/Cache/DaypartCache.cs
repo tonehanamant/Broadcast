@@ -1,5 +1,6 @@
 ﻿using Services.Broadcast.Repositories;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Caching;
@@ -36,8 +37,7 @@ namespace Common.Services
         private MemoryCache _Cache = new MemoryCache("DaypartCache");
         private int _CacheTimeoutInSeconds;
 
-        [ThreadStatic]
-        private static Dictionary<DisplayDaypart, int> _CachedDisplayDayparts;
+        private static ConcurrentDictionary<DisplayDaypart, int> _CachedDisplayDayparts;
 
         private readonly IDisplayDaypartRepository _DisplayDaypartRepository;
 
@@ -80,13 +80,13 @@ namespace Common.Services
         {
             if (_CachedDisplayDayparts == null)
             {
-                _CachedDisplayDayparts = new Dictionary<DisplayDaypart, int>();
+                _CachedDisplayDayparts = new ConcurrentDictionary<DisplayDaypart, int>();
             }
 
             if (!_CachedDisplayDayparts.ContainsKey(displayDaypart))
             {
                 var id = _DisplayDaypartRepository.SaveDaypart(displayDaypart);
-                _CachedDisplayDayparts[displayDaypart] = id;
+                _CachedDisplayDayparts.TryAdd(displayDaypart, id);
                 return id;
             }
             else

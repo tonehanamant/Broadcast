@@ -284,7 +284,7 @@
           "AudienceString": "House Holds",
           "Id": 31
         },
-        "CPM": 6.8181,
+        "CPM": 6.8182,
         "HutPlaybackType": null,
         "Impressions": 88000.0,
         "IsReference": true,
@@ -319,7 +319,7 @@
     ],
     "ManifestRates": [
       {
-        "SpotCost": 599.9928,
+        "SpotCost": 600.0016,
         "SpotLengthId": 1
       }
     ],
@@ -2620,7 +2620,7 @@
           "AudienceString": "House Holds",
           "Id": 31
         },
-        "CPM": 7.3606,
+        "CPM": 7.3607,
         "HutPlaybackType": null,
         "Impressions": 95100.0,
         "IsReference": true,
@@ -2655,7 +2655,7 @@
     ],
     "ManifestRates": [
       {
-        "SpotCost": 699.9930,
+        "SpotCost": 700.0026,
         "SpotLengthId": 1
       }
     ],
@@ -3010,7 +3010,7 @@
           "AudienceString": "House Holds",
           "Id": 31
         },
-        "CPM": 6.8181,
+        "CPM": 6.8182,
         "HutPlaybackType": null,
         "Impressions": 88000.0,
         "IsReference": true,
@@ -3045,7 +3045,7 @@
     ],
     "ManifestRates": [
       {
-        "SpotCost": 599.9928,
+        "SpotCost": 600.0016,
         "SpotLengthId": 1
       }
     ],

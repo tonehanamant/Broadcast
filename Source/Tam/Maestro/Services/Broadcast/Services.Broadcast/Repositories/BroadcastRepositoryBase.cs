@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Configuration;
 using System.Data;
 using System.Data.Entity;
 using System.Data.SqlClient;
@@ -11,8 +10,6 @@ using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
-using Tam.Maestro.Services.Clients;
-using Tam.Maestro.Services.ContractInterfaces;
 
 namespace Common.Services.Repositories
 {
@@ -31,14 +28,13 @@ namespace Common.Services.Repositories
                     return $"{context.Database.Connection.DataSource}|{context.Database.Connection.Database}";
                 });
         }
+
         public new void BulkInsert<T>(DbContext context, List<T> list)
         {
             string name1 = typeof(T).Name;
-            SqlConnection connection = context.Database.Connection as SqlConnection;
-            if (connection == null)
+            if (!(context.Database.Connection is SqlConnection connection))
                 throw new Exception("BulkInsert must only be used with a SqlConnection");
-            SqlTransaction underlyingTransaction = context.Database.CurrentTransaction.UnderlyingTransaction as SqlTransaction;
-            if (underlyingTransaction == null)
+            if (!(context.Database.CurrentTransaction.UnderlyingTransaction is SqlTransaction underlyingTransaction))
                 throw new Exception("BulkInsert must only be used with a SqlTransaction");
             using (SqlBulkCopy sqlBulkCopy = new SqlBulkCopy(connection, SqlBulkCopyOptions.CheckConstraints | SqlBulkCopyOptions.KeepIdentity, underlyingTransaction))
             {
@@ -46,7 +42,7 @@ namespace Common.Services.Repositories
                 sqlBulkCopy.DestinationTableName = name1;
                 sqlBulkCopy.BulkCopyTimeout = 0; // Infinite - the context should have its own timeout
                 DataTable table = new DataTable();
-                PropertyDescriptor[] array = TypeDescriptor.GetProperties(typeof(T)).Cast<PropertyDescriptor>().Where<PropertyDescriptor>((Func<PropertyDescriptor, bool>)(propertyInfo => propertyInfo.PropertyType.Namespace.Equals("System"))).ToArray<PropertyDescriptor>();
+                PropertyDescriptor[] array = TypeDescriptor.GetProperties(typeof(T)).Cast<PropertyDescriptor>().Where(propertyInfo => propertyInfo.PropertyType.Namespace.Equals("System")).ToArray<PropertyDescriptor>();
                 foreach (PropertyDescriptor propertyDescriptor in array)
                 {
                     sqlBulkCopy.ColumnMappings.Add(propertyDescriptor.Name, propertyDescriptor.Name);
@@ -61,7 +57,7 @@ namespace Common.Services.Repositories
                 foreach (T obj in list)
                 {
                     for (int index = 0; index < objArray.Length; ++index)
-                        objArray[index] = array[index].GetValue((object)obj);
+                        objArray[index] = array[index].GetValue(obj);
                     table.Rows.Add(objArray);
                 }
                 sqlBulkCopy.WriteToServer(table);

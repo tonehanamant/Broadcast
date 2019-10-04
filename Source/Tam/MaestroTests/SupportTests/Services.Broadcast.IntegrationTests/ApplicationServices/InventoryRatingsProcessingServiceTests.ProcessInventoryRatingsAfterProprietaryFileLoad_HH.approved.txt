@@ -319,7 +319,7 @@
     ],
     "ManifestRates": [
       {
-        "SpotCost": 204.8613,
+        "SpotCost": 204.8614,
         "SpotLengthId": 1
       }
     ],
@@ -1249,7 +1249,7 @@
     ],
     "ManifestRates": [
       {
-        "SpotCost": 2335.2380,
+        "SpotCost": 2335.2381,
         "SpotLengthId": 1
       }
     ],
@@ -2179,7 +2179,7 @@
     ],
     "ManifestRates": [
       {
-        "SpotCost": 802.6164,
+        "SpotCost": 802.6165,
         "SpotLengthId": 1
       }
     ],
@@ -3153,7 +3153,7 @@
     ],
     "ManifestRates": [
       {
-        "SpotCost": 239.9843,
+        "SpotCost": 239.9844,
         "SpotLengthId": 1
       }
     ],
@@ -5013,7 +5013,7 @@
     ],
     "ManifestRates": [
       {
-        "SpotCost": 204.8613,
+        "SpotCost": 204.8614,
         "SpotLengthId": 1
       }
     ],
@@ -5943,7 +5943,7 @@
     ],
     "ManifestRates": [
       {
-        "SpotCost": 2335.2380,
+        "SpotCost": 2335.2381,
         "SpotLengthId": 1
       }
     ],
@@ -6873,7 +6873,7 @@
     ],
     "ManifestRates": [
       {
-        "SpotCost": 802.6164,
+        "SpotCost": 802.6165,
         "SpotLengthId": 1
       }
     ],
@@ -7847,7 +7847,7 @@
     ],
     "ManifestRates": [
       {
-        "SpotCost": 239.9843,
+        "SpotCost": 239.9844,
         "SpotLengthId": 1
       }
     ],
@@ -9707,7 +9707,7 @@
     ],
     "ManifestRates": [
       {
-        "SpotCost": 204.8613,
+        "SpotCost": 204.8614,
         "SpotLengthId": 2
       }
     ],
@@ -10637,7 +10637,7 @@
     ],
     "ManifestRates": [
       {
-        "SpotCost": 2335.2380,
+        "SpotCost": 2335.2381,
         "SpotLengthId": 2
       }
     ],
@@ -11567,7 +11567,7 @@
     ],
     "ManifestRates": [
       {
-        "SpotCost": 802.6164,
+        "SpotCost": 802.6165,
         "SpotLengthId": 2
       }
     ],
@@ -12541,7 +12541,7 @@
     ],
     "ManifestRates": [
       {
-        "SpotCost": 239.9843,
+        "SpotCost": 239.9844,
         "SpotLengthId": 2
       }
     ],
@@ -14401,7 +14401,7 @@
     ],
     "ManifestRates": [
       {
-        "SpotCost": 204.8613,
+        "SpotCost": 204.8614,
         "SpotLengthId": 1
       }
     ],
@@ -15331,7 +15331,7 @@
     ],
     "ManifestRates": [
       {
-        "SpotCost": 2335.2380,
+        "SpotCost": 2335.2381,
         "SpotLengthId": 1
       }
     ],
@@ -16261,7 +16261,7 @@
     ],
     "ManifestRates": [
       {
-        "SpotCost": 802.6164,
+        "SpotCost": 802.6165,
         "SpotLengthId": 1
       }
     ],
@@ -17235,7 +17235,7 @@
     ],
     "ManifestRates": [
       {
-        "SpotCost": 239.9843,
+        "SpotCost": 239.9844,
         "SpotLengthId": 1
       }
     ],
@@ -19095,7 +19095,7 @@
     ],
     "ManifestRates": [
       {
-        "SpotCost": 204.8613,
+        "SpotCost": 204.8614,
         "SpotLengthId": 1
       }
     ],
@@ -20025,7 +20025,7 @@
     ],
     "ManifestRates": [
       {
-        "SpotCost": 2335.2380,
+        "SpotCost": 2335.2381,
         "SpotLengthId": 1
       }
     ],
@@ -20955,7 +20955,7 @@
     ],
     "ManifestRates": [
       {
-        "SpotCost": 802.6164,
+        "SpotCost": 802.6165,
         "SpotLengthId": 1
       }
     ],
@@ -21929,7 +21929,7 @@
     ],
     "ManifestRates": [
       {
-        "SpotCost": 239.9843,
+        "SpotCost": 239.9844,
         "SpotLengthId": 1
       }
     ],
@@ -23789,7 +23789,7 @@
     ],
     "ManifestRates": [
       {
-        "SpotCost": 204.8613,
+        "SpotCost": 204.8614,
         "SpotLengthId": 1
       }
     ],
@@ -24719,7 +24719,7 @@
     ],
     "ManifestRates": [
       {
-        "SpotCost": 2335.2380,
+        "SpotCost": 2335.2381,
         "SpotLengthId": 1
       }
     ],
@@ -25649,7 +25649,7 @@
     ],
     "ManifestRates": [
       {
-        "SpotCost": 802.6164,
+        "SpotCost": 802.6165,
         "SpotLengthId": 1
       }
     ],
@@ -26623,7 +26623,7 @@
     ],
     "ManifestRates": [
       {
-        "SpotCost": 239.9843,
+        "SpotCost": 239.9844,
         "SpotLengthId": 1
       }
     ],
@@ -28483,7 +28483,7 @@
     ],
     "ManifestRates": [
       {
-        "SpotCost": 204.8613,
+        "SpotCost": 204.8614,
         "SpotLengthId": 3
       }
     ],
@@ -29413,7 +29413,7 @@
     ],
     "ManifestRates": [
       {
-        "SpotCost": 2335.2380,
+        "SpotCost": 2335.2381,
         "SpotLengthId": 3
       }
     ],
@@ -30343,7 +30343,7 @@
     ],
     "ManifestRates": [
       {
-        "SpotCost": 802.6164,
+        "SpotCost": 802.6165,
         "SpotLengthId": 3
       }
     ],
@@ -31317,7 +31317,7 @@
     ],
     "ManifestRates": [
       {
-        "SpotCost": 239.9843,
+        "SpotCost": 239.9844,
         "SpotLengthId": 3
       }
     ],
