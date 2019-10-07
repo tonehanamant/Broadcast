@@ -122,6 +122,8 @@
       "Weeks": []
     }
   ],
+  "EffectiveDate": null,
+  "EndDate": null,
   "FileName": "ProprietaryDataFiles\\Barter_BadFormats_PRI5379.xlsx",
   "FileStatus": 1,
   "Hash": "73-28-0D-ED-A7-61-3E-49-5B-27-89-43-59-2A-AA-96-F9-9A-3B-38",

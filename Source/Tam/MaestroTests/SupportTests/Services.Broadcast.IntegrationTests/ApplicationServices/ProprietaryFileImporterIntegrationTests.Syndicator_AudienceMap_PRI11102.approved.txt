@@ -314,6 +314,8 @@
       "Weeks": []
     }
   ],
+  "EffectiveDate": null,
+  "EndDate": null,
   "FileName": null,
   "FileStatus": 0,
   "Hash": null,

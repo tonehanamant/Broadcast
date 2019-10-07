@@ -1,6 +1,8 @@
 ﻿{
   "CreatedBy": "integration test",
   "DataLines": [],
+  "EffectiveDate": null,
+  "EndDate": null,
   "FileName": "ProprietaryDataFiles\\Barter_BadFormats.xlsx",
   "FileStatus": 1,
   "Hash": "DC-B9-48-FB-C5-D0-8C-BA-87-2B-DC-BA-12-9C-0B-74-A6-71-56-B2",

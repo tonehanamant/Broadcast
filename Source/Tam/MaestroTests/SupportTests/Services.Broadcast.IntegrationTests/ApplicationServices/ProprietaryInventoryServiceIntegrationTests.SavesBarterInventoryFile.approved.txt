@@ -2,6 +2,8 @@
   "CreatedBy": "IntegrationTestUser",
   "CreatedDate": "2019-02-02T00:00:00",
   "DataLines": [],
+  "EffectiveDate": "2019-01-28T00:00:00",
+  "EndDate": "2020-01-05T00:00:00",
   "FileName": "ProprietaryDataFiles\\Barter_ValidFormat.xlsx",
   "FileStatus": 2,
   "Hash": "71-81-B1-20-E0-9B-97-17-F4-A0-FE-98-E9-9E-63-FF-38-C9-73-8F",

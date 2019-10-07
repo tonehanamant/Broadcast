@@ -128,32 +128,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
 
         }
 
-        [Ignore]
-        [Test]
-        [ExpectedException(typeof(BroadcastInventoryFileValidationException), ExpectedMessage = "Invalid rates file dates", MatchType = MessageMatch.Contains)]
-        public void ValidateInventoryFileWithInvalidDates()
-        {
-            var _mockSpotLengthRepository = new Mock<ISpotLengthRepository>();
-            _mockSpotLengthRepository.Setup(a => a.GetSpotLengthAndIds())
-                .Returns(new Dictionary<int, int>());
-
-            var _mockDataRepositoryFactory = new Mock<IDataRepositoryFactory>();
-            _mockDataRepositoryFactory.Setup(a => a.GetDataRepository<ISpotLengthRepository>())
-                .Returns(_mockSpotLengthRepository.Object);
-
-            var _ratesFileValidator = new InventoryFileValidator(null);
-
-            var incomingInventoryFile = new InventoryFile()
-            {
-                StartDate = DateTime.Now.AddDays(6),
-                EndDate = DateTime.Now
-            };
-            var fileProblems = new List<InventoryFileProblem>();
-            var validationResult = _ratesFileValidator.ValidateInventoryFile(incomingInventoryFile);
-            fileProblems.AddRange(validationResult);
-
-        }
-
         [Test]
         //[ExpectedException(typeof(BroadcastInventoryFileValidationException), ExpectedMessage = "programs with zero or null rates", MatchType = MessageMatch.Contains)]
         public void ValidateInventoryFileWithInvalidRates()

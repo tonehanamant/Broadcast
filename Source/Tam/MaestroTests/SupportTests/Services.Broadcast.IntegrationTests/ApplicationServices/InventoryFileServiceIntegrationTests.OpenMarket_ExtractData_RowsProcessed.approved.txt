@@ -1,5 +1,6 @@
 ﻿{
   "CreatedBy": "integration test",
+  "EffectiveDate": "2018-11-05T00:00:00",
   "EndDate": "2018-12-30T00:00:00",
   "FileName": "Fresno_4Q18_ValidFile.xml",
   "FileStatus": 1,
@@ -12404,7 +12405,6 @@
     "Name": "Open Market"
   },
   "RowsProcessed": 42,
-  "StartDate": "2018-11-07T00:00:00",
   "StationContacts": [
     {
       "Company": "KMPH",

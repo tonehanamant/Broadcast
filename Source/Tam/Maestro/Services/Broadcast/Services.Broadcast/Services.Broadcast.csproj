@@ -235,6 +235,7 @@
     <Compile Include="ApplicationServices\AgencyService.cs" />
     <Compile Include="ApplicationServices\CampaignAggregationJobTrigger.cs" />
     <Compile Include="ApplicationServices\CampaignAggregator.cs" />
+    <Compile Include="Converters\RateImport\BaseInventoryFileImporter.cs" />
     <Compile Include="Entities\Campaign\CampaignWithSummary.cs" />
     <Compile Include="Cache\TrafficApiCache.cs" />
     <Compile Include="Entities\CampaignDefaultsDto.cs" />

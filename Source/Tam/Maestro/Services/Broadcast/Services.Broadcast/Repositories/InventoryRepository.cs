@@ -1238,13 +1238,14 @@ namespace Services.Broadcast.Repositories
                 context =>
                 {
                     var files = context.inventory_files
-                             .Include("inventory_file_proprietary_header.daypart_codes")
-                             .Include("inventory_file_proprietary_header.share_media_months")
-                             .Include("inventory_file_proprietary_header.hut_media_months")
-                             .Include("station_inventory_manifest.station_inventory_manifest_weeks")
-                             .Include("station_inventory_manifest.station_inventory_manifest_dayparts.daypart_codes")
-                             .Include("inventory_sources")
-                             .Include(f => f.inventory_file_ratings_jobs)
+                             .Include(x => x.inventory_file_proprietary_header)
+                             .Include(x => x.inventory_file_proprietary_header.Select(h => h.daypart_codes))
+                             .Include(x => x.inventory_file_proprietary_header.Select(h => h.share_media_months))
+                             .Include(x => x.inventory_file_proprietary_header.Select(h => h.hut_media_months))
+                             .Include(x => x.station_inventory_manifest.Select(h => h.station_inventory_manifest_weeks))
+                             .Include(x => x.station_inventory_manifest.Select(h => h.station_inventory_manifest_dayparts.Select(d => d.daypart_codes)))
+                             .Include(x => x.inventory_sources)
+                             .Include(x => x.inventory_file_ratings_jobs)
                              .Where(x => x.inventory_source_id == inventorySourceId)
                              .OrderByDescending(x => x.id);
 
@@ -1258,12 +1259,16 @@ namespace Services.Broadcast.Repositories
                             UploadDateTime = file.created_date,
                             Username = file.created_by,
                             Filename = file.name,
-                            Rows = file.rows_processed ?? 0
+                            Rows = file.rows_processed ?? 0,
+                            EffectiveDate = file.effective_date,
+                            EndDate = file.end_date,
+                            FileLoadStatus = (FileStatusEnum)file.status
                         };
 
                         if (file.inventory_file_proprietary_header.Any()) //Proprietary Inventory file
                         {
-                            var header = file.inventory_file_proprietary_header.SingleOrDefault();
+                            var header = file.inventory_file_proprietary_header.Single();
+
                             if (file.inventory_sources.inventory_source_type == (int)InventorySourceTypeEnum.Diginet)
                             {
                                 fileHistory.DaypartCodes = _GetDistinctDaypartCodesFromManifests(file.station_inventory_manifest);
@@ -1272,9 +1277,6 @@ namespace Services.Broadcast.Repositories
                             {
                                 fileHistory.DaypartCodes = new List<String>() { header.daypart_codes.code };
                             }
-
-                            fileHistory.EffectiveDate = header.effective_date;
-                            fileHistory.EndDate = header.end_date;
 
                             if (header.hut_media_months != null)
                             {
@@ -1295,15 +1297,8 @@ namespace Services.Broadcast.Repositories
                                     Month = header.share_media_months.month
                                 };
                             }
-
-                        }
-                        else if (file.station_inventory_manifest.Any(m => m.station_inventory_manifest_weeks.Any())) //Open Market Inventory file
-                        {
-                            fileHistory.EffectiveDate = file.station_inventory_manifest.SelectMany(m => m.station_inventory_manifest_weeks.Select(w => w.start_date)).Min();
-                            fileHistory.EndDate = file.station_inventory_manifest.SelectMany(m => m.station_inventory_manifest_weeks.Select(w => w.end_date)).Max();
                         }
 
-                        fileHistory.FileLoadStatus = (FileStatusEnum)file.status;
                         if (file.inventory_file_ratings_jobs.Any())
                         {
                             var fileJob = file.inventory_file_ratings_jobs.OrderBy(j => j.id).Last();
@@ -1311,11 +1306,9 @@ namespace Services.Broadcast.Repositories
                         }
 
                         result.Add(fileHistory);
-
                     }
 
                     return result;
-
                 });
         }
 

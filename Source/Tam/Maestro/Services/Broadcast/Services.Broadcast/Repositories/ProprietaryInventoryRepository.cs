@@ -58,6 +58,8 @@ namespace Services.Broadcast.Repositories
                     CreatedBy = file.created_by,
                     CreatedDate = file.created_date,
                     RowsProcessed = file.rows_processed,
+                    EffectiveDate = file.effective_date,
+                    EndDate = file.end_date,
                     InventorySource = new InventorySource
                     {
                         Id = file.inventory_sources.id,
@@ -158,6 +160,8 @@ namespace Services.Broadcast.Repositories
 
                 inventoryFile.status = (byte)proprietaryFile.FileStatus;
                 inventoryFile.rows_processed = proprietaryFile.RowsProcessed;
+                inventoryFile.effective_date = proprietaryFile.EffectiveDate;
+                inventoryFile.end_date = proprietaryFile.EndDate;
                 inventoryFile.inventory_file_proprietary_header = new List<inventory_file_proprietary_header>{
                             new inventory_file_proprietary_header
                             {

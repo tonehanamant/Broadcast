@@ -100,15 +100,17 @@ namespace Services.Broadcast.Repositories
             _InReadUncommitedTransaction(
                 context =>
                 {
-                    file =
-                        context.inventory_files.Where(rf => rf.id == inventoryFile.Id)
-                            .Single(string.Format("Could not find existing rates file with id={0}", inventoryFile.Id));
+                    file = context.inventory_files
+                        .Where(rf => rf.id == inventoryFile.Id)
+                        .Single($"Could not find existing rates file with id={inventoryFile.Id}");
 
                     file.status = (byte)inventoryFile.FileStatus;
                     file.identifier = inventoryFile.UniqueIdentifier;
                     file.rows_processed = inventoryFile.RowsProcessed;
-                    context.SaveChanges();
+                    file.effective_date = inventoryFile.EffectiveDate;
+                    file.end_date = inventoryFile.EndDate;
 
+                    context.SaveChanges();
                 });
         }
 

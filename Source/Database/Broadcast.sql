@@ -121,6 +121,18 @@ SET active_days_label = 'M-Su'
 WHERE number_active_days = 7
 /**************************************** END - PRI-15494 *****************************************************/
 
+/*************************************** START - PRI-16652 ****************************************************/
+IF NOT EXISTS(SELECT 1 FROM sys.COLUMNS WHERE object_id = OBJECT_ID('inventory_files') AND name = 'effective_date')
+BEGIN
+	ALTER TABLE inventory_files ADD effective_date datetime2 NULL
+END
+
+IF NOT EXISTS(SELECT 1 FROM sys.COLUMNS WHERE object_id = OBJECT_ID('inventory_files') AND name = 'end_date')
+BEGIN
+	ALTER TABLE inventory_files ADD end_date datetime2 NULL
+END
+/**************************************** END - PRI-16652 *****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

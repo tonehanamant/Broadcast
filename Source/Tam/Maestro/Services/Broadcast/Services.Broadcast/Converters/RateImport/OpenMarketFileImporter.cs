@@ -29,7 +29,7 @@ using Services.Broadcast.BusinessEngines;
 
 namespace Services.Broadcast.Converters.RateImport
 {
-    public interface IOpenMarketFileImporter : IApplicationService
+    public interface IOpenMarketFileImporter : IApplicationService, IBaseInventoryFileImporter
     {
         void ExtractFileData(Stream rawStream, InventoryFile inventoryFile);
         void CheckFileHash();
@@ -40,7 +40,7 @@ namespace Services.Broadcast.Converters.RateImport
         List<InventoryFileProblem> FileProblems { get; set; }
     }
 
-    public class OpenMarketFileImporter : IOpenMarketFileImporter
+    public class OpenMarketFileImporter : BaseInventoryFileImporter, IOpenMarketFileImporter
     {
         private const int SecondsPerMinute = 60;
 
@@ -118,14 +118,13 @@ namespace Services.Broadcast.Converters.RateImport
             var proposal = message.Proposal;
 
             inventoryFile.UniqueIdentifier = proposal.uniqueIdentifier;
-            inventoryFile.StartDate = proposal.startDate;
-            inventoryFile.EndDate = proposal.endDate;
 
             rowsProcessed = _PopulateStationProgramList(message.Proposal, inventoryFile);
 
             if (inventoryFile.ValidationProblems.Any()) return;
 
             inventoryFile.StationContacts = _ExtractContactData(message);
+            PopulateInventoryFileDateRange(inventoryFile);
         }
 
         private int _PopulateStationProgramList(AAAAMessageProposal proposal, InventoryFile inventoryFile)

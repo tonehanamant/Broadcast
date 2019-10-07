@@ -34,6 +34,8 @@ namespace EntityFrameworkMapping.Broadcast
         public byte status { get; set; }
         public int inventory_source_id { get; set; }
         public Nullable<int> rows_processed { get; set; }
+        public Nullable<System.DateTime> effective_date { get; set; }
+        public Nullable<System.DateTime> end_date { get; set; }
     
         public virtual inventory_sources inventory_sources { get; set; }
         public virtual ICollection<station_contacts> station_contacts { get; set; }

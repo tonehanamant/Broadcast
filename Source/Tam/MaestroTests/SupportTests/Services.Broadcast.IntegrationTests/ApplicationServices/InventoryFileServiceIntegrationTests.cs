@@ -12,6 +12,7 @@ using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.InventorySummary;
 using Services.Broadcast.Entities.StationInventory;
 using Services.Broadcast.Exceptions;
+using Services.Broadcast.IntegrationTests.Helpers;
 using Services.Broadcast.IntegrationTests.Stubbs;
 using Services.Broadcast.Repositories;
 using System;
@@ -36,6 +37,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         private IInventoryRepository _InventoryRepository;
         private IInventoryFileRepository _InventoryFileRepository;
         private static InventorySource _openMarketInventorySource;
+        private InventoryFileTestHelper _InventoryFileTestHelper;
 
         [TestFixtureSetUp]
         public void SetUp()
@@ -47,6 +49,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             _StationInventoryGroupService = IntegrationTestApplicationServiceFactory.GetApplicationService<IStationInventoryGroupService>();
             _InventoryFileRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryFileRepository>();
             _openMarketInventorySource = _InventoryRepository.GetInventorySourceByName("Open Market");
+            _InventoryFileTestHelper = new InventoryFileTestHelper();
         }
 
         [Test]
@@ -1458,39 +1461,77 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void CanGetOpenMarketUploadHistory()
         {
-            var source = 1; //OpenMarket
-            var result = _InventoryService.GetInventoryUploadHistory(source);
+            var inventorySourceId = 1; //OpenMarket
 
-            var jsonResolver = new IgnorableSerializerContractResolver();
-            jsonResolver.Ignore(typeof(InventoryUploadHistoryDto), "FileId");
-
-            var serializer = new JsonSerializerSettings()
+            using (new TransactionScopeWrapper())
             {
-                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                ContractResolver = jsonResolver
-            };
+                _InventoryFileTestHelper.UploadOpenMarketInventoryFile("Open Market projected imps.xml");
 
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, serializer));
+                var result = _InventoryService.GetInventoryUploadHistory(inventorySourceId);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(InventoryUploadHistoryDto), "FileId");
+
+                var serializer = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, serializer));
+            }
         }
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void CanGetProprietaryUploadHistory()
         {
-            var source = 4; 
-            var result = _InventoryService.GetInventoryUploadHistory(source);
+            var inventorySourceId = 4; // TTWN
 
-            var jsonResolver = new IgnorableSerializerContractResolver();
-            jsonResolver.Ignore(typeof(InventoryUploadHistoryDto), "FileId");
-
-            var serializer = new JsonSerializerSettings()
+            using (new TransactionScopeWrapper())
             {
-                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                ContractResolver = jsonResolver
-            };
+                _InventoryFileTestHelper.UploadProprietaryInventoryFile("Barter_Q1_2025.xlsx", processInventoryRatings: true);
 
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, serializer));
+                var result = _InventoryService.GetInventoryUploadHistory(inventorySourceId);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(InventoryUploadHistoryDto), "FileId");
+
+                var serializer = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, serializer));
+            }
         }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void CanGetDiginetUploadHistory()
+        {
+            var inventorySourceId = 20; // COZI
+
+            using (new TransactionScopeWrapper())
+            {
+                _InventoryFileTestHelper.UploadProprietaryInventoryFile("Diginet_ValidFile3.xlsx", processInventoryRatings: true);
+
+                var result = _InventoryService.GetInventoryUploadHistory(inventorySourceId);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(InventoryUploadHistoryDto), "FileId");
+
+                var serializer = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, serializer));
+            }
+        }
+
         private InventoryFileSaveRequest _GetInventoryFileSaveRequest(string filePath)
         {
             return new InventoryFileSaveRequest

@@ -1,6 +1,8 @@
 ﻿{
   "CreatedBy": "IntegrationTestUser",
   "DataLines": [],
+  "EffectiveDate": "2019-02-04T00:00:00",
+  "EndDate": "2019-03-03T00:00:00",
   "FileName": "ProprietaryDataFiles\\OAndO_ValidFile1.xlsx",
   "FileStatus": 2,
   "Hash": "05-15-52-B5-96-DE-5B-0D-C8-A7-C9-AA-E3-4D-B5-7C-B9-42-9F-EF",

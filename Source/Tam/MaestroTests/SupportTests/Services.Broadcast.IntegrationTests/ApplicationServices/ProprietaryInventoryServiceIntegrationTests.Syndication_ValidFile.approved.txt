@@ -1,6 +1,8 @@
 ﻿{
   "CreatedBy": "IntegrationTestUser",
   "DataLines": [],
+  "EffectiveDate": "2019-10-28T00:00:00",
+  "EndDate": "2020-01-05T00:00:00",
   "FileName": "ProprietaryDataFiles\\Syndication_ValidFile1.xlsx",
   "FileStatus": 2,
   "Hash": "50-2F-F3-60-91-1C-CE-E7-A2-63-A5-4E-96-E6-8A-9A-D4-EA-83-A6",

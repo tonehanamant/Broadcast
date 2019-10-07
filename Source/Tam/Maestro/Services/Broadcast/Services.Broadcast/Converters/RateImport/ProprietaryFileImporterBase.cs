@@ -19,7 +19,7 @@ using Services.Broadcast.Cache;
 
 namespace Services.Broadcast.Converters.RateImport
 {
-    public interface IProprietaryFileImporter
+    public interface IProprietaryFileImporter : IBaseInventoryFileImporter
     {
         /// <summary>
         /// Check if the file was already processed by using file hash
@@ -54,7 +54,7 @@ namespace Services.Broadcast.Converters.RateImport
         void PopulateManifests(ProprietaryInventoryFile proprietaryFile, List<DisplayBroadcastStation> stations);
     }
 
-    public abstract class ProprietaryFileImporterBase : IProprietaryFileImporter
+    public abstract class ProprietaryFileImporterBase : BaseInventoryFileImporter, IProprietaryFileImporter
     {
         protected const string CPM_FORMAT = "##.##";
         protected readonly string[] BOOK_DATE_FORMATS = new string[] { "MMM yy", "MMM-yy", "MMM/yy", "yy-MMM", "yy/MMM", "MMM yyyy" };
@@ -171,6 +171,6 @@ namespace Services.Broadcast.Converters.RateImport
         /// <param name="proprietaryFile">ProprietaryInventoryFile to be loaded</param>
         public abstract void LoadAndValidateDataLines(ExcelWorksheet worksheet, ProprietaryInventoryFile proprietaryFile);
 
-        public abstract void PopulateManifests(ProprietaryInventoryFile proprietaryFile, List<DisplayBroadcastStation> stations);                
+        public abstract void PopulateManifests(ProprietaryInventoryFile proprietaryFile, List<DisplayBroadcastStation> stations);
     }
 }

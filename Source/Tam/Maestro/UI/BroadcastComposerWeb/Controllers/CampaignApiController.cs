@@ -82,6 +82,7 @@ namespace BroadcastComposerWeb.Controllers
                 _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ICampaignService>()
                 .SaveCampaign(campaign, FullName, DateTime.Now));
         }
+
         /// <summary>
         /// Gets the quarters.
         /// </summary>

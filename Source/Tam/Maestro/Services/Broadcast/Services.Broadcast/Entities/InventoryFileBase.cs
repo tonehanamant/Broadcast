@@ -19,6 +19,16 @@ namespace Services.Broadcast.Entities
         public List<string> ValidationProblems { get; set; } = new List<string>();
         public int? RowsProcessed { get; set; }
 
+        /// <summary>
+        /// The start date of the inventory uploaded from the file
+        /// </summary>
+        public DateTime? EffectiveDate { get; set; }
+
+        /// <summary>
+        /// The end date of the inventory uploaded from the file
+        /// </summary>
+        public DateTime? EndDate { get; set; }
+
         public List<StationInventoryGroup> InventoryGroups { get; set; } = new List<StationInventoryGroup>();
         public List<StationInventoryManifest> InventoryManifests { get; set; } = new List<StationInventoryManifest>();
 

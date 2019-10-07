@@ -388,6 +388,8 @@
           <Property Name="status" Type="tinyint" Nullable="false" />
           <Property Name="inventory_source_id" Type="int" Nullable="false" />
           <Property Name="rows_processed" Type="int" />
+          <Property Name="effective_date" Type="datetime2" Precision="7" />
+          <Property Name="end_date" Type="datetime2" Precision="7" />
         </EntityType>
         <EntityType Name="inventory_source_logos">
           <Key>
@@ -9353,6 +9355,8 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="inventory_file_ratings_jobs" Relationship="BroadcastModel.FK_inventory_file_ratings_jobs_inventory_files" FromRole="inventory_files" ToRole="inventory_file_ratings_jobs" />
           <NavigationProperty Name="inventory_file_proprietary_header" Relationship="BroadcastModel.FK_inventory_file_proprietary_header_inventory_files" FromRole="inventory_files" ToRole="inventory_file_proprietary_header" />
           <Property Name="rows_processed" Type="Int32" />
+          <Property Name="effective_date" Type="DateTime" Precision="7" />
+          <Property Name="end_date" Type="DateTime" Precision="7" />
         </EntityType>
         <Association Name="FK_inventory_files_inventory_source">
           <End Type="BroadcastModel.inventory_sources" Role="inventory_sources" Multiplicity="1" />
@@ -12095,6 +12099,8 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="inventory_files">
             <EntityTypeMapping TypeName="BroadcastModel.inventory_files">
               <MappingFragment StoreEntitySet="inventory_files">
+                <ScalarProperty Name="end_date" ColumnName="end_date" />
+                <ScalarProperty Name="effective_date" ColumnName="effective_date" />
                 <ScalarProperty Name="rows_processed" ColumnName="rows_processed" />
                 <ScalarProperty Name="inventory_source_id" ColumnName="inventory_source_id" />
                 <ScalarProperty Name="status" ColumnName="status" />

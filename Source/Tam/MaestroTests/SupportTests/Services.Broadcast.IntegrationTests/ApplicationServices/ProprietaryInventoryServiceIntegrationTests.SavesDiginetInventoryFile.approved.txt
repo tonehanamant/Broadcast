@@ -1,6 +1,8 @@
 ﻿{
   "CreatedBy": "IntegrationTestUser",
   "DataLines": [],
+  "EffectiveDate": null,
+  "EndDate": null,
   "FileName": "ProprietaryDataFiles\\Diginet_ValidFile1.xlsx",
   "FileStatus": 2,
   "Hash": "98-7E-58-C8-CC-12-04-D0-F8-61-7E-DD-D5-C7-6A-E0-FD-8E-1F-4C",
