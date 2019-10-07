@@ -1,13 +1,16 @@
 ﻿{
   "AudienceId": 31,
   "AudienceType": 1,
-  "CampaignGoalPercent": 80.0,
+  "BlackoutMarkets": [],
+  "CoverageGoalPercent": 80.0,
   "Currency": 1,
   "DaypartTypeEnum": 2,
-  "EnableHiatus": false,
   "Equivalized": true,
-  "PlanGoalBreakdownType": 1,
-  "PlanStatus": 1,
+  "FlightHiatusDays": [],
+  "GoalBreakdownType": 1,
+  "Name": "",
   "PostingType": 2,
-  "SpotLengthId": 1
+  "SpotLengthId": 1,
+  "Status": 1,
+  "WeeklyBreakdownWeeks": []
 }

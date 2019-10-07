@@ -108,7 +108,7 @@ namespace BroadcastComposerWeb.Controllers
         /// <summary>
         /// Gets the plan defaults.
         /// </summary>
-        /// <returns>Gets the default values for creating a campaign in the form of <see cref="CampaignDefaultsDto"/></returns>
+        /// <returns>Gets the default values for creating a plan in the form of <see cref="PlanDefaultsDto"/></returns>
         [HttpGet]
         [Route("Defaults")]
         public BaseResponse<PlanDefaultsDto> GetPlanDefaults()

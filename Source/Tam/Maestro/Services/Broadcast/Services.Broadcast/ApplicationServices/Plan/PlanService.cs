@@ -430,17 +430,20 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
             return new PlanDefaultsDto
             {
+                Name = string.Empty,
                 AudienceId = householdAudienceId.Id,
                 SpotLengthId = defaultSpotLengthId,
                 Equivalized = true,
-                EnableHiatus = false,
                 AudienceType = AudienceTypeEnum.Nielsen,
                 PostingType = PostingTypeEnum.NTI,
-                PlanStatus = PlanStatusEnum.Working,
+                Status = PlanStatusEnum.Working,
                 Currency = PlanCurrenciesEnum.Impressions,
-                PlanGoalBreakdownType = PlanGoalBreakdownTypeEnum.Even,
-                CampaignGoalPercent = 80d,
-                DaypartTypeEnum = DaypartTypeEnum.EntertainmentNonNews
+                GoalBreakdownType = PlanGoalBreakdownTypeEnum.Even,
+                CoverageGoalPercent = 80d,
+                DaypartTypeEnum = DaypartTypeEnum.EntertainmentNonNews,
+                BlackoutMarkets = new List<PlanBlackoutMarketDto>(),
+                FlightHiatusDays = new List<DateTime>(),
+                WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>()
             };
         }
 
