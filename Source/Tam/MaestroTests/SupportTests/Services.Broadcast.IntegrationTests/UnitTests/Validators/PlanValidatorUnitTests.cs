@@ -307,25 +307,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
         }
 
         [Test]
-        public void ValidatePlan_DaypartStartLaterThanEnd()
-        {
-            _ConfigureSpotLenghtEngineMockToReturnTrue();
-
-            var plan = _GetPlan();
-            plan.Dayparts = new List<PlanDaypartDto>
-            {
-                new PlanDaypartDto
-                {
-                    StartTimeSeconds = 50,
-                    EndTimeSeconds = 10
-                }
-            };
-
-            Assert.That(() => _planValidator.ValidatePlan(plan),
-                Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid daypart times."));
-        }
-
-        [Test]
         public void ValidatePlan_DayPartEndLargerThanSecondsMaximum()
         {
             _ConfigureSpotLenghtEngineMockToReturnTrue();

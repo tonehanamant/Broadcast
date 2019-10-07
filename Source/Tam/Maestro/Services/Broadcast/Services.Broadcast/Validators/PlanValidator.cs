@@ -230,11 +230,6 @@ namespace Services.Broadcast.Validators
                     throw new Exception(INVALID_DAYPART_TIMES);
                 }
 
-                if (daypart.StartTimeSeconds > daypart.EndTimeSeconds)
-                {
-                    throw new Exception(INVALID_DAYPART_TIMES);
-                }
-
                 const double minWeightingGoalPercent = 0.1;
                 const double maxWeightingGoalPercent = 100.0;
                 if (daypart.WeightingGoalPercent.HasValue &&
