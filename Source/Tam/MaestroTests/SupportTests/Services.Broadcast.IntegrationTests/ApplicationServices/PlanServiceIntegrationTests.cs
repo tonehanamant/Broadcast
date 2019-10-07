@@ -117,7 +117,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 testPlan.FlightHiatusDays = new List<DateTime>
                 {
                     new DateTime(2019, 1, 28),
-                    new DateTime(2019, 6, 4)
+                    new DateTime(2019, 1, 4)
                 };
 
                 var modifedPlanId = _PlanService.SavePlan(testPlan, "integration_test", new System.DateTime(2019, 01, 15));
@@ -696,7 +696,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 testPlan.FlightHiatusDays = new List<DateTime>
                 {
                     new DateTime(2019, 1, 28),
-                    new DateTime(2019, 6, 4)
+                    new DateTime(2019, 1, 4)
                 };
 
                 var modifedPlanId = _PlanService.SavePlan(testPlan, "integration_test", new System.DateTime(2019, 01, 15));
@@ -961,28 +961,28 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Name = "New Plan",
                 ProductId = 1,
                 SpotLengthId = 1,
-                Status = Entities.Enums.PlanStatusEnum.Working,
+                Status = PlanStatusEnum.Working,
                 FlightStartDate = new DateTime(2019, 1, 1),
-                FlightEndDate = new DateTime(2019, 7, 31),
+                FlightEndDate = new DateTime(2019, 1, 31),
                 FlightNotes = "Sample notes",
                 FlightHiatusDays = new List<DateTime>
                 {
                     new DateTime(2019,1,20),
-                    new DateTime(2019,4,15)
+                    new DateTime(2019,1,24)
                 },
                 AudienceId = 31,        //HH
-                AudienceType = Entities.Enums.AudienceTypeEnum.Nielsen,
+                AudienceType = AudienceTypeEnum.Nielsen,
                 HUTBookId = 437,
-                PostingType = Entities.Enums.PostingTypeEnum.NTI,
+                PostingType = PostingTypeEnum.NTI,
                 ShareBookId = 437,
                 Budget = 100m,
                 CPM = 12m,
                 DeliveryImpressions = 100d,
                 CPP = 12m,
-                Currency = Entities.Enums.PlanCurrenciesEnum.Impressions,
+                Currency = PlanCurrenciesEnum.Impressions,
                 DeliveryRatingPoints = 100d,
                 CoverageGoalPercent = 80.5,
-                GoalBreakdownType = Entities.Enums.PlanGoalBreakdownTypeEnum.Even,
+                GoalBreakdownType = PlanGoalBreakdownTypeEnum.Even,
                 AvailableMarkets = new List<PlanAvailableMarketDto>
                 {
                     new PlanAvailableMarketDto { MarketCode = 100, MarketCoverageFileId = 1, PercentageOfUS = 48, Rank = 1, ShareOfVoicePercent = 22.2, Market = "Portland-Auburn"},
@@ -1001,7 +1001,40 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     new PlanDaypartDto{ DaypartCodeId = 11, DaypartTypeId = DaypartTypeEnum.News, StartTimeSeconds = 1500, EndTimeSeconds = 2788, WeightingGoalPercent = 33.2 },
                     new PlanDaypartDto{ DaypartCodeId = 3, DaypartTypeId = DaypartTypeEnum.ROS, StartTimeSeconds = 1550, EndTimeSeconds = 3000, WeightingGoalPercent = 25 }
                 },
-                Vpvh = 0.012
+                Vpvh = 0.012,
+                WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>
+                {
+                    new WeeklyBreakdownWeek
+                    {
+                        WeekNumber = 1, MediaWeekId = 784,
+                        StartDate = new DateTime(2018,12,31), EndDate = new DateTime(2019,01,06),
+                        NumberOfActiveDays = 6, ActiveDays = "Tu-Su", Impressions = 20, ShareOfVoice = 20
+                    },
+                    new WeeklyBreakdownWeek
+                    {
+                        WeekNumber = 2, MediaWeekId = 785,
+                        StartDate = new DateTime(2019,01,07), EndDate = new DateTime(2019,01,13),
+                        NumberOfActiveDays = 7, ActiveDays = "M-Su", Impressions = 20, ShareOfVoice = 20
+                    },
+                    new WeeklyBreakdownWeek
+                    {
+                        WeekNumber = 3, MediaWeekId = 786,
+                        StartDate = new DateTime(2019,01,14), EndDate = new DateTime(2019,01,20),
+                        NumberOfActiveDays = 6, ActiveDays = "M-Sa", Impressions = 20, ShareOfVoice = 20
+                    },
+                    new WeeklyBreakdownWeek
+                    {
+                        WeekNumber = 4, MediaWeekId = 787,
+                        StartDate = new DateTime(2019,01,21), EndDate = new DateTime(2019,01,27),
+                        NumberOfActiveDays = 6, ActiveDays = "M-W,F-Su", Impressions = 20, ShareOfVoice = 20
+                    },
+                    new WeeklyBreakdownWeek
+                    {
+                        WeekNumber = 5, MediaWeekId = 788,
+                        StartDate = new DateTime(2019,01,28), EndDate = new DateTime(2019,02,03),
+                        NumberOfActiveDays = 4, ActiveDays = "M-Th", Impressions = 20, ShareOfVoice = 20
+                    }
+                }
             };
         }
 

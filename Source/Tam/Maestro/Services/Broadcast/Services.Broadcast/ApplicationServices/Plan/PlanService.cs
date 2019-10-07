@@ -156,13 +156,18 @@ namespace Services.Broadcast.ApplicationServices.Plan
             PlanDto plan = _PlanRepository.GetPlan(planId);
             _SetWeekNumber(plan.WeeklyBreakdownWeeks);
             DaypartTimeHelper.AddOneSecondToEndTime(plan.Dayparts);
-
-            plan.TotalActiveDays = plan.WeeklyBreakdownWeeks.Select(x => x.NumberOfActiveDays).Sum();
-            plan.TotalShareOfVoice = plan.WeeklyBreakdownWeeks.Select(x => x.ShareOfVoice).Sum();
+            _SetPlanTotals(plan);
 
             //format delivery impressions
             plan.DeliveryImpressions = plan.DeliveryImpressions / 1000;
             return plan;
+        }
+
+        private static void _SetPlanTotals(PlanDto plan)
+        {
+            plan.TotalActiveDays = plan.WeeklyBreakdownWeeks.Select(x => x.NumberOfActiveDays).Sum();
+            plan.TotalHiatusDays = plan.FlightHiatusDays.Count();
+            plan.TotalShareOfVoice = plan.WeeklyBreakdownWeeks.Select(x => x.ShareOfVoice).Sum();
         }
 
         ///<inheritdoc/>

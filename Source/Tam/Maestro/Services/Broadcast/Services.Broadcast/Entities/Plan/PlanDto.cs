@@ -80,7 +80,7 @@ namespace Services.Broadcast.Entities.Plan
         /// The flight end date.
         /// </value>
         public DateTime? FlightEndDate { get; set; }
-
+        
         /// <summary>
         /// Gets or sets the flight notes.
         /// </summary>
@@ -96,6 +96,22 @@ namespace Services.Broadcast.Entities.Plan
         /// The flight hiatus days.
         /// </value>
         public List<DateTime> FlightHiatusDays { get; set; } = new List<DateTime>();
+
+        /// <summary>
+        /// The total number of Hiatus days in the flight.
+        /// </summary>
+        /// <value>
+        /// The total number of Hiatus days in the flight.
+        /// </value>
+        public int? TotalHiatusDays { get; set; }
+
+        /// <summary>
+        /// The total number of Active days in the flight.
+        /// </summary>
+        /// <value>
+        /// The total number of Active days in the flight.
+        /// </value>
+        public int? TotalActiveDays { get; set; }
 
         /// <summary>
         /// Gets or sets the audience identifier.
@@ -240,15 +256,7 @@ namespace Services.Broadcast.Entities.Plan
         /// The weekly breakdown weeks.
         /// </value>
         public List<WeeklyBreakdownWeek> WeeklyBreakdownWeeks { get; set; } = new List<WeeklyBreakdownWeek>();
-
-        /// <summary>
-        /// Gets or sets the total active days.
-        /// </summary>
-        /// <value>
-        /// The total active days.
-        /// </value>
-        public int TotalActiveDays { get; set; }
-
+        
         /// <summary>
         /// Gets or sets the total share of voice.
         /// </summary>
