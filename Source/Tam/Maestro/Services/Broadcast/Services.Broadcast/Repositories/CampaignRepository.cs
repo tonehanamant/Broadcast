@@ -333,16 +333,22 @@ namespace Services.Broadcast.Repositories
                          && s.flight_end_Date >= startDate));
                     }
                     var campaignStatuses = campaignSummaries
-                     .Select(s => (PlanStatusEnum)s.campaign_status.Value)
-                     .Distinct().ToList();
+                        .Select(s => s.campaign_status.HasValue ? (PlanStatusEnum)s.campaign_status.Value : PlanStatusEnum.Working)
+                        .Distinct().ToList();
 
                     if (!campaignStatuses.Contains(PlanStatusEnum.Working))
                     {
-                        var campaignsWithoutValidPlans = _GetFilteredCampaignsWithoutValidPlans(startDate, endDate, null, context);
-                        if (campaignsWithoutValidPlans.Any())
+                        var campaignsWithoutSummary = context.campaigns.Where(c => !c.campaign_summaries.Any());
+
+                        if (startDate.HasValue && endDate.HasValue)
                         {
-                            campaignStatuses.Add(PlanStatusEnum.Working);
+                            campaignsWithoutSummary = campaignsWithoutSummary.Where(c =>
+                            c.created_date >= startDate.Value &&
+                            c.created_date <= endDate);
                         }
+
+                        if (campaignsWithoutSummary.Any())
+                            campaignStatuses.Add(PlanStatusEnum.Working);
                     }
 
                     return campaignStatuses;

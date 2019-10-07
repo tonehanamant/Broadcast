@@ -2,5 +2,9 @@
   {
     "Display": "Working",
     "Id": 1
+  },
+  {
+    "Display": "Contracted",
+    "Id": 4
   }
 ]

@@ -327,7 +327,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var campaigns = _CampaignService.GetStatuses(3, 2019);
+                var campaign = _GetValidCampaignForSave();
+                var campaignId = _CampaignService.SaveCampaign(campaign, IntegrationTestUser, CreatedDate);
+
+                var campaigns = _CampaignService.GetStatuses(2, 2019);
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(campaigns));
             }
         }
@@ -339,6 +342,24 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 var campaigns = _CampaignService.GetStatuses(null,null);
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(campaigns));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetStatuses_WithCampaignStatusNull()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var campaign = _GetValidCampaignForSave();
+                var campaignId = _CampaignService.SaveCampaign(campaign, IntegrationTestUser, CreatedDate);
+
+                var summary = GetSummary(campaignId, IntegrationTestUser, CreatedDate);
+                summary.CampaignStatus = null;
+                _CampaignSummaryRepository.SaveSummary(summary);
+
+                var campaigns = _CampaignService.GetStatuses(null, null);
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(campaigns));
             }
         }
