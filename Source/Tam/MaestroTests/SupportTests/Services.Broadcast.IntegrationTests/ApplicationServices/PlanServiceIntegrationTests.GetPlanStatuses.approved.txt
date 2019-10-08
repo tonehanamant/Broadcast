@@ -22,5 +22,9 @@
   {
     "Display": "Complete",
     "Id": 6
+  },
+  {
+    "Display": "Scenario",
+    "Id": 7
   }
 ]

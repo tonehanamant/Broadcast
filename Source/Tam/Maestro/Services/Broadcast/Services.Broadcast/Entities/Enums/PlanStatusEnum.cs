@@ -15,6 +15,8 @@ namespace Services.Broadcast.Entities.Enums
         [Description("Live")]
         Live = 5,
         [Description("Complete")]
-        Complete = 6,         
+        Complete = 6,
+        [Description("Scenario")]
+        Scenario = 7,
     }
 }

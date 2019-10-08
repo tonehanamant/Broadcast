@@ -40,6 +40,13 @@ namespace Services.Broadcast.Repositories
         PlanDto GetPlan(int planId);
 
         /// <summary>
+        /// Gets the plan status.
+        /// </summary>
+        /// <param name="planId">The plan identifier.</param>
+        /// <returns></returns>
+        PlanStatusEnum GetPlanStatus(int planId);
+
+        /// <summary>
         /// Gets the campaign plans.
         /// </summary>
         /// <param name="campaignId">The campaign identifier.</param>
@@ -108,6 +115,19 @@ namespace Services.Broadcast.Repositories
                         .Single(s => s.id == planId, "Invalid plan id.");
                     return _MapToDto(entity, markets);
                 });
+        }
+
+        /// <inheritdoc />
+        public PlanStatusEnum GetPlanStatus(int planId)
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                var planStatus = context.plans
+                    .Where(x=> x.id == planId)
+                    .Select(x => x.status)
+                    .Single("Invalid plan id.");
+                return EnumHelper.GetEnum<PlanStatusEnum>(planStatus);
+            });
         }
 
         /// <inheritdoc />

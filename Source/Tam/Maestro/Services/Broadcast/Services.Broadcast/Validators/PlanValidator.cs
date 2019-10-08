@@ -1,12 +1,17 @@
-﻿using Services.Broadcast.ApplicationServices;
+﻿using Common.Services.Repositories;
+using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Cache;
 using Services.Broadcast.Clients;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
+using Services.Broadcast.Helpers;
+using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
 using Tam.Maestro.Data.Entities;
 
 namespace Services.Broadcast.Validators
@@ -32,6 +37,7 @@ namespace Services.Broadcast.Validators
         private readonly IBroadcastAudiencesCache _AudienceCache;
         private readonly List<MediaMonth> _PostingBooks;
         private readonly ITrafficApiCache _TrafficApiCache;
+        private readonly IPlanRepository _PlanRepository;
 
         const string INVALID_PLAN_NAME = "Invalid plan name";
         const string INVALID_SPOT_LENGTH = "Invalid spot length";
@@ -66,16 +72,20 @@ namespace Services.Broadcast.Validators
         const string INVALID_CPP = "Invalid CPP.";
         const string INVALID_DELIVERY_IMPRESSIONS = "Invalid Delivery Impressions.";
 
+        const string INVALID_STATUS_TRANSITION_MESSAGE = "Invalid status, can't update a plan from status {0} to status {1}";
+
         const string STOP_WORD = "eOm3wgvfm0dq4rI3srL2";
 
         public PlanValidator(ISpotLengthEngine spotLengthEngine
             , IBroadcastAudiencesCache broadcastAudiencesCache
             , IRatingForecastService ratingForecastService
-            , ITrafficApiCache trafficApiCache)
+            , ITrafficApiCache trafficApiCache
+            , IDataRepositoryFactory broadcastDataRepositoryFactory)
         {
             _SpotLengthEngine = spotLengthEngine;
             _AudienceCache = broadcastAudiencesCache;
             _TrafficApiCache = trafficApiCache;
+            _PlanRepository = broadcastDataRepositoryFactory.GetDataRepository<IPlanRepository>();
 
             _PostingBooks = ratingForecastService.GetMediaMonthCrunchStatuses()
                 .Where(a => a.Crunched == CrunchStatusEnum.Crunched)
@@ -103,9 +113,26 @@ namespace Services.Broadcast.Validators
             _ValidateMarkets(plan);
             _ValidateWeeklyBreakdownWeeks(plan);
             _ValidateBudgetAndDelivery(plan);
+            _ValidatePlanStatusTransitions(plan);
 
             // PRI-14012 We'll use a stop word so QA can trigger an error 
             _ValidateStopWord(plan);
+        }
+
+        private void _ValidatePlanStatusTransitions(PlanDto plan)
+        {
+            if (plan.Id != 0)
+            {
+                var planstatusBeforeUpdate = _PlanRepository.GetPlanStatus(plan.Id);
+
+                if (planstatusBeforeUpdate != plan.Status)
+                {
+                    if (planstatusBeforeUpdate == PlanStatusEnum.Scenario && plan.Status != PlanStatusEnum.Working)
+                    {
+                        throw new Exception(String.Format(INVALID_STATUS_TRANSITION_MESSAGE, PlanStatusEnum.Scenario.GetDescriptionAttribute(), plan.Status.GetDescriptionAttribute()));
+                    }
+                }
+            }
         }
 
         private void _ValidateStopWord(PlanDto plan)

@@ -11,6 +11,9 @@ using System.Collections.Generic;
 using Services.Broadcast.Entities.DTO;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.IntegrationTests.Stubbs;
+using Common.Services.Repositories;
+using Services.Broadcast.Repositories;
+using Services.Broadcast.Helpers;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
 {
@@ -21,6 +24,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
         private Mock<IRatingForecastService> _ratingForecastServiceMock;
         private Mock<ISpotLengthEngine> _spotLengthEngineMock;
         private Mock<IBroadcastAudiencesCache> _broadcastAudiencesCacheMock;
+        private Mock<IDataRepositoryFactory> _broadcastDataRepositoryFactoryMock;
+        private Mock<IPlanRepository> _planRepositoryMock;
 
         private const int HUT_BOOK_ID = 55;
         private const int SHARE_BOOK_ID = 79;
@@ -59,8 +64,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
                             UsageMarkets = 10, ViewerMarkets = 10
                         }, 10),
                 });
+            _planRepositoryMock = new Mock<IPlanRepository>();
+            _broadcastDataRepositoryFactoryMock = new Mock<IDataRepositoryFactory>();
+            _broadcastDataRepositoryFactoryMock.Setup(f => f.GetDataRepository<IPlanRepository>()).Returns(_planRepositoryMock.Object);
             _planValidator = new PlanValidator(_spotLengthEngineMock.Object, _broadcastAudiencesCacheMock.Object,
-                _ratingForecastServiceMock.Object, new TrafficApiCache(new TrafficApiClientStub()));
+                _ratingForecastServiceMock.Object, new TrafficApiCache(new TrafficApiClientStub()), _broadcastDataRepositoryFactoryMock.Object);
         }
 
         [Test]
@@ -761,6 +769,34 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
         }
 
         [Test]
+        [TestCase(PlanStatusEnum.Working, false)]
+        [TestCase(PlanStatusEnum.Reserved, true)]
+        [TestCase(PlanStatusEnum.ClientApproval, true)]
+        [TestCase(PlanStatusEnum.Contracted, true)]
+        [TestCase(PlanStatusEnum.Live, true)]
+        [TestCase(PlanStatusEnum.Complete, true)]
+        public void ValidatePlan_TransitionFromScenarioToOtherStatuses(PlanStatusEnum newStatus, bool throws)
+        {
+            _ConfigureMocksToReturnTrue();
+            _planRepositoryMock.Setup(m => m.GetPlanStatus(It.IsAny<int>())).Returns(PlanStatusEnum.Scenario);
+
+            var plan = _GetPlan();
+            plan.Id = 1;
+            plan.Status = newStatus;
+
+            if (throws)
+            {
+                var expectedMessage = string.Format("Invalid status, can't update a plan from status Scenario to status {0}", newStatus.GetDescriptionAttribute());
+                var caughtException = Assert.Throws<Exception>(() => _planValidator.ValidatePlan(plan));
+                Assert.AreEqual(expectedMessage, caughtException.Message);
+            }
+            else
+            {
+                Assert.DoesNotThrow(() => _planValidator.ValidatePlan(plan));
+            }
+        }
+
+        [Test]
         public void ValidateWeeklyBreakdown_RequestNull()
         {
             Assert.That(() => _planValidator.ValidateWeeklyBreakdown(null),
@@ -838,7 +874,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
                 Vpvh = 0.35,
                 SpotLengthId = 1,
                 Equivalized = true,
-                Status = PlanStatusEnum.Working,
+                Status = PlanStatusEnum.Scenario,
                 ModifiedBy = "UnitTestUser",
                 ModifiedDate = new DateTime(2019, 9, 16, 12, 31, 33),
                 FlightStartDate = new DateTime(2019, 08, 01),
