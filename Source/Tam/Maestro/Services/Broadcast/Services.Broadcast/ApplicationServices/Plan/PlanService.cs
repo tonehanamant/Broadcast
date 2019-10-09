@@ -271,6 +271,11 @@ namespace Services.Broadcast.ApplicationServices.Plan
             {
                 week.NumberOfActiveDays = _CalculateActiveDays(week, request.FlightHiatusDays, out string activeDaysString);
                 week.ActiveDays = activeDaysString;
+                if(week.NumberOfActiveDays < 1)
+                {
+                    week.Impressions = 0;
+                    week.ShareOfVoice = 0;
+                }
             }
 
             //add the missing weeks
