@@ -113,26 +113,9 @@ namespace Services.Broadcast.Validators
             _ValidateMarkets(plan);
             _ValidateWeeklyBreakdownWeeks(plan);
             _ValidateBudgetAndDelivery(plan);
-            _ValidatePlanStatusTransitions(plan);
 
             // PRI-14012 We'll use a stop word so QA can trigger an error 
             _ValidateStopWord(plan);
-        }
-
-        private void _ValidatePlanStatusTransitions(PlanDto plan)
-        {
-            if (plan.Id != 0)
-            {
-                var planstatusBeforeUpdate = _PlanRepository.GetPlanStatus(plan.Id);
-
-                if (planstatusBeforeUpdate != plan.Status)
-                {
-                    if (planstatusBeforeUpdate == PlanStatusEnum.Scenario && plan.Status != PlanStatusEnum.Working)
-                    {
-                        throw new Exception(String.Format(INVALID_STATUS_TRANSITION_MESSAGE, PlanStatusEnum.Scenario.GetDescriptionAttribute(), plan.Status.GetDescriptionAttribute()));
-                    }
-                }
-            }
         }
 
         private void _ValidateStopWord(PlanDto plan)

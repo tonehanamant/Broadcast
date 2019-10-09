@@ -769,34 +769,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
         }
 
         [Test]
-        [TestCase(PlanStatusEnum.Working, false)]
-        [TestCase(PlanStatusEnum.Reserved, true)]
-        [TestCase(PlanStatusEnum.ClientApproval, true)]
-        [TestCase(PlanStatusEnum.Contracted, true)]
-        [TestCase(PlanStatusEnum.Live, true)]
-        [TestCase(PlanStatusEnum.Complete, true)]
-        public void ValidatePlan_TransitionFromScenarioToOtherStatuses(PlanStatusEnum newStatus, bool throws)
-        {
-            _ConfigureMocksToReturnTrue();
-            _planRepositoryMock.Setup(m => m.GetPlanStatus(It.IsAny<int>())).Returns(PlanStatusEnum.Scenario);
-
-            var plan = _GetPlan();
-            plan.Id = 1;
-            plan.Status = newStatus;
-
-            if (throws)
-            {
-                var expectedMessage = string.Format("Invalid status, can't update a plan from status Scenario to status {0}", newStatus.GetDescriptionAttribute());
-                var caughtException = Assert.Throws<Exception>(() => _planValidator.ValidatePlan(plan));
-                Assert.AreEqual(expectedMessage, caughtException.Message);
-            }
-            else
-            {
-                Assert.DoesNotThrow(() => _planValidator.ValidatePlan(plan));
-            }
-        }
-
-        [Test]
         public void ValidateWeeklyBreakdown_RequestNull()
         {
             Assert.That(() => _planValidator.ValidateWeeklyBreakdown(null),
