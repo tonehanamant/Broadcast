@@ -170,7 +170,11 @@ namespace Services.Broadcast.Repositories
 
                     if (campaignStatus.HasValue)
                     {
-                        campaignsWithSummary = campaignsWithSummary.Where(p => p.summary.campaign_status == (byte)campaignStatus);
+                        if (campaignStatus.Value == PlanStatusEnum.Working)
+                            campaignsWithSummary = campaignsWithSummary.Where(c => c.summary.campaign_status == (byte)campaignStatus || c.summary == null || !c.summary.campaign_status.HasValue);
+                        else
+                            campaignsWithSummary = campaignsWithSummary.Where(p => p.summary.campaign_status == (byte)campaignStatus);
+
                     }
 
                     return campaignsWithSummary.ToList()

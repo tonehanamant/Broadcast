@@ -18,6 +18,7 @@ using Services.Broadcast.IntegrationTests.Helpers;
 using Services.Broadcast.Repositories;
 using Services.Broadcast.Validators;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Services.ContractInterfaces;
@@ -62,6 +63,47 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     PlanStatus = PlanStatusEnum.Contracted
                 }, new DateTime(2019, 04, 01));
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(campaigns));
+            }
+        }
+
+        [Test]
+        public void GetCampaignsFilteredByStatusWorking()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var campaignWithoutSummary = _GetValidCampaignForSave();
+                _CampaignService.SaveCampaign(campaignWithoutSummary, IntegrationTestUser, new DateTime(2017, 11, 20));
+
+                var campaignWithoutCampaignStatus = _GetValidCampaignForSave();
+                var campaignIdWithoutCampaignStatus = _CampaignService.SaveCampaign(campaignWithoutCampaignStatus, IntegrationTestUser, new DateTime(2017, 11, 20));
+
+                var summaryWithoutCampaignStatus = GetSummary(campaignIdWithoutCampaignStatus, IntegrationTestUser, CreatedDate);
+                summaryWithoutCampaignStatus.CampaignStatus = null;
+                summaryWithoutCampaignStatus.FlightStartDate = new DateTime(2017, 11, 1);
+                summaryWithoutCampaignStatus.FlightStartDate = new DateTime(2017, 11, 11);
+                _CampaignSummaryRepository.SaveSummary(summaryWithoutCampaignStatus);
+
+                var campaignWithWorkingStatus = _GetValidCampaignForSave();
+                var campaignIdWithWorkingStatus = _CampaignService.SaveCampaign(campaignWithWorkingStatus, IntegrationTestUser, new DateTime(2017, 11, 20));
+
+                var summaryWithWorkingStatus = GetSummary(campaignIdWithWorkingStatus, IntegrationTestUser, CreatedDate);
+                summaryWithWorkingStatus.CampaignStatus = PlanStatusEnum.Working;
+                summaryWithWorkingStatus.FlightStartDate = new DateTime(2017, 11, 1);
+                summaryWithWorkingStatus.FlightStartDate = new DateTime(2017, 11, 11);
+                _CampaignSummaryRepository.SaveSummary(summaryWithWorkingStatus);
+
+                var campaigns = _CampaignService.GetCampaigns(new CampaignFilterDto
+                {
+                    PlanStatus = PlanStatusEnum.Working,
+                    Quarter = new QuarterDto
+                    {
+                        Quarter = 4,
+                        Year = 2017
+                    }
+                }, new DateTime(2017, 04, 01));
+
+                Assert.IsTrue(campaigns.All(c => c.CampaignStatus == PlanStatusEnum.Working));
+                Assert.AreEqual(3, campaigns.Count);
             }
         }
 
@@ -209,7 +251,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 QueuedBy = createdBy,
                 QueuedAt = createdDate,
                 ProcessingStatus = CampaignAggregationProcessingStatusEnum.Completed,
-                LastAggregated = new DateTime(2019,09,04,16,41,0),
+                LastAggregated = new DateTime(2019, 09, 04, 16, 41, 0),
                 CampaignId = campaignId,
                 CampaignStatus = PlanStatusEnum.Contracted,
                 Budget = 1500.0m,
@@ -221,7 +263,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 FlightActiveDays = 26,
                 FlightHiatusDays = 4,
                 PlanStatusCountWorking = 0,
-                PlanStatusCountReserved =0,
+                PlanStatusCountReserved = 0,
                 PlanStatusCountClientApproval = 1,
                 PlanStatusCountContracted = 1,
                 PlanStatusCountLive = 0,
@@ -341,7 +383,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var campaigns = _CampaignService.GetStatuses(null,null);
+                var campaigns = _CampaignService.GetStatuses(null, null);
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(campaigns));
             }
         }
