@@ -198,7 +198,7 @@ namespace Services.Broadcast.Repositories
         private void _InsertGroups(QueryHintBroadcastContext context, List<station_inventory_group> newGroups)
         {
             var sw = Stopwatch.StartNew();
-            var pkGroups = context.station_inventory_group.Max(x => x.id) + 1;
+            var pkGroups = (context.station_inventory_group.Select(x=>(int?)x.id).Max() ?? 0) + 1;
             newGroups.ForEach(m =>
             {
                 m.id = pkGroups++;
