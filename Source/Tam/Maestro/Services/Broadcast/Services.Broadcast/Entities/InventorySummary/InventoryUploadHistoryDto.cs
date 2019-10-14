@@ -23,7 +23,6 @@ namespace Services.Broadcast.Entities.InventorySummary
         public String Status { get; set; }
         public FileStatusEnum FileLoadStatus { get; set; }
         public BackgroundJobProcessingStatus FileProcessingStatus { get; set; }
-
-
+        public List<QuarterDetailDto> Quarters { get; set; }
     }
 }

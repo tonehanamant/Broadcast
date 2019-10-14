@@ -92,7 +92,9 @@ namespace Services.Broadcast.Repositories
 
         List<StationInventoryManifestWeek> GetStationInventoryManifestWeeksForInventorySource(int inventorySourceId);
 
-        List<InventoryUploadHistoryDto> GetInventoryUploadHistoryForInventorySource(int inventorySourceId);
+        List<DateRange> GetInventoryUploadHistoryDatesForInventorySource(int inventorySourceId);
+
+        List<InventoryUploadHistoryDto> GetInventoryUploadHistoryForInventorySource(int inventorySourceId, DateTime? startDate, DateTime? endDate);
 
         /// <summary>
         /// Adds validation problems for an inventory file to DB
@@ -1232,7 +1234,7 @@ namespace Services.Broadcast.Repositories
         }
 
         ///<inheritdoc/>
-        public List<InventoryUploadHistoryDto> GetInventoryUploadHistoryForInventorySource(int inventorySourceId)
+        public List<InventoryUploadHistoryDto> GetInventoryUploadHistoryForInventorySource(int inventorySourceId, DateTime? startDate, DateTime? endDate)
         {
             return _InReadUncommitedTransaction(
                 context =>
@@ -1246,8 +1248,13 @@ namespace Services.Broadcast.Repositories
                              .Include(x => x.station_inventory_manifest.Select(h => h.station_inventory_manifest_dayparts.Select(d => d.daypart_codes)))
                              .Include(x => x.inventory_sources)
                              .Include(x => x.inventory_file_ratings_jobs)
-                             .Where(x => x.inventory_source_id == inventorySourceId)
-                             .OrderByDescending(x => x.id);
+                             .Where(x => x.inventory_source_id == inventorySourceId);
+
+                    if (startDate.HasValue && endDate.HasValue)
+                    {
+                        files = files.Where(f => f.effective_date <= endDate &&
+                                                 f.end_date >= startDate);
+                    }
 
                     var result = new List<InventoryUploadHistoryDto>();
 
@@ -1308,7 +1315,22 @@ namespace Services.Broadcast.Repositories
                         result.Add(fileHistory);
                     }
 
-                    return result;
+                    return result.OrderByDescending(r => r.UploadDateTime).ToList();
+                });
+        }
+
+        public List<DateRange> GetInventoryUploadHistoryDatesForInventorySource(int inventorySourceId)
+        {
+            return _InReadUncommitedTransaction(
+                context =>
+                {
+                    var files = context.inventory_files
+                             .Include(x => x.inventory_file_proprietary_header)
+                             .Where(x => x.inventory_source_id == inventorySourceId);
+
+                    var dates = files.Select(f => new { f.effective_date, f.end_date }).ToList();
+
+                    return dates.Select(d => new DateRange(d.effective_date, d.end_date)).ToList();
                 });
         }
 

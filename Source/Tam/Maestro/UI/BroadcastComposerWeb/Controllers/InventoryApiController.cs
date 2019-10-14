@@ -275,12 +275,20 @@ namespace BroadcastComposerWeb.Controllers
 
         [HttpGet]
         [Route("UploadHistory")]
-        public BaseResponse<List<InventoryUploadHistoryDto>> GetInventoryUploadHistory(int inventorySourceId)
+        public BaseResponse<List<InventoryUploadHistoryDto>> GetInventoryUploadHistory(int inventorySourceId, int? quarter = null, int? year = null)
         {
-            //Returning list of upload history records
             return _ConvertToBaseResponse(() => 
                 _ApplicationServiceFactory.GetApplicationService<IInventoryService>()
-                    .GetInventoryUploadHistory(inventorySourceId));
+                    .GetInventoryUploadHistory(inventorySourceId, quarter, year));
+        }
+
+        [HttpGet]
+        [Route("UploadHistoryQuarters")]
+        public BaseResponse<List<QuarterDetailDto>> GetInventoryUploadHistoryQuarters(int inventorySourceId)
+        {
+            return _ConvertToBaseResponse(() =>
+                _ApplicationServiceFactory.GetApplicationService<IInventoryService>()
+                    .GetInventoryUploadHistoryQuarters(inventorySourceId));
         }
 
         /// <summary>

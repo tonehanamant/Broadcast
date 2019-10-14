@@ -128,8 +128,8 @@ namespace Services.Broadcast.ApplicationServices
             if (!_IsFilterValid(filter))
                 filter = _GetDefaultFilter(currentDate);
 
-            var dateRange = _GetQuarterDateRange(filter.Quarter);
-            var campaigns = _CampaignRepository.GetCampaignsWithSummary(dateRange.Start, dateRange.End, filter.PlanStatus)
+            var quarterDateRange = _GetQuarterDateRange(filter.Quarter);
+            var campaigns = _CampaignRepository.GetCampaignsWithSummary(quarterDateRange.Start, quarterDateRange.End, filter.PlanStatus)
                 .Select(x => _MapToCampaignListItemDto(x)).ToList();
             var cacheAdvertisers = new BaseMemoryCache<List<AdvertiserDto>>("localAdvertisersCache");
 
@@ -145,6 +145,13 @@ namespace Services.Broadcast.ApplicationServices
             }
 
             return campaigns;
+        }
+
+        private DateRange _GetQuarterDateRange(QuarterDto quarter)
+        {
+            if (quarter == null)
+                return new DateRange(null, null);
+            return _QuarterCalculationEngine.GetQuarterDateRange(quarter.Quarter, quarter.Year);
         }
 
         /// <inheritdoc />
@@ -279,26 +286,8 @@ namespace Services.Broadcast.ApplicationServices
         /// <inheritdoc />
         public CampaignQuartersDto GetQuarters(PlanStatusEnum? planStatus, DateTime currentDate)
         {
-            var dates = _CampaignRepository.GetCampaignsDateRanges(planStatus);
-            var validDateRanges = _ValidateDateRanges(dates);
-            var allMediaMonths = new List<MediaMonth>();
-
-            if (validDateRanges.Any())
-            {
-                var min = validDateRanges.Min(x => x.Start.Value);
-                var max = validDateRanges.Max(x => x.End.Value);
-                var mediaMonths = _MediaMonthAndWeekAggregateCache.GetMediaMonthsBetweenDatesInclusive(min, max);
-
-                foreach (var range in validDateRanges)
-                {
-                    var mediaMonthsForRange = mediaMonths.Where(x => x.StartDate <= range.End.Value && x.EndDate >= range.Start.Value);
-                    allMediaMonths.AddRange(mediaMonthsForRange);
-                }
-            }
-
-            var quarters = allMediaMonths.GroupBy(x => new { x.Quarter, x.Year })
-                .Select(x => _QuarterCalculationEngine.GetQuarterDetail(x.Key.Quarter, x.Key.Year))
-                .ToList();
+            var dateRanges = _CampaignRepository.GetCampaignsDateRanges(planStatus);
+            var quarters = _QuarterCalculationEngine.GetQuartersForDateRanges(dateRanges);
 
             var currentQuarter = _QuarterCalculationEngine.GetQuarterRangeByDate(currentDate);
 
@@ -316,30 +305,10 @@ namespace Services.Broadcast.ApplicationServices
         /// <inheritdoc />
         public List<LookupDto> GetStatuses(int? quarter, int? year)
         {
-            QuarterDto quarterDto = null;
-
-            if (quarter.HasValue && year.HasValue)
-            {
-                quarterDto = new QuarterDto
-                {
-                    Quarter = quarter.Value,
-                    Year = year.Value
-                };
-            }
-
-            var dateRange = _GetQuarterDateRange(quarterDto);
-
-            var statuses = _CampaignRepository.GetCampaignsStatuses(dateRange.Start, dateRange.End);
+            var quarterDateRange = _QuarterCalculationEngine.GetQuarterDateRange(quarter, year);
+            var statuses = _CampaignRepository.GetCampaignsStatuses(quarterDateRange.Start, quarterDateRange.End);
 
             return statuses.Select(x => new LookupDto { Id = (int)x, Display = x.Description() }).OrderBy(x => x.Id).ToList();
-        }
-
-        private DateRange _GetQuarterDateRange(QuarterDto quarterDto)
-        {
-            if (quarterDto == null)
-                return new DateRange(null, null);
-            var quarterDetail = _QuarterCalculationEngine.GetQuarterDetail(quarterDto.Quarter, quarterDto.Year);
-            return new DateRange(quarterDetail.StartDate, quarterDetail.EndDate);
         }
 
         /// <inheritdoc />

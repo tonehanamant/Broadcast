@@ -21,6 +21,7 @@ using System.Linq;
 using System.Web;
 using Tam.Maestro.Common;
 using Tam.Maestro.Common.DataLayer;
+using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 using Tam.Maestro.Services.Clients;
@@ -40,7 +41,6 @@ namespace Services.Broadcast.ApplicationServices
         /// <param name="nowDate">Now date</param>
         /// <returns>InventoryFileSaveResult object</returns>
         InventoryFileSaveResult SaveInventoryFile(InventoryFileSaveRequest request, string userName, DateTime nowDate);
-
         List<StationContact> GetStationContacts(string inventorySource, int stationCode);
         bool SaveStationContact(StationContact stationContacts, string userName);
         bool DeleteStationContact(string inventorySourceString, int stationContactId, string userName);
@@ -52,9 +52,9 @@ namespace Services.Broadcast.ApplicationServices
         List<StationContact> FindStationContactsByName(string query);
         bool GetStationProgramConflicted(StationProgramConflictRequest conflict, int manifestId);
         bool DeleteProgram(int programId, string inventorySource, int stationCode, string user);
-
         bool HasSpotsAllocated(int programId);
-        List<InventoryUploadHistoryDto> GetInventoryUploadHistory(int inventorySourceId);
+        List<QuarterDetailDto> GetInventoryUploadHistoryQuarters(int inventorySourceId);
+        List<InventoryUploadHistoryDto> GetInventoryUploadHistory(int inventorySourceId, int? quarter, int? year);
         Tuple<string, Stream, string> DownloadErrorFile(int fileId);
 
         /// <summary>
@@ -726,31 +726,37 @@ namespace Services.Broadcast.ApplicationServices
             return _LockingEngine.UnlockStation(station.Id);
         }
 
-        public List<InventoryUploadHistoryDto> GetInventoryUploadHistory(int inventorySourceId)
+        public List<InventoryUploadHistoryDto> GetInventoryUploadHistory(int inventorySourceId, int? quarter, int? year)
         {
-            var uploadHistory = _InventoryRepository.GetInventoryUploadHistoryForInventorySource(inventorySourceId);
-            foreach(var uploadFile in uploadHistory)
+            var quarterDateRange = _QuarterCalculationEngine.GetQuarterDateRange(quarter, year);
+            var uploadHistory = _InventoryRepository.GetInventoryUploadHistoryForInventorySource(inventorySourceId, quarterDateRange.Start, quarterDateRange.End);
+
+            foreach (var uploadFile in uploadHistory)
             {
-                if(uploadFile.FileLoadStatus == FileStatusEnum.Failed)
+                if (uploadFile.EffectiveDate.HasValue &&
+                    uploadFile.EndDate.HasValue)
+                {
+                    uploadFile.Quarters = _QuarterCalculationEngine.GetAllQuartersBetweenDates(uploadFile.EffectiveDate.Value, uploadFile.EndDate.Value);
+                }
+
+                if (uploadFile.FileLoadStatus == FileStatusEnum.Failed)
                 {
                     uploadFile.Status = "Validation Error";
-                    continue;
                 }
-
-                if(uploadFile.FileProcessingStatus == BackgroundJobProcessingStatus.Failed)
+                else if(uploadFile.FileProcessingStatus == BackgroundJobProcessingStatus.Failed)
                 {
                     uploadFile.Status = "Processing Error";
-                    continue;
                 }
-
-                if(uploadFile.FileProcessingStatus == BackgroundJobProcessingStatus.Succeeded)
+                else if (uploadFile.FileProcessingStatus == BackgroundJobProcessingStatus.Succeeded)
                 {
                     uploadFile.Status = "Succeeded";
-                    continue;
                 }
-
-                uploadFile.Status = "Processing";
+                else
+                {
+                    uploadFile.Status = "Processing";
+                }
             }
+
             return uploadHistory;
         }
 
@@ -808,6 +814,12 @@ namespace Services.Broadcast.ApplicationServices
             return Path.GetExtension(filepath).Equals(".xlsx", StringComparison.InvariantCultureIgnoreCase);
         }
 
+        public List<QuarterDetailDto> GetInventoryUploadHistoryQuarters(int inventorySourceId)
+        {
+            var uploadHistoryDates = _InventoryRepository.GetInventoryUploadHistoryDatesForInventorySource(inventorySourceId);
+            var quarters = _QuarterCalculationEngine.GetQuartersForDateRanges(uploadHistoryDates);
 
+            return quarters.OrderByDescending(q => q.Year).ThenByDescending(q => q.Quarter).ToList();
+        }
     }
 }

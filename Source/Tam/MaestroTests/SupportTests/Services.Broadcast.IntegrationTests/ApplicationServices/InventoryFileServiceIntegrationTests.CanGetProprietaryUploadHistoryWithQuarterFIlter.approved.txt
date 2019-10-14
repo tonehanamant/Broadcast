@@ -1,0 +1,30 @@
+﻿[
+  {
+    "DaypartCodes": [
+      "EMN"
+    ],
+    "EffectiveDate": "2024-12-30T00:00:00",
+    "EndDate": "2025-03-23T00:00:00",
+    "FileLoadStatus": 2,
+    "Filename": "Barter_Q1_2025.xlsx",
+    "FileProcessingStatus": 3,
+    "HutBook": null,
+    "Quarters": [
+      {
+        "EndDate": "2025-03-30T23:59:59",
+        "Quarter": 1,
+        "StartDate": "2024-12-30T00:00:00",
+        "Year": 2025
+      }
+    ],
+    "Rows": 2,
+    "ShareBook": {
+      "Id": 437,
+      "Month": 2,
+      "Year": 2018
+    },
+    "Status": "Succeeded",
+    "UploadDateTime": "2019-02-02T00:00:00",
+    "Username": "IntegrationTestUser"
+  }
+]

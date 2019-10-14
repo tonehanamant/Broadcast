@@ -1467,7 +1467,32 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 _InventoryFileTestHelper.UploadOpenMarketInventoryFile("Open Market projected imps.xml");
 
-                var result = _InventoryService.GetInventoryUploadHistory(inventorySourceId);
+                var result = _InventoryService.GetInventoryUploadHistory(inventorySourceId, null, null);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(InventoryUploadHistoryDto), "FileId");
+
+                var serializer = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, serializer));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void CanGetOpenMarketUploadHistoryWithQuarterFilter()
+        {
+            var inventorySourceId = 1; //OpenMarket
+
+            using (new TransactionScopeWrapper())
+            {
+                _InventoryFileTestHelper.UploadOpenMarketInventoryFile("Open Market projected imps.xml");
+
+                var result = _InventoryService.GetInventoryUploadHistory(inventorySourceId, 1, 2018);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(InventoryUploadHistoryDto), "FileId");
@@ -1492,7 +1517,32 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 _InventoryFileTestHelper.UploadProprietaryInventoryFile("Barter_Q1_2025.xlsx", processInventoryRatings: true);
 
-                var result = _InventoryService.GetInventoryUploadHistory(inventorySourceId);
+                var result = _InventoryService.GetInventoryUploadHistory(inventorySourceId, null, null);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(InventoryUploadHistoryDto), "FileId");
+
+                var serializer = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, serializer));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void CanGetProprietaryUploadHistoryWithQuarterFIlter()
+        {
+            var inventorySourceId = 4; // TTWN
+
+            using (new TransactionScopeWrapper())
+            {
+                _InventoryFileTestHelper.UploadProprietaryInventoryFile("Barter_Q1_2025.xlsx", processInventoryRatings: true);
+
+                var result = _InventoryService.GetInventoryUploadHistory(inventorySourceId, 1, 2025);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(InventoryUploadHistoryDto), "FileId");
@@ -1517,7 +1567,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 _InventoryFileTestHelper.UploadProprietaryInventoryFile("Diginet_ValidFile3.xlsx", processInventoryRatings: true);
 
-                var result = _InventoryService.GetInventoryUploadHistory(inventorySourceId);
+                var result = _InventoryService.GetInventoryUploadHistory(inventorySourceId, null, null);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(InventoryUploadHistoryDto), "FileId");
@@ -1529,6 +1579,40 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 };
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, serializer));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void CanGetUploadHistoryQuartersOpenMarket()
+        {
+            // Open Market.
+            var inventorySourceId = 1;
+
+            using (new TransactionScopeWrapper())
+            {
+                _InventoryFileTestHelper.UploadOpenMarketInventoryFile("Open Market projected imps.xml");
+
+                var result = _InventoryService.GetInventoryUploadHistoryQuarters(inventorySourceId);
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void CanGetUploadHistoryQuartersProprietary()
+        {
+            // TTWN.
+            var inventorySourceId = 4;
+
+            using (new TransactionScopeWrapper())
+            {
+                _InventoryFileTestHelper.UploadProprietaryInventoryFile("Barter_Q1_2025.xlsx", processInventoryRatings: true);
+
+                var result = _InventoryService.GetInventoryUploadHistoryQuarters(inventorySourceId);
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
             }
         }
 

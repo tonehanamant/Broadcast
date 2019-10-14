@@ -5,6 +5,8 @@ using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using Tam.Maestro.Data.Entities;
 
 namespace Services.Broadcast.BusinessEngines
 {
@@ -15,6 +17,8 @@ namespace Services.Broadcast.BusinessEngines
         QuarterDetailDto GetQuarterRangeByDate(DateTime currentDate, int quarterShift);
         List<QuarterDetailDto> GetAllQuartersBetweenDates(DateTime startDate, DateTime endDate);
         QuarterDetailDto GetQuarterDetail(int quarter, int year);
+        List<QuarterDetailDto> GetQuartersForDateRanges(List<DateRange> dateRanges);
+        DateRange GetQuarterDateRange(int? quarter, int? year);
     }
 
     public class QuarterCalculationEngine : IQuarterCalculationEngine
@@ -174,6 +178,61 @@ namespace Services.Broadcast.BusinessEngines
                 quarters.Add(GetQuarterRangeByDate(startDate, quarterShift));
 
             return quarters;
+        }
+
+        public List<QuarterDetailDto> GetQuartersForDateRanges(List<DateRange> dateRanges)
+        {
+            var validDateRanges = _ValidateDateRanges(dateRanges);
+            var allMediaMonths = new List<MediaMonth>();
+
+            if (validDateRanges.Any())
+            {
+                var min = validDateRanges.Min(x => x.Start.Value);
+                var max = validDateRanges.Max(x => x.End.Value);
+                var mediaMonths = _MediaMonthAndWeekAggregateCache.GetMediaMonthsBetweenDatesInclusive(min, max);
+
+                foreach (var range in validDateRanges)
+                {
+                    var mediaMonthsForRange = mediaMonths.Where(x => x.StartDate <= range.End.Value && x.EndDate >= range.Start.Value);
+                    allMediaMonths.AddRange(mediaMonthsForRange);
+                }
+            }
+
+            var quarters = allMediaMonths.GroupBy(x => new { x.Quarter, x.Year })
+                .Select(x => GetQuarterDetail(x.Key.Quarter, x.Key.Year))
+                .ToList();
+
+            return quarters;
+        }
+
+        private List<DateRange> _ValidateDateRanges(List<DateRange> dateRanges)
+        {
+            var nonEmptyRanges = dateRanges.Where(x => !x.IsEmpty());
+            var validStartDate = nonEmptyRanges.Where(x => x.Start != null);
+            var hasEndDate = validStartDate.Where(x => x.End != null);
+            var missingEndDate = validStartDate.Where(x => x.End == null);
+
+            foreach (var dateRange in missingEndDate)
+                dateRange.End = dateRange.Start;
+
+            var allValidDateRanges = hasEndDate.Concat(missingEndDate).ToList();
+
+            return allValidDateRanges;
+        }
+
+        public DateRange GetQuarterDateRange(int? quarter, int? year)
+        {
+            DateTime? start = null;
+            DateTime? end = null;
+
+            if (quarter.HasValue && year.HasValue)
+            {
+                var quarterDetail = GetQuarterDetail(quarter.Value, year.Value);
+                start = quarterDetail.StartDate;
+                end = quarterDetail.EndDate;
+            }
+
+            return new DateRange(start, end);
         }
     }
 }

@@ -76,11 +76,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             };
 
             campaignRepositoryMock.Setup(x => x.GetCampaignsWithSummary(It.IsAny<DateTime>(), It.IsAny<DateTime>(), It.IsAny<PlanStatusEnum>())).Returns(_GetCampaignWithsummeriesReturn(agency, advertiser));
-            quarterCalculationEngineMock.Setup(x => x.GetQuarterDetail(2, 2019)).Returns(new QuarterDetailDto
-            {
-                Year = 2019,
-                Quarter = 2
-            });
+            quarterCalculationEngineMock.Setup(x => x.GetQuarterDateRange(2, 2019)).Returns(new DateRange(new DateTime(2008, 12, 29), new DateTime(2009, 3, 29)));
             dataRepositoryFactoryMock.Setup(s => s.GetDataRepository<ICampaignRepository>()).Returns(campaignRepositoryMock.Object);
 
             var tc = new CampaignService(
@@ -164,11 +160,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 Year = 2019,
                 Quarter = 2
             });
-            quarterCalculationEngineMock.Setup(x => x.GetQuarterDetail(2, 2019)).Returns(new QuarterDetailDto
-            {
-                Year = 2019,
-                Quarter = 2
-            });
+            quarterCalculationEngineMock.Setup(x => x.GetQuarterDateRange(2, 2019)).Returns(new DateRange(new DateTime(2008, 12, 29), new DateTime(2009, 3, 29)));
             dataRepositoryFactoryMock.Setup(s => s.GetDataRepository<ICampaignRepository>()).Returns(campaignRepositoryMock.Object);
             var tc = new CampaignService(
                 dataRepositoryFactoryMock.Object,
@@ -291,10 +283,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             var quarterCalculationEngineMock = new Mock<IQuarterCalculationEngine>();
             var campaignAggregator = new Mock<ICampaignAggregator>();
             var trafficApiCache = new Mock<ITrafficApiCache>();
-            quarterCalculationEngineMock.Setup(x => x.GetQuarterDetail(It.IsAny<int>(), It.IsAny<int>())).Returns(new QuarterDetailDto());
+            quarterCalculationEngineMock.Setup(x => x.GetQuarterDateRange(It.IsAny<int?>(), It.IsAny<int?>())).Returns(new DateRange(null, null));
             quarterCalculationEngineMock.Setup(x => x.GetQuarterRangeByDate(_CreatedDate)).Returns(new QuarterDetailDto());
             campaignRepositoryMock
-                .Setup(x => x.GetCampaignsWithSummary(It.IsAny<DateTime>(), It.IsAny<DateTime>(), null))
+                .Setup(x => x.GetCampaignsWithSummary(It.IsAny<DateTime?>(), It.IsAny<DateTime?>(), null))
                 .Callback(() => throw new Exception(expectedMessage));
             dataRepositoryFactoryMock.Setup(s => s.GetDataRepository<ICampaignRepository>()).Returns(campaignRepositoryMock.Object);
 
