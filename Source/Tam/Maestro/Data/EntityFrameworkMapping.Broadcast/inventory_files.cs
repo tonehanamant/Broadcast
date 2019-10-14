@@ -23,6 +23,7 @@ namespace EntityFrameworkMapping.Broadcast
             this.inventory_file_problems = new HashSet<inventory_file_problems>();
             this.inventory_file_ratings_jobs = new HashSet<inventory_file_ratings_jobs>();
             this.inventory_file_proprietary_header = new HashSet<inventory_file_proprietary_header>();
+            this.inventory_file_program_names_jobs = new HashSet<inventory_file_program_names_jobs>();
         }
     
         public int id { get; set; }
@@ -45,5 +46,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<inventory_file_problems> inventory_file_problems { get; set; }
         public virtual ICollection<inventory_file_ratings_jobs> inventory_file_ratings_jobs { get; set; }
         public virtual ICollection<inventory_file_proprietary_header> inventory_file_proprietary_header { get; set; }
+        public virtual ICollection<inventory_file_program_names_jobs> inventory_file_program_names_jobs { get; set; }
     }
 }

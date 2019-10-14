@@ -327,6 +327,8 @@
         <AssociationConnector Association="BroadcastModel.FK_plan_summary_quarters_plan_summary" />
         <EntityTypeShape EntityType="BroadcastModel.inventory_file_ratings_job_notes" Width="1.5" PointX="7.25" PointY="48.625" />
         <AssociationConnector Association="BroadcastModel.FK_inventory_file_ratings_job_notes_inventory_file_ratings_jobs" />
+        <EntityTypeShape EntityType="BroadcastModel.inventory_file_program_names_jobs" Width="1.5" PointX="5" PointY="51.5" />
+        <AssociationConnector Association="BroadcastModel.FK_inventory_file_program_names_jobs_inventory_file" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

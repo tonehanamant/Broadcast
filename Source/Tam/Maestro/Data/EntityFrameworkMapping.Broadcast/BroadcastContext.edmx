@@ -330,6 +330,7 @@
           <Property Name="created_date" Type="datetime" Nullable="false" />
           <Property Name="modified_by" Type="varchar" MaxLength="63" Nullable="false" />
           <Property Name="modified_date" Type="datetime" Nullable="false" />
+          <Property Name="source_id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="inventory_file_problems">
           <Key>
@@ -338,6 +339,18 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="inventory_file_id" Type="int" Nullable="false" />
           <Property Name="problem_description" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="inventory_file_program_names_jobs">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="inventory_file_id" Type="int" Nullable="false" />
+          <Property Name="status" Type="int" Nullable="false" />
+          <Property Name="error_message" Type="nvarchar" MaxLength="2000" />
+          <Property Name="queued_at" Type="datetime" Nullable="false" />
+          <Property Name="queued_by" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="completed_at" Type="datetime" />
         </EntityType>
         <EntityType Name="inventory_file_proprietary_header">
           <Key>
@@ -1608,6 +1621,8 @@
           <Property Name="spots" Type="int" Nullable="false" />
           <Property Name="start_date" Type="date" Nullable="false" />
           <Property Name="end_date" Type="date" Nullable="false" />
+          <Property Name="sys_start_date" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="sys_end_date" Type="datetime2" Precision="7" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'broadcast_integration_staging.dbo.station_inventory_manifest_weeks_history' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -2004,6 +2019,20 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="inventory_file_problems">
+              <PropertyRef Name="inventory_file_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_inventory_file_program_names_jobs_inventory_file">
+          <End Role="inventory_files" Type="Self.inventory_files" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="inventory_file_program_names_jobs" Type="Self.inventory_file_program_names_jobs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="inventory_files">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="inventory_file_program_names_jobs">
               <PropertyRef Name="inventory_file_id" />
             </Dependent>
           </ReferentialConstraint>
@@ -4282,6 +4311,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySet Name="days" EntityType="Self.days" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="genres" EntityType="Self.genres" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="inventory_file_problems" EntityType="Self.inventory_file_problems" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="inventory_file_program_names_jobs" EntityType="Self.inventory_file_program_names_jobs" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="inventory_file_proprietary_header" EntityType="Self.inventory_file_proprietary_header" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="inventory_file_ratings_job_notes" EntityType="Self.inventory_file_ratings_job_notes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="inventory_file_ratings_jobs" EntityType="Self.inventory_file_ratings_jobs" Schema="dbo" store:Type="Tables" />
@@ -4501,6 +4531,10 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <AssociationSet Name="FK_inventory_file_problems_inventory_files" Association="Self.FK_inventory_file_problems_inventory_files">
             <End Role="inventory_files" EntitySet="inventory_files" />
             <End Role="inventory_file_problems" EntitySet="inventory_file_problems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_inventory_file_program_names_jobs_inventory_file" Association="Self.FK_inventory_file_program_names_jobs_inventory_file">
+            <End Role="inventory_files" EntitySet="inventory_files" />
+            <End Role="inventory_file_program_names_jobs" EntitySet="inventory_file_program_names_jobs" />
           </AssociationSet>
           <AssociationSet Name="FK_inventory_file_proprietary_header_audiences" Association="Self.FK_inventory_file_proprietary_header_audiences">
             <End Role="audiences" EntitySet="audiences" />
@@ -6118,6 +6152,11 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="inventory_file_ratings_jobs" EntitySet="inventory_file_ratings_jobs" />
             <End Role="inventory_file_ratings_job_notes" EntitySet="inventory_file_ratings_job_notes" />
           </AssociationSet>
+          <EntitySet Name="inventory_file_program_names_jobs" EntityType="BroadcastModel.inventory_file_program_names_jobs" />
+          <AssociationSet Name="FK_inventory_file_program_names_jobs_inventory_file" Association="BroadcastModel.FK_inventory_file_program_names_jobs_inventory_file">
+            <End Role="inventory_files" EntitySet="inventory_files" />
+            <End Role="inventory_file_program_names_jobs" EntitySet="inventory_file_program_names_jobs" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="audience_audiences">
           <Key>
@@ -7004,6 +7043,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="proposal_version_detail_criteria_genres" Relationship="BroadcastModel.FK_proposal_version_detail_criteria_genres_genres" FromRole="genre" ToRole="proposal_version_detail_criteria_genres" />
           <NavigationProperty Name="station_inventory_manifest_genres" Relationship="BroadcastModel.FK_station_inventory_manifest_genres_genres" FromRole="genre" ToRole="station_inventory_manifest_genres" />
           <NavigationProperty Name="station_inventory_manifest_daypart_genres" Relationship="BroadcastModel.FK_station_inventory_manifest_daypart_genres_genres" FromRole="genre" ToRole="station_inventory_manifest_daypart_genres" />
+          <Property Name="source_id" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="proposal_version_detail_criteria_cpm">
           <Key>
@@ -9357,6 +9397,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="rows_processed" Type="Int32" />
           <Property Name="effective_date" Type="DateTime" Precision="7" />
           <Property Name="end_date" Type="DateTime" Precision="7" />
+          <NavigationProperty Name="inventory_file_program_names_jobs" Relationship="BroadcastModel.FK_inventory_file_program_names_jobs_inventory_file" FromRole="inventory_files" ToRole="inventory_file_program_names_jobs" />
         </EntityType>
         <Association Name="FK_inventory_files_inventory_source">
           <End Type="BroadcastModel.inventory_sources" Role="inventory_sources" Multiplicity="1" />
@@ -9587,6 +9628,8 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="station_inventory_manifest" Relationship="BroadcastModel.FK_station_inventory_manifest_weeks_station_inventory_manifest" FromRole="station_inventory_manifest_weeks" ToRole="station_inventory_manifest" />
           <Property Name="start_date" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="end_date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="sys_start_date" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="sys_end_date" Type="DateTime" Nullable="false" Precision="7" />
         </EntityType>
         <Association Name="FK_station_inventory_manifest_weeks_media_weeks">
           <End Type="BroadcastModel.media_weeks" Role="media_weeks" Multiplicity="1" />
@@ -10714,6 +10757,33 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="inventory_file_program_names_jobs">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="inventory_file_id" Type="Int32" Nullable="false" />
+          <Property Name="status" Type="Int32" Nullable="false" />
+          <Property Name="error_message" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="queued_at" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="queued_by" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="completed_at" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="inventory_files" Relationship="BroadcastModel.FK_inventory_file_program_names_jobs_inventory_file" FromRole="inventory_file_program_names_jobs" ToRole="inventory_files" />
+        </EntityType>
+        <Association Name="FK_inventory_file_program_names_jobs_inventory_file">
+          <End Type="BroadcastModel.inventory_files" Role="inventory_files" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BroadcastModel.inventory_file_program_names_jobs" Role="inventory_file_program_names_jobs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="inventory_files">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="inventory_file_program_names_jobs">
+              <PropertyRef Name="inventory_file_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -11182,6 +11252,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="genres">
             <EntityTypeMapping TypeName="BroadcastModel.genre">
               <MappingFragment StoreEntitySet="genres">
+                <ScalarProperty Name="source_id" ColumnName="source_id" />
                 <ScalarProperty Name="modified_date" ColumnName="modified_date" />
                 <ScalarProperty Name="modified_by" ColumnName="modified_by" />
                 <ScalarProperty Name="created_date" ColumnName="created_date" />
@@ -12141,6 +12212,8 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="station_inventory_manifest_weeks">
             <EntityTypeMapping TypeName="BroadcastModel.station_inventory_manifest_weeks">
               <MappingFragment StoreEntitySet="station_inventory_manifest_weeks">
+                <ScalarProperty Name="sys_end_date" ColumnName="sys_end_date" />
+                <ScalarProperty Name="sys_start_date" ColumnName="sys_start_date" />
                 <ScalarProperty Name="end_date" ColumnName="end_date" />
                 <ScalarProperty Name="start_date" ColumnName="start_date" />
                 <ScalarProperty Name="spots" ColumnName="spots" />
@@ -12542,6 +12615,19 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
                 <ScalarProperty Name="created_at" ColumnName="created_at" />
                 <ScalarProperty Name="text" ColumnName="text" />
                 <ScalarProperty Name="inventory_file_ratings_job_id" ColumnName="inventory_file_ratings_job_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="inventory_file_program_names_jobs">
+            <EntityTypeMapping TypeName="BroadcastModel.inventory_file_program_names_jobs">
+              <MappingFragment StoreEntitySet="inventory_file_program_names_jobs">
+                <ScalarProperty Name="completed_at" ColumnName="completed_at" />
+                <ScalarProperty Name="queued_by" ColumnName="queued_by" />
+                <ScalarProperty Name="queued_at" ColumnName="queued_at" />
+                <ScalarProperty Name="error_message" ColumnName="error_message" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="inventory_file_id" ColumnName="inventory_file_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

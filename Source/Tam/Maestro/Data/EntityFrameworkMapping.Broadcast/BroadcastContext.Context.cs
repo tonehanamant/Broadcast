@@ -155,5 +155,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<campaign_summaries> campaign_summaries { get; set; }
         public virtual DbSet<plan_summary_quarters> plan_summary_quarters { get; set; }
         public virtual DbSet<inventory_file_ratings_job_notes> inventory_file_ratings_job_notes { get; set; }
+        public virtual DbSet<inventory_file_program_names_jobs> inventory_file_program_names_jobs { get; set; }
     }
 }

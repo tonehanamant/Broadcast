@@ -133,6 +133,36 @@ BEGIN
 END
 /**************************************** END - PRI-16652 *****************************************************/
 
+/*************************************** START PRI 16342 : Program API - send request update out the api *****************************************************/
+
+IF OBJECT_ID('inventory_file_program_names_jobs') IS NULL
+BEGIN 
+	CREATE TABLE [inventory_file_program_names_jobs]
+	(
+		[id] [INT] IDENTITY(1,1) NOT NULL,
+		[inventory_file_id] [INT] NOT NULL,
+		[status] [INT] NOT NULL,
+		[error_message] [NVARCHAR](2000) NULL,
+		[queued_at] [datetime] NOT NULL,
+		[queued_by] [VARCHAR](50) NOT NULL,
+		[completed_at] [datetime] NULL
+		CONSTRAINT [PK_inventory_file_program_names_jobs] PRIMARY KEY CLUSTERED
+		(
+			[id] ASC
+		) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY]
+
+	ALTER TABLE [dbo].[inventory_file_program_names_jobs] WITH CHECK ADD CONSTRAINT [FK_inventory_file_program_names_jobs_inventory_file] FOREIGN KEY ([inventory_file_id])
+			REFERENCES [dbo].[inventory_files] (id)
+			ON DELETE CASCADE
+
+	CREATE NONCLUSTERED INDEX [IX_inventory_file_program_names_jobs_inventory_file_id] ON [dbo].[inventory_file_program_names_jobs] ([inventory_file_id] ASC)
+		INCLUDE ([id])
+		WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+END
+
+/*************************************** END PRI 16342 : Program API - send request update out the api *****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

@@ -1,4 +1,5 @@
-﻿using Common.Services;
+﻿using Cadent.Utilities.Clients;
+using Common.Services;
 using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
 using ConfigurationService.Client;
@@ -25,6 +26,7 @@ using Services.Broadcast.Helpers;
 using Services.Broadcast.ReportGenerators;
 using Services.Broadcast.Repositories;
 using Services.Broadcast.Validators;
+using Tam.Maestro.Common.Clients;
 using Tam.Maestro.Data.EntityFrameworkMapping;
 using Tam.Maestro.Services.Clients;
 
@@ -209,6 +211,12 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<ICampaignAggregator, CampaignAggregator>();
             unityContainer.RegisterType<ICampaignAggregationJobTrigger, CampaignAggregationJobTrigger>();
 
+            unityContainer.RegisterType<IProgramGuideApiClient, ProgramGuideApiClient>();
+            unityContainer.RegisterType<IProgramGuideService, ProgramGuideService>();
+
+            // TODO: Remove this during PRI-17014.  Reroute consumers to ProgramGuideApiClient.
+            unityContainer.RegisterType<IProgramGuideApiClientSimulator, ProgramGuideApiClientSimulator>();
+
             //@todo This is temporary to control the daypart source for Broadcast
             var repoFactory = unityContainer.Resolve<IDataRepositoryFactory>();
             var daypartRepo = repoFactory.GetDataRepository<IDisplayDaypartRepository>();
@@ -219,6 +227,9 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterInstance<IMediaMonthCrunchCache>(MediaMonthCrunchCache.MediaMonthCrunchCacheInstance);
 
             unityContainer.RegisterType<ITrafficApiCache, TrafficApiCache>(new ContainerControlledLifetimeManager()); // singleton
+            unityContainer.RegisterType<IAwsCognitoClient, AwsCognitoClient>(new ContainerControlledLifetimeManager()); // singleton
+
+            unityContainer.RegisterType<IRestClient, RestClient>(new InjectionConstructor());
         }
 
         public T GetApplicationService<T>() where T : class, IApplicationService

@@ -27,6 +27,7 @@ namespace EntityFrameworkMapping.Broadcast
         public System.DateTime created_date { get; set; }
         public string modified_by { get; set; }
         public System.DateTime modified_date { get; set; }
+        public int source_id { get; set; }
     
         public virtual ICollection<proposal_version_detail_criteria_genres> proposal_version_detail_criteria_genres { get; set; }
         public virtual ICollection<station_inventory_manifest_genres> station_inventory_manifest_genres { get; set; }
