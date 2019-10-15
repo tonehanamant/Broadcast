@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using Cadent.Utilities.Clients;
 using Tam.Maestro.Common;
 using Tam.Maestro.Common.Clients;
 
@@ -29,13 +30,15 @@ namespace Services.Broadcast.Clients
         private readonly string _ClientSecret;
 
         private readonly IAwsCognitoClient _TokenClient;
+        private readonly IRestClient _RestClient;
 
         // TODO: Remove this.  It's for testing.
         private readonly bool _UseRestClient = false;
 
-        public ProgramGuideApiClient(IAwsCognitoClient tokenClient)
+        public ProgramGuideApiClient(IAwsCognitoClient tokenClient, IRestClient restClient)
         {
             _TokenClient = tokenClient;
+            _RestClient = restClient;
 
             // TODO Get these from the database configuration once they are finalized
             // should these be readonly like this or should they be something else
@@ -70,22 +73,38 @@ namespace Services.Broadcast.Clients
             T output;
             // TODO: PRI-17014 - change to use the IRestClient 
             // Will complete this in PRI-17014 when we get the actual API.
-            using (var client = new HttpClient())
+            if (_UseRestClient)
             {
-                client.DefaultRequestHeaders.Add(AUTHORIZATION, $"{BEARER} {token}");
-                var serviceResponse = client.PostAsJsonAsync(url, data).Result;
-                if (serviceResponse.IsSuccessStatusCode == false)
-                {
-                    throw new Exception($"Error connecting to ProgramGuide for post data. : {serviceResponse}");
-                }
+                /* With RestClient */
+                var opts = new RestRequestOptions();
+                opts.IncludeHeader(new AuthenticationHeaderValue(BEARER, token.AccessToken));
+                //opts.IncludeHeader(new RestHeader(AUTHORIZATION, $"{BEARER} {token.AccessToken}", HeaderTypes.Request));
+                //opts.IncludeHeader("Accept", @"application/json", HeaderTypes.Request);
+                //var jsonInput = JsonConvert.SerializeObject(data);
 
-                try
+                var serviceResponse = _RestClient.PostAsync<T>(url, data, opts).Result;
+                // goes in here and never comes out.
+                output = serviceResponse.ObjectContent;
+            }
+            else
+            {
+                using (var client = new HttpClient())
                 {
-                    output = serviceResponse.Content.ReadAsAsync<T>().Result;
-                }
-                catch (Exception e)
-                {
-                    throw new Exception("Error calling the ProgramGuide for post data.", e);
+                    client.DefaultRequestHeaders.Add(AUTHORIZATION, $"{BEARER} {token}");
+                    var serviceResponse = client.PostAsJsonAsync(url, data).Result;
+                    if (serviceResponse.IsSuccessStatusCode == false)
+                    {
+                        throw new Exception($"Error connecting to ProgramGuide for post data. : {serviceResponse}");
+                    }
+
+                    try
+                    {
+                        output = serviceResponse.Content.ReadAsAsync<T>().Result;
+                    }
+                    catch (Exception e)
+                    {
+                        throw new Exception("Error calling the ProgramGuide for post data.", e);
+                    }
                 }
             }
 

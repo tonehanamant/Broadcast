@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Cadent.Utilities.Clients;
 using Tam.Maestro.Common.Clients;
 
 namespace Services.Broadcast.Clients
@@ -31,8 +32,8 @@ namespace Services.Broadcast.Clients
     /// <seealso cref="Services.Broadcast.Clients.ProgramGuideApiClient" />
     public class ProgramGuideApiClientSimulator : ProgramGuideApiClient, IProgramGuideApiClientSimulator
     {
-        public ProgramGuideApiClientSimulator(IAwsCognitoClient tokenClient)
-            :base(tokenClient)
+        public ProgramGuideApiClientSimulator(IAwsCognitoClient tokenClient, IRestClient restClient)
+            : base(tokenClient, restClient)
         {
         }
 
@@ -45,12 +46,12 @@ namespace Services.Broadcast.Clients
 
             if (url.Contains(_UrlProgramGuides))
             {
-                return (T)(object) _GetSimulatedProgramsForGuide((List<GuideRequestElementDto>)data);
+                return (T)(object)_GetSimulatedProgramsForGuide((List<GuideRequestElementDto>)data);
             }
 
             return default(T);
         }
-    
+
         private static List<GuideResponseElementDto> _GetSimulatedProgramsForGuide(object input)
         {
             var requestElements = input as List<GuideRequestElementDto>;
@@ -68,7 +69,7 @@ namespace Services.Broadcast.Clients
                 var responseElement = new GuideResponseElementDto
                 {
                     RequestElementId = requestElement.RequestElementId,
-                    Programs = new Func<List<GuideResponseProgramDto>> (() =>
+                    Programs = new Func<List<GuideResponseProgramDto>>(() =>
                     {
                         var duration = requestElement.Daypart.EndTime - requestElement.Daypart.StartTime;
                         var testProgramCount = (int)Math.Floor(duration / thirtyMinutesAsSeconds);
@@ -102,7 +103,7 @@ namespace Services.Broadcast.Clients
             return simulatedResult;
         }
 
-        private static SearchResponseProgramDto[] _CannedPrograms = 
+        private static SearchResponseProgramDto[] _CannedPrograms =
         {
             new SearchResponseProgramDto {ProgramId = "1", ProgramName = "11 NEWS @  5:00AM", GenreId = "33", Genre = "News", ShowType = "MOVTBA", SyndicationType = "O", MpaaRating = "NR"},
             new SearchResponseProgramDto {ProgramId = "2", ProgramName = "11 NEWS @ 10:00PM", GenreId = "33", Genre = "News", ShowType = "MISC", SyndicationType = "S", MpaaRating = "PG-13"},
