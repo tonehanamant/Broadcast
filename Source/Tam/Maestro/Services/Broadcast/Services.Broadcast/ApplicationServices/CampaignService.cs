@@ -308,7 +308,9 @@ namespace Services.Broadcast.ApplicationServices
             var quarterDateRange = _QuarterCalculationEngine.GetQuarterDateRange(quarter, year);
             var statuses = _CampaignRepository.GetCampaignsStatuses(quarterDateRange.Start, quarterDateRange.End);
 
-            return statuses.Select(x => new LookupDto { Id = (int)x, Display = x.Description() }).OrderBy(x => x.Id).ToList();
+            return statuses.Select(x => new LookupDto { Id = (int)x, Display = x.Description() })
+                .OrderByDescending(x => x.Id == (int)PlanStatusEnum.Scenario)
+                .ThenBy(x => x.Id).ToList();
         }
 
         /// <inheritdoc />

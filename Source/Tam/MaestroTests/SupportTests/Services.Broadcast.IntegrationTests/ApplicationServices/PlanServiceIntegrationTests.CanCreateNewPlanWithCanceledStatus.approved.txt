@@ -1,0 +1,150 @@
+﻿{
+  "AudienceId": 31,
+  "AudienceType": 1,
+  "AvailableMarkets": [
+    {
+      "Market": "Portland-Auburn",
+      "MarketCode": 100,
+      "MarketCoverageFileId": 1,
+      "PercentageOfUS": 48.0,
+      "Rank": 1,
+      "ShareOfVoicePercent": 22.2
+    },
+    {
+      "Market": "New York",
+      "MarketCode": 101,
+      "MarketCoverageFileId": 1,
+      "PercentageOfUS": 32.5,
+      "Rank": 2,
+      "ShareOfVoicePercent": 34.5
+    }
+  ],
+  "BlackoutMarkets": [
+    {
+      "Market": "Burlington-Plattsburgh",
+      "MarketCode": 123,
+      "MarketCoverageFileId": 1,
+      "PercentageOfUS": 5.5,
+      "Rank": 5
+    },
+    {
+      "Market": "Amarillo",
+      "MarketCode": 234,
+      "MarketCoverageFileId": 1,
+      "PercentageOfUS": 2.5,
+      "Rank": 8
+    }
+  ],
+  "Budget": 100.0000,
+  "CampaignId": 1,
+  "CoverageGoalPercent": 80.5,
+  "CPM": 12.0000,
+  "CPP": 12.0000,
+  "Currency": 1,
+  "Dayparts": [
+    {
+      "DaypartCodeId": 2,
+      "DaypartTypeId": 2,
+      "EndTimeSeconds": 2000,
+      "StartTimeSeconds": 0,
+      "WeightingGoalPercent": 28.0
+    },
+    {
+      "DaypartCodeId": 11,
+      "DaypartTypeId": 1,
+      "EndTimeSeconds": 2788,
+      "StartTimeSeconds": 1500,
+      "WeightingGoalPercent": 33.2
+    },
+    {
+      "DaypartCodeId": 3,
+      "DaypartTypeId": 3,
+      "EndTimeSeconds": 3000,
+      "StartTimeSeconds": 1550,
+      "WeightingGoalPercent": 25.0
+    }
+  ],
+  "DeliveryImpressions": 100.0,
+  "DeliveryRatingPoints": 100.0,
+  "Equivalized": true,
+  "FlightEndDate": "2019-01-31T00:00:00",
+  "FlightHiatusDays": [
+    "2019-01-20T00:00:00",
+    "2019-01-24T00:00:00"
+  ],
+  "FlightNotes": "Sample notes",
+  "FlightStartDate": "2019-01-01T00:00:00",
+  "GoalBreakdownType": 1,
+  "HouseholdCPM": 0.0120,
+  "HouseholdCPP": 13.4572,
+  "HouseholdDeliveryImpressions": 8333333.33333333,
+  "HouseholdRatingPoints": 7.4309248,
+  "HouseholdUniverse": 112143960.0,
+  "HUTBookId": 437,
+  "ModifiedBy": "integration_test",
+  "ModifiedDate": "2019-01-01T00:00:00",
+  "Name": "New Plan",
+  "PostingType": 2,
+  "ProductId": 1,
+  "SecondaryAudiences": [],
+  "ShareBookId": 437,
+  "SpotLengthId": 1,
+  "Status": 8,
+  "TotalActiveDays": 29,
+  "TotalHiatusDays": 2,
+  "TotalShareOfVoice": 100.0,
+  "Universe": 112143960.0,
+  "Vpvh": 0.012,
+  "WeeklyBreakdownWeeks": [
+    {
+      "ActiveDays": "Tu-Su",
+      "EndDate": "2019-01-06T00:00:00",
+      "Impressions": 20.0,
+      "MediaWeekId": 784,
+      "NumberOfActiveDays": 6,
+      "ShareOfVoice": 20.0,
+      "StartDate": "2018-12-31T00:00:00",
+      "WeekNumber": 1
+    },
+    {
+      "ActiveDays": "M-Su",
+      "EndDate": "2019-01-13T00:00:00",
+      "Impressions": 20.0,
+      "MediaWeekId": 785,
+      "NumberOfActiveDays": 7,
+      "ShareOfVoice": 20.0,
+      "StartDate": "2019-01-07T00:00:00",
+      "WeekNumber": 2
+    },
+    {
+      "ActiveDays": "M-Sa",
+      "EndDate": "2019-01-20T00:00:00",
+      "Impressions": 20.0,
+      "MediaWeekId": 786,
+      "NumberOfActiveDays": 6,
+      "ShareOfVoice": 20.0,
+      "StartDate": "2019-01-14T00:00:00",
+      "WeekNumber": 3
+    },
+    {
+      "ActiveDays": "M-W,F-Su",
+      "EndDate": "2019-01-27T00:00:00",
+      "Impressions": 20.0,
+      "MediaWeekId": 787,
+      "NumberOfActiveDays": 6,
+      "ShareOfVoice": 20.0,
+      "StartDate": "2019-01-21T00:00:00",
+      "WeekNumber": 4
+    },
+    {
+      "ActiveDays": "M-Th",
+      "EndDate": "2019-02-03T00:00:00",
+      "Impressions": 20.0,
+      "MediaWeekId": 788,
+      "NumberOfActiveDays": 4,
+      "ShareOfVoice": 20.0,
+      "StartDate": "2019-01-28T00:00:00",
+      "WeekNumber": 5
+    }
+  ]
+}

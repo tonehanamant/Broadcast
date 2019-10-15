@@ -173,7 +173,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         ///<inheritdoc/>
         public List<LookupDto> GetPlanStatuses()
         {
-            return EnumExtensions.ToLookupDtoList<PlanStatusEnum>(); ;
+            return EnumExtensions.ToLookupDtoList<PlanStatusEnum>().OrderByDescending(x => x.Id == (int)PlanStatusEnum.Scenario).ThenBy(x => x.Id).ToList();
         }
 
         ///<inheritdoc/>

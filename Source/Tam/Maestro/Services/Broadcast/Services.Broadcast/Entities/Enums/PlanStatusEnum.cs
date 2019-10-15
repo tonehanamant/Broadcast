@@ -18,5 +18,9 @@ namespace Services.Broadcast.Entities.Enums
         Complete = 6,
         [Description("Scenario")]
         Scenario = 7,
+        [Description("Canceled")]
+        Canceled = 8,
+        [Description("Rejected")]
+        Rejected = 9,
     }
 }

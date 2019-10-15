@@ -40,6 +40,42 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        public void CanCreateNewPlanWithCanceledStatus()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                PlanDto newPlan = _GetNewPlan();
+                newPlan.Status = PlanStatusEnum.Canceled;
+
+                var newPlanId = _PlanService.SavePlan(newPlan, "integration_test", new System.DateTime(2019, 01, 01));
+
+                Assert.IsTrue(newPlanId > 0);
+                PlanDto finalPlan = _PlanService.GetPlan(newPlanId);
+
+                Assert.AreEqual(PlanStatusEnum.Canceled, finalPlan.Status);
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(finalPlan, _GetJsonSettings()));
+            }
+        }
+
+        [Test]
+        public void CanCreateNewPlanWithRejectedStatus()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                PlanDto newPlan = _GetNewPlan();
+                newPlan.Status = PlanStatusEnum.Rejected;
+
+                var newPlanId = _PlanService.SavePlan(newPlan, "integration_test", new System.DateTime(2019, 01, 01));
+
+                Assert.IsTrue(newPlanId > 0);
+                PlanDto finalPlan = _PlanService.GetPlan(newPlanId);
+
+                Assert.AreEqual(PlanStatusEnum.Rejected, finalPlan.Status);
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(finalPlan, _GetJsonSettings()));
+            }
+        }
+
+        [Test]
         public void CreatePlan_InvalidSpotLengthId()
         {
             using (new TransactionScopeWrapper())

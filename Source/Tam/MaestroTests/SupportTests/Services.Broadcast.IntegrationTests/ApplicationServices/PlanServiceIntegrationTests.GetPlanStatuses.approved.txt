@@ -1,5 +1,9 @@
 ﻿[
   {
+    "Display": "Scenario",
+    "Id": 7
+  },
+  {
     "Display": "Working",
     "Id": 1
   },
@@ -24,7 +28,11 @@
     "Id": 6
   },
   {
-    "Display": "Scenario",
-    "Id": 7
+    "Display": "Canceled",
+    "Id": 8
+  },
+  {
+    "Display": "Rejected",
+    "Id": 9
   }
 ]
