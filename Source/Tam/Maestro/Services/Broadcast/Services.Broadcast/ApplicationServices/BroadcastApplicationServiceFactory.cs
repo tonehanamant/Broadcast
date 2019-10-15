@@ -1,5 +1,4 @@
-﻿using Cadent.Utilities.Clients;
-using Common.Services;
+﻿using Common.Services;
 using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
 using ConfigurationService.Client;
@@ -228,8 +227,6 @@ namespace Services.Broadcast.ApplicationServices
 
             unityContainer.RegisterType<ITrafficApiCache, TrafficApiCache>(new ContainerControlledLifetimeManager()); // singleton
             unityContainer.RegisterType<IAwsCognitoClient, AwsCognitoClient>(new ContainerControlledLifetimeManager()); // singleton
-
-            unityContainer.RegisterType<IRestClient, RestClient>(new InjectionConstructor());
         }
 
         public T GetApplicationService<T>() where T : class, IApplicationService
