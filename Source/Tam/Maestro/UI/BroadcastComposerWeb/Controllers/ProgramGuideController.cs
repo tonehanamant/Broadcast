@@ -4,7 +4,6 @@ using Services.Broadcast.Entities.ProgramGuide;
 using System.Collections.Generic;
 using System.Web.Http;
 using Tam.Maestro.Services.Cable.Entities;
-using Tam.Maestro.Services.Cable.Security;
 using Tam.Maestro.Web.Common;
 
 namespace BroadcastComposerWeb.Controllers
@@ -22,7 +21,6 @@ namespace BroadcastComposerWeb.Controllers
         }
 
         [HttpPost]
-        [RestrictedAccess]
         public BaseResponse<List<GuideResponseElementDto>> GetProgramsForGuide(int fileId, List<GuideRequestElementDto> guideRequestElements, bool simulate = true)
         {
             var fullName = "testUser";
@@ -30,7 +28,6 @@ namespace BroadcastComposerWeb.Controllers
         }
 
         [HttpGet]
-        [RestrictedAccess]
         public BaseResponse<List<SearchResponseProgramDto>> GetPrograms(bool simulate = true)
         {
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IProgramGuideService>().GetPrograms(simulate));
