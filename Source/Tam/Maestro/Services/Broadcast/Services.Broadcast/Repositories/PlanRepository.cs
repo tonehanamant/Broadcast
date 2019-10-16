@@ -320,7 +320,9 @@ namespace Services.Broadcast.Repositories
                 DaypartCodeId = entity.daypart_code_id,
                 DaypartTypeId = EnumHelper.GetEnum<DaypartTypeEnum>(entity.daypart_type),
                 StartTimeSeconds = entity.start_time_seconds,
+                IsStartTimeModified = entity.is_start_time_modified,
                 EndTimeSeconds = entity.end_time_seconds,
+                IsEndTimeModified = entity.is_end_time_modified,
                 WeightingGoalPercent = entity.weighting_goal_percent
             };
             return dto;
@@ -334,7 +336,9 @@ namespace Services.Broadcast.Repositories
                 daypart_code_id = d.DaypartCodeId,
                 daypart_type = (int)d.DaypartTypeId,
                 start_time_seconds = d.StartTimeSeconds,
+                is_start_time_modified = d.IsStartTimeModified,
                 end_time_seconds = d.EndTimeSeconds,
+                is_end_time_modified = d.IsEndTimeModified,
                 weighting_goal_percent = d.WeightingGoalPercent
             }));
         }

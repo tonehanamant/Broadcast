@@ -88,10 +88,13 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private readonly IMediaMonthAndWeekAggregateCache _MediaWeekCache;
         private readonly IPlanAggregator _PlanAggregator;
         private readonly IPlanSummaryRepository _PlanSummaryRepository;
+        private readonly IDaypartCodeRepository _DaypartCodeRepository;
         private readonly ICampaignAggregationJobTrigger _CampaignAggregationJobTrigger;
         private readonly INsiUniverseService _NsiUniverseService;
         private readonly IBroadcastAudiencesCache _BroadcastAudiencesCache;
         private readonly ISpotLengthEngine _SpotLengthEngine;
+
+        private const string _DaypartCodeNotFoundMessage = "Unable to find daypart code";
 
         public PlanService(IDataRepositoryFactory broadcastDataRepositoryFactory
             , IPlanValidator planValidator
@@ -109,6 +112,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
             _PlanRepository = broadcastDataRepositoryFactory.GetDataRepository<IPlanRepository>();
             _PlanSummaryRepository = broadcastDataRepositoryFactory.GetDataRepository<IPlanSummaryRepository>();
+            _DaypartCodeRepository = broadcastDataRepositoryFactory.GetDataRepository<IDaypartCodeRepository>();
             _PlanAggregator = planAggregator;
             _CampaignAggregationJobTrigger = campaignAggregationJobTrigger;
             _NsiUniverseService = nsiUniverseService;
@@ -121,6 +125,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
         {
             plan.ModifiedBy = modifiedBy;
             plan.ModifiedDate = modifiedDate;
+
+            _CalculateDaypartOverrides(plan.Dayparts);
             DaypartTimeHelper.SubtractOneSecondToEndTime(plan.Dayparts);
 
             _PlanValidator.ValidatePlan(plan);
@@ -148,6 +154,19 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _CampaignAggregationJobTrigger.TriggerJob(plan.CampaignId, modifiedBy);
 
             return plan.Id;
+        }
+
+        private void _CalculateDaypartOverrides(List<PlanDaypartDto> dayparts)
+        {
+            var daypartCodeDefaults = _DaypartCodeRepository.GetDaypartCodeDefaults();
+
+            foreach (var planDaypart in dayparts)
+            {
+                var daypartCodeDefault = daypartCodeDefaults.Single(x => x.Id == planDaypart.DaypartCodeId, _DaypartCodeNotFoundMessage);
+
+                planDaypart.IsStartTimeModified = planDaypart.StartTimeSeconds != daypartCodeDefault.DefaultStartTimeSeconds;
+                planDaypart.IsEndTimeModified = planDaypart.EndTimeSeconds != daypartCodeDefault.DefaultEndTimeSeconds;
+            }
         }
 
         ///<inheritdoc/>

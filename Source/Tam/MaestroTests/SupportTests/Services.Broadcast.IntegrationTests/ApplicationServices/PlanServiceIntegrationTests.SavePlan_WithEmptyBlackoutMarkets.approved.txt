@@ -31,6 +31,8 @@
       "DaypartCodeId": 2,
       "DaypartTypeId": 2,
       "EndTimeSeconds": 2000,
+      "IsEndTimeModified": true,
+      "IsStartTimeModified": true,
       "StartTimeSeconds": 0,
       "WeightingGoalPercent": 28.0
     },
@@ -38,14 +40,18 @@
       "DaypartCodeId": 11,
       "DaypartTypeId": 1,
       "EndTimeSeconds": 2788,
+      "IsEndTimeModified": true,
+      "IsStartTimeModified": true,
       "StartTimeSeconds": 1500,
       "WeightingGoalPercent": 33.2
     },
     {
       "DaypartCodeId": 3,
       "DaypartTypeId": 3,
-      "EndTimeSeconds": 3000,
-      "StartTimeSeconds": 1550,
+      "EndTimeSeconds": 68399,
+      "IsEndTimeModified": false,
+      "IsStartTimeModified": false,
+      "StartTimeSeconds": 57600,
       "WeightingGoalPercent": 25.0
     }
   ],

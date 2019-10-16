@@ -21,6 +21,13 @@ namespace Services.Broadcast.Repositories
         DaypartCodeDto GetDaypartCodeById(int daypartCodeId);
 
         /// <summary>
+        /// Gets the daypart code defaults by id.
+        /// </summary>
+        /// <param name="daypartCodeId">The daypart code identifier.</param>
+        /// <returns></returns>
+        DaypartCodeDefaultDto GetDaypartCodeDefaultById(int daypartCodeId);
+
+        /// <summary>
         /// Gets the daypart code defaults.
         /// </summary>
         /// <returns>List of <see cref="DaypartCodeDefaultDto"/></returns>
@@ -76,6 +83,15 @@ namespace Services.Broadcast.Repositories
             });
         }
 
+        ///<inheritdoc/>
+        public DaypartCodeDefaultDto GetDaypartCodeDefaultById(int daypartCodeId)
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                return _MapToDaypartCodeDefault(context.daypart_codes.Single(x => x.is_active && x.id == daypartCodeId, DaypartCodeNotFoundMessage));
+            });
+        }
+
         public List<DaypartCodeDto> GetAllActiveDaypartCodes()
         {
             return _InReadUncommitedTransaction(context =>
@@ -94,6 +110,22 @@ namespace Services.Broadcast.Repositories
                 Id = daypartCode.id,
                 Code = daypartCode.code,
                 FullName = daypartCode.full_name
+            };
+        }
+
+        private DaypartCodeDefaultDto _MapToDaypartCodeDefault(daypart_codes daypartCode)
+        {
+            if (daypartCode == null)
+                return null;
+
+            return new DaypartCodeDefaultDto
+            {
+                Id = daypartCode.id,
+                Code = daypartCode.code,
+                FullName = daypartCode.full_name,
+                DaypartType = (DaypartTypeEnum)daypartCode.daypart_type,
+                DefaultStartTimeSeconds = daypartCode.default_start_time_seconds,
+                DefaultEndTimeSeconds = daypartCode.default_end_time_seconds,
             };
         }
 

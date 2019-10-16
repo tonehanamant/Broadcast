@@ -163,6 +163,36 @@ END
 
 /*************************************** END PRI 16342 : Program API - send request update out the api *****************************************************/
 
+/*************************************** START - PRI-16262 Plan Details - Daypart display Part 2- Additional Details ****************************************************/
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('plan_dayparts') AND name = 'is_start_time_modified')
+BEGIN
+	ALTER TABLE [plan_dayparts] ADD [is_start_time_modified] [BIT] NULL
+
+	EXEC('UPDATE t2
+			SET t2.is_start_time_modified = (CASE WHEN t1.default_start_time_seconds - 1 = t2.start_time_seconds THEN 0 ELSE 1 END)
+			FROM daypart_codes AS t1
+			INNER JOIN plan_dayparts AS t2 ON t1.id = t2.daypart_code_id
+			WHERE t2.is_start_time_modified IS NULL')
+
+	ALTER TABLE [plan_dayparts]
+	ALTER COLUMN [is_start_time_modified] [BIT] NOT NULL
+END
+
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('plan_dayparts') AND name = 'is_end_time_modified')
+BEGIN
+	ALTER TABLE [plan_dayparts] ADD [is_end_time_modified] [BIT] NULL
+
+	EXEC('UPDATE t2
+			SET t2.is_end_time_modified = (CASE WHEN t1.default_end_time_seconds - 1 = t2.end_time_seconds THEN 0 ELSE 1 END)
+			FROM daypart_codes AS t1
+			INNER JOIN plan_dayparts AS t2 ON t1.id = t2.daypart_code_id
+			WHERE t2.is_end_time_modified IS NULL')
+
+	ALTER TABLE [plan_dayparts]
+	ALTER COLUMN [is_end_time_modified] [BIT] NOT NULL
+END
+/**************************************** END - PRI-16262 Plan Details - Daypart display Part 2- Additional Details *****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

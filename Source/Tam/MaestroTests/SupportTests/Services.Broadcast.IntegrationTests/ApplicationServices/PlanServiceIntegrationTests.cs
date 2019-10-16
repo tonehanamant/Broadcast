@@ -1035,7 +1035,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     new PlanDaypartDto{ DaypartCodeId = 2, DaypartTypeId = DaypartTypeEnum.EntertainmentNonNews, StartTimeSeconds = 0, EndTimeSeconds = 2000, WeightingGoalPercent = 28.0 },
                     new PlanDaypartDto{ DaypartCodeId = 11, DaypartTypeId = DaypartTypeEnum.News, StartTimeSeconds = 1500, EndTimeSeconds = 2788, WeightingGoalPercent = 33.2 },
-                    new PlanDaypartDto{ DaypartCodeId = 3, DaypartTypeId = DaypartTypeEnum.ROS, StartTimeSeconds = 1550, EndTimeSeconds = 3000, WeightingGoalPercent = 25 }
+                    new PlanDaypartDto{ DaypartCodeId = 3, DaypartTypeId = DaypartTypeEnum.ROS, StartTimeSeconds = 57600, EndTimeSeconds = 68399, WeightingGoalPercent = 25 }
                 },
                 Vpvh = 0.012,
                 WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>

@@ -32,12 +32,28 @@ namespace Services.Broadcast.Entities.Plan
         public int StartTimeSeconds { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether the default start time value was overridden by the user
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if the start time modified by the user; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsStartTimeModified { get; set; }
+
+        /// <summary>
         /// Gets or sets the end time seconds from midnight ET.
         /// </summary>
         /// <value>
         /// The end time seconds from midnight ET.
         /// </value>
         public int EndTimeSeconds { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the default end time value was overridden by the user
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if the end time modified by the user; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsEndTimeModified { get; set; }
 
         /// <summary>
         /// Gets or sets the weighting goal percent.
