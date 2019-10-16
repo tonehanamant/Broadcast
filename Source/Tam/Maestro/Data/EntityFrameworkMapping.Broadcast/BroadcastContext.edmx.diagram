@@ -329,6 +329,11 @@
         <AssociationConnector Association="BroadcastModel.FK_inventory_file_ratings_job_notes_inventory_file_ratings_jobs" />
         <EntityTypeShape EntityType="BroadcastModel.inventory_file_program_names_jobs" Width="1.5" PointX="5" PointY="51.5" />
         <AssociationConnector Association="BroadcastModel.FK_inventory_file_program_names_jobs_inventory_file" />
+        <EntityTypeShape EntityType="BroadcastModel.genre_mappings" Width="1.5" PointX="14.75" PointY="45.5" />
+        <EntityTypeShape EntityType="BroadcastModel.genre_sources" Width="1.5" PointX="10.25" PointY="48" />
+        <AssociationConnector Association="BroadcastModel.FK__genre_map__maest__328300B1" />
+        <AssociationConnector Association="BroadcastModel.FK__genre_map__mappe__337724EA" />
+        <AssociationConnector Association="BroadcastModel.FK__genres__source_i__2FA69406" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

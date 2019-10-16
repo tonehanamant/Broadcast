@@ -301,6 +301,7 @@
     <Compile Include="ApplicationServices\AgencyService.cs" />
     <Compile Include="ApplicationServices\CampaignAggregationJobTrigger.cs" />
     <Compile Include="ApplicationServices\CampaignAggregator.cs" />
+    <Compile Include="ApplicationServices\GenreService.cs" />
     <Compile Include="ApplicationServices\ProgramGuideService.cs" />
     <Compile Include="Clients\ProgramGuideApiClient.cs" />
     <Compile Include="Clients\ProgramGuideApiClientSimulator.cs" />
@@ -329,6 +330,7 @@
     <Compile Include="Clients\ConfigurationClientSwitch.cs" />
     <Compile Include="Entities\CampaignListItemDto.cs" />
     <Compile Include="Entities\CampaignQuarterDto.cs" />
+    <Compile Include="Entities\Enums\GenreSourceEnum.cs" />
     <Compile Include="Entities\Enums\InventoryFileProgramNameJobStatus.cs" />
     <Compile Include="Entities\InventoryFileProgramNameJob.cs" />
     <Compile Include="Entities\ProgramGuide\GuideRequestDaypartDto.cs" />

@@ -320,6 +320,25 @@
           <Property Name="name" Type="varchar" MaxLength="15" Nullable="false" />
           <Property Name="ordinal" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="genre_mappings">
+          <Key>
+            <PropertyRef Name="maestro_genre_id" />
+            <PropertyRef Name="mapped_genre_id" />
+          </Key>
+          <Property Name="maestro_genre_id" Type="int" Nullable="false" />
+          <Property Name="mapped_genre_id" Type="int" Nullable="false" />
+          <Property Name="created_by" Type="varchar" MaxLength="63" Nullable="false" />
+          <Property Name="created_date" Type="datetime" Nullable="false" />
+          <Property Name="modified_by" Type="varchar" MaxLength="63" Nullable="false" />
+          <Property Name="modified_date" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="genre_sources">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <EntityType Name="genres">
           <Key>
             <PropertyRef Name="id" />
@@ -1751,6 +1770,42 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="daypart_text" Type="varchar" MaxLength="63" Nullable="false" />
           <Property Name="total_hours" Type="float" Nullable="false" />
         </EntityType>
+        <Association Name="FK__genre_map__maest__328300B1">
+          <End Role="genres" Type="Self.genres" Multiplicity="1" />
+          <End Role="genre_mappings" Type="Self.genre_mappings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="genres">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="genre_mappings">
+              <PropertyRef Name="maestro_genre_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__genre_map__mappe__337724EA">
+          <End Role="genres" Type="Self.genres" Multiplicity="1" />
+          <End Role="genre_mappings" Type="Self.genre_mappings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="genres">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="genre_mappings">
+              <PropertyRef Name="mapped_genre_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__genres__source_i__2FA69406">
+          <End Role="genre_sources" Type="Self.genre_sources" Multiplicity="1" />
+          <End Role="genres" Type="Self.genres" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="genre_sources">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="genres">
+              <PropertyRef Name="source_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_affidavit_client_scrub_audiences_affidavit_client_scrubs">
           <End Role="affidavit_client_scrubs" Type="Self.affidavit_client_scrubs" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -4311,6 +4366,8 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySet Name="daypart_days" EntityType="Self.daypart_days" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="dayparts" EntityType="Self.dayparts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="days" EntityType="Self.days" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="genre_mappings" EntityType="Self.genre_mappings" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="genre_sources" EntityType="Self.genre_sources" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="genres" EntityType="Self.genres" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="inventory_file_problems" EntityType="Self.inventory_file_problems" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="inventory_file_program_names_jobs" EntityType="Self.inventory_file_program_names_jobs" Schema="dbo" store:Type="Tables" />
@@ -4450,6 +4507,18 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
     [vw_ccc_daypart].[total_hours] AS [total_hours]
     FROM [dbo].[vw_ccc_daypart] AS [vw_ccc_daypart]</DefiningQuery>
           </EntitySet>
+          <AssociationSet Name="FK__genre_map__maest__328300B1" Association="Self.FK__genre_map__maest__328300B1">
+            <End Role="genres" EntitySet="genres" />
+            <End Role="genre_mappings" EntitySet="genre_mappings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__genre_map__mappe__337724EA" Association="Self.FK__genre_map__mappe__337724EA">
+            <End Role="genres" EntitySet="genres" />
+            <End Role="genre_mappings" EntitySet="genre_mappings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__genres__source_i__2FA69406" Association="Self.FK__genres__source_i__2FA69406">
+            <End Role="genre_sources" EntitySet="genre_sources" />
+            <End Role="genres" EntitySet="genres" />
+          </AssociationSet>
           <AssociationSet Name="FK_affidavit_client_scrub_audiences_affidavit_client_scrubs" Association="Self.FK_affidavit_client_scrub_audiences_affidavit_client_scrubs">
             <End Role="affidavit_client_scrubs" EntitySet="affidavit_client_scrubs" />
             <End Role="affidavit_client_scrub_audiences" EntitySet="affidavit_client_scrub_audiences" />
@@ -6159,6 +6228,20 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="inventory_files" EntitySet="inventory_files" />
             <End Role="inventory_file_program_names_jobs" EntitySet="inventory_file_program_names_jobs" />
           </AssociationSet>
+          <EntitySet Name="genre_mappings" EntityType="BroadcastModel.genre_mappings" />
+          <EntitySet Name="genre_sources" EntityType="BroadcastModel.genre_sources" />
+          <AssociationSet Name="FK__genre_map__maest__328300B1" Association="BroadcastModel.FK__genre_map__maest__328300B1">
+            <End Role="genre" EntitySet="genres" />
+            <End Role="genre_mappings" EntitySet="genre_mappings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__genre_map__mappe__337724EA" Association="BroadcastModel.FK__genre_map__mappe__337724EA">
+            <End Role="genre" EntitySet="genres" />
+            <End Role="genre_mappings" EntitySet="genre_mappings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__genres__source_i__2FA69406" Association="BroadcastModel.FK__genres__source_i__2FA69406">
+            <End Role="genre_sources" EntitySet="genre_sources" />
+            <End Role="genre" EntitySet="genres" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="audience_audiences">
           <Key>
@@ -7046,6 +7129,9 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="station_inventory_manifest_genres" Relationship="BroadcastModel.FK_station_inventory_manifest_genres_genres" FromRole="genre" ToRole="station_inventory_manifest_genres" />
           <NavigationProperty Name="station_inventory_manifest_daypart_genres" Relationship="BroadcastModel.FK_station_inventory_manifest_daypart_genres_genres" FromRole="genre" ToRole="station_inventory_manifest_daypart_genres" />
           <Property Name="source_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="genre_mappings" Relationship="BroadcastModel.FK__genre_map__maest__328300B1" FromRole="genre" ToRole="genre_mappings" />
+          <NavigationProperty Name="genre_mappings1" Relationship="BroadcastModel.FK__genre_map__mappe__337724EA" FromRole="genre" ToRole="genre_mappings" />
+          <NavigationProperty Name="genre_sources" Relationship="BroadcastModel.FK__genres__source_i__2FA69406" FromRole="genre" ToRole="genre_sources" />
         </EntityType>
         <EntityType Name="proposal_version_detail_criteria_cpm">
           <Key>
@@ -10788,6 +10874,64 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="genre_mappings">
+          <Key>
+            <PropertyRef Name="maestro_genre_id" />
+            <PropertyRef Name="mapped_genre_id" />
+          </Key>
+          <Property Name="maestro_genre_id" Type="Int32" Nullable="false" />
+          <Property Name="mapped_genre_id" Type="Int32" Nullable="false" />
+          <Property Name="created_by" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
+          <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="modified_by" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
+          <Property Name="modified_date" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="genre" Relationship="BroadcastModel.FK__genre_map__maest__328300B1" FromRole="genre_mappings" ToRole="genre" />
+          <NavigationProperty Name="genre1" Relationship="BroadcastModel.FK__genre_map__mappe__337724EA" FromRole="genre_mappings" ToRole="genre" />
+        </EntityType>
+        <EntityType Name="genre_sources">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="genres" Relationship="BroadcastModel.FK__genres__source_i__2FA69406" FromRole="genre_sources" ToRole="genre" />
+        </EntityType>
+        <Association Name="FK__genre_map__maest__328300B1">
+          <End Type="BroadcastModel.genre" Role="genre" Multiplicity="1" />
+          <End Type="BroadcastModel.genre_mappings" Role="genre_mappings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="genre">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="genre_mappings">
+              <PropertyRef Name="maestro_genre_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__genre_map__mappe__337724EA">
+          <End Type="BroadcastModel.genre" Role="genre" Multiplicity="1" />
+          <End Type="BroadcastModel.genre_mappings" Role="genre_mappings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="genre">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="genre_mappings">
+              <PropertyRef Name="mapped_genre_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__genres__source_i__2FA69406">
+          <End Type="BroadcastModel.genre_sources" Role="genre_sources" Multiplicity="1" />
+          <End Type="BroadcastModel.genre" Role="genre" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="genre_sources">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="genre">
+              <PropertyRef Name="source_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -12634,6 +12778,26 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
                 <ScalarProperty Name="error_message" ColumnName="error_message" />
                 <ScalarProperty Name="status" ColumnName="status" />
                 <ScalarProperty Name="inventory_file_id" ColumnName="inventory_file_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="genre_mappings">
+            <EntityTypeMapping TypeName="BroadcastModel.genre_mappings">
+              <MappingFragment StoreEntitySet="genre_mappings">
+                <ScalarProperty Name="modified_date" ColumnName="modified_date" />
+                <ScalarProperty Name="modified_by" ColumnName="modified_by" />
+                <ScalarProperty Name="created_date" ColumnName="created_date" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="mapped_genre_id" ColumnName="mapped_genre_id" />
+                <ScalarProperty Name="maestro_genre_id" ColumnName="maestro_genre_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="genre_sources">
+            <EntityTypeMapping TypeName="BroadcastModel.genre_sources">
+              <MappingFragment StoreEntitySet="genre_sources">
+                <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

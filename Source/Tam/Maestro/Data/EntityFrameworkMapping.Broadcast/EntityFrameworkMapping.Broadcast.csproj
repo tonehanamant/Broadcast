@@ -402,6 +402,12 @@
     <Compile Include="genre.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="genre_mappings.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="genre_sources.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="Interceptors\TemporalTableCommandTreeInterceptor.cs" />
     <Compile Include="inventory_files.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>

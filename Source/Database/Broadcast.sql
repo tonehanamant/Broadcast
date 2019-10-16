@@ -193,6 +193,173 @@ BEGIN
 END
 /**************************************** END - PRI-16262 Plan Details - Daypart display Part 2- Additional Details *****************************************************/
 
+/*************************************** START - PRI-16044 ****************************************************/
+-- genre_sources
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('genre_sources'))
+BEGIN
+
+	CREATE TABLE genre_sources (
+		id INT IDENTITY PRIMARY KEY,
+		name VARCHAR(50) NOT NULL
+	)
+
+	INSERT INTO genre_sources
+	VALUES ('Maestro'), ('Dativa')
+
+END
+
+-- Genres
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('genres') AND name = 'source_id')
+BEGIN
+	ALTER TABLE genres
+	ADD source_id INT 
+
+	ALTER TABLE genres
+	ADD FOREIGN KEY (source_id) REFERENCES genre_sources(id);
+
+	EXEC('UPDATE genres 
+	SET source_id = 1
+	WHERE source_id IS NULL')
+
+	ALTER TABLE genres
+	ALTER COLUMN source_id INT NOT NULL
+
+	-- Cadent genres
+	EXEC('UPDATE genres SET name = ''Sports/Sports Talk'' WHERE name = ''Sports''')
+
+	EXEC('INSERT INTO genres (name, created_by, created_date, modified_by, modified_date, source_id)
+	VALUES (''Action/Adventure'', ''System'', GETDATE(), ''System'', GETDATE(), 1),
+	(''Children'', ''System'', GETDATE(), ''System'', GETDATE(), 1),
+	(''Educational'', ''System'', GETDATE(), ''System'', GETDATE(), 1),
+	(''Lifestyle'', ''System'', GETDATE(), ''System'', GETDATE(), 1),
+	(''Paid Program'', ''System'', GETDATE(), ''System'', GETDATE(), 1),
+	(''Special'', ''System'', GETDATE(), ''System'', GETDATE(), 1);')
+
+	-- WWTV genres
+	EXEC('INSERT INTO genres (name, created_by, created_date, modified_by, modified_date, source_id)
+	VALUES (''Family'', ''System'', GETDATE(), ''System'', GETDATE(), 2),
+	(''Comedy'', ''System'', GETDATE(), ''System'', GETDATE(), 2),
+	(''Crime'', ''System'', GETDATE(), ''System'', GETDATE(), 2),
+	(''Investigative'', ''System'', GETDATE(), ''System'', GETDATE(), 2),
+	(''Documentary'', ''System'', GETDATE(), ''System'', GETDATE(), 2),
+	(''Adult'', ''System'', GETDATE(), ''System'', GETDATE(), 2),
+	(''Anthology'', ''System'', GETDATE(), ''System'', GETDATE(), 2),
+	(''Drama'', ''System'', GETDATE(), ''System'', GETDATE(), 2),
+	(''Fantasy'', ''System'', GETDATE(), ''System'', GETDATE(), 2),
+	(''Mystery'', ''System'', GETDATE(), ''System'', GETDATE(), 2),
+	(''Romance'', ''System'', GETDATE(), ''System'', GETDATE(), 2),
+	(''Western'', ''System'', GETDATE(), ''System'', GETDATE(), 2),
+	(''History'', ''System'', GETDATE(), ''System'', GETDATE(), 2),
+	(''Science & Techonology'', ''System'', GETDATE(), ''System'', GETDATE(), 2),
+	(''Entertainment'', ''System'', GETDATE(), ''System'', GETDATE(), 2),
+	(''Interview'', ''System'', GETDATE(), ''System'', GETDATE(), 2),
+	(''Musical'', ''System'', GETDATE(), ''System'', GETDATE(), 2),
+	(''Competition'', ''System'', GETDATE(), ''System'', GETDATE(), 2),
+	(''Game Show'', ''System'', GETDATE(), ''System'', GETDATE(), 2),
+	(''Informational'', ''System'', GETDATE(), ''System'', GETDATE(), 2),
+	(''Profile'', ''System'', GETDATE(), ''System'', GETDATE(), 2),
+	(''Auction'', ''System'', GETDATE(), ''System'', GETDATE(), 2),
+	(''Beauty & Fashion'', ''System'', GETDATE(), ''System'', GETDATE(), 2),
+	(''Do It Yourself'', ''System'', GETDATE(), ''System'', GETDATE(), 2),
+	(''Food'', ''System'', GETDATE(), ''System'', GETDATE(), 2),
+	(''Fitness & Exercise'', ''System'', GETDATE(), ''System'', GETDATE(), 2),
+	(''Health & Medicine'', ''System'', GETDATE(), ''System'', GETDATE(), 2),
+	(''Inspirational'', ''System'', GETDATE(), ''System'', GETDATE(), 2),
+	(''Instructional'', ''System'', GETDATE(), ''System'', GETDATE(), 2),
+	(''Music'', ''System'', GETDATE(), ''System'', GETDATE(), 2),
+	(''Travel'', ''System'', GETDATE(), ''System'', GETDATE(), 2),
+	(''Nature'', ''System'', GETDATE(), ''System'', GETDATE(), 2),
+	(''Business'', ''System'', GETDATE(), ''System'', GETDATE(), 2),
+	(''News'', ''System'', GETDATE(), ''System'', GETDATE(), 2),
+	(''Politics'', ''System'', GETDATE(), ''System'', GETDATE(), 2),
+	(''Home Shopping'', ''System'', GETDATE(), ''System'', GETDATE(), 2),
+	(''Reality'', ''System'', GETDATE(), ''System'', GETDATE(), 2),
+	(''Religious'', ''System'', GETDATE(), ''System'', GETDATE(), 2),
+	(''Awards'', ''System'', GETDATE(), ''System'', GETDATE(), 2),
+	(''Holiday'', ''System'', GETDATE(), ''System'', GETDATE(), 2),
+	(''Parade'', ''System'', GETDATE(), ''System'', GETDATE(), 2),
+	(''Performance'', ''System'', GETDATE(), ''System'', GETDATE(), 2),
+	(''Telethon'', ''System'', GETDATE(), ''System'', GETDATE(), 2),
+	(''Sports'', ''System'', GETDATE(), ''System'', GETDATE(), 2),
+	(''Talk Show'', ''System'', GETDATE(), ''System'', GETDATE(), 2),
+	(''Science Fiction'', ''System'', GETDATE(), ''System'', GETDATE(), 2),
+	(''Action'', ''System'', GETDATE(), ''System'', GETDATE(), 2),
+	(''Adventure'', ''System'', GETDATE(), ''System'', GETDATE(), 2),
+	(''Horror'', ''System'', GETDATE(), ''System'', GETDATE(), 2),
+	(''Thriller & Suspense'', ''System'', GETDATE(), ''System'', GETDATE(), 2)')
+
+END
+
+-- genre_mappings
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('genre_mappings'))
+BEGIN
+	CREATE TABLE genre_mappings (
+		maestro_genre_id INT NOT NULL,
+		mapped_genre_id INT NOT NULL,
+		created_by VARCHAR(63) NOT NULL,
+		created_date DATETIME NOT NULL,
+		modified_by VARCHAR(63) NOT NULL,
+		modified_date DATETIME NOT NULL,
+		PRIMARY KEY (maestro_genre_id, mapped_genre_id),
+		FOREIGN KEY (maestro_genre_id) REFERENCES genres(id),
+		FOREIGN KEY (mapped_genre_id) REFERENCES genres(id),
+	)
+
+	EXEC('INSERT INTO genre_mappings
+	VALUES ((SELECT id FROM genres WHERE source_id = 1 AND name = ''Children''), (SELECT id FROM genres WHERE source_id = 2 AND name = ''Family''), ''System'', GETDATE(), ''System'', GETDATE()),
+	((SELECT id FROM genres WHERE source_id = 1 AND name = ''Comedy''), (SELECT id FROM genres WHERE source_id = 2 AND name = ''Comedy''), ''System'', GETDATE(), ''System'', GETDATE()),
+	((SELECT id FROM genres WHERE source_id = 1 AND name = ''Crime''), (SELECT id FROM genres WHERE source_id = 2 AND name = ''Crime''), ''System'', GETDATE(), ''System'', GETDATE()),
+	((SELECT id FROM genres WHERE source_id = 1 AND name = ''Crime''), (SELECT id FROM genres WHERE source_id = 2 AND name = ''Investigative''), ''System'', GETDATE(), ''System'', GETDATE()),
+	((SELECT id FROM genres WHERE source_id = 1 AND name = ''Documentary''), (SELECT id FROM genres WHERE source_id = 2 AND name = ''Documentary''), ''System'', GETDATE(), ''System'', GETDATE()),
+	((SELECT id FROM genres WHERE source_id = 1 AND name = ''Drama''), (SELECT id FROM genres WHERE source_id = 2 AND name = ''Adult''), ''System'', GETDATE(), ''System'', GETDATE()),
+	((SELECT id FROM genres WHERE source_id = 1 AND name = ''Drama''), (SELECT id FROM genres WHERE source_id = 2 AND name = ''Anthology''), ''System'', GETDATE(), ''System'', GETDATE()),
+	((SELECT id FROM genres WHERE source_id = 1 AND name = ''Drama''), (SELECT id FROM genres WHERE source_id = 2 AND name = ''Drama''), ''System'', GETDATE(), ''System'', GETDATE()),
+	((SELECT id FROM genres WHERE source_id = 1 AND name = ''Drama''), (SELECT id FROM genres WHERE source_id = 2 AND name = ''Fantasy''), ''System'', GETDATE(), ''System'', GETDATE()),
+	((SELECT id FROM genres WHERE source_id = 1 AND name = ''Drama''), (SELECT id FROM genres WHERE source_id = 2 AND name = ''Mystery''), ''System'', GETDATE(), ''System'', GETDATE()),
+	((SELECT id FROM genres WHERE source_id = 1 AND name = ''Drama''), (SELECT id FROM genres WHERE source_id = 2 AND name = ''Romance''), ''System'', GETDATE(), ''System'', GETDATE()),
+	((SELECT id FROM genres WHERE source_id = 1 AND name = ''Drama''), (SELECT id FROM genres WHERE source_id = 2 AND name = ''Western''), ''System'', GETDATE(), ''System'', GETDATE()),
+	((SELECT id FROM genres WHERE source_id = 1 AND name = ''Educational''), (SELECT id FROM genres WHERE source_id = 2 AND name = ''History''), ''System'', GETDATE(), ''System'', GETDATE()),
+	((SELECT id FROM genres WHERE source_id = 1 AND name = ''Educational''), (SELECT id FROM genres WHERE source_id = 2 AND name = ''Science & Techonology''), ''System'', GETDATE(), ''System'', GETDATE()),
+	((SELECT id FROM genres WHERE source_id = 1 AND name = ''Entertainment''), (SELECT id FROM genres WHERE source_id = 2 AND name = ''Entertainment''), ''System'', GETDATE(), ''System'', GETDATE()),
+	((SELECT id FROM genres WHERE source_id = 1 AND name = ''Entertainment''), (SELECT id FROM genres WHERE source_id = 2 AND name = ''Interview''), ''System'', GETDATE(), ''System'', GETDATE()),
+	((SELECT id FROM genres WHERE source_id = 1 AND name = ''Entertainment''), (SELECT id FROM genres WHERE source_id = 2 AND name = ''Musical''), ''System'', GETDATE(), ''System'', GETDATE()),
+	((SELECT id FROM genres WHERE source_id = 1 AND name = ''Game Show''), (SELECT id FROM genres WHERE source_id = 2 AND name = ''Game Show''), ''System'', GETDATE(), ''System'', GETDATE()),
+	((SELECT id FROM genres WHERE source_id = 1 AND name = ''Informational''), (SELECT id FROM genres WHERE source_id = 2 AND name = ''Informational''), ''System'', GETDATE(), ''System'', GETDATE()),
+	((SELECT id FROM genres WHERE source_id = 1 AND name = ''Informational''), (SELECT id FROM genres WHERE source_id = 2 AND name = ''Profile''), ''System'', GETDATE(), ''System'', GETDATE()),
+	((SELECT id FROM genres WHERE source_id = 1 AND name = ''Lifestyle''), (SELECT id FROM genres WHERE source_id = 2 AND name = ''Auction''), ''System'', GETDATE(), ''System'', GETDATE()),
+	((SELECT id FROM genres WHERE source_id = 1 AND name = ''Lifestyle''), (SELECT id FROM genres WHERE source_id = 2 AND name = ''Beauty & Fashion''), ''System'', GETDATE(), ''System'', GETDATE()),
+	((SELECT id FROM genres WHERE source_id = 1 AND name = ''Lifestyle''), (SELECT id FROM genres WHERE source_id = 2 AND name = ''Do It Yourself''), ''System'', GETDATE(), ''System'', GETDATE()),
+	((SELECT id FROM genres WHERE source_id = 1 AND name = ''Lifestyle''), (SELECT id FROM genres WHERE source_id = 2 AND name = ''Food''), ''System'', GETDATE(), ''System'', GETDATE()),
+	((SELECT id FROM genres WHERE source_id = 1 AND name = ''Lifestyle''), (SELECT id FROM genres WHERE source_id = 2 AND name = ''Fitness & Exercise''), ''System'', GETDATE(), ''System'', GETDATE()),
+	((SELECT id FROM genres WHERE source_id = 1 AND name = ''Lifestyle''), (SELECT id FROM genres WHERE source_id = 2 AND name = ''Health & Medicine''), ''System'', GETDATE(), ''System'', GETDATE()),
+	((SELECT id FROM genres WHERE source_id = 1 AND name = ''Lifestyle''), (SELECT id FROM genres WHERE source_id = 2 AND name = ''Inspirational''), ''System'', GETDATE(), ''System'', GETDATE()),
+	((SELECT id FROM genres WHERE source_id = 1 AND name = ''Lifestyle''), (SELECT id FROM genres WHERE source_id = 2 AND name = ''Instructional''), ''System'', GETDATE(), ''System'', GETDATE()),
+	((SELECT id FROM genres WHERE source_id = 1 AND name = ''Lifestyle''), (SELECT id FROM genres WHERE source_id = 2 AND name = ''Music''), ''System'', GETDATE(), ''System'', GETDATE()),
+	((SELECT id FROM genres WHERE source_id = 1 AND name = ''Lifestyle''), (SELECT id FROM genres WHERE source_id = 2 AND name = ''Travel''), ''System'', GETDATE(), ''System'', GETDATE()),
+	((SELECT id FROM genres WHERE source_id = 1 AND name = ''Nature''), (SELECT id FROM genres WHERE source_id = 2 AND name = ''Nature''), ''System'', GETDATE(), ''System'', GETDATE()),
+	((SELECT id FROM genres WHERE source_id = 1 AND name = ''News''), (SELECT id FROM genres WHERE source_id = 2 AND name = ''Business''), ''System'', GETDATE(), ''System'', GETDATE()),
+	((SELECT id FROM genres WHERE source_id = 1 AND name = ''News''), (SELECT id FROM genres WHERE source_id = 2 AND name = ''News''), ''System'', GETDATE(), ''System'', GETDATE()),
+	((SELECT id FROM genres WHERE source_id = 1 AND name = ''News''), (SELECT id FROM genres WHERE source_id = 2 AND name = ''Politics''), ''System'', GETDATE(), ''System'', GETDATE()),
+	((SELECT id FROM genres WHERE source_id = 1 AND name = ''Paid Program''), (SELECT id FROM genres WHERE source_id = 2 AND name = ''Home Shopping''), ''System'', GETDATE(), ''System'', GETDATE()),
+	((SELECT id FROM genres WHERE source_id = 1 AND name = ''Reality''), (SELECT id FROM genres WHERE source_id = 2 AND name = ''Competition''), ''System'', GETDATE(), ''System'', GETDATE()),
+	((SELECT id FROM genres WHERE source_id = 1 AND name = ''Reality''), (SELECT id FROM genres WHERE source_id = 2 AND name = ''Reality''), ''System'', GETDATE(), ''System'', GETDATE()),
+	((SELECT id FROM genres WHERE source_id = 1 AND name = ''Religious''), (SELECT id FROM genres WHERE source_id = 2 AND name = ''Religious''), ''System'', GETDATE(), ''System'', GETDATE()),
+	((SELECT id FROM genres WHERE source_id = 1 AND name = ''Special''), (SELECT id FROM genres WHERE source_id = 2 AND name = ''Awards''), ''System'', GETDATE(), ''System'', GETDATE()),
+	((SELECT id FROM genres WHERE source_id = 1 AND name = ''Special''), (SELECT id FROM genres WHERE source_id = 2 AND name = ''Holiday''), ''System'', GETDATE(), ''System'', GETDATE()),
+	((SELECT id FROM genres WHERE source_id = 1 AND name = ''Special''), (SELECT id FROM genres WHERE source_id = 2 AND name = ''Parade''), ''System'', GETDATE(), ''System'', GETDATE()),
+	((SELECT id FROM genres WHERE source_id = 1 AND name = ''Special''), (SELECT id FROM genres WHERE source_id = 2 AND name = ''Performance''), ''System'', GETDATE(), ''System'', GETDATE()),
+	((SELECT id FROM genres WHERE source_id = 1 AND name = ''Special''), (SELECT id FROM genres WHERE source_id = 2 AND name = ''Telethon''), ''System'', GETDATE(), ''System'', GETDATE()),
+	((SELECT id FROM genres WHERE source_id = 1 AND name = ''Sports/Sports Talk''), (SELECT id FROM genres WHERE source_id = 2 AND name = ''Sports''), ''System'', GETDATE(), ''System'', GETDATE()),
+	((SELECT id FROM genres WHERE source_id = 1 AND name = ''Talk Show''), (SELECT id FROM genres WHERE source_id = 2 AND name = ''Talk Show''), ''System'', GETDATE(), ''System'', GETDATE()),
+	((SELECT id FROM genres WHERE source_id = 1 AND name = ''Science Fiction''), (SELECT id FROM genres WHERE source_id = 2 AND name = ''Science Fiction''), ''System'', GETDATE(), ''System'', GETDATE()),
+	((SELECT id FROM genres WHERE source_id = 1 AND name = ''Action/Adventure''), (SELECT id FROM genres WHERE source_id = 2 AND name = ''Action''), ''System'', GETDATE(), ''System'', GETDATE()),
+	((SELECT id FROM genres WHERE source_id = 1 AND name = ''Action/Adventure''), (SELECT id FROM genres WHERE source_id = 2 AND name = ''Adventure''), ''System'', GETDATE(), ''System'', GETDATE()),
+	((SELECT id FROM genres WHERE source_id = 1 AND name = ''Horror''), (SELECT id FROM genres WHERE source_id = 2 AND name = ''Horror''), ''System'', GETDATE(), ''System'', GETDATE()),
+	((SELECT id FROM genres WHERE source_id = 1 AND name = ''Horror''), (SELECT id FROM genres WHERE source_id = 2 AND name = ''Thriller & Suspense''), ''System'', GETDATE(), ''System'', GETDATE())')
+
+END
+/**************************************** END - PRI-16044 *****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

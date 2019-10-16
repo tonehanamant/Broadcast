@@ -301,6 +301,7 @@
     <Folder Include="Views\BroadcastControllerBase\" />
     <Folder Include="Views\Campaign\" />
     <Folder Include="Views\DaypartCode\" />
+    <Folder Include="Views\GenreApi\" />
     <Folder Include="Views\InventoryCard\" />
     <Folder Include="Views\PricingGuide\" />
     <Folder Include="Views\SpotLength\" />
@@ -321,6 +322,7 @@
     <Compile Include="Controllers\DaypartCodeApiController.cs" />
     <Compile Include="Controllers\DaypartTypeApiController.cs" />
     <Compile Include="Controllers\EnvironmentController.cs" />
+    <Compile Include="Controllers\GenreApiController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ImageApiController.cs" />
     <Compile Include="Controllers\AudienceApiController.cs" />

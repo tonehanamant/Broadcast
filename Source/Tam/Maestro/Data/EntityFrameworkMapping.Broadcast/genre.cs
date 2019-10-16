@@ -19,6 +19,8 @@ namespace EntityFrameworkMapping.Broadcast
             this.proposal_version_detail_criteria_genres = new HashSet<proposal_version_detail_criteria_genres>();
             this.station_inventory_manifest_genres = new HashSet<station_inventory_manifest_genres>();
             this.station_inventory_manifest_daypart_genres = new HashSet<station_inventory_manifest_daypart_genres>();
+            this.genre_mappings = new HashSet<genre_mappings>();
+            this.genre_mappings1 = new HashSet<genre_mappings>();
         }
     
         public int id { get; set; }
@@ -32,5 +34,8 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<proposal_version_detail_criteria_genres> proposal_version_detail_criteria_genres { get; set; }
         public virtual ICollection<station_inventory_manifest_genres> station_inventory_manifest_genres { get; set; }
         public virtual ICollection<station_inventory_manifest_daypart_genres> station_inventory_manifest_daypart_genres { get; set; }
+        public virtual ICollection<genre_mappings> genre_mappings { get; set; }
+        public virtual ICollection<genre_mappings> genre_mappings1 { get; set; }
+        public virtual genre_sources genre_sources { get; set; }
     }
 }

@@ -210,6 +210,8 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<ICampaignAggregator, CampaignAggregator>();
             unityContainer.RegisterType<ICampaignAggregationJobTrigger, CampaignAggregationJobTrigger>();
 
+            unityContainer.RegisterType<IGenreService, GenreService>();
+
             unityContainer.RegisterType<IProgramGuideApiClient, ProgramGuideApiClient>();
             unityContainer.RegisterType<IProgramGuideService, ProgramGuideService>();
 

@@ -1,12 +1,13 @@
 ﻿using Common.Services.Repositories;
+using ConfigurationService.Client;
 using EntityFrameworkMapping.Broadcast;
+using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.Enums;
 using System.Collections.Generic;
 using System.Linq;
-using ConfigurationService.Client;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Data.EntityFrameworkMapping;
-using Tam.Maestro.Services.Clients;
 
 namespace Services.Broadcast.Repositories
 {
@@ -15,9 +16,11 @@ namespace Services.Broadcast.Repositories
         List<LookupDto> GetAllGenres();
 
         List<LookupDto> FindGenres(string genreSearchString);
+
+        List<LookupDto> GetGenresBySourceId(int sourceId);
     }
 
-    public class GenreRepository: BroadcastRepositoryBase, IGenreRepository
+    public class GenreRepository : BroadcastRepositoryBase, IGenreRepository
     {
 
         public GenreRepository(IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
@@ -28,8 +31,9 @@ namespace Services.Broadcast.Repositories
         {
             return _InReadUncommitedTransaction(
                 context => (from x in context.genres
-                    orderby x.name ascending
-                    select new LookupDto() {Id = x.id, Display = x.name}).ToList());
+                            where x.source_id == (int)GenreSourceEnum.Maestro
+                            orderby x.name ascending
+                            select _MapToDto(x)).ToList());
         }
 
 
@@ -37,14 +41,25 @@ namespace Services.Broadcast.Repositories
         {
             return _InReadUncommitedTransaction(
                 context =>
-                {
-                    return context.genres.Where(g => g.name.ToLower().Contains(genreSearchString.ToLower())).Select(
-                        g => new LookupDto()
-                        {
-                            Display = g.name,
-                            Id = g.id
-                        }).ToList();
-                });
+                     context.genres.Where(g => g.source_id == (int)GenreSourceEnum.Maestro && g.name.ToLower().Contains(genreSearchString.ToLower())).Select(_MapToDto).ToList()
+                );
         }
-    }    
+
+        public List<LookupDto> GetGenresBySourceId(int sourceId)
+        {
+            return _InReadUncommitedTransaction(
+                context =>
+                    context.genres.Where(g => g.source_id == sourceId).Select(_MapToDto).ToList()
+                );
+        }
+
+        private LookupDto _MapToDto(genre genre)
+        {
+            return new LookupDto
+            {
+                Display = genre.name,
+                Id = genre.id
+            };
+        }
+    }
 }
