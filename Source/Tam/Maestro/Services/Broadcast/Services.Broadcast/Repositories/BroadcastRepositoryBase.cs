@@ -31,6 +31,11 @@ namespace Common.Services.Repositories
 
         public new void BulkInsert<T>(DbContext context, List<T> list)
         {
+            BulkInsert(context, list, new List<string>());
+        }
+
+        public new void BulkInsert<T>(DbContext context, List<T> list, List<string> propertiesToIgnore)
+        {
             string name1 = typeof(T).Name;
             if (!(context.Database.Connection is SqlConnection connection))
                 throw new Exception("BulkInsert must only be used with a SqlConnection");
@@ -42,8 +47,14 @@ namespace Common.Services.Repositories
                 sqlBulkCopy.DestinationTableName = name1;
                 sqlBulkCopy.BulkCopyTimeout = 0; // Infinite - the context should have its own timeout
                 DataTable table = new DataTable();
-                PropertyDescriptor[] array = TypeDescriptor.GetProperties(typeof(T)).Cast<PropertyDescriptor>().Where(propertyInfo => propertyInfo.PropertyType.Namespace.Equals("System")).ToArray<PropertyDescriptor>();
-                foreach (PropertyDescriptor propertyDescriptor in array)
+
+                PropertyDescriptor[] properties = TypeDescriptor
+                    .GetProperties(typeof(T))
+                    .Cast<PropertyDescriptor>()
+                    .Where(propertyInfo => propertyInfo.PropertyType.Namespace.Equals("System") && !propertiesToIgnore.Contains(propertyInfo.Name))
+                    .ToArray<PropertyDescriptor>();
+
+                foreach (PropertyDescriptor propertyDescriptor in properties)
                 {
                     sqlBulkCopy.ColumnMappings.Add(propertyDescriptor.Name, propertyDescriptor.Name);
                     DataColumnCollection columns = table.Columns;
@@ -53,11 +64,11 @@ namespace Common.Services.Repositories
                         type = propertyDescriptor.PropertyType;
                     columns.Add(name2, type);
                 }
-                object[] objArray = new object[array.Length];
+                object[] objArray = new object[properties.Length];
                 foreach (T obj in list)
                 {
                     for (int index = 0; index < objArray.Length; ++index)
-                        objArray[index] = array[index].GetValue(obj);
+                        objArray[index] = properties[index].GetValue(obj);
                     table.Rows.Add(objArray);
                 }
                 sqlBulkCopy.WriteToServer(table);

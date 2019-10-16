@@ -251,7 +251,10 @@ namespace Services.Broadcast.Repositories
                 });
             });
             var manifestWeeks = mappedManifests.SelectMany(x => x.station_inventory_manifest_weeks).ToList();
-            BulkInsert(context, manifestWeeks);
+            var propertiesToIgnore = new List<string> { "sys_start_date", "sys_end_date" };
+
+            BulkInsert(context, manifestWeeks, propertiesToIgnore);
+
             sw.Stop();
             Debug.WriteLine($"Inserted {manifestWeeks.Count} manifest weeks in {sw.Elapsed}");
         }
