@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Cadent.Utilities.Clients;
 using Tam.Maestro.Common.Clients;
 
 namespace Services.Broadcast.Clients
@@ -32,8 +31,8 @@ namespace Services.Broadcast.Clients
     /// <seealso cref="Services.Broadcast.Clients.ProgramGuideApiClient" />
     public class ProgramGuideApiClientSimulator : ProgramGuideApiClient, IProgramGuideApiClientSimulator
     {
-        public ProgramGuideApiClientSimulator(IAwsCognitoClient tokenClient, IRestClient restClient)
-            : base(tokenClient, restClient)
+        public ProgramGuideApiClientSimulator(IAwsCognitoClient tokenClient)
+            : base(tokenClient)
         {
         }
 
