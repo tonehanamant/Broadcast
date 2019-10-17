@@ -105,6 +105,7 @@ namespace Services.Broadcast.Repositories
                 {
                     var markets = context.markets.ToList();
                     var entity = context.plans
+                        .Include(p => p.plan_summaries)
                         .Include(p => p.plan_flight_hiatus)
                         .Include(p => p.plan_secondary_audiences)
                         .Include(p => p.plan_dayparts)
@@ -153,6 +154,7 @@ namespace Services.Broadcast.Repositories
 
         private PlanDto _MapToDto(plan entity, List<market> markets)
         {
+            var planSummary = entity.plan_summaries.Single();
             var dto = new PlanDto
             {
                 Id = entity.id,
@@ -192,7 +194,10 @@ namespace Services.Broadcast.Repositories
                 HouseholdCPP = entity.household_cpp,
                 HouseholdDeliveryImpressions = entity.household_delivery_impressions,
                 HouseholdRatingPoints = entity.household_rating_points,
-                HouseholdUniverse = entity.household_universe
+                HouseholdUniverse = entity.household_universe,
+                AvailableMarketsWithSovCount  = planSummary.available_market_with_sov_count,
+                BlackoutMarketCount = planSummary.blackout_market_count,
+                BlackoutMarketTotalUsCoveragePercent = planSummary.blackout_market_total_us_coverage_percent
             };
             return dto;
         }

@@ -50,6 +50,14 @@ namespace Services.Broadcast.Entities.Plan
         public int? AvailableMarketCount { get; set; }
 
         /// <summary>
+        /// Gets or sets the count of available markets with share of voice.
+        /// </summary>
+        /// <value>
+        /// The count of available markets with sov.
+        /// </value>
+        public int? AvailableMarketsWithSovCount { get; set; }
+
+        /// <summary>
         /// Gets or sets the available market total us coverage percent.
         /// </summary>
         /// <value>

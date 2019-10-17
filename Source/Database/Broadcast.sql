@@ -377,6 +377,13 @@ BEGIN
 END
 /*************************************** END PRI-17160 BE - Fix PlanStatuses and CampaignStatus *****************************************************/
 
+/**************************************** START - PRI-7457 *****************************************************/
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('plan_summaries') AND name = 'available_market_with_sov_count')
+BEGIN
+	ALTER TABLE [plan_summaries] ADD [available_market_with_sov_count] [INT] NULL	
+END
+/**************************************** END - PRI-7457 *****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

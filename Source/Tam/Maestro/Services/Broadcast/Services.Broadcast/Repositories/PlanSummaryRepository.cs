@@ -119,6 +119,7 @@ namespace Services.Broadcast.Repositories
             entity.hiatus_days_count = dto.TotalHiatusDays;
             entity.active_day_count = dto.TotalActiveDays;
             entity.available_market_count = dto.AvailableMarketCount;
+            entity.available_market_with_sov_count = dto.AvailableMarketsWithSovCount;
             entity.available_market_total_us_coverage_percent = dto.AvailableMarketTotalUsCoveragePercent;
             entity.blackout_market_count = dto.BlackoutMarketCount;
             entity.blackout_market_total_us_coverage_percent = dto.BlackoutMarketTotalUsCoveragePercent;
@@ -143,6 +144,7 @@ namespace Services.Broadcast.Repositories
                 TotalHiatusDays = entity.hiatus_days_count,
                 TotalActiveDays = entity.active_day_count,
                 AvailableMarketCount = entity.available_market_count,
+                AvailableMarketsWithSovCount = entity.available_market_with_sov_count,
                 AvailableMarketTotalUsCoveragePercent = entity.available_market_total_us_coverage_percent,
                 BlackoutMarketCount = entity.blackout_market_count,
                 BlackoutMarketTotalUsCoveragePercent = entity.blackout_market_total_us_coverage_percent,

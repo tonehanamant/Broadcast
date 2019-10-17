@@ -120,6 +120,7 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                 AvailableMarketTotalUsCoveragePercent = 68.7,
                 BlackoutMarketCount = 3,
                 BlackoutMarketTotalUsCoveragePercent = 13.8,
+                AvailableMarketsWithSovCount = 2,                
                 ProductName = "ProductTwo",
                 AudienceName = "AudienceThree",
                 PlanSummaryQuarters = new List<PlanSummaryQuarterDto>

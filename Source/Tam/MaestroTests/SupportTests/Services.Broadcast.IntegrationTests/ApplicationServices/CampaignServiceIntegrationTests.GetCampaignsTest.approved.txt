@@ -75,6 +75,7 @@
       {
         "AudienceName": "House Holds",
         "AvailableMarketCount": 2,
+        "AvailableMarketsWithSovCount": null,
         "AvailableMarketTotalUsCoveragePercent": 52.5,
         "BlackoutMarketCount": null,
         "BlackoutMarketTotalUsCoveragePercent": null,
@@ -121,6 +122,7 @@
       {
         "AudienceName": "House Holds",
         "AvailableMarketCount": 2,
+        "AvailableMarketsWithSovCount": null,
         "AvailableMarketTotalUsCoveragePercent": 52.5,
         "BlackoutMarketCount": null,
         "BlackoutMarketTotalUsCoveragePercent": null,

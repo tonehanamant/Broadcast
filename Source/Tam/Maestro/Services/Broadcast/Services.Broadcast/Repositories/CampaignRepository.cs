@@ -277,6 +277,7 @@ namespace Services.Broadcast.Repositories
                             Budget = plan.budget,
                             Equivalized = plan.equivalized,
                             AvailableMarketCount = summary.available_market_count,
+                            AvailableMarketsWithSovCount = summary.available_market_with_sov_count,
                             AvailableMarketTotalUsCoveragePercent = summary.available_market_total_us_coverage_percent,
                             PlanId = plan.id,
                             ModifiedDate = plan.modified_date,

@@ -19,7 +19,10 @@
       "ShareOfVoicePercent": 34.5
     }
   ],
+  "AvailableMarketsWithSovCount": null,
+  "BlackoutMarketCount": null,
   "BlackoutMarkets": [],
+  "BlackoutMarketTotalUsCoveragePercent": null,
   "Budget": 100.0000,
   "CampaignId": 1,
   "CoverageGoalPercent": 80.5,

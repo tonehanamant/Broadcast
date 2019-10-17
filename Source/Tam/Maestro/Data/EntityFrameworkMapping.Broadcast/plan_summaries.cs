@@ -30,6 +30,7 @@ namespace EntityFrameworkMapping.Broadcast
         public Nullable<double> blackout_market_total_us_coverage_percent { get; set; }
         public string product_name { get; set; }
         public string audience_name { get; set; }
+        public Nullable<int> available_market_with_sov_count { get; set; }
     
         public virtual plan plan { get; set; }
         public virtual ICollection<plan_summary_quarters> plan_summary_quarters { get; set; }

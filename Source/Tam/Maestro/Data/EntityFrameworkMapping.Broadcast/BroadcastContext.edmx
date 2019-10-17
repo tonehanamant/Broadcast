@@ -736,6 +736,7 @@
           <Property Name="blackout_market_total_us_coverage_percent" Type="float" />
           <Property Name="product_name" Type="varchar" MaxLength="256" />
           <Property Name="audience_name" Type="varchar" MaxLength="256" />
+          <Property Name="available_market_with_sov_count" Type="int" />
         </EntityType>
         <EntityType Name="plan_summary_quarters">
           <Key>
@@ -10537,6 +10538,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="audience_name" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="plan" Relationship="BroadcastModel.FK_plan_summary_plans" FromRole="plan_summaries" ToRole="plan" />
           <NavigationProperty Name="plan_summary_quarters" Relationship="BroadcastModel.FK_plan_summary_quarters_plan_summary" FromRole="plan_summaries" ToRole="plan_summary_quarters" />
+          <Property Name="available_market_with_sov_count" Type="Int32" />
         </EntityType>
         <EntityType Name="plan">
           <Key>
@@ -12672,6 +12674,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="plan_summaries">
             <EntityTypeMapping TypeName="BroadcastModel.plan_summaries">
               <MappingFragment StoreEntitySet="plan_summaries">
+                <ScalarProperty Name="available_market_with_sov_count" ColumnName="available_market_with_sov_count" />
                 <ScalarProperty Name="audience_name" ColumnName="audience_name" />
                 <ScalarProperty Name="product_name" ColumnName="product_name" />
                 <ScalarProperty Name="blackout_market_total_us_coverage_percent" ColumnName="blackout_market_total_us_coverage_percent" />

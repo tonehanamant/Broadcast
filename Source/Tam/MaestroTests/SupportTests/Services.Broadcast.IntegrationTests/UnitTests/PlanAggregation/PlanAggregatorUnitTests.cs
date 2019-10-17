@@ -114,6 +114,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanAggregation
             tc.UT_AggregateAvailableMarkets(plan, summary);
 
             Assert.AreEqual(TEST_SELECTED_AVAILABLE_MARKET_COUNT, summary.AvailableMarketCount, "Invalid summary.AvailableMarketCount");
+            Assert.AreEqual(TEST_SELECTED_AVAILABLE_MARKET_WITH_SOV_COUNT, summary.AvailableMarketsWithSovCount, "Invalid summary.AvailableMarketsWithSovCount");
             Assert.AreEqual(TEST_SELECTED_AVAILABLE_MARKET_TOTAL_US_COVERAGE_PERCENT, summary.AvailableMarketTotalUsCoveragePercent, "Invalid summary.AvailableMarketTotalUsCoveragePercent");
         }
 
@@ -491,6 +492,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanAggregation
         }
 
         private const double TEST_SELECTED_AVAILABLE_MARKET_COUNT = 3;
+        private const double TEST_SELECTED_AVAILABLE_MARKET_WITH_SOV_COUNT = 3;
         private const double TEST_SELECTED_AVAILABLE_MARKET_TOTAL_US_COVERAGE_PERCENT = 98.5;
         private List<PlanAvailableMarketDto> GetTestSelectedAvailablePlanMarkets()
         {

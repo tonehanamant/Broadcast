@@ -336,5 +336,29 @@ namespace Services.Broadcast.Entities.Plan
         /// The household delivery impressions.
         /// </value>
         public double HouseholdDeliveryImpressions { get; set; }
+
+        /// <summary>
+        /// Gets or sets the blackout market count.
+        /// </summary>
+        /// <value>
+        /// The blackout market count.
+        /// </value>
+        public int? BlackoutMarketCount { get; set; }
+
+        /// <summary>
+        /// Gets or sets the blackout market total us coverage percent.
+        /// </summary>
+        /// <value>
+        /// The blackout market total us coverage percent.
+        /// </value>
+        public double? BlackoutMarketTotalUsCoveragePercent { get; set; }
+
+        /// <summary>
+        /// Gets or sets the count of available markets with share of voice.
+        /// </summary>
+        /// <value>
+        /// The count of available markets with sov.
+        /// </value>
+        public int? AvailableMarketsWithSovCount { get; set; }
     }
 }

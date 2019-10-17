@@ -122,6 +122,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
             summary.AvailableMarketCount = availableMarketCount;
             summary.AvailableMarketTotalUsCoveragePercent = availableMarketCoverage;
+            summary.AvailableMarketsWithSovCount = plan.AvailableMarkets.Where(x => x.ShareOfVoicePercent.HasValue).Count();
         }
 
         protected void AggregateBlackoutMarkets(PlanDto plan, PlanSummaryDto summary)
