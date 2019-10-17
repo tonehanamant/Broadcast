@@ -111,6 +111,21 @@ namespace Services.Broadcast.Entities
         public int? PlanStatusCountComplete { get; set; }
 
         /// <summary>
+        /// The count of plans with status Complete
+        /// </summary>
+        public int? PlanStatusCountScenario { get; set; }
+
+        /// <summary>
+        /// The count of plans with status Complete
+        /// </summary>
+        public int? PlanStatusCountCanceled { get; set; }
+
+        /// <summary>
+        /// The count of plans with status Complete
+        /// </summary>
+        public int? PlanStatusCountRejected { get; set; }
+
+        /// <summary>
         /// The last time the summary components were modified.
         /// </summary>
         public DateTime? ComponentsModified { get; set; }

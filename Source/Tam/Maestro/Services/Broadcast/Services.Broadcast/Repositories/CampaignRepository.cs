@@ -214,6 +214,9 @@ namespace Services.Broadcast.Repositories
                     PlanStatusCountContracted = summary.plan_status_count_contracted,
                     PlanStatusCountLive = summary.plan_status_count_live,
                     PlanStatusCountComplete = summary.plan_status_count_complete,
+                    PlanStatusCountScenario = summary.plan_status_count_scenario,
+                    PlanStatusCountCanceled = summary.plan_status_count_canceled,
+                    PlanStatusCountRejected = summary.plan_status_count_rejected,
                     ComponentsModified = summary.components_modified,
                     LastAggregated = summary.last_aggregated
                 };

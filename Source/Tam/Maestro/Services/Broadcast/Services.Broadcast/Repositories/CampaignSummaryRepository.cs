@@ -99,6 +99,9 @@ namespace Services.Broadcast.Repositories
                     PlanStatusCountContracted = entity.plan_status_count_contracted,
                     PlanStatusCountLive = entity.plan_status_count_live,
                     PlanStatusCountComplete = entity.plan_status_count_complete,
+                    PlanStatusCountScenario = entity.plan_status_count_scenario,
+                    PlanStatusCountCanceled = entity.plan_status_count_canceled,
+                    PlanStatusCountRejected = entity.plan_status_count_rejected,
                     ComponentsModified = entity.components_modified,
                     LastAggregated = entity.last_aggregated
                 };
@@ -233,6 +236,9 @@ namespace Services.Broadcast.Repositories
             entity.plan_status_count_contracted = dto.PlanStatusCountContracted;
             entity.plan_status_count_live = dto.PlanStatusCountLive;
             entity.plan_status_count_complete = dto.PlanStatusCountComplete;
+            entity.plan_status_count_scenario = dto.PlanStatusCountScenario;
+            entity.plan_status_count_canceled = dto.PlanStatusCountCanceled;
+            entity.plan_status_count_rejected = dto.PlanStatusCountRejected;
 
             // don't want to overwrite the existing value on these
             entity.queued_by = string.IsNullOrWhiteSpace(entity.queued_by) ? dto.QueuedBy : entity.queued_by;

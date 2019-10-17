@@ -37,6 +37,9 @@ namespace EntityFrameworkMapping.Broadcast
         public Nullable<int> campaign_status { get; set; }
         public Nullable<System.DateTime> components_modified { get; set; }
         public Nullable<System.DateTime> last_aggregated { get; set; }
+        public Nullable<int> plan_status_count_scenario { get; set; }
+        public Nullable<int> plan_status_count_canceled { get; set; }
+        public Nullable<int> plan_status_count_rejected { get; set; }
     
         public virtual campaign campaign { get; set; }
     }

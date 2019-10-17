@@ -262,6 +262,9 @@
           <Property Name="campaign_status" Type="int" />
           <Property Name="components_modified" Type="datetime" />
           <Property Name="last_aggregated" Type="datetime" />
+          <Property Name="plan_status_count_scenario" Type="int" />
+          <Property Name="plan_status_count_canceled" Type="int" />
+          <Property Name="plan_status_count_rejected" Type="int" />
         </EntityType>
         <EntityType Name="campaigns">
           <Key>
@@ -692,7 +695,7 @@
           <Property Name="end_time_seconds" Type="int" Nullable="false" />
           <Property Name="weighting_goal_percent" Type="float" />
           <Property Name="daypart_type" Type="int" Nullable="false" />
-          <Property Name="is_start_time_modified" Type="bit" Nullable="false" />
+		  <Property Name="is_start_time_modified" Type="bit" Nullable="false" />
           <Property Name="is_end_time_modified" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="plan_flight_hiatus">
@@ -10786,6 +10789,9 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="components_modified" Type="DateTime" Precision="3" />
           <Property Name="last_aggregated" Type="DateTime" Precision="3" />
           <NavigationProperty Name="campaign" Relationship="BroadcastModel.FK_campaign_summaries_campaign" FromRole="campaign_summaries" ToRole="campaign" />
+          <Property Name="plan_status_count_scenario" Type="Int32" />
+          <Property Name="plan_status_count_canceled" Type="Int32" />
+          <Property Name="plan_status_count_rejected" Type="Int32" />
         </EntityType>
         <EntityType Name="plan_summary_quarters">
           <Key>
@@ -12582,7 +12588,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="plan_dayparts">
             <EntityTypeMapping TypeName="BroadcastModel.plan_dayparts">
               <MappingFragment StoreEntitySet="plan_dayparts">
-                <ScalarProperty Name="is_end_time_modified" ColumnName="is_end_time_modified" />
+				<ScalarProperty Name="is_end_time_modified" ColumnName="is_end_time_modified" />
                 <ScalarProperty Name="is_start_time_modified" ColumnName="is_start_time_modified" />
                 <ScalarProperty Name="daypart_type" ColumnName="daypart_type" />
                 <ScalarProperty Name="weighting_goal_percent" ColumnName="weighting_goal_percent" />
@@ -12723,6 +12729,9 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="campaign_summaries">
             <EntityTypeMapping TypeName="BroadcastModel.campaign_summaries">
               <MappingFragment StoreEntitySet="campaign_summaries">
+                <ScalarProperty Name="plan_status_count_rejected" ColumnName="plan_status_count_rejected" />
+                <ScalarProperty Name="plan_status_count_canceled" ColumnName="plan_status_count_canceled" />
+                <ScalarProperty Name="plan_status_count_scenario" ColumnName="plan_status_count_scenario" />
                 <ScalarProperty Name="last_aggregated" ColumnName="last_aggregated" />
                 <ScalarProperty Name="components_modified" ColumnName="components_modified" />
                 <ScalarProperty Name="campaign_status" ColumnName="campaign_status" />

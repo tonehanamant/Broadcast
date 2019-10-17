@@ -236,6 +236,9 @@ namespace Services.Broadcast.ApplicationServices
             _EvaluateAndAddPlanStatus(statuses, PlanStatusEnum.Contracted, summary.PlanStatusCountContracted);
             _EvaluateAndAddPlanStatus(statuses, PlanStatusEnum.Live, summary.PlanStatusCountLive);
             _EvaluateAndAddPlanStatus(statuses, PlanStatusEnum.Complete, summary.PlanStatusCountComplete);
+            _EvaluateAndAddPlanStatus(statuses, PlanStatusEnum.Scenario, summary.PlanStatusCountScenario);
+            _EvaluateAndAddPlanStatus(statuses, PlanStatusEnum.Canceled, summary.PlanStatusCountCanceled);
+            _EvaluateAndAddPlanStatus(statuses, PlanStatusEnum.Rejected, summary.PlanStatusCountRejected);
             return statuses;
         }
 

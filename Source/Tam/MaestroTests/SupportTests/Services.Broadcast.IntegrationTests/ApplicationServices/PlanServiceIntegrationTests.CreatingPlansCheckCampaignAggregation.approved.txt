@@ -1,0 +1,35 @@
+﻿{
+  "AdvertiserId": 1,
+  "AgencyId": 5,
+  "Budget": 300.0,
+  "CampaignStatus": 9,
+  "FlightActiveDays": 25,
+  "FlightEndDate": "2019-01-31T00:00:00",
+  "FlightHiatusDays": 6,
+  "FlightStartDate": "2019-01-01T00:00:00",
+  "HasHiatus": true,
+  "HasPlans": false,
+  "HouseholdCPM": 0.012,
+  "HouseholdImpressions": 25000000.0,
+  "HouseholdRatingPoints": 22.292774394626335,
+  "Id": 1,
+  "ModifiedBy": "IntegrationTestUser",
+  "ModifiedDate": "2019-05-09T00:00:00",
+  "Name": "Test Campaign 1",
+  "Notes": null,
+  "Plans": [],
+  "PlanStatuses": [
+    {
+      "Count": 1,
+      "PlanStatus": 7
+    },
+    {
+      "Count": 1,
+      "PlanStatus": 8
+    },
+    {
+      "Count": 1,
+      "PlanStatus": 9
+    }
+  ]
+}

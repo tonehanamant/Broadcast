@@ -3,6 +3,7 @@ using ApprovalTests.Reporters;
 using IntegrationTests.Common;
 using Newtonsoft.Json;
 using NUnit.Framework;
+using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.ApplicationServices.Plan;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
@@ -16,6 +17,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
     public class PlanServiceIntegrationTests
     {
         private readonly IPlanService _PlanService = IntegrationTestApplicationServiceFactory.GetApplicationService<IPlanService>();
+        private readonly ICampaignService _CampaignService = IntegrationTestApplicationServiceFactory.GetApplicationService<ICampaignService>();
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
@@ -54,6 +56,38 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 Assert.AreEqual(PlanStatusEnum.Canceled, finalPlan.Status);
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(finalPlan, _GetJsonSettings()));
+            }
+        }
+
+        [Test]
+        public void CreatingPlansCheckCampaignAggregation()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                PlanDto firstNewPlan = _GetNewPlan();
+                firstNewPlan.Status = PlanStatusEnum.Canceled;
+
+                var firstNewPlanId = _PlanService.SavePlan(firstNewPlan, "integration_test", new System.DateTime(2019, 10, 17));
+
+                PlanDto secondNewPlan = _GetNewPlan();
+                secondNewPlan.Status = PlanStatusEnum.Rejected;
+
+                var secondNewPlanId = _PlanService.SavePlan(secondNewPlan, "integration_test", new System.DateTime(2019, 10, 17));
+
+                PlanDto thirdNewPlan = _GetNewPlan();
+                thirdNewPlan.Status = PlanStatusEnum.Scenario;
+
+                var thirdNewPlanId = _PlanService.SavePlan(thirdNewPlan, "integration_test", new System.DateTime(2019, 10, 17));
+
+                Assert.IsTrue(firstNewPlanId > 0);
+                Assert.IsTrue(secondNewPlanId > 0);
+                Assert.IsTrue(thirdNewPlanId > 0);
+
+                _CampaignService.ProcessCampaignAggregation(1);
+
+                var campaign = _CampaignService.GetCampaignById(1);
+                
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(campaign, _GetJsonSettings()));
             }
         }
 

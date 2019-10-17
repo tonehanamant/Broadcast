@@ -115,7 +115,12 @@ namespace Services.Broadcast.ApplicationServices
 
         protected void AggregateCampaignStatus(List<PlanDto> plans, CampaignSummaryDto summary)
         {
-            summary.CampaignStatus = plans.Max(p => p.Status);
+            summary.CampaignStatus = plans
+                .OrderByDescending(p => p.Status == PlanStatusEnum.Scenario)
+                .ThenByDescending(p => p.Status == PlanStatusEnum.Canceled)
+                .ThenByDescending(p => p.Status == PlanStatusEnum.Rejected)
+                .ThenBy(p => p.Status)
+                .Last().Status;
         }
 
         protected void AggregatePlansStatuses(List<PlanDto> plans, CampaignSummaryDto summary)
@@ -126,6 +131,9 @@ namespace Services.Broadcast.ApplicationServices
             summary.PlanStatusCountContracted = plans.Count(p => p.Status == PlanStatusEnum.Contracted);
             summary.PlanStatusCountLive = plans.Count(p => p.Status == PlanStatusEnum.Live);
             summary.PlanStatusCountComplete = plans.Count(p => p.Status == PlanStatusEnum.Complete);
+            summary.PlanStatusCountScenario = plans.Count(p => p.Status == PlanStatusEnum.Scenario);
+            summary.PlanStatusCountCanceled = plans.Count(p => p.Status == PlanStatusEnum.Canceled);
+            summary.PlanStatusCountRejected = plans.Count(p => p.Status == PlanStatusEnum.Rejected);
         }
 
         protected void AggregateComponentsModifiedTime(List<PlanDto> plans, CampaignSummaryDto summary)

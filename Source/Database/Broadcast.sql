@@ -360,6 +360,23 @@ BEGIN
 END
 /**************************************** END - PRI-16044 *****************************************************/
 
+/*************************************** START PRI-17160 BE - Fix PlanStatuses and CampaignStatus *****************************************************/
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('campaign_summaries') AND name = 'plan_status_count_scenario')
+BEGIN
+	ALTER TABLE [campaign_summaries] ADD [plan_status_count_scenario] [INT] NULL
+END
+
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('campaign_summaries') AND name = 'plan_status_count_canceled')
+BEGIN
+	ALTER TABLE [campaign_summaries] ADD [plan_status_count_canceled] [INT] NULL
+END
+
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('campaign_summaries') AND name = 'plan_status_count_rejected')
+BEGIN
+	ALTER TABLE [campaign_summaries] ADD [plan_status_count_rejected] [INT] NULL
+END
+/*************************************** END PRI-17160 BE - Fix PlanStatuses and CampaignStatus *****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version
