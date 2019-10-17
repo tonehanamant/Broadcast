@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using ApprovalTests;
 using ApprovalTests.Reporters;
+using System.Linq;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.CampaignAggregation
 {
@@ -61,6 +62,145 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.CampaignAggregation
                     {
                         new DateTime(2019, 8, 18),
                         new DateTime(2019, 8, 19)
+                    },
+                    ModifiedDate = new DateTime(2019, 08, 28, 12, 30, 32),
+                    ModifiedBy = "TestUserTwo",
+                    HouseholdDeliveryImpressions = 10000,
+                    HouseholdUniverse = 1000000,
+                    HouseholdCPM = 0.05m,
+                    HouseholdRatingPoints = 50,
+                    HouseholdCPP = 1,
+                    Universe = 2000000
+                }
+            };
+            var planRepository = new Mock<IPlanRepository>();
+            planRepository.Setup(s => s.GetPlansForCampaign(It.IsAny<int>())).Returns(plans);
+            var dataRepositoryFactory = new Mock<IDataRepositoryFactory>();
+            dataRepositoryFactory.Setup(d => d.GetDataRepository<IPlanRepository>()).Returns(planRepository.Object);
+            var tc = new CampaignAggregatorUnitTestClass(dataRepositoryFactory.Object);
+
+            var summary = tc.Aggregate(campaignId);
+
+            planRepository.Verify(c => c.GetPlansForCampaign(campaignId), Times.Once());
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(summary));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void Aggregate_IgnoreCanceledRejectedAndScenarioStatusPlans()
+        {
+            const int campaignId = 420;
+            var plans = new List<PlanDto>
+            {
+                new PlanDto
+                {
+                    Status = PlanStatusEnum.Contracted,
+                    Budget = 1000.0m,
+                    CPM = 2000.0m,
+                    CPP = 3000.0m,
+                    DeliveryRatingPoints = 4000.0,
+                    DeliveryImpressions = 5000.0,
+                    FlightStartDate = new DateTime(2019, 08, 01),
+                    FlightEndDate = new DateTime(2019, 08, 20),
+                    FlightHiatusDays = new List<DateTime>
+                    {
+                        new DateTime(2019, 8, 15),
+                        new DateTime(2019, 8, 17)
+                    },
+                    ModifiedDate = new DateTime(2019, 08, 28, 12, 30, 23),
+                    ModifiedBy = "TestUserOne",
+                    HouseholdDeliveryImpressions = 10000,
+                    HouseholdUniverse = 1000000,
+                    HouseholdCPM = 0.05m,
+                    HouseholdRatingPoints = 2,
+                    HouseholdCPP = 1,
+                    Universe = 2000000
+                },
+                new PlanDto
+                {
+                    Status = PlanStatusEnum.ClientApproval,
+                    Budget = 500.0m,
+                    CPM = 500.0m,
+                    CPP = 500.0m,
+                    DeliveryRatingPoints = 500.0,
+                    DeliveryImpressions = 500.0,
+                    FlightStartDate = new DateTime(2019, 09, 21),
+                    FlightEndDate = new DateTime(2019, 09, 30),
+                    FlightHiatusDays = new List<DateTime>
+                    {
+                        new DateTime(2019, 9, 25),
+                        new DateTime(2019, 9, 26)
+                    },
+                    ModifiedDate = new DateTime(2019, 08, 28, 12, 30, 32),
+                    ModifiedBy = "TestUserTwo",
+                    HouseholdDeliveryImpressions = 10000,
+                    HouseholdUniverse = 1000000,
+                    HouseholdCPM = 0.05m,
+                    HouseholdRatingPoints = 50,
+                    HouseholdCPP = 1,
+                    Universe = 2000000
+                },
+                new PlanDto
+                {
+                    Status = PlanStatusEnum.Rejected,
+                    Budget = 500.0m,
+                    CPM = 500.0m,
+                    CPP = 500.0m,
+                    DeliveryRatingPoints = 500.0,
+                    DeliveryImpressions = 500.0,
+                    FlightStartDate = new DateTime(2019, 09, 10),
+                    FlightEndDate = new DateTime(2019, 09, 20),
+                    FlightHiatusDays = new List<DateTime>
+                    {
+                        new DateTime(2019, 9, 12),
+                        new DateTime(2019, 9, 19)
+                    },
+                    ModifiedDate = new DateTime(2019, 08, 28, 12, 30, 32),
+                    ModifiedBy = "TestUserTwo",
+                    HouseholdDeliveryImpressions = 10000,
+                    HouseholdUniverse = 1000000,
+                    HouseholdCPM = 0.05m,
+                    HouseholdRatingPoints = 50,
+                    HouseholdCPP = 1,
+                    Universe = 2000000
+                },
+                new PlanDto
+                {
+                    Status = PlanStatusEnum.Canceled,
+                    Budget = 500.0m,
+                    CPM = 500.0m,
+                    CPP = 500.0m,
+                    DeliveryRatingPoints = 500.0,
+                    DeliveryImpressions = 500.0,
+                    FlightStartDate = new DateTime(2019, 09, 01),
+                    FlightEndDate = new DateTime(2019, 09, 09),
+                    FlightHiatusDays = new List<DateTime>
+                    {
+                        new DateTime(2019, 09, 07)
+                    },
+                    ModifiedDate = new DateTime(2019, 08, 28, 12, 30, 32),
+                    ModifiedBy = "TestUserTwo",
+                    HouseholdDeliveryImpressions = 10000,
+                    HouseholdUniverse = 1000000,
+                    HouseholdCPM = 0.05m,
+                    HouseholdRatingPoints = 50,
+                    HouseholdCPP = 1,
+                    Universe = 2000000
+                },
+                new PlanDto
+                {
+                    Status = PlanStatusEnum.Scenario,
+                    Budget = 500.0m,
+                    CPM = 500.0m,
+                    CPP = 500.0m,
+                    DeliveryRatingPoints = 500.0,
+                    DeliveryImpressions = 500.0,
+                    FlightStartDate = new DateTime(2019, 10, 01),
+                    FlightEndDate = new DateTime(2019, 10, 31),
+                    FlightHiatusDays = new List<DateTime>
+                    {
+                        new DateTime(2019, 10, 18),
+                        new DateTime(2019, 10, 19)
                     },
                     ModifiedDate = new DateTime(2019, 08, 28, 12, 30, 32),
                     ModifiedBy = "TestUserTwo",
@@ -140,7 +280,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.CampaignAggregation
             };
             var summary = new CampaignSummaryDto { CampaignId = campaignId };
 
-            tc.UT_AggregateFlightInfo(plans, summary);
+            tc.UT_AggregateFlightInfo(plans, plans, summary);
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(summary));
         }
@@ -167,7 +307,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.CampaignAggregation
             };
             var summary = new CampaignSummaryDto { CampaignId = campaignId };
             
-            tc.UT_AggregateFlightInfo(plans, summary);
+            tc.UT_AggregateFlightInfo(plans, plans.Where(p => p.Status != PlanStatusEnum.Scenario).ToList(), summary);
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(summary));
         }
@@ -204,7 +344,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.CampaignAggregation
             };
             var summary = new CampaignSummaryDto { CampaignId = campaignId };
 
-            tc.UT_AggregateFlightInfo(plans, summary);
+            tc.UT_AggregateFlightInfo(plans, plans, summary);
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(summary));
         }

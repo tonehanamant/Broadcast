@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Common.Services.Repositories;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Entities;
@@ -13,9 +14,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.CampaignAggregation
         {
         }
 
-        public void UT_AggregateFlightInfo(List<PlanDto> plans, CampaignSummaryDto summary)
+        public void UT_AggregateFlightInfo(List<PlanDto> plans, List<PlanDto> filteredPlans, CampaignSummaryDto summary)
         {
-            AggregateFlightInfo(plans, summary);
+            AggregateFlightInfo(plans, filteredPlans, summary);
         }
     }
 }

@@ -308,8 +308,20 @@ namespace Services.Broadcast.ApplicationServices
         /// <inheritdoc />
         public List<LookupDto> GetStatuses(int? quarter, int? year)
         {
-            var quarterDateRange = _QuarterCalculationEngine.GetQuarterDateRange(quarter, year);
-            var statuses = _CampaignRepository.GetCampaignsStatuses(quarterDateRange.Start, quarterDateRange.End);
+            QuarterDto quarterDto = null;
+
+            if (quarter.HasValue && year.HasValue)
+            {
+                quarterDto = new QuarterDto
+                {
+                    Quarter = quarter.Value,
+                    Year = year.Value
+                };
+            }
+
+            var dateRange = _GetQuarterDateRange(quarterDto);
+
+            var statuses = _CampaignRepository.GetCampaignsStatuses(dateRange.Start, dateRange.End);
 
             return statuses.Select(x => new LookupDto { Id = (int)x, Display = x.Description() })
                 .OrderByDescending(x => x.Id == (int)PlanStatusEnum.Scenario)

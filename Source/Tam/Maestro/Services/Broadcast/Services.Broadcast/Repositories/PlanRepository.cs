@@ -47,7 +47,7 @@ namespace Services.Broadcast.Repositories
         PlanStatusEnum GetPlanStatus(int planId);
 
         /// <summary>
-        /// Gets the campaign plans.
+        /// Gets the plans of a campaign excluding Canceled and Rejected.
         /// </summary>
         /// <param name="campaignId">The campaign identifier.</param>
         /// <returns></returns>

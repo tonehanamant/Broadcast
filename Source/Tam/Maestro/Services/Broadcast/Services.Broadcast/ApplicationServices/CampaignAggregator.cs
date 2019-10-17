@@ -7,7 +7,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using OfficeOpenXml.FormulaParsing.Excel.Functions.Math;
 
 namespace Services.Broadcast.ApplicationServices
 {
@@ -54,22 +53,31 @@ namespace Services.Broadcast.ApplicationServices
                 return summary;
             }
 
+            // We are excluding plans with statuses Scenario, Canceled and Rejected from campaign goals
+            // We still need the Scenario plans to show the sum of them on campaign cards
+            var filteredPlans = plans
+                .Where(p => 
+                    p.Status != PlanStatusEnum.Scenario && 
+                    p.Status != PlanStatusEnum.Canceled &&
+                    p.Status != PlanStatusEnum.Rejected)
+                .ToList();
+
             var aggFunctions = GetAggregationFunctionList();
 
             if (runParallelAggregations)
             {
-                Parallel.ForEach(aggFunctions, (aggF) => aggF(plans, summary));
+                Parallel.ForEach(aggFunctions, (aggF) => aggF(plans, filteredPlans, summary));
                 return summary;
             }
 
             foreach (var aggF in aggFunctions)
             {
-                aggF(plans, summary);
+                aggF(plans, filteredPlans, summary);
             }
             return summary;
         }
         
-        private delegate void AggregationFunction(List<PlanDto> plans, CampaignSummaryDto summary);
+        private delegate void AggregationFunction(List<PlanDto> plans, List<PlanDto> filteredPlans, CampaignSummaryDto summary);
 
         private List<AggregationFunction> GetAggregationFunctionList()
         {
@@ -83,37 +91,35 @@ namespace Services.Broadcast.ApplicationServices
             };
         }
 
-        protected void AggregateFlightInfo(List<PlanDto> plans, CampaignSummaryDto summary)
+        protected void AggregateFlightInfo(List<PlanDto> plans, List<PlanDto> filteredPlans, CampaignSummaryDto summary)
         {
-            summary.FlightStartDate = plans.Min(p => p.FlightStartDate);
-            summary.FlightEndDate = plans.Max(p => p.FlightEndDate);
+            summary.FlightStartDate = filteredPlans.Min(p => p.FlightStartDate);
+            summary.FlightEndDate = filteredPlans.Max(p => p.FlightEndDate);
 
             if (!summary.FlightStartDate.HasValue || !summary.FlightEndDate.HasValue)
             {
                 return;
             }
 
-            summary.FlightHiatusDays = plans.Sum(p => p.FlightHiatusDays.Count);
+            summary.FlightHiatusDays = filteredPlans.Sum(p => p.FlightHiatusDays.Count);
             summary.FlightActiveDays = (Convert.ToInt32(summary.FlightEndDate.Value.Subtract(summary.FlightStartDate.Value).TotalDays) + 1) - summary.FlightHiatusDays;
         }
 
-        protected void AggregateBudgetAndGoalsInfo(List<PlanDto> plans, CampaignSummaryDto summary)
+        protected void AggregateBudgetAndGoalsInfo(List<PlanDto> plans, List<PlanDto> filteredPlans, CampaignSummaryDto summary)
         {
-            // TODO: Remove this once full validation has been implemented
-            // invalid nulls have been introduced during product evolution.
             // validate now to make sure cannot divide by zero
-            if (plans.Any(p => p.DeliveryImpressions == null))
+            if (!filteredPlans.Any())
             {
                 return;
             }
 
-            summary.Budget = plans.Sum(p => p.Budget);
-            summary.HouseholdImpressions = plans.Sum(p => p.HouseholdDeliveryImpressions);
-            summary.HouseholdCPM = (plans.Sum(p => p.Budget) / Convert.ToDecimal(summary.HouseholdImpressions)) * 1000;
-            summary.HouseholdRatingPoints = plans.Sum(p => p.HouseholdRatingPoints);
+            summary.Budget = filteredPlans.Sum(p => p.Budget);
+            summary.HouseholdImpressions = filteredPlans.Sum(p => p.HouseholdDeliveryImpressions);
+            summary.HouseholdCPM = (filteredPlans.Sum(p => p.Budget) / Convert.ToDecimal(summary.HouseholdImpressions)) * 1000;
+            summary.HouseholdRatingPoints = filteredPlans.Sum(p => p.HouseholdRatingPoints);
         }
 
-        protected void AggregateCampaignStatus(List<PlanDto> plans, CampaignSummaryDto summary)
+        protected void AggregateCampaignStatus(List<PlanDto> plans, List<PlanDto> filteredPlans, CampaignSummaryDto summary)
         {
             summary.CampaignStatus = plans
                 .OrderByDescending(p => p.Status == PlanStatusEnum.Scenario)
@@ -123,7 +129,7 @@ namespace Services.Broadcast.ApplicationServices
                 .Last().Status;
         }
 
-        protected void AggregatePlansStatuses(List<PlanDto> plans, CampaignSummaryDto summary)
+        protected void AggregatePlansStatuses(List<PlanDto> plans, List<PlanDto> filteredPlans, CampaignSummaryDto summary)
         {
             summary.PlanStatusCountWorking = plans.Count(p => p.Status == PlanStatusEnum.Working);
             summary.PlanStatusCountReserved = plans.Count(p => p.Status == PlanStatusEnum.Reserved);
@@ -136,7 +142,7 @@ namespace Services.Broadcast.ApplicationServices
             summary.PlanStatusCountRejected = plans.Count(p => p.Status == PlanStatusEnum.Rejected);
         }
 
-        protected void AggregateComponentsModifiedTime(List<PlanDto> plans, CampaignSummaryDto summary)
+        protected void AggregateComponentsModifiedTime(List<PlanDto> plans, List<PlanDto> filteredPlans, CampaignSummaryDto summary)
         {
             summary.ComponentsModified = plans.Max(p => p.ModifiedDate);
         }
