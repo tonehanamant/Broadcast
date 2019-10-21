@@ -10,7 +10,6 @@ using Services.Broadcast.Entities.StationInventory;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
-using System.Diagnostics;
 using System.Linq;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities;
@@ -19,6 +18,7 @@ using Tam.Maestro.Data.EntityFrameworkMapping;
 using Tam.Maestro.Services.ContractInterfaces.AudienceAndRatingsBusinessObjects;
 using Tam.Maestro.Services.ContractInterfaces.Common;
 using static Services.Broadcast.Entities.Enums.ProposalEnums;
+using System.Diagnostics;
 
 namespace Services.Broadcast.Repositories
 {
@@ -905,7 +905,7 @@ namespace Services.Broadcast.Repositories
                     c.station_inventory_manifest_weeks.RemoveRange(c.station_inventory_manifest_weeks.Where(
                         w => mediaWeekIds.Contains(w.media_week_id)
                             && w.station_inventory_manifest.station.market_code == marketCode
-                            && w.station_inventory_manifest.station_inventory_manifest_dayparts.Select(d => d.id).Contains(daypartId)));
+                            && w.station_inventory_manifest.station_inventory_manifest_dayparts.Select(d => d.daypart_id).Contains(daypartId)));
                     c.SaveChanges();
                 });
         }
