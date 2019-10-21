@@ -157,25 +157,19 @@ namespace Services.Broadcast.ApplicationServices
 
         private void _ExpireExistingInventoryManifestWeeks(InventoryFileBase inventoryFile)
         {
-            List<StationInventoryManifestWeek> weeksToExpire = new List<StationInventoryManifestWeek>();
 
-            var taskList = new List<Task<List<StationInventoryManifestWeek>>>();
-            var count = inventoryFile.GetAllManifests().Count();
-            foreach (var manifest in inventoryFile.GetAllManifests())
+            var allManifests = inventoryFile.GetAllManifests();
+
+            var manifestsByMarketDaypart = allManifests.GroupBy(m => new { m.Station.MarketCode, m.ManifestDayparts.Single().Daypart})
+                                            .Where(g => g.Key.MarketCode.HasValue).ToList();
+            var count = manifestsByMarketDaypart.Count;
+            foreach (var manifestGroup in manifestsByMarketDaypart)
             {
-                taskList.Add(Task.Run(() =>
-                {
-                    var allManifestMediaWeekIds = manifest.ManifestWeeks.Select(x => x.MediaWeek.Id).Distinct();
-                    var daypart = manifest.ManifestDayparts.SingleOrDefault();  //open market has only 1 daypart
-
-                    var weeks = _inventoryRepository.GetStationInventoryManifestWeeksForOpenMarket(manifest.Station.Id, daypart.ProgramName, daypart.Daypart.Id);
-                    return weeks.Where(w => allManifestMediaWeekIds.Contains(w.MediaWeek.Id)).ToList();
-                }));
+                var weeks = manifestGroup.SelectMany(m => m.ManifestWeeks.Select(w => w.MediaWeek.Id)).Distinct().ToList();
+                _inventoryRepository.RemoveManifestWeeksByMarketAndDaypart
+                    (weeks, manifestGroup.Key.MarketCode.Value, manifestGroup.Key.Daypart.Id);
 
             }
-
-            weeksToExpire = Task.WhenAll(taskList).Result.SelectMany(x => x).Distinct().ToList();
-            _inventoryRepository.RemoveManifestWeeks(weeksToExpire);
         }
     }
 }

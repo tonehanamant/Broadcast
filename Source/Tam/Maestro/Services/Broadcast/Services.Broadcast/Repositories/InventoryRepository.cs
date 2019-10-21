@@ -41,6 +41,8 @@ namespace Services.Broadcast.Repositories
         /// <param name="weeks">List of StationInventoryManifestWeek to remove</param>
         void RemoveManifestWeeks(List<StationInventoryManifestWeek> weeks);
 
+        void RemoveManifestWeeksByMarketAndDaypart(List<int> mediaWeekIds, int stationId, int daypartId);
+
         List<StationInventoryGroup> GetInventoryBySourceAndName(InventorySource inventorySource, List<string> groupNames);
         List<StationInventoryManifest> GetStationManifestsBySourceAndStationCode(
                                             InventorySource rateSource, int stationCode);
@@ -891,6 +893,19 @@ namespace Services.Broadcast.Repositories
                     var weekIds = weeks.Select(x => x.Id);
                     var dbWeeks = c.station_inventory_manifest_weeks.Where(x => weekIds.Contains(x.id));
                     c.station_inventory_manifest_weeks.RemoveRange(dbWeeks);
+                    c.SaveChanges();
+                });
+        }
+
+        public void RemoveManifestWeeksByMarketAndDaypart(List<int> mediaWeekIds, int marketCode, int daypartId)
+        {
+            _InReadUncommitedTransaction(
+                c =>
+                {
+                    c.station_inventory_manifest_weeks.RemoveRange(c.station_inventory_manifest_weeks.Where(
+                        w => mediaWeekIds.Contains(w.media_week_id)
+                            && w.station_inventory_manifest.station.market_code == marketCode
+                            && w.station_inventory_manifest.station_inventory_manifest_dayparts.Select(d => d.id).Contains(daypartId)));
                     c.SaveChanges();
                 });
         }
