@@ -44,5 +44,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<pricing_guide_distribution_open_market_inventory> pricing_guide_distribution_open_market_inventory { get; set; }
         public virtual ICollection<station_inventory_spot_snapshots> station_inventory_spot_snapshots { get; set; }
         public virtual ICollection<inventory_file_proprietary_header> inventory_file_proprietary_header { get; set; }
+        public virtual timespan timespan { get; set; }
     }
 }

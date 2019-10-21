@@ -13,6 +13,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Web.Http;
+using Services.Broadcast.Entities.ProgramGuide;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.Cable.Entities;
 using Tam.Maestro.Web.Common;
@@ -199,6 +200,15 @@ namespace BroadcastComposerWeb.Controllers
                     Message = e.Message
                 };
             }
+        }
+
+        [HttpGet]
+        [Route("ProcessInventoryProgramNames")]
+        public BaseResponse<List<GuideRequestElementDto>> ProcessInventoryProgramNames(int fileId)
+        {
+            return _ConvertToBaseResponse(() =>
+                _ApplicationServiceFactory.GetApplicationService<IInventoryService>()
+                    .ProcessInventoryProgramNames(fileId));
         }
 
         /// <summary>

@@ -10,6 +10,7 @@ using Services.Broadcast.Entities.StationInventory;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Diagnostics;
 using System.Linq;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities;
@@ -18,7 +19,6 @@ using Tam.Maestro.Data.EntityFrameworkMapping;
 using Tam.Maestro.Services.ContractInterfaces.AudienceAndRatingsBusinessObjects;
 using Tam.Maestro.Services.ContractInterfaces.Common;
 using static Services.Broadcast.Entities.Enums.ProposalEnums;
-using System.Diagnostics;
 
 namespace Services.Broadcast.Repositories
 {

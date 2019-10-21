@@ -384,6 +384,16 @@ BEGIN
 END
 /**************************************** END - PRI-7457 *****************************************************/
 
+/*************************************** START - PRI-15876 ****************************************************/
+IF NOT EXISTS (SELECT * FROM sys.objects o WHERE o.object_id = object_id(N'[dbo].[FK_dayparts_timespans)]') AND OBJECTPROPERTY(o.object_id, N'IsForeignKey') = 1)
+BEGIN
+	ALTER TABLE [dbo].[dayparts]  WITH CHECK ADD  CONSTRAINT [FK_dayparts_timespans] FOREIGN KEY([timespan_id])
+	REFERENCES [dbo].[timespans] ([id])
+END
+/*************************************** END - PRI-15876 ****************************************************/
+
+
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

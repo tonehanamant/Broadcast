@@ -23,6 +23,7 @@ namespace EntityFrameworkMapping.Broadcast
         public int daypart_type { get; set; }
         public bool is_start_time_modified { get; set; }
         public bool is_end_time_modified { get; set; }
+        public Nullable<int> show_type_restrictions_contain_type { get; set; }
     
         public virtual daypart_codes daypart_codes { get; set; }
         public virtual plan plan { get; set; }

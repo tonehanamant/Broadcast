@@ -3,12 +3,14 @@ using Common.Services.ApplicationServices;
 using Common.Services.Extensions;
 using Common.Services.Repositories;
 using Common.Systems.LockTokens;
+using Hangfire;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Cache;
 using Services.Broadcast.Converters.RateImport;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.InventorySummary;
+using Services.Broadcast.Entities.ProgramGuide;
 using Services.Broadcast.Entities.StationInventory;
 using Services.Broadcast.Exceptions;
 using Services.Broadcast.Helpers;
@@ -21,7 +23,6 @@ using System.Linq;
 using System.Web;
 using Tam.Maestro.Common;
 using Tam.Maestro.Common.DataLayer;
-using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 using Tam.Maestro.Services.Clients;
@@ -56,6 +57,8 @@ namespace Services.Broadcast.ApplicationServices
         List<QuarterDetailDto> GetInventoryUploadHistoryQuarters(int inventorySourceId);
         List<InventoryUploadHistoryDto> GetInventoryUploadHistory(int inventorySourceId, int? quarter, int? year);
         Tuple<string, Stream, string> DownloadErrorFile(int fileId);
+        List<GuideRequestElementDto> ProcessInventoryProgramNames(int fileId);
+        void QueueInventoryScheduleMergeJob(int fileId);
 
         /// <summary>
         /// Checks if the filepath is an excel file or not
@@ -98,6 +101,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IAudienceRepository _AudienceRepository;
         private readonly IFileService _FileService;
         private readonly IInventoryRatingsProcessingService _InventoryRatingsService;
+        private readonly IBackgroundJobClient _BackgroundJobClient;
 
         public InventoryService(IDataRepositoryFactory broadcastDataRepositoryFactory,
             IInventoryFileValidator inventoryFileValidator,
@@ -115,7 +119,8 @@ namespace Services.Broadcast.ApplicationServices
             IImpressionsService impressionsService,
             IOpenMarketFileImporter openMarketFileImporter,
             IFileService fileService,
-            IInventoryRatingsProcessingService inventoryRatingsService)
+            IInventoryRatingsProcessingService inventoryRatingsService,
+            IBackgroundJobClient backgroundJobClient)
         {
             _broadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
             _StationRepository = broadcastDataRepositoryFactory.GetDataRepository<IStationRepository>();
@@ -141,6 +146,7 @@ namespace Services.Broadcast.ApplicationServices
             _AudienceRepository = broadcastDataRepositoryFactory.GetDataRepository<IAudienceRepository>();
             _FileService = fileService;
             _InventoryRatingsService = inventoryRatingsService;
+            _BackgroundJobClient = backgroundJobClient;
         }
 
         public bool GetStationProgramConflicted(StationProgramConflictRequest conflict, int manifestId)
@@ -776,6 +782,71 @@ namespace Services.Broadcast.ApplicationServices
 
             throw new ApplicationException($"Error file {fileId} not found!");
 
+        }
+
+        public List<GuideRequestElementDto> ProcessInventoryProgramNames(int fileId)
+        {
+            /*** Gather Inventory ***/
+            var manifests = _InventoryRepository.GetStationInventoryManifestsByFileId(fileId);
+
+            /*** Transform to ProgramGuideApi Input ***/
+            const string dateFormat = "MM/dd/yyyy";
+
+            var requestElementNumber = 0;
+            var requestElements = new List<GuideRequestElementDto>();
+
+            var startDates = new List<DateTime>();
+            manifests.ForEach(m => startDates.Add(m.ManifestWeeks.Select(w => w.StartDate).Min()));
+            var startDateString = startDates.Any() ? startDates.Min().ToString(dateFormat) : null;
+
+            var endDates = new List<DateTime>();
+            manifests.ForEach(m => endDates.Add(m.ManifestWeeks.Select(w => w.EndDate).Max()));
+            var endDateString = endDates.Any() ? endDates.Max().ToString(dateFormat) : null;
+
+            foreach (var m in manifests)
+            {
+                if (m.ManifestDayparts.Any() == false)
+                {
+                    continue;
+                }
+
+                requestElementNumber++;
+                var requestElementDaypartNumber = 0;
+                foreach (var d in m.ManifestDayparts)
+                {
+                    requestElementDaypartNumber++;
+                    requestElements.Add(
+                        new GuideRequestElementDto
+                        {
+                            RequestElementId = $"RequestElement{requestElementNumber.ToString().PadLeft(4, '0')}",
+                            StartDate = startDateString,
+                            EndDate = endDateString,
+                            NielsenLegacyStationCallLetters = m.Station.LegacyCallLetters,
+                            NetworkAffiliate = m.Station.Affiliation,
+                            Daypart = new GuideRequestDaypartDto
+                            {
+                                RequestDaypartId = $"RequestElement_{requestElementNumber.ToString().PadLeft(4, '0')}_Daypart_{requestElementDaypartNumber.ToString().PadLeft(3, '0')}",
+                                Daypart = d.Daypart.Name,
+                                Monday = d.Daypart.Monday,
+                                Tuesday = d.Daypart.Tuesday,
+                                Wednesday = d.Daypart.Wednesday,
+                                Thursday = d.Daypart.Thursday,
+                                Friday = d.Daypart.Friday,
+                                Saturday = d.Daypart.Saturday,
+                                Sunday = d.Daypart.Sunday,
+                                StartTime = d.Daypart.StartTime,
+                                EndTime = d.Daypart.EndTime
+                            }
+                        });
+                }
+            }
+
+            return requestElements;
+        }
+
+        public void QueueInventoryScheduleMergeJob(int fileId)
+        {
+            _BackgroundJobClient.Enqueue<IInventoryService>(x => x.ProcessInventoryProgramNames(fileId));
         }
 
         /// <summary>

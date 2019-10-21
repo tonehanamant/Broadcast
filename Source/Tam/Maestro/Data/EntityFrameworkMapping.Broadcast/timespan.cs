@@ -14,8 +14,15 @@ namespace EntityFrameworkMapping.Broadcast
     
     public partial class timespan
     {
+        public timespan()
+        {
+            this.dayparts = new HashSet<daypart>();
+        }
+    
         public int id { get; set; }
         public int start_time { get; set; }
         public int end_time { get; set; }
+    
+        public virtual ICollection<daypart> dayparts { get; set; }
     }
 }
