@@ -211,7 +211,23 @@ namespace Services.Broadcast.ApplicationServices.Plan
         ///<inheritdoc/>
         public PlanDeliveryBudget Calculate(PlanDeliveryBudget planBudget)
         {
-            return _BudgetCalculator.CalculateBudget(planBudget);
+            var deliveryImpressionsHasValue = planBudget.DeliveryImpressions.HasValue;
+            if (deliveryImpressionsHasValue)
+            {
+                // the UI is sending the user entered value instead of the raw value. BE needs to adjust
+                // this value is only adjusted for calculations
+                planBudget.DeliveryImpressions = planBudget.DeliveryImpressions.Value * 1000;
+            }
+
+            planBudget = _BudgetCalculator.CalculateBudget(planBudget);
+
+            if (deliveryImpressionsHasValue)
+            {
+                // reset the DeliveryImpressions's value to what was entered by the user
+                planBudget.DeliveryImpressions = planBudget.DeliveryImpressions.Value / 1000;
+            }
+
+            return planBudget;
         }
 
         ///<inheritdoc/>

@@ -71,7 +71,7 @@ namespace BroadcastComposerWeb.Controllers
         }
 
         /// <summary>
-        /// Calculats the specified plan budget based on 2 values.
+        /// Calculates the specified plan budget based on 2 values.
         /// </summary>
         /// <param name="planBudget">The plan budget.</param>
         /// <returns>PlanDeliveryBudget object containing the calculated value</returns>
