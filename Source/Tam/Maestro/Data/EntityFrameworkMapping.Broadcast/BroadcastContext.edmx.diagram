@@ -335,7 +335,6 @@
         <AssociationConnector Association="BroadcastModel.FK__genre_map__mappe__337724EA" />
         <AssociationConnector Association="BroadcastModel.FK__genres__source_i__2FA69406" />
         <AssociationConnector Association="BroadcastModel.FK_dayparts_timespans" />
-        <AssociationConnector Association="BroadcastModel.FK_dayparts_timespans" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

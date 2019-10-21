@@ -697,7 +697,6 @@
           <Property Name="daypart_type" Type="int" Nullable="false" />
           <Property Name="is_start_time_modified" Type="bit" Nullable="false" />
           <Property Name="is_end_time_modified" Type="bit" Nullable="false" />
-          <Property Name="show_type_restrictions_contain_type" Type="int" />
         </EntityType>
         <EntityType Name="plan_flight_hiatus">
           <Key>
@@ -12626,7 +12625,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="plan_dayparts">
             <EntityTypeMapping TypeName="BroadcastModel.plan_dayparts">
               <MappingFragment StoreEntitySet="plan_dayparts">
-				<ScalarProperty Name="show_type_restrictions_contain_type" ColumnName="show_type_restrictions_contain_type" />
                 <ScalarProperty Name="is_end_time_modified" ColumnName="is_end_time_modified" />
                 <ScalarProperty Name="is_start_time_modified" ColumnName="is_start_time_modified" />
                 <ScalarProperty Name="daypart_type" ColumnName="daypart_type" />
