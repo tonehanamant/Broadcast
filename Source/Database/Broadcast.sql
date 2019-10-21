@@ -385,7 +385,7 @@ END
 /**************************************** END - PRI-7457 *****************************************************/
 
 /*************************************** START - PRI-15876 ****************************************************/
-IF NOT EXISTS (SELECT * FROM sys.objects o WHERE o.object_id = object_id(N'[dbo].[FK_dayparts_timespans)]') AND OBJECTPROPERTY(o.object_id, N'IsForeignKey') = 1)
+IF NOT EXISTS (SELECT 1 FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[dbo].[FK_dayparts_timespans]') AND parent_object_id = OBJECT_ID(N'[dbo].[dayparts]'))
 BEGIN
 	ALTER TABLE [dbo].[dayparts]  WITH CHECK ADD  CONSTRAINT [FK_dayparts_timespans] FOREIGN KEY([timespan_id])
 	REFERENCES [dbo].[timespans] ([id])
