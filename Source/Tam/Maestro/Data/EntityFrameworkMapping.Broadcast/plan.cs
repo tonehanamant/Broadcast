@@ -18,11 +18,11 @@ namespace EntityFrameworkMapping.Broadcast
         {
             this.plan_available_markets = new HashSet<plan_available_markets>();
             this.plan_blackout_markets = new HashSet<plan_blackout_markets>();
-            this.plan_dayparts = new HashSet<plan_dayparts>();
             this.plan_flight_hiatus = new HashSet<plan_flight_hiatus>();
             this.plan_secondary_audiences = new HashSet<plan_secondary_audiences>();
             this.plan_summaries = new HashSet<plan_summaries>();
             this.plan_weeks = new HashSet<plan_weeks>();
+            this.plan_dayparts = new HashSet<plan_dayparts>();
         }
     
         public int id { get; set; }
@@ -66,11 +66,11 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual media_months media_months1 { get; set; }
         public virtual ICollection<plan_available_markets> plan_available_markets { get; set; }
         public virtual ICollection<plan_blackout_markets> plan_blackout_markets { get; set; }
-        public virtual ICollection<plan_dayparts> plan_dayparts { get; set; }
         public virtual ICollection<plan_flight_hiatus> plan_flight_hiatus { get; set; }
         public virtual ICollection<plan_secondary_audiences> plan_secondary_audiences { get; set; }
         public virtual ICollection<plan_summaries> plan_summaries { get; set; }
         public virtual ICollection<plan_weeks> plan_weeks { get; set; }
         public virtual spot_lengths spot_lengths { get; set; }
+        public virtual ICollection<plan_dayparts> plan_dayparts { get; set; }
     }
 }
