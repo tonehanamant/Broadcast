@@ -19,6 +19,7 @@ using Tam.Maestro.Services.ContractInterfaces.AudienceAndRatingsBusinessObjects;
 using Tam.Maestro.Services.ContractInterfaces.Common;
 using static Services.Broadcast.Entities.Enums.ProposalEnums;
 using System.Diagnostics;
+using System.Data;
 
 namespace Services.Broadcast.Repositories
 {
@@ -41,7 +42,7 @@ namespace Services.Broadcast.Repositories
         /// <param name="weeks">List of StationInventoryManifestWeek to remove</param>
         void RemoveManifestWeeks(List<StationInventoryManifestWeek> weeks);
 
-        void RemoveManifestWeeksByMarketAndDaypart(List<int> mediaWeekIds, int stationId, int daypartId);
+        void RemoveManifestWeeksByMarketAndDaypart(InventorySourceEnum inventorySource, List<int> mediaWeekIds, int stationId, int daypartId);
 
         List<StationInventoryGroup> GetInventoryBySourceAndName(InventorySource inventorySource, List<string> groupNames);
         List<StationInventoryManifest> GetStationManifestsBySourceAndStationCode(
@@ -897,16 +898,36 @@ namespace Services.Broadcast.Repositories
                 });
         }
 
-        public void RemoveManifestWeeksByMarketAndDaypart(List<int> mediaWeekIds, int marketCode, int daypartId)
+        public void RemoveManifestWeeksByMarketAndDaypart(InventorySourceEnum inventorySource, List<int> mediaWeekIds, int marketCode, int daypartId)
         {
             _InReadUncommitedTransaction(
                 c =>
                 {
-                    c.station_inventory_manifest_weeks.RemoveRange(c.station_inventory_manifest_weeks.Where(
-                        w => mediaWeekIds.Contains(w.media_week_id)
-                            && w.station_inventory_manifest.station.market_code == marketCode
-                            && w.station_inventory_manifest.station_inventory_manifest_dayparts.Select(d => d.daypart_id).Contains(daypartId)));
+                    var weekIdList = String.Join(",", mediaWeekIds);
+                    var sql = $@"delete w from station_inventory_manifest_weeks w
+                        inner join	station_inventory_manifest m on w.station_inventory_manifest_id = m.id
+                        inner join station_inventory_manifest_dayparts d on d.station_inventory_manifest_id = m.id
+                        inner join stations s on s.station_code = m.station_id
+                        where s.market_code = @marketCode
+                        and m.inventory_source_id = @inventorySource
+                        and d.daypart_id = @daypart
+                        and w.media_week_id in ({weekIdList})                       
+                    ";
+                    var marketParam = new System.Data.SqlClient.SqlParameter("@marketCode",  marketCode);
+                    var inventorySourceParam = new System.Data.SqlClient.SqlParameter("@inventorySource", (int)inventorySource);
+                    var daypartParam = new System.Data.SqlClient.SqlParameter("@daypart", daypartId);
+                    c.Database.ExecuteSqlCommand(sql, marketParam, inventorySourceParam, daypartParam);
+                    /*
+                    var weeksToRemove = c.station_inventory_manifest_dayparts
+                       .Where(md => md.daypart_id == daypartId)
+                       .Select(md => md.station_inventory_manifest)
+                       .Where(m => m.inventory_source_id == (int) inventorySource && m.station.market_code == marketCode)
+                       .SelectMany(m => m.station_inventory_manifest_weeks)
+                       .Where(w => mediaWeekIds.Contains(w.media_week_id));
+
+                    c.station_inventory_manifest_weeks.RemoveRange(weeksToRemove);
                     c.SaveChanges();
+                    */
                 });
         }
 

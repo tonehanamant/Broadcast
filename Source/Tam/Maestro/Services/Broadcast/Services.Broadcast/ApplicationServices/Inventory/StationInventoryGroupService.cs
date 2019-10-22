@@ -12,6 +12,7 @@ using Tam.Maestro.Common.DataLayer;
 using Services.Broadcast.Entities.StationInventory;
 using Services.Broadcast.Cache;
 using System.Threading.Tasks;
+using Services.Broadcast.Entities.Enums;
 
 namespace Services.Broadcast.ApplicationServices
 {
@@ -167,7 +168,7 @@ namespace Services.Broadcast.ApplicationServices
             {
                 var weeks = manifestGroup.SelectMany(m => m.ManifestWeeks.Select(w => w.MediaWeek.Id)).Distinct().ToList();
                 _inventoryRepository.RemoveManifestWeeksByMarketAndDaypart
-                    (weeks, manifestGroup.Key.MarketCode.Value, manifestGroup.Key.Daypart.Id);
+                    (InventorySourceEnum.OpenMarket, weeks, manifestGroup.Key.MarketCode.Value, manifestGroup.Key.Daypart.Id);
 
             }
         }

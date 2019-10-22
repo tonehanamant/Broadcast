@@ -45,7 +45,7 @@ namespace Services.Broadcast.BusinessEngines
                 if (lockResult.Success)
                 {
                     lockedStationIds.Add(station.Key);
-                    stationLocks.Add(new BomsLockManager(_SmsClient, new StationToken(station.Key)));
+                    //stationLocks.Add(new BomsLockManager(_SmsClient, new StationToken(station.Key)));
                 }
                 else
                 {
@@ -61,10 +61,10 @@ namespace Services.Broadcast.BusinessEngines
                 UnlockStation(stationId);
             }
 
-            foreach (var stationLock in stationLocks)
-            {
-                stationLock.Dispose();
-            }
+            //foreach (var stationLock in stationLocks)
+            //{
+            //    stationLock.Dispose();
+            //}
         }
 
         public LockResponse LockStation(int stationId)
