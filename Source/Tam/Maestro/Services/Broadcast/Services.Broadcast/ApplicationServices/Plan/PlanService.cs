@@ -126,9 +126,9 @@ namespace Services.Broadcast.ApplicationServices.Plan
             plan.ModifiedBy = modifiedBy;
             plan.ModifiedDate = modifiedDate;
 
-            _CalculateDaypartOverrides(plan.Dayparts);
             DaypartTimeHelper.SubtractOneSecondToEndTime(plan.Dayparts);
 
+            _CalculateDaypartOverrides(plan.Dayparts);
             _PlanValidator.ValidatePlan(plan);
 
             if (plan.DeliveryImpressions.HasValue)

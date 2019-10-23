@@ -51,7 +51,7 @@
     {
       "DaypartCodeId": 3,
       "DaypartTypeId": 3,
-      "EndTimeSeconds": 68399,
+      "EndTimeSeconds": 68400,
       "IsEndTimeModified": false,
       "IsStartTimeModified": false,
       "StartTimeSeconds": 57600,
