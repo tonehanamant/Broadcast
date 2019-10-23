@@ -499,7 +499,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
             plan.HouseholdUniverse = householdPlanDeliveryBudget.Universe.Value;
             plan.HouseholdDeliveryImpressions = householdPlanDeliveryBudget.DeliveryImpressions.Value;
-            plan.HouseholdCPM = householdPlanDeliveryBudget.CPM.Value * 1000;
+            plan.HouseholdCPM = householdPlanDeliveryBudget.CPM.Value;
             plan.HouseholdRatingPoints = householdPlanDeliveryBudget.DeliveryRatingPoints.Value;
             plan.HouseholdCPP = householdPlanDeliveryBudget.CPP.Value;
         }
@@ -518,7 +518,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
                 planAudience.DeliveryImpressions = planDeliveryBudget.DeliveryImpressions;
                 planAudience.DeliveryRatingPoints = planDeliveryBudget.DeliveryRatingPoints;
-                planAudience.CPM = planDeliveryBudget.CPM * 1000;
+                planAudience.CPM = planDeliveryBudget.CPM;
                 planAudience.CPP = planDeliveryBudget.CPP;
                 planAudience.Universe = planDeliveryBudget.Universe.Value;
             });
