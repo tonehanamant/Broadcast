@@ -72,8 +72,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     Universe = 112143960.0
                 });
             planRepository.Setup(s => s.SaveNewPlan(It.IsAny<PlanDto>(), It.IsAny<string>(), It.IsAny<DateTime>()))
-                .Callback(() => saveNewPlanCalls.Add(DateTime.Now))
-                .Returns(2);
+                .Callback(() => saveNewPlanCalls.Add(DateTime.Now));
             broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IPlanRepository>())
                 .Returns(planRepository.Object);
             daypartCodeRepository.Setup(s => s.GetDaypartCodeDefaults()).Returns(_GetDaypartCodeDefaults());
@@ -86,8 +85,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Callback<int, PlanAggregationProcessingStatusEnum>((i, s) => setStatusCalls.Add(new Tuple<int, PlanAggregationProcessingStatusEnum, DateTime>(i, s, DateTime.Now)));
             var saveSummaryCalls = new List<Tuple<int, PlanSummaryDto, DateTime>>();
             planSummaryRepo.Setup(s => s.SaveSummary(It.IsAny<PlanSummaryDto>()))
-                .Callback<PlanSummaryDto>((s) => saveSummaryCalls.Add(new Tuple<int, PlanSummaryDto, DateTime>(Thread.CurrentThread.ManagedThreadId, s, DateTime.Now)))
-                .Returns(3);
+                .Callback<PlanSummaryDto>((s) => saveSummaryCalls.Add(new Tuple<int, PlanSummaryDto, DateTime>(Thread.CurrentThread.ManagedThreadId, s, DateTime.Now)));
             broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IPlanSummaryRepository>())
                 .Returns(planSummaryRepo.Object);
             var planAggregator = new Mock<IPlanAggregator>();
@@ -157,8 +155,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     Universe = 112143960.0
                 });
             planRepository.Setup(s => s.SaveNewPlan(It.IsAny<PlanDto>(), It.IsAny<string>(), It.IsAny<DateTime>()))
-                .Callback(() => saveNewPlanCalls.Add(DateTime.Now))
-                .Returns(2);
+                .Callback(() => saveNewPlanCalls.Add(DateTime.Now));
             broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IPlanRepository>())
                 .Returns(planRepository.Object);
             var planSummaryRepo = new Mock<IPlanSummaryRepository>();
@@ -169,8 +166,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Callback<int, PlanAggregationProcessingStatusEnum>((i, s) => setStatusCalls.Add(new Tuple<int, PlanAggregationProcessingStatusEnum, int, DateTime>(i, s, Thread.CurrentThread.ManagedThreadId, DateTime.Now)));
             var saveSummaryCalls = new List<Tuple<int, PlanSummaryDto, DateTime>>();
             planSummaryRepo.Setup(s => s.SaveSummary(It.IsAny<PlanSummaryDto>()))
-                .Callback<PlanSummaryDto>((s) => saveSummaryCalls.Add(new Tuple<int, PlanSummaryDto, DateTime>(Thread.CurrentThread.ManagedThreadId, s, DateTime.Now)))
-                .Returns(3);
+                .Callback<PlanSummaryDto>((s) => saveSummaryCalls.Add(new Tuple<int, PlanSummaryDto, DateTime>(Thread.CurrentThread.ManagedThreadId, s, DateTime.Now)));
             broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IPlanSummaryRepository>())
                 .Returns(planSummaryRepo.Object);
             daypartCodeRepository.Setup(s => s.GetDaypartCodeDefaults()).Returns(_GetDaypartCodeDefaults());

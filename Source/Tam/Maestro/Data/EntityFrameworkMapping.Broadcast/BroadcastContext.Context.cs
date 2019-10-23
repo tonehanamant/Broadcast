@@ -143,20 +143,21 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<inventory_summary_gaps> inventory_summary_gaps { get; set; }
         public virtual DbSet<inventory_summary_quarters> inventory_summary_quarters { get; set; }
         public virtual DbSet<inventory_summary_quarter_details> inventory_summary_quarter_details { get; set; }
-        public virtual DbSet<plan_flight_hiatus> plan_flight_hiatus { get; set; }
-        public virtual DbSet<plan_secondary_audiences> plan_secondary_audiences { get; set; }
-        public virtual DbSet<plan_available_markets> plan_available_markets { get; set; }
-        public virtual DbSet<plan_blackout_markets> plan_blackout_markets { get; set; }
-        public virtual DbSet<plan_weeks> plan_weeks { get; set; }
         public virtual DbSet<campaign> campaigns { get; set; }
-        public virtual DbSet<plan_summaries> plan_summaries { get; set; }
-        public virtual DbSet<plan> plans { get; set; }
         public virtual DbSet<campaign_summaries> campaign_summaries { get; set; }
-        public virtual DbSet<plan_summary_quarters> plan_summary_quarters { get; set; }
         public virtual DbSet<inventory_file_ratings_job_notes> inventory_file_ratings_job_notes { get; set; }
         public virtual DbSet<inventory_file_program_names_jobs> inventory_file_program_names_jobs { get; set; }
         public virtual DbSet<genre_mappings> genre_mappings { get; set; }
         public virtual DbSet<genre_sources> genre_sources { get; set; }
-        public virtual DbSet<plan_dayparts> plan_dayparts { get; set; }
+        public virtual DbSet<plan_version_available_markets> plan_version_available_markets { get; set; }
+        public virtual DbSet<plan_version_blackout_markets> plan_version_blackout_markets { get; set; }
+        public virtual DbSet<plan_version_dayparts> plan_version_dayparts { get; set; }
+        public virtual DbSet<plan_version_flight_hiatus_days> plan_version_flight_hiatus_days { get; set; }
+        public virtual DbSet<plan_version_secondary_audiences> plan_version_secondary_audiences { get; set; }
+        public virtual DbSet<plan_version_summaries> plan_version_summaries { get; set; }
+        public virtual DbSet<plan_version_weeks> plan_version_weeks { get; set; }
+        public virtual DbSet<plan> plans { get; set; }
+        public virtual DbSet<plan_versions> plan_versions { get; set; }
+        public virtual DbSet<plan_version_summary_quarters> plan_version_summary_quarters { get; set; }
     }
 }

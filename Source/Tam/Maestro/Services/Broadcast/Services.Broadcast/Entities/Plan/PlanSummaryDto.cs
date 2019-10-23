@@ -26,6 +26,14 @@ namespace Services.Broadcast.Entities.Plan
         public int PlanId { get; set; }
 
         /// <summary>
+        /// Gets or sets the version identifier.
+        /// </summary>
+        /// <value>
+        /// The version identifier.
+        /// </value>
+        public int VersionId { get; set; }
+
+        /// <summary>
         /// The total number of Hiatus days in the flight.
         /// </summary>
         /// <value>

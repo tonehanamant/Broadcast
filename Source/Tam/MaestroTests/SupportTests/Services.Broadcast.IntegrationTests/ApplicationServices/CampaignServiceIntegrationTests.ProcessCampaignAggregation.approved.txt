@@ -12,7 +12,6 @@
   "HouseholdCPM": 2500.0,
   "HouseholdImpressions": 5500.0,
   "HouseholdRatingPoints": 23.5,
-  "Id": 2,
   "ModifiedBy": "CROSSMW\\bbotelho",
   "ModifiedDate": "2019-05-13T00:00:00",
   "Name": "Test Campaign 2",
@@ -39,7 +38,6 @@
       "ModifiedBy": "IntegrationTestUser",
       "ModifiedDate": "2019-05-14T00:00:00",
       "Name": "New Plan",
-      "PlanId": 523,
       "PlanSummaryQuarters": [
         {
           "Quarter": 1,
@@ -86,7 +84,6 @@
       "ModifiedBy": "IntegrationTestUser",
       "ModifiedDate": "2019-05-14T00:00:00",
       "Name": "New Plan",
-      "PlanId": 524,
       "PlanSummaryQuarters": [
         {
           "Quarter": 1,

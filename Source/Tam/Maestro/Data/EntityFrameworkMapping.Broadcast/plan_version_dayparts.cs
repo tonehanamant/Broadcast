@@ -12,10 +12,9 @@ namespace EntityFrameworkMapping.Broadcast
     using System;
     using System.Collections.Generic;
     
-    public partial class plan_dayparts
+    public partial class plan_version_dayparts
     {
         public int id { get; set; }
-        public int plan_id { get; set; }
         public int daypart_code_id { get; set; }
         public int start_time_seconds { get; set; }
         public int end_time_seconds { get; set; }
@@ -23,8 +22,9 @@ namespace EntityFrameworkMapping.Broadcast
         public int daypart_type { get; set; }
         public bool is_start_time_modified { get; set; }
         public bool is_end_time_modified { get; set; }
+        public int plan_version_id { get; set; }
     
         public virtual daypart_codes daypart_codes { get; set; }
-        public virtual plan plan { get; set; }
+        public virtual plan_versions plan_versions { get; set; }
     }
 }

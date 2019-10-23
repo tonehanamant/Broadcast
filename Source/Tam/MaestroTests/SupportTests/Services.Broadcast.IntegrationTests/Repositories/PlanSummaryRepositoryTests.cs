@@ -24,8 +24,8 @@ namespace Services.Broadcast.IntegrationTests.Repositories
         {
             using (new TransactionScopeWrapper())
             {
-                var planId = _CreateAndSavePlan();
-                var dtoToSave = _GetPlanSummaryDto(planId);
+                _CreateAndSavePlan(out int planId, out int planVersionId);
+                var dtoToSave = _GetPlanSummaryDto(planId, planVersionId);
                 _PlanSummaryRepository.SaveSummary(dtoToSave);
                 var savedSummary = _PlanSummaryRepository.GetSummaryForPlan(planId);
 
@@ -57,13 +57,13 @@ namespace Services.Broadcast.IntegrationTests.Repositories
         {
             using (new TransactionScopeWrapper())
             {
-                var planId = _CreateAndSavePlan();
-                var dtoToSave = _GetPlanSummaryDto(planId);
+                _CreateAndSavePlan(out int planId, out int planVersionId);
+                var dtoToSave = _GetPlanSummaryDto(planId, planVersionId);
                 _PlanSummaryRepository.SaveSummary(dtoToSave);
                 var startSummaryDto = _PlanSummaryRepository.GetSummaryForPlan(planId);
                 var beforeStatus = startSummaryDto.ProcessingStatus;
 
-                _PlanSummaryRepository.SetProcessingStatusForPlanSummary(planId, PlanAggregationProcessingStatusEnum.Error);
+                _PlanSummaryRepository.SetProcessingStatusForPlanSummary(planVersionId, PlanAggregationProcessingStatusEnum.Error);
 
                 PlanSummaryDto afterSummaryDto = _PlanSummaryRepository.GetSummaryForPlan(planId);
                 var afterStatus = afterSummaryDto.ProcessingStatus;
@@ -75,7 +75,7 @@ namespace Services.Broadcast.IntegrationTests.Repositories
 
         #region Helpers
 
-        private int _CreateAndSavePlan()
+        private void _CreateAndSavePlan(out int planId, out int planVersionId)
         {
             var modifiedUser = "RepoIntegrationTestUser";
             var modifiedDateTime = new DateTime(2018, 10, 17, 12, 0, 0);
@@ -104,16 +104,18 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                 DeliveryRatingPoints = 0.00248816152650979,
                 CPP = 200951583.9999m
             };
-            var planId = _PlanRepository.SaveNewPlan(planDto, modifiedUser, modifiedDateTime);
-            return planId;
+            _PlanRepository.SaveNewPlan(planDto, modifiedUser, modifiedDateTime);
+            planId = planDto.Id;
+            planVersionId = planDto.VersionId;
         }
 
-        private PlanSummaryDto _GetPlanSummaryDto(int planId)
+        private PlanSummaryDto _GetPlanSummaryDto(int planId, int planVersionId)
         {
             var dto = new PlanSummaryDto
             {
                 ProcessingStatus = PlanAggregationProcessingStatusEnum.Idle,
                 PlanId = planId,
+                VersionId = planVersionId,
                 TotalHiatusDays = 2,
                 TotalActiveDays = 20,
                 AvailableMarketCount = 12,
@@ -138,6 +140,7 @@ namespace Services.Broadcast.IntegrationTests.Repositories
             var jsonResolver = new IgnorableSerializerContractResolver();
 
             jsonResolver.Ignore(typeof(PlanSummaryDto), "PlanId");
+            jsonResolver.Ignore(typeof(PlanSummaryDto), "VersionId");
 
             return new JsonSerializerSettings
             {

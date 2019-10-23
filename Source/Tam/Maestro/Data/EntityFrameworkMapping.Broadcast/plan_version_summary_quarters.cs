@@ -12,17 +12,13 @@ namespace EntityFrameworkMapping.Broadcast
     using System;
     using System.Collections.Generic;
     
-    public partial class plan_blackout_markets
+    public partial class plan_version_summary_quarters
     {
         public int id { get; set; }
-        public int plan_id { get; set; }
-        public short market_code { get; set; }
-        public int market_coverage_file_id { get; set; }
-        public int rank { get; set; }
-        public double percentage_of_us { get; set; }
+        public int plan_version_summary_id { get; set; }
+        public int quarter { get; set; }
+        public int year { get; set; }
     
-        public virtual market market { get; set; }
-        public virtual market_coverage_files market_coverage_files { get; set; }
-        public virtual plan plan { get; set; }
+        public virtual plan_version_summaries plan_version_summaries { get; set; }
     }
 }

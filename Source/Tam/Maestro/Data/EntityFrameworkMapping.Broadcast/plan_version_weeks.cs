@@ -12,18 +12,17 @@ namespace EntityFrameworkMapping.Broadcast
     using System;
     using System.Collections.Generic;
     
-    public partial class plan_available_markets
+    public partial class plan_version_weeks
     {
         public int id { get; set; }
-        public int plan_id { get; set; }
-        public short market_code { get; set; }
-        public Nullable<double> share_of_voice_percent { get; set; }
-        public int market_coverage_file_id { get; set; }
-        public int rank { get; set; }
-        public double percentage_of_us { get; set; }
+        public int media_week_id { get; set; }
+        public int number_active_days { get; set; }
+        public string active_days_label { get; set; }
+        public double impressions { get; set; }
+        public double share_of_voice { get; set; }
+        public int plan_version_id { get; set; }
     
-        public virtual market market { get; set; }
-        public virtual market_coverage_files market_coverage_files { get; set; }
-        public virtual plan plan { get; set; }
+        public virtual media_weeks media_weeks { get; set; }
+        public virtual plan_versions plan_versions { get; set; }
     }
 }

@@ -140,9 +140,10 @@ namespace Services.Broadcast.Repositories
                 {
                     var campaignsWithSummary = context.campaigns
                         .Include(campaign => campaign.plans)
-                        .Include(campaign => campaign.plans.Select(p => p.plan_summaries))
-                        .Include(campaign => campaign.plans.Select(p => p.plan_dayparts))
-                        .Include(campaign => campaign.plans.Select(p => p.spot_lengths))
+                        .Include(campaign => campaign.plans.Select(x=>x.plan_versions))
+                        .Include(campaign => campaign.plans.Select(x => x.plan_versions.Select(y=>y.plan_version_summaries)))
+                        .Include(campaign => campaign.plans.Select(x => x.plan_versions.Select(y => y.plan_version_dayparts)))
+                        .Include(campaign => campaign.plans.Select(x => x.plan_versions.Select(y => y.spot_lengths)))
                         .GroupJoin(
                             context.campaign_summaries,
                             campaigns => campaigns.id,
@@ -233,11 +234,12 @@ namespace Services.Broadcast.Repositories
                 {
                     var campaign = context.campaigns
                         .Include(x => x.plans)
-                        .Include(x => x.plans.Select(p => p.spot_lengths))
-                        .Include(x => x.plans.Select(p => p.plan_dayparts))
-                        .Include(x => x.plans.Select(p => p.plan_dayparts.Select(d => d.daypart_codes)))
-                        .Include(x => x.plans.Select(p => p.plan_summaries))
-                        .Include(x => x.plans.Select(p => p.plan_summaries.Select(s => s.plan_summary_quarters)))
+                        .Include(z => z.plans.Select(x => x.plan_versions))
+                        .Include(z => z.plans.Select(x => x.plan_versions.Select(y => y.plan_version_summaries)))
+                        .Include(z => z.plans.Select(x => x.plan_versions.Select(y => y.plan_version_dayparts)))
+                        .Include(z => z.plans.Select(x => x.plan_versions.Select(y => y.plan_version_dayparts.Select(t=>t.daypart_codes))))
+                        .Include(z => z.plans.Select(x => x.plan_versions.Select(y => y.spot_lengths)))
+                        .Include(z => z.plans.Select(x => x.plan_versions.Select(y => y.plan_version_summaries.Select(t=>t.plan_version_summary_quarters))))
                         .Single(c => c.id.Equals(campaignId), $"Could not find existing campaign with id '{campaignId}'");
 
                     var campaignDto = _MapToDto(campaign);
@@ -257,46 +259,47 @@ namespace Services.Broadcast.Repositories
                 ModifiedBy = campaign.modified_by,
                 AdvertiserId = campaign.advertiser_id,
                 AgencyId = campaign.agency_id,
-                Plans = campaign.plans
-                    .Where(x => x.plan_summaries.Any(s => s.processing_status == (int)PlanAggregationProcessingStatusEnum.Idle))
-                    .Select(plan =>
+                Plans = campaign.plans.SelectMany(x => x.plan_versions.Where(y => y.plan_version_summaries.Any(s => s.processing_status == (int)PlanAggregationProcessingStatusEnum.Idle)))
+                                    .Where(x=>x.id == x.plan.latest_version_id)
+                    .Select(version =>
                     {
-                        var summary = plan.plan_summaries.Single();
+                        var summary = version.plan_version_summaries.Single();
 
                         return new PlanSummaryDto
                         {
                             ProductName = summary.product_name,
                             AudienceName = summary.audience_name,
-                            PostingType = (PostingTypeEnum)plan.posting_type,
-                            Status = (PlanStatusEnum)plan.status,
-                            Name = plan.name,
-                            SpotLength = plan.spot_lengths.length,
-                            FlightStartDate = plan.flight_start_date,
-                            FlightEndDate = plan.flight_end_date,
-                            TargetCPM = plan.cpm,
-                            Budget = plan.budget,
-                            Equivalized = plan.equivalized,
+                            PostingType = (PostingTypeEnum)version.posting_type,
+                            Status = (PlanStatusEnum)version.status,
+                            Name = version.plan.name,
+                            SpotLength = version.spot_lengths.length,
+                            FlightStartDate = version.flight_start_date,
+                            FlightEndDate = version.flight_end_date,
+                            TargetCPM = version.target_cpm,
+                            Budget = version.budget,
+                            Equivalized = version.equivalized,
                             AvailableMarketCount = summary.available_market_count,
                             AvailableMarketsWithSovCount = summary.available_market_with_sov_count,
                             AvailableMarketTotalUsCoveragePercent = summary.available_market_total_us_coverage_percent,
-                            PlanId = plan.id,
-                            ModifiedDate = plan.modified_date,
-                            ModifiedBy = plan.modified_by,
-                            Dayparts = plan.plan_dayparts.Select(d => d.daypart_codes.code).ToList(),
-                            TargetImpressions = plan.delivery_impressions,
-                            TRP = plan.delivery_rating_points,
+                            PlanId = version.plan.id,
+                            VersionId = version.id,
+                            ModifiedDate = version.modified_date,
+                            ModifiedBy = version.modified_by,
+                            Dayparts = version.plan_version_dayparts.Select(d => d.daypart_codes.code).ToList(),
+                            TargetImpressions = version.target_impression,
+                            TRP = version.target_rating_points,
                             TotalActiveDays = summary.active_day_count,
                             TotalHiatusDays = summary.hiatus_days_count,
                             HasHiatus = summary.hiatus_days_count.HasValue && summary.hiatus_days_count.Value > 0,
-                            HHImpressions = plan.household_delivery_impressions,
-                            HHCPM = plan.household_cpm,
-                            PlanSummaryQuarters = summary.plan_summary_quarters.Select(q => new PlanSummaryQuarterDto
+                            HHImpressions = version.hh_impressions,
+                            HHCPM = version.hh_cpm,
+                            PlanSummaryQuarters = summary.plan_version_summary_quarters.Select(q => new PlanSummaryQuarterDto
                             {
                                 Quarter = q.quarter,
                                 Year = q.year
                             }).ToList()
                         };
-                    }).ToList(),
+                    }).ToList()
             };
 
             campaignDto.HasPlans = campaignDto.Plans.Any();
@@ -312,7 +315,7 @@ namespace Services.Broadcast.Repositories
                     var campaigns = _GetFilteredCampaignsWithoutValidPlans(null, null, planStatus, context);
                     var plans = _GetFilteredPlansWithDates(null, null, planStatus, context);
 
-                    var plansDateRanges = plans.Select(p => new { p.flight_start_date, p.flight_end_date }).ToList();
+                    var plansDateRanges = plans.SelectMany(x=>x.plan_versions).Select(version => new { version.flight_start_date, version.flight_end_date }).ToList();
 
                     return campaigns
                             .Select(c => new DateRange(c.created_date, null))
@@ -395,45 +398,47 @@ namespace Services.Broadcast.Repositories
 
         private IEnumerable<plan> _GetFilteredPlansWithoutDates(PlanStatusEnum? planStatus, QueryHintBroadcastContext context)
         {
-            var plansWithoutStartDate = (from p in context.plans
-                                         where p.flight_start_date == null
-                                         select p);
-
+            var plansWithoutStartDate = (from plan in context.plans
+                                         join version in context.plan_versions on plan.id equals version.plan_id
+                                         where version.flight_start_date == null && version.id == plan.latest_version_id
+                                         select plan);
             if (planStatus.HasValue)
             {
                 plansWithoutStartDate = plansWithoutStartDate
-                                            .Where(p => p.status == (byte)planStatus);
+                                            .Where(p => p.plan_versions.Any(x=> (PlanStatusEnum)x.status == planStatus));
             }
-
             return plansWithoutStartDate;
         }
 
         private IEnumerable<plan> _GetFilteredPlansWithDates(DateTime? startDate, DateTime? endDate, PlanStatusEnum? planStatus, QueryHintBroadcastContext context)
         {
             var plansWithStartDate = (from p in context.plans
-                                      where p.flight_start_date != null
+                                      join v in context.plan_versions on p.id equals v.plan_id
+                                      where v.id == p.latest_version_id && v.flight_start_date != null
                                       select p);
 
             if (startDate.HasValue && endDate.HasValue)
             {
-                plansWithStartDate = plansWithStartDate.Where(p =>
-                                            (p.flight_start_date != null &&
-                                             p.flight_end_date == null &&
-                                             p.flight_start_date >= startDate &&
-                                             p.flight_start_date <= endDate) ||
+                plansWithStartDate = plansWithStartDate.SelectMany(x=>x.plan_versions)
+                                    .Where(v =>
+                                            (v.flight_start_date != null &&
+                                             v.flight_end_date == null &&
+                                             v.flight_start_date >= startDate &&
+                                             v.flight_start_date <= endDate) ||
 
-                                            (p.flight_start_date != null &&
-                                             p.flight_end_date != null &&
-                                             p.flight_start_date <= endDate &&
-                                             p.flight_end_date >= startDate));
+                                            (v.flight_start_date != null &&
+                                             v.flight_end_date != null &&
+                                             v.flight_start_date <= endDate &&
+                                             v.flight_end_date >= startDate))
+                                     .Select(v => v.plan);
             }
 
             if (planStatus.HasValue)
             {
-                plansWithStartDate = plansWithStartDate.Where(p => p.status == (byte)planStatus);
+                plansWithStartDate = plansWithStartDate.SelectMany(x => x.plan_versions).Where(v => v.status == (byte)planStatus).Select(v=>v.plan);
             }
 
-            return plansWithStartDate;
+            return plansWithStartDate.ToList();
         }
 
     }

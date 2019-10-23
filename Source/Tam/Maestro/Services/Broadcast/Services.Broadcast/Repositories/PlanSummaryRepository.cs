@@ -20,8 +20,7 @@ namespace Services.Broadcast.Repositories
         /// Saves the summary.
         /// </summary>
         /// <param name="summary">The summary.</param>
-        /// <returns>The id of the summary saved.</returns>
-        int SaveSummary(PlanSummaryDto summary);
+        void SaveSummary(PlanSummaryDto summary);
 
         /// <summary>
         /// Gets the summary for plan.
@@ -57,65 +56,68 @@ namespace Services.Broadcast.Repositories
         }
 
         /// <inheritdoc />
-        public void SetProcessingStatusForPlanSummary(int planId, PlanAggregationProcessingStatusEnum processingStatus)
+        public void SetProcessingStatusForPlanSummary(int planVersionId, PlanAggregationProcessingStatusEnum processingStatus)
         {
             _InReadUncommitedTransaction(context =>
             {
-                var entity = context.plan_summaries
-                                 .Where(s => s.plan_id == planId)
-                                 .SingleOrDefault($"More than one summary found for plan id {planId}.")
-                             ?? new plan_summaries { plan_id = planId, processing_status = (int)processingStatus};
+                var entity = (from summary in context.plan_version_summaries
+                              join version in context.plan_versions on summary.plan_version_id equals version.id
+                              where version.id == planVersionId
+                              select summary
+                                ).SingleOrDefault($"More than one summary found for plan version id {planVersionId}.")
+                             ?? new plan_version_summaries { plan_version_id = planVersionId };
 
                 if (entity.id <= 0)
                 {
-                    context.plan_summaries.Add(entity);
+                    context.plan_version_summaries.Add(entity);
                 }
 
-                entity.processing_status = (int) processingStatus;
+                entity.processing_status = (int)processingStatus;
                 context.SaveChanges();
             });
         }
 
         /// <inheritdoc />
-        public int SaveSummary(PlanSummaryDto summary)
+        public void SaveSummary(PlanSummaryDto summary)
         {
-            return _InReadUncommitedTransaction(context =>
+            _InReadUncommitedTransaction(context =>
             {
-                var entity = context.plan_summaries
-                                 .Where(s => s.plan_id == summary.PlanId)
-                                 .Include(s => s.plan_summary_quarters)
+                var entity = context.plan_version_summaries
+                                 .Where(s => s.plan_version_id == summary.VersionId)
+                                 .Include(s => s.plan_version_summary_quarters)
                                  .SingleOrDefault($"More than one summary found for plan id {summary.PlanId}.")
-                             ?? new plan_summaries { plan_id = summary.PlanId };
+                             ?? new plan_version_summaries { plan_version_id = summary.VersionId };
 
-                    _HydrateFromDto(entity, summary, context);
+                _HydrateFromDto(entity, summary, context);
 
-                    if (entity.id <= 0)
-                    {
-                        context.plan_summaries.Add(entity);
-                    }
+                if (entity.id <= 0)
+                {
+                    context.plan_version_summaries.Add(entity);
+                }
 
-                    context.SaveChanges();
-                    return entity.id;
-                });
+                context.SaveChanges();
+            });
         }
 
         /// <inheritdoc />
         public PlanSummaryDto GetSummaryForPlan(int planId)
         {
             return _InReadUncommitedTransaction(context =>
-                {
-                    var entity = context.plan_summaries
-                        .Where(s => s.plan_id == planId)
-                        .Include(s => s.plan_summary_quarters)
-                        .Single($"No summary found for {planId}.");
-                    var dto = _MapToDto(entity);
-                    return dto;
-                });
+            {
+                var entity = (from summary in context.plan_version_summaries
+                              join version in context.plan_versions on summary.plan_version_id equals version.id
+                              where version.id == version.plan.latest_version_id && version.plan_id == planId
+                              select summary)
+                                .Include(s => s.plan_version_summary_quarters)
+                                .Include(s => s.plan_versions)
+                                .Single($"No summary found for {planId}.");
+                var dto = _MapToDto(entity);
+                return dto;
+            });
         }
 
-        private void _HydrateFromDto(plan_summaries entity, PlanSummaryDto dto, QueryHintBroadcastContext context)
+        private void _HydrateFromDto(plan_version_summaries entity, PlanSummaryDto dto, QueryHintBroadcastContext context)
         {
-            entity.plan_id = dto.PlanId;
             entity.hiatus_days_count = dto.TotalHiatusDays;
             entity.active_day_count = dto.TotalActiveDays;
             entity.available_market_count = dto.AvailableMarketCount;
@@ -129,17 +131,17 @@ namespace Services.Broadcast.Repositories
             _HydrateQuartersFromDto(entity, dto, context);
         }
 
-        private void _HydrateQuartersFromDto(plan_summaries entity, PlanSummaryDto dto, QueryHintBroadcastContext context)
+        private void _HydrateQuartersFromDto(plan_version_summaries entity, PlanSummaryDto dto, QueryHintBroadcastContext context)
         {
-            context.plan_summary_quarters.RemoveRange(entity.plan_summary_quarters);
-            dto.PlanSummaryQuarters.ForEach(q => entity.plan_summary_quarters.Add(new plan_summary_quarters { quarter = q.Quarter, year = q.Year }));
+            context.plan_version_summary_quarters.RemoveRange(entity.plan_version_summary_quarters);
+            dto.PlanSummaryQuarters.ForEach(q => entity.plan_version_summary_quarters.Add(new plan_version_summary_quarters { quarter = q.Quarter, year = q.Year }));
         }
 
-        private PlanSummaryDto _MapToDto(plan_summaries entity)
+        private PlanSummaryDto _MapToDto(plan_version_summaries entity)
         {
             var dto = new PlanSummaryDto
             {
-                PlanId = entity.plan_id,
+                PlanId = entity.plan_versions.plan_id,
                 ProcessingStatus = (PlanAggregationProcessingStatusEnum)entity.processing_status,
                 TotalHiatusDays = entity.hiatus_days_count,
                 TotalActiveDays = entity.active_day_count,
@@ -150,7 +152,7 @@ namespace Services.Broadcast.Repositories
                 BlackoutMarketTotalUsCoveragePercent = entity.blackout_market_total_us_coverage_percent,
                 ProductName = entity.product_name,
                 AudienceName = entity.audience_name,
-                PlanSummaryQuarters = entity.plan_summary_quarters.Select(q => new PlanSummaryQuarterDto { Quarter = q.quarter, Year = q.year}).ToList()
+                PlanSummaryQuarters = entity.plan_version_summary_quarters.Select(q => new PlanSummaryQuarterDto { Quarter = q.quarter, Year = q.year }).ToList()
             };
             return dto;
         }

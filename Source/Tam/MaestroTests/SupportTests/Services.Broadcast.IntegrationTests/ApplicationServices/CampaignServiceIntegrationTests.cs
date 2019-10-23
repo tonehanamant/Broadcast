@@ -48,7 +48,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     },
                     PlanStatus = PlanStatusEnum.Contracted
                 }, new DateTime(2019, 04, 01));
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(campaigns));
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(campaigns, _GetJsonSettings()));
             }
         }
 
@@ -62,7 +62,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     PlanStatus = PlanStatusEnum.Contracted
                 }, new DateTime(2019, 04, 01));
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(campaigns));
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(campaigns, _GetJsonSettings()));
             }
         }
 
@@ -433,7 +433,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 _CampaignService.ProcessCampaignAggregation(campaignId);
                 var fullCampaign = _CampaignService.GetCampaignById(campaignId);
 
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(fullCampaign));
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(fullCampaign, _GetJsonSettings()));
             }
         }
 
@@ -483,6 +483,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             jsonResolver.Ignore(typeof(CampaignDto), "Id");
             jsonResolver.Ignore(typeof(CampaignListItemDto), "Id");
             jsonResolver.Ignore(typeof(PlanSummaryDto), "PlanId");
+            jsonResolver.Ignore(typeof(PlanSummaryDto), "VersionId");
             jsonResolver.Ignore(typeof(CampaignSummaryDto), "QueuedAt");
 
             return new JsonSerializerSettings

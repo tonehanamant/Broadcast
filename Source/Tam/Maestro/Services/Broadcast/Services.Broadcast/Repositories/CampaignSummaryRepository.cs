@@ -198,23 +198,17 @@ namespace Services.Broadcast.Repositories
 
         private void _LogUnsafeToSave(campaign_summaries entity, CampaignSummaryDto summary)
         {
-            LogHelper.Logger.Warn(_GetUnsafeToSaveMessage(entity, summary));
+            var message = $@"A campaign summary save would stomp on data with a more recent component date.
+                            CampaignID : {summary.CampaignId};
+                            SummaryId : {entity.id};
+                            Entity.ComponentsModified : {entity.components_modified};
+                            Summary.ComponentsModified : {summary.ComponentsModified};
+                            Summary.QueuedAt : {summary.QueuedAt};
+                            Summary.QueuedBy : {summary.QueuedBy};";
+
+            LogHelper.Logger.Warn(message);
         }
-
-        private string _GetUnsafeToSaveMessage(campaign_summaries entity, CampaignSummaryDto summary)
-        {
-            var message = "A campaign summary save would stomp on data with a more recent component date."
-                          + $" CampaignID : {summary.CampaignId};"
-                          + $" SummaryId : {entity.id};"
-                          + $" Entity.ComponentsModified : {entity.components_modified};"
-                          + $" Summary.ComponentsModified : {summary.ComponentsModified};"
-                          + $" Summary.QueuedAt : {summary.QueuedAt};"
-                          + $" Summary.QueuedBy : {summary.QueuedBy};"
-                ;
-
-            return message;
-        }
-
+        
         private void _HydrateFromDto(campaign_summaries entity, CampaignSummaryDto dto)
         {
             entity.processing_status = (int) dto.ProcessingStatus;

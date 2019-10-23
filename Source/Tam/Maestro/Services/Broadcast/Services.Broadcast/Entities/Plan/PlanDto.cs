@@ -360,5 +360,22 @@ namespace Services.Broadcast.Entities.Plan
         /// The count of available markets with sov.
         /// </value>
         public int? AvailableMarketsWithSovCount { get; set; }
+        
+        /// <summary>
+        /// Gets or sets a value indicating whether this instance is draft.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if this instance is draft; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsDraft { get; set; }
+
+        /// <summary>
+        /// Gets or sets the version identifier.
+        /// </summary>
+        /// <value>
+        /// The version identifier.
+        /// </value>
+        public int VersionId { get; set; }
+
     }
 }

@@ -25,14 +25,14 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// Saves the plan.
         /// </summary>
         /// <param name="plan">The plan.</param>
-        /// <param name="modifiedBy">The modified by.</param>
-        /// <param name="modifiedDate">The modified date.</param>
+        /// <param name="createdBy">The modified by.</param>
+        /// <param name="createdDate">The modified date.</param>
         /// <param name="aggregatePlanSynchronously">
         /// Synchronous execution is required for tests 
         /// because the transaction scope locks DB and summary data can not be saved from another thread
         /// </param>
         /// <returns></returns>
-        int SavePlan(PlanDto plan, string modifiedBy, DateTime modifiedDate, bool aggregatePlanSynchronously = false);
+        int SavePlan(PlanDto plan, string createdBy, DateTime createdDate, bool aggregatePlanSynchronously = false);
 
         /// <summary>
         /// Gets the plan.
@@ -121,10 +121,10 @@ namespace Services.Broadcast.ApplicationServices.Plan
         }
 
         ///<inheritdoc/>
-        public int SavePlan(PlanDto plan, string modifiedBy, DateTime modifiedDate, bool aggregatePlanSynchronously = false)
+        public int SavePlan(PlanDto plan, string createdBy, DateTime createdDate, bool aggregatePlanSynchronously = false)
         {
-            plan.ModifiedBy = modifiedBy;
-            plan.ModifiedDate = modifiedDate;
+            plan.ModifiedBy = createdBy;
+            plan.ModifiedDate = createdDate;
 
             DaypartTimeHelper.SubtractOneSecondToEndTime(plan.Dayparts);
 
@@ -141,18 +141,22 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _CalculateHouseholdDeliveryData(plan);
             _CalculateSecondaryAudiencesDeliveryData(plan);
 
-            if (plan.Id == 0)
+            if (plan.VersionId == 0)
             {
-                plan.Id = _PlanRepository.SaveNewPlan(plan, modifiedBy, modifiedDate);
+                _PlanRepository.SaveNewPlan(plan, createdBy, createdDate);
             }
             else
             {
-                _PlanRepository.SavePlan(plan);
+                _PlanRepository.SavePlan(plan, createdBy, createdDate);
             }
 
-            _DispatchPlanAggregation(plan, aggregatePlanSynchronously);
-            _CampaignAggregationJobTrigger.TriggerJob(plan.CampaignId, modifiedBy);
-
+            //we only aggregate data for versions, not drafts
+            if(plan.IsDraft == false)
+            {
+                _DispatchPlanAggregation(plan, aggregatePlanSynchronously);
+                _CampaignAggregationJobTrigger.TriggerJob(plan.CampaignId, createdBy);
+            }
+            
             return plan.Id;
         }
 
@@ -437,7 +441,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
         private void _DispatchPlanAggregation(PlanDto plan, bool aggregatePlanSynchronously)
         {
-            _PlanSummaryRepository.SetProcessingStatusForPlanSummary(plan.Id, PlanAggregationProcessingStatusEnum.InProgress);
+            _PlanSummaryRepository.SetProcessingStatusForPlanSummary(plan.VersionId, PlanAggregationProcessingStatusEnum.InProgress);
 
             if (aggregatePlanSynchronously)
             {
@@ -459,7 +463,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
             catch (Exception)
             {
-                _PlanSummaryRepository.SetProcessingStatusForPlanSummary(plan.Id, PlanAggregationProcessingStatusEnum.Error);
+                _PlanSummaryRepository.SetProcessingStatusForPlanSummary(plan.VersionId, PlanAggregationProcessingStatusEnum.Error);
             }
         }
         public PlanDefaultsDto GetPlanDefaults()

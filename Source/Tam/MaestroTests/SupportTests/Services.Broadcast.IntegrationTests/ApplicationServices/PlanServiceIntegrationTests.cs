@@ -42,6 +42,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [UseReporter(typeof(DiffReporter))]
         public void CanCreateNewPlanWithCanceledStatus()
         {
             using (new TransactionScopeWrapper())
@@ -92,6 +93,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [UseReporter(typeof(DiffReporter))]
         public void CanCreateNewPlanWithRejectedStatus()
         {
             using (new TransactionScopeWrapper())
@@ -1113,9 +1115,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var jsonResolver = new IgnorableSerializerContractResolver();
 
             jsonResolver.Ignore(typeof(PlanDto), "Id");
+            jsonResolver.Ignore(typeof(PlanDto), "VersionId");
             jsonResolver.Ignore(typeof(PlanDaypartDto), "Id");
             jsonResolver.Ignore(typeof(PlanMarketDto), "Id");
             jsonResolver.Ignore(typeof(PlanSummaryDto), "PlanId");
+            jsonResolver.Ignore(typeof(PlanSummaryDto), "VersionId");
 
             return new JsonSerializerSettings
             {

@@ -12,20 +12,20 @@ namespace EntityFrameworkMapping.Broadcast
     using System;
     using System.Collections.Generic;
     
-    public partial class plan_secondary_audiences
+    public partial class plan_version_secondary_audiences
     {
         public int id { get; set; }
-        public int plan_id { get; set; }
         public int audience_type { get; set; }
         public int audience_id { get; set; }
         public double vpvh { get; set; }
         public double delivery_rating_points { get; set; }
+        public double delivery_impressions { get; set; }
         public decimal cpm { get; set; }
         public double cpp { get; set; }
         public double universe { get; set; }
-        public double delivery_impressions { get; set; }
+        public int plan_version_id { get; set; }
     
         public virtual audience audience { get; set; }
-        public virtual plan plan { get; set; }
+        public virtual plan_versions plan_versions { get; set; }
     }
 }

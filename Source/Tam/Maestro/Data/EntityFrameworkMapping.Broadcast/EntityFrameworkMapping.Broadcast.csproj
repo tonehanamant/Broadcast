@@ -493,28 +493,31 @@
     <Compile Include="plan.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="plan_available_markets.cs">
+    <Compile Include="plan_versions.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="plan_blackout_markets.cs">
+    <Compile Include="plan_version_available_markets.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="plan_dayparts.cs">
+    <Compile Include="plan_version_blackout_markets.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="plan_flight_hiatus.cs">
+    <Compile Include="plan_version_dayparts.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="plan_secondary_audiences.cs">
+    <Compile Include="plan_version_flight_hiatus_days.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="plan_summaries.cs">
+    <Compile Include="plan_version_secondary_audiences.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="plan_summary_quarters.cs">
+    <Compile Include="plan_version_summaries.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="plan_weeks.cs">
+    <Compile Include="plan_version_summary_quarters.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="plan_version_weeks.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
     <Compile Include="postlog_client_scrubs.cs">

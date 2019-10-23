@@ -45,7 +45,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// <inheritdoc/>
         public PlanSummaryDto Aggregate(PlanDto plan)
         {
-            var summary = new PlanSummaryDto { PlanId = plan.Id };
+            var summary = new PlanSummaryDto { PlanId = plan.Id, VersionId = plan.VersionId };
             PerformAggregations(plan, summary);
             return summary;
         }
