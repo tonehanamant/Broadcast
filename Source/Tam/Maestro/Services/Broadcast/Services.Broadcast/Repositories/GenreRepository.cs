@@ -30,10 +30,7 @@ namespace Services.Broadcast.Repositories
         public List<LookupDto> GetAllGenres()
         {
             return _InReadUncommitedTransaction(
-                context => (from x in context.genres
-                            where x.source_id == (int)GenreSourceEnum.Maestro
-                            orderby x.name ascending
-                            select _MapToDto(x)).ToList());
+                context => context.genres.Where(g => g.source_id == (int)GenreSourceEnum.Maestro).OrderBy(g => g.name).Select(_MapToDto).ToList());
         }
 
 
