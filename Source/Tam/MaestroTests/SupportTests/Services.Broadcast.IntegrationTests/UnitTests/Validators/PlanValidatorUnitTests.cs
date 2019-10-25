@@ -664,6 +664,20 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
         }
 
         [Test]
+        public void ValidatePlan_WithValidMarketCoverage_DecimalSumValue()
+        {
+            _ConfigureMocksToReturnTrue();
+            var plan = _GetPlan();
+            plan.CoverageGoalPercent = 100;
+            plan.AvailableMarkets = new List<PlanAvailableMarketDto>
+            {
+                new PlanAvailableMarketDto { PercentageOfUS = 99.999999999999943 }
+            };
+
+            Assert.DoesNotThrow(() => _planValidator.ValidatePlan(plan));
+        }
+
+        [Test]
         public void ValidatePlan_ShareOfVoicePercentLessThanMinimum()
         {
             _ConfigureMocksToReturnTrue();
