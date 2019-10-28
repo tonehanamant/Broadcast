@@ -303,8 +303,10 @@
     <Compile Include="ApplicationServices\CampaignAggregator.cs" />
     <Compile Include="ApplicationServices\GenreService.cs" />
     <Compile Include="ApplicationServices\ContainTypeService.cs" />
+    <Compile Include="ApplicationServices\PlanPricingService.cs" />
     <Compile Include="ApplicationServices\ProgramGuideService.cs" />
     <Compile Include="ApplicationServices\ShowTypeService.cs" />
+    <Compile Include="BusinessEngines\ImpressionsCalculationEngine.cs" />
     <Compile Include="Clients\ProgramGuideApiClient.cs" />
     <Compile Include="Clients\ProgramGuideApiClientSimulator.cs" />
     <Compile Include="Converters\RateImport\BaseInventoryFileImporter.cs" />
@@ -335,7 +337,11 @@
     <Compile Include="Entities\Enums\GenreSourceEnum.cs" />
     <Compile Include="Entities\Enums\ContainTypeEnum.cs" />
     <Compile Include="Entities\Enums\InventoryFileProgramNameJobStatus.cs" />
+    <Compile Include="Entities\ImpressionsRequestDto.cs" />
     <Compile Include="Entities\InventoryFileProgramNameJob.cs" />
+    <Compile Include="Entities\PlanPricing\PlanPricingMarket.cs" />
+    <Compile Include="Entities\PlanPricing\PlanPricingProgramDto.cs" />
+    <Compile Include="Entities\PlanPricing\PricingModelInputDto.cs" />
     <Compile Include="Entities\ProgramGuide\GuideRequestDaypartDto.cs" />
     <Compile Include="Entities\ProgramGuide\GuideRequestElementDto.cs" />
     <Compile Include="Entities\ProgramGuide\GuideResponseElementDto.cs" />

@@ -303,6 +303,7 @@
     <Folder Include="Views\DaypartCode\" />
     <Folder Include="Views\GenreApi\" />
     <Folder Include="Views\InventoryCard\" />
+    <Folder Include="Views\PlanPricingApi\" />
     <Folder Include="Views\PricingGuide\" />
     <Folder Include="Views\SpotLength\" />
   </ItemGroup>
@@ -328,6 +329,7 @@
     <Compile Include="Controllers\ImageApiController.cs" />
     <Compile Include="Controllers\AudienceApiController.cs" />
     <Compile Include="Controllers\MarketsApiController.cs" />
+    <Compile Include="Controllers\PlanPricingApiController.cs" />
     <Compile Include="Controllers\PostingTypeApiController.cs" />
     <Compile Include="Controllers\PostingBooksApiController.cs" />
     <Compile Include="Controllers\ProductApiController.cs" />
@@ -722,7 +724,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>63950</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:61722/</IISUrl>
+          <IISUrl>http://localhost:61723/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

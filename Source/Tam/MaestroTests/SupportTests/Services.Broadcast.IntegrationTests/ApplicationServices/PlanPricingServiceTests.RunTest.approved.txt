@@ -1,0 +1,200 @@
+﻿[
+  {
+    "DeliveryMultiplier": 1.0,
+    "GuaranteedImpressions": 34500.0,
+    "PlanPricingMarket": {
+      "MarketId": 101,
+      "MarketName": "New York",
+      "MarketSegment": 3,
+      "MarketShareOfVoice": 0.0
+    },
+    "ProgramNames": [
+      "FRIENDS"
+    ],
+    "ProjectedImpressions": 39331.375,
+    "Rate": 375.0000,
+    "SpotLength": 30,
+    "Station": {
+      "Affiliation": "CW",
+      "CallLetters": "WPIX 11.1",
+      "LegacyCallLetters": "WPIX",
+      "StationCode": 5014
+    }
+  },
+  {
+    "DeliveryMultiplier": 1.0,
+    "GuaranteedImpressions": 29600.0,
+    "PlanPricingMarket": {
+      "MarketId": 101,
+      "MarketName": "New York",
+      "MarketSegment": 4,
+      "MarketShareOfVoice": 0.0
+    },
+    "ProgramNames": [
+      "TWO & A HALF MEN"
+    ],
+    "ProjectedImpressions": 33615.275,
+    "Rate": 350.0000,
+    "SpotLength": 30,
+    "Station": {
+      "Affiliation": "CW",
+      "CallLetters": "WPIX 11.1",
+      "LegacyCallLetters": "WPIX",
+      "StationCode": 5014
+    }
+  },
+  {
+    "DeliveryMultiplier": 1.0,
+    "GuaranteedImpressions": 30200.0,
+    "PlanPricingMarket": {
+      "MarketId": 101,
+      "MarketName": "New York",
+      "MarketSegment": 3,
+      "MarketShareOfVoice": 0.0
+    },
+    "ProgramNames": [
+      "FRIENDS"
+    ],
+    "ProjectedImpressions": 44998.25,
+    "Rate": 400.0000,
+    "SpotLength": 30,
+    "Station": {
+      "Affiliation": "CW",
+      "CallLetters": "WPIX 11.1",
+      "LegacyCallLetters": "WPIX",
+      "StationCode": 5014
+    }
+  },
+  {
+    "DeliveryMultiplier": 1.0,
+    "GuaranteedImpressions": 21800.0,
+    "PlanPricingMarket": {
+      "MarketId": 101,
+      "MarketName": "New York",
+      "MarketSegment": 4,
+      "MarketShareOfVoice": 0.0
+    },
+    "ProgramNames": [
+      "FRIENDS"
+    ],
+    "ProjectedImpressions": 30683.0,
+    "Rate": 375.0000,
+    "SpotLength": 30,
+    "Station": {
+      "Affiliation": "CW",
+      "CallLetters": "WPIX 11.1",
+      "LegacyCallLetters": "WPIX",
+      "StationCode": 5014
+    }
+  },
+  {
+    "DeliveryMultiplier": 1.0,
+    "GuaranteedImpressions": 23400.0,
+    "PlanPricingMarket": {
+      "MarketId": 101,
+      "MarketName": "New York",
+      "MarketSegment": 3,
+      "MarketShareOfVoice": 0.0
+    },
+    "ProgramNames": [
+      "FRIENDS 2X"
+    ],
+    "ProjectedImpressions": 40034.6875,
+    "Rate": 300.0000,
+    "SpotLength": 30,
+    "Station": {
+      "Affiliation": "CW",
+      "CallLetters": "WPIX 11.1",
+      "LegacyCallLetters": "WPIX",
+      "StationCode": 5014
+    }
+  },
+  {
+    "DeliveryMultiplier": 1.0,
+    "GuaranteedImpressions": 300.0,
+    "PlanPricingMarket": {
+      "MarketId": 100,
+      "MarketName": "Portland-Auburn",
+      "MarketSegment": 1,
+      "MarketShareOfVoice": 0.0
+    },
+    "ProgramNames": [
+      "TWO & HALF MEN"
+    ],
+    "ProjectedImpressions": 87.7,
+    "Rate": 25.0000,
+    "SpotLength": 30,
+    "Station": {
+      "Affiliation": "FOX",
+      "CallLetters": "WPFO 23.1",
+      "LegacyCallLetters": "WPFO",
+      "StationCode": 8346
+    }
+  },
+  {
+    "DeliveryMultiplier": 1.0,
+    "GuaranteedImpressions": 300.0,
+    "PlanPricingMarket": {
+      "MarketId": 100,
+      "MarketName": "Portland-Auburn",
+      "MarketSegment": 2,
+      "MarketShareOfVoice": 0.0
+    },
+    "ProgramNames": [
+      "2.5 MEN X2"
+    ],
+    "ProjectedImpressions": 217.3125,
+    "Rate": 6.0000,
+    "SpotLength": 30,
+    "Station": {
+      "Affiliation": "FOX",
+      "CallLetters": "WPFO 23.1",
+      "LegacyCallLetters": "WPFO",
+      "StationCode": 8346
+    }
+  },
+  {
+    "DeliveryMultiplier": 1.0,
+    "GuaranteedImpressions": 200.0,
+    "PlanPricingMarket": {
+      "MarketId": 100,
+      "MarketName": "Portland-Auburn",
+      "MarketSegment": 3,
+      "MarketShareOfVoice": 0.0
+    },
+    "ProgramNames": [
+      "SEINFELD X2"
+    ],
+    "ProjectedImpressions": 290.0,
+    "Rate": 6.0000,
+    "SpotLength": 30,
+    "Station": {
+      "Affiliation": "FOX",
+      "CallLetters": "WPFO 23.1",
+      "LegacyCallLetters": "WPFO",
+      "StationCode": 8346
+    }
+  },
+  {
+    "DeliveryMultiplier": 1.0,
+    "GuaranteedImpressions": 200.0,
+    "PlanPricingMarket": {
+      "MarketId": 100,
+      "MarketName": "Portland-Auburn",
+      "MarketSegment": 4,
+      "MarketShareOfVoice": 0.0
+    },
+    "ProgramNames": [
+      "2 BROKE GIRLS"
+    ],
+    "ProjectedImpressions": 58.7,
+    "Rate": 6.0000,
+    "SpotLength": 30,
+    "Station": {
+      "Affiliation": "FOX",
+      "CallLetters": "WPFO 23.1",
+      "LegacyCallLetters": "WPFO",
+      "StationCode": 8346
+    }
+  }
+]

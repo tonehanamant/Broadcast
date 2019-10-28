@@ -1564,7 +1564,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             var dto = _PricingGuideRepository.GetOpenMarketProposalDetailInventory(proposalDetailId);
             var proposalMarketIds = _ProposalMarketsCalculationEngine.GetProposalMarketsList(dto.ProposalId, dto.ProposalVersion).Select(m => m.Id).ToList();
-            var programs = _StationProgramRepository.GetStationProgramsForProposalDetail(dto.DetailFlightStartDate, dto.DetailFlightEndDate, 
+            var programs = _StationProgramRepository.GetPrograms(dto.DetailFlightStartDate, dto.DetailFlightEndDate, 
                 dto.DetailSpotLengthId, BroadcastConstants.OpenMarketSourceId, proposalMarketIds);
 
             var programWithStationImpressionsExcpected =

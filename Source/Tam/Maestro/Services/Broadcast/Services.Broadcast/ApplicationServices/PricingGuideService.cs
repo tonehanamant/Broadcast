@@ -1283,7 +1283,7 @@ namespace Services.Broadcast.ApplicationServices
         private List<ProposalProgramDto> _GetPrograms(ProposalDetailInventoryBase inventory)
         {
             var proposalMarketIds = _ProposalMarketsCalculationEngine.GetProposalMarketsList(inventory.ProposalId, inventory.ProposalVersion).Select(m => m.Id).ToList();
-            var programs = _StationProgramRepository.GetStationProgramsForProposalDetail(inventory.DetailFlightStartDate,
+            var programs = _StationProgramRepository.GetPrograms(inventory.DetailFlightStartDate,
                                                                                         inventory.DetailFlightEndDate,
                                                                                         inventory.DetailSpotLengthId,
                                                                                         BroadcastConstants.OpenMarketSourceId,
