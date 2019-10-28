@@ -4,12 +4,12 @@
   "BlackoutMarkets": [],
   "CoverageGoalPercent": 80.0,
   "Currency": 1,
-  "DaypartTypeEnum": 2,
   "Equivalized": true,
   "FlightHiatusDays": [],
   "GoalBreakdownType": 1,
   "Name": "",
   "PostingType": 2,
+  "ShowTypeContainType": 2,
   "SpotLengthId": 1,
   "Status": 1,
   "WeeklyBreakdownWeeks": []

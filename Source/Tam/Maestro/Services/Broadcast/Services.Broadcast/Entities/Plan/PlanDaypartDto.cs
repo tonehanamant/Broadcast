@@ -1,4 +1,6 @@
 ﻿using Services.Broadcast.Entities.Enums;
+using System.Collections.Generic;
+using Tam.Maestro.Data.Entities.DataTransferObjects;
 
 namespace Services.Broadcast.Entities.Plan
 {
@@ -62,5 +64,18 @@ namespace Services.Broadcast.Entities.Plan
         /// The weighting goal percent.
         /// </value>
         public double? WeightingGoalPercent { get; set; }
+
+        public RestrictionsDto Restrictions { get; set; } = new RestrictionsDto();
+
+        public class RestrictionsDto
+        {
+            public ShowTypeRestrictionsDto ShowTypeRestrictions { get; set; }
+
+            public class ShowTypeRestrictionsDto
+            {
+                public ContainTypeEnum ContainType { get; set; }
+                public List<LookupDto> ShowTypes { get; set; }
+            }
+        }
     }
 }

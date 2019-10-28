@@ -32,8 +32,7 @@ namespace Services.Broadcast.Repositories
             return _InReadUncommitedTransaction(
                 context => context.genres.Where(g => g.source_id == (int)GenreSourceEnum.Maestro).OrderBy(g => g.name).Select(_MapToDto).ToList());
         }
-
-
+        
         public List<LookupDto> FindGenres(string genreSearchString)
         {
             return _InReadUncommitedTransaction(

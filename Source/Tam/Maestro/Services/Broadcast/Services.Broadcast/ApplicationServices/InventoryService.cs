@@ -332,6 +332,7 @@ namespace Services.Broadcast.ApplicationServices
                     , string.IsNullOrWhiteSpace(x.StationLetters) ? "unknown" : x.StationLetters
                     , string.IsNullOrWhiteSpace(x.ProgramName) ? "unknown" : x.ProgramName
                     , x.ProblemDescription))
+                .OrderBy(x => x)
                 .ToArray();
         }
 

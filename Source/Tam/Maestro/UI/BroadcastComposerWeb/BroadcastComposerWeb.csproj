@@ -319,6 +319,7 @@
     <Compile Include="Controllers\AudienceTypesApiController.cs" />
     <Compile Include="Controllers\BroadcastControllerBase.cs" />
     <Compile Include="Controllers\CampaignApiController.cs" />
+    <Compile Include="Controllers\ContainTypeApiController.cs" />
     <Compile Include="Controllers\DaypartCodeApiController.cs" />
     <Compile Include="Controllers\DaypartTypeApiController.cs" />
     <Compile Include="Controllers\EnvironmentController.cs" />
@@ -331,6 +332,7 @@
     <Compile Include="Controllers\PostingBooksApiController.cs" />
     <Compile Include="Controllers\ProductApiController.cs" />
     <Compile Include="Controllers\ProgramGuideController.cs" />
+    <Compile Include="Controllers\ShowTypeApiController.cs" />
     <Compile Include="Controllers\SpotLengthApiController.cs" />
     <Compile Include="Controllers\PlanApiController.cs" />
     <Compile Include="Controllers\MaintenanceController.cs" />

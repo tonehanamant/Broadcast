@@ -12,6 +12,7 @@ using System.Linq;
 using Services.Broadcast.Extensions;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
+using Tam.Maestro.Data.Entities.DataTransferObjects;
 
 namespace Services.Broadcast.Repositories
 {

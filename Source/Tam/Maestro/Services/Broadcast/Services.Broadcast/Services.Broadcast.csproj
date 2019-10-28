@@ -302,7 +302,9 @@
     <Compile Include="ApplicationServices\CampaignAggregationJobTrigger.cs" />
     <Compile Include="ApplicationServices\CampaignAggregator.cs" />
     <Compile Include="ApplicationServices\GenreService.cs" />
+    <Compile Include="ApplicationServices\ContainTypeService.cs" />
     <Compile Include="ApplicationServices\ProgramGuideService.cs" />
+    <Compile Include="ApplicationServices\ShowTypeService.cs" />
     <Compile Include="Clients\ProgramGuideApiClient.cs" />
     <Compile Include="Clients\ProgramGuideApiClientSimulator.cs" />
     <Compile Include="Converters\RateImport\BaseInventoryFileImporter.cs" />
@@ -331,6 +333,7 @@
     <Compile Include="Entities\CampaignListItemDto.cs" />
     <Compile Include="Entities\CampaignQuarterDto.cs" />
     <Compile Include="Entities\Enums\GenreSourceEnum.cs" />
+    <Compile Include="Entities\Enums\ContainTypeEnum.cs" />
     <Compile Include="Entities\Enums\InventoryFileProgramNameJobStatus.cs" />
     <Compile Include="Entities\InventoryFileProgramNameJob.cs" />
     <Compile Include="Entities\ProgramGuide\GuideRequestDaypartDto.cs" />

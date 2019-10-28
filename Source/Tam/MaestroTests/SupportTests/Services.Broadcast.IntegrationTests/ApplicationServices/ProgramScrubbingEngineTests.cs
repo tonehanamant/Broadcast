@@ -5,6 +5,7 @@ using NUnit.Framework;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.DTO;
+using Services.Broadcast.Entities.Enums;
 using System.Collections.Generic;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 

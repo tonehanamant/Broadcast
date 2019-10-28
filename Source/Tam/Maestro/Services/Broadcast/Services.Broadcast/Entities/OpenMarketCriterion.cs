@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Services.Broadcast.Entities.Enums;
+using System.Collections.Generic;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 
 namespace Services.Broadcast.Entities
@@ -36,12 +37,6 @@ namespace Services.Broadcast.Entities
         public ContainTypeEnum Contain { get; set; }
         public int? Id { get; set; }
         public LookupDto ShowType { get; set; }
-    }
-
-    public enum ContainTypeEnum
-    {
-        Include = 1,
-        Exclude = 2
     }
 
     public enum MinMaxEnum

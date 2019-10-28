@@ -136,6 +136,7 @@ namespace Services.Broadcast.Converters.RateImport
             }
 
             var results = new ConcurrentBag<StationInventoryManifest>();
+            var problems = new ConcurrentBag<InventoryFileProblem>();
             var taskList = new List<Task<int>>();
 
             foreach (var availList in proposal.AvailList)
@@ -154,7 +155,7 @@ namespace Services.Broadcast.Converters.RateImport
                         availLines.AddRange(availList.AvailLineWithPeriods.Select(_Map));
                     }
 
-                    var processed = _PopulateProgramsFromAvailLineWithPeriods(proposal, availList, availLines, FileProblems, results);
+                    var processed = _PopulateProgramsFromAvailLineWithPeriods(proposal, availList, availLines, problems, results);
                     return processed;
                 }));
             }
@@ -162,6 +163,7 @@ namespace Services.Broadcast.Converters.RateImport
             var totalRowsProcessed = Task.WhenAll(taskList).GetAwaiter().GetResult().Sum();
 
             inventoryFile.InventoryManifests = results.ToList();
+            FileProblems = problems.ToList();
 
             return totalRowsProcessed;
         }
@@ -193,7 +195,7 @@ namespace Services.Broadcast.Converters.RateImport
             string linePeriodRate,
             string programName,
             string stationCallLetters,
-            List<InventoryFileProblem> fileProblems)
+            ConcurrentBag<InventoryFileProblem> fileProblems)
         {
             var manifestRates = new List<StationInventoryManifestRate>();
             var availLineRate = string.IsNullOrEmpty(linePeriodRate) ? 0 : decimal.Parse(linePeriodRate);
@@ -228,7 +230,7 @@ namespace Services.Broadcast.Converters.RateImport
             AAAAMessageProposal proposal,
             AAAAMessageProposalAvailList availList,
             List<AvailLineWithPeriods> availLines,
-            List<InventoryFileProblem> fileProblems,
+            ConcurrentBag<InventoryFileProblem> fileProblems,
             ConcurrentBag<StationInventoryManifest> results)
         {
             var audienceMap = _GetAudienceMap(availList.DemoCategories);

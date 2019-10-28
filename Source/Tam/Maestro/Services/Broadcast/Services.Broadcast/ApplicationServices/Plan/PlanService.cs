@@ -179,11 +179,32 @@ namespace Services.Broadcast.ApplicationServices.Plan
             PlanDto plan = _PlanRepository.GetPlan(planId);
             _SetWeekNumber(plan.WeeklyBreakdownWeeks);
             DaypartTimeHelper.AddOneSecondToEndTime(plan.Dayparts);
+
             _SetPlanTotals(plan);
+            _SetDefaultDaypartRestrictions(plan);
 
             //format delivery impressions
             plan.DeliveryImpressions = plan.DeliveryImpressions / 1000;
             return plan;
+        }
+
+        private void _SetDefaultDaypartRestrictions(PlanDto plan)
+        {
+            var planDefaults = GetPlanDefaults();
+
+            foreach (var daypart in plan.Dayparts)
+            {
+                var restrictions = daypart.Restrictions;
+
+                if (restrictions.ShowTypeRestrictions == null)
+                {
+                    restrictions.ShowTypeRestrictions = new PlanDaypartDto.RestrictionsDto.ShowTypeRestrictionsDto
+                    {
+                        ContainType = planDefaults.ShowTypeContainType,
+                        ShowTypes = new List<LookupDto>()
+                    };
+                }
+            }
         }
 
         private static void _SetPlanTotals(PlanDto plan)
@@ -466,6 +487,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 _PlanSummaryRepository.SetProcessingStatusForPlanSummary(plan.VersionId, PlanAggregationProcessingStatusEnum.Error);
             }
         }
+
         public PlanDefaultsDto GetPlanDefaults()
         {
             const int defaultSpotLength = 30;
@@ -483,8 +505,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 Status = PlanStatusEnum.Working,
                 Currency = PlanCurrenciesEnum.Impressions,
                 GoalBreakdownType = PlanGoalBreakdownTypeEnum.Even,
+                ShowTypeContainType = ContainTypeEnum.Exclude,
                 CoverageGoalPercent = 80d,
-                DaypartTypeEnum = DaypartTypeEnum.EntertainmentNonNews,
                 BlackoutMarkets = new List<PlanBlackoutMarketDto>(),
                 FlightHiatusDays = new List<DateTime>(),
                 WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>()
