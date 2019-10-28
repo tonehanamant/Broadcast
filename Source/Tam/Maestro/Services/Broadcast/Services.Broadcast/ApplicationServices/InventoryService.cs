@@ -796,13 +796,8 @@ namespace Services.Broadcast.ApplicationServices
             var requestElementNumber = 0;
             var requestElements = new List<GuideRequestElementDto>();
 
-            var startDates = new List<DateTime>();
-            manifests.ForEach(m => startDates.Add(m.ManifestWeeks.Select(w => w.StartDate).Min()));
-            var startDateString = startDates.Any() ? startDates.Min().ToString(dateFormat) : null;
-
-            var endDates = new List<DateTime>();
-            manifests.ForEach(m => endDates.Add(m.ManifestWeeks.Select(w => w.EndDate).Max()));
-            var endDateString = endDates.Any() ? endDates.Max().ToString(dateFormat) : null;
+            var startDateString = manifests.SelectMany(m => m.ManifestWeeks).Select(m => m.StartDate).Min().ToString(dateFormat);
+            var endDateString = manifests.SelectMany(m => m.ManifestWeeks).Select(m => m.EndDate).Max().ToString(dateFormat);
 
             foreach (var m in manifests)
             {
