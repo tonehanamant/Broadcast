@@ -186,11 +186,6 @@ namespace Services.Broadcast.Repositories
             return _InReadUncommitedTransaction(
                 context =>
                 {
-                    var existingDaypart = context.dayparts.Where(x => x.daypart_text.Equals(daypart.Preview)).SingleOrDefault();
-                    if (existingDaypart != null){
-                        return existingDaypart.id;
-                    }
-
                     var newDaypart = context.dayparts.Create();
                     newDaypart.timespan_id = timespanId;
                     newDaypart.code = daypart.Code;

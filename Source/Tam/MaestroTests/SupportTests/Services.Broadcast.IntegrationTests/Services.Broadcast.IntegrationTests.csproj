@@ -296,6 +296,7 @@
     <Compile Include="AttributeIgnorer.cs" />
     <Compile Include="ApplicationServices\AffidavitMatchingEngineTests.cs" />
     <Compile Include="ApplicationServices\BroadcastAudienceCacheIntegrationTests.cs" />
+    <Compile Include="DaypartCacheTests.cs" />
     <Compile Include="Helpers\ReflectionTestHelper.cs" />
     <Compile Include="Helpers\InventoryFileTestHelper.cs" />
     <Compile Include="Helpers\StringHelper.cs" />

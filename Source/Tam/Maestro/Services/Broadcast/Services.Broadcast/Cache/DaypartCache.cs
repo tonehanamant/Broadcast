@@ -36,8 +36,9 @@ namespace Common.Services
 
         private MemoryCache _Cache = new MemoryCache("DaypartCache");
         private int _CacheTimeoutInSeconds;
-
-        private static ConcurrentDictionary<DisplayDaypart, int> _CachedDisplayDayparts;
+        
+        private static Dictionary<DisplayDaypart, int> _CachedDisplayDayparts = new Dictionary<DisplayDaypart, int>();
+        private static ConcurrentDictionary<DisplayDaypart, object> _KeyLocks = new ConcurrentDictionary<DisplayDaypart, object>();
 
         private readonly IDisplayDaypartRepository _DisplayDaypartRepository;
 
@@ -78,20 +79,30 @@ namespace Common.Services
 
         public int GetIdByDaypart(DisplayDaypart displayDaypart)
         {
-            if (_CachedDisplayDayparts == null)
+            if (_CachedDisplayDayparts.ContainsKey(displayDaypart))
             {
-                _CachedDisplayDayparts = new ConcurrentDictionary<DisplayDaypart, int>();
-            }
-
-            if (!_CachedDisplayDayparts.ContainsKey(displayDaypart))
-            {
-                var id = _DisplayDaypartRepository.SaveDaypart(displayDaypart);
-                _CachedDisplayDayparts.TryAdd(displayDaypart, id);
-                return id;
+                return _CachedDisplayDayparts[displayDaypart];
             }
             else
             {
-                return _CachedDisplayDayparts[displayDaypart];
+                var keyLock = _KeyLocks.GetOrAdd(displayDaypart, k => new object());
+
+                // lock all the other requests with the same daypart
+                // so that SaveDaypart is called only once for several parallel requests with the same daypart
+                lock (keyLock)
+                {
+                    if (_CachedDisplayDayparts.ContainsKey(displayDaypart))
+                    {
+                        return _CachedDisplayDayparts[displayDaypart];
+                    }
+                    else
+                    {
+                        // if it is still not in the cache, let's get it
+                        var id = _DisplayDaypartRepository.SaveDaypart(displayDaypart);
+                        _CachedDisplayDayparts.Add(displayDaypart, id);
+                        return id;
+                    }
+                }
             }
         }
 
