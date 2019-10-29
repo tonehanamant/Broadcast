@@ -52,7 +52,7 @@
     "Id": 69
   },
   {
-    "Display": "Science & Techonology",
+    "Display": "Science & Technology",
     "Id": 70
   },
   {
