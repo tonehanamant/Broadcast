@@ -24,7 +24,6 @@ using Services.Broadcast.Entities.Enums;
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
     [TestFixture]
-    [Ignore]
     public class TrackerServiceIntegrationTests
     {
         private ITrackerService _TrackerService;
@@ -32,7 +31,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         private readonly IScheduleRepository _ScheduleRepository;
         private readonly IRatingAdjustmentsRepository _RatingAdjustmentsRepository;
         private readonly IBvsRepository _BvsRepository;
-        
+        private const int TRACKER_TEST_ESTIMATE_ID = 121220;
+
         public TrackerServiceIntegrationTests()
         {
             _TrackerService = IntegrationTestApplicationServiceFactory.GetApplicationService<ITrackerService>();
@@ -41,8 +41,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             _RatingAdjustmentsRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IRatingAdjustmentsRepository>();
             _BvsRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IBvsRepository>();
         }
-
-        private readonly DateTime _CurrentDateTime = new DateTime(2016, 02, 15);
 
         [Test]
         [Ignore]
@@ -81,35 +79,39 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        public void AcceptAsLeadin()
+        public void AcceptScheduleLeadIn_AcceptAsLeadin()
         {
             using (new TransactionScopeWrapper())
             {
-                var request = new AcceptScheduleLeadinRequest();
-                request.BvsDetailId = 9629;
-                request.ScheduleDetailWeekId = 208275;
+                var request = new AcceptScheduleLeadinRequest
+                {
+                    BvsDetailId = 9629,
+                    ScheduleDetailWeekId = 208275
+                };
 
                 var bvsDetail = _SutEngine.AcceptScheduleLeadIn(request);
 
                 Assert.AreEqual(request.ScheduleDetailWeekId, bvsDetail.ScheduleDetailWeekId);
-                Assert.AreEqual(true, bvsDetail.LinkedToLeadin);
+                Assert.IsTrue(bvsDetail.LinkedToLeadin);
                 Assert.AreEqual(TrackingStatus.InSpec, bvsDetail.Status);
             }
         }
 
         [Test]
-        public void AcceptAsBlock()
+        public void AcceptScheduleBlock_AcceptAsBlock()
         {
             using (new TransactionScopeWrapper())
             {
-                var request = new AcceptScheduleBlockRequest();
-                request.BvsDetailId = 9629;
-                request.ScheduleDetailWeekId = 208275;
+                var request = new AcceptScheduleBlockRequest
+                {
+                    BvsDetailId = 9629,
+                    ScheduleDetailWeekId = 208275
+                };
 
                 var bvsDetail = _SutEngine.AcceptScheduleBlock(request);
 
                 Assert.AreEqual(request.ScheduleDetailWeekId, bvsDetail.ScheduleDetailWeekId);
-                Assert.AreEqual(true, bvsDetail.LinkedToBlock);
+                Assert.IsTrue(bvsDetail.LinkedToBlock);
                 Assert.AreEqual(TrackingStatus.InSpec, bvsDetail.Status);
             }
         }
@@ -127,7 +129,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-
                 var actual = _SutEngine.GetProgramMappingDto(10181);
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(actual));
@@ -198,8 +199,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var actual = _TrackerService.GetDisplaySchedulesWithAdjustedImpressions(startDate, dateTime);
                 IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetUnityContainer().RegisterInstance(oldRepo);
-                Assert.That(actual.Single().PrimaryDemoBooked, Is.EqualTo(9999));
-                Assert.That(actual.Single().PrimaryDemoDelivered, Is.EqualTo(9999));
+                Assert.AreEqual(9999, actual.Single().PrimaryDemoBooked);
+                Assert.AreEqual(9999, actual.Single().PrimaryDemoDelivered);
             }
         }
 
@@ -234,7 +235,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var actual = _TrackerService.GetBvsDetailsWithAdjustedImpressions(dto.EstimateId.Value, dto);
                 IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetUnityContainer().RegisterInstance(oldRepo);
 
-                Assert.That(actual.Single().Impressions, Is.EqualTo(9249234));
+                Assert.AreEqual(9249234, actual.Single().Impressions);
             }
         }
 
@@ -267,7 +268,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var actual = _TrackerService.GetBvsDetailsWithAdjustedImpressions(dto.EstimateId.Value, dto);
                 IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetUnityContainer().RegisterInstance(oldRepo);
 
-                Assert.That(actual.Single().Impressions, Is.EqualTo(4624617.0d));
+                Assert.AreEqual(4624617.0d, actual.Single().Impressions);
             }
         }
 
@@ -373,7 +374,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        public void Test()
+        public void GetEstimateIdsWithSchedulesByFileIds_HasSchedule()
         {
             using (new TransactionScopeWrapper())
             {
@@ -382,9 +383,16 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     .GetDataRepository<IBvsRepository>()
                     .GetEstimateIdsWithSchedulesByFileIds(new List<int> { 313 });
                 Assert.AreEqual(3909, actual.First());
+            }
+        }
 
+        [Test]
+        public void GetEstimateIdsWithSchedulesByFileIds_DoesntHaveSchedule()
+        {
+            using (new TransactionScopeWrapper())
+            {
                 // this guy no schedule
-                actual = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory
+                var actual = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory
                     .GetDataRepository<IBvsRepository>()
                     .GetEstimateIdsWithSchedulesByFileIds(new List<int> { 48 });
 
@@ -467,7 +475,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-
                 var response = _TrackerService.GetScheduleDetailsByEstimateId(3417);
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(response));
             }
@@ -479,7 +486,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-
                 var response = _TrackerService.GetScheduleHeader(3417);
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(response));
             }
@@ -491,7 +497,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-
                 var response = _TrackerService.GetScheduleStations(69);
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(LookupDto), "Id");
@@ -511,7 +516,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-
                 var response = _TrackerService.GetSchedulePrograms(69);
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(LookupDto), "Id");
@@ -527,50 +531,50 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void LoadSchedule()
+        public void GetScheduleTrackingDetails()
         {
             using (new TransactionScopeWrapper())
             {
                 var saveRequest = new ScheduleSaveRequest();
-                var schedule = new ScheduleDTO();
 
-                schedule.AdvertiserId = 39279;
-                schedule.EstimateId = 3390;
-                schedule.PostingBookId = 413;
-                schedule.ScheduleName = "Checkers 2Q16 SYN - Scheduler (tv)";
-                schedule.UserName = "User";
-                schedule.FileName = @"Checkers 2Q16 SYN - Scheduler (tv).scx";
-                schedule.FileStream = new FileStream(@".\Files\Checkers 2Q16 SYN - Scheduler (tv).scx", FileMode.Open,
-                    FileAccess.Read);
-
-                schedule.MarketRestrictions = new List<int> { 101, 102 };
-                // restrict NYC and Binghamton just because reasons
-                schedule.DaypartRestriction = new DaypartDto
+                saveRequest.Schedule = new ScheduleDTO
                 {
-                    startTime = 0,
-                    endTime = 86400 - 1,
-                    mon = true,
-                    tue = true,
-                    wed = true,
-                    thu = true,
-                    fri = true,
-                    sat = true,
-                    sun = true
-                };
-                schedule.Equivalized = true;
-                schedule.ISCIs = new List<IsciDto>
+                    AdvertiserId = 39279,
+                    EstimateId = 3390,
+                    PostingBookId = 413,
+                    ScheduleName = "Checkers 2Q16 SYN - Scheduler (tv)",
+                    UserName = "User",
+                    FileName = @"Checkers 2Q16 SYN - Scheduler (tv).scx",
+                    FileStream = new FileStream(@".\Files\Checkers 2Q16 SYN - Scheduler (tv).scx", FileMode.Open,
+                    FileAccess.Read),
+
+                    MarketRestrictions = new List<int> { 101, 102 },
+                    // restrict NYC and Binghamton just because reasons
+                    DaypartRestriction = new DaypartDto
+                    {
+                        startTime = 0,
+                        endTime = 86400 - 1,
+                        mon = true,
+                        tue = true,
+                        wed = true,
+                        thu = true,
+                        fri = true,
+                        sat = true,
+                        sun = true
+                    },
+                    Equivalized = true,
+                    ISCIs = new List<IsciDto>
                 {
                     new IsciDto
                     {
                         House = "1111",
                         Client = "2222"
                     }
+                },
+
+                    PostType = PostingTypeEnum.NTI,
+                    InventorySource = InventorySourceEnum.CNN
                 };
-
-                schedule.PostType = PostingTypeEnum.NTI;
-                schedule.InventorySource = InventorySourceEnum.CNN;
-
-                saveRequest.Schedule = schedule;
 
                 _TrackerService.SaveSchedule(saveRequest);
 
@@ -588,7 +592,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        public void LoadBvs()
+        public void SaveBvsFiles()
         {
             using (new TransactionScopeWrapper())
             {
@@ -604,7 +608,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        public void LoadBvs_Bad_Campaign()
+        public void SaveBvsFiles_BadCampaign()
         {
             using (new TransactionScopeWrapper())
             {
@@ -615,22 +619,14 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var bvsRequest = new FileSaveRequest();
                 bvsRequest.Files.Add(new FileRequest { FileName = fileName, StreamData = stream });
-                try
-                {
-                    _TrackerService.SaveBvsFiles(bvsRequest, "User");
-                }
-                catch (Exception e)
-                {
-                    Assert.IsTrue(e.Message.Contains("Invalid campaign field in row="),
-                        "Epected to find exception message saying campaign was invalid.");
-                    return;
-                }
-                throw new Exception("Expected error regarding campaign number, but didn't happen.");
+
+                Assert.That(() => _TrackerService.SaveBvsFiles(bvsRequest, "User"),
+                Throws.TypeOf<ExtractBvsException>().With.Message.Contains("Invalid campaign field in row="));
             }
         }
 
         [Test]
-        public void LoadBvs_With_Bad_Rank()
+        public void SaveBvsFiles_WithBadRank()
         {
             using (new TransactionScopeWrapper())
             {
@@ -640,22 +636,14 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var bvsRequest = new FileSaveRequest();
                 bvsRequest.Files.Add(new FileRequest { FileName = fileName, StreamData = stream });
-                try
-                {
-                    _TrackerService.SaveBvsFiles(bvsRequest, "User");
-                }
-                catch (Exception e)
-                {
-                    if (e.Message.Contains("Invalid rank value "))
-                        return;
-                }
+
+                Assert.That(() => _TrackerService.SaveBvsFiles(bvsRequest, "User"),
+               Throws.TypeOf<ExtractBvsException>().With.Message.Contains("Invalid rank value "));
             }
-            throw new Exception("Expected rank exception, but never happened.");
         }
 
         [Test]
-        [ExpectedException(typeof(ExtractBvsException), ExpectedMessage = "Invalid spot length", MatchType = MessageMatch.Contains)]
-        public void LoadBvs_Bad_Spot_Length_Lookup()
+        public void SaveBvsFiles_BadSpotLengthLookup()
         {
             using (new TransactionScopeWrapper())
             {
@@ -666,12 +654,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var bvsRequest = new FileSaveRequest();
                 bvsRequest.Files.Add(new FileRequest { FileName = fileName, StreamData = stream });
 
-                _TrackerService.SaveBvsFiles(bvsRequest, "User");
+                Assert.That(() => _TrackerService.SaveBvsFiles(bvsRequest, "User"),
+               Throws.TypeOf<ExtractBvsException>().With.Message.Contains("Invalid spot length"));
             }
         }
 
         [Test]
-        public void LoadBvs_MultiFile_WithErrors()
+        public void SaveBvsFiles_MultiFileWithErrors()
         {
             using (new TransactionScopeWrapper())
             {
@@ -692,25 +681,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 fileName = "BVS Beiersdorf_Hersheys Empty Rank.xlsx";
                 bvsRequest.Files.Add(new FileRequest { FileName = fileName, StreamData = stream });
 
-                try
-                {
-                    _TrackerService.SaveBvsFiles(bvsRequest, "User");
-                }
-                catch (Exception e)
-                {
-                    if (e.Message.Contains("Invalid rank value ") &&
-                        e.Message.Contains("<br /> Error processing file "))
-                    {
-                        Console.WriteLine(e);
-                        return;
-                    }
-                }
-                throw new Exception("Expected an error but didn't happen");
+                Assert.That(() => _TrackerService.SaveBvsFiles(bvsRequest, "User"),
+               Throws.TypeOf<ExtractBvsException>().With.Message.Contains("Invalid rank value ").And.Message.Contains("<br /> Error processing file "));
             }
         }
 
         [Test]
-        public void LoadBvs_Empty_File_Error()
+        public void SaveBvsFiles_EmptyFileError()
         {
             using (new TransactionScopeWrapper())
             {
@@ -720,17 +697,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var bvsRequest = new FileSaveRequest();
                 bvsRequest.Files.Add(new FileRequest { FileName = fileName, StreamData = stream });
 
-                try
-                {
-                    _TrackerService.SaveBvsFiles(bvsRequest, "User");
-                }
-                catch (Exception e)
-                {
-                    if (e.Message.Contains("File does not contain valid BVS"))
-                        return;
-                }
+                Assert.That(() => _TrackerService.SaveBvsFiles(bvsRequest, "User"),
+               Throws.TypeOf<ExtractBvsException>().With.Message.Contains("File does not contain valid BVS"));
             }
-            throw new Exception("Expected empty file error but didn't happen");
         }
 
         [Test]
@@ -747,26 +716,24 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        public void ScheduleExists()
+        public void ScheduleExists_Exist()
         {
             using (new TransactionScopeWrapper())
             {
-
                 var response = _TrackerService.ScheduleExists(3417);
 
-                Assert.AreEqual(response, true);
+                Assert.IsTrue(response);
             }
         }
 
         [Test]
-        public void ScheduleDoesNotExists()
+        public void ScheduleExists_DoesNotExists()
         {
             using (new TransactionScopeWrapper())
             {
-
                 var response = _TrackerService.ScheduleExists(876165456);
 
-                Assert.AreEqual(response, false);
+                Assert.IsFalse(response);
             }
         }
 
@@ -796,7 +763,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-
                 var response = _TrackerService.GetScheduleStations(69);
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(LookupDto), "Id");
@@ -816,7 +782,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-
                 var response = _TrackerService.GetSchedulePrograms(69);
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(LookupDto), "Id");
@@ -850,7 +815,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-
                 var response = _TrackerService.GetScheduleAudiences(3417);
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(response));
             }
@@ -862,7 +826,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-
                 var response = _TrackerService.GetBvsMapByType("Program");
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(response));
             }
@@ -874,7 +837,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-
                 var response = _TrackerService.GetBvsMapByType("Station");
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(response));
             }
@@ -996,8 +958,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             _TrackerService.SaveBvsFiles(bvsRequest, "User");
         }
 
-        private const int TRACKER_TEST_ESTIMATE_ID = 121220;
-
         [Ignore]
         [Test]
         [UseReporter(typeof(DiffReporter))]
@@ -1080,19 +1040,21 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void Load_SCXWithBlankSpots()
+        public void GenerateScheduleReportDto_SCXWithBlankSpots()
         { //BCOP-1571
             using (new TransactionScopeWrapper())
             {
-                var saveRequest = new ScheduleSaveRequest();
-                var schedule = new ScheduleDTO();
-                schedule.AdvertiserId = 39279;
-                schedule.EstimateId = 44001;
-                schedule.PostingBookId = 413;
-                schedule.ScheduleName = "Checkers 2Q16 SYN - Estimate44001 With Empty Spots.scx";
-                schedule.UserName = "User";
-                schedule.FileName = @"Checkers 2Q16 SYN - Estimate44001 With Empty Spots.scx";
-                schedule.ISCIs = new List<IsciDto>
+                var saveRequest = new ScheduleSaveRequest
+                {
+                    Schedule = new ScheduleDTO
+                    {
+                        AdvertiserId = 39279,
+                        EstimateId = 44001,
+                        PostingBookId = 413,
+                        ScheduleName = "Checkers 2Q16 SYN - Estimate44001 With Empty Spots.scx",
+                        UserName = "User",
+                        FileName = @"Checkers 2Q16 SYN - Estimate44001 With Empty Spots.scx",
+                        ISCIs = new List<IsciDto>
                 {
                     new IsciDto
                     {
@@ -1104,12 +1066,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         House = "4400ABCD2H",
                         Client = "4400ABCD2H"
                     }
+                },
+                        FileStream = new FileStream(@".\Files\Checkers 2Q16 SYN - Estimate44001 With Empty Spots.scx", FileMode.Open,
+       FileAccess.Read),
+                        InventorySource = InventorySourceEnum.OpenMarket,
+                        PostType = PostingTypeEnum.NSI
+                    }
                 };
-                schedule.FileStream = new FileStream(@".\Files\Checkers 2Q16 SYN - Estimate44001 With Empty Spots.scx", FileMode.Open,
-                    FileAccess.Read);
-                schedule.InventorySource = InventorySourceEnum.OpenMarket;
-                schedule.PostType = PostingTypeEnum.NSI;
-                saveRequest.Schedule = schedule;
                 var scheduleId = _TrackerService.SaveSchedule(saveRequest);
 
                 var reportService = IntegrationTestApplicationServiceFactory.GetApplicationService<ISchedulesReportService>();
@@ -1127,35 +1090,37 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Approvals.Verify(json);
             }
         }
+
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void CreateBlankSchedule()
+        public void SaveSchedule_CreateBlankSchedule()
         {
             using (new TransactionScopeWrapper())
             {
-                var saveRequest = new ScheduleSaveRequest();
-                var schedule = new ScheduleDTO();
-
-                schedule.AdvertiserId = 39279;
-                schedule.PostingBookId = 413;
-                schedule.ScheduleName = "Blank Schedule";
-                schedule.UserName = "User";
-                schedule.MarketRestrictions = new List<int> { 101, 102 };
-                // restrict NYC and Binghamton just because reasons
-                schedule.DaypartRestriction = new DaypartDto
+                var saveRequest = new ScheduleSaveRequest
                 {
-                    startTime = 0,
-                    endTime = 86400 - 1,
-                    mon = true,
-                    tue = true,
-                    wed = true,
-                    thu = true,
-                    fri = true,
-                    sat = true,
-                    sun = true
-                };
-                schedule.Equivalized = true;
-                schedule.ISCIs = new List<IsciDto>
+                    Schedule = new ScheduleDTO
+                    {
+                        AdvertiserId = 39279,
+                        PostingBookId = 413,
+                        ScheduleName = "Blank Schedule",
+                        UserName = "User",
+                        MarketRestrictions = new List<int> { 101, 102 },
+                        // restrict NYC and Binghamton just because reasons
+                        DaypartRestriction = new DaypartDto
+                        {
+                            startTime = 0,
+                            endTime = 86400 - 1,
+                            mon = true,
+                            tue = true,
+                            wed = true,
+                            thu = true,
+                            fri = true,
+                            sat = true,
+                            sun = true
+                        },
+                        Equivalized = true,
+                        ISCIs = new List<IsciDto>
                 {
                     new IsciDto
                     {
@@ -1167,20 +1132,20 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         House = "37WEST1605H",
                         Client = "37WEST1605H"
                     }
-                };
+                },
 
-                schedule.PostType = PostingTypeEnum.NTI;
-                schedule.InventorySource = InventorySourceEnum.CNN;
-                schedule.Audiences = new List<BvsTrackingAudience>
+                        PostType = PostingTypeEnum.NTI,
+                        InventorySource = InventorySourceEnum.CNN,
+                        Audiences = new List<BvsTrackingAudience>
                 {
                    new BvsTrackingAudience() {AudienceId = 31, Rank = 1},
                    new BvsTrackingAudience() {AudienceId = 42, Rank = 2}
+                },
+                        StartDate = new DateTime(2017, 1, 20),
+                        EndDate = new DateTime(2018, 1, 20),
+                        IsBlank = true
+                    }
                 };
-                schedule.StartDate = new DateTime(2017, 1, 20);
-                schedule.EndDate = new DateTime(2018, 1, 20);
-                schedule.IsBlank = true;
-
-                saveRequest.Schedule = schedule;
 
                 var scheduleId = _TrackerService.SaveSchedule(saveRequest);
                 var actual = _ScheduleRepository.GetDisplayScheduleById(scheduleId);
@@ -1403,22 +1368,21 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [ExpectedException(typeof(ApplicationException), ExpectedMessage = "All ISCIs must have a client ISCI",
-             MatchType = MessageMatch.Contains)]
-        public void CreateScheduleWithHouseIscWithoutClientIsci()
+        public void SaveSchedule_WithHouseIscWithoutClientIsci()
         {
             using (new TransactionScopeWrapper())
             {
-                var saveRequest = new ScheduleSaveRequest();
-                var schedule = new ScheduleDTO();
+                var saveRequest = new ScheduleSaveRequest
+                {
+                    Schedule = new ScheduleDTO
+                    {
+                        AdvertiserId = 39279,
+                        PostingBookId = 413,
+                        ScheduleName = "Incomplete ISCI Schedule",
+                        UserName = "User",
+                        Equivalized = true,
 
-                schedule.AdvertiserId = 39279;
-                schedule.PostingBookId = 413;
-                schedule.ScheduleName = "Incomplete ISCI Schedule";
-                schedule.UserName = "User";
-                schedule.Equivalized = true;
-
-                schedule.ISCIs = new List<IsciDto>
+                        ISCIs = new List<IsciDto>
                 {
                     new IsciDto
                     {
@@ -1430,69 +1394,70 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         House = "EFGH5678",
                         Client = null
                     }
-                };
+                },
 
-                schedule.PostType = PostingTypeEnum.NTI;
-                schedule.InventorySource = InventorySourceEnum.CNN;
-                schedule.Audiences = new List<BvsTrackingAudience>
+                        PostType = PostingTypeEnum.NTI,
+                        InventorySource = InventorySourceEnum.CNN,
+                        Audiences = new List<BvsTrackingAudience>
                 {
                    new BvsTrackingAudience() {AudienceId = 31, Rank = 1},
                    new BvsTrackingAudience() {AudienceId = 42, Rank = 2}
+                },
+                        StartDate = new DateTime(2017, 1, 20),
+                        EndDate = new DateTime(2018, 1, 20),
+                        IsBlank = true
+                    }
                 };
-                schedule.StartDate = new DateTime(2017, 1, 20);
-                schedule.EndDate = new DateTime(2018, 1, 20);
-                schedule.IsBlank = true;
 
-                saveRequest.Schedule = schedule;
-
-                _TrackerService.SaveSchedule(saveRequest);
+                Assert.That(() => _TrackerService.SaveSchedule(saveRequest),
+                    Throws.TypeOf<ApplicationException>().With.Message.EqualTo("All ISCIs must have a client ISCI"));
             }
         }
 
         [Test]
-        [ExpectedException(typeof(ApplicationException), ExpectedMessage = "All ISCIs must have a house ISCI",
-             MatchType = MessageMatch.Contains)]
-        public void CreateScheduleWithClientIscWithoutHouseIsci()
+        public void SaveSchedule_WithClientIscWithoutHouseIsci()
         {
             using (new TransactionScopeWrapper())
             {
-                var saveRequest = new ScheduleSaveRequest();
-                var schedule = new ScheduleDTO();
-
-                schedule.AdvertiserId = 39279;
-                schedule.PostingBookId = 413;
-                schedule.ScheduleName = "Incomplete ISCI Schedule";
-                schedule.UserName = "User";
-                schedule.Equivalized = true;
-
-                schedule.ISCIs = new List<IsciDto>
+                var saveRequest = new ScheduleSaveRequest
                 {
-                    new IsciDto
+                    Schedule = new ScheduleDTO
                     {
-                        House = null,
-                        Client = "ABCD1234"
+                        AdvertiserId = 39279,
+                        PostingBookId = 413,
+                        ScheduleName = "Incomplete ISCI Schedule",
+                        UserName = "User",
+                        Equivalized = true,
+
+                        ISCIs = new List<IsciDto>
+                        {
+                            new IsciDto
+                            {
+                                House = null,
+                                Client = "ABCD1234"
+                            },
+                            new IsciDto
+                            {
+                                House = "EFGH5678",
+                                Client = "EFGH5678"
+                            }
+                        },
+
+                        PostType = PostingTypeEnum.NTI,
+                        InventorySource = InventorySourceEnum.CNN,
+                        Audiences = new List<BvsTrackingAudience>
+                    {
+                       new BvsTrackingAudience() {AudienceId = 31, Rank = 1},
+                       new BvsTrackingAudience() {AudienceId = 42, Rank = 2}
                     },
-                    new IsciDto
-                    {
-                        House = "EFGH5678",
-                        Client = "EFGH5678"
+                        StartDate = new DateTime(2017, 1, 20),
+                        EndDate = new DateTime(2018, 1, 20),
+                        IsBlank = true
                     }
                 };
 
-                schedule.PostType = PostingTypeEnum.NTI;
-                schedule.InventorySource = InventorySourceEnum.CNN;
-                schedule.Audiences = new List<BvsTrackingAudience>
-                {
-                   new BvsTrackingAudience() {AudienceId = 31, Rank = 1},
-                   new BvsTrackingAudience() {AudienceId = 42, Rank = 2}
-                };
-                schedule.StartDate = new DateTime(2017, 1, 20);
-                schedule.EndDate = new DateTime(2018, 1, 20);
-                schedule.IsBlank = true;
-
-                saveRequest.Schedule = schedule;
-
-                _TrackerService.SaveSchedule(saveRequest);
+                Assert.That(() => _TrackerService.SaveSchedule(saveRequest),
+                    Throws.TypeOf<ApplicationException>().With.Message.EqualTo("All ISCIs must have a house ISCI"));
             }
         }
 
@@ -1644,48 +1609,49 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 if (efSchedule != null)
                 {
-                    var saveRequest = new ScheduleSaveRequest();
-                    var schedule = new ScheduleDTO();
+                    var saveRequest = new ScheduleSaveRequest
+                    {
+                        Schedule = new ScheduleDTO
+                        {
+                            EstimateId = estimateId,
+                            IsBlank = false,
+                            ScheduleName = "Test Update (UPDATED)",
+                            UserName = "User",
 
-                    schedule.EstimateId = estimateId;
-                    schedule.IsBlank = false;
-                    schedule.ScheduleName = "Test Update (UPDATED)";
-                    schedule.UserName = "User";
-
-                    schedule.ISCIs = new List<IsciDto>
+                            ISCIs = new List<IsciDto>
                     {
                         new IsciDto
                         {
                             House = "1111",
                             Client = "2222"
                         }
-                    };
+                    },
 
-                    schedule.AdvertiserId = 37674;
-                    schedule.PostingBookId = 377;
-                    schedule.MarketRestrictions = new List<int> { 125, 390 };
-                    schedule.DaypartRestriction = new DaypartDto
-                    {
-                        startTime = 0,
-                        endTime = 86400 - 1,
-                        mon = false,
-                        tue = true,
-                        wed = true,
-                        thu = true,
-                        fri = true,
-                        sat = true,
-                        sun = true
-                    };
-                    schedule.PostType = PostingTypeEnum.NSI;
-                    schedule.Equivalized = false;
-                    schedule.Audiences = new List<BvsTrackingAudience>
+                            AdvertiserId = 37674,
+                            PostingBookId = 377,
+                            MarketRestrictions = new List<int> { 125, 390 },
+                            DaypartRestriction = new DaypartDto
+                            {
+                                startTime = 0,
+                                endTime = 86400 - 1,
+                                mon = false,
+                                tue = true,
+                                wed = true,
+                                thu = true,
+                                fri = true,
+                                sat = true,
+                                sun = true
+                            },
+                            PostType = PostingTypeEnum.NSI,
+                            Equivalized = false,
+                            Audiences = new List<BvsTrackingAudience>
                     {
                         new BvsTrackingAudience() {AudienceId = 31, Rank = 1},
                         new BvsTrackingAudience() {AudienceId = 42, Rank = 2}
+                    },
+                            InventorySource = InventorySourceEnum.OpenMarket
+                        }
                     };
-                    schedule.InventorySource = InventorySourceEnum.OpenMarket;
-
-                    saveRequest.Schedule = schedule;
                     _TrackerService.SaveSchedule(saveRequest);
 
                     var scheduleId = _ScheduleRepository.GetScheduleDtoByEstimateId(estimateId).Id;
@@ -1742,7 +1708,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        public void SaveBvsFiles_Twice_HasCorrect_DuplicateMessage()
+        public void SaveBvsFiles_TwiceHasCorrectDuplicateMessage()
         {
             using (new TransactionScopeWrapper())
             {
@@ -2152,20 +2118,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
             }
-        }
-          
-        private ProposalBuySaveRequestDto _CreateSuccessfullProposalBuySaveRequestDto(int detailId)
-        {
-            return new ProposalBuySaveRequestDto
-            {
-                EstimateId = 3909,
-                FileName = "Checkers 2Q16 SYN - ProposalBuy.scx",
-                Username = "test-user",
-                ProposalVersionDetailId = detailId,
-                FileStream = new FileStream(@".\Files\Checkers 2Q16 SYN - ProposalBuy.scx",
-                        FileMode.Open,
-                        FileAccess.Read)
-            };
         }
     }
 }

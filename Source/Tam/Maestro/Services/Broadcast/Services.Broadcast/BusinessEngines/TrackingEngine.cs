@@ -432,6 +432,10 @@ namespace Services.Broadcast.BusinessEngines
         public ProgramMappingDto GetProgramMappingDto(int bvsDetailId)
         {
             var bvsDetail = _DataRepositoryFactory.GetDataRepository<IBvsRepository>().GetBvsTrackingDetailById(bvsDetailId);
+
+            if (string.IsNullOrWhiteSpace(bvsDetail.Program))
+                return new ProgramMappingDto();
+
             var scheduleDetails = _DataRepositoryFactory.GetDataRepository<IScheduleRepository>().GetScheduleTrackingDetails(bvsDetail.EstimateId);
 
             var scheduleSpotTargets = scheduleDetails.SelectMany(x => x.ToScheduleSpotTargets()).ToList();
