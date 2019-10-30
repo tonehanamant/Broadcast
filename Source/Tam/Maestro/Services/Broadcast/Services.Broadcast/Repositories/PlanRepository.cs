@@ -156,8 +156,8 @@ namespace Services.Broadcast.Repositories
                        }
                        else
                        {
-                           draftVersion.modified_by = planDto.ModifiedBy;
-                           draftVersion.modified_date = planDto.ModifiedDate;
+                           draftVersion.modified_by = createdBy;
+                           draftVersion.modified_date = createdDate;
                        }
 
                        _MapFromDto(planDto, context, plan, draftVersion);

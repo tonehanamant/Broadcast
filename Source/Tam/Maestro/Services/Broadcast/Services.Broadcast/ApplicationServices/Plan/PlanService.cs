@@ -131,9 +131,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
         ///<inheritdoc/>
         public int SavePlan(PlanDto plan, string createdBy, DateTime createdDate, bool aggregatePlanSynchronously = false)
         {
-            plan.ModifiedBy = createdBy;
-            plan.ModifiedDate = createdDate;
-
             DaypartTimeHelper.SubtractOneSecondToEndTime(plan.Dayparts);
 
             _CalculateDaypartOverrides(plan.Dayparts);
