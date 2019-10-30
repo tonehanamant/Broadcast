@@ -33,6 +33,7 @@
     <TargetFrameworkProfile />
     <NoWarn>1591</NoWarn>
     <DocumentationFile>bin\BroadcastComposerWeb.xml</DocumentationFile>
+    <ExcludeXmlAssemblyFiles>false</ExcludeXmlAssemblyFiles>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>

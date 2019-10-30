@@ -46,10 +46,8 @@ namespace Services.Broadcast.Validators
         const string INVALID_HUT_BOOK = "Invalid HUT book.";
         const string INVALID_FLIGHT_DATES = "Invalid flight dates.  The end date cannot be before the start date.";
         const string INVALID_FLIGHT_DATE = "Invalid flight start/end date.";
-
         const string INVALID_FLIGHT_HIATUS_DAY =
             "Invalid flight hiatus day.  All days must be within the flight date range.";
-
         const string INVALID_AUDIENCE = "Invalid audience";
         const string INVALID_AUDIENCE_DUPLICATE = "An audience cannot appear multiple times";
         const string INVALID_SHARE_HUT_BOOKS = "HUT Book must be prior to Share Book";
@@ -66,14 +64,12 @@ namespace Services.Broadcast.Validators
         const string INVALID_FLIGHT_NOTES = "Flight notes cannot be longer than 1024 characters.";
         const string STOP_WORD_DETECTED = "Stop word detected in plan name";
         const string SUM_OF_DAYPART_WEIGHTINGS_EXCEEDS_LIMIT = "Sum of weighting is greater than 100%";
-
         const string INVALID_BUDGET = "Invalid budget.";
         const string INVALID_CPM = "Invalid CPM.";
         const string INVALID_CPP = "Invalid CPP.";
         const string INVALID_DELIVERY_IMPRESSIONS = "Invalid Delivery Impressions.";
-
         const string INVALID_STATUS_TRANSITION_MESSAGE = "Invalid status, can't update a plan from status {0} to status {1}";
-
+        const string INVALID_DRAFT_ON_NEW_PLAN = "Cannot create a new draft on a non existing plan";
         const string STOP_WORD = "eOm3wgvfm0dq4rI3srL2";
 
         public PlanValidator(ISpotLengthEngine spotLengthEngine
@@ -103,6 +99,11 @@ namespace Services.Broadcast.Validators
             if (!_SpotLengthEngine.SpotLengthIdExists(plan.SpotLengthId))
             {
                 throw new Exception(INVALID_SPOT_LENGTH);
+            }
+
+            if((plan.VersionId == 0 || plan.Id == 0) && plan.IsDraft == true)
+            {
+                throw new Exception(INVALID_DRAFT_ON_NEW_PLAN);
             }
 
             _ValidateProduct(plan);

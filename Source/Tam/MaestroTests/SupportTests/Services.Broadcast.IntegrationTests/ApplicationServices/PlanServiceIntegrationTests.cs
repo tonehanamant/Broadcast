@@ -42,6 +42,24 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        public void CreateNewDraft()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                PlanDto newPlan = _GetNewPlan();
+                newPlan.Id = 523;   //existing plan in database
+                newPlan.VersionId = 1;
+                newPlan.IsDraft = true;
+                
+                var newPlanId = _PlanService.SavePlan(newPlan, "integration_test", new System.DateTime(2019, 01, 01));
+                var draftId = _PlanService.CheckForDraft(newPlanId);
+
+                Assert.IsTrue(draftId > 0);
+                Assert.IsTrue(newPlanId > 0);
+            }
+        }
+        
+        [Test]
         public void SavePlan_InvalidMarketCoverage_PRI17598()
         {
             using (new TransactionScopeWrapper())
@@ -60,6 +78,21 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var newPlanId = _PlanService.SavePlan(newPlan, "integration_test", new System.DateTime(2019, 01, 01));
 
                 Assert.IsTrue(newPlanId > 0);
+            }
+        }
+
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetPlanVersion()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var planVersion = _PlanService.GetPlan(523, 1);
+
+                Assert.IsTrue(planVersion.Id > 0);
+                Assert.IsTrue(planVersion.VersionId > 0);
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(planVersion, _GetJsonSettings()));
             }
         }
 

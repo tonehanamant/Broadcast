@@ -38,8 +38,16 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// Gets the plan.
         /// </summary>
         /// <param name="planId">The plan identifier.</param>
+        /// <param name="versionId">Optional: version id. If nothing is passed, it will return the latest version</param>
         /// <returns></returns>
-        PlanDto GetPlan(int planId);
+        PlanDto GetPlan(int planId, int? versionId = null);
+
+        /// <summary>
+        /// Checks if a draft exist on the plan and returns the draft id
+        /// </summary>
+        /// <param name="planId">The plan identifier.</param>
+        /// <returns>Dravt id</returns>
+        int CheckForDraft(int planId);
 
         /// <summary>
         /// Gets the plan statuses.
@@ -141,13 +149,22 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _CalculateHouseholdDeliveryData(plan);
             _CalculateSecondaryAudiencesDeliveryData(plan);
 
-            if (plan.VersionId == 0)
-            {
+            if (plan.VersionId == 0 || plan.Id == 0)
+            {   //this is a new plan, so we're saving version 1
                 _PlanRepository.SaveNewPlan(plan, createdBy, createdDate);
             }
             else
             {
-                _PlanRepository.SavePlan(plan, createdBy, createdDate);
+                if (plan.IsDraft == true)
+                {
+                    //this is a draft. we create it if none exist or we update it otherwise
+                    _PlanRepository.CreateOrUpdateDraft(plan, createdBy, createdDate);
+                }
+                else
+                {
+                    //this is a new version.
+                    _PlanRepository.SavePlan(plan, createdBy, createdDate);
+                }                
             }
 
             //we only aggregate data for versions, not drafts
@@ -174,9 +191,9 @@ namespace Services.Broadcast.ApplicationServices.Plan
         }
 
         ///<inheritdoc/>
-        public PlanDto GetPlan(int planId)
+        public PlanDto GetPlan(int planId, int? versionId = null)
         {
-            PlanDto plan = _PlanRepository.GetPlan(planId);
+            PlanDto plan = _PlanRepository.GetPlan(planId, versionId);
             _SetWeekNumber(plan.WeeklyBreakdownWeeks);
             DaypartTimeHelper.AddOneSecondToEndTime(plan.Dayparts);
 
@@ -186,6 +203,12 @@ namespace Services.Broadcast.ApplicationServices.Plan
             //format delivery impressions
             plan.DeliveryImpressions = plan.DeliveryImpressions / 1000;
             return plan;
+        }
+
+        /// <inheritdoc/>
+        public int CheckForDraft(int planId)
+        {
+            return _PlanRepository.CheckIfDraftExists(planId);
         }
 
         private void _SetDefaultDaypartRestrictions(PlanDto plan)

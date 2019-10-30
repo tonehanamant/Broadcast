@@ -82,6 +82,19 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
         }
 
         [Test]
+        public void ValidatePlan_CannotSaveDraftOnEmptyPlan()
+        {
+            _ConfigureSpotLenghtEngineMockToReturnTrue();
+
+            var plan = _GetPlan();
+            plan.VersionId = 0;
+            plan.IsDraft = true;
+
+            Assert.That(() => _planValidator.ValidatePlan(plan),
+                Throws.TypeOf<Exception>().With.Message.EqualTo("Cannot create a new draft on a non existing plan"));
+        }
+
+        [Test]
         public void ValidatePlan_NameLargerThan255()
         {
             var plan = _GetPlan();

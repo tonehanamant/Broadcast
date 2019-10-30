@@ -49,14 +49,36 @@ namespace BroadcastComposerWeb.Controllers
         }
 
         /// <summary>
-        /// Gets the plan statuses (This endpoint was added for testing purposes only).
+        /// Gets the plan by id.
         /// </summary>
-        /// <returns>List of LookupDto objects</returns>
+        /// <returns>PlanDto object</returns>
         [HttpGet]
-        [Route("")]
+        [Route("{planId}")]
         public BaseResponse<PlanDto> GetPlanById(int planId)
         {
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanService>().GetPlan(planId));
+        }
+
+        /// <summary>
+        /// Checks if the plan has a draft and returns the draft id
+        /// </summary>
+        /// <returns>Id of the draft</returns>
+        [HttpGet]
+        [Route("{planId}/draft")]
+        public BaseResponse<int> CheckForDraft(int planId)
+        {
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanService>().CheckForDraft(planId));
+        }
+
+        /// <summary>
+        /// Gets the plan by id and version id.
+        /// </summary>
+        /// <returns>PlanDto object</returns>
+        [HttpGet]
+        [Route("{planId}/versions/{versionId}")]
+        public BaseResponse<PlanDto> GetVersionForPlan(int planId, int versionId)
+        {
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanService>().GetPlan(planId, versionId));
         }
 
         /// <summary>

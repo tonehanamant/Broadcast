@@ -1,0 +1,100 @@
+﻿{
+  "AudienceId": 31,
+  "AudienceType": 1,
+  "AvailableMarkets": [
+    {
+      "Market": "Portland-Auburn",
+      "MarketCode": 100,
+      "MarketCoverageFileId": 1,
+      "PercentageOfUS": 20.0,
+      "Rank": 1,
+      "ShareOfVoicePercent": 22.2
+    },
+    {
+      "Market": "New York",
+      "MarketCode": 101,
+      "MarketCoverageFileId": 1,
+      "PercentageOfUS": 32.5,
+      "Rank": 2,
+      "ShareOfVoicePercent": 34.5
+    }
+  ],
+  "AvailableMarketsWithSovCount": null,
+  "BlackoutMarketCount": 2,
+  "BlackoutMarkets": [
+    {
+      "Market": "Burlington-Plattsburgh",
+      "MarketCode": 123,
+      "MarketCoverageFileId": 1,
+      "PercentageOfUS": 5.5,
+      "Rank": 5
+    },
+    {
+      "Market": "Amarillo",
+      "MarketCode": 234,
+      "MarketCoverageFileId": 1,
+      "PercentageOfUS": 2.5,
+      "Rank": 8
+    }
+  ],
+  "BlackoutMarketTotalUsCoveragePercent": 8.0,
+  "Budget": 100.0000,
+  "CampaignId": 2,
+  "CoverageGoalPercent": 80.5,
+  "CPM": 12.0000,
+  "CPP": 200951583.9999,
+  "Currency": 1,
+  "Dayparts": [
+    {
+      "DaypartCodeId": 2,
+      "DaypartTypeId": 1,
+      "EndTimeSeconds": 2000,
+      "IsEndTimeModified": true,
+      "IsStartTimeModified": true,
+      "StartTimeSeconds": 0,
+      "WeightingGoalPercent": 28.0
+    },
+    {
+      "DaypartCodeId": 11,
+      "DaypartTypeId": 1,
+      "EndTimeSeconds": 2788,
+      "IsEndTimeModified": true,
+      "IsStartTimeModified": true,
+      "StartTimeSeconds": 1500,
+      "WeightingGoalPercent": 33.2
+    }
+  ],
+  "DeliveryImpressions": 0.1,
+  "DeliveryRatingPoints": 6.0,
+  "Equivalized": true,
+  "FlightEndDate": "2019-07-31T00:00:00",
+  "FlightHiatusDays": [
+    "2019-01-20T00:00:00",
+    "2019-04-15T00:00:00"
+  ],
+  "FlightNotes": "Sample notes",
+  "FlightStartDate": "2019-01-01T00:00:00",
+  "GoalBreakdownType": 1,
+  "HouseholdCPM": 10.0000,
+  "HouseholdCPP": 5.0000,
+  "HouseholdDeliveryImpressions": 10000.0,
+  "HouseholdRatingPoints": 2.0,
+  "HouseholdUniverse": 10000.0,
+  "HUTBookId": 428,
+  "IsDraft": false,
+  "ModifiedBy": "IntegrationTestUser",
+  "ModifiedDate": "2019-05-14T00:00:00",
+  "Name": "New Plan",
+  "PostingType": 2,
+  "ProductId": 1,
+  "SecondaryAudiences": [],
+  "ShareBookId": 430,
+  "SpotLengthId": 1,
+  "Status": 1,
+  "TotalActiveDays": 0,
+  "TotalHiatusDays": 2,
+  "TotalShareOfVoice": 0.0,
+  "Universe": 1000000.0,
+  "Vpvh": 0.012,
+  "WeeklyBreakdownWeeks": []
+}
