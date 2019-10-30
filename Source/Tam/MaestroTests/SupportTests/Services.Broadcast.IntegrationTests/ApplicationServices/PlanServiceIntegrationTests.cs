@@ -42,7 +42,28 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [UseReporter(typeof(DiffReporter))]
+        public void SavePlan_InvalidMarketCoverage_PRI17598()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                PlanDto newPlan = _GetNewPlan();
+                newPlan.AvailableMarkets = new List<PlanAvailableMarketDto>
+                {
+                    new PlanAvailableMarketDto { MarketCode = 197, MarketCoverageFileId = 1, PercentageOfUS = 0.051, Rank = 1, ShareOfVoicePercent = 22.2, Market = "Parkersburg"},
+                    new PlanAvailableMarketDto { MarketCode = 261, MarketCoverageFileId = 1, PercentageOfUS = 0.048, Rank = 2, ShareOfVoicePercent = 34.5, Market = "San Angelo"},
+                    new PlanAvailableMarketDto { MarketCode = 359, MarketCoverageFileId = 1, PercentageOfUS = 0.048, Rank = 2, ShareOfVoicePercent = 34.5, Market = "Cheyenne-Scottsbluf"},
+                    new PlanAvailableMarketDto { MarketCode = 367, MarketCoverageFileId = 1, PercentageOfUS = 0.048, Rank = 2, ShareOfVoicePercent = 34.5, Market = "Casper-Riverton"},
+                    new PlanAvailableMarketDto { MarketCode = 340, MarketCoverageFileId = 1, PercentageOfUS = 0.048, Rank = 2, ShareOfVoicePercent = 34.5, Market = "North Platte"},
+                };
+                newPlan.CoverageGoalPercent = 0.2;
+
+                var newPlanId = _PlanService.SavePlan(newPlan, "integration_test", new System.DateTime(2019, 01, 01));
+
+                Assert.IsTrue(newPlanId > 0);
+            }
+        }
+
+        [Test]
         public void CanCreateNewPlanWithCanceledStatus()
         {
             using (new TransactionScopeWrapper())
