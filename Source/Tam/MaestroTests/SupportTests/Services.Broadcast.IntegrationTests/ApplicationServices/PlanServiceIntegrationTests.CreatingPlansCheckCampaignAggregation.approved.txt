@@ -22,14 +22,6 @@
     {
       "Count": 1,
       "PlanStatus": 7
-    },
-    {
-      "Count": 1,
-      "PlanStatus": 8
-    },
-    {
-      "Count": 1,
-      "PlanStatus": 9
     }
   ]
 }
