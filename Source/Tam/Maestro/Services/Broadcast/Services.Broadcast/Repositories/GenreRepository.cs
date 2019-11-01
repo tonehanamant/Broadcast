@@ -45,7 +45,11 @@ namespace Services.Broadcast.Repositories
         {
             return _InReadUncommitedTransaction(
                 context =>
-                    context.genres.Where(g => g.source_id == sourceId).Select(_MapToDto).ToList()
+                    context.genres
+                        .Where(g => g.source_id == sourceId)
+                        .OrderBy(x => x.name)
+                        .Select(_MapToDto)
+                        .ToList()
                 );
         }
 

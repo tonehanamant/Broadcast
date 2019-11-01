@@ -224,6 +224,15 @@ namespace Services.Broadcast.ApplicationServices.Plan
                         ShowTypes = new List<LookupDto>()
                     };
                 }
+
+                if (restrictions.GenreRestrictions == null)
+                {
+                    restrictions.GenreRestrictions = new PlanDaypartDto.RestrictionsDto.GenreRestrictionsDto
+                    {
+                        ContainType = planDefaults.GenreContainType,
+                        Genres = new List<LookupDto>()
+                    };
+                }
             }
         }
 
@@ -526,6 +535,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 Currency = PlanCurrenciesEnum.Impressions,
                 GoalBreakdownType = PlanGoalBreakdownTypeEnum.Even,
                 ShowTypeContainType = ContainTypeEnum.Exclude,
+                GenreContainType = ContainTypeEnum.Exclude,
                 CoverageGoalPercent = 80d,
                 BlackoutMarkets = new List<PlanBlackoutMarketDto>(),
                 FlightHiatusDays = new List<DateTime>(),

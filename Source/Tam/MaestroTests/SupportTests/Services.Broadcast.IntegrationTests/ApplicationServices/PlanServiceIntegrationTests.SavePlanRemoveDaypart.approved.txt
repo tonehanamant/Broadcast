@@ -52,6 +52,10 @@
       "IsEndTimeModified": true,
       "IsStartTimeModified": true,
       "Restrictions": {
+        "GenreRestrictions": {
+          "ContainType": 2,
+          "Genres": []
+        },
         "ShowTypeRestrictions": {
           "ContainType": 2,
           "ShowTypes": []
@@ -67,6 +71,10 @@
       "IsEndTimeModified": true,
       "IsStartTimeModified": true,
       "Restrictions": {
+        "GenreRestrictions": {
+          "ContainType": 2,
+          "Genres": []
+        },
         "ShowTypeRestrictions": {
           "ContainType": 2,
           "ShowTypes": []

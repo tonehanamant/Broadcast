@@ -71,10 +71,18 @@ namespace Services.Broadcast.Entities.Plan
         {
             public ShowTypeRestrictionsDto ShowTypeRestrictions { get; set; }
 
+            public GenreRestrictionsDto GenreRestrictions { get; set; }
+
             public class ShowTypeRestrictionsDto
             {
                 public ContainTypeEnum ContainType { get; set; }
                 public List<LookupDto> ShowTypes { get; set; }
+            }
+
+            public class GenreRestrictionsDto
+            {
+                public ContainTypeEnum ContainType { get; set; }
+                public List<LookupDto> Genres { get; set; }
             }
         }
     }

@@ -51,6 +51,16 @@
       "EndTimeSeconds": 2000,
       "IsEndTimeModified": true,
       "IsStartTimeModified": true,
+      "Restrictions": {
+        "GenreRestrictions": {
+          "ContainType": 2,
+          "Genres": []
+        },
+        "ShowTypeRestrictions": {
+          "ContainType": 2,
+          "ShowTypes": []
+        }
+      },
       "StartTimeSeconds": 0,
       "WeightingGoalPercent": 28.0
     },
@@ -60,6 +70,16 @@
       "EndTimeSeconds": 2788,
       "IsEndTimeModified": true,
       "IsStartTimeModified": true,
+      "Restrictions": {
+        "GenreRestrictions": {
+          "ContainType": 2,
+          "Genres": []
+        },
+        "ShowTypeRestrictions": {
+          "ContainType": 2,
+          "ShowTypes": []
+        }
+      },
       "StartTimeSeconds": 1500,
       "WeightingGoalPercent": 33.2
     }

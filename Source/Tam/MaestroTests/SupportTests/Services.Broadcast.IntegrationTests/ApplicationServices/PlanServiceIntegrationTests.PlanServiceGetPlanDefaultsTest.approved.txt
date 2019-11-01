@@ -6,6 +6,7 @@
   "Currency": 1,
   "Equivalized": true,
   "FlightHiatusDays": [],
+  "GenreContainType": 2,
   "GoalBreakdownType": 1,
   "Name": "",
   "PostingType": 2,

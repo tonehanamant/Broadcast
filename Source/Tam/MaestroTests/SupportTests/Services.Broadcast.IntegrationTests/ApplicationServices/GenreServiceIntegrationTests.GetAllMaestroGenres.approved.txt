@@ -4,6 +4,10 @@
     "Id": 1
   },
   {
+    "Display": "Action/Adventure",
+    "Id": 51
+  },
+  {
     "Display": "Adult",
     "Id": 2
   },
@@ -32,6 +36,10 @@
     "Id": 8
   },
   {
+    "Display": "Children",
+    "Id": 52
+  },
+  {
     "Display": "Comedy",
     "Id": 9
   },
@@ -44,16 +52,20 @@
     "Id": 11
   },
   {
-    "Display": "Documentary",
-    "Id": 12
-  },
-  {
     "Display": "Do It Yourself",
     "Id": 13
   },
   {
+    "Display": "Documentary",
+    "Id": 12
+  },
+  {
     "Display": "Drama",
     "Id": 14
+  },
+  {
+    "Display": "Educational",
+    "Id": 53
   },
   {
     "Display": "Entertainment",
@@ -108,12 +120,20 @@
     "Id": 27
   },
   {
+    "Display": "Instructional",
+    "Id": 50
+  },
+  {
     "Display": "Interview",
     "Id": 28
   },
   {
     "Display": "Investigative",
     "Id": 29
+  },
+  {
+    "Display": "Lifestyle",
+    "Id": 54
   },
   {
     "Display": "Music",
@@ -134,6 +154,10 @@
   {
     "Display": "News",
     "Id": 34
+  },
+  {
+    "Display": "Paid Program",
+    "Id": 55
   },
   {
     "Display": "Parade",
@@ -164,12 +188,16 @@
     "Id": 41
   },
   {
+    "Display": "Science & Technology",
+    "Id": 43
+  },
+  {
     "Display": "Science Fiction",
     "Id": 42
   },
   {
-    "Display": "Science & Technology",
-    "Id": 43
+    "Display": "Special",
+    "Id": 56
   },
   {
     "Display": "Sports/Sports Talk",
@@ -194,33 +222,5 @@
   {
     "Display": "Western",
     "Id": 49
-  },
-  {
-    "Display": "Instructional",
-    "Id": 50
-  },
-  {
-    "Display": "Action/Adventure",
-    "Id": 51
-  },
-  {
-    "Display": "Children",
-    "Id": 52
-  },
-  {
-    "Display": "Educational",
-    "Id": 53
-  },
-  {
-    "Display": "Lifestyle",
-    "Id": 54
-  },
-  {
-    "Display": "Paid Program",
-    "Id": 55
-  },
-  {
-    "Display": "Special",
-    "Id": 56
   }
 ]
