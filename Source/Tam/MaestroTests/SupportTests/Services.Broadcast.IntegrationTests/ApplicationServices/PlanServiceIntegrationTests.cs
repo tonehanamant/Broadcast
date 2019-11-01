@@ -5,10 +5,12 @@ using Newtonsoft.Json;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.ApplicationServices.Plan;
+using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Tam.Maestro.Common.DataLayer;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
@@ -143,6 +145,39 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var campaign = _CampaignService.GetCampaignById(1);
                 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(campaign, _GetJsonSettings()));
+            }
+        }
+
+        [Test]
+        public void CreatingASingleCanceledPlanFiltersCampaignsCorrectly()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                SaveCampaignDto newCampaign = _GetNewCampaign();
+                var newCampaignId = _CampaignService.SaveCampaign(newCampaign, "integration_test", new DateTime(2019, 10, 30));
+
+                Assert.IsTrue(newCampaignId > 0);
+
+                PlanDto newCanceledPlan = _GetNewPlan();
+                newCanceledPlan.CampaignId = newCampaignId;
+                newCanceledPlan.Status = PlanStatusEnum.Canceled;
+
+                var newPlanId = _PlanService.SavePlan(newCanceledPlan, "integration_test", new DateTime(2019, 10, 30));
+                
+                Assert.IsTrue(newPlanId > 0);
+
+                _CampaignService.ProcessCampaignAggregation(newCampaignId);
+
+                var filterredCampaignList = _CampaignService.GetCampaigns(new CampaignFilterDto
+                {
+                    Quarter = new QuarterDto
+                    {
+                        Quarter = 4,
+                        Year = 2019
+                    }
+                }, new DateTime(2019, 10, 30));
+
+                Assert.That(filterredCampaignList.Any(campaign => campaign.Id == newCampaignId));
             }
         }
 
@@ -1161,6 +1196,17 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         NumberOfActiveDays = 4, ActiveDays = "M-Th", Impressions = 20, ShareOfVoice = 20
                     }
                 }
+            };
+        }
+
+        private static SaveCampaignDto _GetNewCampaign()
+        {
+            return new SaveCampaignDto
+            {
+                Name = "Campaign1",
+                AdvertiserId = 1,
+                AgencyId = 1,
+                Notes = "Notes for CampaignOne."
             };
         }
 

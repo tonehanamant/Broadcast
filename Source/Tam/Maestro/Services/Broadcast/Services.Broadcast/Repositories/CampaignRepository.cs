@@ -156,17 +156,23 @@ namespace Services.Broadcast.Repositories
                         campaignsWithSummary = campaignsWithSummary.Where(item =>
                             (item.summary == null && 
                              item.campaign.created_date >= startDate.Value && 
-                             item.campaign.created_date <= endDate) ||
+                             item.campaign.created_date <= endDate.Value) ||
+
+                             (item.summary != null &&
+                             item.summary.flight_start_Date == null &&
+                             item.summary.flight_end_Date == null &&
+                             item.campaign.created_date >= startDate.Value &&
+                             item.campaign.created_date <= endDate.Value) ||
 
                             (item.summary.flight_start_Date != null &&
                              item.summary.flight_end_Date == null &&
-                             item.summary.flight_start_Date >= startDate &&
-                             item.summary.flight_start_Date <= endDate) ||
+                             item.summary.flight_start_Date >= startDate.Value &&
+                             item.summary.flight_start_Date <= endDate.Value) ||
 
                             (item.summary.flight_start_Date != null &&
                              item.summary.flight_end_Date != null &&
-                             item.summary.flight_start_Date <= endDate &&
-                             item.summary.flight_end_Date >= startDate));
+                             item.summary.flight_start_Date <= endDate.Value &&
+                             item.summary.flight_end_Date >= startDate.Value));
                     }
 
                     if (campaignStatus.HasValue)
@@ -330,37 +336,40 @@ namespace Services.Broadcast.Repositories
                 {
                     IQueryable<campaign_summaries> campaignSummaries = context.campaign_summaries;
 
+                    var campaignsWithSummary = context.campaigns
+                        .GroupJoin(
+                            context.campaign_summaries,
+                            campaigns => campaigns.id,
+                            campaign_summaries => campaign_summaries.campaign_id,
+                            (campaign, summary) => new { campaign, summaries = summary.DefaultIfEmpty() })
+                         .Select(item => new { item.campaign, summary = item.summaries.FirstOrDefault() });
+
                     if (startDate.HasValue && endDate.HasValue)
                     {
-                        campaignSummaries = campaignSummaries.Where(s =>
-                        (s.flight_start_Date != null
-                         && s.flight_end_Date == null
-                         && s.flight_start_Date >= startDate
-                         && s.flight_start_Date <= endDate) ||
+                        campaignsWithSummary = campaignsWithSummary.Where(item =>
+                            (item.summary == null &&
+                             item.campaign.created_date >= startDate.Value &&
+                             item.campaign.created_date <= endDate.Value) ||
 
-                         (s.flight_start_Date != null
-                         && s.flight_end_Date != null
-                         && s.flight_start_Date <= endDate
-                         && s.flight_end_Date >= startDate));
+                             (item.summary != null &&
+                             item.summary.flight_start_Date == null &&
+                             item.summary.flight_end_Date == null &&
+                             item.campaign.created_date >= startDate.Value &&
+                             item.campaign.created_date <= endDate.Value) ||
+
+                            (item.summary.flight_start_Date != null &&
+                             item.summary.flight_end_Date == null &&
+                             item.summary.flight_start_Date >= startDate.Value &&
+                             item.summary.flight_start_Date <= endDate.Value) ||
+
+                            (item.summary.flight_start_Date != null &&
+                             item.summary.flight_end_Date != null &&
+                             item.summary.flight_start_Date <= endDate.Value &&
+                             item.summary.flight_end_Date >= startDate.Value));
                     }
-                    var campaignStatuses = campaignSummaries
-                        .Select(s => s.campaign_status.HasValue ? (PlanStatusEnum)s.campaign_status.Value : PlanStatusEnum.Working)
+                    var campaignStatuses = campaignsWithSummary
+                        .Select(s => s.summary.campaign_status.HasValue ? (PlanStatusEnum)s.summary.campaign_status.Value : PlanStatusEnum.Working)
                         .Distinct().ToList();
-
-                    if (!campaignStatuses.Contains(PlanStatusEnum.Working))
-                    {
-                        var campaignsWithoutSummary = context.campaigns.Where(c => !c.campaign_summaries.Any());
-
-                        if (startDate.HasValue && endDate.HasValue)
-                        {
-                            campaignsWithoutSummary = campaignsWithoutSummary.Where(c =>
-                            c.created_date >= startDate.Value &&
-                            c.created_date <= endDate);
-                        }
-
-                        if (campaignsWithoutSummary.Any())
-                            campaignStatuses.Add(PlanStatusEnum.Working);
-                    }
 
                     return campaignStatuses;
                 });
