@@ -56,7 +56,8 @@ namespace Services.Broadcast.BusinessEngines
             foreach (var program in programs)
             {
                 var manifestAudienceForProposal =
-                    program.ManifestAudiences.SingleOrDefault(x => x.AudienceId == audienceId);
+                    program.ManifestAudiences.FirstOrDefault(x => x.AudienceId == audienceId && 
+                                                                  x.IsReference);
                 var hasManifestAudiences = manifestAudienceForProposal != null &&
                                            manifestAudienceForProposal.Impressions.HasValue;
 

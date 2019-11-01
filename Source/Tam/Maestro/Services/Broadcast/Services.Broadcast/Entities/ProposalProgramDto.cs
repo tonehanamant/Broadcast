@@ -76,6 +76,7 @@ namespace Services.Broadcast.Entities
             public int AudienceId { get; set; }
 
             public double? Impressions { get; set; }
+            public bool IsReference { get; set; }
         }
     }
 }

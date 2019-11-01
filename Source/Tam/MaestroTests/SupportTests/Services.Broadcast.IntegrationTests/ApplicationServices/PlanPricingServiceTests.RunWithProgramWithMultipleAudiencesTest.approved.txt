@@ -1,0 +1,46 @@
+﻿[
+  {
+    "DeliveryMultiplier": 1.0,
+    "GuaranteedImpressions": 0.0,
+    "PlanPricingMarket": {
+      "MarketId": 132,
+      "MarketName": "Albany-Schenectady-Troy",
+      "MarketSegment": 3,
+      "MarketShareOfVoice": 0.0
+    },
+    "ProgramNames": [
+      "News 10 @ Noon"
+    ],
+    "ProjectedImpressions": 21341.025,
+    "Rate": 75.0000,
+    "SpotLength": 30,
+    "Station": {
+      "Affiliation": "ABC",
+      "CallLetters": "WTEN 10.1",
+      "LegacyCallLetters": "WTEN",
+      "StationCode": 428
+    }
+  },
+  {
+    "DeliveryMultiplier": 1.0,
+    "GuaranteedImpressions": 1000.0,
+    "PlanPricingMarket": {
+      "MarketId": 132,
+      "MarketName": "Albany-Schenectady-Troy",
+      "MarketSegment": 1,
+      "MarketShareOfVoice": 0.0
+    },
+    "ProgramNames": [
+      "News 10 @ Noon"
+    ],
+    "ProjectedImpressions": 21341.025,
+    "Rate": 75.0000,
+    "SpotLength": 30,
+    "Station": {
+      "Affiliation": "ABC",
+      "CallLetters": "WTEN 10.1",
+      "LegacyCallLetters": "WTEN",
+      "StationCode": 428
+    }
+  }
+]

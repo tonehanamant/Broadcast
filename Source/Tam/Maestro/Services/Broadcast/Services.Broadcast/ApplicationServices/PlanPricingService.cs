@@ -146,7 +146,7 @@ namespace Services.Broadcast.ApplicationServices
                     {
                         Id = program.ManifestId,
                         MediaWeekId = programWeek.MediaWeekId,
-                        Impressions = program.ProvidedUnitImpressions.Value,
+                        Impressions = program.ProvidedUnitImpressions ?? 0,
                         Cost = program.SpotCost
                     });
                 }

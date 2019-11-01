@@ -70,7 +70,8 @@ namespace Services.Broadcast.Repositories
                                 ManifestAudiences = m.station_inventory_manifest_audiences.Select(ma => new ProposalProgramDto.ManifestAudienceDto
                                 {
                                     AudienceId = ma.audience_id,
-                                    Impressions = ma.impressions
+                                    Impressions = ma.impressions,
+                                    IsReference = ma.is_reference
                                 }).ToList(),
                                 StartDate = m.station_inventory_manifest_weeks.Min(w => w.start_date),
                                 EndDate = m.station_inventory_manifest_weeks.Max(w => w.end_date),

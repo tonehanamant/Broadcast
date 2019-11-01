@@ -61,5 +61,17 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
             }
         }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void RunWithProgramWithMultipleAudiencesTest()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var result = _PlanPricingService.Run(1200);
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+            }
+        }
     }
 }
