@@ -684,6 +684,14 @@
           <Property Name="percentage_of_us" Type="float" Nullable="false" />
           <Property Name="plan_version_id" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="plan_version_daypart_show_type_restrictions">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="plan_version_daypart_id" Type="int" Nullable="false" />
+          <Property Name="show_type_id" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="plan_version_dayparts">
           <Key>
             <PropertyRef Name="id" />
@@ -697,6 +705,7 @@
           <Property Name="is_start_time_modified" Type="bit" Nullable="false" />
           <Property Name="is_end_time_modified" Type="bit" Nullable="false" />
           <Property Name="plan_version_id" Type="int" Nullable="false" />
+          <Property Name="show_type_restrictions_contain_type" Type="int" />
         </EntityType>
         <EntityType Name="plan_version_flight_hiatus_days">
           <Key>
@@ -1659,7 +1668,7 @@
           <Property Name="sys_end_date" Type="datetime2" Precision="7" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'broadcast_integration_staging_sandbox.dbo.station_inventory_manifest_weeks_history' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'broadcast_integration_staging.dbo.station_inventory_manifest_weeks_history' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="station_inventory_manifest_weeks_history">
           <Key>
             <PropertyRef Name="id" />
@@ -1755,7 +1764,7 @@ warning 6002: The table/view 'broadcast_integration_staging_sandbox.dbo.station_
           <Property Name="end_time" Type="int" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'broadcast_integration_staging_sandbox.dbo.vw_ccc_daypart' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vw_ccc_daypart">
           <Key>
             <PropertyRef Name="id" />
@@ -2568,6 +2577,32 @@ warning 6002: The table/view 'broadcast_integration_staging_sandbox.dbo.vw_ccc_d
             </Principal>
             <Dependent Role="plan_version_blackout_markets">
               <PropertyRef Name="plan_version_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_version_daypart_show_type_restrictions_plan_version_dayparts">
+          <End Role="plan_version_dayparts" Type="Self.plan_version_dayparts" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="plan_version_daypart_show_type_restrictions" Type="Self.plan_version_daypart_show_type_restrictions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="plan_version_dayparts">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_daypart_show_type_restrictions">
+              <PropertyRef Name="plan_version_daypart_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_version_daypart_show_type_restrictions_show_types">
+          <End Role="show_types" Type="Self.show_types" Multiplicity="1" />
+          <End Role="plan_version_daypart_show_type_restrictions" Type="Self.plan_version_daypart_show_type_restrictions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="show_types">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_daypart_show_type_restrictions">
+              <PropertyRef Name="show_type_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -4419,6 +4454,7 @@ warning 6002: The table/view 'broadcast_integration_staging_sandbox.dbo.vw_ccc_d
           <EntitySet Name="nti_transmittals_files" EntityType="Self.nti_transmittals_files" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="plan_version_available_markets" EntityType="Self.plan_version_available_markets" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="plan_version_blackout_markets" EntityType="Self.plan_version_blackout_markets" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="plan_version_daypart_show_type_restrictions" EntityType="Self.plan_version_daypart_show_type_restrictions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="plan_version_dayparts" EntityType="Self.plan_version_dayparts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="plan_version_flight_hiatus_days" EntityType="Self.plan_version_flight_hiatus_days" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="plan_version_secondary_audiences" EntityType="Self.plan_version_secondary_audiences" Schema="dbo" store:Type="Tables" />
@@ -4776,6 +4812,14 @@ warning 6002: The table/view 'broadcast_integration_staging_sandbox.dbo.vw_ccc_d
           <AssociationSet Name="FK_plan_version_blackout_markets_plan_versions" Association="Self.FK_plan_version_blackout_markets_plan_versions">
             <End Role="plan_versions" EntitySet="plan_versions" />
             <End Role="plan_version_blackout_markets" EntitySet="plan_version_blackout_markets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_version_daypart_show_type_restrictions_plan_version_dayparts" Association="Self.FK_plan_version_daypart_show_type_restrictions_plan_version_dayparts">
+            <End Role="plan_version_dayparts" EntitySet="plan_version_dayparts" />
+            <End Role="plan_version_daypart_show_type_restrictions" EntitySet="plan_version_daypart_show_type_restrictions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_version_daypart_show_type_restrictions_show_types" Association="Self.FK_plan_version_daypart_show_type_restrictions_show_types">
+            <End Role="show_types" EntitySet="show_types" />
+            <End Role="plan_version_daypart_show_type_restrictions" EntitySet="plan_version_daypart_show_type_restrictions" />
           </AssociationSet>
           <AssociationSet Name="FK_plan_version_dayparts_plan_versions" Association="Self.FK_plan_version_dayparts_plan_versions">
             <End Role="plan_versions" EntitySet="plan_versions" />
@@ -6280,6 +6324,15 @@ warning 6002: The table/view 'broadcast_integration_staging_sandbox.dbo.vw_ccc_d
           <AssociationSet Name="FK_plan_summary_quarters_plan_summary" Association="BroadcastModel.FK_plan_summary_quarters_plan_summary">
             <End Role="plan_version_summaries" EntitySet="plan_version_summaries" />
             <End Role="plan_version_summary_quarters" EntitySet="plan_version_summary_quarters" />
+          </AssociationSet>
+          <EntitySet Name="plan_version_daypart_show_type_restrictions" EntityType="BroadcastModel.plan_version_daypart_show_type_restrictions" />
+          <AssociationSet Name="FK_plan_version_daypart_show_type_restrictions_plan_dayparts" Association="BroadcastModel.FK_plan_version_daypart_show_type_restrictions_plan_dayparts">
+            <End Role="plan_version_dayparts" EntitySet="plan_version_dayparts" />
+            <End Role="plan_version_daypart_show_type_restrictions" EntitySet="plan_version_daypart_show_type_restrictions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_version_daypart_show_type_restrictions_show_types" Association="BroadcastModel.FK_plan_version_daypart_show_type_restrictions_show_types">
+            <End Role="show_types" EntitySet="show_types" />
+            <End Role="plan_version_daypart_show_type_restrictions" EntitySet="plan_version_daypart_show_type_restrictions" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="audience_audiences">
@@ -7820,6 +7873,7 @@ warning 6002: The table/view 'broadcast_integration_staging_sandbox.dbo.vw_ccc_d
           <Property Name="modified_by" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
           <Property Name="modified_date" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="proposal_version_detail_criteria_show_types" Relationship="BroadcastModel.FK_proposal_version_detail_criteria_show_types_show_types" FromRole="show_types" ToRole="proposal_version_detail_criteria_show_types" />
+          <NavigationProperty Name="plan_version_daypart_show_type_restrictions" Relationship="BroadcastModel.FK_plan_version_daypart_show_type_restrictions_show_types" FromRole="show_types" ToRole="plan_version_daypart_show_type_restrictions" />
         </EntityType>
         <Association Name="FK_proposal_version_detail_criteria_show_types_show_types">
           <End Type="BroadcastModel.show_types" Role="show_types" Multiplicity="1">
@@ -10598,6 +10652,8 @@ warning 6002: The table/view 'broadcast_integration_staging_sandbox.dbo.vw_ccc_d
           <Property Name="plan_version_id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="daypart_codes" Relationship="BroadcastModel.FK_plan_dayparts_daypart_codes" FromRole="plan_version_dayparts" ToRole="daypart_codes" />
           <NavigationProperty Name="plan_versions" Relationship="BroadcastModel.FK_plan_version_dayparts_plan_versions" FromRole="plan_version_dayparts" ToRole="plan_versions" />
+          <Property Name="show_type_restrictions_contain_type" Type="Int32" />
+          <NavigationProperty Name="plan_version_daypart_show_type_restrictions" Relationship="BroadcastModel.FK_plan_version_daypart_show_type_restrictions_plan_dayparts" FromRole="plan_version_dayparts" ToRole="plan_version_daypart_show_type_restrictions" />
         </EntityType>
         <EntityType Name="plan_version_flight_hiatus_days">
           <Key>
@@ -10993,6 +11049,42 @@ warning 6002: The table/view 'broadcast_integration_staging_sandbox.dbo.vw_ccc_d
             </Principal>
             <Dependent Role="plan_version_summary_quarters">
               <PropertyRef Name="plan_version_summary_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="plan_version_daypart_show_type_restrictions">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="plan_version_daypart_id" Type="Int32" Nullable="false" />
+          <Property Name="show_type_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="plan_version_dayparts" Relationship="BroadcastModel.FK_plan_version_daypart_show_type_restrictions_plan_dayparts" FromRole="plan_version_daypart_show_type_restrictions" ToRole="plan_version_dayparts" />
+          <NavigationProperty Name="show_types" Relationship="BroadcastModel.FK_plan_version_daypart_show_type_restrictions_show_types" FromRole="plan_version_daypart_show_type_restrictions" ToRole="show_types" />
+        </EntityType>
+        <Association Name="FK_plan_version_daypart_show_type_restrictions_plan_dayparts">
+          <End Type="BroadcastModel.plan_version_dayparts" Role="plan_version_dayparts" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BroadcastModel.plan_version_daypart_show_type_restrictions" Role="plan_version_daypart_show_type_restrictions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="plan_version_dayparts">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_daypart_show_type_restrictions">
+              <PropertyRef Name="plan_version_daypart_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_version_daypart_show_type_restrictions_show_types">
+          <End Type="BroadcastModel.show_types" Role="show_types" Multiplicity="1" />
+          <End Type="BroadcastModel.plan_version_daypart_show_type_restrictions" Role="plan_version_daypart_show_type_restrictions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="show_types">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_daypart_show_type_restrictions">
+              <PropertyRef Name="show_type_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -12752,6 +12844,7 @@ warning 6002: The table/view 'broadcast_integration_staging_sandbox.dbo.vw_ccc_d
           <EntitySetMapping Name="plan_version_dayparts">
             <EntityTypeMapping TypeName="BroadcastModel.plan_version_dayparts">
               <MappingFragment StoreEntitySet="plan_version_dayparts">
+                <ScalarProperty Name="show_type_restrictions_contain_type" ColumnName="show_type_restrictions_contain_type" />
                 <ScalarProperty Name="plan_version_id" ColumnName="plan_version_id" />
                 <ScalarProperty Name="is_end_time_modified" ColumnName="is_end_time_modified" />
                 <ScalarProperty Name="is_start_time_modified" ColumnName="is_start_time_modified" />
@@ -12876,6 +12969,15 @@ warning 6002: The table/view 'broadcast_integration_staging_sandbox.dbo.vw_ccc_d
                 <ScalarProperty Name="year" ColumnName="year" />
                 <ScalarProperty Name="quarter" ColumnName="quarter" />
                 <ScalarProperty Name="plan_version_summary_id" ColumnName="plan_version_summary_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="plan_version_daypart_show_type_restrictions">
+            <EntityTypeMapping TypeName="BroadcastModel.plan_version_daypart_show_type_restrictions">
+              <MappingFragment StoreEntitySet="plan_version_daypart_show_type_restrictions">
+                <ScalarProperty Name="show_type_id" ColumnName="show_type_id" />
+                <ScalarProperty Name="plan_version_daypart_id" ColumnName="plan_version_daypart_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

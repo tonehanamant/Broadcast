@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Tam.Maestro.Common.DataLayer;
+using Tam.Maestro.Data.Entities.DataTransferObjects;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
@@ -389,7 +390,22 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 PlanDto newPlan = _GetNewPlan();
                 var planId = _PlanService.SavePlan(newPlan, "integration_test", new System.DateTime(2019, 01, 15));
                 PlanDto modifiedPlan = _PlanService.GetPlan(planId);
-                modifiedPlan.Dayparts.Add(new PlanDaypartDto { DaypartCodeId = 3, DaypartTypeId = DaypartTypeEnum.EntertainmentNonNews, StartTimeSeconds = 1200, EndTimeSeconds = 1900, WeightingGoalPercent = 13.8 });
+                modifiedPlan.Dayparts.Add(new PlanDaypartDto
+                {
+                    DaypartCodeId = 3,
+                    DaypartTypeId = DaypartTypeEnum.EntertainmentNonNews,
+                    StartTimeSeconds = 1200,
+                    EndTimeSeconds = 1900,
+                    WeightingGoalPercent = 13.8,
+                    Restrictions = new PlanDaypartDto.RestrictionsDto
+                    {
+                        ShowTypeRestrictions = new PlanDaypartDto.RestrictionsDto.ShowTypeRestrictionsDto
+                        {
+                            ContainType = ContainTypeEnum.Include,
+                            ShowTypes = new List<LookupDto> { new LookupDto { Id = 5 } }
+                        }
+                    }
+                });
 
                 var modifiedPlanId = _PlanService.SavePlan(modifiedPlan, "integration_test", new System.DateTime(2019, 01, 15));
                 PlanDto finalPlan = _PlanService.GetPlan(modifiedPlanId);
@@ -1158,9 +1174,58 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 ModifiedDate = new DateTime(2019, 01, 12, 12, 30, 29),
                 Dayparts = new List<PlanDaypartDto>
                 {
-                    new PlanDaypartDto{ DaypartCodeId = 2, DaypartTypeId = DaypartTypeEnum.EntertainmentNonNews, StartTimeSeconds = 0, EndTimeSeconds = 2000, WeightingGoalPercent = 28.0 },
-                    new PlanDaypartDto{ DaypartCodeId = 11, DaypartTypeId = DaypartTypeEnum.News, StartTimeSeconds = 1500, EndTimeSeconds = 2788, WeightingGoalPercent = 33.2 },
-                    new PlanDaypartDto{ DaypartCodeId = 3, DaypartTypeId = DaypartTypeEnum.ROS, StartTimeSeconds = 57600, EndTimeSeconds = 68400, WeightingGoalPercent = 25 }
+                    new PlanDaypartDto
+                    {
+                        DaypartCodeId = 2,
+                        DaypartTypeId = DaypartTypeEnum.EntertainmentNonNews,
+                        StartTimeSeconds = 0,
+                        EndTimeSeconds = 2000,
+                        WeightingGoalPercent = 28.0,
+                        Restrictions = new PlanDaypartDto.RestrictionsDto
+                        {
+                            ShowTypeRestrictions = new PlanDaypartDto.RestrictionsDto.ShowTypeRestrictionsDto
+                            {
+                                ContainType = ContainTypeEnum.Exclude,
+                                ShowTypes = new List<LookupDto> { new LookupDto { Id = 1 } }
+                            }
+                        }
+                    },
+                    new PlanDaypartDto
+                    {
+                        DaypartCodeId = 11,
+                        DaypartTypeId = DaypartTypeEnum.News,
+                        StartTimeSeconds = 1500,
+                        EndTimeSeconds = 2788,
+                        WeightingGoalPercent = 33.2,
+                        Restrictions = new PlanDaypartDto.RestrictionsDto
+                        {
+                            ShowTypeRestrictions = new PlanDaypartDto.RestrictionsDto.ShowTypeRestrictionsDto
+                            {
+                                ContainType = ContainTypeEnum.Exclude,
+                                ShowTypes = new List<LookupDto> { new LookupDto { Id = 2 } }
+                            }
+                        }
+                    },
+                    new PlanDaypartDto
+                    {
+                        DaypartCodeId = 3,
+                        DaypartTypeId = DaypartTypeEnum.ROS,
+                        StartTimeSeconds = 57600,
+                        EndTimeSeconds = 68400,
+                        WeightingGoalPercent = 25,
+                        Restrictions = new PlanDaypartDto.RestrictionsDto
+                        {
+                            ShowTypeRestrictions = new PlanDaypartDto.RestrictionsDto.ShowTypeRestrictionsDto
+                            {
+                                ContainType = ContainTypeEnum.Include,
+                                ShowTypes = new List<LookupDto>
+                                {
+                                    new LookupDto { Id = 3 },
+                                    new LookupDto { Id = 4 }
+                                }
+                            }
+                        }
+                    }
                 },
                 Vpvh = 0.012,
                 WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>

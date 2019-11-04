@@ -14,6 +14,7 @@ using Services.Broadcast.IntegrationTests.Stubbs;
 using Common.Services.Repositories;
 using Services.Broadcast.Repositories;
 using Services.Broadcast.Helpers;
+using Tam.Maestro.Data.Entities.DataTransferObjects;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
 {
@@ -273,6 +274,42 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
         }
 
         [Test]
+        public void ValidatePlan_WithoutDaypartRestrictions()
+        {
+            _ConfigureSpotLenghtEngineMockToReturnTrue();
+
+            var plan = _GetPlan();
+            plan.Dayparts[0].Restrictions = null;
+
+            Assert.That(() => _planValidator.ValidatePlan(plan),
+                Throws.TypeOf<Exception>().With.Message.EqualTo("Restrictions object is required"));
+        }
+
+        [Test]
+        public void ValidatePlan_WithoutShowTypeDaypartRestrictions()
+        {
+            _ConfigureSpotLenghtEngineMockToReturnTrue();
+
+            var plan = _GetPlan();
+            plan.Dayparts[0].Restrictions.ShowTypeRestrictions = null;
+
+            Assert.That(() => _planValidator.ValidatePlan(plan),
+                Throws.TypeOf<Exception>().With.Message.EqualTo("Show type restrictions object is required"));
+        }
+
+        [Test]
+        public void ValidatePlan_WithWrongShowTypeRestrictionsContainType()
+        {
+            _ConfigureSpotLenghtEngineMockToReturnTrue();
+
+            var plan = _GetPlan();
+            plan.Dayparts[0].Restrictions.ShowTypeRestrictions.ContainType = 0;
+
+            Assert.That(() => _planValidator.ValidatePlan(plan),
+                Throws.TypeOf<Exception>().With.Message.EqualTo("Contain type of the show types restrictions is not valid"));
+        }
+
+        [Test]
         public void ValidatePlan_DayPartStartLessThanSecondsMinimum()
         {
             _ConfigureSpotLenghtEngineMockToReturnTrue();
@@ -395,13 +432,29 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
                 {
                     StartTimeSeconds = 50000,
                     EndTimeSeconds = 54000,
-                    WeightingGoalPercent = 80
+                    WeightingGoalPercent = 80,
+                    Restrictions = new PlanDaypartDto.RestrictionsDto
+                    {
+                        ShowTypeRestrictions = new PlanDaypartDto.RestrictionsDto.ShowTypeRestrictionsDto
+                        {
+                            ContainType = ContainTypeEnum.Exclude,
+                            ShowTypes = new List<LookupDto> { new LookupDto { Id = 1, Display = "Lorem" } }
+                        }
+                    }
                 },
                 new PlanDaypartDto
                 {
                     StartTimeSeconds = 50000,
                     EndTimeSeconds = 54000,
-                    WeightingGoalPercent = 90
+                    WeightingGoalPercent = 90,
+                    Restrictions = new PlanDaypartDto.RestrictionsDto
+                    {
+                        ShowTypeRestrictions = new PlanDaypartDto.RestrictionsDto.ShowTypeRestrictionsDto
+                        {
+                            ContainType = ContainTypeEnum.Exclude,
+                            ShowTypes = new List<LookupDto> { new LookupDto { Id = 1, Display = "Lorem" } }
+                        }
+                    }
                 }
             };
 
@@ -420,24 +473,56 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
                 {
                     StartTimeSeconds = 50000,
                     EndTimeSeconds = 54000,
-                    WeightingGoalPercent = 20
+                    WeightingGoalPercent = 20,
+                    Restrictions = new PlanDaypartDto.RestrictionsDto
+                    {
+                        ShowTypeRestrictions = new PlanDaypartDto.RestrictionsDto.ShowTypeRestrictionsDto
+                        {
+                            ContainType = ContainTypeEnum.Exclude,
+                            ShowTypes = new List<LookupDto> { new LookupDto { Id = 1, Display = "Lorem" } }
+                        }
+                    }
                 },
                 new PlanDaypartDto
                 {
                     StartTimeSeconds = 50000,
                     EndTimeSeconds = 54000,
+                    Restrictions = new PlanDaypartDto.RestrictionsDto
+                    {
+                        ShowTypeRestrictions = new PlanDaypartDto.RestrictionsDto.ShowTypeRestrictionsDto
+                        {
+                            ContainType = ContainTypeEnum.Exclude,
+                            ShowTypes = new List<LookupDto> { new LookupDto { Id = 1, Display = "Lorem" } }
+                        }
+                    }
                 },
                 new PlanDaypartDto
                 {
                     StartTimeSeconds = 50000,
                     EndTimeSeconds = 54000,
-                    WeightingGoalPercent = 25
+                    WeightingGoalPercent = 25,
+                    Restrictions = new PlanDaypartDto.RestrictionsDto
+                    {
+                        ShowTypeRestrictions = new PlanDaypartDto.RestrictionsDto.ShowTypeRestrictionsDto
+                        {
+                            ContainType = ContainTypeEnum.Exclude,
+                            ShowTypes = new List<LookupDto> { new LookupDto { Id = 1, Display = "Lorem" } }
+                        }
+                    }
                 },
                 new PlanDaypartDto
                 {
                     StartTimeSeconds = 50000,
                     EndTimeSeconds = 54000,
-                    WeightingGoalPercent = 50
+                    WeightingGoalPercent = 50,
+                    Restrictions = new PlanDaypartDto.RestrictionsDto
+                    {
+                        ShowTypeRestrictions = new PlanDaypartDto.RestrictionsDto.ShowTypeRestrictionsDto
+                        {
+                            ContainType = ContainTypeEnum.Exclude,
+                            ShowTypes = new List<LookupDto> { new LookupDto { Id = 1, Display = "Lorem" } }
+                        }
+                    }
                 },
             };
 
@@ -865,7 +950,15 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
                     {
                         StartTimeSeconds = 50,
                         EndTimeSeconds = 70,
-                        WeightingGoalPercent = 50
+                        WeightingGoalPercent = 50,
+                        Restrictions = new PlanDaypartDto.RestrictionsDto
+                        {
+                            ShowTypeRestrictions = new PlanDaypartDto.RestrictionsDto.ShowTypeRestrictionsDto
+                            {
+                                ContainType = ContainTypeEnum.Exclude,
+                                ShowTypes = new List<LookupDto> { new LookupDto { Id = 1, Display = "Lorem" } }
+                            }
+                        }
                     }
                 },
                 ShareBookId = SHARE_BOOK_ID,

@@ -79,5 +79,10 @@ namespace Services.Broadcast.Helpers
             var result = (T)Enum.Parse(typeof(T), candidate.ToString());
             return result;
         }
+
+        public static bool IsDefined<T>(T value)
+        {
+            return Enum.IsDefined(typeof(T), value);
+        }
     }
 }

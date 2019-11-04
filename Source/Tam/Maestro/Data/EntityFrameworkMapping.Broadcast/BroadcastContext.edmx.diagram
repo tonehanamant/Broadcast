@@ -340,6 +340,9 @@
         <AssociationConnector Association="BroadcastModel.FK_dayparts_timespans" />
         <EntityTypeShape EntityType="BroadcastModel.plan_version_summary_quarters" Width="1.5" PointX="16.875" PointY="60.75" />
         <AssociationConnector Association="BroadcastModel.FK_plan_summary_quarters_plan_summary" />
+        <EntityTypeShape EntityType="BroadcastModel.plan_version_daypart_show_type_restrictions" Width="1.5" PointX="26.25" PointY="19.75" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_daypart_show_type_restrictions_plan_dayparts" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_daypart_show_type_restrictions_show_types" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

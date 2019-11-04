@@ -159,5 +159,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<plan> plans { get; set; }
         public virtual DbSet<plan_versions> plan_versions { get; set; }
         public virtual DbSet<plan_version_summary_quarters> plan_version_summary_quarters { get; set; }
+        public virtual DbSet<plan_version_daypart_show_type_restrictions> plan_version_daypart_show_type_restrictions { get; set; }
     }
 }

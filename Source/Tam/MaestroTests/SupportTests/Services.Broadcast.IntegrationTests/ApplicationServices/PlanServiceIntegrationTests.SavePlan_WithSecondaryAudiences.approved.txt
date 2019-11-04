@@ -58,7 +58,12 @@
         },
         "ShowTypeRestrictions": {
           "ContainType": 2,
-          "ShowTypes": []
+          "ShowTypes": [
+            {
+              "Display": "Mini-Movie",
+              "Id": 1
+            }
+          ]
         }
       },
       "StartTimeSeconds": 0,
@@ -77,7 +82,12 @@
         },
         "ShowTypeRestrictions": {
           "ContainType": 2,
-          "ShowTypes": []
+          "ShowTypes": [
+            {
+              "Display": "Miscellaneous",
+              "Id": 2
+            }
+          ]
         }
       },
       "StartTimeSeconds": 1500,
@@ -95,8 +105,17 @@
           "Genres": []
         },
         "ShowTypeRestrictions": {
-          "ContainType": 2,
-          "ShowTypes": []
+          "ContainType": 1,
+          "ShowTypes": [
+            {
+              "Display": "Movie",
+              "Id": 3
+            },
+            {
+              "Display": "News",
+              "Id": 4
+            }
+          ]
         }
       },
       "StartTimeSeconds": 57600,

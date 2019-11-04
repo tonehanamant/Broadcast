@@ -179,6 +179,8 @@ namespace Services.Broadcast.Repositories
                         .Include(p => p.plan_versions.Select(x => x.plan_version_flight_hiatus_days))
                         .Include(p => p.plan_versions.Select(x => x.plan_version_secondary_audiences))
                         .Include(p => p.plan_versions.Select(x => x.plan_version_dayparts))
+                        .Include(p => p.plan_versions.Select(x => x.plan_version_dayparts.Select(d => d.plan_version_daypart_show_type_restrictions)))
+                        .Include(p => p.plan_versions.Select(x => x.plan_version_dayparts.Select(d => d.plan_version_daypart_show_type_restrictions.Select(r => r.show_types))))
                         .Include(p => p.plan_versions.Select(x => x.plan_version_available_markets))
                         .Include(p => p.plan_versions.Select(x => x.plan_version_blackout_markets))
                         .Include(p => p.plan_versions.Select(x => x.plan_version_weeks))
@@ -413,22 +415,69 @@ namespace Services.Broadcast.Repositories
                 IsEndTimeModified = entity.is_end_time_modified,
                 WeightingGoalPercent = entity.weighting_goal_percent
             };
+
+            // if the contain type has ever been set
+            if (entity.show_type_restrictions_contain_type.HasValue)
+            {
+                dto.Restrictions.ShowTypeRestrictions = new PlanDaypartDto.RestrictionsDto.ShowTypeRestrictionsDto
+                {
+                    ContainType = (ContainTypeEnum)entity.show_type_restrictions_contain_type.Value,
+                    ShowTypes = entity.plan_version_daypart_show_type_restrictions.Select(x => _MapToLookupDto(x.show_types)).ToList()
+                };
+            }
+
             return dto;
+        }
+
+        private static LookupDto _MapToLookupDto(show_types show_Type)
+        {
+            return new LookupDto()
+            {
+                Id = show_Type.id,
+                Display = show_Type.name
+            };
         }
 
         private static void _MapDayparts(plan_versions entity, PlanDto planDto, QueryHintBroadcastContext context)
         {
             context.plan_version_dayparts.RemoveRange(entity.plan_version_dayparts);
-            planDto.Dayparts.ForEach(d => entity.plan_version_dayparts.Add(new plan_version_dayparts
+
+            foreach (var daypart in planDto.Dayparts)
             {
-                daypart_code_id = d.DaypartCodeId,
-                daypart_type = (int)d.DaypartTypeId,
-                start_time_seconds = d.StartTimeSeconds,
-                is_start_time_modified = d.IsStartTimeModified,
-                end_time_seconds = d.EndTimeSeconds,
-                is_end_time_modified = d.IsEndTimeModified,
-                weighting_goal_percent = d.WeightingGoalPercent
-            }));
+                var showTypeRestrictions = daypart.Restrictions.ShowTypeRestrictions;
+
+                var newDaypart = new plan_version_dayparts
+                {
+                    daypart_code_id = daypart.DaypartCodeId,
+                    daypart_type = (int)daypart.DaypartTypeId,
+                    start_time_seconds = daypart.StartTimeSeconds,
+                    is_start_time_modified = daypart.IsStartTimeModified,
+                    end_time_seconds = daypart.EndTimeSeconds,
+                    is_end_time_modified = daypart.IsEndTimeModified,
+                    weighting_goal_percent = daypart.WeightingGoalPercent,
+                    show_type_restrictions_contain_type = (int)showTypeRestrictions.ContainType
+                };
+
+                _HydrateShowTypeRestrictions(newDaypart, showTypeRestrictions);
+
+                entity.plan_version_dayparts.Add(newDaypart);
+            }
+        }
+
+        private static void _HydrateShowTypeRestrictions(
+            plan_version_dayparts daypart,
+            PlanDaypartDto.RestrictionsDto.ShowTypeRestrictionsDto showTypeRestrictions)
+        {
+            if (showTypeRestrictions.ShowTypes.IsEmpty())
+                return;
+
+            foreach (var showTypeRestriction in showTypeRestrictions.ShowTypes)
+            {
+                daypart.plan_version_daypart_show_type_restrictions.Add(new plan_version_daypart_show_type_restrictions
+                {
+                    show_type_id = showTypeRestriction.Id
+                });
+            }
         }
 
         private static void _MapPlanSecondaryAudiences(plan_versions entity, PlanDto planDto, QueryHintBroadcastContext context)
