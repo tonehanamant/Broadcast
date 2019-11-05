@@ -3,7 +3,7 @@
     /// <summary>
     /// Step \ status for the job.
     /// </summary>
-    public enum InventoryFileProgramNameJobStatus
+    public enum InventoryFileProgramEnrichmentJobStatus
     {
         /// <summary>
         /// The job has been queued for processing.
@@ -26,13 +26,18 @@
         ApplyProgramData = 4,
 
         /// <summary>
+        /// Working on the "Apply The Program Data" step.
+        /// </summary>
+        SavePrograms = 5,
+
+        /// <summary>
         /// The job completed successfully.
         /// </summary>
-        Completed = 5,
+        Completed = 6,
 
         /// <summary>
         /// The job failed with an error.
         /// </summary>
-        Error = 6
+        Error = 7
     }
 }

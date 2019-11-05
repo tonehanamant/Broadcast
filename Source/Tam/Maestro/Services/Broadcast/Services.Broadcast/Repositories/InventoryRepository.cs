@@ -20,6 +20,7 @@ using Tam.Maestro.Services.ContractInterfaces.Common;
 using static Services.Broadcast.Entities.Enums.ProposalEnums;
 using System.Diagnostics;
 using System.Data;
+using Services.Broadcast.Entities.spotcableXML;
 
 namespace Services.Broadcast.Repositories
 {
@@ -86,7 +87,7 @@ namespace Services.Broadcast.Repositories
         /// Returns all the weeks for a station, program name and daypart that need to be expired
         /// </summary>
         /// <param name="stationId">Station id to filter stations</param>
-        /// <param name="programName">Program name to filter programs</param>
+        /// <param name="programName">Program name to filter newPrograms</param>
         /// <param name="daypartId">Daypart id to filter dayparts</param>
         /// <returns>List of StationInventoryManifestWeek objects</returns>
         List<StationInventoryManifestWeek> GetStationInventoryManifestWeeksForOpenMarket(int stationId, string programName, int daypartId);
@@ -112,6 +113,8 @@ namespace Services.Broadcast.Repositories
         /// <param name="inventoryFileId">The inventory file identifier.</param>
         /// <param name="inventorySourceId">The inventory source identifier.</param>
         void AddNewManifests(IEnumerable<StationInventoryManifest> manifests, int inventoryFileId, int inventorySourceId);
+
+        void UpdateInventoryPrograms(List<StationInventoryManifestDaypartProgram> newPrograms, DateTime createdAt, List<int> manifestDaypartIds, DateTime startDate, DateTime endDate);
     }
 
     public class InventoryRepository : BroadcastRepositoryBase, IInventoryRepository
@@ -1384,6 +1387,37 @@ namespace Services.Broadcast.Repositories
 
             return result;
 
+        }
+
+        public void UpdateInventoryPrograms(List<StationInventoryManifestDaypartProgram> newPrograms, DateTime createdAt, List<int> manifestDaypartIds, DateTime startDate, DateTime endDate)
+        {
+            _InReadUncommitedTransaction(
+                context =>
+                {
+                    var items = context.station_inventory_manifest_daypart_programs.Where(p =>
+                        manifestDaypartIds.Contains(p.station_inventory_manifest_daypart_id));
+                    var toRemove = items.Where(p => p.start_date <= endDate && p.end_date >= startDate);
+                    if (toRemove.Any())
+                    {
+                        context.station_inventory_manifest_daypart_programs.RemoveRange(toRemove);
+                    }
+
+                    context.station_inventory_manifest_daypart_programs.AddRange(
+                        newPrograms.Select(p => new station_inventory_manifest_daypart_programs
+                        {
+                            station_inventory_manifest_daypart_id = p.StationInventoryManifestDaypartId,
+                            name = p.ProgramName,
+                            show_type = p.ShowType,
+                            genre_id = p.GenreId,
+                            start_date = p.StartDate,
+                            end_date = p.EndDate,
+                            start_time = p.StartTime,
+                            end_time = p.EndTime,
+                            created_date = createdAt
+                        }));
+
+                    context.SaveChanges();
+                });
         }
     }
 }

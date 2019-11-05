@@ -415,7 +415,7 @@
     <Compile Include="inventory_file_problems.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="inventory_file_program_names_jobs.cs">
+    <Compile Include="inventory_file_program_enrichment_jobs.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
     <Compile Include="inventory_file_proprietary_header.cs">
@@ -703,6 +703,9 @@
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
     <Compile Include="station_inventory_manifest_daypart_genres.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="station_inventory_manifest_daypart_programs.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
     <Compile Include="station_inventory_manifest_generation.cs">

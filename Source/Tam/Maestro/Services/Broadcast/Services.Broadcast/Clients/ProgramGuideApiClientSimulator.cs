@@ -1,6 +1,8 @@
 ﻿using Services.Broadcast.Entities.ProgramGuide;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
+using System.Globalization;
 using System.Linq;
 using Tam.Maestro.Common.Clients;
 
@@ -36,7 +38,7 @@ namespace Services.Broadcast.Clients
         {
         }
 
-        protected override T _Post<T>(string url, object data)
+        protected override T _PostAndGet<T>(string url, object data)
         {
             if (url.Contains(_UrlProgramsSearch))
             {
@@ -54,52 +56,211 @@ namespace Services.Broadcast.Clients
         private static List<GuideResponseElementDto> _GetSimulatedProgramsForGuide(object input)
         {
             var requestElements = input as List<GuideRequestElementDto>;
-
-            const double thirtyMinutesAsSeconds = 30 * 60;
             var simulatedResult = new List<GuideResponseElementDto>();
             var currentProgramIndex = 0;
+            var currentRequestElementIndex = 0;
             foreach (var requestElement in requestElements)
             {
-                if (requestElement.Daypart.EndTime <= requestElement.Daypart.StartTime)
-                {
-                    throw new InvalidOperationException("given daypart end time must be greater than the start time.");
-                }
+                //if (requestElement.Daypart.EndTime <= requestElement.Daypart.StartTime)
+                //{
+                //    throw new InvalidOperationException("given daypart end time must be greater than the start time.");
+                //}
 
-                var responseElement = new GuideResponseElementDto
-                {
-                    RequestElementId = requestElement.RequestElementId,
-                    Programs = new Func<List<GuideResponseProgramDto>>(() =>
-                    {
-                        var duration = requestElement.Daypart.EndTime - requestElement.Daypart.StartTime;
-                        var testProgramCount = (int)Math.Floor(duration / thirtyMinutesAsSeconds);
-                        var programs = new List<GuideResponseProgramDto>();
-                        for (var i = 0; i < testProgramCount; i++)
-                        {
-                            var program = _CannedPrograms[currentProgramIndex];
-                            programs.Add(new GuideResponseProgramDto
-                            {
-                                ProgramId = program.ProgramId,
-                                ProgramName = program.ProgramName,
-                                GenreId = program.GenreId,
-                                Genre = program.Genre,
-                                ShowType = program.ShowType,
-                                SyndicationType = program.SyndicationType,
-                                Occurances = 1
-                            });
-                            currentProgramIndex = currentProgramIndex >= _CannedPrograms.Length ? 0 : currentProgramIndex + 1;
-                        }
-
-                        return programs;
-                    })(),
-                    RequestDaypartId = requestElement.Daypart.RequestDaypartId,
-                    Station = requestElement.NielsenLegacyStationCallLetters,
-                    StartDate = requestElement.StartDate,
-                    EndDate = requestElement.EndDate
-                };
-                simulatedResult.Add(responseElement);
+                var responseElements = _GetScenarioResponse(requestElement, ref currentProgramIndex, currentRequestElementIndex);
+                simulatedResult.AddRange(responseElements);
+                currentRequestElementIndex++;
             }
 
             return simulatedResult;
+        }
+
+        private enum RequestScenario
+        {
+            One,
+            Two,
+            Three,
+            Four
+        }
+
+        private static RequestScenario _GetScenario(int scenarioIndicator)
+        {
+            var scenarioIndex = scenarioIndicator % 2;
+            var scenario = (RequestScenario) scenarioIndex;
+            return scenario;
+        }
+
+        private static List<GuideResponseElementDto> _GetScenarioResponse(GuideRequestElementDto requestElement, ref int currentProgramIndex, int currentRequestElementIndex)
+        {
+            return _GetResponseForScenarioDefault(requestElement, ref currentProgramIndex);
+
+
+            //switch (_GetScenario(currentRequestElementIndex))
+            //{
+            //    case RequestScenario.One:
+            //        return _GetResponseForScenarioOne(requestElement, ref currentProgramIndex);
+            //    case RequestScenario.Two:
+            //        return _GetResponseForScenarioTwo(requestElement, ref currentProgramIndex);
+            //    case RequestScenario.Three:
+            //        return _GetResponseForScenarioThree(requestElement, ref currentProgramIndex);
+            //    case RequestScenario.Four:
+            //        return _GetResponseForScenarioFour(requestElement, ref currentProgramIndex);
+            //    default:
+            //        return _GetResponseForScenarioDefault(requestElement, ref currentProgramIndex);
+            //}
+        }
+
+        /// <summary>
+        /// One program overlaps
+        /// </summary>
+        private static List<GuideResponseElementDto> _GetResponseForScenarioOne(GuideRequestElementDto requestElement, ref int currentProgramIndex)
+        {
+            const int programCount = 1;
+            var responseElement = GetResponseElement(requestElement, ref currentProgramIndex, programCount);
+            return new List<GuideResponseElementDto> { responseElement };
+        }
+
+        /// <summary>
+        /// Two programs overlap
+        /// </summary>
+        private static List<GuideResponseElementDto> _GetResponseForScenarioTwo(GuideRequestElementDto requestElement, ref int currentProgramIndex)
+        {
+            const int programCount = 2;
+            var responseElement = GetResponseElement(requestElement, ref currentProgramIndex, programCount);
+            return new List<GuideResponseElementDto> { responseElement };
+        }
+
+        /// <summary>
+        /// Split the daterange into 2 and assign one program to each.
+        /// </summary>
+        private static List<GuideResponseElementDto> _GetResponseForScenarioThree(GuideRequestElementDto requestElement, ref int currentProgramIndex)
+        {
+            const int programCount = 1;
+            const int dateRangeCount = 2;
+            var responseElement = GetResponseElementSplitDates(requestElement, ref currentProgramIndex, programCount, dateRangeCount);
+            return responseElement;
+        }
+
+        /// <summary>
+        /// Split the daterange into 3 and assign Two programs to each.
+        /// </summary>
+        private static List<GuideResponseElementDto> _GetResponseForScenarioFour(GuideRequestElementDto requestElement, ref int currentProgramIndex)
+        {
+            const int programCount = 2;
+            const int dateRangeCount = 3;
+            var responseElement = GetResponseElementSplitDates(requestElement, ref currentProgramIndex, programCount, dateRangeCount);
+            return responseElement;
+        }
+
+        private static List<GuideResponseElementDto> _GetResponseForScenarioDefault(GuideRequestElementDto requestElement, ref int currentProgramIndex)
+        {
+            const double thirtyMinutesAsSeconds = 30 * 60;
+            var duration = (requestElement.Daypart.EndTime + 1)- requestElement.Daypart.StartTime;
+            var programCount = (int)Math.Ceiling(duration / thirtyMinutesAsSeconds);
+            var responseElement = GetResponseElement(requestElement, ref currentProgramIndex, programCount);
+            return new List<GuideResponseElementDto> { responseElement };
+        }
+
+        private static GuideResponseElementDto GetResponseElement(GuideRequestElementDto requestElement,
+            ref int currentProgramIndex, int programCount)
+        {
+            var programs = _GetProgramsList(ref currentProgramIndex, programCount);
+
+            var responseElement = new GuideResponseElementDto
+            {
+                RequestElementId = requestElement.RequestElementId,
+                Programs = programs,
+                RequestDaypartId = requestElement.Daypart.RequestDaypartId,
+                Station = requestElement.NielsenLegacyStationCallLetters,
+                StartDate = requestElement.StartDate,
+                EndDate = requestElement.EndDate
+            };
+            return responseElement;
+        }
+
+        private static List<DateRange> _GetSplitDateRanges(string startDateString, string endDateString, int rangeCount)
+        {
+            var resultRange = new List<DateRange>();
+            var startDate = DateTime.Parse(startDateString);
+            var endDate = DateTime.Parse(endDateString);
+            var deltaDays = endDate.Subtract(startDate).TotalDays;
+            var splitDays = (int)Math.Round(deltaDays / rangeCount, MidpointRounding.AwayFromZero);
+
+            var totalDaysAccountedFor = 0;
+            var currentStartDate = startDate;
+            
+            do
+            {
+                var currentEndDate = currentStartDate.AddDays(splitDays);
+                var daysOver = (int)currentEndDate.Subtract(endDate).TotalDays;
+                if (daysOver > 0)
+                {
+                    currentEndDate = currentEndDate.AddDays(daysOver * -1);
+                }
+
+                resultRange.Add(new DateRange{StartDate = currentStartDate, EndDate = currentEndDate});
+                currentStartDate = currentEndDate.AddDays(1);
+
+                totalDaysAccountedFor += splitDays;
+            } while (totalDaysAccountedFor < deltaDays);
+
+            return resultRange;
+        }
+
+        private const string DATE_FORMAT = "MM/dd/yyyy";
+
+        private static List<GuideResponseElementDto> GetResponseElementSplitDates(GuideRequestElementDto requestElement,
+            ref int currentProgramIndex, int programCount, int dateRangeCount)
+        {
+            
+            var dateRanges = _GetSplitDateRanges(requestElement.StartDate, requestElement.EndDate, dateRangeCount);
+            var programs = _GetProgramsList(ref currentProgramIndex, programCount);
+            var responseElements = new List<GuideResponseElementDto>();
+
+            foreach (var dateRange in dateRanges)
+            {
+                var responseElement = new GuideResponseElementDto
+                {
+                    RequestElementId = requestElement.RequestElementId,
+                    Programs = programs,
+                    RequestDaypartId = requestElement.Daypart.RequestDaypartId,
+                    Station = requestElement.NielsenLegacyStationCallLetters,
+                    StartDate = dateRange.StartDate.ToString(DATE_FORMAT),
+                    EndDate = dateRange.EndDate.ToString(DATE_FORMAT)
+                };
+                responseElements.Add(responseElement);
+            }
+            return responseElements;
+        }
+
+        private static List<GuideResponseProgramDto> _GetProgramsList(ref int currentProgramIndex, int programCount)
+        {
+            var programs = new List<GuideResponseProgramDto>();
+            for (var i = 0; i < programCount; i++)
+            {
+                var program = _CannedPrograms[currentProgramIndex];
+                programs.Add(new GuideResponseProgramDto
+                {
+                    ProgramId = program.ProgramId,
+                    ProgramName = program.ProgramName,
+                    GenreId = program.GenreId,
+                    Genre = program.Genre,
+                    ShowType = program.ShowType,
+                    SyndicationType = program.SyndicationType,
+                    StartTime = 3600,
+                    EndTime = 7200,
+                    Occurances = 1
+                });
+
+                currentProgramIndex = (currentProgramIndex + 1) >= _CannedPrograms.Length ? 0 : currentProgramIndex + 1;
+            }
+
+            return programs;
+        }
+
+        private class DateRange
+        {
+            public DateTime StartDate { get; set; }
+            public DateTime EndDate { get; set; }
         }
 
         private static SearchResponseProgramDto[] _CannedPrograms =

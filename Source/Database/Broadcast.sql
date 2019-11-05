@@ -611,6 +611,80 @@ WHERE [name] = 'Science & Techonology'
 
 /*************************************** END PRI-17556 *****************************************************/
 
+/*************************************** START PRI-16343 *****************************************************/
+
+IF OBJECT_ID ('dbo.station_inventory_manifest_daypart_programs') IS NULL
+BEGIN
+	CREATE TABLE [station_inventory_manifest_daypart_programs]
+	(
+		[id] [INT] IDENTITY(1,1) NOT NULL,
+		[station_inventory_manifest_daypart_id] [INT] NOT NULL,		
+		[name] [VARCHAR](255) NOT NULL,
+		[show_type] [VARCHAR](30) NOT NULL,
+		[genre_id] [INT] NOT NULL,
+		[start_date] [DATE] NOT NULL,
+		[end_date] [DATE] NOT NULL,
+		[start_time] [INT] NOT NULL,
+		[end_time] [INT] NOT NULL,
+		[created_date] [DATETIME] NOT NULL
+		CONSTRAINT [PK_station_inventory_manifest_daypart_programs] PRIMARY KEY CLUSTERED
+		(
+			[id] ASC
+		)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY]
+
+	ALTER TABLE [dbo].[station_inventory_manifest_daypart_programs] WITH CHECK ADD CONSTRAINT [FK_station_inventory_manifest_daypart_programs_station_inventory_manifest_dayparts] FOREIGN KEY ([station_inventory_manifest_daypart_id])
+		REFERENCES [dbo].[station_inventory_manifest_dayparts] (id)
+		ON DELETE CASCADE
+
+	ALTER TABLE [dbo].[station_inventory_manifest_daypart_programs] CHECK CONSTRAINT [FK_station_inventory_manifest_daypart_programs_station_inventory_manifest_dayparts]
+
+	ALTER TABLE [dbo].[station_inventory_manifest_daypart_programs] WITH CHECK ADD CONSTRAINT [FK_station_inventory_manifest_daypart_programs_genres] FOREIGN KEY ([genre_id])
+		REFERENCES [dbo].[genres] (id)
+
+	ALTER TABLE [dbo].[station_inventory_manifest_daypart_programs] CHECK CONSTRAINT [FK_station_inventory_manifest_daypart_programs_genres]
+
+	CREATE NONCLUSTERED INDEX [IX_station_inventory_manifest_daypart_programs_dayparts] ON [dbo].[station_inventory_manifest_daypart_programs] ([station_inventory_manifest_daypart_id])
+
+END
+
+GO
+
+IF OBJECT_ID('dbo.inventory_file_program_names_jobs') IS NOT NULL
+BEGIN
+	DROP TABLE inventory_file_program_names_jobs
+END
+
+GO
+
+IF OBJECT_ID('dbo.inventory_file_program_enrichment_jobs') IS NULL
+BEGIN
+	CREATE TABLE [dbo].[inventory_file_program_enrichment_jobs](
+		[id] [int] IDENTITY(1,1) NOT NULL,
+		[inventory_file_id] [int] NOT NULL,
+		[status] [int] NOT NULL,
+		[error_message] [nvarchar](2000) NULL,
+		[queued_at] [datetime] NOT NULL,
+		[queued_by] [varchar](50) NOT NULL,
+		[completed_at] [datetime] NULL,
+	 CONSTRAINT [PK_inventory_file_program_enrichment_jobs] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY]
+
+	ALTER TABLE [dbo].[inventory_file_program_enrichment_jobs]  WITH CHECK ADD  CONSTRAINT [FK_inventory_file_program_enrichment_jobs_inventory_file] FOREIGN KEY([inventory_file_id])
+	REFERENCES [dbo].[inventory_files] ([id])
+	ON DELETE CASCADE
+
+	ALTER TABLE [dbo].[inventory_file_program_enrichment_jobs] CHECK CONSTRAINT [FK_inventory_file_program_enrichment_jobs_inventory_file]
+
+END
+
+GO
+
+/*************************************** END PRI-16343 *****************************************************/
+
 /*************************************** START - PRI-16393 ****************************************************/
 
 IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('plan_version_dayparts') AND name = 'show_type_restrictions_contain_type')

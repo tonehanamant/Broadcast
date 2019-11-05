@@ -7,13 +7,12 @@ using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.InterceptionExtension;
 using Moq;
 using Services.Broadcast.ApplicationServices;
+using Services.Broadcast.Cache;
 using Services.Broadcast.Clients;
 using Services.Broadcast.Helpers;
 using Services.Broadcast.IntegrationTests.Stubbs;
-using Services.Broadcast.IntegrationTests.UnitTests;
 using Services.Broadcast.Repositories;
 using System;
-using Services.Broadcast.Cache;
 using Tam.Maestro.Common;
 using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Services.Clients;
@@ -67,6 +66,10 @@ namespace Services.Broadcast.IntegrationTests
                     _instance.RegisterType<ICampaignAggregator, CampaignAggregator>();
                     _instance.RegisterType<ITrafficApiClient, TrafficApiClientStub>();
                     _instance.RegisterType<ITrafficApiCache, TrafficApiCache>();
+
+                    _instance.RegisterType<IProgramGuideApiClient, ProgramGuideApiClient>();
+                    _instance.RegisterType<IProgramGuideService, ProgramGuideService>();
+                    _instance.RegisterType<IProgramGuideApiClientSimulator, ProgramGuideApiClientSimulator>();
                 }
             }
         }

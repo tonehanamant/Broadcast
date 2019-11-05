@@ -3,13 +3,13 @@ using Services.Broadcast.Entities.Enums;
 
 namespace Services.Broadcast.Entities
 {
-    public class InventoryFileProgramNameJob
+    public class InventoryFileProgramEnrichmentJob
     {
         public int Id { get; set; }
 
         public int InventoryFileId { get; set; }
 
-        public InventoryFileProgramNameJobStatus Status { get; set; }
+        public InventoryFileProgramEnrichmentJobStatus Status { get; set; }
 
         public string ErrorMessage { get; set; }
 

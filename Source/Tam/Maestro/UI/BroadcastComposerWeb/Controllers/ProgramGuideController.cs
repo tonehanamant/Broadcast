@@ -21,10 +21,10 @@ namespace BroadcastComposerWeb.Controllers
         }
 
         [HttpPost]
-        public BaseResponse<List<GuideResponseElementDto>> GetProgramsForGuide(int fileId, List<GuideRequestElementDto> guideRequestElements, bool simulate = true)
+        public BaseResponse<List<GuideResponseElementDto>> GetProgramsForGuide(List<GuideRequestElementDto> guideRequestElements, bool simulate = true)
         {
             var fullName = "testUser";
-            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IProgramGuideService>().GetProgramsForGuide(fileId, guideRequestElements, fullName, simulate));
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IProgramGuideService>().GetProgramsForGuide(guideRequestElements, fullName, simulate));
         }
 
         [HttpGet]

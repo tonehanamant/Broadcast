@@ -24,5 +24,11 @@ namespace Services.Broadcast.Entities.ProgramGuide
 
         [JsonProperty(PropertyName = "occurances")]
         public int Occurances { get; set; }
+
+        [JsonProperty(PropertyName = "start_time")]
+        public int StartTime { get; set; }
+
+        [JsonProperty(PropertyName = "end_time")]
+        public int EndTime { get; set; }
     }
 }

@@ -203,12 +203,19 @@ namespace BroadcastComposerWeb.Controllers
         }
 
         [HttpGet]
-        [Route("ProcessInventoryProgramNames")]
-        public BaseResponse<List<GuideRequestElementDto>> ProcessInventoryProgramNames(int fileId)
+        [Route("QueueInventoryFileProgramEnrichmentJob")]
+        public BaseResponse<int> QueueInventoryFileProgramEnrichmentJob(int fileId, string username)
         {
             return _ConvertToBaseResponse(() =>
-                _ApplicationServiceFactory.GetApplicationService<IInventoryService>()
-                    .ProcessInventoryProgramNames(fileId));
+                _ApplicationServiceFactory.GetApplicationService<IInventoryService>().QueueInventoryFileProgramEnrichmentJob(fileId, username));
+        }
+
+        [HttpGet]
+        [Route("PerformInventoryFileProgramEnrichmentJob")]
+        public BaseResponse<InventoryFileProgramEnrichmentJobDiagnostics> PerformInventoryFileProgramEnrichmentJob(int jobId)
+        {
+            return _ConvertToBaseResponse(() =>
+                _ApplicationServiceFactory.GetApplicationService<IInventoryService>().PerformInventoryFileProgramEnrichmentJob(jobId));
         }
 
         /// <summary>

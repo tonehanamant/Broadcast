@@ -21,21 +21,18 @@ namespace Services.Broadcast.ApplicationServices
     {
         List<SearchResponseProgramDto> GetPrograms(bool simulate);
 
-        List<GuideResponseElementDto> GetProgramsForGuide(int fileId, List<GuideRequestElementDto> requestElements, string queuedBy, bool simulate);
+        List<GuideResponseElementDto> GetProgramsForGuide(List<GuideRequestElementDto> requestElements, string queuedBy, bool simulate);
     }
 
     public class ProgramGuideService : IProgramGuideService
     {
         private IProgramGuideApiClient _ProgramGuideApiClient;
         private IProgramGuideApiClientSimulator _ProgramGuideApiClientSimulator;
-        private IInventoryFileProgramNameJobsRepository _InventoryFileProgramNameJobsRepository;
 
         public ProgramGuideService(IProgramGuideApiClient programGuideApiClient, IDataRepositoryFactory dataRepositoryFactory
             , IProgramGuideApiClientSimulator programGuideApiClientSimulator)
         {
             _ProgramGuideApiClient = programGuideApiClient;
-            _InventoryFileProgramNameJobsRepository = dataRepositoryFactory.GetDataRepository<IInventoryFileProgramNameJobsRepository>();
-
             _ProgramGuideApiClientSimulator = programGuideApiClientSimulator;
         }
 
@@ -45,16 +42,8 @@ namespace Services.Broadcast.ApplicationServices
             return simulate ? _ProgramGuideApiClientSimulator.GetPrograms() : _ProgramGuideApiClient.GetPrograms();
         }
 
-        public List<GuideResponseElementDto> GetProgramsForGuide(int fileId, List<GuideRequestElementDto> requestElements, string queuedBy, bool simulate = true)
+        public List<GuideResponseElementDto> GetProgramsForGuide(List<GuideRequestElementDto> requestElements, string queuedBy, bool simulate = true)
         {
-            _InventoryFileProgramNameJobsRepository.AddJob(new InventoryFileProgramNameJob
-            {
-                InventoryFileId = fileId,
-                Status = InventoryFileProgramNameJobStatus.CallApi,
-                QueuedAt = DateTime.Now,
-                QueuedBy = queuedBy
-            });
-
             return simulate ? _ProgramGuideApiClientSimulator.GetProgramsForGuide(requestElements) : _ProgramGuideApiClient.GetProgramsForGuide(requestElements);
         }
     }

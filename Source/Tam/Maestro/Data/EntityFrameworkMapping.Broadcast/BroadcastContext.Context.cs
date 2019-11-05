@@ -146,7 +146,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<campaign> campaigns { get; set; }
         public virtual DbSet<campaign_summaries> campaign_summaries { get; set; }
         public virtual DbSet<inventory_file_ratings_job_notes> inventory_file_ratings_job_notes { get; set; }
-        public virtual DbSet<inventory_file_program_names_jobs> inventory_file_program_names_jobs { get; set; }
         public virtual DbSet<genre_mappings> genre_mappings { get; set; }
         public virtual DbSet<genre_sources> genre_sources { get; set; }
         public virtual DbSet<plan_version_available_markets> plan_version_available_markets { get; set; }
@@ -160,5 +159,7 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<plan_versions> plan_versions { get; set; }
         public virtual DbSet<plan_version_summary_quarters> plan_version_summary_quarters { get; set; }
         public virtual DbSet<plan_version_daypart_show_type_restrictions> plan_version_daypart_show_type_restrictions { get; set; }
+        public virtual DbSet<inventory_file_program_enrichment_jobs> inventory_file_program_enrichment_jobs { get; set; }
+        public virtual DbSet<station_inventory_manifest_daypart_programs> station_inventory_manifest_daypart_programs { get; set; }
     }
 }

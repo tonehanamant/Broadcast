@@ -1,0 +1,13 @@
+﻿{
+  "FileId": 236654,
+  "RequestChunkSize": 1000,
+  "SaveChunkSize": 1000,
+  "TotalApiCallCount": 2,
+  "TotalDaypartCount": 3,
+  "TotalManifestCount": 2,
+  "TotalProgramsSaved": 132,
+  "TotalRequestCount": 5,
+  "TotalResponseCount": 5,
+  "TotalSavesCount": 2,
+  "TotalWeekCount": 2
+}
