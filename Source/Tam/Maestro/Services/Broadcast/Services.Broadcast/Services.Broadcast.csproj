@@ -304,6 +304,7 @@
     <Compile Include="ApplicationServices\GenreService.cs" />
     <Compile Include="ApplicationServices\ContainTypeService.cs" />
     <Compile Include="ApplicationServices\PlanPricingService.cs" />
+    <Compile Include="ApplicationServices\PricingService.cs" />
     <Compile Include="ApplicationServices\ProgramGuideService.cs" />
     <Compile Include="ApplicationServices\ShowTypeService.cs" />
     <Compile Include="BusinessEngines\ImpressionsCalculationEngine.cs" />
@@ -336,6 +337,7 @@
     <Compile Include="Entities\CampaignQuarterDto.cs" />
     <Compile Include="Entities\Enums\GenreSourceEnum.cs" />
     <Compile Include="Entities\Enums\ContainTypeEnum.cs" />
+    <Compile Include="Entities\Enums\UnitCapEnum.cs" />
     <Compile Include="Entities\Enums\InventoryFileProgramEnrichmentJobStatus.cs" />
     <Compile Include="Entities\ImpressionsRequestDto.cs" />
     <Compile Include="Entities\InventoryFileProgramEnrichmentJob.cs" />

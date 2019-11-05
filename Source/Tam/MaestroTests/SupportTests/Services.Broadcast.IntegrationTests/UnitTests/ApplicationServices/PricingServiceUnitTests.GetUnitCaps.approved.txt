@@ -1,0 +1,22 @@
+﻿[
+  {
+    "Display": "Per 30 Min",
+    "Id": 1
+  },
+  {
+    "Display": "Per Hour",
+    "Id": 2
+  },
+  {
+    "Display": "Per Day",
+    "Id": 3
+  },
+  {
+    "Display": "Per Week",
+    "Id": 4
+  },
+  {
+    "Display": "Per Month",
+    "Id": 5
+  }
+]

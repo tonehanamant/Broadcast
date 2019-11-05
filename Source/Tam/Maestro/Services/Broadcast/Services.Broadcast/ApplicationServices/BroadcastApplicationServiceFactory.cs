@@ -220,6 +220,8 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IPlanPricingService, PlanPricingService>();
             unityContainer.RegisterType<IImpressionsCalculationEngine, ImpressionsCalculationEngine>();
 
+            unityContainer.RegisterType<IPricingService, PricingService>();
+
             // TODO: Remove this during PRI-17014.  Reroute consumers to ProgramGuideApiClient.
             unityContainer.RegisterType<IProgramGuideApiClientSimulator, ProgramGuideApiClientSimulator>();
 
