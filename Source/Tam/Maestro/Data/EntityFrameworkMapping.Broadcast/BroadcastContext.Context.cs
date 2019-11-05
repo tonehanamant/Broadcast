@@ -161,5 +161,7 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<plan_version_daypart_show_type_restrictions> plan_version_daypart_show_type_restrictions { get; set; }
         public virtual DbSet<inventory_file_program_enrichment_jobs> inventory_file_program_enrichment_jobs { get; set; }
         public virtual DbSet<station_inventory_manifest_daypart_programs> station_inventory_manifest_daypart_programs { get; set; }
+        public virtual DbSet<plan_pricing_execution_markets> plan_pricing_execution_markets { get; set; }
+        public virtual DbSet<plan_pricing_executions> plan_pricing_executions { get; set; }
     }
 }

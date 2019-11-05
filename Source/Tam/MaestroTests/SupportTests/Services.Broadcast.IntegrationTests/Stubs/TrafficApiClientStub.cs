@@ -4,7 +4,7 @@ using Services.Broadcast.Entities.DTO;
 using System;
 using System.Collections.Generic;
 
-namespace Services.Broadcast.IntegrationTests.Stubbs
+namespace Services.Broadcast.IntegrationTests.Stubs
 {
     public class TrafficApiClientStub : ITrafficApiClient
     {

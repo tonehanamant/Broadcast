@@ -17,6 +17,7 @@ namespace EntityFrameworkMapping.Broadcast
         public plan()
         {
             this.plan_versions = new HashSet<plan_versions>();
+            this.plan_pricing_executions = new HashSet<plan_pricing_executions>();
         }
     
         public int id { get; set; }
@@ -27,5 +28,6 @@ namespace EntityFrameworkMapping.Broadcast
     
         public virtual campaign campaign { get; set; }
         public virtual ICollection<plan_versions> plan_versions { get; set; }
+        public virtual ICollection<plan_pricing_executions> plan_pricing_executions { get; set; }
     }
 }

@@ -17,15 +17,15 @@ namespace Services.Broadcast.IntegrationTests
         [UseReporter(typeof(DiffReporter))]
         public void Email_Hello_Test()
         {
-            IntegrationTestApplicationServiceFactory.Instance.RegisterType<IEmailerService, EmailerServiceStubb>();
+            IntegrationTestApplicationServiceFactory.Instance.RegisterType<IEmailerService, EmailerServiceStub>();
 
             var from = new MailAddress("broadcastsmtp@crossmw.com");
 
             var emailerService = IntegrationTestApplicationServiceFactory.GetApplicationService<IEmailerService>() ;
 
-            (emailerService as EmailerServiceStubb).QuickSend(true, "<b>Hello, world.</b>", "Test Hello", MailPriority.Normal, from, new List<MailAddress>() {new MailAddress("test@crossmw.com")});
+            (emailerService as EmailerServiceStub).QuickSend(true, "<b>Hello, world.</b>", "Test Hello", MailPriority.Normal, from, new List<MailAddress>() {new MailAddress("test@crossmw.com")});
 
-            var response = EmailerServiceStubb.LastMailMessageGenerated;
+            var response = EmailerServiceStub.LastMailMessageGenerated;
 
             var jsonResolver = new IgnorableSerializerContractResolver();
             var jsonSettings = new JsonSerializerSettings()

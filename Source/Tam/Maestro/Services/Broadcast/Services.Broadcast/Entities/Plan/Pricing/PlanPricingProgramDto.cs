@@ -5,7 +5,7 @@ namespace Services.Broadcast.Entities.PlanPricing
     public class PlanPricingProgramDto
     {
         public List<string> ProgramNames { get; set; }
-        public PlanPricingMarket PlanPricingMarket { get; set; }
+        public PlanPricingMarketDto PlanPricingMarket { get; set; }
         public DisplayScheduleStation Station { get; set; }
         public int SpotLength { get; set; }
         public decimal Rate { get; set; }

@@ -25,9 +25,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         public AffidavitPreprocessingServiceIntegrationTests()
         {
-            IntegrationTestApplicationServiceFactory.Instance.RegisterType<IEmailerService, EmailerServiceStubb>();
-            IntegrationTestApplicationServiceFactory.Instance.RegisterType<IFtpService, FtpServiceStubb_Empty>();
-            IntegrationTestApplicationServiceFactory.Instance.RegisterType<IImpersonateUser, ImpersonateUserStubb>();
+            IntegrationTestApplicationServiceFactory.Instance.RegisterType<IEmailerService, EmailerServiceStub>();
+            IntegrationTestApplicationServiceFactory.Instance.RegisterType<IFtpService, FtpServiceStub_Empty>();
+            IntegrationTestApplicationServiceFactory.Instance.RegisterType<IImpersonateUser, ImpersonateUserStub>();
 
             _AffidavitPreprocessingService = IntegrationTestApplicationServiceFactory
                 .GetApplicationService<IAffidavitPreprocessingService>();

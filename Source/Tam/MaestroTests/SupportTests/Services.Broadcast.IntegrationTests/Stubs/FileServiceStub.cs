@@ -9,7 +9,7 @@ using Common.Services;
 
 namespace Services.Broadcast.IntegrationTests
 {
-    public class FileServiceStubb : IFileService
+    public class FileServiceStub : IFileService
     {
         public virtual List<string> GetFiles(string path)
         {
@@ -75,7 +75,7 @@ namespace Services.Broadcast.IntegrationTests
         }
     }
 
-    public class InMemoryFileServiceStubb : FileServiceStubb
+    public class InMemoryFileServiceStubb : FileServiceStub
     {
         public List<string> Paths { get; set; } = new List<string>();
         public List<Stream> Streams { get; set; } = new List<Stream>();
@@ -97,7 +97,7 @@ namespace Services.Broadcast.IntegrationTests
         }
     }
 
-    public class FailingFileServiceStub : FileServiceStubb
+    public class FailingFileServiceStub : FileServiceStub
     {
         public List<string> Paths { get; set; } = new List<string>();
         public List<Stream> Streams { get; set; } = new List<Stream>();
@@ -118,7 +118,7 @@ namespace Services.Broadcast.IntegrationTests
         }
     }
 
-    public class FileServiceSingleFileStubb : FileServiceStubb
+    public class FileServiceSingleFileStubb : FileServiceStub
     {
         private readonly string _SingleFileName = "file1.txt";
         private readonly string _BasePath = "c:\\temp";
@@ -134,7 +134,7 @@ namespace Services.Broadcast.IntegrationTests
         }
     }
 
-    public class FileServiceDataLakeStubb : FileServiceStubb
+    public class FileServiceDataLakeStubb : FileServiceStub
     {
         private List<string> _Files = new List<string>();
         

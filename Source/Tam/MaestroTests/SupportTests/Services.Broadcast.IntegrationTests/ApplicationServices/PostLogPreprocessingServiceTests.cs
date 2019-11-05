@@ -26,9 +26,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         public PostLogPreprocessingServiceTests()
         {
-            IntegrationTestApplicationServiceFactory.Instance.RegisterType<IEmailerService, EmailerServiceStubb>();
-            IntegrationTestApplicationServiceFactory.Instance.RegisterType<IFtpService, FtpServiceStubb_Empty>();
-            IntegrationTestApplicationServiceFactory.Instance.RegisterType<IImpersonateUser, ImpersonateUserStubb>();
+            IntegrationTestApplicationServiceFactory.Instance.RegisterType<IEmailerService, EmailerServiceStub>();
+            IntegrationTestApplicationServiceFactory.Instance.RegisterType<IFtpService, FtpServiceStub_Empty>();
+            IntegrationTestApplicationServiceFactory.Instance.RegisterType<IImpersonateUser, ImpersonateUserStub>();
 
             _PostLogPreprocessingService = IntegrationTestApplicationServiceFactory
                 .GetApplicationService<IPostLogPreprocessingService>();
@@ -131,10 +131,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         // use for manual testing and not automated running 
         public void PostLogPreprocessing_ProcessFiles()
         {
-            IntegrationTestApplicationServiceFactory.Instance.RegisterType<IEmailerService, EmailerServiceStubb>();
-            IntegrationTestApplicationServiceFactory.Instance.RegisterType<IFtpService, FtpServiceStubb_Empty>();
+            IntegrationTestApplicationServiceFactory.Instance.RegisterType<IEmailerService, EmailerServiceStub>();
+            IntegrationTestApplicationServiceFactory.Instance.RegisterType<IFtpService, FtpServiceStub_Empty>();
             //for testing real upload: IntegrationTestApplicationServiceFactory.Instance.RegisterType<IFtpService, FtpService>();
-            IntegrationTestApplicationServiceFactory.Instance.RegisterType<IImpersonateUser, ImpersonateUserStubb>();
+            IntegrationTestApplicationServiceFactory.Instance.RegisterType<IImpersonateUser, ImpersonateUserStub>();
             
             _PostLogPreprocessingService.ProcessFiles("PostLogPreprocessingTest");
 
@@ -148,12 +148,12 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             };
             try
             {
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(EmailerServiceStubb.LastMailMessageGenerated,
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(EmailerServiceStub.LastMailMessageGenerated,
                     jsonSettings));
             }
             finally
             {
-                EmailerServiceStubb.ClearLastMessage();
+                EmailerServiceStub.ClearLastMessage();
             }
         }
 

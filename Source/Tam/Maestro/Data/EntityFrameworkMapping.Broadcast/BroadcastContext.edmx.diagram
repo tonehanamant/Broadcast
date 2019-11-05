@@ -346,6 +346,10 @@
         <AssociationConnector Association="BroadcastModel.FK_station_inventory_manifest_daypart_programs_genres" />
         <AssociationConnector Association="BroadcastModel.FK_inventory_file_program_enrichment_jobs_inventory_file" />
         <AssociationConnector Association="BroadcastModel.FK_station_inventory_manifest_daypart_programs_station_inventory_manifest_dayparts" />
+        <EntityTypeShape EntityType="BroadcastModel.plan_pricing_execution_markets" Width="1.5" PointX="7.5" PointY="61.125" />
+        <EntityTypeShape EntityType="BroadcastModel.plan_pricing_executions" Width="1.5" PointX="5.25" PointY="60.25" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_pricing_execution_markets_plan_pricing_executions" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_pricing_executions_plans" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

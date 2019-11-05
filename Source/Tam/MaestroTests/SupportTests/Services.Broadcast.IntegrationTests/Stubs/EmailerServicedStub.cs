@@ -5,7 +5,7 @@ using Common.Services;
 
 namespace Services.Broadcast.IntegrationTests
 {
-    public class EmailerServiceStubb : IEmailerService
+    public class EmailerServiceStub : IEmailerService
     {
 
         public static MailMessage LastMailMessageGenerated { get; set; }

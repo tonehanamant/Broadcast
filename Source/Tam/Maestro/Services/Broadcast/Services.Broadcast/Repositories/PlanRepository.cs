@@ -2,17 +2,20 @@
 using Common.Services.Repositories;
 using ConfigurationService.Client;
 using EntityFrameworkMapping.Broadcast;
+using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
+using Services.Broadcast.Entities.Plan.Pricing;
+using Services.Broadcast.Entities.PlanPricing;
+using Services.Broadcast.Extensions;
 using Services.Broadcast.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using Services.Broadcast.Extensions;
 using Tam.Maestro.Common.DataLayer;
-using Tam.Maestro.Data.EntityFrameworkMapping;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
+using Tam.Maestro.Data.EntityFrameworkMapping;
 
 namespace Services.Broadcast.Repositories
 {
@@ -63,6 +66,14 @@ namespace Services.Broadcast.Repositories
         /// <param name="planId">The plan identifier.</param>
         /// <returns>Dravt id</returns>
         int CheckIfDraftExists(int planId);
+
+        /// <summary>
+        /// Saves the model that ran in the pricing guide.
+        /// </summary>
+        /// <param name="planPricingRunModel">Plan pricing model data</param>
+        void SavePricingRequest(PlanPricingApiRequestParametersDto planPricingRunModel);
+
+        List<PlanPricingApiRequestParametersDto> GetPlanPricingRuns(int planId);
     }
 
     public class PlanRepository : BroadcastRepositoryBase, IPlanRepository
@@ -567,6 +578,71 @@ namespace Services.Broadcast.Repositories
                 PercentageOfUS = entity.percentage_of_us,
             };
             return dto;
+        }
+
+        public void SavePricingRequest(PlanPricingApiRequestParametersDto planPricingRunModel)
+        {
+            _InReadUncommitedTransaction(
+                context =>
+                {
+                    var planPricingExecution = new plan_pricing_executions
+                    {
+                        plan_id = planPricingRunModel.PlanId,
+                        min_cpm = planPricingRunModel.MinCpm,
+                        max_cpm = planPricingRunModel.MaxCpm,
+                        impressions_goal = planPricingRunModel.ImpressionsGoal,
+                        budget_goal = planPricingRunModel.BudgetGoal,
+                        cpm_goal = planPricingRunModel.CpmGoal,
+                        proprietary_blend = planPricingRunModel.ProprietaryBlend,
+                        competition_factor = planPricingRunModel.CompetitionFactor,
+                        inflation_factor = planPricingRunModel.InflationFactor,
+                        coverage_goal = planPricingRunModel.CoverageGoalPercent,
+                        unit_caps_type = (int)planPricingRunModel.UnitCapType,
+                        unit_caps = planPricingRunModel.UnitCaps
+                    };
+
+                    foreach (var market in planPricingRunModel.Markets)
+                    {
+                        planPricingExecution.plan_pricing_execution_markets.Add(new plan_pricing_execution_markets
+                        {
+                            market_code = (short)market.MarketId,
+                            share_of_voice_percent = market.MarketShareOfVoice
+                        });
+                    }
+
+                    context.plan_pricing_executions.Add(planPricingExecution);
+                    context.SaveChanges();
+                }
+            );
+        }
+
+        public List<PlanPricingApiRequestParametersDto> GetPlanPricingRuns(int planId)
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                var executions = context.plan_pricing_executions.Where(p => p.plan_id == planId);
+
+                return executions.Select(e => new PlanPricingApiRequestParametersDto
+                {
+                    PlanId = e.plan_id,
+                    BudgetGoal = e.budget_goal,
+                    CompetitionFactor = e.competition_factor,
+                    CoverageGoalPercent = e.coverage_goal,
+                    CpmGoal = e.cpm_goal,
+                    ImpressionsGoal = e.impressions_goal,
+                    InflationFactor = e.inflation_factor,
+                    Markets = e.plan_pricing_execution_markets.Select(m => new PlanPricingMarketDto
+                    {
+                        MarketId = m.market_code,
+                        MarketShareOfVoice = m.share_of_voice_percent
+                    }).ToList(),
+                    MaxCpm = e.max_cpm,
+                    MinCpm = e.min_cpm,
+                    ProprietaryBlend = e.proprietary_blend,
+                    UnitCaps = e.unit_caps,
+                    UnitCapType = (UnitCapEnum)e.unit_caps_type
+                }).ToList();
+            });
         }
     }
 }

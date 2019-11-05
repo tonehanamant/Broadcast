@@ -1,8 +1,7 @@
 ﻿using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Entities;
-using System;
 
-namespace Services.Broadcast.IntegrationTests.Stubbs
+namespace Services.Broadcast.IntegrationTests.Stubs
 {
     public class DataLakeFileServiceStub : IDataLakeFileService
     {

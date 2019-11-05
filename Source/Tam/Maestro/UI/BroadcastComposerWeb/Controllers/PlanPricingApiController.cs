@@ -1,6 +1,7 @@
 ﻿using Common.Services.WebComponents;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.Plan.Pricing;
 using Services.Broadcast.Entities.PlanPricing;
 using System.Collections.Generic;
 using System.Web.Http;
@@ -21,10 +22,17 @@ namespace BroadcastComposerWeb.Controllers
         }
 
         [HttpGet]
-        [Route("Run")]
-        public BaseResponse<List<PlanPricingProgramDto>> Run(int planId)
+        [Route("GetInventoryForPlan")]
+        public BaseResponse<List<PlanPricingProgramDto>> GetInventoryForPlan(int planId)
         {
-            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanPricingService>().Run(planId));
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanPricingService>().GetInventoryForPlan(planId));
+        }
+
+        [HttpPost]
+        [Route("Run")]
+        public BaseResponse<PlanPricingResultDto> Run(PlanPricingRequestDto planPricingRequestDto)
+        {
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanPricingService>().Run(planPricingRequestDto));
         }
     }
 }

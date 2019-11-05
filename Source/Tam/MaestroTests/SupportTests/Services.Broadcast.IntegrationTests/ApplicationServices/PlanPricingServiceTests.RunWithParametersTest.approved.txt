@@ -1,0 +1,30 @@
+﻿[
+  {
+    "BudgetGoal": 1000.0000,
+    "CompetitionFactor": 0.1,
+    "CoverageGoalPercent": 80.5,
+    "CpmGoal": 5.0000,
+    "ImpressionsGoal": 50000.0,
+    "InflationFactor": 0.5,
+    "Markets": [
+      {
+        "MarketId": 2557,
+        "MarketName": null,
+        "MarketSegment": 0,
+        "MarketShareOfVoice": 22.2
+      },
+      {
+        "MarketId": 2558,
+        "MarketName": null,
+        "MarketSegment": 0,
+        "MarketShareOfVoice": 34.5
+      }
+    ],
+    "MaxCpm": 10.0000,
+    "MinCpm": 1.0000,
+    "PlanId": 1197,
+    "ProprietaryBlend": 0.2,
+    "UnitCaps": 10,
+    "UnitCapType": 1
+  }
+]

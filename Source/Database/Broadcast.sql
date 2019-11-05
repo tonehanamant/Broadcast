@@ -719,6 +719,61 @@ END
 
 /*************************************** END - PRI-16393 ****************************************************/
 
+/*************************************** START - PRI-16188 ****************************************************/
+
+IF OBJECT_ID('plan_pricing_executions') IS NULL
+BEGIN
+	CREATE TABLE [dbo].[plan_pricing_executions](
+		[id] [int] IDENTITY(1,1) NOT NULL,
+		[plan_id] [int] NOT NULL,
+		[min_cpm] [money] NULL,
+		[max_cpm] [money] NULL,
+		[coverage_goal] [float] NOT NULL,
+		[impressions_goal] [float] NOT NULL,
+		[budget_goal] [money] NOT NULL,
+		[cpm_goal] [money] NOT NULL,
+		[proprietary_blend] [float] NOT NULL,
+		[competition_factor] [float] NULL,
+		[inflation_factor] [float] NULL,
+		[unit_caps_type] [int] NOT NULL,
+		[unit_caps] [int] NOT NULL,
+	CONSTRAINT [PK_plan_version_pricing_executions] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC
+	) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY]
+
+
+	ALTER TABLE [dbo].[plan_pricing_executions]  WITH CHECK ADD  CONSTRAINT [FK_plan_pricing_executions_plans] FOREIGN KEY([plan_id])
+	REFERENCES [dbo].[plans] ([id])
+
+	ALTER TABLE [dbo].[plan_pricing_executions] CHECK CONSTRAINT [FK_plan_pricing_executions_plans]
+
+END
+
+
+IF OBJECT_ID('plan_pricing_execution_markets') IS NULL
+	BEGIN
+	CREATE TABLE [dbo].[plan_pricing_execution_markets]
+	(
+		[id] [int] IDENTITY(1,1) NOT NULL,
+		[plan_pricing_execution_id] [int] NOT NULL,
+		[market_code] [smallint] NOT NULL,
+		[share_of_voice_percent] [float] NULL,
+
+	CONSTRAINT [PK_plan_pricing_execution_markets] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC
+	) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY]
+
+	ALTER TABLE [dbo].[plan_pricing_execution_markets]  WITH CHECK ADD  CONSTRAINT [FK_plan_pricing_execution_markets_plan_pricing_executions] FOREIGN KEY([plan_pricing_execution_id])
+	REFERENCES [dbo].[plan_pricing_executions] ([id])
+
+	ALTER TABLE [dbo].[plan_pricing_execution_markets] CHECK CONSTRAINT [FK_plan_pricing_execution_markets_plan_pricing_executions]
+END
+/*************************************** END - PRI-16188 ****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

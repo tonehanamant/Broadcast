@@ -3,8 +3,10 @@ using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Cache;
+using Services.Broadcast.Clients;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Plan;
+using Services.Broadcast.Entities.Plan.Pricing;
 using Services.Broadcast.Entities.PlanPricing;
 using Services.Broadcast.Repositories;
 using System;
@@ -19,7 +21,9 @@ namespace Services.Broadcast.ApplicationServices
 {
     public interface IPlanPricingService : IApplicationService
     {
-        List<PlanPricingProgramDto> Run(int planId);
+        List<PlanPricingProgramDto> GetInventoryForPlan(int planId);
+        PlanPricingResultDto Run(PlanPricingRequestDto planPricingRequestDto);
+        List<PlanPricingApiRequestParametersDto> GetPlanPricingRuns(int planId);
     }
 
     public class PlanPricingService : IPlanPricingService
@@ -34,6 +38,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IImpressionsCalculationEngine _ImpressionsCalculationEngine;
         private readonly ISpotLengthEngine _SpotLengthEngine;
         private readonly ISpotLengthRepository _SpotLengthRepository;
+        private readonly IPricingApiClient _PricingApiClient;
 
         public PlanPricingService(IDataRepositoryFactory broadcastDataRepositoryFactory,
                                   IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
@@ -41,7 +46,8 @@ namespace Services.Broadcast.ApplicationServices
                                   IBroadcastAudiencesCache audienceCache,
                                   IImpressionAdjustmentEngine impressionAdjustmentEngine,
                                   IImpressionsCalculationEngine impressionsCalculationEngine,
-                                  ISpotLengthEngine spotLengthEngine)
+                                  ISpotLengthEngine spotLengthEngine,
+                                  IPricingApiClient pricingApiClient)
         {
             _BroadcastAudienceRepository = broadcastDataRepositoryFactory.GetDataRepository<IBroadcastAudienceRepository>();
             _PlanRepository = broadcastDataRepositoryFactory.GetDataRepository<IPlanRepository>();
@@ -53,23 +59,108 @@ namespace Services.Broadcast.ApplicationServices
             _ImpressionAdjustmentEngine = impressionAdjustmentEngine;
             _ImpressionsCalculationEngine = impressionsCalculationEngine;
             _SpotLengthEngine = spotLengthEngine;
+            _PricingApiClient = pricingApiClient;
         }
 
-        public List<PlanPricingProgramDto> Run(int planId)
+        public List<PlanPricingProgramDto> GetInventoryForPlan(int planId)
         {
             var plan = _PlanRepository.GetPlan(planId);
+            var inventory = _GetInventory(plan);
+
+            return _MapToPlanPricingPrograms(inventory, plan);
+        }
+
+        private List<ProposalProgramDto> _GetInventory(PlanDto plan)
+        {
             var programs = _GetPrograms(plan);
             programs = _FilterProgramsByDaypart(plan, programs);
             _ApplyProjectedImpressions(programs, plan);
             _ApplyProvidedImpressions(programs, plan);
+            return programs;
+        }
 
-            var pricingModelInputDto = new PricingModelInputDto
+        public PlanPricingResultDto Run(PlanPricingRequestDto planPricingRequestDto)
+        {
+            var plan = _PlanRepository.GetPlan(planPricingRequestDto.PlanId);
+            var inventory = _GetInventory(plan);
+            var pricingMarkets = _MapToPlanPricingPrograms(plan);
+            var parameters = _GetPricingApiRequestParameters(planPricingRequestDto, plan, pricingMarkets);
+
+            var pricingApiRequest = new PlanPricingApiRequestDto
             {
                 Weeks = _GetPricingModelWeeks(plan),
-                Spots = _GetPricingModelSpots(programs)
+                Spots = _GetPricingModelSpots(inventory),
+                Parameters = parameters
             };
 
-            return _MapToPlanPricingPrograms(programs, plan);
+            var result = _PricingApiClient.GetPricingCalculationResult(pricingApiRequest);
+
+            _PlanRepository.SavePricingRequest(parameters);
+
+            return _MapToPlanPricingResultDto(pricingApiRequest, result);
+        }
+
+        private PlanPricingApiRequestParametersDto _GetPricingApiRequestParameters(PlanPricingRequestDto planPricingRequestDto, PlanDto plan, List<PlanPricingMarketDto> pricingMarkets)
+        {
+            var parameters = _MapToApiParametersRequest(planPricingRequestDto);
+
+            parameters.Markets = pricingMarkets;
+            parameters.CoverageGoalPercent = plan.CoverageGoalPercent ?? 0;
+
+            return parameters;
+        }
+
+        private List<PlanPricingMarketDto> _MapToPlanPricingPrograms(PlanDto plan)
+        {
+            var pricingMarkets = new List<PlanPricingMarketDto>();
+
+            foreach (var planMarket in plan.AvailableMarkets)
+            {
+                pricingMarkets.Add(new PlanPricingMarketDto
+                {
+                    MarketId = planMarket.Id,
+                    MarketName = planMarket.Market,
+                    MarketShareOfVoice = planMarket.ShareOfVoicePercent ?? 0,
+                });
+            }
+
+            return pricingMarkets;
+        }
+
+        private PlanPricingResultDto _MapToPlanPricingResultDto(PlanPricingApiRequestDto request, PlanPricingApiResponsetDto response)
+        {
+            return new PlanPricingResultDto
+            {
+                Weeks = request.Weeks,
+                Spots = request.Spots,
+                Parameters = request.Parameters,
+                Response = response
+            };
+        }
+
+        private PlanPricingApiRequestParametersDto _MapToApiParametersRequest(PlanPricingRequestDto planPricingRequestDto)
+        {
+            var parameters = new PlanPricingApiRequestParametersDto
+            {
+                PlanId = planPricingRequestDto.PlanId,
+                MinCpm = planPricingRequestDto.MinCpm,
+                MaxCpm = planPricingRequestDto.MaxCpm,
+                ImpressionsGoal = planPricingRequestDto.ImpressionsGoal,
+                BudgetGoal = planPricingRequestDto.BudgetGoal,
+                ProprietaryBlend = planPricingRequestDto.ProprietaryBlend,
+                CpmGoal = planPricingRequestDto.CpmGoal,
+                CompetitionFactor = planPricingRequestDto.CompetitionFactor,
+                InflationFactor = planPricingRequestDto.InflationFactor,
+                UnitCaps = planPricingRequestDto.UnitCaps,
+                UnitCapType = planPricingRequestDto.UnitCapType
+            };
+
+            return parameters;
+        }
+
+        public List<PlanPricingApiRequestParametersDto> GetPlanPricingRuns(int planId)
+        {
+            return _PlanRepository.GetPlanPricingRuns(planId);
         }
 
         private List<PlanPricingProgramDto> _MapToPlanPricingPrograms(List<ProposalProgramDto> programs, PlanDto plan)
@@ -95,7 +186,7 @@ namespace Services.Broadcast.ApplicationServices
                     DeliveryMultiplier = deliveryMultiplier.Value,
                     Station = program.Station,
                     Rate = program.SpotCost,
-                    PlanPricingMarket = new PlanPricingMarket
+                    PlanPricingMarket = new PlanPricingMarketDto
                     {
                         MarketId = program.Market.Id,
                         MarketName = program.Market.Display,

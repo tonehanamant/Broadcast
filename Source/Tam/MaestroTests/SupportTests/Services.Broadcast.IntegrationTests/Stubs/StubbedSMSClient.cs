@@ -1,58 +1,62 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
-using System.Linq;
-using System.Management.Automation;
-using System.Text;
-using System.Threading.Tasks;
-using ConfigurationService.Client;
+using System.Security.Principal;
+using Common.Systems.DataTransferObjects;
+using Tam.Maestro.Data.Entities;
+using Tam.Maestro.Data.Entities.DataTransferObjects;
+using Tam.Maestro.Services.Clients;
+using Tam.Maestro.Services.ContractInterfaces;
+using Tam.Maestro.Services.ContractInterfaces.Common;
 
-namespace Services.Broadcast.IntegrationTests.Stubbs
+
+namespace Services.Broadcast.IntegrationTests
 {
-    public class StubbedConfigurationWebApiClient : IConfigurationWebApiClient
+    public class StubbedSMSClient : ISMSClient
     {
-        public string TAMEnvironment => "Local";
-
-        public bool ClearSystemComponentParameterCache(string componentId, string parameterId)
+        public event GenericEvent<TAMService, string> UriChanged;
+        public event GenericEvent<TAMResource, string> ResourceChanged;
+        public string TamEnvironment { get; private set; }
+        public ServiceStatus GetStatus()
         {
-            throw new NotImplementedException();
+            throw new System.NotImplementedException();
         }
 
-        public bool ClearSystemComponentParameterCache()
+        public string GetUri<T>(TAMService tamService) where T : ITAMService
         {
-            throw new NotImplementedException();
+            throw new System.NotImplementedException();
+        }
+
+        public SmsDbConnectionInfo GetSmsDbConnectionInfo(string pTamResource)
+        {
+            throw new System.NotImplementedException();
         }
 
         public string GetResource(string pTamResource)
         {
-            // Note: The SMS Service and the Configuration API take slightly different strings as input
-            pTamResource = pTamResource == TAMResource.BroadcastConnectionString.ToString()
-                ? "broadcast"
-                : "broadcastforecast";
-
-            pTamResource = pTamResource.ToLower();
             //@todo, Temporary switch to check if the CI server is running the tests.
             if (System.Configuration.ConfigurationManager.AppSettings["Environment"] == "Development")
             {
-                if (pTamResource == "broadcast")
+                if (pTamResource == "BroadcastConnectionString")
                 {
                     return
                         @"Data Source=devsql.dev.crossmw.com\maestro2_dev;Initial Catalog=broadcast_integration;  Persist Security Info=True;user id=tamservice;pwd=KFqUjr+SjgugpL7h7yeJCg==; Asynchronous Processing=true";
                 }
-                else if (pTamResource == "broadcastforecast")
+                else if (pTamResource == "BroadcastForecastConnectionString")
                 {
                     return
                         @"Data Source=devsql.dev.crossmw.com\maestro2_dev;Initial Catalog=broadcast_forecast_integration;  Persist Security Info=True;user id=tamservice;pwd=KFqUjr+SjgugpL7h7yeJCg==; Asynchronous Processing=true";
                 }
             }
-            else if (System.Configuration.ConfigurationManager.AppSettings["Environment"] == "Staging")
+            else if(System.Configuration.ConfigurationManager.AppSettings["Environment"] == "Staging")
             {
-                if (pTamResource == "broadcast")
+                if (pTamResource == "BroadcastConnectionString")
                 {
                     return
                         @"Data Source=devsql.dev.crossmw.com\maestro2_dev;Initial Catalog=broadcast_integration_staging;  Persist Security Info=True;user id=tamservice;pwd=KFqUjr+SjgugpL7h7yeJCg==; Asynchronous Processing=true";
                 }
-                else if (pTamResource == "broadcastforecast")
+                else if (pTamResource == "BroadcastForecastConnectionString")
                 {
                     return
                         @"Data Source=devsql.dev.crossmw.com\maestro2_dev;Initial Catalog=broadcast_forecast_integration_staging;  Persist Security Info=True;user id=tamservice;pwd=KFqUjr+SjgugpL7h7yeJCg==; Asynchronous Processing=true";
@@ -60,12 +64,12 @@ namespace Services.Broadcast.IntegrationTests.Stubbs
             }
             else if (System.Configuration.ConfigurationManager.AppSettings["Environment"] == "Release")
             {
-                if (pTamResource == "broadcast")
+                if (pTamResource == "BroadcastConnectionString")
                 {
                     return
                         @"Data Source=devsql.dev.crossmw.com\maestro2_dev;Initial Catalog=broadcast_integration_codefreeze;  Persist Security Info=True;user id=tamservice;pwd=KFqUjr+SjgugpL7h7yeJCg==; Asynchronous Processing=true";
                 }
-                else if (pTamResource == "broadcastforecast")
+                else if (pTamResource == "BroadcastForecastConnectionString")
                 {
                     return
                         @"Data Source=devsql.dev.crossmw.com\maestro2_dev;Initial Catalog=broadcast_forecast_integration_codefreeze;  Persist Security Info=True;user id=tamservice;pwd=KFqUjr+SjgugpL7h7yeJCg==; Asynchronous Processing=true";
@@ -73,12 +77,12 @@ namespace Services.Broadcast.IntegrationTests.Stubbs
             }
             else if (System.Configuration.ConfigurationManager.AppSettings["Environment"] == "Release_CodeFreeze")
             {
-                if (pTamResource == "broadcast")
+                if (pTamResource == "BroadcastConnectionString")
                 {
                     return
                         @"Data Source=devsql.dev.crossmw.com\maestro2_dev;Initial Catalog=broadcast_integration_codefreeze_staging;  Persist Security Info=True;user id=tamservice;pwd=KFqUjr+SjgugpL7h7yeJCg==; Asynchronous Processing=true";
                 }
-                else if (pTamResource == "broadcastforecast")
+                else if (pTamResource == "BroadcastForecastConnectionString")
                 {
                     return
                         @"Data Source=devsql.dev.crossmw.com\maestro2_dev;Initial Catalog=broadcast_forecast_integration_codefreeze_staging;  Persist Security Info=True;user id=tamservice;pwd=KFqUjr+SjgugpL7h7yeJCg==; Asynchronous Processing=true";
@@ -88,15 +92,10 @@ namespace Services.Broadcast.IntegrationTests.Stubbs
             throw new Exception("Un-coded resource: " + pTamResource);
         }
 
-        public ConfigurationService.Interfaces.Dtos.SystemComponentParameter GetSystemComponentParameter(string componentId, string parameterId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GetSystemComponentParameterValue(string componentId, string parameterId)
+        public string GetSystemComponentParameterValue(string pSystemComponentID, string pSystemParameterID)
         {
             string result = string.Empty;
-            switch (parameterId)
+            switch (pSystemParameterID)
             {
                 case "BroadcastMatchingBuffer":
                     result = "120";
@@ -125,7 +124,7 @@ namespace Services.Broadcast.IntegrationTests.Stubbs
                 case "WWTV_FtpInboundFolder":
                     result = @"OutPost";
                     break;
-                case "EmailHost":
+                case "EmailHost": 
                     result = "smtp.office365.com";
                     break;
                 case "EmailFrom":
@@ -156,8 +155,8 @@ namespace Services.Broadcast.IntegrationTests.Stubbs
                     result = "password";
                     break;
                 case "DefaultNtiConversionFactor":
-                    result = "0.2";
-                    break;
+                   result = "0.2";
+                   break;   
                 case "WWTV_SharedFolder":
                     result = "C:\\WWTV\\WWTVData";
                     break;
@@ -192,7 +191,7 @@ namespace Services.Broadcast.IntegrationTests.Stubbs
                     result = @"18000";
                     break;
                 case "DataLake_SharedFolder":
-                    result = Path.GetTempPath();
+                    result =  Path.GetTempPath();
                     break;
                 case "DataLake_SharedFolder_UserName":
                     result = string.Empty;
@@ -218,23 +217,107 @@ namespace Services.Broadcast.IntegrationTests.Stubbs
                 case "InventorySummaryCacheAbsoluteExpirationSeconds":
                     result = "600";
                     break;
-                case "EnableCampaignsLocking":
-                    result = "True";
-                    break;
                 default:
-                    throw new Exception("Unknown SystemComponentParameter: " + parameterId);
+                    throw new Exception("Unknown SystemComponentParameter: " + pSystemParameterID);
             }
             return result;
         }
 
-        public void SaveSystemComponentParameters(List<ConfigurationService.Interfaces.Dtos.SystemComponentParameter> paramList)
+        public bool ClearSystemComponentParameterCache(string pSystemComponentID, string pSystemParameterID)
         {
-            throw new NotImplementedException();
+            throw new System.NotImplementedException();
         }
 
-        public List<ConfigurationService.Interfaces.Dtos.SystemComponentParameter> SearchSystemComponentParameters(string componentId, string parameterId)
+        public bool ValidateEnvironment()
         {
-            throw new NotImplementedException();
+            throw new System.NotImplementedException();
+        }
+
+        public TAMResult IsLocked(IBusinessEntity[] pEntities)
+        {
+            return new TAMResult()
+            {
+                MultipleResult = new object[] {false}
+            };
+        }
+
+        public TAMResult LockEntity(IBusinessEntity[] pEntities)
+        {
+            return new TAMResult()
+            {
+                SingleResult = true
+            };
+        }
+
+        public void ReleaseEntity(IBusinessEntity[] pEntities)
+        {
+        }
+
+        public MaestroImage GetLogoImage(CMWImageEnums logoType)
+        {
+            var image = System.Drawing.Image.FromFile(".\\Penny_test.jpg");
+            using (var ms = new MemoryStream())
+            {
+                image.Save(ms, image.RawFormat);
+
+                return new MaestroImage()
+                {
+                    ImageData = ms.ToArray()
+                };
+            }
+        }
+
+        public LockResponse LockObject(string key, string userId)
+        {
+            return new LockResponse
+            {
+                Success = true
+            };
+        }
+
+        public ReleaseLockResponse ReleaseObject(string key, string userId)
+        {
+            return null;
+        }
+
+        public bool IsObjectLocked(string key, string userId)
+        {
+            return false;
+        }
+
+        public List<LookupDto> GetActiveAdvertisers()
+        {
+            return new List<LookupDto>
+            {
+                new LookupDto(1, "Test Advertiser 1"),
+                new LookupDto(2, "Test Advertiser 2"),
+                new LookupDto(3, "Test Advertiser 3"),
+                new LookupDto(4, "Test Advertiser 4"),
+                new LookupDto(37444, "Leagas Delaney"),
+                new LookupDto(37674, "1 Vision"),
+            };
+        }
+
+        public List<LookupDto> FindAdvertisersByIds(List<int> advertiserIds)
+        {
+            var lookups = new List<LookupDto>();
+            int ctr = 5;
+            foreach (var advertiserId in advertiserIds)
+            {
+                lookups.Add(new LookupDto(ctr,"Test Advertiser " + ctr));
+                ctr++;
+            }
+            return lookups;
+        }
+
+        public LookupDto FindAdvertiserById(int advertiserId)
+        {
+            if (advertiserId == 0)
+            {
+                throw new Exception("Cannot find advertiser");
+            }
+
+            return new LookupDto(9, "Test Advertiser 9");
         }
     }
 }

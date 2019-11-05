@@ -1,18 +1,16 @@
 ﻿using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Services.Broadcast.Entities.PlanPricing
+namespace Services.Broadcast.Entities.Plan.Pricing
 {
-    public class PricingModelInputDto
+    public class PlanPricingApiRequestDto
     {
         [JsonProperty("contract")]
         public List<PricingModelWeekInputDto> Weeks { get; set; } = new List<PricingModelWeekInputDto>();
         [JsonProperty("inventory")]
         public List<PricingModelSpotsDto> Spots { get; set; } = new List<PricingModelSpotsDto>();
+        [JsonProperty("params")]
+        public PlanPricingApiRequestParametersDto Parameters { get; set; }
     }
 
     public class PricingModelSpotsDto

@@ -493,6 +493,12 @@
     <Compile Include="plan.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="plan_pricing_executions.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="plan_pricing_execution_markets.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="plan_versions.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>

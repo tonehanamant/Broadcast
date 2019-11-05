@@ -34,9 +34,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         public AffPPServiceIntegrationTests()
         {
-            IntegrationTestApplicationServiceFactory.Instance.RegisterType<IEmailerService, EmailerServiceStubb>();
-            IntegrationTestApplicationServiceFactory.Instance.RegisterType<IFtpService, FtpServiceStubb_Empty>();
-            IntegrationTestApplicationServiceFactory.Instance.RegisterType<IImpersonateUser, ImpersonateUserStubb>();
+            IntegrationTestApplicationServiceFactory.Instance.RegisterType<IEmailerService, EmailerServiceStub>();
+            IntegrationTestApplicationServiceFactory.Instance.RegisterType<IFtpService, FtpServiceStub_Empty>();
+            IntegrationTestApplicationServiceFactory.Instance.RegisterType<IImpersonateUser, ImpersonateUserStub>();
 
             _AudiencesCache = IntegrationTestApplicationServiceFactory.Instance.Resolve<IBroadcastAudiencesCache>();
             _AffidavitPostProcessingService = IntegrationTestApplicationServiceFactory.GetApplicationService<IAffidavitPostProcessingService>();
@@ -244,10 +244,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (var trans = new TransactionScopeWrapper())
             {
-                IntegrationTestApplicationServiceFactory.Instance.RegisterType<IEmailerService, EmailerServiceStubb>();
-                IntegrationTestApplicationServiceFactory.Instance.RegisterType<IFtpService, FtpServiceStubb_Empty>();
+                IntegrationTestApplicationServiceFactory.Instance.RegisterType<IEmailerService, EmailerServiceStub>();
+                IntegrationTestApplicationServiceFactory.Instance.RegisterType<IFtpService, FtpServiceStub_Empty>();
                 IntegrationTestApplicationServiceFactory.Instance
-                    .RegisterType<IImpersonateUser, ImpersonateUserStubb>();
+                    .RegisterType<IImpersonateUser, ImpersonateUserStub>();
 
                 var srv = IntegrationTestApplicationServiceFactory
                     .GetApplicationService<IAffidavitPostProcessingService>();
@@ -272,16 +272,16 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (var trans = new TransactionScopeWrapper())
             {
-                IntegrationTestApplicationServiceFactory.Instance.RegisterType<IEmailerService, EmailerServiceStubb>();
+                IntegrationTestApplicationServiceFactory.Instance.RegisterType<IEmailerService, EmailerServiceStub>();
                 IntegrationTestApplicationServiceFactory.Instance
-                    .RegisterInstance<IFtpService>(new FtpServiceStubb_SingleFile());
+                    .RegisterInstance<IFtpService>(new FtpServiceStub_SingleFile());
                 IntegrationTestApplicationServiceFactory.Instance
-                    .RegisterType<IImpersonateUser, ImpersonateUserStubb>();
+                    .RegisterType<IImpersonateUser, ImpersonateUserStub>();
 
                 var srv = IntegrationTestApplicationServiceFactory
                     .GetApplicationService<IAffidavitPostProcessingService>();
 
-                EmailerServiceStubb.LastMailMessageGenerated = null;
+                EmailerServiceStub.LastMailMessageGenerated = null;
                 srv.DownloadAndProcessWWTVFiles("WWTV Service", new DateTime(2019, 3, 31));
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
@@ -292,9 +292,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     ContractResolver = jsonResolver
                 };
                 // remove stack trace gobble-de-gook
-                var body = EmailerServiceStubb.LastMailMessageGenerated.Body;
-                EmailerServiceStubb.LastMailMessageGenerated.Body = body.Substring(0,body.IndexOf("It cannot be read in its current state"));
-                var json = IntegrationTestHelper.ConvertToJson(EmailerServiceStubb.LastMailMessageGenerated, jsonSettings);
+                var body = EmailerServiceStub.LastMailMessageGenerated.Body;
+                EmailerServiceStub.LastMailMessageGenerated.Body = body.Substring(0,body.IndexOf("It cannot be read in its current state"));
+                var json = IntegrationTestHelper.ConvertToJson(EmailerServiceStub.LastMailMessageGenerated, jsonSettings);
                 Approvals.Verify(json);
             }
         }
@@ -305,16 +305,16 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (var trans = new TransactionScopeWrapper())
             {
-                IntegrationTestApplicationServiceFactory.Instance.RegisterType<IEmailerService, EmailerServiceStubb>();
+                IntegrationTestApplicationServiceFactory.Instance.RegisterType<IEmailerService, EmailerServiceStub>();
                 IntegrationTestApplicationServiceFactory.Instance
-                    .RegisterType<IFtpService, DownloadAndProcessWWTVFiles_Validation_Errors_Stubb>();
+                    .RegisterType<IFtpService, DownloadAndProcessWWTVFiles_Validation_Errors_Stub>();
                 IntegrationTestApplicationServiceFactory.Instance
-                    .RegisterType<IImpersonateUser, ImpersonateUserStubb>();
+                    .RegisterType<IImpersonateUser, ImpersonateUserStub>();
 
                 var srv = IntegrationTestApplicationServiceFactory
                     .GetApplicationService<IAffidavitPostProcessingService>();
 
-                EmailerServiceStubb.LastMailMessageGenerated = null;
+                EmailerServiceStub.LastMailMessageGenerated = null;
                 srv.DownloadAndProcessWWTVFiles("WWTV Service", new DateTime(2019, 3, 31));
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
@@ -324,7 +324,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                     ContractResolver = jsonResolver
                 };
-                var json = IntegrationTestHelper.ConvertToJson(EmailerServiceStubb.LastMailMessageGenerated, jsonSettings);
+                var json = IntegrationTestHelper.ConvertToJson(EmailerServiceStub.LastMailMessageGenerated, jsonSettings);
                 Approvals.Verify(json);
             }
         }
@@ -335,19 +335,19 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (var trans = new TransactionScopeWrapper())
             {
-                IntegrationTestApplicationServiceFactory.Instance.RegisterType<IEmailerService, EmailerServiceStubb>();
+                IntegrationTestApplicationServiceFactory.Instance.RegisterType<IEmailerService, EmailerServiceStub>();
                 IntegrationTestApplicationServiceFactory.Instance
-                    .RegisterType<IFtpService, DownloadAndProcessWWTVFiles_ValidFile_Stubb>();
+                    .RegisterType<IFtpService, DownloadAndProcessWWTVFiles_ValidFile_Stub>();
                 IntegrationTestApplicationServiceFactory.Instance
-                    .RegisterType<IImpersonateUser, ImpersonateUserStubb>();
+                    .RegisterType<IImpersonateUser, ImpersonateUserStub>();
 
                 var srv = IntegrationTestApplicationServiceFactory
                     .GetApplicationService<IAffidavitPostProcessingService>();
 
-                EmailerServiceStubb.LastMailMessageGenerated = null;
+                EmailerServiceStub.LastMailMessageGenerated = null;
                 var response = srv.DownloadAndProcessWWTVFiles("WWTV Service", new DateTime(2019, 3, 31));
 
-                Assert.IsNull(EmailerServiceStubb.LastMailMessageGenerated);
+                Assert.IsNull(EmailerServiceStub.LastMailMessageGenerated);
                 Assert.IsEmpty(response.FailedDownloads);
                 Assert.IsEmpty(response.ValidationErrors);
                 Assert.IsTrue(response.FilesFoundToProcess.Count() == 1,"Expecting only one file found for processing");
@@ -362,10 +362,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (var trans = new TransactionScopeWrapper())
             {
-                IntegrationTestApplicationServiceFactory.Instance.RegisterType<IEmailerService, EmailerServiceStubb>();
+                IntegrationTestApplicationServiceFactory.Instance.RegisterType<IEmailerService, EmailerServiceStub>();
                 IntegrationTestApplicationServiceFactory.Instance.RegisterType<IFtpService, FtpServiceStubb_KeepingTrac>();
                 IntegrationTestApplicationServiceFactory.Instance
-                    .RegisterType<IImpersonateUser, ImpersonateUserStubb>();
+                    .RegisterType<IImpersonateUser, ImpersonateUserStub>();
 
                 var srv = IntegrationTestApplicationServiceFactory
                     .GetApplicationService<IAffidavitPostProcessingService>();
@@ -390,10 +390,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (var trans = new TransactionScopeWrapper())
             {
-                IntegrationTestApplicationServiceFactory.Instance.RegisterType<IEmailerService, EmailerServiceStubb>();
+                IntegrationTestApplicationServiceFactory.Instance.RegisterType<IEmailerService, EmailerServiceStub>();
                 IntegrationTestApplicationServiceFactory.Instance.RegisterType<IFtpService, FtpServiceStubb_KeepingTrac_BadTime>();
                 IntegrationTestApplicationServiceFactory.Instance
-                    .RegisterType<IImpersonateUser, ImpersonateUserStubb>();
+                    .RegisterType<IImpersonateUser, ImpersonateUserStub>();
 
                 var srv = IntegrationTestApplicationServiceFactory
                     .GetApplicationService<IAffidavitPostProcessingService>();
@@ -418,9 +418,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         // use for manual testing and not automated running 
         public void Test_ProcessErrorFiles_Empty() //Errors returned from WWTV
         {
-            IntegrationTestApplicationServiceFactory.Instance.RegisterType<IEmailerService, EmailerServiceStubb>();
-            IntegrationTestApplicationServiceFactory.Instance.RegisterType<IFtpService, FtpServiceStubb_Empty>();
-            IntegrationTestApplicationServiceFactory.Instance.RegisterType<IImpersonateUser, ImpersonateUserStubb>();
+            IntegrationTestApplicationServiceFactory.Instance.RegisterType<IEmailerService, EmailerServiceStub>();
+            IntegrationTestApplicationServiceFactory.Instance.RegisterType<IFtpService, FtpServiceStub_Empty>();
+            IntegrationTestApplicationServiceFactory.Instance.RegisterType<IImpersonateUser, ImpersonateUserStub>();
 
             _AffidavitPostProcessingService.ProcessErrorFiles();
 
@@ -434,12 +434,12 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             };
             try
             {
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(EmailerServiceStubb.LastMailMessageGenerated,
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(EmailerServiceStub.LastMailMessageGenerated,
                     jsonSettings));
             }
             finally
             {
-                EmailerServiceStubb.ClearLastMessage();
+                EmailerServiceStub.ClearLastMessage();
             }
         }
         
@@ -448,9 +448,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         // use for manual testing and not automated running 
         public void Test_ProcessErrorFiles_SingleFile() //Errors returned from WWTV
         {
-            IntegrationTestApplicationServiceFactory.Instance.RegisterType<IEmailerService, EmailerServiceStubb>();
-            IntegrationTestApplicationServiceFactory.Instance.RegisterType<IFtpService, FtpServiceStubb_SingleFile>();
-            IntegrationTestApplicationServiceFactory.Instance.RegisterType<IImpersonateUser, ImpersonateUserStubb>();
+            IntegrationTestApplicationServiceFactory.Instance.RegisterType<IEmailerService, EmailerServiceStub>();
+            IntegrationTestApplicationServiceFactory.Instance.RegisterType<IFtpService, FtpServiceStub_SingleFile>();
+            IntegrationTestApplicationServiceFactory.Instance.RegisterType<IImpersonateUser, ImpersonateUserStub>();
             
             _AffidavitPostProcessingService.ProcessErrorFiles();
 
@@ -464,12 +464,12 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             };
             try
             {
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(EmailerServiceStubb.LastMailMessageGenerated,
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(EmailerServiceStub.LastMailMessageGenerated,
                     jsonSettings));
             }
             finally
             {
-                EmailerServiceStubb.ClearLastMessage();
+                EmailerServiceStub.ClearLastMessage();
             }
         }
 
@@ -509,8 +509,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var filename = "DLAndProcessWWTVFiles_DataLakeCopy.txt";
             using (var trans = new TransactionScopeWrapper())
             {
-                IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<IFtpService>(new FtpServiceStubb_SingleFile(filename));
-                IntegrationTestApplicationServiceFactory.Instance.RegisterType<IImpersonateUser, ImpersonateUserStubb>();
+                IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<IFtpService>(new FtpServiceStub_SingleFile(filename));
+                IntegrationTestApplicationServiceFactory.Instance.RegisterType<IImpersonateUser, ImpersonateUserStub>();
                 IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<IFileService>(new FileServiceDataLakeStubb());
 
                 var affidavitPostProcessingService = IntegrationTestApplicationServiceFactory.GetApplicationService<IAffidavitPostProcessingService>();

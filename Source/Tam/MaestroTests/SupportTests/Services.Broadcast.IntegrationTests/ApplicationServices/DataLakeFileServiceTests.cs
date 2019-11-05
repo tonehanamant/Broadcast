@@ -68,7 +68,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         public void ErrorEmailTest()
         {
             var impersonateUser = IntegrationTestApplicationServiceFactory.Instance.Resolve<IImpersonateUser>();
-            var emailService = new EmailerServiceStubb();
+            var emailService = new EmailerServiceStub();
             var fileService = new FileServiceSingleFileStubb();
             var dataLakeSystemParamteres = new Mock<IDataLakeSystemParameters>();
             dataLakeSystemParamteres.Setup(r => r.GetSharedFolder()).Returns("C:\\");
@@ -89,7 +89,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             dataLakeFileService.Save(request);
 
-            var response = EmailerServiceStubb.LastMailMessageGenerated;
+            var response = EmailerServiceStub.LastMailMessageGenerated;
             response.Body = response.Body.Substring(0, 60);
 
             var jsonResolver = new IgnorableSerializerContractResolver();

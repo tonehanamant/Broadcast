@@ -10,7 +10,7 @@ using System;
 using System.Collections.Generic;
 using Services.Broadcast.Entities.DTO;
 using Services.Broadcast.Entities.Enums;
-using Services.Broadcast.IntegrationTests.Stubbs;
+using Services.Broadcast.IntegrationTests.Stubs;
 using Common.Services.Repositories;
 using Services.Broadcast.Repositories;
 using Services.Broadcast.Helpers;

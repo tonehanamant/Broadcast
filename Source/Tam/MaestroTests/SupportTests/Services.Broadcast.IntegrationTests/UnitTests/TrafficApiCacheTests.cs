@@ -3,7 +3,7 @@ using ApprovalTests.Reporters;
 using IntegrationTests.Common;
 using NUnit.Framework;
 using Services.Broadcast.Cache;
-using Services.Broadcast.IntegrationTests.Stubbs;
+using Services.Broadcast.IntegrationTests.Stubs;
 using System;
 using Microsoft.Practices.Unity;
 using Services.Broadcast.Clients;

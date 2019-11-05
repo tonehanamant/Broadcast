@@ -10,7 +10,7 @@ using Tam.Maestro.Services.ContractInterfaces;
 
 namespace Services.Broadcast.IntegrationTests
 {
-    public class FtpServiceStubb_Empty : IFtpService
+    public class FtpServiceStub_Empty : IFtpService
     {
         public virtual NetworkCredential GetCredentials(string ftpUserName, string ftpPassword)
         {
@@ -42,15 +42,15 @@ namespace Services.Broadcast.IntegrationTests
 
     }
 
-    public class FtpServiceStubb_SingleFile : FtpServiceStubb_Empty
+    public class FtpServiceStub_SingleFile : FtpServiceStub_Empty
     {
         private readonly string _Filename;
-        public FtpServiceStubb_SingleFile() : base()
+        public FtpServiceStub_SingleFile() : base()
         {
             _Filename = "Special_Ftp_Phantom_File.txt";
         }
         
-        public FtpServiceStubb_SingleFile(string fileName): base()
+        public FtpServiceStub_SingleFile(string fileName): base()
         {
             _Filename = fileName;
         }
@@ -102,7 +102,7 @@ namespace Services.Broadcast.IntegrationTests
 
 
     #region some stubbs for specific tests
-    public class DownloadAndProcessWWTVFiles_Validation_Errors_Stubb : FtpServiceStubb_SingleFile
+    public class DownloadAndProcessWWTVFiles_Validation_Errors_Stub : FtpServiceStub_SingleFile
     {
         protected override string GetFileContents()
         {
@@ -135,7 +135,7 @@ namespace Services.Broadcast.IntegrationTests
     }
 
 
-    public class DownloadAndProcessWWTVFiles_ValidFile_Stubb : FtpServiceStubb_SingleFile
+    public class DownloadAndProcessWWTVFiles_ValidFile_Stub : FtpServiceStub_SingleFile
     {
         protected override string GetFileContents()
         {
@@ -168,7 +168,7 @@ namespace Services.Broadcast.IntegrationTests
         }
     }
 
-    public class FtpServiceStubb_KeepingTrac : FtpServiceStubb_SingleFile
+    public class FtpServiceStubb_KeepingTrac : FtpServiceStub_SingleFile
     {
         public string KeepingTracFile = "KeepingTracTest.xlsx.txt";
         public override List<string> GetFileList(NetworkCredential credentials, string remoteFTPPath)
@@ -185,7 +185,7 @@ namespace Services.Broadcast.IntegrationTests
 
     }
 
-    public class FtpServiceStubb_KeepingTrac_BadTime : FtpServiceStubb_SingleFile
+    public class FtpServiceStubb_KeepingTrac_BadTime : FtpServiceStub_SingleFile
     {
         public string KeepingTracFile = "KeepingTracTest.xlsx.BadTimes.txt";
         public override List<string> GetFileList(NetworkCredential credentials, string remoteFTPPath)

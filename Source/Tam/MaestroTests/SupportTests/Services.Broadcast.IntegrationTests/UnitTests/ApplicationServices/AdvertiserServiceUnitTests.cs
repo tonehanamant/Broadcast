@@ -8,7 +8,7 @@ using Services.Broadcast.Entities;
 using System;
 using System.Collections.Generic;
 using ApprovalTests;
-using Services.Broadcast.IntegrationTests.Stubbs;
+using Services.Broadcast.IntegrationTests.Stubs;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 {
