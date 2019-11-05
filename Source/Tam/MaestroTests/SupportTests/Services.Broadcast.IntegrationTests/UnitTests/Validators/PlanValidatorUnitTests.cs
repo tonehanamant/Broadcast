@@ -274,30 +274,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
         }
 
         [Test]
-        public void ValidatePlan_WithoutDaypartRestrictions()
-        {
-            _ConfigureSpotLenghtEngineMockToReturnTrue();
-
-            var plan = _GetPlan();
-            plan.Dayparts[0].Restrictions = null;
-
-            Assert.That(() => _planValidator.ValidatePlan(plan),
-                Throws.TypeOf<Exception>().With.Message.EqualTo("Restrictions object is required"));
-        }
-
-        [Test]
-        public void ValidatePlan_WithoutShowTypeDaypartRestrictions()
-        {
-            _ConfigureSpotLenghtEngineMockToReturnTrue();
-
-            var plan = _GetPlan();
-            plan.Dayparts[0].Restrictions.ShowTypeRestrictions = null;
-
-            Assert.That(() => _planValidator.ValidatePlan(plan),
-                Throws.TypeOf<Exception>().With.Message.EqualTo("Show type restrictions object is required"));
-        }
-
-        [Test]
         public void ValidatePlan_WithWrongShowTypeRestrictionsContainType()
         {
             _ConfigureSpotLenghtEngineMockToReturnTrue();

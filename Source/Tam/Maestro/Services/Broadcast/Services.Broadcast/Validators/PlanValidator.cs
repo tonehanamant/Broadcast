@@ -71,9 +71,7 @@ namespace Services.Broadcast.Validators
         const string INVALID_STATUS_TRANSITION_MESSAGE = "Invalid status, can't update a plan from status {0} to status {1}";
         const string INVALID_DRAFT_ON_NEW_PLAN = "Cannot create a new draft on a non existing plan";
         const string STOP_WORD = "eOm3wgvfm0dq4rI3srL2";
-
-        const string RESTRICTIONS_OBJECT_IS_REQUIRED = "Restrictions object is required";
-        const string SHOW_TYPE_RESTRICTIONS_OBJECT_IS_REQUIRED = "Show type restrictions object is required";
+        
         const string SHOW_TYPE_CONTAIN_TYPE_IS_NOT_VALID = "Contain type of the show types restrictions is not valid";
 
         public PlanValidator(ISpotLengthEngine spotLengthEngine
@@ -268,26 +266,22 @@ namespace Services.Broadcast.Validators
         {
             var restrictions = planDaypartDto.Restrictions;
 
-            if (restrictions == null)
+            if (restrictions != null)
             {
-                throw new Exception(RESTRICTIONS_OBJECT_IS_REQUIRED);
+                _ValidateShowTypeRestrictions(restrictions);
             }
-
-            _ValidateShowTypeRestrictions(restrictions);
         }
 
         private void _ValidateShowTypeRestrictions(PlanDaypartDto.RestrictionsDto restrictions)
         {
             var showTypeRestrictions = restrictions.ShowTypeRestrictions;
 
-            if (showTypeRestrictions == null)
+            if (showTypeRestrictions != null)
             {
-                throw new Exception(SHOW_TYPE_RESTRICTIONS_OBJECT_IS_REQUIRED);
-            }
-
-            if (!EnumHelper.IsDefined(showTypeRestrictions.ContainType))
-            {
-                throw new Exception(SHOW_TYPE_CONTAIN_TYPE_IS_NOT_VALID);
+                if (!EnumHelper.IsDefined(showTypeRestrictions.ContainType))
+                {
+                    throw new Exception(SHOW_TYPE_CONTAIN_TYPE_IS_NOT_VALID);
+                }
             }
         }
 

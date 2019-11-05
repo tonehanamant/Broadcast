@@ -444,8 +444,6 @@ namespace Services.Broadcast.Repositories
 
             foreach (var daypart in planDto.Dayparts)
             {
-                var showTypeRestrictions = daypart.Restrictions.ShowTypeRestrictions;
-
                 var newDaypart = new plan_version_dayparts
                 {
                     daypart_code_id = daypart.DaypartCodeId,
@@ -454,12 +452,14 @@ namespace Services.Broadcast.Repositories
                     is_start_time_modified = daypart.IsStartTimeModified,
                     end_time_seconds = daypart.EndTimeSeconds,
                     is_end_time_modified = daypart.IsEndTimeModified,
-                    weighting_goal_percent = daypart.WeightingGoalPercent,
-                    show_type_restrictions_contain_type = (int)showTypeRestrictions.ContainType
+                    weighting_goal_percent = daypart.WeightingGoalPercent
                 };
 
-                _HydrateShowTypeRestrictions(newDaypart, showTypeRestrictions);
-
+                if (daypart.Restrictions != null)
+                {
+                    _HydrateShowTypeRestrictions(newDaypart, daypart.Restrictions.ShowTypeRestrictions);
+                }
+                
                 entity.plan_version_dayparts.Add(newDaypart);
             }
         }
@@ -468,15 +468,20 @@ namespace Services.Broadcast.Repositories
             plan_version_dayparts daypart,
             PlanDaypartDto.RestrictionsDto.ShowTypeRestrictionsDto showTypeRestrictions)
         {
-            if (showTypeRestrictions.ShowTypes.IsEmpty())
+            if (showTypeRestrictions == null)
                 return;
 
-            foreach (var showTypeRestriction in showTypeRestrictions.ShowTypes)
+            daypart.show_type_restrictions_contain_type = (int)showTypeRestrictions.ContainType;
+
+            if (!showTypeRestrictions.ShowTypes.IsEmpty())
             {
-                daypart.plan_version_daypart_show_type_restrictions.Add(new plan_version_daypart_show_type_restrictions
+                foreach (var showTypeRestriction in showTypeRestrictions.ShowTypes)
                 {
-                    show_type_id = showTypeRestriction.Id
-                });
+                    daypart.plan_version_daypart_show_type_restrictions.Add(new plan_version_daypart_show_type_restrictions
+                    {
+                        show_type_id = showTypeRestriction.Id
+                    });
+                }
             }
         }
 

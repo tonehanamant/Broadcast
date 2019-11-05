@@ -383,6 +383,42 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        public void SavePlanWithDayparts_WithoutRestrictions()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                PlanDto newPlan = _GetNewPlan();
+
+                newPlan.Dayparts.First().Restrictions = null;
+
+                var planId = _PlanService.SavePlan(newPlan, "integration_test", new DateTime(2019, 01, 15));
+                PlanDto finalPlan = _PlanService.GetPlan(planId);
+
+                Assert.AreEqual(3, finalPlan.Dayparts.Count);
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(finalPlan, _GetJsonSettings()));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void SavePlanWithDayparts_WithoutShowTypeRestrictions()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                PlanDto newPlan = _GetNewPlan();
+
+                newPlan.Dayparts.First().Restrictions.ShowTypeRestrictions = null;
+
+                var planId = _PlanService.SavePlan(newPlan, "integration_test", new DateTime(2019, 01, 15));
+                PlanDto finalPlan = _PlanService.GetPlan(planId);
+
+                Assert.AreEqual(3, finalPlan.Dayparts.Count);
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(finalPlan, _GetJsonSettings()));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
         public void SavePlanAddDaypart()
         {
             using (new TransactionScopeWrapper())
