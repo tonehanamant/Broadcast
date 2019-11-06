@@ -86,6 +86,13 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// </summary>
         /// <returns></returns>
         PlanDefaultsDto GetPlanDefaults();
+
+        /// <summary>
+        /// Locks the plan.
+        /// </summary>
+        /// <param name="planId">The plan identifier.</param>
+        /// <returns></returns>
+        PlanLockResponse LockPlan(int planId);
     }
 
     public class PlanService : IPlanService
@@ -101,6 +108,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private readonly INsiUniverseService _NsiUniverseService;
         private readonly IBroadcastAudiencesCache _BroadcastAudiencesCache;
         private readonly ISpotLengthEngine _SpotLengthEngine;
+        private readonly ILockingManagerApplicationService _LockingManagerApplicationService;
 
         private const string _DaypartCodeNotFoundMessage = "Unable to find daypart code";
 
@@ -112,7 +120,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
             , ICampaignAggregationJobTrigger campaignAggregationJobTrigger
             , INsiUniverseService nsiUniverseService
             , IBroadcastAudiencesCache broadcastAudiencesCache
-            , ISpotLengthEngine spotLengthEngine)
+            , ISpotLengthEngine spotLengthEngine
+            , ILockingManagerApplicationService lockingManagerApplicationService)
         {
             _MediaWeekCache = mediaMonthAndWeekAggregateCache;
             _PlanValidator = planValidator;
@@ -126,6 +135,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _NsiUniverseService = nsiUniverseService;
             _BroadcastAudiencesCache = broadcastAudiencesCache;
             _SpotLengthEngine = spotLengthEngine;
+            _LockingManagerApplicationService = lockingManagerApplicationService;
         }
 
         ///<inheritdoc/>
@@ -152,16 +162,26 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
             else
             {
-                if (plan.IsDraft == true)
+                var key = KeyHelper.GetPlanLockingKey(plan.Id);
+                var lockingResult = _LockingManagerApplicationService.LockObject(key);
+
+                if (lockingResult.Success)
                 {
-                    //this is a draft. we create it if none exist or we update it otherwise
-                    _PlanRepository.CreateOrUpdateDraft(plan, createdBy, createdDate);
+                    if (plan.IsDraft == true)
+                    {
+                        //this is a draft. we create it if none exist or we update it otherwise
+                        _PlanRepository.CreateOrUpdateDraft(plan, createdBy, createdDate);
+                    }
+                    else
+                    {
+                        //this is a new version.
+                        _PlanRepository.SavePlan(plan, createdBy, createdDate);
+                    }
                 }
                 else
                 {
-                    //this is a new version.
-                    _PlanRepository.SavePlan(plan, createdBy, createdDate);
-                }                
+                    throw new Exception($"The chosen plan has been locked by {lockingResult.LockedUserName}");
+                }
             }
 
             //we only aggregate data for versions, not drafts
@@ -578,6 +598,24 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 planAudience.CPP = planDeliveryBudget.CPP;
                 planAudience.Universe = planDeliveryBudget.Universe.Value;
             });
+        }
+
+        public PlanLockResponse LockPlan(int planId)
+        {
+            var key = KeyHelper.GetPlanLockingKey(planId);
+            var lockingResponse = _LockingManagerApplicationService.LockObject(key);
+            var planName = _PlanRepository.GetPlanNameById(planId);
+
+            return new PlanLockResponse
+            {
+                Key = lockingResponse.Key,
+                Success = lockingResponse.Success,
+                LockTimeoutInSeconds = lockingResponse.LockTimeoutInSeconds,
+                LockedUserId = lockingResponse.LockedUserId,
+                LockedUserName = lockingResponse.LockedUserName,
+                Error = lockingResponse.Error,
+                PlanName = planName
+            };
         }
     }
 }

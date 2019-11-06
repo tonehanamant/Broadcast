@@ -1,4 +1,5 @@
-﻿using Common.Services.Repositories;
+﻿using Common.Services.ApplicationServices;
+using Common.Services.Repositories;
 using Microsoft.Practices.Unity;
 using Moq;
 using NUnit.Framework;
@@ -14,6 +15,7 @@ using Services.Broadcast.Validators;
 using System;
 using System.Collections.Generic;
 using System.Threading;
+using Tam.Maestro.Services.ContractInterfaces;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plans
 {
@@ -33,11 +35,17 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var nsiUniverseService = new Mock<INsiUniverseService>();
             var broadcastAudienceCacheMock = new Mock<IBroadcastAudiencesCache>();
             var spotLengthEngine = new Mock<ISpotLengthEngine>();
+            var lockingManagerApplicationServiceMock = new Mock<ILockingManagerApplicationService>();
+            lockingManagerApplicationServiceMock.Setup(x => x.LockObject(It.IsAny<string>())).Returns(new LockResponse
+            {
+                Success = true,
+                LockedUserName = "IntegrationUser"
+            });
 
             var tc = new PlanService(broadcastDataRepositoryFactory.Object, planValidator.Object,
                 planBudgetDeliveryCalculator.Object, mediaMonthAndWeekAggregateCache.Object, planAggregator.Object,
                 IntegrationTestApplicationServiceFactory.Instance.Resolve<ICampaignAggregationJobTrigger>(),
-                nsiUniverseService.Object, broadcastAudienceCacheMock.Object, spotLengthEngine.Object);
+                nsiUniverseService.Object, broadcastAudienceCacheMock.Object, spotLengthEngine.Object, lockingManagerApplicationServiceMock.Object);
 
             Assert.IsNotNull(tc);
         }
@@ -100,9 +108,17 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var broadcastAudienceCacheMock = new Mock<IBroadcastAudiencesCache>();
             broadcastAudienceCacheMock.Setup(a => a.GetDefaultAudience()).Returns(new Entities.BroadcastAudience());
 
+            var lockingManagerApplicationServiceMock = new Mock<ILockingManagerApplicationService>();
+            lockingManagerApplicationServiceMock.Setup(x => x.LockObject(It.IsAny<string>())).Returns(new LockResponse
+            {
+                Success = true,
+                LockedUserName = "IntegrationUser"
+            });
+
             var tc = new PlanService(broadcastDataRepositoryFactory.Object, planValidator.Object,
                 planBudgetDeliveryCalculator.Object, mediaMonthAndWeekAggregateCache.Object, planAggregator.Object,
-                campaignAggJobTrigger.Object, nsiUniverseService.Object, broadcastAudienceCacheMock.Object, spotLengthEngine.Object);
+                campaignAggJobTrigger.Object, nsiUniverseService.Object, broadcastAudienceCacheMock.Object, spotLengthEngine.Object,
+                lockingManagerApplicationServiceMock.Object);
 
             var plan = _GetNewPlan();
             var campaignId = plan.CampaignId;
@@ -189,9 +205,17 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var broadcastAudienceCacheMock = new Mock<IBroadcastAudiencesCache>();
             broadcastAudienceCacheMock.Setup(a => a.GetDefaultAudience()).Returns(new BroadcastAudience());
 
+            var lockingManagerApplicationServiceMock = new Mock<ILockingManagerApplicationService>();
+            lockingManagerApplicationServiceMock.Setup(x => x.LockObject(It.IsAny<string>())).Returns(new LockResponse
+            {
+                Success = false,
+                LockedUserName = "IntegrationUser"
+            });
+
             var tc = new PlanService(broadcastDataRepositoryFactory.Object, planValidator.Object,
                 planBudgetDeliveryCalculator.Object, mediaMonthAndWeekAggregateCache.Object, planAggregator.Object,
-                campaignAggJobTrigger.Object, nsiUniverseService.Object, broadcastAudienceCacheMock.Object, spotLengthEngine.Object);
+                campaignAggJobTrigger.Object, nsiUniverseService.Object, broadcastAudienceCacheMock.Object, spotLengthEngine.Object,
+                lockingManagerApplicationServiceMock.Object);
             var plan = _GetNewPlan();
             var campaignId = plan.CampaignId;
             var modifiedWho = "ModificationUser";
@@ -219,6 +243,88 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         }
 
         #endregion // #region Dispatch Aggregation
+
+        #region Plan Locking
+
+        [Test]
+        public void CanNotUpdateLockedPlan()
+        {
+            const string expectedMessage = "The chosen plan has been locked by IntegrationUser";
+
+            var broadcastDataRepositoryFactory = new Mock<IDataRepositoryFactory>();
+            var planValidator = new Mock<IPlanValidator>();
+            var planBudgetDeliveryCalculator = new Mock<IPlanBudgetDeliveryCalculator>();
+            var daypartCodeRepository = new Mock<IDaypartCodeRepository>();
+            var planRepository = new Mock<IPlanRepository>();
+            var mediaMonthAndWeekAggregateCache = new Mock<IMediaMonthAndWeekAggregateCache>();
+            var audiencesCache = new Mock<IBroadcastAudiencesCache>();
+            var spotLengthEngine = new Mock<ISpotLengthEngine>();
+
+            var saveNewPlanCalls = new List<DateTime>();
+            planBudgetDeliveryCalculator.Setup(s => s.CalculateBudget(It.IsAny<PlanDeliveryBudget>()))
+                .Returns(new PlanDeliveryBudget
+                {
+                    AudienceId = 31,
+                    Budget = 100.0M,
+                    CPM = 0.0333333333333333333333333333M,
+                    CPP = 37381.32000000000388347057216M,
+                    DeliveryImpressions = 3000.0,
+                    DeliveryRatingPoints = 0.0026751329273551603,
+                    MediaMonthId = 437,
+                    Universe = 112143960.0
+                });
+            planRepository.Setup(s => s.SaveNewPlan(It.IsAny<PlanDto>(), It.IsAny<string>(), It.IsAny<DateTime>()))
+                .Callback(() => saveNewPlanCalls.Add(DateTime.Now));
+            broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IPlanRepository>())
+                .Returns(planRepository.Object);
+            daypartCodeRepository.Setup(s => s.GetDaypartCodeDefaults()).Returns(_GetDaypartCodeDefaults());
+            broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IDaypartCodeRepository>())
+                .Returns(daypartCodeRepository.Object);
+            var planSummaryRepo = new Mock<IPlanSummaryRepository>();
+            var setStatusCalls = new List<Tuple<int, PlanAggregationProcessingStatusEnum, DateTime>>();
+            planSummaryRepo.Setup(s =>
+                    s.SetProcessingStatusForPlanSummary(It.IsAny<int>(), It.IsAny<PlanAggregationProcessingStatusEnum>()))
+                .Callback<int, PlanAggregationProcessingStatusEnum>((i, s) => setStatusCalls.Add(new Tuple<int, PlanAggregationProcessingStatusEnum, DateTime>(i, s, DateTime.Now)));
+            var saveSummaryCalls = new List<Tuple<int, PlanSummaryDto, DateTime>>();
+            planSummaryRepo.Setup(s => s.SaveSummary(It.IsAny<PlanSummaryDto>()))
+                .Callback<PlanSummaryDto>((s) => saveSummaryCalls.Add(new Tuple<int, PlanSummaryDto, DateTime>(Thread.CurrentThread.ManagedThreadId, s, DateTime.Now)));
+            broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IPlanSummaryRepository>())
+                .Returns(planSummaryRepo.Object);
+            var planAggregator = new Mock<IPlanAggregator>();
+            var aggregateCallCount = 0;
+            var aggregateReturn = new PlanSummaryDto();
+            planAggregator.Setup(s => s.Aggregate(It.IsAny<PlanDto>()))
+                .Callback(() => aggregateCallCount++)
+                .Returns(aggregateReturn);
+            var campaignAggJobTrigger = new Mock<ICampaignAggregationJobTrigger>();
+            var nsiUniverseService = new Mock<INsiUniverseService>();
+            nsiUniverseService.Setup(n => n.GetAudienceUniverseForMediaMonth(It.IsAny<int>(), It.IsAny<int>())).Returns(1000000);
+            var broadcastAudienceCacheMock = new Mock<IBroadcastAudiencesCache>();
+            broadcastAudienceCacheMock.Setup(a => a.GetDefaultAudience()).Returns(new Entities.BroadcastAudience());
+
+            var lockingManagerApplicationServiceMock = new Mock<ILockingManagerApplicationService>();
+            lockingManagerApplicationServiceMock.Setup(x => x.LockObject(It.IsAny<string>())).Returns(new LockResponse
+            {
+                Success = false,
+                LockedUserName = "IntegrationUser"
+            });
+
+            var service = new PlanService(broadcastDataRepositoryFactory.Object, planValidator.Object,
+                planBudgetDeliveryCalculator.Object, mediaMonthAndWeekAggregateCache.Object, planAggregator.Object,
+                campaignAggJobTrigger.Object, nsiUniverseService.Object, broadcastAudienceCacheMock.Object, spotLengthEngine.Object,
+                lockingManagerApplicationServiceMock.Object);
+
+
+            PlanDto plan = _GetNewPlan();
+            plan.Id = 1;
+            plan.VersionId = 1;
+
+            var exception = Assert.Throws<Exception>(() => service.SavePlan(plan, "IntegrationUser", new DateTime(2019, 10, 23)));
+
+            Assert.AreEqual(expectedMessage, exception.Message);
+        }
+
+        #endregion
 
         #region Helpers
 

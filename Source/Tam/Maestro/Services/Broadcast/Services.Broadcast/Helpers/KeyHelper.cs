@@ -16,5 +16,10 @@
         {
             return $"broadcast_station : {stationId}";
         }
+
+        public static string GetPlanLockingKey(int planId)
+        {
+            return $"broadcast_plan : {planId}";
+        }
     }
 }

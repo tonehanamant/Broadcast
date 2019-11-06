@@ -351,6 +351,7 @@
     <Compile Include="Entities\Plan\Pricing\PlanPricingApiResultDto.cs" />
     <Compile Include="Entities\Plan\Pricing\PlanPricingRequestDto.cs" />
     <Compile Include="Entities\Plan\Pricing\PlanPricingResultDto.cs" />
+    <Compile Include="Entities\Plan\PlanLockResponse.cs" />
     <Compile Include="Entities\ProgramGuide\GuideRequestDaypartDto.cs" />
     <Compile Include="Entities\ProgramGuide\GuideRequestElementDto.cs" />
     <Compile Include="Entities\ProgramGuide\GuideResponseElementDto.cs" />

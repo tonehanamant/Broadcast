@@ -74,6 +74,13 @@ namespace Services.Broadcast.Repositories
         void SavePricingRequest(PlanPricingApiRequestParametersDto planPricingRunModel);
 
         List<PlanPricingApiRequestParametersDto> GetPlanPricingRuns(int planId);
+
+        /// <summary>
+        /// Gets the plan name by identifier.
+        /// </summary>
+        /// <param name="planId">The plan identifier.</param>
+        /// <returns>The name of the plan</returns>
+        string GetPlanNameById(int planId);
     }
 
     public class PlanRepository : BroadcastRepositoryBase, IPlanRepository
@@ -202,6 +209,19 @@ namespace Services.Broadcast.Repositories
                         .Single(s => s.id == planId, "Invalid plan id.");
                     return _MapToDto(entity, markets, versionId);
                 });
+        }
+
+        /// <inheritdoc />
+        public string GetPlanNameById(int planId)
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                var planName = (from plan in context.plans
+                              where plan.id == planId
+                              select plan.name)
+                            .Single("Invalid plan id.");
+                return planName;
+            });
         }
 
         public int CheckIfDraftExists(int planId)

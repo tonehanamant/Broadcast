@@ -1,12 +1,17 @@
-﻿using Common.Services.WebComponents;
+﻿using Common.Services.ApplicationServices;
+using Common.Services.WebComponents;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.ApplicationServices.Plan;
 using Services.Broadcast.Entities.Plan;
+using Services.Broadcast.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Web.Http;
+using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.Cable.Entities;
+using Tam.Maestro.Services.Cable.Security;
+using Tam.Maestro.Services.ContractInterfaces;
 using Tam.Maestro.Web.Common;
 
 namespace BroadcastComposerWeb.Controllers
@@ -125,6 +130,33 @@ namespace BroadcastComposerWeb.Controllers
         public BaseResponse<WeeklyBreakdownResponseDto> CalculateWeeklyBreakdown(WeeklyBreakdownRequest request)
         {
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanService>().CalculatePlanWeeklyGoalBreakdown(request));
+        }
+
+        /// <summary>
+        /// Locks the plan.
+        /// </summary>
+        /// <param name="planId">The plan identifier.</param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("{planId}/Lock")]
+        [Authorize] // Locking only works with Authorize, RestrictedAccess doesn't
+        public BaseResponse<PlanLockResponse> LockPlan(int planId)
+        {
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanService>().LockPlan(planId));
+        }
+
+        /// <summary>
+        /// Unlocks the plan.
+        /// </summary>
+        /// <param name="planId">The plan identifier.</param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("{planId}/Unlock")]
+        [Authorize]
+        public BaseResponse<ReleaseLockResponse> UnlockPlan(int planId)
+        {
+            var key = KeyHelper.GetPlanLockingKey(planId);
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ILockingManagerApplicationService>().ReleaseObject(key));
         }
 
         /// <summary>
