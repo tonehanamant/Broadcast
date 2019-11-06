@@ -286,6 +286,18 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
         }
 
         [Test]
+        public void ValidatePlan_WithWrongGenreRestrictionsContainType()
+        {
+            _ConfigureSpotLenghtEngineMockToReturnTrue();
+
+            var plan = _GetPlan();
+            plan.Dayparts[0].Restrictions.GenreRestrictions.ContainType = 0;
+
+            Assert.That(() => _planValidator.ValidatePlan(plan),
+                Throws.TypeOf<Exception>().With.Message.EqualTo("Contain type of the genres restrictions is not valid"));
+        }
+
+        [Test]
         public void ValidatePlan_DayPartStartLessThanSecondsMinimum()
         {
             _ConfigureSpotLenghtEngineMockToReturnTrue();
@@ -415,6 +427,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
                         {
                             ContainType = ContainTypeEnum.Exclude,
                             ShowTypes = new List<LookupDto> { new LookupDto { Id = 1, Display = "Lorem" } }
+                        },
+                        GenreRestrictions = new PlanDaypartDto.RestrictionsDto.GenreRestrictionsDto
+                        {
+                            ContainType = ContainTypeEnum.Exclude,
+                            Genres = new List<LookupDto> { new LookupDto { Id = 1, Display = "Lorem" } }
                         }
                     }
                 },
@@ -429,6 +446,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
                         {
                             ContainType = ContainTypeEnum.Exclude,
                             ShowTypes = new List<LookupDto> { new LookupDto { Id = 1, Display = "Lorem" } }
+                        },
+                        GenreRestrictions = new PlanDaypartDto.RestrictionsDto.GenreRestrictionsDto
+                        {
+                            ContainType = ContainTypeEnum.Exclude,
+                            Genres = new List<LookupDto> { new LookupDto { Id = 1, Display = "Lorem" } }
                         }
                     }
                 }
@@ -456,6 +478,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
                         {
                             ContainType = ContainTypeEnum.Exclude,
                             ShowTypes = new List<LookupDto> { new LookupDto { Id = 1, Display = "Lorem" } }
+                        },
+                        GenreRestrictions = new PlanDaypartDto.RestrictionsDto.GenreRestrictionsDto
+                        {
+                            ContainType = ContainTypeEnum.Exclude,
+                            Genres = new List<LookupDto> { new LookupDto { Id = 1, Display = "Lorem" } }
                         }
                     }
                 },
@@ -469,6 +496,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
                         {
                             ContainType = ContainTypeEnum.Exclude,
                             ShowTypes = new List<LookupDto> { new LookupDto { Id = 1, Display = "Lorem" } }
+                        },
+                        GenreRestrictions = new PlanDaypartDto.RestrictionsDto.GenreRestrictionsDto
+                        {
+                            ContainType = ContainTypeEnum.Exclude,
+                            Genres = new List<LookupDto> { new LookupDto { Id = 1, Display = "Lorem" } }
                         }
                     }
                 },
@@ -483,6 +515,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
                         {
                             ContainType = ContainTypeEnum.Exclude,
                             ShowTypes = new List<LookupDto> { new LookupDto { Id = 1, Display = "Lorem" } }
+                        },
+                        GenreRestrictions = new PlanDaypartDto.RestrictionsDto.GenreRestrictionsDto
+                        {
+                            ContainType = ContainTypeEnum.Exclude,
+                            Genres = new List<LookupDto> { new LookupDto { Id = 1, Display = "Lorem" } }
                         }
                     }
                 },
@@ -497,6 +534,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
                         {
                             ContainType = ContainTypeEnum.Exclude,
                             ShowTypes = new List<LookupDto> { new LookupDto { Id = 1, Display = "Lorem" } }
+                        },
+                        GenreRestrictions = new PlanDaypartDto.RestrictionsDto.GenreRestrictionsDto
+                        {
+                            ContainType = ContainTypeEnum.Exclude,
+                            Genres = new List<LookupDto> { new LookupDto { Id = 1, Display = "Lorem" } }
                         }
                     }
                 },
@@ -933,6 +975,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
                             {
                                 ContainType = ContainTypeEnum.Exclude,
                                 ShowTypes = new List<LookupDto> { new LookupDto { Id = 1, Display = "Lorem" } }
+                            },
+                            GenreRestrictions = new PlanDaypartDto.RestrictionsDto.GenreRestrictionsDto
+                            {
+                                ContainType = ContainTypeEnum.Exclude,
+                                Genres = new List<LookupDto> { new LookupDto { Id = 1, Display = "Lorem" } }
                             }
                         }
                     }

@@ -611,6 +611,72 @@ WHERE [name] = 'Science & Techonology'
 
 /*************************************** END PRI-17556 *****************************************************/
 
+/*************************************** START - PRI-16393 ****************************************************/
+
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('plan_version_dayparts') AND name = 'show_type_restrictions_contain_type')
+BEGIN
+	ALTER TABLE [plan_version_dayparts] ADD [show_type_restrictions_contain_type] INT NULL
+END
+
+IF OBJECT_ID('plan_version_daypart_show_type_restrictions') IS NULL
+BEGIN 
+	CREATE TABLE [plan_version_daypart_show_type_restrictions]
+	(
+		[id] INT IDENTITY(1,1) NOT NULL,
+		[plan_version_daypart_id] INT NOT NULL,
+		[show_type_id] INT NOT NULL
+
+		CONSTRAINT [PK_plan_version_daypart_show_type_restrictions] PRIMARY KEY CLUSTERED 
+		(
+			[id] ASC
+		)
+	)
+
+	ALTER TABLE [dbo].[plan_version_daypart_show_type_restrictions] WITH CHECK ADD CONSTRAINT [FK_plan_version_daypart_show_type_restrictions_plan_version_dayparts] FOREIGN KEY([plan_version_daypart_id])
+	REFERENCES [dbo].[plan_version_dayparts] ([id]) ON DELETE CASCADE
+	ALTER TABLE [dbo].[plan_version_daypart_show_type_restrictions] CHECK CONSTRAINT [FK_plan_version_daypart_show_type_restrictions_plan_version_dayparts]
+
+	ALTER TABLE [dbo].[plan_version_daypart_show_type_restrictions] WITH CHECK ADD CONSTRAINT [FK_plan_version_daypart_show_type_restrictions_show_types] FOREIGN KEY([show_type_id])
+	REFERENCES [dbo].[show_types] ([id])
+	ALTER TABLE [dbo].[plan_version_daypart_show_type_restrictions] CHECK CONSTRAINT [FK_plan_version_daypart_show_type_restrictions_show_types]
+
+	ALTER TABLE [dbo].[plan_version_daypart_show_type_restrictions] WITH CHECK ADD CONSTRAINT [UQ_plan_version_daypart_show_type_restrictions] UNIQUE ([plan_version_daypart_id], [show_type_id])
+END
+
+/*************************************** END - PRI-16393 ****************************************************/
+
+/*************************************** START - PRI-13298 ****************************************************/
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('plan_version_dayparts') AND name = 'genre_restrictions_contain_type')
+BEGIN
+	ALTER TABLE [plan_version_dayparts] ADD [genre_restrictions_contain_type] INT NULL
+END
+
+IF OBJECT_ID('plan_version_daypart_genre_restrictions') IS NULL
+BEGIN 
+	CREATE TABLE [plan_version_daypart_genre_restrictions]
+	(
+		[id] INT IDENTITY(1,1) NOT NULL,
+		[plan_version_daypart_id] INT NOT NULL,
+		[genre_id] INT NOT NULL
+		CONSTRAINT [PK_plan_version_daypart_genre_restrictions] PRIMARY KEY CLUSTERED 
+		(
+			[id] ASC
+		)
+	)
+
+	ALTER TABLE [dbo].[plan_version_daypart_genre_restrictions] WITH CHECK ADD CONSTRAINT [FK_plan_version_daypart_genre_restrictions_plan_version_dayparts] FOREIGN KEY([plan_version_daypart_id])
+	REFERENCES [dbo].[plan_version_dayparts] ([id]) ON DELETE CASCADE
+	ALTER TABLE [dbo].[plan_version_daypart_genre_restrictions] CHECK CONSTRAINT [FK_plan_version_daypart_genre_restrictions_plan_version_dayparts]
+
+	ALTER TABLE [dbo].[plan_version_daypart_genre_restrictions] WITH CHECK ADD CONSTRAINT [FK_plan_version_daypart_genre_restrictions_genres] FOREIGN KEY([genre_id])
+	REFERENCES [dbo].[genres] ([id])
+	ALTER TABLE [dbo].[plan_version_daypart_genre_restrictions] CHECK CONSTRAINT [FK_plan_version_daypart_genre_restrictions_genres]
+
+	ALTER TABLE [dbo].[plan_version_daypart_genre_restrictions] WITH CHECK ADD CONSTRAINT [UQ_plan_version_daypart_genre_restrictions] UNIQUE ([plan_version_daypart_id], [genre_id])
+END
+/*************************************** END - PRI-13298 ****************************************************/
+
+
 /*************************************** START PRI-16343 *****************************************************/
 
 IF OBJECT_ID ('dbo.station_inventory_manifest_daypart_programs') IS NULL
@@ -684,40 +750,6 @@ END
 GO
 
 /*************************************** END PRI-16343 *****************************************************/
-
-/*************************************** START - PRI-16393 ****************************************************/
-
-IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('plan_version_dayparts') AND name = 'show_type_restrictions_contain_type')
-BEGIN
-	ALTER TABLE [plan_version_dayparts] ADD [show_type_restrictions_contain_type] INT NULL
-END
-
-IF OBJECT_ID('plan_version_daypart_show_type_restrictions') IS NULL
-BEGIN 
-	CREATE TABLE [plan_version_daypart_show_type_restrictions]
-	(
-		[id] INT IDENTITY(1,1) NOT NULL,
-		[plan_version_daypart_id] INT NOT NULL,
-		[show_type_id] INT NOT NULL
-
-		CONSTRAINT [PK_plan_version_daypart_show_type_restrictions] PRIMARY KEY CLUSTERED 
-		(
-			[id] ASC
-		)
-	)
-
-	ALTER TABLE [dbo].[plan_version_daypart_show_type_restrictions] WITH CHECK ADD CONSTRAINT [FK_plan_version_daypart_show_type_restrictions_plan_version_dayparts] FOREIGN KEY([plan_version_daypart_id])
-	REFERENCES [dbo].[plan_version_dayparts] ([id]) ON DELETE CASCADE
-	ALTER TABLE [dbo].[plan_version_daypart_show_type_restrictions] CHECK CONSTRAINT [FK_plan_version_daypart_show_type_restrictions_plan_version_dayparts]
-
-	ALTER TABLE [dbo].[plan_version_daypart_show_type_restrictions] WITH CHECK ADD CONSTRAINT [FK_plan_version_daypart_show_type_restrictions_show_types] FOREIGN KEY([show_type_id])
-	REFERENCES [dbo].[show_types] ([id])
-	ALTER TABLE [dbo].[plan_version_daypart_show_type_restrictions] CHECK CONSTRAINT [FK_plan_version_daypart_show_type_restrictions_show_types]
-
-	ALTER TABLE [dbo].[plan_version_daypart_show_type_restrictions] WITH CHECK ADD CONSTRAINT [UQ_plan_version_daypart_show_type_restrictions] UNIQUE ([plan_version_daypart_id], [show_type_id])
-END
-
-/*************************************** END - PRI-16393 ****************************************************/
 
 /*************************************** START - PRI-16188 ****************************************************/
 

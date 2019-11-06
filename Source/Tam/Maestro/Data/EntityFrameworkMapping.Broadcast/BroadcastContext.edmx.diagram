@@ -350,6 +350,9 @@
         <EntityTypeShape EntityType="BroadcastModel.plan_pricing_executions" Width="1.5" PointX="5.25" PointY="60.25" />
         <AssociationConnector Association="BroadcastModel.FK_plan_pricing_execution_markets_plan_pricing_executions" />
         <AssociationConnector Association="BroadcastModel.FK_plan_pricing_executions_plans" />
+		<EntityTypeShape EntityType="BroadcastModel.plan_version_daypart_genre_restrictions" Width="1.5" PointX="26.75" PointY="30.875" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_daypart_genre_restrictions_genres" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_daypart_genre_restrictions_plan_version_dayparts" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

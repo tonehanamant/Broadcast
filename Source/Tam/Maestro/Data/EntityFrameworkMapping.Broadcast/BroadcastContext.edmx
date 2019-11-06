@@ -711,6 +711,14 @@
           <Property Name="percentage_of_us" Type="float" Nullable="false" />
           <Property Name="plan_version_id" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="plan_version_daypart_genre_restrictions">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="plan_version_daypart_id" Type="int" Nullable="false" />
+          <Property Name="genre_id" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="plan_version_daypart_show_type_restrictions">
           <Key>
             <PropertyRef Name="id" />
@@ -733,6 +741,7 @@
           <Property Name="is_end_time_modified" Type="bit" Nullable="false" />
           <Property Name="plan_version_id" Type="int" Nullable="false" />
           <Property Name="show_type_restrictions_contain_type" Type="int" />
+          <Property Name="genre_restrictions_contain_type" Type="int" />
         </EntityType>
         <EntityType Name="plan_version_flight_hiatus_days">
           <Key>
@@ -2646,6 +2655,32 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_plan_version_daypart_genre_restrictions_genres">
+          <End Role="genres" Type="Self.genres" Multiplicity="1" />
+          <End Role="plan_version_daypart_genre_restrictions" Type="Self.plan_version_daypart_genre_restrictions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="genres">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_daypart_genre_restrictions">
+              <PropertyRef Name="genre_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_version_daypart_genre_restrictions_plan_version_dayparts">
+          <End Role="plan_version_dayparts" Type="Self.plan_version_dayparts" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="plan_version_daypart_genre_restrictions" Type="Self.plan_version_daypart_genre_restrictions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="plan_version_dayparts">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_daypart_genre_restrictions">
+              <PropertyRef Name="plan_version_daypart_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_plan_version_daypart_show_type_restrictions_plan_version_dayparts">
           <End Role="plan_version_dayparts" Type="Self.plan_version_dayparts" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -4548,6 +4583,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySet Name="plan_pricing_executions" EntityType="Self.plan_pricing_executions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="plan_version_available_markets" EntityType="Self.plan_version_available_markets" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="plan_version_blackout_markets" EntityType="Self.plan_version_blackout_markets" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="plan_version_daypart_genre_restrictions" EntityType="Self.plan_version_daypart_genre_restrictions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="plan_version_daypart_show_type_restrictions" EntityType="Self.plan_version_daypart_show_type_restrictions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="plan_version_dayparts" EntityType="Self.plan_version_dayparts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="plan_version_flight_hiatus_days" EntityType="Self.plan_version_flight_hiatus_days" Schema="dbo" store:Type="Tables" />
@@ -4915,6 +4951,14 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <AssociationSet Name="FK_plan_version_blackout_markets_plan_versions" Association="Self.FK_plan_version_blackout_markets_plan_versions">
             <End Role="plan_versions" EntitySet="plan_versions" />
             <End Role="plan_version_blackout_markets" EntitySet="plan_version_blackout_markets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_version_daypart_genre_restrictions_genres" Association="Self.FK_plan_version_daypart_genre_restrictions_genres">
+            <End Role="genres" EntitySet="genres" />
+            <End Role="plan_version_daypart_genre_restrictions" EntitySet="plan_version_daypart_genre_restrictions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_version_daypart_genre_restrictions_plan_version_dayparts" Association="Self.FK_plan_version_daypart_genre_restrictions_plan_version_dayparts">
+            <End Role="plan_version_dayparts" EntitySet="plan_version_dayparts" />
+            <End Role="plan_version_daypart_genre_restrictions" EntitySet="plan_version_daypart_genre_restrictions" />
           </AssociationSet>
           <AssociationSet Name="FK_plan_version_daypart_show_type_restrictions_plan_version_dayparts" Association="Self.FK_plan_version_daypart_show_type_restrictions_plan_version_dayparts">
             <End Role="plan_version_dayparts" EntitySet="plan_version_dayparts" />
@@ -6464,6 +6508,15 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="plan" EntitySet="plans" />
             <End Role="plan_pricing_executions" EntitySet="plan_pricing_executions" />
           </AssociationSet>
+          <EntitySet Name="plan_version_daypart_genre_restrictions" EntityType="BroadcastModel.plan_version_daypart_genre_restrictions" />
+          <AssociationSet Name="FK_plan_version_daypart_genre_restrictions_genres" Association="BroadcastModel.FK_plan_version_daypart_genre_restrictions_genres">
+            <End Role="genre" EntitySet="genres" />
+            <End Role="plan_version_daypart_genre_restrictions" EntitySet="plan_version_daypart_genre_restrictions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_version_daypart_genre_restrictions_plan_version_dayparts" Association="BroadcastModel.FK_plan_version_daypart_genre_restrictions_plan_version_dayparts">
+            <End Role="plan_version_dayparts" EntitySet="plan_version_dayparts" />
+            <End Role="plan_version_daypart_genre_restrictions" EntitySet="plan_version_daypart_genre_restrictions" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="audience_audiences">
           <Key>
@@ -7356,6 +7409,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="genre_mappings" Relationship="BroadcastModel.FK__genre_map__maest__328300B1" FromRole="genre" ToRole="genre_mappings" />
           <NavigationProperty Name="genre_mappings1" Relationship="BroadcastModel.FK__genre_map__mappe__337724EA" FromRole="genre" ToRole="genre_mappings" />
           <NavigationProperty Name="genre_sources" Relationship="BroadcastModel.FK__genres__source_i__2FA69406" FromRole="genre" ToRole="genre_sources" />
+          <NavigationProperty Name="plan_version_daypart_genre_restrictions" Relationship="BroadcastModel.FK_plan_version_daypart_genre_restrictions_genres" FromRole="genre" ToRole="plan_version_daypart_genre_restrictions" />
           <NavigationProperty Name="station_inventory_manifest_daypart_programs" Relationship="BroadcastModel.FK_station_inventory_manifest_daypart_programs_genres" FromRole="genre" ToRole="station_inventory_manifest_daypart_programs" />
         </EntityType>
         <EntityType Name="proposal_version_detail_criteria_cpm">
@@ -10759,6 +10813,8 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="plan_versions" Relationship="BroadcastModel.FK_plan_version_dayparts_plan_versions" FromRole="plan_version_dayparts" ToRole="plan_versions" />
           <Property Name="show_type_restrictions_contain_type" Type="Int32" />
           <NavigationProperty Name="plan_version_daypart_show_type_restrictions" Relationship="BroadcastModel.FK_plan_version_daypart_show_type_restrictions_plan_dayparts" FromRole="plan_version_dayparts" ToRole="plan_version_daypart_show_type_restrictions" />
+          <Property Name="genre_restrictions_contain_type" Type="Int32" />
+          <NavigationProperty Name="plan_version_daypart_genre_restrictions" Relationship="BroadcastModel.FK_plan_version_daypart_genre_restrictions_plan_version_dayparts" FromRole="plan_version_dayparts" ToRole="plan_version_daypart_genre_restrictions" />
         </EntityType>
         <EntityType Name="plan_version_flight_hiatus_days">
           <Key>
@@ -11315,6 +11371,42 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Principal>
             <Dependent Role="plan_pricing_executions">
               <PropertyRef Name="plan_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+		<EntityType Name="plan_version_daypart_genre_restrictions">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="plan_version_daypart_id" Type="Int32" Nullable="false" />
+          <Property Name="genre_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="genre" Relationship="BroadcastModel.FK_plan_version_daypart_genre_restrictions_genres" FromRole="plan_version_daypart_genre_restrictions" ToRole="genre" />
+          <NavigationProperty Name="plan_version_dayparts" Relationship="BroadcastModel.FK_plan_version_daypart_genre_restrictions_plan_version_dayparts" FromRole="plan_version_daypart_genre_restrictions" ToRole="plan_version_dayparts" />
+        </EntityType>
+        <Association Name="FK_plan_version_daypart_genre_restrictions_genres">
+          <End Type="BroadcastModel.genre" Role="genre" Multiplicity="1" />
+          <End Type="BroadcastModel.plan_version_daypart_genre_restrictions" Role="plan_version_daypart_genre_restrictions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="genre">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_daypart_genre_restrictions">
+              <PropertyRef Name="genre_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_version_daypart_genre_restrictions_plan_version_dayparts">
+          <End Type="BroadcastModel.plan_version_dayparts" Role="plan_version_dayparts" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BroadcastModel.plan_version_daypart_genre_restrictions" Role="plan_version_daypart_genre_restrictions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="plan_version_dayparts">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_daypart_genre_restrictions">
+              <PropertyRef Name="plan_version_daypart_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -13061,6 +13153,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="plan_version_dayparts">
             <EntityTypeMapping TypeName="BroadcastModel.plan_version_dayparts">
               <MappingFragment StoreEntitySet="plan_version_dayparts">
+                <ScalarProperty Name="genre_restrictions_contain_type" ColumnName="genre_restrictions_contain_type" />
                 <ScalarProperty Name="show_type_restrictions_contain_type" ColumnName="show_type_restrictions_contain_type" />
                 <ScalarProperty Name="plan_version_id" ColumnName="plan_version_id" />
                 <ScalarProperty Name="is_end_time_modified" ColumnName="is_end_time_modified" />
@@ -13253,6 +13346,15 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
                 <ScalarProperty Name="max_cpm" ColumnName="max_cpm" />
                 <ScalarProperty Name="min_cpm" ColumnName="min_cpm" />
                 <ScalarProperty Name="plan_id" ColumnName="plan_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+		  <EntitySetMapping Name="plan_version_daypart_genre_restrictions">
+            <EntityTypeMapping TypeName="BroadcastModel.plan_version_daypart_genre_restrictions">
+              <MappingFragment StoreEntitySet="plan_version_daypart_genre_restrictions">
+                <ScalarProperty Name="genre_id" ColumnName="genre_id" />
+                <ScalarProperty Name="plan_version_daypart_id" ColumnName="plan_version_daypart_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

@@ -192,6 +192,8 @@ namespace Services.Broadcast.Repositories
                         .Include(p => p.plan_versions.Select(x => x.plan_version_dayparts))
                         .Include(p => p.plan_versions.Select(x => x.plan_version_dayparts.Select(d => d.plan_version_daypart_show_type_restrictions)))
                         .Include(p => p.plan_versions.Select(x => x.plan_version_dayparts.Select(d => d.plan_version_daypart_show_type_restrictions.Select(r => r.show_types))))
+                        .Include(p => p.plan_versions.Select(x => x.plan_version_dayparts.Select(d => d.plan_version_daypart_genre_restrictions)))
+                        .Include(p => p.plan_versions.Select(x => x.plan_version_dayparts.Select(d => d.plan_version_daypart_genre_restrictions.Select(r => r.genre))))
                         .Include(p => p.plan_versions.Select(x => x.plan_version_available_markets))
                         .Include(p => p.plan_versions.Select(x => x.plan_version_blackout_markets))
                         .Include(p => p.plan_versions.Select(x => x.plan_version_weeks))
@@ -437,6 +439,16 @@ namespace Services.Broadcast.Repositories
                 };
             }
 
+            // if the contain type has ever been set
+            if (entity.genre_restrictions_contain_type.HasValue)
+            {
+                dto.Restrictions.GenreRestrictions = new PlanDaypartDto.RestrictionsDto.GenreRestrictionsDto
+                {
+                    ContainType = (ContainTypeEnum)entity.genre_restrictions_contain_type.Value,
+                    Genres = entity.plan_version_daypart_genre_restrictions.Select(x => _MapToLookupDto(x.genre)).ToList()
+                };
+            }
+
             return dto;
         }
 
@@ -446,6 +458,15 @@ namespace Services.Broadcast.Repositories
             {
                 Id = show_Type.id,
                 Display = show_Type.name
+            };
+        }
+
+        private static LookupDto _MapToLookupDto(genre genre)
+        {
+            return new LookupDto()
+            {
+                Id = genre.id,
+                Display = genre.name
             };
         }
 
@@ -469,6 +490,7 @@ namespace Services.Broadcast.Repositories
                 if (daypart.Restrictions != null)
                 {
                     _HydrateShowTypeRestrictions(newDaypart, daypart.Restrictions.ShowTypeRestrictions);
+                    _HydrateGenreRestrictions(newDaypart, daypart.Restrictions.GenreRestrictions);
                 }
                 
                 entity.plan_version_dayparts.Add(newDaypart);
@@ -491,6 +513,27 @@ namespace Services.Broadcast.Repositories
                     daypart.plan_version_daypart_show_type_restrictions.Add(new plan_version_daypart_show_type_restrictions
                     {
                         show_type_id = showTypeRestriction.Id
+                    });
+                }
+            }
+        }
+
+        private static void _HydrateGenreRestrictions(
+            plan_version_dayparts daypart,
+            PlanDaypartDto.RestrictionsDto.GenreRestrictionsDto genreRestrictions)
+        {
+            if (genreRestrictions == null)
+                return;
+
+            daypart.genre_restrictions_contain_type = (int)genreRestrictions.ContainType;
+
+            if (!genreRestrictions.Genres.IsEmpty())
+            {
+                foreach (var genreRestriction in genreRestrictions.Genres)
+                {
+                    daypart.plan_version_daypart_genre_restrictions.Add(new plan_version_daypart_genre_restrictions
+                    {
+                        genre_id = genreRestriction.Id
                     });
                 }
             }

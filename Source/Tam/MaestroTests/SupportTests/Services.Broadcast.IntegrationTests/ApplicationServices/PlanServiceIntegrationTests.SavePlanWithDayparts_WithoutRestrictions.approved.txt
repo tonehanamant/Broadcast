@@ -53,8 +53,13 @@
       "IsStartTimeModified": true,
       "Restrictions": {
         "GenreRestrictions": {
-          "ContainType": 2,
-          "Genres": []
+          "ContainType": 1,
+          "Genres": [
+            {
+              "Display": "Adult",
+              "Id": 2
+            }
+          ]
         },
         "ShowTypeRestrictions": {
           "ContainType": 2,
@@ -78,7 +83,16 @@
       "Restrictions": {
         "GenreRestrictions": {
           "ContainType": 2,
-          "Genres": []
+          "Genres": [
+            {
+              "Display": "Adventure",
+              "Id": 3
+            },
+            {
+              "Display": "Anthology",
+              "Id": 4
+            }
+          ]
         },
         "ShowTypeRestrictions": {
           "ContainType": 1,

@@ -73,6 +73,7 @@ namespace Services.Broadcast.Validators
         const string STOP_WORD = "eOm3wgvfm0dq4rI3srL2";
         
         const string SHOW_TYPE_CONTAIN_TYPE_IS_NOT_VALID = "Contain type of the show types restrictions is not valid";
+        const string GENRE_CONTAIN_TYPE_IS_NOT_VALID = "Contain type of the genres restrictions is not valid";
 
         public PlanValidator(ISpotLengthEngine spotLengthEngine
             , IBroadcastAudiencesCache broadcastAudiencesCache
@@ -269,6 +270,7 @@ namespace Services.Broadcast.Validators
             if (restrictions != null)
             {
                 _ValidateShowTypeRestrictions(restrictions);
+                _ValidateGenreRestrictions(restrictions);
             }
         }
 
@@ -281,6 +283,19 @@ namespace Services.Broadcast.Validators
                 if (!EnumHelper.IsDefined(showTypeRestrictions.ContainType))
                 {
                     throw new Exception(SHOW_TYPE_CONTAIN_TYPE_IS_NOT_VALID);
+                }
+            }
+        }
+
+        private void _ValidateGenreRestrictions(PlanDaypartDto.RestrictionsDto restrictions)
+        {
+            var genreRestrictions = restrictions.GenreRestrictions;
+
+            if (genreRestrictions != null)
+            {
+                if (!EnumHelper.IsDefined(genreRestrictions.ContainType))
+                {
+                    throw new Exception(GENRE_CONTAIN_TYPE_IS_NOT_VALID);
                 }
             }
         }

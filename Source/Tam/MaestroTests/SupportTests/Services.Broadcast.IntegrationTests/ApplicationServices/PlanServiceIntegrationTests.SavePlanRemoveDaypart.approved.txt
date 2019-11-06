@@ -53,8 +53,13 @@
       "IsStartTimeModified": true,
       "Restrictions": {
         "GenreRestrictions": {
-          "ContainType": 2,
-          "Genres": []
+          "ContainType": 1,
+          "Genres": [
+            {
+              "Display": "Action",
+              "Id": 1
+            }
+          ]
         },
         "ShowTypeRestrictions": {
           "ContainType": 2,
@@ -77,8 +82,13 @@
       "IsStartTimeModified": true,
       "Restrictions": {
         "GenreRestrictions": {
-          "ContainType": 2,
-          "Genres": []
+          "ContainType": 1,
+          "Genres": [
+            {
+              "Display": "Adult",
+              "Id": 2
+            }
+          ]
         },
         "ShowTypeRestrictions": {
           "ContainType": 2,

@@ -21,7 +21,22 @@
   ],
   "AvailableMarketsWithSovCount": null,
   "BlackoutMarketCount": null,
-  "BlackoutMarkets": [],
+  "BlackoutMarkets": [
+    {
+      "Market": "Burlington-Plattsburgh",
+      "MarketCode": 123,
+      "MarketCoverageFileId": 1,
+      "PercentageOfUS": 5.5,
+      "Rank": 5
+    },
+    {
+      "Market": "Amarillo",
+      "MarketCode": 234,
+      "MarketCoverageFileId": 1,
+      "PercentageOfUS": 2.5,
+      "Rank": 8
+    }
+  ],
   "BlackoutMarketTotalUsCoveragePercent": null,
   "Budget": 100.0000,
   "CampaignId": 1,
@@ -38,13 +53,8 @@
       "IsStartTimeModified": true,
       "Restrictions": {
         "GenreRestrictions": {
-          "ContainType": 1,
-          "Genres": [
-            {
-              "Display": "Action",
-              "Id": 1
-            }
-          ]
+          "ContainType": 2,
+          "Genres": []
         },
         "ShowTypeRestrictions": {
           "ContainType": 2,
@@ -131,10 +141,10 @@
   "Equivalized": true,
   "FlightEndDate": "2019-01-31T00:00:00",
   "FlightHiatusDays": [
-    "2019-01-28T00:00:00",
-    "2019-01-04T00:00:00"
+    "2019-01-20T00:00:00",
+    "2019-01-24T00:00:00"
   ],
-  "FlightNotes": "Changed the flight notes",
+  "FlightNotes": "Sample notes",
   "FlightStartDate": "2019-01-01T00:00:00",
   "GoalBreakdownType": 1,
   "HouseholdCPM": 0.0120,
@@ -146,9 +156,9 @@
   "IsDraft": false,
   "ModifiedBy": "integration_test",
   "ModifiedDate": "2019-01-15T00:00:00",
-  "Name": "Renamed Plan",
+  "Name": "New Plan",
   "PostingType": 2,
-  "ProductId": 2,
+  "ProductId": 1,
   "SecondaryAudiences": [],
   "ShareBookId": 437,
   "SpotLengthId": 1,

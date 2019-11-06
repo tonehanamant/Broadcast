@@ -46,6 +46,30 @@
   "Currency": 1,
   "Dayparts": [
     {
+      "DaypartCodeId": 2,
+      "DaypartTypeId": 2,
+      "EndTimeSeconds": 2000,
+      "IsEndTimeModified": true,
+      "IsStartTimeModified": true,
+      "Restrictions": {
+        "GenreRestrictions": {
+          "ContainType": 1,
+          "Genres": [
+            {
+              "Display": "Action",
+              "Id": 1
+            }
+          ]
+        },
+        "ShowTypeRestrictions": {
+          "ContainType": 2,
+          "ShowTypes": []
+        }
+      },
+      "StartTimeSeconds": 0,
+      "WeightingGoalPercent": 28.0
+    },
+    {
       "DaypartCodeId": 11,
       "DaypartTypeId": 1,
       "EndTimeSeconds": 2788,
@@ -53,8 +77,13 @@
       "IsStartTimeModified": true,
       "Restrictions": {
         "GenreRestrictions": {
-          "ContainType": 2,
-          "Genres": []
+          "ContainType": 1,
+          "Genres": [
+            {
+              "Display": "Adult",
+              "Id": 2
+            }
+          ]
         },
         "ShowTypeRestrictions": {
           "ContainType": 2,
@@ -78,7 +107,16 @@
       "Restrictions": {
         "GenreRestrictions": {
           "ContainType": 2,
-          "Genres": []
+          "Genres": [
+            {
+              "Display": "Adventure",
+              "Id": 3
+            },
+            {
+              "Display": "Anthology",
+              "Id": 4
+            }
+          ]
         },
         "ShowTypeRestrictions": {
           "ContainType": 1,
@@ -96,25 +134,6 @@
       },
       "StartTimeSeconds": 57600,
       "WeightingGoalPercent": 25.0
-    },
-    {
-      "DaypartCodeId": 2,
-      "DaypartTypeId": 2,
-      "EndTimeSeconds": 2000,
-      "IsEndTimeModified": true,
-      "IsStartTimeModified": true,
-      "Restrictions": {
-        "GenreRestrictions": {
-          "ContainType": 2,
-          "Genres": []
-        },
-        "ShowTypeRestrictions": {
-          "ContainType": 2,
-          "ShowTypes": []
-        }
-      },
-      "StartTimeSeconds": 0,
-      "WeightingGoalPercent": 28.0
     }
   ],
   "DeliveryImpressions": 100.0,

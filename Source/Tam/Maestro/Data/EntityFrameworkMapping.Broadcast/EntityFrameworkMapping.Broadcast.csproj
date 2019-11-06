@@ -511,6 +511,9 @@
     <Compile Include="plan_version_dayparts.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="plan_version_daypart_genre_restrictions.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="plan_version_daypart_show_type_restrictions.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>

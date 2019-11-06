@@ -419,6 +419,24 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        public void SavePlanWithDayparts_WithoutGenreRestrictions()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                PlanDto newPlan = _GetNewPlan();
+
+                newPlan.Dayparts.First().Restrictions.GenreRestrictions = null;
+
+                var planId = _PlanService.SavePlan(newPlan, "integration_test", new DateTime(2019, 01, 15));
+                PlanDto finalPlan = _PlanService.GetPlan(planId);
+
+                Assert.AreEqual(3, finalPlan.Dayparts.Count);
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(finalPlan, _GetJsonSettings()));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
         public void SavePlanAddDaypart()
         {
             using (new TransactionScopeWrapper())
@@ -439,6 +457,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         {
                             ContainType = ContainTypeEnum.Include,
                             ShowTypes = new List<LookupDto> { new LookupDto { Id = 5 } }
+                        },
+                        GenreRestrictions = new PlanDaypartDto.RestrictionsDto.GenreRestrictionsDto
+                        {
+                            ContainType = ContainTypeEnum.Exclude,
+                            Genres = new List<LookupDto> { new LookupDto { Id = 4 } }
                         }
                     }
                 });
@@ -1223,6 +1246,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                             {
                                 ContainType = ContainTypeEnum.Exclude,
                                 ShowTypes = new List<LookupDto> { new LookupDto { Id = 1 } }
+                            },
+                            GenreRestrictions = new PlanDaypartDto.RestrictionsDto.GenreRestrictionsDto
+                            {
+                                ContainType = ContainTypeEnum.Include,
+                                Genres = new List<LookupDto> { new LookupDto { Id = 1 } }
                             }
                         }
                     },
@@ -1239,6 +1267,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                             {
                                 ContainType = ContainTypeEnum.Exclude,
                                 ShowTypes = new List<LookupDto> { new LookupDto { Id = 2 } }
+                            },
+                            GenreRestrictions = new PlanDaypartDto.RestrictionsDto.GenreRestrictionsDto
+                            {
+                                ContainType = ContainTypeEnum.Include,
+                                Genres = new List<LookupDto> { new LookupDto { Id = 2 } }
                             }
                         }
                     },
@@ -1255,6 +1288,15 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                             {
                                 ContainType = ContainTypeEnum.Include,
                                 ShowTypes = new List<LookupDto>
+                                {
+                                    new LookupDto { Id = 3 },
+                                    new LookupDto { Id = 4 }
+                                }
+                            },
+                            GenreRestrictions = new PlanDaypartDto.RestrictionsDto.GenreRestrictionsDto
+                            {
+                                ContainType = ContainTypeEnum.Exclude,
+                                Genres = new List<LookupDto>
                                 {
                                     new LookupDto { Id = 3 },
                                     new LookupDto { Id = 4 }
