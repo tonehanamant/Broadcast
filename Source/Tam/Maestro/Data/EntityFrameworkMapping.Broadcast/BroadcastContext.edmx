@@ -2632,7 +2632,9 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_plan_version_available_markets_plan_versions">
-          <End Role="plan_versions" Type="Self.plan_versions" Multiplicity="1" />
+          <End Role="plan_versions" Type="Self.plan_versions" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="plan_version_available_markets" Type="Self.plan_version_available_markets" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="plan_versions">
@@ -2644,7 +2646,9 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_plan_version_blackout_markets_plan_versions">
-          <End Role="plan_versions" Type="Self.plan_versions" Multiplicity="1" />
+          <End Role="plan_versions" Type="Self.plan_versions" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="plan_version_blackout_markets" Type="Self.plan_version_blackout_markets" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="plan_versions">
@@ -2708,7 +2712,9 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_plan_version_dayparts_plan_versions">
-          <End Role="plan_versions" Type="Self.plan_versions" Multiplicity="1" />
+          <End Role="plan_versions" Type="Self.plan_versions" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="plan_version_dayparts" Type="Self.plan_version_dayparts" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="plan_versions">
@@ -2720,7 +2726,9 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_plan_version_flight_hiatus_days_plan_versions">
-          <End Role="plan_versions" Type="Self.plan_versions" Multiplicity="1" />
+          <End Role="plan_versions" Type="Self.plan_versions" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="plan_version_flight_hiatus_days" Type="Self.plan_version_flight_hiatus_days" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="plan_versions">
@@ -2732,7 +2740,9 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_plan_version_secondary_audiences_plan_versions">
-          <End Role="plan_versions" Type="Self.plan_versions" Multiplicity="1" />
+          <End Role="plan_versions" Type="Self.plan_versions" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="plan_version_secondary_audiences" Type="Self.plan_version_secondary_audiences" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="plan_versions">
@@ -2756,7 +2766,9 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_plan_version_weeks_plan_versions">
-          <End Role="plan_versions" Type="Self.plan_versions" Multiplicity="1" />
+          <End Role="plan_versions" Type="Self.plan_versions" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="plan_version_weeks" Type="Self.plan_version_weeks" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="plan_versions">

@@ -601,6 +601,45 @@ BEGIN
 END
 /*************************************** END PRI-15898 *****************************************************/
 
+/*************************************** START PRI-15921 *****************************************************/
+IF EXISTS(SELECT 1 FROM sys.foreign_keys WHERE parent_object_id = OBJECT_ID('plan_version_dayparts') AND name = 'FK_plan_version_dayparts_plan_versions')
+BEGIN
+	ALTER TABLE [plan_version_dayparts] DROP CONSTRAINT [FK_plan_version_dayparts_plan_versions]
+	ALTER TABLE [dbo].[plan_version_dayparts] WITH CHECK ADD CONSTRAINT [FK_plan_version_dayparts_plan_versions] FOREIGN KEY ([plan_version_id])
+	REFERENCES [dbo].[plan_versions] (id) ON DELETE CASCADE
+END
+IF EXISTS(SELECT 1 FROM sys.foreign_keys WHERE parent_object_id = OBJECT_ID('plan_version_available_markets') AND name = 'FK_plan_version_available_markets_plan_versions')
+BEGIN
+	ALTER TABLE [plan_version_available_markets] DROP CONSTRAINT [FK_plan_version_available_markets_plan_versions]
+	ALTER TABLE [dbo].[plan_version_available_markets] WITH CHECK ADD CONSTRAINT [FK_plan_version_available_markets_plan_versions] FOREIGN KEY ([plan_version_id])
+	REFERENCES [dbo].[plan_versions] (id) ON DELETE CASCADE
+END
+IF EXISTS(SELECT 1 FROM sys.foreign_keys WHERE parent_object_id = OBJECT_ID('plan_version_blackout_markets') AND name = 'FK_plan_version_blackout_markets_plan_versions')
+BEGIN
+	ALTER TABLE [plan_version_blackout_markets] DROP CONSTRAINT [FK_plan_version_blackout_markets_plan_versions]
+	ALTER TABLE [dbo].[plan_version_blackout_markets] WITH CHECK ADD CONSTRAINT [FK_plan_version_blackout_markets_plan_versions] FOREIGN KEY ([plan_version_id])
+	REFERENCES [dbo].[plan_versions] (id) ON DELETE CASCADE
+END
+IF EXISTS(SELECT 1 FROM sys.foreign_keys WHERE parent_object_id = OBJECT_ID('plan_version_flight_hiatus_days') AND name = 'FK_plan_version_flight_hiatus_days_plan_versions')
+BEGIN
+	ALTER TABLE [plan_version_flight_hiatus_days] DROP CONSTRAINT [FK_plan_version_flight_hiatus_days_plan_versions]
+	ALTER TABLE [dbo].[plan_version_flight_hiatus_days] WITH CHECK ADD CONSTRAINT [FK_plan_version_flight_hiatus_days_plan_versions] FOREIGN KEY ([plan_version_id])
+	REFERENCES [dbo].[plan_versions] (id) ON DELETE CASCADE
+END
+IF EXISTS(SELECT 1 FROM sys.foreign_keys WHERE parent_object_id = OBJECT_ID('plan_version_secondary_audiences') AND name = 'FK_plan_version_secondary_audiences_plan_versions')
+BEGIN
+	ALTER TABLE [plan_version_secondary_audiences] DROP CONSTRAINT [FK_plan_version_secondary_audiences_plan_versions]
+	ALTER TABLE [dbo].[plan_version_secondary_audiences] WITH CHECK ADD CONSTRAINT [FK_plan_version_secondary_audiences_plan_versions] FOREIGN KEY ([plan_version_id])
+	REFERENCES [dbo].[plan_versions] (id) ON DELETE CASCADE
+END
+IF EXISTS(SELECT 1 FROM sys.foreign_keys WHERE parent_object_id = OBJECT_ID('plan_version_weeks') AND name = 'FK_plan_version_weeks_plan_versions')
+BEGIN
+	ALTER TABLE [plan_version_weeks] DROP CONSTRAINT [FK_plan_version_weeks_plan_versions]
+	ALTER TABLE [dbo].[plan_version_weeks] WITH CHECK ADD CONSTRAINT [FK_plan_version_weeks_plan_versions] FOREIGN KEY ([plan_version_id])
+	REFERENCES [dbo].[plan_versions] (id) ON DELETE CASCADE
+END
+/*************************************** END PRI-15921 *****************************************************/
+
 /*************************************** Start PRI-17556 ***************************************************/
 
 UPDATE Genres SET

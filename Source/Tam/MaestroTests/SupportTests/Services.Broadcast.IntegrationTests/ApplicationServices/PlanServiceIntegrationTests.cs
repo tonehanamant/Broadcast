@@ -84,6 +84,44 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
+        [Test]
+        public void DeleteDraft()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                PlanDto newPlan = _GetNewPlan();
+
+                //save version 1
+                int newPlanId = _PlanService.SavePlan(newPlan, "integration_test", new DateTime(2019, 01, 01));
+
+                //get the plan and format the impressions
+                PlanDto plan = _PlanService.GetPlan(newPlanId);
+
+                //save draft
+                plan.IsDraft = true;
+                _PlanService.SavePlan(plan, "integration_test", new DateTime(2019, 01, 07));
+
+                var draftId = _PlanService.CheckForDraft(newPlanId);
+                Assert.IsTrue(draftId > 0);
+
+                //delete draft and check
+                _PlanService.DeletePlanDraft(newPlanId);
+                var draftIdDeleted = _PlanService.CheckForDraft(newPlanId);
+                Assert.IsTrue(draftIdDeleted == 0);
+            }
+        }
+
+        [Test]
+        public void DeleteDraft_InvalidDraft()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                //try to delete non existing draft                
+                var exception = Assert.Throws<Exception>(() => _PlanService.DeletePlanDraft(999));
+                
+                Assert.That(exception.Message, Is.EqualTo("Cannot delete invalid draft."));
+            }
+        }
 
         [Test]
         [UseReporter(typeof(DiffReporter))]

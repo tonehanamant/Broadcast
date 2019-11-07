@@ -95,6 +95,13 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// <returns></returns>
         PlanLockResponse LockPlan(int planId);
 
+         /// <summary>
+        /// Deletes the plan draft.
+        /// </summary>        
+        /// <param name="planId">The plan identifier.</param>
+        /// <returns>True if the delete was successful</returns>
+        bool DeletePlanDraft(int planId);
+        
         /// <summary>
         /// Gets the plan history.
         /// </summary>
@@ -304,6 +311,13 @@ namespace Services.Broadcast.ApplicationServices.Plan
             plan.TotalActiveDays = plan.WeeklyBreakdownWeeks.Select(x => x.NumberOfActiveDays).Sum();
             plan.TotalHiatusDays = plan.FlightHiatusDays.Count();
             plan.TotalShareOfVoice = plan.WeeklyBreakdownWeeks.Select(x => x.ShareOfVoice).Sum();
+        }
+
+        ///<inheritdoc/>
+        public bool DeletePlanDraft(int planId)
+        {
+            _PlanRepository.DeletePlanDraft(planId);
+            return true;
         }
 
         ///<inheritdoc/>

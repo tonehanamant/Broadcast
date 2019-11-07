@@ -180,5 +180,16 @@ namespace BroadcastComposerWeb.Controllers
         {
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanService>().GetPlanHistory(planId));
         }
+
+        /// <summary>
+        /// Delete the draft on a plan.
+        /// </summary>
+        /// <returns>True if the delete was successful</returns>
+        [HttpGet]
+        [Route("{planId}/DeleteDraft")]
+        public BaseResponse<bool> DeleteDraft(int planId)
+        {
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanService>().DeletePlanDraft(planId));
+        }
     }
 }

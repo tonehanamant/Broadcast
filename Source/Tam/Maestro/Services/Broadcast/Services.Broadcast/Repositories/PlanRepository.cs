@@ -80,6 +80,12 @@ namespace Services.Broadcast.Repositories
         /// <param name="planPricingRunModel">Plan pricing model data</param>
         void SavePricingRequest(PlanPricingApiRequestParametersDto planPricingRunModel);
 
+        /// <summary>
+        /// Deletes the plan draft.
+        /// </summary>
+        /// <param name="planId">The plan identifier.</param>
+        void DeletePlanDraft(int planId);
+        
         List<PlanPricingApiRequestParametersDto> GetPlanPricingRuns(int planId);
 
         /// <summary>
@@ -194,6 +200,23 @@ namespace Services.Broadcast.Repositories
 
                        _MapFromDto(planDto, context, plan, draftVersion);
 
+                       context.SaveChanges();
+                   });
+        }
+
+        /// <inheritdoc />
+        public void DeletePlanDraft(int planId)
+        {
+            _InReadUncommitedTransaction(
+                   context =>
+                   {
+                       //there can be only 1 draft on a plan, so we're doing Single here
+                       var draftVersion = (from v in context.plan_versions
+                                           where v.plan_id == planId && v.is_draft == true
+                                           select v)
+                       .Single("Cannot delete invalid draft.");
+
+                       context.plan_versions.Remove(draftVersion);
                        context.SaveChanges();
                    });
         }
