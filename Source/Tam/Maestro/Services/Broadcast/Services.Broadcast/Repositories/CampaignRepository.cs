@@ -270,6 +270,8 @@ namespace Services.Broadcast.Repositories
                     .Select(version =>
                     {
                         var summary = version.plan_version_summaries.Single();
+                        var draft = campaign.plans.SelectMany(x=> x.plan_versions)
+                            .Where(x => x.plan_id == version.plan_id && x.is_draft == true).SingleOrDefault();
 
                         return new PlanSummaryDto
                         {
@@ -299,6 +301,8 @@ namespace Services.Broadcast.Repositories
                             HasHiatus = summary.hiatus_days_count.HasValue && summary.hiatus_days_count.Value > 0,
                             HHImpressions = version.hh_impressions,
                             HHCPM = version.hh_cpm,
+                            DraftModifiedBy = draft?.modified_by ?? draft?.created_by,
+                            DraftModifiedDate = draft?.modified_date ?? draft?.created_date,
                             PlanSummaryQuarters = summary.plan_version_summary_quarters.Select(q => new PlanSummaryQuarterDto
                             {
                                 Quarter = q.quarter,

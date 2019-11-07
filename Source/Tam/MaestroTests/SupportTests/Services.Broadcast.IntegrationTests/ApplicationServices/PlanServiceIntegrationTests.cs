@@ -280,6 +280,33 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        public void CreatingDraftPlanPopulatesGetCampaignFlagsCorrectly()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                SaveCampaignDto newCampaign = _GetNewCampaign();
+                var newCampaignId = _CampaignService.SaveCampaign(newCampaign, "integration_test", new DateTime(2019, 10, 30));
+
+                Assert.IsTrue(newCampaignId > 0);
+
+                PlanDto newPlan = _GetNewPlan();
+                newPlan.CampaignId = newCampaignId;
+                var newPlanId = _PlanService.SavePlan(newPlan, "integration_test", new DateTime(2019, 10, 30), true);
+
+                var planFromDB = _PlanService.GetPlan(newPlanId);
+                planFromDB.IsDraft = true;
+                var draftPLan = _PlanService.SavePlan(planFromDB, "integration_test", new DateTime(2019, 10, 30), true);
+
+                _CampaignService.ProcessCampaignAggregation(newCampaignId);
+                var campaign = _CampaignService.GetCampaignById(newCampaignId);
+
+                Assert.AreEqual(1, campaign.Plans.Count);
+                Assert.AreEqual("integration_test", campaign.Plans.First().DraftModifiedBy);
+                Assert.AreEqual(new DateTime(2019, 10, 30), campaign.Plans.First().DraftModifiedDate);
+            }
+        }
+
+        [Test]
         [UseReporter(typeof(DiffReporter))]
         public void CanCreateNewPlanWithRejectedStatus()
         {

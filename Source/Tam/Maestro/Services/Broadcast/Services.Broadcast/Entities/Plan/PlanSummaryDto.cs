@@ -144,6 +144,16 @@ namespace Services.Broadcast.Entities.Plan
         public bool HasHiatus { get; set; }
 
         /// <summary>
+        /// The last time this plans draft was modified.
+        /// </summary>
+        public DateTime? DraftModifiedDate { get; set; }
+
+        /// <summary>
+        /// The last user who modified this plans draft.
+        /// </summary>
+        public string DraftModifiedBy { get; set; }
+
+        /// <summary>
         /// The last time this entity was modified.
         /// </summary>
         public DateTime? ModifiedDate { get; set; }

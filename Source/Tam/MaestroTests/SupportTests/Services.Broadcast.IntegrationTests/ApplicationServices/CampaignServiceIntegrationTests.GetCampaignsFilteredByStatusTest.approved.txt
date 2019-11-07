@@ -82,6 +82,8 @@
           "MDN",
           "OVN"
         ],
+        "DraftModifiedBy": null,
+        "DraftModifiedDate": null,
         "Equivalized": true,
         "FlightEndDate": "2019-07-31T00:00:00",
         "FlightStartDate": "2019-01-01T00:00:00",
@@ -128,6 +130,8 @@
           "MDN",
           "OVN"
         ],
+        "DraftModifiedBy": null,
+        "DraftModifiedDate": null,
         "Equivalized": true,
         "FlightEndDate": "2019-07-31T00:00:00",
         "FlightStartDate": "2019-01-01T00:00:00",
