@@ -26,6 +26,14 @@ namespace Services.Broadcast.Entities.Plan
         public int CampaignId { get; set; }
 
         /// <summary>
+        /// Gets or sets the name of the campaign.
+        /// </summary>
+        /// <value>
+        /// The name of the campaign.
+        /// </value>
+        public string CampaignName { get; set; }
+
+        /// <summary>
         /// Gets or sets the name.
         /// </summary>
         /// <value>

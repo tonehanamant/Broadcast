@@ -200,6 +200,7 @@ namespace Services.Broadcast.Repositories
                     var entity = (from plan in context.plans
                                   where plan.id == planId
                                   select plan)
+                        .Include(x => x.campaign)
                         .Include(x => x.plan_versions)
                         .Include(p => p.plan_versions.Select(x => x.plan_version_flight_hiatus_days))
                         .Include(p => p.plan_versions.Select(x => x.plan_version_secondary_audiences))
@@ -319,7 +320,8 @@ namespace Services.Broadcast.Repositories
             var dto = new PlanDto
             {
                 Id = entity.id,
-                CampaignId = entity.campaign_id,
+                CampaignId = entity.campaign.id,
+                CampaignName = entity.campaign.name,
                 Name = entity.name,
                 SpotLengthId = latestPlanVersion.spot_length_id,
                 Equivalized = latestPlanVersion.equivalized,

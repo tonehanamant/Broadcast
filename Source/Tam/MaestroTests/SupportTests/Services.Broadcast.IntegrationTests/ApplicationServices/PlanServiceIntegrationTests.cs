@@ -100,6 +100,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [UseReporter(typeof(DiffReporter))]
         public void CanCreateNewPlanWithCanceledStatus()
         {
             using (new TransactionScopeWrapper())
