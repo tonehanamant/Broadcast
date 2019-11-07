@@ -7,6 +7,7 @@ using Microsoft.Practices.Unity;
 using Owin;
 using Services.Broadcast;
 using Services.Broadcast.ApplicationServices;
+using Services.Broadcast.ApplicationServices.Plan;
 using Services.Broadcast.Entities.Enums;
 using Tam.Maestro.Common;
 using Tam.Maestro.Services.Clients;
@@ -40,6 +41,11 @@ namespace BroadcastComposerWeb
                 Queues = Enum.GetNames(typeof(QueueEnum)),
                 WorkerCount = Environment.ProcessorCount * 5
             });
+
+            var recurringJobsFactory = new RecurringJobsFactory(
+                BroadcastApplicationServiceFactory.Instance.Resolve<IRecurringJobManager>(),
+                BroadcastApplicationServiceFactory.Instance.Resolve<IPlanService>());
+            recurringJobsFactory.AddOrUpdateRecurringJobs();
         }
 
         public class HangfireJobActivator : JobActivator

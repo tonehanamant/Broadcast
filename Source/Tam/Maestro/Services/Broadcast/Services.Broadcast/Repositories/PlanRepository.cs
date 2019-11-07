@@ -81,6 +81,13 @@ namespace Services.Broadcast.Repositories
         /// <param name="planId">The plan identifier.</param>
         /// <returns>The name of the plan</returns>
         string GetPlanNameById(int planId);
+
+        /// <summary>
+        /// Gets the plans for automatic transition.
+        /// </summary>
+        /// <param name="transitionDate">The transition date.</param>
+        /// <returns></returns>
+        List<PlanDto> GetPlansForAutomaticTransition(DateTime transitionDate);
     }
 
     public class PlanRepository : BroadcastRepositoryBase, IPlanRepository
@@ -246,6 +253,39 @@ namespace Services.Broadcast.Repositories
                 var entitiesRaw = (from plan in context.plans
                                    join planVersion in context.plan_versions on plan.id equals planVersion.plan_id
                                    where plan.campaign_id == campaignId && plan.latest_version_id == planVersion.id
+                                   select plan)
+                        .Include(x => x.plan_versions)
+                        .Include(p => p.plan_versions.Select(x => x.plan_version_flight_hiatus_days))
+                        .Include(p => p.plan_versions.Select(x => x.plan_version_secondary_audiences))
+                        .Include(p => p.plan_versions.Select(x => x.plan_version_dayparts))
+                        .Include(p => p.plan_versions.Select(x => x.plan_version_available_markets))
+                        .Include(p => p.plan_versions.Select(x => x.plan_version_blackout_markets))
+                        .Include(p => p.plan_versions.Select(x => x.plan_version_weeks))
+                        .Include(p => p.plan_versions.Select(x => x.plan_version_summaries))
+                        .Include(p => p.plan_versions.Select(x => x.plan_version_weeks.Select(y => y.media_weeks)))
+                    .ToList();
+
+                return entitiesRaw.Select(e => _MapToDto(e, markets)).ToList();
+            });
+        }
+        
+        /// <inheritdoc />
+        public List<PlanDto> GetPlansForAutomaticTransition(DateTime transitionDate)
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                var planIdsThatHaveDrafts =
+                    context.plan_versions.Where(v => v.is_draft == true).Select(v => v.plan_id);
+
+                var markets = context.markets.ToList();
+                var entitiesRaw = (from plan in context.plans
+                                   join planVersion in context.plan_versions on plan.id equals planVersion.plan_id
+                                   where !planIdsThatHaveDrafts.Contains(plan.id) &&
+                                   plan.latest_version_id == planVersion.id &&
+                                   (
+                                    (planVersion.flight_start_date <= transitionDate && planVersion.status == (int)PlanStatusEnum.Contracted) ||
+                                    (planVersion.flight_end_date <= transitionDate && planVersion.status == (int)PlanStatusEnum.Live)
+                                   )
                                    select plan)
                         .Include(x => x.plan_versions)
                         .Include(p => p.plan_versions.Select(x => x.plan_version_flight_hiatus_days))

@@ -306,6 +306,7 @@
     <Compile Include="ApplicationServices\PlanPricingService.cs" />
     <Compile Include="ApplicationServices\PricingService.cs" />
     <Compile Include="ApplicationServices\ProgramGuideService.cs" />
+    <Compile Include="ApplicationServices\RecurringJobsFactory.cs" />
     <Compile Include="ApplicationServices\ShowTypeService.cs" />
     <Compile Include="BusinessEngines\ImpressionsCalculationEngine.cs" />
     <Compile Include="Clients\PricingApiClient.cs" />

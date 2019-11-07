@@ -1,6 +1,7 @@
 ﻿using Common.Services.ApplicationServices;
 using Common.Services.Extensions;
 using Common.Services.Repositories;
+using Hangfire;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Cache;
 using Services.Broadcast.Entities.Enums;
@@ -93,6 +94,15 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// <param name="planId">The plan identifier.</param>
         /// <returns></returns>
         PlanLockResponse LockPlan(int planId);
+
+        /// <summary>
+        /// The logic for automatic status transitioning
+        /// </summary>
+        /// <param name="transitionDate">The transition date.</param>
+        /// <param name="updatedBy">The updated by.</param>
+        /// <param name="updatedDate">The updated date.</param>
+        /// <param name="aggregatePlanSynchronously"></param>
+        void AutomaticStatusTransitions(DateTime transitionDate, string updatedBy, DateTime updatedDate, bool aggregatePlanSynchronously = false);
     }
 
     public class PlanService : IPlanService
@@ -331,6 +341,44 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 response = _CalculateCustomPlanWeeklyGoalBreakdown(request, weeks);
             }
             return response;
+        }
+
+        [AutomaticRetry(Attempts = 5, DelaysInSeconds = new int[] { 5 * 60 }, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
+        public void AutomaticStatusTransitions(DateTime transitionDate, string updatedBy, DateTime updatedDate, bool aggregatePlanSynchronously = false)
+        {
+            var plansToTransition = _PlanRepository.GetPlansForAutomaticTransition(transitionDate);
+            foreach (var plan in plansToTransition)
+            {
+                // PRI-16115
+                // We will skip plan-locking for now
+                // This logic will run in the background, the LockingManagerApplicationService needs a user to lock the resource, which we don't have
+
+                //var key = KeyHelper.GetPlanLockingKey(plan.Id);
+                //var lockingResult = _LockingManagerApplicationService.LockObject(key);
+
+                //if (lockingResult.Success)
+                //{
+                if (plan.Status == PlanStatusEnum.Contracted)
+                {
+                    plan.Status = PlanStatusEnum.Live;
+                }
+                else if (plan.Status == PlanStatusEnum.Live)
+                {
+                    plan.Status = PlanStatusEnum.Complete;
+                }
+
+                _PlanRepository.SavePlan(plan, updatedBy, updatedDate);
+
+                _DispatchPlanAggregation(plan, aggregatePlanSynchronously);
+                _CampaignAggregationJobTrigger.TriggerJob(plan.CampaignId, updatedBy);
+                //}
+                //else
+                //{
+                //    throw new Exception($"The chosen plan has been locked by {lockingResult.LockedUserName}");
+                //}
+
+                //_LockingManagerApplicationService.ReleaseObject(key);
+            }
         }
 
         private void _AddMissingWeeks(WeeklyBreakdownResponseDto result, List<DisplayMediaWeek> weeks, List<DateTime> flightHiatusDays, bool isCustom = false)

@@ -585,6 +585,44 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        public void PlanAutomaticStatusTransition_ContractedToLive()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                PlanDto testPlan = _GetNewPlan();
+                testPlan.Status = PlanStatusEnum.Contracted;
+
+                var newPlanId =_PlanService.SavePlan(testPlan, "integration_test",
+                    new DateTime(2019, 01, 01));
+
+                _PlanService.AutomaticStatusTransitions(new DateTime(2019, 01, 01), "integration_test", new DateTime(2019, 01, 01));
+
+                var updatedPlan = _PlanService.GetPlan(newPlanId);
+
+                Assert.AreEqual(updatedPlan.Status, PlanStatusEnum.Live);
+            }
+        }
+
+        [Test]
+        public void PlanAutomaticStatusTransition_LiveToComplete()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                PlanDto testPlan = _GetNewPlan();
+                testPlan.Status = PlanStatusEnum.Live;
+
+                var newPlanId = _PlanService.SavePlan(testPlan, "integration_test",
+                    new DateTime(2019, 01, 01));
+
+                _PlanService.AutomaticStatusTransitions(new DateTime(2019, 02, 01), "integration_test", new DateTime(2019, 02, 01));
+
+                var updatedPlan = _PlanService.GetPlan(newPlanId);
+
+                Assert.AreEqual(updatedPlan.Status, PlanStatusEnum.Complete);
+            }
+        }
+
+        [Test]
         [UseReporter(typeof(DiffReporter))]
         public void GetPlanCurrencies()
         {

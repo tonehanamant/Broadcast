@@ -54,7 +54,7 @@ namespace Services.Broadcast.ApplicationServices
                         _instance.RegisterType<JobStorage>(new InjectionFactory(c => JobStorage.Current));
                         _instance.RegisterType<IJobFilterProvider, JobFilterAttributeFilterProvider>(new InjectionConstructor(true));
                         _instance.RegisterType<IBackgroundJobFactory, BackgroundJobFactory>();
-                        _instance.RegisterType<IRecurringJobManager, RecurringJobManager>();
+                        _instance.RegisterType<IRecurringJobManager, RecurringJobManager>(new InjectionConstructor());
                         _instance.RegisterType<IBackgroundJobClient, BackgroundJobClient>();
                         _instance.RegisterType<IBackgroundJobStateChanger, BackgroundJobStateChanger>();
 
