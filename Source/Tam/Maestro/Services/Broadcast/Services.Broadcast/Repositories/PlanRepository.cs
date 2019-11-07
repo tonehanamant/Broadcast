@@ -61,6 +61,13 @@ namespace Services.Broadcast.Repositories
         void CreateOrUpdateDraft(PlanDto plan, string createdBy, DateTime createdDate);
 
         /// <summary>
+        /// Gets the plan history.
+        /// </summary>
+        /// <param name="planId">The plan identifier.</param>
+        /// <returns>List of PlanHistoryDto objects</returns>
+        List<PlanHistoryDto> GetPlanHistory(int planId);
+        
+        /// <summary>
         /// Checks if a draft exist on the plan and returns the draft id
         /// </summary>
         /// <param name="planId">The plan identifier.</param>
@@ -243,6 +250,39 @@ namespace Services.Broadcast.Repositories
                     .Single(s => s.id == planId, "Invalid plan id.");
                 return entity.plan_versions.Where(x => x.is_draft == true).Select(x => x.id).SingleOrDefault();
             });
+        }
+
+        /// <inheritdoc/>
+        public List<PlanHistoryDto> GetPlanHistory(int planId)
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                var versions = (from version in context.plan_versions
+                                where version.plan_id == planId
+                                select version)
+                    .Include(p => p.plan_version_dayparts)
+                    .ToList();
+                return _MapToHistoryDto(versions);
+            });
+        }
+
+        private List<PlanHistoryDto> _MapToHistoryDto(List<plan_versions> versions)
+        {
+            return versions.Select(x => new PlanHistoryDto
+            {
+                Budget = x.budget,
+                CPM = x.target_cpm,
+                DeliveryImpressions = x.target_impression,
+                FlightEndDate = x.flight_end_date,
+                FlightStartDate = x.flight_start_date,
+                IsDraft = x.is_draft,
+                ModifiedBy = x.modified_by ?? x.created_by,
+                ModifiedDate = x.modified_date ?? x.created_date,
+                Status = EnumHelper.GetEnum<PlanStatusEnum>(x.status),
+                TargetAudienceId = x.target_audience_id,
+                TotalDayparts = x.plan_version_dayparts.Count(),
+                VersionId = x.id
+            }).ToList();
         }
 
         /// <inheritdoc />

@@ -346,6 +346,7 @@
     <Compile Include="Entities\InventoryFileProgramEnrichmentJobDiagnostics.cs" />
     <Compile Include="Entities\Plan\Pricing\PlanPricingMarketDto.cs" />
     <Compile Include="Entities\Plan\Pricing\PlanPricingProgramDto.cs" />
+    <Compile Include="Entities\Plan\PlanHistoryDto.cs" />
     <Compile Include="Entities\Plan\Pricing\PlanPricingApiRequestParametersDto.cs" />
     <Compile Include="Entities\Plan\Pricing\PlanPricingApiRequestDto.cs" />
     <Compile Include="Entities\Plan\Pricing\PlanPricingApiResponsetDto.cs" />

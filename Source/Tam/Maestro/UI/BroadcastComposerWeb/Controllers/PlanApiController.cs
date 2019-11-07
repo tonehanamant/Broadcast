@@ -96,7 +96,7 @@ namespace BroadcastComposerWeb.Controllers
         {
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanService>().GetPlanCurrencies());
         }
-
+                
         /// <summary>
         /// Calculates the specified plan budget based on 2 values.
         /// </summary>
@@ -168,6 +168,17 @@ namespace BroadcastComposerWeb.Controllers
         public BaseResponse<PlanDefaultsDto> GetPlanDefaults()
         {
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanService>().GetPlanDefaults());
+        }
+
+        /// <summary>
+        /// Gets the currencies.
+        /// </summary>
+        /// <returns>List of LookupDto objects</returns>
+        [HttpGet]
+        [Route("{planId}/history")]
+        public BaseResponse<List<PlanHistoryDto>> GetPlanHistory(int planId)
+        {
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanService>().GetPlanHistory(planId));
         }
     }
 }

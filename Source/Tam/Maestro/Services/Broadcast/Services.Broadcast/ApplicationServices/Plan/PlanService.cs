@@ -96,6 +96,13 @@ namespace Services.Broadcast.ApplicationServices.Plan
         PlanLockResponse LockPlan(int planId);
 
         /// <summary>
+        /// Gets the plan history.
+        /// </summary>
+        /// <param name="planId">Plan identifier</param>
+        /// <returns>List of PlanHistoryDto objects</returns>
+        List<PlanHistoryDto> GetPlanHistory(int planId);
+        
+        /// <summary>
         /// The logic for automatic status transitioning
         /// </summary>
         /// <param name="transitionDate">The transition date.</param>
@@ -230,6 +237,32 @@ namespace Services.Broadcast.ApplicationServices.Plan
             //format delivery impressions
             plan.DeliveryImpressions = plan.DeliveryImpressions / 1000;
             return plan;
+        }
+
+        /// <inheritdoc/>
+        public List<PlanHistoryDto> GetPlanHistory(int planId)
+        {
+            var planVersions = _PlanRepository.GetPlanHistory(planId);
+            planVersions = planVersions.OrderByDescending(x => x.IsDraft == true).ThenByDescending(x => x.ModifiedDate).ToList();
+            _SetVersionName(planVersions);
+
+            return planVersions;
+        }
+
+        private void _SetVersionName(List<PlanHistoryDto> planVersions)
+        {
+            var draft = planVersions.SingleOrDefault(x=>x.IsDraft ==true);
+            if(draft != null)
+            {
+                draft.VersionName = "Draft";
+            }
+            int index = 0;
+            var remainingVersion = planVersions.Where(x => x.IsDraft != true).ToList();
+            foreach (var version in remainingVersion)
+            {
+                version.VersionName = $"Version {remainingVersion.Count - index}";
+                index++;
+            }
         }
 
         /// <inheritdoc/>

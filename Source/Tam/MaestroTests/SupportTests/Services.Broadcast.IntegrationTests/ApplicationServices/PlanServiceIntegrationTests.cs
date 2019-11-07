@@ -119,6 +119,64 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetPlanHistory()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                PlanDto newPlan = _GetNewPlan();
+
+                //save version 1
+                int newPlanId = _PlanService.SavePlan(newPlan, "integration_test", new DateTime(2019, 01, 01));
+
+                //get the plan and format the impressions
+                PlanDto plan = _PlanService.GetPlan(newPlanId);
+
+                //save version 2
+                plan.Budget = 222;  //we change the budget to have different data between versions                 
+                _PlanService.SavePlan(plan, "integration_test", new DateTime(2019, 01, 05));
+
+                //save version 3
+                plan.Dayparts.RemoveAt(1); //we remove a daypart to have different data between versions
+                plan.DeliveryImpressions = plan.DeliveryImpressions / 1000;
+                _PlanService.SavePlan(plan, "integration_test", new DateTime(2019, 01, 07));
+
+                var planHistory = _PlanService.GetPlanHistory(newPlanId);
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(planHistory, _GetJsonSettings()));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetPlanHistory_WithDraft()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                PlanDto newPlan = _GetNewPlan();
+
+                //save version 1
+                int newPlanId = _PlanService.SavePlan(newPlan, "integration_test", new DateTime(2019, 01, 01));
+
+                //get the plan and format the impressions
+                PlanDto plan = _PlanService.GetPlan(newPlanId);
+
+                //save version 2
+                plan.Budget = 222;
+                _PlanService.SavePlan(plan, "integration_test", new DateTime(2019, 01, 01));
+
+                //save draft
+                plan.IsDraft = true;
+                plan.DeliveryImpressions = plan.DeliveryImpressions / 1000;
+                _PlanService.SavePlan(plan, "integration_test", new DateTime(2019, 01, 01));
+
+                var planHistory = _PlanService.GetPlanHistory(newPlanId);
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(planHistory, _GetJsonSettings()));
+            }
+        }
+
+        [Test]
         public void CreatingPlansCheckCampaignAggregation()
         {
             using (new TransactionScopeWrapper())
@@ -1402,6 +1460,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             jsonResolver.Ignore(typeof(PlanMarketDto), "Id");
             jsonResolver.Ignore(typeof(PlanSummaryDto), "PlanId");
             jsonResolver.Ignore(typeof(PlanSummaryDto), "VersionId");
+            jsonResolver.Ignore(typeof(PlanHistoryDto), "VersionId");
 
             return new JsonSerializerSettings
             {
