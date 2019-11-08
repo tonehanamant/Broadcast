@@ -3,7 +3,7 @@ using System;
 
 namespace Services.Broadcast.Entities.Plan
 {
-    public class PlanHistoryDto
+    public class PlanVersionDto
     {
         /// <summary>
         /// Gets or sets the version identifier.
@@ -54,6 +54,14 @@ namespace Services.Broadcast.Entities.Plan
         public DateTime FlightEndDate { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether this instance is flight modified.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if this instance is flight modified; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsModifiedFlight { get; set; }
+
+        /// <summary>
         /// Gets or sets the target audience identifier.
         /// </summary>
         /// <value>
@@ -62,12 +70,29 @@ namespace Services.Broadcast.Entities.Plan
         public int TargetAudienceId { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether this instance is target audience modified.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if this instance is target audience modified; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsModifiedTargetAudience { get; set; }
+
+        /// <summary>
         /// Gets or sets the total dayparts.
         /// </summary>
         /// <value>
         /// The total dayparts.
         /// </value>
         public int TotalDayparts { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this instance is modified dayparts.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if this instance is modified dayparts; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsModifiedDayparts { get; set; }
+
         /// <summary>
         /// Gets or sets the budget.
         /// </summary>
@@ -77,19 +102,44 @@ namespace Services.Broadcast.Entities.Plan
         public decimal? Budget { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether this instance is modified budget.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if this instance is modified budget; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsModifiedBudget { get; set; }
+
+        /// <summary>
         /// Gets or sets the delivery.
         /// </summary>
         /// <value>
         /// The delivery.
         /// </value>
-        public double? DeliveryImpressions { get; set; }
+        public double? TargetImpressions { get; set; }
+
         /// <summary>
-        /// Gets or sets the CPM.
+        /// Gets or sets a value indicating whether this instance is modified target impressions.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if this instance is modified target impressions; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsModifiedTargetImpressions { get; set; }
+
+        /// <summary>
+        /// Gets or sets the target CPM.
         /// </summary>
         /// <value>
         /// The CPM.
         /// </value>
-        public decimal? CPM { get; set; }
+        public decimal? TargetCPM { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this instance is modified target CPM.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if this instance is modified target CPM; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsModifiedTargetCPM { get; set; }
 
         /// <summary>
         /// Gets or sets the modified by.

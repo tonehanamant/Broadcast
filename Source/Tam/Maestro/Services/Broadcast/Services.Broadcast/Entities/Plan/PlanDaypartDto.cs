@@ -1,4 +1,5 @@
 ﻿using Services.Broadcast.Entities.Enums;
+using System;
 using System.Collections.Generic;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 
@@ -7,7 +8,7 @@ namespace Services.Broadcast.Entities.Plan
     /// <summary>
     /// The user defined daypart for the plan.
     /// </summary>
-    public class PlanDaypartDto
+    public class PlanDaypartDto : IEquatable<PlanDaypartDto>
     {
         /// <summary>
         /// Gets or sets the daypart code identifier.
@@ -66,6 +67,15 @@ namespace Services.Broadcast.Entities.Plan
         public double? WeightingGoalPercent { get; set; }
 
         public RestrictionsDto Restrictions { get; set; } = new RestrictionsDto();
+
+        public bool Equals(PlanDaypartDto other)
+        {
+            return DaypartCodeId == other.DaypartCodeId
+                && DaypartTypeId == other.DaypartTypeId
+                && IsStartTimeModified == other.IsStartTimeModified
+                && IsEndTimeModified == other.IsEndTimeModified
+                && WeightingGoalPercent == other.WeightingGoalPercent;
+        }
 
         public class RestrictionsDto
         {

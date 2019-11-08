@@ -1525,7 +1525,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             jsonResolver.Ignore(typeof(PlanMarketDto), "Id");
             jsonResolver.Ignore(typeof(PlanSummaryDto), "PlanId");
             jsonResolver.Ignore(typeof(PlanSummaryDto), "VersionId");
-            jsonResolver.Ignore(typeof(PlanHistoryDto), "VersionId");
+            jsonResolver.Ignore(typeof(PlanVersionDto), "VersionId");
 
             return new JsonSerializerSettings
             {

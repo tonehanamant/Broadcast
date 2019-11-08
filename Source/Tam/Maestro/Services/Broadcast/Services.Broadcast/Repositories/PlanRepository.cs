@@ -65,7 +65,7 @@ namespace Services.Broadcast.Repositories
         /// </summary>
         /// <param name="planId">The plan identifier.</param>
         /// <returns>List of PlanHistoryDto objects</returns>
-        List<PlanHistoryDto> GetPlanHistory(int planId);
+        List<PlanVersion> GetPlanHistory(int planId);
         
         /// <summary>
         /// Checks if a draft exist on the plan and returns the draft id
@@ -276,36 +276,40 @@ namespace Services.Broadcast.Repositories
         }
 
         /// <inheritdoc/>
-        public List<PlanHistoryDto> GetPlanHistory(int planId)
+        public List<PlanVersion> GetPlanHistory(int planId)
         {
             return _InReadUncommitedTransaction(context =>
             {
-                var versions = (from version in context.plan_versions
+                return (from version in context.plan_versions
                                 where version.plan_id == planId
                                 select version)
                     .Include(p => p.plan_version_dayparts)
-                    .ToList();
-                return _MapToHistoryDto(versions);
+                    .Include(p => p.plan_version_flight_hiatus_days)
+                    .Select(x => new PlanVersion
+                    {
+                        VersionId = x.id,
+                        Budget = x.budget,
+                        TargetCPM = x.target_cpm,
+                        TargetImpressions = x.target_impression,
+                        FlightEndDate = x.flight_end_date,
+                        FlightStartDate = x.flight_start_date,
+                        IsDraft = x.is_draft,
+                        ModifiedBy = x.modified_by ?? x.created_by,
+                        ModifiedDate = x.modified_date ?? x.created_date,
+                        Status = x.status,
+                        TargetAudienceId = x.target_audience_id,
+                        Dayparts = x.plan_version_dayparts.Select(y => new PlanDaypartDto
+                        {
+                            DaypartCodeId = y.daypart_code_id,
+                            EndTimeSeconds = y.end_time_seconds,
+                            IsEndTimeModified = y.is_end_time_modified,
+                            IsStartTimeModified = y.is_start_time_modified,
+                            StartTimeSeconds = y.start_time_seconds,
+                            WeightingGoalPercent = y.weighting_goal_percent
+                        }).ToList(),
+                        HiatusDays = x.plan_version_flight_hiatus_days.Select(y => y.hiatus_day).ToList()
+                    }).ToList();
             });
-        }
-
-        private List<PlanHistoryDto> _MapToHistoryDto(List<plan_versions> versions)
-        {
-            return versions.Select(x => new PlanHistoryDto
-            {
-                Budget = x.budget,
-                CPM = x.target_cpm,
-                DeliveryImpressions = x.target_impression,
-                FlightEndDate = x.flight_end_date,
-                FlightStartDate = x.flight_start_date,
-                IsDraft = x.is_draft,
-                ModifiedBy = x.modified_by ?? x.created_by,
-                ModifiedDate = x.modified_date ?? x.created_date,
-                Status = EnumHelper.GetEnum<PlanStatusEnum>(x.status),
-                TargetAudienceId = x.target_audience_id,
-                TotalDayparts = x.plan_version_dayparts.Count(),
-                VersionId = x.id
-            }).ToList();
         }
 
         /// <inheritdoc />
@@ -371,7 +375,7 @@ namespace Services.Broadcast.Repositories
             newPlan.latest_version_id = newPlan.plan_versions.Max(x => x.id);
             context.SaveChanges();
         }
-
+          
         private PlanDto _MapToDto(plan entity, List<market> markets, int? versionId = null)
         {
             var latestPlanVersion = versionId != null

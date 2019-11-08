@@ -176,7 +176,7 @@ namespace BroadcastComposerWeb.Controllers
         /// <returns>List of LookupDto objects</returns>
         [HttpGet]
         [Route("{planId}/history")]
-        public BaseResponse<List<PlanHistoryDto>> GetPlanHistory(int planId)
+        public BaseResponse<List<PlanVersionDto>> GetPlanHistory(int planId)
         {
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanService>().GetPlanHistory(planId));
         }

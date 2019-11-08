@@ -19,7 +19,7 @@ using Tam.Maestro.Services.ContractInterfaces.Common;
 
 namespace Services.Broadcast.ApplicationServices.Plan
 {
-    
+
     public interface IPlanService : IApplicationService
     {
         /// <summary>
@@ -96,18 +96,18 @@ namespace Services.Broadcast.ApplicationServices.Plan
         PlanLockResponse LockPlan(int planId);
 
          /// <summary>
+        /// Gets the plan history.
+        /// </summary>
+        /// <param name="planId">Plan identifier</param>
+        /// <returns>List of PlanHistoryDto objects</returns>
+        List<PlanVersionDto> GetPlanHistory(int planId);
+        
+         /// <summary>
         /// Deletes the plan draft.
         /// </summary>        
         /// <param name="planId">The plan identifier.</param>
         /// <returns>True if the delete was successful</returns>
         bool DeletePlanDraft(int planId);
-        
-        /// <summary>
-        /// Gets the plan history.
-        /// </summary>
-        /// <param name="planId">Plan identifier</param>
-        /// <returns>List of PlanHistoryDto objects</returns>
-        List<PlanHistoryDto> GetPlanHistory(int planId);
         
         /// <summary>
         /// The logic for automatic status transitioning
@@ -200,7 +200,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     {
                         //this is a new version.
                         _PlanRepository.SavePlan(plan, createdBy, createdDate);
-                    }
+                }
                 }
                 else
                 {
@@ -209,12 +209,12 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
 
             //we only aggregate data for versions, not drafts
-            if(plan.IsDraft == false)
+            if (plan.IsDraft == false)
             {
                 _DispatchPlanAggregation(plan, aggregatePlanSynchronously);
                 _CampaignAggregationJobTrigger.TriggerJob(plan.CampaignId, createdBy);
             }
-            
+
             return plan.Id;
         }
 
@@ -247,19 +247,106 @@ namespace Services.Broadcast.ApplicationServices.Plan
         }
 
         /// <inheritdoc/>
-        public List<PlanHistoryDto> GetPlanHistory(int planId)
+        public List<PlanVersionDto> GetPlanHistory(int planId)
         {
             var planVersions = _PlanRepository.GetPlanHistory(planId);
-            planVersions = planVersions.OrderByDescending(x => x.IsDraft == true).ThenByDescending(x => x.ModifiedDate).ToList();
-            _SetVersionName(planVersions);
+            
+            List<PlanVersionDto> result = _MapToPlanHistoryDto(planVersions);
+            result = result.OrderByDescending(x => x.IsDraft == true).ThenByDescending(x => x.ModifiedDate).ToList();
 
-            return planVersions;
+            _SetVersionName(result);
+            _CompareVersions(planVersions, result);
+
+            return result;
         }
 
-        private void _SetVersionName(List<PlanHistoryDto> planVersions)
+        private void _CompareVersions(List<PlanVersion> planVersions, List<PlanVersionDto> result)
         {
-            var draft = planVersions.SingleOrDefault(x=>x.IsDraft ==true);
-            if(draft != null)
+            //based on the ordering done in the calling method, the version we compare with is the first one in the result list
+            var baseVersion = planVersions.Single(x => x.VersionId == result.First().VersionId);
+
+            foreach(var version in planVersions.Where(x=>x.VersionId != baseVersion.VersionId).ToList())
+            {
+                var resultedVersion = result.Single(x => x.VersionId == version.VersionId);
+                resultedVersion.IsModifiedBudget = (baseVersion.Budget != version.Budget);
+                resultedVersion.IsModifiedFlight = _CheckIfFlightIsModified(baseVersion, version, resultedVersion);
+                resultedVersion.IsModifiedTargetAudience = (baseVersion.TargetAudienceId != version.TargetAudienceId);
+                resultedVersion.IsModifiedTargetCPM = (baseVersion.TargetCPM != version.TargetCPM);
+                resultedVersion.IsModifiedTargetImpressions = (baseVersion.TargetImpressions != version.TargetImpressions);
+                resultedVersion.IsModifiedDayparts = _CheckIfDaypartsAreModified(baseVersion, version, resultedVersion);
+            }
+        }
+
+        private bool _CheckIfDaypartsAreModified(PlanVersion baseVersion, PlanVersion version, PlanVersionDto resultedVersion)
+        {
+            //check if number of dayparts is different
+            if(baseVersion.Dayparts.Count() != version.Dayparts.Count())
+            {
+                return true;
+            }
+
+            //check if the dayparts themselves are different
+            foreach(var daypart in baseVersion.Dayparts)
+            {
+                if (!version.Dayparts.Contains(daypart))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private bool _CheckIfFlightIsModified(PlanVersion baseVersion, PlanVersion version, PlanVersionDto resultedVersion)
+        {
+            //check if start or end dates are different
+            if (baseVersion.FlightStartDate != version.FlightStartDate || baseVersion.FlightEndDate != version.FlightEndDate)
+            {
+                return true;
+            }
+
+            //check if number of hiatus days is different
+            if(baseVersion.HiatusDays.Count() != version.HiatusDays.Count())
+            {
+                return true;
+            }
+
+            //check if the hiatus days themselves are different
+            foreach(var date in baseVersion.HiatusDays)
+            {
+                if (!version.HiatusDays.Contains(date))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        //this method only maps the db fields
+        private List<PlanVersionDto> _MapToPlanHistoryDto(List<PlanVersion> planVersions)
+        {
+            return planVersions.Select(x => new PlanVersionDto
+            {
+                Budget = x.Budget,
+                TargetCPM = x.TargetCPM,
+                TargetImpressions = x.TargetImpressions,
+                FlightEndDate = x.FlightEndDate,
+                FlightStartDate = x.FlightStartDate,
+                IsDraft = x.IsDraft,
+                ModifiedBy = x.ModifiedBy,
+                ModifiedDate = x.ModifiedDate,
+                Status = EnumHelper.GetEnum<PlanStatusEnum>(x.Status),
+                TargetAudienceId = x.TargetAudienceId,
+                VersionId = x.VersionId,
+                TotalDayparts = x.Dayparts.Count()
+            }).ToList();
+        }
+
+        private void _SetVersionName(List<PlanVersionDto> planVersions)
+        {
+            var draft = planVersions.SingleOrDefault(x => x.IsDraft == true);
+            if (draft != null)
             {
                 draft.VersionName = "Draft";
             }
@@ -475,7 +562,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             {
                 week.NumberOfActiveDays = _CalculateActiveDays(week, request.FlightHiatusDays, out string activeDaysString);
                 week.ActiveDays = activeDaysString;
-                if(week.NumberOfActiveDays < 1)
+                if (week.NumberOfActiveDays < 1)
                 {
                     week.Impressions = 0;
                     week.ShareOfVoice = 0;
