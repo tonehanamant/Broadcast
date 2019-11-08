@@ -1,39 +1,7 @@
 ﻿[
   {
-    "Display": "Action",
-    "Id": 1
-  },
-  {
     "Display": "Action/Adventure",
     "Id": 51
-  },
-  {
-    "Display": "Adult",
-    "Id": 2
-  },
-  {
-    "Display": "Adventure",
-    "Id": 3
-  },
-  {
-    "Display": "Anthology",
-    "Id": 4
-  },
-  {
-    "Display": "Auction",
-    "Id": 5
-  },
-  {
-    "Display": "Awards",
-    "Id": 6
-  },
-  {
-    "Display": "Beauty & Fashion",
-    "Id": 7
-  },
-  {
-    "Display": "Business",
-    "Id": 8
   },
   {
     "Display": "Children",
@@ -44,16 +12,8 @@
     "Id": 9
   },
   {
-    "Display": "Competition",
-    "Id": 10
-  },
-  {
     "Display": "Crime",
     "Id": 11
-  },
-  {
-    "Display": "Do It Yourself",
-    "Id": 13
   },
   {
     "Display": "Documentary",
@@ -72,40 +32,8 @@
     "Id": 15
   },
   {
-    "Display": "Family",
-    "Id": 16
-  },
-  {
-    "Display": "Fantasy",
-    "Id": 17
-  },
-  {
-    "Display": "Fitness & Exercise",
-    "Id": 18
-  },
-  {
-    "Display": "Food",
-    "Id": 19
-  },
-  {
     "Display": "Game Show",
     "Id": 20
-  },
-  {
-    "Display": "Health & Medicine",
-    "Id": 21
-  },
-  {
-    "Display": "History",
-    "Id": 22
-  },
-  {
-    "Display": "Holiday",
-    "Id": 23
-  },
-  {
-    "Display": "Home Shopping",
-    "Id": 24
   },
   {
     "Display": "Horror",
@@ -116,36 +44,8 @@
     "Id": 26
   },
   {
-    "Display": "Inspirational",
-    "Id": 27
-  },
-  {
-    "Display": "Instructional",
-    "Id": 50
-  },
-  {
-    "Display": "Interview",
-    "Id": 28
-  },
-  {
-    "Display": "Investigative",
-    "Id": 29
-  },
-  {
     "Display": "Lifestyle",
     "Id": 54
-  },
-  {
-    "Display": "Music",
-    "Id": 30
-  },
-  {
-    "Display": "Musical",
-    "Id": 31
-  },
-  {
-    "Display": "Mystery",
-    "Id": 32
   },
   {
     "Display": "Nature",
@@ -160,36 +60,12 @@
     "Id": 55
   },
   {
-    "Display": "Parade",
-    "Id": 35
-  },
-  {
-    "Display": "Performance",
-    "Id": 36
-  },
-  {
-    "Display": "Politics",
-    "Id": 37
-  },
-  {
-    "Display": "Profile",
-    "Id": 38
-  },
-  {
     "Display": "Reality",
     "Id": 39
   },
   {
     "Display": "Religious",
     "Id": 40
-  },
-  {
-    "Display": "Romance",
-    "Id": 41
-  },
-  {
-    "Display": "Science & Technology",
-    "Id": 43
   },
   {
     "Display": "Science Fiction",
@@ -204,23 +80,7 @@
     "Id": 44
   },
   {
-    "Display": "Talk Show",
+    "Display": "Talk",
     "Id": 45
-  },
-  {
-    "Display": "Telethon",
-    "Id": 46
-  },
-  {
-    "Display": "Thriller & Suspense",
-    "Id": 47
-  },
-  {
-    "Display": "Travel",
-    "Id": 48
-  },
-  {
-    "Display": "Western",
-    "Id": 49
   }
 ]

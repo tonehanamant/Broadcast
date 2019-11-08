@@ -845,6 +845,27 @@ IF OBJECT_ID('plan_pricing_execution_markets') IS NULL
 END
 /*************************************** END - PRI-16188 ****************************************************/
 
+/*************************************** START MAESTRO genre fix *****************************************************/
+
+IF ((SELECT COUNT(*) FROM genres WHERE source_id = 1 AND name = 'Talk Show' ) = 1)
+BEGIN 
+	UPDATE genres 
+	SET name = 'Talk' 
+	WHERE source_id = 1 AND name = 'Talk Show'
+END
+
+if((SELECT COUNT(*) FROM genres WHERE source_id = 1
+	AND name NOT IN ('CHILDREN', 'COMEDY', 'CRIME', 'DOCUMENTARY', 'DRAMA', 'EDUCATIONAL', 'ENTERTAINMENT', 'GAME SHOW', 'INFORMATIONAL', 'LIFESTYLE', 'NATURE', 'NEWS', 'PAID PROGRAM', 'REALITY', 'RELIGIOUS', 'SPECIAL', 'SPORTS/SPORTS TALK', 'TALK', 'SCIENCE FICTION', 'ACTION/ADVENTURE', 'HORROR')) > 0)
+BEGIN
+	DELETE FROM genres 
+	WHERE source_id = 1
+	AND name NOT IN ('CHILDREN', 'COMEDY', 'CRIME', 'DOCUMENTARY', 'DRAMA', 'EDUCATIONAL', 'ENTERTAINMENT', 'GAME SHOW', 'INFORMATIONAL', 'LIFESTYLE', 'NATURE', 'NEWS', 'PAID PROGRAM', 'REALITY', 'RELIGIOUS', 'SPECIAL', 'SPORTS/SPORTS TALK', 'TALK', 'SCIENCE FICTION', 'ACTION/ADVENTURE', 'HORROR')
+END
+
+
+/*************************************** END MAESTRO genre fix *****************************************************/
+
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version
