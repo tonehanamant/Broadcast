@@ -7,7 +7,7 @@
     "1Q'16: 2 weeks - 5/30, 6/6",
     "2Q'16: 2 weeks - 5/30, 6/6"
   ],
-  "GuaranteedDemo": "House Holds",
+  "GuaranteedDemo": "Households",
   "IsNtiReport": false,
   "PlaybackTypes": [
     "Live+3"

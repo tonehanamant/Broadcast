@@ -866,6 +866,17 @@ END
 /*************************************** END MAESTRO genre fix *****************************************************/
 
 
+/*************************************** Start PRI-17689  ***************************************************/
+
+IF((SELECT COUNT(*) FROM audiences WHERE Name = 'House Holds') = 1)
+BEGIN
+	UPDATE audiences
+	SET name = 'Households'
+	WHERE code = 'HH'
+END
+
+/*************************************** END PRI-17689 *****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

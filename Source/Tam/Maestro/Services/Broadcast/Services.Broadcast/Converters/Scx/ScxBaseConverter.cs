@@ -318,12 +318,12 @@ namespace Services.Broadcast.Converters.Scx
 
         private demoNameComplexTypeGroup _GetGroupFromAudience(DemoData demo)
         {
-            if (demo.Demo.Name.Contains("House Hold"))
+            if (demo.Demo.Name.Contains("Households"))
                 return demoNameComplexTypeGroup.Households;
             if (demo.Demo.Name.Contains("Adult"))
                 return demoNameComplexTypeGroup.Adults;
             if (demo.Demo.Name.StartsWith("Men"))
-                return demoNameComplexTypeGroup.Men;            
+                return demoNameComplexTypeGroup.Men;
             if (demo.Demo.Name.StartsWith("Women"))
                 return demoNameComplexTypeGroup.Women;
             if (demo.Demo.Name.Contains("Children"))

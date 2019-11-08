@@ -188,7 +188,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "House Holds",
+          "AudienceString": "Households",
           "Id": 31
         },
         "CPM": null,
@@ -281,7 +281,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "House Holds",
+          "AudienceString": "Households",
           "Id": 31
         },
         "CPM": 99.8800,
@@ -1118,7 +1118,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "House Holds",
+          "AudienceString": "Households",
           "Id": 31
         },
         "CPM": null,
@@ -1211,7 +1211,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "House Holds",
+          "AudienceString": "Households",
           "Id": 31
         },
         "CPM": 99.8800,
@@ -2048,7 +2048,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "House Holds",
+          "AudienceString": "Households",
           "Id": 31
         },
         "CPM": null,
@@ -2141,7 +2141,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "House Holds",
+          "AudienceString": "Households",
           "Id": 31
         },
         "CPM": 99.8800,
@@ -2978,7 +2978,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "House Holds",
+          "AudienceString": "Households",
           "Id": 31
         },
         "CPM": null,
@@ -3071,7 +3071,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "House Holds",
+          "AudienceString": "Households",
           "Id": 31
         },
         "CPM": 99.8800,
@@ -3952,7 +3952,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "House Holds",
+          "AudienceString": "Households",
           "Id": 31
         },
         "CPM": null,
@@ -4045,7 +4045,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "House Holds",
+          "AudienceString": "Households",
           "Id": 31
         },
         "CPM": 99.8800,
@@ -4882,7 +4882,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "House Holds",
+          "AudienceString": "Households",
           "Id": 31
         },
         "CPM": null,
@@ -4975,7 +4975,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "House Holds",
+          "AudienceString": "Households",
           "Id": 31
         },
         "CPM": 99.8800,
@@ -5812,7 +5812,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "House Holds",
+          "AudienceString": "Households",
           "Id": 31
         },
         "CPM": null,
@@ -5905,7 +5905,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "House Holds",
+          "AudienceString": "Households",
           "Id": 31
         },
         "CPM": 99.8800,
@@ -6742,7 +6742,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "House Holds",
+          "AudienceString": "Households",
           "Id": 31
         },
         "CPM": null,
@@ -6835,7 +6835,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "House Holds",
+          "AudienceString": "Households",
           "Id": 31
         },
         "CPM": 99.8800,
@@ -7672,7 +7672,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "House Holds",
+          "AudienceString": "Households",
           "Id": 31
         },
         "CPM": null,
@@ -7765,7 +7765,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "House Holds",
+          "AudienceString": "Households",
           "Id": 31
         },
         "CPM": 99.8800,
@@ -8646,7 +8646,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "House Holds",
+          "AudienceString": "Households",
           "Id": 31
         },
         "CPM": null,
@@ -8739,7 +8739,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "House Holds",
+          "AudienceString": "Households",
           "Id": 31
         },
         "CPM": 99.8800,
@@ -9576,7 +9576,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "House Holds",
+          "AudienceString": "Households",
           "Id": 31
         },
         "CPM": null,
@@ -9669,7 +9669,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "House Holds",
+          "AudienceString": "Households",
           "Id": 31
         },
         "CPM": 99.8800,
@@ -10506,7 +10506,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "House Holds",
+          "AudienceString": "Households",
           "Id": 31
         },
         "CPM": null,
@@ -10599,7 +10599,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "House Holds",
+          "AudienceString": "Households",
           "Id": 31
         },
         "CPM": 99.8800,
@@ -11436,7 +11436,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "House Holds",
+          "AudienceString": "Households",
           "Id": 31
         },
         "CPM": null,
@@ -11529,7 +11529,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "House Holds",
+          "AudienceString": "Households",
           "Id": 31
         },
         "CPM": 99.8800,
@@ -12366,7 +12366,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "House Holds",
+          "AudienceString": "Households",
           "Id": 31
         },
         "CPM": null,
@@ -12459,7 +12459,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "House Holds",
+          "AudienceString": "Households",
           "Id": 31
         },
         "CPM": 99.8800,
@@ -13340,7 +13340,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "House Holds",
+          "AudienceString": "Households",
           "Id": 31
         },
         "CPM": null,
@@ -13433,7 +13433,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "House Holds",
+          "AudienceString": "Households",
           "Id": 31
         },
         "CPM": 99.8800,
@@ -14270,7 +14270,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "House Holds",
+          "AudienceString": "Households",
           "Id": 31
         },
         "CPM": null,
@@ -14363,7 +14363,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "House Holds",
+          "AudienceString": "Households",
           "Id": 31
         },
         "CPM": 99.8800,
@@ -15200,7 +15200,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "House Holds",
+          "AudienceString": "Households",
           "Id": 31
         },
         "CPM": null,
@@ -15293,7 +15293,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "House Holds",
+          "AudienceString": "Households",
           "Id": 31
         },
         "CPM": 99.8800,
@@ -16130,7 +16130,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "House Holds",
+          "AudienceString": "Households",
           "Id": 31
         },
         "CPM": null,
@@ -16223,7 +16223,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "House Holds",
+          "AudienceString": "Households",
           "Id": 31
         },
         "CPM": 99.8800,
@@ -17060,7 +17060,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "House Holds",
+          "AudienceString": "Households",
           "Id": 31
         },
         "CPM": null,
@@ -17153,7 +17153,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "House Holds",
+          "AudienceString": "Households",
           "Id": 31
         },
         "CPM": 99.8800,
@@ -18034,7 +18034,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "House Holds",
+          "AudienceString": "Households",
           "Id": 31
         },
         "CPM": null,
@@ -18127,7 +18127,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "House Holds",
+          "AudienceString": "Households",
           "Id": 31
         },
         "CPM": 99.8800,
@@ -18964,7 +18964,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "House Holds",
+          "AudienceString": "Households",
           "Id": 31
         },
         "CPM": null,
@@ -19057,7 +19057,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "House Holds",
+          "AudienceString": "Households",
           "Id": 31
         },
         "CPM": 99.8800,
@@ -19894,7 +19894,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "House Holds",
+          "AudienceString": "Households",
           "Id": 31
         },
         "CPM": null,
@@ -19987,7 +19987,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "House Holds",
+          "AudienceString": "Households",
           "Id": 31
         },
         "CPM": 99.8800,
@@ -20824,7 +20824,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "House Holds",
+          "AudienceString": "Households",
           "Id": 31
         },
         "CPM": null,
@@ -20917,7 +20917,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "House Holds",
+          "AudienceString": "Households",
           "Id": 31
         },
         "CPM": 99.8800,
@@ -21754,7 +21754,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "House Holds",
+          "AudienceString": "Households",
           "Id": 31
         },
         "CPM": null,
@@ -21847,7 +21847,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "House Holds",
+          "AudienceString": "Households",
           "Id": 31
         },
         "CPM": 99.8800,
@@ -22728,7 +22728,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "House Holds",
+          "AudienceString": "Households",
           "Id": 31
         },
         "CPM": null,
@@ -22821,7 +22821,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "House Holds",
+          "AudienceString": "Households",
           "Id": 31
         },
         "CPM": 99.8800,
@@ -23658,7 +23658,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "House Holds",
+          "AudienceString": "Households",
           "Id": 31
         },
         "CPM": null,
@@ -23751,7 +23751,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "House Holds",
+          "AudienceString": "Households",
           "Id": 31
         },
         "CPM": 99.8800,
@@ -24588,7 +24588,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "House Holds",
+          "AudienceString": "Households",
           "Id": 31
         },
         "CPM": null,
@@ -24681,7 +24681,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "House Holds",
+          "AudienceString": "Households",
           "Id": 31
         },
         "CPM": 99.8800,
@@ -25518,7 +25518,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "House Holds",
+          "AudienceString": "Households",
           "Id": 31
         },
         "CPM": null,
@@ -25611,7 +25611,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "House Holds",
+          "AudienceString": "Households",
           "Id": 31
         },
         "CPM": 99.8800,
@@ -26448,7 +26448,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "House Holds",
+          "AudienceString": "Households",
           "Id": 31
         },
         "CPM": null,
@@ -26541,7 +26541,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "House Holds",
+          "AudienceString": "Households",
           "Id": 31
         },
         "CPM": 99.8800,
@@ -27422,7 +27422,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "House Holds",
+          "AudienceString": "Households",
           "Id": 31
         },
         "CPM": null,
@@ -27515,7 +27515,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "House Holds",
+          "AudienceString": "Households",
           "Id": 31
         },
         "CPM": 99.8800,
@@ -28352,7 +28352,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "House Holds",
+          "AudienceString": "Households",
           "Id": 31
         },
         "CPM": null,
@@ -28445,7 +28445,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "House Holds",
+          "AudienceString": "Households",
           "Id": 31
         },
         "CPM": 99.8800,
@@ -29282,7 +29282,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "House Holds",
+          "AudienceString": "Households",
           "Id": 31
         },
         "CPM": null,
@@ -29375,7 +29375,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "House Holds",
+          "AudienceString": "Households",
           "Id": 31
         },
         "CPM": 99.8800,
@@ -30212,7 +30212,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "House Holds",
+          "AudienceString": "Households",
           "Id": 31
         },
         "CPM": null,
@@ -30305,7 +30305,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "House Holds",
+          "AudienceString": "Households",
           "Id": 31
         },
         "CPM": 99.8800,
@@ -31142,7 +31142,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "House Holds",
+          "AudienceString": "Households",
           "Id": 31
         },
         "CPM": null,
@@ -31235,7 +31235,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "House Holds",
+          "AudienceString": "Households",
           "Id": 31
         },
         "CPM": 99.8800,
@@ -32116,7 +32116,7 @@
       },
       {
         "Audience": {
-          "AudienceString": "House Holds",
+          "AudienceString": "Households",
           "Id": 31
         },
         "CPM": null,
@@ -32209,7 +32209,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "House Holds",
+          "AudienceString": "Households",
           "Id": 31
         },
         "CPM": 99.8800,

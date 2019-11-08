@@ -105,7 +105,7 @@
     "WeekEnd": "2018-10-08T00:00:00",
     "WeekStart": "2018-10-01T00:00:00"
   },
-  "GuaranteedDemo": "House Holds",
+  "GuaranteedDemo": "Households",
   "Id": 33029,
   "MarketGroupId": 1,
   "Markets": [],

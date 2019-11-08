@@ -1,7 +1,7 @@
 ﻿{
   "Audiences": [
     {
-      "Display": "House Holds",
+      "Display": "Households",
       "Id": 31
     },
     {

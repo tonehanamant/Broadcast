@@ -7,7 +7,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "House Holds",
+          "AudienceString": "Households",
           "Id": 31
         },
         "CPM": 6.2500,
@@ -105,7 +105,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "House Holds",
+          "AudienceString": "Households",
           "Id": 31
         },
         "CPM": 5.6250,
@@ -191,7 +191,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "House Holds",
+          "AudienceString": "Households",
           "Id": 31
         },
         "CPM": 6.2500,

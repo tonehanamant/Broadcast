@@ -7,7 +7,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "House Holds"
+          "AudienceString": "Households"
         },
         "CPM": null,
         "HutPlaybackType": null,
@@ -252,7 +252,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "House Holds"
+          "AudienceString": "Households"
         },
         "CPM": null,
         "HutPlaybackType": null,
@@ -497,7 +497,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "House Holds"
+          "AudienceString": "Households"
         },
         "CPM": null,
         "HutPlaybackType": null,
@@ -742,7 +742,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "House Holds"
+          "AudienceString": "Households"
         },
         "CPM": null,
         "HutPlaybackType": null,
@@ -987,7 +987,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "House Holds"
+          "AudienceString": "Households"
         },
         "CPM": null,
         "HutPlaybackType": null,
@@ -1232,7 +1232,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "House Holds"
+          "AudienceString": "Households"
         },
         "CPM": null,
         "HutPlaybackType": null,
@@ -1477,7 +1477,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "House Holds"
+          "AudienceString": "Households"
         },
         "CPM": null,
         "HutPlaybackType": null,
@@ -1722,7 +1722,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "House Holds"
+          "AudienceString": "Households"
         },
         "CPM": null,
         "HutPlaybackType": null,
@@ -1857,7 +1857,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "House Holds"
+          "AudienceString": "Households"
         },
         "CPM": null,
         "HutPlaybackType": null,
@@ -1992,7 +1992,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "House Holds"
+          "AudienceString": "Households"
         },
         "CPM": null,
         "HutPlaybackType": null,
@@ -2204,7 +2204,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "House Holds"
+          "AudienceString": "Households"
         },
         "CPM": null,
         "HutPlaybackType": null,
@@ -2416,7 +2416,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "House Holds"
+          "AudienceString": "Households"
         },
         "CPM": null,
         "HutPlaybackType": null,
@@ -2661,7 +2661,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "House Holds"
+          "AudienceString": "Households"
         },
         "CPM": null,
         "HutPlaybackType": null,
@@ -2796,7 +2796,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "House Holds"
+          "AudienceString": "Households"
         },
         "CPM": null,
         "HutPlaybackType": null,
@@ -3041,7 +3041,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "House Holds"
+          "AudienceString": "Households"
         },
         "CPM": null,
         "HutPlaybackType": null,
@@ -3286,7 +3286,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "House Holds"
+          "AudienceString": "Households"
         },
         "CPM": null,
         "HutPlaybackType": null,
@@ -3531,7 +3531,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "House Holds"
+          "AudienceString": "Households"
         },
         "CPM": null,
         "HutPlaybackType": null,
@@ -3776,7 +3776,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "House Holds"
+          "AudienceString": "Households"
         },
         "CPM": null,
         "HutPlaybackType": null,
@@ -4021,7 +4021,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "House Holds"
+          "AudienceString": "Households"
         },
         "CPM": null,
         "HutPlaybackType": null,
@@ -4266,7 +4266,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "House Holds"
+          "AudienceString": "Households"
         },
         "CPM": null,
         "HutPlaybackType": null,

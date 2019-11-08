@@ -5,7 +5,7 @@
       "Audiences": [
         {
           "Audience": {
-            "AudienceString": "House Holds",
+            "AudienceString": "Households",
             "Id": 31
           },
           "Cpm": null,

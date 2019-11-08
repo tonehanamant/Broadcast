@@ -3,7 +3,7 @@
   "Daypart": null,
   "Equivalized": false,
   "FlightDates": [],
-  "GuaranteedDemo": "House Holds",
+  "GuaranteedDemo": "Households",
   "IsNtiReport": false,
   "PlaybackTypes": [],
   "PostingBooks": [],

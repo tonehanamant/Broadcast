@@ -128,7 +128,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 var inventoryScxDataPrep = _InventoryScxDataPrepFactory.GetInventoryDataPrep(Entities.Enums.InventorySourceTypeEnum.Barter);
 
-                string fileName = "Barter_A25-54_Q1 CNN.xlsx";
+                var fileName = "Barter_A25-54_Q1 CNN.xlsx";
                 var request = new FileRequest
                 {
                     StreamData = new FileStream($@".\Files\ProprietaryDataFiles\{fileName}", FileMode.Open, FileAccess.Read),

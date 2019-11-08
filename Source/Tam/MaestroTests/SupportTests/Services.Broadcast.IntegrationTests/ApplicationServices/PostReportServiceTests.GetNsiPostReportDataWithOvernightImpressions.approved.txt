@@ -5,7 +5,7 @@
   "FlightDates": [
     "2Q'16: 1 week - 5/30"
   ],
-  "GuaranteedDemo": "House Holds",
+  "GuaranteedDemo": "Households",
   "IsNtiReport": false,
   "PlaybackTypes": [
     "Live+3"

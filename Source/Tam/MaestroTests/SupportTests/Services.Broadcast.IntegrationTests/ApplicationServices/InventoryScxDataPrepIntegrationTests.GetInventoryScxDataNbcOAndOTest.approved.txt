@@ -83,7 +83,7 @@
           "_Code": "HH",
           "_Custom": false,
           "_Id": 31,
-          "_Name": "House Holds",
+          "_Name": "Households",
           "_RangeEnd": 99,
           "_RangeStart": 0,
           "_SubCategoryCode": "H",

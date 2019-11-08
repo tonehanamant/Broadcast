@@ -7,7 +7,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "House Holds",
+          "AudienceString": "Households",
           "Id": 31
         },
         "CPM": 14.5000,
@@ -89,7 +89,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "House Holds",
+          "AudienceString": "Households",
           "Id": 31
         },
         "CPM": 18.7200,
@@ -171,7 +171,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "House Holds",
+          "AudienceString": "Households",
           "Id": 31
         },
         "CPM": 18.5900,
@@ -253,7 +253,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "House Holds",
+          "AudienceString": "Households",
           "Id": 31
         },
         "CPM": 12.3100,
@@ -335,7 +335,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "House Holds",
+          "AudienceString": "Households",
           "Id": 31
         },
         "CPM": 4.7800,
@@ -417,7 +417,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "House Holds",
+          "AudienceString": "Households",
           "Id": 31
         },
         "CPM": 3.4800,
@@ -499,7 +499,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "House Holds",
+          "AudienceString": "Households",
           "Id": 31
         },
         "CPM": 5.8000,
@@ -581,7 +581,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "House Holds",
+          "AudienceString": "Households",
           "Id": 31
         },
         "CPM": 8.5000,
@@ -663,7 +663,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "House Holds",
+          "AudienceString": "Households",
           "Id": 31
         },
         "CPM": 8.4400,
@@ -745,7 +745,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "House Holds",
+          "AudienceString": "Households",
           "Id": 31
         },
         "CPM": 16.5100,
@@ -827,7 +827,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "House Holds",
+          "AudienceString": "Households",
           "Id": 31
         },
         "CPM": 15.5200,
@@ -909,7 +909,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "House Holds",
+          "AudienceString": "Households",
           "Id": 31
         },
         "CPM": 17.2200,
@@ -991,7 +991,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "House Holds",
+          "AudienceString": "Households",
           "Id": 31
         },
         "CPM": 10.3000,
@@ -1073,7 +1073,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "House Holds",
+          "AudienceString": "Households",
           "Id": 31
         },
         "CPM": 10.1900,
@@ -1155,7 +1155,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "House Holds",
+          "AudienceString": "Households",
           "Id": 31
         },
         "CPM": 19.8800,
@@ -1237,7 +1237,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "House Holds",
+          "AudienceString": "Households",
           "Id": 31
         },
         "CPM": 19.7700,
@@ -1319,7 +1319,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "House Holds",
+          "AudienceString": "Households",
           "Id": 31
         },
         "CPM": 7.7200,
@@ -1401,7 +1401,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "House Holds",
+          "AudienceString": "Households",
           "Id": 31
         },
         "CPM": 4.2700,
@@ -1483,7 +1483,7 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "House Holds",
+          "AudienceString": "Households",
           "Id": 31
         },
         "CPM": 8.8800,
