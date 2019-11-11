@@ -81,8 +81,8 @@
           "ContainType": 1,
           "Genres": [
             {
-              "Display": "Adult",
-              "Id": 2
+              "Display": "Game Show",
+              "Id": 20
             }
           ]
         },
@@ -110,12 +110,12 @@
           "ContainType": 2,
           "Genres": [
             {
-              "Display": "Adventure",
-              "Id": 3
+              "Display": "Documentary",
+              "Id": 12
             },
             {
-              "Display": "Anthology",
-              "Id": 4
+              "Display": "Drama",
+              "Id": 14
             }
           ]
         },
@@ -123,12 +123,12 @@
           "ContainType": 1,
           "ShowTypes": [
             {
-              "Display": "Movie",
-              "Id": 3
+              "Display": "Special Event",
+              "Id": 9
             },
             {
-              "Display": "News",
-              "Id": 4
+              "Display": "TBA Movie",
+              "Id": 11
             }
           ]
         }

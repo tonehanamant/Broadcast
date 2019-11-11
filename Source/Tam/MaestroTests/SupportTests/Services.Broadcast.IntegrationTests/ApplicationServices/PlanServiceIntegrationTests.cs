@@ -585,7 +585,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         GenreRestrictions = new PlanDaypartDto.RestrictionsDto.GenreRestrictionsDto
                         {
                             ContainType = ContainTypeEnum.Exclude,
-                            Genres = new List<LookupDto> { new LookupDto { Id = 4 } }
+                            Genres = new List<LookupDto> { new LookupDto { Id = 12 } }
                         }
                     }
                 });
@@ -1412,7 +1412,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                             GenreRestrictions = new PlanDaypartDto.RestrictionsDto.GenreRestrictionsDto
                             {
                                 ContainType = ContainTypeEnum.Include,
-                                Genres = new List<LookupDto> { new LookupDto { Id = 1 } }
+                                Genres = new List<LookupDto> { new LookupDto { Id = 25 } }
                             }
                         }
                     },
@@ -1433,7 +1433,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                             GenreRestrictions = new PlanDaypartDto.RestrictionsDto.GenreRestrictionsDto
                             {
                                 ContainType = ContainTypeEnum.Include,
-                                Genres = new List<LookupDto> { new LookupDto { Id = 2 } }
+                                Genres = new List<LookupDto> { new LookupDto { Id = 20 } }
                             }
                         }
                     },
@@ -1451,8 +1451,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                                 ContainType = ContainTypeEnum.Include,
                                 ShowTypes = new List<LookupDto>
                                 {
-                                    new LookupDto { Id = 3 },
-                                    new LookupDto { Id = 4 }
+                                    new LookupDto { Id = 9 },
+                                    new LookupDto { Id = 11 }
                                 }
                             },
                             GenreRestrictions = new PlanDaypartDto.RestrictionsDto.GenreRestrictionsDto
@@ -1460,8 +1460,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                                 ContainType = ContainTypeEnum.Exclude,
                                 Genres = new List<LookupDto>
                                 {
-                                    new LookupDto { Id = 3 },
-                                    new LookupDto { Id = 4 }
+                                    new LookupDto { Id = 12 },
+                                    new LookupDto { Id = 14 }
                                 }
                             }
                         }
