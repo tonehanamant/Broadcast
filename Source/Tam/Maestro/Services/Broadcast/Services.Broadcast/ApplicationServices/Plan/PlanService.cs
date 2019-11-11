@@ -170,11 +170,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _CalculateDaypartOverrides(plan.Dayparts);
             _PlanValidator.ValidatePlan(plan);
 
-            if (plan.DeliveryImpressions.HasValue)
-            {
-                //the UI is sending the user entered value instead of the raw value. BE needs to adjust
-                plan.DeliveryImpressions = plan.DeliveryImpressions.Value * 1000;
-            }
+            _ConvertImpressionsToRawFormat(plan);
 
             plan.Universe = _NsiUniverseService.GetAudienceUniverseForMediaMonth(plan.ShareBookId, plan.AudienceId);
             _CalculateHouseholdDeliveryData(plan);
@@ -200,7 +196,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     {
                         //this is a new version.
                         _PlanRepository.SavePlan(plan, createdBy, createdDate);
-                }
+                    }
                 }
                 else
                 {
@@ -216,6 +212,32 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
 
             return plan.Id;
+        }
+
+        private static void _ConvertImpressionsToRawFormat(PlanDto plan)
+        {
+            //the UI is sending the user entered value instead of the raw value. BE needs to adjust
+            if (plan.DeliveryImpressions.HasValue)
+            {                
+                plan.DeliveryImpressions = plan.DeliveryImpressions.Value * 1000;
+            }
+            foreach(var week in plan.WeeklyBreakdownWeeks)
+            {
+                week.Impressions = week.Impressions * 1000;
+            }
+        }
+
+        private static void _ConvertImpressionsToUserFormat(PlanDto plan)
+        {
+            //the UI is sending the user entered value instead of the raw value. BE needs to adjust
+            if (plan.DeliveryImpressions.HasValue)
+            {
+                plan.DeliveryImpressions = plan.DeliveryImpressions.Value / 1000;
+            }
+            foreach (var week in plan.WeeklyBreakdownWeeks)
+            {
+                week.Impressions = week.Impressions / 1000;
+            }
         }
 
         private void _CalculateDaypartOverrides(List<PlanDaypartDto> dayparts)
@@ -240,9 +262,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
             _SetPlanTotals(plan);
             _SetDefaultDaypartRestrictions(plan);
+            _ConvertImpressionsToUserFormat(plan);
 
-            //format delivery impressions
-            plan.DeliveryImpressions = plan.DeliveryImpressions / 1000;
             return plan;
         }
 
