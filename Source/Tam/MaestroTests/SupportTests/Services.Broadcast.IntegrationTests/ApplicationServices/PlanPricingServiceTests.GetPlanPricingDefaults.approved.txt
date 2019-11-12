@@ -1,0 +1,40 @@
+﻿{
+  "InventorySources": [
+    {
+      "Id": 3,
+      "Name": "TVB",
+      "Percentage": 10
+    },
+    {
+      "Id": 5,
+      "Name": "CNN",
+      "Percentage": 10
+    },
+    {
+      "Id": 6,
+      "Name": "Sinclair",
+      "Percentage": 10
+    },
+    {
+      "Id": 7,
+      "Name": "LilaMax",
+      "Percentage": 10
+    },
+    {
+      "Id": 10,
+      "Name": "ABC O&O",
+      "Percentage": 10
+    },
+    {
+      "Id": 11,
+      "Name": "NBC O&O",
+      "Percentage": 10
+    },
+    {
+      "Id": 12,
+      "Name": "KATZ",
+      "Percentage": 10
+    }
+  ],
+  "UnitCap": 2
+}

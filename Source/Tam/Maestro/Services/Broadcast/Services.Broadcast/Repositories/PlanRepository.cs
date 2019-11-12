@@ -782,6 +782,13 @@ namespace Services.Broadcast.Repositories
                         });
                     }
 
+                    planPricingRunModel.InventorySourcePercentages.ForEach(s => planPricingExecution.plan_pricing_inventory_source_percentages.Add(
+                        new plan_pricing_inventory_source_percentages
+                        {
+                            inventory_source_id = s.Id,
+                            percentage = s.Percentage
+                        }));
+
                     context.plan_pricing_executions.Add(planPricingExecution);
                     context.SaveChanges();
                 }
@@ -793,7 +800,6 @@ namespace Services.Broadcast.Repositories
             return _InReadUncommitedTransaction(context =>
             {
                 var executions = context.plan_pricing_executions.Where(p => p.plan_id == planId);
-
                 return executions.Select(e => new PlanPricingApiRequestParametersDto
                 {
                     PlanId = e.plan_id,
@@ -812,7 +818,14 @@ namespace Services.Broadcast.Repositories
                     MinCpm = e.min_cpm,
                     ProprietaryBlend = e.proprietary_blend,
                     UnitCaps = e.unit_caps,
-                    UnitCapType = (UnitCapEnum)e.unit_caps_type
+                    UnitCapType = (UnitCapEnum)e.unit_caps_type,
+                    InventorySourcePercentages = e.plan_pricing_inventory_source_percentages.Select(
+                        s => new PlanPricingInventorySourceDto
+                        {
+                            Id = s.inventory_source_id,
+                            Name = s.inventory_sources.name,
+                            Percentage = s.percentage
+                        }).ToList()
                 }).ToList();
             });
         }

@@ -12,8 +12,11 @@ using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Services.Broadcast.Entities.Enums;
+using Services.Broadcast.Helpers;
 using Tam.Maestro.Common;
 using Tam.Maestro.Data.Entities;
+using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.ContractInterfaces.Common;
 using static Services.Broadcast.Entities.Enums.ProposalEnums;
 
@@ -24,6 +27,13 @@ namespace Services.Broadcast.ApplicationServices
         List<PlanPricingProgramDto> GetInventoryForPlan(int planId);
         PlanPricingResultDto Run(PlanPricingRequestDto planPricingRequestDto);
         List<PlanPricingApiRequestParametersDto> GetPlanPricingRuns(int planId);
+
+        /// <summary>
+        /// Gets the unit caps.
+        /// </summary>
+        /// <returns>List of LookupDto objects</returns>
+        List<LookupDto> GetUnitCaps();
+        PlanPricingDefaults GetPlanPricingDefaults();
     }
 
     public class PlanPricingService : IPlanPricingService
@@ -39,6 +49,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly ISpotLengthEngine _SpotLengthEngine;
         private readonly ISpotLengthRepository _SpotLengthRepository;
         private readonly IPricingApiClient _PricingApiClient;
+        private readonly IInventoryRepository _InventoryRepository;
 
         public PlanPricingService(IDataRepositoryFactory broadcastDataRepositoryFactory,
                                   IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
@@ -60,6 +71,7 @@ namespace Services.Broadcast.ApplicationServices
             _ImpressionsCalculationEngine = impressionsCalculationEngine;
             _SpotLengthEngine = spotLengthEngine;
             _PricingApiClient = pricingApiClient;
+            _InventoryRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
         }
 
         public List<PlanPricingProgramDto> GetInventoryForPlan(int planId)
@@ -68,6 +80,49 @@ namespace Services.Broadcast.ApplicationServices
             var inventory = _GetInventory(plan);
 
             return _MapToPlanPricingPrograms(inventory, plan);
+        }
+
+        public List<LookupDto> GetUnitCaps()
+        {
+            return Enum.GetValues(typeof(UnitCapEnum))
+                .Cast<UnitCapEnum>()
+                .Select(e => new LookupDto
+                {
+                    Id = (int)e,
+                    Display = e.GetDescriptionAttribute()
+                })
+                .OrderBy(x => x.Id)
+                .ToList();
+        }
+
+        public PlanPricingDefaults GetPlanPricingDefaults()
+        {
+            // ids are different between environments so must go off the name
+            var planPricingSourceNames = new List<string>
+            {
+                "CNN", 
+                "TVB", 
+                "Sinclair",
+                "LilaMax",
+                "ABC O&O",
+                "KATZ",
+                "NBC O&O"
+            };
+
+            var ppDefaults = new PlanPricingDefaults
+            {
+                UnitCap = 2,
+                InventorySources = _InventoryRepository.GetInventorySources().Where(
+                        s => planPricingSourceNames.Contains(s.Name))
+                    .Select(s => new PlanPricingInventorySourceDto
+                    {
+                        Id = s.Id,
+                        Name = s.Name,
+                        Percentage = 10
+                    }).ToList()
+            };
+
+            return ppDefaults;
         }
 
         private List<ProposalProgramDto> _GetInventory(PlanDto plan)
@@ -152,7 +207,8 @@ namespace Services.Broadcast.ApplicationServices
                 CompetitionFactor = planPricingRequestDto.CompetitionFactor,
                 InflationFactor = planPricingRequestDto.InflationFactor,
                 UnitCaps = planPricingRequestDto.UnitCaps,
-                UnitCapType = planPricingRequestDto.UnitCapType
+                UnitCapType = planPricingRequestDto.UnitCapType,
+                InventorySourcePercentages = planPricingRequestDto.InventorySourcePercentages
             };
 
             return parameters;

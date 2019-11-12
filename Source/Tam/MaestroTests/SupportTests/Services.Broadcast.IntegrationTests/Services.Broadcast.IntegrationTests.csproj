@@ -320,7 +320,6 @@
     <Compile Include="Stubs\StubbedSMSClient.cs" />
     <Compile Include="ApplicationServices\EmailerServiceTests.cs" />
     <Compile Include="ApplicationServices\ProgramScrubbingEngineTests.cs" />
-    <Compile Include="UnitTests\ApplicationServices\PricingServiceUnitTests.cs" />
     <Compile Include="Stubs\TrafficApiClientStub.cs" />
     <Compile Include="UnitTests\BusinessEngines\TrackingEngineUnitTests.cs" />
     <Compile Include="UnitTests\TrafficApiCacheTests.cs" />

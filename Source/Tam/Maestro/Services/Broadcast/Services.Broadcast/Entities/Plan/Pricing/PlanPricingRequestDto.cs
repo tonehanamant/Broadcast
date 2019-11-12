@@ -1,4 +1,5 @@
-﻿using Services.Broadcast.Entities.Enums;
+﻿using System.Collections.Generic;
+using Services.Broadcast.Entities.Enums;
 
 namespace Services.Broadcast.Entities.Plan.Pricing
 {
@@ -15,5 +16,6 @@ namespace Services.Broadcast.Entities.Plan.Pricing
         public double? InflationFactor { get; set; }
         public int UnitCaps { get; set; }
         public UnitCapEnum UnitCapType { get; set; }
+        public List<PlanPricingInventorySourceDto> InventorySourcePercentages { get; set; }
     }
 }

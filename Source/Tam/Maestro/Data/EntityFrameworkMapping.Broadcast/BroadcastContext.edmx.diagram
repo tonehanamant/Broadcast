@@ -353,6 +353,9 @@
 		<EntityTypeShape EntityType="BroadcastModel.plan_version_daypart_genre_restrictions" Width="1.5" PointX="26.75" PointY="30.875" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_daypart_genre_restrictions_genres" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_daypart_genre_restrictions_plan_version_dayparts" />
+        <EntityTypeShape EntityType="BroadcastModel.plan_pricing_inventory_source_percentages" Width="1.5" PointX="7.5" PointY="51.5" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_pricing_inventory_source_percentages_inventory_sources" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_pricing_inventory_source_percentages_plan_pricing_executions" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

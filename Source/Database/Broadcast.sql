@@ -843,6 +843,7 @@ IF OBJECT_ID('plan_pricing_execution_markets') IS NULL
 
 	ALTER TABLE [dbo].[plan_pricing_execution_markets] CHECK CONSTRAINT [FK_plan_pricing_execution_markets_plan_pricing_executions]
 END
+
 /*************************************** END - PRI-16188 ****************************************************/
 
 /*************************************** START MAESTRO genre fix *****************************************************/
@@ -876,6 +877,33 @@ BEGIN
 END
 
 /*************************************** END PRI-17689 *****************************************************/
+
+/*************************************** Start PRI-17673  ***************************************************/
+
+IF OBJECT_ID('plan_pricing_inventory_source_percentages') IS NULL
+BEGIN
+	CREATE TABLE plan_pricing_inventory_source_percentages
+	(
+		[id] [int] IDENTITY(1,1) NOT NULL,
+		[plan_pricing_execution_id] [int] NOT NULL,
+		[inventory_source_id] [int] NOT NULL,
+		[percentage] [int] NOT NULL,
+		CONSTRAINT [PK_plan_pricing_inventory_source_percentages] PRIMARY KEY CLUSTERED 
+		(
+			[id] ASC
+		) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY]
+		
+	ALTER TABLE [dbo].[plan_pricing_inventory_source_percentages]  WITH CHECK ADD  CONSTRAINT [FK_plan_pricing_inventory_source_percentages_plan_pricing_executions] FOREIGN KEY([plan_pricing_execution_id])
+	REFERENCES [dbo].[plan_pricing_executions] ([id])
+		ON DELETE CASCADE
+
+	ALTER TABLE [dbo].[plan_pricing_inventory_source_percentages]  WITH CHECK ADD  CONSTRAINT [FK_plan_pricing_inventory_source_percentages_inventory_sources] FOREIGN KEY([inventory_source_id])
+	REFERENCES [dbo].[inventory_sources] ([id])
+	
+END
+
+/*************************************** END PRI-17673 *****************************************************/
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 

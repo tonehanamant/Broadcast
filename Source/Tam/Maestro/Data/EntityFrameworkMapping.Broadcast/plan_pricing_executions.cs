@@ -17,6 +17,7 @@ namespace EntityFrameworkMapping.Broadcast
         public plan_pricing_executions()
         {
             this.plan_pricing_execution_markets = new HashSet<plan_pricing_execution_markets>();
+            this.plan_pricing_inventory_source_percentages = new HashSet<plan_pricing_inventory_source_percentages>();
         }
     
         public int id { get; set; }
@@ -35,5 +36,6 @@ namespace EntityFrameworkMapping.Broadcast
     
         public virtual ICollection<plan_pricing_execution_markets> plan_pricing_execution_markets { get; set; }
         public virtual plan plan { get; set; }
+        public virtual ICollection<plan_pricing_inventory_source_percentages> plan_pricing_inventory_source_percentages { get; set; }
     }
 }

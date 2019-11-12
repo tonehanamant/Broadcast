@@ -4,11 +4,11 @@ using IntegrationTests.Common;
 using Microsoft.Practices.Unity;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
-using Services.Broadcast.ApplicationServices.Plan;
 using Services.Broadcast.Clients;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan.Pricing;
 using Services.Broadcast.IntegrationTests.Stubs;
+using System.Collections.Generic;
 using Tam.Maestro.Common.DataLayer;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
@@ -17,13 +17,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
     public class PlanPricingServiceTests
     {
         private readonly IPlanPricingService _PlanPricingService;
-        private readonly IPlanService _PlanService;
 
         public PlanPricingServiceTests()
         {
             IntegrationTestApplicationServiceFactory.Instance.RegisterType<IPricingApiClient, PricingApiClientStub>();
             _PlanPricingService = IntegrationTestApplicationServiceFactory.GetApplicationService<IPlanPricingService>();
-            _PlanService = IntegrationTestApplicationServiceFactory.GetApplicationService<IPlanService>();
         }
 
         [Test]
@@ -104,13 +102,39 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     InflationFactor = 0.5,
                     ProprietaryBlend = 0.2,
                     UnitCaps = 10,
-                    UnitCapType = UnitCapEnum.PerDay
+                    UnitCapType = UnitCapEnum.PerDay,
+                    InventorySourcePercentages = new List<PlanPricingInventorySourceDto>
+                    {
+                        new PlanPricingInventorySourceDto{Id = 3, Percentage = 12},
+                        new PlanPricingInventorySourceDto{Id = 5, Percentage = 13},
+                        new PlanPricingInventorySourceDto{Id = 6, Percentage = 14},
+                        new PlanPricingInventorySourceDto{Id = 7, Percentage = 15},
+                        new PlanPricingInventorySourceDto{Id = 10, Percentage = 16},
+                        new PlanPricingInventorySourceDto{Id = 11, Percentage = 17},
+                        new PlanPricingInventorySourceDto{Id = 12, Percentage = 8},
+                    }
                 });
 
                 var executions = _PlanPricingService.GetPlanPricingRuns(1197);
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(executions));
             }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetUnitCaps()
+        {
+            var unitCaps = _PlanPricingService.GetUnitCaps();
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(unitCaps));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetPlanPricingDefaults()
+        {
+            var ppDefaults = _PlanPricingService.GetPlanPricingDefaults();
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(ppDefaults));
         }
     }
 }

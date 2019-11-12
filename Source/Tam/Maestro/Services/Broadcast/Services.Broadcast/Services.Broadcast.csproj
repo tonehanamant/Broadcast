@@ -304,7 +304,6 @@
     <Compile Include="ApplicationServices\GenreService.cs" />
     <Compile Include="ApplicationServices\ContainTypeService.cs" />
     <Compile Include="ApplicationServices\PlanPricingService.cs" />
-    <Compile Include="ApplicationServices\PricingService.cs" />
     <Compile Include="ApplicationServices\ProgramGuideService.cs" />
     <Compile Include="ApplicationServices\RecurringJobsFactory.cs" />
     <Compile Include="ApplicationServices\ShowTypeService.cs" />
@@ -344,6 +343,8 @@
     <Compile Include="Entities\ImpressionsRequestDto.cs" />
     <Compile Include="Entities\InventoryFileProgramEnrichmentJob.cs" />
     <Compile Include="Entities\InventoryFileProgramEnrichmentJobDiagnostics.cs" />
+    <Compile Include="Entities\Plan\Pricing\PlanPricingDefaults.cs" />
+    <Compile Include="Entities\Plan\Pricing\PlanPricingInventorySourceDto.cs" />
     <Compile Include="Entities\Plan\Pricing\PlanPricingMarketDto.cs" />
     <Compile Include="Entities\Plan\Pricing\PlanPricingProgramDto.cs" />
     <Compile Include="Entities\Plan\PlanVersion.cs" />

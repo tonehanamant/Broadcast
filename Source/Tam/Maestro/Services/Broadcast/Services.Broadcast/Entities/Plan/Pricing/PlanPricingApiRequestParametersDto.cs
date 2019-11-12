@@ -19,5 +19,6 @@ namespace Services.Broadcast.Entities.Plan.Pricing
         public UnitCapEnum UnitCapType { get; set; }
         public List<PlanPricingMarketDto> Markets { get; set; }
         public double CoverageGoalPercent { get; set; }
+        public List<PlanPricingInventorySourceDto> InventorySourcePercentages { get; set; }
     }
 }

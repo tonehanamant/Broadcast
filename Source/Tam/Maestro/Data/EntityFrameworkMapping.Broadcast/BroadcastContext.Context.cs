@@ -164,5 +164,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<plan_pricing_execution_markets> plan_pricing_execution_markets { get; set; }
         public virtual DbSet<plan_pricing_executions> plan_pricing_executions { get; set; }
         public virtual DbSet<plan_version_daypart_genre_restrictions> plan_version_daypart_genre_restrictions { get; set; }
+        public virtual DbSet<plan_pricing_inventory_source_percentages> plan_pricing_inventory_source_percentages { get; set; }
     }
 }
