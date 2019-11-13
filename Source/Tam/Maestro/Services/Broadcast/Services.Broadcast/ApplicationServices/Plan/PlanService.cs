@@ -178,6 +178,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
             if (plan.VersionId == 0 || plan.Id == 0)
             {   //this is a new plan, so we're saving version 1
+                plan.VersionNumber = 1;
                 _PlanRepository.SaveNewPlan(plan, createdBy, createdDate);
             }
             else
@@ -190,11 +191,13 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     if (plan.IsDraft == true)
                     {
                         //this is a draft. we create it if none exist or we update it otherwise
+                        plan.VersionNumber = null;
                         _PlanRepository.CreateOrUpdateDraft(plan, createdBy, createdDate);
                     }
                     else
                     {
                         //this is a new version.
+                        plan.VersionNumber = _PlanRepository.GetLatestVersionNumberForPlan(plan.Id) + 1;
                         _PlanRepository.SavePlan(plan, createdBy, createdDate);
                     }
                 }
@@ -275,7 +278,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
             List<PlanVersionDto> result = _MapToPlanHistoryDto(planVersions);
             result = result.OrderByDescending(x => x.IsDraft == true).ThenByDescending(x => x.ModifiedDate).ToList();
 
-            _SetVersionName(result);
             _CompareVersions(planVersions, result);
 
             return result;
@@ -360,23 +362,20 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 Status = EnumHelper.GetEnum<PlanStatusEnum>(x.Status),
                 TargetAudienceId = x.TargetAudienceId,
                 VersionId = x.VersionId,
-                TotalDayparts = x.Dayparts.Count()
+                TotalDayparts = x.Dayparts.Count(),
+                VersionName = _SetVersionName(x)
             }).ToList();
         }
 
-        private void _SetVersionName(List<PlanVersionDto> planVersions)
+        private string _SetVersionName(PlanVersion planVersion)
         {
-            var draft = planVersions.SingleOrDefault(x => x.IsDraft == true);
-            if (draft != null)
+            if (planVersion.IsDraft == true)
             {
-                draft.VersionName = "Draft";
+                return "Draft";
             }
-            int index = 0;
-            var remainingVersion = planVersions.Where(x => x.IsDraft != true).ToList();
-            foreach (var version in remainingVersion)
+            else
             {
-                version.VersionName = $"Version {remainingVersion.Count - index}";
-                index++;
+                return $"Version {planVersion.VersionNumber.Value}";
             }
         }
 

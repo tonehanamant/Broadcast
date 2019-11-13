@@ -6,7 +6,7 @@ namespace Services.Broadcast.Entities.Plan
     public class PlanVersion
     {        
         public int VersionId { get; set; }
-        public string VersionName { get; set; }
+        public int? VersionNumber { get; set; }
         public bool IsDraft { get; set; }
         public int Status { get; set; }
         public DateTime FlightStartDate { get; set; }

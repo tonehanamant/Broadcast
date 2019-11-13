@@ -58,6 +58,7 @@ namespace EntityFrameworkMapping.Broadcast
         public System.DateTime created_date { get; set; }
         public string modified_by { get; set; }
         public Nullable<System.DateTime> modified_date { get; set; }
+        public Nullable<int> version_number { get; set; }
     
         public virtual audience audience { get; set; }
         public virtual media_months share_media_months { get; set; }

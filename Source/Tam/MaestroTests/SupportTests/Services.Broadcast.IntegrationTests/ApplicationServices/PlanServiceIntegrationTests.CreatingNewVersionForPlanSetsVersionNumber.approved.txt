@@ -38,7 +38,7 @@
     }
   ],
   "BlackoutMarketTotalUsCoveragePercent": null,
-  "Budget": 100.0000,
+  "Budget": 222.0000,
   "CampaignId": 1,
   "CampaignName": "Test Campaign 1",
   "CoverageGoalPercent": 80.5,
@@ -140,35 +140,6 @@
       },
       "StartTimeSeconds": 57600,
       "WeightingGoalPercent": 25.0
-    },
-    {
-      "DaypartCodeId": 3,
-      "DaypartTypeId": 2,
-      "EndTimeSeconds": 1900,
-      "IsEndTimeModified": true,
-      "IsStartTimeModified": true,
-      "Restrictions": {
-        "GenreRestrictions": {
-          "ContainType": 2,
-          "Genres": [
-            {
-              "Display": "Documentary",
-              "Id": 12
-            }
-          ]
-        },
-        "ShowTypeRestrictions": {
-          "ContainType": 1,
-          "ShowTypes": [
-            {
-              "Display": "Off Air",
-              "Id": 5
-            }
-          ]
-        }
-      },
-      "StartTimeSeconds": 1200,
-      "WeightingGoalPercent": 13.8
     }
   ],
   "DeliveryImpressions": 100.0,
@@ -182,15 +153,15 @@
   "FlightNotes": "Sample notes",
   "FlightStartDate": "2019-01-01T00:00:00",
   "GoalBreakdownType": 1,
-  "HouseholdCPM": 0.0120,
-  "HouseholdCPP": 13.4572,
+  "HouseholdCPM": 0.0266,
+  "HouseholdCPP": 29.8751,
   "HouseholdDeliveryImpressions": 8333333.33333333,
   "HouseholdRatingPoints": 7.4309248,
   "HouseholdUniverse": 112143960.0,
   "HUTBookId": 437,
   "IsDraft": false,
   "ModifiedBy": "integration_test",
-  "ModifiedDate": "2019-01-15T00:00:00",
+  "ModifiedDate": "2019-01-01T00:00:00",
   "Name": "New Plan",
   "PostingType": 2,
   "ProductId": 1,

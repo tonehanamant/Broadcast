@@ -101,6 +101,13 @@ namespace Services.Broadcast.Repositories
         /// <param name="transitionDate">The transition date.</param>
         /// <returns></returns>
         List<PlanDto> GetPlansForAutomaticTransition(DateTime transitionDate);
+
+        /// <summary>
+        /// Gets the latest version number for plan.
+        /// </summary>
+        /// <param name="planId">The plan identifier.</param>
+        /// <returns>Numeric value representing the plans latest version number</returns>
+        int GetLatestVersionNumberForPlan(int planId);
     }
 
     public class PlanRepository : BroadcastRepositoryBase, IPlanRepository
@@ -288,6 +295,7 @@ namespace Services.Broadcast.Repositories
                     .Select(x => new PlanVersion
                     {
                         VersionId = x.id,
+                        VersionNumber = x.version_number,
                         Budget = x.budget,
                         TargetCPM = x.target_cpm,
                         TargetImpressions = x.target_impression,
@@ -370,6 +378,21 @@ namespace Services.Broadcast.Repositories
             });
         }
 
+        /// <inheritdoc />
+        public int GetLatestVersionNumberForPlan(int planId)
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                var latestPlanByVersion =
+                    context.plan_versions
+                        .Where(p => p.plan_id == planId && p.is_draft == false)
+                        .OrderByDescending(p => p.version_number)
+                        .FirstOrDefault();
+
+                return latestPlanByVersion.version_number.Value;
+            });
+        }
+
         private void _UpdateLatestVersionId(plan newPlan, QueryHintBroadcastContext context)
         {
             newPlan.latest_version_id = newPlan.plan_versions.Max(x => x.id);
@@ -429,6 +452,7 @@ namespace Services.Broadcast.Repositories
                 BlackoutMarketCount = planSummary?.blackout_market_count ?? null,
                 BlackoutMarketTotalUsCoveragePercent = planSummary?.blackout_market_total_us_coverage_percent ?? null,
                 IsDraft = latestPlanVersion.is_draft,
+                VersionNumber = latestPlanVersion.version_number,
                 VersionId = latestPlanVersion.id
             };
             return dto;
@@ -485,6 +509,7 @@ namespace Services.Broadcast.Repositories
             version.hh_rating_points = planDto.HouseholdRatingPoints;
             version.hh_universe = planDto.HouseholdUniverse;
             version.is_draft = planDto.IsDraft;
+            version.version_number = planDto.VersionNumber;
 
             _MapPlanAudienceInfo(version, planDto);
             _MapPlanBudget(version, planDto);

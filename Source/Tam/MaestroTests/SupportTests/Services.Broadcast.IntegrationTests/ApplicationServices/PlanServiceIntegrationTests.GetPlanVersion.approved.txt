@@ -116,6 +116,7 @@
   "TotalHiatusDays": 2,
   "TotalShareOfVoice": 0.0,
   "Universe": 1000000.0,
+  "VersionNumber": 1,
   "Vpvh": 0.012,
   "WeeklyBreakdownWeeks": []
 }

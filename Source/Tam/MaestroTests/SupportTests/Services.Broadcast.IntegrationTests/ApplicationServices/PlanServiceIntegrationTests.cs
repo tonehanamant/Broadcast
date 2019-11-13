@@ -215,6 +215,75 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void CreatingPlanSetsVersionNumber()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                PlanDto newPlan = _GetNewPlan();
+
+                //save version 1
+                int newPlanId = _PlanService.SavePlan(newPlan, "integration_test", new DateTime(2019, 01, 01));
+
+                //get the plan
+                PlanDto plan = _PlanService.GetPlan(newPlanId);
+                
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(plan, _GetJsonSettings()));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void CreatingNewVersionForPlanSetsVersionNumber()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                PlanDto newPlan = _GetNewPlan();
+
+                //save version 1
+                int newPlanId = _PlanService.SavePlan(newPlan, "integration_test", new DateTime(2019, 01, 01));
+
+                //get the plan
+                PlanDto plan = _PlanService.GetPlan(newPlanId);
+
+                //save version 2
+                plan.Budget = 222;
+                _PlanService.SavePlan(plan, "integration_test", new DateTime(2019, 01, 01));
+
+                //get the plan again
+                plan = _PlanService.GetPlan(newPlanId);
+                
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(plan, _GetJsonSettings()));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void CreatingDraftForPlanDoesntUpdateVersionNumber()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                PlanDto newPlan = _GetNewPlan();
+
+                //save version 1
+                int newPlanId = _PlanService.SavePlan(newPlan, "integration_test", new DateTime(2019, 01, 01));
+
+                //get the plan
+                PlanDto plan = _PlanService.GetPlan(newPlanId);
+
+                //create draft
+                plan.Budget = 222;
+                plan.IsDraft = true;
+                _PlanService.SavePlan(plan, "integration_test", new DateTime(2019, 01, 01));
+
+                //get the plan again
+                plan = _PlanService.GetPlan(newPlanId);
+                
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(plan, _GetJsonSettings()));
+            }
+        }
+
+        [Test]
         public void CreatingPlansCheckCampaignAggregation()
         {
             using (new TransactionScopeWrapper())

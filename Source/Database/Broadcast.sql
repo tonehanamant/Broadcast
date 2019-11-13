@@ -905,6 +905,18 @@ END
 
 /*************************************** END PRI-17673 *****************************************************/
 
+/*************************************** START - PRI-16186 ****************************************************/
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE name = 'version_number' AND  object_id = OBJECT_ID('plan_versions'))
+BEGIN
+	ALTER TABLE [plan_versions] ADD [version_number] INT NULL
+	EXEC(' UPDATE [plan_versions]
+			SET [version_number] = (SELECT versioned.vn
+									FROM (SELECT ROW_NUMBER() OVER(ORDER BY id ASC) AS vn, pv.id, pv.plan_id FROM plan_versions AS pv WHERE pv.plan_id = pv1.plan_id AND 0 = is_draft) AS versioned
+									WHERE versioned.id = pv1.id)
+			FROM [plan_versions] AS pv1')
+END
+/*************************************** END - PRI-16186 ****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

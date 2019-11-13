@@ -378,6 +378,14 @@ namespace Services.Broadcast.Entities.Plan
         public bool IsDraft { get; set; }
 
         /// <summary>
+        /// Gets or sets the plans version number.
+        /// </summary>
+        /// <value>
+        /// The version number.
+        /// </value>
+        public int? VersionNumber { get; set; }
+
+        /// <summary>
         /// Gets or sets the version identifier.
         /// </summary>
         /// <value>
