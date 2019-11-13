@@ -299,6 +299,7 @@
   <ItemGroup>
     <Compile Include="ApplicationServices\AdvertiserService.cs" />
     <Compile Include="ApplicationServices\AgencyService.cs" />
+    <Compile Include="ApplicationServices\BroadcastLockingManagerApplicationService.cs" />
     <Compile Include="ApplicationServices\CampaignAggregationJobTrigger.cs" />
     <Compile Include="ApplicationServices\CampaignAggregator.cs" />
     <Compile Include="ApplicationServices\GenreService.cs" />

@@ -47,7 +47,7 @@ namespace Services.Broadcast.ApplicationServices
                         _instance = new UnityContainer();
 
                         _instance.RegisterInstance<ISMSClient>(SMSClient.Handler);
-                        _instance.RegisterType<ILockingManagerApplicationService, LockingManagerApplicationService>();
+                        _instance.RegisterType<ILockingManagerApplicationService, BroadcastLockingManagerApplicationService>();
                         _instance.RegisterInstance<IConfigurationWebApiClient>(ConfigurationClientSwitch.Handler);
                         _instance.RegisterType<IDataRepositoryFactory, BroadcastDataDataRepositoryFactory>();
 

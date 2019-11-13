@@ -59,7 +59,7 @@ namespace Services.Broadcast.IntegrationTests
 
                     SystemComponentParameterHelper.SetConfigurationClient(stubbedConfigurationClient);
                     
-                    _instance.RegisterType<ILockingManagerApplicationService, LockingManagerApplicationService>();
+                    _instance.RegisterType<ILockingManagerApplicationService, BroadcastLockingManagerApplicationService>();
                     _instance.RegisterInstance<ISMSClient>(stubbedSmsClient);
                     BroadcastApplicationServiceFactory.RegisterApplicationServices(_instance);
                     MediaMonthAndWeekAggregateCache = _instance.Resolve<IMediaMonthAndWeekAggregateCache>();
