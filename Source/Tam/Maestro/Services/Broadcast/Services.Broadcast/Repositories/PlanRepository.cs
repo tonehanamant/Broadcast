@@ -546,7 +546,7 @@ namespace Services.Broadcast.Repositories
         {
             entity.target_audience_id = planDto.AudienceId;
             entity.audience_type = (int)planDto.AudienceType;
-            entity.hut_book_id = planDto.HUTBookId.Value;
+            entity.hut_book_id = planDto.HUTBookId;
             entity.share_book_id = planDto.ShareBookId;
             entity.posting_type = (int)planDto.PostingType;
         }

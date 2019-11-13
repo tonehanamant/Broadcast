@@ -37,7 +37,7 @@
     "TargetCPM": 12.0000,
     "TargetImpressions": 100000.0,
     "TotalDayparts": 3,
-    "VersionName": "Version 2"
+    "VersionName": "Version 1"
   },
   {
     "Budget": 222.0000,
@@ -57,6 +57,6 @@
     "TargetCPM": 12.0000,
     "TargetImpressions": 100000.0,
     "TotalDayparts": 3,
-    "VersionName": "Version 1"
+    "VersionName": "Version 2"
   }
 ]

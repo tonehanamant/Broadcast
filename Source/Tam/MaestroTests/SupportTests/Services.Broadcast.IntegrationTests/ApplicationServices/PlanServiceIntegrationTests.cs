@@ -45,6 +45,23 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void CreateNewPlan_NullHutBook()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                PlanDto newPlan = _GetNewPlan();
+                newPlan.HUTBookId = null;
+                var newPlanId = _PlanService.SavePlan(newPlan, "integration_test", new System.DateTime(2019, 01, 01));
+                
+                var planVersion = _PlanService.GetPlan(newPlanId);
+
+                Assert.IsTrue(newPlanId > 0);
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(planVersion, _GetJsonSettings()));
+            }
+        }
+
+        [Test]
         public void CreateNewDraft()
         {
             using (new TransactionScopeWrapper())
@@ -53,7 +70,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 newPlan.Id = 523;   //existing plan in database
                 newPlan.VersionId = 1;
                 newPlan.IsDraft = true;
-                
+
                 var newPlanId = _PlanService.SavePlan(newPlan, "integration_test", new System.DateTime(2019, 01, 01));
                 var draftId = _PlanService.CheckForDraft(newPlanId);
 
@@ -61,7 +78,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Assert.IsTrue(newPlanId > 0);
             }
         }
-        
+
         [Test]
         public void SavePlan_InvalidMarketCoverage_PRI17598()
         {
@@ -118,7 +135,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 //try to delete non existing draft                
                 var exception = Assert.Throws<Exception>(() => _PlanService.DeletePlanDraft(999));
-                
+
                 Assert.That(exception.Message, Is.EqualTo("Cannot delete invalid draft."));
             }
         }
@@ -177,6 +194,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 //save version 3
                 plan.Dayparts.RemoveAt(1); //we remove a daypart to have different data between versions
                 plan.DeliveryImpressions = plan.DeliveryImpressions / 1000;
+                foreach(var week in plan.WeeklyBreakdownWeeks)
+                {
+                    week.Impressions = week.Impressions / 1000;
+                }
                 _PlanService.SavePlan(plan, "integration_test", new DateTime(2019, 01, 07));
 
                 var planHistory = _PlanService.GetPlanHistory(newPlanId);
@@ -206,6 +227,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 //save draft
                 plan.IsDraft = true;
                 plan.DeliveryImpressions = plan.DeliveryImpressions / 1000;
+                foreach (var week in plan.WeeklyBreakdownWeeks)
+                {
+                    week.Impressions = week.Impressions / 1000;
+                }
                 _PlanService.SavePlan(plan, "integration_test", new DateTime(2019, 01, 01));
 
                 var planHistory = _PlanService.GetPlanHistory(newPlanId);
@@ -227,7 +252,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 //get the plan
                 PlanDto plan = _PlanService.GetPlan(newPlanId);
-                
+
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(plan, _GetJsonSettings()));
             }
         }
@@ -252,7 +277,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 //get the plan again
                 plan = _PlanService.GetPlan(newPlanId);
-                
+
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(plan, _GetJsonSettings()));
             }
         }
@@ -278,7 +303,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 //get the plan again
                 plan = _PlanService.GetPlan(newPlanId);
-                
+
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(plan, _GetJsonSettings()));
             }
         }
@@ -310,7 +335,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 _CampaignService.ProcessCampaignAggregation(1);
 
                 var campaign = _CampaignService.GetCampaignById(1);
-                
+
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(campaign, _GetJsonSettings()));
             }
         }
@@ -330,7 +355,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 newCanceledPlan.Status = PlanStatusEnum.Canceled;
 
                 var newPlanId = _PlanService.SavePlan(newCanceledPlan, "integration_test", new DateTime(2019, 10, 30));
-                
+
                 Assert.IsTrue(newPlanId > 0);
 
                 _CampaignService.ProcessCampaignAggregation(newCampaignId);
@@ -785,7 +810,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 PlanDto testPlan = _GetNewPlan();
                 testPlan.Status = PlanStatusEnum.Contracted;
 
-                var newPlanId =_PlanService.SavePlan(testPlan, "integration_test",
+                var newPlanId = _PlanService.SavePlan(testPlan, "integration_test",
                     new DateTime(2019, 01, 01));
 
                 _PlanService.AutomaticStatusTransitions(new DateTime(2019, 01, 01), "integration_test", new DateTime(2019, 01, 01));
