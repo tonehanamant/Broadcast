@@ -2,7 +2,9 @@
 using Common.Services.Extensions;
 using Services.Broadcast.Cache;
 using Services.Broadcast.Entities.Enums;
+using Services.Broadcast.Entities.Plan;
 using System.Collections.Generic;
+using System.Linq;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 
 namespace Services.Broadcast.ApplicationServices
@@ -19,7 +21,7 @@ namespace Services.Broadcast.ApplicationServices
         /// Gets the audiences.
         /// </summary>
         /// <returns>List of LookupDto objects</returns>
-        List<LookupDto> GetAudiences();
+        List<PlanAudienceDisplay> GetAudiences();
     }
 
     public class AudienceService : IAudienceService
@@ -38,9 +40,15 @@ namespace Services.Broadcast.ApplicationServices
         }
 
         ///<inheritdoc/>
-        public List<LookupDto> GetAudiences()
+        public List<PlanAudienceDisplay> GetAudiences()
         {
-            return _AudiencesCache.GetAllLookups();
+            return _AudiencesCache.GetAllEntities()
+                .Select(x => new PlanAudienceDisplay
+                {
+                    Id = x.Id,
+                    Code = x.Code,
+                    Display = x.Name
+                }).ToList();
         }
     }
 }

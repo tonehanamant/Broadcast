@@ -1,289 +1,361 @@
 ﻿[
   {
+    "Code": "HH",
     "Display": "Households",
     "Id": 31
   },
   {
+    "Code": "A18+",
     "Display": "Adults 18+",
     "Id": 34
   },
   {
+    "Code": "A18-20",
     "Display": "Adults 18-20",
     "Id": 418
   },
   {
+    "Code": "A18-34",
     "Display": "Adults 18-34",
     "Id": 32
   },
   {
+    "Code": "A18-49",
     "Display": "Adults 18-49",
     "Id": 33
   },
   {
+    "Code": "A18-54",
     "Display": "Adults 18-54",
     "Id": 247
   },
   {
+    "Code": "A21-24",
     "Display": "Adults 21-24",
     "Id": 249
   },
   {
+    "Code": "A21-49",
     "Display": "Adults 21-49",
     "Id": 252
   },
   {
+    "Code": "A25+",
     "Display": "Adults 25+",
     "Id": 258
   },
   {
+    "Code": "A25-34",
     "Display": "Adults 25-34",
     "Id": 35
   },
   {
+    "Code": "A25-49",
     "Display": "Adults 25-49",
     "Id": 36
   },
   {
+    "Code": "A25-54",
     "Display": "Adults 25-54",
     "Id": 37
   },
   {
+    "Code": "A25-64",
     "Display": "Adults 25-64",
     "Id": 257
   },
   {
+    "Code": "A35+",
     "Display": "Adults 35+",
     "Id": 41
   },
   {
+    "Code": "A35-49",
     "Display": "Adults 35-49",
     "Id": 38
   },
   {
+    "Code": "A35-54",
     "Display": "Adults 35-54",
     "Id": 39
   },
   {
+    "Code": "A35-64",
     "Display": "Adults 35-64",
     "Id": 40
   },
   {
+    "Code": "A50+",
     "Display": "Adults 50+",
     "Id": 42
   },
   {
+    "Code": "A50-54",
     "Display": "Adults 50-54",
     "Id": 264
   },
   {
+    "Code": "A55+",
     "Display": "Adults 55+",
     "Id": 43
   },
   {
+    "Code": "A55-64",
     "Display": "Adults 55-64",
     "Id": 266
   },
   {
+    "Code": "A65+",
     "Display": "Adults 65+",
     "Id": 44
   },
   {
+    "Code": "M12-14",
     "Display": "Men 12-14",
     "Id": 19
   },
   {
+    "Code": "M15-17",
     "Display": "Men 15-17",
     "Id": 20
   },
   {
+    "Code": "M18+",
     "Display": "Men 18+",
     "Id": 277
   },
   {
+    "Code": "M18-20",
     "Display": "Men 18-20",
     "Id": 21
   },
   {
+    "Code": "M18-34",
     "Display": "Men 18-34",
     "Id": 48
   },
   {
+    "Code": "M18-49",
     "Display": "Men 18-49",
     "Id": 49
   },
   {
+    "Code": "M18-54",
     "Display": "Men 18-54",
     "Id": 50
   },
   {
+    "Code": "M21-24",
     "Display": "Men 21-24",
     "Id": 22
   },
   {
+    "Code": "M21-49",
     "Display": "Men 21-49",
     "Id": 280
   },
   {
+    "Code": "M25+",
     "Display": "Men 25+",
     "Id": 288
   },
   {
+    "Code": "M25-34",
     "Display": "Men 25-34",
     "Id": 284
   },
   {
+    "Code": "M25-49",
     "Display": "Men 25-49",
     "Id": 286
   },
   {
+    "Code": "M25-54",
     "Display": "Men 25-54",
     "Id": 51
   },
   {
+    "Code": "M25-64",
     "Display": "Men 25-64",
     "Id": 287
   },
   {
+    "Code": "M35+",
     "Display": "Men 35+",
     "Id": 54
   },
   {
+    "Code": "M35-49",
     "Display": "Men 35-49",
     "Id": 290
   },
   {
+    "Code": "M35-54",
     "Display": "Men 35-54",
     "Id": 52
   },
   {
+    "Code": "M35-64",
     "Display": "Men 35-64",
     "Id": 53
   },
   {
+    "Code": "M50+",
     "Display": "Men 50+",
     "Id": 295
   },
   {
+    "Code": "M50-54",
     "Display": "Men 50-54",
     "Id": 28
   },
   {
+    "Code": "M55+",
     "Display": "Men 55+",
     "Id": 296
   },
   {
+    "Code": "M55-64",
     "Display": "Men 55-64",
     "Id": 29
   },
   {
+    "Code": "M65+",
     "Display": "Men 65+",
     "Id": 30
   },
   {
+    "Code": "W12-14",
     "Display": "Women 12-14",
     "Id": 4
   },
   {
+    "Code": "W15-17",
     "Display": "Women 15-17",
     "Id": 5
   },
   {
+    "Code": "W18+",
     "Display": "Women 18+",
     "Id": 308
   },
   {
+    "Code": "W18-20",
     "Display": "Women 18-20",
     "Id": 6
   },
   {
+    "Code": "W18-34",
     "Display": "Women 18-34",
     "Id": 55
   },
   {
+    "Code": "W18-49",
     "Display": "Women 18-49",
     "Id": 56
   },
   {
+    "Code": "W18-54",
     "Display": "Women 18-54",
     "Id": 306
   },
   {
+    "Code": "W21-24",
     "Display": "Women 21-24",
     "Id": 7
   },
   {
+    "Code": "W21-49",
     "Display": "Women 21-49",
     "Id": 312
   },
   {
+    "Code": "W25+",
     "Display": "Women 25+",
     "Id": 319
   },
   {
+    "Code": "W25-34",
     "Display": "Women 25-34",
     "Id": 348
   },
   {
+    "Code": "W25-49",
     "Display": "Women 25-49",
     "Id": 57
   },
   {
+    "Code": "W25-54",
     "Display": "Women 25-54",
     "Id": 58
   },
   {
+    "Code": "W25-64",
     "Display": "Women 25-64",
     "Id": 318
   },
   {
+    "Code": "W35+",
     "Display": "Women 35+",
     "Id": 61
   },
   {
+    "Code": "W35-49",
     "Display": "Women 35-49",
     "Id": 347
   },
   {
+    "Code": "W35-54",
     "Display": "Women 35-54",
     "Id": 59
   },
   {
+    "Code": "W35-64",
     "Display": "Women 35-64",
     "Id": 60
   },
   {
+    "Code": "W50+",
     "Display": "Women 50+",
     "Id": 62
   },
   {
+    "Code": "W50-54",
     "Display": "Women 50-54",
     "Id": 13
   },
   {
+    "Code": "W55+",
     "Display": "Women 55+",
     "Id": 329
   },
   {
+    "Code": "W55-64",
     "Display": "Women 55-64",
     "Id": 14
   },
   {
+    "Code": "W65+",
     "Display": "Women 65+",
     "Id": 15
   },
   {
+    "Code": "C2-5",
     "Display": "Children 2-5",
     "Id": 339
   },
   {
+    "Code": "C6-11",
     "Display": "Children 6-11",
     "Id": 46
   },
   {
+    "Code": "P12-14",
     "Display": "Persons 12-14",
     "Id": 416
   },
   {
+    "Code": "P15-17",
     "Display": "Persons 15-17",
     "Id": 417
   }

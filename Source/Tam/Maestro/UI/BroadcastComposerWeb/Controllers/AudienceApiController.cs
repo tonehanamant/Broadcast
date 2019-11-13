@@ -4,7 +4,7 @@ using System.Web.Http;
 using Tam.Maestro.Web.Common;
 using Tam.Maestro.Services.Cable.Entities;
 using System.Collections.Generic;
-using Tam.Maestro.Data.Entities.DataTransferObjects;
+using Services.Broadcast.Entities.Plan;
 
 namespace BroadcastComposerWeb.Controllers
 {
@@ -27,7 +27,7 @@ namespace BroadcastComposerWeb.Controllers
         /// <returns>List of LookupDto objects</returns>
         [HttpGet]
         [Route("")]
-        public BaseResponse<List<LookupDto>> GetAudiences()
+        public BaseResponse<List<PlanAudienceDisplay>> GetAudiences()
         {
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IAudienceService>().GetAudiences());
         }
