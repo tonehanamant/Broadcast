@@ -31,16 +31,30 @@ namespace Services.Broadcast.Entities.ProgramGuide
         [JsonProperty(PropertyName = "sun")]
         public bool Sunday { get; set; }
 
+        /*
+         * 11/14/2019
+         * The current Api version is incorrect in that the times are only accepted as "HH:mm" rather than "secondsSinceMidnight".
+         *
+         */
+
         /// <summary>
         /// Seconds since midnight.
         /// </summary>
-        [JsonProperty(PropertyName = "starttime")]
+        //[JsonProperty(PropertyName = "starttime")]
+        [JsonIgnore]
         public int StartTime { get; set; }
 
         /// <summary>
         /// Seconds since midnight.
         /// </summary>
-        [JsonProperty(PropertyName = "endtime")]
+        //[JsonProperty(PropertyName = "endtime")]
+        [JsonIgnore]
         public int EndTime { get; set; }
+
+        [JsonProperty(PropertyName = "starttime")]
+        public string StartTimeString { get; set; }
+
+        [JsonProperty(PropertyName = "endtime")]
+        public string EndTimeString { get; set; }
     }
 }
