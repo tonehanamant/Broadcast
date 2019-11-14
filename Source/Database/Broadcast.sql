@@ -917,6 +917,35 @@ BEGIN
 END
 /*************************************** END - PRI-16186 ****************************************************/
 
+/*************************************** START - PRI-16407 ****************************************************/
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE name = 'program_restrictions_contain_type' AND  object_id = OBJECT_ID('plan_version_dayparts'))
+BEGIN
+	ALTER TABLE plan_version_dayparts
+	ADD program_restrictions_contain_type INT
+END
+
+IF OBJECT_ID('plan_version_daypart_program_restrictions') IS NULL
+BEGIN
+	CREATE TABLE plan_version_daypart_program_restrictions
+	(
+		id INT PRIMARY KEY IDENTITY,
+		plan_version_daypart_id INT NOT NULL,
+		[program_name] VARCHAR(255),
+		genre_id INT FOREIGN KEY REFERENCES genres (id),
+		content_rating VARCHAR(15)
+	)
+
+	ALTER TABLE [dbo].[plan_version_daypart_program_restrictions] WITH CHECK 
+	ADD CONSTRAINT [FK_plan_version_daypart_program_restrictions_plan_version_dayparts] FOREIGN KEY([plan_version_daypart_id])
+	REFERENCES [dbo].[plan_version_dayparts] ([id]) ON DELETE CASCADE
+
+	ALTER TABLE [dbo].[plan_version_daypart_program_restrictions] WITH CHECK 
+	ADD CONSTRAINT [UC_plan_version_daypart_program_restrictions]  UNIQUE ([plan_version_daypart_id], [program_name])
+END
+
+
+/*************************************** END - PRI-16407 ****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

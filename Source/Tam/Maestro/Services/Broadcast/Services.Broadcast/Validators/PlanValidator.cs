@@ -74,6 +74,7 @@ namespace Services.Broadcast.Validators
         
         const string SHOW_TYPE_CONTAIN_TYPE_IS_NOT_VALID = "Contain type of the show types restrictions is not valid";
         const string GENRE_CONTAIN_TYPE_IS_NOT_VALID = "Contain type of the genres restrictions is not valid";
+        const string PROGRAM_CONTAIN_TYPE_IS_NOT_VALID = "Contain type of the program restrictions is not valid";
 
         public PlanValidator(ISpotLengthEngine spotLengthEngine
             , IBroadcastAudiencesCache broadcastAudiencesCache
@@ -271,6 +272,7 @@ namespace Services.Broadcast.Validators
             {
                 _ValidateShowTypeRestrictions(restrictions);
                 _ValidateGenreRestrictions(restrictions);
+                _ValidateProgramRestrictions(restrictions);
             }
         }
 
@@ -278,12 +280,9 @@ namespace Services.Broadcast.Validators
         {
             var showTypeRestrictions = restrictions.ShowTypeRestrictions;
 
-            if (showTypeRestrictions != null)
+            if (showTypeRestrictions != null && !EnumHelper.IsDefined(showTypeRestrictions.ContainType))
             {
-                if (!EnumHelper.IsDefined(showTypeRestrictions.ContainType))
-                {
-                    throw new Exception(SHOW_TYPE_CONTAIN_TYPE_IS_NOT_VALID);
-                }
+                throw new Exception(SHOW_TYPE_CONTAIN_TYPE_IS_NOT_VALID);
             }
         }
 
@@ -291,12 +290,19 @@ namespace Services.Broadcast.Validators
         {
             var genreRestrictions = restrictions.GenreRestrictions;
 
-            if (genreRestrictions != null)
+            if (genreRestrictions != null && !EnumHelper.IsDefined(genreRestrictions.ContainType))
             {
-                if (!EnumHelper.IsDefined(genreRestrictions.ContainType))
-                {
-                    throw new Exception(GENRE_CONTAIN_TYPE_IS_NOT_VALID);
-                }
+                throw new Exception(GENRE_CONTAIN_TYPE_IS_NOT_VALID);
+            }
+        }
+
+        private void _ValidateProgramRestrictions(PlanDaypartDto.RestrictionsDto restrictions)
+        {
+            var programRestrictions = restrictions.ProgramRestrictions;
+
+            if (programRestrictions != null && !EnumHelper.IsDefined(programRestrictions.ContainType))
+            {
+                throw new Exception(PROGRAM_CONTAIN_TYPE_IS_NOT_VALID);
             }
         }
 

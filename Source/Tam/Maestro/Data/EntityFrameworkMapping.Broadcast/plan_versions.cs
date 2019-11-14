@@ -18,11 +18,11 @@ namespace EntityFrameworkMapping.Broadcast
         {
             this.plan_version_available_markets = new HashSet<plan_version_available_markets>();
             this.plan_version_blackout_markets = new HashSet<plan_version_blackout_markets>();
-            this.plan_version_dayparts = new HashSet<plan_version_dayparts>();
             this.plan_version_flight_hiatus_days = new HashSet<plan_version_flight_hiatus_days>();
             this.plan_version_secondary_audiences = new HashSet<plan_version_secondary_audiences>();
             this.plan_version_summaries = new HashSet<plan_version_summaries>();
             this.plan_version_weeks = new HashSet<plan_version_weeks>();
+            this.plan_version_dayparts = new HashSet<plan_version_dayparts>();
         }
     
         public int id { get; set; }
@@ -65,12 +65,12 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual media_months hut_media_months { get; set; }
         public virtual ICollection<plan_version_available_markets> plan_version_available_markets { get; set; }
         public virtual ICollection<plan_version_blackout_markets> plan_version_blackout_markets { get; set; }
-        public virtual ICollection<plan_version_dayparts> plan_version_dayparts { get; set; }
         public virtual ICollection<plan_version_flight_hiatus_days> plan_version_flight_hiatus_days { get; set; }
         public virtual ICollection<plan_version_secondary_audiences> plan_version_secondary_audiences { get; set; }
         public virtual ICollection<plan_version_summaries> plan_version_summaries { get; set; }
         public virtual ICollection<plan_version_weeks> plan_version_weeks { get; set; }
         public virtual plan plan { get; set; }
         public virtual spot_lengths spot_lengths { get; set; }
+        public virtual ICollection<plan_version_dayparts> plan_version_dayparts { get; set; }
     }
 }

@@ -12,13 +12,15 @@ namespace EntityFrameworkMapping.Broadcast
     using System;
     using System.Collections.Generic;
     
-    public partial class plan_version_daypart_show_type_restrictions
+    public partial class plan_version_daypart_program_restrictions
     {
         public int id { get; set; }
         public int plan_version_daypart_id { get; set; }
-        public int show_type_id { get; set; }
+        public string program_name { get; set; }
+        public Nullable<int> genre_id { get; set; }
+        public string content_rating { get; set; }
     
-        public virtual show_types show_types { get; set; }
+        public virtual genre genre { get; set; }
         public virtual plan_version_dayparts plan_version_dayparts { get; set; }
     }
 }

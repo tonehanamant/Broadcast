@@ -63,21 +63,17 @@
           ]
         },
         "ProgramRestrictions": {
-          "ContainType": 1,
-          "Programs": [
-            {
-              "ContentRating": "PG-13",
-              "Genre": {
-                "Display": "Horror",
-                "Id": 25
-              },
-              "Name": "Young Sheldon"
-            }
-          ]
+          "ContainType": 2,
+          "Programs": []
         },
         "ShowTypeRestrictions": {
           "ContainType": 2,
-          "ShowTypes": []
+          "ShowTypes": [
+            {
+              "Display": "Mini-Movie",
+              "Id": 1
+            }
+          ]
         }
       },
       "StartTimeSeconds": 0,

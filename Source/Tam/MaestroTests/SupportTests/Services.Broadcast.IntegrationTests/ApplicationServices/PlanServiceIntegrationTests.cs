@@ -6,6 +6,7 @@ using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.ApplicationServices.Plan;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.DTO.Program;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
 using System;
@@ -644,6 +645,24 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 PlanDto newPlan = _GetNewPlan();
 
                 newPlan.Dayparts.First().Restrictions.GenreRestrictions = null;
+
+                var planId = _PlanService.SavePlan(newPlan, "integration_test", new DateTime(2019, 01, 15));
+                PlanDto finalPlan = _PlanService.GetPlan(planId);
+
+                Assert.AreEqual(3, finalPlan.Dayparts.Count);
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(finalPlan, _GetJsonSettings()));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void SavePlanWithDayparts_WithoutProgramRestrictions()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                PlanDto newPlan = _GetNewPlan();
+
+                newPlan.Dayparts.First().Restrictions.ProgramRestrictions = null;
 
                 var planId = _PlanService.SavePlan(newPlan, "integration_test", new DateTime(2019, 01, 15));
                 PlanDto finalPlan = _PlanService.GetPlan(planId);
@@ -1507,6 +1526,19 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                             {
                                 ContainType = ContainTypeEnum.Include,
                                 Genres = new List<LookupDto> { new LookupDto { Id = 25 } }
+                            },
+                            ProgramRestrictions = new PlanDaypartDto.RestrictionsDto.ProgramRestrictionDto
+                            {
+                                ContainType = ContainTypeEnum.Include,
+                                Programs = new List<ProgramDto>
+                                {
+                                    new ProgramDto
+                                    {
+                                        ContentRating = "PG-13",
+                                        Genre = new LookupDto { Id = 25},
+                                        Name = "Young Sheldon"
+                                    }
+                                }
                             }
                         }
                     },
@@ -1528,6 +1560,19 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                             {
                                 ContainType = ContainTypeEnum.Include,
                                 Genres = new List<LookupDto> { new LookupDto { Id = 20 } }
+                            },
+                            ProgramRestrictions = new PlanDaypartDto.RestrictionsDto.ProgramRestrictionDto
+                            {
+                                ContainType = ContainTypeEnum.Exclude,
+                                Programs = new List<ProgramDto>
+                                {
+                                    new ProgramDto
+                                    {
+                                        ContentRating = "G",
+                                        Genre = new LookupDto { Id = 25},
+                                        Name = "Teletubbies"
+                                    }
+                                }
                             }
                         }
                     },
@@ -1556,6 +1601,19 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                                 {
                                     new LookupDto { Id = 12 },
                                     new LookupDto { Id = 14 }
+                                }
+                            },
+                            ProgramRestrictions = new PlanDaypartDto.RestrictionsDto.ProgramRestrictionDto
+                            {
+                                ContainType = ContainTypeEnum.Include,
+                                Programs = new List<ProgramDto>
+                                {
+                                    new ProgramDto
+                                    {
+                                        ContentRating = "R",
+                                        Genre = new LookupDto { Id = 25},
+                                        Name = "Power Rangers"
+                                    }
                                 }
                             }
                         }

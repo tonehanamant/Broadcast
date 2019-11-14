@@ -1,4 +1,5 @@
-﻿using Services.Broadcast.Entities.Enums;
+﻿using Services.Broadcast.Entities.DTO.Program;
+using Services.Broadcast.Entities.Enums;
 using System;
 using System.Collections.Generic;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
@@ -83,6 +84,8 @@ namespace Services.Broadcast.Entities.Plan
 
             public GenreRestrictionsDto GenreRestrictions { get; set; }
 
+            public ProgramRestrictionDto ProgramRestrictions { get; set; }
+
             public class ShowTypeRestrictionsDto
             {
                 public ContainTypeEnum ContainType { get; set; }
@@ -93,6 +96,12 @@ namespace Services.Broadcast.Entities.Plan
             {
                 public ContainTypeEnum ContainType { get; set; }
                 public List<LookupDto> Genres { get; set; }
+            }
+
+            public class ProgramRestrictionDto
+            {
+                public ContainTypeEnum ContainType { get; set; }
+                public List<ProgramDto> Programs { get; set; }
             }
         }
     }

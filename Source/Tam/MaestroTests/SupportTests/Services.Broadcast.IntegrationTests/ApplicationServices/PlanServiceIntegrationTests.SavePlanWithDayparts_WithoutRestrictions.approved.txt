@@ -62,6 +62,19 @@
             }
           ]
         },
+        "ProgramRestrictions": {
+          "ContainType": 2,
+          "Programs": [
+            {
+              "ContentRating": "G",
+              "Genre": {
+                "Display": "Horror",
+                "Id": 25
+              },
+              "Name": "Teletubbies"
+            }
+          ]
+        },
         "ShowTypeRestrictions": {
           "ContainType": 2,
           "ShowTypes": [
@@ -95,6 +108,19 @@
             }
           ]
         },
+        "ProgramRestrictions": {
+          "ContainType": 1,
+          "Programs": [
+            {
+              "ContentRating": "R",
+              "Genre": {
+                "Display": "Horror",
+                "Id": 25
+              },
+              "Name": "Power Rangers"
+            }
+          ]
+        },
         "ShowTypeRestrictions": {
           "ContainType": 1,
           "ShowTypes": [
@@ -122,6 +148,10 @@
         "GenreRestrictions": {
           "ContainType": 2,
           "Genres": []
+        },
+        "ProgramRestrictions": {
+          "ContainType": 2,
+          "Programs": []
         },
         "ShowTypeRestrictions": {
           "ContainType": 2,

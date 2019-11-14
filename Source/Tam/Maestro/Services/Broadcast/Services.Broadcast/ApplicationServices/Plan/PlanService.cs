@@ -4,6 +4,7 @@ using Common.Services.Repositories;
 using Hangfire;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Cache;
+using Services.Broadcast.Entities.DTO.Program;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
 using Services.Broadcast.Extensions;
@@ -188,7 +189,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
                 if (lockingResult.Success)
                 {
-                    if (plan.IsDraft == true)
+                    if (plan.IsDraft)
                     {
                         //this is a draft. we create it if none exist or we update it otherwise
                         plan.VersionNumber = null;
@@ -208,7 +209,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
 
             //we only aggregate data for versions, not drafts
-            if (plan.IsDraft == false)
+            if (!plan.IsDraft)
             {
                 _DispatchPlanAggregation(plan, aggregatePlanSynchronously);
                 _CampaignAggregationJobTrigger.TriggerJob(plan.CampaignId, createdBy);
@@ -369,14 +370,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
         private string _SetVersionName(PlanVersion planVersion)
         {
-            if (planVersion.IsDraft == true)
-            {
-                return "Draft";
-            }
-            else
-            {
-                return $"Version {planVersion.VersionNumber.Value}";
-            }
+            return planVersion.IsDraft ? "Draft" : $"Version {planVersion.VersionNumber.Value}";
         }
 
         /// <inheritdoc/>
@@ -408,6 +402,15 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     {
                         ContainType = planDefaults.GenreContainType,
                         Genres = new List<LookupDto>()
+                    };
+                }
+
+                if (restrictions.ProgramRestrictions == null)
+                {
+                    restrictions.ProgramRestrictions = new PlanDaypartDto.RestrictionsDto.ProgramRestrictionDto
+                    {
+                        ContainType = planDefaults.ProgramContainType,
+                        Programs = new List<ProgramDto>()
                     };
                 }
             }
@@ -758,6 +761,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 GoalBreakdownType = PlanGoalBreakdownTypeEnum.Even,
                 ShowTypeContainType = ContainTypeEnum.Exclude,
                 GenreContainType = ContainTypeEnum.Exclude,
+                ProgramContainType = ContainTypeEnum.Exclude,
                 CoverageGoalPercent = 80d,
                 BlackoutMarkets = new List<PlanBlackoutMarketDto>(),
                 FlightHiatusDays = new List<DateTime>(),

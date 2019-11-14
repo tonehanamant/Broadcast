@@ -57,6 +57,10 @@
           "ContainType": 2,
           "Genres": []
         },
+        "ProgramRestrictions": {
+          "ContainType": 2,
+          "Programs": []
+        },
         "ShowTypeRestrictions": {
           "ContainType": 2,
           "ShowTypes": []
@@ -75,6 +79,10 @@
         "GenreRestrictions": {
           "ContainType": 2,
           "Genres": []
+        },
+        "ProgramRestrictions": {
+          "ContainType": 2,
+          "Programs": []
         },
         "ShowTypeRestrictions": {
           "ContainType": 2,

@@ -23,6 +23,7 @@ namespace EntityFrameworkMapping.Broadcast
             this.genre_mappings1 = new HashSet<genre_mappings>();
             this.plan_version_daypart_genre_restrictions = new HashSet<plan_version_daypart_genre_restrictions>();
             this.station_inventory_manifest_daypart_programs = new HashSet<station_inventory_manifest_daypart_programs>();
+            this.plan_version_daypart_program_restrictions = new HashSet<plan_version_daypart_program_restrictions>();
         }
     
         public int id { get; set; }
@@ -41,5 +42,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual genre_sources genre_sources { get; set; }
         public virtual ICollection<plan_version_daypart_genre_restrictions> plan_version_daypart_genre_restrictions { get; set; }
         public virtual ICollection<station_inventory_manifest_daypart_programs> station_inventory_manifest_daypart_programs { get; set; }
+        public virtual ICollection<plan_version_daypart_program_restrictions> plan_version_daypart_program_restrictions { get; set; }
     }
 }

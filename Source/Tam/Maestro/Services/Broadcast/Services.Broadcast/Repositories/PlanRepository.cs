@@ -3,6 +3,7 @@ using Common.Services.Repositories;
 using ConfigurationService.Client;
 using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.DTO.Program;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
 using Services.Broadcast.Entities.Plan.Pricing;
@@ -66,7 +67,7 @@ namespace Services.Broadcast.Repositories
         /// <param name="planId">The plan identifier.</param>
         /// <returns>List of PlanHistoryDto objects</returns>
         List<PlanVersion> GetPlanHistory(int planId);
-        
+
         /// <summary>
         /// Checks if a draft exist on the plan and returns the draft id
         /// </summary>
@@ -85,7 +86,7 @@ namespace Services.Broadcast.Repositories
         /// </summary>
         /// <param name="planId">The plan identifier.</param>
         void DeletePlanDraft(int planId);
-        
+
         List<PlanPricingApiRequestParametersDto> GetPlanPricingRuns(int planId);
 
         /// <summary>
@@ -246,6 +247,8 @@ namespace Services.Broadcast.Repositories
                         .Include(p => p.plan_versions.Select(x => x.plan_version_dayparts.Select(d => d.plan_version_daypart_show_type_restrictions.Select(r => r.show_types))))
                         .Include(p => p.plan_versions.Select(x => x.plan_version_dayparts.Select(d => d.plan_version_daypart_genre_restrictions)))
                         .Include(p => p.plan_versions.Select(x => x.plan_version_dayparts.Select(d => d.plan_version_daypart_genre_restrictions.Select(r => r.genre))))
+                        .Include(p => p.plan_versions.Select(x => x.plan_version_dayparts.Select(d => d.plan_version_daypart_program_restrictions)))
+                        .Include(p => p.plan_versions.Select(x => x.plan_version_dayparts.Select(d => d.plan_version_daypart_program_restrictions.Select(r => r.genre))))
                         .Include(p => p.plan_versions.Select(x => x.plan_version_available_markets))
                         .Include(p => p.plan_versions.Select(x => x.plan_version_blackout_markets))
                         .Include(p => p.plan_versions.Select(x => x.plan_version_weeks))
@@ -262,8 +265,8 @@ namespace Services.Broadcast.Repositories
             return _InReadUncommitedTransaction(context =>
             {
                 var planName = (from plan in context.plans
-                              where plan.id == planId
-                              select plan.name)
+                                where plan.id == planId
+                                select plan.name)
                             .Single("Invalid plan id.");
                 return planName;
             });
@@ -288,8 +291,8 @@ namespace Services.Broadcast.Repositories
             return _InReadUncommitedTransaction(context =>
             {
                 return (from version in context.plan_versions
-                                where version.plan_id == planId
-                                select version)
+                        where version.plan_id == planId
+                        select version)
                     .Include(p => p.plan_version_dayparts)
                     .Include(p => p.plan_version_flight_hiatus_days)
                     .Select(x => new PlanVersion
@@ -344,7 +347,7 @@ namespace Services.Broadcast.Repositories
                 return entitiesRaw.Select(e => _MapToDto(e, markets)).ToList();
             });
         }
-        
+
         /// <inheritdoc />
         public List<PlanDto> GetPlansForAutomaticTransition(DateTime transitionDate)
         {
@@ -398,7 +401,7 @@ namespace Services.Broadcast.Repositories
             newPlan.latest_version_id = newPlan.plan_versions.Max(x => x.id);
             context.SaveChanges();
         }
-          
+
         private PlanDto _MapToDto(plan entity, List<market> markets, int? versionId = null)
         {
             var latestPlanVersion = versionId != null
@@ -603,21 +606,44 @@ namespace Services.Broadcast.Repositories
                 };
             }
 
+            if (entity.program_restrictions_contain_type.HasValue)
+            {
+                dto.Restrictions.ProgramRestrictions = new PlanDaypartDto.RestrictionsDto.ProgramRestrictionDto
+                {
+                    ContainType = (ContainTypeEnum)entity.program_restrictions_contain_type.Value,
+                    Programs = entity.plan_version_daypart_program_restrictions.Select(_MapToProgramDto).ToList()
+                };
+            }
+
             return dto;
         }
 
         private static LookupDto _MapToLookupDto(show_types show_Type)
         {
-            return new LookupDto()
+            return new LookupDto
             {
                 Id = show_Type.id,
                 Display = show_Type.name
             };
         }
 
+        private static ProgramDto _MapToProgramDto(plan_version_daypart_program_restrictions programRestriction)
+        {
+            return new ProgramDto
+            {
+                Genre = new LookupDto
+                {
+                    Id = programRestriction.genre.id,
+                    Display = programRestriction.genre.name
+                },
+                ContentRating = programRestriction.content_rating,
+                Name = programRestriction.program_name
+            };
+        }
+
         private static LookupDto _MapToLookupDto(genre genre)
         {
-            return new LookupDto()
+            return new LookupDto
             {
                 Id = genre.id,
                 Display = genre.name
@@ -645,8 +671,9 @@ namespace Services.Broadcast.Repositories
                 {
                     _HydrateShowTypeRestrictions(newDaypart, daypart.Restrictions.ShowTypeRestrictions);
                     _HydrateGenreRestrictions(newDaypart, daypart.Restrictions.GenreRestrictions);
+                    _HydrateProgramRestrictions(newDaypart, daypart.Restrictions.ProgramRestrictions);
                 }
-                
+
                 entity.plan_version_dayparts.Add(newDaypart);
             }
         }
@@ -688,6 +715,29 @@ namespace Services.Broadcast.Repositories
                     daypart.plan_version_daypart_genre_restrictions.Add(new plan_version_daypart_genre_restrictions
                     {
                         genre_id = genreRestriction.Id
+                    });
+                }
+            }
+        }
+
+        private static void _HydrateProgramRestrictions(
+            plan_version_dayparts daypart,
+            PlanDaypartDto.RestrictionsDto.ProgramRestrictionDto programRestrictions)
+        {
+            if (programRestrictions == null)
+                return;
+
+            daypart.program_restrictions_contain_type = (int)programRestrictions.ContainType;
+
+            if (!programRestrictions.Programs.IsEmpty())
+            {
+                foreach (var programRestriction in programRestrictions.Programs)
+                {
+                    daypart.plan_version_daypart_program_restrictions.Add(new plan_version_daypart_program_restrictions
+                    {
+                        genre_id = programRestriction.Genre.Id,
+                        content_rating = programRestriction.ContentRating,
+                        program_name = programRestriction.Name
                     });
                 }
             }

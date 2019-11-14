@@ -150,7 +150,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<genre_sources> genre_sources { get; set; }
         public virtual DbSet<plan_version_available_markets> plan_version_available_markets { get; set; }
         public virtual DbSet<plan_version_blackout_markets> plan_version_blackout_markets { get; set; }
-        public virtual DbSet<plan_version_dayparts> plan_version_dayparts { get; set; }
         public virtual DbSet<plan_version_flight_hiatus_days> plan_version_flight_hiatus_days { get; set; }
         public virtual DbSet<plan_version_secondary_audiences> plan_version_secondary_audiences { get; set; }
         public virtual DbSet<plan_version_summaries> plan_version_summaries { get; set; }
@@ -165,5 +164,7 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<plan_pricing_executions> plan_pricing_executions { get; set; }
         public virtual DbSet<plan_version_daypart_genre_restrictions> plan_version_daypart_genre_restrictions { get; set; }
         public virtual DbSet<plan_pricing_inventory_source_percentages> plan_pricing_inventory_source_percentages { get; set; }
+        public virtual DbSet<plan_version_daypart_program_restrictions> plan_version_daypart_program_restrictions { get; set; }
+        public virtual DbSet<plan_version_dayparts> plan_version_dayparts { get; set; }
     }
 }

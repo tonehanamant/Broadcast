@@ -7,10 +7,8 @@ using Services.Broadcast.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Web.Http;
-using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.Cable.Entities;
-using Tam.Maestro.Services.Cable.Security;
 using Tam.Maestro.Services.ContractInterfaces;
 using Tam.Maestro.Web.Common;
 

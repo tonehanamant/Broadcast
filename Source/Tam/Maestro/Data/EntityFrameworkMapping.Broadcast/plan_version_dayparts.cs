@@ -16,8 +16,9 @@ namespace EntityFrameworkMapping.Broadcast
     {
         public plan_version_dayparts()
         {
-            this.plan_version_daypart_show_type_restrictions = new HashSet<plan_version_daypart_show_type_restrictions>();
             this.plan_version_daypart_genre_restrictions = new HashSet<plan_version_daypart_genre_restrictions>();
+            this.plan_version_daypart_program_restrictions = new HashSet<plan_version_daypart_program_restrictions>();
+            this.plan_version_daypart_show_type_restrictions = new HashSet<plan_version_daypart_show_type_restrictions>();
         }
     
         public int id { get; set; }
@@ -31,10 +32,12 @@ namespace EntityFrameworkMapping.Broadcast
         public int plan_version_id { get; set; }
         public Nullable<int> show_type_restrictions_contain_type { get; set; }
         public Nullable<int> genre_restrictions_contain_type { get; set; }
+        public Nullable<int> program_restrictions_contain_type { get; set; }
     
         public virtual daypart_codes daypart_codes { get; set; }
-        public virtual plan_versions plan_versions { get; set; }
-        public virtual ICollection<plan_version_daypart_show_type_restrictions> plan_version_daypart_show_type_restrictions { get; set; }
         public virtual ICollection<plan_version_daypart_genre_restrictions> plan_version_daypart_genre_restrictions { get; set; }
+        public virtual ICollection<plan_version_daypart_program_restrictions> plan_version_daypart_program_restrictions { get; set; }
+        public virtual ICollection<plan_version_daypart_show_type_restrictions> plan_version_daypart_show_type_restrictions { get; set; }
+        public virtual plan_versions plan_versions { get; set; }
     }
 }

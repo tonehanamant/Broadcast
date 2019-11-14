@@ -62,6 +62,19 @@
             }
           ]
         },
+        "ProgramRestrictions": {
+          "ContainType": 1,
+          "Programs": [
+            {
+              "ContentRating": "PG-13",
+              "Genre": {
+                "Display": "Horror",
+                "Id": 25
+              },
+              "Name": "Young Sheldon"
+            }
+          ]
+        },
         "ShowTypeRestrictions": {
           "ContainType": 2,
           "ShowTypes": [
@@ -88,6 +101,19 @@
             {
               "Display": "Game Show",
               "Id": 20
+            }
+          ]
+        },
+        "ProgramRestrictions": {
+          "ContainType": 2,
+          "Programs": [
+            {
+              "ContentRating": "G",
+              "Genre": {
+                "Display": "Horror",
+                "Id": 25
+              },
+              "Name": "Teletubbies"
             }
           ]
         },
@@ -124,6 +150,19 @@
             }
           ]
         },
+        "ProgramRestrictions": {
+          "ContainType": 1,
+          "Programs": [
+            {
+              "ContentRating": "R",
+              "Genre": {
+                "Display": "Horror",
+                "Id": 25
+              },
+              "Name": "Power Rangers"
+            }
+          ]
+        },
         "ShowTypeRestrictions": {
           "ContainType": 1,
           "ShowTypes": [
@@ -156,6 +195,10 @@
               "Id": 12
             }
           ]
+        },
+        "ProgramRestrictions": {
+          "ContainType": 2,
+          "Programs": []
         },
         "ShowTypeRestrictions": {
           "ContainType": 1,

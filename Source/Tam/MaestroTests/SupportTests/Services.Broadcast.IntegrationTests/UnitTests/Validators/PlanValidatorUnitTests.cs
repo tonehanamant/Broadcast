@@ -15,6 +15,7 @@ using Common.Services.Repositories;
 using Services.Broadcast.Repositories;
 using Services.Broadcast.Helpers;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
+using Services.Broadcast.Entities.DTO.Program;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
 {
@@ -295,6 +296,18 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
 
             Assert.That(() => _planValidator.ValidatePlan(plan),
                 Throws.TypeOf<Exception>().With.Message.EqualTo("Contain type of the genres restrictions is not valid"));
+        }
+
+        [Test]
+        public void ValidatePlan_WithWrongProgramRestrictionsContainType()
+        {
+            _ConfigureSpotLenghtEngineMockToReturnTrue();
+
+            var plan = _GetPlan();
+            plan.Dayparts[0].Restrictions.ProgramRestrictions.ContainType = 0;
+
+            Assert.That(() => _planValidator.ValidatePlan(plan),
+                Throws.TypeOf<Exception>().With.Message.EqualTo("Contain type of the program restrictions is not valid"));
         }
 
         [Test]
@@ -980,6 +993,19 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
                             {
                                 ContainType = ContainTypeEnum.Exclude,
                                 Genres = new List<LookupDto> { new LookupDto { Id = 1, Display = "Lorem" } }
+                            },
+                            ProgramRestrictions = new PlanDaypartDto.RestrictionsDto.ProgramRestrictionDto
+                            {
+                                ContainType = ContainTypeEnum.Exclude,
+                                Programs = new List<ProgramDto>
+                                {
+                                    new ProgramDto
+                                    {
+                                        ContentRating = "G",
+                                        Genre = new LookupDto{ Id = 25},
+                                        Name = "Pimp My Ride"
+                                    }
+                                }
                             }
                         }
                     }
