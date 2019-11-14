@@ -32,25 +32,29 @@ namespace Services.Broadcast.Clients
         private readonly int _ResponseNotReadyPauseMs;
 
         private readonly IAwsCognitoClient _TokenClient;
-        
+
         public ProgramGuideApiClient(IAwsCognitoClient tokenClient)
         {
-            _UrlProgramGuides = @"/v1/programs/guide/";
-
             _TokenClient = tokenClient;
 
             // Dev url
             _ProgramGuidesUrlBase = @"https://qye2zoq6d0.execute-api.us-east-1.amazonaws.com/dev-abr";
-            
             // Staging Url 
             //_ProgramGuidesUrlBase = @"https://h0ix5d7yhb.execute-api.us-east-1.amazonaws.com/staging";
-
-            //_ProgramGuidesUrlBase = BroadcastServiceSystemParameter.ProgramGuideUrl;
-            _TokenUrl = BroadcastServiceSystemParameter.ProgramGuideTokenUrl;
-            _ClientId = BroadcastServiceSystemParameter.ProgramGuideClientId;
-            _EncryptedSecret = BroadcastServiceSystemParameter.ProgramGuideEncryptedSecret;
+            _UrlProgramGuides = @"/v1/programs/guide/";
+            _TokenUrl = @"https://dev-cmw.auth.us-east-1.amazoncognito.com/oauth2/token";
+            _ClientId = @"5e9kdecif9k6r7ttetgd4e500t";
+            _EncryptedSecret = @"OJE8vVrWiuZrou5oVn/uVdCmMSCRf/7vhlBB9Uz9bG/dQkN8WKjS1gXV01ANViI+UvbDSI8XjCs=";
             _ClientSecret = EncryptionHelper.DecryptString(_EncryptedSecret, EncryptionHelper.EncryptionKey);
-            _TimeoutSeconds = BroadcastServiceSystemParameter.ProgramGuideTimeoutSeconds;
+            _TimeoutSeconds = 20 * 60;
+
+            // TODO : Populate the existing settings with the actual values.
+            //_ProgramGuidesUrlBase = BroadcastServiceSystemParameter.ProgramGuideUrl;
+            //_TokenUrl = BroadcastServiceSystemParameter.ProgramGuideTokenUrl;
+            //_ClientId = BroadcastServiceSystemParameter.ProgramGuideClientId;
+            //_EncryptedSecret = BroadcastServiceSystemParameter.ProgramGuideEncryptedSecret;
+            //_ClientSecret = EncryptionHelper.DecryptString(_EncryptedSecret, EncryptionHelper.EncryptionKey);
+            //_TimeoutSeconds = BroadcastServiceSystemParameter.ProgramGuideTimeoutSeconds;
         }
 
         public List<GuideResponseElementDto> GetProgramsForGuide(List<GuideRequestElementDto> requestElements)
