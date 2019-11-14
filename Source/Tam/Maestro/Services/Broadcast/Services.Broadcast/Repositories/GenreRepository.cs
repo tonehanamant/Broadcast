@@ -13,11 +13,15 @@ namespace Services.Broadcast.Repositories
 {
     public interface IGenreRepository : IDataRepository
     {
-        List<LookupDto> GetAllGenres();
+        List<LookupDto> GetAllMaestroGenres();
+
+        List<Genre> GetAllGenres();
 
         List<LookupDto> FindGenres(string genreSearchString);
 
         List<LookupDto> GetGenresBySourceId(int sourceId);
+
+        List<GenreMapping> GetGenreMappingsBySourceId(int sourceId);
     }
 
     public class GenreRepository : BroadcastRepositoryBase, IGenreRepository
@@ -27,10 +31,15 @@ namespace Services.Broadcast.Repositories
             ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient)
             : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
 
-        public List<LookupDto> GetAllGenres()
+        public List<LookupDto> GetAllMaestroGenres()
         {
             return _InReadUncommitedTransaction(
                 context => context.genres.Where(g => g.source_id == (int)GenreSourceEnum.Maestro).OrderBy(g => g.name).Select(_MapToDto).ToList());
+        }
+
+        public List<Genre> GetAllGenres()
+        {
+            return _InReadUncommitedTransaction(context => context.genres.Select(_MapToGenre).ToList());
         }
         
         public List<LookupDto> FindGenres(string genreSearchString)
@@ -53,12 +62,44 @@ namespace Services.Broadcast.Repositories
                 );
         }
 
+        public List<GenreMapping> GetGenreMappingsBySourceId(int sourceId)
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                var query = from genre_mapping in context.genre_mappings
+                            join genre in context.genres on genre_mapping.mapped_genre_id equals genre.id
+                            where genre.source_id == sourceId
+                            select genre_mapping;
+
+                return query.ToList().Select(_MapToGenreMapping).ToList();
+            });
+        }
+
         private LookupDto _MapToDto(genre genre)
         {
             return new LookupDto
             {
                 Display = genre.name,
                 Id = genre.id
+            };
+        }
+
+        private Genre _MapToGenre(genre genre)
+        {
+            return new Genre
+            {
+                Id = genre.id,
+                Name = genre.name,
+                SourceId = genre.source_id
+            };
+        }
+
+        private GenreMapping _MapToGenreMapping(genre_mappings genre_mapping)
+        {
+            return new GenreMapping
+            {
+                GenreIdToMap = genre_mapping.mapped_genre_id,
+                MaestroGenreId = genre_mapping.maestro_genre_id
             };
         }
     }

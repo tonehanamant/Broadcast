@@ -48,7 +48,7 @@ namespace Services.Broadcast.ApplicationServices
         List<StationContact> GetStationContacts(string inventorySource, int stationCode);
         bool SaveStationContact(StationContact stationContacts, string userName);
         bool DeleteStationContact(string inventorySourceString, int stationContactId, string userName);
-        List<LookupDto> GetAllGenres();
+        List<LookupDto> GetAllMaestroGenres();
         LockResponse LockStation(int stationCode);
         ReleaseLockResponse UnlockStation(int stationCode);
         RatesInitialDataDto GetInitialRatesData();
@@ -600,9 +600,9 @@ namespace Services.Broadcast.ApplicationServices
             return true;
         }
 
-        public List<LookupDto> GetAllGenres()
+        public List<LookupDto> GetAllMaestroGenres()
         {
-            return _GenreRepository.GetAllGenres();
+            return _GenreRepository.GetAllMaestroGenres();
         }
 
         private void _SetRateDataThrough(List<DisplayBroadcastStation> stations, DateTime currentDate)

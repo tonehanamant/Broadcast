@@ -502,9 +502,54 @@ namespace Tam.Maestro.Common.SystemComponentParameter
             get { return "MediaMonthCruchCacheSlidingExpirationSeconds"; }
         }
 	 
+		public static string ProgramGuideClientId  
+		{
+            get { return "ProgramGuideClientId"; }
+        }
+	 
+		public static string ProgramGuideEncryptedSecret  
+		{
+            get { return "ProgramGuideEncryptedSecret"; }
+        }
+	 
+		public static string ProgramGuideTimeoutSeconds  
+		{
+            get { return "ProgramGuideTimeoutSeconds"; }
+        }
+	 
+		public static string ProgramGuideTokenUrl  
+		{
+            get { return "ProgramGuideTokenUrl"; }
+        }
+	 
+		public static string ProgramGuideUrl  
+		{
+            get { return "ProgramGuideUrl"; }
+        }
+	 
 		public static string ProgramSearchApiUrl  
 		{
             get { return "ProgramSearchApiUrl"; }
+        }
+	 
+		public static string ProgramsSearchClientId  
+		{
+            get { return "ProgramsSearchClientId"; }
+        }
+	 
+		public static string ProgramsSearchEncryptedSecret  
+		{
+            get { return "ProgramsSearchEncryptedSecret"; }
+        }
+	 
+		public static string ProgramsSearchTokenUrl  
+		{
+            get { return "ProgramsSearchTokenUrl"; }
+        }
+	 
+		public static string ProgramsSearchUrl  
+		{
+            get { return "ProgramsSearchUrl"; }
         }
 	 
 		public static string RelativePathToMarketCoveragesFile  

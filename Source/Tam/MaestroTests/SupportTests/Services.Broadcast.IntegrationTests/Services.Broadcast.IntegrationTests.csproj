@@ -255,6 +255,7 @@
     <Compile Include="ApplicationServices\InventoryGapCalculationEngineTests.cs" />
     <Compile Include="ApplicationServices\AudienceServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\PostingBookServiceIntegrationTests.cs" />
+    <Compile Include="ApplicationServices\ProgramServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\ProprietaryFileImporterIntegrationTests.cs" />
     <Compile Include="ApplicationServices\ProprietaryInventoryServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\BaseProposalInventoryServiceIntegrationTests.cs" />

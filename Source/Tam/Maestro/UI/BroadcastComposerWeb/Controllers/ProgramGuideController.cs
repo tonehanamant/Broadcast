@@ -26,11 +26,5 @@ namespace BroadcastComposerWeb.Controllers
             var fullName = "testUser";
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IProgramGuideService>().GetProgramsForGuide(guideRequestElements, fullName, simulate));
         }
-
-        [HttpGet]
-        public BaseResponse<List<SearchResponseProgramDto>> GetPrograms(bool simulate = true)
-        {
-            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IProgramGuideService>().GetPrograms(simulate));
-        }
     }
 }

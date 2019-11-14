@@ -558,10 +558,64 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.MediaMonthCruchCacheSlidingExpirationSeconds); }
         }
 	 
+		public static string ProgramGuideClientId  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<string>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.ProgramGuideClientId); }
+        }
+	 
+		public static string ProgramGuideEncryptedSecret  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<string>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.ProgramGuideEncryptedSecret); }
+        }
+	 
+		public static int ProgramGuideTimeoutSeconds  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<int>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.ProgramGuideTimeoutSeconds); }
+        }
+	 
+		public static string ProgramGuideTokenUrl  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<string>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.ProgramGuideTokenUrl); }
+        }
+	 
+		public static string ProgramGuideUrl  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<string>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.ProgramGuideUrl); }
+        }
+	 
 		public static string ProgramSearchApiUrl  
 		{
             get { return SystemComponentParameterHelper.GetPropertyValue<string>
 					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.ProgramSearchApiUrl); }
+        }
+	 
+		public static string ProgramsSearchClientId  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<string>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.ProgramsSearchClientId); }
+        }
+	 
+		public static string ProgramsSearchEncryptedSecret  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<string>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.ProgramsSearchEncryptedSecret); }
+        }
+	 
+		public static string ProgramsSearchTokenUrl  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<string>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.ProgramsSearchTokenUrl); }
+        }
+	 
+		public static string ProgramsSearchUrl  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<string>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.ProgramsSearchUrl); }
         }
 	 
 		public static string RelativePathToMarketCoveragesFile  

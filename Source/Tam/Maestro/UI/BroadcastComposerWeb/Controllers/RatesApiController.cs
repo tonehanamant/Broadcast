@@ -116,13 +116,13 @@ namespace BroadcastComposerWeb.Controllers
 
         [HttpGet]
         [Route("Genres")]
-        public BaseResponse<List<LookupDto>> GetAllGenres()
+        public BaseResponse<List<LookupDto>> GetAllMaestroGenres()
         {
             return
                 _ConvertToBaseResponse(
                     () =>
                         _ApplicationServiceFactory.GetApplicationService<IInventoryService>()
-                            .GetAllGenres());
+                            .GetAllMaestroGenres());
         }
 
         [HttpGet]

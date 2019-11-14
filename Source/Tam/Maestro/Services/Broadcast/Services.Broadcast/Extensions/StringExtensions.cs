@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Text;
 
 namespace Services.Broadcast.Extensions
@@ -39,6 +40,11 @@ namespace Services.Broadcast.Extensions
             }
 
             return s.ToString();
+        }
+
+        public static bool Contains(this string source, string search, StringComparison stringComparison)
+        {
+            return source.IndexOf(search, stringComparison) != -1;
         }
     }
 }

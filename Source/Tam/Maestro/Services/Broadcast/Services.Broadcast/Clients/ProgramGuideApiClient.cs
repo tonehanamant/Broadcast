@@ -2,27 +2,23 @@
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
-using OfficeOpenXml.FormulaParsing.Excel.Functions.Text;
 using Tam.Maestro.Common;
 using Tam.Maestro.Common.Clients;
+using Tam.Maestro.Services.Cable.SystemComponentParameters;
 
 namespace Services.Broadcast.Clients
 {
     public interface IProgramGuideApiClient
     {
         List<GuideResponseElementDto> GetProgramsForGuide(List<GuideRequestElementDto> requestElements);
-
-        List<SearchResponseProgramDto> GetPrograms();
     }
 
     public class ProgramGuideApiClient : IProgramGuideApiClient
     {
         private const string AUTHORIZATION = "Authorization";
         private const string BEARER = "Bearer";
-
-        private readonly string _BaseProgramGuideUrl;
-        protected readonly string _UrlProgramGuides;
-        protected readonly string _UrlProgramsSearch;
+        
+        protected readonly string _ProgramGuidesUrl;
         private readonly string _TokenUrl;
         private readonly string _ClientId;
         private readonly string _EncryptedSecret;
@@ -30,50 +26,22 @@ namespace Services.Broadcast.Clients
         private readonly int _TimeoutSeconds;
 
         private readonly IAwsCognitoClient _TokenClient;
-
-        // TODO: Remove this.  It's for testing.
-        private readonly bool _UseRestClient = false;
-
+        
         public ProgramGuideApiClient(IAwsCognitoClient tokenClient)
         {
             _TokenClient = tokenClient;
-
-            // TODO Get these from the database configuration once they are finalized
-            // should these be readonly like this or should they be something else
-            // to allow consume a changed configuration value on next attempt?
-
-            // Pre-Dev url
-            //_BaseProgramGuideUrl = @"https://virtserver.swaggerhub.com/Cadent7/ProgramGuideAPI/1.0.0";
-
-            // Staging Url - 401 Unauthorized
-            _BaseProgramGuideUrl = @"https://h0ix5d7yhb.execute-api.us-east-1.amazonaws.com/staging";
-
-            _UrlProgramGuides = @"/v1/programs/guide/";
-            _UrlProgramsSearch = @"/v1/programs/search/";
-
-            _TokenUrl = @"https://dev-cmw.auth.us-east-1.amazoncognito.com/oauth2/token";
-            _ClientId = @"5e9kdecif9k6r7ttetgd4e500t";
-            _EncryptedSecret = @"OJE8vVrWiuZrou5oVn/uVdCmMSCRf/7vhlBB9Uz9bG/dQkN8WKjS1gXV01ANViI+UvbDSI8XjCs=";
+            
+            _ProgramGuidesUrl = BroadcastServiceSystemParameter.ProgramGuideUrl;
+            _TokenUrl = BroadcastServiceSystemParameter.ProgramGuideTokenUrl;
+            _ClientId = BroadcastServiceSystemParameter.ProgramGuideClientId;
+            _EncryptedSecret = BroadcastServiceSystemParameter.ProgramGuideEncryptedSecret;
             _ClientSecret = EncryptionHelper.DecryptString(_EncryptedSecret, EncryptionHelper.EncryptionKey);
-            _TimeoutSeconds = 20 * 60;
+            _TimeoutSeconds = BroadcastServiceSystemParameter.ProgramGuideTimeoutSeconds;
         }
 
         public List<GuideResponseElementDto> GetProgramsForGuide(List<GuideRequestElementDto> requestElements)
         {
-            return _PostAndGet<List<GuideResponseElementDto>>($"{_BaseProgramGuideUrl}{_UrlProgramGuides}", requestElements);
-        }
-
-        public List<SearchResponseProgramDto> GetPrograms()
-        {
-            var request = new SearchRequestProgramDto
-            {
-                ProgramName = "zo*",
-                //Start = 0,
-                //Limit = 20,
-                Genres = new List<SearchRequestProgramGenreDto>()
-            };
-
-            return _PostAndGet<List<SearchResponseProgramDto>>($"{_BaseProgramGuideUrl}{_UrlProgramsSearch}", request);
+            return _PostAndGet<List<GuideResponseElementDto>>(_ProgramGuidesUrl, requestElements);
         }
 
         private AwsToken _GetToken()
@@ -85,7 +53,7 @@ namespace Services.Broadcast.Clients
         {
             var timeoutTime = DateTime.Now.AddSeconds(_TimeoutSeconds);
             var token = _GetToken();
-            
+
             // TODO: PRI-17014 - change to use the IRestClient 
             // Will complete this in PRI-17014 when we get the actual API.
             string queryId;
@@ -93,6 +61,7 @@ namespace Services.Broadcast.Clients
             {
                 client.DefaultRequestHeaders.Add(AUTHORIZATION, $"{BEARER} {token.AccessToken}");
                 var serviceResponse = client.PostAsJsonAsync(url, data).Result;
+
                 if (serviceResponse.IsSuccessStatusCode == false)
                 {
                     throw new Exception($"Error connecting to ProgramGuide for post data. : {serviceResponse}");

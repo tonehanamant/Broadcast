@@ -215,14 +215,15 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IGenreService, GenreService>();
 
             unityContainer.RegisterType<IProgramGuideApiClient, ProgramGuideApiClient>();
+            // TODO: Remove this during PRI-17014.  Reroute consumers to ProgramGuideApiClient.
+            unityContainer.RegisterType<IProgramGuideApiClientSimulator, ProgramGuideApiClientSimulator>();
             unityContainer.RegisterType<IProgramGuideService, ProgramGuideService>();
+            unityContainer.RegisterType<IProgramsSearchApiClient, ProgramsSearchApiClient>();
+            unityContainer.RegisterType<IProgramService, ProgramService>();
 
             unityContainer.RegisterType<IPlanPricingService, PlanPricingService>();
             unityContainer.RegisterType<IPricingApiClient, PricingApiClient>();
             unityContainer.RegisterType<IImpressionsCalculationEngine, ImpressionsCalculationEngine>();
-
-            // TODO: Remove this during PRI-17014.  Reroute consumers to ProgramGuideApiClient.
-            unityContainer.RegisterType<IProgramGuideApiClientSimulator, ProgramGuideApiClientSimulator>();
 
             //@todo This is temporary to control the daypart source for Broadcast
             var repoFactory = unityContainer.Resolve<IDataRepositoryFactory>();
@@ -233,8 +234,10 @@ namespace Services.Broadcast.ApplicationServices
             MediaMonthCrunchCache.MediaMonthCrunchCacheInstance = new MediaMonthCrunchCache(repoFactory, unityContainer.Resolve<IMediaMonthAndWeekAggregateCache>());
             unityContainer.RegisterInstance<IMediaMonthCrunchCache>(MediaMonthCrunchCache.MediaMonthCrunchCacheInstance);
 
-            unityContainer.RegisterType<ITrafficApiCache, TrafficApiCache>(new ContainerControlledLifetimeManager()); // singleton
-            unityContainer.RegisterType<IAwsCognitoClient, AwsCognitoClient>(new ContainerControlledLifetimeManager()); // singleton
+            // singletons
+            unityContainer.RegisterType<ITrafficApiCache, TrafficApiCache>(new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<IAwsCognitoClient, AwsCognitoClient>(new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<IGenreCache, GenreCache>(new ContainerControlledLifetimeManager());
         }
 
         public T GetApplicationService<T>() where T : class, IApplicationService

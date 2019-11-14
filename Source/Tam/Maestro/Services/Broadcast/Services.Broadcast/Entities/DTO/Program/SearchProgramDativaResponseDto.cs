@@ -1,8 +1,8 @@
 ﻿using Newtonsoft.Json;
 
-namespace Services.Broadcast.Entities.ProgramGuide
+namespace Services.Broadcast.Entities.DTO.Program
 {
-    public class SearchResponseProgramDto
+    public class SearchProgramDativaResponseDto
     {
         [JsonProperty(PropertyName = "id")]
         public string ProgramId { get; set; }

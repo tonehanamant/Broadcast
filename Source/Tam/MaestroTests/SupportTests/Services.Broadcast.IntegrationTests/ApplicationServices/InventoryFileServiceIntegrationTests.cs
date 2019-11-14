@@ -273,7 +273,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var genres = _InventoryService.GetAllGenres();
+                var genres = _InventoryService.GetAllMaestroGenres();
                 Assert.IsTrue(genres.Any());
             }
         }

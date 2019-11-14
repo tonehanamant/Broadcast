@@ -330,10 +330,12 @@
     <Compile Include="Controllers\ImageApiController.cs" />
     <Compile Include="Controllers\AudienceApiController.cs" />
     <Compile Include="Controllers\MarketsApiController.cs" />
+    <Compile Include="Controllers\MockDativaProgramSearchApiController.cs" />
     <Compile Include="Controllers\PlanPricingApiController.cs" />
     <Compile Include="Controllers\PostingTypeApiController.cs" />
     <Compile Include="Controllers\PostingBooksApiController.cs" />
     <Compile Include="Controllers\ProductApiController.cs" />
+    <Compile Include="Controllers\ProgramApiController.cs" />
     <Compile Include="Controllers\ProgramGuideController.cs" />
     <Compile Include="Controllers\ShowTypeApiController.cs" />
     <Compile Include="Controllers\SpotLengthApiController.cs" />
