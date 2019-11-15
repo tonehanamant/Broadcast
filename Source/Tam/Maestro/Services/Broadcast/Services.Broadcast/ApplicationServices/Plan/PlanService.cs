@@ -506,35 +506,31 @@ namespace Services.Broadcast.ApplicationServices.Plan
             var plansToTransition = _PlanRepository.GetPlansForAutomaticTransition(transitionDate);
             foreach (var plan in plansToTransition)
             {
-                // PRI-16115
-                // We will skip plan-locking for now
-                // This logic will run in the background, the LockingManagerApplicationService needs a user to lock the resource, which we don't have
+                var key = KeyHelper.GetPlanLockingKey(plan.Id);
+                var lockingResult = _LockingManagerApplicationService.LockObject(key);
 
-                //var key = KeyHelper.GetPlanLockingKey(plan.Id);
-                //var lockingResult = _LockingManagerApplicationService.LockObject(key);
-
-                //if (lockingResult.Success)
-                //{
-                if (plan.Status == PlanStatusEnum.Contracted)
+                if (lockingResult.Success)
                 {
-                    plan.Status = PlanStatusEnum.Live;
+                    if (plan.Status == PlanStatusEnum.Contracted)
+                    {
+                        plan.Status = PlanStatusEnum.Live;
+                    }
+                    else if (plan.Status == PlanStatusEnum.Live)
+                    {
+                        plan.Status = PlanStatusEnum.Complete;
+                    }
+
+                    _PlanRepository.SavePlan(plan, updatedBy, updatedDate);
+
+                    _DispatchPlanAggregation(plan, aggregatePlanSynchronously);
+                    _CampaignAggregationJobTrigger.TriggerJob(plan.CampaignId, updatedBy);
                 }
-                else if (plan.Status == PlanStatusEnum.Live)
+                else
                 {
-                    plan.Status = PlanStatusEnum.Complete;
+                    throw new Exception($"The chosen plan has been locked by {lockingResult.LockedUserName}");
                 }
 
-                _PlanRepository.SavePlan(plan, updatedBy, updatedDate);
-
-                _DispatchPlanAggregation(plan, aggregatePlanSynchronously);
-                _CampaignAggregationJobTrigger.TriggerJob(plan.CampaignId, updatedBy);
-                //}
-                //else
-                //{
-                //    throw new Exception($"The chosen plan has been locked by {lockingResult.LockedUserName}");
-                //}
-
-                //_LockingManagerApplicationService.ReleaseObject(key);
+                _LockingManagerApplicationService.ReleaseObject(key);
             }
         }
 
