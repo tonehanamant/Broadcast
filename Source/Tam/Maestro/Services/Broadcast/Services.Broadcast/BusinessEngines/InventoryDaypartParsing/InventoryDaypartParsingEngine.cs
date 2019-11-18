@@ -215,6 +215,11 @@ namespace Services.Broadcast.BusinessEngines.InventoryDaypartParsing
                     lDisplayDaypart.StartTime = 0;
                 }
 
+                if (lDisplayDaypart.EndTime == -1)
+                {
+                    lDisplayDaypart.EndTime = 86399;
+                }
+
                 result = lDisplayDaypart;
             }
 

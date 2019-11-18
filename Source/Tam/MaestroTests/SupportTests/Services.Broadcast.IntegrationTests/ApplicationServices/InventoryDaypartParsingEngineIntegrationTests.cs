@@ -17,6 +17,20 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        public void ParseSpecificCases()
+        {
+            var daypartStrings = new List<string>
+            {
+                "M-F 12:00PM-12:00AM"
+            };
+
+            var result = _ParseDayparts(daypartStrings);
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
         public void CanParseCNNDayparts()
         {
             const string fileName = @".\Files\InventoryDaypartParsing\CNN_dayparts.xlsx";
