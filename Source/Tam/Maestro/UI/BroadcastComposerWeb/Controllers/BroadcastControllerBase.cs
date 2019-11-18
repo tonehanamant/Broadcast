@@ -40,6 +40,10 @@ namespace BroadcastComposerWeb.Controllers
                     WindowsIdentity.GetCurrent().Name : 
                     User.Identity.Name;
 
+                _Logger.LogEventInformation(
+                    message: $"User.Identity.Name: {User.Identity.Name}, WindowsIdentity.GetCurrent().Name: {WindowsIdentity.GetCurrent().Name}",
+                    serviceName: "BroadcastControllerBase");
+
                 UserPrincipal user = UserPrincipal.FindByIdentity(ctx, userName);
 
                 return user.DisplayName;

@@ -23,7 +23,7 @@ namespace Tam.Maestro.Web.Common
 
     public class ControllerBase : ApiController
     {
-        private readonly IWebLogger _Logger;
+        protected readonly IWebLogger _Logger;
         private readonly ControllerNameRetriever _ControllerNameRetriever;
 
         public ControllerBase(IWebLogger logger, ControllerNameRetriever controllerNameRetriever)
