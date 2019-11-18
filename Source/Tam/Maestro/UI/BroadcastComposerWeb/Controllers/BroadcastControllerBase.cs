@@ -35,7 +35,13 @@ namespace BroadcastComposerWeb.Controllers
             get
             {
                 PrincipalContext ctx = new PrincipalContext(ContextType.Domain);
-                UserPrincipal user = UserPrincipal.FindByIdentity(ctx, User.Identity.Name);
+
+                var userName = string.IsNullOrEmpty(User.Identity.Name) ? 
+                    WindowsIdentity.GetCurrent().Name : 
+                    User.Identity.Name;
+
+                UserPrincipal user = UserPrincipal.FindByIdentity(ctx, userName);
+
                 return user.DisplayName;
             }
         }
