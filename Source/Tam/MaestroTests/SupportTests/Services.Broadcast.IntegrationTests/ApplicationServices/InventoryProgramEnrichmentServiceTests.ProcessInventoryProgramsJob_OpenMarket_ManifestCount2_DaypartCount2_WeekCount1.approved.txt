@@ -1,0 +1,19 @@
+﻿{
+  "FileId": 205127,
+  "InventorySource": {
+    "Id": 1,
+    "InventoryType": 1,
+    "IsActive": true,
+    "Name": "Open Market"
+  },
+  "RequestChunkSize": 1000,
+  "SaveChunkSize": 1000,
+  "TotalApiCallCount": 1,
+  "TotalDaypartCount": 2,
+  "TotalManifestCount": 2,
+  "TotalProgramsSaved": 48,
+  "TotalRequestCount": 2,
+  "TotalResponseCount": 2,
+  "TotalSavesCount": 1,
+  "TotalWeekCount": 1
+}

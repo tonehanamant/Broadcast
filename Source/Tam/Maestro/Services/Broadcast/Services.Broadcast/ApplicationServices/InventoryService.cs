@@ -3,29 +3,24 @@ using Common.Services.ApplicationServices;
 using Common.Services.Extensions;
 using Common.Services.Repositories;
 using Common.Systems.LockTokens;
-using Hangfire;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Cache;
-using Services.Broadcast.Clients;
 using Services.Broadcast.Converters.RateImport;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.InventorySummary;
-using Services.Broadcast.Entities.ProgramGuide;
 using Services.Broadcast.Entities.StationInventory;
 using Services.Broadcast.Exceptions;
 using Services.Broadcast.Helpers;
 using Services.Broadcast.Repositories;
 using Services.Broadcast.Validators;
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web;
 using Tam.Maestro.Common;
 using Tam.Maestro.Common.DataLayer;
-using Tam.Maestro.Common.Utilities.Logging;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 using Tam.Maestro.Services.Clients;
@@ -60,9 +55,6 @@ namespace Services.Broadcast.ApplicationServices
         List<QuarterDetailDto> GetInventoryUploadHistoryQuarters(int inventorySourceId);
         List<InventoryUploadHistoryDto> GetInventoryUploadHistory(int inventorySourceId, int? quarter, int? year);
         Tuple<string, Stream, string> DownloadErrorFile(int fileId);
-        
-        int QueueInventoryFileProgramEnrichmentJob(int fileId, string username);
-        InventoryFileProgramEnrichmentJobDiagnostics PerformInventoryFileProgramEnrichmentJob(int jobId);
 
         /// <summary>
         /// Checks if the filepath is an excel file or not
@@ -105,9 +97,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IAudienceRepository _AudienceRepository;
         private readonly IFileService _FileService;
         private readonly IInventoryRatingsProcessingService _InventoryRatingsService;
-        private readonly IBackgroundJobClient _BackgroundJobClient;
-        private readonly IInventoryFileProgramEnrichmentJobsRepository _InventoryFileProgramEnrichmentJobsRepository;
-        private readonly IProgramGuideApiClientSimulator _ProgramGuideApiClient; 
+        private readonly IInventoryProgramEnrichmentService _InventoryProgramEnrichmentService;
 
         public InventoryService(IDataRepositoryFactory broadcastDataRepositoryFactory,
             IInventoryFileValidator inventoryFileValidator,
@@ -126,8 +116,7 @@ namespace Services.Broadcast.ApplicationServices
             IOpenMarketFileImporter openMarketFileImporter,
             IFileService fileService,
             IInventoryRatingsProcessingService inventoryRatingsService,
-            IBackgroundJobClient backgroundJobClient,
-            IProgramGuideApiClientSimulator programGuideApiClient)
+            IInventoryProgramEnrichmentService inventoryProgramEnrichmentService)
         {
             _broadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
             _StationRepository = broadcastDataRepositoryFactory.GetDataRepository<IStationRepository>();
@@ -153,10 +142,7 @@ namespace Services.Broadcast.ApplicationServices
             _AudienceRepository = broadcastDataRepositoryFactory.GetDataRepository<IAudienceRepository>();
             _FileService = fileService;
             _InventoryRatingsService = inventoryRatingsService;
-            _BackgroundJobClient = backgroundJobClient;
-            _InventoryFileProgramEnrichmentJobsRepository = broadcastDataRepositoryFactory
-                .GetDataRepository<IInventoryFileProgramEnrichmentJobsRepository>();
-            _ProgramGuideApiClient = programGuideApiClient;
+            _InventoryProgramEnrichmentService = inventoryProgramEnrichmentService;
         }
 
         public bool GetStationProgramConflicted(StationProgramConflictRequest conflict, int manifestId)
@@ -292,6 +278,8 @@ namespace Services.Broadcast.ApplicationServices
             if (!inventoryFile.ValidationProblems.Any())
             {
                 _InventoryRatingsService.QueueInventoryFileRatingsJob(inventoryFile.Id);
+                // TODO: Enable this when ready.
+                //_InventoryProgramEnrichmentService.QueueInventoryFileProgramEnrichmentJob(inventoryFile.Id, userName);
 
                 try
                 {
@@ -792,199 +780,6 @@ namespace Services.Broadcast.ApplicationServices
             }
 
             throw new ApplicationException($"Error file {fileId} not found!");
-        }
-
-        /// <remarks>
-        /// ProcessDiagnostics used to gather and report info.
-        /// Intending to remove ProcessDiagnostics once api client is in place and tested. 
-        /// </remarks>
-        public InventoryFileProgramEnrichmentJobDiagnostics PerformInventoryFileProgramEnrichmentJob(int jobId)
-        {
-            const string dateFormat = "MM/dd/yyyy";
-            const int genreSourceId = (int) GenreSourceEnum.Dativa;
-            const int requestChunkSize = 1000; // PRI-17014 will make this configurable
-            const int saveChunkSize = 1000; // PRI-17014 will make this configurable
-
-            var requestElementNumber = 0;
-            var processDiagnostics = new InventoryFileProgramEnrichmentJobDiagnostics { JobId = jobId, RequestChunkSize = requestChunkSize, SaveChunkSize = saveChunkSize };
-
-            try
-            {
-                processDiagnostics.RecordStart();
-
-                var fileId = _InventoryFileProgramEnrichmentJobsRepository.GetJob(jobId).InventoryFileId;
-                processDiagnostics.RecordFileId(fileId);
-
-                /*** Gather Inventory ***/
-                processDiagnostics.RecordGatherInventoryStart();
-                _InventoryFileProgramEnrichmentJobsRepository.UpdateJobStatus(jobId, InventoryFileProgramEnrichmentJobStatus.GatherInventory);
-
-                var manifests = _InventoryRepository.GetStationInventoryManifestsByFileId(fileId)
-                    .Where(m => m.Station != null && m.ManifestDayparts.Any() && m.ManifestWeeks.Any()).ToList();
-
-                processDiagnostics.RecordGatherInventoryStop();
-
-                if (manifests.Any() == false)
-                {
-                    _InventoryFileProgramEnrichmentJobsRepository.SetJobCompleteSuccess(jobId);
-                    return processDiagnostics;
-                }
-
-                /*** Transform to ProgramGuideApi Input ***/
-                var distinctWeeks = manifests.SelectMany(m => m.ManifestWeeks).Select(w => w.MediaWeek).Distinct()
-                    .OrderBy(w => w.StartDate).ToList();
-                processDiagnostics.RecordManifestDetails(manifests.Count, distinctWeeks.Count, manifests.Sum(m => m.ManifestDayparts.Count));
-
-                var weekNumber = 0;
-                foreach (var week in distinctWeeks)
-                {
-                    weekNumber++;
-                    processDiagnostics.RecordIterationStart(weekNumber, distinctWeeks.Count);
-                    processDiagnostics.RecordTransformToInputStart();
-
-                    var startDateString = week.StartDate.ToString(dateFormat);
-                    var endDateString = week.EndDate.ToString(dateFormat);
-
-                    var requestMappings = new List<GuideRequestResponseMapping>();
-                    var requestElements = new List<GuideRequestElementDto>();
-
-                    var relevantManifests = manifests.Where(m =>
-                        m.ManifestWeeks.Select(w => w.MediaWeek.Id).Contains(week.Id)).OrderBy(m => m.Station.LegacyCallLetters);
-
-                    foreach (var manifest in relevantManifests)
-                    {
-                        foreach (var daypart in manifest.ManifestDayparts.OrderBy(d => d.Daypart.StartTime))
-                        {
-                            var requestElementMapping = new GuideRequestResponseMapping
-                            {
-                                RequestElementNumber = ++requestElementNumber,
-                                WeekNumber = weekNumber,
-                                ManifestId = manifest.Id ?? 0,
-                                ManifestDaypartId = daypart.Id ?? 0,
-                                WeekStartDte = week.StartDate,
-                                WeekEndDate = week.EndDate
-                            };
-                            requestMappings.Add(requestElementMapping);
-                            requestElements.Add(
-                                new GuideRequestElementDto
-                                {
-                                    RequestElementId = requestElementMapping.RequestEntryId,
-                                    StartDate = startDateString,
-                                    EndDate = endDateString,
-                                    NielsenLegacyStationCallLetters = manifest.Station.LegacyCallLetters,
-                                    NetworkAffiliate = manifest.Station.Affiliation,
-                                    Daypart = new GuideRequestDaypartDto
-                                    {
-                                        RequestDaypartId = requestElementMapping.RequestEntryId,
-                                        Daypart = daypart.Daypart.Preview,
-                                        Monday = daypart.Daypart.Monday,
-                                        Tuesday = daypart.Daypart.Tuesday,
-                                        Wednesday = daypart.Daypart.Wednesday,
-                                        Thursday = daypart.Daypart.Thursday,
-                                        Friday = daypart.Daypart.Friday,
-                                        Saturday = daypart.Daypart.Saturday,
-                                        Sunday = daypart.Daypart.Sunday,
-                                        StartTime = daypart.Daypart.StartTime,
-                                        EndTime = daypart.Daypart.EndTime
-                                    }
-                                });
-                        }
-                    }
-
-                    processDiagnostics.RecordTransformToInputStop(requestElements.Count);
-
-                    var requestChunks = requestElements.Select((x, i) => new { Index = i, Value = x })
-                        .GroupBy(x => x.Index / requestChunkSize)
-                        .Select(x => x.Select(v => v.Value).ToList())
-                        .ToList();
-
-                    var currentRequestChunkIndex = 0;
-                    foreach (var requestChunk in requestChunks)
-                    {
-                        /*** Call Api ***/
-                        _InventoryFileProgramEnrichmentJobsRepository.UpdateJobStatus(jobId, InventoryFileProgramEnrichmentJobStatus.CallApi);
-
-                        currentRequestChunkIndex++;
-                        processDiagnostics.RecordIterationStartCallToApi(currentRequestChunkIndex, requestChunks.Count);
-                        
-                        var programGuideResponse = _ProgramGuideApiClient.GetProgramsForGuide(requestChunk);
-
-                        processDiagnostics.RecordIterationStopCallToApi(programGuideResponse.Count);
-
-                        /*** Apply Api Response ***/
-                        processDiagnostics.RecordIterationStartApplyApiResponse();
-
-                        _InventoryFileProgramEnrichmentJobsRepository.UpdateJobStatus(jobId, InventoryFileProgramEnrichmentJobStatus.ApplyProgramData);
-
-                        var genres = _GenreRepository.GetGenresBySourceId(genreSourceId);
-                        var programs = new ConcurrentBag<StationInventoryManifestDaypartProgram>();
-
-                        foreach (var mapping in requestMappings)
-                        {
-                            foreach (var responseEntry in programGuideResponse.Where(e =>
-                                e.RequestDaypartId.Equals(mapping.RequestEntryId)))
-                            {
-                                responseEntry.Programs.Select(p => new StationInventoryManifestDaypartProgram
-                                {
-                                    StationInventoryManifestDaypartId = mapping.ManifestDaypartId,
-                                    ProgramName = p.ProgramName,
-                                    ShowType = p.ShowType,
-                                    Genre = p.Genre,
-                                    GenreSourceId = genreSourceId,
-                                    GenreId = genres.Single(g => g.Display.Equals(p.Genre)).Id,
-                                    StartDate = DateTime.Parse(responseEntry.StartDate),
-                                    EndDate = DateTime.Parse(responseEntry.EndDate),
-                                    StartTime = p.StartTime,
-                                    EndTime = p.EndTime
-                                }).ForEach(a => programs.Add(a));
-                            }
-                        }
-
-                        processDiagnostics.RecordIterationStopApplyApiResponse(programs.Count);
-
-                        /*** Save the programs ***/
-                        _InventoryFileProgramEnrichmentJobsRepository.UpdateJobStatus(jobId, InventoryFileProgramEnrichmentJobStatus.SavePrograms);
-
-                        processDiagnostics.RecordIterationStartSavePrograms();
-
-                        var programSaveChunks = programs.Select((x, i) => new { Index = i, Value = x })
-                            .GroupBy(x => x.Index / saveChunkSize)
-                            .Select(x => x.Select(v => v.Value).ToList())
-                            .ToList();
-
-                        programSaveChunks.ForEach(chunk => _InventoryRepository.UpdateInventoryPrograms(chunk,
-                            DateTime.Now, chunk.Select(c => c.StationInventoryManifestDaypartId).ToList(),
-                            week.StartDate, week.EndDate));
-
-                        processDiagnostics.RecordIterationStopSavePrograms(programSaveChunks.Count);
-                    }
-                }
-
-                /*** All done. ***/
-                _InventoryFileProgramEnrichmentJobsRepository.SetJobCompleteSuccess(jobId);
-            }
-            catch (Exception ex)
-            {
-                LogHelper.Logger.Error(
-                    $"Error caught processing an inventory file for program names.  JobId = '{jobId}'", ex);
-                _InventoryFileProgramEnrichmentJobsRepository.SetJobCompleteError(jobId, ex.Message);
-
-                throw ex;
-            }
-            finally
-            {
-                processDiagnostics.RecordStop();
-            }
-            return processDiagnostics;
-        }
-
-        public int QueueInventoryFileProgramEnrichmentJob(int fileId, string username)
-        {
-            // validate file exists.  Will throw.
-            _InventoryFileRepository.GetInventoryFileById(fileId);
-            var jobId = _InventoryFileProgramEnrichmentJobsRepository.QueueJob(fileId, username, DateTime.Now);
-            _BackgroundJobClient.Enqueue<IInventoryService>(x => x.PerformInventoryFileProgramEnrichmentJob(jobId));
-            return jobId;
         }
 
         /// <summary>

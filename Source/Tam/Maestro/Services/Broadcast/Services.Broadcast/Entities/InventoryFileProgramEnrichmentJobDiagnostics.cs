@@ -8,6 +8,7 @@ namespace Services.Broadcast.Entities
     {
         public int JobId { get; set; }
         public int FileId { get; set; }
+        public InventorySource InventorySource { get; set; }
 
         public int RequestChunkSize { get; set; }
         public int SaveChunkSize { get; set; }
@@ -45,9 +46,10 @@ namespace Services.Broadcast.Entities
             _StartTimer(SW_KEY_TOTAL_DURATION);
         }
 
-        public void RecordFileId(int fileId)
+        public void RecordFileInfo(int fileId, InventorySource inventorySource)
         {
             FileId = fileId;
+            InventorySource = inventorySource;
             Report($"JobId {JobId} processes fileId {FileId}.");
         }
 
@@ -155,9 +157,15 @@ namespace Services.Broadcast.Entities
 
         public override string ToString()
         {
+            var inventorySourceName = InventorySource == null ? "unknown" : InventorySource.Name;
+            var inventorySourceType = InventorySource == null ? "unknown" : InventorySource.InventoryType.ToString();
+
             var sb = new StringBuilder();
             sb.AppendLine($"JobId : {JobId}");
             sb.AppendLine($"FileId : {FileId}");
+            sb.AppendLine($"InventorySource : {inventorySourceName}");
+            sb.AppendLine($"InventorySourceType : {inventorySourceType}");
+            sb.AppendLine();
             sb.AppendLine($"RequestChunkSize : {RequestChunkSize}");
             sb.AppendLine($"SaveChunkSize : {SaveChunkSize}");
             sb.AppendLine();
@@ -171,7 +179,6 @@ namespace Services.Broadcast.Entities
             sb.AppendLine($"Total SaveCalls Count : {TotalSavesCount}");
             sb.AppendLine();
             sb.AppendLine(GetDurationString(SW_KEY_TOTAL_DURATION));
-
             sb.AppendLine(GetDurationString(SW_KEY_TOTAL_DURATION_GATHER_INVENTORY));
             sb.AppendLine(GetDurationString(SW_KEY_TOTAL_DURATION_TRANSFORM_TO_INPUT));
             sb.AppendLine(GetDurationString(SW_KEY_TOTAL_DURATION_CALL_TO_API));

@@ -247,7 +247,7 @@
     <Compile Include="ApplicationServices\CampaignServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\DaypartTypeServiceTests.cs" />
     <Compile Include="ApplicationServices\GenreServiceIntegrationTests.cs" />
-    <Compile Include="ApplicationServices\InventoryServiceIntegrationTests.cs" />
+    <Compile Include="ApplicationServices\InventoryProgramEnrichmentServiceTests.cs" />
     <Compile Include="ApplicationServices\PlanPricingServiceTests.cs" />
     <Compile Include="ApplicationServices\PlanServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\DaypartCodeServiceTests.cs" />

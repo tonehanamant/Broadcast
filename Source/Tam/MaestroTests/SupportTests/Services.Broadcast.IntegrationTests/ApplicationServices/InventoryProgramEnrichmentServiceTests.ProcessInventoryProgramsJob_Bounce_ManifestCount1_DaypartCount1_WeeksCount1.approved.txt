@@ -1,0 +1,19 @@
+﻿{
+  "FileId": 248312,
+  "InventorySource": {
+    "Id": 18,
+    "InventoryType": 5,
+    "IsActive": true,
+    "Name": "Bounce"
+  },
+  "RequestChunkSize": 1000,
+  "SaveChunkSize": 1000,
+  "TotalApiCallCount": 1,
+  "TotalDaypartCount": 1,
+  "TotalManifestCount": 1,
+  "TotalProgramsSaved": 4,
+  "TotalRequestCount": 1,
+  "TotalResponseCount": 1,
+  "TotalSavesCount": 1,
+  "TotalWeekCount": 1
+}

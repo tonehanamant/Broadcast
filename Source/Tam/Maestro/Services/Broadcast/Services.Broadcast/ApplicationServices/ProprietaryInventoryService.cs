@@ -70,6 +70,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IInventoryWeekEngine _InventoryWeekEngine;
         private readonly IFileService _FileService;
         private readonly IInventoryScxDataPrepFactory _InventoryScxDataPrepFactory;
+        private readonly IInventoryProgramEnrichmentService _InventoryProgramEnrichmentService;
 
         public ProprietaryInventoryService(IDataRepositoryFactory broadcastDataRepositoryFactory
             , IProprietaryFileImporterFactory proprietaryFileImporterFactory
@@ -85,7 +86,8 @@ namespace Services.Broadcast.ApplicationServices
             , IQuarterCalculationEngine quarterCalculationEngine
             , IInventoryWeekEngine inventoryWeekEngine
             , IFileService fileService
-            , IInventoryScxDataPrepFactory inventoryScxDataPrepFactory)
+            , IInventoryScxDataPrepFactory inventoryScxDataPrepFactory
+            ,IInventoryProgramEnrichmentService inventoryProgramEnrichmentService)
         {
             _ProprietaryRepository = broadcastDataRepositoryFactory.GetDataRepository<IProprietaryRepository>();
             _InventoryRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
@@ -105,6 +107,7 @@ namespace Services.Broadcast.ApplicationServices
             _InventoryWeekEngine = inventoryWeekEngine;
             _FileService = fileService;
             _InventoryScxDataPrepFactory = inventoryScxDataPrepFactory;
+            _InventoryProgramEnrichmentService = inventoryProgramEnrichmentService;
         }
 
         ///<inheritdoc/>
@@ -178,6 +181,8 @@ namespace Services.Broadcast.ApplicationServices
             if (!proprietaryFile.ValidationProblems.Any())
             {
                 _InventoryRatingsService.QueueInventoryFileRatingsJob(proprietaryFile.Id);
+                // TODO: Enable this when ready.
+                _InventoryProgramEnrichmentService.QueueInventoryFileProgramEnrichmentJob(proprietaryFile.Id, userName);
 
                 try
                 {

@@ -9,6 +9,8 @@ namespace Services.Broadcast.Entities.Enums
         CampaignAggregation,
         [Display(Name = "inventoryrating")]
         InventoryRating,
+        [Display(Name = "inventoryprogramenrichment")]
+        InventoryProgramEnrichment,
         [Display(Name = "scxfilegeneration")]
         ScxFileGeneration,
         [Display(Name = "default")]

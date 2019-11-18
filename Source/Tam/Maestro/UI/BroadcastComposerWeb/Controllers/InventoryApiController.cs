@@ -207,7 +207,7 @@ namespace BroadcastComposerWeb.Controllers
         public BaseResponse<int> QueueInventoryFileProgramEnrichmentJob(int fileId, string username)
         {
             return _ConvertToBaseResponse(() =>
-                _ApplicationServiceFactory.GetApplicationService<IInventoryService>().QueueInventoryFileProgramEnrichmentJob(fileId, username));
+                _ApplicationServiceFactory.GetApplicationService<IInventoryProgramEnrichmentService>().QueueInventoryFileProgramEnrichmentJob(fileId, username));
         }
 
         [HttpGet]
@@ -215,7 +215,7 @@ namespace BroadcastComposerWeb.Controllers
         public BaseResponse<InventoryFileProgramEnrichmentJobDiagnostics> PerformInventoryFileProgramEnrichmentJob(int jobId)
         {
             return _ConvertToBaseResponse(() =>
-                _ApplicationServiceFactory.GetApplicationService<IInventoryService>().PerformInventoryFileProgramEnrichmentJob(jobId));
+                _ApplicationServiceFactory.GetApplicationService<IInventoryProgramEnrichmentService>().PerformInventoryFileProgramEnrichmentJob(jobId));
         }
 
         /// <summary>

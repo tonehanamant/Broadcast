@@ -1,5 +1,11 @@
 ﻿{
   "FileId": 236654,
+  "InventorySource": {
+    "Id": 10,
+    "InventoryType": 3,
+    "IsActive": true,
+    "Name": "ABC O&O"
+  },
   "RequestChunkSize": 1000,
   "SaveChunkSize": 1000,
   "TotalApiCallCount": 2,

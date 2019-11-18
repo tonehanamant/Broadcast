@@ -1,0 +1,19 @@
+﻿{
+  "FileId": 251393,
+  "InventorySource": {
+    "Id": 23,
+    "InventoryType": 5,
+    "IsActive": true,
+    "Name": "HITV"
+  },
+  "RequestChunkSize": 1000,
+  "SaveChunkSize": 1000,
+  "TotalApiCallCount": 1,
+  "TotalDaypartCount": 16,
+  "TotalManifestCount": 9,
+  "TotalProgramsSaved": 84,
+  "TotalRequestCount": 16,
+  "TotalResponseCount": 16,
+  "TotalSavesCount": 1,
+  "TotalWeekCount": 1
+}

@@ -304,6 +304,7 @@
     <Compile Include="ApplicationServices\CampaignAggregator.cs" />
     <Compile Include="ApplicationServices\GenreService.cs" />
     <Compile Include="ApplicationServices\ContainTypeService.cs" />
+    <Compile Include="ApplicationServices\InventoryProgramEnrichmentService.cs" />
     <Compile Include="ApplicationServices\PlanPricingService.cs" />
     <Compile Include="ApplicationServices\ProgramGuideService.cs" />
     <Compile Include="ApplicationServices\ProgramService.cs" />
