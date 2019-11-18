@@ -1,0 +1,1631 @@
+﻿[
+  {
+    "AdditionalAudienceImpressions": 0.0,
+    "AdditionalAudienceSubscribers": 0.0,
+    "AdditionalDemoRating": 0.0,
+    "AdditonalAudienceCPM": 0.0,
+    "Allocations": [],
+    "DayParts": [],
+    "DemoRating": 0.0,
+    "EffectiveImpressionsPerSpot": 69000.0,
+    "EndDate": "2018-12-30T00:00:00",
+    "FlightWeeks": [
+      {
+        "Allocations": null,
+        "EndDate": "2018-10-07T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 771,
+        "Rate": 750.0000,
+        "StartDate": "2018-10-01T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-10-14T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 772,
+        "Rate": 750.0000,
+        "StartDate": "2018-10-08T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-10-21T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 773,
+        "Rate": 750.0000,
+        "StartDate": "2018-10-15T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-10-28T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 774,
+        "Rate": 750.0000,
+        "StartDate": "2018-10-22T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-11-04T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 775,
+        "Rate": 750.0000,
+        "StartDate": "2018-10-29T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-11-11T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 776,
+        "Rate": 750.0000,
+        "StartDate": "2018-11-05T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-11-18T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 777,
+        "Rate": 750.0000,
+        "StartDate": "2018-11-12T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-11-25T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 778,
+        "Rate": 750.0000,
+        "StartDate": "2018-11-19T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-12-02T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 779,
+        "Rate": 750.0000,
+        "StartDate": "2018-11-26T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-12-09T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 780,
+        "Rate": 750.0000,
+        "StartDate": "2018-12-03T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-12-16T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 781,
+        "Rate": 750.0000,
+        "StartDate": "2018-12-10T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-12-23T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 782,
+        "Rate": 750.0000,
+        "StartDate": "2018-12-17T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-12-30T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 783,
+        "Rate": 750.0000,
+        "StartDate": "2018-12-24T00:00:00"
+      }
+    ],
+    "Genres": [],
+    "GRP": 0.0,
+    "HHeCPM": 0.0,
+    "HHImpressions": 0.0,
+    "HouseHoldMarketSubscribers": 0.0,
+    "HouseHoldRating": 0.0,
+    "IsOverlapping": false,
+    "ManifestAudiences": [
+      {
+        "AudienceId": 31,
+        "Impressions": 34500.0,
+        "IsReference": true
+      },
+      {
+        "AudienceId": 33,
+        "Impressions": 22700.0,
+        "IsReference": true
+      },
+      {
+        "AudienceId": 37,
+        "Impressions": 26200.0,
+        "IsReference": true
+      },
+      {
+        "AudienceId": 39,
+        "Impressions": 20000.0,
+        "IsReference": true
+      },
+      {
+        "AudienceId": 40,
+        "Impressions": 27900.0,
+        "IsReference": true
+      }
+    ],
+    "ManifestDaypartId": 0,
+    "ManifestDayparts": [
+      {
+        "DaypartId": 32941,
+        "Id": 358772,
+        "ProgramName": "FRIENDS"
+      }
+    ],
+    "ManifestId": 287146,
+    "Market": {
+      "Display": "New York",
+      "Id": 101
+    },
+    "MarketSubscribers": 0.0,
+    "ProvidedUnitImpressions": 69000.0,
+    "SpotCost": 750.0000,
+    "StartDate": "2018-10-01T00:00:00",
+    "Station": {
+      "Affiliation": "CW",
+      "CallLetters": "WPIX 11.1",
+      "LegacyCallLetters": "WPIX",
+      "StationCode": 5014
+    },
+    "TargetCpm": 0.0,
+    "TargetImpressions": 0.0,
+    "TotalCost": 0.0,
+    "TotalImpressions": 0.0,
+    "TotalSpots": 0,
+    "TRP": 0.0,
+    "UnitImpressions": 78662.75
+  },
+  {
+    "AdditionalAudienceImpressions": 0.0,
+    "AdditionalAudienceSubscribers": 0.0,
+    "AdditionalDemoRating": 0.0,
+    "AdditonalAudienceCPM": 0.0,
+    "Allocations": [],
+    "DayParts": [],
+    "DemoRating": 0.0,
+    "EffectiveImpressionsPerSpot": 59200.0,
+    "EndDate": "2018-12-30T00:00:00",
+    "FlightWeeks": [
+      {
+        "Allocations": null,
+        "EndDate": "2018-10-07T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 771,
+        "Rate": 700.0000,
+        "StartDate": "2018-10-01T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-10-14T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 772,
+        "Rate": 700.0000,
+        "StartDate": "2018-10-08T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-10-21T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 773,
+        "Rate": 700.0000,
+        "StartDate": "2018-10-15T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-10-28T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 774,
+        "Rate": 700.0000,
+        "StartDate": "2018-10-22T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-11-04T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 775,
+        "Rate": 700.0000,
+        "StartDate": "2018-10-29T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-11-11T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 776,
+        "Rate": 700.0000,
+        "StartDate": "2018-11-05T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-11-18T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 777,
+        "Rate": 700.0000,
+        "StartDate": "2018-11-12T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-11-25T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 778,
+        "Rate": 700.0000,
+        "StartDate": "2018-11-19T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-12-02T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 779,
+        "Rate": 700.0000,
+        "StartDate": "2018-11-26T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-12-09T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 780,
+        "Rate": 700.0000,
+        "StartDate": "2018-12-03T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-12-16T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 781,
+        "Rate": 700.0000,
+        "StartDate": "2018-12-10T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-12-23T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 782,
+        "Rate": 700.0000,
+        "StartDate": "2018-12-17T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-12-30T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 783,
+        "Rate": 700.0000,
+        "StartDate": "2018-12-24T00:00:00"
+      }
+    ],
+    "Genres": [],
+    "GRP": 0.0,
+    "HHeCPM": 0.0,
+    "HHImpressions": 0.0,
+    "HouseHoldMarketSubscribers": 0.0,
+    "HouseHoldRating": 0.0,
+    "IsOverlapping": false,
+    "ManifestAudiences": [
+      {
+        "AudienceId": 31,
+        "Impressions": 29600.0,
+        "IsReference": true
+      },
+      {
+        "AudienceId": 33,
+        "Impressions": 18000.0,
+        "IsReference": true
+      },
+      {
+        "AudienceId": 37,
+        "Impressions": 18000.0,
+        "IsReference": true
+      },
+      {
+        "AudienceId": 39,
+        "Impressions": 13700.0,
+        "IsReference": true
+      },
+      {
+        "AudienceId": 40,
+        "Impressions": 21900.0,
+        "IsReference": true
+      }
+    ],
+    "ManifestDaypartId": 0,
+    "ManifestDayparts": [
+      {
+        "DaypartId": 32055,
+        "Id": 358773,
+        "ProgramName": "TWO & A HALF MEN"
+      }
+    ],
+    "ManifestId": 287147,
+    "Market": {
+      "Display": "New York",
+      "Id": 101
+    },
+    "MarketSubscribers": 0.0,
+    "ProvidedUnitImpressions": 59200.0,
+    "SpotCost": 700.0000,
+    "StartDate": "2018-10-01T00:00:00",
+    "Station": {
+      "Affiliation": "CW",
+      "CallLetters": "WPIX 11.1",
+      "LegacyCallLetters": "WPIX",
+      "StationCode": 5014
+    },
+    "TargetCpm": 0.0,
+    "TargetImpressions": 0.0,
+    "TotalCost": 0.0,
+    "TotalImpressions": 0.0,
+    "TotalSpots": 0,
+    "TRP": 0.0,
+    "UnitImpressions": 67230.55
+  },
+  {
+    "AdditionalAudienceImpressions": 0.0,
+    "AdditionalAudienceSubscribers": 0.0,
+    "AdditionalDemoRating": 0.0,
+    "AdditonalAudienceCPM": 0.0,
+    "Allocations": [],
+    "DayParts": [],
+    "DemoRating": 0.0,
+    "EffectiveImpressionsPerSpot": 60400.0,
+    "EndDate": "2018-12-30T00:00:00",
+    "FlightWeeks": [
+      {
+        "Allocations": null,
+        "EndDate": "2018-10-07T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 771,
+        "Rate": 800.0000,
+        "StartDate": "2018-10-01T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-10-14T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 772,
+        "Rate": 800.0000,
+        "StartDate": "2018-10-08T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-10-21T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 773,
+        "Rate": 800.0000,
+        "StartDate": "2018-10-15T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-10-28T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 774,
+        "Rate": 800.0000,
+        "StartDate": "2018-10-22T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-11-04T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 775,
+        "Rate": 800.0000,
+        "StartDate": "2018-10-29T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-11-11T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 776,
+        "Rate": 800.0000,
+        "StartDate": "2018-11-05T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-11-18T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 777,
+        "Rate": 800.0000,
+        "StartDate": "2018-11-12T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-11-25T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 778,
+        "Rate": 800.0000,
+        "StartDate": "2018-11-19T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-12-02T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 779,
+        "Rate": 800.0000,
+        "StartDate": "2018-11-26T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-12-09T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 780,
+        "Rate": 800.0000,
+        "StartDate": "2018-12-03T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-12-16T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 781,
+        "Rate": 800.0000,
+        "StartDate": "2018-12-10T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-12-23T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 782,
+        "Rate": 800.0000,
+        "StartDate": "2018-12-17T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-12-30T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 783,
+        "Rate": 800.0000,
+        "StartDate": "2018-12-24T00:00:00"
+      }
+    ],
+    "Genres": [],
+    "GRP": 0.0,
+    "HHeCPM": 0.0,
+    "HHImpressions": 0.0,
+    "HouseHoldMarketSubscribers": 0.0,
+    "HouseHoldRating": 0.0,
+    "IsOverlapping": false,
+    "ManifestAudiences": [
+      {
+        "AudienceId": 31,
+        "Impressions": 30200.0,
+        "IsReference": true
+      },
+      {
+        "AudienceId": 33,
+        "Impressions": 11300.0,
+        "IsReference": true
+      },
+      {
+        "AudienceId": 37,
+        "Impressions": 11800.0,
+        "IsReference": true
+      },
+      {
+        "AudienceId": 39,
+        "Impressions": 12100.0,
+        "IsReference": true
+      },
+      {
+        "AudienceId": 40,
+        "Impressions": 21300.0,
+        "IsReference": true
+      }
+    ],
+    "ManifestDaypartId": 0,
+    "ManifestDayparts": [
+      {
+        "DaypartId": 32943,
+        "Id": 358776,
+        "ProgramName": "FRIENDS"
+      }
+    ],
+    "ManifestId": 287150,
+    "Market": {
+      "Display": "New York",
+      "Id": 101
+    },
+    "MarketSubscribers": 0.0,
+    "ProvidedUnitImpressions": 60400.0,
+    "SpotCost": 800.0000,
+    "StartDate": "2018-10-01T00:00:00",
+    "Station": {
+      "Affiliation": "CW",
+      "CallLetters": "WPIX 11.1",
+      "LegacyCallLetters": "WPIX",
+      "StationCode": 5014
+    },
+    "TargetCpm": 0.0,
+    "TargetImpressions": 0.0,
+    "TotalCost": 0.0,
+    "TotalImpressions": 0.0,
+    "TotalSpots": 0,
+    "TRP": 0.0,
+    "UnitImpressions": 89996.5
+  },
+  {
+    "AdditionalAudienceImpressions": 0.0,
+    "AdditionalAudienceSubscribers": 0.0,
+    "AdditionalDemoRating": 0.0,
+    "AdditonalAudienceCPM": 0.0,
+    "Allocations": [],
+    "DayParts": [],
+    "DemoRating": 0.0,
+    "EffectiveImpressionsPerSpot": 43600.0,
+    "EndDate": "2018-12-30T00:00:00",
+    "FlightWeeks": [
+      {
+        "Allocations": null,
+        "EndDate": "2018-10-07T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 771,
+        "Rate": 750.0000,
+        "StartDate": "2018-10-01T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-10-14T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 772,
+        "Rate": 750.0000,
+        "StartDate": "2018-10-08T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-10-21T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 773,
+        "Rate": 750.0000,
+        "StartDate": "2018-10-15T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-10-28T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 774,
+        "Rate": 750.0000,
+        "StartDate": "2018-10-22T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-11-04T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 775,
+        "Rate": 750.0000,
+        "StartDate": "2018-10-29T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-11-11T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 776,
+        "Rate": 750.0000,
+        "StartDate": "2018-11-05T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-11-18T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 777,
+        "Rate": 750.0000,
+        "StartDate": "2018-11-12T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-11-25T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 778,
+        "Rate": 750.0000,
+        "StartDate": "2018-11-19T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-12-02T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 779,
+        "Rate": 750.0000,
+        "StartDate": "2018-11-26T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-12-09T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 780,
+        "Rate": 750.0000,
+        "StartDate": "2018-12-03T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-12-16T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 781,
+        "Rate": 750.0000,
+        "StartDate": "2018-12-10T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-12-23T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 782,
+        "Rate": 750.0000,
+        "StartDate": "2018-12-17T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-12-30T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 783,
+        "Rate": 750.0000,
+        "StartDate": "2018-12-24T00:00:00"
+      }
+    ],
+    "Genres": [],
+    "GRP": 0.0,
+    "HHeCPM": 0.0,
+    "HHImpressions": 0.0,
+    "HouseHoldMarketSubscribers": 0.0,
+    "HouseHoldRating": 0.0,
+    "IsOverlapping": false,
+    "ManifestAudiences": [
+      {
+        "AudienceId": 31,
+        "Impressions": 21800.0,
+        "IsReference": true
+      },
+      {
+        "AudienceId": 33,
+        "Impressions": 14100.0,
+        "IsReference": true
+      },
+      {
+        "AudienceId": 37,
+        "Impressions": 13600.0,
+        "IsReference": true
+      },
+      {
+        "AudienceId": 39,
+        "Impressions": 12900.0,
+        "IsReference": true
+      },
+      {
+        "AudienceId": 40,
+        "Impressions": 16900.0,
+        "IsReference": true
+      }
+    ],
+    "ManifestDaypartId": 0,
+    "ManifestDayparts": [
+      {
+        "DaypartId": 32072,
+        "Id": 358777,
+        "ProgramName": "FRIENDS"
+      }
+    ],
+    "ManifestId": 287151,
+    "Market": {
+      "Display": "New York",
+      "Id": 101
+    },
+    "MarketSubscribers": 0.0,
+    "ProvidedUnitImpressions": 43600.0,
+    "SpotCost": 750.0000,
+    "StartDate": "2018-10-01T00:00:00",
+    "Station": {
+      "Affiliation": "CW",
+      "CallLetters": "WPIX 11.1",
+      "LegacyCallLetters": "WPIX",
+      "StationCode": 5014
+    },
+    "TargetCpm": 0.0,
+    "TargetImpressions": 0.0,
+    "TotalCost": 0.0,
+    "TotalImpressions": 0.0,
+    "TotalSpots": 0,
+    "TRP": 0.0,
+    "UnitImpressions": 61366.0
+  },
+  {
+    "AdditionalAudienceImpressions": 0.0,
+    "AdditionalAudienceSubscribers": 0.0,
+    "AdditionalDemoRating": 0.0,
+    "AdditonalAudienceCPM": 0.0,
+    "Allocations": [],
+    "DayParts": [],
+    "DemoRating": 0.0,
+    "EffectiveImpressionsPerSpot": 46800.0,
+    "EndDate": "2018-12-30T00:00:00",
+    "FlightWeeks": [
+      {
+        "Allocations": null,
+        "EndDate": "2018-10-07T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 771,
+        "Rate": 600.0000,
+        "StartDate": "2018-10-01T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-10-14T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 772,
+        "Rate": 600.0000,
+        "StartDate": "2018-10-08T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-10-21T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 773,
+        "Rate": 600.0000,
+        "StartDate": "2018-10-15T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-10-28T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 774,
+        "Rate": 600.0000,
+        "StartDate": "2018-10-22T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-11-04T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 775,
+        "Rate": 600.0000,
+        "StartDate": "2018-10-29T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-11-11T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 776,
+        "Rate": 600.0000,
+        "StartDate": "2018-11-05T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-11-18T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 777,
+        "Rate": 600.0000,
+        "StartDate": "2018-11-12T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-11-25T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 778,
+        "Rate": 600.0000,
+        "StartDate": "2018-11-19T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-12-02T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 779,
+        "Rate": 600.0000,
+        "StartDate": "2018-11-26T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-12-09T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 780,
+        "Rate": 600.0000,
+        "StartDate": "2018-12-03T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-12-16T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 781,
+        "Rate": 600.0000,
+        "StartDate": "2018-12-10T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-12-23T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 782,
+        "Rate": 600.0000,
+        "StartDate": "2018-12-17T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-12-30T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 783,
+        "Rate": 600.0000,
+        "StartDate": "2018-12-24T00:00:00"
+      }
+    ],
+    "Genres": [],
+    "GRP": 0.0,
+    "HHeCPM": 0.0,
+    "HHImpressions": 0.0,
+    "HouseHoldMarketSubscribers": 0.0,
+    "HouseHoldRating": 0.0,
+    "IsOverlapping": false,
+    "ManifestAudiences": [
+      {
+        "AudienceId": 31,
+        "Impressions": 23400.0,
+        "IsReference": true
+      },
+      {
+        "AudienceId": 33,
+        "Impressions": 11800.0,
+        "IsReference": true
+      },
+      {
+        "AudienceId": 37,
+        "Impressions": 13300.0,
+        "IsReference": true
+      },
+      {
+        "AudienceId": 39,
+        "Impressions": 12100.0,
+        "IsReference": true
+      },
+      {
+        "AudienceId": 40,
+        "Impressions": 16900.0,
+        "IsReference": true
+      }
+    ],
+    "ManifestDaypartId": 0,
+    "ManifestDayparts": [
+      {
+        "DaypartId": 29548,
+        "Id": 358780,
+        "ProgramName": "FRIENDS 2X"
+      }
+    ],
+    "ManifestId": 287154,
+    "Market": {
+      "Display": "New York",
+      "Id": 101
+    },
+    "MarketSubscribers": 0.0,
+    "ProvidedUnitImpressions": 46800.0,
+    "SpotCost": 600.0000,
+    "StartDate": "2018-10-01T00:00:00",
+    "Station": {
+      "Affiliation": "CW",
+      "CallLetters": "WPIX 11.1",
+      "LegacyCallLetters": "WPIX",
+      "StationCode": 5014
+    },
+    "TargetCpm": 0.0,
+    "TargetImpressions": 0.0,
+    "TotalCost": 0.0,
+    "TotalImpressions": 0.0,
+    "TotalSpots": 0,
+    "TRP": 0.0,
+    "UnitImpressions": 80069.375
+  },
+  {
+    "AdditionalAudienceImpressions": 0.0,
+    "AdditionalAudienceSubscribers": 0.0,
+    "AdditionalDemoRating": 0.0,
+    "AdditonalAudienceCPM": 0.0,
+    "Allocations": [],
+    "DayParts": [],
+    "DemoRating": 0.0,
+    "EffectiveImpressionsPerSpot": 600.0,
+    "EndDate": "2018-12-30T00:00:00",
+    "FlightWeeks": [
+      {
+        "Allocations": null,
+        "EndDate": "2018-10-07T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 771,
+        "Rate": 50.0000,
+        "StartDate": "2018-10-01T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-10-14T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 772,
+        "Rate": 50.0000,
+        "StartDate": "2018-10-08T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-10-21T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 773,
+        "Rate": 50.0000,
+        "StartDate": "2018-10-15T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-10-28T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 774,
+        "Rate": 50.0000,
+        "StartDate": "2018-10-22T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-11-04T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 775,
+        "Rate": 50.0000,
+        "StartDate": "2018-10-29T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-11-11T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 776,
+        "Rate": 50.0000,
+        "StartDate": "2018-11-05T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-11-18T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 777,
+        "Rate": 50.0000,
+        "StartDate": "2018-11-12T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-11-25T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 778,
+        "Rate": 50.0000,
+        "StartDate": "2018-11-19T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-12-02T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 779,
+        "Rate": 50.0000,
+        "StartDate": "2018-11-26T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-12-09T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 780,
+        "Rate": 50.0000,
+        "StartDate": "2018-12-03T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-12-16T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 781,
+        "Rate": 50.0000,
+        "StartDate": "2018-12-10T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-12-23T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 782,
+        "Rate": 50.0000,
+        "StartDate": "2018-12-17T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-12-30T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 783,
+        "Rate": 50.0000,
+        "StartDate": "2018-12-24T00:00:00"
+      }
+    ],
+    "Genres": [],
+    "GRP": 0.0,
+    "HHeCPM": 0.0,
+    "HHImpressions": 0.0,
+    "HouseHoldMarketSubscribers": 0.0,
+    "HouseHoldRating": 0.0,
+    "IsOverlapping": false,
+    "ManifestAudiences": [
+      {
+        "AudienceId": 31,
+        "Impressions": 300.0,
+        "IsReference": true
+      },
+      {
+        "AudienceId": 33,
+        "Impressions": 100.0,
+        "IsReference": true
+      },
+      {
+        "AudienceId": 37,
+        "Impressions": 100.0,
+        "IsReference": true
+      },
+      {
+        "AudienceId": 39,
+        "Impressions": 100.0,
+        "IsReference": true
+      },
+      {
+        "AudienceId": 40,
+        "Impressions": 300.0,
+        "IsReference": true
+      }
+    ],
+    "ManifestDaypartId": 0,
+    "ManifestDayparts": [
+      {
+        "DaypartId": 32941,
+        "Id": 360318,
+        "ProgramName": "TWO & HALF MEN"
+      }
+    ],
+    "ManifestId": 288692,
+    "Market": {
+      "Display": "Portland-Auburn",
+      "Id": 100
+    },
+    "MarketSubscribers": 0.0,
+    "ProvidedUnitImpressions": 600.0,
+    "SpotCost": 50.0000,
+    "StartDate": "2018-10-01T00:00:00",
+    "Station": {
+      "Affiliation": "FOX",
+      "CallLetters": "WPFO 23.1",
+      "LegacyCallLetters": "WPFO",
+      "StationCode": 8346
+    },
+    "TargetCpm": 0.0,
+    "TargetImpressions": 0.0,
+    "TotalCost": 0.0,
+    "TotalImpressions": 0.0,
+    "TotalSpots": 0,
+    "TRP": 0.0,
+    "UnitImpressions": 175.4
+  },
+  {
+    "AdditionalAudienceImpressions": 0.0,
+    "AdditionalAudienceSubscribers": 0.0,
+    "AdditionalDemoRating": 0.0,
+    "AdditonalAudienceCPM": 0.0,
+    "Allocations": [],
+    "DayParts": [],
+    "DemoRating": 0.0,
+    "EffectiveImpressionsPerSpot": 600.0,
+    "EndDate": "2018-12-30T00:00:00",
+    "FlightWeeks": [
+      {
+        "Allocations": null,
+        "EndDate": "2018-10-07T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 771,
+        "Rate": 12.0000,
+        "StartDate": "2018-10-01T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-10-14T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 772,
+        "Rate": 12.0000,
+        "StartDate": "2018-10-08T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-10-21T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 773,
+        "Rate": 12.0000,
+        "StartDate": "2018-10-15T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-10-28T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 774,
+        "Rate": 12.0000,
+        "StartDate": "2018-10-22T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-11-04T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 775,
+        "Rate": 12.0000,
+        "StartDate": "2018-10-29T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-11-11T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 776,
+        "Rate": 12.0000,
+        "StartDate": "2018-11-05T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-11-18T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 777,
+        "Rate": 12.0000,
+        "StartDate": "2018-11-12T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-11-25T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 778,
+        "Rate": 12.0000,
+        "StartDate": "2018-11-19T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-12-02T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 779,
+        "Rate": 12.0000,
+        "StartDate": "2018-11-26T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-12-09T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 780,
+        "Rate": 12.0000,
+        "StartDate": "2018-12-03T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-12-16T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 781,
+        "Rate": 12.0000,
+        "StartDate": "2018-12-10T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-12-23T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 782,
+        "Rate": 12.0000,
+        "StartDate": "2018-12-17T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-12-30T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 783,
+        "Rate": 12.0000,
+        "StartDate": "2018-12-24T00:00:00"
+      }
+    ],
+    "Genres": [],
+    "GRP": 0.0,
+    "HHeCPM": 0.0,
+    "HHImpressions": 0.0,
+    "HouseHoldMarketSubscribers": 0.0,
+    "HouseHoldRating": 0.0,
+    "IsOverlapping": false,
+    "ManifestAudiences": [
+      {
+        "AudienceId": 31,
+        "Impressions": 300.0,
+        "IsReference": true
+      },
+      {
+        "AudienceId": 33,
+        "Impressions": 100.0,
+        "IsReference": true
+      },
+      {
+        "AudienceId": 37,
+        "Impressions": 300.0,
+        "IsReference": true
+      },
+      {
+        "AudienceId": 39,
+        "Impressions": 300.0,
+        "IsReference": true
+      },
+      {
+        "AudienceId": 40,
+        "Impressions": 400.0,
+        "IsReference": true
+      }
+    ],
+    "ManifestDaypartId": 0,
+    "ManifestDayparts": [
+      {
+        "DaypartId": 29555,
+        "Id": 360319,
+        "ProgramName": "2.5 MEN X2"
+      }
+    ],
+    "ManifestId": 288693,
+    "Market": {
+      "Display": "Portland-Auburn",
+      "Id": 100
+    },
+    "MarketSubscribers": 0.0,
+    "ProvidedUnitImpressions": 600.0,
+    "SpotCost": 12.0000,
+    "StartDate": "2018-10-01T00:00:00",
+    "Station": {
+      "Affiliation": "FOX",
+      "CallLetters": "WPFO 23.1",
+      "LegacyCallLetters": "WPFO",
+      "StationCode": 8346
+    },
+    "TargetCpm": 0.0,
+    "TargetImpressions": 0.0,
+    "TotalCost": 0.0,
+    "TotalImpressions": 0.0,
+    "TotalSpots": 0,
+    "TRP": 0.0,
+    "UnitImpressions": 434.625
+  },
+  {
+    "AdditionalAudienceImpressions": 0.0,
+    "AdditionalAudienceSubscribers": 0.0,
+    "AdditionalDemoRating": 0.0,
+    "AdditonalAudienceCPM": 0.0,
+    "Allocations": [],
+    "DayParts": [],
+    "DemoRating": 0.0,
+    "EffectiveImpressionsPerSpot": 400.0,
+    "EndDate": "2018-12-30T00:00:00",
+    "FlightWeeks": [
+      {
+        "Allocations": null,
+        "EndDate": "2018-10-07T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 771,
+        "Rate": 12.0000,
+        "StartDate": "2018-10-01T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-10-14T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 772,
+        "Rate": 12.0000,
+        "StartDate": "2018-10-08T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-10-21T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 773,
+        "Rate": 12.0000,
+        "StartDate": "2018-10-15T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-10-28T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 774,
+        "Rate": 12.0000,
+        "StartDate": "2018-10-22T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-11-04T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 775,
+        "Rate": 12.0000,
+        "StartDate": "2018-10-29T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-11-11T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 776,
+        "Rate": 12.0000,
+        "StartDate": "2018-11-05T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-11-18T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 777,
+        "Rate": 12.0000,
+        "StartDate": "2018-11-12T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-11-25T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 778,
+        "Rate": 12.0000,
+        "StartDate": "2018-11-19T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-12-02T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 779,
+        "Rate": 12.0000,
+        "StartDate": "2018-11-26T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-12-09T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 780,
+        "Rate": 12.0000,
+        "StartDate": "2018-12-03T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-12-16T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 781,
+        "Rate": 12.0000,
+        "StartDate": "2018-12-10T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-12-23T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 782,
+        "Rate": 12.0000,
+        "StartDate": "2018-12-17T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-12-30T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 783,
+        "Rate": 12.0000,
+        "StartDate": "2018-12-24T00:00:00"
+      }
+    ],
+    "Genres": [],
+    "GRP": 0.0,
+    "HHeCPM": 0.0,
+    "HHImpressions": 0.0,
+    "HouseHoldMarketSubscribers": 0.0,
+    "HouseHoldRating": 0.0,
+    "IsOverlapping": false,
+    "ManifestAudiences": [
+      {
+        "AudienceId": 31,
+        "Impressions": 200.0,
+        "IsReference": true
+      },
+      {
+        "AudienceId": 33,
+        "Impressions": 100.0,
+        "IsReference": true
+      },
+      {
+        "AudienceId": 37,
+        "Impressions": 100.0,
+        "IsReference": true
+      },
+      {
+        "AudienceId": 39,
+        "Impressions": 100.0,
+        "IsReference": true
+      },
+      {
+        "AudienceId": 40,
+        "Impressions": 200.0,
+        "IsReference": true
+      }
+    ],
+    "ManifestDaypartId": 0,
+    "ManifestDayparts": [
+      {
+        "DaypartId": 29548,
+        "Id": 360320,
+        "ProgramName": "SEINFELD X2"
+      }
+    ],
+    "ManifestId": 288694,
+    "Market": {
+      "Display": "Portland-Auburn",
+      "Id": 100
+    },
+    "MarketSubscribers": 0.0,
+    "ProvidedUnitImpressions": 400.0,
+    "SpotCost": 12.0000,
+    "StartDate": "2018-10-01T00:00:00",
+    "Station": {
+      "Affiliation": "FOX",
+      "CallLetters": "WPFO 23.1",
+      "LegacyCallLetters": "WPFO",
+      "StationCode": 8346
+    },
+    "TargetCpm": 0.0,
+    "TargetImpressions": 0.0,
+    "TotalCost": 0.0,
+    "TotalImpressions": 0.0,
+    "TotalSpots": 0,
+    "TRP": 0.0,
+    "UnitImpressions": 580.0
+  },
+  {
+    "AdditionalAudienceImpressions": 0.0,
+    "AdditionalAudienceSubscribers": 0.0,
+    "AdditionalDemoRating": 0.0,
+    "AdditonalAudienceCPM": 0.0,
+    "Allocations": [],
+    "DayParts": [],
+    "DemoRating": 0.0,
+    "EffectiveImpressionsPerSpot": 400.0,
+    "EndDate": "2018-12-30T00:00:00",
+    "FlightWeeks": [
+      {
+        "Allocations": null,
+        "EndDate": "2018-10-07T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 771,
+        "Rate": 12.0000,
+        "StartDate": "2018-10-01T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-10-14T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 772,
+        "Rate": 12.0000,
+        "StartDate": "2018-10-08T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-10-21T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 773,
+        "Rate": 12.0000,
+        "StartDate": "2018-10-15T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-10-28T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 774,
+        "Rate": 12.0000,
+        "StartDate": "2018-10-22T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-11-04T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 775,
+        "Rate": 12.0000,
+        "StartDate": "2018-10-29T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-11-11T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 776,
+        "Rate": 12.0000,
+        "StartDate": "2018-11-05T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-11-18T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 777,
+        "Rate": 12.0000,
+        "StartDate": "2018-11-12T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-11-25T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 778,
+        "Rate": 12.0000,
+        "StartDate": "2018-11-19T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-12-02T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 779,
+        "Rate": 12.0000,
+        "StartDate": "2018-11-26T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-12-09T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 780,
+        "Rate": 12.0000,
+        "StartDate": "2018-12-03T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-12-16T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 781,
+        "Rate": 12.0000,
+        "StartDate": "2018-12-10T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-12-23T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 782,
+        "Rate": 12.0000,
+        "StartDate": "2018-12-17T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-12-30T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 783,
+        "Rate": 12.0000,
+        "StartDate": "2018-12-24T00:00:00"
+      }
+    ],
+    "Genres": [],
+    "GRP": 0.0,
+    "HHeCPM": 0.0,
+    "HHImpressions": 0.0,
+    "HouseHoldMarketSubscribers": 0.0,
+    "HouseHoldRating": 0.0,
+    "IsOverlapping": false,
+    "ManifestAudiences": [
+      {
+        "AudienceId": 31,
+        "Impressions": 200.0,
+        "IsReference": true
+      },
+      {
+        "AudienceId": 33,
+        "Impressions": 100.0,
+        "IsReference": true
+      },
+      {
+        "AudienceId": 37,
+        "Impressions": 100.0,
+        "IsReference": true
+      },
+      {
+        "AudienceId": 39,
+        "Impressions": 100.0,
+        "IsReference": true
+      },
+      {
+        "AudienceId": 40,
+        "Impressions": 200.0,
+        "IsReference": true
+      }
+    ],
+    "ManifestDaypartId": 0,
+    "ManifestDayparts": [
+      {
+        "DaypartId": 32055,
+        "Id": 360321,
+        "ProgramName": "2 BROKE GIRLS"
+      }
+    ],
+    "ManifestId": 288695,
+    "Market": {
+      "Display": "Portland-Auburn",
+      "Id": 100
+    },
+    "MarketSubscribers": 0.0,
+    "ProvidedUnitImpressions": 400.0,
+    "SpotCost": 12.0000,
+    "StartDate": "2018-10-01T00:00:00",
+    "Station": {
+      "Affiliation": "FOX",
+      "CallLetters": "WPFO 23.1",
+      "LegacyCallLetters": "WPFO",
+      "StationCode": 8346
+    },
+    "TargetCpm": 0.0,
+    "TargetImpressions": 0.0,
+    "TotalCost": 0.0,
+    "TotalImpressions": 0.0,
+    "TotalSpots": 0,
+    "TRP": 0.0,
+    "UnitImpressions": 117.4
+  }
+]

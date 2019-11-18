@@ -200,6 +200,7 @@
   "ModifiedDate": "2019-01-15T00:00:00",
   "Name": "Renamed Plan",
   "PostingType": 2,
+  "PricingParameters": null,
   "ProductId": 2,
   "SecondaryAudiences": [],
   "ShareBookId": 437,

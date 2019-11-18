@@ -12,20 +12,13 @@ namespace EntityFrameworkMapping.Broadcast
     using System;
     using System.Collections.Generic;
     
-    public partial class plan
+    public partial class plan_version_pricing_execution_markets
     {
-        public plan()
-        {
-            this.plan_versions = new HashSet<plan_versions>();
-        }
-    
         public int id { get; set; }
-        public int campaign_id { get; set; }
-        public string name { get; set; }
-        public int product_id { get; set; }
-        public int latest_version_id { get; set; }
+        public int plan_version_pricing_execution_id { get; set; }
+        public short market_code { get; set; }
+        public Nullable<double> share_of_voice_percent { get; set; }
     
-        public virtual campaign campaign { get; set; }
-        public virtual ICollection<plan_versions> plan_versions { get; set; }
+        public virtual plan_version_pricing_executions plan_version_pricing_executions { get; set; }
     }
 }

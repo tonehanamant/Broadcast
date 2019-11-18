@@ -2,14 +2,19 @@
 using ApprovalTests.Reporters;
 using IntegrationTests.Common;
 using Microsoft.Practices.Unity;
+using Newtonsoft.Json;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Clients;
-using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan.Pricing;
 using Services.Broadcast.IntegrationTests.Stubs;
 using System.Collections.Generic;
+using System;
 using Tam.Maestro.Common.DataLayer;
+using Services.Broadcast.Entities.Enums;
+using Services.Broadcast.ApplicationServices.Plan;
+using Services.Broadcast.Repositories;
+using Services.Broadcast.Entities.Plan;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
@@ -17,20 +22,185 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
     public class PlanPricingServiceTests
     {
         private readonly IPlanPricingService _PlanPricingService;
+        private readonly IPlanService _PlanService;
+        private readonly IPlanRepository _PlanRepository;
 
         public PlanPricingServiceTests()
         {
             IntegrationTestApplicationServiceFactory.Instance.RegisterType<IPricingApiClient, PricingApiClientStub>();
             _PlanPricingService = IntegrationTestApplicationServiceFactory.GetApplicationService<IPlanPricingService>();
+            _PlanService = IntegrationTestApplicationServiceFactory.GetApplicationService<IPlanService>();
+            _PlanRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IPlanRepository>();
         }
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void RunNoDataTest()
+        public void QueuePricingJobTest()
         {
             using (new TransactionScopeWrapper())
             {
-                var result = _PlanPricingService.GetInventoryForPlan(1196);
+                var result = _PlanPricingService.QueuePricingJob(new PlanPricingRequestDto
+                {
+                    PlanId = 1196
+                }, new DateTime(2019, 11, 4));
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(PlanPricingJob), "Id");
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetCurrentPricingExecutionNoJobQueuedTest()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var result = _PlanPricingService.GetCurrentPricingExecution(1196);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(PlanPricingJob), "Id");
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetCurrentPricingExecutionTest()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                _PlanPricingService.QueuePricingJob(new PlanPricingRequestDto
+                {
+                    PlanId = 1196
+                }, new DateTime(2019, 11, 4));
+
+                var result = _PlanPricingService.GetCurrentPricingExecution(1196);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(PlanPricingJob), "Id");
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetCurrentProcessingPricingExecution_WithCompletedJobs()
+        {
+            var currentDate = new DateTime(2019, 11, 4);
+
+            using (new TransactionScopeWrapper())
+            {
+                var plan = _PlanRepository.GetPlan(1196);
+
+                _PopulateSomePricingJobs(plan, currentDate);
+
+                _PlanRepository.AddPlanPricingJob(new PlanPricingJob
+                {
+                    PlanVersionId = plan.VersionId,
+                    Status = BackgroundJobProcessingStatus.Processing,
+                    Queued = currentDate.AddSeconds(6),
+                });
+
+                var result = _PlanPricingService.GetCurrentPricingExecution(1196);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(PlanPricingJob), "Id");
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetCurrentQueuedPricingExecution_WithCompletedJobs()
+        {
+            var currentDate = new DateTime(2019, 11, 4);
+
+            using (new TransactionScopeWrapper())
+            {
+                var plan = _PlanRepository.GetPlan(1196);
+
+                _PopulateSomePricingJobs(plan, currentDate);
+
+                _PlanRepository.AddPlanPricingJob(new PlanPricingJob
+                {
+                    PlanVersionId = plan.VersionId,
+                    Status = BackgroundJobProcessingStatus.Queued,
+                    Queued = currentDate.AddSeconds(6)
+                });
+
+                var result = _PlanPricingService.GetCurrentPricingExecution(1196);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(PlanPricingJob), "Id");
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
+            }
+        }
+
+        private void _PopulateSomePricingJobs(PlanDto plan, DateTime currentDate)
+        {
+            _PlanRepository.AddPlanPricingJob(new PlanPricingJob
+            {
+                PlanVersionId = plan.VersionId,
+                Status = BackgroundJobProcessingStatus.Succeeded,
+                Queued = currentDate,
+                Completed = currentDate.AddSeconds(2)
+            });
+
+            _PlanRepository.AddPlanPricingJob(new PlanPricingJob
+            {
+                PlanVersionId = plan.VersionId,
+                Status = BackgroundJobProcessingStatus.Failed,
+                Queued = currentDate.AddSeconds(2),
+                Completed = currentDate.AddSeconds(3)
+            });
+
+            _PlanRepository.AddPlanPricingJob(new PlanPricingJob
+            {
+                PlanVersionId = plan.VersionId,
+                Status = BackgroundJobProcessingStatus.Succeeded,
+                Queued = currentDate.AddSeconds(4),
+                Completed = currentDate.AddSeconds(5)
+            });
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetPlanPricingRunsTest()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var result = _PlanPricingService.GetPlanPricingRuns(1196);
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
             }
@@ -38,59 +208,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void RunTest()
+        public void RunPricingJobTest()
         {
             using (new TransactionScopeWrapper())
             {
-                var result = _PlanPricingService.GetInventoryForPlan(1198);
-
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
-            }
-        }
-
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
-        public void RunWithHiatusDayTest()
-        {
-            using (new TransactionScopeWrapper())
-            {
-                var result = _PlanPricingService.GetInventoryForPlan(1199);
-
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
-            }
-        }
-
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
-        public void RunSpotLengthTest()
-        {
-            using (new TransactionScopeWrapper())
-            {
-                var result = _PlanPricingService.GetInventoryForPlan(1197);
-
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
-            }
-        }
-
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
-        public void RunWithProgramWithMultipleAudiencesTest()
-        {
-            using (new TransactionScopeWrapper())
-            {
-                var result = _PlanPricingService.GetInventoryForPlan(1200);
-
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
-            }
-        }
-
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
-        public void RunWithParametersTest()
-        {
-            using (new TransactionScopeWrapper())
-            {
-                _PlanPricingService.Run(new PlanPricingRequestDto
+                var planPricingRequestDto = new PlanPricingRequestDto
                 {
                     PlanId = 1197,
                     MaxCpm = 10m,
@@ -113,11 +235,25 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         new PlanPricingInventorySourceDto{Id = 11, Percentage = 17},
                         new PlanPricingInventorySourceDto{Id = 12, Percentage = 8},
                     }
-                });
+                };
 
-                var executions = _PlanPricingService.GetPlanPricingRuns(1197);
+                var job = _PlanPricingService.QueuePricingJob(planPricingRequestDto, new DateTime(2019, 11, 4));
 
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(executions));
+                _PlanPricingService.RunPricingJob(planPricingRequestDto, job.Id);
+
+                var result = _PlanPricingService.GetCurrentPricingExecution(1197);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(PlanPricingJob), "Id");
+                jsonResolver.Ignore(typeof(PlanPricingJob), "Completed");
+                jsonResolver.Ignore(typeof(PlanPricingJob), "DiagnosticResult");
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
             }
         }
 
@@ -135,6 +271,45 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             var ppDefaults = _PlanPricingService.GetPlanPricingDefaults();
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(ppDefaults));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetPlanPricingParametersTest()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var planPricingRequestDto = new PlanPricingRequestDto
+                {
+                    PlanId = 1197,
+                    MaxCpm = 10m,
+                    MinCpm = 1m,
+                    BudgetGoal = 1000,
+                    CompetitionFactor = 0.1,
+                    CpmGoal = 5m,
+                    ImpressionsGoal = 50000,
+                    InflationFactor = 0.5,
+                    ProprietaryBlend = 0.2,
+                    UnitCaps = 10,
+                    UnitCapType = UnitCapEnum.PerDay,
+                    InventorySourcePercentages = new List<PlanPricingInventorySourceDto>
+                    {
+                        new PlanPricingInventorySourceDto{Id = 3, Percentage = 12},
+                        new PlanPricingInventorySourceDto{Id = 5, Percentage = 13},
+                        new PlanPricingInventorySourceDto{Id = 6, Percentage = 14},
+                        new PlanPricingInventorySourceDto{Id = 7, Percentage = 15},
+                        new PlanPricingInventorySourceDto{Id = 10, Percentage = 16},
+                        new PlanPricingInventorySourceDto{Id = 11, Percentage = 17},
+                        new PlanPricingInventorySourceDto{Id = 12, Percentage = 8},
+                    }
+                };
+
+                var job = _PlanPricingService.QueuePricingJob(planPricingRequestDto, new DateTime(2019, 11, 4));
+
+                var result = _PlanService.GetPlan(1197);
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+            }
         }
     }
 }

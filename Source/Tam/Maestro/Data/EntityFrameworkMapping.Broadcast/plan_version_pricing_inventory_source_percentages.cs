@@ -12,13 +12,14 @@ namespace EntityFrameworkMapping.Broadcast
     using System;
     using System.Collections.Generic;
     
-    public partial class plan_pricing_execution_markets
+    public partial class plan_version_pricing_inventory_source_percentages
     {
         public int id { get; set; }
-        public int plan_pricing_execution_id { get; set; }
-        public short market_code { get; set; }
-        public Nullable<double> share_of_voice_percent { get; set; }
+        public int plan_version_pricing_execution_id { get; set; }
+        public int inventory_source_id { get; set; }
+        public int percentage { get; set; }
     
-        public virtual plan_pricing_executions plan_pricing_executions { get; set; }
+        public virtual inventory_sources inventory_sources { get; set; }
+        public virtual plan_version_pricing_executions plan_version_pricing_executions { get; set; }
     }
 }

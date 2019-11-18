@@ -109,6 +109,13 @@ namespace Services.Broadcast.Repositories
         /// <param name="planId">The plan identifier.</param>
         /// <returns>Numeric value representing the plans latest version number</returns>
         int GetLatestVersionNumberForPlan(int planId);
+
+        int AddPlanPricingJob(PlanPricingJob planPricingJob);
+
+        void UpdatePlanPricingJob(PlanPricingJob planPricingJob);
+
+        PlanPricingJob GetLatestPricingJob(int planId);
+        void SavePlanPricingParameters(PlanPricingRequestDto planPricingRequestDto);
     }
 
     public class PlanRepository : BroadcastRepositoryBase, IPlanRepository
@@ -454,11 +461,32 @@ namespace Services.Broadcast.Repositories
                 AvailableMarketsWithSovCount = planSummary?.available_market_with_sov_count ?? null,
                 BlackoutMarketCount = planSummary?.blackout_market_count ?? null,
                 BlackoutMarketTotalUsCoveragePercent = planSummary?.blackout_market_total_us_coverage_percent ?? null,
+                PricingParameters = _MapPricingParameters(latestPlanVersion.plan_version_pricing_parameters.SingleOrDefault()),
                 IsDraft = latestPlanVersion.is_draft,
                 VersionNumber = latestPlanVersion.version_number,
                 VersionId = latestPlanVersion.id
             };
             return dto;
+        }
+
+        private PlanPricingParametersDto _MapPricingParameters(plan_version_pricing_parameters arg)
+        {
+            if (arg == null)
+                return null;
+
+            return new PlanPricingParametersDto
+            {
+                BudgetGoal = arg.budget_goal,
+                CompetitionFactor = arg.competition_factor,
+                CpmGoal = arg.cpm_goal,
+                ImpressionsGoal = arg.impressions_goal,
+                InflationFactor = arg.inflation_factor,
+                MaxCpm = arg.max_cpm,
+                MinCpm = arg.min_cpm,
+                ProprietaryBlend = arg.proprietary_blend,
+                UnitCaps = arg.unit_caps,
+                UnitCapType = (UnitCapEnum)arg.unit_caps_type
+            };
         }
 
         private WeeklyBreakdownWeek _MapWeeklyBreakdownWeeks(plan_version_weeks arg)
@@ -832,9 +860,12 @@ namespace Services.Broadcast.Repositories
             _InReadUncommitedTransaction(
                 context =>
                 {
-                    var planPricingExecution = new plan_pricing_executions
+                    var plan = context.plans.Single(x => x.id == planPricingRunModel.PlanId);
+                    var planVersionId = plan.latest_version_id;
+
+                    var planPricingExecution = new plan_version_pricing_executions
                     {
-                        plan_id = planPricingRunModel.PlanId,
+                        plan_version_id = planVersionId,
                         min_cpm = planPricingRunModel.MinCpm,
                         max_cpm = planPricingRunModel.MaxCpm,
                         impressions_goal = planPricingRunModel.ImpressionsGoal,
@@ -850,21 +881,21 @@ namespace Services.Broadcast.Repositories
 
                     foreach (var market in planPricingRunModel.Markets)
                     {
-                        planPricingExecution.plan_pricing_execution_markets.Add(new plan_pricing_execution_markets
+                        planPricingExecution.plan_version_pricing_execution_markets.Add(new plan_version_pricing_execution_markets
                         {
                             market_code = (short)market.MarketId,
                             share_of_voice_percent = market.MarketShareOfVoice
                         });
                     }
 
-                    planPricingRunModel.InventorySourcePercentages.ForEach(s => planPricingExecution.plan_pricing_inventory_source_percentages.Add(
-                        new plan_pricing_inventory_source_percentages
+                    planPricingRunModel.InventorySourcePercentages.ForEach(s => planPricingExecution.plan_version_pricing_inventory_source_percentages.Add(
+                        new plan_version_pricing_inventory_source_percentages
                         {
                             inventory_source_id = s.Id,
                             percentage = s.Percentage
                         }));
 
-                    context.plan_pricing_executions.Add(planPricingExecution);
+                    context.plan_version_pricing_executions.Add(planPricingExecution);
                     context.SaveChanges();
                 }
             );
@@ -874,17 +905,18 @@ namespace Services.Broadcast.Repositories
         {
             return _InReadUncommitedTransaction(context =>
             {
-                var executions = context.plan_pricing_executions.Where(p => p.plan_id == planId);
+                var executions = context.plan_version_pricing_executions.Where(p => p.plan_versions.plan_id == planId);
+
                 return executions.Select(e => new PlanPricingApiRequestParametersDto
                 {
-                    PlanId = e.plan_id,
+                    PlanId = e.plan_versions.plan_id,
                     BudgetGoal = e.budget_goal,
                     CompetitionFactor = e.competition_factor,
                     CoverageGoalPercent = e.coverage_goal,
                     CpmGoal = e.cpm_goal,
                     ImpressionsGoal = e.impressions_goal,
                     InflationFactor = e.inflation_factor,
-                    Markets = e.plan_pricing_execution_markets.Select(m => new PlanPricingMarketDto
+                    Markets = e.plan_version_pricing_execution_markets.Select(m => new PlanPricingMarketDto
                     {
                         MarketId = m.market_code,
                         MarketShareOfVoice = m.share_of_voice_percent
@@ -894,7 +926,7 @@ namespace Services.Broadcast.Repositories
                     ProprietaryBlend = e.proprietary_blend,
                     UnitCaps = e.unit_caps,
                     UnitCapType = (UnitCapEnum)e.unit_caps_type,
-                    InventorySourcePercentages = e.plan_pricing_inventory_source_percentages.Select(
+                    InventorySourcePercentages = e.plan_version_pricing_inventory_source_percentages.Select(
                         s => new PlanPricingInventorySourceDto
                         {
                             Id = s.inventory_source_id,
@@ -902,6 +934,105 @@ namespace Services.Broadcast.Repositories
                             Percentage = s.percentage
                         }).ToList()
                 }).ToList();
+            });
+        }
+
+        public int AddPlanPricingJob(PlanPricingJob planPricingJob)
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                var planPricingJobDb = new plan_version_pricing_job
+                {
+                    plan_version_id = planPricingJob.PlanVersionId,
+                    status = (int)planPricingJob.Status,
+                    queued_at = planPricingJob.Queued,
+                    completed_at = planPricingJob.Completed
+                };
+
+                context.plan_version_pricing_job.Add(planPricingJobDb);
+
+                context.SaveChanges();
+
+                return planPricingJobDb.id;
+            });
+        }
+
+        public void UpdatePlanPricingJob(PlanPricingJob planPricingJob)
+        {
+            _InReadUncommitedTransaction(context =>
+            {
+                var job = context.plan_version_pricing_job.Single(x => x.id == planPricingJob.Id);
+
+                job.status = (int)planPricingJob.Status;
+                job.completed_at = planPricingJob.Completed;
+                job.error_message = planPricingJob.ErrorMessage;
+                job.diagnostic_result = planPricingJob.DiagnosticResult;
+
+                context.SaveChanges();
+            });
+        }
+
+        public PlanPricingJob GetLatestPricingJob(int planId)
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                var latestJob = context.plan_version_pricing_job
+                                    .Where(x => x.plan_versions.plan.id == planId)
+
+                                    // take jobs with status Queued or Processing first
+                                    .OrderByDescending(x => x.status == (int)BackgroundJobProcessingStatus.Queued || x.status == (int)BackgroundJobProcessingStatus.Processing)
+
+                                    // if there is no such then take latest completed
+                                    .ThenByDescending(x => x.completed_at)
+                                    .FirstOrDefault();
+
+                if (latestJob == null)
+                    return null;
+
+                return new PlanPricingJob
+                {
+                    Id = latestJob.id,
+                    PlanVersionId = latestJob.plan_version_id,
+                    Status = (BackgroundJobProcessingStatus)latestJob.status,
+                    Queued = latestJob.queued_at,
+                    Completed = latestJob.completed_at,
+                    ErrorMessage = latestJob.error_message,
+                    DiagnosticResult = latestJob.diagnostic_result
+                };
+            });
+        }
+
+        public void SavePlanPricingParameters(PlanPricingRequestDto planPricingRequestDto)
+        {
+            _InReadUncommitedTransaction(context =>
+            {
+                var plan = context.plans.Single(x => x.id == planPricingRequestDto.PlanId);
+                var planVersionId = plan.latest_version_id;
+                var previousParameters = context.plan_version_pricing_parameters.SingleOrDefault(x => x.plan_version_id == planVersionId);
+
+                if (previousParameters != null)
+                {
+                    context.plan_version_pricing_parameters.Remove(previousParameters);
+                }
+
+                var planPricingParameters = new plan_version_pricing_parameters
+                {
+                    plan_version_id = planVersionId,
+                    min_cpm = planPricingRequestDto.MinCpm,
+                    max_cpm = planPricingRequestDto.MaxCpm,
+                    impressions_goal = planPricingRequestDto.ImpressionsGoal,
+                    budget_goal = planPricingRequestDto.BudgetGoal,
+                    cpm_goal = planPricingRequestDto.CpmGoal,
+                    proprietary_blend = planPricingRequestDto.ProprietaryBlend,
+                    competition_factor = planPricingRequestDto.CompetitionFactor,
+                    inflation_factor = planPricingRequestDto.InflationFactor,
+                    unit_caps_type = (int)planPricingRequestDto.UnitCapType,
+                    unit_caps = planPricingRequestDto.UnitCaps
+                };
+
+                context.plan_version_pricing_parameters.Add(planPricingParameters);
+
+                context.SaveChanges();
             });
         }
     }

@@ -115,6 +115,7 @@
   "ModifiedDate": "2019-05-14T00:00:00",
   "Name": "New Plan",
   "PostingType": 2,
+  "PricingParameters": null,
   "ProductId": 1,
   "SecondaryAudiences": [],
   "ShareBookId": 430,

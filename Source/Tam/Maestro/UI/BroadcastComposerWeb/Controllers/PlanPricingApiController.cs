@@ -2,6 +2,7 @@
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Entities.Plan.Pricing;
 using Services.Broadcast.Entities.PlanPricing;
+using System;
 using System.Collections.Generic;
 using System.Web.Http;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
@@ -21,18 +22,18 @@ namespace BroadcastComposerWeb.Controllers
             _ApplicationServiceFactory = applicationServiceFactory;
         }
 
-        [HttpGet]
-        [Route("GetInventoryForPlan")]
-        public BaseResponse<List<PlanPricingProgramDto>> GetInventoryForPlan(int planId)
+        [HttpPost]
+        [Route("Queue")]
+        public BaseResponse<PlanPricingJob> Queue(PlanPricingRequestDto planPricingRequestDto)
         {
-            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanPricingService>().GetInventoryForPlan(planId));
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanPricingService>().QueuePricingJob(planPricingRequestDto, DateTime.Now));
         }
 
         [HttpPost]
-        [Route("Run")]
-        public BaseResponse<PlanPricingResultDto> Run(PlanPricingRequestDto planPricingRequestDto)
+        [Route("Execution")]
+        public BaseResponse<PlanPricingResponseDto> GetCurrentPricingExecution(int planId)
         {
-            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanPricingService>().Run(planPricingRequestDto));
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanPricingService>().GetCurrentPricingExecution(planId));
         }
 
         /// <summary>

@@ -23,6 +23,9 @@ namespace EntityFrameworkMapping.Broadcast
             this.plan_version_summaries = new HashSet<plan_version_summaries>();
             this.plan_version_weeks = new HashSet<plan_version_weeks>();
             this.plan_version_dayparts = new HashSet<plan_version_dayparts>();
+            this.plan_version_pricing_executions = new HashSet<plan_version_pricing_executions>();
+            this.plan_version_pricing_job = new HashSet<plan_version_pricing_job>();
+            this.plan_version_pricing_parameters = new HashSet<plan_version_pricing_parameters>();
         }
     
         public int id { get; set; }
@@ -72,5 +75,8 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual plan plan { get; set; }
         public virtual spot_lengths spot_lengths { get; set; }
         public virtual ICollection<plan_version_dayparts> plan_version_dayparts { get; set; }
+        public virtual ICollection<plan_version_pricing_executions> plan_version_pricing_executions { get; set; }
+        public virtual ICollection<plan_version_pricing_job> plan_version_pricing_job { get; set; }
+        public virtual ICollection<plan_version_pricing_parameters> plan_version_pricing_parameters { get; set; }
     }
 }

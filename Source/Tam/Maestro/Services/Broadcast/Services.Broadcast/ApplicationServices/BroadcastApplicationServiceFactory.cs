@@ -226,6 +226,11 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IPricingApiClient, PricingApiClient>();
             unityContainer.RegisterType<IImpressionsCalculationEngine, ImpressionsCalculationEngine>();
 
+            unityContainer.RegisterType<IPlanPricingInventoryEngine, PlanPricingInventoryEngine>();
+
+            // TODO: Remove this during PRI-17014.  Reroute consumers to ProgramGuideApiClient.
+            unityContainer.RegisterType<IProgramGuideApiClientSimulator, ProgramGuideApiClientSimulator>();
+
             //@todo This is temporary to control the daypart source for Broadcast
             var repoFactory = unityContainer.Resolve<IDataRepositoryFactory>();
             var daypartRepo = repoFactory.GetDataRepository<IDisplayDaypartRepository>();

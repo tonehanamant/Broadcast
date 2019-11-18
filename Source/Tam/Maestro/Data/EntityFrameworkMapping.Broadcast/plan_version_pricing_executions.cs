@@ -12,16 +12,16 @@ namespace EntityFrameworkMapping.Broadcast
     using System;
     using System.Collections.Generic;
     
-    public partial class plan_pricing_executions
+    public partial class plan_version_pricing_executions
     {
-        public plan_pricing_executions()
+        public plan_version_pricing_executions()
         {
-            this.plan_pricing_execution_markets = new HashSet<plan_pricing_execution_markets>();
-            this.plan_pricing_inventory_source_percentages = new HashSet<plan_pricing_inventory_source_percentages>();
+            this.plan_version_pricing_execution_markets = new HashSet<plan_version_pricing_execution_markets>();
+            this.plan_version_pricing_inventory_source_percentages = new HashSet<plan_version_pricing_inventory_source_percentages>();
         }
     
         public int id { get; set; }
-        public int plan_id { get; set; }
+        public int plan_version_id { get; set; }
         public Nullable<decimal> min_cpm { get; set; }
         public Nullable<decimal> max_cpm { get; set; }
         public double coverage_goal { get; set; }
@@ -34,8 +34,8 @@ namespace EntityFrameworkMapping.Broadcast
         public int unit_caps_type { get; set; }
         public int unit_caps { get; set; }
     
-        public virtual ICollection<plan_pricing_execution_markets> plan_pricing_execution_markets { get; set; }
-        public virtual plan plan { get; set; }
-        public virtual ICollection<plan_pricing_inventory_source_percentages> plan_pricing_inventory_source_percentages { get; set; }
+        public virtual ICollection<plan_version_pricing_execution_markets> plan_version_pricing_execution_markets { get; set; }
+        public virtual plan_versions plan_versions { get; set; }
+        public virtual ICollection<plan_version_pricing_inventory_source_percentages> plan_version_pricing_inventory_source_percentages { get; set; }
     }
 }

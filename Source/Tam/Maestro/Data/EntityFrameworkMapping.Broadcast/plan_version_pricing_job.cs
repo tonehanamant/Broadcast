@@ -12,14 +12,16 @@ namespace EntityFrameworkMapping.Broadcast
     using System;
     using System.Collections.Generic;
     
-    public partial class plan_pricing_inventory_source_percentages
+    public partial class plan_version_pricing_job
     {
         public int id { get; set; }
-        public int plan_pricing_execution_id { get; set; }
-        public int inventory_source_id { get; set; }
-        public int percentage { get; set; }
+        public int plan_version_id { get; set; }
+        public int status { get; set; }
+        public System.DateTime queued_at { get; set; }
+        public Nullable<System.DateTime> completed_at { get; set; }
+        public string error_message { get; set; }
+        public string diagnostic_result { get; set; }
     
-        public virtual inventory_sources inventory_sources { get; set; }
-        public virtual plan_pricing_executions plan_pricing_executions { get; set; }
+        public virtual plan_versions plan_versions { get; set; }
     }
 }

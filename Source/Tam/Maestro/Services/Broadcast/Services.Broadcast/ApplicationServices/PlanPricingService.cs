@@ -1,31 +1,30 @@
 ﻿using Common.Services;
 using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
+using Hangfire;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Cache;
 using Services.Broadcast.Clients;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
 using Services.Broadcast.Entities.Plan.Pricing;
 using Services.Broadcast.Entities.PlanPricing;
+using Services.Broadcast.Helpers;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Services.Broadcast.Entities.Enums;
-using Services.Broadcast.Helpers;
-using Tam.Maestro.Common;
-using Tam.Maestro.Data.Entities;
+using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
-using Tam.Maestro.Services.ContractInterfaces.Common;
-using static Services.Broadcast.Entities.Enums.ProposalEnums;
 
 namespace Services.Broadcast.ApplicationServices
 {
     public interface IPlanPricingService : IApplicationService
     {
-        List<PlanPricingProgramDto> GetInventoryForPlan(int planId);
-        PlanPricingResultDto Run(PlanPricingRequestDto planPricingRequestDto);
+        PlanPricingJob QueuePricingJob(PlanPricingRequestDto planPricingRequestDto, DateTime currentDate);
+        PlanPricingResponseDto GetCurrentPricingExecution(int planId);
+        void RunPricingJob(PlanPricingRequestDto planPricingRequestDto, int jobId);
         List<PlanPricingApiRequestParametersDto> GetPlanPricingRuns(int planId);
 
         /// <summary>
@@ -39,17 +38,14 @@ namespace Services.Broadcast.ApplicationServices
     public class PlanPricingService : IPlanPricingService
     {
         private readonly IPlanRepository _PlanRepository;
-        private readonly IStationProgramRepository _StationProgramRepository;
         private readonly IBroadcastAudienceRepository _BroadcastAudienceRepository;
-        private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekAggregateCache;
-        private readonly IDaypartCache _DaypartCache;
+        private readonly IPlanPricingInventoryEngine _PlanPricingInventoryEngine;
         private readonly IBroadcastAudiencesCache _AudienceCache;
-        private readonly IImpressionAdjustmentEngine _ImpressionAdjustmentEngine;
-        private readonly IImpressionsCalculationEngine _ImpressionsCalculationEngine;
         private readonly ISpotLengthEngine _SpotLengthEngine;
         private readonly ISpotLengthRepository _SpotLengthRepository;
         private readonly IPricingApiClient _PricingApiClient;
         private readonly IInventoryRepository _InventoryRepository;
+        private readonly IBackgroundJobClient _BackgroundJobClient;
 
         public PlanPricingService(IDataRepositoryFactory broadcastDataRepositoryFactory,
                                   IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
@@ -58,28 +54,41 @@ namespace Services.Broadcast.ApplicationServices
                                   IImpressionAdjustmentEngine impressionAdjustmentEngine,
                                   IImpressionsCalculationEngine impressionsCalculationEngine,
                                   ISpotLengthEngine spotLengthEngine,
-                                  IPricingApiClient pricingApiClient)
+                                  IPricingApiClient pricingApiClient,
+                                  IBackgroundJobClient backgroundJobClient,
+                                  IPlanPricingInventoryEngine planPricingInventoryEngine)
         {
             _BroadcastAudienceRepository = broadcastDataRepositoryFactory.GetDataRepository<IBroadcastAudienceRepository>();
             _PlanRepository = broadcastDataRepositoryFactory.GetDataRepository<IPlanRepository>();
-            _StationProgramRepository = broadcastDataRepositoryFactory.GetDataRepository<IStationProgramRepository>();
             _SpotLengthRepository = broadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>();
-            _MediaMonthAndWeekAggregateCache = mediaMonthAndWeekAggregateCache;
-            _DaypartCache = daypartCache;
             _AudienceCache = audienceCache;
-            _ImpressionAdjustmentEngine = impressionAdjustmentEngine;
-            _ImpressionsCalculationEngine = impressionsCalculationEngine;
             _SpotLengthEngine = spotLengthEngine;
             _PricingApiClient = pricingApiClient;
+            _BackgroundJobClient = backgroundJobClient;
+            _PlanPricingInventoryEngine = planPricingInventoryEngine;
             _InventoryRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
         }
 
-        public List<PlanPricingProgramDto> GetInventoryForPlan(int planId)
+        public PlanPricingJob QueuePricingJob(PlanPricingRequestDto planPricingRequestDto, DateTime currentDate)
         {
-            var plan = _PlanRepository.GetPlan(planId);
-            var inventory = _GetInventory(plan);
+            var plan = _PlanRepository.GetPlan(planPricingRequestDto.PlanId);
 
-            return _MapToPlanPricingPrograms(inventory, plan);
+            var job = new PlanPricingJob
+            {
+                PlanVersionId = plan.VersionId,
+                Status = BackgroundJobProcessingStatus.Queued,
+                Queued = currentDate
+            };
+
+            var jobId = _PlanRepository.AddPlanPricingJob(job);
+
+            job.Id = jobId;
+
+            _PlanRepository.SavePlanPricingParameters(planPricingRequestDto);
+
+            _BackgroundJobClient.Enqueue<IPlanPricingService>(x => x.RunPricingJob(planPricingRequestDto, jobId));
+
+            return job;
         }
 
         public List<LookupDto> GetUnitCaps()
@@ -125,34 +134,48 @@ namespace Services.Broadcast.ApplicationServices
             return ppDefaults;
         }
 
-        private List<ProposalProgramDto> _GetInventory(PlanDto plan)
+        public PlanPricingResponseDto GetCurrentPricingExecution(int planId)
         {
-            var programs = _GetPrograms(plan);
-            programs = _FilterProgramsByDaypart(plan, programs);
-            _ApplyProjectedImpressions(programs, plan);
-            _ApplyProvidedImpressions(programs, plan);
-            return programs;
+            var job = _PlanRepository.GetLatestPricingJob(planId);
+
+            return new PlanPricingResponseDto
+            {
+                Job = job,
+                Result = new PlanPricingResultDto
+                {
+                    Programs = _GetMockPrograms(job)
+                }
+            };
         }
 
-        public PlanPricingResultDto Run(PlanPricingRequestDto planPricingRequestDto)
+        private List<PlanPricingProgramDto> _GetMockPrograms(PlanPricingJob job)
         {
-            var plan = _PlanRepository.GetPlan(planPricingRequestDto.PlanId);
-            var inventory = _GetInventory(plan);
-            var pricingMarkets = _MapToPlanPricingPrograms(plan);
-            var parameters = _GetPricingApiRequestParameters(planPricingRequestDto, plan, pricingMarkets);
+            if (job == null || job.Status != BackgroundJobProcessingStatus.Succeeded)
+                return null;
 
-            var pricingApiRequest = new PlanPricingApiRequestDto
+            return new List<PlanPricingProgramDto>
             {
-                Weeks = _GetPricingModelWeeks(plan),
-                Spots = _GetPricingModelSpots(inventory),
-                Parameters = parameters
+                new PlanPricingProgramDto
+                {
+                    ProgramName = "NFL Sunday Night Football",
+                    Genre = "Sports",
+                    MarketCount = 72,
+                    StationCount = 72,
+                    AvgCpm = 13.5m,
+                    AvgImpressions = 250,
+                    PercentageOfBuy = 2.05
+                },
+                new PlanPricingProgramDto
+                {
+                    ProgramName = "Good Morning America",
+                    Genre = "News",
+                    MarketCount = 14,
+                    StationCount = 23,
+                    AvgCpm = 18,
+                    AvgImpressions = 150,
+                    PercentageOfBuy = 97.95
+                }
             };
-
-            var result = _PricingApiClient.GetPricingCalculationResult(pricingApiRequest);
-
-            _PlanRepository.SavePricingRequest(parameters);
-
-            return _MapToPlanPricingResultDto(pricingApiRequest, result);
         }
 
         private PlanPricingApiRequestParametersDto _GetPricingApiRequestParameters(PlanPricingRequestDto planPricingRequestDto, PlanDto plan, List<PlanPricingMarketDto> pricingMarkets)
@@ -182,17 +205,6 @@ namespace Services.Broadcast.ApplicationServices
             return pricingMarkets;
         }
 
-        private PlanPricingResultDto _MapToPlanPricingResultDto(PlanPricingApiRequestDto request, PlanPricingApiResponsetDto response)
-        {
-            return new PlanPricingResultDto
-            {
-                Weeks = request.Weeks,
-                Spots = request.Spots,
-                Parameters = request.Parameters,
-                Response = response
-            };
-        }
-
         private PlanPricingApiRequestParametersDto _MapToApiParametersRequest(PlanPricingRequestDto planPricingRequestDto)
         {
             var parameters = new PlanPricingApiRequestParametersDto
@@ -219,9 +231,9 @@ namespace Services.Broadcast.ApplicationServices
             return _PlanRepository.GetPlanPricingRuns(planId);
         }
 
-        private List<PlanPricingProgramDto> _MapToPlanPricingPrograms(List<ProposalProgramDto> programs, PlanDto plan)
+        private List<PlanPricingInventoryProgramDto> _MapToPlanPricingPrograms(List<ProposalProgramDto> programs, PlanDto plan)
         {
-            var pricingPrograms = new List<PlanPricingProgramDto>();
+            var pricingPrograms = new List<PlanPricingInventoryProgramDto>();
             var spotLength = _SpotLengthEngine.GetSpotLengthValueById(plan.SpotLengthId);
             var spotLengthsMultipliers = _SpotLengthRepository.GetSpotLengthMultipliers();
             var deliveryMultiplier = spotLengthsMultipliers.Single(s => s.Key == spotLength);
@@ -235,7 +247,7 @@ namespace Services.Broadcast.ApplicationServices
                 if (planMarket != null)
                     marketShareOfVoice = planMarket.ShareOfVoicePercent ?? 0;
 
-                var pricingProgram = new PlanPricingProgramDto
+                var pricingProgram = new PlanPricingInventoryProgramDto
                 {
                     ProgramNames = new List<string>(programNames),
                     SpotLength = spotLength,
@@ -258,26 +270,6 @@ namespace Services.Broadcast.ApplicationServices
             }
 
             return pricingPrograms;
-        }
-
-        private void _ApplyProvidedImpressions(List<ProposalProgramDto> programs, PlanDto plan)
-        {
-            _ImpressionsCalculationEngine.ApplyProvidedImpressions(programs, plan.AudienceId, plan.SpotLengthId, plan.Equivalized);
-        }
-
-        private void _ApplyProjectedImpressions(IEnumerable<ProposalProgramDto> programs, PlanDto plan)
-        {
-            var impressionsRequest = new ImpressionsRequestDto
-            {
-                Equivalized = plan.Equivalized,
-                HutProjectionBookId = plan.HUTBookId,
-                PlaybackType = ProposalPlaybackType.LivePlus3,
-                PostType = plan.PostingType,
-                ShareProjectionBookId = plan.ShareBookId,
-                SpotLengthId = plan.SpotLengthId
-            };
-
-            _ImpressionsCalculationEngine.ApplyProjectedImpressions(programs, impressionsRequest, plan.AudienceId);
         }
 
         private List<PricingModelSpotsDto> _GetPricingModelSpots(List<ProposalProgramDto> programs)
@@ -318,138 +310,66 @@ namespace Services.Broadcast.ApplicationServices
             return pricingModelWeeks;
         }
 
-        private List<ProposalProgramDto> _GetPrograms(PlanDto plan)
+        public void RunPricingJob(PlanPricingRequestDto planPricingRequestDto, int jobId)
         {
-            var marketCodes = plan.AvailableMarkets.Select(m => (int)m.MarketCode).ToList();
-            var planDateRanges = _GetPlanDateRanges(plan);
-            var programs = new List<ProposalProgramDto>();
+            var planPricingJobDiagnostic = new PlanPricingJobDiagnostic { JobId = jobId };
 
-            foreach (var planDateRange in planDateRanges)
+            planPricingJobDiagnostic.RecordStart();
+
+            _PlanRepository.UpdatePlanPricingJob(new PlanPricingJob
             {
-                programs.AddRange(_StationProgramRepository.GetPrograms(planDateRange.Start.Value,
-                                                                        planDateRange.End.Value,
-                                                                        plan.SpotLengthId,
-                                                                        BroadcastConstants.OpenMarketSourceId,
-                                                                        marketCodes));
-            }
+                Id = jobId,
+                Status = BackgroundJobProcessingStatus.Processing,
+            });
 
-            _SetFlightWeeks(programs);
-
-            return programs;
-        }
-
-        private List<DateRange> _GetPlanDateRanges(PlanDto plan)
-        {
-            var planStartDate = plan.FlightStartDate.Value;
-            var planEndDate = plan.FlightEndDate.Value;
-            var rangeStartDate = plan.FlightStartDate.Value;
-            var rangeEndDate = rangeStartDate;
-            var dateRanges = new List<DateRange>();
-            var dateDifference = planEndDate - rangeStartDate;
-            var dateDifferenceDays = dateDifference.Days;
-            var currentDate = rangeStartDate;
-
-            if (!plan.FlightHiatusDays.Any())
+            try
             {
-                dateRanges.Add(new DateRange(rangeStartDate, planEndDate));
+                var plan = _PlanRepository.GetPlan(planPricingRequestDto.PlanId);
+                planPricingJobDiagnostic.RecordGatherInventoryStart();
+                var inventory = _PlanPricingInventoryEngine.GetInventoryForPlan(planPricingRequestDto.PlanId);
+                planPricingJobDiagnostic.RecordGatherInventoryEnd();
+                var pricingMarkets = _MapToPlanPricingPrograms(plan);
+                var parameters = _GetPricingApiRequestParameters(planPricingRequestDto, plan, pricingMarkets);
 
-                return dateRanges;
-            }
-
-            for (var daysIndex = 0; daysIndex <= dateDifferenceDays; daysIndex++)
-            {
-                var hiatusDate = planStartDate.AddDays(daysIndex);
-                var isHiatus = plan.FlightHiatusDays.Any(h => h == hiatusDate);
-
-                if (!isHiatus)
-                    rangeEndDate = planStartDate.AddDays(daysIndex);
-
-                while (isHiatus)
+                var pricingApiRequest = new PlanPricingApiRequestDto
                 {
-                    daysIndex++;
-                    hiatusDate = planStartDate.AddDays(daysIndex);
-                    isHiatus = plan.FlightHiatusDays.Any(h => h == hiatusDate);
-
-                    if (!isHiatus)
-                    {
-                        dateRanges.Add(new DateRange(rangeStartDate, rangeEndDate));
-                        rangeStartDate = planStartDate.AddDays(daysIndex);
-                        rangeEndDate = rangeStartDate;
-                    }
-                }
-
-                if (daysIndex == dateDifferenceDays)
-                {
-                    dateRanges.Add(new DateRange(rangeStartDate, rangeEndDate));
-                }
-            }
-
-            return dateRanges;
-        }
-
-        private void _SetFlightWeeks(IEnumerable<ProposalProgramDto> programs)
-        {
-            if (programs.Any())
-            {
-                var startDate = programs.Min(p => p.StartDate);
-                var endDate = programs.Max(p => p.EndDate) ?? DateTime.MaxValue;
-                var mediaWeeksToUse = _MediaMonthAndWeekAggregateCache.GetMediaWeeksByFlight(startDate, endDate);
-
-                foreach (var program in programs)
-                {
-                    program.FlightWeeks = _GetFlightWeeks(program, mediaWeeksToUse);
-                }
-            }
-        }
-
-        private List<ProposalProgramFlightWeek> _GetFlightWeeks(ProposalProgramDto programDto, List<MediaWeek> mediaWeeksToUse = null)
-        {
-            var nonNullableEndDate = programDto.EndDate ?? programDto.StartDate.AddYears(1);
-            var displayFlighWeeks = _MediaMonthAndWeekAggregateCache.GetDisplayMediaWeekByFlight(programDto.StartDate, nonNullableEndDate, mediaWeeksToUse);
-            var flighWeeks = new List<ProposalProgramFlightWeek>();
-
-            foreach (var displayMediaWeek in displayFlighWeeks)
-            {
-                flighWeeks.Add(new ProposalProgramFlightWeek
-                {
-                    StartDate = displayMediaWeek.WeekStartDate,
-                    EndDate = displayMediaWeek.WeekEndDate,
-                    MediaWeekId = displayMediaWeek.Id,
-                    Rate = programDto.SpotCost
-                });
-            }
-
-            return flighWeeks;
-        }
-
-        private List<ProposalProgramDto> _FilterProgramsByDaypart(PlanDto plan, List<ProposalProgramDto> programs)
-        {
-            if (plan.Dayparts == null || !plan.Dayparts.Any())
-                return programs;
-
-            var filteredPrograms = new List<ProposalProgramDto>();
-
-            foreach (var planDaypart in plan.Dayparts)
-            {
-                var planDisplayDaypart = new DisplayDaypart
-                {
-                    Monday = true,
-                    Tuesday = true,
-                    Wednesday = true,
-                    Thursday = true,
-                    Friday = true,
-                    Saturday = true,
-                    Sunday = true,
-                    StartTime = planDaypart.StartTimeSeconds,
-                    EndTime = planDaypart.EndTimeSeconds
+                    Weeks = _GetPricingModelWeeks(plan),
+                    Spots = _GetPricingModelSpots(inventory),
+                    Parameters = parameters
                 };
 
-                filteredPrograms.AddRange(
-                    programs.Where(p => 
-                        p.ManifestDayparts.Any(d => _DaypartCache.GetDisplayDaypart(d.DaypartId).Intersects(planDisplayDaypart))));
-            }
+                planPricingJobDiagnostic.RecordApiCallStart();
 
-            return filteredPrograms;
+                var result = _PricingApiClient.GetPricingCalculationResult(pricingApiRequest);
+
+                planPricingJobDiagnostic.RecordApiCallEnd();
+
+                planPricingJobDiagnostic.RecordEnd();
+
+                using (var transaction = new TransactionScopeWrapper())
+                {
+                    _PlanRepository.SavePricingRequest(parameters);
+
+                    _PlanRepository.UpdatePlanPricingJob(new PlanPricingJob
+                    {
+                        Id = jobId,
+                        Status = BackgroundJobProcessingStatus.Succeeded,
+                        Completed = DateTime.Now,
+                        DiagnosticResult = planPricingJobDiagnostic.ToString()
+                    });
+
+                    transaction.Complete();
+                }
+            }
+            catch (Exception exception)
+            {
+                _PlanRepository.UpdatePlanPricingJob(new PlanPricingJob
+                {
+                    Id = jobId,
+                    Status = BackgroundJobProcessingStatus.Failed,
+                    ErrorMessage = exception.Message
+                });
+            }
         }
     }
 }

@@ -68,8 +68,8 @@ namespace Tam.Maestro.Services.Clients
         {
             // Note: The SMS Service and the Configuration API take slightly different strings as input
             string databaseName = resource == TAMResource.BroadcastConnectionString.ToString()
-                ? "broadcast"
-                : "broadcastforecast";
+            ? "broadcast"
+            : "broadcastforecast";
 
             if (ShouldUseSMSClient())
             {

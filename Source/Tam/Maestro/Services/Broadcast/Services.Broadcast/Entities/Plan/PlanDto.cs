@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Services.Broadcast.Entities.Enums;
+using Services.Broadcast.Entities.Plan.Pricing;
 
 namespace Services.Broadcast.Entities.Plan
 {
@@ -393,5 +394,9 @@ namespace Services.Broadcast.Entities.Plan
         /// </value>
         public int VersionId { get; set; }
 
+        /// <summary>
+        /// The plan pricing parameters.
+        /// </summary>
+        public PlanPricingParametersDto PricingParameters { get; set; }
     }
 }

@@ -963,6 +963,138 @@ BEGIN
 END
 /*************************************** END - PRI-17030 ****************************************************/
 
+/*************************************** START PRI-17245  ***************************************************/
+IF OBJECT_ID('plan_pricing_execution_markets') IS NOT NULL
+BEGIN
+	EXEC('DELETE FROM plan_pricing_execution_markets')
+	EXEC('DROP TABLE plan_pricing_execution_markets')
+END
+IF OBJECT_ID('plan_pricing_inventory_source_percentages') IS NOT NULL
+BEGIN
+	EXEC('DELETE FROM plan_pricing_inventory_source_percentages')
+	EXEC('DROP TABLE plan_pricing_inventory_source_percentages')
+END
+IF OBJECT_ID('plan_pricing_executions') IS NOT NULL
+BEGIN
+	EXEC('DELETE FROM plan_pricing_executions')
+	EXEC('DROP TABLE plan_pricing_executions')
+END
+IF OBJECT_ID('plan_version_pricing_executions') IS NULL
+BEGIN
+	CREATE TABLE [dbo].[plan_version_pricing_executions](
+		[id] [int] IDENTITY(1,1) NOT NULL,
+		[plan_version_id] [int] NOT NULL,
+		[min_cpm] [money] NULL,
+		[max_cpm] [money] NULL,
+		[coverage_goal] [float] NOT NULL,
+		[impressions_goal] [float] NOT NULL,
+		[budget_goal] [money] NOT NULL,
+		[cpm_goal] [money] NOT NULL,
+		[proprietary_blend] [float] NOT NULL,
+		[competition_factor] [float] NULL,
+		[inflation_factor] [float] NULL,
+		[unit_caps_type] [int] NOT NULL,
+		[unit_caps] [int] NOT NULL,
+	CONSTRAINT [PK_plan_version_pricing_executions] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC
+	) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY]
+	ALTER TABLE [dbo].[plan_version_pricing_executions]  WITH CHECK ADD  CONSTRAINT [FK_plan_version_pricing_executions_plan_versions] FOREIGN KEY([plan_version_id])
+	REFERENCES [dbo].[plan_versions] ([id]) ON DELETE CASCADE
+	ALTER TABLE [dbo].[plan_version_pricing_executions] CHECK CONSTRAINT [FK_plan_version_pricing_executions_plan_versions]
+END
+IF OBJECT_ID('plan_version_pricing_execution_markets') IS NULL
+	BEGIN
+	CREATE TABLE [dbo].[plan_version_pricing_execution_markets]
+	(
+		[id] [int] IDENTITY(1,1) NOT NULL,
+		[plan_version_pricing_execution_id] [int] NOT NULL,
+		[market_code] [smallint] NOT NULL,
+		[share_of_voice_percent] [float] NULL,
+	CONSTRAINT [PK_plan_version_pricing_execution_markets] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC
+	) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY]
+	ALTER TABLE [dbo].[plan_version_pricing_execution_markets]  WITH CHECK ADD  CONSTRAINT [FK_plan_version_pricing_execution_markets_plan_version_pricing_executions] FOREIGN KEY([plan_version_pricing_execution_id])
+	REFERENCES [dbo].[plan_version_pricing_executions] ([id]) ON DELETE CASCADE
+	ALTER TABLE [dbo].[plan_version_pricing_execution_markets] CHECK CONSTRAINT [FK_plan_version_pricing_execution_markets_plan_version_pricing_executions]
+END
+IF OBJECT_ID('plan_version_pricing_job') IS NULL
+BEGIN
+	CREATE TABLE [dbo].[plan_version_pricing_job](
+		[id] [int] IDENTITY(1,1) NOT NULL,
+		[plan_version_id] [int] NOT NULL,
+		[status] [int] NOT NULL,
+		[queued_at] [datetime] NOT NULL,
+		[completed_at] [datetime] NULL,
+		[error_message] nvarchar(2000) NULL,
+		[diagnostic_result] nvarchar(2000) NULL
+	 CONSTRAINT [PK_plan_version_pricing_job] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY]
+	ALTER TABLE [dbo].[plan_version_pricing_job]  WITH CHECK ADD  CONSTRAINT [FK_plan_version_pricing_job_plan_versions] FOREIGN KEY([plan_version_id])
+	REFERENCES [dbo].[plan_versions] ([id]) ON DELETE CASCADE
+	ALTER TABLE [dbo].[plan_version_pricing_job] CHECK CONSTRAINT [FK_plan_version_pricing_job_plan_versions]
+END
+IF OBJECT_ID('plan_version_pricing_parameters') IS NULL
+BEGIN
+	CREATE TABLE [dbo].[plan_version_pricing_parameters](
+		[id] [int] IDENTITY(1,1) NOT NULL,
+		[plan_version_id] [int] NOT NULL,
+		[min_cpm] [money] NULL,
+		[max_cpm] [money] NULL,
+		[coverage_goal] [float] NOT NULL,
+		[impressions_goal] [float] NOT NULL,
+		[budget_goal] [money] NOT NULL,
+		[cpm_goal] [money] NOT NULL,
+		[proprietary_blend] [float] NOT NULL,
+		[competition_factor] [float] NULL,
+		[inflation_factor] [float] NULL,
+		[unit_caps_type] [int] NOT NULL,
+		[unit_caps] [int] NOT NULL,
+	 CONSTRAINT UQ_plan_version_id UNIQUE(plan_version_id),
+	 CONSTRAINT [PK_plan_version_pricing_parameters] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY]
+	ALTER TABLE [dbo].[plan_version_pricing_parameters]  WITH CHECK ADD  CONSTRAINT [FK_plan_version_pricing_parameters_plan_versions] FOREIGN KEY([plan_version_id])
+	REFERENCES [dbo].[plan_versions] ([id]) ON DELETE CASCADE
+	ALTER TABLE [dbo].[plan_version_pricing_parameters] CHECK CONSTRAINT [FK_plan_version_pricing_parameters_plan_versions]
+END
+IF OBJECT_ID('plan_pricing_inventory_source_percentages') IS NOT NULL
+BEGIN
+	EXEC('TRUNCATE TABLE plan_pricing_inventory_source_percentages')
+	EXEC('DROP TABLE plan_pricing_inventory_source_percentages')
+END
+IF OBJECT_ID('plan_version_pricing_inventory_source_percentages') IS NULL
+BEGIN
+	CREATE TABLE [dbo].[plan_version_pricing_inventory_source_percentages](
+		[id] [int] IDENTITY(1,1) NOT NULL,
+		[plan_version_pricing_execution_id] [int] NOT NULL,
+		[inventory_source_id] [int] NOT NULL,
+		[percentage] [int] NOT NULL,
+	 CONSTRAINT [PK_plan_version_pricing_inventory_source_percentages] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY]
+
+	ALTER TABLE [dbo].[plan_version_pricing_inventory_source_percentages]  WITH CHECK ADD  CONSTRAINT [FK_plan_version_pricing_inventory_source_percentages_inventory_sources] FOREIGN KEY([inventory_source_id])
+	REFERENCES [dbo].[inventory_sources] ([id])
+	ALTER TABLE [dbo].[plan_version_pricing_inventory_source_percentages] CHECK CONSTRAINT [FK_plan_version_pricing_inventory_source_percentages_inventory_sources]
+	ALTER TABLE [dbo].[plan_version_pricing_inventory_source_percentages]  WITH CHECK ADD  CONSTRAINT [FK_plan_version_pricing_inventory_source_percentages_plan_version_pricing_executions] FOREIGN KEY([plan_version_pricing_execution_id])
+	REFERENCES [dbo].[plan_version_pricing_executions] ([id])
+	ON DELETE CASCADE
+	ALTER TABLE [dbo].[plan_version_pricing_inventory_source_percentages] CHECK CONSTRAINT [FK_plan_version_pricing_inventory_source_percentages_plan_version_pricing_executions]
+END
+/*************************************** END PRI-17245  *****************************************************/
+
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

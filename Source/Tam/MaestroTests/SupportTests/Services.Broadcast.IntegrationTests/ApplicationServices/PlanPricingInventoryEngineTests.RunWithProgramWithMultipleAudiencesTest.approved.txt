@@ -1,0 +1,406 @@
+﻿[
+  {
+    "AdditionalAudienceImpressions": 0.0,
+    "AdditionalAudienceSubscribers": 0.0,
+    "AdditionalDemoRating": 0.0,
+    "AdditonalAudienceCPM": 0.0,
+    "Allocations": [],
+    "DayParts": [],
+    "DemoRating": 0.0,
+    "EffectiveImpressionsPerSpot": 21341.025,
+    "EndDate": "2018-04-25T00:00:00",
+    "FlightWeeks": [
+      {
+        "Allocations": null,
+        "EndDate": "2018-04-01T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 744,
+        "Rate": 75.0000,
+        "StartDate": "2018-03-26T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-04-08T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 745,
+        "Rate": 75.0000,
+        "StartDate": "2018-04-02T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-04-15T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 746,
+        "Rate": 75.0000,
+        "StartDate": "2018-04-09T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-04-22T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 747,
+        "Rate": 75.0000,
+        "StartDate": "2018-04-16T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-04-29T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 748,
+        "Rate": 75.0000,
+        "StartDate": "2018-04-23T00:00:00"
+      }
+    ],
+    "Genres": [],
+    "GRP": 0.0,
+    "HHeCPM": 0.0,
+    "HHImpressions": 0.0,
+    "HouseHoldMarketSubscribers": 0.0,
+    "HouseHoldRating": 0.0,
+    "IsOverlapping": false,
+    "ManifestAudiences": [
+      {
+        "AudienceId": 31,
+        "Impressions": null,
+        "IsReference": true
+      },
+      {
+        "AudienceId": 4,
+        "Impressions": 0.0,
+        "IsReference": false
+      },
+      {
+        "AudienceId": 5,
+        "Impressions": 0.0,
+        "IsReference": false
+      },
+      {
+        "AudienceId": 6,
+        "Impressions": 0.0,
+        "IsReference": false
+      },
+      {
+        "AudienceId": 7,
+        "Impressions": 125.69999999999999,
+        "IsReference": false
+      },
+      {
+        "AudienceId": 13,
+        "Impressions": 1542.275,
+        "IsReference": false
+      },
+      {
+        "AudienceId": 14,
+        "Impressions": 2466.475,
+        "IsReference": false
+      },
+      {
+        "AudienceId": 15,
+        "Impressions": 8106.725,
+        "IsReference": false
+      },
+      {
+        "AudienceId": 19,
+        "Impressions": 53.9,
+        "IsReference": false
+      },
+      {
+        "AudienceId": 20,
+        "Impressions": 0.0,
+        "IsReference": false
+      },
+      {
+        "AudienceId": 21,
+        "Impressions": 123.07499999999999,
+        "IsReference": false
+      },
+      {
+        "AudienceId": 22,
+        "Impressions": 759.72500000000014,
+        "IsReference": false
+      },
+      {
+        "AudienceId": 28,
+        "Impressions": 473.9375,
+        "IsReference": false
+      },
+      {
+        "AudienceId": 29,
+        "Impressions": 2148.125,
+        "IsReference": false
+      },
+      {
+        "AudienceId": 30,
+        "Impressions": 3640.5125,
+        "IsReference": false
+      },
+      {
+        "AudienceId": 31,
+        "Impressions": 19870.775,
+        "IsReference": false
+      },
+      {
+        "AudienceId": 46,
+        "Impressions": 97.5375,
+        "IsReference": false
+      },
+      {
+        "AudienceId": 284,
+        "Impressions": 171.375,
+        "IsReference": false
+      },
+      {
+        "AudienceId": 290,
+        "Impressions": 1031.1625000000001,
+        "IsReference": false
+      },
+      {
+        "AudienceId": 339,
+        "Impressions": 177.2375,
+        "IsReference": false
+      },
+      {
+        "AudienceId": 347,
+        "Impressions": 1678.1374999999998,
+        "IsReference": false
+      },
+      {
+        "AudienceId": 348,
+        "Impressions": 397.3375,
+        "IsReference": false
+      }
+    ],
+    "ManifestDaypartId": 0,
+    "ManifestDayparts": [
+      {
+        "DaypartId": 1617,
+        "Id": 576683,
+        "ProgramName": "News 10 @ Noon"
+      }
+    ],
+    "ManifestId": 469330,
+    "Market": {
+      "Display": "Albany-Schenectady-Troy",
+      "Id": 132
+    },
+    "MarketSubscribers": 0.0,
+    "ProvidedUnitImpressions": null,
+    "SpotCost": 75.0000,
+    "StartDate": "2018-03-26T00:00:00",
+    "Station": {
+      "Affiliation": "ABC",
+      "CallLetters": "WTEN 10.1",
+      "LegacyCallLetters": "WTEN",
+      "StationCode": 428
+    },
+    "TargetCpm": 0.0,
+    "TargetImpressions": 0.0,
+    "TotalCost": 0.0,
+    "TotalImpressions": 0.0,
+    "TotalSpots": 0,
+    "TRP": 0.0,
+    "UnitImpressions": 21341.025
+  },
+  {
+    "AdditionalAudienceImpressions": 0.0,
+    "AdditionalAudienceSubscribers": 0.0,
+    "AdditionalDemoRating": 0.0,
+    "AdditonalAudienceCPM": 0.0,
+    "Allocations": [],
+    "DayParts": [],
+    "DemoRating": 0.0,
+    "EffectiveImpressionsPerSpot": 1000.0,
+    "EndDate": "2018-04-25T00:00:00",
+    "FlightWeeks": [
+      {
+        "Allocations": null,
+        "EndDate": "2018-04-01T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 744,
+        "Rate": 75.0000,
+        "StartDate": "2018-03-26T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-04-08T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 745,
+        "Rate": 75.0000,
+        "StartDate": "2018-04-02T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-04-15T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 746,
+        "Rate": 75.0000,
+        "StartDate": "2018-04-09T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-04-22T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 747,
+        "Rate": 75.0000,
+        "StartDate": "2018-04-16T00:00:00"
+      },
+      {
+        "Allocations": null,
+        "EndDate": "2018-04-29T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 748,
+        "Rate": 75.0000,
+        "StartDate": "2018-04-23T00:00:00"
+      }
+    ],
+    "Genres": [],
+    "GRP": 0.0,
+    "HHeCPM": 0.0,
+    "HHImpressions": 0.0,
+    "HouseHoldMarketSubscribers": 0.0,
+    "HouseHoldRating": 0.0,
+    "IsOverlapping": false,
+    "ManifestAudiences": [
+      {
+        "AudienceId": 31,
+        "Impressions": 1000.0,
+        "IsReference": true
+      },
+      {
+        "AudienceId": 4,
+        "Impressions": 0.0,
+        "IsReference": false
+      },
+      {
+        "AudienceId": 5,
+        "Impressions": 0.0,
+        "IsReference": false
+      },
+      {
+        "AudienceId": 6,
+        "Impressions": 0.0,
+        "IsReference": false
+      },
+      {
+        "AudienceId": 7,
+        "Impressions": 125.69999999999999,
+        "IsReference": false
+      },
+      {
+        "AudienceId": 13,
+        "Impressions": 1542.275,
+        "IsReference": false
+      },
+      {
+        "AudienceId": 14,
+        "Impressions": 2466.475,
+        "IsReference": false
+      },
+      {
+        "AudienceId": 15,
+        "Impressions": 8106.725,
+        "IsReference": false
+      },
+      {
+        "AudienceId": 19,
+        "Impressions": 53.9,
+        "IsReference": false
+      },
+      {
+        "AudienceId": 20,
+        "Impressions": 0.0,
+        "IsReference": false
+      },
+      {
+        "AudienceId": 21,
+        "Impressions": 123.07499999999999,
+        "IsReference": false
+      },
+      {
+        "AudienceId": 22,
+        "Impressions": 759.72500000000014,
+        "IsReference": false
+      },
+      {
+        "AudienceId": 28,
+        "Impressions": 473.9375,
+        "IsReference": false
+      },
+      {
+        "AudienceId": 29,
+        "Impressions": 2148.125,
+        "IsReference": false
+      },
+      {
+        "AudienceId": 30,
+        "Impressions": 3640.5125,
+        "IsReference": false
+      },
+      {
+        "AudienceId": 31,
+        "Impressions": 19870.775,
+        "IsReference": false
+      },
+      {
+        "AudienceId": 46,
+        "Impressions": 97.5375,
+        "IsReference": false
+      },
+      {
+        "AudienceId": 284,
+        "Impressions": 171.375,
+        "IsReference": false
+      },
+      {
+        "AudienceId": 290,
+        "Impressions": 1031.1625000000001,
+        "IsReference": false
+      },
+      {
+        "AudienceId": 339,
+        "Impressions": 177.2375,
+        "IsReference": false
+      },
+      {
+        "AudienceId": 347,
+        "Impressions": 1678.1374999999998,
+        "IsReference": false
+      },
+      {
+        "AudienceId": 348,
+        "Impressions": 397.3375,
+        "IsReference": false
+      }
+    ],
+    "ManifestDaypartId": 0,
+    "ManifestDayparts": [
+      {
+        "DaypartId": 1617,
+        "Id": 576685,
+        "ProgramName": "News 10 @ Noon"
+      }
+    ],
+    "ManifestId": 469332,
+    "Market": {
+      "Display": "Albany-Schenectady-Troy",
+      "Id": 132
+    },
+    "MarketSubscribers": 0.0,
+    "ProvidedUnitImpressions": 1000.0,
+    "SpotCost": 75.0000,
+    "StartDate": "2018-03-26T00:00:00",
+    "Station": {
+      "Affiliation": "ABC",
+      "CallLetters": "WTEN 10.1",
+      "LegacyCallLetters": "WTEN",
+      "StationCode": 428
+    },
+    "TargetCpm": 0.0,
+    "TargetImpressions": 0.0,
+    "TotalCost": 0.0,
+    "TotalImpressions": 0.0,
+    "TotalSpots": 0,
+    "TRP": 0.0,
+    "UnitImpressions": 21341.025
+  }
+]

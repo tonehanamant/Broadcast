@@ -3,6 +3,7 @@
   "AudienceType": 1,
   "AvailableMarkets": [
     {
+      "Id": 2557,
       "Market": "Portland-Auburn",
       "MarketCode": 100,
       "MarketCoverageFileId": 1,
@@ -11,6 +12,7 @@
       "ShareOfVoicePercent": 22.2
     },
     {
+      "Id": 2558,
       "Market": "New York",
       "MarketCode": 101,
       "MarketCoverageFileId": 1,
@@ -23,6 +25,7 @@
   "BlackoutMarketCount": null,
   "BlackoutMarkets": [
     {
+      "Id": 2465,
       "Market": "Burlington-Plattsburgh",
       "MarketCode": 123,
       "MarketCoverageFileId": 1,
@@ -30,6 +33,7 @@
       "Rank": 5
     },
     {
+      "Id": 2466,
       "Market": "Amarillo",
       "MarketCode": 234,
       "MarketCoverageFileId": 1,
@@ -39,8 +43,8 @@
   ],
   "BlackoutMarketTotalUsCoveragePercent": null,
   "Budget": 100.0000,
-  "CampaignId": 1,
-  "CampaignName": "Test Campaign 1",
+  "CampaignId": 6,
+  "CampaignName": "Test Campaign 6",
   "CoverageGoalPercent": 80.5,
   "CPM": 12.0000,
   "CPP": 12.0000,
@@ -58,134 +62,25 @@
           "Genres": []
         },
         "ProgramRestrictions": {
-          "ContainType": 1,
-          "Programs": [
-            {
-              "ContentRating": "PG-13",
-              "Genre": {
-                "Display": "Horror",
-                "Id": 25
-              },
-              "Name": "Young Sheldon"
-            }
-          ]
+          "ContainType": 2,
+          "Programs": []
         },
         "ShowTypeRestrictions": {
           "ContainType": 2,
-          "ShowTypes": [
-            {
-              "Display": "Mini-Movie",
-              "Id": 1
-            }
-          ]
+          "ShowTypes": []
         }
       },
       "StartTimeSeconds": 0,
-      "WeightingGoalPercent": 28.0
-    },
-    {
-      "DaypartCodeId": 11,
-      "DaypartTypeId": 1,
-      "EndTimeSeconds": 2788,
-      "IsEndTimeModified": true,
-      "IsStartTimeModified": true,
-      "Restrictions": {
-        "GenreRestrictions": {
-          "ContainType": 1,
-          "Genres": [
-            {
-              "Display": "Game Show",
-              "Id": 20
-            }
-          ]
-        },
-        "ProgramRestrictions": {
-          "ContainType": 2,
-          "Programs": [
-            {
-              "ContentRating": "G",
-              "Genre": {
-                "Display": "Horror",
-                "Id": 25
-              },
-              "Name": "Teletubbies"
-            }
-          ]
-        },
-        "ShowTypeRestrictions": {
-          "ContainType": 2,
-          "ShowTypes": [
-            {
-              "Display": "Miscellaneous",
-              "Id": 2
-            }
-          ]
-        }
-      },
-      "StartTimeSeconds": 1500,
-      "WeightingGoalPercent": 33.2
-    },
-    {
-      "DaypartCodeId": 3,
-      "DaypartTypeId": 3,
-      "EndTimeSeconds": 68400,
-      "IsEndTimeModified": false,
-      "IsStartTimeModified": false,
-      "Restrictions": {
-        "GenreRestrictions": {
-          "ContainType": 2,
-          "Genres": [
-            {
-              "Display": "Documentary",
-              "Id": 12
-            },
-            {
-              "Display": "Drama",
-              "Id": 14
-            }
-          ]
-        },
-        "ProgramRestrictions": {
-          "ContainType": 1,
-          "Programs": [
-            {
-              "ContentRating": "R",
-              "Genre": {
-                "Display": "Horror",
-                "Id": 25
-              },
-              "Name": "Power Rangers"
-            }
-          ]
-        },
-        "ShowTypeRestrictions": {
-          "ContainType": 1,
-          "ShowTypes": [
-            {
-              "Display": "Special Event",
-              "Id": 9
-            },
-            {
-              "Display": "TBA Movie",
-              "Id": 11
-            }
-          ]
-        }
-      },
-      "StartTimeSeconds": 57600,
-      "WeightingGoalPercent": 25.0
+      "WeightingGoalPercent": 100.0
     }
   ],
   "DeliveryImpressions": 100.0,
   "DeliveryRatingPoints": 100.0,
   "Equivalized": true,
-  "FlightEndDate": "2019-01-31T00:00:00",
-  "FlightHiatusDays": [
-    "2019-01-20T00:00:00",
-    "2019-01-24T00:00:00"
-  ],
+  "FlightEndDate": "2018-10-31T00:00:00",
+  "FlightHiatusDays": [],
   "FlightNotes": "Sample notes",
-  "FlightStartDate": "2019-01-01T00:00:00",
+  "FlightStartDate": "2018-10-01T00:00:00",
   "GoalBreakdownType": 1,
   "HouseholdCPM": 0.0120,
   "HouseholdCPP": 13.4572,
@@ -193,28 +88,41 @@
   "HouseholdRatingPoints": 7.4309248,
   "HouseholdUniverse": 112143960.0,
   "HUTBookId": 437,
+  "Id": 1197,
   "IsDraft": false,
   "ModifiedBy": "integration_test",
-  "ModifiedDate": "2019-01-15T00:00:00",
-  "Name": "New Plan",
+  "ModifiedDate": "2019-01-01T00:00:00",
+  "Name": "Plan Pricing 2",
   "PostingType": 2,
-  "PricingParameters": null,
+  "PricingParameters": {
+    "BudgetGoal": 1000.0000,
+    "CompetitionFactor": 0.1,
+    "CpmGoal": 5.0000,
+    "ImpressionsGoal": 50000.0,
+    "InflationFactor": 0.5,
+    "MaxCpm": 10.0000,
+    "MinCpm": 1.0000,
+    "ProprietaryBlend": 0.2,
+    "UnitCaps": 10,
+    "UnitCapType": 3
+  },
   "ProductId": 1,
   "SecondaryAudiences": [],
   "ShareBookId": 437,
-  "SpotLengthId": 1,
+  "SpotLengthId": 2,
   "Status": 1,
   "TotalActiveDays": 29,
-  "TotalHiatusDays": 2,
+  "TotalHiatusDays": 0,
   "TotalShareOfVoice": 100.0,
   "Universe": 112143960.0,
+  "VersionId": 47,
   "VersionNumber": 1,
   "Vpvh": 0.012,
   "WeeklyBreakdownWeeks": [
     {
       "ActiveDays": "Tu-Su",
       "EndDate": "2019-01-06T00:00:00",
-      "Impressions": 20.0,
+      "Impressions": 0.02,
       "MediaWeekId": 784,
       "NumberOfActiveDays": 6,
       "ShareOfVoice": 20.0,
@@ -224,7 +132,7 @@
     {
       "ActiveDays": "M-Su",
       "EndDate": "2019-01-13T00:00:00",
-      "Impressions": 20.0,
+      "Impressions": 0.02,
       "MediaWeekId": 785,
       "NumberOfActiveDays": 7,
       "ShareOfVoice": 20.0,
@@ -234,7 +142,7 @@
     {
       "ActiveDays": "M-Sa",
       "EndDate": "2019-01-20T00:00:00",
-      "Impressions": 20.0,
+      "Impressions": 0.02,
       "MediaWeekId": 786,
       "NumberOfActiveDays": 6,
       "ShareOfVoice": 20.0,
@@ -244,7 +152,7 @@
     {
       "ActiveDays": "M-W,F-Su",
       "EndDate": "2019-01-27T00:00:00",
-      "Impressions": 20.0,
+      "Impressions": 0.02,
       "MediaWeekId": 787,
       "NumberOfActiveDays": 6,
       "ShareOfVoice": 20.0,
@@ -254,7 +162,7 @@
     {
       "ActiveDays": "M-Th",
       "EndDate": "2019-02-03T00:00:00",
-      "Impressions": 20.0,
+      "Impressions": 0.02,
       "MediaWeekId": 788,
       "NumberOfActiveDays": 4,
       "ShareOfVoice": 20.0,

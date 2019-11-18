@@ -1,0 +1,30 @@
+﻿{
+  "Job": {
+    "ErrorMessage": null,
+    "PlanVersionId": 47,
+    "Queued": "2019-11-04T00:00:00",
+    "Status": 3
+  },
+  "Result": {
+    "Programs": [
+      {
+        "AvgCpm": 13.5,
+        "AvgImpressions": 250.0,
+        "Genre": "Sports",
+        "MarketCount": 72,
+        "PercentageOfBuy": 2.05,
+        "ProgramName": "NFL Sunday Night Football",
+        "StationCount": 72
+      },
+      {
+        "AvgCpm": 18.0,
+        "AvgImpressions": 150.0,
+        "Genre": "News",
+        "MarketCount": 14,
+        "PercentageOfBuy": 97.95,
+        "ProgramName": "Good Morning America",
+        "StationCount": 23
+      }
+    ]
+  }
+}
