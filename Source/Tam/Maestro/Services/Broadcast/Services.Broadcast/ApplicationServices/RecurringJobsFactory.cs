@@ -21,7 +21,7 @@ namespace Services.Broadcast.ApplicationServices
         {
             _RecurringJobManager.AddOrUpdate(
                 "plan-automatic-status-transition",
-                () => _PlanService.AutomaticStatusTransitions(DateTime.Today, "hangfire-job", DateTime.Now, false),
+                () => _PlanService.AutomaticStatusTransitions(DateTime.Today, "automated status update", DateTime.Now, false),
                 Cron.Daily,
                 TimeZoneInfo.Local);
         }
