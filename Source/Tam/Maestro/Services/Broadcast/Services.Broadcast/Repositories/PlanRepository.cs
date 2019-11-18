@@ -467,9 +467,9 @@ namespace Services.Broadcast.Repositories
             {
                 ActiveDays = arg.active_days_label,
                 EndDate = arg.media_weeks.end_date,
-                Impressions = arg.impressions,
+                Impressions = arg.weekly_impressions,
                 NumberOfActiveDays = arg.number_active_days,
-                ShareOfVoice = arg.share_of_voice,
+                ShareOfVoice = arg.weekly_impressions_percentage,
                 StartDate = arg.media_weeks.start_date,
                 MediaWeekId = arg.media_weeks.id
             };
@@ -538,8 +538,8 @@ namespace Services.Broadcast.Repositories
                 {
                     active_days_label = d.ActiveDays,
                     number_active_days = d.NumberOfActiveDays,
-                    impressions = d.Impressions,
-                    share_of_voice = d.ShareOfVoice,
+                    weekly_impressions = d.Impressions,
+                    weekly_impressions_percentage = d.ShareOfVoice,
                     media_week_id = d.MediaWeekId
                 });
             });

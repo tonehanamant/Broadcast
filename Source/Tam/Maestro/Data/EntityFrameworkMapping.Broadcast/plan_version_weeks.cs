@@ -18,9 +18,9 @@ namespace EntityFrameworkMapping.Broadcast
         public int media_week_id { get; set; }
         public int number_active_days { get; set; }
         public string active_days_label { get; set; }
-        public double impressions { get; set; }
-        public double share_of_voice { get; set; }
         public int plan_version_id { get; set; }
+        public double weekly_impressions { get; set; }
+        public double weekly_impressions_percentage { get; set; }
     
         public virtual media_weeks media_weeks { get; set; }
         public virtual plan_versions plan_versions { get; set; }

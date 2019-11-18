@@ -820,8 +820,8 @@
           <Property Name="media_week_id" Type="int" Nullable="false" />
           <Property Name="number_active_days" Type="int" Nullable="false" />
           <Property Name="active_days_label" Type="varchar" MaxLength="20" />
-          <Property Name="impressions" Type="float" Nullable="false" />
-          <Property Name="share_of_voice" Type="float" Nullable="false" />
+          <Property Name="weekly_impressions" Type="float" Nullable="false" />
+          <Property Name="weekly_impressions_percentage" Type="float" Nullable="false" />
           <Property Name="plan_version_id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="plan_versions">
@@ -1740,7 +1740,7 @@
           <Property Name="sys_end_date" Type="datetime2" Precision="7" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'broadcast_integration_staging.dbo.station_inventory_manifest_weeks_history' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'broadcast_integration.dbo.station_inventory_manifest_weeks_history' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="station_inventory_manifest_weeks_history">
           <Key>
             <PropertyRef Name="id" />
@@ -1836,7 +1836,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.station_inventor
           <Property Name="end_time" Type="int" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'broadcast_integration.dbo.vw_ccc_daypart' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vw_ccc_daypart">
           <Key>
             <PropertyRef Name="id" />
@@ -1900,7 +1900,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__plan_vers__genre__029EE365">
+        <Association Name="FK__plan_vers__genre__6CAFA246">
           <End Role="genres" Type="Self.genres" Multiplicity="0..1" />
           <End Role="plan_version_daypart_program_restrictions" Type="Self.plan_version_daypart_program_restrictions" Multiplicity="*" />
           <ReferentialConstraint>
@@ -4795,7 +4795,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="genre_sources" EntitySet="genre_sources" />
             <End Role="genres" EntitySet="genres" />
           </AssociationSet>
-          <AssociationSet Name="FK__plan_vers__genre__029EE365" Association="Self.FK__plan_vers__genre__029EE365">
+          <AssociationSet Name="FK__plan_vers__genre__6CAFA246" Association="Self.FK__plan_vers__genre__6CAFA246">
             <End Role="genres" EntitySet="genres" />
             <End Role="plan_version_daypart_program_restrictions" EntitySet="plan_version_daypart_program_restrictions" />
           </AssociationSet>
@@ -10972,11 +10972,11 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="media_week_id" Type="Int32" Nullable="false" />
           <Property Name="number_active_days" Type="Int32" Nullable="false" />
           <Property Name="active_days_label" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="impressions" Type="Double" Nullable="false" />
-          <Property Name="share_of_voice" Type="Double" Nullable="false" />
           <Property Name="plan_version_id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="media_weeks" Relationship="BroadcastModel.FK_plan_weeks_media_weeks" FromRole="plan_version_weeks" ToRole="media_weeks" />
           <NavigationProperty Name="plan_versions" Relationship="BroadcastModel.FK_plan_version_weeks_plan_versions" FromRole="plan_version_weeks" ToRole="plan_versions" />
+          <Property Name="weekly_impressions" Type="Double" Nullable="false" />
+          <Property Name="weekly_impressions_percentage" Type="Double" Nullable="false" />
         </EntityType>
         <EntityType Name="plan">
           <Key>
@@ -13400,9 +13400,9 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="plan_version_weeks">
             <EntityTypeMapping TypeName="BroadcastModel.plan_version_weeks">
               <MappingFragment StoreEntitySet="plan_version_weeks">
+                <ScalarProperty Name="weekly_impressions_percentage" ColumnName="weekly_impressions_percentage" />
+                <ScalarProperty Name="weekly_impressions" ColumnName="weekly_impressions" />
                 <ScalarProperty Name="plan_version_id" ColumnName="plan_version_id" />
-                <ScalarProperty Name="share_of_voice" ColumnName="share_of_voice" />
-                <ScalarProperty Name="impressions" ColumnName="impressions" />
                 <ScalarProperty Name="active_days_label" ColumnName="active_days_label" />
                 <ScalarProperty Name="number_active_days" ColumnName="number_active_days" />
                 <ScalarProperty Name="media_week_id" ColumnName="media_week_id" />

@@ -952,6 +952,17 @@ SET [created_by] = 'automated status update'
 WHERE [created_by] = 'hangfire-job'
 /*************************************** END - PRI-18173 ****************************************************/
 
+/*************************************** START - PRI-17030 ****************************************************/
+IF EXISTS(SELECT 1 FROM sys.columns WHERE object_id =OBJECT_ID('plan_version_weeks') AND name = 'share_of_voice')
+BEGIN
+	EXEC sp_rename 'dbo.plan_version_weeks.share_of_voice', 'weekly_impressions_percentage', 'COLUMN';
+END
+IF EXISTS(SELECT 1 FROM sys.columns WHERE object_id =OBJECT_ID('plan_version_weeks') AND name = 'impressions')
+BEGIN
+	EXEC sp_rename 'dbo.plan_version_weeks.impressions', 'weekly_impressions', 'COLUMN';
+END
+/*************************************** END - PRI-17030 ****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version
