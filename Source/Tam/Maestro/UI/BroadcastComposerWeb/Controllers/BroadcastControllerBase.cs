@@ -7,6 +7,7 @@ using System.Web;
 using Common.Services.WebComponents;
 using Tam.Maestro.Services.Cable.Entities;
 using System.Web.Http.Cors;
+using Tam.Maestro.Services.Clients;
 
 namespace BroadcastComposerWeb.Controllers
 {
@@ -34,15 +35,14 @@ namespace BroadcastComposerWeb.Controllers
         {
             get
             {
-                PrincipalContext ctx = new PrincipalContext(ContextType.Domain);
+                var ssid = HttpContext.Current.Request.LogonUserIdentity.User.Value;
+                var employee = SMSClient.Handler.GetEmployee(ssid, false);
+                if (employee == null)
+                {
+                    return null;
+                }
 
-                _Logger.LogEventInformation(
-                    message: $"at get_FullName, User.Identity.Name: {User.Identity.Name}",
-                    serviceName: "BroadcastControllerBase");
-
-                UserPrincipal user = UserPrincipal.FindByIdentity(ctx, User.Identity.Name);
-
-                return user.DisplayName;
+                return employee.Employee.FullName;
             }
         }
     }
