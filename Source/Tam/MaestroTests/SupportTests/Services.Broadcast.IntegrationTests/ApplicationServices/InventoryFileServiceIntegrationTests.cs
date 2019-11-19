@@ -1484,6 +1484,33 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        public void SuccessfullyLoadsOpenMarketFile_MultithreadingTesting()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var request = new InventoryFileSaveRequest
+                {
+                    StreamData = new FileStream($@".\Files\ImportingRateData\CTV-Broadcast-2E-100-2019-04-10-17-59-16.xml", FileMode.Open, FileAccess.Read),
+                    FileName = "CTV-Broadcast-2E-100-2019-04-10-17-59-16.xml"
+                };
+                
+                var result = _InventoryService.SaveInventoryFile(request, "IntegrationTestUser", new DateTime(2019, 02, 02));
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(InventoryFileSaveResult), "FileId");
+
+                var serializer = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, serializer));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
         public void CanGetOpenMarketUploadHistoryWithQuarterFilter()
         {
             var inventorySourceId = 1; //OpenMarket

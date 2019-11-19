@@ -1124,6 +1124,9 @@
     <Content Include="Files\ImportingRateData\Cadent Q2 News.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Files\ImportingRateData\CTV-Broadcast-2E-100-2019-04-10-17-59-16.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Files\ImportingRateData\Open Market negative demo value.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

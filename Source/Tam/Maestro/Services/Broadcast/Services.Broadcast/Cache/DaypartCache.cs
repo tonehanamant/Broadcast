@@ -36,8 +36,13 @@ namespace Common.Services
 
         private MemoryCache _Cache = new MemoryCache("DaypartCache");
         private int _CacheTimeoutInSeconds;
-        
-        private static Dictionary<DisplayDaypart, int> _CachedDisplayDayparts = new Dictionary<DisplayDaypart, int>();
+
+        // Dictionary<>.Insert() will throw a NullReferenceException internally 
+        // if the dictionary instance is modified from another thread during the insert operation
+        // that`s why ConcurrentDictionary must be used here
+        private static ConcurrentDictionary<DisplayDaypart, int> _CachedDisplayDayparts = new ConcurrentDictionary<DisplayDaypart, int>();
+
+        // key locks dictionary is needed to prevent multiple calls _DisplayDaypartRepository.SaveDaypart(displayDaypart) in GetIdByDaypart
         private static ConcurrentDictionary<DisplayDaypart, object> _KeyLocks = new ConcurrentDictionary<DisplayDaypart, object>();
 
         private readonly IDisplayDaypartRepository _DisplayDaypartRepository;
@@ -99,8 +104,7 @@ namespace Common.Services
                     {
                         // if it is still not in the cache, let's get it
                         var id = _DisplayDaypartRepository.SaveDaypart(displayDaypart);
-                        _CachedDisplayDayparts.Add(displayDaypart, id);
-                        return id;
+                        return _CachedDisplayDayparts.AddOrUpdate(displayDaypart, key => id, (key, oldValue) => id);
                     }
                 }
             }
