@@ -808,7 +808,7 @@ BEGIN
 		[inflation_factor] [float] NULL,
 		[unit_caps_type] [int] NOT NULL,
 		[unit_caps] [int] NOT NULL,
-	CONSTRAINT [PK_plan_version_pricing_executions] PRIMARY KEY CLUSTERED 
+	CONSTRAINT [PK_plan_pricing_executions] PRIMARY KEY CLUSTERED 
 	(
 		[id] ASC
 	) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
