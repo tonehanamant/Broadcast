@@ -7,6 +7,18 @@
   },
   "Quarters": [
     {
+      "EndDate": "2020-03-29T23:59:59",
+      "Quarter": 1,
+      "StartDate": "2019-12-30T00:00:00",
+      "Year": 2020
+    },
+    {
+      "EndDate": "2019-12-29T23:59:59",
+      "Quarter": 4,
+      "StartDate": "2019-09-30T00:00:00",
+      "Year": 2019
+    },
+    {
       "EndDate": "2019-06-30T23:59:59",
       "Quarter": 2,
       "StartDate": "2019-04-01T00:00:00",
