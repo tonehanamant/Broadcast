@@ -363,6 +363,9 @@
         <AssociationConnector Association="BroadcastModel.FK_plan_version_pricing_inventory_source_percentages_plan_version_pricing_executions" />
         <EntityTypeShape EntityType="BroadcastModel.plan_version_pricing_parameters" Width="1.5" PointX="14.5" PointY="65.125" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_pricing_parameters_plan_versions" />
+        <EntityTypeShape EntityType="BroadcastModel.plan_version_pricing_parameters_inventory_source_percentages" Width="1.5" PointX="16.75" PointY="54.125" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_pricing_parameters_inventory_source_percentages_inventory_sources" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_pricing_parameters_inventory_source_percentages_plan_version_pricing_parameters" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

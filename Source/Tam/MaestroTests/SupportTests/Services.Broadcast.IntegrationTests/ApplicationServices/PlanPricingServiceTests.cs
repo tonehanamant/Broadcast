@@ -39,7 +39,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var result = _PlanPricingService.QueuePricingJob(new PlanPricingRequestDto
+                var result = _PlanPricingService.QueuePricingJob(new PlanPricingParametersDto
                 {
                     PlanId = 1196
                 }, new DateTime(2019, 11, 4));
@@ -82,7 +82,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                _PlanPricingService.QueuePricingJob(new PlanPricingRequestDto
+                _PlanPricingService.QueuePricingJob(new PlanPricingParametersDto
                 {
                     PlanId = 1196
                 }, new DateTime(2019, 11, 4));
@@ -212,19 +212,19 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var planPricingRequestDto = new PlanPricingRequestDto
+                var planPricingRequestDto = new PlanPricingParametersDto
                 {
                     PlanId = 1197,
                     MaxCpm = 10m,
                     MinCpm = 1m,
-                    BudgetGoal = 1000,
+                    Budget = 1000,
                     CompetitionFactor = 0.1,
-                    CpmGoal = 5m,
-                    ImpressionsGoal = 50000,
+                    CPM = 5m,
+                    DeliveryImpressions = 50000,
                     InflationFactor = 0.5,
                     ProprietaryBlend = 0.2,
                     UnitCaps = 10,
-                    UnitCapType = UnitCapEnum.PerDay,
+                    UnitCapsType = UnitCapEnum.PerDay,
                     InventorySourcePercentages = new List<PlanPricingInventorySourceDto>
                     {
                         new PlanPricingInventorySourceDto{Id = 3, Percentage = 12},
@@ -279,19 +279,22 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var planPricingRequestDto = new PlanPricingRequestDto
+                var planPricingRequestDto = new PlanPricingParametersDto
                 {
                     PlanId = 1197,
                     MaxCpm = 10m,
                     MinCpm = 1m,
-                    BudgetGoal = 1000,
+                    Budget = 1000,
                     CompetitionFactor = 0.1,
-                    CpmGoal = 5m,
-                    ImpressionsGoal = 50000,
+                    CPM = 5m,
+                    DeliveryImpressions = 50000,
                     InflationFactor = 0.5,
                     ProprietaryBlend = 0.2,
                     UnitCaps = 10,
-                    UnitCapType = UnitCapEnum.PerDay,
+                    UnitCapsType = UnitCapEnum.PerDay,
+                    CPP = 1000,
+                    Currency = PlanCurrenciesEnum.GRP,
+                    DeliveryRatingPoints = 1234,
                     InventorySourcePercentages = new List<PlanPricingInventorySourceDto>
                     {
                         new PlanPricingInventorySourceDto{Id = 3, Percentage = 12},

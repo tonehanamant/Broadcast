@@ -95,16 +95,57 @@
   "Name": "Plan Pricing 2",
   "PostingType": 2,
   "PricingParameters": {
-    "BudgetGoal": 1000.0000,
+    "Budget": 1000.0000,
     "CompetitionFactor": 0.1,
-    "CpmGoal": 5.0000,
-    "ImpressionsGoal": 50000.0,
+    "CPM": 5.0000,
+    "CPP": 1000.0000,
+    "Currency": 2,
+    "DeliveryImpressions": 50000.0,
+    "DeliveryRatingPoints": 1234.0,
     "InflationFactor": 0.5,
+    "InventorySourcePercentages": [
+      {
+        "Id": 3,
+        "Name": "TVB",
+        "Percentage": 12
+      },
+      {
+        "Id": 5,
+        "Name": "CNN",
+        "Percentage": 13
+      },
+      {
+        "Id": 6,
+        "Name": "Sinclair",
+        "Percentage": 14
+      },
+      {
+        "Id": 7,
+        "Name": "LilaMax",
+        "Percentage": 15
+      },
+      {
+        "Id": 10,
+        "Name": "ABC O&O",
+        "Percentage": 16
+      },
+      {
+        "Id": 11,
+        "Name": "NBC O&O",
+        "Percentage": 17
+      },
+      {
+        "Id": 12,
+        "Name": "KATZ",
+        "Percentage": 8
+      }
+    ],
     "MaxCpm": 10.0000,
     "MinCpm": 1.0000,
+    "PlanId": 1197,
     "ProprietaryBlend": 0.2,
     "UnitCaps": 10,
-    "UnitCapType": 3
+    "UnitCapsType": 3
   },
   "ProductId": 1,
   "SecondaryAudiences": [],

@@ -24,7 +24,7 @@ namespace BroadcastComposerWeb.Controllers
 
         [HttpPost]
         [Route("Queue")]
-        public BaseResponse<PlanPricingJob> Queue(PlanPricingRequestDto planPricingRequestDto)
+        public BaseResponse<PlanPricingJob> Queue(PlanPricingParametersDto planPricingRequestDto)
         {
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanPricingService>().QueuePricingJob(planPricingRequestDto, DateTime.Now));
         }

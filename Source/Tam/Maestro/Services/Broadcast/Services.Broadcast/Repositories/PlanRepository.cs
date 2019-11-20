@@ -2,7 +2,6 @@
 using Common.Services.Repositories;
 using ConfigurationService.Client;
 using EntityFrameworkMapping.Broadcast;
-using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.DTO.Program;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
@@ -115,7 +114,7 @@ namespace Services.Broadcast.Repositories
         void UpdatePlanPricingJob(PlanPricingJob planPricingJob);
 
         PlanPricingJob GetLatestPricingJob(int planId);
-        void SavePlanPricingParameters(PlanPricingRequestDto planPricingRequestDto);
+        void SavePlanPricingParameters(PlanPricingParametersDto planPricingRequestDto);
     }
 
     public class PlanRepository : BroadcastRepositoryBase, IPlanRepository
@@ -476,16 +475,26 @@ namespace Services.Broadcast.Repositories
 
             return new PlanPricingParametersDto
             {
-                BudgetGoal = arg.budget_goal,
+                PlanId = arg.plan_versions.plan_id,
+                Budget = arg.budget_goal,
                 CompetitionFactor = arg.competition_factor,
-                CpmGoal = arg.cpm_goal,
-                ImpressionsGoal = arg.impressions_goal,
+                CPM = arg.cpm_goal,
+                DeliveryImpressions = arg.impressions_goal,
                 InflationFactor = arg.inflation_factor,
                 MaxCpm = arg.max_cpm,
                 MinCpm = arg.min_cpm,
                 ProprietaryBlend = arg.proprietary_blend,
+                CPP = arg.cpp,
+                Currency = (PlanCurrenciesEnum)arg.currency,
+                DeliveryRatingPoints = arg.rating_points,
+                InventorySourcePercentages = arg.plan_version_pricing_parameters_inventory_source_percentages.Select(i => new PlanPricingInventorySourceDto
+                {
+                    Id = i.inventory_source_id,
+                    Name = i.inventory_sources.name,
+                    Percentage = i.percentage
+                }).ToList(),
                 UnitCaps = arg.unit_caps,
-                UnitCapType = (UnitCapEnum)arg.unit_caps_type
+                UnitCapsType = (UnitCapEnum)arg.unit_caps_type
             };
         }
 
@@ -1002,11 +1011,11 @@ namespace Services.Broadcast.Repositories
             });
         }
 
-        public void SavePlanPricingParameters(PlanPricingRequestDto planPricingRequestDto)
+        public void SavePlanPricingParameters(PlanPricingParametersDto planPricingParametersDto)
         {
             _InReadUncommitedTransaction(context =>
             {
-                var plan = context.plans.Single(x => x.id == planPricingRequestDto.PlanId);
+                var plan = context.plans.Single(x => x.id == planPricingParametersDto.PlanId);
                 var planVersionId = plan.latest_version_id;
                 var previousParameters = context.plan_version_pricing_parameters.SingleOrDefault(x => x.plan_version_id == planVersionId);
 
@@ -1018,17 +1027,27 @@ namespace Services.Broadcast.Repositories
                 var planPricingParameters = new plan_version_pricing_parameters
                 {
                     plan_version_id = planVersionId,
-                    min_cpm = planPricingRequestDto.MinCpm,
-                    max_cpm = planPricingRequestDto.MaxCpm,
-                    impressions_goal = planPricingRequestDto.ImpressionsGoal,
-                    budget_goal = planPricingRequestDto.BudgetGoal,
-                    cpm_goal = planPricingRequestDto.CpmGoal,
-                    proprietary_blend = planPricingRequestDto.ProprietaryBlend,
-                    competition_factor = planPricingRequestDto.CompetitionFactor,
-                    inflation_factor = planPricingRequestDto.InflationFactor,
-                    unit_caps_type = (int)planPricingRequestDto.UnitCapType,
-                    unit_caps = planPricingRequestDto.UnitCaps
+                    min_cpm = planPricingParametersDto.MinCpm,
+                    max_cpm = planPricingParametersDto.MaxCpm,
+                    impressions_goal = planPricingParametersDto.DeliveryImpressions,
+                    budget_goal = planPricingParametersDto.Budget,
+                    cpm_goal = planPricingParametersDto.CPM,
+                    proprietary_blend = planPricingParametersDto.ProprietaryBlend,
+                    competition_factor = planPricingParametersDto.CompetitionFactor,
+                    inflation_factor = planPricingParametersDto.InflationFactor,
+                    unit_caps_type = (int)planPricingParametersDto.UnitCapsType,
+                    unit_caps = planPricingParametersDto.UnitCaps,
+                    cpp = planPricingParametersDto.CPP,
+                    currency = (int)planPricingParametersDto.Currency,
+                    rating_points = planPricingParametersDto.DeliveryRatingPoints
                 };
+
+                planPricingParametersDto.InventorySourcePercentages.ForEach(s => planPricingParameters.plan_version_pricing_parameters_inventory_source_percentages.Add(
+                       new plan_version_pricing_parameters_inventory_source_percentages
+                       {
+                           inventory_source_id = s.Id,
+                           percentage = s.Percentage
+                       }));
 
                 context.plan_version_pricing_parameters.Add(planPricingParameters);
 

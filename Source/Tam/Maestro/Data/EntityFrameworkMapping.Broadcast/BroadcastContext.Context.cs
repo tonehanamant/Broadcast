@@ -168,5 +168,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<plan_version_pricing_job> plan_version_pricing_job { get; set; }
         public virtual DbSet<plan_version_pricing_inventory_source_percentages> plan_version_pricing_inventory_source_percentages { get; set; }
         public virtual DbSet<plan_version_pricing_parameters> plan_version_pricing_parameters { get; set; }
+        public virtual DbSet<plan_version_pricing_parameters_inventory_source_percentages> plan_version_pricing_parameters_inventory_source_percentages { get; set; }
     }
 }

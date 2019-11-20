@@ -50,6 +50,64 @@ GO
 
 /*************************************** START UPDATE SCRIPT *****************************************************/
 
+/*************************************** START PRI-17245 *****************************************************/
+
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE name = 'cpp' AND  object_id = OBJECT_ID('plan_version_pricing_parameters'))
+BEGIN	
+	ALTER TABLE plan_version_pricing_parameters ADD cpp MONEY NULL
+	
+	EXEC('UPDATE plan_version_pricing_parameters
+		  SET cpp = 0')
+		  
+    ALTER TABLE plan_version_pricing_parameters ALTER COLUMN cpp MONEY NOT NULL
+END
+
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE name = 'currency' AND  object_id = OBJECT_ID('plan_version_pricing_parameters'))
+BEGIN
+	ALTER TABLE plan_version_pricing_parameters ADD currency INT NULL
+	
+	EXEC('UPDATE plan_version_pricing_parameters
+		  SET currency = 1')
+		  
+    ALTER TABLE plan_version_pricing_parameters ALTER COLUMN currency INT NOT NULL
+END
+
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE name = 'rating_points' AND  object_id = OBJECT_ID('plan_version_pricing_parameters'))
+BEGIN
+	ALTER TABLE plan_version_pricing_parameters ADD rating_points FLOAT NULL
+	
+	EXEC('UPDATE plan_version_pricing_parameters
+		  SET rating_points = 1000')
+		  
+    ALTER TABLE plan_version_pricing_parameters ALTER COLUMN rating_points FLOAT NOT NULL
+END
+
+IF OBJECT_ID('plan_version_pricing_parameters_inventory_source_percentages') IS NULL
+BEGIN
+	CREATE TABLE [dbo].[plan_version_pricing_parameters_inventory_source_percentages](
+		[id] [int] IDENTITY(1,1) NOT NULL,
+		[plan_version_pricing_parameter_id] [int] NOT NULL,
+		[inventory_source_id] [int] NOT NULL,
+		[percentage] [int] NOT NULL,
+	 CONSTRAINT [PK_plan_version_pricing_parameters_inventory_source_percentages] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY]
+
+	ALTER TABLE [dbo].[plan_version_pricing_parameters_inventory_source_percentages]  WITH CHECK ADD CONSTRAINT [FK_plan_version_pricing_parameters_inventory_source_percentages_inventory_sources] FOREIGN KEY([inventory_source_id])
+	REFERENCES [dbo].[inventory_sources] ([id])
+
+	ALTER TABLE [dbo].[plan_version_pricing_parameters_inventory_source_percentages] CHECK CONSTRAINT [FK_plan_version_pricing_parameters_inventory_source_percentages_inventory_sources]
+	
+	ALTER TABLE [dbo].[plan_version_pricing_parameters_inventory_source_percentages]  WITH CHECK ADD  CONSTRAINT [FK_plan_version_pricing_parameters_inventory_source_percentages_plan_version_pricing_parameters] FOREIGN KEY([plan_version_pricing_parameter_id])
+	REFERENCES [dbo].[plan_version_pricing_parameters] ([id])
+	ON DELETE CASCADE
+	
+	ALTER TABLE [dbo].[plan_version_pricing_parameters_inventory_source_percentages] CHECK CONSTRAINT [FK_plan_version_pricing_parameters_inventory_source_percentages_plan_version_pricing_parameters]
+END
+
+/*************************************** END PRI-17245 *****************************************************/
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 

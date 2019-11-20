@@ -800,6 +800,18 @@
           <Property Name="inflation_factor" Type="float" />
           <Property Name="unit_caps_type" Type="int" Nullable="false" />
           <Property Name="unit_caps" Type="int" Nullable="false" />
+          <Property Name="cpp" Type="money" Nullable="false" />
+          <Property Name="currency" Type="int" Nullable="false" />
+          <Property Name="rating_points" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="plan_version_pricing_parameters_inventory_source_percentages">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="plan_version_pricing_parameter_id" Type="int" Nullable="false" />
+          <Property Name="inventory_source_id" Type="int" Nullable="false" />
+          <Property Name="percentage" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="plan_version_secondary_audiences">
           <Key>
@@ -1770,7 +1782,7 @@
           <Property Name="sys_end_date" Type="datetime2" Precision="7" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'broadcast_integration.dbo.station_inventory_manifest_weeks_history' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'broadcast_integration_staging.dbo.station_inventory_manifest_weeks_history' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="station_inventory_manifest_weeks_history">
           <Key>
             <PropertyRef Name="id" />
@@ -1866,7 +1878,7 @@ warning 6002: The table/view 'broadcast_integration.dbo.station_inventory_manife
           <Property Name="end_time" Type="int" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'broadcast_integration.dbo.vw_ccc_daypart' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vw_ccc_daypart">
           <Key>
             <PropertyRef Name="id" />
@@ -2851,6 +2863,32 @@ warning 6002: The table/view 'broadcast_integration.dbo.vw_ccc_daypart' does not
             </Principal>
             <Dependent Role="plan_version_pricing_job">
               <PropertyRef Name="plan_version_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_version_pricing_parameters_inventory_source_percentages_inventory_sources">
+          <End Role="inventory_sources" Type="Self.inventory_sources" Multiplicity="1" />
+          <End Role="plan_version_pricing_parameters_inventory_source_percentages" Type="Self.plan_version_pricing_parameters_inventory_source_percentages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="inventory_sources">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_pricing_parameters_inventory_source_percentages">
+              <PropertyRef Name="inventory_source_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_version_pricing_parameters_inventory_source_percentages_plan_version_pricing_parameters">
+          <End Role="plan_version_pricing_parameters" Type="Self.plan_version_pricing_parameters" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="plan_version_pricing_parameters_inventory_source_percentages" Type="Self.plan_version_pricing_parameters_inventory_source_percentages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="plan_version_pricing_parameters">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_pricing_parameters_inventory_source_percentages">
+              <PropertyRef Name="plan_version_pricing_parameter_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -4730,6 +4768,7 @@ warning 6002: The table/view 'broadcast_integration.dbo.vw_ccc_daypart' does not
           <EntitySet Name="plan_version_pricing_inventory_source_percentages" EntityType="Self.plan_version_pricing_inventory_source_percentages" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="plan_version_pricing_job" EntityType="Self.plan_version_pricing_job" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="plan_version_pricing_parameters" EntityType="Self.plan_version_pricing_parameters" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="plan_version_pricing_parameters_inventory_source_percentages" EntityType="Self.plan_version_pricing_parameters_inventory_source_percentages" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="plan_version_secondary_audiences" EntityType="Self.plan_version_secondary_audiences" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="plan_version_summaries" EntityType="Self.plan_version_summaries" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="plan_version_summary_quarters" EntityType="Self.plan_version_summary_quarters" Schema="dbo" store:Type="Tables" />
@@ -5138,6 +5177,14 @@ warning 6002: The table/view 'broadcast_integration.dbo.vw_ccc_daypart' does not
           <AssociationSet Name="FK_plan_version_pricing_job_plan_versions" Association="Self.FK_plan_version_pricing_job_plan_versions">
             <End Role="plan_versions" EntitySet="plan_versions" />
             <End Role="plan_version_pricing_job" EntitySet="plan_version_pricing_job" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_version_pricing_parameters_inventory_source_percentages_inventory_sources" Association="Self.FK_plan_version_pricing_parameters_inventory_source_percentages_inventory_sources">
+            <End Role="inventory_sources" EntitySet="inventory_sources" />
+            <End Role="plan_version_pricing_parameters_inventory_source_percentages" EntitySet="plan_version_pricing_parameters_inventory_source_percentages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_version_pricing_parameters_inventory_source_percentages_plan_version_pricing_parameters" Association="Self.FK_plan_version_pricing_parameters_inventory_source_percentages_plan_version_pricing_parameters">
+            <End Role="plan_version_pricing_parameters" EntitySet="plan_version_pricing_parameters" />
+            <End Role="plan_version_pricing_parameters_inventory_source_percentages" EntitySet="plan_version_pricing_parameters_inventory_source_percentages" />
           </AssociationSet>
           <AssociationSet Name="FK_plan_version_pricing_parameters_plan_versions" Association="Self.FK_plan_version_pricing_parameters_plan_versions">
             <End Role="plan_versions" EntitySet="plan_versions" />
@@ -6712,6 +6759,15 @@ warning 6002: The table/view 'broadcast_integration.dbo.vw_ccc_daypart' does not
             <End Role="plan_versions" EntitySet="plan_versions" />
             <End Role="plan_version_pricing_parameters" EntitySet="plan_version_pricing_parameters" />
           </AssociationSet>
+          <EntitySet Name="plan_version_pricing_parameters_inventory_source_percentages" EntityType="BroadcastModel.plan_version_pricing_parameters_inventory_source_percentages" />
+          <AssociationSet Name="FK_plan_version_pricing_parameters_inventory_source_percentages_inventory_sources" Association="BroadcastModel.FK_plan_version_pricing_parameters_inventory_source_percentages_inventory_sources">
+            <End Role="inventory_sources" EntitySet="inventory_sources" />
+            <End Role="plan_version_pricing_parameters_inventory_source_percentages" EntitySet="plan_version_pricing_parameters_inventory_source_percentages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_version_pricing_parameters_inventory_source_percentages_plan_version_pricing_parameters" Association="BroadcastModel.FK_plan_version_pricing_parameters_inventory_source_percentages_plan_version_pricing_parameters">
+            <End Role="plan_version_pricing_parameters" EntitySet="plan_version_pricing_parameters" />
+            <End Role="plan_version_pricing_parameters_inventory_source_percentages" EntitySet="plan_version_pricing_parameters_inventory_source_percentages" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="audience_audiences">
           <Key>
@@ -7731,6 +7787,7 @@ warning 6002: The table/view 'broadcast_integration.dbo.vw_ccc_daypart' does not
           <NavigationProperty Name="inventory_summary" Relationship="BroadcastModel.FK_inventory_summary_inventory_sources" FromRole="inventory_sources" ToRole="inventory_summary" />
           <NavigationProperty Name="inventory_summary_quarters" Relationship="BroadcastModel.FK_inventory_summary_quarters_inventory_sources" FromRole="inventory_sources" ToRole="inventory_summary_quarters" />
           <NavigationProperty Name="plan_version_pricing_inventory_source_percentages" Relationship="BroadcastModel.FK_plan_version_pricing_inventory_source_percentages_inventory_sources" FromRole="inventory_sources" ToRole="plan_version_pricing_inventory_source_percentages" />
+          <NavigationProperty Name="plan_version_pricing_parameters_inventory_source_percentages" Relationship="BroadcastModel.FK_plan_version_pricing_parameters_inventory_source_percentages_inventory_sources" FromRole="inventory_sources" ToRole="plan_version_pricing_parameters_inventory_source_percentages" />
         </EntityType>
         <EntityType Name="station_inventory_group">
           <Key>
@@ -11733,6 +11790,10 @@ warning 6002: The table/view 'broadcast_integration.dbo.vw_ccc_daypart' does not
           <Property Name="unit_caps_type" Type="Int32" Nullable="false" />
           <Property Name="unit_caps" Type="Int32" Nullable="false" />
           <NavigationProperty Name="plan_versions" Relationship="BroadcastModel.FK_plan_version_pricing_parameters_plan_versions" FromRole="plan_version_pricing_parameters" ToRole="plan_versions" />
+          <Property Name="cpp" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="currency" Type="Int32" Nullable="false" />
+          <Property Name="rating_points" Type="Double" Nullable="false" />
+          <NavigationProperty Name="plan_version_pricing_parameters_inventory_source_percentages" Relationship="BroadcastModel.FK_plan_version_pricing_parameters_inventory_source_percentages_plan_version_pricing_parameters" FromRole="plan_version_pricing_parameters" ToRole="plan_version_pricing_parameters_inventory_source_percentages" />
         </EntityType>
         <Association Name="FK_plan_version_pricing_parameters_plan_versions">
           <End Type="BroadcastModel.plan_versions" Role="plan_versions" Multiplicity="1" />
@@ -11743,6 +11804,43 @@ warning 6002: The table/view 'broadcast_integration.dbo.vw_ccc_daypart' does not
             </Principal>
             <Dependent Role="plan_version_pricing_parameters">
               <PropertyRef Name="plan_version_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="plan_version_pricing_parameters_inventory_source_percentages">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="plan_version_pricing_parameter_id" Type="Int32" Nullable="false" />
+          <Property Name="inventory_source_id" Type="Int32" Nullable="false" />
+          <Property Name="percentage" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="inventory_sources" Relationship="BroadcastModel.FK_plan_version_pricing_parameters_inventory_source_percentages_inventory_sources" FromRole="plan_version_pricing_parameters_inventory_source_percentages" ToRole="inventory_sources" />
+          <NavigationProperty Name="plan_version_pricing_parameters" Relationship="BroadcastModel.FK_plan_version_pricing_parameters_inventory_source_percentages_plan_version_pricing_parameters" FromRole="plan_version_pricing_parameters_inventory_source_percentages" ToRole="plan_version_pricing_parameters" />
+        </EntityType>
+        <Association Name="FK_plan_version_pricing_parameters_inventory_source_percentages_inventory_sources">
+          <End Type="BroadcastModel.inventory_sources" Role="inventory_sources" Multiplicity="1" />
+          <End Type="BroadcastModel.plan_version_pricing_parameters_inventory_source_percentages" Role="plan_version_pricing_parameters_inventory_source_percentages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="inventory_sources">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_pricing_parameters_inventory_source_percentages">
+              <PropertyRef Name="inventory_source_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_version_pricing_parameters_inventory_source_percentages_plan_version_pricing_parameters">
+          <End Type="BroadcastModel.plan_version_pricing_parameters" Role="plan_version_pricing_parameters" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BroadcastModel.plan_version_pricing_parameters_inventory_source_percentages" Role="plan_version_pricing_parameters_inventory_source_percentages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="plan_version_pricing_parameters">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_pricing_parameters_inventory_source_percentages">
+              <PropertyRef Name="plan_version_pricing_parameter_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -13734,6 +13832,9 @@ warning 6002: The table/view 'broadcast_integration.dbo.vw_ccc_daypart' does not
           <EntitySetMapping Name="plan_version_pricing_parameters">
             <EntityTypeMapping TypeName="BroadcastModel.plan_version_pricing_parameters">
               <MappingFragment StoreEntitySet="plan_version_pricing_parameters">
+                <ScalarProperty Name="rating_points" ColumnName="rating_points" />
+                <ScalarProperty Name="currency" ColumnName="currency" />
+                <ScalarProperty Name="cpp" ColumnName="cpp" />
                 <ScalarProperty Name="unit_caps" ColumnName="unit_caps" />
                 <ScalarProperty Name="unit_caps_type" ColumnName="unit_caps_type" />
                 <ScalarProperty Name="inflation_factor" ColumnName="inflation_factor" />
@@ -13746,6 +13847,16 @@ warning 6002: The table/view 'broadcast_integration.dbo.vw_ccc_daypart' does not
                 <ScalarProperty Name="max_cpm" ColumnName="max_cpm" />
                 <ScalarProperty Name="min_cpm" ColumnName="min_cpm" />
                 <ScalarProperty Name="plan_version_id" ColumnName="plan_version_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="plan_version_pricing_parameters_inventory_source_percentages">
+            <EntityTypeMapping TypeName="BroadcastModel.plan_version_pricing_parameters_inventory_source_percentages">
+              <MappingFragment StoreEntitySet="plan_version_pricing_parameters_inventory_source_percentages">
+                <ScalarProperty Name="percentage" ColumnName="percentage" />
+                <ScalarProperty Name="inventory_source_id" ColumnName="inventory_source_id" />
+                <ScalarProperty Name="plan_version_pricing_parameter_id" ColumnName="plan_version_pricing_parameter_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

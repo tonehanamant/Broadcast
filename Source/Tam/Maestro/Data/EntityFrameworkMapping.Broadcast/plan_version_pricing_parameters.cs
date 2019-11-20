@@ -14,6 +14,11 @@ namespace EntityFrameworkMapping.Broadcast
     
     public partial class plan_version_pricing_parameters
     {
+        public plan_version_pricing_parameters()
+        {
+            this.plan_version_pricing_parameters_inventory_source_percentages = new HashSet<plan_version_pricing_parameters_inventory_source_percentages>();
+        }
+    
         public int id { get; set; }
         public int plan_version_id { get; set; }
         public Nullable<decimal> min_cpm { get; set; }
@@ -27,7 +32,11 @@ namespace EntityFrameworkMapping.Broadcast
         public Nullable<double> inflation_factor { get; set; }
         public int unit_caps_type { get; set; }
         public int unit_caps { get; set; }
+        public decimal cpp { get; set; }
+        public int currency { get; set; }
+        public double rating_points { get; set; }
     
         public virtual plan_versions plan_versions { get; set; }
+        public virtual ICollection<plan_version_pricing_parameters_inventory_source_percentages> plan_version_pricing_parameters_inventory_source_percentages { get; set; }
     }
 }

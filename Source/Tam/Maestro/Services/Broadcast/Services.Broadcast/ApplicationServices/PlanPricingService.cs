@@ -22,9 +22,9 @@ namespace Services.Broadcast.ApplicationServices
 {
     public interface IPlanPricingService : IApplicationService
     {
-        PlanPricingJob QueuePricingJob(PlanPricingRequestDto planPricingRequestDto, DateTime currentDate);
+        PlanPricingJob QueuePricingJob(PlanPricingParametersDto planPricingParametersDto, DateTime currentDate);
         PlanPricingResponseDto GetCurrentPricingExecution(int planId);
-        void RunPricingJob(PlanPricingRequestDto planPricingRequestDto, int jobId);
+        void RunPricingJob(PlanPricingParametersDto planPricingParametersDto, int jobId);
         List<PlanPricingApiRequestParametersDto> GetPlanPricingRuns(int planId);
 
         /// <summary>
@@ -69,9 +69,9 @@ namespace Services.Broadcast.ApplicationServices
             _InventoryRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
         }
 
-        public PlanPricingJob QueuePricingJob(PlanPricingRequestDto planPricingRequestDto, DateTime currentDate)
+        public PlanPricingJob QueuePricingJob(PlanPricingParametersDto planPricingParametersDto, DateTime currentDate)
         {
-            var plan = _PlanRepository.GetPlan(planPricingRequestDto.PlanId);
+            var plan = _PlanRepository.GetPlan(planPricingParametersDto.PlanId);
 
             var job = new PlanPricingJob
             {
@@ -84,9 +84,9 @@ namespace Services.Broadcast.ApplicationServices
 
             job.Id = jobId;
 
-            _PlanRepository.SavePlanPricingParameters(planPricingRequestDto);
+            _PlanRepository.SavePlanPricingParameters(planPricingParametersDto);
 
-            _BackgroundJobClient.Enqueue<IPlanPricingService>(x => x.RunPricingJob(planPricingRequestDto, jobId));
+            _BackgroundJobClient.Enqueue<IPlanPricingService>(x => x.RunPricingJob(planPricingParametersDto, jobId));
 
             return job;
         }
@@ -178,9 +178,9 @@ namespace Services.Broadcast.ApplicationServices
             };
         }
 
-        private PlanPricingApiRequestParametersDto _GetPricingApiRequestParameters(PlanPricingRequestDto planPricingRequestDto, PlanDto plan, List<PlanPricingMarketDto> pricingMarkets)
+        private PlanPricingApiRequestParametersDto _GetPricingApiRequestParameters(PlanPricingParametersDto planPricingParametersDto, PlanDto plan, List<PlanPricingMarketDto> pricingMarkets)
         {
-            var parameters = _MapToApiParametersRequest(planPricingRequestDto);
+            var parameters = _MapToApiParametersRequest(planPricingParametersDto);
 
             parameters.Markets = pricingMarkets;
             parameters.CoverageGoalPercent = plan.CoverageGoalPercent ?? 0;
@@ -205,22 +205,22 @@ namespace Services.Broadcast.ApplicationServices
             return pricingMarkets;
         }
 
-        private PlanPricingApiRequestParametersDto _MapToApiParametersRequest(PlanPricingRequestDto planPricingRequestDto)
+        private PlanPricingApiRequestParametersDto _MapToApiParametersRequest(PlanPricingParametersDto planPricingParametersDto)
         {
             var parameters = new PlanPricingApiRequestParametersDto
             {
-                PlanId = planPricingRequestDto.PlanId,
-                MinCpm = planPricingRequestDto.MinCpm,
-                MaxCpm = planPricingRequestDto.MaxCpm,
-                ImpressionsGoal = planPricingRequestDto.ImpressionsGoal,
-                BudgetGoal = planPricingRequestDto.BudgetGoal,
-                ProprietaryBlend = planPricingRequestDto.ProprietaryBlend,
-                CpmGoal = planPricingRequestDto.CpmGoal,
-                CompetitionFactor = planPricingRequestDto.CompetitionFactor,
-                InflationFactor = planPricingRequestDto.InflationFactor,
-                UnitCaps = planPricingRequestDto.UnitCaps,
-                UnitCapType = planPricingRequestDto.UnitCapType,
-                InventorySourcePercentages = planPricingRequestDto.InventorySourcePercentages
+                PlanId = planPricingParametersDto.PlanId,
+                MinCpm = planPricingParametersDto.MinCpm,
+                MaxCpm = planPricingParametersDto.MaxCpm,
+                ImpressionsGoal = planPricingParametersDto.DeliveryImpressions,
+                BudgetGoal = planPricingParametersDto.Budget,
+                ProprietaryBlend = planPricingParametersDto.ProprietaryBlend,
+                CpmGoal = planPricingParametersDto.CPM,
+                CompetitionFactor = planPricingParametersDto.CompetitionFactor,
+                InflationFactor = planPricingParametersDto.InflationFactor,
+                UnitCaps = planPricingParametersDto.UnitCaps,
+                UnitCapType = planPricingParametersDto.UnitCapsType,
+                InventorySourcePercentages = planPricingParametersDto.InventorySourcePercentages
             };
 
             return parameters;
@@ -310,7 +310,7 @@ namespace Services.Broadcast.ApplicationServices
             return pricingModelWeeks;
         }
 
-        public void RunPricingJob(PlanPricingRequestDto planPricingRequestDto, int jobId)
+        public void RunPricingJob(PlanPricingParametersDto planPricingParametersDto, int jobId)
         {
             var planPricingJobDiagnostic = new PlanPricingJobDiagnostic { JobId = jobId };
 
@@ -324,12 +324,12 @@ namespace Services.Broadcast.ApplicationServices
 
             try
             {
-                var plan = _PlanRepository.GetPlan(planPricingRequestDto.PlanId);
+                var plan = _PlanRepository.GetPlan(planPricingParametersDto.PlanId);
                 planPricingJobDiagnostic.RecordGatherInventoryStart();
-                var inventory = _PlanPricingInventoryEngine.GetInventoryForPlan(planPricingRequestDto.PlanId);
+                var inventory = _PlanPricingInventoryEngine.GetInventoryForPlan(planPricingParametersDto.PlanId);
                 planPricingJobDiagnostic.RecordGatherInventoryEnd();
                 var pricingMarkets = _MapToPlanPricingPrograms(plan);
-                var parameters = _GetPricingApiRequestParameters(planPricingRequestDto, plan, pricingMarkets);
+                var parameters = _GetPricingApiRequestParameters(planPricingParametersDto, plan, pricingMarkets);
 
                 var pricingApiRequest = new PlanPricingApiRequestDto
                 {
