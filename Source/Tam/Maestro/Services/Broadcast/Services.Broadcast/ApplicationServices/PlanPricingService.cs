@@ -120,8 +120,8 @@ namespace Services.Broadcast.ApplicationServices
 
             var ppDefaults = new PlanPricingDefaults
             {
-                UnitCap = 2,
-                InventorySources = _InventoryRepository.GetInventorySources().Where(
+                UnitCaps = 2,
+                InventorySourcePercentages = _InventoryRepository.GetInventorySources().Where(
                         s => planPricingSourceNames.Contains(s.Name))
                     .Select(s => new PlanPricingInventorySourceDto
                     {

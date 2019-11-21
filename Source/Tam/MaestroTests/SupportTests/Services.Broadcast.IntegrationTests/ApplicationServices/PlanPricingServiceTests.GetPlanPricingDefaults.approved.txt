@@ -1,5 +1,5 @@
 ﻿{
-  "InventorySources": [
+  "InventorySourcePercentages": [
     {
       "Id": 3,
       "Name": "TVB",
@@ -36,5 +36,5 @@
       "Percentage": 10
     }
   ],
-  "UnitCap": 2
+  "UnitCaps": 2
 }

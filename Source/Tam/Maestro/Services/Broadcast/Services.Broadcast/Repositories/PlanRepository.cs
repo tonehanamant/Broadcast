@@ -484,6 +484,9 @@ namespace Services.Broadcast.Repositories
                 MaxCpm = arg.max_cpm,
                 MinCpm = arg.min_cpm,
                 ProprietaryBlend = arg.proprietary_blend,
+                CPP = arg.cpp,
+                Currency = (PlanCurrenciesEnum)arg.currency,
+                DeliveryRatingPoints = arg.rating_points,
                 InventorySourcePercentages = arg.plan_version_pricing_parameters_inventory_source_percentages.Select(i => new PlanPricingInventorySourceDto
                 {
                     Id = i.inventory_source_id,
@@ -1033,7 +1036,10 @@ namespace Services.Broadcast.Repositories
                     competition_factor = planPricingParametersDto.CompetitionFactor,
                     inflation_factor = planPricingParametersDto.InflationFactor,
                     unit_caps_type = (int)planPricingParametersDto.UnitCapsType,
-                    unit_caps = planPricingParametersDto.UnitCaps
+                    unit_caps = planPricingParametersDto.UnitCaps,
+                    cpp = planPricingParametersDto.CPP,
+                    currency = (int)planPricingParametersDto.Currency,
+                    rating_points = planPricingParametersDto.DeliveryRatingPoints
                 };
 
                 planPricingParametersDto.InventorySourcePercentages.ForEach(s => planPricingParameters.plan_version_pricing_parameters_inventory_source_percentages.Add(
