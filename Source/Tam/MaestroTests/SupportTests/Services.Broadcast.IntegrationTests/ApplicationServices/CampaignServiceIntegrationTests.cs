@@ -21,6 +21,9 @@ using System.Linq;
 using System.Collections.Generic;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Services.ContractInterfaces;
+using Services.Broadcast.Entities.Campaign;
+using Services.Broadcast.ReportGenerators;
+using System.IO;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
@@ -501,7 +504,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Name = "New Plan",
                 ProductId = 1,
                 SpotLengthId = 1,
-                Status = Entities.Enums.PlanStatusEnum.Working,
+                Status = PlanStatusEnum.Working,
                 FlightStartDate = new DateTime(2019, 1, 1),
                 FlightEndDate = new DateTime(2019, 7, 31),
                 FlightNotes = "Sample notes",
@@ -511,9 +514,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     new DateTime(2019,4,15)
                 },
                 AudienceId = 31,        //HH
-                AudienceType = Entities.Enums.AudienceTypeEnum.Nielsen,
+                AudienceType = AudienceTypeEnum.Nielsen,
                 HUTBookId = 437,
-                PostingType = Entities.Enums.PostingTypeEnum.NTI,
+                PostingType = PostingTypeEnum.NTI,
                 ShareBookId = 437,
                 Budget = 100m,
                 CPM = 12m,
@@ -522,7 +525,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 DeliveryRatingPoints = 6d,
                 CoverageGoalPercent = 80.5,
                 Currency = PlanCurrenciesEnum.Impressions,
-                GoalBreakdownType = Entities.Enums.PlanGoalBreakdownTypeEnum.Even,
+                GoalBreakdownType = PlanGoalBreakdownTypeEnum.Even,
                 AvailableMarkets = new List<PlanAvailableMarketDto>
                 {
                     new PlanAvailableMarketDto { MarketCode = 100, MarketCoverageFileId = 1, PercentageOfUS = 48, Rank = 1, ShareOfVoicePercent = 22.2, Market = "Portland-Auburn"},
@@ -533,7 +536,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     new PlanBlackoutMarketDto {MarketCode = 123, MarketCoverageFileId = 1, PercentageOfUS = 5.5, Rank = 5, Market = "Burlington-Plattsburgh" },
                     new PlanBlackoutMarketDto {MarketCode = 234, MarketCoverageFileId = 1, PercentageOfUS = 2.5, Rank = 8, Market = "Amarillo" },
                 },
-                ModifiedBy = "Test User",
+                ModifiedBy = "Integration test",
                 ModifiedDate = new DateTime(2019, 01, 12, 12, 30, 29),
                 Dayparts = new List<PlanDaypartDto>
                 {
@@ -547,6 +550,64 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 HouseholdRatingPoints = 1,
                 HouseholdCPP = 10000,
                 Universe = 3000000,
+            };
+        }
+        
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void CampaignExport_AllPlans()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var reportData = _CampaignService.GetCampaignReportData(new CampaignReportRequest { CampaignId = 596 });
+                var reportOutput = new CampaignReportGenerator().Generate(reportData);
+                
+                //write excel file to file system (this is used for manual testing only)
+                using (var destinationFileStream = new FileStream(@"C:\temp\plan-excel-generation\CampaignExport_AllPlans.xlsx", FileMode.OpenOrCreate))
+                {
+                    while (reportOutput.Stream.Position < reportOutput.Stream.Length)
+                    {
+                        destinationFileStream.WriteByte((byte)reportOutput.Stream.ReadByte());
+                    }
+                }
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(reportData, _GetJsonSettingsForCampaignExport()));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void CampaignExport_SelectedPlans()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var reportData = _CampaignService.GetCampaignReportData(new CampaignReportRequest { CampaignId = 596, SelectedPlans = new List<int> { 1540 , 1541} });
+
+                var reportOutput = new CampaignReportGenerator().Generate(reportData);
+
+                //write excel file to file system (this is used for manual testing only)
+                using (var destinationFileStream = new FileStream(@"C:\temp\plan-excel-generation\CampaignExport_SelectedPlans.xlsx", FileMode.OpenOrCreate))
+                {
+                    while (reportOutput.Stream.Position < reportOutput.Stream.Length)
+                    {
+                        destinationFileStream.WriteByte((byte)reportOutput.Stream.ReadByte());
+                    }
+                }
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(reportData, _GetJsonSettingsForCampaignExport()));
+            }
+        }
+
+        private JsonSerializerSettings _GetJsonSettingsForCampaignExport()
+        {
+            var jsonResolver = new IgnorableSerializerContractResolver();
+
+            jsonResolver.Ignore(typeof(CampaignReportData), "CreatedDate");
+
+            return new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                ContractResolver = jsonResolver
             };
         }
     }

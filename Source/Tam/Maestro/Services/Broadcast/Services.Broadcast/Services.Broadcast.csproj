@@ -318,6 +318,8 @@
     <Compile Include="Clients\ProgramGuideApiClientSimulator.cs" />
     <Compile Include="Clients\ProgramsSearchApiClient.cs" />
     <Compile Include="Converters\RateImport\BaseInventoryFileImporter.cs" />
+    <Compile Include="Entities\Campaign\CampaignReportData.cs" />
+    <Compile Include="Entities\Campaign\CampaignReportRequest.cs" />
     <Compile Include="Entities\Campaign\CampaignWithSummary.cs" />
     <Compile Include="Cache\TrafficApiCache.cs" />
     <Compile Include="Entities\CampaignDefaultsDto.cs" />
@@ -417,10 +419,12 @@
     <Compile Include="Entities\StationInventory\StationInventoryManifestDaypartProgram.cs" />
     <Compile Include="Exceptions\UnknownGenreException.cs" />
     <Compile Include="Extensions\HttpExtensions.cs" />
+    <Compile Include="Extensions\QuarterDetailExtension.cs" />
     <Compile Include="Helpers\DaypartTimeHelper.cs" />
     <Compile Include="Helpers\KeyHelper.cs" />
     <Compile Include="Helpers\SystemComponentParameterHelper.cs" />
     <Compile Include="ReflectionHelper.cs" />
+    <Compile Include="ReportGenerators\CampaignReportGenerator.cs" />
     <Compile Include="Repositories\CampaignSummaryRepository.cs" />
     <Compile Include="Repositories\InventoryFileProgramEnrichmentJobsRepository.cs" />
     <Compile Include="Repositories\PlanRepository.cs" />

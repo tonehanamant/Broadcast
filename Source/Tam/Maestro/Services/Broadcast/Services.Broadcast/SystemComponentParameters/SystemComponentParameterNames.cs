@@ -78,6 +78,29 @@ namespace Tam.Maestro.Common.SystemComponentParameter
         }
 	}
 	 
+	public static class AmazonCognitoSystemParameterNames
+	{
+		public static string ComponentID
+        {
+            get { return "AmazonCognito" ; }
+        }
+	  
+		public static string CppcDativaClientId  
+		{
+            get { return "CppcDativaClientId"; }
+        }
+	 
+		public static string CppcDativaClientSecret  
+		{
+            get { return "CppcDativaClientSecret"; }
+        }
+	 
+		public static string TokenUrl  
+		{
+            get { return "TokenUrl"; }
+        }
+	}
+	 
 	public static class AppSettings_ResourceSystemParameterNames
 	{
 		public static string ComponentID
@@ -166,6 +189,134 @@ namespace Tam.Maestro.Common.SystemComponentParameter
 		public static string ComponentID
         {
             get { return "AppSettings_Service" ; }
+        }
+	  
+		public static string ACCT  
+		{
+            get { return "ACCT"; }
+        }
+	 
+		public static string ACS  
+		{
+            get { return "ACS"; }
+        }
+	 
+		public static string ARS  
+		{
+            get { return "ARS"; }
+        }
+	 
+		public static string ARSLoader  
+		{
+            get { return "ARSLoader"; }
+        }
+	 
+		public static string BOMS  
+		{
+            get { return "BOMS"; }
+        }
+	 
+		public static string BRS  
+		{
+            get { return "BRS"; }
+        }
+	 
+		public static string BS  
+		{
+            get { return "BS"; }
+        }
+	 
+		public static string CUS  
+		{
+            get { return "CUS"; }
+        }
+	 
+		public static string DES  
+		{
+            get { return "DES"; }
+        }
+	 
+		public static string FTP  
+		{
+            get { return "FTP"; }
+        }
+	 
+		public static string ICS  
+		{
+            get { return "ICS"; }
+        }
+	 
+		public static string MAS  
+		{
+            get { return "MAS"; }
+        }
+	 
+		public static string MCS  
+		{
+            get { return "MCS"; }
+        }
+	 
+		public static string PCS  
+		{
+            get { return "PCS"; }
+        }
+	 
+		public static string PLS  
+		{
+            get { return "PLS"; }
+        }
+	 
+		public static string PST  
+		{
+            get { return "PST"; }
+        }
+	 
+		public static string RCS  
+		{
+            get { return "RCS"; }
+        }
+	 
+		public static string REL  
+		{
+            get { return "REL"; }
+        }
+	 
+		public static string REL2  
+		{
+            get { return "REL2"; }
+        }
+	 
+		public static string RS  
+		{
+            get { return "RS"; }
+        }
+	 
+		public static string SingletonTestService  
+		{
+            get { return "SingletonTestService"; }
+        }
+	 
+		public static string SMS  
+		{
+            get { return "SMS"; }
+        }
+	 
+		public static string STS2  
+		{
+            get { return "STS2"; }
+        }
+	 
+		public static string TCS  
+		{
+            get { return "TCS"; }
+        }
+	}
+	 
+	public static class AppSettings_Service_DevCISystemParameterNames
+	{
+		public static string ComponentID
+        {
+            get { return "AppSettings_Service_DevCI" ; }
         }
 	  
 		public static string ACCT  
@@ -395,6 +546,11 @@ namespace Tam.Maestro.Common.SystemComponentParameter
 		public static string BroadcastDayStart  
 		{
             get { return "BroadcastDayStart"; }
+        }
+	 
+		public static string BroadcastExcelTemplatesPath  
+		{
+            get { return "BroadcastExcelTemplatesPath"; }
         }
 	 
 		public static string BroadcastMatchingBuffer  
@@ -1015,9 +1171,64 @@ namespace Tam.Maestro.Common.SystemComponentParameter
             get { return "MarryWizardWeb" ; }
         }
 	  
+		public static string CacheSecondsTillEntryExpires  
+		{
+            get { return "CacheSecondsTillEntryExpires"; }
+        }
+	 
+		public static string DefaultSpotLength  
+		{
+            get { return "DefaultSpotLength"; }
+        }
+	 
 		public static string DisablePastFlightWeeks  
 		{
             get { return "DisablePastFlightWeeks"; }
+        }
+	 
+		public static string LockTimeOutSeconds  
+		{
+            get { return "LockTimeOutSeconds"; }
+        }
+	 
+		public static string LogDirectory  
+		{
+            get { return "LogDirectory"; }
+        }
+	 
+		public static string LogDSRequest  
+		{
+            get { return "LogDSRequest"; }
+        }
+	 
+		public static string LogDSResponses  
+		{
+            get { return "LogDSResponses"; }
+        }
+	 
+		public static string LogSelectedProposals  
+		{
+            get { return "LogSelectedProposals"; }
+        }
+	 
+		public static string MarryWizardAPIUrl  
+		{
+            get { return "MarryWizardAPIUrl"; }
+        }
+	 
+		public static string OpenNetworks  
+		{
+            get { return "OpenNetworks"; }
+        }
+	 
+		public static string ProposalMatchServiceUri  
+		{
+            get { return "ProposalMatchServiceUri"; }
+        }
+	 
+		public static string ProposalServiceUri  
+		{
+            get { return "ProposalServiceUri"; }
         }
 	}
 	 
@@ -1329,6 +1540,11 @@ namespace Tam.Maestro.Common.SystemComponentParameter
             get { return "DishUZoneId"; }
         }
 	 
+		public static string EnableBigDataIngest  
+		{
+            get { return "EnableBigDataIngest"; }
+        }
+	 
 		public static string EnableDatabaseOptimization  
 		{
             get { return "EnableDatabaseOptimization"; }
@@ -1575,6 +1791,26 @@ namespace Tam.Maestro.Common.SystemComponentParameter
             get { return "ProposalComposerWeb" ; }
         }
 	  
+		public static string DativaDelayAmount  
+		{
+            get { return "DativaDelayAmount"; }
+        }
+	 
+		public static string DativaResponseRetention  
+		{
+            get { return "DativaResponseRetention"; }
+        }
+	 
+		public static string DativaRetryAmount  
+		{
+            get { return "DativaRetryAmount"; }
+        }
+	 
+		public static string DativaUri  
+		{
+            get { return "DativaUri"; }
+        }
+	 
 		public static string ShowAdvancedTV  
 		{
             get { return "ShowAdvancedTV"; }
@@ -2163,9 +2399,14 @@ namespace Tam.Maestro.Common.SystemComponentParameter
             get { return "DeliveryInsightUrl"; }
         }
 	 
-		public static string EnablePilotTesting  
+		public static string EnableTrafficIndexerFileBasedLogging  
 		{
-            get { return "EnablePilotTesting"; }
+            get { return "EnableTrafficIndexerFileBasedLogging"; }
+        }
+	 
+		public static string EnableTrafficIndexerPilotOverride  
+		{
+            get { return "EnableTrafficIndexerPilotOverride"; }
         }
 	 
 		public static string IndexRecommendModelApiResource  
@@ -2176,11 +2417,6 @@ namespace Tam.Maestro.Common.SystemComponentParameter
 		public static string IndexRecommendModelApiUrl  
 		{
             get { return "IndexRecommendModelApiUrl"; }
-        }
-	 
-		public static string IndexRecommendModelLogging  
-		{
-            get { return "IndexRecommendModelLogging"; }
         }
 	 
 		public static string IndexRecommendModelLogsFilePath  

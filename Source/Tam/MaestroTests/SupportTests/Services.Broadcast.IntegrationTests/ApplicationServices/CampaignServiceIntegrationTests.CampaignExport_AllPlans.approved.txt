@@ -1,0 +1,5 @@
+﻿{
+  "CampaignEndQuarter": "Q1 '20",
+  "CampaignName": "Test Gorilla Glue",
+  "CampaignStartQuarter": "Q3 '19"
+}

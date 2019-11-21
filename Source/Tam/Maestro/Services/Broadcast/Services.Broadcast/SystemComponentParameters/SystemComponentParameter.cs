@@ -82,6 +82,27 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
         }
 	}
 	 
+	public static class AmazonCognitoSystemParameter 
+	{ 
+		public static string CppcDativaClientId  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<string>
+					(AmazonCognitoSystemParameterNames.ComponentID , AmazonCognitoSystemParameterNames.CppcDativaClientId); }
+        }
+	 
+		public static string CppcDativaClientSecret  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<string>
+					(AmazonCognitoSystemParameterNames.ComponentID , AmazonCognitoSystemParameterNames.CppcDativaClientSecret); }
+        }
+	 
+		public static string TokenUrl  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<string>
+					(AmazonCognitoSystemParameterNames.ComponentID , AmazonCognitoSystemParameterNames.TokenUrl); }
+        }
+	}
+	 
 	public static class AppSettings_ResourceSystemParameter 
 	{ 
 		public static string Broadcast  
@@ -322,6 +343,153 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
         }
 	}
 	 
+	public static class AppSettings_Service_DevCISystemParameter 
+	{ 
+		public static string ACCT  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<string>
+					(AppSettings_Service_DevCISystemParameterNames.ComponentID , AppSettings_Service_DevCISystemParameterNames.ACCT); }
+        }
+	 
+		public static string ACS  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<string>
+					(AppSettings_Service_DevCISystemParameterNames.ComponentID , AppSettings_Service_DevCISystemParameterNames.ACS); }
+        }
+	 
+		public static string ARS  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<string>
+					(AppSettings_Service_DevCISystemParameterNames.ComponentID , AppSettings_Service_DevCISystemParameterNames.ARS); }
+        }
+	 
+		public static string ARSLoader  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<string>
+					(AppSettings_Service_DevCISystemParameterNames.ComponentID , AppSettings_Service_DevCISystemParameterNames.ARSLoader); }
+        }
+	 
+		public static string BOMS  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<string>
+					(AppSettings_Service_DevCISystemParameterNames.ComponentID , AppSettings_Service_DevCISystemParameterNames.BOMS); }
+        }
+	 
+		public static string BRS  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<string>
+					(AppSettings_Service_DevCISystemParameterNames.ComponentID , AppSettings_Service_DevCISystemParameterNames.BRS); }
+        }
+	 
+		public static string BS  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<string>
+					(AppSettings_Service_DevCISystemParameterNames.ComponentID , AppSettings_Service_DevCISystemParameterNames.BS); }
+        }
+	 
+		public static string CUS  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<string>
+					(AppSettings_Service_DevCISystemParameterNames.ComponentID , AppSettings_Service_DevCISystemParameterNames.CUS); }
+        }
+	 
+		public static string DES  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<string>
+					(AppSettings_Service_DevCISystemParameterNames.ComponentID , AppSettings_Service_DevCISystemParameterNames.DES); }
+        }
+	 
+		public static string FTP  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<string>
+					(AppSettings_Service_DevCISystemParameterNames.ComponentID , AppSettings_Service_DevCISystemParameterNames.FTP); }
+        }
+	 
+		public static string ICS  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<string>
+					(AppSettings_Service_DevCISystemParameterNames.ComponentID , AppSettings_Service_DevCISystemParameterNames.ICS); }
+        }
+	 
+		public static string MAS  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<string>
+					(AppSettings_Service_DevCISystemParameterNames.ComponentID , AppSettings_Service_DevCISystemParameterNames.MAS); }
+        }
+	 
+		public static string MCS  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<string>
+					(AppSettings_Service_DevCISystemParameterNames.ComponentID , AppSettings_Service_DevCISystemParameterNames.MCS); }
+        }
+	 
+		public static string PCS  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<string>
+					(AppSettings_Service_DevCISystemParameterNames.ComponentID , AppSettings_Service_DevCISystemParameterNames.PCS); }
+        }
+	 
+		public static string PLS  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<string>
+					(AppSettings_Service_DevCISystemParameterNames.ComponentID , AppSettings_Service_DevCISystemParameterNames.PLS); }
+        }
+	 
+		public static string PST  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<string>
+					(AppSettings_Service_DevCISystemParameterNames.ComponentID , AppSettings_Service_DevCISystemParameterNames.PST); }
+        }
+	 
+		public static string RCS  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<string>
+					(AppSettings_Service_DevCISystemParameterNames.ComponentID , AppSettings_Service_DevCISystemParameterNames.RCS); }
+        }
+	 
+		public static string REL  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<string>
+					(AppSettings_Service_DevCISystemParameterNames.ComponentID , AppSettings_Service_DevCISystemParameterNames.REL); }
+        }
+	 
+		public static string REL2  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<string>
+					(AppSettings_Service_DevCISystemParameterNames.ComponentID , AppSettings_Service_DevCISystemParameterNames.REL2); }
+        }
+	 
+		public static string RS  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<string>
+					(AppSettings_Service_DevCISystemParameterNames.ComponentID , AppSettings_Service_DevCISystemParameterNames.RS); }
+        }
+	 
+		public static string SingletonTestService  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<string>
+					(AppSettings_Service_DevCISystemParameterNames.ComponentID , AppSettings_Service_DevCISystemParameterNames.SingletonTestService); }
+        }
+	 
+		public static string SMS  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<string>
+					(AppSettings_Service_DevCISystemParameterNames.ComponentID , AppSettings_Service_DevCISystemParameterNames.SMS); }
+        }
+	 
+		public static string STS2  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<string>
+					(AppSettings_Service_DevCISystemParameterNames.ComponentID , AppSettings_Service_DevCISystemParameterNames.STS2); }
+        }
+	 
+		public static string TCS  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<string>
+					(AppSettings_Service_DevCISystemParameterNames.ComponentID , AppSettings_Service_DevCISystemParameterNames.TCS); }
+        }
+	}
+	 
 	public static class AudienceAndRatingsServiceSystemParameter 
 	{ 
 		public static bool EnableAutomaticForecasting  
@@ -430,6 +598,12 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 		{
             get { return SystemComponentParameterHelper.GetPropertyValue<string>
 					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.BroadcastDayStart); }
+        }
+	 
+		public static string BroadcastExcelTemplatesPath  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<string>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.BroadcastExcelTemplatesPath); }
         }
 	 
 		public static int BroadcastMatchingBuffer  
@@ -1101,10 +1275,76 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 	 
 	public static class MarryWizardWebSystemParameter 
 	{ 
+		public static int CacheSecondsTillEntryExpires  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<int>
+					(MarryWizardWebSystemParameterNames.ComponentID , MarryWizardWebSystemParameterNames.CacheSecondsTillEntryExpires); }
+        }
+	 
+		public static int DefaultSpotLength  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<int>
+					(MarryWizardWebSystemParameterNames.ComponentID , MarryWizardWebSystemParameterNames.DefaultSpotLength); }
+        }
+	 
 		public static bool DisablePastFlightWeeks  
 		{
             get { return SystemComponentParameterHelper.GetPropertyValue<bool>
 					(MarryWizardWebSystemParameterNames.ComponentID , MarryWizardWebSystemParameterNames.DisablePastFlightWeeks); }
+        }
+	 
+		public static int LockTimeOutSeconds  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<int>
+					(MarryWizardWebSystemParameterNames.ComponentID , MarryWizardWebSystemParameterNames.LockTimeOutSeconds); }
+        }
+	 
+		public static string LogDirectory  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<string>
+					(MarryWizardWebSystemParameterNames.ComponentID , MarryWizardWebSystemParameterNames.LogDirectory); }
+        }
+	 
+		public static bool LogDSRequest  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<bool>
+					(MarryWizardWebSystemParameterNames.ComponentID , MarryWizardWebSystemParameterNames.LogDSRequest); }
+        }
+	 
+		public static bool LogDSResponses  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<bool>
+					(MarryWizardWebSystemParameterNames.ComponentID , MarryWizardWebSystemParameterNames.LogDSResponses); }
+        }
+	 
+		public static bool LogSelectedProposals  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<bool>
+					(MarryWizardWebSystemParameterNames.ComponentID , MarryWizardWebSystemParameterNames.LogSelectedProposals); }
+        }
+	 
+		public static string MarryWizardAPIUrl  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<string>
+					(MarryWizardWebSystemParameterNames.ComponentID , MarryWizardWebSystemParameterNames.MarryWizardAPIUrl); }
+        }
+	 
+		public static string OpenNetworks  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<string>
+					(MarryWizardWebSystemParameterNames.ComponentID , MarryWizardWebSystemParameterNames.OpenNetworks); }
+        }
+	 
+		public static string ProposalMatchServiceUri  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<string>
+					(MarryWizardWebSystemParameterNames.ComponentID , MarryWizardWebSystemParameterNames.ProposalMatchServiceUri); }
+        }
+	 
+		public static string ProposalServiceUri  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<string>
+					(MarryWizardWebSystemParameterNames.ComponentID , MarryWizardWebSystemParameterNames.ProposalServiceUri); }
         }
 	}
 	 
@@ -1458,6 +1698,12 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 					(PostLogServiceSystemParameterNames.ComponentID , PostLogServiceSystemParameterNames.DishUZoneId); }
         }
 	 
+		public static bool EnableBigDataIngest  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<bool>
+					(PostLogServiceSystemParameterNames.ComponentID , PostLogServiceSystemParameterNames.EnableBigDataIngest); }
+        }
+	 
 		public static bool EnableDatabaseOptimization  
 		{
             get { return SystemComponentParameterHelper.GetPropertyValue<bool>
@@ -1740,6 +1986,30 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 	 
 	public static class ProposalComposerWebSystemParameter 
 	{ 
+		public static int DativaDelayAmount  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<int>
+					(ProposalComposerWebSystemParameterNames.ComponentID , ProposalComposerWebSystemParameterNames.DativaDelayAmount); }
+        }
+	 
+		public static int DativaResponseRetention  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<int>
+					(ProposalComposerWebSystemParameterNames.ComponentID , ProposalComposerWebSystemParameterNames.DativaResponseRetention); }
+        }
+	 
+		public static int DativaRetryAmount  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<int>
+					(ProposalComposerWebSystemParameterNames.ComponentID , ProposalComposerWebSystemParameterNames.DativaRetryAmount); }
+        }
+	 
+		public static string DativaUri  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<string>
+					(ProposalComposerWebSystemParameterNames.ComponentID , ProposalComposerWebSystemParameterNames.DativaUri); }
+        }
+	 
 		public static bool ShowAdvancedTV  
 		{
             get { return SystemComponentParameterHelper.GetPropertyValue<bool>
@@ -2373,10 +2643,16 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 					(TrafficComposerWebSystemParameterNames.ComponentID , TrafficComposerWebSystemParameterNames.DeliveryInsightUrl); }
         }
 	 
-		public static bool EnablePilotTesting  
+		public static bool EnableTrafficIndexerFileBasedLogging  
 		{
             get { return SystemComponentParameterHelper.GetPropertyValue<bool>
-					(TrafficComposerWebSystemParameterNames.ComponentID , TrafficComposerWebSystemParameterNames.EnablePilotTesting); }
+					(TrafficComposerWebSystemParameterNames.ComponentID , TrafficComposerWebSystemParameterNames.EnableTrafficIndexerFileBasedLogging); }
+        }
+	 
+		public static bool EnableTrafficIndexerPilotOverride  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<bool>
+					(TrafficComposerWebSystemParameterNames.ComponentID , TrafficComposerWebSystemParameterNames.EnableTrafficIndexerPilotOverride); }
         }
 	 
 		public static string IndexRecommendModelApiResource  
@@ -2389,12 +2665,6 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 		{
             get { return SystemComponentParameterHelper.GetPropertyValue<string>
 					(TrafficComposerWebSystemParameterNames.ComponentID , TrafficComposerWebSystemParameterNames.IndexRecommendModelApiUrl); }
-        }
-	 
-		public static bool IndexRecommendModelLogging  
-		{
-            get { return SystemComponentParameterHelper.GetPropertyValue<bool>
-					(TrafficComposerWebSystemParameterNames.ComponentID , TrafficComposerWebSystemParameterNames.IndexRecommendModelLogging); }
         }
 	 
 		public static string IndexRecommendModelLogsFilePath  

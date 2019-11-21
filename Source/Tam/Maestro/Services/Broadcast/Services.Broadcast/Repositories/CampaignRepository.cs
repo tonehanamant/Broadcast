@@ -34,7 +34,7 @@ namespace Services.Broadcast.Repositories
         /// Gets the campaign.
         /// </summary>
         /// <param name="id">The identifier.</param>
-        /// <returns></returns>
+        /// <returns>CampaignDto object</returns>
         CampaignDto GetCampaign(int id);
 
         /// <summary>
@@ -247,13 +247,11 @@ namespace Services.Broadcast.Repositories
                         .Include(z => z.plans.Select(x => x.plan_versions.Select(y => y.spot_lengths)))
                         .Include(z => z.plans.Select(x => x.plan_versions.Select(y => y.plan_version_summaries.Select(t=>t.plan_version_summary_quarters))))
                         .Single(c => c.id.Equals(campaignId), $"Could not find existing campaign with id '{campaignId}'");
-
-                    var campaignDto = _MapToDto(campaign);
-
-                    return campaignDto;
+       
+                    return _MapToDto(campaign); 
                 });
         }
-
+        
         private CampaignDto _MapToDto(campaign campaign)
         {
             var campaignDto = new CampaignDto

@@ -221,6 +221,9 @@ namespace Services.Broadcast.IntegrationTests.Stubs
                 case "EnableCampaignsLocking":
                     result = "True";
                     break;
+                case "BroadcastExcelTemplatesPath":
+                    result = @"C:\temp\plan-excel-generation";
+                    break;
                 default:
                     throw new Exception("Unknown SystemComponentParameter: " + parameterId);
             }

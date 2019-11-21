@@ -216,7 +216,7 @@ namespace Services.Broadcast.IntegrationTests
                     break;
                 case "InventorySummaryCacheAbsoluteExpirationSeconds":
                     result = "600";
-                    break;
+                    break;                
                 default:
                     throw new Exception("Unknown SystemComponentParameter: " + pSystemParameterID);
             }

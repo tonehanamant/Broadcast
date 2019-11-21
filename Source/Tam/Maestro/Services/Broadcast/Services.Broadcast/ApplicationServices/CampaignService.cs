@@ -8,14 +8,13 @@ using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Campaign;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Helpers;
+using Services.Broadcast.ReportGenerators;
 using Services.Broadcast.Repositories;
-using Services.Broadcast.SystemComponentParameters;
 using Services.Broadcast.Validators;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Tam.Maestro.Common;
-using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 
 namespace Services.Broadcast.ApplicationServices
@@ -23,7 +22,7 @@ namespace Services.Broadcast.ApplicationServices
     /// <summary>
     /// Operations related to the Campaign domain.
     /// </summary>
-    /// <seealso cref="Common.Services.ApplicationServices.IApplicationService" />
+    /// <seealso cref="IApplicationService" />
     public interface ICampaignService : IApplicationService
     {
         /// <summary>
@@ -83,6 +82,20 @@ namespace Services.Broadcast.ApplicationServices
         /// </summary>
         /// <returns>Gets the default values for creating a campaign in the form of <see cref="CampaignDefaultsDto"/></returns>
         CampaignDefaultsDto GetCampaignDefaults();
+
+        /// <summary>
+        /// Generates the campaign report.
+        /// </summary>
+        /// <param name="request">CampaignReportRequest object containing the campaign id and the selected plans id</param>
+        /// <returns>ReportOutput object</returns>
+        ReportOutput GenerateCampaignReport(CampaignReportRequest request);
+
+        /// <summary>
+        /// Gets the campaign report data. Method used for testing purposes
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <returns>CampaignReport object</returns>
+        CampaignReportData GetCampaignReportData(CampaignReportRequest request);
     }
 
     /// <summary>
@@ -93,6 +106,7 @@ namespace Services.Broadcast.ApplicationServices
     {
         private readonly ICampaignValidator _CampaignValidator;
         private readonly ICampaignRepository _CampaignRepository;
+        private readonly IPlanRepository _PlanRepository;
         private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekAggregateCache;
         private readonly IQuarterCalculationEngine _QuarterCalculationEngine;
         private readonly ILockingManagerApplicationService _LockingManagerApplicationService;
@@ -120,6 +134,7 @@ namespace Services.Broadcast.ApplicationServices
             _CampaignSummaryRepository = dataRepositoryFactory.GetDataRepository<ICampaignSummaryRepository>();
             _CampaignAggregationJobTrigger = campaignAggregationJobTrigger;
             _TrafficApiCache = trafficApiCache;
+            _PlanRepository = dataRepositoryFactory.GetDataRepository<IPlanRepository>();
         }
 
         /// <inheritdoc />
@@ -406,6 +421,32 @@ namespace Services.Broadcast.ApplicationServices
             };
 
             return campaignDefaultValues;
+        }
+
+        /// <inheritdoc/>
+        public ReportOutput GenerateCampaignReport(CampaignReportRequest request)
+        {
+            var campaignReportData = GetCampaignReportData(request);
+            var reportGenerator = new CampaignReportGenerator();
+            return reportGenerator.Generate(campaignReportData);
+        }
+
+        /// <inheritdoc/>
+        public CampaignReportData GetCampaignReportData(CampaignReportRequest request)
+        {
+            var campaign = _CampaignRepository.GetCampaign(request.CampaignId);
+            var summary = _CampaignSummaryRepository.GetSummaryForCampaign(request.CampaignId);
+            _HydrateCampaignWithSummary(campaign, summary);
+
+            if (request.SelectedPlans != null && request.SelectedPlans.Any())
+            {
+                campaign.Plans = campaign.Plans.Where(x => request.SelectedPlans.Contains(x.PlanId)).ToList();
+            }
+
+            var plans = campaign.Plans
+                .Select(x => _PlanRepository.GetPlan(x.PlanId)).ToList();
+
+            return new CampaignReportData(campaign, plans, _QuarterCalculationEngine);
         }
     }
 }

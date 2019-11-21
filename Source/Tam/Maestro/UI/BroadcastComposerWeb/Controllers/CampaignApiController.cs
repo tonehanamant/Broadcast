@@ -11,9 +11,12 @@ using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.Cable.Entities;
 using Tam.Maestro.Services.ContractInterfaces;
 using Tam.Maestro.Web.Common;
-using Services.Broadcast.SystemComponentParameters;
 using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Services.Cable.Security;
+using System.Net.Http;
+using System.Net;
+using System.Net.Http.Headers;
+using Services.Broadcast.Entities.Campaign;
 
 namespace BroadcastComposerWeb.Controllers
 {
@@ -196,6 +199,29 @@ namespace BroadcastComposerWeb.Controllers
         public BaseResponse<CampaignDefaultsDto> GetCampaignDefaults()
         {
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ICampaignService>().GetCampaignDefaults());
+        }
+
+        /// <summary>
+        /// Downloads the campaign report.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <returns>Excel file containing the campaign report</returns>
+        [HttpPost]
+        [Route("DownloadCampaignReport")]
+        [RestrictedAccess(RequiredRole = RoleType.Broadcast_Proposer)]
+        public HttpResponseMessage DownloadCampaignReport([FromBody]CampaignReportRequest request)
+        {
+            var report = _ApplicationServiceFactory.GetApplicationService<ICampaignService>().GenerateCampaignReport(request);
+
+            var result = Request.CreateResponse(HttpStatusCode.OK);
+            result.Content = new StreamContent(report.Stream);
+            result.Content.Headers.ContentType = new MediaTypeHeaderValue("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+            result.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
+            {
+                FileName = report.Filename
+            };
+
+            return result;
         }
     }
 }
