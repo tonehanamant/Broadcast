@@ -222,7 +222,7 @@ namespace Services.Broadcast.IntegrationTests.Stubs
                     result = "True";
                     break;
                 case "BroadcastExcelTemplatesPath":
-                    result = @"C:\temp\plan-excel-generation";
+                    result = @"\\cadfs11\\Inventory Management UI";
                     break;
                 default:
                     throw new Exception("Unknown SystemComponentParameter: " + parameterId);

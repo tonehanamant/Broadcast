@@ -14,7 +14,7 @@ namespace Services.Broadcast.ReportGenerators
 
         private readonly string NOT_FOUND_WORKSHEET = "Could not find worksheet {0} in template file {1}";
 
-        private readonly string TEMPLATE_FILENAME = "Template - Campaign Export - v4.xlsx";
+        private readonly string TEMPLATE_FILENAME = "Template - Campaign Export.xlsx";
 
         /// <summary>
         /// Generates a report of type CampaignReport
@@ -38,7 +38,7 @@ namespace Services.Broadcast.ReportGenerators
 
         private ExcelPackage GenerateExcelPackage(CampaignReportData dataObject)
         {
-            string templateFilePath = $@"{BroadcastServiceSystemParameter.BroadcastExcelTemplatesPath}\plan-excel-generation\{TEMPLATE_FILENAME}";
+            string templateFilePath = $@"{BroadcastServiceSystemParameter.BroadcastExcelTemplatesPath}\{TEMPLATE_FILENAME}";
             var package = new ExcelPackage(new FileInfo(templateFilePath), useStream:true);
             ExcelWorksheet proposalByQuarterWorksheet = package.Workbook.Worksheets.SingleOrDefault(x => x.Name.Equals(PROPOSAL_BY_QUARTER_WORKSHEET_NAME));
             if(proposalByQuarterWorksheet == null)

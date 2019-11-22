@@ -563,13 +563,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var reportOutput = new CampaignReportGenerator().Generate(reportData);
                 
                 //write excel file to file system (this is used for manual testing only)
-                using (var destinationFileStream = new FileStream(@"C:\temp\plan-excel-generation\CampaignExport_AllPlans.xlsx", FileMode.OpenOrCreate))
-                {
-                    while (reportOutput.Stream.Position < reportOutput.Stream.Length)
-                    {
-                        destinationFileStream.WriteByte((byte)reportOutput.Stream.ReadByte());
-                    }
-                }
+                //using (var destinationFileStream = new FileStream(@"C:\temp\plan-excel-generation\CampaignExport_AllPlans.xlsx", FileMode.OpenOrCreate))
+                //{
+                //    while (reportOutput.Stream.Position < reportOutput.Stream.Length)
+                //    {
+                //        destinationFileStream.WriteByte((byte)reportOutput.Stream.ReadByte());
+                //    }
+                //}
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(reportData, _GetJsonSettingsForCampaignExport()));
             }
@@ -586,13 +586,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var reportOutput = new CampaignReportGenerator().Generate(reportData);
 
                 //write excel file to file system (this is used for manual testing only)
-                using (var destinationFileStream = new FileStream(@"C:\temp\plan-excel-generation\CampaignExport_SelectedPlans.xlsx", FileMode.OpenOrCreate))
-                {
-                    while (reportOutput.Stream.Position < reportOutput.Stream.Length)
-                    {
-                        destinationFileStream.WriteByte((byte)reportOutput.Stream.ReadByte());
-                    }
-                }
+                //using (var destinationFileStream = new FileStream(@"C:\temp\plan-excel-generation\CampaignExport_SelectedPlans.xlsx", FileMode.OpenOrCreate))
+                //{
+                //    while (reportOutput.Stream.Position < reportOutput.Stream.Length)
+                //    {
+                //        destinationFileStream.WriteByte((byte)reportOutput.Stream.ReadByte());
+                //    }
+                //}
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(reportData, _GetJsonSettingsForCampaignExport()));
             }
