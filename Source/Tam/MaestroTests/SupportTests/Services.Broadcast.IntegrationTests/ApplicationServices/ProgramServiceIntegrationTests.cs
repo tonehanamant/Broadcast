@@ -76,6 +76,16 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             new SearchProgramDativaResponseDto
             {
                 ProgramId = "2",
+                ProgramName = "Z_ABBA: The Movie",
+                GenreId = "2",
+                Genre = "Investigative",
+                ShowType = "Movie",
+                MpaaRating = "PG1",
+                SyndicationType = "Syn"
+            },
+            new SearchProgramDativaResponseDto
+            {
+                ProgramId = "2",
                 ProgramName = "ABBA: The Movie",
                 GenreId = "2",
                 Genre = "Investigative",

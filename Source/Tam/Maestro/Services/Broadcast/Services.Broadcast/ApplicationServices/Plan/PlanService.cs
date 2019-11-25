@@ -278,8 +278,17 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _SetPlanTotals(plan);
             _SetDefaultDaypartRestrictions(plan);
             _ConvertImpressionsToUserFormat(plan);
+            _SortProgramRestrictions(plan);
 
             return plan;
+        }
+
+        private void _SortProgramRestrictions(PlanDto plan)
+        {
+            foreach (var daypart in plan.Dayparts)
+            {
+                daypart.Restrictions.ProgramRestrictions.Programs = daypart.Restrictions.ProgramRestrictions.Programs.OrderBy(x => x.Name).ToList();
+            }
         }
 
         /// <inheritdoc/>

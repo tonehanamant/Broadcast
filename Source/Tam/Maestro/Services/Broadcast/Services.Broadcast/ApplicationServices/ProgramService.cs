@@ -71,7 +71,7 @@ namespace Services.Broadcast.ApplicationServices
                 }
             }
 
-            return result;
+            return result.OrderBy(x => x.Name).ToList();
         }
 
         // TODO after switching to the real Dativa API: remove this
