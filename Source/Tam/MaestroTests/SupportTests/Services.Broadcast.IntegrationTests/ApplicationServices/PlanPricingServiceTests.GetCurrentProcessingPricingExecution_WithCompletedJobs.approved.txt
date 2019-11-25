@@ -1,4 +1,5 @@
 ﻿{
+  "IsPricingModelRunning": true,
   "Job": {
     "Completed": null,
     "DiagnosticResult": null,

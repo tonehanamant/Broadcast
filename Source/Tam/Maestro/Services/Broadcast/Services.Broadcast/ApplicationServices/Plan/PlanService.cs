@@ -134,6 +134,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private readonly IBroadcastAudiencesCache _BroadcastAudiencesCache;
         private readonly ISpotLengthEngine _SpotLengthEngine;
         private readonly ILockingManagerApplicationService _LockingManagerApplicationService;
+        private readonly IPlanPricingService _PlanPricingService;
 
         private const string _DaypartCodeNotFoundMessage = "Unable to find daypart code";
 
@@ -146,7 +147,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
             , INsiUniverseService nsiUniverseService
             , IBroadcastAudiencesCache broadcastAudiencesCache
             , ISpotLengthEngine spotLengthEngine
-            , ILockingManagerApplicationService lockingManagerApplicationService)
+            , ILockingManagerApplicationService lockingManagerApplicationService
+            , IPlanPricingService planPricingService)
         {
             _MediaWeekCache = mediaMonthAndWeekAggregateCache;
             _PlanValidator = planValidator;
@@ -161,11 +163,17 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _BroadcastAudiencesCache = broadcastAudiencesCache;
             _SpotLengthEngine = spotLengthEngine;
             _LockingManagerApplicationService = lockingManagerApplicationService;
+            _PlanPricingService = planPricingService;
         }
 
         ///<inheritdoc/>
         public int SavePlan(PlanDto plan, string createdBy, DateTime createdDate, bool aggregatePlanSynchronously = false)
         {
+            if (plan.Id >= 0 && _PlanPricingService.IsPricingModelRunningForPlan(plan.Id))
+            {
+                throw new Exception("The pricing model is running for the plan");
+            }
+
             DaypartTimeHelper.SubtractOneSecondToEndTime(plan.Dayparts);
 
             _CalculateDaypartOverrides(plan.Dayparts);
@@ -261,6 +269,9 @@ namespace Services.Broadcast.ApplicationServices.Plan
         public PlanDto GetPlan(int planId, int? versionId = null)
         {
             PlanDto plan = _PlanRepository.GetPlan(planId, versionId);
+            
+            plan.IsPricingModelRunning = _PlanPricingService.IsPricingModelRunningForPlan(planId);
+
             _SetWeekNumber(plan.WeeklyBreakdownWeeks);
             DaypartTimeHelper.AddOneSecondToEndTime(plan.Dayparts);
 

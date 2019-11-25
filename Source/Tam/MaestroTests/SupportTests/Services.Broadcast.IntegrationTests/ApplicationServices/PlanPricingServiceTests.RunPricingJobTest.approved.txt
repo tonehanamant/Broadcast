@@ -1,4 +1,5 @@
 ﻿{
+  "IsPricingModelRunning": false,
   "Job": {
     "ErrorMessage": null,
     "PlanVersionId": 47,

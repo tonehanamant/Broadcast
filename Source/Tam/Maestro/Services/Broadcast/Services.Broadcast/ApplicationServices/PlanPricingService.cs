@@ -33,6 +33,7 @@ namespace Services.Broadcast.ApplicationServices
         /// <returns>List of LookupDto objects</returns>
         List<LookupDto> GetUnitCaps();
         PlanPricingDefaults GetPlanPricingDefaults();
+        bool IsPricingModelRunningForPlan(int planId);
     }
 
     public class PlanPricingService : IPlanPricingService
@@ -71,6 +72,11 @@ namespace Services.Broadcast.ApplicationServices
 
         public PlanPricingJob QueuePricingJob(PlanPricingParametersDto planPricingParametersDto, DateTime currentDate)
         {
+            if (IsPricingModelRunningForPlan(planPricingParametersDto.PlanId))
+            {
+                throw new Exception("The pricing model is already running for the plan");
+            }
+            
             var plan = _PlanRepository.GetPlan(planPricingParametersDto.PlanId);
 
             var job = new PlanPricingJob
@@ -144,8 +150,20 @@ namespace Services.Broadcast.ApplicationServices
                 Result = new PlanPricingResultDto
                 {
                     Programs = _GetMockPrograms(job)
-                }
+                },
+                IsPricingModelRunning = IsPricingModelRunning(job)
             };
+        }
+
+        public static bool IsPricingModelRunning(PlanPricingJob job)
+        {
+            return job != null && (job.Status == BackgroundJobProcessingStatus.Queued || job.Status == BackgroundJobProcessingStatus.Processing);
+        }
+
+        public bool IsPricingModelRunningForPlan(int planId)
+        {
+            var job = _PlanRepository.GetLatestPricingJob(planId);
+            return IsPricingModelRunning(job);
         }
 
         private List<PlanPricingProgramDto> _GetMockPrograms(PlanPricingJob job)

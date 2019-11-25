@@ -1,4 +1,5 @@
 ﻿{
+  "IsPricingModelRunning": false,
   "Job": null,
   "Result": {
     "Programs": null

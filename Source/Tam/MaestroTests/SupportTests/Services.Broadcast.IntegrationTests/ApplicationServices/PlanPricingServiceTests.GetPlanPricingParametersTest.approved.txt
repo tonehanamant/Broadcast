@@ -90,6 +90,7 @@
   "HUTBookId": 437,
   "Id": 1197,
   "IsDraft": false,
+  "IsPricingModelRunning": true,
   "ModifiedBy": "integration_test",
   "ModifiedDate": "2019-01-01T00:00:00",
   "Name": "Plan Pricing 2",

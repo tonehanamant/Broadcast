@@ -184,6 +184,7 @@
   "HouseholdUniverse": 112143960.0,
   "HUTBookId": 437,
   "IsDraft": false,
+  "IsPricingModelRunning": false,
   "ModifiedBy": "integration_test",
   "ModifiedDate": "2019-01-15T00:00:00",
   "Name": "Renamed Plan",

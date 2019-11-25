@@ -4,5 +4,10 @@
     {
         public PlanPricingJob Job { get; set; }
         public PlanPricingResultDto Result { get; set; }
+        
+        /// <summary>
+        /// True - when there is a pricing model execution with status 'Queued' or 'Processing' in the DB
+        /// </summary>
+        public bool IsPricingModelRunning { get; set; }
     }
 }
