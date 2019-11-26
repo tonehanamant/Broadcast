@@ -5,9 +5,7 @@
     ],
     "EffectiveDate": null,
     "EndDate": null,
-    "FileLoadStatus": 2,
     "Filename": "ProprietaryDataFiles\\Barter_ValidFormat_SingleBook_ShortDateRange.xlsx",
-    "FileProcessingStatus": 3,
     "HutBook": null,
     "Quarters": null,
     "Rows": 5,
@@ -16,7 +14,7 @@
       "Month": 2,
       "Year": 2018
     },
-    "Status": "Succeeded",
+    "Status": "Processing",
     "UploadDateTime": "2019-07-20T00:00:00",
     "Username": "IntegrationTestUser"
   },
@@ -26,9 +24,7 @@
     ],
     "EffectiveDate": null,
     "EndDate": null,
-    "FileLoadStatus": 2,
     "Filename": "TTWN EMN Q1 Barter_Inventory Template_2.6.2019 (17).xlsx",
-    "FileProcessingStatus": 3,
     "HutBook": null,
     "Quarters": null,
     "Rows": 0,
@@ -37,7 +33,7 @@
       "Month": 2,
       "Year": 2017
     },
-    "Status": "Succeeded",
+    "Status": "Processing",
     "UploadDateTime": "2019-04-12T15:55:59.753",
     "Username": "sroibu"
   },
@@ -47,9 +43,7 @@
     ],
     "EffectiveDate": "2024-12-30T00:00:00",
     "EndDate": "2025-03-23T00:00:00",
-    "FileLoadStatus": 2,
     "Filename": "Barter_Q1_2025.xlsx",
-    "FileProcessingStatus": 3,
     "HutBook": null,
     "Quarters": [
       {
@@ -65,7 +59,7 @@
       "Month": 2,
       "Year": 2018
     },
-    "Status": "Succeeded",
+    "Status": "Processing",
     "UploadDateTime": "2019-02-02T00:00:00",
     "Username": "IntegrationTestUser"
   }

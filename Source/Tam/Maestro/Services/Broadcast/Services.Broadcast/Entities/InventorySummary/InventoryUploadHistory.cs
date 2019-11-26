@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Services.Broadcast.Entities.Enums;
+using System;
 using System.Collections.Generic;
 
 namespace Services.Broadcast.Entities.InventorySummary
 {
-    public class InventoryUploadHistoryDto
+    public class InventoryUploadHistory
     {
         public int FileId { get; set; }
         public DateTime UploadDateTime { get; set; }
@@ -15,7 +16,8 @@ namespace Services.Broadcast.Entities.InventorySummary
         public MediaMonthDto HutBook { get; set; }
         public MediaMonthDto ShareBook { get; set; }
         public int Rows { get; set; }
-        public string Status { get; set; }
-        public List<QuarterDetailDto> Quarters { get; set; }
+        public FileStatusEnum FileLoadStatus { get; set; }
+        public BackgroundJobProcessingStatus RatingProcessingJobStatus { get; set; }
+        public InventoryFileProgramEnrichmentJobStatus ProgramEnrichmentJobStatus { get; set; }
     }
 }

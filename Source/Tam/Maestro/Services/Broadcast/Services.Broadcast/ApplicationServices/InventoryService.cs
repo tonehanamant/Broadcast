@@ -278,8 +278,7 @@ namespace Services.Broadcast.ApplicationServices
             if (!inventoryFile.ValidationProblems.Any())
             {
                 _InventoryRatingsService.QueueInventoryFileRatingsJob(inventoryFile.Id);
-                // TODO: Enable this when ready.
-                //_InventoryProgramEnrichmentService.QueueInventoryFileProgramEnrichmentJob(inventoryFile.Id, userName);
+                _InventoryProgramEnrichmentService.QueueInventoryFileProgramEnrichmentJob(inventoryFile.Id, userName);
 
                 try
                 {
@@ -733,36 +732,59 @@ namespace Services.Broadcast.ApplicationServices
 
         public List<InventoryUploadHistoryDto> GetInventoryUploadHistory(int inventorySourceId, int? quarter, int? year)
         {
+            var result = new List<InventoryUploadHistoryDto>();
             var quarterDateRange = _QuarterCalculationEngine.GetQuarterDateRange(quarter, year);
             var uploadHistory = _InventoryRepository.GetInventoryUploadHistoryForInventorySource(inventorySourceId, quarterDateRange.Start, quarterDateRange.End);
 
-            foreach (var uploadFile in uploadHistory)
+            foreach (var uploadHistoryItem in uploadHistory)
             {
-                if (uploadFile.EffectiveDate.HasValue &&
-                    uploadFile.EndDate.HasValue)
+                var uploadHistoryItemDto = new InventoryUploadHistoryDto
                 {
-                    uploadFile.Quarters = _QuarterCalculationEngine.GetAllQuartersBetweenDates(uploadFile.EffectiveDate.Value, uploadFile.EndDate.Value);
+                    FileId = uploadHistoryItem.FileId,
+                    UploadDateTime = uploadHistoryItem.UploadDateTime,
+                    Username = uploadHistoryItem.Username,
+                    Filename = uploadHistoryItem.Filename,
+                    DaypartCodes = uploadHistoryItem.DaypartCodes,
+                    EffectiveDate = uploadHistoryItem.EffectiveDate,
+                    EndDate = uploadHistoryItem.EndDate,
+                    HutBook = uploadHistoryItem.HutBook,
+                    ShareBook = uploadHistoryItem.ShareBook,
+                    Rows = uploadHistoryItem.Rows,
+                    Status = _GetUploadHistoryStatus(uploadHistoryItem)
+                };
+
+                if (uploadHistoryItem.EffectiveDate.HasValue &&
+                    uploadHistoryItem.EndDate.HasValue)
+                {
+                    uploadHistoryItemDto.Quarters = _QuarterCalculationEngine.GetAllQuartersBetweenDates(uploadHistoryItem.EffectiveDate.Value, uploadHistoryItem.EndDate.Value);
                 }
 
-                if (uploadFile.FileLoadStatus == FileStatusEnum.Failed)
-                {
-                    uploadFile.Status = "Validation Error";
-                }
-                else if(uploadFile.FileProcessingStatus == BackgroundJobProcessingStatus.Failed)
-                {
-                    uploadFile.Status = "Processing Error";
-                }
-                else if (uploadFile.FileProcessingStatus == BackgroundJobProcessingStatus.Succeeded)
-                {
-                    uploadFile.Status = "Succeeded";
-                }
-                else
-                {
-                    uploadFile.Status = "Processing";
-                }
+                result.Add(uploadHistoryItemDto);
             }
 
-            return uploadHistory;
+            return result;
+        }
+
+        private string _GetUploadHistoryStatus(InventoryUploadHistory inventoryUploadHistory)
+        {
+            if (inventoryUploadHistory.FileLoadStatus == FileStatusEnum.Failed)
+            {
+                return "Validation Error";
+            }
+
+            if (inventoryUploadHistory.RatingProcessingJobStatus == BackgroundJobProcessingStatus.Failed ||
+                inventoryUploadHistory.ProgramEnrichmentJobStatus == InventoryFileProgramEnrichmentJobStatus.Error)
+            {
+                return "Processing Error";
+            }
+
+            if (inventoryUploadHistory.RatingProcessingJobStatus == BackgroundJobProcessingStatus.Succeeded &&
+                inventoryUploadHistory.ProgramEnrichmentJobStatus == InventoryFileProgramEnrichmentJobStatus.Completed)
+            {
+                return "Succeeded";
+            }
+
+            return "Processing";
         }
 
         public Tuple<string, Stream, string> DownloadErrorFile(int fileId)

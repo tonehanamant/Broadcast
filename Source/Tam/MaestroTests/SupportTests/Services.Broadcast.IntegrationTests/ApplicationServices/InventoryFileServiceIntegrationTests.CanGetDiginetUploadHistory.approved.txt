@@ -6,9 +6,7 @@
     ],
     "EffectiveDate": "2018-10-08T00:00:00",
     "EndDate": "2018-10-21T00:00:00",
-    "FileLoadStatus": 2,
     "Filename": "Diginet_ValidFile3.xlsx",
-    "FileProcessingStatus": 3,
     "HutBook": null,
     "Quarters": [
       {
@@ -20,7 +18,7 @@
     ],
     "Rows": 2,
     "ShareBook": null,
-    "Status": "Succeeded",
+    "Status": "Processing",
     "UploadDateTime": "2019-02-02T00:00:00",
     "Username": "IntegrationTestUser"
   }

@@ -98,7 +98,7 @@ namespace Services.Broadcast.Repositories
 
         List<DateRange> GetInventoryUploadHistoryDatesForInventorySource(int inventorySourceId);
 
-        List<InventoryUploadHistoryDto> GetInventoryUploadHistoryForInventorySource(int inventorySourceId, DateTime? startDate, DateTime? endDate);
+        List<InventoryUploadHistory> GetInventoryUploadHistoryForInventorySource(int inventorySourceId, DateTime? startDate, DateTime? endDate);
 
         /// <summary>
         /// Adds validation problems for an inventory file to DB
@@ -1276,7 +1276,7 @@ namespace Services.Broadcast.Repositories
         }
 
         ///<inheritdoc/>
-        public List<InventoryUploadHistoryDto> GetInventoryUploadHistoryForInventorySource(int inventorySourceId, DateTime? startDate, DateTime? endDate)
+        public List<InventoryUploadHistory> GetInventoryUploadHistoryForInventorySource(int inventorySourceId, DateTime? startDate, DateTime? endDate)
         {
             return _InReadUncommitedTransaction(
                 context =>
@@ -1290,6 +1290,7 @@ namespace Services.Broadcast.Repositories
                              .Include(x => x.station_inventory_manifest.Select(h => h.station_inventory_manifest_dayparts.Select(d => d.daypart_codes)))
                              .Include(x => x.inventory_sources)
                              .Include(x => x.inventory_file_ratings_jobs)
+                             .Include(x => x.inventory_file_program_enrichment_jobs)
                              .Where(x => x.inventory_source_id == inventorySourceId);
 
                     if (startDate.HasValue && endDate.HasValue)
@@ -1298,11 +1299,11 @@ namespace Services.Broadcast.Repositories
                                                  f.end_date >= startDate);
                     }
 
-                    var result = new List<InventoryUploadHistoryDto>();
+                    var result = new List<InventoryUploadHistory>();
 
                     foreach (var file in files)
                     {
-                        var fileHistory = new InventoryUploadHistoryDto()
+                        var fileHistory = new InventoryUploadHistory
                         {
                             FileId = file.id,
                             UploadDateTime = file.created_date,
@@ -1350,8 +1351,14 @@ namespace Services.Broadcast.Repositories
 
                         if (file.inventory_file_ratings_jobs.Any())
                         {
-                            var fileJob = file.inventory_file_ratings_jobs.OrderBy(j => j.id).Last();
-                            fileHistory.FileProcessingStatus = (BackgroundJobProcessingStatus)fileJob.status;
+                            var ratingProcessingJob = file.inventory_file_ratings_jobs.OrderBy(j => j.id).Last();
+                            fileHistory.RatingProcessingJobStatus = (BackgroundJobProcessingStatus)ratingProcessingJob.status;
+                        }
+
+                        if (file.inventory_file_program_enrichment_jobs.Any())
+                        {
+                            var programEnrichmentJob = file.inventory_file_program_enrichment_jobs.OrderBy(x => x.id).Last();
+                            fileHistory.ProgramEnrichmentJobStatus = (InventoryFileProgramEnrichmentJobStatus)programEnrichmentJob.status;
                         }
 
                         result.Add(fileHistory);

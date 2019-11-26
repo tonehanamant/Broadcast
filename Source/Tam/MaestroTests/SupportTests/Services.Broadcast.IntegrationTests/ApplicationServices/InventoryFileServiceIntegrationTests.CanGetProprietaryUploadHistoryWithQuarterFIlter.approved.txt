@@ -5,9 +5,7 @@
     ],
     "EffectiveDate": "2024-12-30T00:00:00",
     "EndDate": "2025-03-23T00:00:00",
-    "FileLoadStatus": 2,
     "Filename": "Barter_Q1_2025.xlsx",
-    "FileProcessingStatus": 3,
     "HutBook": null,
     "Quarters": [
       {
@@ -23,7 +21,7 @@
       "Month": 2,
       "Year": 2018
     },
-    "Status": "Succeeded",
+    "Status": "Processing",
     "UploadDateTime": "2019-02-02T00:00:00",
     "Username": "IntegrationTestUser"
   }

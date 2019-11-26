@@ -3,9 +3,7 @@
     "DaypartCodes": null,
     "EffectiveDate": "2018-03-19T00:00:00",
     "EndDate": "2018-04-29T00:00:00",
-    "FileLoadStatus": 2,
     "Filename": "Open Market projected imps.xml",
-    "FileProcessingStatus": 3,
     "HutBook": null,
     "Quarters": [
       {
@@ -23,7 +21,7 @@
     ],
     "Rows": 1,
     "ShareBook": null,
-    "Status": "Succeeded",
+    "Status": "Processing",
     "UploadDateTime": "2019-02-02T00:00:00",
     "Username": "IntegrationTestUser"
   }
