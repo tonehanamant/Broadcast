@@ -126,7 +126,7 @@ namespace Services.Broadcast.ApplicationServices
 
             var ppDefaults = new PlanPricingDefaults
             {
-                UnitCaps = 2,
+                UnitCaps = 1,
                 InventorySourcePercentages = _InventoryRepository.GetInventorySources().Where(
                         s => planPricingSourceNames.Contains(s.Name))
                     .Select(s => new PlanPricingInventorySourceDto

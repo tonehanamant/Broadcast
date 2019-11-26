@@ -36,5 +36,5 @@
       "Percentage": 10
     }
   ],
-  "UnitCaps": 2
+  "UnitCaps": 1
 }
