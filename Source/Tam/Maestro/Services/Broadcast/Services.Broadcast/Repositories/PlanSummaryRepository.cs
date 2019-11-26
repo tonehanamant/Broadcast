@@ -127,7 +127,6 @@ namespace Services.Broadcast.Repositories
             entity.blackout_market_total_us_coverage_percent = dto.BlackoutMarketTotalUsCoveragePercent;
             entity.product_name = dto.ProductName;
             entity.processing_status = (int)dto.ProcessingStatus;
-            entity.audience_name = dto.AudienceName;
             _HydrateQuartersFromDto(entity, dto, context);
         }
 
@@ -151,7 +150,6 @@ namespace Services.Broadcast.Repositories
                 BlackoutMarketCount = entity.blackout_market_count,
                 BlackoutMarketTotalUsCoveragePercent = entity.blackout_market_total_us_coverage_percent,
                 ProductName = entity.product_name,
-                AudienceName = entity.audience_name,
                 PlanSummaryQuarters = entity.plan_version_summary_quarters.Select(q => new PlanSummaryQuarterDto { Quarter = q.quarter, Year = q.year }).ToList()
             };
             return dto;

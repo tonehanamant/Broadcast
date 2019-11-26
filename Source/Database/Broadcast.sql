@@ -109,6 +109,13 @@ END
 
 /*************************************** END PRI-17245 *****************************************************/
 
+/*************************************** START PRI-18180 *****************************************************/
+IF EXISTS(SELECT 1 FROM sys.columns WHERE name = 'audience_name' AND  object_id = OBJECT_ID('plan_version_summaries'))
+BEGIN		  
+    ALTER TABLE plan_version_summaries DROP COLUMN audience_name
+END
+/*************************************** END PRI-18180 *****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

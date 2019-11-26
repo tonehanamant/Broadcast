@@ -98,12 +98,12 @@ namespace Services.Broadcast.Entities.Plan
         public string ProductName { get; set; }
 
         /// <summary>
-        /// Gets or sets the name of the audience.
+        /// Gets or sets the audience identifier.
         /// </summary>
         /// <value>
-        /// The name of the audience.
+        /// The audience identifier.
         /// </value>
-        public string AudienceName { get; set; }
+        public int AudienceId { get; set; }
 
         /// <summary>
         /// The quarters covered by the plan's flight.

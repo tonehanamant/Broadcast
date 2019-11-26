@@ -160,35 +160,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanAggregation
         }
 
         [Test]
-        public void AggregateAudience()
-        {
-            var tc = GetTestClassSetupForAudiences();
-            var plan = new PlanDto
-            {
-                AudienceId = 1
-            };
-            var summary = new PlanSummaryDto();
-
-            tc.UT_AggregateAudience(plan, summary);
-
-            Assert.AreEqual(1, tc.GetAudiencesByIdsCalledCount, "Invalid getAudiencesByIdsCallCount");
-            Assert.AreEqual("AudienceOne", summary.AudienceName, "Invalid AudienceName");
-        }
-
-        [Test]
-        public void AggregateAudience_WithoutValue()
-        {
-            var tc = GetTestClassSetupForAudiences();
-            var plan = new PlanDto();
-            var summary = new PlanSummaryDto();
-
-            tc.UT_AggregateAudience(plan, summary);
-
-            Assert.AreEqual(0, tc.GetAudiencesByIdsCalledCount, "Invalid getAudiencesByIdsCallCount");
-            Assert.IsNull(summary.AudienceName, "Invalid AudienceName");
-        }
-
-        [Test]
         public void AggregateQuarters_Single()
         {
             var testQuarters = new List<QuarterDetailDto>
@@ -358,10 +329,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanAggregation
                 , quarterCalculationEngine.Object
                 , trafficApiCache
             );
-            var getAudiencesByIdsReturn = new List<LookupDto> { new LookupDto(1, "AudienceOne") };
-            audienceRepository.Setup(s => s.GetAudiencesByIds(It.IsAny<List<int>>()))
-                .Callback(() => tc.GetAudiencesByIdsCalledCount++)
-                .Returns(getAudiencesByIdsReturn);
             var getQuartersReturn = new List<QuarterDetailDto>
             {
                 new QuarterDetailDto { Quarter = 2, Year = 2019 },
@@ -392,11 +359,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanAggregation
                 , quarterCalculationEngine.Object
                 , trafficApiCache
             );
-
-            var getAudiencesByIdsReturn = new List<LookupDto> { new LookupDto(1, "AudienceOne") };
-            audienceRepository.Setup(s => s.GetAudiencesByIds(It.IsAny<List<int>>()))
-                .Callback(() => tc.GetAudiencesByIdsCalledCount++)
-                .Returns(getAudiencesByIdsReturn);
 
             return tc;
         }
@@ -480,7 +442,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanAggregation
             Assert.AreEqual(TEST_SELECTED_AVAILABLE_MARKET_TOTAL_US_COVERAGE_PERCENT, summary.AvailableMarketTotalUsCoveragePercent, "Invalid summary.AvailableMarketTotalUsCoveragePercent");
             Assert.AreEqual(TEST_SELECTED_BLACKOUT_MARKET_COUNT, summary.BlackoutMarketCount, "Invalid summary.BlackoutMarketCount");
             Assert.AreEqual(TEST_SELECTED_BLACKOUT_MARKET_TOTAL_US_COVERAGE_PERCENT, summary.BlackoutMarketTotalUsCoveragePercent, "Invalid summary.BlackoutMarketTotalUsCoveragePercent");
-            Assert.AreEqual("AudienceOne", summary.AudienceName, "Invalid AudienceName");
             Assert.AreEqual("Product2", summary.ProductName, "Invalid ProductName");
             Assert.AreEqual(3, summary.PlanSummaryQuarters.Count, "Invalid summary quarters count.");
             Assert.AreEqual(4, summary.PlanSummaryQuarters[0].Quarter, "Invalid quarter.");

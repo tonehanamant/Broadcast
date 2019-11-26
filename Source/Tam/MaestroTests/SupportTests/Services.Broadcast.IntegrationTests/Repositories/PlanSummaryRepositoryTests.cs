@@ -124,7 +124,6 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                 BlackoutMarketTotalUsCoveragePercent = 13.8,
                 AvailableMarketsWithSovCount = 2,                
                 ProductName = "ProductTwo",
-                AudienceName = "AudienceThree",
                 PlanSummaryQuarters = new List<PlanSummaryQuarterDto>
                 {
                     new PlanSummaryQuarterDto { Quarter = 1, Year = 2017},

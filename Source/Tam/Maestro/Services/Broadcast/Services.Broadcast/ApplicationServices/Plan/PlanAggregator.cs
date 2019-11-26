@@ -88,7 +88,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 AggregateFlightDays,
                 AggregateAvailableMarkets,
                 AggregateBlackoutMarkets,
-                AggregateAudience,
                 AggregateQuarters,
                 AggregateProduct
             };
@@ -137,20 +136,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
             summary.BlackoutMarketCount = blackoutMarketCount;
             summary.BlackoutMarketTotalUsCoveragePercent = blackoutMarketCoverage;
-        }
-
-        protected void AggregateAudience(PlanDto plan, PlanSummaryDto summary)
-        {
-            if (plan.AudienceId <= 0)
-            {
-                return;
-            }
-
-            var audience = _AudienceRepository.GetAudiencesByIds(new List<int> {plan.AudienceId})
-                .Single("Invalid number of Primary Audiences.");
-            var audienceName = audience.Display;
-
-            summary.AudienceName = audienceName;
         }
 
         protected void AggregateQuarters(PlanDto plan, PlanSummaryDto summary)

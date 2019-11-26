@@ -14,8 +14,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanAggregation
         : base(broadcastDataRepositoryFactory, quarterCalculationEngine, trafficApiCache)
         {
         }
-
-        public int GetAudiencesByIdsCalledCount { get; set; }
+        
         public int GetAllQuartersBetweenDatesCalledCount { get; set; }
 
         public void UT_PerformAggregations(PlanDto plan, PlanSummaryDto summary, bool runParallelAggregations = false)
@@ -36,11 +35,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanAggregation
         public void UT_AggregateBlackoutMarkets(PlanDto plan, PlanSummaryDto summary)
         {
             AggregateBlackoutMarkets(plan, summary);
-        }
-
-        public void UT_AggregateAudience(PlanDto plan, PlanSummaryDto summary)
-        {
-            AggregateAudience(plan, summary);
         }
 
         public void UT_AggregateQuarters(PlanDto plan, PlanSummaryDto summary)

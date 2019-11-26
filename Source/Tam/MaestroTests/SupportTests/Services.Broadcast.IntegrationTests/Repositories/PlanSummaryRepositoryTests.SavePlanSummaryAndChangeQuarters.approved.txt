@@ -1,5 +1,5 @@
 ﻿{
-  "AudienceName": "AudienceThree",
+  "AudienceId": 0,
   "AvailableMarketCount": 12,
   "AvailableMarketsWithSovCount": 2,
   "AvailableMarketTotalUsCoveragePercent": 68.7,

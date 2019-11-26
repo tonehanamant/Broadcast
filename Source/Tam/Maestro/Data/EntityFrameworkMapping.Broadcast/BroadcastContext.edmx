@@ -841,7 +841,6 @@
           <Property Name="blackout_market_count" Type="int" />
           <Property Name="blackout_market_total_us_coverage_percent" Type="float" />
           <Property Name="product_name" Type="varchar" MaxLength="256" />
-          <Property Name="audience_name" Type="varchar" MaxLength="256" />
           <Property Name="available_market_with_sov_count" Type="int" />
           <Property Name="plan_version_id" Type="int" Nullable="false" />
         </EntityType>
@@ -11089,7 +11088,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="blackout_market_count" Type="Int32" />
           <Property Name="blackout_market_total_us_coverage_percent" Type="Double" />
           <Property Name="product_name" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
-          <Property Name="audience_name" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
           <Property Name="plan_version_id" Type="Int32" Nullable="false" />
           <Property Name="available_market_with_sov_count" Type="Int32" />
           <NavigationProperty Name="plan_versions" Relationship="BroadcastModel.FK_plan_version_summaries_plan_versions" FromRole="plan_version_summaries" ToRole="plan_versions" />
@@ -13614,7 +13612,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
               <MappingFragment StoreEntitySet="plan_version_summaries">
                 <ScalarProperty Name="available_market_with_sov_count" ColumnName="available_market_with_sov_count" />
                 <ScalarProperty Name="plan_version_id" ColumnName="plan_version_id" />
-                <ScalarProperty Name="audience_name" ColumnName="audience_name" />
                 <ScalarProperty Name="product_name" ColumnName="product_name" />
                 <ScalarProperty Name="blackout_market_total_us_coverage_percent" ColumnName="blackout_market_total_us_coverage_percent" />
                 <ScalarProperty Name="blackout_market_count" ColumnName="blackout_market_count" />

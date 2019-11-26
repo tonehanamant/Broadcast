@@ -274,7 +274,7 @@ namespace Services.Broadcast.Repositories
                         return new PlanSummaryDto
                         {
                             ProductName = summary.product_name,
-                            AudienceName = summary.audience_name,
+                            AudienceId = version.target_audience_id,
                             PostingType = (PostingTypeEnum)version.posting_type,
                             Status = (PlanStatusEnum)version.status,
                             Name = version.plan.name,

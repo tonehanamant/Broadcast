@@ -18,7 +18,7 @@
   "Notes": "This is a test note for a test campaign.",
   "Plans": [
     {
-      "AudienceName": "House Holds",
+      "AudienceId": 31,
       "AvailableMarketCount": 2,
       "AvailableMarketsWithSovCount": null,
       "AvailableMarketTotalUsCoveragePercent": 52.5,
@@ -66,7 +66,7 @@
       "TRP": 6.0
     },
     {
-      "AudienceName": "House Holds",
+      "AudienceId": 31,
       "AvailableMarketCount": 2,
       "AvailableMarketsWithSovCount": null,
       "AvailableMarketTotalUsCoveragePercent": 52.5,
