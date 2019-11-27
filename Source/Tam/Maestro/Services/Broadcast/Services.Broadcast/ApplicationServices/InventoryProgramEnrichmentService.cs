@@ -21,6 +21,7 @@ namespace Services.Broadcast.ApplicationServices
         int QueueInventoryFileProgramEnrichmentJob(int fileId, string username);
 
         [Queue("inventoryprogramenrichment")]
+        [AutomaticRetry(Attempts = 0, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
         InventoryFileProgramEnrichmentJobDiagnostics PerformInventoryFileProgramEnrichmentJob(int jobId);
     }
 

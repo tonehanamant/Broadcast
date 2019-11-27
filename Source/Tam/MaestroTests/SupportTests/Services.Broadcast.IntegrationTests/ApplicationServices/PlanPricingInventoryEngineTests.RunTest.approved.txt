@@ -912,6 +912,65 @@
     "Allocations": [],
     "DayParts": [],
     "DemoRating": 0.0,
+    "EffectiveImpressionsPerSpot": 39331.375,
+    "EndDate": "2018-10-07T00:00:00",
+    "FlightWeeks": [
+      {
+        "Allocations": null,
+        "EndDate": "2018-10-07T00:00:00",
+        "IsHiatus": false,
+        "MediaWeekId": 771,
+        "Rate": 0.0,
+        "StartDate": "2018-10-01T00:00:00"
+      }
+    ],
+    "Genres": [],
+    "GRP": 0.0,
+    "HHeCPM": 0.0,
+    "HHImpressions": 0.0,
+    "HouseHoldMarketSubscribers": 0.0,
+    "HouseHoldRating": 0.0,
+    "IsOverlapping": false,
+    "ManifestAudiences": [],
+    "ManifestDaypartId": 0,
+    "ManifestDayparts": [
+      {
+        "DaypartId": 32941,
+        "Id": 633845,
+        "ProgramName": "FRIENDS"
+      }
+    ],
+    "ManifestId": 518246,
+    "Market": {
+      "Display": "New York",
+      "Id": 101
+    },
+    "MarketSubscribers": 0.0,
+    "ProvidedUnitImpressions": null,
+    "SpotCost": 0.0,
+    "StartDate": "2018-10-01T00:00:00",
+    "Station": {
+      "Affiliation": "CW",
+      "CallLetters": "WPIX 11.1",
+      "LegacyCallLetters": "WPIX",
+      "StationCode": 5014
+    },
+    "TargetCpm": 0.0,
+    "TargetImpressions": 0.0,
+    "TotalCost": 0.0,
+    "TotalImpressions": 0.0,
+    "TotalSpots": 0,
+    "TRP": 0.0,
+    "UnitImpressions": 39331.375
+  },
+  {
+    "AdditionalAudienceImpressions": 0.0,
+    "AdditionalAudienceSubscribers": 0.0,
+    "AdditionalDemoRating": 0.0,
+    "AdditonalAudienceCPM": 0.0,
+    "Allocations": [],
+    "DayParts": [],
+    "DemoRating": 0.0,
     "EffectiveImpressionsPerSpot": 300.0,
     "EndDate": "2018-12-30T00:00:00",
     "FlightWeeks": [

@@ -27,6 +27,8 @@ namespace Services.Broadcast.ApplicationServices
         void RunPricingJob(PlanPricingParametersDto planPricingParametersDto, int jobId);
         List<PlanPricingApiRequestParametersDto> GetPlanPricingRuns(int planId);
 
+        PlanPricingApiRequestDto GetPricingInventory(int planId);
+
         /// <summary>
         /// Gets the unit caps.
         /// </summary>
@@ -318,7 +320,7 @@ namespace Services.Broadcast.ApplicationServices
                     {
                         Id = program.ManifestId,
                         MediaWeekId = programWeek.MediaWeekId,
-                        Impressions = program.ProvidedUnitImpressions ?? 0,
+                        Impressions = program.ProvidedUnitImpressions ?? program.UnitImpressions,
                         Cost = program.SpotCost
                     });
                 }
@@ -403,6 +405,21 @@ namespace Services.Broadcast.ApplicationServices
                     ErrorMessage = exception.Message
                 });
             }
+        }
+
+        public PlanPricingApiRequestDto GetPricingInventory(int planId)
+        {
+            var plan = _PlanRepository.GetPlan(planId);
+            var inventory = _PlanPricingInventoryEngine.GetInventoryForPlan(planId);
+            var pricingMarkets = _MapToPlanPricingPrograms(plan);
+
+            var pricingApiRequest = new PlanPricingApiRequestDto
+            {
+                Weeks = _GetPricingModelWeeks(plan),
+                Spots = _GetPricingModelSpots(inventory)
+            };
+
+            return pricingApiRequest;
         }
     }
 }

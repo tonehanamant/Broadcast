@@ -275,6 +275,14 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        public void GetPricingInventoryTest()
+        {
+            var result = _PlanPricingService.GetPricingInventory(1197);
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
         public void GetPlanPricingParametersTest()
         {
             using (new TransactionScopeWrapper())

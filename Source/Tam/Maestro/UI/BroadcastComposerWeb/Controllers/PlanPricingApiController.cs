@@ -36,6 +36,13 @@ namespace BroadcastComposerWeb.Controllers
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanPricingService>().GetCurrentPricingExecution(planId));
         }
 
+        [HttpPost]
+        [Route("Inventory")]
+        public BaseResponse<PlanPricingResponseDto> GetPricingInventory(int planId)
+        {
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanPricingService>().GetCurrentPricingExecution(planId));
+        }
+
         /// <summary>
         /// Gets the unit caps.
         /// </summary>

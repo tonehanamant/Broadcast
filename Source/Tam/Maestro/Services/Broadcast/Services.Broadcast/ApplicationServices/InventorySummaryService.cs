@@ -11,6 +11,7 @@ using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hangfire;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 
 namespace Services.Broadcast.ApplicationServices
@@ -30,6 +31,8 @@ namespace Services.Broadcast.ApplicationServices
         /// Aggregates all the information based on the list of inventory source ids
         /// </summary>
         /// <param name="inventorySourceIds">List of inventory source ids</param>
+        [Queue("inventorysummaryaggregation")]
+        [AutomaticRetry(Attempts = 0, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
         void AggregateInventorySummaryData(List<int> inventorySourceIds);
     }
 

@@ -23,6 +23,7 @@ namespace Services.Broadcast.ApplicationServices
     {
         int QueueScxGenerationJob(InventoryScxDownloadRequest inventoryScxDownloadRequest, string userName, DateTime currentDate);
         [Queue("scxfilegeneration")]
+        [AutomaticRetry(Attempts = 0, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
         void ProcessScxGenerationJob(int jobId);
         void ProcessScxGenerationJob(ScxGenerationJob job, DateTime currentDate);
         List<ScxGenerationJob> GetQueuedJobs(int limit);

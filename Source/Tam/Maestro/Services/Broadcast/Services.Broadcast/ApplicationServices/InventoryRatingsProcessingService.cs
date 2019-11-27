@@ -36,6 +36,7 @@ namespace Services.Broadcast.ApplicationServices
         int ProcessInventoryRatingsJob(int jobId, bool ignoreStatus);
 
         [Queue("inventoryrating")]
+        [AutomaticRetry(Attempts = 0, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
         int ProcessInventoryRatingsJob(int jobId);
 
         void ResetJobStatusToQueued(int jobId);
@@ -121,22 +122,22 @@ namespace Services.Broadcast.ApplicationServices
                 throw new ApplicationException($"Job with id {jobId} was not found");
             }
 
-            if (!ignoreStatus && job.Status != BackgroundJobProcessingStatus.Queued)
-            {
-                var message = $"Job with id {jobId} already has status {job.Status}";
-                _AddJobNote(jobId, message);
-                throw new ApplicationException(message);
-            }
-
             try
             {
+                var inventoryFile = _InventoryFileRepository.GetInventoryFileById(job.InventoryFileId);
+                if (!ignoreStatus && job.Status != BackgroundJobProcessingStatus.Queued)
+                {
+                    var message = $"Job with id {jobId} already has status {job.Status}.";
+                    _AddJobNote(jobId, message);
+                    return inventoryFile.InventorySource.Id;
+                }
+
                 job.Status = BackgroundJobProcessingStatus.Processing;
                 _InventoryFileRatingsJobsRepository.UpdateJob(job);
                 _AddJobNote(jobId, $"Started processing. Machine info: {_GetMachineInfo()}");
 
-                var inventoryFile = _InventoryFileRepository.GetInventoryFileById(job.InventoryFileId);
                 var inventorySource = inventoryFile.InventorySource;
-                
+
                 if (inventorySource.InventoryType == InventorySourceTypeEnum.Barter)
                 {
                     var header =  _ProprietaryRepository.GetInventoryFileHeader(job.InventoryFileId);

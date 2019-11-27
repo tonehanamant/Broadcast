@@ -23,7 +23,8 @@ namespace Services.Broadcast.ApplicationServices
                 "plan-automatic-status-transition",
                 () => _PlanService.AutomaticStatusTransitions(DateTime.Today, "automated status update", DateTime.Now, false),
                 Cron.Daily,
-                TimeZoneInfo.Local);
+                TimeZoneInfo.Local, 
+                queue: "planstatustransition");
         }
     }
 }

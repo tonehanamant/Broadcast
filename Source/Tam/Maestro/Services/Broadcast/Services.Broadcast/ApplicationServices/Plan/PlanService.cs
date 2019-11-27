@@ -109,7 +109,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// <param name="planId">The plan identifier.</param>
         /// <returns>True if the delete was successful</returns>
         bool DeletePlanDraft(int planId);
-        
+
         /// <summary>
         /// The logic for automatic status transitioning
         /// </summary>
@@ -117,6 +117,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// <param name="updatedBy">The updated by.</param>
         /// <param name="updatedDate">The updated date.</param>
         /// <param name="aggregatePlanSynchronously"></param>
+        [Queue("planstatustransition")]
         void AutomaticStatusTransitions(DateTime transitionDate, string updatedBy, DateTime updatedDate, bool aggregatePlanSynchronously = false);
     }
 
@@ -520,7 +521,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
             return response;
         }
 
-        [AutomaticRetry(Attempts = 5, DelaysInSeconds = new int[] { 5 * 60 }, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
+        // attribute has to be on the class instead of the interface because this is a recurring job.
+        [AutomaticRetry(Attempts = 2, DelaysInSeconds = new int[] { 5 * 60 }, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
         public void AutomaticStatusTransitions(DateTime transitionDate, string updatedBy, DateTime updatedDate, bool aggregatePlanSynchronously = false)
         {
             var plansToTransition = _PlanRepository.GetPlansForAutomaticTransition(transitionDate);
