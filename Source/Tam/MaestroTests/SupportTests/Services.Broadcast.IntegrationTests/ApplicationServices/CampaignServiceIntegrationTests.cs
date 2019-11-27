@@ -157,7 +157,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             using (new TransactionScopeWrapper(System.Transactions.IsolationLevel.ReadCommitted))
             {
-                var lockingManagerApplicationServiceMock = new Mock<ILockingManagerApplicationService>();
+                var lockingManagerApplicationServiceMock = new Mock<IBroadcastLockingManagerApplicationService>();
                 lockingManagerApplicationServiceMock.Setup(x => x.LockObject(It.IsAny<string>())).Returns(new LockResponse
                 {
                     Success = false,

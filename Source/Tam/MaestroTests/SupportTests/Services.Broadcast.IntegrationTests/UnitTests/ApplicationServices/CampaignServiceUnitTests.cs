@@ -25,7 +25,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
     {
         private const string _CreatedBy = "UnitTest_User";
         private readonly DateTime _CreatedDate = new DateTime(2017, 10, 17, 7, 30, 23);
-        private readonly Mock<ILockingManagerApplicationService> _LockingManagerApplicationServiceMock = new Mock<ILockingManagerApplicationService>();
+        private readonly Mock<IBroadcastLockingManagerApplicationService> _LockingManagerApplicationServiceMock = new Mock<IBroadcastLockingManagerApplicationService>();
 
         [Test]
         [UseReporter(typeof(DiffReporter))]

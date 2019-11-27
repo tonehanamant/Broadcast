@@ -195,7 +195,7 @@ namespace BroadcastComposerWeb.Controllers
         {
             var key = KeyHelper.GetProposalLockingKey(proposalId);
             return _ConvertToBaseResponse(
-                () => _ApplicationServiceFactory.GetApplicationService<ILockingManagerApplicationService>()
+                () => _ApplicationServiceFactory.GetApplicationService<IBroadcastLockingManagerApplicationService>()
                     .LockObject(key));
         }
 
@@ -206,7 +206,7 @@ namespace BroadcastComposerWeb.Controllers
         {
             var key = KeyHelper.GetProposalLockingKey(proposalId);
             return _ConvertToBaseResponse(
-                () => _ApplicationServiceFactory.GetApplicationService<ILockingManagerApplicationService>()
+                () => _ApplicationServiceFactory.GetApplicationService<IBroadcastLockingManagerApplicationService>()
                     .ReleaseObject(key));
         }
 

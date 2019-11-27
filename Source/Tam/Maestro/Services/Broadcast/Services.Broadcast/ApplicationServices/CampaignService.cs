@@ -109,7 +109,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IPlanRepository _PlanRepository;
         private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekAggregateCache;
         private readonly IQuarterCalculationEngine _QuarterCalculationEngine;
-        private readonly ILockingManagerApplicationService _LockingManagerApplicationService;
+        private readonly IBroadcastLockingManagerApplicationService _LockingManagerApplicationService;
         private readonly ICampaignAggregator _CampaignAggregator;
         private readonly ICampaignSummaryRepository _CampaignSummaryRepository;
         private readonly ICampaignAggregationJobTrigger _CampaignAggregationJobTrigger;
@@ -120,7 +120,7 @@ namespace Services.Broadcast.ApplicationServices
             ICampaignValidator campaignValidator,
             IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
             IQuarterCalculationEngine quarterCalculationEngine,
-            ILockingManagerApplicationService lockingManagerApplicationService,
+            IBroadcastLockingManagerApplicationService lockingManagerApplicationService,
             ICampaignAggregator campaignAggregator,
             ICampaignAggregationJobTrigger campaignAggregationJobTrigger,
             ITrafficApiCache trafficApiCache)

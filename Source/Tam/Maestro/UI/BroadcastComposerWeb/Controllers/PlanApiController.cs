@@ -154,7 +154,7 @@ namespace BroadcastComposerWeb.Controllers
         public BaseResponse<ReleaseLockResponse> UnlockPlan(int planId)
         {
             var key = KeyHelper.GetPlanLockingKey(planId);
-            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ILockingManagerApplicationService>().ReleaseObject(key));
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IBroadcastLockingManagerApplicationService>().ReleaseObject(key));
         }
 
         /// <summary>

@@ -35,7 +35,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var nsiUniverseService = new Mock<INsiUniverseService>();
             var broadcastAudienceCacheMock = new Mock<IBroadcastAudiencesCache>();
             var spotLengthEngine = new Mock<ISpotLengthEngine>();
-            var lockingManagerApplicationServiceMock = new Mock<ILockingManagerApplicationService>();
+            var lockingManagerApplicationServiceMock = new Mock<IBroadcastLockingManagerApplicationService>();
             var planPricingServiceMock = new Mock<IPlanPricingService>();
             lockingManagerApplicationServiceMock.Setup(x => x.LockObject(It.IsAny<string>())).Returns(new LockResponse
             {
@@ -110,7 +110,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var broadcastAudienceCacheMock = new Mock<IBroadcastAudiencesCache>();
             broadcastAudienceCacheMock.Setup(a => a.GetDefaultAudience()).Returns(new Entities.BroadcastAudience());
 
-            var lockingManagerApplicationServiceMock = new Mock<ILockingManagerApplicationService>();
+            var lockingManagerApplicationServiceMock = new Mock<IBroadcastLockingManagerApplicationService>();
             lockingManagerApplicationServiceMock.Setup(x => x.LockObject(It.IsAny<string>())).Returns(new LockResponse
             {
                 Success = true,
@@ -208,7 +208,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var broadcastAudienceCacheMock = new Mock<IBroadcastAudiencesCache>();
             broadcastAudienceCacheMock.Setup(a => a.GetDefaultAudience()).Returns(new BroadcastAudience());
 
-            var lockingManagerApplicationServiceMock = new Mock<ILockingManagerApplicationService>();
+            var lockingManagerApplicationServiceMock = new Mock<IBroadcastLockingManagerApplicationService>();
             lockingManagerApplicationServiceMock.Setup(x => x.LockObject(It.IsAny<string>())).Returns(new LockResponse
             {
                 Success = false,
@@ -306,7 +306,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var broadcastAudienceCacheMock = new Mock<IBroadcastAudiencesCache>();
             broadcastAudienceCacheMock.Setup(a => a.GetDefaultAudience()).Returns(new Entities.BroadcastAudience());
 
-            var lockingManagerApplicationServiceMock = new Mock<ILockingManagerApplicationService>();
+            var lockingManagerApplicationServiceMock = new Mock<IBroadcastLockingManagerApplicationService>();
             lockingManagerApplicationServiceMock.Setup(x => x.LockObject(It.IsAny<string>())).Returns(new LockResponse
             {
                 Success = false,
@@ -343,7 +343,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var campaignAggJobTrigger = new Mock<ICampaignAggregationJobTrigger>();
             var nsiUniverseService = new Mock<INsiUniverseService>();
             var broadcastAudienceCacheMock = new Mock<IBroadcastAudiencesCache>();
-            var lockingManagerApplicationServiceMock = new Mock<ILockingManagerApplicationService>();
+            var lockingManagerApplicationServiceMock = new Mock<IBroadcastLockingManagerApplicationService>();
             var planPricingServiceMock = new Mock<IPlanPricingService>();
 
             planPricingServiceMock.Setup(x => x.IsPricingModelRunningForPlan(It.IsAny<int>())).Returns(true);

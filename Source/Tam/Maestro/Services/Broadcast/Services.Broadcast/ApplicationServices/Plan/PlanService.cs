@@ -133,7 +133,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private readonly INsiUniverseService _NsiUniverseService;
         private readonly IBroadcastAudiencesCache _BroadcastAudiencesCache;
         private readonly ISpotLengthEngine _SpotLengthEngine;
-        private readonly ILockingManagerApplicationService _LockingManagerApplicationService;
+        private readonly IBroadcastLockingManagerApplicationService _LockingManagerApplicationService;
         private readonly IPlanPricingService _PlanPricingService;
 
         private const string _DaypartCodeNotFoundMessage = "Unable to find daypart code";
@@ -147,7 +147,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             , INsiUniverseService nsiUniverseService
             , IBroadcastAudiencesCache broadcastAudiencesCache
             , ISpotLengthEngine spotLengthEngine
-            , ILockingManagerApplicationService lockingManagerApplicationService
+            , IBroadcastLockingManagerApplicationService lockingManagerApplicationService
             , IPlanPricingService planPricingService)
         {
             _MediaWeekCache = mediaMonthAndWeekAggregateCache;

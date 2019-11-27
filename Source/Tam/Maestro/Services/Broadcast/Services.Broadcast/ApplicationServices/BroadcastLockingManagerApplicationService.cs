@@ -1,23 +1,27 @@
 ﻿using Common.Services.ApplicationServices;
 using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Collections.Concurrent;
 using System.Security.Principal;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web;
 using Tam.Maestro.Services.Clients;
 using Tam.Maestro.Services.ContractInterfaces;
 
 namespace Services.Broadcast.ApplicationServices
 {
-    public class BroadcastLockingManagerApplicationService : ILockingManagerApplicationService
+    public interface IBroadcastLockingManagerApplicationService : ILockingManagerApplicationService
+    {
+        object GetNotUserBasedLockObjectForKey(string key);
+    }
+
+    public class BroadcastLockingManagerApplicationService : IBroadcastLockingManagerApplicationService
     {
         private readonly ISMSClient _SmsClient;
+        private readonly ConcurrentDictionary<string, object> _NotUserBasedLockObjects;
 
         public BroadcastLockingManagerApplicationService(ISMSClient smsClient)
         {
             _SmsClient = smsClient;
+            _NotUserBasedLockObjects = new ConcurrentDictionary<string, object>();
             System.Diagnostics.Debug.WriteLine("Initializing BroadcastLockingManagerApplicationService");
         }
 
@@ -52,5 +56,9 @@ namespace Services.Broadcast.ApplicationServices
 
         }
 
+        public object GetNotUserBasedLockObjectForKey(string key)
+        {
+            return _NotUserBasedLockObjects.GetOrAdd(key, new object());
+        }
     }
 }

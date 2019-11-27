@@ -120,7 +120,7 @@ namespace BroadcastComposerWeb.Controllers
             if (true)
             {
                 var key = KeyHelper.GetCampaignLockingKey(campaignId);
-                return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ILockingManagerApplicationService>().LockObject(key));
+                return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IBroadcastLockingManagerApplicationService>().LockObject(key));
             }
             else
             {
@@ -148,7 +148,7 @@ namespace BroadcastComposerWeb.Controllers
             if (true)
             {
                 var key = KeyHelper.GetCampaignLockingKey(campaignId);
-                return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ILockingManagerApplicationService>().ReleaseObject(key));
+                return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IBroadcastLockingManagerApplicationService>().ReleaseObject(key));
             }
             else
             {
@@ -170,7 +170,7 @@ namespace BroadcastComposerWeb.Controllers
         public BaseResponse<LockResponse> LockTestLockCampaign(int campaignId)
         {
             var key = KeyHelper.GetCampaignLockingKey(campaignId);
-            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ILockingManagerApplicationService>().LockObject(key));
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IBroadcastLockingManagerApplicationService>().LockObject(key));
         }
 
         [HttpPost]
@@ -179,7 +179,7 @@ namespace BroadcastComposerWeb.Controllers
         public BaseResponse<ReleaseLockResponse> LockTestUnlockCampaign(int campaignId)
         {
             var key = KeyHelper.GetCampaignLockingKey(campaignId);
-            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ILockingManagerApplicationService>().ReleaseObject(key));
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IBroadcastLockingManagerApplicationService>().ReleaseObject(key));
         }
 
         [HttpPost]

@@ -1,6 +1,7 @@
 ﻿using Common.Services;
 using Common.Services.ApplicationServices;
 using Common.Systems.LockTokens;
+using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Helpers;
 using System;
 using System.Collections.Generic;
@@ -22,11 +23,11 @@ namespace Services.Broadcast.BusinessEngines
 
     public class LockingEngine : ILockingEngine
     {
-        private readonly ILockingManagerApplicationService _LockingManager;
+        private readonly IBroadcastLockingManagerApplicationService _LockingManager;
         private readonly ISMSClient _SmsClient;
 
         public LockingEngine(
-            ILockingManagerApplicationService lockingManager,
+            IBroadcastLockingManagerApplicationService lockingManager,
             ISMSClient smsClient)
         {
             _LockingManager = lockingManager;

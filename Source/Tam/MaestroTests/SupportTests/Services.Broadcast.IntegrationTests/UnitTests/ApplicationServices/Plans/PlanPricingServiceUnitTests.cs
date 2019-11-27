@@ -27,6 +27,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         private readonly Mock<IPricingApiClient> _PricingApiClientMock;
         private readonly Mock<IBackgroundJobClient> _BackgroundJobClientMock;
         private readonly Mock<IPlanPricingInventoryEngine> _PlanPricingInventoryEngineMock;
+        private readonly Mock<IBroadcastLockingManagerApplicationService> _BroadcastLockingManagerApplicationServiceMock;
 
         public PlanPricingServiceUnitTests()
         {
@@ -40,6 +41,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _PricingApiClientMock = new Mock<IPricingApiClient>();
             _BackgroundJobClientMock = new Mock<IBackgroundJobClient>();
             _PlanPricingInventoryEngineMock = new Mock<IPlanPricingInventoryEngine>();
+            _BroadcastLockingManagerApplicationServiceMock = new Mock<IBroadcastLockingManagerApplicationService>();
         }
 
         [Test]
@@ -54,7 +56,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Setup(x => x.GetLatestPricingJob(It.IsAny<int>()))
                 .Returns(new PlanPricingJob { Status = status });
 
-            _DataRepositoryFactoryMock.Setup(x => x.GetDataRepository<IPlanRepository>()).Returns(planRepositoryMock.Object);
+            _DataRepositoryFactoryMock
+                .Setup(x => x.GetDataRepository<IPlanRepository>())
+                .Returns(planRepositoryMock.Object);
+
+            _BroadcastLockingManagerApplicationServiceMock
+                .Setup(x => x.GetNotUserBasedLockObjectForKey(It.IsAny<string>()))
+                .Returns(new object());
 
             var service = new PlanPricingService(
                 _DataRepositoryFactoryMock.Object,
@@ -66,7 +74,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 _SpotLengthEngineMock.Object,
                 _PricingApiClientMock.Object,
                 _BackgroundJobClientMock.Object,
-                _PlanPricingInventoryEngineMock.Object);
+                _PlanPricingInventoryEngineMock.Object,
+                _BroadcastLockingManagerApplicationServiceMock.Object);
 
             var exception = Assert.Throws<Exception>(() => service.QueuePricingJob(
                 planPricingParametersDto: new PlanPricingParametersDto(), 

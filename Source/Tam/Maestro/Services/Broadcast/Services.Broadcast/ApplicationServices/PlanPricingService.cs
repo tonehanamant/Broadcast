@@ -47,6 +47,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IPricingApiClient _PricingApiClient;
         private readonly IInventoryRepository _InventoryRepository;
         private readonly IBackgroundJobClient _BackgroundJobClient;
+        private readonly IBroadcastLockingManagerApplicationService _LockingManagerApplicationService;
 
         public PlanPricingService(IDataRepositoryFactory broadcastDataRepositoryFactory,
                                   IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
@@ -57,7 +58,8 @@ namespace Services.Broadcast.ApplicationServices
                                   ISpotLengthEngine spotLengthEngine,
                                   IPricingApiClient pricingApiClient,
                                   IBackgroundJobClient backgroundJobClient,
-                                  IPlanPricingInventoryEngine planPricingInventoryEngine)
+                                  IPlanPricingInventoryEngine planPricingInventoryEngine,
+                                  IBroadcastLockingManagerApplicationService lockingManagerApplicationService)
         {
             _BroadcastAudienceRepository = broadcastDataRepositoryFactory.GetDataRepository<IBroadcastAudienceRepository>();
             _PlanRepository = broadcastDataRepositoryFactory.GetDataRepository<IPlanRepository>();
@@ -68,33 +70,46 @@ namespace Services.Broadcast.ApplicationServices
             _BackgroundJobClient = backgroundJobClient;
             _PlanPricingInventoryEngine = planPricingInventoryEngine;
             _InventoryRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
+            _LockingManagerApplicationService = lockingManagerApplicationService;
         }
 
         public PlanPricingJob QueuePricingJob(PlanPricingParametersDto planPricingParametersDto, DateTime currentDate)
         {
-            if (IsPricingModelRunningForPlan(planPricingParametersDto.PlanId))
+            // lock the plan so that two requests for the same plan can not get in this area concurrently
+            var key = KeyHelper.GetPlanLockingKey(planPricingParametersDto.PlanId);
+            var lockObject = _LockingManagerApplicationService.GetNotUserBasedLockObjectForKey(key);
+
+            lock (lockObject)
             {
-                throw new Exception("The pricing model is already running for the plan");
+                if (IsPricingModelRunningForPlan(planPricingParametersDto.PlanId))
+                {
+                    throw new Exception("The pricing model is already running for the plan");
+                }
+
+                var plan = _PlanRepository.GetPlan(planPricingParametersDto.PlanId);
+
+                var job = new PlanPricingJob
+                {
+                    PlanVersionId = plan.VersionId,
+                    Status = BackgroundJobProcessingStatus.Queued,
+                    Queued = currentDate
+                };
+
+                using (var transaction = TransactionScopeHelper.CreateTransactionScopeWrapper(TimeSpan.FromMinutes(20)))
+                {
+                    var jobId = _PlanRepository.AddPlanPricingJob(job);
+
+                    job.Id = jobId;
+
+                    _PlanRepository.SavePlanPricingParameters(planPricingParametersDto);
+
+                    _BackgroundJobClient.Enqueue<IPlanPricingService>(x => x.RunPricingJob(planPricingParametersDto, jobId));
+
+                    transaction.Complete();
+                }
+
+                return job;
             }
-            
-            var plan = _PlanRepository.GetPlan(planPricingParametersDto.PlanId);
-
-            var job = new PlanPricingJob
-            {
-                PlanVersionId = plan.VersionId,
-                Status = BackgroundJobProcessingStatus.Queued,
-                Queued = currentDate
-            };
-
-            var jobId = _PlanRepository.AddPlanPricingJob(job);
-
-            job.Id = jobId;
-
-            _PlanRepository.SavePlanPricingParameters(planPricingParametersDto);
-
-            _BackgroundJobClient.Enqueue<IPlanPricingService>(x => x.RunPricingJob(planPricingParametersDto, jobId));
-
-            return job;
         }
 
         public List<LookupDto> GetUnitCaps()
