@@ -7,6 +7,7 @@ using Services.Broadcast.Cache;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Campaign;
 using Services.Broadcast.Entities.Enums;
+using Services.Broadcast.Entities.Plan;
 using Services.Broadcast.Helpers;
 using Services.Broadcast.ReportGenerators;
 using Services.Broadcast.Repositories;
@@ -114,6 +115,8 @@ namespace Services.Broadcast.ApplicationServices
         private readonly ICampaignSummaryRepository _CampaignSummaryRepository;
         private readonly ICampaignAggregationJobTrigger _CampaignAggregationJobTrigger;
         private readonly ITrafficApiCache _TrafficApiCache;
+        private readonly IAudienceService _AudienceService;
+        private readonly ISpotLengthService _SpotLengthService;
 
         public CampaignService(
             IDataRepositoryFactory dataRepositoryFactory,
@@ -123,7 +126,9 @@ namespace Services.Broadcast.ApplicationServices
             IBroadcastLockingManagerApplicationService lockingManagerApplicationService,
             ICampaignAggregator campaignAggregator,
             ICampaignAggregationJobTrigger campaignAggregationJobTrigger,
-            ITrafficApiCache trafficApiCache)
+            ITrafficApiCache trafficApiCache,
+            IAudienceService audienceService,
+            ISpotLengthService spotLengthService)
         {
             _CampaignRepository = dataRepositoryFactory.GetDataRepository<ICampaignRepository>();
             _CampaignValidator = campaignValidator;
@@ -135,6 +140,8 @@ namespace Services.Broadcast.ApplicationServices
             _CampaignAggregationJobTrigger = campaignAggregationJobTrigger;
             _TrafficApiCache = trafficApiCache;
             _PlanRepository = dataRepositoryFactory.GetDataRepository<IPlanRepository>();
+            _AudienceService = audienceService;
+            _SpotLengthService = spotLengthService;
         }
 
         /// <inheritdoc />
@@ -443,10 +450,27 @@ namespace Services.Broadcast.ApplicationServices
                 campaign.Plans = campaign.Plans.Where(x => request.SelectedPlans.Contains(x.PlanId)).ToList();
             }
 
+            _ValidateSelectedPlans(request.ExportType, campaign.Plans);
+
+            AgencyDto agency = _TrafficApiCache.GetAgency(campaign.AgencyId);
+            AdvertiserDto advertiser = _TrafficApiCache.GetAdvertiser(campaign.AdvertiserId);
             var plans = campaign.Plans
                 .Select(x => _PlanRepository.GetPlan(x.PlanId)).ToList();
 
-            return new CampaignReportData(campaign, plans, _QuarterCalculationEngine);
+            List<PlanAudienceDisplay> guaranteedDemos = plans.Select(x => x.AudienceId).Distinct()
+                .Select(x=> _AudienceService.GetAudienceById(x)).ToList();
+
+            return new CampaignReportData(request.ExportType, campaign, plans, agency, advertiser, guaranteedDemos, 
+                _SpotLengthService.GetAllSpotLengths(), _QuarterCalculationEngine);
+        }
+
+        private void _ValidateSelectedPlans(CampaignExportTypeEnum exportType, List<PlanSummaryDto> plans)
+        {
+            const string MULTIPLE_POSTING_TYPES_EXCEPTION = "Cannot have multiple posting types in the export. Please select only plans with the same posting type.";
+            if (plans.Select(x=>x.PostingType).Distinct().Count() != 1)
+            {
+                throw new Exception(MULTIPLE_POSTING_TYPES_EXCEPTION);
+            }
         }
     }
 }

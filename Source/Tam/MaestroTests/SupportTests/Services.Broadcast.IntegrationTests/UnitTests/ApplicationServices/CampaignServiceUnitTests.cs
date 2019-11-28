@@ -37,6 +37,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             var campaignValidatorMock = new Mock<ICampaignValidator>();
             var mediaMonthAndWeekAggregateCache = new Mock<IMediaMonthAndWeekAggregateCache>();
             var quarterCalculationEngineMock = new Mock<IQuarterCalculationEngine>();
+            var audienceService = new Mock<IAudienceService>();
+            var spotLengthService = new Mock<ISpotLengthService>();
             var trafficApiCache = new TrafficApiCache(new TrafficApiClientStub());
             var agency = new AgencyDto { Id = 1, Name = "Name1" };
             var advertiser = new AdvertiserDto { Id = 2, Name = "Name2", AgencyId = 1 };
@@ -87,7 +89,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 _LockingManagerApplicationServiceMock.Object,
                 campaignAggregator.Object,
                 IntegrationTestApplicationServiceFactory.Instance.Resolve<ICampaignAggregationJobTrigger>(),
-                trafficApiCache);
+                trafficApiCache, audienceService.Object, spotLengthService.Object);
             var serExpectedResult = IntegrationTestHelper.ConvertToJson(getCampaignsReturn);
 
             // Act
@@ -120,6 +122,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             var agency = new AgencyDto { Id = 1, Name = "Name1" };
             var advertiser = new AdvertiserDto { Id = 2, Name = "Name2", AgencyId = 1 };
             var campaignAggregator = new Mock<ICampaignAggregator>();
+            var audienceService = new Mock<IAudienceService>();
+            var spotLengthService = new Mock<ISpotLengthService>();
             var getCampaignsReturn = new List<CampaignListItemDto>
             {
                 new CampaignListItemDto
@@ -170,7 +174,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 _LockingManagerApplicationServiceMock.Object,
                 campaignAggregator.Object,
                 IntegrationTestApplicationServiceFactory.Instance.Resolve<ICampaignAggregationJobTrigger>(),
-                trafficApiCache);
+                trafficApiCache, audienceService.Object, spotLengthService.Object);
 
             // Act
             var result = tc.GetCampaigns(null, _CreatedDate);
@@ -283,6 +287,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             var quarterCalculationEngineMock = new Mock<IQuarterCalculationEngine>();
             var campaignAggregator = new Mock<ICampaignAggregator>();
             var trafficApiCache = new Mock<ITrafficApiCache>();
+            var audienceService = new Mock<IAudienceService>();
+            var spotLengthService = new Mock<ISpotLengthService>();
             quarterCalculationEngineMock.Setup(x => x.GetQuarterDateRange(It.IsAny<int?>(), It.IsAny<int?>())).Returns(new DateRange(null, null));
             quarterCalculationEngineMock.Setup(x => x.GetQuarterRangeByDate(_CreatedDate)).Returns(new QuarterDetailDto());
             campaignRepositoryMock
@@ -298,7 +304,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 _LockingManagerApplicationServiceMock.Object,
                 campaignAggregator.Object,
                 IntegrationTestApplicationServiceFactory.Instance.Resolve<ICampaignAggregationJobTrigger>(),
-                trafficApiCache.Object);
+                trafficApiCache.Object, audienceService.Object, spotLengthService.Object);
 
             // Act
             var caught = Assert.Throws<Exception>(() => tc.GetCampaigns(It.IsAny<CampaignFilterDto>(), _CreatedDate));
@@ -334,6 +340,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             var campaignAggregationJobTrigger = new Mock<ICampaignAggregationJobTrigger>();
             var campaignSummaryRepo = new Mock<ICampaignSummaryRepository>();
             var trafficApiCache = new Mock<ITrafficApiCache>();
+            var audienceService = new Mock<IAudienceService>();
+            var spotLengthService = new Mock<ISpotLengthService>();
             dataRepositoryFactoryMock.Setup(s => s.GetDataRepository<ICampaignRepository>()).Returns(campaignRepositoryMock.Object);
             dataRepositoryFactoryMock.Setup(s => s.GetDataRepository<ICampaignSummaryRepository>()).Returns(campaignSummaryRepo.Object);
 
@@ -345,7 +353,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 _LockingManagerApplicationServiceMock.Object,
                 campaignAggregator.Object,
                 campaignAggregationJobTrigger.Object,
-                trafficApiCache.Object);
+                trafficApiCache.Object, audienceService.Object, spotLengthService.Object);
 
             // Act
             tc.SaveCampaign(campaign, _CreatedBy, _CreatedDate);
@@ -386,7 +394,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             var campaignSummaryRepo = new Mock<ICampaignSummaryRepository>();
             var campaignAggregationJobTrigger = new Mock<ICampaignAggregationJobTrigger>();
             var trafficApiCache = new Mock<ITrafficApiCache>();
-
+            var audienceService = new Mock<IAudienceService>();
+            var spotLengthService = new Mock<ISpotLengthService>();
             dataRepositoryFactoryMock.Setup(s => s.GetDataRepository<ICampaignRepository>()).Returns(campaignRepositoryMock.Object);
             dataRepositoryFactoryMock.Setup(s => s.GetDataRepository<ICampaignSummaryRepository>()).Returns(campaignSummaryRepo.Object);
 
@@ -398,7 +407,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 _LockingManagerApplicationServiceMock.Object,
                 campaignAggregator.Object,
                 campaignAggregationJobTrigger.Object,
-                trafficApiCache.Object);
+                trafficApiCache.Object, audienceService.Object, spotLengthService.Object);
 
             // Act
             tc.SaveCampaign(campaign, _CreatedBy, _CreatedDate);
@@ -440,7 +449,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             var quarterCalculationEngineMock = new Mock<IQuarterCalculationEngine>();
             var campaignAggregator = new Mock<ICampaignAggregator>();
             var trafficApiCache = new Mock<ITrafficApiCache>();
-
+            var audienceService = new Mock<IAudienceService>();
+            var spotLengthService = new Mock<ISpotLengthService>();
             campaignValidatorMock
                 .Setup(s => s.Validate(It.IsAny<SaveCampaignDto>()))
                 .Callback<SaveCampaignDto>(x => throw new Exception(expectedMessage));
@@ -453,7 +463,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 _LockingManagerApplicationServiceMock.Object,
                 campaignAggregator.Object,
                 IntegrationTestApplicationServiceFactory.Instance.Resolve<ICampaignAggregationJobTrigger>(),
-                trafficApiCache.Object);
+                trafficApiCache.Object, audienceService.Object, spotLengthService.Object);
 
             // Act
             var caught = Assert.Throws<Exception>(() => tc.SaveCampaign(campaign, _CreatedBy, _CreatedDate));
@@ -495,7 +505,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             var quarterCalculationEngineMock = new Mock<IQuarterCalculationEngine>();
             var campaignAggregator = new Mock<ICampaignAggregator>();
             var trafficApiCache = new Mock<ITrafficApiCache>();
-
+            var audienceService = new Mock<IAudienceService>();
+            var spotLengthService = new Mock<ISpotLengthService>();
             campaignRepositoryMock
                 .Setup(s => s.CreateCampaign(It.IsAny<SaveCampaignDto>(), It.IsAny<string>(), It.IsAny<DateTime>()))
                 .Callback(() => throw new Exception(expectedMessage));
@@ -509,7 +520,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 _LockingManagerApplicationServiceMock.Object,
                 campaignAggregator.Object,
                 IntegrationTestApplicationServiceFactory.Instance.Resolve<ICampaignAggregationJobTrigger>(),
-                trafficApiCache.Object);
+                trafficApiCache.Object, audienceService.Object, spotLengthService.Object);
 
             // Act
             var caught = Assert.Throws<Exception>(() => tc.SaveCampaign(campaign, _CreatedBy, _CreatedDate));
@@ -543,7 +554,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 new DateRange(new DateTime(2019, 1, 1), null),
                 new DateRange(new DateTime(2019, 2, 1), new DateTime(2019, 9, 1))
             };
-            
+            var audienceService = new Mock<IAudienceService>();
+            var spotLengthService = new Mock<ISpotLengthService>();
             dataRepositoryFactoryMock.Setup(x => x.GetDataRepository<ICampaignRepository>()).Returns(campaignRepositoryMock.Object);
             campaignRepositoryMock.Setup(x => x.GetCampaignsDateRanges(null)).Returns(getCampaignsDateRangesReturn);
             
@@ -555,7 +567,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 _LockingManagerApplicationServiceMock.Object,
                 campaignAggregator.Object,
                 IntegrationTestApplicationServiceFactory.Instance.Resolve<ICampaignAggregationJobTrigger>(),
-                trafficApiCache.Object);
+                trafficApiCache.Object, audienceService.Object, spotLengthService.Object);
 
             // Act
             var campaignQuarters = tc.GetQuarters(null, new DateTime(2019, 8, 20));
@@ -581,7 +593,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             var trafficApiCache = new Mock<ITrafficApiCache>();
             dataRepositoryFactoryMock.Setup(x => x.GetDataRepository<ICampaignRepository>()).Returns(campaignRepositoryMock.Object);
             campaignRepositoryMock.Setup(x => x.GetCampaignsDateRanges(null)).Returns(getCampaignsDateRangesReturn);
-
+            var audienceService = new Mock<IAudienceService>();
+            var spotLengthService = new Mock<ISpotLengthService>();
             var tc = new CampaignService(
                 dataRepositoryFactoryMock.Object,
                 campaignValidatorMock.Object,
@@ -590,7 +603,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 _LockingManagerApplicationServiceMock.Object,
                 campaignAggregator.Object,
                 IntegrationTestApplicationServiceFactory.Instance.Resolve<ICampaignAggregationJobTrigger>(),
-                trafficApiCache.Object);
+                trafficApiCache.Object, audienceService.Object, spotLengthService.Object);
 
             // Act
             var campaignQuarters = tc.GetQuarters(null, new DateTime(2019, 8, 20));
@@ -631,7 +644,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             campaignRepositoryMock.Setup(x => x.GetCampaignsDateRanges(It.IsAny<PlanStatusEnum?>())).Returns(getCampaignsDateRangesReturn);
             campaignSummaryRepository.Setup(s => s.SaveSummary(It.IsAny<CampaignSummaryDto>())).Returns(1);
             var campaignAggJobTrigger = new Mock<ICampaignAggregationJobTrigger>();
-
+            var audienceService = new Mock<IAudienceService>();
+            var spotLengthService = new Mock<ISpotLengthService>();
             var tc = new CampaignService(
                 dataRepositoryFactoryMock.Object,
                 campaignValidatorMock.Object,
@@ -640,7 +654,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 _LockingManagerApplicationServiceMock.Object,
                 campaignAggregator.Object,
                 campaignAggJobTrigger.Object,
-                trafficApiCache.Object);
+                trafficApiCache.Object, audienceService.Object, spotLengthService.Object);
 
             tc.SaveCampaign(campaign, _CreatedBy, _CreatedDate);
 
@@ -658,6 +672,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             var campaignAggregator = new Mock<ICampaignAggregator>();
             var campaignAggJobTrigger = new Mock<ICampaignAggregationJobTrigger>();
             var trafficApiCache = new Mock<ITrafficApiCache>();
+            var audienceService = new Mock<IAudienceService>();
+            var spotLengthService = new Mock<ISpotLengthService>();
             var tc = new CampaignService(
                 dataRepositoryFactoryMock.Object,
                 campaignValidatorMock.Object,
@@ -666,7 +682,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 _LockingManagerApplicationServiceMock.Object,
                 campaignAggregator.Object,
                 campaignAggJobTrigger.Object,
-                trafficApiCache.Object);
+                trafficApiCache.Object, audienceService.Object, spotLengthService.Object);
 
             tc.TriggerCampaignAggregationJob(campaignId, _CreatedBy);
 
@@ -693,6 +709,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 .Returns(new CampaignSummaryDto());
             campaignSummaryRepository.Setup(s => s.SaveSummary(It.IsAny<CampaignSummaryDto>()))
                 .Returns(1);
+            var audienceService = new Mock<IAudienceService>();
+            var spotLengthService = new Mock<ISpotLengthService>();
             var tc = new CampaignService(
                 dataRepositoryFactoryMock.Object,
                 campaignValidatorMock.Object,
@@ -701,7 +719,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 _LockingManagerApplicationServiceMock.Object,
                 campaignAggregator.Object,
                 IntegrationTestApplicationServiceFactory.Instance.Resolve<ICampaignAggregationJobTrigger>(),
-                trafficApiCache.Object);
+                trafficApiCache.Object, audienceService.Object, spotLengthService.Object);
 
             tc.ProcessCampaignAggregation(campaignId);
             
@@ -730,6 +748,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 .Returns(new CampaignSummaryDto());
             campaignSummaryRepository.Setup(s => s.SaveSummary(It.IsAny<CampaignSummaryDto>()))
                 .Throws(new Exception("Error from SaveSummary"));
+            var audienceService = new Mock<IAudienceService>();
+            var spotLengthService = new Mock<ISpotLengthService>();
             var tc = new CampaignService(
                 dataRepositoryFactoryMock.Object,
                 campaignValidatorMock.Object,
@@ -738,7 +758,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 _LockingManagerApplicationServiceMock.Object,
                 campaignAggregator.Object,
                 IntegrationTestApplicationServiceFactory.Instance.Resolve<ICampaignAggregationJobTrigger>(),
-                trafficApiCache.Object);
+                trafficApiCache.Object, audienceService.Object, spotLengthService.Object);
 
             var caught = Assert.Throws<Exception>(() => tc.ProcessCampaignAggregation(campaignId));
 

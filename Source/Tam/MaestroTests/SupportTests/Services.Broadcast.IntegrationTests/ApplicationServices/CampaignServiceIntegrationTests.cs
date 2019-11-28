@@ -24,6 +24,8 @@ using Tam.Maestro.Services.ContractInterfaces;
 using Services.Broadcast.Entities.Campaign;
 using Services.Broadcast.ReportGenerators;
 using System.IO;
+using Services.Broadcast.Clients;
+using Services.Broadcast.IntegrationTests.Stubs;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
@@ -172,7 +174,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     lockingManagerApplicationServiceMock.Object,
                     IntegrationTestApplicationServiceFactory.Instance.Resolve<ICampaignAggregator>(),
                     IntegrationTestApplicationServiceFactory.Instance.Resolve<ICampaignAggregationJobTrigger>(),
-                    IntegrationTestApplicationServiceFactory.Instance.Resolve<ITrafficApiCache>()
+                    IntegrationTestApplicationServiceFactory.Instance.Resolve<ITrafficApiCache>(),
+                    IntegrationTestApplicationServiceFactory.Instance.Resolve<IAudienceService>(),
+                    IntegrationTestApplicationServiceFactory.Instance.Resolve<ISpotLengthService>()
                     );
 
                 var campaign = _GetValidCampaignForSave();
@@ -552,18 +556,21 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Universe = 3000000,
             };
         }
-        
+
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void CampaignExport_AllPlans()
         {
             using (new TransactionScopeWrapper())
             {
-                var reportData = _CampaignService.GetCampaignReportData(new CampaignReportRequest { CampaignId = 596 });
+                IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<ITrafficApiCache>(new TrafficApiCacheStub());
+                var _CampaignService = IntegrationTestApplicationServiceFactory.GetApplicationService<ICampaignService>();
+
+                var reportData = _CampaignService.GetCampaignReportData(new CampaignReportRequest { CampaignId = 596, ExportType = CampaignExportTypeEnum.Contract });
                 var reportOutput = new CampaignReportGenerator().Generate(reportData);
-                
-                //write excel file to file system (this is used for manual testing only)
-                //using (var destinationFileStream = new FileStream(@"C:\temp\plan-excel-generation\CampaignExport_AllPlans.xlsx", FileMode.OpenOrCreate))
+
+                //write excel file to file system(this is used for manual testing only)
+                //using (var destinationFileStream = new FileStream($@"C:\temp\plan-excel-generation\{reportOutput.Filename}", FileMode.OpenOrCreate))
                 //{
                 //    while (reportOutput.Stream.Position < reportOutput.Stream.Length)
                 //    {
@@ -581,12 +588,20 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var reportData = _CampaignService.GetCampaignReportData(new CampaignReportRequest { CampaignId = 596, SelectedPlans = new List<int> { 1540 , 1541} });
+                IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<ITrafficApiCache>(new TrafficApiCacheStub());
+                var _CampaignService = IntegrationTestApplicationServiceFactory.GetApplicationService<ICampaignService>();
+
+                var reportData = _CampaignService.GetCampaignReportData(new CampaignReportRequest
+                {
+                    CampaignId = 596,
+                    SelectedPlans = new List<int> { 1540, 1541 },
+                    ExportType = CampaignExportTypeEnum.Contract
+                });
 
                 var reportOutput = new CampaignReportGenerator().Generate(reportData);
 
                 //write excel file to file system (this is used for manual testing only)
-                //using (var destinationFileStream = new FileStream(@"C:\temp\plan-excel-generation\CampaignExport_SelectedPlans.xlsx", FileMode.OpenOrCreate))
+                //using (var destinationFileStream = new FileStream($@"C:\temp\plan-excel-generation\{reportOutput.Filename}", FileMode.OpenOrCreate))
                 //{
                 //    while (reportOutput.Stream.Position < reportOutput.Stream.Length)
                 //    {

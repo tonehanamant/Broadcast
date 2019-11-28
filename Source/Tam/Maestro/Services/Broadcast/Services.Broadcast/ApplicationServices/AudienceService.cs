@@ -22,6 +22,13 @@ namespace Services.Broadcast.ApplicationServices
         /// </summary>
         /// <returns>List of LookupDto objects</returns>
         List<PlanAudienceDisplay> GetAudiences();
+
+        /// <summary>
+        /// Gets the audience by identifier.
+        /// </summary>
+        /// <param name="audienceId">The audience identifier.</param>
+        /// <returns></returns>
+        PlanAudienceDisplay GetAudienceById(int audienceId);
     }
 
     public class AudienceService : IAudienceService
@@ -49,6 +56,19 @@ namespace Services.Broadcast.ApplicationServices
                     Code = x.Code,
                     Display = x.Name
                 }).ToList();
+        }
+
+        ///<inheritdoc/>
+        public PlanAudienceDisplay GetAudienceById(int audienceId)
+        {
+            return _AudiencesCache.GetAllEntities()
+                .Where(x=>x.Id == audienceId)
+                .Select(x => new PlanAudienceDisplay
+                {
+                    Id = x.Id,
+                    Code = x.Code,
+                    Display = x.Name
+                }).Single(x=>x.Id == audienceId, $"Could not find audience with id = {audienceId}");
         }
     }
 }

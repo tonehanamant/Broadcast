@@ -6,5 +6,6 @@ namespace Services.Broadcast.Entities.Campaign
     {
         public int CampaignId { get; set; }
         public List<int> SelectedPlans { get; set; } = new List<int>();
+        public CampaignExportTypeEnum ExportType { get; set; }
     }
 }

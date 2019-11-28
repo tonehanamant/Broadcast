@@ -318,6 +318,7 @@
     <Compile Include="Clients\ProgramGuideApiClientSimulator.cs" />
     <Compile Include="Clients\ProgramsSearchApiClient.cs" />
     <Compile Include="Converters\RateImport\BaseInventoryFileImporter.cs" />
+    <Compile Include="Entities\Campaign\CampaignExportTypeEnum.cs" />
     <Compile Include="Entities\Campaign\CampaignReportData.cs" />
     <Compile Include="Entities\Campaign\CampaignReportRequest.cs" />
     <Compile Include="Entities\Campaign\CampaignWithSummary.cs" />
