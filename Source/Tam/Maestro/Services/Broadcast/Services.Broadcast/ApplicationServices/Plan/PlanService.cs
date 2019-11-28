@@ -111,13 +111,18 @@ namespace Services.Broadcast.ApplicationServices.Plan
         bool DeletePlanDraft(int planId);
 
         /// <summary>
+        /// Automatics the status transitions hangfire job entry point.
+        /// </summary>
+        [Queue("planstatustransition")]
+        void AutomaticStatusTransitionsJobEntryPoint();
+
+        /// <summary>
         /// The logic for automatic status transitioning
         /// </summary>
         /// <param name="transitionDate">The transition date.</param>
         /// <param name="updatedBy">The updated by.</param>
         /// <param name="updatedDate">The updated date.</param>
         /// <param name="aggregatePlanSynchronously"></param>
-        [Queue("planstatustransition")]
         void AutomaticStatusTransitions(DateTime transitionDate, string updatedBy, DateTime updatedDate, bool aggregatePlanSynchronously = false);
     }
 
@@ -523,6 +528,14 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
         // attribute has to be on the class instead of the interface because this is a recurring job.
         [AutomaticRetry(Attempts = 2, DelaysInSeconds = new int[] { 5 * 60 }, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
+        public void AutomaticStatusTransitionsJobEntryPoint()
+        {
+            var transitionDate = DateTime.Today;
+            var updatedBy = "automated status update";
+            var updatedDate = DateTime.Now;
+            AutomaticStatusTransitions(transitionDate, updatedBy, updatedDate, false);
+        }
+        
         public void AutomaticStatusTransitions(DateTime transitionDate, string updatedBy, DateTime updatedDate, bool aggregatePlanSynchronously = false)
         {
             var plansToTransition = _PlanRepository.GetPlansForAutomaticTransition(transitionDate);
