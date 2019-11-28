@@ -190,10 +190,10 @@ namespace Services.Broadcast.ApplicationServices.Plan
             plan.Universe = _NsiUniverseService.GetAudienceUniverseForMediaMonth(plan.ShareBookId, plan.AudienceId);
             _CalculateHouseholdDeliveryData(plan);
             _CalculateSecondaryAudiencesDeliveryData(plan);
+            _SetPlanVersionNumber(plan);
 
             if (plan.VersionId == 0 || plan.Id == 0)
-            {   //this is a new plan, so we're saving version 1
-                plan.VersionNumber = 1;
+            {
                 _PlanRepository.SaveNewPlan(plan, createdBy, createdDate);
             }
             else
@@ -205,14 +205,10 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 {
                     if (plan.IsDraft)
                     {
-                        //this is a draft. we create it if none exist or we update it otherwise
-                        plan.VersionNumber = null;
                         _PlanRepository.CreateOrUpdateDraft(plan, createdBy, createdDate);
                     }
                     else
                     {
-                        //this is a new version.
-                        plan.VersionNumber = _PlanRepository.GetLatestVersionNumberForPlan(plan.Id) + 1;
                         _PlanRepository.SavePlan(plan, createdBy, createdDate);
                     }
                 }
@@ -555,6 +551,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                         plan.Status = PlanStatusEnum.Complete;
                     }
 
+                    _SetPlanVersionNumber(plan);
                     _PlanRepository.SavePlan(plan, updatedBy, updatedDate);
 
                     _DispatchPlanAggregation(plan, aggregatePlanSynchronously);
@@ -566,6 +563,25 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 }
 
                 _LockingManagerApplicationService.ReleaseObject(key);
+            }
+        }
+
+        private void _SetPlanVersionNumber(PlanDto plan)
+        {
+            if (plan.VersionId == 0 || plan.Id == 0)
+            {
+                //this is a new plan, so we're saving version 1
+                plan.VersionNumber = 1;
+            }
+            else if (plan.IsDraft)
+            {
+                //this is a draft. we create it if none exist or we update it otherwise
+                plan.VersionNumber = null;
+            }
+            else
+            {
+                //this is a new version.
+                plan.VersionNumber = _PlanRepository.GetLatestVersionNumberForPlan(plan.Id) + 1;
             }
         }
 

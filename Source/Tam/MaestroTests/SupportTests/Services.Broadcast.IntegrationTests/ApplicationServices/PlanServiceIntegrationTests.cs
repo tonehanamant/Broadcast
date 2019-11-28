@@ -832,11 +832,15 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var newPlanId = _PlanService.SavePlan(testPlan, "integration_test",
                     new DateTime(2019, 01, 01));
 
+                var newPlan = _PlanService.GetPlan(newPlanId);
+                Assert.AreEqual(newPlan.VersionNumber, 1);
+
                 _PlanService.AutomaticStatusTransitions(new DateTime(2019, 01, 01), "integration_test", new DateTime(2019, 01, 01));
 
                 var updatedPlan = _PlanService.GetPlan(newPlanId);
 
                 Assert.AreEqual(updatedPlan.Status, PlanStatusEnum.Live);
+                Assert.AreEqual(updatedPlan.VersionNumber, 2);
             }
         }
 
@@ -851,11 +855,15 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var newPlanId = _PlanService.SavePlan(testPlan, "integration_test",
                     new DateTime(2019, 01, 01));
 
+                var newPlan = _PlanService.GetPlan(newPlanId);
+                Assert.AreEqual(newPlan.VersionNumber, 1);
+
                 _PlanService.AutomaticStatusTransitions(new DateTime(2019, 02, 01), "integration_test", new DateTime(2019, 02, 01));
 
                 var updatedPlan = _PlanService.GetPlan(newPlanId);
 
                 Assert.AreEqual(updatedPlan.Status, PlanStatusEnum.Complete);
+                Assert.AreEqual(updatedPlan.VersionNumber, 2);
             }
         }
 

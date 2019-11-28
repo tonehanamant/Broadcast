@@ -116,6 +116,18 @@ BEGIN
 END
 /*************************************** END PRI-18180 *****************************************************/
 
+/*************************************** START - PRI-16186 ****************************************************/
+UPDATE [plan_versions]
+SET [version_number] = (SELECT versioned.vn
+						FROM (SELECT ROW_NUMBER() OVER(ORDER BY id ASC) AS vn, pv.id, pv.plan_id FROM plan_versions AS pv WHERE pv.plan_id = pv1.plan_id AND 0 = is_draft) AS versioned
+						WHERE versioned.id = pv1.id)
+FROM [plan_versions] AS pv1
+WHERE pv1.plan_id IN (SELECT plan_id FROM plan_versions AS pv 
+						GROUP BY plan_id
+						HAVING MAX(pv.version_number) != COUNT(*))
+/*************************************** END - PRI-16186 ****************************************************/
+
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version
