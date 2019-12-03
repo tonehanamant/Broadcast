@@ -1,9 +1,9 @@
-﻿using System;
-using ApprovalTests;
+﻿using ApprovalTests;
 using ApprovalTests.Reporters;
 using IntegrationTests.Common;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
+using System;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
@@ -26,6 +26,15 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var shareBooks = _PostingBookService.GetHUTBooks(437);
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(shareBooks));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetMonthlyBooks()
+        {
+            var books = _PostingBookService.GetMonthlyBooks(437);
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(books));
         }
     }
 }

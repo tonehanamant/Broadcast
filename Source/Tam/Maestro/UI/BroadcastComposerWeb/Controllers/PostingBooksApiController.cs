@@ -54,7 +54,7 @@ namespace BroadcastComposerWeb.Controllers
         [Route("HUT")]
         public BaseResponse<List<LookupDto>> GetHutBooks(int shareBookId)
         {
-            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPostingBookService>().GetHUTBooks(shareBookId));
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPostingBookService>().GetMonthlyBooks(shareBookId));
         }
     }
 }
