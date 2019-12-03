@@ -2,10 +2,10 @@
 
 namespace Services.Broadcast.Entities.Enums
 {
-    // Order is important because jobs are prioritized by the order of the queues
-    // queue names must be lowercase when handed to hangfire
     public enum QueueEnum
     {
+        [Display(Name = "planpricing")]
+        PlanPricing,
         [Display(Name = "campaignaggregation")]
         CampaignAggregation,
         [Display(Name = "planstatustransition")]

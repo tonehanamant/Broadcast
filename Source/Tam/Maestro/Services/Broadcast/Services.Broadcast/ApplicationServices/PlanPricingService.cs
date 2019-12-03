@@ -24,6 +24,8 @@ namespace Services.Broadcast.ApplicationServices
     {
         PlanPricingJob QueuePricingJob(PlanPricingParametersDto planPricingParametersDto, DateTime currentDate);
         PlanPricingResponseDto GetCurrentPricingExecution(int planId);
+        [Queue("planpricing")]
+        [AutomaticRetry(Attempts = 0, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
         void RunPricingJob(PlanPricingParametersDto planPricingParametersDto, int jobId);
         List<PlanPricingApiRequestParametersDto> GetPlanPricingRuns(int planId);
 
@@ -105,10 +107,10 @@ namespace Services.Broadcast.ApplicationServices
 
                     _PlanRepository.SavePlanPricingParameters(planPricingParametersDto);
 
-                    _BackgroundJobClient.Enqueue<IPlanPricingService>(x => x.RunPricingJob(planPricingParametersDto, jobId));
-
                     transaction.Complete();
                 }
+
+                _BackgroundJobClient.Enqueue<IPlanPricingService>(x => x.RunPricingJob(planPricingParametersDto, job.Id));
 
                 return job;
             }

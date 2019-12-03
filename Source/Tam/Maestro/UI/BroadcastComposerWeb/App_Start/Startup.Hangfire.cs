@@ -97,6 +97,7 @@ namespace BroadcastComposerWeb
             return new[]
             {
                 Enum.GetName(typeof(QueueEnum), QueueEnum.InventoryRating),
+                Enum.GetName(typeof(QueueEnum), QueueEnum.PlanPricing),
                 Enum.GetName(typeof(QueueEnum), QueueEnum.InventorySummaryAggregation),
                 Enum.GetName(typeof(QueueEnum), QueueEnum.InventoryProgramEnrichment),
                 Enum.GetName(typeof(QueueEnum), QueueEnum.ScxFileGeneration),
