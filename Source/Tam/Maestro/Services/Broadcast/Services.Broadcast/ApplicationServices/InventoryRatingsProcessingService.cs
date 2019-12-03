@@ -236,8 +236,10 @@ namespace Services.Broadcast.ApplicationServices
                 }
                 _InventoryFileRatingsJobsRepository.UpdateJob(job);
 
-                _BackgroundJobClient.Enqueue<IInventorySummaryService>(
-                    x => x.AggregateInventorySummaryData(new List<int> { inventorySource.Id }));
+                // Commenting out to be replaced per PRI-18981 : QA Performance Spike
+                // until then manually trigger aggregation with the Maintenance page.
+                //_BackgroundJobClient.Enqueue<IInventorySummaryService>(
+                //    x => x.AggregateInventorySummaryData(new List<int> { inventorySource.Id }));
 
                 return inventoryFile.InventorySource.Id;
             }
