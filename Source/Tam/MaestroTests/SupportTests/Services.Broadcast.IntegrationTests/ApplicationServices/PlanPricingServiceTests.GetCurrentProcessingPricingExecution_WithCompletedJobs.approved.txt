@@ -9,6 +9,12 @@
     "Status": 2
   },
   "Result": {
-    "Programs": null
+    "Programs": [],
+    "Totals": {
+      "AvgCpm": 0.0,
+      "AvgImpressions": 0.0,
+      "MarketCount": 0,
+      "StationCount": 0
+    }
   }
 }

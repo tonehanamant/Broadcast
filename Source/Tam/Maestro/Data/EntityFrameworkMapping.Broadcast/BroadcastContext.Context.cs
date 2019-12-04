@@ -130,7 +130,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<station_inventory_manifest_weeks> station_inventory_manifest_weeks { get; set; }
         public virtual DbSet<station> stations { get; set; }
         public virtual DbSet<inventory_file_ratings_jobs> inventory_file_ratings_jobs { get; set; }
-        public virtual DbSet<daypart_codes> daypart_codes { get; set; }
         public virtual DbSet<inventory_file_proprietary_header> inventory_file_proprietary_header { get; set; }
         public virtual DbSet<station_inventory_manifest_weeks_history> station_inventory_manifest_weeks_history { get; set; }
         public virtual DbSet<inventory_source_logos> inventory_source_logos { get; set; }
@@ -169,5 +168,8 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<plan_version_pricing_inventory_source_percentages> plan_version_pricing_inventory_source_percentages { get; set; }
         public virtual DbSet<plan_version_pricing_parameters> plan_version_pricing_parameters { get; set; }
         public virtual DbSet<plan_version_pricing_parameters_inventory_source_percentages> plan_version_pricing_parameters_inventory_source_percentages { get; set; }
+        public virtual DbSet<plan_version_pricing_api_result_spots> plan_version_pricing_api_result_spots { get; set; }
+        public virtual DbSet<plan_version_pricing_api_results> plan_version_pricing_api_results { get; set; }
+        public virtual DbSet<daypart_codes> daypart_codes { get; set; }
     }
 }

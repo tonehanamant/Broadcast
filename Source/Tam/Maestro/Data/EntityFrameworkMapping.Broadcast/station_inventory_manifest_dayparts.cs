@@ -31,7 +31,7 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual station_inventory_manifest station_inventory_manifest { get; set; }
         public virtual ICollection<station_inventory_manifest_daypart_genres> station_inventory_manifest_daypart_genres { get; set; }
         public virtual ICollection<pricing_guide_distribution_open_market_inventory> pricing_guide_distribution_open_market_inventory { get; set; }
-        public virtual daypart_codes daypart_codes { get; set; }
         public virtual ICollection<station_inventory_manifest_daypart_programs> station_inventory_manifest_daypart_programs { get; set; }
+        public virtual daypart_codes daypart_codes { get; set; }
     }
 }

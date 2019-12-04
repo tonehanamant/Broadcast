@@ -359,6 +359,7 @@
     <Compile Include="Entities\InventoryFileRatingsJobDiagnostics.cs" />
     <Compile Include="Entities\InventorySummary\InventoryUploadHistory.cs" />
     <Compile Include="Entities\Plan\PlanAudienceDisplay.cs" />
+    <Compile Include="Entities\Plan\Pricing\PlanPricingApiResultDto.cs" />
     <Compile Include="Entities\Plan\Pricing\PlanPricingDefaults.cs" />
     <Compile Include="Entities\Plan\Pricing\PlanPricingInventorySourceDto.cs" />
     <Compile Include="Entities\Plan\Pricing\PlanPricingJobDiagnostic.cs" />
@@ -371,7 +372,7 @@
     <Compile Include="Entities\Plan\Pricing\PlanPricingApiRequestParametersDto.cs" />
     <Compile Include="Entities\Plan\Pricing\PlanPricingApiRequestDto.cs" />
     <Compile Include="Entities\Plan\Pricing\PlanPricingApiResponsetDto.cs" />
-    <Compile Include="Entities\Plan\Pricing\PlanPricingApiResultDto.cs" />
+    <Compile Include="Entities\Plan\Pricing\PlanPricingApiMinimumCostResultDto.cs" />
     <Compile Include="Entities\Plan\Pricing\PlanPricingResponseDto.cs" />
     <Compile Include="Entities\Plan\Pricing\PlanPricingResultDto.cs" />
     <Compile Include="Entities\Plan\PlanLockResponse.cs" />

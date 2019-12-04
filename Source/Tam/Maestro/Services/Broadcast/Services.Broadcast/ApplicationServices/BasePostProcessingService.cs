@@ -1,5 +1,5 @@
 ﻿using Common.Services;
-using Common.Services.ApplicationServices;
+using ConfigurationService.Client;
 using Newtonsoft.Json;
 using Services.Broadcast.ApplicationServices.Helpers;
 using Services.Broadcast.Cache;
@@ -13,10 +13,8 @@ using System.Linq;
 using System.Net.Mail;
 using System.Text;
 using System.Text.RegularExpressions;
-using ConfigurationService.Client;
 using Tam.Maestro.Common;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
-using Tam.Maestro.Services.Clients;
 using Tam.Maestro.Services.ContractInterfaces;
 
 namespace Services.Broadcast.ApplicationServices

@@ -168,9 +168,24 @@ namespace Services.Broadcast.ApplicationServices
                 Job = job,
                 Result = new PlanPricingResultDto
                 {
+                    Totals = _GetMockTotals(job),
                     Programs = _GetMockPrograms(job)
                 },
                 IsPricingModelRunning = IsPricingModelRunning(job)
+            };
+        }
+
+        private PlanPricingTotalsDto _GetMockTotals(PlanPricingJob job)
+        {
+            if (job == null || job.Status != BackgroundJobProcessingStatus.Succeeded)
+                return new PlanPricingTotalsDto();
+
+            return new PlanPricingTotalsDto
+            {
+                AvgCpm = 12.5m,
+                AvgImpressions = 124542.221,
+                MarketCount = 2,
+                StationCount = 79
             };
         }
 
@@ -188,7 +203,7 @@ namespace Services.Broadcast.ApplicationServices
         private List<PlanPricingProgramDto> _GetMockPrograms(PlanPricingJob job)
         {
             if (job == null || job.Status != BackgroundJobProcessingStatus.Succeeded)
-                return null;
+                return new List<PlanPricingProgramDto>();
 
             return new List<PlanPricingProgramDto>
             {
@@ -309,16 +324,16 @@ namespace Services.Broadcast.ApplicationServices
             return pricingPrograms;
         }
 
-        private List<PricingModelSpotsDto> _GetPricingModelSpots(List<ProposalProgramDto> programs)
+        private List<PlanPricingApiRequestSpotsDto> _GetPricingModelSpots(List<ProposalProgramDto> programs)
         {
-            var pricingModelSpots = new List<PricingModelSpotsDto>();
+            var pricingModelSpots = new List<PlanPricingApiRequestSpotsDto>();
             var householdAudienceId = _AudienceCache.GetDefaultAudience().Id;
 
             foreach (var program in programs)
             {
                 foreach (var programWeek in program.FlightWeeks)
                 {
-                    pricingModelSpots.Add(new PricingModelSpotsDto
+                    pricingModelSpots.Add(new PlanPricingApiRequestSpotsDto
                     {
                         Id = program.ManifestId,
                         MediaWeekId = programWeek.MediaWeekId,
@@ -331,13 +346,13 @@ namespace Services.Broadcast.ApplicationServices
             return pricingModelSpots;
         }
 
-        private List<PricingModelWeekInputDto> _GetPricingModelWeeks(PlanDto plan)
+        private List<PlanPricingApiRequestWeekDto> _GetPricingModelWeeks(PlanDto plan)
         {
-            var pricingModelWeeks = new List<PricingModelWeekInputDto>();
+            var pricingModelWeeks = new List<PlanPricingApiRequestWeekDto>();
 
             foreach (var week in plan.WeeklyBreakdownWeeks)
             {
-                pricingModelWeeks.Add(new PricingModelWeekInputDto
+                pricingModelWeeks.Add(new PlanPricingApiRequestWeekDto
                 {
                     MediaWeekId = week.MediaWeekId,
                     Impressions = week.WeeklyImpressions
@@ -361,9 +376,10 @@ namespace Services.Broadcast.ApplicationServices
 
             try
             {
-                var plan = _PlanRepository.GetPlan(planPricingParametersDto.PlanId);
+                var planId = planPricingParametersDto.PlanId;
+                var plan = _PlanRepository.GetPlan(planId);
                 planPricingJobDiagnostic.RecordGatherInventoryStart();
-                var inventory = _PlanPricingInventoryEngine.GetInventoryForPlan(planPricingParametersDto.PlanId);
+                var inventory = _PlanPricingInventoryEngine.GetInventoryForPlan(planId);
                 planPricingJobDiagnostic.RecordGatherInventoryEnd();
                 var pricingMarkets = _MapToPlanPricingPrograms(plan);
                 var parameters = _GetPricingApiRequestParameters(planPricingParametersDto, plan, pricingMarkets);
@@ -385,6 +401,8 @@ namespace Services.Broadcast.ApplicationServices
 
                 using (var transaction = new TransactionScopeWrapper())
                 {
+                    _PlanRepository.SavePricingResults(planId, result);
+
                     _PlanRepository.SavePricingRequest(parameters);
 
                     _PlanRepository.UpdatePlanPricingJob(new PlanPricingJob

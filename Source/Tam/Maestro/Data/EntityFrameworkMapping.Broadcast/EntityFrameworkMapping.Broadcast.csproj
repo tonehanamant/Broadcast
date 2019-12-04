@@ -517,6 +517,12 @@
     <Compile Include="plan_version_flight_hiatus_days.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="plan_version_pricing_api_results.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="plan_version_pricing_api_result_spots.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="plan_version_pricing_executions.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>

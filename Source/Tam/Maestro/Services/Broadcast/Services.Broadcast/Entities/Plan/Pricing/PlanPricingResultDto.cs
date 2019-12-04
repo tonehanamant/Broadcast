@@ -5,7 +5,8 @@ namespace Services.Broadcast.Entities.Plan.Pricing
 {
     public class PlanPricingResultDto
     {
-       public List<PlanPricingProgramDto> Programs { get; set; }
+        public PlanPricingTotalsDto Totals { get; set; }
+        public List<PlanPricingProgramDto> Programs { get; set; }
     }
 
     public class PlanPricingProgramDto
@@ -17,5 +18,13 @@ namespace Services.Broadcast.Entities.Plan.Pricing
         public decimal AvgCpm { get; set; }
         public double AvgImpressions { get; set; }
         public double PercentageOfBuy { get; set; }
+    }
+
+    public class PlanPricingTotalsDto
+    {
+        public int MarketCount { get; set; }
+        public int StationCount { get; set; }
+        public decimal AvgCpm { get; set; }
+        public double AvgImpressions { get; set; }
     }
 }

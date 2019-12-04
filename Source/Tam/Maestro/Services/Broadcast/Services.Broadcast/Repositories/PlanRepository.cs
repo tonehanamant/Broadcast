@@ -115,6 +115,9 @@ namespace Services.Broadcast.Repositories
 
         PlanPricingJob GetLatestPricingJob(int planId);
         void SavePlanPricingParameters(PlanPricingParametersDto planPricingRequestDto);
+        void SavePricingResults(int planId, PlanPricingApiResponsetDto result);
+
+        PlanPricingApiResponsetDto GetPricingApiResults(int planId);
     }
 
     public class PlanRepository : BroadcastRepositoryBase, IPlanRepository
@@ -1054,5 +1057,71 @@ namespace Services.Broadcast.Repositories
                 context.SaveChanges();
             });
         }
+
+        public void SavePricingResults(int planId, PlanPricingApiResponsetDto result)
+        {
+            _InReadUncommitedTransaction(context =>
+            {
+                var plan = context.plans.Single(x => x.id == planId);
+                var planVersionId = plan.latest_version_id;
+                var previousResults = context.plan_version_pricing_api_results.Where(x => x.plan_version_id == planVersionId);
+
+                if (previousResults != null)
+                {
+                    context.plan_version_pricing_api_results.RemoveRange(previousResults);
+                }
+
+                var planPricingApiResult = new plan_version_pricing_api_results
+                {
+                    plan_version_id = planVersionId,
+                    optimal_cpm = result.Results.OptimalCpm
+                };
+
+                foreach (var spot in result.Results.Spots)
+                {
+                    var planPricingApiResultSpots = new plan_version_pricing_api_result_spots
+                    {
+                        station_inventory_manifest_id = spot.Id,
+                        media_week_id = spot.MediaWeekId,
+                        impressions = spot.Impressions,
+                        cost = spot.Cost,
+                        spots = spot.Spots
+                    };
+
+                    planPricingApiResult.plan_version_pricing_api_result_spots.Add(planPricingApiResultSpots);
+                }
+
+                context.plan_version_pricing_api_results.Add(planPricingApiResult);
+
+                context.SaveChanges();
+            });
+        }
+
+        public PlanPricingApiResponsetDto GetPricingApiResults(int planId)
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                var plan = context.plans.Single(x => x.id == planId);
+                var planVersionId = plan.latest_version_id;
+                var apiResult = context.plan_version_pricing_api_results.Single(p => p.plan_version_id == planVersionId);
+
+                return new PlanPricingApiResponsetDto
+                {
+                    Results = new PlanPricingApiResultDto
+                    {
+                        OptimalCpm = apiResult.optimal_cpm,
+                        Spots = apiResult.plan_version_pricing_api_result_spots.Select(r => new PlanPricingApiResultSpotDto
+                        {
+                            Id = r.id,
+                            Cost = r.cost,
+                            Impressions = r.impressions,
+                            MediaWeekId = r.media_week_id,
+                            Spots = r.spots
+                        }).ToList()
+                    }
+                };
+            });
+        }
+
     }
 }

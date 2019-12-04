@@ -23,8 +23,8 @@ namespace EntityFrameworkMapping.Broadcast
         public System.DateTime end_date { get; set; }
         public string unit_name { get; set; }
     
-        public virtual daypart_codes daypart_codes { get; set; }
         public virtual inventory_sources inventory_sources { get; set; }
         public virtual scx_generation_jobs scx_generation_jobs { get; set; }
+        public virtual daypart_codes daypart_codes { get; set; }
     }
 }

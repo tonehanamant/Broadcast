@@ -30,9 +30,9 @@ namespace EntityFrameworkMapping.Broadcast
         public Nullable<System.DateTime> completed_at { get; set; }
         public string requested_by { get; set; }
     
-        public virtual daypart_codes daypart_codes { get; set; }
         public virtual inventory_sources inventory_sources { get; set; }
         public virtual ICollection<scx_generation_job_files> scx_generation_job_files { get; set; }
         public virtual ICollection<scx_generation_job_units> scx_generation_job_units { get; set; }
+        public virtual daypart_codes daypart_codes { get; set; }
     }
 }

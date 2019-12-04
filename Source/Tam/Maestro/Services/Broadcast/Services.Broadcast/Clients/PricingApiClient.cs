@@ -1,5 +1,6 @@
 ﻿using Services.Broadcast.Entities.Plan.Pricing;
 using System;
+using System.Collections.Generic;
 using System.Net.Http;
 
 namespace Services.Broadcast.Clients
@@ -9,10 +10,38 @@ namespace Services.Broadcast.Clients
         PlanPricingApiResponsetDto GetPricingCalculationResult(PlanPricingApiRequestDto request);
     }
 
+    public class MockedResultsPricingApiClient : IPricingApiClient
+    {
+        public PlanPricingApiResponsetDto GetPricingCalculationResult(PlanPricingApiRequestDto request)
+        {
+            var spots = new List<PlanPricingApiResultSpotDto>();
+
+            foreach (var spot in request.Spots)
+            {
+                spots.Add(new PlanPricingApiResultSpotDto
+                {
+                    Id = spot.Id,
+                    MediaWeekId = spot.MediaWeekId,
+                    Cost = spot.Cost,
+                    Impressions = spot.Impressions,
+                    Spots = 3
+                });
+            }
+
+            return new PlanPricingApiResponsetDto
+            {
+                RequestId = Guid.NewGuid().ToString(),
+                Results = new PlanPricingApiResultDto
+                {
+                    Spots = spots
+                }
+            };
+        }
+    }
+
     public class PricingApiClient : IPricingApiClient
     {
         private readonly string _BaseUrl;
-
 
         public PricingApiClient()
         {

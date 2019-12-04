@@ -1,5 +1,6 @@
 ﻿using Services.Broadcast.Clients;
 using Services.Broadcast.Entities.Plan.Pricing;
+using System.Collections.Generic;
 
 namespace Services.Broadcast.IntegrationTests.Stubs
 {
@@ -12,7 +13,17 @@ namespace Services.Broadcast.IntegrationTests.Stubs
                 RequestId = "a3289ujvb3,s,aksa",
                 Results = new PlanPricingApiResultDto
                 {
-                    MinimumCost = 50
+                    Spots = new List<PlanPricingApiResultSpotDto>
+                    {
+                        new PlanPricingApiResultSpotDto
+                        {
+                            Id = 1,
+                            MediaWeekId = 200,
+                            Cost = 1000,
+                            Impressions = 1000,
+                            Spots = 1
+                        }
+                    }
                 }
             };
         }

@@ -26,6 +26,12 @@
         "ProgramName": "Good Morning America",
         "StationCount": 23
       }
-    ]
+    ],
+    "Totals": {
+      "AvgCpm": 12.5,
+      "AvgImpressions": 124542.221,
+      "MarketCount": 2,
+      "StationCount": 79
+    }
   }
 }

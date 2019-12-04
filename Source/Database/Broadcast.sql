@@ -153,6 +153,64 @@ BEGIN
     EXEC sp_rename 'dbo.campaign_summaries.household_rating_points', 'hh_rating_points', 'COLUMN';
 END
 /*************************************** END - PRI-18985 ****************************************************/
+/*************************************** START - PRI-16134 ****************************************************/
+
+IF OBJECT_ID('plan_version_pricing_api_results') IS NULL
+BEGIN
+	CREATE TABLE [dbo].[plan_version_pricing_api_results](
+		[id] [int] IDENTITY(1,1) NOT NULL,
+		[plan_version_id] [int] NOT NULL,
+		[optimal_cpm] [money] NOT NULL
+	 CONSTRAINT [PK_plan_version_pricing_api_results] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY]
+		
+	ALTER TABLE [dbo].[plan_version_pricing_api_results]  WITH CHECK ADD  CONSTRAINT [FK_plan_version_pricing_api_results_plan_versions] FOREIGN KEY([plan_version_id])
+	REFERENCES [dbo].[plan_versions] ([id])
+	ON DELETE CASCADE
+	
+	ALTER TABLE [dbo].[plan_version_pricing_api_results] CHECK CONSTRAINT [FK_plan_version_pricing_api_results_plan_versions]
+END
+
+IF OBJECT_ID('plan_version_pricing_api_result_spots') IS NULL
+BEGIN
+	CREATE TABLE [dbo].[plan_version_pricing_api_result_spots](
+		[id] [int] IDENTITY(1,1) NOT NULL,
+		[plan_version_pricing_api_results_id] [int] NOT NULL,
+		[station_inventory_manifest_id] [int] NOT NULL,
+		[media_week_id] [int] NOT NULL,
+		[impressions] [float] NOT NULL,
+		[cost] [money] NOT NULL,
+		[spots] [int] NOT NULL,
+	 CONSTRAINT [PK_plan_version_pricing_api_result_spots] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY]
+		
+	ALTER TABLE [dbo].[plan_version_pricing_api_result_spots]  WITH CHECK ADD  CONSTRAINT [FK_plan_version_pricing_api_result_spots_plan_version_pricing_api_results] FOREIGN KEY([plan_version_pricing_api_results_id])
+	REFERENCES [dbo].[plan_version_pricing_api_results] ([id])
+	ON DELETE CASCADE
+	
+	ALTER TABLE [dbo].[plan_version_pricing_api_result_spots] CHECK CONSTRAINT [FK_plan_version_pricing_api_result_spots_plan_version_pricing_api_results]
+	
+	ALTER TABLE [dbo].[plan_version_pricing_api_result_spots]  WITH CHECK ADD  CONSTRAINT [FK_plan_version_pricing_api_result_spots_station_inventory_manifest] FOREIGN KEY([station_inventory_manifest_id])
+	REFERENCES [dbo].[station_inventory_manifest] ([id])
+	ON DELETE CASCADE
+	
+	ALTER TABLE [dbo].[plan_version_pricing_api_result_spots] CHECK CONSTRAINT [FK_plan_version_pricing_api_result_spots_station_inventory_manifest]
+	
+	ALTER TABLE [dbo].[plan_version_pricing_api_result_spots]  WITH CHECK ADD  CONSTRAINT [FK_plan_version_pricing_api_result_spots_media_weeks] FOREIGN KEY([media_week_id])
+	REFERENCES [dbo].[media_weeks] ([id])
+	ON DELETE CASCADE
+	
+	ALTER TABLE [dbo].[plan_version_pricing_api_result_spots] CHECK CONSTRAINT [FK_plan_version_pricing_api_result_spots_media_weeks]
+END
+
+/*************************************** START - PRI-16134 ****************************************************/
+
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 

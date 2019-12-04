@@ -6,14 +6,14 @@ namespace Services.Broadcast.Entities.Plan.Pricing
     public class PlanPricingApiRequestDto
     {
         [JsonProperty("contract")]
-        public List<PricingModelWeekInputDto> Weeks { get; set; } = new List<PricingModelWeekInputDto>();
+        public List<PlanPricingApiRequestWeekDto> Weeks { get; set; } = new List<PlanPricingApiRequestWeekDto>();
         [JsonProperty("inventory")]
-        public List<PricingModelSpotsDto> Spots { get; set; } = new List<PricingModelSpotsDto>();
+        public List<PlanPricingApiRequestSpotsDto> Spots { get; set; } = new List<PlanPricingApiRequestSpotsDto>();
         [JsonProperty("params")]
         public PlanPricingApiRequestParametersDto Parameters { get; set; }
     }
 
-    public class PricingModelSpotsDto
+    public class PlanPricingApiRequestSpotsDto
     {
         [JsonProperty("id")]
         public int Id { get; set; }
@@ -25,7 +25,7 @@ namespace Services.Broadcast.Entities.Plan.Pricing
         public decimal Cost { get; set; }
     }
 
-    public class PricingModelWeekInputDto
+    public class PlanPricingApiRequestWeekDto
     {
         [JsonProperty("week_id")]
         public int MediaWeekId { get; set; }
