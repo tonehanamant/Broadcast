@@ -1,17 +1,18 @@
 ﻿using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
+using Hangfire;
+using Newtonsoft.Json;
 using Services.Broadcast.BusinessEngines;
+using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
-using Hangfire;
-using static Services.Broadcast.Entities.Enums.ProposalEnums;
-using Services.Broadcast.Entities;
 using System.Net;
 using System.Net.Sockets;
-using System.Diagnostics;
+using static Services.Broadcast.Entities.Enums.ProposalEnums;
 
 namespace Services.Broadcast.ApplicationServices
 {
@@ -122,6 +123,8 @@ namespace Services.Broadcast.ApplicationServices
                 throw new ApplicationException($"Job with id {jobId} was not found");
             }
 
+            var processDiagnostics = new InventoryFileRatingsJobDiagnostics {JobId = jobId};
+
             try
             {
                 var inventoryFile = _InventoryFileRepository.GetInventoryFileById(job.InventoryFileId);
@@ -137,18 +140,21 @@ namespace Services.Broadcast.ApplicationServices
                 _AddJobNote(jobId, $"Started processing. Machine info: {_GetMachineInfo()}");
 
                 var inventorySource = inventoryFile.InventorySource;
+                processDiagnostics.RecordJobStart(job.Id, inventoryFile.Id, inventorySource, DateTime.Now);
 
                 if (inventorySource.InventoryType == InventorySourceTypeEnum.Barter)
                 {
-                    var header =  _ProprietaryRepository.GetInventoryFileHeader(job.InventoryFileId);
+                    var header = _ProprietaryRepository.GetInventoryFileHeader(job.InventoryFileId);
                     var manifests = _InventoryRepository.GetStationInventoryManifestsByFileId(job.InventoryFileId);
 
                     // process impressions/cost
-                    _ImpressionsService.AddProjectedImpressionsToManifests(manifests, header.PlaybackType, header.ShareBookId.Value, header.HutBookId);
+                    _ImpressionsService.AddProjectedImpressionsToManifests(manifests, header.PlaybackType,
+                        header.ShareBookId.Value, header.HutBookId);
                     _ProprietarySpotCostCalculationEngine.CalculateSpotCost(manifests);
 
                     // process components impressions
-                    _ImpressionsService.AddProjectedImpressionsForComponentsToManifests(manifests, header.PlaybackType, header.ShareBookId.Value, header.HutBookId);
+                    _ImpressionsService.AddProjectedImpressionsForComponentsToManifests(manifests, header.PlaybackType,
+                        header.ShareBookId.Value, header.HutBookId);
 
                     // update manifest rates and audiences
                     _InventoryRepository.UpdateInventoryManifests(manifests);
@@ -165,7 +171,8 @@ namespace Services.Broadcast.ApplicationServices
                     _ProprietarySpotCostCalculationEngine.CalculateSpotCost(manifests, useProvidedImpressions: true);
 
                     //process components impressions
-                    _ImpressionsService.AddProjectedImpressionsForComponentsToManifests(manifests, header.PlaybackType, header.ShareBookId.Value, header.HutBookId);
+                    _ImpressionsService.AddProjectedImpressionsForComponentsToManifests(manifests, header.PlaybackType,
+                        header.ShareBookId.Value, header.HutBookId);
 
                     //update manifest rates
                     _InventoryRepository.UpdateInventoryManifests(manifests);
@@ -187,12 +194,22 @@ namespace Services.Broadcast.ApplicationServices
                 }
                 else if (inventorySource.InventoryType == InventorySourceTypeEnum.OpenMarket)
                 {
+                    processDiagnostics.RecordGatherInventoryStart();
                     var manifests = _InventoryRepository.GetStationInventoryManifestsByFileId(job.InventoryFileId);
-
                     // filter out manifests without weeks
                     manifests = manifests.Where(x => x.ManifestWeeks.Any()).ToList();
                     
-                    var allMediaMonthIds = manifests.SelectMany(x => x.ManifestWeeks).Select(x => x.MediaWeek.MediaMonthId).Distinct();
+                    processDiagnostics.ManifestCount = manifests.Count;
+                    processDiagnostics.StationCount = manifests.Select(m => m.Station).Distinct().Count();
+                    var manifestCheck = manifests.First();
+                    processDiagnostics.WeekCount = manifestCheck.ManifestWeeks.Count;
+                    processDiagnostics.DaypartCount = manifestCheck.ManifestDayparts.Count();
+                    processDiagnostics.AudienceCount = manifestCheck.ManifestAudiences.Count();
+                    processDiagnostics.RecordGatherInventoryStop();
+
+                    processDiagnostics.RecordOrganizeInventoryStart();
+                    var allMediaMonthIds = manifests.SelectMany(x => x.ManifestWeeks)
+                        .Select(x => x.MediaWeek.MediaMonthId).Distinct();
                     var allMediaMonths = _MediaMonthAndWeekAggregateCache.GetMediaMonthsByIds(allMediaMonthIds);
                     var manifestsGroupedByQuarter = manifests
                         .Select(x => new
@@ -201,28 +218,40 @@ namespace Services.Broadcast.ApplicationServices
 
                             // all weeks in a manifest belongs to a single quarter so that we can just take a first week and find its quarter
                             // see OpenMarketFileImporter._PopulateProgramsFromAvailLineWithPeriods for details
-                            quarter = allMediaMonths.Single(m => m.Id == x.ManifestWeeks.First().MediaWeek.MediaMonthId).QuarterAndYearText
+                            quarter = allMediaMonths.Single(m => m.Id == x.ManifestWeeks.First().MediaWeek.MediaMonthId)
+                                .QuarterAndYearText
                         })
-                        .GroupBy(x => x.quarter);
-                    //var sw = Stopwatch.StartNew();
+                        .GroupBy(x => x.quarter).ToList();
+
+                    processDiagnostics.QuartersCovered = manifestsGroupedByQuarter.Select(s => s.Key).ToList();
+                    processDiagnostics.RecordOrganizeInventoryStop();
+
+                    processDiagnostics.RecordProcessImpressionsTotalStart();
+                    
                     foreach (var manifestsGroup in manifestsGroupedByQuarter)
                     {
                         var quarterManifests = manifestsGroup.Select(x => x.manifest).ToList();
 
+                        processDiagnostics.RecordDeterminePostingBookStart();
                         // we can take any week of any manifest since all they belong to the same quarter
                         var postingBookDate = quarterManifests.First().ManifestWeeks.First().StartDate;
-                        var postingBook = _NsiPostingBookService.GetLatestNsiPostingBookForMonthContainingDate(postingBookDate);
+                        var postingBookId =
+                            _NsiPostingBookService.GetLatestNsiPostingBookForMonthContainingDate(postingBookDate);
 
-                        _ImpressionsService.AddProjectedImpressionsForComponentsToManifests(quarterManifests, defaultOpenMarketPlaybackType, postingBook);                       
+                        processDiagnostics.RecordDeterminePostingBookStop(manifestsGroup.Key, postingBookId);
+
+                        processDiagnostics.RecordAddImpressionsStart();
+                        _ImpressionsService.AddProjectedImpressionsForComponentsToManifests(quarterManifests,
+                            defaultOpenMarketPlaybackType, postingBookId);
+                        processDiagnostics.RecordAddImpressionsStop();
                     }
-                    //sw.Stop();
-                    //Debug.WriteLine($"=====> Completed impression calculation in {sw.Elapsed}ms");
+                    processDiagnostics.RecordProcessImpressionsTotalStop();
 
-                    // save all changes to DB
-                    //sw.Restart();
+                    processDiagnostics.RecordSaveManifestsStart();
+
                     _InventoryRepository.UpdateInventoryManifests(manifests);
-                    //sw.Stop();
-                    //Debug.WriteLine($"=====> Done saving manifest audiences in {sw.Elapsed}ms");
+
+                    processDiagnostics.RecordSaveManifestsStop();
 
                     job.Status = BackgroundJobProcessingStatus.Succeeded;
                     job.CompletedAt = DateTime.Now;
@@ -234,7 +263,11 @@ namespace Services.Broadcast.ApplicationServices
                     job.CompletedAt = DateTime.Now;
                     _AddJobNote(jobId, $"Cannot process unsupported type: {inventorySource.InventoryType}");
                 }
+
+                processDiagnostics.RecordJobCompleted(DateTime.Now);
+
                 _InventoryFileRatingsJobsRepository.UpdateJob(job);
+                _AddJobNote(jobId, JsonConvert.SerializeObject(processDiagnostics));
 
                 // Commenting out to be replaced per PRI-18981 : QA Performance Spike
                 // until then manually trigger aggregation with the Maintenance page.
@@ -243,10 +276,15 @@ namespace Services.Broadcast.ApplicationServices
 
                 return inventoryFile.InventorySource.Id;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
+                var completedAt = DateTime.Now;
                 job.Status = BackgroundJobProcessingStatus.Failed;
-                job.CompletedAt = DateTime.Now;
+                job.CompletedAt = completedAt;
+                processDiagnostics.RecordJobCompleted(completedAt);
+
+                _AddJobNote(jobId, JsonConvert.SerializeObject(processDiagnostics));
+
                 _InventoryFileRatingsJobsRepository.UpdateJob(job);
                 _AddJobNote(jobId, ex.ToString());
                 throw;

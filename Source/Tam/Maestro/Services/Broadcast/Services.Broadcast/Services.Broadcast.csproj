@@ -356,6 +356,7 @@
     <Compile Include="Entities\ImpressionsRequestDto.cs" />
     <Compile Include="Entities\InventoryFileProgramEnrichmentJob.cs" />
     <Compile Include="Entities\InventoryFileProgramEnrichmentJobDiagnostics.cs" />
+    <Compile Include="Entities\InventoryFileRatingsJobDiagnostics.cs" />
     <Compile Include="Entities\InventorySummary\InventoryUploadHistory.cs" />
     <Compile Include="Entities\Plan\PlanAudienceDisplay.cs" />
     <Compile Include="Entities\Plan\Pricing\PlanPricingDefaults.cs" />
