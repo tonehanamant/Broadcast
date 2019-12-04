@@ -5,71 +5,71 @@
     {
       "ActiveDays": "M-Su",
       "EndDate": "2019-08-11T00:00:00",
-      "Impressions": 142.85714286,
       "MediaWeekId": 815,
       "NumberOfActiveDays": 7,
-      "ShareOfVoice": 14.28571429,
       "StartDate": "2019-08-05T00:00:00",
+      "WeeklyImpressions": 142.85714286,
+      "WeeklyImpressionsPercentage": 14.28571429,
       "WeekNumber": 1
     },
     {
       "ActiveDays": "M-W,F-Su",
       "EndDate": "2019-08-18T00:00:00",
-      "Impressions": 142.85714286,
       "MediaWeekId": 816,
       "NumberOfActiveDays": 6,
-      "ShareOfVoice": 14.28571429,
       "StartDate": "2019-08-12T00:00:00",
+      "WeeklyImpressions": 142.85714286,
+      "WeeklyImpressionsPercentage": 14.28571429,
       "WeekNumber": 2
     },
     {
       "ActiveDays": "M-Su",
       "EndDate": "2019-08-25T00:00:00",
-      "Impressions": 142.85714286,
       "MediaWeekId": 817,
       "NumberOfActiveDays": 7,
-      "ShareOfVoice": 14.28571429,
       "StartDate": "2019-08-19T00:00:00",
+      "WeeklyImpressions": 142.85714286,
+      "WeeklyImpressionsPercentage": 14.28571429,
       "WeekNumber": 3
     },
     {
       "ActiveDays": "M-Su",
       "EndDate": "2019-09-01T00:00:00",
-      "Impressions": 142.85714286,
       "MediaWeekId": 818,
       "NumberOfActiveDays": 7,
-      "ShareOfVoice": 14.28571429,
       "StartDate": "2019-08-26T00:00:00",
+      "WeeklyImpressions": 142.85714286,
+      "WeeklyImpressionsPercentage": 14.28571429,
       "WeekNumber": 4
     },
     {
       "ActiveDays": "M-Su",
       "EndDate": "2019-09-08T00:00:00",
-      "Impressions": 142.85714286,
       "MediaWeekId": 819,
       "NumberOfActiveDays": 7,
-      "ShareOfVoice": 14.28571429,
       "StartDate": "2019-09-02T00:00:00",
+      "WeeklyImpressions": 142.85714286,
+      "WeeklyImpressionsPercentage": 14.28571429,
       "WeekNumber": 5
     },
     {
       "ActiveDays": "M-Su",
       "EndDate": "2019-09-15T00:00:00",
-      "Impressions": 142.85714286,
       "MediaWeekId": 820,
       "NumberOfActiveDays": 7,
-      "ShareOfVoice": 14.28571429,
       "StartDate": "2019-09-09T00:00:00",
+      "WeeklyImpressions": 142.85714286,
+      "WeeklyImpressionsPercentage": 14.28571429,
       "WeekNumber": 6
     },
     {
       "ActiveDays": "M-Th",
       "EndDate": "2019-09-22T00:00:00",
-      "Impressions": 142.85714286,
       "MediaWeekId": 821,
       "NumberOfActiveDays": 4,
-      "ShareOfVoice": 14.28571429,
       "StartDate": "2019-09-16T00:00:00",
+      "WeeklyImpressions": 142.85714286,
+      "WeeklyImpressionsPercentage": 14.28571429,
       "WeekNumber": 7
     }
   ]

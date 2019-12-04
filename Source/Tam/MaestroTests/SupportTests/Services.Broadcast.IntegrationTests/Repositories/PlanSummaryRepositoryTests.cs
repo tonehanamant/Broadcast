@@ -98,11 +98,11 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                 FlightStartDate = new DateTime(2019, 8, 1),
                 FlightEndDate = new DateTime(2019,9,1),
                 Budget = 500000m,
-                DeliveryImpressions = 50000000,
-                CPM = 10m,
+                TargetImpressions = 50000000,
+                TargetCPM = 10m,
                 CoverageGoalPercent = 60,
-                DeliveryRatingPoints = 0.00248816152650979,
-                CPP = 200951583.9999m
+                TargetRatingPoints = 0.00248816152650979,
+                TargetCPP = 200951583.9999m
             };
             _PlanRepository.SaveNewPlan(planDto, modifiedUser, modifiedDateTime);
             planId = planDto.Id;

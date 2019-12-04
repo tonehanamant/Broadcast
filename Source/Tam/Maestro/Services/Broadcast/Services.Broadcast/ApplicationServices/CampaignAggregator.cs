@@ -114,9 +114,9 @@ namespace Services.Broadcast.ApplicationServices
             }
 
             summary.Budget = filteredPlans.Sum(p => p.Budget);
-            summary.HouseholdImpressions = filteredPlans.Sum(p => p.HouseholdDeliveryImpressions);
-            summary.HouseholdCPM = (filteredPlans.Sum(p => p.Budget) / Convert.ToDecimal(summary.HouseholdImpressions)) * 1000;
-            summary.HouseholdRatingPoints = filteredPlans.Sum(p => p.HouseholdRatingPoints);
+            summary.HHImpressions = filteredPlans.Sum(p => p.HHImpressions);
+            summary.HHCPM = (filteredPlans.Sum(p => p.Budget) / Convert.ToDecimal(summary.HHImpressions)) * 1000;
+            summary.HHRatingPoints = filteredPlans.Sum(p => p.HHRatingPoints);
         }
 
         protected void AggregateCampaignStatus(List<PlanDto> plans, List<PlanDto> filteredPlans, CampaignSummaryDto summary)

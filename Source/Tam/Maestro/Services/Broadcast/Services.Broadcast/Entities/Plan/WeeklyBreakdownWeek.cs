@@ -10,7 +10,7 @@ namespace Services.Broadcast.Entities.Plan
         public DateTime EndDate { get; set; }
         public int NumberOfActiveDays { get; set; }
         public string ActiveDays { get; set; }
-        public double Impressions { get; set; }
-        public double ShareOfVoice { get; set; }
+        public double WeeklyImpressions { get; set; }
+        public double WeeklyImpressionsPercentage { get; set; }
     }
 }

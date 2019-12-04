@@ -127,6 +127,32 @@ WHERE pv1.plan_id IN (SELECT plan_id FROM plan_versions AS pv
 						HAVING MAX(pv.version_number) != COUNT(*))
 /*************************************** END - PRI-16186 ****************************************************/
 
+/*************************************** START - PRI-18985 ****************************************************/
+IF EXISTS(SELECT 1 FROM sys.columns WHERE name = 'delivery_rating_points' AND  object_id = OBJECT_ID('plan_version_secondary_audiences'))
+BEGIN		  
+    EXEC sp_rename 'dbo.plan_version_secondary_audiences.delivery_rating_points', 'rating_points', 'COLUMN';
+END
+
+IF EXISTS(SELECT 1 FROM sys.columns WHERE name = 'delivery_impressions' AND  object_id = OBJECT_ID('plan_version_secondary_audiences'))
+BEGIN		  
+    EXEC sp_rename 'dbo.plan_version_secondary_audiences.delivery_impressions', 'impressions', 'COLUMN';
+END
+
+IF EXISTS(SELECT 1 FROM sys.columns WHERE name = 'household_cpm' AND  object_id = OBJECT_ID('campaign_summaries'))
+BEGIN		  
+    EXEC sp_rename 'dbo.campaign_summaries.household_cpm', 'hh_cpm', 'COLUMN';
+END
+
+IF EXISTS(SELECT 1 FROM sys.columns WHERE name = 'household_delivery_impressions' AND  object_id = OBJECT_ID('campaign_summaries'))
+BEGIN		  
+    EXEC sp_rename 'dbo.campaign_summaries.household_delivery_impressions', 'hh_impressions', 'COLUMN';
+END
+
+IF EXISTS(SELECT 1 FROM sys.columns WHERE name = 'household_rating_points' AND  object_id = OBJECT_ID('campaign_summaries'))
+BEGIN		  
+    EXEC sp_rename 'dbo.campaign_summaries.household_rating_points', 'hh_rating_points', 'COLUMN';
+END
+/*************************************** END - PRI-18985 ****************************************************/
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 

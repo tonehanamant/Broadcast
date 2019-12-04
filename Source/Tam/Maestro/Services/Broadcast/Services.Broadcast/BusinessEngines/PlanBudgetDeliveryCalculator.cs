@@ -27,8 +27,8 @@ namespace Services.Broadcast.BusinessEngines
         ///<inheritdoc/>
         public PlanDeliveryBudget CalculateBudget(PlanDeliveryBudget input)
         {
-            if ((input.DeliveryImpressions.HasValue && input.DeliveryImpressions < 0)
-                || (input.DeliveryRatingPoints.HasValue && input.DeliveryRatingPoints < 0)
+            if ((input.Impressions.HasValue && input.Impressions < 0)
+                || (input.RatingPoints.HasValue && input.RatingPoints < 0)
                 || (input.Budget.HasValue && input.Budget < 0)
                 || (input.CPM.HasValue && input.CPM < 0)
                 || (input.CPP.HasValue && input.CPP < 0))
@@ -45,51 +45,51 @@ namespace Services.Broadcast.BusinessEngines
 
             var result = input;
 
-            if (input.DeliveryImpressions.HasValue && input.Budget.HasValue)
+            if (input.Impressions.HasValue && input.Budget.HasValue)
             {
-                result.CPM = _CalculateCPM(input.Budget, input.DeliveryImpressions);
-                result.DeliveryRatingPoints = _CalculateDeliveryRatingPoints(input.DeliveryImpressions, input.Universe.Value);
-                result.CPP = _CalculateCPP(input.Budget, result.DeliveryRatingPoints);
+                result.CPM = _CalculateCPM(input.Budget, input.Impressions);
+                result.RatingPoints = _CalculateDeliveryRatingPoints(input.Impressions, input.Universe.Value);
+                result.CPP = _CalculateCPP(input.Budget, result.RatingPoints);
                 return result;
             }
 
-            if (input.DeliveryImpressions.HasValue && input.CPM.HasValue)
+            if (input.Impressions.HasValue && input.CPM.HasValue)
             {
-                result.Budget = _CalculateBudgetByCPM(input.DeliveryImpressions, input.CPM);
-                result.DeliveryRatingPoints = _CalculateDeliveryRatingPoints(input.DeliveryImpressions, input.Universe.Value);
-                result.CPP = _CalculateCPP(result.Budget, result.DeliveryRatingPoints);
+                result.Budget = _CalculateBudgetByCPM(input.Impressions, input.CPM);
+                result.RatingPoints = _CalculateDeliveryRatingPoints(input.Impressions, input.Universe.Value);
+                result.CPP = _CalculateCPP(result.Budget, result.RatingPoints);
                 return result;
             }
 
             if (input.Budget.HasValue && input.CPM.HasValue)
             {
-                result.DeliveryImpressions = _CalculateDeliveryImpressionsByCPM(input.Budget, input.CPM);
-                result.DeliveryRatingPoints = _CalculateDeliveryRatingPoints(input.DeliveryImpressions, input.Universe.Value);
-                result.CPP = _CalculateCPP(result.Budget, result.DeliveryRatingPoints);
+                result.Impressions = _CalculateDeliveryImpressionsByCPM(input.Budget, input.CPM);
+                result.RatingPoints = _CalculateDeliveryRatingPoints(input.Impressions, input.Universe.Value);
+                result.CPP = _CalculateCPP(result.Budget, result.RatingPoints);
                 return result;
             }
 
-            if (input.DeliveryRatingPoints.HasValue && input.Budget.HasValue)
+            if (input.RatingPoints.HasValue && input.Budget.HasValue)
             {
-                result.DeliveryImpressions = _CalculateDeliveryImpressionsByUniverse(input.DeliveryRatingPoints, input.Universe.Value);
-                result.CPM = _CalculateCPM(input.Budget, result.DeliveryImpressions);
-                result.CPP = _CalculateCPP(input.Budget, input.DeliveryRatingPoints);
+                result.Impressions = _CalculateDeliveryImpressionsByUniverse(input.RatingPoints, input.Universe.Value);
+                result.CPM = _CalculateCPM(input.Budget, result.Impressions);
+                result.CPP = _CalculateCPP(input.Budget, input.RatingPoints);
                 return result;
             }
 
-            if (input.DeliveryRatingPoints.HasValue && input.CPP.HasValue)
+            if (input.RatingPoints.HasValue && input.CPP.HasValue)
             {
-                result.Budget = _CalculateBudgetByCPP(input.DeliveryRatingPoints, input.CPP);
-                result.DeliveryImpressions = _CalculateDeliveryImpressionsByUniverse(input.DeliveryRatingPoints, input.Universe.Value);
-                result.CPM = _CalculateCPM(result.Budget, result.DeliveryImpressions);
+                result.Budget = _CalculateBudgetByCPP(input.RatingPoints, input.CPP);
+                result.Impressions = _CalculateDeliveryImpressionsByUniverse(input.RatingPoints, input.Universe.Value);
+                result.CPM = _CalculateCPM(result.Budget, result.Impressions);
                 return result;
             }
 
             if (input.Budget.HasValue && input.CPP.HasValue)
             {
-                result.DeliveryRatingPoints = _CalculateDeliveryRatingPointsByCPP(input.Budget, input.CPP);
-                result.DeliveryImpressions = _CalculateDeliveryImpressionsByUniverse(input.DeliveryRatingPoints, input.Universe.Value);
-                result.CPM = _CalculateCPM(input.Budget, result.DeliveryImpressions);
+                result.RatingPoints = _CalculateDeliveryRatingPointsByCPP(input.Budget, input.CPP);
+                result.Impressions = _CalculateDeliveryImpressionsByUniverse(input.RatingPoints, input.Universe.Value);
+                result.CPM = _CalculateCPM(input.Budget, result.Impressions);
                 return result;
             }
             throw new Exception("At least 2 values needed to calculate goal amount");

@@ -340,7 +340,7 @@ namespace Services.Broadcast.ApplicationServices
                 pricingModelWeeks.Add(new PricingModelWeekInputDto
                 {
                     MediaWeekId = week.MediaWeekId,
-                    Impressions = week.Impressions
+                    Impressions = week.WeeklyImpressions
                 });
             }
 

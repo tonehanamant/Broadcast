@@ -187,7 +187,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
             _ConvertImpressionsToRawFormat(plan);
 
-            plan.Universe = _NsiUniverseService.GetAudienceUniverseForMediaMonth(plan.ShareBookId, plan.AudienceId);
+            plan.TargetUniverse = _NsiUniverseService.GetAudienceUniverseForMediaMonth(plan.ShareBookId, plan.AudienceId);
             _CalculateHouseholdDeliveryData(plan);
             _CalculateSecondaryAudiencesDeliveryData(plan);
             _SetPlanVersionNumber(plan);
@@ -231,26 +231,26 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private static void _ConvertImpressionsToRawFormat(PlanDto plan)
         {
             //the UI is sending the user entered value instead of the raw value. BE needs to adjust
-            if (plan.DeliveryImpressions.HasValue)
+            if (plan.TargetImpressions.HasValue)
             {                
-                plan.DeliveryImpressions = plan.DeliveryImpressions.Value * 1000;
+                plan.TargetImpressions = plan.TargetImpressions.Value * 1000;
             }
             foreach(var week in plan.WeeklyBreakdownWeeks)
             {
-                week.Impressions = week.Impressions * 1000;
+                week.WeeklyImpressions = week.WeeklyImpressions * 1000;
             }
         }
 
         private static void _ConvertImpressionsToUserFormat(PlanDto plan)
         {
             //the UI is sending the user entered value instead of the raw value. BE needs to adjust
-            if (plan.DeliveryImpressions.HasValue)
+            if (plan.TargetImpressions.HasValue)
             {
-                plan.DeliveryImpressions = plan.DeliveryImpressions.Value / 1000;
+                plan.TargetImpressions = plan.TargetImpressions.Value / 1000;
             }
             foreach (var week in plan.WeeklyBreakdownWeeks)
             {
-                week.Impressions = week.Impressions / 1000;
+                week.WeeklyImpressions = week.WeeklyImpressions / 1000;
             }
         }
 
@@ -442,7 +442,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         {
             plan.TotalActiveDays = plan.WeeklyBreakdownWeeks.Select(x => x.NumberOfActiveDays).Sum();
             plan.TotalHiatusDays = plan.FlightHiatusDays.Count();
-            plan.TotalShareOfVoice = plan.WeeklyBreakdownWeeks.Select(x => x.ShareOfVoice).Sum();
+            plan.TotalShareOfVoice = plan.WeeklyBreakdownWeeks.Select(x => x.WeeklyImpressionsPercentage).Sum();
         }
 
         ///<inheritdoc/>
@@ -474,20 +474,20 @@ namespace Services.Broadcast.ApplicationServices.Plan
         ///<inheritdoc/>
         public PlanDeliveryBudget Calculate(PlanDeliveryBudget planBudget)
         {
-            var deliveryImpressionsHasValue = planBudget.DeliveryImpressions.HasValue;
-            if (deliveryImpressionsHasValue)
+            var impressionsHasValue = planBudget.Impressions.HasValue;
+            if (impressionsHasValue)
             {
                 // the UI is sending the user entered value instead of the raw value. BE needs to adjust
                 // this value is only adjusted for calculations
-                planBudget.DeliveryImpressions = planBudget.DeliveryImpressions.Value * 1000;
+                planBudget.Impressions = planBudget.Impressions.Value * 1000;
             }
 
             planBudget = _BudgetCalculator.CalculateBudget(planBudget);
 
-            if (deliveryImpressionsHasValue)
+            if (impressionsHasValue)
             {
                 // reset the DeliveryImpressions's value to what was entered by the user
-                planBudget.DeliveryImpressions = planBudget.DeliveryImpressions.Value / 1000;
+                planBudget.Impressions = planBudget.Impressions.Value / 1000;
             }
 
             return planBudget;
@@ -634,8 +634,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 week.ActiveDays = activeDaysString;
                 if (week.NumberOfActiveDays < 1)
                 {
-                    week.Impressions = 0;
-                    week.ShareOfVoice = 0;
+                    week.WeeklyImpressions = 0;
+                    week.WeeklyImpressionsPercentage = 0;
                 }
             }
 
@@ -673,7 +673,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private static void _CalculateWeeklyGoalBreakdownTotals(WeeklyBreakdownResponseDto result)
         {
             result.TotalActiveDays = result.Weeks.Select(x => x.NumberOfActiveDays).Sum();
-            result.TotalShareOfVoice = Math.Round(result.Weeks.Select(x => x.ShareOfVoice).Sum(), 2);
+            result.TotalShareOfVoice = Math.Round(result.Weeks.Select(x => x.WeeklyImpressionsPercentage).Sum(), 2);
         }
 
         private void _RemoveDeletedWeeks(List<WeeklyBreakdownWeek> requestWeeks, List<DisplayMediaWeek> flightWeeks)
@@ -697,8 +697,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
             var activeWeeks = weeks.Where(x => x.NumberOfActiveDays > 0);
             foreach (var week in activeWeeks)
             {
-                week.Impressions = totalImpressions / activeWeeks.Count();
-                week.ShareOfVoice = (double)100 / activeWeeks.Count();
+                week.WeeklyImpressions = totalImpressions / activeWeeks.Count();
+                week.WeeklyImpressionsPercentage = (double)100 / activeWeeks.Count();
             }
         }
 
@@ -820,17 +820,17 @@ namespace Services.Broadcast.ApplicationServices.Plan
         {
             var householdPlanDeliveryBudget = _BudgetCalculator.CalculateBudget(new PlanDeliveryBudget
             {
-                DeliveryImpressions = plan.DeliveryImpressions.Value / plan.Vpvh,
+                Impressions = plan.TargetImpressions.Value / plan.Vpvh,
                 AudienceId = _BroadcastAudiencesCache.GetDefaultAudience().Id,
                 MediaMonthId = plan.ShareBookId,
                 Budget = plan.Budget
             });
 
-            plan.HouseholdUniverse = householdPlanDeliveryBudget.Universe.Value;
-            plan.HouseholdDeliveryImpressions = householdPlanDeliveryBudget.DeliveryImpressions.Value;
-            plan.HouseholdCPM = householdPlanDeliveryBudget.CPM.Value;
-            plan.HouseholdRatingPoints = householdPlanDeliveryBudget.DeliveryRatingPoints.Value;
-            plan.HouseholdCPP = householdPlanDeliveryBudget.CPP.Value;
+            plan.HHUniverse = householdPlanDeliveryBudget.Universe.Value;
+            plan.HHImpressions = householdPlanDeliveryBudget.Impressions.Value;
+            plan.HHCPM = householdPlanDeliveryBudget.CPM.Value;
+            plan.HHRatingPoints = householdPlanDeliveryBudget.RatingPoints.Value;
+            plan.HHCPP = householdPlanDeliveryBudget.CPP.Value;
         }
 
         private void _CalculateSecondaryAudiencesDeliveryData(PlanDto plan)
@@ -839,14 +839,14 @@ namespace Services.Broadcast.ApplicationServices.Plan
             {
                 var planDeliveryBudget = _BudgetCalculator.CalculateBudget(new PlanDeliveryBudget
                 {
-                    DeliveryImpressions = plan.HouseholdDeliveryImpressions * planAudience.Vpvh,
+                    Impressions = plan.HHImpressions * planAudience.Vpvh,
                     AudienceId = planAudience.AudienceId,
                     MediaMonthId = plan.ShareBookId,
                     Budget = plan.Budget
                 });
 
-                planAudience.DeliveryImpressions = planDeliveryBudget.DeliveryImpressions;
-                planAudience.DeliveryRatingPoints = planDeliveryBudget.DeliveryRatingPoints;
+                planAudience.Impressions = planDeliveryBudget.Impressions;
+                planAudience.RatingPoints = planDeliveryBudget.RatingPoints;
                 planAudience.CPM = planDeliveryBudget.CPM;
                 planAudience.CPP = planDeliveryBudget.CPP;
                 planAudience.Universe = planDeliveryBudget.Universe.Value;

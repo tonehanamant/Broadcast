@@ -76,8 +76,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     Budget = 100.0M,
                     CPM = 0.0333333333333333333333333333M,
                     CPP = 37381.32000000000388347057216M,
-                    DeliveryImpressions = 3000.0,
-                    DeliveryRatingPoints = 0.0026751329273551603,
+                    Impressions = 3000.0,
+                    RatingPoints = 0.0026751329273551603,
                     MediaMonthId = 437,
                     Universe = 112143960.0
                 });
@@ -168,8 +168,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     Budget = 100.0M,
                     CPM = 0.0333333333333333333333333333M,
                     CPP = 37381.32000000000388347057216M,
-                    DeliveryImpressions = 3000.0,
-                    DeliveryRatingPoints = 0.0026751329273551603,
+                    Impressions = 3000.0,
+                    RatingPoints = 0.0026751329273551603,
                     MediaMonthId = 437,
                     Universe = 112143960.0
                 });
@@ -272,8 +272,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     Budget = 100.0M,
                     CPM = 0.0333333333333333333333333333M,
                     CPP = 37381.32000000000388347057216M,
-                    DeliveryImpressions = 3000.0,
-                    DeliveryRatingPoints = 0.0026751329273551603,
+                    Impressions = 3000.0,
+                    RatingPoints = 0.0026751329273551603,
                     MediaMonthId = 437,
                     Universe = 112143960.0
                 });
@@ -390,8 +390,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 PostingType = Entities.Enums.PostingTypeEnum.NTI,
                 ShareBookId = 437,
                 Budget = 100m,
-                CPM = 12m,
-                DeliveryImpressions = 100d,
+                TargetCPM = 12m,
+                TargetImpressions = 100d,
                 CoverageGoalPercent = 80.5,
                 AvailableMarkets = new List<PlanAvailableMarketDto>
                 {

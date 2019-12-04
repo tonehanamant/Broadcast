@@ -18,12 +18,12 @@ namespace EntityFrameworkMapping.Broadcast
         public int audience_type { get; set; }
         public int audience_id { get; set; }
         public double vpvh { get; set; }
-        public double delivery_rating_points { get; set; }
-        public double delivery_impressions { get; set; }
         public decimal cpm { get; set; }
         public double cpp { get; set; }
         public double universe { get; set; }
         public int plan_version_id { get; set; }
+        public double rating_points { get; set; }
+        public double impressions { get; set; }
     
         public virtual audience audience { get; set; }
         public virtual plan_versions plan_versions { get; set; }

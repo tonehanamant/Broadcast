@@ -42,8 +42,6 @@
   "CampaignId": 1,
   "CampaignName": "Test Campaign 1",
   "CoverageGoalPercent": 80.5,
-  "CPM": 12.0000,
-  "CPP": 12.0000,
   "Currency": 1,
   "Dayparts": [
     {
@@ -214,8 +212,6 @@
       "WeightingGoalPercent": 13.8
     }
   ],
-  "DeliveryImpressions": 100.0,
-  "DeliveryRatingPoints": 100.0,
   "Equivalized": true,
   "FlightEndDate": "2019-01-31T00:00:00",
   "FlightHiatusDays": [
@@ -225,11 +221,11 @@
   "FlightNotes": "Sample notes",
   "FlightStartDate": "2019-01-01T00:00:00",
   "GoalBreakdownType": 1,
-  "HouseholdCPM": 0.0120,
-  "HouseholdCPP": 13.4572,
-  "HouseholdDeliveryImpressions": 8333333.33333333,
-  "HouseholdRatingPoints": 7.4309248,
-  "HouseholdUniverse": 112143960.0,
+  "HHCPM": 0.0120,
+  "HHCPP": 13.4572,
+  "HHImpressions": 8333333.33333333,
+  "HHRatingPoints": 7.4309248,
+  "HHUniverse": 112143960.0,
   "HUTBookId": 437,
   "IsDraft": false,
   "IsPricingModelRunning": false,
@@ -243,61 +239,65 @@
   "ShareBookId": 437,
   "SpotLengthId": 1,
   "Status": 1,
+  "TargetCPM": 12.0000,
+  "TargetCPP": 12.0000,
+  "TargetImpressions": 100.0,
+  "TargetRatingPoints": 100.0,
+  "TargetUniverse": 112143960.0,
   "TotalActiveDays": 29,
   "TotalHiatusDays": 2,
   "TotalShareOfVoice": 100.0,
-  "Universe": 112143960.0,
   "VersionNumber": 2,
   "Vpvh": 0.012,
   "WeeklyBreakdownWeeks": [
     {
       "ActiveDays": "Tu-Su",
       "EndDate": "2019-01-06T00:00:00",
-      "Impressions": 20.0,
       "MediaWeekId": 784,
       "NumberOfActiveDays": 6,
-      "ShareOfVoice": 20.0,
       "StartDate": "2018-12-31T00:00:00",
+      "WeeklyImpressions": 20.0,
+      "WeeklyImpressionsPercentage": 20.0,
       "WeekNumber": 1
     },
     {
       "ActiveDays": "M-Su",
       "EndDate": "2019-01-13T00:00:00",
-      "Impressions": 20.0,
       "MediaWeekId": 785,
       "NumberOfActiveDays": 7,
-      "ShareOfVoice": 20.0,
       "StartDate": "2019-01-07T00:00:00",
+      "WeeklyImpressions": 20.0,
+      "WeeklyImpressionsPercentage": 20.0,
       "WeekNumber": 2
     },
     {
       "ActiveDays": "M-Sa",
       "EndDate": "2019-01-20T00:00:00",
-      "Impressions": 20.0,
       "MediaWeekId": 786,
       "NumberOfActiveDays": 6,
-      "ShareOfVoice": 20.0,
       "StartDate": "2019-01-14T00:00:00",
+      "WeeklyImpressions": 20.0,
+      "WeeklyImpressionsPercentage": 20.0,
       "WeekNumber": 3
     },
     {
       "ActiveDays": "M-W,F-Su",
       "EndDate": "2019-01-27T00:00:00",
-      "Impressions": 20.0,
       "MediaWeekId": 787,
       "NumberOfActiveDays": 6,
-      "ShareOfVoice": 20.0,
       "StartDate": "2019-01-21T00:00:00",
+      "WeeklyImpressions": 20.0,
+      "WeeklyImpressionsPercentage": 20.0,
       "WeekNumber": 4
     },
     {
       "ActiveDays": "M-Th",
       "EndDate": "2019-02-03T00:00:00",
-      "Impressions": 20.0,
       "MediaWeekId": 788,
       "NumberOfActiveDays": 4,
-      "ShareOfVoice": 20.0,
       "StartDate": "2019-01-28T00:00:00",
+      "WeeklyImpressions": 20.0,
+      "WeeklyImpressionsPercentage": 20.0,
       "WeekNumber": 5
     }
   ]

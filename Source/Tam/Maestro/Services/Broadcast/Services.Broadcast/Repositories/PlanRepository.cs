@@ -436,10 +436,10 @@ namespace Services.Broadcast.Repositories
                 PostingType = EnumHelper.GetEnum<PostingTypeEnum>(latestPlanVersion.posting_type),
                 FlightHiatusDays = latestPlanVersion.plan_version_flight_hiatus_days.Select(h => h.hiatus_day).ToList(),
                 Budget = latestPlanVersion.budget,
-                DeliveryImpressions = latestPlanVersion.target_impression,
-                CPM = latestPlanVersion.target_cpm,
-                DeliveryRatingPoints = latestPlanVersion.target_rating_points,
-                CPP = latestPlanVersion.target_cpp,
+                TargetImpressions = latestPlanVersion.target_impression,
+                TargetCPM = latestPlanVersion.target_cpm,
+                TargetRatingPoints = latestPlanVersion.target_rating_points,
+                TargetCPP = latestPlanVersion.target_cpp,
                 Currency = EnumHelper.GetEnum<PlanCurrenciesEnum>(latestPlanVersion.currency),
                 GoalBreakdownType = EnumHelper.GetEnum<PlanGoalBreakdownTypeEnum>(latestPlanVersion.goal_breakdown_type),
                 SecondaryAudiences = latestPlanVersion.plan_version_secondary_audiences.Select(_MapSecondaryAudiences).ToList(),
@@ -451,12 +451,12 @@ namespace Services.Broadcast.Repositories
                 ModifiedBy = latestPlanVersion.modified_by ?? latestPlanVersion.created_by,
                 ModifiedDate = latestPlanVersion.modified_date ?? latestPlanVersion.created_date,
                 Vpvh = latestPlanVersion.target_vpvh,
-                Universe = latestPlanVersion.target_universe,
-                HouseholdCPM = latestPlanVersion.hh_cpm,
-                HouseholdCPP = latestPlanVersion.hh_cpp,
-                HouseholdDeliveryImpressions = latestPlanVersion.hh_impressions,
-                HouseholdRatingPoints = latestPlanVersion.hh_rating_points,
-                HouseholdUniverse = latestPlanVersion.hh_universe,
+                TargetUniverse = latestPlanVersion.target_universe,
+                HHCPM = latestPlanVersion.hh_cpm,
+                HHCPP = latestPlanVersion.hh_cpp,
+                HHImpressions = latestPlanVersion.hh_impressions,
+                HHRatingPoints = latestPlanVersion.hh_rating_points,
+                HHUniverse = latestPlanVersion.hh_universe,
                 AvailableMarketsWithSovCount = planSummary?.available_market_with_sov_count ?? null,
                 BlackoutMarketCount = planSummary?.blackout_market_count ?? null,
                 BlackoutMarketTotalUsCoveragePercent = planSummary?.blackout_market_total_us_coverage_percent ?? null,
@@ -504,9 +504,9 @@ namespace Services.Broadcast.Repositories
             {
                 ActiveDays = arg.active_days_label,
                 EndDate = arg.media_weeks.end_date,
-                Impressions = arg.weekly_impressions,
+                WeeklyImpressions = arg.weekly_impressions,
                 NumberOfActiveDays = arg.number_active_days,
-                ShareOfVoice = arg.weekly_impressions_percentage,
+                WeeklyImpressionsPercentage = arg.weekly_impressions_percentage,
                 StartDate = arg.media_weeks.start_date,
                 MediaWeekId = arg.media_weeks.id
             };
@@ -519,8 +519,8 @@ namespace Services.Broadcast.Repositories
                 AudienceId = x.audience_id,
                 Type = (AudienceTypeEnum)x.audience_type,
                 Vpvh = x.vpvh,
-                DeliveryRatingPoints = x.delivery_rating_points,
-                DeliveryImpressions = x.delivery_impressions,
+                RatingPoints = x.rating_points,
+                Impressions = x.impressions,
                 CPM = x.cpm,
                 CPP = (decimal?)x.cpp,
                 Universe = x.universe
@@ -542,12 +542,12 @@ namespace Services.Broadcast.Repositories
             version.coverage_goal_percent = planDto.CoverageGoalPercent.Value;
             version.goal_breakdown_type = (int)planDto.GoalBreakdownType;
             version.target_vpvh = planDto.Vpvh;
-            version.target_universe = planDto.Universe;
-            version.hh_cpm = planDto.HouseholdCPM;
-            version.hh_cpp = planDto.HouseholdCPP;
-            version.hh_impressions = planDto.HouseholdDeliveryImpressions;
-            version.hh_rating_points = planDto.HouseholdRatingPoints;
-            version.hh_universe = planDto.HouseholdUniverse;
+            version.target_universe = planDto.TargetUniverse;
+            version.hh_cpm = planDto.HHCPM;
+            version.hh_cpp = planDto.HHCPP;
+            version.hh_impressions = planDto.HHImpressions;
+            version.hh_rating_points = planDto.HHRatingPoints;
+            version.hh_universe = planDto.HHUniverse;
             version.is_draft = planDto.IsDraft;
             version.version_number = planDto.VersionNumber;
 
@@ -575,8 +575,8 @@ namespace Services.Broadcast.Repositories
                 {
                     active_days_label = d.ActiveDays,
                     number_active_days = d.NumberOfActiveDays,
-                    weekly_impressions = d.Impressions,
-                    weekly_impressions_percentage = d.ShareOfVoice,
+                    weekly_impressions = d.WeeklyImpressions,
+                    weekly_impressions_percentage = d.WeeklyImpressionsPercentage,
                     media_week_id = d.MediaWeekId
                 });
             });
@@ -594,10 +594,10 @@ namespace Services.Broadcast.Repositories
         private static void _MapPlanBudget(plan_versions entity, PlanDto planDto)
         {
             entity.budget = planDto.Budget.Value;
-            entity.target_impression = planDto.DeliveryImpressions.Value;
-            entity.target_cpm = planDto.CPM.Value;
-            entity.target_rating_points = planDto.DeliveryRatingPoints.Value;
-            entity.target_cpp = planDto.CPP.Value;
+            entity.target_impression = planDto.TargetImpressions.Value;
+            entity.target_cpm = planDto.TargetCPM.Value;
+            entity.target_rating_points = planDto.TargetRatingPoints.Value;
+            entity.target_cpp = planDto.TargetCPP.Value;
             entity.currency = (int)planDto.Currency;
         }
 
@@ -790,8 +790,8 @@ namespace Services.Broadcast.Repositories
                     audience_id = d.AudienceId,
                     audience_type = (int)d.Type,
                     vpvh = d.Vpvh,
-                    delivery_rating_points = d.DeliveryRatingPoints.Value,
-                    delivery_impressions = d.DeliveryImpressions.Value,
+                    rating_points = d.RatingPoints.Value,
+                    impressions = d.Impressions.Value,
                     cpm = d.CPM.Value,
                     cpp = (double)d.CPP.Value,
                     universe = d.Universe

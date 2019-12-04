@@ -351,12 +351,12 @@ namespace Services.Broadcast.Validators
                 return;
             }
 
-            if (plan.DeliveryImpressions != Math.Round(plan.WeeklyBreakdownWeeks.Select(x => x.Impressions).Sum(), 3))
+            if (plan.TargetImpressions != Math.Round(plan.WeeklyBreakdownWeeks.Select(x => x.WeeklyImpressions).Sum(), 3))
             {
                 throw new Exception(INVALID_IMPRESSIONS_COUNT);
             }
 
-            if (100 != Math.Round(plan.WeeklyBreakdownWeeks.Select(x => x.ShareOfVoice).Sum()))
+            if (100 != Math.Round(plan.WeeklyBreakdownWeeks.Select(x => x.WeeklyImpressionsPercentage).Sum()))
             {
                 throw new Exception(INVALID_SOV_COUNT);
             }
@@ -381,17 +381,17 @@ namespace Services.Broadcast.Validators
                 throw new Exception(INVALID_BUDGET);
             }
 
-            if (!(plan.CPM.HasValue && plan.CPM.Value > 0m))
+            if (!(plan.TargetCPM.HasValue && plan.TargetCPM.Value > 0m))
             {
                 throw new Exception(INVALID_CPM);
             }
 
-            if (!(plan.CPP.HasValue && plan.CPP.Value > 0m))
+            if (!(plan.TargetCPP.HasValue && plan.TargetCPP.Value > 0m))
             {
                 throw new Exception(INVALID_CPP);
             }
 
-            if (!(plan.DeliveryImpressions.HasValue && plan.DeliveryImpressions.Value > 0d))
+            if (!(plan.TargetImpressions.HasValue && plan.TargetImpressions.Value > 0d))
             {
                 throw new Exception(INVALID_DELIVERY_IMPRESSIONS);
             }

@@ -187,36 +187,36 @@ namespace Services.Broadcast.Entities.Plan
         public decimal? Budget { get; set; }
 
         /// <summary>
-        /// Gets or sets the delivery.
+        /// Gets or sets the target impressions.
         /// </summary>
         /// <value>
-        /// The delivery.
+        /// The target impressions.
         /// </value>
-        public double? DeliveryImpressions { get; set; }
+        public double? TargetImpressions { get; set; }
 
         /// <summary>
-        /// Gets or sets the delivery rating points.
+        /// Gets or sets the target rating points.
         /// </summary>
         /// <value>
-        /// The delivery rating points.
+        /// The target rating points.
         /// </value>
-        public double? DeliveryRatingPoints { get; set; }
+        public double? TargetRatingPoints { get; set; }
 
         /// <summary>
-        /// Gets or sets the CPP.
+        /// Gets or sets the target CPP.
         /// </summary>
         /// <value>
-        /// The CPP.
+        /// The target CPP.
         /// </value>
-        public decimal? CPP { get; set; }
+        public decimal? TargetCPP { get; set; }
 
         /// <summary>
-        /// Gets or sets the CPM.
+        /// Gets or sets the target CPM.
         /// </summary>
         /// <value>
-        /// The CPM.
+        /// The target CPM.
         /// </value>
-        public decimal? CPM { get; set; }
+        public decimal? TargetCPM { get; set; }
 
         /// <summary>
         /// Gets or sets the currency.
@@ -304,7 +304,7 @@ namespace Services.Broadcast.Entities.Plan
         /// <value>
         /// The household CPM.
         /// </value>
-        public decimal HouseholdCPM { get; set; }
+        public decimal HHCPM { get; set; }
 
         /// <summary>
         /// Gets or sets the household universe.
@@ -312,7 +312,7 @@ namespace Services.Broadcast.Entities.Plan
         /// <value>
         /// The household universe.
         /// </value>
-        public double HouseholdUniverse { get; set; }
+        public double HHUniverse { get; set; }
 
         /// <summary>
         /// Gets or sets the household CPP.
@@ -320,7 +320,7 @@ namespace Services.Broadcast.Entities.Plan
         /// <value>
         /// The household CPP.
         /// </value>
-        public decimal HouseholdCPP { get; set; }
+        public decimal HHCPP { get; set; }
 
         /// <summary>
         /// Gets or sets the household rating points.
@@ -328,23 +328,23 @@ namespace Services.Broadcast.Entities.Plan
         /// <value>
         /// The household rating points.
         /// </value>
-        public double HouseholdRatingPoints { get; set; }
+        public double HHRatingPoints { get; set; }
 
         /// <summary>
-        /// Gets or sets the universe.
+        /// Gets or sets the target universe.
         /// </summary>
         /// <value>
-        /// The universe.
+        /// The target universe.
         /// </value>
-        public double Universe { get; set; }
+        public double TargetUniverse { get; set; }
 
         /// <summary>
-        /// Gets or sets the household delivery impressions.
+        /// Gets or sets the household impressions.
         /// </summary>
         /// <value>
-        /// The household delivery impressions.
+        /// The household impressions.
         /// </value>
-        public double HouseholdDeliveryImpressions { get; set; }
+        public double HHImpressions { get; set; }
 
         /// <summary>
         /// Gets or sets the blackout market count.

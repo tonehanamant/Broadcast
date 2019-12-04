@@ -89,9 +89,9 @@ namespace Services.Broadcast.Repositories
                     FlightHiatusDays = entity.flight_hiatus_days,
                     FlightActiveDays = entity.flight_active_days,
                     Budget = _ToNullableDecimal(entity.budget),
-                    HouseholdCPM = _ToNullableDecimal(entity.household_cpm),
-                    HouseholdImpressions = entity.household_delivery_impressions,
-                    HouseholdRatingPoints = entity.household_rating_points,
+                    HHCPM = _ToNullableDecimal(entity.hh_cpm),
+                    HHImpressions = entity.hh_impressions,
+                    HHRatingPoints = entity.hh_rating_points,
                     CampaignStatus = (PlanStatusEnum?) entity.campaign_status,
                     PlanStatusCountWorking = entity.plan_status_count_working,
                     PlanStatusCountReserved = entity.plan_status_count_reserved,
@@ -218,9 +218,9 @@ namespace Services.Broadcast.Repositories
             entity.flight_hiatus_days = dto.FlightHiatusDays;
             entity.flight_active_days = dto.FlightActiveDays;
             entity.budget = _ToNullableDouble(dto.Budget);
-            entity.household_cpm = _ToNullableDouble(dto.HouseholdCPM);
-            entity.household_delivery_impressions = dto.HouseholdImpressions;
-            entity.household_rating_points = dto.HouseholdRatingPoints;
+            entity.hh_cpm = _ToNullableDouble(dto.HHCPM);
+            entity.hh_impressions = dto.HHImpressions;
+            entity.hh_rating_points = dto.HHRatingPoints;
             entity.campaign_status = (int?) dto.CampaignStatus;
             entity.components_modified = dto.ComponentsModified;
             entity.last_aggregated = dto.LastAggregated;

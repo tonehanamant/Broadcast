@@ -250,9 +250,9 @@
           <Property Name="flight_hiatus_days" Type="int" />
           <Property Name="flight_active_days" Type="int" />
           <Property Name="budget" Type="float" />
-          <Property Name="household_cpm" Type="float" />
-          <Property Name="household_delivery_impressions" Type="float" />
-          <Property Name="household_rating_points" Type="float" />
+          <Property Name="hh_cpm" Type="float" />
+          <Property Name="hh_impressions" Type="float" />
+          <Property Name="hh_rating_points" Type="float" />
           <Property Name="plan_status_count_working" Type="int" />
           <Property Name="plan_status_count_reserved" Type="int" />
           <Property Name="plan_status_count_client_approval" Type="int" />
@@ -821,8 +821,8 @@
           <Property Name="audience_type" Type="int" Nullable="false" />
           <Property Name="audience_id" Type="int" Nullable="false" />
           <Property Name="vpvh" Type="float" Nullable="false" />
-          <Property Name="delivery_rating_points" Type="float" Nullable="false" />
-          <Property Name="delivery_impressions" Type="float" Nullable="false" />
+          <Property Name="rating_points" Type="float" Nullable="false" />
+          <Property Name="impressions" Type="float" Nullable="false" />
           <Property Name="cpm" Type="money" Nullable="false" />
           <Property Name="cpp" Type="float" Nullable="false" />
           <Property Name="universe" Type="float" Nullable="false" />
@@ -10909,9 +10909,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="flight_hiatus_days" Type="Int32" />
           <Property Name="flight_active_days" Type="Int32" />
           <Property Name="budget" Type="Double" />
-          <Property Name="household_cpm" Type="Double" />
-          <Property Name="household_delivery_impressions" Type="Double" />
-          <Property Name="household_rating_points" Type="Double" />
           <Property Name="plan_status_count_working" Type="Int32" />
           <Property Name="plan_status_count_reserved" Type="Int32" />
           <Property Name="plan_status_count_client_approval" Type="Int32" />
@@ -10925,6 +10922,9 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="plan_status_count_scenario" Type="Int32" />
           <Property Name="plan_status_count_canceled" Type="Int32" />
           <Property Name="plan_status_count_rejected" Type="Int32" />
+          <Property Name="hh_cpm" Type="Double" />
+          <Property Name="hh_impressions" Type="Double" />
+          <Property Name="hh_rating_points" Type="Double" />
         </EntityType>
         <Association Name="FK_campaign_summaries_campaign">
           <End Type="BroadcastModel.campaign" Role="campaign" Multiplicity="1">
@@ -11066,14 +11066,14 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="audience_type" Type="Int32" Nullable="false" />
           <Property Name="audience_id" Type="Int32" Nullable="false" />
           <Property Name="vpvh" Type="Double" Nullable="false" />
-          <Property Name="delivery_rating_points" Type="Double" Nullable="false" />
-          <Property Name="delivery_impressions" Type="Double" Nullable="false" />
           <Property Name="cpm" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
           <Property Name="cpp" Type="Double" Nullable="false" />
           <Property Name="universe" Type="Double" Nullable="false" />
           <Property Name="plan_version_id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="audience" Relationship="BroadcastModel.FK_plan_secondary_audiences_audiences" FromRole="plan_version_secondary_audiences" ToRole="audience" />
           <NavigationProperty Name="plan_versions" Relationship="BroadcastModel.FK_plan_version_secondary_audiences_plan_versions" FromRole="plan_version_secondary_audiences" ToRole="plan_versions" />
+          <Property Name="rating_points" Type="Double" Nullable="false" />
+          <Property Name="impressions" Type="Double" Nullable="false" />
         </EntityType>
         <EntityType Name="plan_version_summaries">
           <Key>
@@ -13498,6 +13498,9 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="campaign_summaries">
             <EntityTypeMapping TypeName="BroadcastModel.campaign_summaries">
               <MappingFragment StoreEntitySet="campaign_summaries">
+                <ScalarProperty Name="hh_rating_points" ColumnName="hh_rating_points" />
+                <ScalarProperty Name="hh_impressions" ColumnName="hh_impressions" />
+                <ScalarProperty Name="hh_cpm" ColumnName="hh_cpm" />
                 <ScalarProperty Name="plan_status_count_rejected" ColumnName="plan_status_count_rejected" />
                 <ScalarProperty Name="plan_status_count_canceled" ColumnName="plan_status_count_canceled" />
                 <ScalarProperty Name="plan_status_count_scenario" ColumnName="plan_status_count_scenario" />
@@ -13510,9 +13513,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
                 <ScalarProperty Name="plan_status_count_client_approval" ColumnName="plan_status_count_client_approval" />
                 <ScalarProperty Name="plan_status_count_reserved" ColumnName="plan_status_count_reserved" />
                 <ScalarProperty Name="plan_status_count_working" ColumnName="plan_status_count_working" />
-                <ScalarProperty Name="household_rating_points" ColumnName="household_rating_points" />
-                <ScalarProperty Name="household_delivery_impressions" ColumnName="household_delivery_impressions" />
-                <ScalarProperty Name="household_cpm" ColumnName="household_cpm" />
                 <ScalarProperty Name="budget" ColumnName="budget" />
                 <ScalarProperty Name="flight_active_days" ColumnName="flight_active_days" />
                 <ScalarProperty Name="flight_hiatus_days" ColumnName="flight_hiatus_days" />
@@ -13594,12 +13594,12 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="plan_version_secondary_audiences">
             <EntityTypeMapping TypeName="BroadcastModel.plan_version_secondary_audiences">
               <MappingFragment StoreEntitySet="plan_version_secondary_audiences">
+                <ScalarProperty Name="impressions" ColumnName="impressions" />
+                <ScalarProperty Name="rating_points" ColumnName="rating_points" />
                 <ScalarProperty Name="plan_version_id" ColumnName="plan_version_id" />
                 <ScalarProperty Name="universe" ColumnName="universe" />
                 <ScalarProperty Name="cpp" ColumnName="cpp" />
                 <ScalarProperty Name="cpm" ColumnName="cpm" />
-                <ScalarProperty Name="delivery_impressions" ColumnName="delivery_impressions" />
-                <ScalarProperty Name="delivery_rating_points" ColumnName="delivery_rating_points" />
                 <ScalarProperty Name="vpvh" ColumnName="vpvh" />
                 <ScalarProperty Name="audience_id" ColumnName="audience_id" />
                 <ScalarProperty Name="audience_type" ColumnName="audience_type" />

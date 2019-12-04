@@ -28,10 +28,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.CampaignAggregation
                 {
                     Status = PlanStatusEnum.Contracted,
                     Budget = 1000.0m,
-                    CPM = 2000.0m,
-                    CPP = 3000.0m,
-                    DeliveryRatingPoints = 4000.0,
-                    DeliveryImpressions = 5000.0,
+                    TargetCPM = 2000.0m,
+                    TargetCPP = 3000.0m,
+                    TargetRatingPoints = 4000.0,
+                    TargetImpressions = 5000.0,
                     FlightStartDate = new DateTime(2019,08, 01),
                     FlightEndDate = new DateTime(2019, 08, 20),
                     FlightHiatusDays = new List<DateTime>
@@ -41,21 +41,21 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.CampaignAggregation
                     },
                     ModifiedDate = new DateTime(2019, 08, 28, 12, 30, 23),
                     ModifiedBy = "TestUserOne",
-                    HouseholdDeliveryImpressions = 10000,
-                    HouseholdUniverse = 1000000,
-                    HouseholdCPM = 0.05m,
-                    HouseholdRatingPoints = 2,
-                    HouseholdCPP = 1,
-                    Universe = 2000000
+                    HHImpressions = 10000,
+                    HHUniverse = 1000000,
+                    HHCPM = 0.05m,
+                    HHRatingPoints = 2,
+                    HHCPP = 1,
+                    TargetUniverse = 2000000
                 },
                 new PlanDto
                 {
                     Status = PlanStatusEnum.ClientApproval,
                     Budget = 500.0m,
-                    CPM = 500.0m,
-                    CPP = 500.0m,
-                    DeliveryRatingPoints = 500.0,
-                    DeliveryImpressions = 500.0,
+                    TargetCPM = 500.0m,
+                    TargetCPP = 500.0m,
+                    TargetRatingPoints = 500.0,
+                    TargetImpressions = 500.0,
                     FlightStartDate = new DateTime(2019,08, 21),
                     FlightEndDate = new DateTime(2019, 08, 30),
                     FlightHiatusDays = new List<DateTime>
@@ -65,12 +65,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.CampaignAggregation
                     },
                     ModifiedDate = new DateTime(2019, 08, 28, 12, 30, 32),
                     ModifiedBy = "TestUserTwo",
-                    HouseholdDeliveryImpressions = 10000,
-                    HouseholdUniverse = 1000000,
-                    HouseholdCPM = 0.05m,
-                    HouseholdRatingPoints = 50,
-                    HouseholdCPP = 1,
-                    Universe = 2000000
+                    HHImpressions = 10000,
+                    HHUniverse = 1000000,
+                    HHCPM = 0.05m,
+                    HHRatingPoints = 50,
+                    HHCPP = 1,
+                    TargetUniverse = 2000000
                 }
             };
             var planRepository = new Mock<IPlanRepository>();
@@ -96,10 +96,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.CampaignAggregation
                 {
                     Status = PlanStatusEnum.Contracted,
                     Budget = 1000.0m,
-                    CPM = 2000.0m,
-                    CPP = 3000.0m,
-                    DeliveryRatingPoints = 4000.0,
-                    DeliveryImpressions = 5000.0,
+                    TargetCPM = 2000.0m,
+                    TargetCPP = 3000.0m,
+                    TargetRatingPoints = 4000.0,
+                    TargetImpressions = 5000.0,
                     FlightStartDate = new DateTime(2019, 08, 01),
                     FlightEndDate = new DateTime(2019, 08, 20),
                     FlightHiatusDays = new List<DateTime>
@@ -109,21 +109,21 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.CampaignAggregation
                     },
                     ModifiedDate = new DateTime(2019, 08, 28, 12, 30, 23),
                     ModifiedBy = "TestUserOne",
-                    HouseholdDeliveryImpressions = 10000,
-                    HouseholdUniverse = 1000000,
-                    HouseholdCPM = 0.05m,
-                    HouseholdRatingPoints = 2,
-                    HouseholdCPP = 1,
-                    Universe = 2000000
+                    HHImpressions = 10000,
+                    HHUniverse = 1000000,
+                    HHCPM = 0.05m,
+                    HHRatingPoints = 2,
+                    HHCPP = 1,
+                    TargetUniverse = 2000000
                 },
                 new PlanDto
                 {
                     Status = PlanStatusEnum.ClientApproval,
                     Budget = 500.0m,
-                    CPM = 500.0m,
-                    CPP = 500.0m,
-                    DeliveryRatingPoints = 500.0,
-                    DeliveryImpressions = 500.0,
+                    TargetCPM = 500.0m,
+                    TargetCPP = 500.0m,
+                    TargetRatingPoints = 500.0,
+                    TargetImpressions = 500.0,
                     FlightStartDate = new DateTime(2019, 09, 21),
                     FlightEndDate = new DateTime(2019, 09, 30),
                     FlightHiatusDays = new List<DateTime>
@@ -133,21 +133,21 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.CampaignAggregation
                     },
                     ModifiedDate = new DateTime(2019, 08, 28, 12, 30, 32),
                     ModifiedBy = "TestUserTwo",
-                    HouseholdDeliveryImpressions = 10000,
-                    HouseholdUniverse = 1000000,
-                    HouseholdCPM = 0.05m,
-                    HouseholdRatingPoints = 50,
-                    HouseholdCPP = 1,
-                    Universe = 2000000
+                    HHImpressions = 10000,
+                    HHUniverse = 1000000,
+                    HHCPM = 0.05m,
+                    HHRatingPoints = 50,
+                    HHCPP = 1,
+                    TargetUniverse = 2000000
                 },
                 new PlanDto
                 {
                     Status = PlanStatusEnum.Rejected,
                     Budget = 500.0m,
-                    CPM = 500.0m,
-                    CPP = 500.0m,
-                    DeliveryRatingPoints = 500.0,
-                    DeliveryImpressions = 500.0,
+                    TargetCPM = 500.0m,
+                    TargetCPP = 500.0m,
+                    TargetRatingPoints = 500.0,
+                    TargetImpressions = 500.0,
                     FlightStartDate = new DateTime(2019, 09, 10),
                     FlightEndDate = new DateTime(2019, 09, 20),
                     FlightHiatusDays = new List<DateTime>
@@ -157,21 +157,21 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.CampaignAggregation
                     },
                     ModifiedDate = new DateTime(2019, 08, 28, 12, 30, 32),
                     ModifiedBy = "TestUserTwo",
-                    HouseholdDeliveryImpressions = 10000,
-                    HouseholdUniverse = 1000000,
-                    HouseholdCPM = 0.05m,
-                    HouseholdRatingPoints = 50,
-                    HouseholdCPP = 1,
-                    Universe = 2000000
+                    HHImpressions = 10000,
+                    HHUniverse = 1000000,
+                    HHCPM = 0.05m,
+                    HHRatingPoints = 50,
+                    HHCPP = 1,
+                    TargetUniverse = 2000000
                 },
                 new PlanDto
                 {
                     Status = PlanStatusEnum.Canceled,
                     Budget = 500.0m,
-                    CPM = 500.0m,
-                    CPP = 500.0m,
-                    DeliveryRatingPoints = 500.0,
-                    DeliveryImpressions = 500.0,
+                    TargetCPM = 500.0m,
+                    TargetCPP = 500.0m,
+                    TargetRatingPoints = 500.0,
+                    TargetImpressions = 500.0,
                     FlightStartDate = new DateTime(2019, 09, 01),
                     FlightEndDate = new DateTime(2019, 09, 09),
                     FlightHiatusDays = new List<DateTime>
@@ -180,21 +180,21 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.CampaignAggregation
                     },
                     ModifiedDate = new DateTime(2019, 08, 28, 12, 30, 32),
                     ModifiedBy = "TestUserTwo",
-                    HouseholdDeliveryImpressions = 10000,
-                    HouseholdUniverse = 1000000,
-                    HouseholdCPM = 0.05m,
-                    HouseholdRatingPoints = 50,
-                    HouseholdCPP = 1,
-                    Universe = 2000000
+                    HHImpressions = 10000,
+                    HHUniverse = 1000000,
+                    HHCPM = 0.05m,
+                    HHRatingPoints = 50,
+                    HHCPP = 1,
+                    TargetUniverse = 2000000
                 },
                 new PlanDto
                 {
                     Status = PlanStatusEnum.Scenario,
                     Budget = 500.0m,
-                    CPM = 500.0m,
-                    CPP = 500.0m,
-                    DeliveryRatingPoints = 500.0,
-                    DeliveryImpressions = 500.0,
+                    TargetCPM = 500.0m,
+                    TargetCPP = 500.0m,
+                    TargetRatingPoints = 500.0,
+                    TargetImpressions = 500.0,
                     FlightStartDate = new DateTime(2019, 10, 01),
                     FlightEndDate = new DateTime(2019, 10, 31),
                     FlightHiatusDays = new List<DateTime>
@@ -204,12 +204,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.CampaignAggregation
                     },
                     ModifiedDate = new DateTime(2019, 08, 28, 12, 30, 32),
                     ModifiedBy = "TestUserTwo",
-                    HouseholdDeliveryImpressions = 10000,
-                    HouseholdUniverse = 1000000,
-                    HouseholdCPM = 0.05m,
-                    HouseholdRatingPoints = 50,
-                    HouseholdCPP = 1,
-                    Universe = 2000000
+                    HHImpressions = 10000,
+                    HHUniverse = 1000000,
+                    HHCPM = 0.05m,
+                    HHRatingPoints = 50,
+                    HHCPP = 1,
+                    TargetUniverse = 2000000
                 }
             };
             var planRepository = new Mock<IPlanRepository>();

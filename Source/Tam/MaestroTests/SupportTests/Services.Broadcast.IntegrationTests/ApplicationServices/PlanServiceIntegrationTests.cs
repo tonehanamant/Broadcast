@@ -194,10 +194,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 //save version 3
                 plan.Dayparts.RemoveAt(1); //we remove a daypart to have different data between versions
-                plan.DeliveryImpressions = plan.DeliveryImpressions / 1000;
+                plan.TargetImpressions = plan.TargetImpressions / 1000;
                 foreach(var week in plan.WeeklyBreakdownWeeks)
                 {
-                    week.Impressions = week.Impressions / 1000;
+                    week.WeeklyImpressions = week.WeeklyImpressions / 1000;
                 }
                 _PlanService.SavePlan(plan, "integration_test", new DateTime(2019, 01, 07));
 
@@ -227,10 +227,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 //save draft
                 plan.IsDraft = true;
-                plan.DeliveryImpressions = plan.DeliveryImpressions / 1000;
+                plan.TargetImpressions = plan.TargetImpressions / 1000;
                 foreach (var week in plan.WeeklyBreakdownWeeks)
                 {
-                    week.Impressions = week.Impressions / 1000;
+                    week.WeeklyImpressions = week.WeeklyImpressions / 1000;
                 }
                 _PlanService.SavePlan(plan, "integration_test", new DateTime(2019, 01, 01));
 
@@ -892,7 +892,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var result = _PlanService.Calculate(new PlanDeliveryBudget
             {
                 Budget = 100m,
-                DeliveryImpressions = 3000d,
+                Impressions = 3000d,
                 AudienceId = 31,
                 MediaMonthId = 437
             });
@@ -906,7 +906,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var result = _PlanService.Calculate(new PlanDeliveryBudget
             {
                 CPM = 100m,
-                DeliveryImpressions = 3000d,
+                Impressions = 3000d,
                 AudienceId = 31,
                 MediaMonthId = 437
             });
@@ -948,7 +948,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var result = _PlanService.Calculate(new PlanDeliveryBudget
             {
                 CPP = 100m,
-                DeliveryRatingPoints = 3000d,
+                RatingPoints = 3000d,
                 AudienceId = 31,
                 MediaMonthId = 437
             });
@@ -962,7 +962,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var result = _PlanService.Calculate(new PlanDeliveryBudget
             {
                 Budget = 100m,
-                DeliveryRatingPoints = 3000d,
+                RatingPoints = 3000d,
                 AudienceId = 31,
                 MediaMonthId = 437
             });
@@ -976,8 +976,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var result = _PlanService.Calculate(new PlanDeliveryBudget
             {
                 Budget = 1000,
-                DeliveryRatingPoints = 0,
-                DeliveryImpressions = 25000,
+                RatingPoints = 0,
+                Impressions = 25000,
                 AudienceId = 34,
                 MediaMonthId = 437
             });
@@ -991,7 +991,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var result = _PlanService.Calculate(new PlanDeliveryBudget
             {
                 CPM = 13.45m,
-                DeliveryImpressions = 13.456d,
+                Impressions = 13.456d,
                 AudienceId = 31,
                 MediaMonthId = 437
             });
@@ -1005,7 +1005,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var result = _PlanService.Calculate(new PlanDeliveryBudget
             {
                 Budget = 3000,
-                DeliveryImpressions = 3000d,
+                Impressions = 3000d,
                 AudienceId = 31,
                 MediaMonthId = 437
             });
@@ -1019,7 +1019,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var result = _PlanService.Calculate(new PlanDeliveryBudget
             {
                 CPM = 1,
-                DeliveryImpressions = 3000d,
+                Impressions = 3000d,
                 AudienceId = 31,
                 MediaMonthId = 437
             });
@@ -1049,7 +1049,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     Budget = null,
                     CPM = null,
-                    DeliveryImpressions = null,
+                    Impressions = null,
                     AudienceId = 5
                 }), Throws.TypeOf<Exception>().With.Message.EqualTo("Cannot calculate goal without media month and audience"));
             }
@@ -1064,7 +1064,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     Budget = null,
                     CPM = null,
-                    DeliveryImpressions = null,
+                    Impressions = null,
                     MediaMonthId = 437,
                 }), Throws.TypeOf<Exception>().With.Message.EqualTo("Cannot calculate goal without media month and audience"));
             }
@@ -1079,7 +1079,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     Budget = null,
                     CPM = null,
-                    DeliveryImpressions = null,
+                    Impressions = null,
                     MediaMonthId = 437,
                     AudienceId = 5
                 }), Throws.TypeOf<Exception>().With.Message.EqualTo("At least 2 values needed to calculate goal amount"));
@@ -1095,7 +1095,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     Budget = 1,
                     CPM = 1,
-                    DeliveryImpressions = 1,
+                    Impressions = 1,
                     AudienceId = 0
                 }), Throws.TypeOf<Exception>().With.Message.EqualTo("Cannot calculate goal without media month and audience"));
             }
@@ -1110,7 +1110,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     Budget = -1,
                     CPM = null,
-                    DeliveryImpressions = null
+                    Impressions = null
                 }), Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid budget values passed"));
             }
         }
@@ -1412,10 +1412,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Weeks = new List<WeeklyBreakdownWeek> { new WeeklyBreakdownWeek {
                       ActiveDays= "Sa,Su",
                       EndDate= new DateTime(2019,08,4),
-                      Impressions= 200.0,
+                      WeeklyImpressions= 200.0,
                       MediaWeekId= 814,
                       NumberOfActiveDays= 2,
-                      ShareOfVoice= 20.0,
+                      WeeklyImpressionsPercentage= 20.0,
                       StartDate= new DateTime(2019,07,29),
                       WeekNumber= 1
                 }}
@@ -1439,20 +1439,20 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     new WeeklyBreakdownWeek {
                       ActiveDays= "",
                       EndDate= new DateTime(2019,10,6),
-                      Impressions= 500,
+                      WeeklyImpressions= 500,
                       MediaWeekId= 814,
                       NumberOfActiveDays= 7,
-                      ShareOfVoice= 50,
+                      WeeklyImpressionsPercentage= 50,
                       StartDate= new DateTime(2019,09,30),
                       WeekNumber= 1
                     },
                     new WeeklyBreakdownWeek {
                       ActiveDays= "",
                       EndDate= new DateTime(2019,10,13),
-                      Impressions= 500,
+                      WeeklyImpressions= 500,
                       MediaWeekId= 814,
                       NumberOfActiveDays= 7,
-                      ShareOfVoice= 50,
+                      WeeklyImpressionsPercentage= 50,
                       StartDate= new DateTime(2019,10,7),
                       WeekNumber= 2
                     },
@@ -1495,11 +1495,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 PostingType = PostingTypeEnum.NTI,
                 ShareBookId = 437,
                 Budget = 100m,
-                CPM = 12m,
-                DeliveryImpressions = 100d,
-                CPP = 12m,
+                TargetCPM = 12m,
+                TargetImpressions = 100d,
+                TargetCPP = 12m,
                 Currency = PlanCurrenciesEnum.Impressions,
-                DeliveryRatingPoints = 100d,
+                TargetRatingPoints = 100d,
                 CoverageGoalPercent = 80.5,
                 GoalBreakdownType = PlanGoalBreakdownTypeEnum.Even,
                 AvailableMarkets = new List<PlanAvailableMarketDto>
@@ -1634,31 +1634,31 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     {
                         WeekNumber = 1, MediaWeekId = 784,
                         StartDate = new DateTime(2018,12,31), EndDate = new DateTime(2019,01,06),
-                        NumberOfActiveDays = 6, ActiveDays = "Tu-Su", Impressions = 20, ShareOfVoice = 20
+                        NumberOfActiveDays = 6, ActiveDays = "Tu-Su", WeeklyImpressions = 20, WeeklyImpressionsPercentage = 20
                     },
                     new WeeklyBreakdownWeek
                     {
                         WeekNumber = 2, MediaWeekId = 785,
                         StartDate = new DateTime(2019,01,07), EndDate = new DateTime(2019,01,13),
-                        NumberOfActiveDays = 7, ActiveDays = "M-Su", Impressions = 20, ShareOfVoice = 20
+                        NumberOfActiveDays = 7, ActiveDays = "M-Su", WeeklyImpressions = 20, WeeklyImpressionsPercentage = 20
                     },
                     new WeeklyBreakdownWeek
                     {
                         WeekNumber = 3, MediaWeekId = 786,
                         StartDate = new DateTime(2019,01,14), EndDate = new DateTime(2019,01,20),
-                        NumberOfActiveDays = 6, ActiveDays = "M-Sa", Impressions = 20, ShareOfVoice = 20
+                        NumberOfActiveDays = 6, ActiveDays = "M-Sa", WeeklyImpressions = 20, WeeklyImpressionsPercentage = 20
                     },
                     new WeeklyBreakdownWeek
                     {
                         WeekNumber = 4, MediaWeekId = 787,
                         StartDate = new DateTime(2019,01,21), EndDate = new DateTime(2019,01,27),
-                        NumberOfActiveDays = 6, ActiveDays = "M-W,F-Su", Impressions = 20, ShareOfVoice = 20
+                        NumberOfActiveDays = 6, ActiveDays = "M-W,F-Su", WeeklyImpressions = 20, WeeklyImpressionsPercentage = 20
                     },
                     new WeeklyBreakdownWeek
                     {
                         WeekNumber = 5, MediaWeekId = 788,
                         StartDate = new DateTime(2019,01,28), EndDate = new DateTime(2019,02,03),
-                        NumberOfActiveDays = 4, ActiveDays = "M-Th", Impressions = 20, ShareOfVoice = 20
+                        NumberOfActiveDays = 4, ActiveDays = "M-Th", WeeklyImpressions = 20, WeeklyImpressionsPercentage = 20
                     }
                 }
             };

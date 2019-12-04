@@ -3,8 +3,8 @@
   "Budget": 3000.0,
   "CPM": 0.0891710975785053425971403000,
   "CPP": 100.0,
-  "DeliveryImpressions": 33643188.0,
-  "DeliveryRatingPoints": 30.0,
+  "Impressions": 33643188.0,
   "MediaMonthId": 437,
+  "RatingPoints": 30.0,
   "Universe": 112143960.0
 }

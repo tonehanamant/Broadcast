@@ -210,7 +210,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             _ConfigureMocksToReturnTrue();
 
             var plan = _GetPlan();
-            plan.CPM = candidate;
+            plan.TargetCPM = candidate;
 
             Assert.That(() => _planValidator.ValidatePlan(plan),
                 Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid CPM."));
@@ -223,9 +223,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
 
             var plan = _GetPlan();
             plan.Budget = 0.0000001m;
-            plan.CPP = 0.0000001m;
-            plan.CPM = 0.0000001m;
-            plan.DeliveryImpressions = 0.0000001;
+            plan.TargetCPP = 0.0000001m;
+            plan.TargetCPM = 0.0000001m;
+            plan.TargetImpressions = 0.0000001;
 
             Assert.DoesNotThrow(() => _planValidator.ValidatePlan(plan));
         }
@@ -240,7 +240,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             _ConfigureMocksToReturnTrue();
 
             var plan = _GetPlan();
-            plan.CPP = candidate;
+            plan.TargetCPP = candidate;
 
             Assert.That(() => _planValidator.ValidatePlan(plan),
                 Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid CPP."));
@@ -256,7 +256,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             _ConfigureMocksToReturnTrue();
 
             var plan = _GetPlan();
-            plan.DeliveryImpressions = candidate;
+            plan.TargetImpressions = candidate;
 
             Assert.That(() => _planValidator.ValidatePlan(plan),
                 Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid Delivery Impressions."));
@@ -842,11 +842,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             _ConfigureMocksToReturnTrue();
 
             var plan = _GetPlan();
-            plan.DeliveryImpressions = 100;
+            plan.TargetImpressions = 100;
             plan.WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>
             {
-                new WeeklyBreakdownWeek {Impressions = 20},
-                new WeeklyBreakdownWeek {Impressions = 30}
+                new WeeklyBreakdownWeek {WeeklyImpressions = 20},
+                new WeeklyBreakdownWeek {WeeklyImpressions = 30}
             };
 
             Assert.That(() => _planValidator.ValidatePlan(plan), Throws.TypeOf<Exception>().With.Message.EqualTo("The impressions count is different between the delivery and the weekly breakdown"));
@@ -858,11 +858,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             _ConfigureMocksToReturnTrue();
 
             var plan = _GetPlan();
-            plan.DeliveryImpressions = 100;
+            plan.TargetImpressions = 100;
             plan.WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>
             {
-                new WeeklyBreakdownWeek {Impressions = 50, ShareOfVoice=50},
-                new WeeklyBreakdownWeek {Impressions = 49.999999, ShareOfVoice = 50}
+                new WeeklyBreakdownWeek {WeeklyImpressions = 50, WeeklyImpressionsPercentage=50},
+                new WeeklyBreakdownWeek {WeeklyImpressions = 49.999999, WeeklyImpressionsPercentage = 50}
             };
 
             Assert.DoesNotThrow(() => _planValidator.ValidatePlan(plan));
@@ -874,11 +874,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             _ConfigureMocksToReturnTrue();
 
             var plan = _GetPlan();
-            plan.DeliveryImpressions = 90.123;
+            plan.TargetImpressions = 90.123;
             plan.WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>
             {
-                new WeeklyBreakdownWeek {Impressions = 90, ShareOfVoice=50},
-                new WeeklyBreakdownWeek {Impressions = 0.1229999, ShareOfVoice = 50}
+                new WeeklyBreakdownWeek {WeeklyImpressions = 90, WeeklyImpressionsPercentage=50},
+                new WeeklyBreakdownWeek {WeeklyImpressions = 0.1229999, WeeklyImpressionsPercentage = 50}
             };
 
             Assert.DoesNotThrow(() => _planValidator.ValidatePlan(plan));
@@ -890,11 +890,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             _ConfigureMocksToReturnTrue();
 
             var plan = _GetPlan();
-            plan.DeliveryImpressions = 50;
+            plan.TargetImpressions = 50;
             plan.WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>
             {
-                new WeeklyBreakdownWeek {Impressions = 20, ShareOfVoice = 20},
-                new WeeklyBreakdownWeek {Impressions = 30, ShareOfVoice = 20}
+                new WeeklyBreakdownWeek {WeeklyImpressions = 20, WeeklyImpressionsPercentage = 20},
+                new WeeklyBreakdownWeek {WeeklyImpressions = 30, WeeklyImpressionsPercentage = 20}
             };
 
             Assert.That(() => _planValidator.ValidatePlan(plan), Throws.TypeOf<Exception>().With.Message.EqualTo("The share of voice count is not equal to 100%"));
@@ -1025,11 +1025,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
                 PostingType = PostingTypeEnum.NSI,
                 AudienceId = 31,
                 Budget = 100.00m,
-                DeliveryImpressions = 100,
-                CPM = 12.00m,
+                TargetImpressions = 100,
+                TargetCPM = 12.00m,
                 GoalBreakdownType = PlanGoalBreakdownTypeEnum.Custom,
-                DeliveryRatingPoints = 6,
-                CPP = 200951583.9999m,
+                TargetRatingPoints = 6,
+                TargetCPP = 200951583.9999m,
                 Currency = PlanCurrenciesEnum.Impressions,
                 CoverageGoalPercent = 80.5,
                 AvailableMarkets = new List<PlanAvailableMarketDto>

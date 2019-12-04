@@ -297,7 +297,7 @@
         <AssociationConnector Association="BroadcastModel.FK_inventory_summary_quarter_details_inventory_summary_quarters" />
         <EntityTypeShape EntityType="BroadcastModel.campaign" Width="1.5" PointX="0.75" PointY="25.375" />
         <AssociationConnector Association="BroadcastModel.FK_proposals_campaigns" />
-        <EntityTypeShape EntityType="BroadcastModel.campaign_summaries" Width="1.5" PointX="3" PointY="62.875" />
+        <EntityTypeShape EntityType="BroadcastModel.campaign_summaries" Width="5.25" PointX="3" PointY="62.875" />
         <AssociationConnector Association="BroadcastModel.FK_campaign_summaries_campaign" />
         <EntityTypeShape EntityType="BroadcastModel.inventory_file_ratings_job_notes" Width="1.5" PointX="7.25" PointY="48.625" />
         <AssociationConnector Association="BroadcastModel.FK_inventory_file_ratings_job_notes_inventory_file_ratings_jobs" />

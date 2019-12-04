@@ -42,8 +42,6 @@
   "CampaignId": 2,
   "CampaignName": "Test Campaign 2",
   "CoverageGoalPercent": 80.5,
-  "CPM": 12.0000,
-  "CPP": 200951583.9999,
   "Currency": 1,
   "Dayparts": [
     {
@@ -93,8 +91,6 @@
       "WeightingGoalPercent": 33.2
     }
   ],
-  "DeliveryImpressions": 0.1,
-  "DeliveryRatingPoints": 6.0,
   "Equivalized": true,
   "FlightEndDate": "2019-07-31T00:00:00",
   "FlightHiatusDays": [
@@ -104,11 +100,11 @@
   "FlightNotes": "Sample notes",
   "FlightStartDate": "2019-01-01T00:00:00",
   "GoalBreakdownType": 1,
-  "HouseholdCPM": 10.0000,
-  "HouseholdCPP": 5.0000,
-  "HouseholdDeliveryImpressions": 10000.0,
-  "HouseholdRatingPoints": 2.0,
-  "HouseholdUniverse": 10000.0,
+  "HHCPM": 10.0000,
+  "HHCPP": 5.0000,
+  "HHImpressions": 10000.0,
+  "HHRatingPoints": 2.0,
+  "HHUniverse": 10000.0,
   "HUTBookId": 428,
   "IsDraft": false,
   "IsPricingModelRunning": false,
@@ -122,10 +118,14 @@
   "ShareBookId": 430,
   "SpotLengthId": 1,
   "Status": 1,
+  "TargetCPM": 12.0000,
+  "TargetCPP": 200951583.9999,
+  "TargetImpressions": 0.1,
+  "TargetRatingPoints": 6.0,
+  "TargetUniverse": 1000000.0,
   "TotalActiveDays": 0,
   "TotalHiatusDays": 2,
   "TotalShareOfVoice": 0.0,
-  "Universe": 1000000.0,
   "VersionNumber": 1,
   "Vpvh": 0.012,
   "WeeklyBreakdownWeeks": []
