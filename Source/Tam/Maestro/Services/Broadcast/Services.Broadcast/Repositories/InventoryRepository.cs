@@ -1285,9 +1285,14 @@ namespace Services.Broadcast.Repositories
                              .Include(x => x.inventory_file_proprietary_header)
                              .Include(x => x.inventory_file_proprietary_header.Select(h => h.daypart_codes))
                              .Include(x => x.inventory_file_proprietary_header.Select(h => h.share_media_months))
-                             .Include(x => x.inventory_file_proprietary_header.Select(h => h.hut_media_months))
-                             .Include(x => x.station_inventory_manifest.Select(h => h.station_inventory_manifest_weeks))
-                             .Include(x => x.station_inventory_manifest.Select(h => h.station_inventory_manifest_dayparts.Select(d => d.daypart_codes)))
+                             .Include(x => x.inventory_file_proprietary_header.Select(h => h.hut_media_months));
+                    //skip daypart codes for open market
+                    if(inventorySourceId != (int) InventorySourceEnum.OpenMarket)
+                    {
+                        files = files.Include(x => x.station_inventory_manifest.Select(h => h.station_inventory_manifest_dayparts.Select(d => d.daypart_codes)));
+                    }
+                             
+                    files = files
                              .Include(x => x.inventory_sources)
                              .Include(x => x.inventory_file_ratings_jobs)
                              .Include(x => x.inventory_file_program_enrichment_jobs)
