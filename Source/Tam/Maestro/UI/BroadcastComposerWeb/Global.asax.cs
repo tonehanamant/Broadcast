@@ -72,9 +72,9 @@ namespace BroadcastComposerWeb
             var disableSlabInProcess = (ConfigurationManager.AppSettings["DisableSlabInProcess"] == "true");
             if (!disableSlabInProcess)
             {
-                //_logListener.LogToRollingFlatFile(config.LogFilePath, 102400, "yyyyMMdd",
-                //    Microsoft.Practices.EnterpriseLibrary.SemanticLogging.Sinks.RollFileExistsBehavior.Increment,
-                //    Microsoft.Practices.EnterpriseLibrary.SemanticLogging.Sinks.RollInterval.Day);
+                _logListener.LogToRollingFlatFile(config.LogFilePath, 102400, "yyyyMMdd",
+                    Microsoft.Practices.EnterpriseLibrary.SemanticLogging.Sinks.RollFileExistsBehavior.Increment,
+                    Microsoft.Practices.EnterpriseLibrary.SemanticLogging.Sinks.RollInterval.Day);
             }
 
             _logger.LogEventInformation("Broadcast Web Application Initialized.", "BroadcastController");
