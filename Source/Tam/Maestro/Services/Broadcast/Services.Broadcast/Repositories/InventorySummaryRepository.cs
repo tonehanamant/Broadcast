@@ -28,7 +28,7 @@ namespace Services.Broadcast.Repositories
         /// Saves the inventory summary aggregated data for the source
         /// </summary>
         /// <param name="inventorySummaryAggregation">InventorySummaryAggregation object to be saved</param>
-        void SaveInventoryAggregatedData(InventorySummaryAggregation inventorySummaryAggregation);
+        void SaveInventoryAggregatedData(InventoryQuarterSummary inventorySummaryAggregation);
 
         /// <summary>
         /// Gets the aggregated summary data for the source and selected quarter
@@ -37,7 +37,7 @@ namespace Services.Broadcast.Repositories
         /// <param name="quarter">Quarter number to filter by</param>
         /// <param name="year">Quarter year to filter by</param>
         /// <returns>InventorySummaryAggregation object</returns>
-        InventorySummaryAggregation GetInventorySummaryDataForSources(InventorySource inventorySource, int quarter, int year);
+        InventoryQuarterSummary GetInventorySummaryDataForSources(InventorySource inventorySource, int quarter, int year);
     }
 
     public class InventorySummaryRepository : BroadcastRepositoryBase, IInventorySummaryRepository
@@ -75,7 +75,7 @@ namespace Services.Broadcast.Repositories
         }
 
         /// <inheritdoc/>
-        public void SaveInventoryAggregatedData(InventorySummaryAggregation inventorySummaryAggregation)
+        public void SaveInventoryAggregatedData(InventoryQuarterSummary inventorySummaryAggregation)
         {
             _InReadUncommitedTransaction(
                 context =>
@@ -260,7 +260,7 @@ namespace Services.Broadcast.Repositories
                 });
         }
 
-        private static inventory_summary _MapInventorySummaryData(InventorySummaryAggregation inventorySummaryAggregation)
+        private static inventory_summary _MapInventorySummaryData(InventoryQuarterSummary inventorySummaryAggregation)
         {
             return new inventory_summary
             {
@@ -283,7 +283,7 @@ namespace Services.Broadcast.Repositories
                         && x.quarter_year == year).ToList());
         }
 
-        private List<inventory_summary_gaps> _MapInventorySummaryGapsData(InventorySummaryAggregation inventorySummaryAggregation)
+        private List<inventory_summary_gaps> _MapInventorySummaryGapsData(InventoryQuarterSummary inventorySummaryAggregation)
         {
             return inventorySummaryAggregation.InventoryGaps.Select(x => new inventory_summary_gaps
             {
@@ -305,7 +305,7 @@ namespace Services.Broadcast.Repositories
         /// <param name="quarter">Quarter number to filter by</param>
         /// <param name="year">Quarter year to filter by</param>
         /// <returns>InventorySummaryAggregation object</returns>
-        public InventorySummaryAggregation GetInventorySummaryDataForSources(InventorySource inventorySource, int quarter, int year)
+        public InventoryQuarterSummary GetInventorySummaryDataForSources(InventorySource inventorySource, int quarter, int year)
         {
             return _InReadUncommitedTransaction(
             context =>
@@ -337,7 +337,7 @@ namespace Services.Broadcast.Repositories
                 //quarterData will be null when there is no inventory for a specific quarter
                 if (quarterData == null) return null;
 
-                var summaryAggregationData = new InventorySummaryAggregation
+                var summaryAggregationData = new InventoryQuarterSummary
                 {
                     LastUpdatedDate = summaryData.last_update_date,
                     RatesAvailableFromQuarter = new QuarterDto { Quarter = summaryData.first_quarter_number, Year = summaryData.first_quarter_year },
@@ -360,7 +360,7 @@ namespace Services.Broadcast.Repositories
                                   where file.inventory_source_id == inventorySource.Id
                                   && (job.status == (int)BackgroundJobProcessingStatus.Queued || job.status == (int)BackgroundJobProcessingStatus.Processing)
                                   select job).Any(),
-                    Details = quarterData.inventory_summary_quarter_details.Select(x => new InventorySummaryAggregation.Detail
+                    Details = quarterData.inventory_summary_quarter_details.Select(x => new InventoryQuarterSummary.Detail
                     {
                         CPM = x.cpm,
                         DaypartCodeId = x.daypart_code_id,

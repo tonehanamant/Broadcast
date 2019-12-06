@@ -94,7 +94,7 @@ namespace Services.Broadcast.Repositories
 
         List<StationInventoryGroup> GetInventoryGroups(int inventorySourceId, int daypartCodeId, DateTime startDate, DateTime endDate);
 
-        List<StationInventoryManifestWeek> GetStationInventoryManifestWeeksForInventorySource(int inventorySourceId);
+        List<int> GetStationInventoryManifestWeeksForInventorySource(int inventorySourceId);
 
         List<DateRange> GetInventoryUploadHistoryDatesForInventorySource(int inventorySourceId);
 
@@ -1260,17 +1260,15 @@ namespace Services.Broadcast.Repositories
         }
 
         ///<inheritdoc/>
-        public List<StationInventoryManifestWeek> GetStationInventoryManifestWeeksForInventorySource(int inventorySourceId)
+        public List<int> GetStationInventoryManifestWeeksForInventorySource(int inventorySourceId)
         {
             return _InReadUncommitedTransaction(
                 context =>
                 {
-                    return context.station_inventory_manifest
-                             .Where(x => x.inventory_source_id == inventorySourceId)
-                             .SelectMany(x => x.station_inventory_manifest_weeks)
-                             .Include(x => x.media_weeks)
-                             .ToList()
-                             .Select(_MapToInventoryManifestWeek)
+                    return context.station_inventory_manifest_weeks
+                             .Where(x => x.station_inventory_manifest.inventory_source_id == inventorySourceId)
+                             .Select(x => x.media_week_id)
+                             .Distinct()
                              .ToList();
                 });
         }

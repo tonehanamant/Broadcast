@@ -357,6 +357,7 @@
     <Compile Include="Entities\ImpressionsRequestDto.cs" />
     <Compile Include="Entities\InventoryFileProgramEnrichmentJob.cs" />
     <Compile Include="Entities\InventoryFileProgramEnrichmentJobDiagnostics.cs" />
+    <Compile Include="Entities\InventorySummary\InventoryAvailability.cs" />
     <Compile Include="Entities\InventoryFileRatingsJobDiagnostics.cs" />
     <Compile Include="Entities\InventorySummary\InventoryUploadHistory.cs" />
     <Compile Include="Entities\Plan\PlanAudienceDisplay.cs" />
@@ -397,7 +398,7 @@
     <Compile Include="Entities\Enums\PlanStatusEnum.cs" />
     <Compile Include="Entities\Enums\QueueEnum.cs" />
     <Compile Include="Entities\InventoryFileRatingsProcessingJob.cs" />
-    <Compile Include="Entities\InventorySummary\InventorySummaryAggregation.cs" />
+    <Compile Include="Entities\InventorySummary\InventoryQuarterSummary.cs" />
     <Compile Include="Entities\Plan\PlanDefaultsDto.cs" />
     <Compile Include="Entities\PlansStatusCountDto.cs" />
     <Compile Include="Entities\QuarterDto.cs" />

@@ -10,6 +10,7 @@ using Services.Broadcast.Entities.InventorySummary;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using Hangfire;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
@@ -207,26 +208,46 @@ namespace Services.Broadcast.ApplicationServices
             }
         }
 
-        private List<InventorySummaryAggregation> _CreateInventorySummariesForSource(InventorySource inventorySource, 
+        private List<InventoryQuarterSummary> _CreateInventorySummariesForSource(InventorySource inventorySource, 
             BaseInventorySummaryAbstractFactory inventorySummaryFactory,
             int householdAudienceId, DateTime currentDate)
         {
-            var result = new List<InventorySummaryAggregation>();
+            var result = new List<InventoryQuarterSummary>();
+            var sw = Stopwatch.StartNew();
             var inventorySourceDateRange = _GetInventorySourceOrCurrentQuarterDateRange(inventorySource.Id, currentDate);
+            sw.Stop();
+            Debug.WriteLine($"Got inventory date range in {sw.Elapsed}");
+
+            sw.Restart();
             var allQuartersBetweenDates =
                 _QuarterCalculationEngine.GetAllQuartersBetweenDates(inventorySourceDateRange.Start.Value,
                                                                      inventorySourceDateRange.End.Value);
+            sw.Stop();
+            Debug.WriteLine($"Got quarters in date range in {sw.Elapsed}");
+
+            var inventoryAvailability = inventorySummaryFactory.GetInventoryAvailabilityBySource(inventorySource);
             List<DaypartCodeDto> daypartCodesAndIds = _DaypartCodeRepository.GetAllActiveDaypartCodes();
             foreach (var quarterDetail in allQuartersBetweenDates)
             {
+                sw.Restart();
                 var manifests = _GetInventorySummaryManifests(inventorySource, quarterDetail);
-                
+                sw.Stop();
+                Debug.WriteLine($"Got inventory {manifests.Count} manifests in {sw.Elapsed}");
+
+
                 if (manifests.Count == 0)   //there is no data in this quarter
                 {
                     continue;
                 }
-                
-                var summaryData = inventorySummaryFactory.CreateInventorySummary(inventorySource, householdAudienceId, quarterDetail, manifests, daypartCodesAndIds);
+
+                sw.Restart();
+                var summaryData = inventorySummaryFactory.CreateInventorySummary
+                    (inventorySource, householdAudienceId, quarterDetail, manifests, 
+                    daypartCodesAndIds, inventoryAvailability);
+                sw.Stop();
+                Debug.WriteLine($"Created inventory summary in {sw.Elapsed}");
+                Debug.WriteLine($"Processed {sw.ElapsedMilliseconds / manifests.Count}ms per record");
+
                 result.Add(summaryData);
             }
             return result;
@@ -292,7 +313,7 @@ namespace Services.Broadcast.ApplicationServices
             return result.Any() ? result : new List<InventorySummaryManifestDto>();
         }
         
-        private InventorySummaryDto _LoadInventorySummary(InventorySource inventorySource, InventorySummaryAggregation data, QuarterDetailDto quarterDetail)
+        private InventorySummaryDto _LoadInventorySummary(InventorySource inventorySource, InventoryQuarterSummary data, QuarterDetailDto quarterDetail)
         {
             var inventorySummaryFactory = _GetInventorySummaryFactory(inventorySource.InventoryType);
             if (data != null && data.InventoryGaps.Any())

@@ -11,7 +11,7 @@ namespace Services.Broadcast.BusinessEngines
 {
     public interface IInventoryGapCalculationEngine : IApplicationService
     {
-        List<InventoryGapDetail> GetInventoryGaps(IEnumerable<StationInventoryManifestWeek> manifestWeeks, Tuple<QuarterDetailDto, QuarterDetailDto> inventoryDateRangeTuple, QuarterDetailDto quarterDetail);
+        List<InventoryGapDetail> GetInventoryGaps(List<int> manifestMediaWeeks);
     }
 
     public class InventoryGapCalculationEngine : IInventoryGapCalculationEngine
@@ -26,23 +26,18 @@ namespace Services.Broadcast.BusinessEngines
             _MediaMonthAndWeekAggregateCache = mediaMonthAndWeekAggregateCache;
         }
 
-        public List<InventoryGapDetail> GetInventoryGaps(IEnumerable<StationInventoryManifestWeek> manifestWeeks, Tuple<QuarterDetailDto, QuarterDetailDto> inventoryDateRangeTuple, QuarterDetailDto quarterDetail)
+        public List<InventoryGapDetail> GetInventoryGaps(List<int> manifestMediaWeeks)
         {
             var inventoryGapDetails = new List<InventoryGapDetail>();
-            var dateRange = DateRange.ConvertToDateRange(inventoryDateRangeTuple);
+            var startDate = _MediaMonthAndWeekAggregateCache.GetMediaWeekById(manifestMediaWeeks.Min()).StartDate;
+            var endDate = _MediaMonthAndWeekAggregateCache.GetMediaWeekById(manifestMediaWeeks.Max()).EndDate;
+            var dateRange = new DateRange(startDate, endDate);
 
             if (dateRange.IsEmpty())
             {
                 return inventoryGapDetails;
             }
-
-            var manifestMediaWeeks = manifestWeeks.Select(x => x.MediaWeek.Id).Distinct();
-            var quarterEndDate = inventoryDateRangeTuple.Item2.EndDate;
-
-            if (quarterEndDate < quarterDetail.EndDate)
-                quarterEndDate = quarterDetail.EndDate;
-
-            var allQuarters = _QuarterCalculationEngine.GetAllQuartersBetweenDates(quarterDetail.StartDate, inventoryDateRangeTuple.Item2.EndDate);
+            var allQuarters = _QuarterCalculationEngine.GetAllQuartersBetweenDates(dateRange.Start.Value, dateRange.End.Value);
 
             foreach (var quarter in allQuarters)
             {

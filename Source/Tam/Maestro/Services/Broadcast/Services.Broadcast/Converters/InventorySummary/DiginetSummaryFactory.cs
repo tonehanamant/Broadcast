@@ -31,11 +31,12 @@ namespace Services.Broadcast.Converters.InventorySummary
         {
         }
 
-        public override InventorySummaryAggregation CreateInventorySummary(InventorySource inventorySource, int householdAudienceId, 
-            QuarterDetailDto quarterDetail, List<InventorySummaryManifestDto> inventorySummaryManifests, List<DaypartCodeDto> daypartCodes)
+        public override InventoryQuarterSummary CreateInventorySummary(InventorySource inventorySource, int householdAudienceId, 
+            QuarterDetailDto quarterDetail, List<InventorySummaryManifestDto> inventorySummaryManifests, List<DaypartCodeDto> daypartCodes,
+            InventoryAvailability inventoryAvailability)
         {
-            var allInventorySourceManifestWeeks = InventoryRepository.GetStationInventoryManifestWeeksForInventorySource(inventorySource.Id);
-            var quartersForInventoryAvailable = GetQuartersForInventoryAvailable(allInventorySourceManifestWeeks);
+            
+            
             var inventorySummaryManifestFiles = GetInventorySummaryManifestFiles(inventorySummaryManifests);
             var stationInventoryManifests = InventoryRepository.GetStationInventoryManifestsByIds(inventorySummaryManifests.Select(x => x.ManifestId));
             
@@ -43,26 +44,26 @@ namespace Services.Broadcast.Converters.InventorySummary
 
             _CalculateCPM(stationInventoryManifests, householdAudienceId, out var CPM);
 
-            var inventoryGaps = InventoryGapCalculationEngine.GetInventoryGaps(allInventorySourceManifestWeeks, quartersForInventoryAvailable, quarterDetail);
+            
 
-            return new InventorySummaryAggregation
+            return new InventoryQuarterSummary
             {
                 InventorySourceId = inventorySource.Id,
                 Quarter = GetInventorySummaryQuarter( quarterDetail),
                 TotalDaypartCodes = inventorySummaryManifests.SelectMany(x => x.DaypartCodeIds).Distinct().Count(),
                 LastUpdatedDate = DateTime.Now,
-                RatesAvailableFromQuarter = GetInventorySummaryQuarter(quartersForInventoryAvailable.Item1),
-                RatesAvailableToQuarter = GetInventorySummaryQuarter(quartersForInventoryAvailable.Item2),
-                InventoryGaps = inventoryGaps,
+                RatesAvailableFromQuarter = inventoryAvailability.StartQuarter,
+                RatesAvailableToQuarter = inventoryAvailability.EndQuarter,
+                InventoryGaps = inventoryAvailability.InventoryGaps,
                 CPM = CPM,
                 Details = _GetDetails(inventorySummaryManifests, stationInventoryManifests, householdAudienceId)
             };
         }
 
-        private List<InventorySummaryAggregation.Detail> _GetDetails(List<InventorySummaryManifestDto> allSummaryManifests
+        private List<InventoryQuarterSummary.Detail> _GetDetails(List<InventorySummaryManifestDto> allSummaryManifests
             , List<StationInventoryManifest> stationInventoryManifests, int householdAudienceId)
         {
-            var result = new List<InventorySummaryAggregation.Detail>();
+            var result = new List<InventoryQuarterSummary.Detail>();
             var allDaypartCodes = allSummaryManifests.SelectMany(x => x.DaypartCodeIds).Distinct();
 
             foreach (var daypartCode in allDaypartCodes)
@@ -71,7 +72,7 @@ namespace Services.Broadcast.Converters.InventorySummary
 
                 _CalculateHouseHoldImpressionsAndCPMUsingDaypartCodePortion(manifests, householdAudienceId, daypartCode, out var householdImpressions, out var cpm);
 
-                result.Add(new InventorySummaryAggregation.Detail
+                result.Add(new InventoryQuarterSummary.Detail
                 {
                     DaypartCodeId = daypartCode,
                     TotalProjectedHouseholdImpressions = householdImpressions,
@@ -162,7 +163,7 @@ namespace Services.Broadcast.Converters.InventorySummary
         /// <param name="diginetData">The data.</param>
         /// <param name="quarterDetail">Quarter detail data</param>
         /// <returns>InventorySummaryDto object</returns>
-        public override InventorySummaryDto LoadInventorySummary(InventorySource inventorySource, InventorySummaryAggregation diginetData, QuarterDetailDto quarterDetail)
+        public override InventorySummaryDto LoadInventorySummary(InventorySource inventorySource, InventoryQuarterSummary diginetData, QuarterDetailDto quarterDetail)
         {
             if (diginetData == null) return new DiginetInventorySummaryDto()
             {

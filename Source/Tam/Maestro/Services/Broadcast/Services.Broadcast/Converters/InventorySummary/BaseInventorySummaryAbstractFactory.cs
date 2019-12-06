@@ -8,6 +8,7 @@ using Services.Broadcast.Entities.StationInventory;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Services.ContractInterfaces.Common;
@@ -42,20 +43,49 @@ namespace Services.Broadcast.Converters.InventorySummary
             _MediaMonthAndWeekAggregateCache = mediaMonthAndWeekAggregateCache;
         }
 
-        public abstract InventorySummaryAggregation CreateInventorySummary(InventorySource inventorySource,
+        public abstract InventoryQuarterSummary CreateInventorySummary(InventorySource inventorySource,
                                                                    int householdAudienceId,
                                                                    QuarterDetailDto quarterDetail,
                                                                    List<InventorySummaryManifestDto> manifests,
-                                                                   List<DaypartCodeDto> daypartCodes);
+                                                                   List<DaypartCodeDto> daypartCodes,
+                                                                   InventoryAvailability inventoryAvailability);
                 
-        public abstract InventorySummaryDto LoadInventorySummary(InventorySource inventorySource, InventorySummaryAggregation data, QuarterDetailDto quarterDetail);
+        public abstract InventorySummaryDto LoadInventorySummary(InventorySource inventorySource, InventoryQuarterSummary data, QuarterDetailDto quarterDetail);
 
-        protected Tuple<QuarterDetailDto, QuarterDetailDto> GetQuartersForInventoryAvailable(List<StationInventoryManifestWeek> weeks)
+        public InventoryAvailability GetInventoryAvailabilityBySource(InventorySource inventorySource)
+        {
+            var sw = Stopwatch.StartNew();
+            var allInventorySourceManifestWeeks = InventoryRepository.
+                GetStationInventoryManifestWeeksForInventorySource(inventorySource.Id);
+            sw.Stop();
+            Debug.WriteLine($"#####> Obtained inventory manifest weeks in {sw.Elapsed}");
+
+            sw.Restart();
+            var allQuarterRangeInventoryAvailable = GetQuartersForInventoryAvailable(allInventorySourceManifestWeeks);
+            sw.Stop();
+            Debug.WriteLine($"#####> Obtained inventory quarters in {sw.Elapsed}");
+
+            sw.Restart();
+            var inventoryGaps = InventoryGapCalculationEngine.GetInventoryGaps(allInventorySourceManifestWeeks);
+            sw.Stop();
+            Debug.WriteLine($"#####> Obtained {inventoryGaps.Count} inventory gaps in {sw.Elapsed}");
+
+            return new InventoryAvailability
+            {
+                InventoryGaps = inventoryGaps,
+                StartQuarter = GetInventorySummaryQuarter(allQuarterRangeInventoryAvailable.Item1),
+                EndQuarter = GetInventorySummaryQuarter(allQuarterRangeInventoryAvailable.Item2)
+
+            };
+
+        }
+
+        protected Tuple<QuarterDetailDto, QuarterDetailDto> GetQuartersForInventoryAvailable(List<int> weeks)
         {
             if (weeks.Any())
             {
-                var ratesAvailableFrom = weeks.Min(x => x.StartDate);
-                var ratesAvailableTo = weeks.Max(x => x.EndDate);
+                var ratesAvailableFrom = _MediaMonthAndWeekAggregateCache.GetMediaWeekById(weeks.Min()).StartDate;
+                var ratesAvailableTo = _MediaMonthAndWeekAggregateCache.GetMediaWeekById(weeks.Max()).EndDate;
                 var ratesAvailableFromQuarterDetail = _QuarterCalculationEngine.GetQuarterRangeByDate(ratesAvailableFrom);
                 var ratesAvailableToQuarterDetail = _QuarterCalculationEngine.GetQuarterRangeByDate(ratesAvailableTo);
 

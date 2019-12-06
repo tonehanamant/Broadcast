@@ -6,6 +6,7 @@ using Services.Broadcast.Entities.StationInventory;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace Services.Broadcast.Converters.InventorySummary
@@ -35,33 +36,66 @@ namespace Services.Broadcast.Converters.InventorySummary
             return inventorySummaryManifestFiles.Max(x => (DateTime?)x.CreatedDate);
         }
 
-        public override InventorySummaryAggregation CreateInventorySummary(InventorySource inventorySource,
+        public override InventoryQuarterSummary CreateInventorySummary(InventorySource inventorySource,
                                                                    int householdAudienceId,
                                                                    QuarterDetailDto quarterDetail,
-                                                                   List<InventorySummaryManifestDto> inventorySummaryManifests,
-                                                                   List<DaypartCodeDto> daypartCodes)
+                                                                   List<InventorySummaryManifestDto> quarterInventorySummaryManifests,
+                                                                   List<DaypartCodeDto> daypartCodes,
+                                                                   InventoryAvailability inventoryAvailability)
         {
-            var allInventorySourceManifestWeeks = InventoryRepository.GetStationInventoryManifestWeeksForInventorySource(inventorySource.Id);
-            var quartersForInventoryAvailable = GetQuartersForInventoryAvailable(allInventorySourceManifestWeeks);
-            var inventorySummaryManifestFiles = GetInventorySummaryManifestFiles(inventorySummaryManifests);
-            var manifests = InventoryRepository.GetStationInventoryManifestsByIds(inventorySummaryManifests.Select(x => x.ManifestId));
 
-            GetLatestInventoryPostingBook(inventorySummaryManifestFiles, out var shareBook, out var hutBook);
+            var sw = Stopwatch.StartNew();
+            var quarterInventorySummaryManifestFiles = GetInventorySummaryManifestFiles(quarterInventorySummaryManifests);
+            sw.Stop();
+            Debug.WriteLine($"=======> Obtained {quarterInventorySummaryManifestFiles.Count} manifest files in {sw.Elapsed}");
 
-            var inventoryGaps = InventoryGapCalculationEngine.GetInventoryGaps(allInventorySourceManifestWeeks, quartersForInventoryAvailable, quarterDetail);
+            sw.Restart();
+            var quarterManifestIds = InventoryRepository.GetStationInventoryManifestsByIds(quarterInventorySummaryManifests.Select(x => x.ManifestId));
+            sw.Stop();
+            Debug.WriteLine($"=======> Obtained {quarterManifestIds.Count} manifest ids in {sw.Elapsed}");
 
-            return new InventorySummaryAggregation
+            sw.Restart();
+            GetLatestInventoryPostingBook(quarterInventorySummaryManifestFiles, out var shareBook, out var hutBook);
+            sw.Stop();
+            Debug.WriteLine($"=======> Obtained latest posting books in {sw.Elapsed}");
+
+            sw.Restart();
+            var inventorySummaryQuarter = GetInventorySummaryQuarter(quarterDetail);
+            sw.Stop();
+            Debug.WriteLine($"=======> Obtained InventorySummaryQuarter in {sw.Elapsed}");
+
+            sw.Restart();
+            var totalMarkets = GetTotalMarkets(quarterInventorySummaryManifests);
+            sw.Stop();
+            Debug.WriteLine($"=======> Obtained {totalMarkets} total markets in {sw.Elapsed}");
+
+            sw.Restart();
+            var totalStations = GetTotalStations(quarterInventorySummaryManifests);
+            sw.Stop();
+            Debug.WriteLine($"=======> Obtained {totalStations} total stations in {sw.Elapsed}");
+
+            sw.Restart();
+            var totalPrograms = GetTotalPrograms(quarterInventorySummaryManifests);
+            sw.Stop();
+            Debug.WriteLine($"=======> Obtained {totalPrograms} total programs in {sw.Elapsed}");
+
+            sw.Restart();
+            var projectedHouseholdImpressions = _GetHouseholdImpressions(quarterManifestIds, householdAudienceId);
+            sw.Stop();
+            Debug.WriteLine($"=======> Obtained {projectedHouseholdImpressions} projected household impressions in {sw.Elapsed}");
+
+            return new InventoryQuarterSummary
             {
                 InventorySourceId = inventorySource.Id,
-                Quarter = GetInventorySummaryQuarter(quarterDetail),
-                TotalMarkets = GetTotalMarkets(inventorySummaryManifests),
-                TotalStations = GetTotalStations(inventorySummaryManifests),
-                TotalPrograms = GetTotalPrograms(inventorySummaryManifests),
-                TotalProjectedHouseholdImpressions = _GetHouseholdImpressions(manifests, householdAudienceId),
+                Quarter = inventorySummaryQuarter,
+                TotalMarkets = totalMarkets,
+                TotalStations = totalStations,
+                TotalPrograms = totalPrograms,
+                TotalProjectedHouseholdImpressions = projectedHouseholdImpressions,
                 LastUpdatedDate = DateTime.Now,
-                RatesAvailableFromQuarter = GetInventorySummaryQuarter(quartersForInventoryAvailable.Item1),
-                RatesAvailableToQuarter = GetInventorySummaryQuarter(quartersForInventoryAvailable.Item2),
-                InventoryGaps = inventoryGaps,
+                RatesAvailableFromQuarter = inventoryAvailability.StartQuarter,
+                RatesAvailableToQuarter = inventoryAvailability.EndQuarter,
+                InventoryGaps = inventoryAvailability.InventoryGaps,
                 Details = null, //open market does not have details
                 ShareBookId = shareBook?.Id,
                 HutBookId = hutBook?.Id
@@ -91,7 +125,8 @@ namespace Services.Broadcast.Converters.InventorySummary
 
         private StationInventoryManifestAudience _GetAudienceWithPositiveImpressions(IEnumerable<StationInventoryManifestAudience> audiences, int audienceId)
         {
-            return audiences.SingleOrDefault(x => x.Audience.Id == audienceId && x.Impressions.HasValue && x.Impressions.Value > 0);
+                //this is just a workaround. We need to figure out why we get multiple audiences here
+                return audiences.FirstOrDefault(x => x.Audience.Id == audienceId && x.Impressions.HasValue && x.Impressions.Value > 0);            
         }
 
         /// <summary>
@@ -101,7 +136,7 @@ namespace Services.Broadcast.Converters.InventorySummary
         /// <param name="openMarketData">The data.</param>
         /// <param name="quarterDetail">Quarter detail data</param>
         /// <returns>InventorySummaryDto object</returns>
-        public override InventorySummaryDto LoadInventorySummary(InventorySource inventorySource, InventorySummaryAggregation openMarketData, QuarterDetailDto quarterDetail)
+        public override InventorySummaryDto LoadInventorySummary(InventorySource inventorySource, InventoryQuarterSummary openMarketData, QuarterDetailDto quarterDetail)
         {
             if (openMarketData == null) return new OpenMarketInventorySummaryDto()
             {

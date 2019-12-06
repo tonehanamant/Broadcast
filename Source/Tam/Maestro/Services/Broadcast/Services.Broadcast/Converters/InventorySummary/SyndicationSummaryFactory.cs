@@ -28,26 +28,26 @@ namespace Services.Broadcast.Converters.InventorySummary
         {
         }
 
-        public override InventorySummaryAggregation CreateInventorySummary(InventorySource inventorySource,
+        public override InventoryQuarterSummary CreateInventorySummary(InventorySource inventorySource,
                                                                    int householdAudienceId,
                                                                    QuarterDetailDto quarterDetail,
                                                                    List<InventorySummaryManifestDto> manifests,
-                                                                   List<DaypartCodeDto> daypartCodes)
+                                                                   List<DaypartCodeDto> daypartCodes,
+                                                                   InventoryAvailability inventoryAvailability)
         {
-            var allInventorySourceManifestWeeks = InventoryRepository.GetStationInventoryManifestWeeksForInventorySource(inventorySource.Id);
-            var quartersForInventoryAvailable = GetQuartersForInventoryAvailable(allInventorySourceManifestWeeks);
+            
             var inventorySummaryManifestFiles = GetInventorySummaryManifestFiles(manifests);
-            var inventoryGaps = InventoryGapCalculationEngine.GetInventoryGaps(allInventorySourceManifestWeeks, quartersForInventoryAvailable, quarterDetail);
+            
 
-            return new InventorySummaryAggregation
+            return new InventoryQuarterSummary
             {
                 InventorySourceId = inventorySource.Id,
                 Quarter = GetInventorySummaryQuarter(quarterDetail),
                 LastUpdatedDate = DateTime.Now,
                 TotalPrograms = GetTotalPrograms(manifests),
-                RatesAvailableFromQuarter = GetInventorySummaryQuarter(quartersForInventoryAvailable.Item1),
-                RatesAvailableToQuarter = GetInventorySummaryQuarter(quartersForInventoryAvailable.Item2),
-                InventoryGaps = inventoryGaps,
+                RatesAvailableFromQuarter = inventoryAvailability.StartQuarter,
+                RatesAvailableToQuarter = inventoryAvailability.EndQuarter,
+                InventoryGaps = inventoryAvailability.InventoryGaps,
                 Details = null //Syndication does not have details
             };
         }
@@ -59,7 +59,7 @@ namespace Services.Broadcast.Converters.InventorySummary
         /// <param name="syndicationData"></param>
         /// <param name="quarterDetail">Quarter detail data</param>
         /// <returns>InventorySummaryDto object</returns>
-        public override InventorySummaryDto LoadInventorySummary(InventorySource inventorySource, InventorySummaryAggregation syndicationData, QuarterDetailDto quarterDetail)
+        public override InventorySummaryDto LoadInventorySummary(InventorySource inventorySource, InventoryQuarterSummary syndicationData, QuarterDetailDto quarterDetail)
         {
             if (syndicationData == null) return new SyndicationInventorySummaryDto()
             {

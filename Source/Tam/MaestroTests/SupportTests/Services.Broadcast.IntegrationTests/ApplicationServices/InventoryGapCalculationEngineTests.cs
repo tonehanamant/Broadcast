@@ -29,19 +29,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             // All media weeks for Q1 2018.
             var manifestWeeks = _GenerateManifestMediaWeeks(732, 743);
             // First week of Q2 2018.
-            manifestWeeks.Add(new StationInventoryManifestWeek
-            {
-                MediaWeek = new MediaWeek
-                {
-                    Id = 744
-                }
-            });
+            manifestWeeks.Add(744);
             var quarterStart = _QuarterCalculationEngine.GetQuarterDetail(1, 2018);
             var quarterEnd = _QuarterCalculationEngine.GetQuarterDetail(2, 2018);
             var inventoryDateRangeTuple = new Tuple<QuarterDetailDto, QuarterDetailDto>(quarterStart, quarterEnd);
             var quarter = _QuarterCalculationEngine.GetQuarterDetail(1, 2018);
 
-            var result = _InventoryGapCalculationEngine.GetInventoryGaps(manifestWeeks, inventoryDateRangeTuple, quarter);
+            var result = _InventoryGapCalculationEngine.GetInventoryGaps(manifestWeeks);
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
@@ -59,7 +53,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var inventoryDateRangeTuple = new Tuple<QuarterDetailDto, QuarterDetailDto>(quarterStart, quarterEnd);
             var quarter = _QuarterCalculationEngine.GetQuarterDetail(1, 2018);
 
-            var result = _InventoryGapCalculationEngine.GetInventoryGaps(manifestWeeks, inventoryDateRangeTuple, quarter);
+            var result = _InventoryGapCalculationEngine.GetInventoryGaps(manifestWeeks);
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
@@ -77,7 +71,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var inventoryDateRangeTuple = new Tuple<QuarterDetailDto, QuarterDetailDto>(quarterStart, quarterEnd);
             var quarter = _QuarterCalculationEngine.GetQuarterDetail(1, 2018);
 
-            var result = _InventoryGapCalculationEngine.GetInventoryGaps(manifestWeeks, inventoryDateRangeTuple, quarter);
+            var result = _InventoryGapCalculationEngine.GetInventoryGaps(manifestWeeks);
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
@@ -95,7 +89,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var inventoryDateRangeTuple = new Tuple<QuarterDetailDto, QuarterDetailDto>(quarterStart, quarterEnd);
             var quarter = _QuarterCalculationEngine.GetQuarterDetail(2, 2018);
 
-            var result = _InventoryGapCalculationEngine.GetInventoryGaps(manifestWeeks, inventoryDateRangeTuple, quarter);
+            var result = _InventoryGapCalculationEngine.GetInventoryGaps(manifestWeeks);
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
@@ -113,7 +107,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var inventoryDateRangeTuple = new Tuple<QuarterDetailDto, QuarterDetailDto>(quarterStart, quarterEnd);
             var quarter = _QuarterCalculationEngine.GetQuarterDetail(2, 2018);
 
-            var result = _InventoryGapCalculationEngine.GetInventoryGaps(manifestWeeks, inventoryDateRangeTuple, quarter);
+            var result = _InventoryGapCalculationEngine.GetInventoryGaps(manifestWeeks);
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
@@ -127,26 +121,19 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             manifestWeeks.AddRange(_GenerateManifestMediaWeeks(742, 743));
             var quarterStart = _QuarterCalculationEngine.GetQuarterDetail(1, 2018);
             var quarterEnd = _QuarterCalculationEngine.GetQuarterDetail(2, 2018);
-            var inventoryDateRangeTuple = new Tuple<QuarterDetailDto, QuarterDetailDto>(quarterStart, quarterEnd);
             var quarter = _QuarterCalculationEngine.GetQuarterDetail(1, 2018);
 
-            var result = _InventoryGapCalculationEngine.GetInventoryGaps(manifestWeeks, inventoryDateRangeTuple, quarter);
+            var result = _InventoryGapCalculationEngine.GetInventoryGaps(manifestWeeks);
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
 
-        private List<StationInventoryManifestWeek> _GenerateManifestMediaWeeks(int from, int to)
+        private List<int> _GenerateManifestMediaWeeks(int from, int to)
         {
-            var result = new List<StationInventoryManifestWeek>();
+            var result = new List<int>();
 
             for (var start = from; start <= to; start++)
-                result.Add(new StationInventoryManifestWeek
-                {
-                    MediaWeek = new MediaWeek
-                    {
-                        Id = start
-                    }
-                });
+                result.Add(start);
 
             return result;
         }

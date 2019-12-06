@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Services.Broadcast.Entities.InventorySummary
 {
-    public class InventorySummaryAggregation
+    public class InventoryQuarterSummary
     {
         public int InventorySourceId { get; set; }
         public string InventorySourceName { get; set; }
