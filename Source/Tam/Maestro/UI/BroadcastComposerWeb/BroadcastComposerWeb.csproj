@@ -317,6 +317,7 @@
     <Compile Include="BroadcastWebLogger.cs" />
     <Compile Include="Controllers\AdvertiserApiController.cs" />
     <Compile Include="Controllers\AffidavitUploadApiController.cs" />
+    <Compile Include="Controllers\AffiliateApiController.cs" />
     <Compile Include="Controllers\AgencyApiController.cs" />
     <Compile Include="Controllers\AudienceTypesApiController.cs" />
     <Compile Include="Controllers\BroadcastControllerBase.cs" />

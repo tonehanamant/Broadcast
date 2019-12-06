@@ -298,6 +298,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationServices\AdvertiserService.cs" />
+    <Compile Include="ApplicationServices\AffiliateService.cs" />
     <Compile Include="ApplicationServices\AgencyService.cs" />
     <Compile Include="ApplicationServices\BroadcastLockingManagerApplicationService.cs" />
     <Compile Include="ApplicationServices\CampaignAggregationJobTrigger.cs" />
@@ -429,6 +430,7 @@
     <Compile Include="Helpers\SystemComponentParameterHelper.cs" />
     <Compile Include="ReflectionHelper.cs" />
     <Compile Include="ReportGenerators\CampaignReportGenerator.cs" />
+    <Compile Include="Repositories\AffiliateRepository.cs" />
     <Compile Include="Repositories\CampaignSummaryRepository.cs" />
     <Compile Include="Repositories\InventoryFileProgramEnrichmentJobsRepository.cs" />
     <Compile Include="Repositories\PlanRepository.cs" />

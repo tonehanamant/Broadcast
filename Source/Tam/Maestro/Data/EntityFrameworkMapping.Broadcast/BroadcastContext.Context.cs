@@ -171,5 +171,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<plan_version_pricing_api_result_spots> plan_version_pricing_api_result_spots { get; set; }
         public virtual DbSet<plan_version_pricing_api_results> plan_version_pricing_api_results { get; set; }
         public virtual DbSet<daypart_codes> daypart_codes { get; set; }
+        public virtual DbSet<affiliate> affiliates { get; set; }
     }
 }

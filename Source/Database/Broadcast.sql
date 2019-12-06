@@ -211,6 +211,35 @@ END
 
 /*************************************** START - PRI-16134 ****************************************************/
 
+/*************************************** START - PRI-19007 ****************************************************/
+IF OBJECT_ID('affiliates') IS NULL
+BEGIN
+	CREATE TABLE [dbo].[affiliates](
+		
+		[id] [int] IDENTITY(1,1) NOT NULL,
+		[name] [varchar](127) NOT NULL,
+		[created_by] [varchar](63) NOT NULL,
+		[created_date] [datetime] NOT NULL,
+		[modified_by] [varchar](63) NOT NULL,
+		[modified_date] [datetime] NOT NULL,
+	 CONSTRAINT [PK_affiliates] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY]
+
+	INSERT INTO [dbo].[affiliates](
+		[name],
+		[created_by],
+		[created_date],
+		[modified_by],
+		[modified_date]
+	)
+	SELECT DISTINCT affiliation, 'System' as created_by, SYSDATETIME() as created_date, 'System' as modified_by, SYSDATETIME() as modified_date
+	FROM stations 
+	WHERE affiliation IS NOT NULL
+END
+/*************************************** END - PRI-19007 ****************************************************/
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 

@@ -131,6 +131,17 @@
           <Property Name="created_date" Type="datetime" Nullable="false" />
           <Property Name="created_by" Type="varchar" MaxLength="63" Nullable="false" />
         </EntityType>
+        <EntityType Name="affiliates">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="127" Nullable="false" />
+          <Property Name="created_by" Type="varchar" MaxLength="63" Nullable="false" />
+          <Property Name="created_date" Type="datetime" Nullable="false" />
+          <Property Name="modified_by" Type="varchar" MaxLength="63" Nullable="false" />
+          <Property Name="modified_date" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="audience_audiences">
           <Key>
             <PropertyRef Name="rating_category_group_id" />
@@ -1801,7 +1812,7 @@
           <Property Name="sys_end_date" Type="datetime2" Precision="7" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'broadcast_integration.dbo.station_inventory_manifest_weeks_history' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'broadcast_integration_staging.dbo.station_inventory_manifest_weeks_history' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="station_inventory_manifest_weeks_history">
           <Key>
             <PropertyRef Name="id" />
@@ -1897,7 +1908,7 @@ warning 6002: The table/view 'broadcast_integration.dbo.station_inventory_manife
           <Property Name="end_time" Type="int" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'broadcast_integration.dbo.vw_ccc_daypart' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vw_ccc_daypart">
           <Key>
             <PropertyRef Name="id" />
@@ -4787,6 +4798,7 @@ warning 6002: The table/view 'broadcast_integration.dbo.vw_ccc_daypart' does not
           <EntitySet Name="affidavit_files" EntityType="Self.affidavit_files" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="affidavit_outbound_file_problems" EntityType="Self.affidavit_outbound_file_problems" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="affidavit_outbound_files" EntityType="Self.affidavit_outbound_files" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="affiliates" EntityType="Self.affiliates" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="audience_audiences" EntityType="Self.audience_audiences" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="audience_maps" EntityType="Self.audience_maps" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="audiences" EntityType="Self.audiences" Schema="dbo" store:Type="Tables" />
@@ -6879,6 +6891,7 @@ warning 6002: The table/view 'broadcast_integration.dbo.vw_ccc_daypart' does not
             <End Role="daypart_codes" EntitySet="daypart_codes" />
             <End Role="station_inventory_manifest_dayparts" EntitySet="station_inventory_manifest_dayparts" />
           </AssociationSet>
+          <EntitySet Name="affiliates" EntityType="BroadcastModel.affiliate" />
           </EntityContainer>
         <EntityType Name="audience_audiences">
           <Key>
@@ -12038,6 +12051,17 @@ warning 6002: The table/view 'broadcast_integration.dbo.vw_ccc_daypart' does not
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="affiliate">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="127" FixedLength="false" Unicode="false" />
+          <Property Name="created_by" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
+          <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="modified_by" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
+          <Property Name="modified_date" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -14072,6 +14096,18 @@ warning 6002: The table/view 'broadcast_integration.dbo.vw_ccc_daypart' does not
                 <ScalarProperty Name="full_name" ColumnName="full_name" />
                 <ScalarProperty Name="is_active" ColumnName="is_active" />
                 <ScalarProperty Name="code" ColumnName="code" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="affiliates">
+            <EntityTypeMapping TypeName="BroadcastModel.affiliate">
+              <MappingFragment StoreEntitySet="affiliates">
+                <ScalarProperty Name="modified_date" ColumnName="modified_date" />
+                <ScalarProperty Name="modified_by" ColumnName="modified_by" />
+                <ScalarProperty Name="created_date" ColumnName="created_date" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

@@ -194,6 +194,7 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IDaypartCodeService, DaypartCodeService>();
             unityContainer.RegisterType<IShowTypeService, ShowTypeService>();
             unityContainer.RegisterType<IContainTypeService, ContainTypeService>();
+            unityContainer.RegisterType<IAffiliateService, AffiliateService>();
 
             unityContainer.RegisterType<IScxGenerationService, ScxGenerationService>();
 
