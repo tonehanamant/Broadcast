@@ -5,15 +5,18 @@ using Newtonsoft.Json;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.ApplicationServices.Plan;
+using Services.Broadcast.Cache;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.DTO.Program;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
+using Services.Broadcast.IntegrationTests.Stubs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
+using Microsoft.Practices.Unity;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
@@ -346,6 +349,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
+                IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<ITrafficApiCache>(new TrafficApiCacheStub());
+                var _CampaignService = IntegrationTestApplicationServiceFactory.GetApplicationService<ICampaignService>();
+
                 SaveCampaignDto newCampaign = _GetNewCampaign();
                 var newCampaignId = _CampaignService.SaveCampaign(newCampaign, "integration_test", new DateTime(2019, 10, 30));
 
@@ -471,6 +477,20 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 // generate a plan for test
                 PlanDto newPlan = _GetNewPlan();
+                newPlan.SecondaryAudiences = new List<PlanAudienceDto>
+                {
+                    new PlanAudienceDto
+                    {
+                        AudienceId = 6,
+                        CPM = 10,
+                        CPP = 12,
+                        Impressions = 100000,
+                        RatingPoints = 25,
+                        Type = AudienceTypeEnum.Nielsen,
+                        Universe = 123123,
+                        Vpvh =0.456
+                    }
+                };
                 var newPlanId = _PlanService.SavePlan(newPlan, "integration_test", new System.DateTime(2019, 01, 01));
 
                 PlanDto testPlan = _PlanService.GetPlan(newPlanId);

@@ -31,12 +31,15 @@ namespace Services.Broadcast.IntegrationTests.Stubs
 
         public ProductDto GetProduct(int productId)
         {
-            throw new NotImplementedException();
+            return new ProductDto { AdvertiserId = 1, Id = 1, Name = "Product" };
         }
 
         public List<ProductDto> GetProductsByAdvertiserId(int advertiserId)
         {
-            throw new NotImplementedException();
+            return new List<ProductDto>
+            {
+                new ProductDto { AdvertiserId = 1, Id = 1, Name = "Product" }
+            };
         }
     }
 }

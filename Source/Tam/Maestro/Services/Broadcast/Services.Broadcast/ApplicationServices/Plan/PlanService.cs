@@ -248,6 +248,10 @@ namespace Services.Broadcast.ApplicationServices.Plan
             {
                 plan.TargetImpressions = plan.TargetImpressions.Value / 1000;
             }
+            foreach(var audience in plan.SecondaryAudiences)
+            {
+                audience.Impressions = audience.Impressions.Value / 1000;
+            }
             foreach (var week in plan.WeeklyBreakdownWeeks)
             {
                 week.WeeklyImpressions = week.WeeklyImpressions / 1000;

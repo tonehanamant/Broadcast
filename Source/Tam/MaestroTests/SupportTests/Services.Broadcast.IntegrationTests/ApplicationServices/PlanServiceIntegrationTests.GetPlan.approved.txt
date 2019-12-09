@@ -202,7 +202,18 @@
   "PostingType": 2,
   "PricingParameters": null,
   "ProductId": 1,
-  "SecondaryAudiences": [],
+  "SecondaryAudiences": [
+    {
+      "AudienceId": 6,
+      "CPM": 0.0263,
+      "CPP": 1.55695763157895,
+      "Impressions": 3800.0,
+      "RatingPoints": 64.227823526956,
+      "Type": 1,
+      "Universe": 5916439.0,
+      "Vpvh": 0.456
+    }
+  ],
   "ShareBookId": 437,
   "SpotLengthId": 1,
   "Status": 1,
