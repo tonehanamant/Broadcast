@@ -305,7 +305,7 @@ namespace Services.Broadcast.Repositories
                             {
                                 Quarter = q.quarter,
                                 Year = q.year
-                            }).ToList()
+                            }).OrderBy(x=>x.Year).ThenBy(x=>x.Quarter).ToList()
                         };
                     }).ToList()
             };

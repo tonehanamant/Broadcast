@@ -2,12 +2,185 @@
   {
     "Advertiser": {
       "AgencyId": 1,
-      "Id": 4,
-      "Name": "Name4"
+      "Id": 39203,
+      "Name": "Stub Advertiser"
     },
     "Agency": {
-      "Id": 3,
-      "Name": "!_Name_3"
+      "Id": 1,
+      "Name": "Stub Agency"
+    },
+    "Budget": 37800000.0,
+    "CampaignStatus": 4,
+    "FlightActiveDays": 170,
+    "FlightEndDate": "2020-01-26T00:00:00",
+    "FlightHiatusDays": 10,
+    "FlightStartDate": "2019-07-31T00:00:00",
+    "HasHiatus": true,
+    "HasPlans": true,
+    "HHCPM": 7.40250000000001,
+    "HHImpressions": 5106382978.7234049,
+    "HHRatingPoints": 4632.9795669926189,
+    "ModifiedBy": "Sebastian Roibu",
+    "ModifiedDate": "2019-11-20T14:54:10.593",
+    "Name": "Test Gorilla Glue",
+    "Notes": "",
+    "Plans": [
+      {
+        "AudienceId": 32,
+        "AvailableMarketCount": 146,
+        "AvailableMarketsWithSovCount": 0,
+        "AvailableMarketTotalUsCoveragePercent": 88.790999999999912,
+        "BlackoutMarketCount": null,
+        "BlackoutMarketTotalUsCoveragePercent": null,
+        "Budget": 5000000.0000,
+        "Dayparts": [
+          "EM",
+          "MDN",
+          "PT"
+        ],
+        "DraftModifiedBy": null,
+        "DraftModifiedDate": null,
+        "Equivalized": true,
+        "FlightEndDate": "2019-12-29T00:00:00",
+        "FlightStartDate": "2019-10-02T00:00:00",
+        "HasHiatus": false,
+        "HHCPM": 4.7000,
+        "HHImpressions": 1063829787.2340426,
+        "ModifiedBy": "CROSSMW\\sroibu",
+        "ModifiedDate": "2019-11-20T14:57:08.05",
+        "Name": "First plan",
+        "PlanSummaryQuarters": [
+          {
+            "Quarter": 4,
+            "Year": 2019
+          }
+        ],
+        "PostingType": 2,
+        "ProcessingStatus": 0,
+        "ProductName": "PetMed Express",
+        "SpotLength": 30,
+        "Status": 1,
+        "TargetCPM": 20.0000,
+        "TargetImpressions": 250000000.0,
+        "TotalActiveDays": 89,
+        "TotalHiatusDays": 0,
+        "TRP": 427.90200400543659
+      },
+      {
+        "AudienceId": 32,
+        "AvailableMarketCount": 170,
+        "AvailableMarketsWithSovCount": 0,
+        "AvailableMarketTotalUsCoveragePercent": 77.065999999999946,
+        "BlackoutMarketCount": null,
+        "BlackoutMarketTotalUsCoveragePercent": null,
+        "Budget": 25000000.0000,
+        "Dayparts": [
+          "EM",
+          "ENLN",
+          "SYN"
+        ],
+        "DraftModifiedBy": null,
+        "DraftModifiedDate": null,
+        "Equivalized": false,
+        "FlightEndDate": "2019-10-13T00:00:00",
+        "FlightStartDate": "2019-07-31T00:00:00",
+        "HasHiatus": false,
+        "HHCPM": 11.7499,
+        "HHImpressions": 2127659574.4680853,
+        "ModifiedBy": "CROSSMW\\sroibu",
+        "ModifiedDate": "2019-11-20T15:00:25.593",
+        "Name": "Second plan",
+        "PlanSummaryQuarters": [
+          {
+            "Quarter": 3,
+            "Year": 2019
+          },
+          {
+            "Quarter": 4,
+            "Year": 2019
+          }
+        ],
+        "PostingType": 2,
+        "ProcessingStatus": 0,
+        "ProductName": "PetMed Express",
+        "SpotLength": 45,
+        "Status": 4,
+        "TargetCPM": 50.0000,
+        "TargetImpressions": 500000000.0,
+        "TotalActiveDays": 75,
+        "TotalHiatusDays": 0,
+        "TRP": 855.80400801087319
+      },
+      {
+        "AudienceId": 32,
+        "AvailableMarketCount": 164,
+        "AvailableMarketsWithSovCount": 0,
+        "AvailableMarketTotalUsCoveragePercent": 52.238000000000007,
+        "BlackoutMarketCount": null,
+        "BlackoutMarketTotalUsCoveragePercent": null,
+        "Budget": 7800000.0000,
+        "Dayparts": [
+          "EM",
+          "EF",
+          "PA"
+        ],
+        "DraftModifiedBy": null,
+        "DraftModifiedDate": null,
+        "Equivalized": true,
+        "FlightEndDate": "2020-01-26T00:00:00",
+        "FlightStartDate": "2019-11-06T00:00:00",
+        "HasHiatus": true,
+        "HHCPM": 4.0733,
+        "HHImpressions": 1914893617.0212767,
+        "ModifiedBy": "CROSSMW\\sroibu",
+        "ModifiedDate": "2019-11-20T15:02:25.853",
+        "Name": "Third plan",
+        "PlanSummaryQuarters": [
+          {
+            "Quarter": 4,
+            "Year": 2019
+          },
+          {
+            "Quarter": 1,
+            "Year": 2020
+          }
+        ],
+        "PostingType": 2,
+        "ProcessingStatus": 0,
+        "ProductName": "PetMed Express",
+        "SpotLength": 10,
+        "Status": 3,
+        "TargetCPM": 17.3333,
+        "TargetImpressions": 450000000.0,
+        "TotalActiveDays": 72,
+        "TotalHiatusDays": 10,
+        "TRP": 770.22360720978588
+      }
+    ],
+    "PlanStatuses": [
+      {
+        "Count": 1,
+        "PlanStatus": 1
+      },
+      {
+        "Count": 1,
+        "PlanStatus": 3
+      },
+      {
+        "Count": 1,
+        "PlanStatus": 4
+      }
+    ]
+  },
+  {
+    "Advertiser": {
+      "AgencyId": 1,
+      "Id": 4,
+      "Name": "Stub Advertiser"
+    },
+    "Agency": {
+      "Id": 1,
+      "Name": "Stub Agency"
     },
     "Budget": 1500.0,
     "CampaignStatus": 4,
@@ -17,9 +190,9 @@
     "FlightStartDate": "2019-08-01T00:00:00",
     "HasHiatus": true,
     "HasPlans": false,
-    "HouseholdCPM": 2500.0,
-    "HouseholdImpressions": 5500.0,
-    "HouseholdRatingPoints": 23.5,
+    "HHCPM": 2500.0,
+    "HHImpressions": 5500.0,
+    "HHRatingPoints": 23.5,
     "ModifiedBy": "CROSSMW\\bbotelho",
     "ModifiedDate": "2019-08-27T00:00:00",
     "Name": "Test Campaign 4",
@@ -48,11 +221,11 @@
     "Advertiser": {
       "AgencyId": 1,
       "Id": 2,
-      "Name": "Name2"
+      "Name": "Stub Advertiser"
     },
     "Agency": {
-      "Id": 9,
-      "Name": "#_Name_9"
+      "Id": 1,
+      "Name": "Stub Agency"
     },
     "Budget": 1500.0,
     "CampaignStatus": 4,
@@ -62,16 +235,16 @@
     "FlightStartDate": "2019-08-01T00:00:00",
     "HasHiatus": true,
     "HasPlans": true,
-    "HouseholdCPM": 2500.0,
-    "HouseholdImpressions": 5500.0,
-    "HouseholdRatingPoints": 23.5,
+    "HHCPM": 2500.0,
+    "HHImpressions": 5500.0,
+    "HHRatingPoints": 23.5,
     "ModifiedBy": "CROSSMW\\bbotelho",
     "ModifiedDate": "2019-05-13T00:00:00",
     "Name": "Test Campaign 2",
     "Notes": "This is a test note for a test campaign.",
     "Plans": [
       {
-        "AudienceName": "House Holds",
+        "AudienceId": 31,
         "AvailableMarketCount": 2,
         "AvailableMarketsWithSovCount": null,
         "AvailableMarketTotalUsCoveragePercent": 52.5,
@@ -119,7 +292,7 @@
         "TRP": 6.0
       },
       {
-        "AudienceName": "House Holds",
+        "AudienceId": 31,
         "AvailableMarketCount": 2,
         "AvailableMarketsWithSovCount": null,
         "AvailableMarketTotalUsCoveragePercent": 52.5,
@@ -190,11 +363,11 @@
     "Advertiser": {
       "AgencyId": 1,
       "Id": 1,
-      "Name": "Name1"
+      "Name": "Stub Advertiser"
     },
     "Agency": {
-      "Id": 5,
-      "Name": "\"_Name_5"
+      "Id": 1,
+      "Name": "Stub Agency"
     },
     "Budget": 1500.0,
     "CampaignStatus": 4,
@@ -204,9 +377,9 @@
     "FlightStartDate": "2019-08-01T00:00:00",
     "HasHiatus": true,
     "HasPlans": false,
-    "HouseholdCPM": 2500.0,
-    "HouseholdImpressions": 5500.0,
-    "HouseholdRatingPoints": 23.5,
+    "HHCPM": 2500.0,
+    "HHImpressions": 5500.0,
+    "HHRatingPoints": 23.5,
     "ModifiedBy": "IntegrationTestUser",
     "ModifiedDate": "2019-05-09T00:00:00",
     "Name": "Test Campaign 1",
@@ -235,11 +408,11 @@
     "Advertiser": {
       "AgencyId": 1,
       "Id": 3,
-      "Name": "Name3"
+      "Name": "Stub Advertiser"
     },
     "Agency": {
-      "Id": 18,
-      "Name": "&amp;_Name_18"
+      "Id": 1,
+      "Name": "Stub Agency"
     },
     "Budget": 1500.0,
     "CampaignStatus": 4,
@@ -249,9 +422,9 @@
     "FlightStartDate": "2019-08-01T00:00:00",
     "HasHiatus": true,
     "HasPlans": false,
-    "HouseholdCPM": 2500.0,
-    "HouseholdImpressions": 5500.0,
-    "HouseholdRatingPoints": 23.5,
+    "HHCPM": 2500.0,
+    "HHImpressions": 5500.0,
+    "HHRatingPoints": 23.5,
     "ModifiedBy": "IntegrationTestUser",
     "ModifiedDate": "2017-06-05T00:00:00",
     "Name": "Test Campaign 3",
