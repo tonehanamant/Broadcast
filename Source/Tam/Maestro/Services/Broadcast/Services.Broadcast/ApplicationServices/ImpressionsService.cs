@@ -15,6 +15,7 @@ using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 using Tam.Maestro.Services.ContractInterfaces.AudienceAndRatingsBusinessObjects;
 using static Services.Broadcast.Entities.Enums.ProposalEnums;
+using StationInventoryManifest = Services.Broadcast.Entities.StationInventory.StationInventoryManifest;
 
 namespace Services.Broadcast.ApplicationServices
 {
@@ -142,7 +143,6 @@ namespace Services.Broadcast.ApplicationServices
 
             foreach (var manifestsByContractedAudience in manifestsByContractedAudienceList)
             {
-                //Debug.WriteLine($"Processing impressions for manifest by audience {manifestsByContractedAudience.Key}");
                 var contractedAudience = manifestsByContractedAudience.Key;
 
                 var audiencesMappings = _BroadcastAudienceRepository
@@ -176,7 +176,7 @@ namespace Services.Broadcast.ApplicationServices
                         );
                 }
 
-                List<StationImpressions> stationImpressions = null;
+                List<StationImpressionsWithAudience> stationImpressions = null;
 
                 if (hutBook.HasValue)
                 {
@@ -188,9 +188,7 @@ namespace Services.Broadcast.ApplicationServices
                 {
                     stationImpressions = _RatingsRepository
                         .GetImpressionsDaypart(shareBook, ratingAudiences, stationDetails, playbackType)
-                        .Impressions
-                        .Select(x => (StationImpressions)x)
-                        .ToList();                   
+                        .Impressions;
                 }
 
                 counter = 1;
@@ -244,7 +242,7 @@ namespace Services.Broadcast.ApplicationServices
                     };
 
                     //get the impressions for this station detail and all the nsi components
-                    var stationInventoryManifestAudiences = _LoadImpressionsForComponents(componentAudiences, stationDetail, hutBook, shareBook, playbackType, marketCode);
+                    var stationInventoryManifestAudiences = _LoadImpressionsForComponents(stationDetail, hutBook, shareBook, playbackType, marketCode, componentAudiences);
 
                     //each manifest in this group has the same impressions for the nsi componentns
                     foreach (var manifest in msd.Select(x => x.manifest).ToList())
@@ -271,41 +269,21 @@ namespace Services.Broadcast.ApplicationServices
             }
         }
 
-        private List<StationInventoryManifestAudience> _LoadImpressionsForComponents(
-            List<BroadcastAudience> componentAudiences, 
-            ManifestDetailDaypart stationDetail, 
-            int? hutBook, 
-            int shareBook,
-            ProposalPlaybackType? playbackType,
-            int marketCode)
+        private List<StationInventoryManifestAudience> _LoadImpressionsForComponents(ManifestDetailDaypart stationDetail, 
+            int? hutBook, int shareBook, ProposalPlaybackType? playbackType, int marketCode, List<BroadcastAudience> components)
         {
-            var taskList = new List<Task<StationInventoryManifestAudience>>();
-
-            foreach (var component in componentAudiences)
-            {
-                taskList.Add(Task.Run(() =>
-                {
-                    return _GetImpressionsForAudience(stationDetail, hutBook, shareBook, playbackType, marketCode, component);
-                }));                
-            }
-
-            var result = Task.WhenAll(taskList).Result.ToList();
-
-            return result;
-        }
-
-        private StationInventoryManifestAudience _GetImpressionsForAudience(ManifestDetailDaypart stationDetail, int? hutBook, int shareBook, ProposalPlaybackType? playbackType, int marketCode, BroadcastAudience component)
-        {
-            List<StationImpressions> stationImpressions;
+            List<StationImpressionsWithAudience> stationImpressions;
             ProposalPlaybackType? usedHutPlaybackType = null;
             ProposalPlaybackType? usedSharePlaybackType = null;
+
+            var componentIds = components.Select(c => c.Id).ToList();
 
             if (hutBook.HasValue)
             {
                 var impressionsTwoBooksResult = _RatingsRepository.GetImpressionsDaypart(
                         (short)hutBook.Value,
                         (short)shareBook,
-                        new List<int> { component.Id },
+                        componentIds,
                         new List<ManifestDetailDaypart> { stationDetail },
                         playbackType);
 
@@ -321,11 +299,11 @@ namespace Services.Broadcast.ApplicationServices
             {
                 var impressionsSingleBookResult = _RatingsRepository.GetImpressionsDaypart(
                         shareBook,
-                        new List<int> { component.Id },
+                        componentIds,
                         new List<ManifestDetailDaypart> { stationDetail },
                         playbackType);
 
-                stationImpressions = impressionsSingleBookResult.Impressions.Select(x => (StationImpressions)x).ToList();
+                stationImpressions = impressionsSingleBookResult.Impressions;
 
                 if (stationImpressions.Any())
                 {
@@ -333,14 +311,14 @@ namespace Services.Broadcast.ApplicationServices
                 }
             }
 
-            var result = new StationInventoryManifestAudience
-            {
-                Audience = new DisplayAudience { Id = component.Id },
-                Impressions = stationImpressions.Sum(x => x.Impressions),
-                IsReference = false,
-                SharePlaybackType = usedSharePlaybackType,
-                HutPlaybackType = usedHutPlaybackType
-            };
+            var result = components.Select(component => new StationInventoryManifestAudience
+                {
+                    Audience = new DisplayAudience {Id = component.Id},
+                    Impressions = stationImpressions.Where(s => s.AudienceId == component.Id).Sum(s => s.Impressions),
+                    IsReference = false,
+                    SharePlaybackType = usedSharePlaybackType,
+                    HutPlaybackType = usedHutPlaybackType
+                }).ToList();
 
             return result;
         }

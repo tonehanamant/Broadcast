@@ -42,7 +42,7 @@ namespace Services.Broadcast.ApplicationServices
         protected IEnumerable<StationImpressions> GetImpressions(ProposalDetailInventoryBase proposalDetailInventory, List<int> ratingAudiences, List<ManifestDetailDaypart> impressionRequests)
         {
             var repository = BroadcastDataRepositoryFactory.GetDataRepository<IRatingForecastRepository>();
-            List<StationImpressions> impressions = null;
+            List<StationImpressionsWithAudience> impressions = null;
 
             if (proposalDetailInventory.ShareProjectionBookId.HasValue && proposalDetailInventory.HutProjectionBookId.HasValue)
             {
@@ -59,7 +59,7 @@ namespace Services.Broadcast.ApplicationServices
                     proposalDetailInventory.SingleProjectionBookId.Value,
                     ratingAudiences,
                     impressionRequests,
-                    proposalDetailInventory.PlaybackType).Impressions.Select(x => (StationImpressions)x).ToList();
+                    proposalDetailInventory.PlaybackType).Impressions;
             }
 
             if (impressions != null)

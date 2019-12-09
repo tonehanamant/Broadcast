@@ -32,8 +32,12 @@ namespace BroadcastComposerWeb
             var serviceNameBase = $"{Environment.MachineName}.{applicationName}";
             var quickRunWorkerCount = double.Parse(ConfigurationManager.AppSettings["HangfireQuickWorkerCountPerProcessor"]);
             var longRunWorkerCount = double.Parse(ConfigurationManager.AppSettings["HangfireLongWorkerCountPerProcessor"]); ;
-            _AddService($"{serviceNameBase}.QuickRun", GetQuickRunQueueNames(), quickRunWorkerCount, app);
-            _AddService($"{serviceNameBase}.LongRun", GetLongRunQueueNames(), longRunWorkerCount, app);
+
+            if (_AreHangfireServicesEnabled())
+            {
+                _AddService($"{serviceNameBase}.QuickRun", GetQuickRunQueueNames(), quickRunWorkerCount, app);
+                _AddService($"{serviceNameBase}.LongRun", GetLongRunQueueNames(), longRunWorkerCount, app);
+            }
 
             // set the default retry count.  
             // override on a queue item with the AutomaticRetry attribute
@@ -125,6 +129,26 @@ namespace BroadcastComposerWeb
                 Queues = queuesToManage,
                 WorkerCount = workerCount
             });
+        }
+
+        /// <summary>
+        /// The Hangfire services work off a database queue.
+        /// Scenario :
+        ///     The CD environment has installed Broadcast Hangfire Services running.
+        ///     I'm running in debug locally against the CD environment and when I start up I also have Broadcast Hangfire Services running. 
+        ///     My services will pluck from the CD queue.
+        ///
+        /// Avoid that scenario by setting the below app setting to false.
+        /// </summary>
+        /// <returns></returns>
+        private bool _AreHangfireServicesEnabled()
+        {
+            const string ConfigKeyHangfireServicesEnabled = "HangfireServicesEnabled";
+            if (ConfigurationManager.AppSettings.AllKeys.Contains(ConfigKeyHangfireServicesEnabled))
+            {
+                return bool.TryParse(ConfigurationManager.AppSettings[ConfigKeyHangfireServicesEnabled], out var flag) ? flag : true;
+            }
+            return true;
         }
     }
 }

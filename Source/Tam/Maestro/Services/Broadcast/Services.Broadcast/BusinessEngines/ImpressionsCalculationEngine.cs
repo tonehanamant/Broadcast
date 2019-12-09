@@ -16,7 +16,7 @@ namespace Services.Broadcast.BusinessEngines
     {
         void ApplyProjectedImpressions(IEnumerable<ProposalProgramDto> programs, ImpressionsRequestDto impressionsRequest, int audienceId);
         void ApplyProvidedImpressions(List<ProposalProgramDto> programs, int audienceId, int spotLengthId, bool equivalized);
-        IEnumerable<StationImpressions> GetImpressions(ImpressionsRequestDto impressionsRequest, List<int> ratingAudiences, List<ManifestDetailDaypart> impressionRequests);
+        IEnumerable<StationImpressionsWithAudience> GetImpressions(ImpressionsRequestDto impressionsRequest, List<int> ratingAudiences, List<ManifestDetailDaypart> impressionRequests);
     }
 
     public class ImpressionsCalculationEngine : IImpressionsCalculationEngine
@@ -124,9 +124,9 @@ namespace Services.Broadcast.BusinessEngines
             }
         }
 
-        public IEnumerable<StationImpressions> GetImpressions(ImpressionsRequestDto impressionsRequest, List<int> ratingAudiences, List<ManifestDetailDaypart> impressionRequests)
+        public IEnumerable<StationImpressionsWithAudience> GetImpressions(ImpressionsRequestDto impressionsRequest, List<int> ratingAudiences, List<ManifestDetailDaypart> impressionRequests)
         {
-            List<StationImpressions> impressions = null;
+            List<StationImpressionsWithAudience> impressions = null;
             var spotLength = _SpotLengthEngine.GetSpotLengthValueById(impressionsRequest.SpotLengthId);
 
             if (impressionsRequest.ShareProjectionBookId.HasValue && impressionsRequest.HutProjectionBookId.HasValue)
@@ -144,7 +144,7 @@ namespace Services.Broadcast.BusinessEngines
                     impressionsRequest.SingleProjectionBookId.Value,
                     ratingAudiences,
                     impressionRequests,
-                    impressionsRequest.PlaybackType).Impressions.Select(x => (StationImpressions)x).ToList();
+                    impressionsRequest.PlaybackType).Impressions;
             }
 
             if (impressions != null)

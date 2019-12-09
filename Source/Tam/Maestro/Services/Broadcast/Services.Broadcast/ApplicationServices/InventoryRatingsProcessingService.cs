@@ -5,9 +5,12 @@ using Newtonsoft.Json;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
+using Services.Broadcast.Entities.StationInventory;
+using Services.Broadcast.Extensions;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
@@ -111,9 +114,35 @@ namespace Services.Broadcast.ApplicationServices
         {
             return ProcessInventoryRatingsJob(jobId, false);
         }
+
+        private void _RecordManifestStats(InventoryFileRatingsJobDiagnostics processDiagnostics, List<StationInventoryManifest> manifests)
+        {
+            processDiagnostics.ManifestCount = manifests.Count;
+            processDiagnostics.StationCount = manifests.Select(m => m.Station.Id).Distinct().Count();
+            var manifestCheck = manifests.First();
+            processDiagnostics.WeekCount = manifestCheck.ManifestWeeks.Count;
+            processDiagnostics.DaypartCount = manifestCheck.ManifestDayparts.Count();
+            processDiagnostics.AudienceCount = manifestCheck.ManifestAudiences.Count();
+        }
+
+        private void SaveManifestsInChunks(InventoryFileRatingsJobDiagnostics processDiagnostics, int fileId, List<StationInventoryManifest> manifests, int chunkSize)
+        {
+            _InventoryRepository.DeleteInventoryManifestAudiencesForFile(fileId);
+
+            processDiagnostics.IsChunking = chunkSize > 1;
+            processDiagnostics.SaveChunkSize = chunkSize;
+            var saveChunks = manifests.GetChunks(chunkSize);
+            processDiagnostics.SaveChunkCount = saveChunks.Count();
+            foreach (var chunk in saveChunks)
+            {
+                _InventoryRepository.UpdateInventoryManifests(chunk);
+            }
+        }
+
         /// <inheritdoc/>        
         public int ProcessInventoryRatingsJob(int jobId, bool ignoreStatus=false)
         {
+            const int manifestSaveChunkSize = 200;
             const ProposalPlaybackType defaultOpenMarketPlaybackType = ProposalPlaybackType.LivePlus3;
 
             var job = _InventoryFileRatingsJobsRepository.GetJobById(jobId);
@@ -144,8 +173,14 @@ namespace Services.Broadcast.ApplicationServices
 
                 if (inventorySource.InventoryType == InventorySourceTypeEnum.Barter)
                 {
+                    processDiagnostics.RecordGatherInventoryStart();
                     var header = _ProprietaryRepository.GetInventoryFileHeader(job.InventoryFileId);
                     var manifests = _InventoryRepository.GetStationInventoryManifestsByFileId(job.InventoryFileId);
+                    _RecordManifestStats(processDiagnostics, manifests);
+
+                    processDiagnostics.RecordGatherInventoryStop();
+
+                    processDiagnostics.RecordProcessImpressionsTotalStart();
 
                     // process impressions/cost
                     _ImpressionsService.AddProjectedImpressionsToManifests(manifests, header.PlaybackType,
@@ -156,17 +191,26 @@ namespace Services.Broadcast.ApplicationServices
                     _ImpressionsService.AddProjectedImpressionsForComponentsToManifests(manifests, header.PlaybackType,
                         header.ShareBookId.Value, header.HutBookId);
 
+                    processDiagnostics.RecordProcessImpressionsTotalStop();
+
                     // update manifest rates and audiences
-                    _InventoryRepository.UpdateInventoryManifests(manifests);
+                    processDiagnostics.RecordSaveManifestsStart();
+                    SaveManifestsInChunks(processDiagnostics, job.InventoryFileId, manifests, manifestSaveChunkSize);
+                    processDiagnostics.RecordSaveManifestsStop();
 
                     job.Status = BackgroundJobProcessingStatus.Succeeded;
                     job.CompletedAt = DateTime.Now;
                 }
                 else if (inventorySource.InventoryType == InventorySourceTypeEnum.ProprietaryOAndO)
                 {
+                    processDiagnostics.RecordGatherInventoryStart();
                     var header = _ProprietaryRepository.GetInventoryFileHeader(job.InventoryFileId);
                     var manifests = _InventoryRepository.GetStationInventoryManifestsByFileId(job.InventoryFileId);
 
+                    _RecordManifestStats(processDiagnostics, manifests);
+                    processDiagnostics.RecordGatherInventoryStop();
+
+                    processDiagnostics.RecordProcessImpressionsTotalStart();
                     //process cost
                     _ProprietarySpotCostCalculationEngine.CalculateSpotCost(manifests, useProvidedImpressions: true);
 
@@ -174,8 +218,12 @@ namespace Services.Broadcast.ApplicationServices
                     _ImpressionsService.AddProjectedImpressionsForComponentsToManifests(manifests, header.PlaybackType,
                         header.ShareBookId.Value, header.HutBookId);
 
+                    processDiagnostics.RecordProcessImpressionsTotalStop();
+
                     //update manifest rates
-                    _InventoryRepository.UpdateInventoryManifests(manifests);
+                    processDiagnostics.RecordSaveManifestsStart();
+                    SaveManifestsInChunks(processDiagnostics, job.InventoryFileId, manifests, manifestSaveChunkSize);
+                    processDiagnostics.RecordSaveManifestsStop();
 
                     job.Status = BackgroundJobProcessingStatus.Succeeded;
                     job.CompletedAt = DateTime.Now;
@@ -198,13 +246,8 @@ namespace Services.Broadcast.ApplicationServices
                     var manifests = _InventoryRepository.GetStationInventoryManifestsByFileId(job.InventoryFileId);
                     // filter out manifests without weeks
                     manifests = manifests.Where(x => x.ManifestWeeks.Any()).ToList();
-                    
-                    processDiagnostics.ManifestCount = manifests.Count;
-                    processDiagnostics.StationCount = manifests.Select(m => m.Station).Distinct().Count();
-                    var manifestCheck = manifests.First();
-                    processDiagnostics.WeekCount = manifestCheck.ManifestWeeks.Count;
-                    processDiagnostics.DaypartCount = manifestCheck.ManifestDayparts.Count();
-                    processDiagnostics.AudienceCount = manifestCheck.ManifestAudiences.Count();
+
+                    _RecordManifestStats(processDiagnostics, manifests);
                     processDiagnostics.RecordGatherInventoryStop();
 
                     processDiagnostics.RecordOrganizeInventoryStart();
@@ -227,7 +270,7 @@ namespace Services.Broadcast.ApplicationServices
                     processDiagnostics.RecordOrganizeInventoryStop();
 
                     processDiagnostics.RecordProcessImpressionsTotalStart();
-                    
+
                     foreach (var manifestsGroup in manifestsGroupedByQuarter)
                     {
                         var quarterManifests = manifestsGroup.Select(x => x.manifest).ToList();
@@ -237,20 +280,16 @@ namespace Services.Broadcast.ApplicationServices
                         var postingBookDate = quarterManifests.First().ManifestWeeks.First().StartDate;
                         var postingBookId =
                             _NsiPostingBookService.GetLatestNsiPostingBookForMonthContainingDate(postingBookDate);
-
                         processDiagnostics.RecordDeterminePostingBookStop(manifestsGroup.Key, postingBookId);
 
                         processDiagnostics.RecordAddImpressionsStart();
-                        _ImpressionsService.AddProjectedImpressionsForComponentsToManifests(quarterManifests,
-                            defaultOpenMarketPlaybackType, postingBookId);
+                        _ImpressionsService.AddProjectedImpressionsForComponentsToManifests(quarterManifests, defaultOpenMarketPlaybackType, postingBookId);
                         processDiagnostics.RecordAddImpressionsStop();
                     }
                     processDiagnostics.RecordProcessImpressionsTotalStop();
 
                     processDiagnostics.RecordSaveManifestsStart();
-
-                    _InventoryRepository.UpdateInventoryManifests(manifests);
-
+                    SaveManifestsInChunks(processDiagnostics, job.InventoryFileId, manifests, manifestSaveChunkSize);
                     processDiagnostics.RecordSaveManifestsStop();
 
                     job.Status = BackgroundJobProcessingStatus.Succeeded;
@@ -269,10 +308,10 @@ namespace Services.Broadcast.ApplicationServices
                 _InventoryFileRatingsJobsRepository.UpdateJob(job);
                 _AddJobNote(jobId, JsonConvert.SerializeObject(processDiagnostics));
 
-                // Commenting out to be replaced per PRI-18981 : QA Performance Spike
-                // until then manually trigger aggregation with the Maintenance page.
-                //_BackgroundJobClient.Enqueue<IInventorySummaryService>(
-                //    x => x.AggregateInventorySummaryData(new List<int> { inventorySource.Id }));
+                if (_ShouldTriggerInventorySourceAggregation())
+                {
+                    _BackgroundJobClient.Enqueue<IInventorySummaryService>(x => x.AggregateInventorySummaryData(new List<int> { inventorySource.Id }));
+                }
 
                 return inventoryFile.InventorySource.Id;
             }
@@ -289,6 +328,16 @@ namespace Services.Broadcast.ApplicationServices
                 _AddJobNote(jobId, ex.ToString());
                 throw;
             }
+        }
+
+        private bool _ShouldTriggerInventorySourceAggregation()
+        {
+            const string configKeyTriggerInventorySourceAggregation = "TriggerInventorySourceAggregation";
+            if (ConfigurationManager.AppSettings.AllKeys.Contains(configKeyTriggerInventorySourceAggregation))
+            {
+                return bool.TryParse(ConfigurationManager.AppSettings[configKeyTriggerInventorySourceAggregation], out var flag) ? flag : true;
+            }
+            return true;
         }
 
         public void ResetJobStatusToQueued(int jobId)

@@ -304,18 +304,19 @@ namespace Services.Broadcast.Repositories
                     command.CommandTimeout = 0; // This makes it infinite so it will just use the transaction's timeout
 
                     var reader = command.ExecuteReader();
-                    var impressions = new List<StationImpressions>();
+                    var impressions = new List<StationImpressionsWithAudience>();
 
                     if (reader.HasRows)
                     {
                         while (reader.Read())
                         {
-                            impressions.Add(new StationImpressions
+                            impressions.Add(new StationImpressionsWithAudience
                             {
                                 Id = reader.GetInt32(0),
                                 LegacyCallLetters = reader.GetString(1),
                                 Impressions = reader.GetDouble(2),
-                                Rating = reader.GetDouble(3)
+                                Rating = reader.GetDouble(3),
+                                AudienceId = reader.GetInt32(4)
                             });
                         }
                     }

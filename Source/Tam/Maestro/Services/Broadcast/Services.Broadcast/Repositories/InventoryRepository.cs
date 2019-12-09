@@ -7,9 +7,13 @@ using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.InventorySummary;
 using Services.Broadcast.Entities.ProprietaryInventory;
 using Services.Broadcast.Entities.StationInventory;
+using Services.Broadcast.Extensions;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Entity;
+using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Linq;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities;
@@ -18,9 +22,6 @@ using Tam.Maestro.Data.EntityFrameworkMapping;
 using Tam.Maestro.Services.ContractInterfaces.AudienceAndRatingsBusinessObjects;
 using Tam.Maestro.Services.ContractInterfaces.Common;
 using static Services.Broadcast.Entities.Enums.ProposalEnums;
-using System.Diagnostics;
-using System.Data;
-using Services.Broadcast.Entities.spotcableXML;
 
 namespace Services.Broadcast.Repositories
 {
@@ -54,6 +55,12 @@ namespace Services.Broadcast.Repositories
         InventorySource GetInventorySource(int inventorySourceId);
         DateRange GetInventorySourceDateRange(int inventorySourceId);
         DateRange GetAllInventoriesDateRange();
+
+        /// <summary>
+        /// Deletes the inventory manifest audiences for file.
+        /// </summary>
+        /// <param name="fileId">The file identifier.</param>
+        void DeleteInventoryManifestAudiencesForFile(int fileId);
 
         /// <summary>
         /// Update the rates and adds the audiences for all the manifests in the list
@@ -1031,6 +1038,20 @@ namespace Services.Broadcast.Repositories
                 });
         }
 
+        public void DeleteInventoryManifestAudiencesForFile(int fileId)
+        {
+            const string sql = "DELETE FROM station_inventory_manifest_audiences "
+                    + "WHERE station_inventory_manifest_id in "
+                    + "(select id from station_inventory_manifest where file_id = @FileId) "
+                    + "and is_reference = 0";
+
+            _InReadUncommitedTransaction(context =>
+                {
+                    context.Database.ExecuteSqlCommand(sql, new SqlParameter("@FileId", fileId));
+                }
+            );
+        }
+
         ///<inheritdoc/>
         public void UpdateInventoryManifests(List<StationInventoryManifest> manifests)
         {
@@ -1060,7 +1081,7 @@ namespace Services.Broadcast.Repositories
                                    spot_length_id = rate.SpotLengthId,
                                    spot_cost = rate.SpotCost,
                                    station_inventory_manifest_id = dbManifest.id
-                               });                               
+                               });
                            }
                            else
                            {
@@ -1081,8 +1102,9 @@ namespace Services.Broadcast.Repositories
                            hut_playback_type = (int?)x.HutPlaybackType
                        }).ToList());
                    }
-                   context.SaveChanges();
 
+                   context.SaveChanges();
+                   
                    _InsertManifestAudiences(context, newManifestAudiences);
                    _InsertManifestRates(context, newRates);
                });

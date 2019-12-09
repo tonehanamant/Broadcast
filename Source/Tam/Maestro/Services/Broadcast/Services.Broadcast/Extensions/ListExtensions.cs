@@ -45,5 +45,13 @@ namespace Services.Broadcast.Extensions
                 yield return temp;
             }
         }
+
+        public static IEnumerable<List<T>> GetChunks<T>(this List<T> items, int chunkSize)
+        {
+            for (int i = 0; i < items.Count; i += chunkSize)
+            {
+                yield return items.GetRange(i, Math.Min(chunkSize, items.Count - i));
+            }
+        }
     }
 }
