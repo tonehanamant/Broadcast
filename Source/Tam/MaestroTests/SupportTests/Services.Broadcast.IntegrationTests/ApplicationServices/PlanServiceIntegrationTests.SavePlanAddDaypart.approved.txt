@@ -179,9 +179,9 @@
       "WeightingGoalPercent": 25.0
     },
     {
-      "DaypartCodeId": 3,
+      "DaypartCodeId": 9,
       "DaypartTypeId": 2,
-      "EndTimeSeconds": 1900,
+      "EndTimeSeconds": 64799,
       "IsEndTimeModified": true,
       "IsStartTimeModified": true,
       "Restrictions": {
@@ -208,7 +208,7 @@
           ]
         }
       },
-      "StartTimeSeconds": 1200,
+      "StartTimeSeconds": 54000,
       "WeightingGoalPercent": 13.8
     }
   ],

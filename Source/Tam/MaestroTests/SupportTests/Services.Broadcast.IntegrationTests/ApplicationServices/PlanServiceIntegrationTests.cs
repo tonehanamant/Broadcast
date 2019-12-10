@@ -106,6 +106,23 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        public void SavePlan_InvalidDayparts_DuplicateDayparts()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                PlanDto newPlan = _GetNewPlan();
+                var daypart = newPlan.Dayparts.First();
+                newPlan.Dayparts.Add(daypart);
+                var hasDuplicates = newPlan.Dayparts.GroupBy(d => d.DaypartCodeId).Any(d => d.Count() > 1);
+
+                var exception = Assert.Throws<Exception>(() => _PlanService.SavePlan(newPlan, "integration_test", new System.DateTime(2019, 01, 01)));
+
+                Assert.IsTrue(hasDuplicates);
+                Assert.AreEqual(exception.Message, "Invalid dayparts.  Each daypart can be entered only once.");
+            }
+        }
+
+        [Test]
         public void DeleteDraft()
         {
             using (new TransactionScopeWrapper())
@@ -703,10 +720,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 PlanDto modifiedPlan = _PlanService.GetPlan(planId);
                 modifiedPlan.Dayparts.Add(new PlanDaypartDto
                 {
-                    DaypartCodeId = 3,
+                    DaypartCodeId = 9,
                     DaypartTypeId = DaypartTypeEnum.EntertainmentNonNews,
-                    StartTimeSeconds = 1200,
-                    EndTimeSeconds = 1900,
+                    StartTimeSeconds = 54000,
+                    EndTimeSeconds = 64799,
                     WeightingGoalPercent = 13.8,
                     Restrictions = new PlanDaypartDto.RestrictionsDto
                     {

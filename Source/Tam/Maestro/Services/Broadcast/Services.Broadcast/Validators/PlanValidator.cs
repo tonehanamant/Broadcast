@@ -64,6 +64,7 @@ namespace Services.Broadcast.Validators
         const string INVALID_FLIGHT_NOTES = "Flight notes cannot be longer than 1024 characters.";
         const string STOP_WORD_DETECTED = "Stop word detected in plan name";
         const string SUM_OF_DAYPART_WEIGHTINGS_EXCEEDS_LIMIT = "Sum of weighting is greater than 100%";
+        const string INVALID_DAYPART_DUPLICATE_DAYPART = "Invalid dayparts.  Each daypart can be entered only once.";
         const string INVALID_BUDGET = "Invalid budget.";
         const string INVALID_CPM = "Invalid CPM.";
         const string INVALID_CPP = "Invalid CPP.";
@@ -231,6 +232,11 @@ namespace Services.Broadcast.Validators
             if (plan.Dayparts?.Any() != true)
             {
                 throw new Exception(INVALID_DAYPART_NUMBER);
+            }
+
+            if (plan.Dayparts.GroupBy(d => d.DaypartCodeId).Any(g => g.Count() > 1))
+            {
+                throw new Exception(INVALID_DAYPART_DUPLICATE_DAYPART);
             }
 
             foreach (var daypart in plan.Dayparts)
