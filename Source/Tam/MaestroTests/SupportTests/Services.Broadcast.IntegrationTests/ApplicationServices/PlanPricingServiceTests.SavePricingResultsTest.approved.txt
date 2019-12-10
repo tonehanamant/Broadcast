@@ -1,7 +1,7 @@
 ﻿{
   "request_id": null,
   "results": {
-    "optimal_cpm": 0.0000,
+    "optimal_cpm": 13.3000,
     "spots": [
       {
         "cost": 750.0000,

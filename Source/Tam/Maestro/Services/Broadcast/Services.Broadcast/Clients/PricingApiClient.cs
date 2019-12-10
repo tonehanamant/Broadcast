@@ -33,6 +33,8 @@ namespace Services.Broadcast.Clients
                 RequestId = Guid.NewGuid().ToString(),
                 Results = new PlanPricingApiResultDto
                 {
+                    // Mocked.
+                    OptimalCpm = 13.3m,
                     Spots = spots
                 }
             };

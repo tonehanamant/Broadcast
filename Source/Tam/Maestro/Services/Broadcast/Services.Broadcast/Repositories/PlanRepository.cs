@@ -1074,10 +1074,10 @@ namespace Services.Broadcast.Repositories
                 var planPricingApiResult = new plan_version_pricing_api_results
                 {
                     plan_version_id = planVersionId,
-                    optimal_cpm = result.Results.OptimalCpm
+                    optimal_cpm = result.Results?.OptimalCpm ?? 0
                 };
 
-                foreach (var spot in result.Results.Spots)
+                foreach (var spot in result.Results?.Spots)
                 {
                     var planPricingApiResultSpots = new plan_version_pricing_api_result_spots
                     {
