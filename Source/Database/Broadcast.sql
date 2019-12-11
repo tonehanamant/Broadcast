@@ -241,6 +241,37 @@ BEGIN
 END
 /*************************************** END - PRI-19007 ****************************************************/
 
+/*************************************** START - PRI-19058 ****************************************************/
+IF OBJECT_ID('plan_version_daypart_affiliate_restrictions') IS NULL
+BEGIN
+	CREATE TABLE [dbo].[plan_version_daypart_affiliate_restrictions](		
+		[id] [int] IDENTITY(1,1) NOT NULL,
+		[plan_version_daypart_id] [int] NOT NULL,
+		[affiliate_id] [int] NOT NULL,
+	 CONSTRAINT [PK_plan_version_daypart_affiliate_restrictions] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY]
+
+	ALTER TABLE [dbo].[plan_version_daypart_affiliate_restrictions] WITH CHECK ADD CONSTRAINT [FK_plan_version_daypart_affiliate_restrictions_plan_version_dayparts] FOREIGN KEY([plan_version_daypart_id])
+	REFERENCES [dbo].[plan_version_dayparts] ([id])
+	ON DELETE CASCADE
+
+	ALTER TABLE [dbo].[plan_version_daypart_affiliate_restrictions] CHECK CONSTRAINT [FK_plan_version_daypart_affiliate_restrictions_plan_version_dayparts]
+
+	ALTER TABLE [dbo].[plan_version_daypart_affiliate_restrictions] WITH CHECK ADD CONSTRAINT [FK_plan_version_daypart_affiliate_restrictions_affiliates] FOREIGN KEY([affiliate_id])
+	REFERENCES [dbo].[affiliates] ([id])
+
+	ALTER TABLE [dbo].[plan_version_daypart_affiliate_restrictions] CHECK CONSTRAINT [FK_plan_version_daypart_affiliate_restrictions_affiliates]
+END
+
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('plan_version_dayparts') AND name = 'affiliate_restrictions_contain_type')
+BEGIN
+	ALTER TABLE [plan_version_dayparts] ADD [affiliate_restrictions_contain_type] INT NULL
+END
+/*************************************** END - PRI-19058 ****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

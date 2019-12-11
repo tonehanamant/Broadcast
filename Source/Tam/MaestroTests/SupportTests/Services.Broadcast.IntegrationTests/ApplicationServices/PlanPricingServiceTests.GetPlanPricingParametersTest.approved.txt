@@ -55,6 +55,10 @@
       "IsEndTimeModified": true,
       "IsStartTimeModified": true,
       "Restrictions": {
+        "AffiliateRestrictions": {
+          "Affiliates": [],
+          "ContainType": 2
+        },
         "GenreRestrictions": {
           "ContainType": 2,
           "Genres": []

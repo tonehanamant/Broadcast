@@ -373,6 +373,9 @@
         <AssociationConnector Association="BroadcastModel.FK_scx_generation_jobs_daypart_codes" />
         <AssociationConnector Association="BroadcastModel.FK_station_inventory_manifest_dayparts_daypart_codes" />
         <EntityTypeShape EntityType="BroadcastModel.affiliate" Width="1.5" PointX="5.375" PointY="1.25" />
+        <EntityTypeShape EntityType="BroadcastModel.plan_version_daypart_affiliate_restrictions" Width="1.5" PointX="16.75" PointY="0.75" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_daypart_affiliate_restrictions_affiliates" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_daypart_affiliate_restrictions_plan_version_dayparts" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

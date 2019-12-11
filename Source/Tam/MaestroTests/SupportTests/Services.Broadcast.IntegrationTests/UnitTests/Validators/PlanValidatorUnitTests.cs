@@ -311,6 +311,18 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
         }
 
         [Test]
+        public void ValidatePlan_WithWrongAffiliateRestrictionsContainType()
+        {
+            _ConfigureSpotLenghtEngineMockToReturnTrue();
+
+            var plan = _GetPlan();
+            plan.Dayparts[0].Restrictions.AffiliateRestrictions.ContainType = 0;
+
+            Assert.That(() => _planValidator.ValidatePlan(plan),
+                Throws.TypeOf<Exception>().With.Message.EqualTo("Contain type of the affiliate restrictions is not valid"));
+        }
+
+        [Test]
         public void ValidatePlan_DayPartStartLessThanSecondsMinimum()
         {
             _ConfigureSpotLenghtEngineMockToReturnTrue();
@@ -1006,6 +1018,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
                                         Name = "Pimp My Ride"
                                     }
                                 }
+                            },
+                            AffiliateRestrictions = new PlanDaypartDto.RestrictionsDto.AffiliateRestrictionsDto
+                            {
+                                ContainType = ContainTypeEnum.Exclude,
+                                Affiliates = new List<LookupDto> { new LookupDto { Id = 1, Display = "NBC" } }
                             }
                         }
                     }

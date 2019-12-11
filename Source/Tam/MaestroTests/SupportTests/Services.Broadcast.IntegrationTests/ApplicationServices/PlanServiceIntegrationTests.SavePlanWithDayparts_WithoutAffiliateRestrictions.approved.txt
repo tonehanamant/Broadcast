@@ -52,12 +52,7 @@
       "IsStartTimeModified": true,
       "Restrictions": {
         "AffiliateRestrictions": {
-          "Affiliates": [
-            {
-              "Display": "FOX",
-              "Id": 20
-            }
-          ],
+          "Affiliates": [],
           "ContainType": 2
         },
         "GenreRestrictions": {
@@ -84,7 +79,12 @@
         },
         "ShowTypeRestrictions": {
           "ContainType": 2,
-          "ShowTypes": []
+          "ShowTypes": [
+            {
+              "Display": "Mini-Movie",
+              "Id": 1
+            }
+          ]
         }
       },
       "StartTimeSeconds": 0,

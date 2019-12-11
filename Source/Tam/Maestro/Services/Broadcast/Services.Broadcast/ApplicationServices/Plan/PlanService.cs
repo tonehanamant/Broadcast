@@ -439,6 +439,15 @@ namespace Services.Broadcast.ApplicationServices.Plan
                         Programs = new List<ProgramDto>()
                     };
                 }
+
+                if (restrictions.AffiliateRestrictions == null)
+                {
+                    restrictions.AffiliateRestrictions = new PlanDaypartDto.RestrictionsDto.AffiliateRestrictionsDto
+                    {
+                        ContainType = planDefaults.AffiliateContainType,
+                        Affiliates = new List<LookupDto>()
+                    };
+                }
             }
         }
 
@@ -813,6 +822,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 ShowTypeContainType = ContainTypeEnum.Exclude,
                 GenreContainType = ContainTypeEnum.Exclude,
                 ProgramContainType = ContainTypeEnum.Exclude,
+                AffiliateContainType = ContainTypeEnum.Exclude,
                 CoverageGoalPercent = 80d,
                 BlackoutMarkets = new List<PlanBlackoutMarketDto>(),
                 FlightHiatusDays = new List<DateTime>(),

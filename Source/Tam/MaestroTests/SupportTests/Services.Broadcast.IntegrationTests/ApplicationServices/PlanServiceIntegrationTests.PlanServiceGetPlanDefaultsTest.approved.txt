@@ -1,4 +1,5 @@
 ﻿{
+  "AffiliateContainType": 2,
   "AudienceId": 31,
   "AudienceType": 1,
   "BlackoutMarkets": [],

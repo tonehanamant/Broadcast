@@ -711,6 +711,24 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        public void SavePlanWithDayparts_WithoutAffiliateRestrictions()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                PlanDto newPlan = _GetNewPlan();
+
+                newPlan.Dayparts.First().Restrictions.AffiliateRestrictions = null;
+
+                var planId = _PlanService.SavePlan(newPlan, "integration_test", new DateTime(2019, 01, 15));
+                PlanDto finalPlan = _PlanService.GetPlan(planId);
+
+                Assert.AreEqual(3, finalPlan.Dayparts.Count);
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(finalPlan, _GetJsonSettings()));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
         public void SavePlanAddDaypart()
         {
             using (new TransactionScopeWrapper())
@@ -1584,6 +1602,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                                         Name = "Young Sheldon"
                                     }
                                 }
+                            },
+                            AffiliateRestrictions = new PlanDaypartDto.RestrictionsDto.AffiliateRestrictionsDto
+                            {
+                                ContainType = ContainTypeEnum.Exclude,
+                                Affiliates = new List<LookupDto> { new LookupDto { Id = 20 } }
                             }
                         }
                     },

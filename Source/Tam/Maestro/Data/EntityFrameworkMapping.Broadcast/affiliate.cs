@@ -14,11 +14,18 @@ namespace EntityFrameworkMapping.Broadcast
     
     public partial class affiliate
     {
+        public affiliate()
+        {
+            this.plan_version_daypart_affiliate_restrictions = new HashSet<plan_version_daypart_affiliate_restrictions>();
+        }
+    
         public int id { get; set; }
         public string name { get; set; }
         public string created_by { get; set; }
         public System.DateTime created_date { get; set; }
         public string modified_by { get; set; }
         public System.DateTime modified_date { get; set; }
+    
+        public virtual ICollection<plan_version_daypart_affiliate_restrictions> plan_version_daypart_affiliate_restrictions { get; set; }
     }
 }

@@ -51,6 +51,15 @@
       "IsEndTimeModified": true,
       "IsStartTimeModified": true,
       "Restrictions": {
+        "AffiliateRestrictions": {
+          "Affiliates": [
+            {
+              "Display": "FOX",
+              "Id": 20
+            }
+          ],
+          "ContainType": 2
+        },
         "GenreRestrictions": {
           "ContainType": 1,
           "Genres": [
@@ -93,6 +102,10 @@
       "IsEndTimeModified": true,
       "IsStartTimeModified": true,
       "Restrictions": {
+        "AffiliateRestrictions": {
+          "Affiliates": [],
+          "ContainType": 2
+        },
         "GenreRestrictions": {
           "ContainType": 1,
           "Genres": [

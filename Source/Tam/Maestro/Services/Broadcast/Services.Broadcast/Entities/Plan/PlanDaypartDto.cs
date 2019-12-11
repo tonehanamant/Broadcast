@@ -86,6 +86,8 @@ namespace Services.Broadcast.Entities.Plan
 
             public ProgramRestrictionDto ProgramRestrictions { get; set; }
 
+            public AffiliateRestrictionsDto AffiliateRestrictions { get; set; }
+
             public class ShowTypeRestrictionsDto
             {
                 public ContainTypeEnum ContainType { get; set; }
@@ -102,6 +104,12 @@ namespace Services.Broadcast.Entities.Plan
             {
                 public ContainTypeEnum ContainType { get; set; }
                 public List<ProgramDto> Programs { get; set; }
+            }
+
+            public class AffiliateRestrictionsDto
+            {
+                public ContainTypeEnum ContainType { get; set; }
+                public List<LookupDto> Affiliates { get; set; }
             }
         }
     }

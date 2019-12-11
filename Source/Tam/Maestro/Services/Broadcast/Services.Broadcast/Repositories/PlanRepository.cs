@@ -258,6 +258,8 @@ namespace Services.Broadcast.Repositories
                         .Include(p => p.plan_versions.Select(x => x.plan_version_dayparts.Select(d => d.plan_version_daypart_genre_restrictions.Select(r => r.genre))))
                         .Include(p => p.plan_versions.Select(x => x.plan_version_dayparts.Select(d => d.plan_version_daypart_program_restrictions)))
                         .Include(p => p.plan_versions.Select(x => x.plan_version_dayparts.Select(d => d.plan_version_daypart_program_restrictions.Select(r => r.genre))))
+                        .Include(p => p.plan_versions.Select(x => x.plan_version_dayparts.Select(d => d.plan_version_daypart_affiliate_restrictions)))
+                        .Include(p => p.plan_versions.Select(x => x.plan_version_dayparts.Select(d => d.plan_version_daypart_affiliate_restrictions.Select(r => r.affiliate))))
                         .Include(p => p.plan_versions.Select(x => x.plan_version_available_markets))
                         .Include(p => p.plan_versions.Select(x => x.plan_version_blackout_markets))
                         .Include(p => p.plan_versions.Select(x => x.plan_version_weeks))
@@ -655,6 +657,15 @@ namespace Services.Broadcast.Repositories
                 };
             }
 
+            if (entity.affiliate_restrictions_contain_type.HasValue)
+            {
+                dto.Restrictions.AffiliateRestrictions = new PlanDaypartDto.RestrictionsDto.AffiliateRestrictionsDto
+                {
+                    ContainType = (ContainTypeEnum)entity.affiliate_restrictions_contain_type.Value,
+                    Affiliates = entity.plan_version_daypart_affiliate_restrictions.Select(x => _MapToLookupDto(x.affiliate)).ToList()
+                };
+            }
+
             return dto;
         }
 
@@ -664,6 +675,15 @@ namespace Services.Broadcast.Repositories
             {
                 Id = show_Type.id,
                 Display = show_Type.name
+            };
+        }
+
+        private static LookupDto _MapToLookupDto(affiliate affiliate)
+        {
+            return new LookupDto
+            {
+                Id = affiliate.id,
+                Display = affiliate.name
             };
         }
 
@@ -712,6 +732,7 @@ namespace Services.Broadcast.Repositories
                     _HydrateShowTypeRestrictions(newDaypart, daypart.Restrictions.ShowTypeRestrictions);
                     _HydrateGenreRestrictions(newDaypart, daypart.Restrictions.GenreRestrictions);
                     _HydrateProgramRestrictions(newDaypart, daypart.Restrictions.ProgramRestrictions);
+                    _HydrateAffiliateRestrictions(newDaypart, daypart.Restrictions.AffiliateRestrictions);
                 }
 
                 entity.plan_version_dayparts.Add(newDaypart);
@@ -778,6 +799,27 @@ namespace Services.Broadcast.Repositories
                         genre_id = programRestriction.Genre.Id,
                         content_rating = programRestriction.ContentRating,
                         program_name = programRestriction.Name
+                    });
+                }
+            }
+        }
+
+        private static void _HydrateAffiliateRestrictions(
+            plan_version_dayparts newDaypart,
+            PlanDaypartDto.RestrictionsDto.AffiliateRestrictionsDto affiliateRestrictions)
+        {
+            if (affiliateRestrictions == null)
+                return;
+
+            newDaypart.affiliate_restrictions_contain_type = (int)affiliateRestrictions.ContainType;
+
+            if (!affiliateRestrictions.Affiliates.IsEmpty())
+            {
+                foreach (var affiliateRestriction in affiliateRestrictions.Affiliates)
+                {
+                    newDaypart.plan_version_daypart_affiliate_restrictions.Add(new plan_version_daypart_affiliate_restrictions
+                    {
+                        affiliate_id = affiliateRestriction.Id
                     });
                 }
             }

@@ -18,6 +18,7 @@ namespace Services.Broadcast.Entities.Plan
         public ContainTypeEnum ShowTypeContainType { get; set; }
         public ContainTypeEnum GenreContainType { get; set; }
         public ContainTypeEnum ProgramContainType { get; set; }
+        public ContainTypeEnum AffiliateContainType { get; set; }
         public double CoverageGoalPercent { get; set; }
         public List<PlanBlackoutMarketDto> BlackoutMarkets { get; set; }
         public List<DateTime> FlightHiatusDays { get; set; }

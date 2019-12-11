@@ -695,6 +695,14 @@
           <Property Name="percentage_of_us" Type="float" Nullable="false" />
           <Property Name="plan_version_id" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="plan_version_daypart_affiliate_restrictions">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="plan_version_daypart_id" Type="int" Nullable="false" />
+          <Property Name="affiliate_id" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="plan_version_daypart_genre_restrictions">
           <Key>
             <PropertyRef Name="id" />
@@ -737,6 +745,7 @@
           <Property Name="show_type_restrictions_contain_type" Type="int" />
           <Property Name="genre_restrictions_contain_type" Type="int" />
           <Property Name="program_restrictions_contain_type" Type="int" />
+          <Property Name="affiliate_restrictions_contain_type" Type="int" />
         </EntityType>
         <EntityType Name="plan_version_flight_hiatus_days">
           <Key>
@@ -2737,6 +2746,32 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Principal>
             <Dependent Role="plan_version_blackout_markets">
               <PropertyRef Name="plan_version_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_version_daypart_affiliate_restrictions_affiliates">
+          <End Role="affiliates" Type="Self.affiliates" Multiplicity="1" />
+          <End Role="plan_version_daypart_affiliate_restrictions" Type="Self.plan_version_daypart_affiliate_restrictions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="affiliates">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_daypart_affiliate_restrictions">
+              <PropertyRef Name="affiliate_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_version_daypart_affiliate_restrictions_plan_version_dayparts">
+          <End Role="plan_version_dayparts" Type="Self.plan_version_dayparts" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="plan_version_daypart_affiliate_restrictions" Type="Self.plan_version_daypart_affiliate_restrictions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="plan_version_dayparts">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_daypart_affiliate_restrictions">
+              <PropertyRef Name="plan_version_daypart_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -4845,6 +4880,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySet Name="nti_transmittals_files" EntityType="Self.nti_transmittals_files" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="plan_version_available_markets" EntityType="Self.plan_version_available_markets" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="plan_version_blackout_markets" EntityType="Self.plan_version_blackout_markets" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="plan_version_daypart_affiliate_restrictions" EntityType="Self.plan_version_daypart_affiliate_restrictions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="plan_version_daypart_genre_restrictions" EntityType="Self.plan_version_daypart_genre_restrictions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="plan_version_daypart_program_restrictions" EntityType="Self.plan_version_daypart_program_restrictions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="plan_version_daypart_show_type_restrictions" EntityType="Self.plan_version_daypart_show_type_restrictions" Schema="dbo" store:Type="Tables" />
@@ -5218,6 +5254,14 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <AssociationSet Name="FK_plan_version_blackout_markets_plan_versions" Association="Self.FK_plan_version_blackout_markets_plan_versions">
             <End Role="plan_versions" EntitySet="plan_versions" />
             <End Role="plan_version_blackout_markets" EntitySet="plan_version_blackout_markets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_version_daypart_affiliate_restrictions_affiliates" Association="Self.FK_plan_version_daypart_affiliate_restrictions_affiliates">
+            <End Role="affiliates" EntitySet="affiliates" />
+            <End Role="plan_version_daypart_affiliate_restrictions" EntitySet="plan_version_daypart_affiliate_restrictions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_version_daypart_affiliate_restrictions_plan_version_dayparts" Association="Self.FK_plan_version_daypart_affiliate_restrictions_plan_version_dayparts">
+            <End Role="plan_version_dayparts" EntitySet="plan_version_dayparts" />
+            <End Role="plan_version_daypart_affiliate_restrictions" EntitySet="plan_version_daypart_affiliate_restrictions" />
           </AssociationSet>
           <AssociationSet Name="FK_plan_version_daypart_genre_restrictions_genres" Association="Self.FK_plan_version_daypart_genre_restrictions_genres">
             <End Role="genres" EntitySet="genres" />
@@ -6892,6 +6936,15 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="station_inventory_manifest_dayparts" EntitySet="station_inventory_manifest_dayparts" />
           </AssociationSet>
           <EntitySet Name="affiliates" EntityType="BroadcastModel.affiliate" />
+          <EntitySet Name="plan_version_daypart_affiliate_restrictions" EntityType="BroadcastModel.plan_version_daypart_affiliate_restrictions" />
+          <AssociationSet Name="FK_plan_version_daypart_affiliate_restrictions_affiliates" Association="BroadcastModel.FK_plan_version_daypart_affiliate_restrictions_affiliates">
+            <End Role="affiliate" EntitySet="affiliates" />
+            <End Role="plan_version_daypart_affiliate_restrictions" EntitySet="plan_version_daypart_affiliate_restrictions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_version_daypart_affiliate_restrictions_plan_version_dayparts" Association="BroadcastModel.FK_plan_version_daypart_affiliate_restrictions_plan_version_dayparts">
+            <End Role="plan_version_dayparts" EntitySet="plan_version_dayparts" />
+            <End Role="plan_version_daypart_affiliate_restrictions" EntitySet="plan_version_daypart_affiliate_restrictions" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="audience_audiences">
           <Key>
@@ -11634,6 +11687,8 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="plan_version_daypart_show_type_restrictions" Relationship="BroadcastModel.FK_plan_version_daypart_show_type_restrictions_plan_version_dayparts" FromRole="plan_version_dayparts" ToRole="plan_version_daypart_show_type_restrictions" />
           <NavigationProperty Name="plan_versions" Relationship="BroadcastModel.FK_plan_version_dayparts_plan_versions" FromRole="plan_version_dayparts" ToRole="plan_versions" />
           <NavigationProperty Name="daypart_codes" Relationship="BroadcastModel.FK_plan_dayparts_daypart_codes" FromRole="plan_version_dayparts" ToRole="daypart_codes" />
+          <NavigationProperty Name="plan_version_daypart_affiliate_restrictions" Relationship="BroadcastModel.FK_plan_version_daypart_affiliate_restrictions_plan_version_dayparts" FromRole="plan_version_dayparts" ToRole="plan_version_daypart_affiliate_restrictions" />
+          <Property Name="affiliate_restrictions_contain_type" Type="Int32" />
         </EntityType>
         <Association Name="FK_plan_version_daypart_genre_restrictions_plan_version_dayparts">
           <End Type="BroadcastModel.plan_version_dayparts" Role="plan_version_dayparts" Multiplicity="1">
@@ -12061,7 +12116,44 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="modified_by" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
           <Property Name="modified_date" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="plan_version_daypart_affiliate_restrictions" Relationship="BroadcastModel.FK_plan_version_daypart_affiliate_restrictions_affiliates" FromRole="affiliate" ToRole="plan_version_daypart_affiliate_restrictions" />
         </EntityType>
+        <EntityType Name="plan_version_daypart_affiliate_restrictions">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="plan_version_daypart_id" Type="Int32" Nullable="false" />
+          <Property Name="affiliate_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="affiliate" Relationship="BroadcastModel.FK_plan_version_daypart_affiliate_restrictions_affiliates" FromRole="plan_version_daypart_affiliate_restrictions" ToRole="affiliate" />
+          <NavigationProperty Name="plan_version_dayparts" Relationship="BroadcastModel.FK_plan_version_daypart_affiliate_restrictions_plan_version_dayparts" FromRole="plan_version_daypart_affiliate_restrictions" ToRole="plan_version_dayparts" />
+        </EntityType>
+        <Association Name="FK_plan_version_daypart_affiliate_restrictions_affiliates">
+          <End Type="BroadcastModel.affiliate" Role="affiliate" Multiplicity="1" />
+          <End Type="BroadcastModel.plan_version_daypart_affiliate_restrictions" Role="plan_version_daypart_affiliate_restrictions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="affiliate">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_daypart_affiliate_restrictions">
+              <PropertyRef Name="affiliate_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_version_daypart_affiliate_restrictions_plan_version_dayparts">
+          <End Type="BroadcastModel.plan_version_dayparts" Role="plan_version_dayparts" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BroadcastModel.plan_version_daypart_affiliate_restrictions" Role="plan_version_daypart_affiliate_restrictions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="plan_version_dayparts">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_daypart_affiliate_restrictions">
+              <PropertyRef Name="plan_version_daypart_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -13966,6 +14058,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="plan_version_dayparts">
             <EntityTypeMapping TypeName="BroadcastModel.plan_version_dayparts">
               <MappingFragment StoreEntitySet="plan_version_dayparts">
+                <ScalarProperty Name="affiliate_restrictions_contain_type" ColumnName="affiliate_restrictions_contain_type" />
                 <ScalarProperty Name="program_restrictions_contain_type" ColumnName="program_restrictions_contain_type" />
                 <ScalarProperty Name="genre_restrictions_contain_type" ColumnName="genre_restrictions_contain_type" />
                 <ScalarProperty Name="show_type_restrictions_contain_type" ColumnName="show_type_restrictions_contain_type" />
@@ -14108,6 +14201,15 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
                 <ScalarProperty Name="created_date" ColumnName="created_date" />
                 <ScalarProperty Name="created_by" ColumnName="created_by" />
                 <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="plan_version_daypart_affiliate_restrictions">
+            <EntityTypeMapping TypeName="BroadcastModel.plan_version_daypart_affiliate_restrictions">
+              <MappingFragment StoreEntitySet="plan_version_daypart_affiliate_restrictions">
+                <ScalarProperty Name="affiliate_id" ColumnName="affiliate_id" />
+                <ScalarProperty Name="plan_version_daypart_id" ColumnName="plan_version_daypart_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

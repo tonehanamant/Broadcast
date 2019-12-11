@@ -2,16 +2,13 @@
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Cache;
-using Services.Broadcast.Clients;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
 using Services.Broadcast.Helpers;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using System.Reflection;
 using Tam.Maestro.Data.Entities;
 
 namespace Services.Broadcast.Validators
@@ -76,6 +73,7 @@ namespace Services.Broadcast.Validators
         const string SHOW_TYPE_CONTAIN_TYPE_IS_NOT_VALID = "Contain type of the show types restrictions is not valid";
         const string GENRE_CONTAIN_TYPE_IS_NOT_VALID = "Contain type of the genres restrictions is not valid";
         const string PROGRAM_CONTAIN_TYPE_IS_NOT_VALID = "Contain type of the program restrictions is not valid";
+        const string AFFILIATE_CONTAIN_TYPE_IS_NOT_VALID = "Contain type of the affiliate restrictions is not valid";
 
         public PlanValidator(ISpotLengthEngine spotLengthEngine
             , IBroadcastAudiencesCache broadcastAudiencesCache
@@ -279,6 +277,7 @@ namespace Services.Broadcast.Validators
                 _ValidateShowTypeRestrictions(restrictions);
                 _ValidateGenreRestrictions(restrictions);
                 _ValidateProgramRestrictions(restrictions);
+                _ValidateAffiliateRestrictions(restrictions);
             }
         }
 
@@ -309,6 +308,16 @@ namespace Services.Broadcast.Validators
             if (programRestrictions != null && !EnumHelper.IsDefined(programRestrictions.ContainType))
             {
                 throw new Exception(PROGRAM_CONTAIN_TYPE_IS_NOT_VALID);
+            }
+        }
+
+        private void _ValidateAffiliateRestrictions(PlanDaypartDto.RestrictionsDto restrictions)
+        {
+            var affiliateRestrictions = restrictions.AffiliateRestrictions;
+
+            if (affiliateRestrictions != null && !EnumHelper.IsDefined(affiliateRestrictions.ContainType))
+            {
+                throw new Exception(AFFILIATE_CONTAIN_TYPE_IS_NOT_VALID);
             }
         }
 
