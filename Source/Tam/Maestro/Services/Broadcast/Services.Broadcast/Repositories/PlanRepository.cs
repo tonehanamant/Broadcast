@@ -1119,10 +1119,17 @@ namespace Services.Broadcast.Repositories
                     optimal_cpm = result.Results?.OptimalCpm ?? 0
                 };
 
+                context.plan_version_pricing_api_results.Add(planPricingApiResult);
+
+                context.SaveChanges();
+
+                var planPricingApiResultSpots = new List<plan_version_pricing_api_result_spots>();
+
                 foreach (var spot in result.Results?.Spots)
                 {
-                    var planPricingApiResultSpots = new plan_version_pricing_api_result_spots
+                    var planPricingApiResultSpot = new plan_version_pricing_api_result_spots
                     {
+                        plan_version_pricing_api_results_id = planPricingApiResult.id,
                         station_inventory_manifest_id = spot.Id,
                         media_week_id = spot.MediaWeekId,
                         impressions = spot.Impressions,
@@ -1130,12 +1137,12 @@ namespace Services.Broadcast.Repositories
                         spots = spot.Spots
                     };
 
-                    planPricingApiResult.plan_version_pricing_api_result_spots.Add(planPricingApiResultSpots);
+                    planPricingApiResultSpots.Add(planPricingApiResultSpot);
                 }
 
-                context.plan_version_pricing_api_results.Add(planPricingApiResult);
+                var propertiesToIgnore = new List<string>() { "id" };
 
-                context.SaveChanges();
+                BulkInsert(context, planPricingApiResultSpots, propertiesToIgnore);
             });
         }
 

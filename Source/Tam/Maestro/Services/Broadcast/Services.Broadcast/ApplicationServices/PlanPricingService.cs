@@ -422,7 +422,7 @@ namespace Services.Broadcast.ApplicationServices
                 {
                     Id = jobId,
                     Status = BackgroundJobProcessingStatus.Failed,
-                    ErrorMessage = exception.Message
+                    ErrorMessage = exception.ToString()
                 });
             }
         }
