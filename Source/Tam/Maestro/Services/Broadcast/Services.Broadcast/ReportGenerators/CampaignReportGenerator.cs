@@ -79,6 +79,8 @@ namespace Services.Broadcast.ReportGenerators
                // _PopulateContractWorksheet(contractWorksheet, dataObject);
             }
 
+            //set the active tab as the first one in the file
+            package.Workbook.Worksheets.First().Select();
             return package;
         }
         
