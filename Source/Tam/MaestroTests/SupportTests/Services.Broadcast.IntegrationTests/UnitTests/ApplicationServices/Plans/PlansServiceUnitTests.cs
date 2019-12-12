@@ -22,8 +22,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
     [TestFixture]
     public class PlansServiceUnitTests
     {
-        #region Construction
-
         [Test]
         public void Construction()
         {
@@ -37,6 +35,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var spotLengthEngine = new Mock<ISpotLengthEngine>();
             var lockingManagerApplicationServiceMock = new Mock<IBroadcastLockingManagerApplicationService>();
             var planPricingServiceMock = new Mock<IPlanPricingService>();
+            var quarterCalculationEngineMock = new Mock<IQuarterCalculationEngine>();
+
             lockingManagerApplicationServiceMock.Setup(x => x.LockObject(It.IsAny<string>())).Returns(new LockResponse
             {
                 Success = true,
@@ -47,14 +47,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 planBudgetDeliveryCalculator.Object, mediaMonthAndWeekAggregateCache.Object, planAggregator.Object,
                 IntegrationTestApplicationServiceFactory.Instance.Resolve<ICampaignAggregationJobTrigger>(),
                 nsiUniverseService.Object, broadcastAudienceCacheMock.Object, spotLengthEngine.Object, lockingManagerApplicationServiceMock.Object,
-                planPricingServiceMock.Object);
+                planPricingServiceMock.Object, quarterCalculationEngineMock.Object);
 
             Assert.IsNotNull(tc);
         }
-
-        #endregion // #region Construction
-
-        #region Dispatch Aggregation
 
         [Test]
         public void DispatchAggregation_WasTriggeredOnSave()
@@ -67,6 +63,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var mediaMonthAndWeekAggregateCache = new Mock<IMediaMonthAndWeekAggregateCache>();
             var audiencesCache = new Mock<IBroadcastAudiencesCache>();
             var spotLengthEngine = new Mock<ISpotLengthEngine>();
+            var quarterCalculationEngineMock = new Mock<IQuarterCalculationEngine>();
 
             var saveNewPlanCalls = new List<DateTime>();
             planBudgetDeliveryCalculator.Setup(s => s.CalculateBudget(It.IsAny<PlanDeliveryBudget>()))
@@ -121,7 +118,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var tc = new PlanService(broadcastDataRepositoryFactory.Object, planValidator.Object,
                 planBudgetDeliveryCalculator.Object, mediaMonthAndWeekAggregateCache.Object, planAggregator.Object,
                 campaignAggJobTrigger.Object, nsiUniverseService.Object, broadcastAudienceCacheMock.Object, spotLengthEngine.Object,
-                lockingManagerApplicationServiceMock.Object, planPricingServiceMock.Object);
+                lockingManagerApplicationServiceMock.Object, planPricingServiceMock.Object, quarterCalculationEngineMock.Object);
 
             var plan = _GetNewPlan();
             var campaignId = plan.CampaignId;
@@ -159,6 +156,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var planRepository = new Mock<IPlanRepository>();
             var daypartCodeRepository = new Mock<IDaypartCodeRepository>();
             var audiencesCache = new Mock<IBroadcastAudiencesCache>();
+            var quarterCalculationEngineMock = new Mock<IQuarterCalculationEngine>();
             var spotLengthEngine = new Mock<ISpotLengthEngine>();
             var saveNewPlanCalls = new List<DateTime>();
             planBudgetDeliveryCalculator.Setup(s => s.CalculateBudget(It.IsAny<PlanDeliveryBudget>()))
@@ -219,7 +217,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var tc = new PlanService(broadcastDataRepositoryFactory.Object, planValidator.Object,
                 planBudgetDeliveryCalculator.Object, mediaMonthAndWeekAggregateCache.Object, planAggregator.Object,
                 campaignAggJobTrigger.Object, nsiUniverseService.Object, broadcastAudienceCacheMock.Object, spotLengthEngine.Object,
-                lockingManagerApplicationServiceMock.Object, planPricingServiceMock.Object);
+                lockingManagerApplicationServiceMock.Object, planPricingServiceMock.Object, quarterCalculationEngineMock.Object);
             var plan = _GetNewPlan();
             var campaignId = plan.CampaignId;
             var modifiedWho = "ModificationUser";
@@ -246,10 +244,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             campaignAggJobTrigger.Verify(s => s.TriggerJob(campaignId, modifiedWho), Times.Once);
         }
 
-        #endregion // #region Dispatch Aggregation
-
-        #region Plan Locking
-
         [Test]
         public void CanNotUpdateLockedPlan()
         {
@@ -263,6 +257,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var mediaMonthAndWeekAggregateCache = new Mock<IMediaMonthAndWeekAggregateCache>();
             var audiencesCache = new Mock<IBroadcastAudiencesCache>();
             var spotLengthEngine = new Mock<ISpotLengthEngine>();
+            var quarterCalculationEngineMock = new Mock<IQuarterCalculationEngine>();
 
             var saveNewPlanCalls = new List<DateTime>();
             planBudgetDeliveryCalculator.Setup(s => s.CalculateBudget(It.IsAny<PlanDeliveryBudget>()))
@@ -317,7 +312,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var service = new PlanService(broadcastDataRepositoryFactory.Object, planValidator.Object,
                 planBudgetDeliveryCalculator.Object, mediaMonthAndWeekAggregateCache.Object, planAggregator.Object,
                 campaignAggJobTrigger.Object, nsiUniverseService.Object, broadcastAudienceCacheMock.Object, spotLengthEngine.Object,
-                lockingManagerApplicationServiceMock.Object, planPricingServiceMock.Object);
+                lockingManagerApplicationServiceMock.Object, planPricingServiceMock.Object, quarterCalculationEngineMock.Object);
 
 
             PlanDto plan = _GetNewPlan();
@@ -345,13 +340,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var broadcastAudienceCacheMock = new Mock<IBroadcastAudiencesCache>();
             var lockingManagerApplicationServiceMock = new Mock<IBroadcastLockingManagerApplicationService>();
             var planPricingServiceMock = new Mock<IPlanPricingService>();
+            var quarterCalculationEngineMock = new Mock<IQuarterCalculationEngine>();
 
             planPricingServiceMock.Setup(x => x.IsPricingModelRunningForPlan(It.IsAny<int>())).Returns(true);
 
             var service = new PlanService(broadcastDataRepositoryFactory.Object, planValidator.Object,
                 planBudgetDeliveryCalculator.Object, mediaMonthAndWeekAggregateCache.Object, planAggregator.Object,
                 campaignAggJobTrigger.Object, nsiUniverseService.Object, broadcastAudienceCacheMock.Object, spotLengthEngine.Object,
-                lockingManagerApplicationServiceMock.Object, planPricingServiceMock.Object);
+                lockingManagerApplicationServiceMock.Object, planPricingServiceMock.Object, quarterCalculationEngineMock.Object);
             
             PlanDto plan = _GetNewPlan();
             plan.Id = 1;
@@ -361,10 +357,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             Assert.AreEqual(expectedMessage, exception.Message);
         }
-
-        #endregion
-
-        #region Helpers
 
         private static PlanDto _GetNewPlan()
         {
@@ -422,7 +414,5 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 new DaypartCodeDefaultDto { Id = 11, DaypartType = DaypartTypeEnum.News, DefaultEndTimeSeconds = 5000, DefaultStartTimeSeconds = 6000 },
             };
         }
-
-        #endregion // #region Helpers
     }
 }

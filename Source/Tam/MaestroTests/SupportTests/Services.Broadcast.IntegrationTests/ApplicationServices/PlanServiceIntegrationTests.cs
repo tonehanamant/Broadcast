@@ -1,6 +1,7 @@
 ﻿using ApprovalTests;
 using ApprovalTests.Reporters;
 using IntegrationTests.Common;
+using Microsoft.Practices.Unity;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
@@ -16,7 +17,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
-using Microsoft.Practices.Unity;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
@@ -1524,6 +1524,38 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var defaults = _PlanService.GetPlanDefaults();
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(defaults));
+        }
+
+        [Test]
+        [TestCase("12/09/2019", "12/16/2019")]
+        [TestCase("12/10/2019", "12/16/2019")]
+        [TestCase("12/11/2019", "12/16/2019")]
+        [TestCase("12/12/2019", "12/16/2019")]
+        [TestCase("12/13/2019", "12/16/2019")]
+        [TestCase("12/14/2019", "12/16/2019")]
+        [TestCase("12/15/2019", "12/16/2019")]
+        [TestCase("12/16/2019", "12/23/2019")]
+        public void GetCurrentQuarters_VerifyStartDate(string currentDateTimeString, string expectedStartDateTimeString)
+        {
+            var currentDateTime = DateTime.Parse(currentDateTimeString);
+
+            var resultQuarters = _PlanService.GetCurrentQuarters(currentDateTime);
+
+            var firstQuarterStartDateInList = resultQuarters[0].StartDate.ToString("MM/dd/yyyy");
+            Assert.AreEqual(expectedStartDateTimeString, firstQuarterStartDateInList);
+            Assert.AreEqual(5, resultQuarters.Count);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetCurrentQuarters()
+        {
+            // this is a Thursday
+            var currentDateTime = new DateTime(2019, 12, 12);
+
+            var results = _PlanService.GetCurrentQuarters(currentDateTime);
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(results));
         }
 
         private static PlanDto _GetNewPlan()

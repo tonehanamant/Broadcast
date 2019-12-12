@@ -4,6 +4,7 @@ using Common.Services.Repositories;
 using Hangfire;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Cache;
+using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.DTO.Program;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
@@ -124,6 +125,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// <param name="updatedDate">The updated date.</param>
         /// <param name="aggregatePlanSynchronously"></param>
         void AutomaticStatusTransitions(DateTime transitionDate, string updatedBy, DateTime updatedDate, bool aggregatePlanSynchronously = false);
+
+        List<QuarterDetailDto> GetCurrentQuarters(DateTime currentDateTime);
     }
 
     public class PlanService : IPlanService
@@ -141,6 +144,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private readonly ISpotLengthEngine _SpotLengthEngine;
         private readonly IBroadcastLockingManagerApplicationService _LockingManagerApplicationService;
         private readonly IPlanPricingService _PlanPricingService;
+        private readonly IQuarterCalculationEngine _QuarterCalculationEngine;
 
         private const string _DaypartCodeNotFoundMessage = "Unable to find daypart code";
 
@@ -154,7 +158,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
             , IBroadcastAudiencesCache broadcastAudiencesCache
             , ISpotLengthEngine spotLengthEngine
             , IBroadcastLockingManagerApplicationService lockingManagerApplicationService
-            , IPlanPricingService planPricingService)
+            , IPlanPricingService planPricingService
+            , IQuarterCalculationEngine quarterCalculationEngine)
         {
             _MediaWeekCache = mediaMonthAndWeekAggregateCache;
             _PlanValidator = planValidator;
@@ -170,6 +175,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _SpotLengthEngine = spotLengthEngine;
             _LockingManagerApplicationService = lockingManagerApplicationService;
             _PlanPricingService = planPricingService;
+            _QuarterCalculationEngine = quarterCalculationEngine;
         }
 
         ///<inheritdoc/>
@@ -510,6 +516,29 @@ namespace Services.Broadcast.ApplicationServices.Plan
         public List<LookupDto> PlanGoalBreakdownTypes()
         {
             return EnumExtensions.ToLookupDtoList<PlanGoalBreakdownTypeEnum>(); ;
+        }
+
+        /// <summary>
+        /// Gets the current quarters.
+        ///
+        /// The list contains the current quarter and the following four quarters.
+        /// The current quarter's start date is "the following Monday" from "today".
+        /// </summary>
+        /// <param name="currentDateTime">The current date time.</param>
+        /// <returns></returns>
+        public List<QuarterDetailDto> GetCurrentQuarters(DateTime currentDateTime)
+        {
+            const int monthModifierForQuery = 14;
+            const int totalQuartersToReturn = 5;
+
+            var endDate = currentDateTime.AddMonths(monthModifierForQuery);
+            var quarters = _QuarterCalculationEngine.GetAllQuartersBetweenDates(currentDateTime, endDate)
+                .Take(totalQuartersToReturn).ToList();
+            // ... + 7) % 7) to ensure we get range between 0 and 7.
+            var daysToAdd = currentDateTime.DayOfWeek == DayOfWeek.Monday ? 7 
+                : ((int)DayOfWeek.Monday - (int)currentDateTime.DayOfWeek + 7) % 7;
+            quarters[0].StartDate = currentDateTime.AddDays(daysToAdd);
+            return quarters;
         }
 
         ///<inheritdoc/>
