@@ -1527,22 +1527,22 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [TestCase("12/09/2019", "12/16/2019")]
-        [TestCase("12/10/2019", "12/16/2019")]
-        [TestCase("12/11/2019", "12/16/2019")]
-        [TestCase("12/12/2019", "12/16/2019")]
-        [TestCase("12/13/2019", "12/16/2019")]
-        [TestCase("12/14/2019", "12/16/2019")]
-        [TestCase("12/15/2019", "12/16/2019")]
-        [TestCase("12/16/2019", "12/23/2019")]
+        [TestCase("12/09/2019", "12/16/2019 00:00:00")]
+        [TestCase("12/10/2019", "12/16/2019 00:00:00")]
+        [TestCase("12/11/2019", "12/16/2019 00:00:00")]
+        [TestCase("12/12/2019", "12/16/2019 00:00:00")]
+        [TestCase("12/13/2019", "12/16/2019 00:00:00")]
+        [TestCase("12/14/2019", "12/16/2019 00:00:00")]
+        [TestCase("12/15/2019", "12/16/2019 00:00:00")]
+        [TestCase("12/16/2019", "12/23/2019 00:00:00")]
         public void GetCurrentQuarters_VerifyStartDate(string currentDateTimeString, string expectedStartDateTimeString)
         {
             var currentDateTime = DateTime.Parse(currentDateTimeString);
+            var expectedStartDateTime = DateTime.Parse(expectedStartDateTimeString);
 
             var resultQuarters = _PlanService.GetCurrentQuarters(currentDateTime);
 
-            var firstQuarterStartDateInList = resultQuarters[0].StartDate.ToString("MM/dd/yyyy");
-            Assert.AreEqual(expectedStartDateTimeString, firstQuarterStartDateInList);
+            Assert.AreEqual(expectedStartDateTime, resultQuarters[0].StartDate);
             Assert.AreEqual(5, resultQuarters.Count);
         }
 

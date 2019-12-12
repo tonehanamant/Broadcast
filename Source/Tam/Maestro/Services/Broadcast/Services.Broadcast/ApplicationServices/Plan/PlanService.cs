@@ -537,7 +537,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             // ... + 7) % 7) to ensure we get range between 0 and 7.
             var daysToAdd = currentDateTime.DayOfWeek == DayOfWeek.Monday ? 7 
                 : ((int)DayOfWeek.Monday - (int)currentDateTime.DayOfWeek + 7) % 7;
-            quarters[0].StartDate = currentDateTime.AddDays(daysToAdd);
+            quarters[0].StartDate = DateTime.Parse(currentDateTime.AddDays(daysToAdd).ToString("MM/dd/yyyy 00:00:00"));
             return quarters;
         }
 
