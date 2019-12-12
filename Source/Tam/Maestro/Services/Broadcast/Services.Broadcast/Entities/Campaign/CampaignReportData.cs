@@ -19,9 +19,7 @@ namespace Services.Broadcast.Entities.Campaign
             , List<PlanAudienceDisplay> guaranteedDemos
             , List<LookupDto> spotLenghts
             , IQuarterCalculationEngine _QuarterCalculationEngine)
-        {            
-            CampaignStartQuarter = _QuarterCalculationEngine.GetQuarterRangeByDate(campaign.FlightStartDate).ShortFormat();
-            CampaignEndQuarter = _QuarterCalculationEngine.GetQuarterRangeByDate(campaign.FlightEndDate).ShortFormat();
+        {
             CampaignName = campaign.Name;
             CreatedDate = DateTime.Now.ToString(DATE_FORMAT);
             AgencyName = agency.Name;
@@ -29,21 +27,20 @@ namespace Services.Broadcast.Entities.Campaign
             CampaignFlightStartDate = campaign.FlightStartDate != null ? campaign.FlightStartDate.Value.ToString(DATE_FORMAT_SHORT_YEAR) : string.Empty;
             CampaignFlightEndDate = campaign.FlightEndDate != null ? campaign.FlightEndDate.Value.ToString(DATE_FORMAT_SHORT_YEAR) : string.Empty;
             GuaranteedDemo = string.Join(",", guaranteedDemos.Select(x => x.Code).ToList());
+
             SpotLengths = plans
-                .Select(x => new { x.SpotLengthId, x.Equivalized })
+                .Select(x => new { spotLenghts.Single(y => y.Id == x.SpotLengthId).Display, x.Equivalized })
                 .Distinct()
-                .Select (x => new { x.Equivalized, spotLenghts.Single(y => y.Id == x.SpotLengthId).Display })
-                .OrderBy(x=>x.Display)
+                .OrderBy(x => int.Parse(x.Display))
                 .Select(x => $":{x.Display}{(x.Equivalized ? " eq." : string.Empty)}")
                 .ToList();
+
             PostingType = plans.Select(x => x.PostingType).Distinct().Single().ToString();
-            Status = exportType.Equals(CampaignExportTypeEnum.Contract) ? "Order" : "Proposal";   
+            Status = exportType.Equals(CampaignExportTypeEnum.Contract) ? "Order" : "Proposal";
         }
 
         public string CampaignName { get; set; }
         public string CreatedDate { get; set; }
-        public string CampaignStartQuarter { get; set; }
-        public string CampaignEndQuarter { get; set; }
         public string AgencyName { get; set; }
         public string ClientName { get; set; }
         public string CampaignFlightStartDate { get; set; }

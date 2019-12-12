@@ -85,7 +85,7 @@ namespace Services.Broadcast.ReportGenerators
         private void _PopulateProposalWorksheetHeader(ExcelWorksheet worksheet, CampaignReportData data)
         {
             worksheet.Cells[CREATED_DATE_CELL].Value += data.CreatedDate;
-            worksheet.Cells[CAMPAIGN_NAME_CELL].Value += $"{data.CampaignName} {data.CampaignStartQuarter} - {data.CampaignEndQuarter}";
+            worksheet.Cells[CAMPAIGN_NAME_CELL].Value += data.CampaignName;
             worksheet.Cells[AGENCY_NAME_CELL].Value = data.AgencyName;
             worksheet.Cells[CLIENT_NAME_CELL].Value = data.ClientName;
             worksheet.Cells[CAMPAIGN_FLIGHT_CELL].Value = $"{data.CampaignFlightStartDate} - {data.CampaignFlightEndDate}";
