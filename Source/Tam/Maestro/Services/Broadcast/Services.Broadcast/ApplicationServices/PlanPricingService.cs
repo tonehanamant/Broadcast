@@ -324,22 +324,27 @@ namespace Services.Broadcast.ApplicationServices
             return pricingPrograms;
         }
 
-        private List<PlanPricingApiRequestSpotsDto> _GetPricingModelSpots(List<ProposalProgramDto> programs)
+        private List<PlanPricingApiRequestSpotsDto> _GetPricingModelSpots(List<PlanPricingInventoryProgram> programs)
         {
             var pricingModelSpots = new List<PlanPricingApiRequestSpotsDto>();
-            var householdAudienceId = _AudienceCache.GetDefaultAudience().Id;
 
             foreach (var program in programs)
             {
-                foreach (var programWeek in program.FlightWeeks)
+                foreach (var daypart in program.ManifestDayparts)
                 {
-                    pricingModelSpots.Add(new PlanPricingApiRequestSpotsDto
+                    var spots = program.MediaWeekIds.Select(mediaWeekId => new PlanPricingApiRequestSpotsDto
                     {
                         Id = program.ManifestId,
-                        MediaWeekId = programWeek.MediaWeekId,
-                        Impressions = program.ProvidedUnitImpressions ?? program.UnitImpressions,
-                        Cost = program.SpotCost
+                        MediaWeekId = mediaWeekId,
+                        DaypartId = daypart.DaypartId,
+                        Impressions = program.ProvidedImpressions ?? program.ProjectedImpressions,
+                        Cost = program.SpotCost,
+                        Unit = program.Unit,
+                        InventorySource = program.InventorySource,
+                        InventorySourceType = program.InventorySourceType
                     });
+
+                    pricingModelSpots.AddRange(spots);
                 }
             }
 
@@ -376,14 +381,14 @@ namespace Services.Broadcast.ApplicationServices
 
             try
             {
-                var planId = planPricingParametersDto.PlanId;
-                var plan = _PlanRepository.GetPlan(planId);
-                planPricingJobDiagnostic.RecordGatherInventoryStart();
-                var inventory = _PlanPricingInventoryEngine.GetInventoryForPlan(planId);
-                planPricingJobDiagnostic.RecordGatherInventoryEnd();
+                var plan = _PlanRepository.GetPlan(planPricingParametersDto.PlanId);
                 var pricingMarkets = _MapToPlanPricingPrograms(plan);
                 var parameters = _GetPricingApiRequestParameters(planPricingParametersDto, plan, pricingMarkets);
 
+                planPricingJobDiagnostic.RecordGatherInventoryStart();
+                var inventory = _PlanPricingInventoryEngine.GetInventoryForPlan(plan);
+                planPricingJobDiagnostic.RecordGatherInventoryEnd();
+                
                 var pricingApiRequest = new PlanPricingApiRequestDto
                 {
                     Weeks = _GetPricingModelWeeks(plan),
@@ -401,7 +406,7 @@ namespace Services.Broadcast.ApplicationServices
 
                 using (var transaction = new TransactionScopeWrapper())
                 {
-                    _PlanRepository.SavePricingResults(planId, result);
+                    _PlanRepository.SavePricingResults(plan.Id, result);
 
                     _PlanRepository.SavePricingRequest(parameters);
 
@@ -430,8 +435,7 @@ namespace Services.Broadcast.ApplicationServices
         public PlanPricingApiRequestDto GetPricingInventory(int planId)
         {
             var plan = _PlanRepository.GetPlan(planId);
-            var inventory = _PlanPricingInventoryEngine.GetInventoryForPlan(planId);
-            var pricingMarkets = _MapToPlanPricingPrograms(plan);
+            var inventory = _PlanPricingInventoryEngine.GetInventoryForPlan(plan);
 
             var pricingApiRequest = new PlanPricingApiRequestDto
             {

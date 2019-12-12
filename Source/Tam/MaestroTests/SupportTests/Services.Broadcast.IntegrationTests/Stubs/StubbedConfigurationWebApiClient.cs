@@ -12,6 +12,7 @@ namespace Services.Broadcast.IntegrationTests.Stubs
     public class StubbedConfigurationWebApiClient : IConfigurationWebApiClient
     {
         public string TAMEnvironment => "Local";
+        public static Dictionary<string, string> RunTimeParameters = new Dictionary<string, string>();
 
         public bool ClearSystemComponentParameterCache(string componentId, string parameterId)
         {
@@ -95,7 +96,15 @@ namespace Services.Broadcast.IntegrationTests.Stubs
 
         public string GetSystemComponentParameterValue(string componentId, string parameterId)
         {
-            string result = string.Empty;
+            if (RunTimeParameters.TryGetValue(parameterId, out var result))
+            {
+                return result;
+            }
+            else
+            {
+                result = string.Empty;
+            }
+            
             switch (parameterId)
             {
                 case "BroadcastMatchingBuffer":
@@ -223,6 +232,15 @@ namespace Services.Broadcast.IntegrationTests.Stubs
                     break;
                 case "BroadcastExcelTemplatesPath":
                     result = @"\\cadfs11\\Inventory Management UI";
+                    break;
+                case "EnableBarterInventoryForPricingModel":
+                    result = "True";
+                    break;
+                case "EnableOpenMarketInventoryForPricingModel":
+                    result = "True";
+                    break;
+                case "EnableProprietaryOAndOInventoryForPricingModel":
+                    result = "True";
                     break;
                 default:
                     throw new Exception("Unknown SystemComponentParameter: " + parameterId);

@@ -2,20 +2,18 @@
 using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
 using Services.Broadcast.Entities;
-using Services.Broadcast.Entities.Enums;
+using Services.Broadcast.Entities.Plan.Pricing;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Services.Broadcast.BusinessEngines
 {
     public interface IImpressionsCalculationEngine : IApplicationService
     {
-        void ApplyProjectedImpressions(IEnumerable<ProposalProgramDto> programs, ImpressionsRequestDto impressionsRequest, int audienceId);
-        void ApplyProvidedImpressions(List<ProposalProgramDto> programs, int audienceId, int spotLengthId, bool equivalized);
+        void ApplyProjectedImpressions(IEnumerable<PlanPricingInventoryProgram> programs, ImpressionsRequestDto impressionsRequest, int audienceId);
+        void ApplyProvidedImpressions(List<PlanPricingInventoryProgram> programs, int audienceId, int spotLengthId, bool equivalized);
         IEnumerable<StationImpressionsWithAudience> GetImpressions(ImpressionsRequestDto impressionsRequest, List<int> ratingAudiences, List<ManifestDetailDaypart> impressionRequests);
     }
 
@@ -49,30 +47,25 @@ namespace Services.Broadcast.BusinessEngines
             _RatingForecastRepository = broadcastDataRepositoryFactory.GetDataRepository<IRatingForecastRepository>();
         }
 
-        public void ApplyProvidedImpressions(List<ProposalProgramDto> programs, int audienceId, int spotLengthId, bool equivalized)
+        public void ApplyProvidedImpressions(List<PlanPricingInventoryProgram> programs, int audienceId, int spotLengthId, bool equivalized)
         {
             var spotLength = _SpotLengthEngine.GetSpotLengthValueById(spotLengthId);
 
             foreach (var program in programs)
             {
-                var manifestAudienceForProposal =
-                    program.ManifestAudiences.FirstOrDefault(x => x.AudienceId == audienceId && 
-                                                                  x.IsReference);
-                var hasManifestAudiences = manifestAudienceForProposal != null &&
-                                           manifestAudienceForProposal.Impressions.HasValue;
+                var manifestAudienceForProgram = program.ManifestAudiences.FirstOrDefault(x => x.AudienceId == audienceId && x.IsReference);
+                var hasProvidedImpressions = manifestAudienceForProgram != null && manifestAudienceForProgram.Impressions.HasValue;
 
-                if (hasManifestAudiences)
+                if (hasProvidedImpressions)
                 {
-                    program.ProvidedUnitImpressions =
-                        _ImpressionAdjustmentEngine.AdjustImpression(manifestAudienceForProposal.Impressions.Value, equivalized, spotLength);
+                    program.ProvidedImpressions = _ImpressionAdjustmentEngine.AdjustImpression(manifestAudienceForProgram.Impressions.Value, equivalized, spotLength);
                 }
             }
         }
 
-        public void ApplyProjectedImpressions(IEnumerable<ProposalProgramDto> programs, ImpressionsRequestDto impressionsRequest, int audienceId)
+        public void ApplyProjectedImpressions(IEnumerable<PlanPricingInventoryProgram> programs, ImpressionsRequestDto impressionsRequest, int audienceId)
         {
             var impressionRequests = new List<ManifestDetailDaypart>();
-            var stationDetailImpressions = new Dictionary<int, ProposalProgramDto>();
             var manifestDaypartImpressions = new Dictionary<int, double>();
 
             foreach (var program in programs)
@@ -82,7 +75,7 @@ namespace Services.Broadcast.BusinessEngines
                     var manifestDisplayDaypart = DaypartCache.Instance.GetDisplayDaypart(manifestDaypart.DaypartId);
                     var stationDaypart = new ManifestDetailDaypart
                     {
-                        LegacyCallLetters = program.Station.LegacyCallLetters,
+                        LegacyCallLetters = program.StationLegacyCallLetters,
                         Id = manifestDaypart.Id,
                         DisplayDaypart = manifestDisplayDaypart
                     };
@@ -91,8 +84,6 @@ namespace Services.Broadcast.BusinessEngines
 
                     manifestDaypartImpressions[manifestDaypart.Id] = 0;
                 }
-
-                stationDetailImpressions[program.ManifestId] = program;
             }
 
             var ratingAudiences = _BroadcastAudienceRepository.GetRatingsAudiencesByMaestroAudience(
@@ -119,7 +110,7 @@ namespace Services.Broadcast.BusinessEngines
 
                 if (daypartCount > 0)
                 {
-                    program.UnitImpressions = programDaypartImpressions.Sum(i => i) / daypartCount;
+                    program.ProjectedImpressions = programDaypartImpressions.Sum(i => i) / daypartCount;
                 }
             }
         }

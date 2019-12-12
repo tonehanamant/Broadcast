@@ -17,6 +17,8 @@ namespace Services.Broadcast.Entities.Plan.Pricing
         public int Id { get; set; }
         [JsonProperty("week_id")]
         public int MediaWeekId { get; set; }
+        [JsonProperty("daypart_id")]
+        public int DaypartId { get; set; }
         [JsonProperty("impressions")]
         public double Impressions { get; set; }
         [JsonProperty("cost")]

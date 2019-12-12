@@ -24,6 +24,7 @@ namespace Services.Broadcast.Clients
                     MediaWeekId = spot.MediaWeekId,
                     Cost = spot.Cost,
                     Impressions = spot.Impressions,
+                    DaypartId = spot.DaypartId,
                     Spots = 3
                 });
             }

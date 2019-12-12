@@ -5,711 +5,318 @@
     "spots": [
       {
         "cost": 750.0000,
+        "daypart_id": 32941,
         "impressions": 69000.0,
         "spots": 3,
         "week_id": 771
       },
       {
         "cost": 750.0000,
+        "daypart_id": 32941,
         "impressions": 69000.0,
         "spots": 3,
         "week_id": 772
       },
       {
         "cost": 750.0000,
+        "daypart_id": 32941,
         "impressions": 69000.0,
         "spots": 3,
         "week_id": 773
       },
       {
         "cost": 750.0000,
+        "daypart_id": 32941,
         "impressions": 69000.0,
         "spots": 3,
         "week_id": 774
       },
       {
         "cost": 750.0000,
+        "daypart_id": 32941,
         "impressions": 69000.0,
         "spots": 3,
         "week_id": 775
       },
       {
-        "cost": 750.0000,
-        "impressions": 69000.0,
-        "spots": 3,
-        "week_id": 776
-      },
-      {
-        "cost": 750.0000,
-        "impressions": 69000.0,
-        "spots": 3,
-        "week_id": 777
-      },
-      {
-        "cost": 750.0000,
-        "impressions": 69000.0,
-        "spots": 3,
-        "week_id": 778
-      },
-      {
-        "cost": 750.0000,
-        "impressions": 69000.0,
-        "spots": 3,
-        "week_id": 779
-      },
-      {
-        "cost": 750.0000,
-        "impressions": 69000.0,
-        "spots": 3,
-        "week_id": 780
-      },
-      {
-        "cost": 750.0000,
-        "impressions": 69000.0,
-        "spots": 3,
-        "week_id": 781
-      },
-      {
-        "cost": 750.0000,
-        "impressions": 69000.0,
-        "spots": 3,
-        "week_id": 782
-      },
-      {
-        "cost": 750.0000,
-        "impressions": 69000.0,
-        "spots": 3,
-        "week_id": 783
-      },
-      {
         "cost": 700.0000,
+        "daypart_id": 32055,
         "impressions": 59200.0,
         "spots": 3,
         "week_id": 771
       },
       {
         "cost": 700.0000,
+        "daypart_id": 32055,
         "impressions": 59200.0,
         "spots": 3,
         "week_id": 772
       },
       {
         "cost": 700.0000,
+        "daypart_id": 32055,
         "impressions": 59200.0,
         "spots": 3,
         "week_id": 773
       },
       {
         "cost": 700.0000,
+        "daypart_id": 32055,
         "impressions": 59200.0,
         "spots": 3,
         "week_id": 774
       },
       {
         "cost": 700.0000,
+        "daypart_id": 32055,
         "impressions": 59200.0,
         "spots": 3,
         "week_id": 775
       },
       {
-        "cost": 700.0000,
-        "impressions": 59200.0,
-        "spots": 3,
-        "week_id": 776
-      },
-      {
-        "cost": 700.0000,
-        "impressions": 59200.0,
-        "spots": 3,
-        "week_id": 777
-      },
-      {
-        "cost": 700.0000,
-        "impressions": 59200.0,
-        "spots": 3,
-        "week_id": 778
-      },
-      {
-        "cost": 700.0000,
-        "impressions": 59200.0,
-        "spots": 3,
-        "week_id": 779
-      },
-      {
-        "cost": 700.0000,
-        "impressions": 59200.0,
-        "spots": 3,
-        "week_id": 780
-      },
-      {
-        "cost": 700.0000,
-        "impressions": 59200.0,
-        "spots": 3,
-        "week_id": 781
-      },
-      {
-        "cost": 700.0000,
-        "impressions": 59200.0,
-        "spots": 3,
-        "week_id": 782
-      },
-      {
-        "cost": 700.0000,
-        "impressions": 59200.0,
-        "spots": 3,
-        "week_id": 783
-      },
-      {
         "cost": 800.0000,
+        "daypart_id": 32943,
         "impressions": 60400.0,
         "spots": 3,
         "week_id": 771
       },
       {
         "cost": 800.0000,
+        "daypart_id": 32943,
         "impressions": 60400.0,
         "spots": 3,
         "week_id": 772
       },
       {
         "cost": 800.0000,
+        "daypart_id": 32943,
         "impressions": 60400.0,
         "spots": 3,
         "week_id": 773
       },
       {
         "cost": 800.0000,
+        "daypart_id": 32943,
         "impressions": 60400.0,
         "spots": 3,
         "week_id": 774
       },
       {
         "cost": 800.0000,
+        "daypart_id": 32943,
         "impressions": 60400.0,
         "spots": 3,
         "week_id": 775
       },
       {
-        "cost": 800.0000,
-        "impressions": 60400.0,
-        "spots": 3,
-        "week_id": 776
-      },
-      {
-        "cost": 800.0000,
-        "impressions": 60400.0,
-        "spots": 3,
-        "week_id": 777
-      },
-      {
-        "cost": 800.0000,
-        "impressions": 60400.0,
-        "spots": 3,
-        "week_id": 778
-      },
-      {
-        "cost": 800.0000,
-        "impressions": 60400.0,
-        "spots": 3,
-        "week_id": 779
-      },
-      {
-        "cost": 800.0000,
-        "impressions": 60400.0,
-        "spots": 3,
-        "week_id": 780
-      },
-      {
-        "cost": 800.0000,
-        "impressions": 60400.0,
-        "spots": 3,
-        "week_id": 781
-      },
-      {
-        "cost": 800.0000,
-        "impressions": 60400.0,
-        "spots": 3,
-        "week_id": 782
-      },
-      {
-        "cost": 800.0000,
-        "impressions": 60400.0,
-        "spots": 3,
-        "week_id": 783
-      },
-      {
         "cost": 750.0000,
+        "daypart_id": 32072,
         "impressions": 43600.0,
         "spots": 3,
         "week_id": 771
       },
       {
         "cost": 750.0000,
+        "daypart_id": 32072,
         "impressions": 43600.0,
         "spots": 3,
         "week_id": 772
       },
       {
         "cost": 750.0000,
+        "daypart_id": 32072,
         "impressions": 43600.0,
         "spots": 3,
         "week_id": 773
       },
       {
         "cost": 750.0000,
+        "daypart_id": 32072,
         "impressions": 43600.0,
         "spots": 3,
         "week_id": 774
       },
       {
         "cost": 750.0000,
+        "daypart_id": 32072,
         "impressions": 43600.0,
         "spots": 3,
         "week_id": 775
       },
       {
-        "cost": 750.0000,
-        "impressions": 43600.0,
-        "spots": 3,
-        "week_id": 776
-      },
-      {
-        "cost": 750.0000,
-        "impressions": 43600.0,
-        "spots": 3,
-        "week_id": 777
-      },
-      {
-        "cost": 750.0000,
-        "impressions": 43600.0,
-        "spots": 3,
-        "week_id": 778
-      },
-      {
-        "cost": 750.0000,
-        "impressions": 43600.0,
-        "spots": 3,
-        "week_id": 779
-      },
-      {
-        "cost": 750.0000,
-        "impressions": 43600.0,
-        "spots": 3,
-        "week_id": 780
-      },
-      {
-        "cost": 750.0000,
-        "impressions": 43600.0,
-        "spots": 3,
-        "week_id": 781
-      },
-      {
-        "cost": 750.0000,
-        "impressions": 43600.0,
-        "spots": 3,
-        "week_id": 782
-      },
-      {
-        "cost": 750.0000,
-        "impressions": 43600.0,
-        "spots": 3,
-        "week_id": 783
-      },
-      {
         "cost": 600.0000,
+        "daypart_id": 29548,
         "impressions": 46800.0,
         "spots": 3,
         "week_id": 771
       },
       {
         "cost": 600.0000,
+        "daypart_id": 29548,
         "impressions": 46800.0,
         "spots": 3,
         "week_id": 772
       },
       {
         "cost": 600.0000,
+        "daypart_id": 29548,
         "impressions": 46800.0,
         "spots": 3,
         "week_id": 773
       },
       {
         "cost": 600.0000,
+        "daypart_id": 29548,
         "impressions": 46800.0,
         "spots": 3,
         "week_id": 774
       },
       {
         "cost": 600.0000,
+        "daypart_id": 29548,
         "impressions": 46800.0,
         "spots": 3,
         "week_id": 775
       },
       {
-        "cost": 600.0000,
-        "impressions": 46800.0,
-        "spots": 3,
-        "week_id": 776
-      },
-      {
-        "cost": 600.0000,
-        "impressions": 46800.0,
-        "spots": 3,
-        "week_id": 777
-      },
-      {
-        "cost": 600.0000,
-        "impressions": 46800.0,
-        "spots": 3,
-        "week_id": 778
-      },
-      {
-        "cost": 600.0000,
-        "impressions": 46800.0,
-        "spots": 3,
-        "week_id": 779
-      },
-      {
-        "cost": 600.0000,
-        "impressions": 46800.0,
-        "spots": 3,
-        "week_id": 780
-      },
-      {
-        "cost": 600.0000,
-        "impressions": 46800.0,
-        "spots": 3,
-        "week_id": 781
-      },
-      {
-        "cost": 600.0000,
-        "impressions": 46800.0,
-        "spots": 3,
-        "week_id": 782
-      },
-      {
-        "cost": 600.0000,
-        "impressions": 46800.0,
-        "spots": 3,
-        "week_id": 783
-      },
-      {
-        "cost": 0.0000,
-        "impressions": 78662.75,
-        "spots": 3,
-        "week_id": 771
-      },
-      {
         "cost": 50.0000,
+        "daypart_id": 32941,
         "impressions": 600.0,
         "spots": 3,
         "week_id": 771
       },
       {
         "cost": 50.0000,
+        "daypart_id": 32941,
         "impressions": 600.0,
         "spots": 3,
         "week_id": 772
       },
       {
         "cost": 50.0000,
+        "daypart_id": 32941,
         "impressions": 600.0,
         "spots": 3,
         "week_id": 773
       },
       {
         "cost": 50.0000,
+        "daypart_id": 32941,
         "impressions": 600.0,
         "spots": 3,
         "week_id": 774
       },
       {
         "cost": 50.0000,
+        "daypart_id": 32941,
         "impressions": 600.0,
         "spots": 3,
         "week_id": 775
       },
       {
-        "cost": 50.0000,
-        "impressions": 600.0,
-        "spots": 3,
-        "week_id": 776
-      },
-      {
-        "cost": 50.0000,
-        "impressions": 600.0,
-        "spots": 3,
-        "week_id": 777
-      },
-      {
-        "cost": 50.0000,
-        "impressions": 600.0,
-        "spots": 3,
-        "week_id": 778
-      },
-      {
-        "cost": 50.0000,
-        "impressions": 600.0,
-        "spots": 3,
-        "week_id": 779
-      },
-      {
-        "cost": 50.0000,
-        "impressions": 600.0,
-        "spots": 3,
-        "week_id": 780
-      },
-      {
-        "cost": 50.0000,
-        "impressions": 600.0,
-        "spots": 3,
-        "week_id": 781
-      },
-      {
-        "cost": 50.0000,
-        "impressions": 600.0,
-        "spots": 3,
-        "week_id": 782
-      },
-      {
-        "cost": 50.0000,
-        "impressions": 600.0,
-        "spots": 3,
-        "week_id": 783
-      },
-      {
         "cost": 12.0000,
+        "daypart_id": 29555,
         "impressions": 600.0,
         "spots": 3,
         "week_id": 771
       },
       {
         "cost": 12.0000,
+        "daypart_id": 29555,
         "impressions": 600.0,
         "spots": 3,
         "week_id": 772
       },
       {
         "cost": 12.0000,
+        "daypart_id": 29555,
         "impressions": 600.0,
         "spots": 3,
         "week_id": 773
       },
       {
         "cost": 12.0000,
+        "daypart_id": 29555,
         "impressions": 600.0,
         "spots": 3,
         "week_id": 774
       },
       {
         "cost": 12.0000,
+        "daypart_id": 29555,
         "impressions": 600.0,
         "spots": 3,
         "week_id": 775
       },
       {
         "cost": 12.0000,
-        "impressions": 600.0,
-        "spots": 3,
-        "week_id": 776
-      },
-      {
-        "cost": 12.0000,
-        "impressions": 600.0,
-        "spots": 3,
-        "week_id": 777
-      },
-      {
-        "cost": 12.0000,
-        "impressions": 600.0,
-        "spots": 3,
-        "week_id": 778
-      },
-      {
-        "cost": 12.0000,
-        "impressions": 600.0,
-        "spots": 3,
-        "week_id": 779
-      },
-      {
-        "cost": 12.0000,
-        "impressions": 600.0,
-        "spots": 3,
-        "week_id": 780
-      },
-      {
-        "cost": 12.0000,
-        "impressions": 600.0,
-        "spots": 3,
-        "week_id": 781
-      },
-      {
-        "cost": 12.0000,
-        "impressions": 600.0,
-        "spots": 3,
-        "week_id": 782
-      },
-      {
-        "cost": 12.0000,
-        "impressions": 600.0,
-        "spots": 3,
-        "week_id": 783
-      },
-      {
-        "cost": 12.0000,
+        "daypart_id": 29548,
         "impressions": 400.0,
         "spots": 3,
         "week_id": 771
       },
       {
         "cost": 12.0000,
+        "daypart_id": 29548,
         "impressions": 400.0,
         "spots": 3,
         "week_id": 772
       },
       {
         "cost": 12.0000,
+        "daypart_id": 29548,
         "impressions": 400.0,
         "spots": 3,
         "week_id": 773
       },
       {
         "cost": 12.0000,
+        "daypart_id": 29548,
         "impressions": 400.0,
         "spots": 3,
         "week_id": 774
       },
       {
         "cost": 12.0000,
+        "daypart_id": 29548,
         "impressions": 400.0,
         "spots": 3,
         "week_id": 775
       },
       {
         "cost": 12.0000,
-        "impressions": 400.0,
-        "spots": 3,
-        "week_id": 776
-      },
-      {
-        "cost": 12.0000,
-        "impressions": 400.0,
-        "spots": 3,
-        "week_id": 777
-      },
-      {
-        "cost": 12.0000,
-        "impressions": 400.0,
-        "spots": 3,
-        "week_id": 778
-      },
-      {
-        "cost": 12.0000,
-        "impressions": 400.0,
-        "spots": 3,
-        "week_id": 779
-      },
-      {
-        "cost": 12.0000,
-        "impressions": 400.0,
-        "spots": 3,
-        "week_id": 780
-      },
-      {
-        "cost": 12.0000,
-        "impressions": 400.0,
-        "spots": 3,
-        "week_id": 781
-      },
-      {
-        "cost": 12.0000,
-        "impressions": 400.0,
-        "spots": 3,
-        "week_id": 782
-      },
-      {
-        "cost": 12.0000,
-        "impressions": 400.0,
-        "spots": 3,
-        "week_id": 783
-      },
-      {
-        "cost": 12.0000,
+        "daypart_id": 32055,
         "impressions": 400.0,
         "spots": 3,
         "week_id": 771
       },
       {
         "cost": 12.0000,
+        "daypart_id": 32055,
         "impressions": 400.0,
         "spots": 3,
         "week_id": 772
       },
       {
         "cost": 12.0000,
+        "daypart_id": 32055,
         "impressions": 400.0,
         "spots": 3,
         "week_id": 773
       },
       {
         "cost": 12.0000,
+        "daypart_id": 32055,
         "impressions": 400.0,
         "spots": 3,
         "week_id": 774
       },
       {
         "cost": 12.0000,
+        "daypart_id": 32055,
         "impressions": 400.0,
         "spots": 3,
         "week_id": 775
-      },
-      {
-        "cost": 12.0000,
-        "impressions": 400.0,
-        "spots": 3,
-        "week_id": 776
-      },
-      {
-        "cost": 12.0000,
-        "impressions": 400.0,
-        "spots": 3,
-        "week_id": 777
-      },
-      {
-        "cost": 12.0000,
-        "impressions": 400.0,
-        "spots": 3,
-        "week_id": 778
-      },
-      {
-        "cost": 12.0000,
-        "impressions": 400.0,
-        "spots": 3,
-        "week_id": 779
-      },
-      {
-        "cost": 12.0000,
-        "impressions": 400.0,
-        "spots": 3,
-        "week_id": 780
-      },
-      {
-        "cost": 12.0000,
-        "impressions": 400.0,
-        "spots": 3,
-        "week_id": 781
-      },
-      {
-        "cost": 12.0000,
-        "impressions": 400.0,
-        "spots": 3,
-        "week_id": 782
-      },
-      {
-        "cost": 12.0000,
-        "impressions": 400.0,
-        "spots": 3,
-        "week_id": 783
       }
     ]
   }

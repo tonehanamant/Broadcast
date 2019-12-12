@@ -168,7 +168,7 @@ namespace Services.Broadcast.Converters.RateImport
             }
             else
             {
-                header.Audience = AudienceCache.GetBroadcastAudienceByCode(demo);
+                header.Audience = audience;
             }
 
             //Format: M-F 6:30PM-11PM and Standard Cadent Daypart rules

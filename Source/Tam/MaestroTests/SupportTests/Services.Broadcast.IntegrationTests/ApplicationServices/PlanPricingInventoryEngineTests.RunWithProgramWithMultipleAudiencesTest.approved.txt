@@ -1,63 +1,7 @@
 ﻿[
   {
-    "AdditionalAudienceImpressions": 0.0,
-    "AdditionalAudienceSubscribers": 0.0,
-    "AdditionalDemoRating": 0.0,
-    "AdditonalAudienceCPM": 0.0,
-    "Allocations": [],
-    "DayParts": [],
-    "DemoRating": 0.0,
-    "EffectiveImpressionsPerSpot": 21341.025,
-    "EndDate": "2018-04-25T00:00:00",
-    "FlightWeeks": [
-      {
-        "Allocations": null,
-        "EndDate": "2018-04-01T00:00:00",
-        "IsHiatus": false,
-        "MediaWeekId": 744,
-        "Rate": 75.0000,
-        "StartDate": "2018-03-26T00:00:00"
-      },
-      {
-        "Allocations": null,
-        "EndDate": "2018-04-08T00:00:00",
-        "IsHiatus": false,
-        "MediaWeekId": 745,
-        "Rate": 75.0000,
-        "StartDate": "2018-04-02T00:00:00"
-      },
-      {
-        "Allocations": null,
-        "EndDate": "2018-04-15T00:00:00",
-        "IsHiatus": false,
-        "MediaWeekId": 746,
-        "Rate": 75.0000,
-        "StartDate": "2018-04-09T00:00:00"
-      },
-      {
-        "Allocations": null,
-        "EndDate": "2018-04-22T00:00:00",
-        "IsHiatus": false,
-        "MediaWeekId": 747,
-        "Rate": 75.0000,
-        "StartDate": "2018-04-16T00:00:00"
-      },
-      {
-        "Allocations": null,
-        "EndDate": "2018-04-29T00:00:00",
-        "IsHiatus": false,
-        "MediaWeekId": 748,
-        "Rate": 75.0000,
-        "StartDate": "2018-04-23T00:00:00"
-      }
-    ],
-    "Genres": [],
-    "GRP": 0.0,
-    "HHeCPM": 0.0,
-    "HHImpressions": 0.0,
-    "HouseHoldMarketSubscribers": 0.0,
-    "HouseHoldRating": 0.0,
-    "IsOverlapping": false,
+    "InventorySource": "Open Market",
+    "InventorySourceType": "Open Market",
     "ManifestAudiences": [
       {
         "AudienceId": 31,
@@ -170,7 +114,6 @@
         "IsReference": false
       }
     ],
-    "ManifestDaypartId": 0,
     "ManifestDayparts": [
       {
         "DaypartId": 1617,
@@ -179,87 +122,18 @@
       }
     ],
     "ManifestId": 469330,
-    "Market": {
-      "Display": "Albany-Schenectady-Troy",
-      "Id": 132
-    },
-    "MarketSubscribers": 0.0,
-    "ProvidedUnitImpressions": null,
+    "MediaWeekIds": [
+      744
+    ],
+    "ProjectedImpressions": 21341.025,
+    "ProvidedImpressions": null,
     "SpotCost": 75.0000,
-    "StartDate": "2018-03-26T00:00:00",
-    "Station": {
-      "Affiliation": "ABC",
-      "CallLetters": "WTEN 10.1",
-      "LegacyCallLetters": "WTEN",
-      "StationCode": 428
-    },
-    "TargetCpm": 0.0,
-    "TargetImpressions": 0.0,
-    "TotalCost": 0.0,
-    "TotalImpressions": 0.0,
-    "TotalSpots": 0,
-    "TRP": 0.0,
-    "UnitImpressions": 21341.025
+    "StationLegacyCallLetters": "WTEN",
+    "Unit": null
   },
   {
-    "AdditionalAudienceImpressions": 0.0,
-    "AdditionalAudienceSubscribers": 0.0,
-    "AdditionalDemoRating": 0.0,
-    "AdditonalAudienceCPM": 0.0,
-    "Allocations": [],
-    "DayParts": [],
-    "DemoRating": 0.0,
-    "EffectiveImpressionsPerSpot": 1000.0,
-    "EndDate": "2018-04-25T00:00:00",
-    "FlightWeeks": [
-      {
-        "Allocations": null,
-        "EndDate": "2018-04-01T00:00:00",
-        "IsHiatus": false,
-        "MediaWeekId": 744,
-        "Rate": 75.0000,
-        "StartDate": "2018-03-26T00:00:00"
-      },
-      {
-        "Allocations": null,
-        "EndDate": "2018-04-08T00:00:00",
-        "IsHiatus": false,
-        "MediaWeekId": 745,
-        "Rate": 75.0000,
-        "StartDate": "2018-04-02T00:00:00"
-      },
-      {
-        "Allocations": null,
-        "EndDate": "2018-04-15T00:00:00",
-        "IsHiatus": false,
-        "MediaWeekId": 746,
-        "Rate": 75.0000,
-        "StartDate": "2018-04-09T00:00:00"
-      },
-      {
-        "Allocations": null,
-        "EndDate": "2018-04-22T00:00:00",
-        "IsHiatus": false,
-        "MediaWeekId": 747,
-        "Rate": 75.0000,
-        "StartDate": "2018-04-16T00:00:00"
-      },
-      {
-        "Allocations": null,
-        "EndDate": "2018-04-29T00:00:00",
-        "IsHiatus": false,
-        "MediaWeekId": 748,
-        "Rate": 75.0000,
-        "StartDate": "2018-04-23T00:00:00"
-      }
-    ],
-    "Genres": [],
-    "GRP": 0.0,
-    "HHeCPM": 0.0,
-    "HHImpressions": 0.0,
-    "HouseHoldMarketSubscribers": 0.0,
-    "HouseHoldRating": 0.0,
-    "IsOverlapping": false,
+    "InventorySource": "Open Market",
+    "InventorySourceType": "Open Market",
     "ManifestAudiences": [
       {
         "AudienceId": 31,
@@ -372,7 +246,6 @@
         "IsReference": false
       }
     ],
-    "ManifestDaypartId": 0,
     "ManifestDayparts": [
       {
         "DaypartId": 1617,
@@ -381,26 +254,13 @@
       }
     ],
     "ManifestId": 469332,
-    "Market": {
-      "Display": "Albany-Schenectady-Troy",
-      "Id": 132
-    },
-    "MarketSubscribers": 0.0,
-    "ProvidedUnitImpressions": 1000.0,
+    "MediaWeekIds": [
+      744
+    ],
+    "ProjectedImpressions": 21341.025,
+    "ProvidedImpressions": 1000.0,
     "SpotCost": 75.0000,
-    "StartDate": "2018-03-26T00:00:00",
-    "Station": {
-      "Affiliation": "ABC",
-      "CallLetters": "WTEN 10.1",
-      "LegacyCallLetters": "WTEN",
-      "StationCode": 428
-    },
-    "TargetCpm": 0.0,
-    "TargetImpressions": 0.0,
-    "TotalCost": 0.0,
-    "TotalImpressions": 0.0,
-    "TotalSpots": 0,
-    "TRP": 0.0,
-    "UnitImpressions": 21341.025
+    "StationLegacyCallLetters": "WTEN",
+    "Unit": null
   }
 ]

@@ -17,12 +17,27 @@ namespace Services.Broadcast.Entities.Plan.Pricing
     {
         [JsonProperty("id")]
         public int Id { get; set; }
+
         [JsonProperty("week_id")]
         public int MediaWeekId { get; set; }
+
+        [JsonProperty("daypart_id")]
+        public int DaypartId { get; set; }
+
         [JsonProperty("impressions")]
         public double Impressions { get; set; }
+
         [JsonProperty("cost")]
         public decimal Cost { get; set; }
+
+        [JsonProperty("unit")]
+        public string Unit { get; set; }
+
+        [JsonProperty("inventory_source")]
+        public string InventorySource { get; set; }
+
+        [JsonProperty("inventory_source_type")]
+        public string InventorySourceType { get; set; }
     }
 
     public class PlanPricingApiRequestWeekDto

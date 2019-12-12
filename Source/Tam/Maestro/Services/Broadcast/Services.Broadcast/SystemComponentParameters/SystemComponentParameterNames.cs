@@ -628,9 +628,24 @@ namespace Tam.Maestro.Common.SystemComponentParameter
             get { return "EmailWhiteList"; }
         }
 	 
+		public static string EnableBarterInventoryForPricingModel  
+		{
+            get { return "EnableBarterInventoryForPricingModel"; }
+        }
+	 
 		public static string EnableCampaignsLocking  
 		{
             get { return "EnableCampaignsLocking"; }
+        }
+	 
+		public static string EnableOpenMarketInventoryForPricingModel  
+		{
+            get { return "EnableOpenMarketInventoryForPricingModel"; }
+        }
+	 
+		public static string EnableProprietaryOAndOInventoryForPricingModel  
+		{
+            get { return "EnableProprietaryOAndOInventoryForPricingModel"; }
         }
 	 
 		public static string InventoryRatingsJobIntervalSeconds  

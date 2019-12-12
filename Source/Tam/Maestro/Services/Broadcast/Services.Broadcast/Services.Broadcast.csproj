@@ -363,6 +363,7 @@
     <Compile Include="Entities\Plan\PlanAudienceDisplay.cs" />
     <Compile Include="Entities\Plan\Pricing\PlanPricingApiResultDto.cs" />
     <Compile Include="Entities\Plan\Pricing\PlanPricingDefaults.cs" />
+    <Compile Include="Entities\Plan\Pricing\PlanPricingInventoryProgram.cs" />
     <Compile Include="Entities\Plan\Pricing\PlanPricingInventorySourceDto.cs" />
     <Compile Include="Entities\Plan\Pricing\PlanPricingJobDiagnostic.cs" />
     <Compile Include="Entities\Plan\Pricing\PlanPricingJob.cs" />

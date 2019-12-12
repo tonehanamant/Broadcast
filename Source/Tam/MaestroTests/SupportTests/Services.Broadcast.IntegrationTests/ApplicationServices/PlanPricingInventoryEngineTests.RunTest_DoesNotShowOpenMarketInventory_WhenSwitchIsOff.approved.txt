@@ -1,0 +1,135 @@
+﻿[
+  {
+    "InventorySource": "ABC O&O",
+    "InventorySourceType": "O&O",
+    "ManifestAudiences": [
+      {
+        "AudienceId": 31,
+        "Impressions": 88000.0,
+        "IsReference": true
+      },
+      {
+        "AudienceId": 4,
+        "Impressions": 0.0,
+        "IsReference": false
+      },
+      {
+        "AudienceId": 5,
+        "Impressions": 0.0,
+        "IsReference": false
+      },
+      {
+        "AudienceId": 6,
+        "Impressions": 0.0,
+        "IsReference": false
+      },
+      {
+        "AudienceId": 7,
+        "Impressions": 0.0,
+        "IsReference": false
+      },
+      {
+        "AudienceId": 13,
+        "Impressions": 0.0,
+        "IsReference": false
+      },
+      {
+        "AudienceId": 14,
+        "Impressions": 0.0,
+        "IsReference": false
+      },
+      {
+        "AudienceId": 15,
+        "Impressions": 0.0,
+        "IsReference": false
+      },
+      {
+        "AudienceId": 19,
+        "Impressions": 0.0,
+        "IsReference": false
+      },
+      {
+        "AudienceId": 20,
+        "Impressions": 0.0,
+        "IsReference": false
+      },
+      {
+        "AudienceId": 21,
+        "Impressions": 0.0,
+        "IsReference": false
+      },
+      {
+        "AudienceId": 22,
+        "Impressions": 0.0,
+        "IsReference": false
+      },
+      {
+        "AudienceId": 28,
+        "Impressions": 0.0,
+        "IsReference": false
+      },
+      {
+        "AudienceId": 29,
+        "Impressions": 0.0,
+        "IsReference": false
+      },
+      {
+        "AudienceId": 30,
+        "Impressions": 0.0,
+        "IsReference": false
+      },
+      {
+        "AudienceId": 31,
+        "Impressions": 0.0,
+        "IsReference": false
+      },
+      {
+        "AudienceId": 46,
+        "Impressions": 0.0,
+        "IsReference": false
+      },
+      {
+        "AudienceId": 284,
+        "Impressions": 0.0,
+        "IsReference": false
+      },
+      {
+        "AudienceId": 290,
+        "Impressions": 0.0,
+        "IsReference": false
+      },
+      {
+        "AudienceId": 339,
+        "Impressions": 0.0,
+        "IsReference": false
+      },
+      {
+        "AudienceId": 347,
+        "Impressions": 0.0,
+        "IsReference": false
+      },
+      {
+        "AudienceId": 348,
+        "Impressions": 0.0,
+        "IsReference": false
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "DaypartId": 32941,
+        "ProgramName": "Eyewitness News at 430a"
+      }
+    ],
+    "MediaWeekIds": [
+      772,
+      773,
+      774,
+      775
+    ],
+    "ProjectedImpressions": 41974.75,
+    "ProvidedImpressions": 88000.0,
+    "SpotCost": 600.0016,
+    "StationLegacyCallLetters": "WNYW",
+    "Unit": null
+  }
+]

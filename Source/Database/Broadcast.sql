@@ -272,6 +272,27 @@ BEGIN
 END
 /*************************************** END - PRI-19058 ****************************************************/
 
+/*************************************** START - PRI-18261 ****************************************************/
+
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE name = 'daypart_id' AND  object_id = OBJECT_ID('plan_version_pricing_api_result_spots'))
+BEGIN
+	ALTER TABLE plan_version_pricing_api_result_spots ADD daypart_id INT NULL
+	
+	EXEC('UPDATE plan_version_pricing_api_result_spots
+		  SET daypart_id = (SELECT TOP 1 daypart_id FROM station_inventory_manifest_dayparts
+							WHERE station_inventory_manifest_id = plan_version_pricing_api_result_spots.station_inventory_manifest_id)')
+		  
+    ALTER TABLE plan_version_pricing_api_result_spots ALTER COLUMN daypart_id INT NOT NULL
+	
+	ALTER TABLE [dbo].[plan_version_pricing_api_result_spots]  WITH CHECK ADD CONSTRAINT [FK_plan_version_pricing_api_result_spots_dayparts] FOREIGN KEY([daypart_id])
+	REFERENCES [dbo].[dayparts] ([id])
+	ON DELETE CASCADE
+	
+	ALTER TABLE [dbo].[plan_version_pricing_api_result_spots] CHECK CONSTRAINT [FK_plan_version_pricing_api_result_spots_dayparts]
+END
+
+/*************************************** END - PRI-18261 ****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

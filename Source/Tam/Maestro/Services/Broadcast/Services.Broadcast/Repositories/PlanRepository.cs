@@ -1133,6 +1133,7 @@ namespace Services.Broadcast.Repositories
                         station_inventory_manifest_id = spot.Id,
                         media_week_id = spot.MediaWeekId,
                         impressions = spot.Impressions,
+                        daypart_id = spot.DaypartId,
                         cost = spot.Cost,
                         spots = spot.Spots
                     };
@@ -1162,9 +1163,10 @@ namespace Services.Broadcast.Repositories
                         Spots = apiResult.plan_version_pricing_api_result_spots.Select(r => new PlanPricingApiResultSpotDto
                         {
                             Id = r.id,
-                            Cost = r.cost,
-                            Impressions = r.impressions,
                             MediaWeekId = r.media_week_id,
+                            DaypartId = r.daypart_id,
+                            Impressions = r.impressions,
+                            Cost = r.cost,
                             Spots = r.spots
                         }).ToList()
                     }

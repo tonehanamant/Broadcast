@@ -11,6 +11,9 @@ using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Data.EntityFrameworkMapping;
 using Services.Broadcast.Entities.StationInventory;
+using Services.Broadcast.Entities.Plan.Pricing;
+using Services.Broadcast.Entities.Enums;
+using Services.Broadcast.Helpers;
 
 namespace Services.Broadcast.Repositories
 {
@@ -21,6 +24,13 @@ namespace Services.Broadcast.Repositories
             int spotLength, int rateSource, List<int> proposalMarketIds);
 
         List<ProposalProgramDto> GetStationPrograms(List<int> manifestIds);
+        
+        List<PlanPricingInventoryProgram> GetProgramsForPricingModel(
+            DateTime startDate, 
+            DateTime endDate,
+            int spotLengthId,
+            List<int> inventorySourceTypes,
+            List<int> marketCodes);
     }
 
     public class StationProgramRepository : BroadcastRepositoryBase, IStationProgramRepository
@@ -102,6 +112,65 @@ namespace Services.Broadcast.Repositories
                             }).ToList());
                     });
             }
+        }
+
+        public List<PlanPricingInventoryProgram> GetProgramsForPricingModel(
+            DateTime startDate, 
+            DateTime endDate, 
+            int spotLengthId,
+            List<int> inventorySourceTypes,
+            List<int> marketCodes)
+        {
+            return _InReadUncommitedTransaction(
+                    context => 
+                    {
+                        var query = (from manifest in context.station_inventory_manifest
+                                     from manifestWeek in manifest.station_inventory_manifest_weeks
+                                     from manifestRate in manifest.station_inventory_manifest_rates
+                                     where inventorySourceTypes.Contains(manifest.inventory_sources.inventory_source_type) &&
+                                           marketCodes.Contains(manifest.station.market_code.Value) &&
+                                           manifestWeek.start_date <= endDate && manifestWeek.end_date >= startDate &&
+                                           manifestRate.spot_length_id == spotLengthId &&
+                                           manifest.inventory_files.inventory_file_ratings_jobs.FirstOrDefault().status == (int)BackgroundJobProcessingStatus.Succeeded // take only inventory with ratings calculated
+                                     group manifest by manifest.id into manifestGroup
+                                     select manifestGroup.FirstOrDefault());
+
+                        query = query
+                            .Include(x => x.station_inventory_manifest_weeks)
+                            .Include(x => x.station_inventory_manifest_rates)
+                            .Include(x => x.station_inventory_manifest_dayparts)
+                            .Include(x => x.station_inventory_manifest_audiences)
+                            .Include(x => x.station_inventory_group)
+                            .Include(x => x.station)
+                            .Include(x => x.inventory_sources);
+
+                        return query.ToList().Select(x => new PlanPricingInventoryProgram
+                        {
+                            ManifestId = x.id,
+                            MediaWeekIds = x.station_inventory_manifest_weeks
+                                .Where(w => w.start_date <= endDate && w.end_date >= startDate)
+                                .Select(w => w.media_week_id)
+                                .Distinct()
+                                .ToList(),
+                            SpotCost = x.station_inventory_manifest_rates.Single(r => r.spot_length_id == spotLengthId).spot_cost,
+                            StationLegacyCallLetters = x.station.legacy_call_letters,
+                            Unit = x.station_inventory_group?.name,
+                            InventorySource = x.inventory_sources.name,
+                            InventorySourceType = ((InventorySourceTypeEnum)x.inventory_sources.inventory_source_type).GetDescriptionAttribute(),
+                            ManifestDayparts = x.station_inventory_manifest_dayparts.Select(d => new ProposalProgramDto.ManifestDaypartDto
+                            {
+                                Id = d.id,
+                                DaypartId = d.daypart_id,
+                                ProgramName = d.program_name
+                            }).ToList(),
+                            ManifestAudiences = x.station_inventory_manifest_audiences.Select(a => new ProposalProgramDto.ManifestAudienceDto
+                            {
+                                AudienceId = a.audience_id,
+                                Impressions = a.impressions,
+                                IsReference = a.is_reference
+                            }).ToList()
+                        }).ToList();
+                    });
         }
 
         public List<ProposalProgramDto> GetStationPrograms(List<int> manifestIds)

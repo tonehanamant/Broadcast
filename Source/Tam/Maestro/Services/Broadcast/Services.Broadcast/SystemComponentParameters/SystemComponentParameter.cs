@@ -696,10 +696,28 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.EmailWhiteList); }
         }
 	 
+		public static bool EnableBarterInventoryForPricingModel  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<bool>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.EnableBarterInventoryForPricingModel); }
+        }
+	 
 		public static bool EnableCampaignsLocking  
 		{
             get { return SystemComponentParameterHelper.GetPropertyValue<bool>
 					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.EnableCampaignsLocking); }
+        }
+	 
+		public static bool EnableOpenMarketInventoryForPricingModel  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<bool>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.EnableOpenMarketInventoryForPricingModel); }
+        }
+	 
+		public static bool EnableProprietaryOAndOInventoryForPricingModel  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<bool>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.EnableProprietaryOAndOInventoryForPricingModel); }
         }
 	 
 		public static int InventoryRatingsJobIntervalSeconds  
