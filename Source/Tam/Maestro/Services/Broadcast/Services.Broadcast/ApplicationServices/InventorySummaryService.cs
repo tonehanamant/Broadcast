@@ -35,6 +35,8 @@ namespace Services.Broadcast.ApplicationServices
         [Queue("inventorysummaryaggregation")]
         [AutomaticRetry(Attempts = 0, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
         void AggregateInventorySummaryData(List<int> inventorySourceIds);
+
+        void QueueAggregateInventorySummaryDataJob(int inventorySourceId);
     }
 
     public class InventorySummaryService : IInventorySummaryService
@@ -58,6 +60,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IInventoryGapCalculationEngine _InventoryGapCalculationEngine;
         private readonly IInventoryLogoRepository _InventoryLogoRepository;
         private readonly IInventorySummaryCache _InventorySummaryCache;
+        private readonly IBackgroundJobClient _BackgroundJobClient;
 
         public InventorySummaryService(IDataRepositoryFactory broadcastDataRepositoryFactory,
                                        IQuarterCalculationEngine quarterCalculationEngine,
@@ -65,7 +68,8 @@ namespace Services.Broadcast.ApplicationServices
                                        IMarketCoverageCache marketCoverageCache,
                                        IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
                                        IInventoryGapCalculationEngine inventoryGapCalculationEngine,
-                                       IInventorySummaryCache inventorySummaryCache)
+                                       IInventorySummaryCache inventorySummaryCache,
+                                       IBackgroundJobClient backgroundJobClient)
         {
             _QuarterCalculationEngine = quarterCalculationEngine;
             _AudiencesCache = audiencesCache;
@@ -78,6 +82,7 @@ namespace Services.Broadcast.ApplicationServices
             _InventoryGapCalculationEngine = inventoryGapCalculationEngine;
             _InventoryLogoRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryLogoRepository>();
             _InventorySummaryCache = inventorySummaryCache;
+            _BackgroundJobClient = backgroundJobClient;
         }
 
         public List<InventorySource> GetInventorySources()
@@ -441,6 +446,11 @@ namespace Services.Broadcast.ApplicationServices
             var groups = _InventoryRepository.GetInventoryGroups(inventorySourceId, daypartCodeId, startDate, endDate);
 
             return groups.Select(x => x.Name).Distinct(StringComparer.OrdinalIgnoreCase).ToList();
+        }
+
+        public void QueueAggregateInventorySummaryDataJob(int inventorySourceId)
+        {
+            _BackgroundJobClient.Enqueue<IInventorySummaryService>(x => x.AggregateInventorySummaryData(new List<int> { inventorySourceId }));
         }
 
         /// <summary>

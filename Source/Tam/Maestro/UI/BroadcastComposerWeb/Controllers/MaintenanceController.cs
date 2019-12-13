@@ -1,14 +1,14 @@
-﻿using System;
+﻿using Common.Services;
+using Services.Broadcast;
+using Services.Broadcast.ApplicationServices;
+using Services.Broadcast.ApplicationServices.Helpers;
+using Services.Broadcast.Entities;
+using System;
 using System.IO;
 using System.Net;
 using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
-using Common.Services;
-using Services.Broadcast;
-using Services.Broadcast.ApplicationServices;
-using Services.Broadcast.ApplicationServices.Helpers;
-using Services.Broadcast.Entities;
 using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Services.Cable.Security;
 
@@ -102,13 +102,13 @@ namespace BroadcastComposerWeb.Controllers
         }
 
         [HttpPost]
-        public ActionResult ProcessInventoryRatingsJob(int jobId)
+        public ActionResult RequeueInventoryRatingsJob(int jobId)
         {
             try
             {
                 var service = _ApplicationServiceFactory.GetApplicationService<IInventoryRatingsProcessingService>();
-                service.ProcessInventoryRatingsJob(jobId, true);
-                ViewBag.Message = "Job Processed";
+                service.RequeueInventoryFileRatingsJob(jobId);
+                ViewBag.Message = $"Job '{jobId}' queued.";
             }
             catch (Exception e)
             {
@@ -119,13 +119,13 @@ namespace BroadcastComposerWeb.Controllers
         }
 
         [HttpPost]
-        public ActionResult ProcessScxGenerationJob(int jobId)
+        public ActionResult RequeueScxGenerationJob(int jobId)
         {
             try
             {
                 var service = _ApplicationServiceFactory.GetApplicationService<IScxGenerationService>();
-                service.ProcessScxGenerationJob(jobId);
-                ViewBag.Message = "Job Processed";
+                service.RequeueScxGenerationJob(jobId);
+                ViewBag.Message = $"Job '{jobId}' queued.";
             }
             catch (Exception e)
             {
@@ -170,13 +170,14 @@ namespace BroadcastComposerWeb.Controllers
         }
 
         [HttpPost]
-        public ActionResult AggregateInventorySourcesData(int inventorySourceId)
+        public ActionResult QueueInventorySourceAggregation(int inventorySourceId)
         {
             try
             {
                 var service = _ApplicationServiceFactory.GetApplicationService<IInventorySummaryService>();
-                service.AggregateInventorySummaryData(new System.Collections.Generic.List<int> { inventorySourceId});
-                ViewBag.Message = $"Job Processed. Data aggregated for source id = {inventorySourceId}";
+                service.QueueAggregateInventorySummaryDataJob(inventorySourceId);
+
+                ViewBag.Message = $"Job queued for inventory source '{inventorySourceId}'.";
             }
             catch (Exception e)
             {

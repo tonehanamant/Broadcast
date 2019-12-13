@@ -62,17 +62,17 @@
     <div>
         <h1>Application Jobs</h1>
         <div>
-            @using (Html.BeginForm("ProcessInventoryRatingsJob", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            @using (Html.BeginForm("RequeueInventoryRatingsJob", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
                 <input type="text" name="jobId" />
-                <input type="submit" value="Process Ratings Job" id="submit" />
+                <input type="submit" value="Requeue Ratings Job" id="submit" />
             }
         </div>
         <div>
-            @using (Html.BeginForm("ProcessScxGenerationJob", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            @using (Html.BeginForm("RequeueScxGenerationJob", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
                 <input type="text" name="jobId" />
-                <input type="submit" value="Process SCX Generation Job" id="submit" />
+                <input type="submit" value="Requeue SCX Generation Job" id="submit" />
             }
         </div>
         <div>
@@ -90,10 +90,10 @@
             }
         </div>
         <div>
-            @using (Html.BeginForm("AggregateInventorySourcesData", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            @using (Html.BeginForm("QueueInventorySourceAggregation", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
                 <input type="text" name="inventorySourceId" />
-                <input type="submit" value="Aggregate inventory sources by id" id="submit" />
+                <input type="submit" value="Queue Inventory Source Aggregation" id="submit" />
             }
         </div>
     </div>

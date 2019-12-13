@@ -1,19 +1,18 @@
 using Common.Services;
 using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
+using Hangfire;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Scx;
+using Services.Broadcast.Helpers;
 using Services.Broadcast.Repositories;
 using System;
-using System.CodeDom;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web;
-using Hangfire;
-using Services.Broadcast.Helpers;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 
@@ -28,6 +27,8 @@ namespace Services.Broadcast.ApplicationServices
         void ProcessScxGenerationJob(ScxGenerationJob job, DateTime currentDate);
         List<ScxGenerationJob> GetQueuedJobs(int limit);
         void ResetJobStatusToQueued(int jobId);
+
+        void RequeueScxGenerationJob(int jobId);
 
         /// <summary>
         /// Gets the SCX file generation history.
@@ -83,6 +84,11 @@ namespace Services.Broadcast.ApplicationServices
             _BackgroundJobClient.Enqueue<IScxGenerationService>(x => x.ProcessScxGenerationJob(jobId));
 
             return jobId;
+        }
+
+        public void RequeueScxGenerationJob(int jobId)
+        {
+            _BackgroundJobClient.Enqueue<IScxGenerationService>(x => x.ProcessScxGenerationJob(jobId));
         }
 
         public void ProcessScxGenerationJob(int jobId)
