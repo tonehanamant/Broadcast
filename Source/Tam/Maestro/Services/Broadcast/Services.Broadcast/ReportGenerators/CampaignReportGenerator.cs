@@ -1,4 +1,5 @@
 ﻿using OfficeOpenXml;
+using OfficeOpenXml.FormulaParsing;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Campaign;
 using System;
@@ -79,8 +80,13 @@ namespace Services.Broadcast.ReportGenerators
                // _PopulateContractWorksheet(contractWorksheet, dataObject);
             }
 
-            //set the active tab as the first one in the file
+            //set the first tab as the active tab in the file
             package.Workbook.Worksheets.First().Select();
+
+            //force calculation 
+            package.Workbook.Calculate();
+            package.Workbook.CalcMode = ExcelCalcMode.Automatic;
+
             return package;
         }
         
