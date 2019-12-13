@@ -654,7 +654,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             var result = new WeeklyBreakdownResponseDto();
             _AddMissingWeeks(result, weeks, request.FlightHiatusDays);
 
-            _CalculateImpressionsAndShareOfVoice(result.Weeks, request.TotalImpressions);
+            _CalculateRatingsImpressionsAndShareOfVoice(result.Weeks, request.TotalImpressions, request.TotalRatings);
             _CalculateWeeklyGoalBreakdownTotals(result);
             return result;
         }
@@ -669,7 +669,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             //add the remain weeks
             result.Weeks.AddRange(request.Weeks);
 
-            //update ActiveDays reamin weeks
+            //update ActiveDays remain weeks
             foreach (var week in result.Weeks)
             {
                 week.NumberOfActiveDays = _CalculateActiveDays(week, request.FlightHiatusDays, out string activeDaysString);
@@ -677,7 +677,28 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 if (week.NumberOfActiveDays < 1)
                 {
                     week.WeeklyImpressions = 0;
+                    week.WeeklyRatings = 0;
                     week.WeeklyImpressionsPercentage = 0;
+                }
+
+                double newPercentageRaw;
+                switch (request.WeeklyBreakdownCalculationFrom)
+                {
+                    case WeeklyBreakdownCalculationFrom.Ratings:
+                        newPercentageRaw = week.WeeklyRatings / request.TotalRatings;
+                        week.WeeklyImpressionsPercentage = newPercentageRaw * 100;
+                        week.WeeklyImpressions = newPercentageRaw * request.TotalImpressions;
+                        break;
+                    case WeeklyBreakdownCalculationFrom.Percentage:
+                        newPercentageRaw = week.WeeklyImpressionsPercentage / 100;
+                        week.WeeklyImpressions = newPercentageRaw * request.TotalImpressions;
+                        week.WeeklyRatings = request.TotalRatings * newPercentageRaw;
+                        break;
+                    default:
+                        newPercentageRaw = week.WeeklyImpressions / request.TotalImpressions;
+                        week.WeeklyImpressionsPercentage = newPercentageRaw * 100;
+                        week.WeeklyRatings = request.TotalRatings * newPercentageRaw;
+                        break;
                 }
             }
 
@@ -686,7 +707,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
             _CalculateWeeklyGoalBreakdownTotals(result);
 
-            //the order of the weeks might be incorect, so do the order
+            //the order of the weeks might be incorrect, so do the order
             result.Weeks = result.Weeks.OrderBy(x => x.StartDate).ToList();
             _SetWeekNumber(result.Weeks);
 
@@ -734,11 +755,12 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
         }
 
-        private void _CalculateImpressionsAndShareOfVoice(List<WeeklyBreakdownWeek> weeks, double totalImpressions)
+        private void _CalculateRatingsImpressionsAndShareOfVoice(List<WeeklyBreakdownWeek> weeks, double totalImpressions, double totalRatings)
         {
             var activeWeeks = weeks.Where(x => x.NumberOfActiveDays > 0);
             foreach (var week in activeWeeks)
             {
+                week.WeeklyRatings = totalRatings / activeWeeks.Count();
                 week.WeeklyImpressions = totalImpressions / activeWeeks.Count();
                 week.WeeklyImpressionsPercentage = (double)100 / activeWeeks.Count();
             }

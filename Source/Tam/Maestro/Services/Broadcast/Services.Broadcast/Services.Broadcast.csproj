@@ -354,6 +354,7 @@
     <Compile Include="Entities\Enums\ContainTypeEnum.cs" />
     <Compile Include="Entities\Enums\UnitCapEnum.cs" />
     <Compile Include="Entities\Enums\InventoryFileProgramEnrichmentJobStatus.cs" />
+    <Compile Include="Entities\Enums\WeeklyBreakdownCalculationFrom.cs" />
     <Compile Include="Entities\Genre.cs" />
     <Compile Include="Entities\GenreMapping.cs" />
     <Compile Include="Entities\ImpressionsRequestDto.cs" />

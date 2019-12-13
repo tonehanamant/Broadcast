@@ -904,6 +904,7 @@
           <Property Name="weekly_impressions" Type="float" Nullable="false" />
           <Property Name="weekly_impressions_percentage" Type="float" Nullable="false" />
           <Property Name="plan_version_id" Type="int" Nullable="false" />
+          <Property Name="ratings" Type="float" Nullable="false" />
         </EntityType>
         <EntityType Name="plan_versions">
           <Key>
@@ -11208,6 +11209,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="plan_versions" Relationship="BroadcastModel.FK_plan_version_weeks_plan_versions" FromRole="plan_version_weeks" ToRole="plan_versions" />
           <Property Name="weekly_impressions" Type="Double" Nullable="false" />
           <Property Name="weekly_impressions_percentage" Type="Double" Nullable="false" />
+          <Property Name="weekly_ratings" Type="Double" Nullable="false" />
         </EntityType>
         <EntityType Name="plan">
           <Key>
@@ -13926,6 +13928,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="plan_version_weeks">
             <EntityTypeMapping TypeName="BroadcastModel.plan_version_weeks">
               <MappingFragment StoreEntitySet="plan_version_weeks">
+                <ScalarProperty Name="weekly_ratings" ColumnName="ratings" />
                 <ScalarProperty Name="weekly_impressions_percentage" ColumnName="weekly_impressions_percentage" />
                 <ScalarProperty Name="weekly_impressions" ColumnName="weekly_impressions" />
                 <ScalarProperty Name="plan_version_id" ColumnName="plan_version_id" />

@@ -241,6 +241,29 @@ BEGIN
 END
 /*************************************** END - PRI-19007 ****************************************************/
 
+/*************************************** Start - PRI-19008 ****************************************************/
+
+GO
+
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE name = 'ratings' AND  object_id = OBJECT_ID('plan_version_weeks'))
+BEGIN
+	ALTER TABLE plan_version_weeks ADD ratings FLOAT NULL
+	
+	EXEC('UPDATe w SET
+			Ratings = v.target_rating_points * (w.weekly_impressions_percentage / 100.0)
+		FROM plan_version_weeks w
+		INNER JOIN plan_versions v
+			ON w.plan_version_id = v.id
+		WHERE COALESCE(w.ratings, 0) = 0')
+		  
+    ALTER TABLE plan_version_weeks ALTER COLUMN ratings FLOAT NOT NULL
+END
+
+GO
+
+/*************************************** END - PRI-19008 ******************************************************/
+
+
 /*************************************** START - PRI-19058 ****************************************************/
 IF OBJECT_ID('plan_version_daypart_affiliate_restrictions') IS NULL
 BEGIN

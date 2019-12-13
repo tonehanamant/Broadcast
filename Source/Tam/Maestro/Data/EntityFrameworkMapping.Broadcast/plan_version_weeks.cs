@@ -21,6 +21,7 @@ namespace EntityFrameworkMapping.Broadcast
         public int plan_version_id { get; set; }
         public double weekly_impressions { get; set; }
         public double weekly_impressions_percentage { get; set; }
+        public double weekly_ratings { get; set; }
     
         public virtual media_weeks media_weeks { get; set; }
         public virtual plan_versions plan_versions { get; set; }

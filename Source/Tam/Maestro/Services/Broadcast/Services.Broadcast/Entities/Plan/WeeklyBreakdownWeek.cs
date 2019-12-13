@@ -12,5 +12,6 @@ namespace Services.Broadcast.Entities.Plan
         public string ActiveDays { get; set; }
         public double WeeklyImpressions { get; set; }
         public double WeeklyImpressionsPercentage { get; set; }
+        public double WeeklyRatings { get; set; }
     }
 }

@@ -233,6 +233,7 @@
       "StartDate": "2018-12-31T00:00:00",
       "WeeklyImpressions": 20.0,
       "WeeklyImpressionsPercentage": 20.0,
+      "WeeklyRatings": 0.0123,
       "WeekNumber": 1
     },
     {
@@ -243,6 +244,7 @@
       "StartDate": "2019-01-07T00:00:00",
       "WeeklyImpressions": 20.0,
       "WeeklyImpressionsPercentage": 20.0,
+      "WeeklyRatings": 0.0123,
       "WeekNumber": 2
     },
     {
@@ -253,6 +255,7 @@
       "StartDate": "2019-01-14T00:00:00",
       "WeeklyImpressions": 20.0,
       "WeeklyImpressionsPercentage": 20.0,
+      "WeeklyRatings": 0.0123,
       "WeekNumber": 3
     },
     {
@@ -263,6 +266,7 @@
       "StartDate": "2019-01-21T00:00:00",
       "WeeklyImpressions": 20.0,
       "WeeklyImpressionsPercentage": 20.0,
+      "WeeklyRatings": 0.0123,
       "WeekNumber": 4
     },
     {
@@ -273,6 +277,7 @@
       "StartDate": "2019-01-28T00:00:00",
       "WeeklyImpressions": 20.0,
       "WeeklyImpressionsPercentage": 20.0,
+      "WeeklyRatings": 0.0123,
       "WeekNumber": 5
     }
   ]

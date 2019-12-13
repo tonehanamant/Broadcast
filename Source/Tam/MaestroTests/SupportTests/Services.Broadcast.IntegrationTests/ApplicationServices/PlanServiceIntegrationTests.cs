@@ -1352,7 +1352,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Assert.That(() => _PlanService.CalculatePlanWeeklyGoalBreakdown(new WeeklyBreakdownRequest
                 {
                     FlightEndDate = default,
-                    FlightStartDate = default
+                    FlightStartDate = default,
                 }), Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid flight start/end date."));
             }
         }
@@ -1365,7 +1365,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Assert.That(() => _PlanService.CalculatePlanWeeklyGoalBreakdown(new WeeklyBreakdownRequest
                 {
                     FlightEndDate = default,
-                    FlightStartDate = new DateTime(2019, 01, 01)
+                    FlightStartDate = new DateTime(2019, 01, 01),
                 }), Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid flight start/end date."));
             }
         }
@@ -1382,7 +1382,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     FlightStartDate = new DateTime(2019, 02, 01),
                     DeliveryType = PlanGoalBreakdownTypeEnum.Custom,
                     FlightHiatusDays = new List<DateTime>(),
-                    TotalImpressions = 10000
+                    TotalImpressions = 10000,
+                    TotalRatings = 0.000907291831869388,
+                    WeeklyBreakdownCalculationFrom = WeeklyBreakdownCalculationFrom.Impressions
                 });
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
             }
@@ -1398,7 +1400,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 FlightStartDate = new DateTime(2019, 08, 03),
                 FlightEndDate = new DateTime(2019, 08, 27),
                 FlightHiatusDays = new List<DateTime> { new DateTime(2019, 8, 15) },
-                TotalImpressions = 1000
+                TotalImpressions = 1000,
+                TotalRatings = 0.000907291831869388,
+                WeeklyBreakdownCalculationFrom = WeeklyBreakdownCalculationFrom.Impressions
             });
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
@@ -1414,7 +1418,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 FlightStartDate = new DateTime(2019, 08, 05),
                 FlightEndDate = new DateTime(2019, 09, 19),
                 FlightHiatusDays = new List<DateTime> { new DateTime(2019, 8, 15) },
-                TotalImpressions = 1000
+                TotalImpressions = 1000,
+                TotalRatings = 0.000907291831869388,
+                WeeklyBreakdownCalculationFrom = WeeklyBreakdownCalculationFrom.Impressions
             });
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
@@ -1430,7 +1436,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 FlightStartDate = new DateTime(2019, 09, 29),
                 FlightEndDate = new DateTime(2019, 10, 13),
                 FlightHiatusDays = new List<DateTime> { new DateTime(2019, 10, 10), new DateTime(2019, 10, 12), new DateTime(2019, 10, 4), new DateTime(2019, 10, 2) },
-                TotalImpressions = 20095158400
+                TotalImpressions = 20095158400,
+                TotalRatings = 896090.698153806, // not accurate to the total impressions, but that doesn't matter for the test.
+                WeeklyBreakdownCalculationFrom = WeeklyBreakdownCalculationFrom.Impressions
             });
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
@@ -1447,7 +1455,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 FlightEndDate = new DateTime(2019, 08, 31),
                 FlightHiatusDays = new List<DateTime> { new DateTime(2019, 8, 5), new DateTime(2019, 8, 6), new DateTime(2019, 8, 7), new DateTime(2019, 8, 8),
                                                         new DateTime(2019, 8, 9), new DateTime(2019, 8, 10), new DateTime(2019, 8, 11)},
-                TotalImpressions = 1000
+                TotalImpressions = 1000,
+                TotalRatings = 0.000907291831869388,
+                WeeklyBreakdownCalculationFrom = WeeklyBreakdownCalculationFrom.Impressions
             });
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
@@ -1464,10 +1474,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 FlightEndDate = new DateTime(2019, 08, 20),
                 FlightHiatusDays = new List<DateTime> { new DateTime(2019, 8, 15) },
                 TotalImpressions = 1000,
+                TotalRatings = 0.000907291831869388,
+                WeeklyBreakdownCalculationFrom = WeeklyBreakdownCalculationFrom.Impressions,
                 Weeks = new List<WeeklyBreakdownWeek> { new WeeklyBreakdownWeek {
                       ActiveDays= "Sa,Su",
                       EndDate= new DateTime(2019,08,4),
                       WeeklyImpressions= 200.0,
+                      WeeklyRatings = 0.0001814583663738776,
                       MediaWeekId= 814,
                       NumberOfActiveDays= 2,
                       WeeklyImpressionsPercentage= 20.0,
@@ -1476,6 +1489,53 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 }}
             });
 
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void Plan_WeeklyBreakdown_CustomDelivery_ChangeRatings()
+        {
+            var request = _GetBaseRequestForCustomWeeklyBreakdown();
+            request.Weeks.First(w => w.WeekNumber == 2).WeeklyRatings = .03;
+            request.WeeklyBreakdownCalculationFrom = WeeklyBreakdownCalculationFrom.Ratings;
+
+            var result = _PlanService.CalculatePlanWeeklyGoalBreakdown(request);
+
+            Assert.AreEqual(105, result.TotalShareOfVoice);
+            Assert.AreEqual(300, result.Weeks.First(w => w.WeekNumber == 2).WeeklyImpressions);
+            Assert.AreEqual(30, result.Weeks.First(w => w.WeekNumber == 2).WeeklyImpressionsPercentage);
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void Plan_WeeklyBreakdown_CustomDelivery_ChangeImpression()
+        {
+            var request = _GetBaseRequestForCustomWeeklyBreakdown();
+            request.Weeks.First(w => w.WeekNumber == 2).WeeklyImpressions = 300;
+
+            var result = _PlanService.CalculatePlanWeeklyGoalBreakdown(request);
+
+            Assert.AreEqual(105, result.TotalShareOfVoice);
+            Assert.AreEqual(.03, result.Weeks.First(w => w.WeekNumber == 2).WeeklyRatings);
+            Assert.AreEqual(30, result.Weeks.First(w => w.WeekNumber == 2).WeeklyImpressionsPercentage);
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void Plan_WeeklyBreakdown_CustomDelivery_ChangePercentage()
+        {
+            var request = _GetBaseRequestForCustomWeeklyBreakdown();
+            request.Weeks.First(w => w.WeekNumber == 2).WeeklyImpressionsPercentage = 30;
+            request.WeeklyBreakdownCalculationFrom = WeeklyBreakdownCalculationFrom.Percentage;
+
+            var result = _PlanService.CalculatePlanWeeklyGoalBreakdown(request);
+
+            Assert.AreEqual(105, result.TotalShareOfVoice);
+            Assert.AreEqual(.03, result.Weeks.First(w => w.WeekNumber == 2).WeeklyRatings);
+            Assert.AreEqual(300, result.Weeks.First(w => w.WeekNumber == 2).WeeklyImpressions);
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
 
@@ -1490,6 +1550,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 FlightEndDate = new DateTime(2019, 10, 13),
                 FlightHiatusDays = new List<DateTime> { new DateTime(2019, 10, 2) },
                 TotalImpressions = 1000,
+                TotalRatings = 0.000907291831869388,
+                WeeklyBreakdownCalculationFrom = WeeklyBreakdownCalculationFrom.Impressions,
                 Weeks = new List<WeeklyBreakdownWeek> {
                     new WeeklyBreakdownWeek {
                       ActiveDays= "",
@@ -1497,7 +1559,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                       WeeklyImpressions= 500,
                       MediaWeekId= 814,
                       NumberOfActiveDays= 7,
-                      WeeklyImpressionsPercentage= 50,
+                      WeeklyImpressionsPercentage = 50,
+                      WeeklyRatings = 0.00045364591593469400,
                       StartDate= new DateTime(2019,09,30),
                       WeekNumber= 1
                     },
@@ -1507,12 +1570,33 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                       WeeklyImpressions= 500,
                       MediaWeekId= 814,
                       NumberOfActiveDays= 7,
-                      WeeklyImpressionsPercentage= 50,
+                      WeeklyImpressionsPercentage = 50,
+                      WeeklyRatings = 0.00045364591593469400,
                       StartDate= new DateTime(2019,10,7),
                       WeekNumber= 2
                     },
                 }
             });
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void Plan_WeeklyBreakdown_EvenDelivery()
+        {
+            var request = new WeeklyBreakdownRequest
+            {
+                DeliveryType = PlanGoalBreakdownTypeEnum.Even,
+                FlightStartDate = new DateTime(2019, 12, 01),
+                FlightEndDate = new DateTime(2019, 12, 31),
+                FlightHiatusDays = new List<DateTime>(),
+                TotalImpressions = 500,
+                TotalRatings = 0.453645915934694,
+                WeeklyBreakdownCalculationFrom = WeeklyBreakdownCalculationFrom.Impressions
+            };
+
+            var result = _PlanService.CalculatePlanWeeklyGoalBreakdown(request);
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
@@ -1726,31 +1810,36 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     {
                         WeekNumber = 1, MediaWeekId = 784,
                         StartDate = new DateTime(2018,12,31), EndDate = new DateTime(2019,01,06),
-                        NumberOfActiveDays = 6, ActiveDays = "Tu-Su", WeeklyImpressions = 20, WeeklyImpressionsPercentage = 20
+                        NumberOfActiveDays = 6, ActiveDays = "Tu-Su", WeeklyImpressions = 20, WeeklyImpressionsPercentage  = 20,
+                        WeeklyRatings = .0123
                     },
                     new WeeklyBreakdownWeek
                     {
                         WeekNumber = 2, MediaWeekId = 785,
                         StartDate = new DateTime(2019,01,07), EndDate = new DateTime(2019,01,13),
-                        NumberOfActiveDays = 7, ActiveDays = "M-Su", WeeklyImpressions = 20, WeeklyImpressionsPercentage = 20
+                        NumberOfActiveDays = 7, ActiveDays = "M-Su", WeeklyImpressions = 20, WeeklyImpressionsPercentage  = 20,
+                        WeeklyRatings = .0123
                     },
                     new WeeklyBreakdownWeek
                     {
                         WeekNumber = 3, MediaWeekId = 786,
                         StartDate = new DateTime(2019,01,14), EndDate = new DateTime(2019,01,20),
-                        NumberOfActiveDays = 6, ActiveDays = "M-Sa", WeeklyImpressions = 20, WeeklyImpressionsPercentage = 20
+                        NumberOfActiveDays = 6, ActiveDays = "M-Sa", WeeklyImpressions = 20, WeeklyImpressionsPercentage  = 20,
+                        WeeklyRatings = .0123
                     },
                     new WeeklyBreakdownWeek
                     {
                         WeekNumber = 4, MediaWeekId = 787,
                         StartDate = new DateTime(2019,01,21), EndDate = new DateTime(2019,01,27),
-                        NumberOfActiveDays = 6, ActiveDays = "M-W,F-Su", WeeklyImpressions = 20, WeeklyImpressionsPercentage = 20
+                        NumberOfActiveDays = 6, ActiveDays = "M-W,F-Su", WeeklyImpressions = 20, WeeklyImpressionsPercentage  = 20,
+                        WeeklyRatings = .0123
                     },
                     new WeeklyBreakdownWeek
                     {
                         WeekNumber = 5, MediaWeekId = 788,
                         StartDate = new DateTime(2019,01,28), EndDate = new DateTime(2019,02,03),
-                        NumberOfActiveDays = 4, ActiveDays = "M-Th", WeeklyImpressions = 20, WeeklyImpressionsPercentage = 20
+                        NumberOfActiveDays = 4, ActiveDays = "M-Th", WeeklyImpressions = 20, WeeklyImpressionsPercentage  = 20,
+                        WeeklyRatings = .0123
                     }
                 }
             };
@@ -1764,6 +1853,71 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 AdvertiserId = 1,
                 AgencyId = 1,
                 Notes = "Notes for CampaignOne."
+            };
+        }
+
+        private WeeklyBreakdownRequest _GetBaseRequestForCustomWeeklyBreakdown()
+        {
+            return new WeeklyBreakdownRequest
+            {
+                DeliveryType = PlanGoalBreakdownTypeEnum.Custom,
+                FlightStartDate = new DateTime(2019, 08, 03),
+                FlightEndDate = new DateTime(2019, 08, 20),
+                FlightHiatusDays = new List<DateTime> { new DateTime(2019, 8, 15) },
+                TotalImpressions = 1000,
+                TotalRatings = .1,
+                WeeklyBreakdownCalculationFrom = WeeklyBreakdownCalculationFrom.Impressions,
+                Weeks = new List<WeeklyBreakdownWeek>
+                {
+                    new WeeklyBreakdownWeek
+                    {
+                        ActiveDays = "Sa,Su",
+                        EndDate = new DateTime(2019, 08, 4),
+                        MediaWeekId = 814,
+                        NumberOfActiveDays = 2,
+                        StartDate = new DateTime(2019, 07, 29),
+                        WeekNumber = 1,
+                        WeeklyImpressions = 250,
+                        WeeklyImpressionsPercentage = 25.0,
+                        WeeklyRatings = 0.025,
+                    },
+                    new WeeklyBreakdownWeek
+                    {
+                        ActiveDays = "M-Su",
+                        EndDate = new DateTime(2019, 08, 11),
+                        MediaWeekId = 815,
+                        NumberOfActiveDays = 7,
+                        StartDate = new DateTime(2019, 08, 5),
+                        WeekNumber = 2,
+                        WeeklyImpressions = 250,
+                        WeeklyImpressionsPercentage = 25.0,
+                        WeeklyRatings = 0.025,
+                    },
+                    new WeeklyBreakdownWeek
+                    {
+                        ActiveDays = "M-W,F-Su",
+                        EndDate = new DateTime(2019, 08, 18),
+                        MediaWeekId = 816,
+                        NumberOfActiveDays = 6,
+                        StartDate = new DateTime(2019, 08, 12),
+                        WeekNumber = 3,
+                        WeeklyImpressions = 250,
+                        WeeklyImpressionsPercentage = 25.0,
+                        WeeklyRatings = 0.025,
+                    },
+                    new WeeklyBreakdownWeek
+                    {
+                        ActiveDays = "M,Tu",
+                        EndDate = new DateTime(2019, 08, 25),
+                        MediaWeekId = 817,
+                        NumberOfActiveDays = 2,
+                        StartDate = new DateTime(2019, 08, 19),
+                        WeekNumber = 4,
+                        WeeklyImpressions = 250,
+                        WeeklyImpressionsPercentage = 25.0,
+                        WeeklyRatings = 0.025,
+                    }
+                }
             };
         }
 

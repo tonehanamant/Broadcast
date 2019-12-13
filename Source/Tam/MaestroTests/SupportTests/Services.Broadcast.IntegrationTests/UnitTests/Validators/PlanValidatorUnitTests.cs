@@ -323,6 +323,28 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
         }
 
         [Test]
+        public void ValidatePlan_DuplicateDaypart()
+        {
+            _ConfigureSpotLenghtEngineMockToReturnTrue();
+
+            var plan = _GetPlan();
+            plan.Dayparts = new List<PlanDaypartDto>
+            {
+                new PlanDaypartDto
+                {
+                    DaypartCodeId = 1
+                },
+                new PlanDaypartDto
+                {
+                    DaypartCodeId = 1
+                }
+            };
+
+            Assert.That(() => _planValidator.ValidatePlan(plan),
+                Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid dayparts.  Each daypart can be entered only once."));
+        }
+
+        [Test]
         public void ValidatePlan_DayPartStartLessThanSecondsMinimum()
         {
             _ConfigureSpotLenghtEngineMockToReturnTrue();
@@ -443,6 +465,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             {
                 new PlanDaypartDto
                 {
+                    DaypartCodeId = 2,
                     StartTimeSeconds = 50000,
                     EndTimeSeconds = 54000,
                     WeightingGoalPercent = 80,
@@ -462,6 +485,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
                 },
                 new PlanDaypartDto
                 {
+                    DaypartCodeId = 1,
                     StartTimeSeconds = 50000,
                     EndTimeSeconds = 54000,
                     WeightingGoalPercent = 90,
@@ -494,6 +518,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             {
                 new PlanDaypartDto
                 {
+                    DaypartCodeId = 1,
                     StartTimeSeconds = 50000,
                     EndTimeSeconds = 54000,
                     WeightingGoalPercent = 20,
@@ -513,6 +538,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
                 },
                 new PlanDaypartDto
                 {
+                    DaypartCodeId = 2,
                     StartTimeSeconds = 50000,
                     EndTimeSeconds = 54000,
                     Restrictions = new PlanDaypartDto.RestrictionsDto
@@ -531,6 +557,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
                 },
                 new PlanDaypartDto
                 {
+                    DaypartCodeId = 3,
                     StartTimeSeconds = 50000,
                     EndTimeSeconds = 54000,
                     WeightingGoalPercent = 25,
@@ -550,6 +577,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
                 },
                 new PlanDaypartDto
                 {
+                    DaypartCodeId = 4,
                     StartTimeSeconds = 50000,
                     EndTimeSeconds = 54000,
                     WeightingGoalPercent = 50,

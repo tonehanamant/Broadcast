@@ -1,61 +1,50 @@
 ﻿{
-  "TotalActiveDays": 24,
-  "TotalShareOfVoice": 100.0,
+  "TotalActiveDays": 17,
+  "TotalShareOfVoice": 105.0,
   "Weeks": [
     {
-      "ActiveDays": "Th-Su",
+      "ActiveDays": "Sa,Su",
       "EndDate": "2019-08-04T00:00:00",
       "MediaWeekId": 814,
-      "NumberOfActiveDays": 4,
+      "NumberOfActiveDays": 2,
       "StartDate": "2019-07-29T00:00:00",
       "WeeklyImpressions": 250.0,
       "WeeklyImpressionsPercentage": 25.0,
-      "WeeklyRatings": 0.00022682,
+      "WeeklyRatings": 0.025,
       "WeekNumber": 1
     },
     {
-      "ActiveDays": "",
+      "ActiveDays": "M-Su",
       "EndDate": "2019-08-11T00:00:00",
       "MediaWeekId": 815,
-      "NumberOfActiveDays": 0,
+      "NumberOfActiveDays": 7,
       "StartDate": "2019-08-05T00:00:00",
-      "WeeklyImpressions": 0.0,
-      "WeeklyImpressionsPercentage": 0.0,
-      "WeeklyRatings": 0.0,
+      "WeeklyImpressions": 300.0,
+      "WeeklyImpressionsPercentage": 30.0,
+      "WeeklyRatings": 0.03,
       "WeekNumber": 2
     },
     {
-      "ActiveDays": "M-Su",
+      "ActiveDays": "M-W,F-Su",
       "EndDate": "2019-08-18T00:00:00",
       "MediaWeekId": 816,
-      "NumberOfActiveDays": 7,
+      "NumberOfActiveDays": 6,
       "StartDate": "2019-08-12T00:00:00",
       "WeeklyImpressions": 250.0,
       "WeeklyImpressionsPercentage": 25.0,
-      "WeeklyRatings": 0.00022682,
+      "WeeklyRatings": 0.025,
       "WeekNumber": 3
     },
     {
-      "ActiveDays": "M-Su",
+      "ActiveDays": "M,Tu",
       "EndDate": "2019-08-25T00:00:00",
       "MediaWeekId": 817,
-      "NumberOfActiveDays": 7,
+      "NumberOfActiveDays": 2,
       "StartDate": "2019-08-19T00:00:00",
       "WeeklyImpressions": 250.0,
       "WeeklyImpressionsPercentage": 25.0,
-      "WeeklyRatings": 0.00022682,
+      "WeeklyRatings": 0.025,
       "WeekNumber": 4
-    },
-    {
-      "ActiveDays": "M-Sa",
-      "EndDate": "2019-09-01T00:00:00",
-      "MediaWeekId": 818,
-      "NumberOfActiveDays": 6,
-      "StartDate": "2019-08-26T00:00:00",
-      "WeeklyImpressions": 250.0,
-      "WeeklyImpressionsPercentage": 25.0,
-      "WeeklyRatings": 0.00022682,
-      "WeekNumber": 5
     }
   ]
 }

@@ -10,6 +10,7 @@
       "StartDate": "2019-08-05T00:00:00",
       "WeeklyImpressions": 142.85714286,
       "WeeklyImpressionsPercentage": 14.28571429,
+      "WeeklyRatings": 0.00012961,
       "WeekNumber": 1
     },
     {
@@ -20,6 +21,7 @@
       "StartDate": "2019-08-12T00:00:00",
       "WeeklyImpressions": 142.85714286,
       "WeeklyImpressionsPercentage": 14.28571429,
+      "WeeklyRatings": 0.00012961,
       "WeekNumber": 2
     },
     {
@@ -30,6 +32,7 @@
       "StartDate": "2019-08-19T00:00:00",
       "WeeklyImpressions": 142.85714286,
       "WeeklyImpressionsPercentage": 14.28571429,
+      "WeeklyRatings": 0.00012961,
       "WeekNumber": 3
     },
     {
@@ -40,6 +43,7 @@
       "StartDate": "2019-08-26T00:00:00",
       "WeeklyImpressions": 142.85714286,
       "WeeklyImpressionsPercentage": 14.28571429,
+      "WeeklyRatings": 0.00012961,
       "WeekNumber": 4
     },
     {
@@ -50,6 +54,7 @@
       "StartDate": "2019-09-02T00:00:00",
       "WeeklyImpressions": 142.85714286,
       "WeeklyImpressionsPercentage": 14.28571429,
+      "WeeklyRatings": 0.00012961,
       "WeekNumber": 5
     },
     {
@@ -60,6 +65,7 @@
       "StartDate": "2019-09-09T00:00:00",
       "WeeklyImpressions": 142.85714286,
       "WeeklyImpressionsPercentage": 14.28571429,
+      "WeeklyRatings": 0.00012961,
       "WeekNumber": 6
     },
     {
@@ -70,6 +76,7 @@
       "StartDate": "2019-09-16T00:00:00",
       "WeeklyImpressions": 142.85714286,
       "WeeklyImpressionsPercentage": 14.28571429,
+      "WeeklyRatings": 0.00012961,
       "WeekNumber": 7
     }
   ]

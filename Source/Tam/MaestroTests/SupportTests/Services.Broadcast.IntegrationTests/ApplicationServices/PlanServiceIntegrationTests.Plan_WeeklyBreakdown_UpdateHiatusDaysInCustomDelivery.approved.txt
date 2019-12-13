@@ -10,6 +10,7 @@
       "StartDate": "2019-09-30T00:00:00",
       "WeeklyImpressions": 500.0,
       "WeeklyImpressionsPercentage": 50.0,
+      "WeeklyRatings": 0.00045365,
       "WeekNumber": 1
     },
     {
@@ -20,6 +21,7 @@
       "StartDate": "2019-10-07T00:00:00",
       "WeeklyImpressions": 500.0,
       "WeeklyImpressionsPercentage": 50.0,
+      "WeeklyRatings": 0.00045365,
       "WeekNumber": 2
     }
   ]
