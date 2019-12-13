@@ -1,5 +1,6 @@
 ﻿using Common.Services;
 using NUnit.Framework;
+using Services.Broadcast.Entities;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
@@ -40,6 +41,11 @@ namespace Services.Broadcast.IntegrationTests
         {
             public int CallCount { get; set; }
 
+            public List<DaypartCleanupDto> GetAllDaypartsIncludeDays()
+            {
+                throw new NotImplementedException();
+            }
+
             public DisplayDaypart GetDisplayDaypart(int pDaypartId)
             {
                 throw new NotImplementedException();
@@ -64,6 +70,11 @@ namespace Services.Broadcast.IntegrationTests
             {
                 CallCount++;
                 return CallCount;
+            }
+
+            public DaypartCleanupDto UpdateDaysForDayparts(DaypartCleanupDto daypartCleanupDto)
+            {
+                throw new NotImplementedException();
             }
         }
     }

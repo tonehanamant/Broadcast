@@ -135,5 +135,21 @@
             }
         </div>
     </div>
+
+    <div>
+        <h1>Cleanup Dayparts</h1>
+        <div>
+            @using (Html.BeginForm("CleanupDaypartsFilterErroneousDayparts", "Maintenance", FormMethod.Post))
+            {
+                <input type="submit" value="Show erroneous dayparts" id="submit" />
+            }
+            @using (Html.BeginForm("CleanupDaypartsRepairErroneousDayparts", "Maintenance", FormMethod.Post))
+            {
+                <input type="submit" value="Repair erroneous dayparts" id="submit" />
+            }
+            <div><b>Results:</b></div>
+            <textarea rows="20" style="width: 600px;" id="divCleanupJSON">@ViewBag.DaypartCleanupMessage</textarea>
+        </div>
+    </div>
 </body>
 </html>

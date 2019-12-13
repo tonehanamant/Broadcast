@@ -2,6 +2,7 @@
 using EntityFrameworkMapping.Broadcast;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Transactions;
 using ConfigurationService.Client;
@@ -10,6 +11,8 @@ using Tam.Maestro.Data.EntityFrameworkMapping;
 using Tam.Maestro.Services.Clients;
 using Tam.Maestro.Services.ContractInterfaces.Common;
 using IsolationLevel = System.Transactions.IsolationLevel;
+using Services.Broadcast.Entities;
+using Common.Services.Extensions;
 
 namespace Services.Broadcast.Repositories
 {
@@ -46,6 +49,8 @@ namespace Services.Broadcast.Repositories
         int SaveDaypart(DisplayDaypart pDaypart);
         int GetDisplayDaypartIdByText(string pDaypartText);
         int OnlyForTests_SaveDaypartInternal(DisplayDaypart pDaypart);
+        List<DaypartCleanupDto> GetAllDaypartsIncludeDays();
+        DaypartCleanupDto UpdateDaysForDayparts(DaypartCleanupDto daypartCleanupDto);
     }
 
     public class DisplayDaypartBroadcastRepository : BroadcastRepositoryBase, IDisplayDaypartRepository
@@ -297,6 +302,61 @@ namespace Services.Broadcast.Repositories
 
                   return query.FirstOrDefault();
               });
+        }
+
+        public List<DaypartCleanupDto> GetAllDaypartsIncludeDays()
+        {
+            return _InReadUncommitedTransaction(
+              context =>
+              {
+                  var query = context.dayparts
+                    .Include(dp => dp.days)
+                    .Include(dp => dp.timespan)
+                    .ToList()
+                    .Select(dp => _MapToDaypartCleanupDto(dp));
+
+                  return query.ToList();
+              });
+        }
+
+        private DaypartCleanupDto _MapToDaypartCleanupDto(daypart dp)
+        {
+            return new DaypartCleanupDto
+            {
+                Id = dp.id,
+                Name = dp.name,
+                Code = dp.code,
+                Text = dp.daypart_text,
+                StartTime = dp.timespan.start_time,
+                EndTime = dp.timespan.end_time,
+                Days = dp.days.Select(d => d.ordinal).ToList()
+            };
+        }
+
+        public DaypartCleanupDto UpdateDaysForDayparts(DaypartCleanupDto daypartCleanupDto)
+        {
+            return _InReadUncommitedTransaction(context => {
+                //get the days associated to the daypart
+                var daypartDays = context.days.Where(d => daypartCleanupDto.Days.Contains(d.id)).ToList();
+
+                //get the daypart
+                var daypart = context.dayparts
+                    .Include(dp => dp.days)
+                    .Include(dp => dp.timespan)
+                    .Where(dp => dp.id == daypartCleanupDto.Id)
+                    .Single(dp => dp.id == daypartCleanupDto.Id, "Invalid daypart id.");
+
+                //refresh the dayparts days
+                daypart.days.Clear();
+                foreach (var daypartDay in daypartDays)
+                {
+                    daypart.days.Add(daypartDay);
+                }
+
+                context.SaveChanges();
+
+                return _MapToDaypartCleanupDto(daypart);
+            });
         }
     }
 }

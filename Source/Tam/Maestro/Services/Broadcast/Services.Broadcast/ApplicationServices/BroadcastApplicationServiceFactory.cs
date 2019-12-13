@@ -10,6 +10,7 @@ using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.InterceptionExtension;
 using Services.Broadcast.ApplicationServices.Helpers;
 using Services.Broadcast.ApplicationServices.Inventory;
+using Services.Broadcast.ApplicationServices.Maintenance;
 using Services.Broadcast.ApplicationServices.Plan;
 using Services.Broadcast.ApplicationServices.Security;
 using Services.Broadcast.BusinessEngines;
@@ -209,6 +210,8 @@ namespace Services.Broadcast.ApplicationServices
 
             unityContainer.RegisterType<IEnvironmentService, EnvironmentService>();
             unityContainer.RegisterType<IDaypartTypeService, DaypartTypeService>();
+            
+            unityContainer.RegisterType<IDaypartCleanupService, DaypartCleanupService>();
 
             unityContainer.RegisterType<ITrafficApiClient, TrafficApiClient>();
             unityContainer.RegisterType<ICampaignAggregator, CampaignAggregator>();

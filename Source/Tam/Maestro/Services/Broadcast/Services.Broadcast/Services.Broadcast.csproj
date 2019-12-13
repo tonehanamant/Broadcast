@@ -303,6 +303,7 @@
     <Compile Include="ApplicationServices\BroadcastLockingManagerApplicationService.cs" />
     <Compile Include="ApplicationServices\CampaignAggregationJobTrigger.cs" />
     <Compile Include="ApplicationServices\CampaignAggregator.cs" />
+    <Compile Include="ApplicationServices\Maintenance\DaypartCleanupService.cs" />
     <Compile Include="ApplicationServices\GenreService.cs" />
     <Compile Include="ApplicationServices\ContainTypeService.cs" />
     <Compile Include="ApplicationServices\InventoryProgramEnrichmentService.cs" />
@@ -346,6 +347,7 @@
     <Compile Include="Clients\ConfigurationClientSwitch.cs" />
     <Compile Include="Entities\CampaignListItemDto.cs" />
     <Compile Include="Entities\CampaignQuarterDto.cs" />
+    <Compile Include="Entities\DaypartCleanupDto.cs" />
     <Compile Include="Entities\DTO\Program\ProgramDto.cs" />
     <Compile Include="Entities\DTO\Program\SearchRequestProgramDto.cs" />
     <Compile Include="Entities\Enums\GenreSourceEnum.cs" />

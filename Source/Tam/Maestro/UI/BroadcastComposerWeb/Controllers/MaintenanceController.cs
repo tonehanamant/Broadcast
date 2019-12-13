@@ -9,6 +9,8 @@ using System.Net;
 using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
+using Newtonsoft.Json;
+using Services.Broadcast.ApplicationServices.Maintenance;
 using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Services.Cable.Security;
 
@@ -221,6 +223,24 @@ namespace BroadcastComposerWeb.Controllers
                 }
             }
 
+            return View("Index");
+        }
+
+        [HttpPost]
+        public ActionResult CleanupDaypartsFilterErroneousDayparts()
+        {
+            var service = _ApplicationServiceFactory.GetApplicationService<IDaypartCleanupService>();
+            var results = service.FilterErroneousDayparts();
+            ViewBag.DaypartCleanupMessage = JsonConvert.SerializeObject(results, Formatting.Indented);
+            return View("Index");
+        }
+
+        [HttpPost]
+        public ActionResult CleanupDaypartsRepairErroneousDayparts()
+        {
+            var service = _ApplicationServiceFactory.GetApplicationService<IDaypartCleanupService>();
+            var results = service.RepairErroneousDayparts();
+            ViewBag.DaypartCleanupMessage = JsonConvert.SerializeObject(results, Formatting.Indented);
             return View("Index");
         }
     }
