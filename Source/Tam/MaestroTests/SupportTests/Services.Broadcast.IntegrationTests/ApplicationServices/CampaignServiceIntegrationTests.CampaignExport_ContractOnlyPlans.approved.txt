@@ -1,7 +1,7 @@
 ﻿{
   "AgencyName": "Stub Agency",
-  "CampaignFlightEndDate": "06/28/20",
-  "CampaignFlightStartDate": "12/30/19",
+  "CampaignFlightEndDate": "04/12/20",
+  "CampaignFlightStartDate": "03/14/20",
   "CampaignName": "Campaign with all types of plans",
   "ClientName": "Stub Advertiser",
   "GuaranteedDemo": [

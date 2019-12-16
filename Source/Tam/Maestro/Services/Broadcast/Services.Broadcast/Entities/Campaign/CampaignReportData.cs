@@ -22,9 +22,8 @@ namespace Services.Broadcast.Entities.Campaign
             CreatedDate = DateTime.Now.ToString(DATE_FORMAT_SHORT_YEAR);
             AgencyName = agency.Name;
             ClientName = advertiser.Name;
-            CampaignFlightStartDate = campaign.FlightStartDate != null ? campaign.FlightStartDate.Value.ToString(DATE_FORMAT_SHORT_YEAR) : string.Empty;
-            CampaignFlightEndDate = campaign.FlightEndDate != null ? campaign.FlightEndDate.Value.ToString(DATE_FORMAT_SHORT_YEAR) : string.Empty;
-
+            _SetCampaignFlightDate(plans);
+            
             var orderedAudiencesId = orderedAudiences.Select(x => x.Id).ToList();
             GuaranteedDemo = guaranteedDemos
                 .OrderBy(x=> orderedAudiencesId.IndexOf(x.Id))
@@ -40,6 +39,14 @@ namespace Services.Broadcast.Entities.Campaign
 
             PostingType = plans.Select(x => x.PostingType).Distinct().Single().ToString();
             Status = exportType.Equals(CampaignExportTypeEnum.Contract) ? "Order" : "Proposal";
+        }
+
+        private void _SetCampaignFlightDate(List<PlanDto> plans)
+        {
+            var minStartDate = plans.Select(x => x.FlightStartDate).Min();
+            var maxEndDate = plans.Select(x => x.FlightEndDate).Max();
+            CampaignFlightStartDate = minStartDate != null ? minStartDate.Value.ToString(DATE_FORMAT_SHORT_YEAR) : string.Empty;
+            CampaignFlightEndDate = maxEndDate != null ? maxEndDate.Value.ToString(DATE_FORMAT_SHORT_YEAR) : string.Empty;
         }
 
         public string CampaignName { get; set; }
