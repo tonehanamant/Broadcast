@@ -29,6 +29,7 @@
         "MDN",
         "OVN"
       ],
+      "DraftId": null,
       "DraftModifiedBy": null,
       "DraftModifiedDate": null,
       "Equivalized": true,
@@ -77,6 +78,7 @@
         "MDN",
         "OVN"
       ],
+      "DraftId": null,
       "DraftModifiedBy": null,
       "DraftModifiedDate": null,
       "Equivalized": true,

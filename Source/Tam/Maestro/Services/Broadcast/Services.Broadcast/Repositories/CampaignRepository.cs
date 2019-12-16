@@ -301,6 +301,7 @@ namespace Services.Broadcast.Repositories
                             HHCPM = version.hh_cpm,
                             DraftModifiedBy = draft?.modified_by ?? draft?.created_by,
                             DraftModifiedDate = draft?.modified_date ?? draft?.created_date,
+                            DraftId = draft?.id,
                             PlanSummaryQuarters = summary.plan_version_summary_quarters.Select(q => new PlanSummaryQuarterDto
                             {
                                 Quarter = q.quarter,

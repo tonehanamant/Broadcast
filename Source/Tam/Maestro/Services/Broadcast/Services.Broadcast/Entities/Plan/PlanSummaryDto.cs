@@ -162,5 +162,13 @@ namespace Services.Broadcast.Entities.Plan
         /// The last user who modified this entity.
         /// </summary>
         public string ModifiedBy { get; set; }
+
+        /// <summary>
+        /// Gets or sets the draft identifier.
+        /// </summary>
+        /// <value>
+        /// The draft identifier.
+        /// </value>
+        public int? DraftId { get; set; }
     }
 }

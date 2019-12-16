@@ -6,5 +6,13 @@
   {
     "Display": "Contracted",
     "Id": 4
+  },
+  {
+    "Display": "Live",
+    "Id": 5
+  },
+  {
+    "Display": "Complete",
+    "Id": 6
   }
 ]
