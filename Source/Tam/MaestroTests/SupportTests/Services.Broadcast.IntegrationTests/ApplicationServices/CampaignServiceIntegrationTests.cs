@@ -23,9 +23,8 @@ using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Services.ContractInterfaces;
 using Services.Broadcast.Entities.Campaign;
 using Services.Broadcast.ReportGenerators;
-using System.IO;
-using Services.Broadcast.Clients;
 using Services.Broadcast.IntegrationTests.Stubs;
+using System.IO;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
@@ -568,32 +567,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void CampaignExport_AllPlans()
-        {
-            using (new TransactionScopeWrapper())
-            {
-                IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<ITrafficApiCache>(new TrafficApiCacheStub());
-                var _CampaignService = IntegrationTestApplicationServiceFactory.GetApplicationService<ICampaignService>();
-
-                var reportData = _CampaignService.GetCampaignReportData(new CampaignReportRequest { CampaignId = 596, ExportType = CampaignExportTypeEnum.Contract });
-                var reportOutput = new CampaignReportGenerator().Generate(reportData);
-
-                //write excel file to file system(this is used for manual testing only)
-                //using (var destinationFileStream = new FileStream($@"C:\temp\plan-excel-generation\{reportOutput.Filename}", FileMode.OpenOrCreate))
-                //{
-                //    while (reportOutput.Stream.Position < reportOutput.Stream.Length)
-                //    {
-                //        destinationFileStream.WriteByte((byte)reportOutput.Stream.ReadByte());
-                //    }
-                //}
-
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(reportData, _GetJsonSettingsForCampaignExport()));
-            }
-        }
-
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
-        public void CampaignExport_SelectedPlans()
+        public void CampaignExport_ContractOnlyPlans()
         {
             using (new TransactionScopeWrapper())
             {
@@ -602,14 +576,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var reportData = _CampaignService.GetCampaignReportData(new CampaignReportRequest
                 {
-                    CampaignId = 596,
-                    SelectedPlans = new List<int> { 1540, 1541 },
-                    ExportType = CampaignExportTypeEnum.Contract
+                    CampaignId = 652,
+                    ExportType = CampaignExportTypeEnum.Contract,
+                    SelectedPlans = new List<int> { 1852, 1853, 1854}
                 });
 
-                var reportOutput = new CampaignReportGenerator().Generate(reportData);
-
-                //write excel file to file system (this is used for manual testing only)
+                //write excel file to file system(this is used for manual testing only)
+                //var reportOutput = new CampaignReportGenerator().Generate(reportData);
                 //using (var destinationFileStream = new FileStream($@"C:\temp\plan-excel-generation\{reportOutput.Filename}", FileMode.OpenOrCreate))
                 //{
                 //    while (reportOutput.Stream.Position < reportOutput.Stream.Length)
@@ -618,10 +591,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 //    }
                 //}
 
+                Assert.IsTrue(DateTime.Now.ToString("MM/dd/yy").Equals(reportData.CreatedDate));
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(reportData, _GetJsonSettingsForCampaignExport()));
             }
         }
-
+        
         private JsonSerializerSettings _GetJsonSettingsForCampaignExport()
         {
             var jsonResolver = new IgnorableSerializerContractResolver();

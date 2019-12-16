@@ -461,7 +461,7 @@ namespace Services.Broadcast.ApplicationServices
                 .Select(x=> _AudienceService.GetAudienceById(x)).ToList();
 
             return new CampaignReportData(request.ExportType, campaign, plans, agency, advertiser, guaranteedDemos, 
-                _SpotLengthService.GetAllSpotLengths(), _QuarterCalculationEngine);
+                _SpotLengthService.GetAllSpotLengths(), _AudienceService.GetAudiences(), _QuarterCalculationEngine);
         }
 
         private void _ValidateSelectedPlans(CampaignExportTypeEnum exportType, List<PlanSummaryDto> plans)

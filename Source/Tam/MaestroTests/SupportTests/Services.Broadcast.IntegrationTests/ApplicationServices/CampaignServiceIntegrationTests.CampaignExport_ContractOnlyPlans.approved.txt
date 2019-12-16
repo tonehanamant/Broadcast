@@ -1,0 +1,16 @@
+﻿{
+  "AgencyName": "Stub Agency",
+  "CampaignFlightEndDate": "06/28/20",
+  "CampaignFlightStartDate": "12/30/19",
+  "CampaignName": "Campaign with all types of plans",
+  "ClientName": "Stub Advertiser",
+  "GuaranteedDemo": [
+    "A21-24"
+  ],
+  "PostingType": "NTI",
+  "SpotLengths": [
+    ":30 eq.",
+    ":45 eq."
+  ],
+  "Status": "Order"
+}

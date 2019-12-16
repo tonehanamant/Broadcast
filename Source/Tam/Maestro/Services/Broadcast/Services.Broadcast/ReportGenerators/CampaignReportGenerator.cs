@@ -97,7 +97,7 @@ namespace Services.Broadcast.ReportGenerators
             worksheet.Cells[AGENCY_NAME_CELL].Value = data.AgencyName;
             worksheet.Cells[CLIENT_NAME_CELL].Value = data.ClientName;
             worksheet.Cells[CAMPAIGN_FLIGHT_CELL].Value = $"{data.CampaignFlightStartDate} - {data.CampaignFlightEndDate}";
-            worksheet.Cells[GUARANTEED_DEMO_CELL].Value = data.GuaranteedDemo;
+            worksheet.Cells[GUARANTEED_DEMO_CELL].Value = string.Join(",", data.GuaranteedDemo);
             worksheet.Cells[CAMPAIGN_SPOT_LENGTH_CELL].Value = string.Join(", ", data.SpotLengths);
             worksheet.Cells[POSTING_TYPE_CELL].Value = data.PostingType;
             worksheet.Cells[STATUS_CELL].Value = data.Status;
