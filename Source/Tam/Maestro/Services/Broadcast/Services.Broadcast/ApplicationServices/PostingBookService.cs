@@ -45,9 +45,15 @@ namespace Services.Broadcast.ApplicationServices
 
     public class PostingBookService : IPostingBookService
     {
-        private readonly List<MediaMonthCrunchStatus> _MediaMonthsCrunchStatus;
+        private readonly List<MediaMonth> _MediaMonths;
         private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekAggregateCache;
         private readonly IQuarterCalculationEngine _QuartersEngine;
+
+        private const int _February = 2;
+        private const int _May = 5;
+        private const int _July = 7;
+        private const int _November = 11;
+        private readonly List<int> _SweepBooksMonths = new List<int> { _February, _May, _July, _November };
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PostingBookService"/> class.
@@ -61,47 +67,45 @@ namespace Services.Broadcast.ApplicationServices
         {
             _MediaMonthAndWeekAggregateCache = mediaMonthAndWeekAggregateCache;
             _QuartersEngine = quarterCalculationEngine;
-            _MediaMonthsCrunchStatus = ratingForecastService.GetMediaMonthCrunchStatuses();
+            _MediaMonths = ratingForecastService.GetMediaMonthCrunchStatuses().Where(a => a.Crunched == CrunchStatusEnum.Crunched)
+                        .Select(m => m.MediaMonth)
+                        .ToList();
         }
 
         private List<MediaMonth> _GetSweepBooks() =>
-            _MediaMonthsCrunchStatus.Where(a => a.Crunched == CrunchStatusEnum.Crunched)
-                        .Select(m => m.MediaMonth)
-                        .ToList();
-
-        private List<MediaMonth> _GetAllMonthlyBooks() =>
-            _MediaMonthsCrunchStatus.Select(m => m.MediaMonth).ToList();
+            _MediaMonths.Where(m => _SweepBooksMonths.Contains(m.Month)).ToList();
 
         ///<inheritdoc/>
         public List<LookupDto> GetAllPostingBooks() =>
-            _ToLookupDto(_GetAllMonthlyBooks());
+            _ToLookupDto(_MediaMonths);
 
         ///<inheritdoc/>
         public List<LookupDto> GetHUTBooks(int shareBookId) =>
-            _GetBooks(_GetSweepBooks(), shareBookId);
+            _GetBooks(shareBookId);
 
         /// <inheritdoc/>
         public List<LookupDto> GetMonthlyBooks(int shareBookId) =>
-            _GetBooks(_GetAllMonthlyBooks(), shareBookId);
+            _GetBooks(shareBookId);
 
-        private List<LookupDto> _GetBooks(List<MediaMonth> mediaMonths, int shareBookId)
+        private List<LookupDto> _GetBooks(int shareBookId)
         {
-            var shareBookDate = mediaMonths.Single(b => b.Id == shareBookId).StartDate;
+            var shareBookDate = _MediaMonths.Single(b => b.Id == shareBookId).StartDate;
 
             var currentQuarter = _QuartersEngine.GetQuarterRangeByDate(shareBookDate);
             var lastYearQuarter = _QuartersEngine.GetQuarterDetail(currentQuarter.Quarter, shareBookDate.Year - 1);
 
-            var books = mediaMonths
+            var books = _MediaMonths
                 .Where(x => x.EndDate <= lastYearQuarter.EndDate);
             return _ToLookupDto(books);
         }
 
         ///<inheritdoc/>
         public int GetDefaultShareBookId(DateTime startDate) =>
-             _GetSweepBooks()
+           _GetSweepBooks()
                 .Where(x => x.StartDate <= startDate)
                 .OrderByDescending(x => x.StartDate)
                 .First().Id;
+             
 
         #region Private methods
         private List<LookupDto> _ToLookupDto(IEnumerable<MediaMonth> postingBooks)
