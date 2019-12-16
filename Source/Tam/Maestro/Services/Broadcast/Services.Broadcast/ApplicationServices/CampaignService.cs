@@ -208,7 +208,7 @@ namespace Services.Broadcast.ApplicationServices
             campaign.CampaignStatus = summary.CampaignStatus;
             campaign.PlanStatuses = _MapToPlanStatuses(summary);
         }
-        
+
         private CampaignListItemDto _MapToCampaignListItemDto(CampaignWithSummary campaignAndCampaignSummary)
         {
             var campaign = new CampaignListItemDto
@@ -233,8 +233,8 @@ namespace Services.Broadcast.ApplicationServices
                 campaign.FlightEndDate = campaignAndCampaignSummary.CampaignSummary.FlightEndDate;
                 campaign.FlightHiatusDays = campaignAndCampaignSummary.CampaignSummary.FlightHiatusDays;
                 campaign.FlightActiveDays = campaignAndCampaignSummary.CampaignSummary.FlightActiveDays;
-                campaign.HasHiatus = 
-                    campaignAndCampaignSummary.CampaignSummary.FlightHiatusDays.HasValue && 
+                campaign.HasHiatus =
+                    campaignAndCampaignSummary.CampaignSummary.FlightHiatusDays.HasValue &&
                     campaignAndCampaignSummary.CampaignSummary.FlightHiatusDays.Value > 0;
 
                 campaign.Budget = campaignAndCampaignSummary.CampaignSummary.Budget;
@@ -248,7 +248,7 @@ namespace Services.Broadcast.ApplicationServices
 
             return campaign;
         }
-        
+
         private List<PlansStatusCountDto> _MapToPlanStatuses(CampaignSummaryDto summary)
         {
             var statuses = new List<PlansStatusCountDto>();
@@ -458,18 +458,56 @@ namespace Services.Broadcast.ApplicationServices
                 .Select(x => _PlanRepository.GetPlan(x.PlanId)).ToList();
 
             List<PlanAudienceDisplay> guaranteedDemos = plans.Select(x => x.AudienceId).Distinct()
-                .Select(x=> _AudienceService.GetAudienceById(x)).ToList();
+                .Select(x => _AudienceService.GetAudienceById(x)).ToList();
 
-            return new CampaignReportData(request.ExportType, campaign, plans, agency, advertiser, guaranteedDemos, 
+            return new CampaignReportData(request.ExportType, campaign, plans, agency, advertiser, guaranteedDemos,
                 _SpotLengthService.GetAllSpotLengths(), _AudienceService.GetAudiences(), _QuarterCalculationEngine);
         }
 
         private void _ValidateSelectedPlans(CampaignExportTypeEnum exportType, List<PlanSummaryDto> plans)
         {
+            _ValidatePostingType(plans);
+            _ValidateExportType(exportType, plans);
+        }
+
+        private static void _ValidatePostingType(List<PlanSummaryDto> plans)
+        {
             const string MULTIPLE_POSTING_TYPES_EXCEPTION = "Cannot have multiple posting types in the export. Please select only plans with the same posting type.";
-            if (plans.Select(x=>x.PostingType).Distinct().Count() != 1)
+
+            if (plans.Select(x => x.PostingType).Distinct().Count() != 1)
             {
                 throw new Exception(MULTIPLE_POSTING_TYPES_EXCEPTION);
+            }
+        }
+
+        private static void _ValidateExportType(CampaignExportTypeEnum exportType, List<PlanSummaryDto> plans)
+        {
+            const string INVALID_EXPORT_TYPE_FOR_SELECTED_PLANS = "Invalid export type for selected plans.";
+            List<PlanStatusEnum> distinctPlansStatuses = plans.Select(x => x.Status).Distinct().ToList();
+            if (distinctPlansStatuses.Contains(PlanStatusEnum.Scenario)
+                || distinctPlansStatuses.Contains(PlanStatusEnum.Rejected)
+                || distinctPlansStatuses.Contains(PlanStatusEnum.Canceled))
+            {
+                if (!exportType.Equals(CampaignExportTypeEnum.Proposal))
+                {
+                    throw new Exception(INVALID_EXPORT_TYPE_FOR_SELECTED_PLANS);
+                }
+            }
+            else if (distinctPlansStatuses.Contains(PlanStatusEnum.Complete)
+                || distinctPlansStatuses.Contains(PlanStatusEnum.Contracted)
+                || distinctPlansStatuses.Contains(PlanStatusEnum.Live))
+            {
+                if (!exportType.Equals(CampaignExportTypeEnum.Contract))
+                {
+                    throw new Exception(INVALID_EXPORT_TYPE_FOR_SELECTED_PLANS);
+                }
+            }
+            else
+            {
+                if (!exportType.Equals(CampaignExportTypeEnum.Proposal))
+                {
+                    throw new Exception(INVALID_EXPORT_TYPE_FOR_SELECTED_PLANS);
+                }
             }
         }
     }

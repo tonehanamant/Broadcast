@@ -596,6 +596,101 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
         
+        [Test]
+        public void CampaignExport_ValidateExportType_Contracted()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<ITrafficApiCache>(new TrafficApiCacheStub());
+                var _CampaignService = IntegrationTestApplicationServiceFactory.GetApplicationService<ICampaignService>();
+
+                var exception = Assert.Throws<Exception>(() =>
+                _CampaignService.GetCampaignReportData(new CampaignReportRequest
+                {
+                    CampaignId = 652,
+                    ExportType = CampaignExportTypeEnum.Proposal,
+                    SelectedPlans = new List<int> { 1852, 1853, 1854 }
+                }));
+                Assert.That(exception.Message, Is.EqualTo("Invalid export type for selected plans."));
+            }
+        }
+
+        [Test]
+        public void CampaignExport_ValidateExportType_ContractedWithProposal()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<ITrafficApiCache>(new TrafficApiCacheStub());
+                var _CampaignService = IntegrationTestApplicationServiceFactory.GetApplicationService<ICampaignService>();
+
+                var exception = Assert.Throws<Exception>(() =>
+                _CampaignService.GetCampaignReportData(new CampaignReportRequest
+                {
+                    CampaignId = 652,
+                    ExportType = CampaignExportTypeEnum.Proposal,
+                    SelectedPlans = new List<int> { 1851, 1849, 1852, 1853, 1854 }
+                }));
+                Assert.That(exception.Message, Is.EqualTo("Invalid export type for selected plans."));
+            }
+        }
+
+        [Test]
+        public void CampaignExport_ValidateExportType_ContractedWithOther()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<ITrafficApiCache>(new TrafficApiCacheStub());
+                var _CampaignService = IntegrationTestApplicationServiceFactory.GetApplicationService<ICampaignService>();
+
+                var exception = Assert.Throws<Exception>(() =>
+                _CampaignService.GetCampaignReportData(new CampaignReportRequest
+                {
+                    CampaignId = 652,
+                    ExportType = CampaignExportTypeEnum.Contract,
+                    SelectedPlans = new List<int> { 1853, 1856 }
+                }));
+                Assert.That(exception.Message, Is.EqualTo("Invalid export type for selected plans."));
+            }
+        }
+
+        [Test]
+        public void CampaignExport_ValidateExportType_ProposalOrOther()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<ITrafficApiCache>(new TrafficApiCacheStub());
+                var _CampaignService = IntegrationTestApplicationServiceFactory.GetApplicationService<ICampaignService>();
+
+                var exception = Assert.Throws<Exception>(() =>
+                _CampaignService.GetCampaignReportData(new CampaignReportRequest
+                {
+                    CampaignId = 652,
+                    ExportType = CampaignExportTypeEnum.Contract,
+                    SelectedPlans = new List<int> { 1849, 1856}
+                }));
+                Assert.That(exception.Message, Is.EqualTo("Invalid export type for selected plans."));
+            }
+        }
+
+        [Test]
+        public void CampaignExport_ValidateExportType_Other()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<ITrafficApiCache>(new TrafficApiCacheStub());
+                var _CampaignService = IntegrationTestApplicationServiceFactory.GetApplicationService<ICampaignService>();
+
+                var exception = Assert.Throws<Exception>(() =>
+                _CampaignService.GetCampaignReportData(new CampaignReportRequest
+                {
+                    CampaignId = 652,
+                    ExportType = CampaignExportTypeEnum.Contract,
+                    SelectedPlans = new List<int> { 1855, 1856 }
+                }));
+                Assert.That(exception.Message, Is.EqualTo("Invalid export type for selected plans."));
+            }
+        }
+
         private JsonSerializerSettings _GetJsonSettingsForCampaignExport()
         {
             var jsonResolver = new IgnorableSerializerContractResolver();
