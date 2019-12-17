@@ -162,6 +162,7 @@ namespace Services.Broadcast.ApplicationServices
         public PlanPricingResponseDto GetCurrentPricingExecution(int planId)
         {
             var job = _PlanRepository.GetLatestPricingJob(planId);
+            var mockPrograms = _GetMockPrograms(job);
 
             return new PlanPricingResponseDto
             {
@@ -169,7 +170,10 @@ namespace Services.Broadcast.ApplicationServices
                 Result = new PlanPricingResultDto
                 {
                     Totals = _GetMockTotals(job),
-                    Programs = _GetMockPrograms(job)
+                    Programs = mockPrograms
+                        .OrderByDescending(p => p.PercentageOfBuy)
+                        .ThenBy(p => p.AvgCpm)
+                        .ThenBy(p => p.ProgramName).ToList()
                 },
                 IsPricingModelRunning = IsPricingModelRunning(job)
             };
@@ -209,7 +213,7 @@ namespace Services.Broadcast.ApplicationServices
             {
                 new PlanPricingProgramDto
                 {
-                    ProgramName = "NFL Sunday Night Football",
+                    ProgramName = "NFL Sunday Night Football A",
                     Genre = "Sports",
                     MarketCount = 72,
                     StationCount = 72,
@@ -219,13 +223,63 @@ namespace Services.Broadcast.ApplicationServices
                 },
                 new PlanPricingProgramDto
                 {
-                    ProgramName = "Good Morning America",
+                    ProgramName = "NFL Sunday Night Football B",
+                    Genre = "Sports",
+                    MarketCount = 72,
+                    StationCount = 72,
+                    AvgCpm = 13.5m,
+                    AvgImpressions = 250,
+                    PercentageOfBuy = 2.05
+                },
+                new PlanPricingProgramDto
+                {
+                    ProgramName = "NFL Sunday Night Football C",
+                    Genre = "Sports",
+                    MarketCount = 72,
+                    StationCount = 72,
+                    AvgCpm = 13.5m,
+                    AvgImpressions = 250,
+                    PercentageOfBuy = 2.05
+                },
+                new PlanPricingProgramDto
+                {
+                    ProgramName = "Good Morning America B",
                     Genre = "News",
                     MarketCount = 14,
                     StationCount = 23,
                     AvgCpm = 18,
                     AvgImpressions = 150,
-                    PercentageOfBuy = 97.95
+                    PercentageOfBuy = 10
+                },
+                new PlanPricingProgramDto
+                {
+                    ProgramName = "Good Morning America A",
+                    Genre = "News",
+                    MarketCount = 14,
+                    StationCount = 23,
+                    AvgCpm = 19,
+                    AvgImpressions = 150,
+                    PercentageOfBuy = 10
+                },
+                new PlanPricingProgramDto
+                {
+                    ProgramName = "HOUSE",
+                    Genre = "News",
+                    MarketCount = 14,
+                    StationCount = 23,
+                    AvgCpm = 14,
+                    AvgImpressions = 150,
+                    PercentageOfBuy = 36.925
+                },
+                new PlanPricingProgramDto
+                {
+                    ProgramName = "FRIENDS",
+                    Genre = "News",
+                    MarketCount = 14,
+                    StationCount = 23,
+                    AvgCpm = 99,
+                    AvgImpressions = 150,
+                    PercentageOfBuy = 36.925
                 }
             };
         }

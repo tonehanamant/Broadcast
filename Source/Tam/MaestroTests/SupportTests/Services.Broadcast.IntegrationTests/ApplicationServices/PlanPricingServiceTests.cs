@@ -5,16 +5,15 @@ using Microsoft.Practices.Unity;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
-using Services.Broadcast.Clients;
-using Services.Broadcast.Entities.Plan.Pricing;
-using Services.Broadcast.IntegrationTests.Stubs;
-using System.Collections.Generic;
-using System;
-using Tam.Maestro.Common.DataLayer;
-using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.ApplicationServices.Plan;
-using Services.Broadcast.Repositories;
+using Services.Broadcast.Clients;
+using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
+using Services.Broadcast.Entities.Plan.Pricing;
+using Services.Broadcast.Repositories;
+using System;
+using System.Collections.Generic;
+using Tam.Maestro.Common.DataLayer;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {

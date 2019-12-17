@@ -9,22 +9,67 @@
   "Result": {
     "Programs": [
       {
-        "AvgCpm": 13.5,
-        "AvgImpressions": 250.0,
-        "Genre": "Sports",
-        "MarketCount": 72,
-        "PercentageOfBuy": 2.05,
-        "ProgramName": "NFL Sunday Night Football",
-        "StationCount": 72
+        "AvgCpm": 14.0,
+        "AvgImpressions": 150.0,
+        "Genre": "News",
+        "MarketCount": 14,
+        "PercentageOfBuy": 36.925,
+        "ProgramName": "HOUSE",
+        "StationCount": 23
+      },
+      {
+        "AvgCpm": 99.0,
+        "AvgImpressions": 150.0,
+        "Genre": "News",
+        "MarketCount": 14,
+        "PercentageOfBuy": 36.925,
+        "ProgramName": "FRIENDS",
+        "StationCount": 23
       },
       {
         "AvgCpm": 18.0,
         "AvgImpressions": 150.0,
         "Genre": "News",
         "MarketCount": 14,
-        "PercentageOfBuy": 97.95,
-        "ProgramName": "Good Morning America",
+        "PercentageOfBuy": 10.0,
+        "ProgramName": "Good Morning America B",
         "StationCount": 23
+      },
+      {
+        "AvgCpm": 19.0,
+        "AvgImpressions": 150.0,
+        "Genre": "News",
+        "MarketCount": 14,
+        "PercentageOfBuy": 10.0,
+        "ProgramName": "Good Morning America A",
+        "StationCount": 23
+      },
+      {
+        "AvgCpm": 13.5,
+        "AvgImpressions": 250.0,
+        "Genre": "Sports",
+        "MarketCount": 72,
+        "PercentageOfBuy": 2.05,
+        "ProgramName": "NFL Sunday Night Football A",
+        "StationCount": 72
+      },
+      {
+        "AvgCpm": 13.5,
+        "AvgImpressions": 250.0,
+        "Genre": "Sports",
+        "MarketCount": 72,
+        "PercentageOfBuy": 2.05,
+        "ProgramName": "NFL Sunday Night Football B",
+        "StationCount": 72
+      },
+      {
+        "AvgCpm": 13.5,
+        "AvgImpressions": 250.0,
+        "Genre": "Sports",
+        "MarketCount": 72,
+        "PercentageOfBuy": 2.05,
+        "ProgramName": "NFL Sunday Night Football C",
+        "StationCount": 72
       }
     ],
     "Totals": {
