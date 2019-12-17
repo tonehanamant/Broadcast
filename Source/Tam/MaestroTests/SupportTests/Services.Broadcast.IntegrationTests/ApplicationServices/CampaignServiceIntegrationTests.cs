@@ -583,14 +583,14 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 });
 
                 //write excel file to file system(this is used for manual testing only)
-                var reportOutput = new CampaignReportGenerator().Generate(reportData);
-                using (var destinationFileStream = new FileStream($@"C:\temp\plan-excel-generation\{reportOutput.Filename}", FileMode.OpenOrCreate))
-                {
-                    while (reportOutput.Stream.Position < reportOutput.Stream.Length)
-                    {
-                        destinationFileStream.WriteByte((byte)reportOutput.Stream.ReadByte());
-                    }
-                }
+                //var reportOutput = new CampaignReportGenerator().Generate(reportData);
+                //using (var destinationFileStream = new FileStream($@"C:\temp\plan-excel-generation\{reportOutput.Filename}", FileMode.OpenOrCreate))
+                //{
+                //    while (reportOutput.Stream.Position < reportOutput.Stream.Length)
+                //    {
+                //        destinationFileStream.WriteByte((byte)reportOutput.Stream.ReadByte());
+                //    }
+                //}
 
                 Assert.IsTrue(DateTime.Now.ToString("MM/dd/yy").Equals(reportData.CreatedDate));
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(reportData, _GetJsonSettingsForCampaignExport()));
