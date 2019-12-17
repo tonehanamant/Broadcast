@@ -9,15 +9,6 @@
   "Result": {
     "Programs": [
       {
-        "AvgCpm": 14.0,
-        "AvgImpressions": 150.0,
-        "Genre": "News",
-        "MarketCount": 14,
-        "PercentageOfBuy": 36.925,
-        "ProgramName": "HOUSE",
-        "StationCount": 23
-      },
-      {
         "AvgCpm": 99.0,
         "AvgImpressions": 150.0,
         "Genre": "News",
@@ -27,12 +18,12 @@
         "StationCount": 23
       },
       {
-        "AvgCpm": 18.0,
+        "AvgCpm": 14.0,
         "AvgImpressions": 150.0,
         "Genre": "News",
         "MarketCount": 14,
-        "PercentageOfBuy": 10.0,
-        "ProgramName": "Good Morning America B",
+        "PercentageOfBuy": 36.925,
+        "ProgramName": "HOUSE",
         "StationCount": 23
       },
       {
@@ -42,6 +33,15 @@
         "MarketCount": 14,
         "PercentageOfBuy": 10.0,
         "ProgramName": "Good Morning America A",
+        "StationCount": 23
+      },
+      {
+        "AvgCpm": 18.0,
+        "AvgImpressions": 150.0,
+        "Genre": "News",
+        "MarketCount": 14,
+        "PercentageOfBuy": 10.0,
+        "ProgramName": "Good Morning America B",
         "StationCount": 23
       },
       {

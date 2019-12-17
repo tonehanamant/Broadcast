@@ -172,7 +172,7 @@ namespace Services.Broadcast.ApplicationServices
                     Totals = _GetMockTotals(job),
                     Programs = mockPrograms
                         .OrderByDescending(p => p.PercentageOfBuy)
-                        .ThenBy(p => p.AvgCpm)
+                        .ThenByDescending(p => p.AvgCpm)
                         .ThenBy(p => p.ProgramName).ToList()
                 },
                 IsPricingModelRunning = IsPricingModelRunning(job)
