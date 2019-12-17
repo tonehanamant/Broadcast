@@ -11,6 +11,7 @@ namespace Services.Broadcast.Entities.Campaign
 {
     public class CampaignReportData
     {
+        public string CampaignExportFileName { get; set; }
         public string CampaignName { get; set; }
         public string CreatedDate { get; set; }
         public string CampaignStartQuarter { get; set; }
@@ -31,6 +32,8 @@ namespace Services.Broadcast.Entities.Campaign
         public string Notes { get; set; }
 
         private const string DATE_FORMAT_SHORT_YEAR = "MM/dd/yy";
+        private const string DATE_FORMAT_FILENAME = "MM-dd";
+        private const string FILENAME_FORMAT = "{0} {1} {2} Plan Rev - {3}.xlsx";
 
         public CampaignReportData(CampaignExportTypeEnum exportType, CampaignDto campaign
             , List<PlanDto> plans, AgencyDto agency, AdvertiserDto advertiser
@@ -44,6 +47,16 @@ namespace Services.Broadcast.Entities.Campaign
             List<ProjectedPlan> projectedPlans = _ProjectPlansForQuarterExport(plans, spotLenghts, daypartCodes, mediaMonthAndWeekAggregateCache, quarterCalculationEngine);
             _PopulateHeaderData(exportType, campaign, plans, agency, advertiser, guaranteedDemos, spotLenghts, orderedAudiences, quarterCalculationEngine);
             _PopulateQuarterTableData(projectedPlans, quarterCalculationEngine);
+            _SetExportFileName(projectedPlans, campaign.ModifiedDate);
+        }
+
+        private void _SetExportFileName(List<ProjectedPlan> projectedPlans, DateTime campaignModifiedDate)
+        {
+            CampaignExportFileName = string.Format(FILENAME_FORMAT
+                , ClientName
+                , string.Join(" ", projectedPlans.Select(x => x.DaypartCode).Distinct().OrderBy(x=>x).ToList())
+                , (CampaignEndQuarter != CampaignStartQuarter ? $"{CampaignStartQuarter}-{CampaignEndQuarter}" : CampaignStartQuarter)
+                , campaignModifiedDate.ToString(DATE_FORMAT_FILENAME));
         }
 
         private List<ProjectedPlan> _ProjectPlansForQuarterExport(List<PlanDto> plans, List<LookupDto> spotLenghts
@@ -205,7 +218,7 @@ namespace Services.Broadcast.Entities.Campaign
         {
             return impressions == 0 ? 0 : cost / (decimal)impressions;
         }
-
+        
         private void _PopulateHeaderData(CampaignExportTypeEnum exportType
             , CampaignDto campaign
             , List<PlanDto> plans

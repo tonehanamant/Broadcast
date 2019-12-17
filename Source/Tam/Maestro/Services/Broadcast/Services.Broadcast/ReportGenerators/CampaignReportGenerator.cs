@@ -65,9 +65,9 @@ namespace Services.Broadcast.ReportGenerators
         /// </returns>
         public ReportOutput Generate(CampaignReportData dataObject)
         {
-            var output = new ReportOutput(filename: $"Broadcast Export Plan Rev - {DateTime.Now.ToString("MM-dd")}.xlsx");
+            var output = new ReportOutput(filename: dataObject.CampaignExportFileName);
 
-            var package = _GetFileWithData(dataObject);
+            ExcelPackage package = _GetFileWithData(dataObject);
 
             package.SaveAs(output.Stream);
             package.Dispose();

@@ -12,7 +12,7 @@ namespace Services.Broadcast.Extensions
         /// <returns>string</returns>
         public static string ShortFormat(this QuarterDetailDto quarter)
         {
-            return $"Q{quarter.Quarter} '{quarter.Year.ToString().Substring(2)}";
+            return $"Q{quarter.Quarter}'{quarter.Year.ToString().Substring(2)}";
         }
 
         /// <summary>
