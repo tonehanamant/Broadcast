@@ -231,7 +231,7 @@ namespace Services.Broadcast.ApplicationServices
                     $"Error caught processing an inventory file for program names.  JobId = '{jobId}'", ex);
                 _InventoryFileProgramEnrichmentJobsRepository.SetJobCompleteError(jobId, ex.Message);
 
-                throw ex;
+                throw;
             }
             finally
             {

@@ -16,6 +16,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Tam.Maestro.Common;
+using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 
 namespace Services.Broadcast.ApplicationServices
@@ -117,6 +118,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly ITrafficApiCache _TrafficApiCache;
         private readonly IAudienceService _AudienceService;
         private readonly ISpotLengthService _SpotLengthService;
+        private readonly IDaypartCodeService _DaypartCodeService;
 
         public CampaignService(
             IDataRepositoryFactory dataRepositoryFactory,
@@ -128,7 +130,8 @@ namespace Services.Broadcast.ApplicationServices
             ICampaignAggregationJobTrigger campaignAggregationJobTrigger,
             ITrafficApiCache trafficApiCache,
             IAudienceService audienceService,
-            ISpotLengthService spotLengthService)
+            ISpotLengthService spotLengthService,
+            IDaypartCodeService daypartCodeService)
         {
             _CampaignRepository = dataRepositoryFactory.GetDataRepository<ICampaignRepository>();
             _CampaignValidator = campaignValidator;
@@ -142,6 +145,7 @@ namespace Services.Broadcast.ApplicationServices
             _PlanRepository = dataRepositoryFactory.GetDataRepository<IPlanRepository>();
             _AudienceService = audienceService;
             _SpotLengthService = spotLengthService;
+            _DaypartCodeService = daypartCodeService;
         }
 
         /// <inheritdoc />
@@ -376,7 +380,7 @@ namespace Services.Broadcast.ApplicationServices
             {
                 _CampaignSummaryRepository.SetSummaryProcessingStatusToError(campaignId, $"Exception caught during processing : {e.Message}");
                 // re-throw so that the caller can track the failure.
-                throw e;
+                throw;
             }
         }
 
@@ -459,9 +463,13 @@ namespace Services.Broadcast.ApplicationServices
 
             List<PlanAudienceDisplay> guaranteedDemos = plans.Select(x => x.AudienceId).Distinct()
                 .Select(x => _AudienceService.GetAudienceById(x)).ToList();
-
+            
             return new CampaignReportData(request.ExportType, campaign, plans, agency, advertiser, guaranteedDemos,
-                _SpotLengthService.GetAllSpotLengths(), _AudienceService.GetAudiences(), _QuarterCalculationEngine);
+                _SpotLengthService.GetAllSpotLengths(),                
+                _DaypartCodeService.GetAllDaypartCodes(),
+                 _AudienceService.GetAudiences(),
+                 _MediaMonthAndWeekAggregateCache,
+                _QuarterCalculationEngine);
         }
 
         private void _ValidateSelectedPlans(CampaignExportTypeEnum exportType, List<PlanSummaryDto> plans)
