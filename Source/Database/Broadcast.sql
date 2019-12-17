@@ -316,6 +316,24 @@ END
 
 /*************************************** END - PRI-18261 ****************************************************/
 
+/*************************************** END - PRI-19871 ****************************************************/
+IF NOT EXISTS
+	(SELECT 1 
+	FROM sys.indexes 
+	WHERE name='IX_station_inventory_manifest_audiences_manifest_id_audience_id_is_reference'
+	AND object_id = OBJECT_ID('station_inventory_manifest_audiences'))
+BEGIN
+	CREATE NONCLUSTERED INDEX [IX_station_inventory_manifest_audiences_manifest_id_audience_id_is_reference] ON [dbo].[station_inventory_manifest_audiences]
+	(
+		[station_inventory_manifest_id] ASC,
+		[audience_id] ASC,
+		[is_reference] ASC
+	)
+	INCLUDE ([impressions]) 
+END
+GO
+/*************************************** END - PRI-19871 ****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version
