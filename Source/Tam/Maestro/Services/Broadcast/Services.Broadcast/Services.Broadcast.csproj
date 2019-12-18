@@ -362,6 +362,7 @@
     <Compile Include="Entities\InventoryFileProgramEnrichmentJobDiagnostics.cs" />
     <Compile Include="Entities\InventorySummary\InventoryAvailability.cs" />
     <Compile Include="Entities\InventoryFileRatingsJobDiagnostics.cs" />
+    <Compile Include="Entities\InventorySummary\InventorySummaryTotals.cs" />
     <Compile Include="Entities\InventorySummary\InventoryUploadHistory.cs" />
     <Compile Include="Entities\Plan\PlanAudienceDisplay.cs" />
     <Compile Include="Entities\Plan\Pricing\PlanPricingApiResultDto.cs" />

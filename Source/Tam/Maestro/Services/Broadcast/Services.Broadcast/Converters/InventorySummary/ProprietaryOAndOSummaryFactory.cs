@@ -198,5 +198,6 @@ namespace Services.Broadcast.Converters.InventorySummary
                 }).ToList()
             };
         }
+
     }
 }

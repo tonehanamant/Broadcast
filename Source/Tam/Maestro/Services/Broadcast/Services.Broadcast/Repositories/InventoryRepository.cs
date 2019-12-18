@@ -38,6 +38,8 @@ namespace Services.Broadcast.Repositories
         List<StationInventoryManifestWeekHistory> GetStationInventoryManifestWeeksHistory(IEnumerable<int> manifestIds);
         List<StationInventoryManifest> GetInventoryManifestsBySource(InventorySource source);
 
+        InventorySummaryTotals GetInventorySummaryDateRangeTotalsForSource(InventorySource inventorySource, DateTime startDate, DateTime endDate);
+
         /// <summary>
         /// Removes station_inventory_manifest_weeks records based on their id
         /// </summary>
@@ -1450,6 +1452,38 @@ namespace Services.Broadcast.Repositories
 
                     context.SaveChanges();
                 });
+        }
+
+        public InventorySummaryTotals GetInventorySummaryDateRangeTotalsForSource(InventorySource inventorySource, DateTime startDate, DateTime endDate)
+        {
+            return _InReadUncommitedTransaction(
+               context =>
+               {
+                   context.Database.Log = s => System.Diagnostics.Debug.WriteLine(s);
+                   var manifests = context.station_inventory_manifest
+                       .Where(m => m.station_inventory_manifest_weeks.Any(w => w.start_date <= endDate && w.end_date >= startDate))
+                       .Where(m => m.inventory_source_id == inventorySource.Id);
+
+                   var impressions = context.station_inventory_manifest_weeks
+                        .Where(w => w.station_inventory_manifest.inventory_source_id == 1)
+                        .Where(w => w.start_date <= endDate && w.end_date >= startDate)
+                        .Select(w => w.station_inventory_manifest.station_inventory_manifest_audiences
+                            .Where(ma => ma.is_reference == true && ma.audience_id == 31 && ma.impressions.HasValue).Any() ?
+                              w.station_inventory_manifest.station_inventory_manifest_audiences.Where(ma => ma.is_reference == true && ma.audience_id == 31 && ma.impressions.HasValue).FirstOrDefault().impressions :
+                              w.station_inventory_manifest.station_inventory_manifest_audiences.Where(ma => ma.is_reference == false && ma.audience_id == 31 && ma.impressions.HasValue).FirstOrDefault().impressions
+                            ).Sum();
+
+                   var result = new InventorySummaryTotals
+                   {
+                       TotalMarkets = manifests.GroupBy(m => m.station.market_code).Count(),
+                       TotalStations = manifests.GroupBy(m => m.station_id).Count(),
+                       TotalPrograms = manifests.SelectMany(m => m.station_inventory_manifest_dayparts)
+                                        .GroupBy(d => d.program_name).Count(),
+                       TotalHouseholdImpressions = impressions ?? 0
+                   };
+
+                   return result;
+               });
         }
     }
 }

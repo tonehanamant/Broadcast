@@ -234,24 +234,23 @@ namespace Services.Broadcast.ApplicationServices
             List<DaypartCodeDto> daypartCodesAndIds = _DaypartCodeRepository.GetAllActiveDaypartCodes();
             foreach (var quarterDetail in allQuartersBetweenDates)
             {
+                InventoryQuarterSummary summaryData;
                 sw.Restart();
-                var manifests = _GetInventorySummaryManifests(inventorySource, quarterDetail);
-                sw.Stop();
-                Debug.WriteLine($"Got inventory {manifests.Count} manifests in {sw.Elapsed}");
-
-
-                if (manifests.Count == 0)   //there is no data in this quarter
+                if ((InventorySourceEnum)inventorySource.Id == InventorySourceEnum.OpenMarket)
                 {
-                    continue;
+                    summaryData = inventorySummaryFactory.CreateInventorySummary
+                        (inventorySource, householdAudienceId, quarterDetail,
+                        daypartCodesAndIds, inventoryAvailability);
                 }
-
-                sw.Restart();
-                var summaryData = inventorySummaryFactory.CreateInventorySummary
-                    (inventorySource, householdAudienceId, quarterDetail, manifests, 
+                else
+                {
+                    var manifests = _GetInventorySummaryManifests(inventorySource, quarterDetail);
+                    summaryData = inventorySummaryFactory.CreateInventorySummary
+                    (inventorySource, householdAudienceId, quarterDetail, manifests,
                     daypartCodesAndIds, inventoryAvailability);
+                }
                 sw.Stop();
                 Debug.WriteLine($"Created inventory summary in {sw.Elapsed}");
-                Debug.WriteLine($"Processed {sw.ElapsedMilliseconds / manifests.Count}ms per record");
 
                 result.Add(summaryData);
             }

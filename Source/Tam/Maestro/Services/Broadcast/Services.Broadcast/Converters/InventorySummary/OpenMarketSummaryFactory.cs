@@ -39,66 +39,36 @@ namespace Services.Broadcast.Converters.InventorySummary
         public override InventoryQuarterSummary CreateInventorySummary(InventorySource inventorySource,
                                                                    int householdAudienceId,
                                                                    QuarterDetailDto quarterDetail,
-                                                                   List<InventorySummaryManifestDto> quarterInventorySummaryManifests,
                                                                    List<DaypartCodeDto> daypartCodes,
                                                                    InventoryAvailability inventoryAvailability)
         {
 
             var sw = Stopwatch.StartNew();
-            var quarterInventorySummaryManifestFiles = GetInventorySummaryManifestFiles(quarterInventorySummaryManifests);
-            sw.Stop();
-            Debug.WriteLine($"=======> Obtained {quarterInventorySummaryManifestFiles.Count} manifest files in {sw.Elapsed}");
-
-            sw.Restart();
-            var quarterManifestIds = InventoryRepository.GetStationInventoryManifestsByIds(quarterInventorySummaryManifests.Select(x => x.ManifestId));
-            sw.Stop();
-            Debug.WriteLine($"=======> Obtained {quarterManifestIds.Count} manifest ids in {sw.Elapsed}");
-
-            sw.Restart();
-            GetLatestInventoryPostingBook(quarterInventorySummaryManifestFiles, out var shareBook, out var hutBook);
-            sw.Stop();
-            Debug.WriteLine($"=======> Obtained latest posting books in {sw.Elapsed}");
-
-            sw.Restart();
             var inventorySummaryQuarter = GetInventorySummaryQuarter(quarterDetail);
             sw.Stop();
             Debug.WriteLine($"=======> Obtained InventorySummaryQuarter in {sw.Elapsed}");
 
             sw.Restart();
-            var totalMarkets = GetTotalMarkets(quarterInventorySummaryManifests);
+            var inventorySummaryTotals = InventoryRepository.GetInventorySummaryDateRangeTotalsForSource
+                                            (inventorySource, quarterDetail.StartDate, quarterDetail.EndDate);
             sw.Stop();
-            Debug.WriteLine($"=======> Obtained {totalMarkets} total markets in {sw.Elapsed}");
-
-            sw.Restart();
-            var totalStations = GetTotalStations(quarterInventorySummaryManifests);
-            sw.Stop();
-            Debug.WriteLine($"=======> Obtained {totalStations} total stations in {sw.Elapsed}");
-
-            sw.Restart();
-            var totalPrograms = GetTotalPrograms(quarterInventorySummaryManifests);
-            sw.Stop();
-            Debug.WriteLine($"=======> Obtained {totalPrograms} total programs in {sw.Elapsed}");
-
-            sw.Restart();
-            var projectedHouseholdImpressions = _GetHouseholdImpressions(quarterManifestIds, householdAudienceId);
-            sw.Stop();
-            Debug.WriteLine($"=======> Obtained {projectedHouseholdImpressions} projected household impressions in {sw.Elapsed}");
+            Debug.WriteLine($"=======> Obtained inventory summary totals in  {sw.Elapsed}");
 
             return new InventoryQuarterSummary
             {
                 InventorySourceId = inventorySource.Id,
                 Quarter = inventorySummaryQuarter,
-                TotalMarkets = totalMarkets,
-                TotalStations = totalStations,
-                TotalPrograms = totalPrograms,
-                TotalProjectedHouseholdImpressions = projectedHouseholdImpressions,
+                TotalMarkets = inventorySummaryTotals.TotalMarkets,
+                TotalStations = inventorySummaryTotals.TotalStations,
+                TotalPrograms = inventorySummaryTotals.TotalPrograms,
+                TotalProjectedHouseholdImpressions = inventorySummaryTotals.TotalHouseholdImpressions,
                 LastUpdatedDate = DateTime.Now,
                 RatesAvailableFromQuarter = inventoryAvailability.StartQuarter,
                 RatesAvailableToQuarter = inventoryAvailability.EndQuarter,
                 InventoryGaps = inventoryAvailability.InventoryGaps,
                 Details = null, //open market does not have details
-                ShareBookId = shareBook?.Id,
-                HutBookId = hutBook?.Id
+                ShareBookId = null,
+                HutBookId = null
             };
         }
 
@@ -165,6 +135,11 @@ namespace Services.Broadcast.Converters.InventorySummary
                 HasRatesAvailableForQuarter = openMarketData.TotalMarkets > 0,
                 Details = null  //open market does not have details
             };
+        }
+
+        public override InventoryQuarterSummary CreateInventorySummary(InventorySource inventorySource, int householdAudienceId, QuarterDetailDto quarterDetail, List<InventorySummaryManifestDto> manifests, List<DaypartCodeDto> daypartCodes, InventoryAvailability inventoryAvailability)
+        {
+            throw new NotImplementedException();
         }
     }
 }

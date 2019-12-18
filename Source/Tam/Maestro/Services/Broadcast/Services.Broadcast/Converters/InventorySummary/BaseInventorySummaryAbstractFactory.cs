@@ -44,12 +44,20 @@ namespace Services.Broadcast.Converters.InventorySummary
         }
 
         public abstract InventoryQuarterSummary CreateInventorySummary(InventorySource inventorySource,
-                                                                   int householdAudienceId,
-                                                                   QuarterDetailDto quarterDetail,
-                                                                   List<InventorySummaryManifestDto> manifests,
-                                                                   List<DaypartCodeDto> daypartCodes,
-                                                                   InventoryAvailability inventoryAvailability);
-                
+                                                           int householdAudienceId,
+                                                           QuarterDetailDto quarterDetail,
+                                                           List<InventorySummaryManifestDto> manifests,
+                                                           List<DaypartCodeDto> daypartCodes,
+                                                           InventoryAvailability inventoryAvailability);
+        public virtual InventoryQuarterSummary CreateInventorySummary(InventorySource inventorySource,
+                                                   int householdAudienceId,
+                                                   QuarterDetailDto quarterDetail,
+                                                   List<DaypartCodeDto> daypartCodes,
+                                                   InventoryAvailability inventoryAvailability)
+        {
+            throw new NotImplementedException();
+        }
+
         public abstract InventorySummaryDto LoadInventorySummary(InventorySource inventorySource, InventoryQuarterSummary data, QuarterDetailDto quarterDetail);
 
         public InventoryAvailability GetInventoryAvailabilityBySource(InventorySource inventorySource)
