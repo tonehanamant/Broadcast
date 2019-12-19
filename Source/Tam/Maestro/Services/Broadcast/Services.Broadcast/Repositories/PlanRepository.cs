@@ -1155,7 +1155,9 @@ namespace Services.Broadcast.Repositories
             {
                 var plan = context.plans.Single(x => x.id == planId);
                 var planVersionId = plan.latest_version_id;
-                var apiResult = context.plan_version_pricing_api_results.Single(p => p.plan_version_id == planVersionId);
+                var apiResult = context.plan_version_pricing_api_results
+                    .Include(x => x.plan_version_pricing_api_result_spots)
+                    .Single(p => p.plan_version_id == planVersionId);
 
                 return new PlanPricingApiResponsetDto
                 {

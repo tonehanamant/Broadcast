@@ -116,9 +116,25 @@
     ],
     "ManifestDayparts": [
       {
-        "DaypartId": 1617,
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 46799,
+          "_Friday": true,
+          "_Id": 1617,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 43200,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
         "Id": 576683,
-        "ProgramName": "News 10 @ Noon"
+        "Programs": []
       }
     ],
     "ManifestId": 469330,
@@ -248,9 +264,25 @@
     ],
     "ManifestDayparts": [
       {
-        "DaypartId": 1617,
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 46799,
+          "_Friday": true,
+          "_Id": 1617,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 43200,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
         "Id": 576685,
-        "ProgramName": "News 10 @ Noon"
+        "Programs": []
       }
     ],
     "ManifestId": 469332,

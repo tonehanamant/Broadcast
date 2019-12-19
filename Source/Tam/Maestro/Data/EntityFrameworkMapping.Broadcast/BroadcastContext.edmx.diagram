@@ -359,11 +359,7 @@
         <EntityTypeShape EntityType="BroadcastModel.plan_version_pricing_parameters_inventory_source_percentages" Width="1.5" PointX="16.75" PointY="54.125" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_pricing_parameters_inventory_source_percentages_inventory_sources" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_pricing_parameters_inventory_source_percentages_plan_version_pricing_parameters" />
-        <EntityTypeShape EntityType="BroadcastModel.plan_version_pricing_api_result_spots" Width="1.5" PointX="20.75" PointY="41.625" />
         <EntityTypeShape EntityType="BroadcastModel.plan_version_pricing_api_results" Width="1.5" PointX="14.5" PointY="71.125" />
-        <AssociationConnector Association="BroadcastModel.FK_plan_version_pricing_api_result_spots_media_weeks" />
-        <AssociationConnector Association="BroadcastModel.FK_plan_version_pricing_api_result_spots_plan_version_pricing_api_results" />
-        <AssociationConnector Association="BroadcastModel.FK_plan_version_pricing_api_result_spots_station_inventory_manifest" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_pricing_api_results_plan_versions" />
         <EntityTypeShape EntityType="BroadcastModel.daypart_codes" Width="1.5" PointX="30.375" PointY="5" />
         <AssociationConnector Association="BroadcastModel.FK_inventory_file_proprietary_header_daypart_codes" />
@@ -376,6 +372,11 @@
         <EntityTypeShape EntityType="BroadcastModel.plan_version_daypart_affiliate_restrictions" Width="1.5" PointX="16.75" PointY="0.75" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_daypart_affiliate_restrictions_affiliates" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_daypart_affiliate_restrictions_plan_version_dayparts" />
+        <EntityTypeShape EntityType="BroadcastModel.plan_version_pricing_api_result_spots" Width="1.5" PointX="20.75" PointY="41.125" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_pricing_api_result_spots_dayparts" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_pricing_api_result_spots_media_weeks" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_pricing_api_result_spots_plan_version_pricing_api_results" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_pricing_api_result_spots_station_inventory_manifest" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

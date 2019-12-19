@@ -116,8 +116,46 @@
     ],
     "ManifestDayparts": [
       {
-        "DaypartId": 32941,
-        "ProgramName": "Eyewitness News at 430a"
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 1799,
+          "_Friday": true,
+          "_Id": 32941,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "BRDCST DP362",
+          "_Saturday": false,
+          "_StartTime": 0,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "Id": 633846,
+        "Programs": [
+          {
+            "Genre": "News",
+            "Name": "11 NEWS @  5:00AM",
+            "ShowType": "MOVTBA"
+          },
+          {
+            "Genre": "News",
+            "Name": "11 NEWS @  5:00AM",
+            "ShowType": "MOVTBA"
+          },
+          {
+            "Genre": "News",
+            "Name": "11 NEWS @  5:00AM",
+            "ShowType": "MOVTBA"
+          },
+          {
+            "Genre": "News",
+            "Name": "11 NEWS @  5:00AM",
+            "ShowType": "MOVTBA"
+          }
+        ]
       }
     ],
     "MediaWeekIds": [

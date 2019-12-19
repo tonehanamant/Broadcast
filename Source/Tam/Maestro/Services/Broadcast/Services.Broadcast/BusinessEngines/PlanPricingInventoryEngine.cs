@@ -1,10 +1,12 @@
 ﻿using Common.Services;
 using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
+using Services.Broadcast.Cache;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
 using Services.Broadcast.Entities.Plan.Pricing;
+using Services.Broadcast.Extensions;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
@@ -13,7 +15,6 @@ using Tam.Maestro.Common;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 using Tam.Maestro.Services.ContractInterfaces.Common;
 using static Services.Broadcast.Entities.Enums.ProposalEnums;
-using static Services.Broadcast.Entities.ProposalProgramDto;
 
 namespace Services.Broadcast.BusinessEngines
 {
@@ -29,26 +30,32 @@ namespace Services.Broadcast.BusinessEngines
         private readonly IImpressionsCalculationEngine _ImpressionsCalculationEngine;
         private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekAggregateCache;
         private readonly IDaypartCache _DaypartCache;
+        private readonly IGenreCache _GenreCache;
 
         public PlanPricingInventoryEngine(IDataRepositoryFactory broadcastDataRepositoryFactory,
                                           IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
                                           IImpressionsCalculationEngine impressionsCalculationEngine,
-                                          IDaypartCache daypartCache)
+                                          IDaypartCache daypartCache,
+                                          IGenreCache genreCache)
         {
             _PlanRepository = broadcastDataRepositoryFactory.GetDataRepository<IPlanRepository>();
             _StationProgramRepository = broadcastDataRepositoryFactory.GetDataRepository<IStationProgramRepository>();
             _MediaMonthAndWeekAggregateCache = mediaMonthAndWeekAggregateCache;
             _ImpressionsCalculationEngine = impressionsCalculationEngine;
             _DaypartCache = daypartCache;
+            _GenreCache = genreCache;
         }
 
         public List<PlanPricingInventoryProgram> GetInventoryForPlan(PlanDto plan)
         {
             var planFlightDateRanges = _GetPlanDateRanges(plan);
             var programs = _GetPrograms(plan, planFlightDateRanges);
-            programs = _FilterProgramsByDaypart(plan, programs, planFlightDateRanges);
+
+            programs = FilterProgramsByDayparts(plan, programs, planFlightDateRanges);
+
             _ApplyProjectedImpressions(programs, plan);
             _ApplyProvidedImpressions(programs, plan);
+
             return programs;
         }
 
@@ -148,37 +155,122 @@ namespace Services.Broadcast.BusinessEngines
             return dateRanges;
         }
 
-        private List<PlanPricingInventoryProgram> _FilterProgramsByDaypart(
+        public List<PlanPricingInventoryProgram> FilterProgramsByDayparts(
             PlanDto plan, 
             List<PlanPricingInventoryProgram> programs,
             List<DateRange> planFlightDateRanges)
         {
-            if (plan.Dayparts == null || !plan.Dayparts.Any())
+            if (plan.Dayparts.IsEmpty())
                 return programs;
 
-            var filteredPrograms = new List<PlanPricingInventoryProgram>();
-            var planDisplayDaypart = _GetPlanDaypartDaysFromPlanFlight(plan, planFlightDateRanges);
+            var result = new List<PlanPricingInventoryProgram>();
+            var planDisplayDaypart = _GetPlanDaypartDaysFromPlanFlight(planFlightDateRanges);
 
-            foreach (var planDaypart in plan.Dayparts)
+            foreach (var program in programs)
+            {
+                var inventoryDayparts = _GetInventoryDaypartsThatMatchProgram(plan.Dayparts, planDisplayDaypart, program);
+                
+                if (inventoryDayparts.Any() && _IsProgramAllowedByRestrictions(inventoryDayparts))
+                {
+                    result.Add(program);
+                }
+            }
+
+            return result;
+        }
+
+        private bool _IsProgramAllowedByRestrictions(List<ProgramInventoryDaypart> programInventoryDayparts)
+        {
+            foreach (var inventoryDaypart in programInventoryDayparts)
+            {
+                if (!_IsProgramAllowedByProgramRestrictions(inventoryDaypart))
+                    return false;
+
+                if (!_IsProgramAllowedByGenreRestrictions(inventoryDaypart))
+                    return false;
+
+                if (!_IsProgramAllowedByShowTypeRestrictions(inventoryDaypart))
+                    return false;
+            }
+
+            return true;
+        }
+
+        private bool _IsProgramAllowedByProgramRestrictions(ProgramInventoryDaypart programInventoryDaypart)
+        {
+            var programRestrictions = programInventoryDaypart.PlanDaypart.Restrictions.ProgramRestrictions;
+
+            if (programRestrictions == null || programRestrictions.Programs.IsEmpty())
+                return true;
+
+            var programNames = programRestrictions.Programs.Select(x => x.Name);
+            var manifestDaypartProgramNames = programInventoryDaypart.ManifestDaypart.Programs.Select(x => x.Name);
+            var hasIntersections = manifestDaypartProgramNames.ContainsAny(programNames);
+
+            return programRestrictions.ContainType == ContainTypeEnum.Include ? 
+                hasIntersections : 
+                !hasIntersections;
+        }
+
+        private bool _IsProgramAllowedByGenreRestrictions(ProgramInventoryDaypart programInventoryDaypart)
+        {
+            var genreRestrictions = programInventoryDaypart.PlanDaypart.Restrictions.GenreRestrictions;
+
+            if (genreRestrictions == null || genreRestrictions.Genres.IsEmpty())
+                return true;
+
+            var genres = genreRestrictions.Genres.Select(x => x.Display);
+            var manifestDaypartGenres = programInventoryDaypart.ManifestDaypart.Programs.Select(x => _GenreCache.GetMaestroGenreFromDativaGenre(x.Genre).Display);
+            var hasIntersections = manifestDaypartGenres.ContainsAny(genres);
+
+            return genreRestrictions.ContainType == ContainTypeEnum.Include ?
+                hasIntersections :
+                !hasIntersections;
+        }
+
+        private bool _IsProgramAllowedByShowTypeRestrictions(ProgramInventoryDaypart programInventoryDaypart)
+        {
+            var showTypeRestrictions = programInventoryDaypart.PlanDaypart.Restrictions.ShowTypeRestrictions;
+
+            if (showTypeRestrictions == null || showTypeRestrictions.ShowTypes.IsEmpty())
+                return true;
+
+            var showTypes = showTypeRestrictions.ShowTypes.Select(x => x.Display);
+            var manifestDaypartShowTypes = programInventoryDaypart.ManifestDaypart.Programs.Select(x => x.ShowType);
+            var hasIntersections = manifestDaypartShowTypes.ContainsAny(showTypes);
+
+            return showTypeRestrictions.ContainType == ContainTypeEnum.Include ?
+                hasIntersections :
+                !hasIntersections;
+        }
+
+        private List<ProgramInventoryDaypart> _GetInventoryDaypartsThatMatchProgram(
+            List<PlanDaypartDto> planDayparts,
+            DisplayDaypart planDisplayDaypart,
+            PlanPricingInventoryProgram program)
+        {
+            var result = new List<ProgramInventoryDaypart>();
+
+            foreach (var planDaypart in planDayparts)
             {
                 planDisplayDaypart.StartTime = planDaypart.StartTimeSeconds;
                 planDisplayDaypart.EndTime = planDaypart.EndTimeSeconds;
 
-                var programsThatMatchDaypart = programs.Where(p => _AnyIntersects(p.ManifestDayparts, planDisplayDaypart)).ToList();
+                var programInventoryDayparts = program.ManifestDayparts
+                    .Where(x => x.Daypart.Intersects(planDisplayDaypart))
+                    .Select(x => new ProgramInventoryDaypart
+                    {
+                        PlanDaypart = planDaypart,
+                        ManifestDaypart = x
+                    });
 
-                filteredPrograms.AddRange(programsThatMatchDaypart);
+                result.AddRange(programInventoryDayparts);
             }
 
-            // prevents the same programs being added because of 2 plan dayparts that match program
-            filteredPrograms = filteredPrograms
-                .GroupBy(x => x.ManifestId)
-                .Select(x => x.First())
-                .ToList();
-
-            return filteredPrograms;
+            return result;
         }
-
-        private DisplayDaypart _GetPlanDaypartDaysFromPlanFlight(PlanDto plan, List<DateRange> planFlightDateRanges)
+        
+        private DisplayDaypart _GetPlanDaypartDaysFromPlanFlight(List<DateRange> planFlightDateRanges)
         {
             var result = new DisplayDaypart
             {
@@ -229,11 +321,6 @@ namespace Services.Broadcast.BusinessEngines
             return result;
         }
 
-        private bool _AnyIntersects(List<ManifestDaypartDto> dayparts, DisplayDaypart daypart)
-        {
-            return dayparts.Any(x => _DaypartCache.GetDisplayDaypart(x.DaypartId).Intersects(daypart));
-        }
-
         private void _ApplyProvidedImpressions(List<PlanPricingInventoryProgram> programs, PlanDto plan)
         {
             _ImpressionsCalculationEngine.ApplyProvidedImpressions(programs, plan.AudienceId, plan.SpotLengthId, plan.Equivalized);
@@ -252,6 +339,13 @@ namespace Services.Broadcast.BusinessEngines
             };
 
             _ImpressionsCalculationEngine.ApplyProjectedImpressions(programs, impressionsRequest, plan.AudienceId);
+        }
+
+        private class ProgramInventoryDaypart
+        {
+            public PlanDaypartDto PlanDaypart { get; set; }
+
+            public PlanPricingInventoryProgram.ManifestDaypart ManifestDaypart { get; set; }
         }
     }
 }

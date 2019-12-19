@@ -390,7 +390,7 @@ namespace Services.Broadcast.ApplicationServices
                     {
                         Id = program.ManifestId,
                         MediaWeekId = mediaWeekId,
-                        DaypartId = daypart.DaypartId,
+                        DaypartId = daypart.Daypart.Id,
                         Impressions = program.ProvidedImpressions ?? program.ProjectedImpressions,
                         Cost = program.SpotCost,
                         Unit = program.Unit,

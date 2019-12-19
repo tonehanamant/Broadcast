@@ -31,9 +31,25 @@
     ],
     "ManifestDayparts": [
       {
-        "DaypartId": 32941,
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 1799,
+          "_Friday": true,
+          "_Id": 32941,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "BRDCST DP362",
+          "_Saturday": false,
+          "_StartTime": 0,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
         "Id": 358772,
-        "ProgramName": "FRIENDS"
+        "Programs": []
       }
     ],
     "ManifestId": 287146,
@@ -78,9 +94,25 @@
     ],
     "ManifestDayparts": [
       {
-        "DaypartId": 32055,
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 3599,
+          "_Friday": true,
+          "_Id": 32055,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "BRDCST DP362",
+          "_Saturday": false,
+          "_StartTime": 1800,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
         "Id": 358773,
-        "ProgramName": "TWO & A HALF MEN"
+        "Programs": []
       }
     ],
     "ManifestId": 287147,
@@ -125,9 +157,25 @@
     ],
     "ManifestDayparts": [
       {
-        "DaypartId": 32941,
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 1799,
+          "_Friday": true,
+          "_Id": 32941,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "BRDCST DP362",
+          "_Saturday": false,
+          "_StartTime": 0,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
         "Id": 360318,
-        "ProgramName": "TWO & HALF MEN"
+        "Programs": []
       }
     ],
     "ManifestId": 288692,
@@ -172,9 +220,25 @@
     ],
     "ManifestDayparts": [
       {
-        "DaypartId": 32055,
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 3599,
+          "_Friday": true,
+          "_Id": 32055,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "BRDCST DP362",
+          "_Saturday": false,
+          "_StartTime": 1800,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
         "Id": 360321,
-        "ProgramName": "2 BROKE GIRLS"
+        "Programs": []
       }
     ],
     "ManifestId": 288695,

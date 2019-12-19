@@ -6,6 +6,11 @@ namespace Services.Broadcast.Extensions
 {
     public static class ListExtentions
     {
+        public static bool ContainsAny<T>(this IEnumerable<T> list, IEnumerable<T> listToCompareWith)
+        {
+            return list.Any(x => listToCompareWith.Contains(x));
+        }
+
         public static bool IsEmpty<T>(this List<T> list)
         {
             return list == null || !list.Any();

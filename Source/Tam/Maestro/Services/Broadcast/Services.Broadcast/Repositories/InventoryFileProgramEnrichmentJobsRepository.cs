@@ -22,6 +22,8 @@ namespace Services.Broadcast.Repositories
         void SetJobCompleteSuccess(int jobId);
 
         InventoryFileProgramEnrichmentJob GetJob(int jobId);
+
+        InventoryFileProgramEnrichmentJob GetLatestJob();
     }
 
     public class InventoryFileProgramEnrichmentJobsRepository : BroadcastRepositoryBase, IInventoryFileProgramEnrichmentJobsRepository
@@ -83,6 +85,29 @@ namespace Services.Broadcast.Repositories
                     };
                 }
             );
+        }
+
+        public InventoryFileProgramEnrichmentJob GetLatestJob()
+        {
+            return _InReadUncommitedTransaction(
+                context =>
+                {
+                    var job = context.inventory_file_program_enrichment_jobs
+                        .Where(j => j.status == (int)InventoryFileProgramEnrichmentJobStatus.Queued)
+                        .OrderByDescending(j => j.queued_at)
+                        .FirstOrDefault();
+
+                    return job == null ? null : new InventoryFileProgramEnrichmentJob
+                    {
+                        Id = job.id,
+                        InventoryFileId = job.inventory_file_id,
+                        Status = (InventoryFileProgramEnrichmentJobStatus)job.status,
+                        ErrorMessage = job.error_message,
+                        QueuedAt = job.queued_at,
+                        QueuedBy = job.queued_by,
+                        CompletedAt = job.completed_at
+                    };
+                });
         }
 
         private void _UpdateJob(int jobId, InventoryFileProgramEnrichmentJobStatus status, string errorMessage, DateTime? completedAt)

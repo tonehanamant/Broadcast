@@ -72,12 +72,11 @@ namespace Services.Broadcast.BusinessEngines
             {
                 foreach (var manifestDaypart in program.ManifestDayparts)
                 {
-                    var manifestDisplayDaypart = DaypartCache.Instance.GetDisplayDaypart(manifestDaypart.DaypartId);
                     var stationDaypart = new ManifestDetailDaypart
                     {
                         LegacyCallLetters = program.StationLegacyCallLetters,
                         Id = manifestDaypart.Id,
-                        DisplayDaypart = manifestDisplayDaypart
+                        DisplayDaypart = manifestDaypart.Daypart
                     };
 
                     impressionRequests.Add(stationDaypart);

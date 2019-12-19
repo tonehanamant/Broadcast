@@ -31,8 +31,25 @@
     ],
     "ManifestDayparts": [
       {
-        "DaypartId": 32941,
-        "ProgramName": "FRIENDS"
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 1799,
+          "_Friday": true,
+          "_Id": 32941,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "BRDCST DP362",
+          "_Saturday": false,
+          "_StartTime": 0,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "Id": 358772,
+        "Programs": []
       }
     ],
     "MediaWeekIds": [
@@ -80,8 +97,25 @@
     ],
     "ManifestDayparts": [
       {
-        "DaypartId": 32055,
-        "ProgramName": "TWO & A HALF MEN"
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 3599,
+          "_Friday": true,
+          "_Id": 32055,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "BRDCST DP362",
+          "_Saturday": false,
+          "_StartTime": 1800,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "Id": 358773,
+        "Programs": []
       }
     ],
     "MediaWeekIds": [
@@ -129,8 +163,25 @@
     ],
     "ManifestDayparts": [
       {
-        "DaypartId": 32943,
-        "ProgramName": "FRIENDS"
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 1799,
+          "_Friday": false,
+          "_Id": 32943,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": false,
+          "_Name": "BRDCST DP362",
+          "_Saturday": true,
+          "_StartTime": 0,
+          "_Sunday": false,
+          "_Thursday": false,
+          "_Tuesday": false,
+          "_Wednesday": false
+        },
+        "Id": 358776,
+        "Programs": []
       }
     ],
     "MediaWeekIds": [
@@ -178,8 +229,25 @@
     ],
     "ManifestDayparts": [
       {
-        "DaypartId": 32072,
-        "ProgramName": "FRIENDS"
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 3599,
+          "_Friday": false,
+          "_Id": 32072,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": false,
+          "_Name": "BRDCST DP362",
+          "_Saturday": true,
+          "_StartTime": 1800,
+          "_Sunday": false,
+          "_Thursday": false,
+          "_Tuesday": false,
+          "_Wednesday": false
+        },
+        "Id": 358777,
+        "Programs": []
       }
     ],
     "MediaWeekIds": [
@@ -227,8 +295,25 @@
     ],
     "ManifestDayparts": [
       {
-        "DaypartId": 29548,
-        "ProgramName": "FRIENDS 2X"
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 3599,
+          "_Friday": false,
+          "_Id": 29548,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": false,
+          "_Name": "BRDCST DP362",
+          "_Saturday": false,
+          "_StartTime": 0,
+          "_Sunday": true,
+          "_Thursday": false,
+          "_Tuesday": false,
+          "_Wednesday": false
+        },
+        "Id": 358780,
+        "Programs": []
       }
     ],
     "MediaWeekIds": [
@@ -276,8 +361,25 @@
     ],
     "ManifestDayparts": [
       {
-        "DaypartId": 32941,
-        "ProgramName": "TWO & HALF MEN"
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 1799,
+          "_Friday": true,
+          "_Id": 32941,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "BRDCST DP362",
+          "_Saturday": false,
+          "_StartTime": 0,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "Id": 360318,
+        "Programs": []
       }
     ],
     "MediaWeekIds": [
@@ -325,8 +427,25 @@
     ],
     "ManifestDayparts": [
       {
-        "DaypartId": 29555,
-        "ProgramName": "2.5 MEN X2"
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 3599,
+          "_Friday": false,
+          "_Id": 29555,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": false,
+          "_Name": "BRDCST DP362",
+          "_Saturday": true,
+          "_StartTime": 0,
+          "_Sunday": false,
+          "_Thursday": false,
+          "_Tuesday": false,
+          "_Wednesday": false
+        },
+        "Id": 360319,
+        "Programs": []
       }
     ],
     "MediaWeekIds": [
@@ -374,8 +493,25 @@
     ],
     "ManifestDayparts": [
       {
-        "DaypartId": 29548,
-        "ProgramName": "SEINFELD X2"
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 3599,
+          "_Friday": false,
+          "_Id": 29548,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": false,
+          "_Name": "BRDCST DP362",
+          "_Saturday": false,
+          "_StartTime": 0,
+          "_Sunday": true,
+          "_Thursday": false,
+          "_Tuesday": false,
+          "_Wednesday": false
+        },
+        "Id": 360320,
+        "Programs": []
       }
     ],
     "MediaWeekIds": [
@@ -423,8 +559,25 @@
     ],
     "ManifestDayparts": [
       {
-        "DaypartId": 32055,
-        "ProgramName": "2 BROKE GIRLS"
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 3599,
+          "_Friday": true,
+          "_Id": 32055,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "BRDCST DP362",
+          "_Saturday": false,
+          "_StartTime": 1800,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "Id": 360321,
+        "Programs": []
       }
     ],
     "MediaWeekIds": [
@@ -557,8 +710,36 @@
     ],
     "ManifestDayparts": [
       {
-        "DaypartId": 32941,
-        "ProgramName": null
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 1799,
+          "_Friday": true,
+          "_Id": 32941,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "BRDCST DP362",
+          "_Saturday": false,
+          "_StartTime": 0,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "Id": 633847,
+        "Programs": [
+          {
+            "Genre": "News",
+            "Name": "11 NEWS @ 10:00PM - SAT",
+            "ShowType": "MOV"
+          },
+          {
+            "Genre": "News",
+            "Name": "11 NEWS @ 10:00PM - SAT",
+            "ShowType": "MOV"
+          }
+        ]
       }
     ],
     "MediaWeekIds": [
@@ -688,8 +869,36 @@
     ],
     "ManifestDayparts": [
       {
-        "DaypartId": 32941,
-        "ProgramName": null
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 1799,
+          "_Friday": true,
+          "_Id": 32941,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "BRDCST DP362",
+          "_Saturday": false,
+          "_StartTime": 0,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "Id": 633849,
+        "Programs": [
+          {
+            "Genre": "News",
+            "Name": "11 NEWS @ 5.30PM",
+            "ShowType": "MOVTBA"
+          },
+          {
+            "Genre": "News",
+            "Name": "11 NEWS @ 5.30PM",
+            "ShowType": "MOVTBA"
+          }
+        ]
       }
     ],
     "MediaWeekIds": [
@@ -819,8 +1028,46 @@
     ],
     "ManifestDayparts": [
       {
-        "DaypartId": 32941,
-        "ProgramName": "Eyewitness News at 430a"
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 1799,
+          "_Friday": true,
+          "_Id": 32941,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "BRDCST DP362",
+          "_Saturday": false,
+          "_StartTime": 0,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "Id": 633852,
+        "Programs": [
+          {
+            "Genre": "News",
+            "Name": "11 NEWS @  5:00AM",
+            "ShowType": "MOVTBA"
+          },
+          {
+            "Genre": "News",
+            "Name": "11 NEWS @  5:00AM",
+            "ShowType": "MOVTBA"
+          },
+          {
+            "Genre": "News",
+            "Name": "11 NEWS @  5:00AM",
+            "ShowType": "MOVTBA"
+          },
+          {
+            "Genre": "News",
+            "Name": "11 NEWS @  5:00AM",
+            "ShowType": "MOVTBA"
+          }
+        ]
       }
     ],
     "MediaWeekIds": [

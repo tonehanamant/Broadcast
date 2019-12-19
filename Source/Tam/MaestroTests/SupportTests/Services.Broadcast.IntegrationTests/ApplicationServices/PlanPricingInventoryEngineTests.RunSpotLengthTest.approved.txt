@@ -31,9 +31,25 @@
     ],
     "ManifestDayparts": [
       {
-        "DaypartId": 32941,
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 1799,
+          "_Friday": true,
+          "_Id": 32941,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "BRDCST DP362",
+          "_Saturday": false,
+          "_StartTime": 0,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
         "Id": 358772,
-        "ProgramName": "FRIENDS"
+        "Programs": []
       }
     ],
     "ManifestId": 287146,
@@ -82,9 +98,25 @@
     ],
     "ManifestDayparts": [
       {
-        "DaypartId": 32055,
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 3599,
+          "_Friday": true,
+          "_Id": 32055,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "BRDCST DP362",
+          "_Saturday": false,
+          "_StartTime": 1800,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
         "Id": 358773,
-        "ProgramName": "TWO & A HALF MEN"
+        "Programs": []
       }
     ],
     "ManifestId": 287147,
@@ -133,9 +165,25 @@
     ],
     "ManifestDayparts": [
       {
-        "DaypartId": 32943,
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 1799,
+          "_Friday": false,
+          "_Id": 32943,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": false,
+          "_Name": "BRDCST DP362",
+          "_Saturday": true,
+          "_StartTime": 0,
+          "_Sunday": false,
+          "_Thursday": false,
+          "_Tuesday": false,
+          "_Wednesday": false
+        },
         "Id": 358776,
-        "ProgramName": "FRIENDS"
+        "Programs": []
       }
     ],
     "ManifestId": 287150,
@@ -184,9 +232,25 @@
     ],
     "ManifestDayparts": [
       {
-        "DaypartId": 32072,
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 3599,
+          "_Friday": false,
+          "_Id": 32072,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": false,
+          "_Name": "BRDCST DP362",
+          "_Saturday": true,
+          "_StartTime": 1800,
+          "_Sunday": false,
+          "_Thursday": false,
+          "_Tuesday": false,
+          "_Wednesday": false
+        },
         "Id": 358777,
-        "ProgramName": "FRIENDS"
+        "Programs": []
       }
     ],
     "ManifestId": 287151,
@@ -235,9 +299,25 @@
     ],
     "ManifestDayparts": [
       {
-        "DaypartId": 29548,
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 3599,
+          "_Friday": false,
+          "_Id": 29548,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": false,
+          "_Name": "BRDCST DP362",
+          "_Saturday": false,
+          "_StartTime": 0,
+          "_Sunday": true,
+          "_Thursday": false,
+          "_Tuesday": false,
+          "_Wednesday": false
+        },
         "Id": 358780,
-        "ProgramName": "FRIENDS 2X"
+        "Programs": []
       }
     ],
     "ManifestId": 287154,
@@ -286,9 +366,25 @@
     ],
     "ManifestDayparts": [
       {
-        "DaypartId": 32941,
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 1799,
+          "_Friday": true,
+          "_Id": 32941,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "BRDCST DP362",
+          "_Saturday": false,
+          "_StartTime": 0,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
         "Id": 360318,
-        "ProgramName": "TWO & HALF MEN"
+        "Programs": []
       }
     ],
     "ManifestId": 288692,
@@ -337,9 +433,25 @@
     ],
     "ManifestDayparts": [
       {
-        "DaypartId": 29555,
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 3599,
+          "_Friday": false,
+          "_Id": 29555,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": false,
+          "_Name": "BRDCST DP362",
+          "_Saturday": true,
+          "_StartTime": 0,
+          "_Sunday": false,
+          "_Thursday": false,
+          "_Tuesday": false,
+          "_Wednesday": false
+        },
         "Id": 360319,
-        "ProgramName": "2.5 MEN X2"
+        "Programs": []
       }
     ],
     "ManifestId": 288693,
@@ -388,9 +500,25 @@
     ],
     "ManifestDayparts": [
       {
-        "DaypartId": 29548,
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 3599,
+          "_Friday": false,
+          "_Id": 29548,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": false,
+          "_Name": "BRDCST DP362",
+          "_Saturday": false,
+          "_StartTime": 0,
+          "_Sunday": true,
+          "_Thursday": false,
+          "_Tuesday": false,
+          "_Wednesday": false
+        },
         "Id": 360320,
-        "ProgramName": "SEINFELD X2"
+        "Programs": []
       }
     ],
     "ManifestId": 288694,
@@ -439,9 +567,25 @@
     ],
     "ManifestDayparts": [
       {
-        "DaypartId": 32055,
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 3599,
+          "_Friday": true,
+          "_Id": 32055,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "BRDCST DP362",
+          "_Saturday": false,
+          "_StartTime": 1800,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
         "Id": 360321,
-        "ProgramName": "2 BROKE GIRLS"
+        "Programs": []
       }
     ],
     "ManifestId": 288695,

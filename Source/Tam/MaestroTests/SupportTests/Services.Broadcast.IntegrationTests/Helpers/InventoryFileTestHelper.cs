@@ -8,20 +8,28 @@ namespace Services.Broadcast.IntegrationTests.Helpers
 {
     public class InventoryFileTestHelper
     {
-        private IInventoryRatingsProcessingService _InventoryRatingsProcessingService;
-        private IInventoryFileRatingsJobsRepository _InventoryFileRatingsJobsRepository;
-        private IProprietaryInventoryService _ProprietaryInventoryService;
-        private IInventoryService _InventoryService;
+        private readonly IInventoryRatingsProcessingService _InventoryRatingsProcessingService;
+        private readonly IInventoryFileRatingsJobsRepository _InventoryFileRatingsJobsRepository;
+        private readonly IProprietaryInventoryService _ProprietaryInventoryService;
+        private readonly IInventoryService _InventoryService;
+        private readonly IInventoryFileProgramEnrichmentJobsRepository _InventoryFileProgramEnrichmentJobsRepository;
+        private readonly IInventoryProgramEnrichmentService _InventoryProgramEnrichmentService;
 
         public InventoryFileTestHelper()
         {
             _InventoryRatingsProcessingService = IntegrationTestApplicationServiceFactory.GetApplicationService<IInventoryRatingsProcessingService>();
             _InventoryFileRatingsJobsRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryFileRatingsJobsRepository>();
+            _InventoryFileProgramEnrichmentJobsRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryFileProgramEnrichmentJobsRepository>();
             _ProprietaryInventoryService = IntegrationTestApplicationServiceFactory.GetApplicationService<IProprietaryInventoryService>();
             _InventoryService = IntegrationTestApplicationServiceFactory.GetApplicationService<IInventoryService>();
+            _InventoryProgramEnrichmentService = IntegrationTestApplicationServiceFactory.GetApplicationService<IInventoryProgramEnrichmentService>();
         }
 
-        public void UploadProprietaryInventoryFile(string fileName, DateTime? date = null, bool processInventoryRatings = true)
+        public void UploadProprietaryInventoryFile(
+            string fileName, 
+            DateTime? date = null, 
+            bool processInventoryRatings = true,
+            bool processProgramEnrichmentJob = false)
         {
             var request = new FileRequest
             {
@@ -36,6 +44,12 @@ namespace Services.Broadcast.IntegrationTests.Helpers
             {
                 var job = _InventoryFileRatingsJobsRepository.GetLatestJob();
                 _InventoryRatingsProcessingService.ProcessInventoryRatingsJob(job.Id);
+            }
+
+            if (processProgramEnrichmentJob)
+            {
+                var job = _InventoryFileProgramEnrichmentJobsRepository.GetLatestJob();
+                _InventoryProgramEnrichmentService.PerformInventoryFileProgramEnrichmentJob(job.Id);
             }
         }
 

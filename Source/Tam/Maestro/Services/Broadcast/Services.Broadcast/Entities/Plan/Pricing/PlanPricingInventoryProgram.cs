@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using static Services.Broadcast.Entities.ProposalProgramDto;
+using Tam.Maestro.Services.ContractInterfaces.Common;
 
 namespace Services.Broadcast.Entities.Plan.Pricing
 {
@@ -21,10 +21,37 @@ namespace Services.Broadcast.Entities.Plan.Pricing
 
         public string InventorySourceType { get; set; }
 
-        public List<ManifestDaypartDto> ManifestDayparts { get; set; }
+        public List<ManifestDaypart> ManifestDayparts { get; set; }
 
-        public List<ManifestAudienceDto> ManifestAudiences { get; set; }
+        public List<ManifestAudience> ManifestAudiences { get; set; }
 
         public List<int> MediaWeekIds { get; set; }
+
+        public class ManifestDaypart
+        {
+            public int Id { get; set; }
+
+            public DisplayDaypart Daypart { get; set; }
+
+            public List<Program> Programs { get; set; }
+
+            public class Program
+            {
+                public string Name { get; set; }
+
+                public string ShowType { get; set; }
+
+                public string Genre { get; set; }
+            }
+        }
+
+        public class ManifestAudience
+        {
+            public int AudienceId { get; set; }
+
+            public double? Impressions { get; set; }
+
+            public bool IsReference { get; set; }
+        }
     }
 }

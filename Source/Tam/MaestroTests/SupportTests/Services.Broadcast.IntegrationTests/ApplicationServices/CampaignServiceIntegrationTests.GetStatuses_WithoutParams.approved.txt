@@ -6,5 +6,9 @@
   {
     "Display": "Contracted",
     "Id": 4
+  },
+  {
+    "Display": "Complete",
+    "Id": 6
   }
 ]

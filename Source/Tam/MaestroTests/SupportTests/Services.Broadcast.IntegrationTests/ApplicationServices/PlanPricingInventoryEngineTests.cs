@@ -46,8 +46,15 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                _InventoryFileTestHelper.UploadProprietaryInventoryFile("PricingModel_Barter.xlsx", processInventoryRatings: true);
-                _InventoryFileTestHelper.UploadProprietaryInventoryFile("PricingModel_OAndO.xlsx", processInventoryRatings: true);
+                _InventoryFileTestHelper.UploadProprietaryInventoryFile(
+                    "PricingModel_Barter.xlsx", 
+                    processInventoryRatings: true, 
+                    processProgramEnrichmentJob: true);
+
+                _InventoryFileTestHelper.UploadProprietaryInventoryFile(
+                    "PricingModel_OAndO.xlsx", 
+                    processInventoryRatings: true, 
+                    processProgramEnrichmentJob: true);
 
                 var plan = _PlanRepository.GetPlan(1198);
                 var result = _PlanPricingInventoryEngine.GetInventoryForPlan(plan);
@@ -74,7 +81,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 StubbedConfigurationWebApiClient.RunTimeParameters["EnableOpenMarketInventoryForPricingModel"] = "False";
 
-                _InventoryFileTestHelper.UploadProprietaryInventoryFile("PricingModel_OAndO.xlsx", processInventoryRatings: true);
+                _InventoryFileTestHelper.UploadProprietaryInventoryFile(
+                    "PricingModel_OAndO.xlsx", 
+                    processInventoryRatings: true,
+                    processProgramEnrichmentJob: true);
 
                 var plan = _PlanRepository.GetPlan(1198);
                 var result = _PlanPricingInventoryEngine.GetInventoryForPlan(plan);

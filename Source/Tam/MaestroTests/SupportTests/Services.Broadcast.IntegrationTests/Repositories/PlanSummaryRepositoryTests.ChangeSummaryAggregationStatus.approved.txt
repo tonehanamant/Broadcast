@@ -7,6 +7,7 @@
   "BlackoutMarketTotalUsCoveragePercent": 13.8,
   "Budget": null,
   "Dayparts": null,
+  "DraftId": null,
   "DraftModifiedBy": null,
   "DraftModifiedDate": null,
   "Equivalized": false,
