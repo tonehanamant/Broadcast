@@ -25,7 +25,7 @@ namespace Services.Broadcast.Entities.Campaign
         public string PostingType { get; set; }
         public string Status { get; set; }
         public List<ProposalQuarterTableData> QuarterTables { get; set; } = new List<ProposalQuarterTableData>();
-        public ProposalQuarterTableData CampaignTotalsTable { get; set; }
+        public ProposalQuarterTableData CampaignTotalsTable { get; set; } = new ProposalQuarterTableData();
         public MarketCoverageData MarketCoverageData { get; set; }
         public List<DaypartData> Dayparts { get; set; } = new List<DaypartData>();
         public List<DateTime> FlightHiatuses { get; set; } = new List<DateTime>();
@@ -47,6 +47,7 @@ namespace Services.Broadcast.Entities.Campaign
             List<ProjectedPlan> projectedPlans = _ProjectPlansForQuarterExport(plans, spotLenghts, daypartCodes, mediaMonthAndWeekAggregateCache, quarterCalculationEngine);
             _PopulateHeaderData(exportType, campaign, plans, agency, advertiser, guaranteedDemos, spotLenghts, orderedAudiences, quarterCalculationEngine);
             _PopulateQuarterTableData(projectedPlans, quarterCalculationEngine);
+            _PopulateCampaignTotalsTable();
             _SetExportFileName(projectedPlans, campaign.ModifiedDate);
         }
 
@@ -134,16 +135,15 @@ namespace Services.Broadcast.Entities.Campaign
             return result;
         }
 
-        private void _PopulateQuarterTableData(List<ProjectedPlan> allDayparts, IQuarterCalculationEngine quarterCalculationEngine)
+        private void _PopulateQuarterTableData(List<ProjectedPlan> projectedPlans, IQuarterCalculationEngine quarterCalculationEngine)
         {
-            allDayparts.GroupBy(x => new { x.QuarterNumber, x.QuarterYear })
+            projectedPlans.GroupBy(x => new { x.QuarterNumber, x.QuarterYear })
                 .ToList()
                 .ForEach(planGroup =>
                 {
                     ProposalQuarterTableData newTable = new ProposalQuarterTableData
                     {
-                        QuarterLabel = $"Q{planGroup.Key.QuarterNumber} {planGroup.Key.QuarterYear}",
-                        Rows = new List<ProposalQuarterTableRowData>()
+                        QuarterLabel = $"Q{planGroup.Key.QuarterNumber} {planGroup.Key.QuarterYear}"
                     };
 
                     planGroup.GroupBy(x => new { x.DaypartCode, x.SpotLength, x.Equivalized })
@@ -162,7 +162,7 @@ namespace Services.Broadcast.Entities.Campaign
                             Units = unitsSum,
                             GuaranteedAudienceData = new ProposalQuarterGuaranteedAudienceData
                             {
-                                Impressions = (items.Sum(x => x.Units) == 0 ? 0 : (items.Sum(x => x.TotalImpressions) / unitsSum) / 1000),
+                                Impressions = (unitsSum == 0 ? 0 : (items.Sum(x => x.TotalImpressions) / unitsSum) / 1000),
                                 RatingPoints = (unitsSum == 0 ? 0 : items.Sum(x => x.TotalRatingPoints) / unitsSum),
                                 TotalImpressions = items.Sum(x => x.TotalImpressions) / 1000,
                                 TotalRatingPoints = items.Sum(x => x.TotalRatingPoints)
@@ -181,16 +181,55 @@ namespace Services.Broadcast.Entities.Campaign
                         row.HHAudienceData.CPM = _CalculateCost(row.HHAudienceData.TotalImpressions, row.TotalCost);
                         row.HHAudienceData.CPP = _CalculateCost(row.HHAudienceData.TotalImpressions, row.TotalCost);
 
-                        _SetRowTotals(newTable);
-
                         newTable.Rows.Add(row);
                         
                     });
+                    _SetTableTotals(newTable);
                     QuarterTables.Add(newTable);
                 });
         }
 
-        private static void _SetRowTotals(ProposalQuarterTableData table)
+        private void _PopulateCampaignTotalsTable()
+        {
+            QuarterTables.SelectMany(x => x.Rows)
+                .GroupBy(x => new { x.SpotLength, x.DaypartCode })
+                .ToList()
+                .ForEach(group=> {
+                    var items = group.ToList();
+                    int unitsSum = items.Sum(x => x.Units);
+                    ProposalQuarterTableRowData row = new ProposalQuarterTableRowData
+                    {
+                        DaypartCode = group.Key.DaypartCode,
+                        SpotLength = group.Key.SpotLength,
+                        TotalCost = items.Sum(x=>x.TotalCost),
+                        Units = unitsSum,
+                        GuaranteedAudienceData = new ProposalQuarterGuaranteedAudienceData
+                        {
+                            Impressions = items.Sum(x => x.GuaranteedAudienceData.Impressions),
+                            RatingPoints = items.Sum(x => x.GuaranteedAudienceData.RatingPoints),
+                            TotalImpressions = items.Sum(x => x.GuaranteedAudienceData.TotalImpressions),
+                            TotalRatingPoints = items.Sum(x => x.GuaranteedAudienceData.TotalRatingPoints)
+                        },
+                        HHAudienceData = new ProposalQuarterAudienceData
+                        {
+                            Impressions = items.Sum(x => x.HHAudienceData.Impressions),
+                            RatingPoints = items.Sum(x => x.HHAudienceData.RatingPoints),
+                            TotalImpressions = items.Sum(x => x.HHAudienceData.TotalImpressions),
+                            TotalRatingPoints = items.Sum(x => x.HHAudienceData.TotalRatingPoints)
+                        }
+                    };
+                    row.GuaranteedAudienceData.VPVH = row.GuaranteedAudienceData.TotalImpressions / row.HHAudienceData.TotalImpressions;
+                    row.GuaranteedAudienceData.CPM = _CalculateCost(row.GuaranteedAudienceData.TotalImpressions, row.TotalCost);
+                    row.GuaranteedAudienceData.CPP = _CalculateCost(row.GuaranteedAudienceData.TotalImpressions, row.TotalCost);
+                    row.HHAudienceData.CPM = _CalculateCost(row.HHAudienceData.TotalImpressions, row.TotalCost);
+                    row.HHAudienceData.CPP = _CalculateCost(row.HHAudienceData.TotalImpressions, row.TotalCost);
+                    
+                    CampaignTotalsTable.Rows.Add(row);
+                });
+            _SetTableTotals(CampaignTotalsTable);
+        }
+
+        private static void _SetTableTotals(ProposalQuarterTableData table)
         {
             table.TotalCost = table.Rows.Sum(x => x.TotalCost);
             table.TotalUnits = table.Rows.Sum(x => x.Units);
@@ -302,7 +341,7 @@ namespace Services.Broadcast.Entities.Campaign
     public class ProposalQuarterTableData
     {
         public string QuarterLabel { get; set; }
-        public List<ProposalQuarterTableRowData> Rows { get; set; }
+        public List<ProposalQuarterTableRowData> Rows { get; set; } = new List<ProposalQuarterTableRowData>();
         public decimal TotalCost { get; set; }
         public int TotalUnits { get; set; }
         public ProposalQuarterTotalTableData TotalHHData { get; set; }

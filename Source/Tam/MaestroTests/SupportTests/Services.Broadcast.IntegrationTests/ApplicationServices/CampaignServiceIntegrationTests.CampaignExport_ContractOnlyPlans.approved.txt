@@ -6,7 +6,169 @@
   "CampaignFlightStartDate": "03/14/20",
   "CampaignName": "Campaign with all types of plans",
   "CampaignStartQuarter": "Q1'20",
-  "CampaignTotalsTable": null,
+  "CampaignTotalsTable": {
+    "QuarterLabel": null,
+    "Rows": [
+      {
+        "DaypartCode": "MDN",
+        "GuaranteedAudienceData": {
+          "CPM": 25.00000000,
+          "CPP": 25.00000000,
+          "Impressions": 0.0,
+          "RatingPoints": 0.0,
+          "TotalImpressions": 40.0,
+          "TotalRatingPoints": 0.29889201,
+          "VPVH": 0.5
+        },
+        "HHAudienceData": {
+          "CPM": 12.50000000,
+          "CPP": 12.50000000,
+          "Impressions": 0.0,
+          "RatingPoints": 0.0,
+          "TotalImpressions": 80.0,
+          "TotalRatingPoints": 0.07258335
+        },
+        "SpotLength": "45 eq.",
+        "TotalCost": 1000.00000000,
+        "UnitCost": 0.0,
+        "Units": 0
+      },
+      {
+        "DaypartCode": "EF",
+        "GuaranteedAudienceData": {
+          "CPM": 25.00000000,
+          "CPP": 25.00000000,
+          "Impressions": 0.0,
+          "RatingPoints": 0.0,
+          "TotalImpressions": 80.0,
+          "TotalRatingPoints": 0.59778401,
+          "VPVH": 0.5
+        },
+        "HHAudienceData": {
+          "CPM": 12.50000000,
+          "CPP": 12.50000000,
+          "Impressions": 0.0,
+          "RatingPoints": 0.0,
+          "TotalImpressions": 160.0,
+          "TotalRatingPoints": 0.14516669
+        },
+        "SpotLength": "45 eq.",
+        "TotalCost": 2000.00000000,
+        "UnitCost": 0.0,
+        "Units": 0
+      },
+      {
+        "DaypartCode": "EM",
+        "GuaranteedAudienceData": {
+          "CPM": 25.00000000,
+          "CPP": 25.00000000,
+          "Impressions": 0.0,
+          "RatingPoints": 0.0,
+          "TotalImpressions": 19880.0,
+          "TotalRatingPoints": 148.54932764,
+          "VPVH": 0.5
+        },
+        "HHAudienceData": {
+          "CPM": 12.50000000,
+          "CPP": 12.50000000,
+          "Impressions": 0.0,
+          "RatingPoints": 0.0,
+          "TotalImpressions": 39760.0,
+          "TotalRatingPoints": 36.07392324
+        },
+        "SpotLength": "45 eq.",
+        "TotalCost": 497000.00000000,
+        "UnitCost": 0.0,
+        "Units": 0
+      },
+      {
+        "DaypartCode": "MDN",
+        "GuaranteedAudienceData": {
+          "CPM": 25.00000000,
+          "CPP": 25.00000000,
+          "Impressions": 0.0,
+          "RatingPoints": 0.0,
+          "TotalImpressions": 80.0,
+          "TotalRatingPoints": 0.59778401,
+          "VPVH": 0.5
+        },
+        "HHAudienceData": {
+          "CPM": 12.50000000,
+          "CPP": 12.50000000,
+          "Impressions": 0.0,
+          "RatingPoints": 0.0,
+          "TotalImpressions": 160.0,
+          "TotalRatingPoints": 0.14516669
+        },
+        "SpotLength": "30 eq.",
+        "TotalCost": 2000.00000000,
+        "UnitCost": 0.0,
+        "Units": 0
+      },
+      {
+        "DaypartCode": "EF",
+        "GuaranteedAudienceData": {
+          "CPM": 25.00000000,
+          "CPP": 25.00000000,
+          "Impressions": 0.0,
+          "RatingPoints": 0.0,
+          "TotalImpressions": 160.0,
+          "TotalRatingPoints": 1.19556803,
+          "VPVH": 0.5
+        },
+        "HHAudienceData": {
+          "CPM": 12.50000000,
+          "CPP": 12.50000000,
+          "Impressions": 0.0,
+          "RatingPoints": 0.0,
+          "TotalImpressions": 320.0,
+          "TotalRatingPoints": 0.29033339
+        },
+        "SpotLength": "30 eq.",
+        "TotalCost": 4000.00000000,
+        "UnitCost": 0.0,
+        "Units": 0
+      },
+      {
+        "DaypartCode": "EM",
+        "GuaranteedAudienceData": {
+          "CPM": 25.00000000,
+          "CPP": 25.00000000,
+          "Impressions": 0.0,
+          "RatingPoints": 0.0,
+          "TotalImpressions": 39760.0,
+          "TotalRatingPoints": 297.09865528,
+          "VPVH": 0.5
+        },
+        "HHAudienceData": {
+          "CPM": 12.50000000,
+          "CPP": 12.50000000,
+          "Impressions": 0.0,
+          "RatingPoints": 0.0,
+          "TotalImpressions": 79520.0,
+          "TotalRatingPoints": 72.14784647
+        },
+        "SpotLength": "30 eq.",
+        "TotalCost": 994000.00000000,
+        "UnitCost": 0.0,
+        "Units": 0
+      }
+    ],
+    "TotalCost": 1500000.00000000,
+    "TotalGuaranteeedData": {
+      "TotalCPM": 25.00000000,
+      "TotalCPP": 3345.6900000000002205478848,
+      "TotalImpressions": 60000.0,
+      "TotalRatingPoints": 448.33801099
+    },
+    "TotalHHData": {
+      "TotalCPM": 12.50000000,
+      "TotalCPP": 13777.264999999940062881177617,
+      "TotalImpressions": 120000.0,
+      "TotalRatingPoints": 108.87501982
+    },
+    "TotalUnits": 0
+  },
   "ClientName": "Stub Advertiser",
   "Dayparts": [],
   "FlightHiatuses": [],
@@ -165,18 +327,18 @@
           "Units": 0
         }
       ],
-      "TotalCost": 303600.00000000,
+      "TotalCost": 900000.00000000,
       "TotalGuaranteeedData": {
         "TotalCPM": 25.00000000,
-        "TotalCPP": 3345.6900000000000435733144269,
-        "TotalImpressions": 12144.0,
-        "TotalRatingPoints": 90.74361343
+        "TotalCPP": 3345.689999999997733071979,
+        "TotalImpressions": 36000.0,
+        "TotalRatingPoints": 269.0028066
       },
       "TotalHHData": {
         "TotalCPM": 12.50000000,
-        "TotalCPP": 13777.264999999993080486640868,
-        "TotalImpressions": 24288.0,
-        "TotalRatingPoints": 22.03630401
+        "TotalCPP": 13777.265000000003333891471025,
+        "TotalImpressions": 72000.0,
+        "TotalRatingPoints": 65.32501189
       },
       "TotalUnits": 0
     },
@@ -328,18 +490,18 @@
           "Units": 0
         }
       ],
-      "TotalCost": 202400.00000000,
+      "TotalCost": 600000.00000000,
       "TotalGuaranteeedData": {
         "TotalCPM": 25.00000000,
-        "TotalCPP": 3345.6900000000000435733144269,
-        "TotalImpressions": 8096.0,
-        "TotalRatingPoints": 60.49574228
+        "TotalCPP": 3345.6900000000039517617435,
+        "TotalImpressions": 24000.0,
+        "TotalRatingPoints": 179.3352044
       },
       "TotalHHData": {
         "TotalCPM": 12.50000000,
-        "TotalCPP": 13777.265000000024340867220615,
-        "TotalImpressions": 16192.0,
-        "TotalRatingPoints": 14.69086934
+        "TotalCPP": 13777.265000000003333891471025,
+        "TotalImpressions": 48000.0,
+        "TotalRatingPoints": 43.55000793
       },
       "TotalUnits": 0
     }
