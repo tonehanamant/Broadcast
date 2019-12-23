@@ -127,10 +127,11 @@ namespace Services.Broadcast.ReportGenerators
         {
             //markets row is the second row after current index
             currentRowIndex +=2;
-            string marketCoverageValue = string.Format("~{0}% Minimum TV HH Coverage | Blackout Markets: {1} | Preferential Markets: {2}"
+            string marketCoverageValue = string.Format("~{0}% Minimum TV HH Coverage{1}{2}"
                 , data.CoveragePercentage
-                , string.Join(", ", data.BlackoutMarketsName)
-                , string.Join(", ", data.PreferentialMarketsName));
+                , data.BlackoutMarketsName.Any() ?  $" | Blackout Markets: {string.Join(", ", data.BlackoutMarketsName)}" : string.Empty
+                , data.PreferentialMarketsName.Any() ? $" | Preferential Markets: {string.Join(", ", data.PreferentialMarketsName)}" : string.Empty
+                );
             proposalWorksheet.Cells[$"{FOOTER_INFO_COLUMN_INDEX}{currentRowIndex}"].Value = marketCoverageValue;
         }
 
