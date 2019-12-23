@@ -175,7 +175,20 @@
   "GuaranteedDemo": [
     "A21-24"
   ],
-  "MarketCoverageData": null,
+  "MarketCoverageData": {
+    "BlackoutMarketsName": [
+      "Presque Isle",
+      "Wilmington",
+      "Lansing"
+    ],
+    "CoveragePercentage": 80.0,
+    "PreferentialMarketsName": [
+      "Philadelphia",
+      "Macon",
+      "New York",
+      "Binghamton"
+    ]
+  },
   "Notes": null,
   "PostingType": "NTI",
   "QuarterTables": [

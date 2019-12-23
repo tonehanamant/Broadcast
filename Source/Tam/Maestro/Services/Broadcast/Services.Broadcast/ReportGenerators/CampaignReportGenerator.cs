@@ -1,5 +1,4 @@
 ﻿using OfficeOpenXml;
-using OfficeOpenXml.FormulaParsing;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Campaign;
 using System;
@@ -28,7 +27,7 @@ namespace Services.Broadcast.ReportGenerators
         private readonly int ROWS_TO_COPY = 4;
         private int planNameRowIndex = 7;        
         private int firstDataRowIndex = 9;
-        
+        private int currentRowIndex = 0;
 
         #region Cells addresses
         private readonly string CREATED_DATE_CELL = "T2";
@@ -61,6 +60,7 @@ namespace Services.Broadcast.ReportGenerators
         private readonly string CPM_COLUMN = "S";
         private readonly string CPP_COLUMN = "T";
         private readonly string CONDITIONAL_FORMAT_COLUMN = "A";
+        private readonly string FOOTER_INFO_COLUMN_INDEX = "F";
         #endregion
 
         /// <summary>
@@ -94,9 +94,9 @@ namespace Services.Broadcast.ReportGenerators
                 throw new Exception(string.Format(NOT_FOUND_WORKSHEET, PROPOSAL_WORKSHEET_NAME, Path.GetFileName(templateFilePath)));
             }
             _PopulateProposalWorksheetHeader(proposalWorksheet, campaignReportData);
-            int lastDataRowIndex = _PopulateProposalWorksheetQuarterTables(proposalWorksheet, campaignReportData);
-            _PopulateProposaTabTotalsTable(proposalWorksheet, campaignReportData.GuaranteedDemo, campaignReportData.CampaignTotalsTable, lastDataRowIndex);
-
+            _PopulateProposalWorksheetQuarterTables(proposalWorksheet, campaignReportData);
+            _PopulateProposaTabTotalsTable(proposalWorksheet, campaignReportData.GuaranteedDemo, campaignReportData.CampaignTotalsTable);
+            _PopulateMarketCoverage(proposalWorksheet, campaignReportData.MarketCoverageData);
             if (campaignReportData.Status.Equals("Proposal"))
             {
                 package.Workbook.Worksheets.Delete(CONTRACT_WORKSHEET_NAME);
@@ -123,24 +123,30 @@ namespace Services.Broadcast.ReportGenerators
             return package;
         }
 
-        private int _PopulateProposalWorksheetQuarterTables(ExcelWorksheet proposalWorksheet, CampaignReportData campaignReportData)
+        private void _PopulateMarketCoverage(ExcelWorksheet proposalWorksheet, MarketCoverageData data)
+        {
+            //markets row is the second row after current index
+            currentRowIndex +=2;
+            string marketCoverageValue = string.Format("~{0}% Minimum TV HH Coverage | Blackout Markets: {1} | Preferential Markets: {2}"
+                , data.CoveragePercentage
+                , string.Join(", ", data.BlackoutMarketsName)
+                , string.Join(", ", data.PreferentialMarketsName));
+            proposalWorksheet.Cells[$"{FOOTER_INFO_COLUMN_INDEX}{currentRowIndex}"].Value = marketCoverageValue;
+        }
+
+        private void _PopulateProposalWorksheetQuarterTables(ExcelWorksheet proposalWorksheet, CampaignReportData campaignReportData)
         {
             _AddQuarterPlanEmptyTables(proposalWorksheet, campaignReportData.QuarterTables.Count);
-            int lastDataRowIndex = _PutDataIntoPlanQuarterTables(proposalWorksheet, campaignReportData);
-            return lastDataRowIndex;
+            _PutDataIntoPlanQuarterTables(proposalWorksheet, campaignReportData);
         }
 
         private void _PopulateProposaTabTotalsTable(ExcelWorksheet proposalWorksheet, List<string> guaranteedDemo
-            , ProposalQuarterTableData campaignTotalsTable, int lastDataRowIndex)
+            , ProposalQuarterTableData campaignTotalsTable)
         {
-            int currentRowIndex = lastDataRowIndex;
-
-            currentRowIndex = _InsertTableRowsData(proposalWorksheet, guaranteedDemo, null, lastDataRowIndex
-                    , END_COLUMN_INDEX, FIRST_COLUMNS_INDEX, currentRowIndex, campaignTotalsTable);
+            _InsertTableRowsData(proposalWorksheet, guaranteedDemo, null, campaignTotalsTable);
 
             _SetTableTotals(proposalWorksheet, currentRowIndex, campaignTotalsTable);
         }
-
 
         private void _PopulateProposalWorksheetHeader(ExcelWorksheet worksheet, CampaignReportData data)
         {
@@ -171,31 +177,28 @@ namespace Services.Broadcast.ReportGenerators
             }
         }
 
-        private int _PutDataIntoPlanQuarterTables(ExcelWorksheet worksheet, CampaignReportData campaignReportData)
+        private void _PutDataIntoPlanQuarterTables(ExcelWorksheet worksheet, CampaignReportData campaignReportData)
         {
-            int currentRowIndex = firstDataRowIndex;
+            currentRowIndex = firstDataRowIndex;
             for (int j = 0; j < campaignReportData.QuarterTables.Count; j++)
             {
                 var table = campaignReportData.QuarterTables[j];
-                currentRowIndex = _InsertTableRowsData(worksheet, campaignReportData.GuaranteedDemo, planNameRowIndex, firstDataRowIndex
-                    , END_COLUMN_INDEX, FIRST_COLUMNS_INDEX, currentRowIndex, table);
+                _InsertTableRowsData(worksheet, campaignReportData.GuaranteedDemo, planNameRowIndex, table);
 
                 _SetTableTotals(worksheet, currentRowIndex, table);
 
                 if (j < campaignReportData.QuarterTables.Count)
                 {
                     currentRowIndex += EMPTY_TABLE_ROWS_NUMBER;
-                    planNameRowIndex = currentRowIndex - 2;
+                    planNameRowIndex = currentRowIndex - 2; //plan name row is 2 rows before the data row
                     firstDataRowIndex = currentRowIndex;
                 }
             }
-            return currentRowIndex;
         }
 
-        private int _InsertTableRowsData(ExcelWorksheet worksheet, List<string> guaranteedDemo
-            , int? planNameRowIndex, int firstDataRowIndex, int planEndColumnIndex, int firstColumnIndex
-            , int currentRowIndex, ProposalQuarterTableData table)
-        {
+        private void _InsertTableRowsData(ExcelWorksheet worksheet, List<string> guaranteedDemo
+            , int? planNameRowIndex, ProposalQuarterTableData table)
+        {            
             //we only set table name for quarter tables and not for campaign totals table
             if(planNameRowIndex != null)
             {
@@ -209,7 +212,7 @@ namespace Services.Broadcast.ReportGenerators
 
             for (int i = 0; i < table.Rows.Count; i++)
             {
-                worksheet.Cells[firstDataRowIndex, firstColumnIndex, firstDataRowIndex, planEndColumnIndex].Copy(worksheet.Cells[currentRowIndex, firstColumnIndex]);
+                worksheet.Cells[firstDataRowIndex, FIRST_COLUMNS_INDEX, firstDataRowIndex, END_COLUMN_INDEX].Copy(worksheet.Cells[currentRowIndex, FIRST_COLUMNS_INDEX]);
 
                 var row = table.Rows[i];
                 worksheet.Cells[$"{CONDITIONAL_FORMAT_COLUMN}{currentRowIndex}"].Value = (i % 2 == 0 ? "Odd" : "Even");
@@ -219,8 +222,6 @@ namespace Services.Broadcast.ReportGenerators
                 worksheet.Row(currentRowIndex).Height = ROW_HEIGHT;
                 currentRowIndex++;
             }
-
-            return currentRowIndex;
         }
 
         private void _SetTableTotals(ExcelWorksheet worksheet, int currentRowIndex, ProposalQuarterTableData table)

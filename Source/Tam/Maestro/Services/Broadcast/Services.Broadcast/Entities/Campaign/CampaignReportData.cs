@@ -48,14 +48,33 @@ namespace Services.Broadcast.Entities.Campaign
             _PopulateHeaderData(exportType, campaign, plans, agency, advertiser, guaranteedDemos, spotLenghts, orderedAudiences, quarterCalculationEngine);
             _PopulateQuarterTableData(projectedPlans, quarterCalculationEngine);
             _PopulateCampaignTotalsTable();
+            _PopulateMarketCoverate(plans);
             _SetExportFileName(projectedPlans, campaign.ModifiedDate);
+        }
+
+        private void _PopulateMarketCoverate(List<PlanDto> plans)
+        {
+            MarketCoverageData = new MarketCoverageData
+            {
+                PreferentialMarketsName = plans.SelectMany(x => x.AvailableMarkets.Where(y => y.ShareOfVoicePercent != null))
+                            .OrderByDescending(x => x.ShareOfVoicePercent.Value)
+                            .Select(x => x.Market)
+                            .ToList(),
+                BlackoutMarketsName = plans.SelectMany(x => x.BlackoutMarkets)
+                            .OrderByDescending(x => x.Rank)
+                            .Select(x => x.Market)
+                            .ToList(),
+                CoveragePercentage = plans.Where(x => x.CoverageGoalPercent.HasValue)
+                            .Select(x => x.CoverageGoalPercent.Value)
+                            .Max()
+            };
         }
 
         private void _SetExportFileName(List<ProjectedPlan> projectedPlans, DateTime campaignModifiedDate)
         {
             CampaignExportFileName = string.Format(FILENAME_FORMAT
                 , ClientName
-                , string.Join(" ", projectedPlans.Select(x => x.DaypartCode).Distinct().OrderBy(x=>x).ToList())
+                , string.Join(" ", projectedPlans.Select(x => x.DaypartCode).Distinct().OrderBy(x => x).ToList())
                 , (CampaignEndQuarter != CampaignStartQuarter ? $"{CampaignStartQuarter}-{CampaignEndQuarter}" : CampaignStartQuarter)
                 , campaignModifiedDate.ToString(DATE_FORMAT_FILENAME));
         }
@@ -182,7 +201,7 @@ namespace Services.Broadcast.Entities.Campaign
                         row.HHAudienceData.CPP = _CalculateCost(row.HHAudienceData.TotalImpressions, row.TotalCost);
 
                         newTable.Rows.Add(row);
-                        
+
                     });
                     _SetTableTotals(newTable);
                     QuarterTables.Add(newTable);
@@ -194,14 +213,15 @@ namespace Services.Broadcast.Entities.Campaign
             QuarterTables.SelectMany(x => x.Rows)
                 .GroupBy(x => new { x.SpotLength, x.DaypartCode })
                 .ToList()
-                .ForEach(group=> {
+                .ForEach(group =>
+                {
                     var items = group.ToList();
                     int unitsSum = items.Sum(x => x.Units);
                     ProposalQuarterTableRowData row = new ProposalQuarterTableRowData
                     {
                         DaypartCode = group.Key.DaypartCode,
                         SpotLength = group.Key.SpotLength,
-                        TotalCost = items.Sum(x=>x.TotalCost),
+                        TotalCost = items.Sum(x => x.TotalCost),
                         Units = unitsSum,
                         GuaranteedAudienceData = new ProposalQuarterGuaranteedAudienceData
                         {
@@ -223,7 +243,7 @@ namespace Services.Broadcast.Entities.Campaign
                     row.GuaranteedAudienceData.CPP = _CalculateCost(row.GuaranteedAudienceData.TotalImpressions, row.TotalCost);
                     row.HHAudienceData.CPM = _CalculateCost(row.HHAudienceData.TotalImpressions, row.TotalCost);
                     row.HHAudienceData.CPP = _CalculateCost(row.HHAudienceData.TotalImpressions, row.TotalCost);
-                    
+
                     CampaignTotalsTable.Rows.Add(row);
                 });
             _SetTableTotals(CampaignTotalsTable);
@@ -257,7 +277,7 @@ namespace Services.Broadcast.Entities.Campaign
         {
             return impressions == 0 ? 0 : cost / (decimal)impressions;
         }
-        
+
         private void _PopulateHeaderData(CampaignExportTypeEnum exportType
             , CampaignDto campaign
             , List<PlanDto> plans
@@ -277,7 +297,7 @@ namespace Services.Broadcast.Entities.Campaign
             _SetCampaignFlightDate(plans);
             PostingType = plans.Select(x => x.PostingType).Distinct().Single().ToString();
             Status = exportType.Equals(CampaignExportTypeEnum.Contract) ? "Order" : "Proposal";
-            
+
             _SetGuaranteeedDemo(guaranteedDemos, orderedAudiences);
             _SetSpotLengths(plans, spotLenghts);
         }
@@ -322,12 +342,10 @@ namespace Services.Broadcast.Entities.Campaign
             public decimal TotalCost { get; set; }
             public int Units { get; set; }
 
-
             public double TotalHHRatingPoints { get; set; }
             public double TotalHHImpressions { get; set; }
             public decimal HHCPM { get; set; }
             public decimal HHCPP { get; set; }
-
 
             public int AudienceId { get; set; }
             public double VPVH { get; set; }
@@ -378,6 +396,7 @@ namespace Services.Broadcast.Entities.Campaign
         public decimal CPP { get; set; }
 
     }
+
     public class ProposalQuarterGuaranteedAudienceData : ProposalQuarterAudienceData
     {
         public double VPVH { get; set; }
@@ -387,7 +406,7 @@ namespace Services.Broadcast.Entities.Campaign
     {
         public List<string> BlackoutMarketsName { get; set; }
         public List<string> PreferentialMarketsName { get; set; }
-        public int CoveragePercentage { get; set; }
+        public double CoveragePercentage { get; set; }
     }
 
     public class DaypartData
