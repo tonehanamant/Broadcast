@@ -199,7 +199,7 @@ namespace Services.Broadcast.Entities.Campaign
                         row.GuaranteedAudienceData.CPP = _CalculateCost(row.GuaranteedAudienceData.TotalImpressions, row.TotalCost);
                         row.HHAudienceData.CPM = _CalculateCost(row.HHAudienceData.TotalImpressions, row.TotalCost);
                         row.HHAudienceData.CPP = _CalculateCost(row.HHAudienceData.TotalImpressions, row.TotalCost);
-
+                        
                         newTable.Rows.Add(row);
 
                     });
