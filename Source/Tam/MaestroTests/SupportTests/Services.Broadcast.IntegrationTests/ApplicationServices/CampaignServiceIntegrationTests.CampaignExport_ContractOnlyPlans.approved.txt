@@ -13,7 +13,7 @@
         "DaypartCode": "MDN",
         "GuaranteedAudienceData": {
           "CPM": 25.00000000,
-          "CPP": 25.00000000,
+          "CPP": 3345.6900000000002205478848,
           "Impressions": 0.0,
           "RatingPoints": 0.0,
           "TotalImpressions": 40.0,
@@ -22,7 +22,7 @@
         },
         "HHAudienceData": {
           "CPM": 12.50000000,
-          "CPP": 12.50000000,
+          "CPP": 13777.265000000003333891471025,
           "Impressions": 0.0,
           "RatingPoints": 0.0,
           "TotalImpressions": 80.0,
@@ -37,7 +37,7 @@
         "DaypartCode": "EF",
         "GuaranteedAudienceData": {
           "CPM": 25.00000000,
-          "CPP": 25.00000000,
+          "CPP": 3345.6900000000002205478848,
           "Impressions": 0.0,
           "RatingPoints": 0.0,
           "TotalImpressions": 80.0,
@@ -46,7 +46,7 @@
         },
         "HHAudienceData": {
           "CPM": 12.50000000,
-          "CPP": 12.50000000,
+          "CPP": 13777.265000000003333891471025,
           "Impressions": 0.0,
           "RatingPoints": 0.0,
           "TotalImpressions": 160.0,
@@ -61,7 +61,7 @@
         "DaypartCode": "EM",
         "GuaranteedAudienceData": {
           "CPM": 25.00000000,
-          "CPP": 25.00000000,
+          "CPP": 3345.6899999999890494287263582,
           "Impressions": 0.0,
           "RatingPoints": 0.0,
           "TotalImpressions": 19880.0,
@@ -70,7 +70,7 @@
         },
         "HHAudienceData": {
           "CPM": 12.50000000,
-          "CPP": 12.50000000,
+          "CPP": 13777.264999999983092260411363,
           "Impressions": 0.0,
           "RatingPoints": 0.0,
           "TotalImpressions": 39760.0,
@@ -85,7 +85,7 @@
         "DaypartCode": "MDN",
         "GuaranteedAudienceData": {
           "CPM": 25.00000000,
-          "CPP": 25.00000000,
+          "CPP": 3345.6900000000002205478848,
           "Impressions": 0.0,
           "RatingPoints": 0.0,
           "TotalImpressions": 80.0,
@@ -94,7 +94,7 @@
         },
         "HHAudienceData": {
           "CPM": 12.50000000,
-          "CPP": 12.50000000,
+          "CPP": 13777.265000000003333891471025,
           "Impressions": 0.0,
           "RatingPoints": 0.0,
           "TotalImpressions": 160.0,
@@ -109,7 +109,7 @@
         "DaypartCode": "EF",
         "GuaranteedAudienceData": {
           "CPM": 25.00000000,
-          "CPP": 25.00000000,
+          "CPP": 3345.68999999999462372709675,
           "Impressions": 0.0,
           "RatingPoints": 0.0,
           "TotalImpressions": 160.0,
@@ -118,7 +118,7 @@
         },
         "HHAudienceData": {
           "CPM": 12.50000000,
-          "CPP": 12.50000000,
+          "CPP": 13777.265000000003333891471025,
           "Impressions": 0.0,
           "RatingPoints": 0.0,
           "TotalImpressions": 320.0,
@@ -133,7 +133,7 @@
         "DaypartCode": "EM",
         "GuaranteedAudienceData": {
           "CPM": 25.00000000,
-          "CPP": 25.00000000,
+          "CPP": 3345.6900000000003106375554326,
           "Impressions": 0.0,
           "RatingPoints": 0.0,
           "TotalImpressions": 39760.0,
@@ -142,7 +142,7 @@
         },
         "HHAudienceData": {
           "CPM": 12.50000000,
-          "CPP": 12.50000000,
+          "CPP": 13777.265000000002188138769535,
           "Impressions": 0.0,
           "RatingPoints": 0.0,
           "TotalImpressions": 79520.0,
@@ -199,7 +199,7 @@
           "DaypartCode": "MDN",
           "GuaranteedAudienceData": {
             "CPM": 25.00000000,
-            "CPP": 25.00000000,
+            "CPP": 3345.6900000000039517617435,
             "Impressions": 0.0,
             "RatingPoints": 0.0,
             "TotalImpressions": 24.0,
@@ -208,7 +208,7 @@
           },
           "HHAudienceData": {
             "CPM": 12.50000000,
-            "CPP": 12.50000000,
+            "CPP": 13777.265000000003333891471025,
             "Impressions": 0.0,
             "RatingPoints": 0.0,
             "TotalImpressions": 48.0,
@@ -223,7 +223,7 @@
           "DaypartCode": "EF",
           "GuaranteedAudienceData": {
             "CPM": 25.00000000,
-            "CPP": 25.00000000,
+            "CPP": 3345.6900000000039517617435,
             "Impressions": 0.0,
             "RatingPoints": 0.0,
             "TotalImpressions": 48.0,
@@ -232,7 +232,7 @@
           },
           "HHAudienceData": {
             "CPM": 12.50000000,
-            "CPP": 12.50000000,
+            "CPP": 13777.265000000003333891471025,
             "Impressions": 0.0,
             "RatingPoints": 0.0,
             "TotalImpressions": 96.0,
@@ -247,7 +247,7 @@
           "DaypartCode": "EM",
           "GuaranteedAudienceData": {
             "CPM": 25.00000000,
-            "CPP": 25.00000000,
+            "CPP": 3345.6900000000003106375554326,
             "Impressions": 0.0,
             "RatingPoints": 0.0,
             "TotalImpressions": 11928.0,
@@ -256,7 +256,7 @@
           },
           "HHAudienceData": {
             "CPM": 12.50000000,
-            "CPP": 12.50000000,
+            "CPP": 13777.265000000008553431555592,
             "Impressions": 0.0,
             "RatingPoints": 0.0,
             "TotalImpressions": 23856.0,
@@ -271,7 +271,7 @@
           "DaypartCode": "MDN",
           "GuaranteedAudienceData": {
             "CPM": 25.00000000,
-            "CPP": 25.00000000,
+            "CPP": 3345.6900000000039517617435,
             "Impressions": 0.0,
             "RatingPoints": 0.0,
             "TotalImpressions": 48.0,
@@ -280,7 +280,7 @@
           },
           "HHAudienceData": {
             "CPM": 12.50000000,
-            "CPP": 12.50000000,
+            "CPP": 13777.265000000003333891471025,
             "Impressions": 0.0,
             "RatingPoints": 0.0,
             "TotalImpressions": 96.0,
@@ -295,7 +295,7 @@
           "DaypartCode": "EF",
           "GuaranteedAudienceData": {
             "CPM": 25.00000000,
-            "CPP": 25.00000000,
+            "CPP": 3345.689999999999287744420125,
             "Impressions": 0.0,
             "RatingPoints": 0.0,
             "TotalImpressions": 96.0,
@@ -304,7 +304,7 @@
           },
           "HHAudienceData": {
             "CPM": 12.50000000,
-            "CPP": 12.50000000,
+            "CPP": 13777.265000000034969396617729,
             "Impressions": 0.0,
             "RatingPoints": 0.0,
             "TotalImpressions": 192.0,
@@ -319,7 +319,7 @@
           "DaypartCode": "EM",
           "GuaranteedAudienceData": {
             "CPM": 25.00000000,
-            "CPP": 25.00000000,
+            "CPP": 3345.6900000000078181101081489,
             "Impressions": 0.0,
             "RatingPoints": 0.0,
             "TotalImpressions": 23856.0,
@@ -328,7 +328,7 @@
           },
           "HHAudienceData": {
             "CPM": 12.50000000,
-            "CPP": 12.50000000,
+            "CPP": 13777.265000000008553431555592,
             "Impressions": 0.0,
             "RatingPoints": 0.0,
             "TotalImpressions": 47712.0,
@@ -362,7 +362,7 @@
           "DaypartCode": "MDN",
           "GuaranteedAudienceData": {
             "CPM": 25.00000000,
-            "CPP": 25.00000000,
+            "CPP": 3345.68999999999462372709675,
             "Impressions": 0.0,
             "RatingPoints": 0.0,
             "TotalImpressions": 16.0,
@@ -371,7 +371,7 @@
           },
           "HHAudienceData": {
             "CPM": 12.50000000,
-            "CPP": 12.50000000,
+            "CPP": 13777.265000000003333891471025,
             "Impressions": 0.0,
             "RatingPoints": 0.0,
             "TotalImpressions": 32.0,
@@ -386,7 +386,7 @@
           "DaypartCode": "EF",
           "GuaranteedAudienceData": {
             "CPM": 25.00000000,
-            "CPP": 25.00000000,
+            "CPP": 3345.68999999999462372709675,
             "Impressions": 0.0,
             "RatingPoints": 0.0,
             "TotalImpressions": 32.0,
@@ -395,7 +395,7 @@
           },
           "HHAudienceData": {
             "CPM": 12.50000000,
-            "CPP": 12.50000000,
+            "CPP": 13777.265000000003333891471025,
             "Impressions": 0.0,
             "RatingPoints": 0.0,
             "TotalImpressions": 64.0,
@@ -410,7 +410,7 @@
           "DaypartCode": "EM",
           "GuaranteedAudienceData": {
             "CPM": 25.00000000,
-            "CPP": 25.00000000,
+            "CPP": 3345.6900000000003106375554326,
             "Impressions": 0.0,
             "RatingPoints": 0.0,
             "TotalImpressions": 7952.0,
@@ -419,7 +419,7 @@
           },
           "HHAudienceData": {
             "CPM": 12.50000000,
-            "CPP": 12.50000000,
+            "CPP": 13777.265000000040379895485878,
             "Impressions": 0.0,
             "RatingPoints": 0.0,
             "TotalImpressions": 15904.0,
@@ -434,7 +434,7 @@
           "DaypartCode": "MDN",
           "GuaranteedAudienceData": {
             "CPM": 25.00000000,
-            "CPP": 25.00000000,
+            "CPP": 3345.68999999999462372709675,
             "Impressions": 0.0,
             "RatingPoints": 0.0,
             "TotalImpressions": 32.0,
@@ -443,7 +443,7 @@
           },
           "HHAudienceData": {
             "CPM": 12.50000000,
-            "CPP": 12.50000000,
+            "CPP": 13777.265000000003333891471025,
             "Impressions": 0.0,
             "RatingPoints": 0.0,
             "TotalImpressions": 64.0,
@@ -458,7 +458,7 @@
           "DaypartCode": "EF",
           "GuaranteedAudienceData": {
             "CPM": 25.00000000,
-            "CPP": 25.00000000,
+            "CPP": 3345.6900000000016197530818125,
             "Impressions": 0.0,
             "RatingPoints": 0.0,
             "TotalImpressions": 64.0,
@@ -467,7 +467,7 @@
           },
           "HHAudienceData": {
             "CPM": 12.50000000,
-            "CPP": 12.50000000,
+            "CPP": 13777.264999999955880633750969,
             "Impressions": 0.0,
             "RatingPoints": 0.0,
             "TotalImpressions": 128.0,
@@ -482,7 +482,7 @@
           "DaypartCode": "EM",
           "GuaranteedAudienceData": {
             "CPM": 25.00000000,
-            "CPP": 25.00000000,
+            "CPP": 3345.6899999999890494287263582,
             "Impressions": 0.0,
             "RatingPoints": 0.0,
             "TotalImpressions": 15904.0,
@@ -491,7 +491,7 @@
           },
           "HHAudienceData": {
             "CPM": 12.50000000,
-            "CPP": 12.50000000,
+            "CPP": 13777.264999999992640199590449,
             "Impressions": 0.0,
             "RatingPoints": 0.0,
             "TotalImpressions": 31808.0,

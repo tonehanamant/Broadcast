@@ -196,9 +196,9 @@ namespace Services.Broadcast.Entities.Campaign
                         };
                         row.GuaranteedAudienceData.VPVH = row.GuaranteedAudienceData.TotalImpressions / row.HHAudienceData.TotalImpressions;
                         row.GuaranteedAudienceData.CPM = _CalculateCost(row.GuaranteedAudienceData.TotalImpressions, row.TotalCost);
-                        row.GuaranteedAudienceData.CPP = _CalculateCost(row.GuaranteedAudienceData.TotalImpressions, row.TotalCost);
+                        row.GuaranteedAudienceData.CPP = _CalculateCost(row.GuaranteedAudienceData.TotalRatingPoints, row.TotalCost);
                         row.HHAudienceData.CPM = _CalculateCost(row.HHAudienceData.TotalImpressions, row.TotalCost);
-                        row.HHAudienceData.CPP = _CalculateCost(row.HHAudienceData.TotalImpressions, row.TotalCost);
+                        row.HHAudienceData.CPP = _CalculateCost(row.HHAudienceData.TotalRatingPoints, row.TotalCost);
                         
                         newTable.Rows.Add(row);
 
@@ -206,6 +206,17 @@ namespace Services.Broadcast.Entities.Campaign
                     _SetTableTotals(newTable);
                     QuarterTables.Add(newTable);
                 });
+        }
+
+        /// <summary>
+        /// Calculate CPM or CPP depending on the value sent in the points property   
+        /// </summary>
+        /// <param name="points">Impressions or rating points.</param>
+        /// <param name="cost">Available budget</param>
+        /// <returns>CPM or CPP</returns>
+        private static decimal _CalculateCost(double points, decimal cost)
+        {
+            return points == 0 ? 0 : cost / (decimal)points;
         }
 
         private void _PopulateCampaignTotalsTable()
@@ -240,9 +251,9 @@ namespace Services.Broadcast.Entities.Campaign
                     };
                     row.GuaranteedAudienceData.VPVH = row.GuaranteedAudienceData.TotalImpressions / row.HHAudienceData.TotalImpressions;
                     row.GuaranteedAudienceData.CPM = _CalculateCost(row.GuaranteedAudienceData.TotalImpressions, row.TotalCost);
-                    row.GuaranteedAudienceData.CPP = _CalculateCost(row.GuaranteedAudienceData.TotalImpressions, row.TotalCost);
+                    row.GuaranteedAudienceData.CPP = _CalculateCost(row.GuaranteedAudienceData.TotalRatingPoints, row.TotalCost);
                     row.HHAudienceData.CPM = _CalculateCost(row.HHAudienceData.TotalImpressions, row.TotalCost);
-                    row.HHAudienceData.CPP = _CalculateCost(row.HHAudienceData.TotalImpressions, row.TotalCost);
+                    row.HHAudienceData.CPP = _CalculateCost(row.HHAudienceData.TotalRatingPoints, row.TotalCost);
 
                     CampaignTotalsTable.Rows.Add(row);
                 });
@@ -272,12 +283,7 @@ namespace Services.Broadcast.Entities.Campaign
                 TotalCPP = _CalculateCost(totalRatingPoints, table.TotalCost)
             };
         }
-
-        private static decimal _CalculateCost(double impressions, decimal cost)
-        {
-            return impressions == 0 ? 0 : cost / (decimal)impressions;
-        }
-
+        
         private void _PopulateHeaderData(CampaignExportTypeEnum exportType
             , CampaignDto campaign
             , List<PlanDto> plans
