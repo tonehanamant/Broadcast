@@ -144,7 +144,7 @@ namespace Services.Broadcast.ReportGenerators
         private void _PopulateProposaTabTotalsTable(ExcelWorksheet proposalWorksheet, List<string> guaranteedDemo
             , ProposalQuarterTableData campaignTotalsTable)
         {
-            _InsertTableRowsData(proposalWorksheet, guaranteedDemo, null, campaignTotalsTable);
+            _InsertTableRowsData(proposalWorksheet, guaranteedDemo, campaignTotalsTable, false);
 
             _SetTableTotals(proposalWorksheet, currentRowIndex, campaignTotalsTable);
         }
@@ -184,7 +184,7 @@ namespace Services.Broadcast.ReportGenerators
             for (int j = 0; j < campaignReportData.QuarterTables.Count; j++)
             {
                 var table = campaignReportData.QuarterTables[j];
-                _InsertTableRowsData(worksheet, campaignReportData.GuaranteedDemo, planNameRowIndex, table);
+                _InsertTableRowsData(worksheet, campaignReportData.GuaranteedDemo, table);
 
                 _SetTableTotals(worksheet, currentRowIndex, table);
 
@@ -198,15 +198,15 @@ namespace Services.Broadcast.ReportGenerators
         }
 
         private void _InsertTableRowsData(ExcelWorksheet worksheet, List<string> guaranteedDemo
-            , int? planNameRowIndex, ProposalQuarterTableData table)
+            , ProposalQuarterTableData table, bool setTableName = true)
         {            
             //we only set table name for quarter tables and not for campaign totals table
-            if(planNameRowIndex != null)
+            if(setTableName)
             {
-                worksheet.Cells[$"{PLAN_NAME_COLUMN}{planNameRowIndex}"].Value = table.QuarterLabel;
-                worksheet.Cells[$"{GUARANTEED_DEMO_COLUMN}{planNameRowIndex}"].Value = guaranteedDemo;
+                worksheet.Cells[$"{PLAN_NAME_COLUMN}{planNameRowIndex}"].Value = table.QuarterLabel;                
             }
-            
+            worksheet.Cells[$"{GUARANTEED_DEMO_COLUMN}{planNameRowIndex}"].Value = string.Join(",", guaranteedDemo);
+
             //insert count - 1 rows because we already have 1 row in the template
             //insert at position currentRowIndex+1 because we want to insert after the first data row existing in the template
             worksheet.InsertRow(currentRowIndex + 1, table.Rows.Count - 1);
