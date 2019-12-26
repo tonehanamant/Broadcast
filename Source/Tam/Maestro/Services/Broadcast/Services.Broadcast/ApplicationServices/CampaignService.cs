@@ -459,13 +459,18 @@ namespace Services.Broadcast.ApplicationServices
             AgencyDto agency = _TrafficApiCache.GetAgency(campaign.AgencyId);
             AdvertiserDto advertiser = _TrafficApiCache.GetAdvertiser(campaign.AdvertiserId);
             var plans = campaign.Plans
-                .Select(x => _PlanRepository.GetPlan(x.PlanId)).ToList();
+                .Select(x =>
+                {
+                    var plan = _PlanRepository.GetPlan(x.PlanId);
+                    DaypartTimeHelper.AddOneSecondToEndTime(plan.Dayparts);
+                    return plan;
+                }).ToList();
 
             List<PlanAudienceDisplay> guaranteedDemos = plans.Select(x => x.AudienceId).Distinct()
                 .Select(x => _AudienceService.GetAudienceById(x)).ToList();
-            
+
             return new CampaignReportData(request.ExportType, campaign, plans, agency, advertiser, guaranteedDemos,
-                _SpotLengthService.GetAllSpotLengths(),                
+                _SpotLengthService.GetAllSpotLengths(),
                 _DaypartCodeService.GetAllDaypartCodes(),
                  _AudienceService.GetAudiences(),
                  _MediaMonthAndWeekAggregateCache,

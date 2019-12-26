@@ -1,10 +1,10 @@
 ﻿using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities.Plan;
 using Services.Broadcast.Extensions;
+using Services.Broadcast.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 
 namespace Services.Broadcast.Entities.Campaign
@@ -27,7 +27,7 @@ namespace Services.Broadcast.Entities.Campaign
         public List<ProposalQuarterTableData> QuarterTables { get; set; } = new List<ProposalQuarterTableData>();
         public ProposalQuarterTableData CampaignTotalsTable { get; set; } = new ProposalQuarterTableData();
         public MarketCoverageData MarketCoverageData { get; set; }
-        public List<DaypartData> Dayparts { get; set; } = new List<DaypartData>();
+        public List<DaypartData> DaypartsData { get; set; } = new List<DaypartData>();
         public List<DateTime> FlightHiatuses { get; set; } = new List<DateTime>();
         public string Notes { get; set; }
 
@@ -49,7 +49,18 @@ namespace Services.Broadcast.Entities.Campaign
             _PopulateQuarterTableData(projectedPlans, quarterCalculationEngine);
             _PopulateCampaignTotalsTable();
             _PopulateMarketCoverate(plans);
+            _PopulateDaypartsData(projectedPlans);
             _SetExportFileName(projectedPlans, campaign.ModifiedDate);
+        }
+
+        private void _PopulateDaypartsData(List<ProjectedPlan> projectedPlans)
+        {
+            DaypartsData = projectedPlans.Select(x => new DaypartData
+            {
+                DaypartCode = x.DaypartCode,
+                EndTime = x.DaypartEndTime,
+                StartTime = x.DaypartStartTime
+            }).Distinct(new DaypartDataEqualityComparer()).ToList();
         }
 
         private void _PopulateMarketCoverate(List<PlanDto> plans)
@@ -125,6 +136,8 @@ namespace Services.Broadcast.Entities.Campaign
                             QuarterYear = quarter.Year,
                             QuarterNumber = quarter.Quarter,
                             DaypartCode = daypartCode.Code,
+                            DaypartStartTime = DaypartTimeHelper.ConvertSecondsToFormattedTime(daypart.StartTimeSeconds),
+                            DaypartEndTime = DaypartTimeHelper.ConvertSecondsToFormattedTime(daypart.EndTimeSeconds),
                             SpotLengthId = plan.SpotLengthId,
                             SpotLength = spotLenghts.Single(y => y.Id == plan.SpotLengthId).Display,
                             Equivalized = plan.Equivalized,
@@ -340,6 +353,8 @@ namespace Services.Broadcast.Entities.Campaign
             public int QuarterNumber { get; set; }
             public int QuarterYear { get; set; }
             public string DaypartCode { get; set; }
+            public string DaypartStartTime { get; set; }
+            public string DaypartEndTime { get; set; }
             public List<string> GuaranteedDemo { get; set; }
             public string SpotLength { get; set; }
             public int SpotLengthId { get; set; }
@@ -419,7 +434,22 @@ namespace Services.Broadcast.Entities.Campaign
     {
         public string DaypartCode { get; set; }
         public string DaysLabel { get; set; }
-        public int StartTime { get; set; }
-        public int EndTime { get; set; }
+        public string StartTime { get; set; }
+        public string EndTime { get; set; }
+    }
+
+    public class DaypartDataEqualityComparer : IEqualityComparer<DaypartData>
+    {
+        public bool Equals(DaypartData x, DaypartData y)
+        {
+            return x.DaypartCode.Equals(y.DaypartCode)
+                && x.StartTime.Equals(y.StartTime)
+                && x.EndTime.Equals(y.EndTime);
+        }
+
+        public int GetHashCode(DaypartData obj)
+        {
+            return $"{obj.DaypartCode} {obj.StartTime} {obj.EndTime}".GetHashCode();
+        }
     }
 }

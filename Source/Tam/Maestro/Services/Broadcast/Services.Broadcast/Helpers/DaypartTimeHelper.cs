@@ -2,6 +2,7 @@
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Plan;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace Services.Broadcast.Helpers
 {
@@ -48,6 +49,17 @@ namespace Services.Broadcast.Helpers
 
             var pi = incomingType.GetProperty(_RegisteredTypesAndProperties[incomingType]);
             candidates.ForEach(c => pi.SetValue(c, (int)pi.GetValue(c) - 1));
+        }
+
+        /// <summary>
+        /// Gets the time format as "hh:mm:ss tt" from seconds.
+        /// </summary>
+        /// <param name="seconds">The seconds to format as time</param>
+        /// <returns>String containing the time format</returns>
+        public static string ConvertSecondsToFormattedTime(int seconds)
+        {
+            return DateTime.Today.Add(TimeSpan.FromSeconds(seconds))
+                .ToString("hh:mmtt", new DateTimeFormatInfo { AMDesignator = "am", PMDesignator = "pm"});
         }
     }
 }

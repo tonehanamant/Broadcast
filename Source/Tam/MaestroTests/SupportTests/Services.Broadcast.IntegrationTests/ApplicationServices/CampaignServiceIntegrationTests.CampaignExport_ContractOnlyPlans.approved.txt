@@ -170,7 +170,26 @@
     "TotalUnits": 0
   },
   "ClientName": "Stub Advertiser",
-  "Dayparts": [],
+  "DaypartsData": [
+    {
+      "DaypartCode": "MDN",
+      "DaysLabel": null,
+      "EndTime": "01:00pm",
+      "StartTime": "11:00am"
+    },
+    {
+      "DaypartCode": "EF",
+      "DaysLabel": null,
+      "EndTime": "06:00pm",
+      "StartTime": "03:00pm"
+    },
+    {
+      "DaypartCode": "EM",
+      "DaysLabel": null,
+      "EndTime": "09:00am",
+      "StartTime": "06:00am"
+    }
+  ],
   "FlightHiatuses": [],
   "GuaranteedDemo": [
     "A21-24"

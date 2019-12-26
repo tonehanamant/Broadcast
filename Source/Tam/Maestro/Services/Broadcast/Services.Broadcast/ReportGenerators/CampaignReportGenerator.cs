@@ -97,6 +97,7 @@ namespace Services.Broadcast.ReportGenerators
             _PopulateProposalWorksheetQuarterTables(proposalWorksheet, campaignReportData);
             _PopulateProposaTabTotalsTable(proposalWorksheet, campaignReportData.GuaranteedDemo, campaignReportData.CampaignTotalsTable);
             _PopulateMarketCoverage(proposalWorksheet, campaignReportData.MarketCoverageData);
+            _PopulateDayparts(proposalWorksheet, campaignReportData.DaypartsData);
             if (campaignReportData.Status.Equals("Proposal"))
             {
                 package.Workbook.Worksheets.Delete(CONTRACT_WORKSHEET_NAME);
@@ -121,6 +122,17 @@ namespace Services.Broadcast.ReportGenerators
             package.Workbook.CalcMode = ExcelCalcMode.Automatic;
 
             return package;
+        }
+
+        private void _PopulateDayparts(ExcelWorksheet proposalWorksheet, List<DaypartData> daypartsData)
+        {
+            //markets row is the second row after current index
+            currentRowIndex += 2;
+            if (daypartsData.Any())
+            {
+                string daypartsRowData = string.Join(", ", daypartsData.Select(x => $"{x.DaypartCode} - {x.StartTime} - {x.EndTime}").ToList());
+                proposalWorksheet.Cells[$"{FOOTER_INFO_COLUMN_INDEX}{currentRowIndex}"].Value = daypartsRowData;
+            }
         }
 
         private void _PopulateMarketCoverage(ExcelWorksheet proposalWorksheet, MarketCoverageData data)
