@@ -72,7 +72,7 @@ namespace Services.Broadcast.Entities.Campaign
                             .Select(x => x.Market)
                             .ToList(),
                 BlackoutMarketsName = plans.SelectMany(x => x.BlackoutMarkets)
-                            .OrderByDescending(x => x.Rank)
+                            .OrderBy(x => x.Rank)
                             .Select(x => x.Market)
                             .ToList(),
                 CoveragePercentage = plans.Where(x => x.CoverageGoalPercent.HasValue)

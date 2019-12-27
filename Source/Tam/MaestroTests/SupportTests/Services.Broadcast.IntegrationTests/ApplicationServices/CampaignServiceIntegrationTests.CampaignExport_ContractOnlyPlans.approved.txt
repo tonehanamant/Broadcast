@@ -196,9 +196,9 @@
   ],
   "MarketCoverageData": {
     "BlackoutMarketsName": [
-      "Presque Isle",
+      "Lansing",
       "Wilmington",
-      "Lansing"
+      "Presque Isle"
     ],
     "CoveragePercentage": 80.0,
     "PreferentialMarketsName": [
