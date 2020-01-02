@@ -12,20 +12,18 @@ using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.Cable.Entities;
 using Tam.Maestro.Services.ContractInterfaces;
 using Tam.Maestro.Web.Common;
+using Services.Broadcast.ApplicationServices.Security;
 
 namespace BroadcastComposerWeb.Controllers
 {
     [RoutePrefix("api/v1/Plan")]
     public class PlanApiController : BroadcastControllerBase
     {
-        private readonly BroadcastApplicationServiceFactory _ApplicationServiceFactory;
-
         public PlanApiController(
             IWebLogger logger,
             BroadcastApplicationServiceFactory applicationServiceFactory)
-            : base(logger, new ControllerNameRetriever(typeof(PlanApiController).Name))
+            : base(logger, new ControllerNameRetriever(typeof(PlanApiController).Name), applicationServiceFactory)
         {
-            _ApplicationServiceFactory = applicationServiceFactory;
         }
 
         /// <summary>
@@ -38,7 +36,8 @@ namespace BroadcastComposerWeb.Controllers
         [Authorize]
         public BaseResponse<int> SavePlan(PlanDto newPlan)
         {
-            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanService>().SavePlan(newPlan, Identity.Name, DateTime.Now));
+            var fullName = _GetCurrentUserFullName();
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanService>().SavePlan(newPlan, fullName, DateTime.Now));
         }
 
         /// <summary>

@@ -12,12 +12,9 @@ namespace BroadcastComposerWeb.Controllers
     [RoutePrefix("api/v1/Genres")]
     public class GenreApiController : BroadcastControllerBase
     {
-        private readonly BroadcastApplicationServiceFactory _ApplicationServiceFactory;
-
         public GenreApiController(IWebLogger logger, BroadcastApplicationServiceFactory applicationServiceFactory) :
-            base(logger, new ControllerNameRetriever(typeof(GenreApiController).Name))
+            base(logger, new ControllerNameRetriever(typeof(GenreApiController).Name), applicationServiceFactory)
         {
-            _ApplicationServiceFactory = applicationServiceFactory;
         }
 
         /// <summary>

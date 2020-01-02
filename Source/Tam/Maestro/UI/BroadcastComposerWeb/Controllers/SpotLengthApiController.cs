@@ -11,14 +11,11 @@ namespace BroadcastComposerWeb.Controllers
     [RoutePrefix("api/v1/SpotLengths")]
     public class SpotLengthApiController : BroadcastControllerBase
     {
-        private readonly BroadcastApplicationServiceFactory _ApplicationServiceFactory;
-
         public SpotLengthApiController(
             IWebLogger logger,
             BroadcastApplicationServiceFactory applicationServiceFactory)
-            : base(logger, new ControllerNameRetriever(typeof(SpotLengthApiController).Name))
+            : base(logger, new ControllerNameRetriever(typeof(SpotLengthApiController).Name), applicationServiceFactory)
         {
-            _ApplicationServiceFactory = applicationServiceFactory;
         }
 
         /// <summary>

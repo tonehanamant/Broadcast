@@ -15,8 +15,6 @@ namespace BroadcastComposerWeb.Controllers
     [RoutePrefix("api/v1/DaypartTypes")]
     public class DaypartTypeApiController : BroadcastControllerBase
     {
-        private readonly BroadcastApplicationServiceFactory _ApplicationServiceFactory;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="DaypartTypeApiController"/> class.
         /// </summary>
@@ -25,9 +23,8 @@ namespace BroadcastComposerWeb.Controllers
         public DaypartTypeApiController(
             IWebLogger logger,
             BroadcastApplicationServiceFactory applicationServiceFactory)
-            : base(logger, new ControllerNameRetriever(typeof(DaypartTypeApiController).Name))
+            : base(logger, new ControllerNameRetriever(typeof(DaypartTypeApiController).Name), applicationServiceFactory)
         {
-            _ApplicationServiceFactory = applicationServiceFactory;
         }
 
         /// <summary>

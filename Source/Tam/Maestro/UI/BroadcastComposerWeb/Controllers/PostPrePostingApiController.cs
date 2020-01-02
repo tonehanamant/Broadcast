@@ -1,6 +1,7 @@
 ﻿using Common.Services.WebComponents;
 using Newtonsoft.Json;
 using Services.Broadcast.ApplicationServices;
+using Services.Broadcast.ApplicationServices.Security;
 using Services.Broadcast.Entities;
 using System;
 using System.Collections.Generic;
@@ -19,12 +20,9 @@ namespace BroadcastComposerWeb.Controllers
     [RestrictedAccess(RequiredRole = RoleType.Broadcast_Proposer)]
     public class PostPrePostingApiController : BroadcastControllerBase
     {
-        private readonly BroadcastApplicationServiceFactory _ApplicationServiceFactory;
-
         public PostPrePostingApiController(IWebLogger logger, BroadcastApplicationServiceFactory applicationServiceFactory)
-            : base(logger, new ControllerNameRetriever(typeof(PostPrePostingApiController).Name))
+            : base(logger, new ControllerNameRetriever(typeof(PostPrePostingApiController).Name), applicationServiceFactory)
         {
-            _ApplicationServiceFactory = applicationServiceFactory;
         }
 
         [HttpPost]
@@ -35,7 +33,7 @@ namespace BroadcastComposerWeb.Controllers
                 throw new Exception("No post file data received.");
 
             var request = JsonConvert.DeserializeObject<PostRequest>(saveRequest.Content.ReadAsStringAsync().Result);
-            request.UserName = Identity.Name;
+            request.UserName = _GetCurrentUserFullName();
             request.UploadDate = DateTime.Now;
             request.ModifiedDate = DateTime.Now;
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPostPrePostingService>().SavePost(request));
@@ -52,7 +50,7 @@ namespace BroadcastComposerWeb.Controllers
             if (request.FileId == null)
                 throw new Exception("Can not edit post with no id.");
 
-            request.UserName = Identity.Name;
+            request.UserName = _GetCurrentUserFullName();
             request.ModifiedDate = DateTime.Now;
 
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPostPrePostingService>().EditPost(request));

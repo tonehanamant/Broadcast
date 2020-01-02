@@ -11,17 +11,15 @@ namespace BroadcastComposerWeb.Controllers
     [RoutePrefix("api/v1/Advertisers")]
     public class AdvertiserApiController : BroadcastControllerBase
     {
-        private readonly BroadcastApplicationServiceFactory _ApplicationServiceFactory;
-
         public AdvertiserApiController(IWebLogger logger, BroadcastApplicationServiceFactory applicationServiceFactory) :
-            base(logger, new ControllerNameRetriever(typeof(DaypartCodeApiController).Name))
+            base(logger, new ControllerNameRetriever(typeof(DaypartCodeApiController).Name), applicationServiceFactory)
         {
-            _ApplicationServiceFactory = applicationServiceFactory;
         }
 
         /// <summary>
         /// Returns advertisers for a specific agency
         /// </summary>
+        /// <param name="agencyId">Agency id</param>
         [HttpGet]
         [Route("")]
         public BaseResponse<List<AdvertiserDto>> GetAdvertisersByAgencyId(int agencyId)

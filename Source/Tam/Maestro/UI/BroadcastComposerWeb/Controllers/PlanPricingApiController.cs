@@ -1,7 +1,6 @@
 ﻿using Common.Services.WebComponents;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Entities.Plan.Pricing;
-using Services.Broadcast.Entities.PlanPricing;
 using System;
 using System.Collections.Generic;
 using System.Web.Http;
@@ -14,12 +13,9 @@ namespace BroadcastComposerWeb.Controllers
     [RoutePrefix("api/v1/PricingService")]
     public class PlanPricingApiController : BroadcastControllerBase
     {
-        private readonly BroadcastApplicationServiceFactory _ApplicationServiceFactory;
-
         public PlanPricingApiController(IWebLogger logger, BroadcastApplicationServiceFactory applicationServiceFactory) : 
-            base(logger, new ControllerNameRetriever(typeof(PlanPricingApiController).Name))
+            base(logger, new ControllerNameRetriever(typeof(PlanPricingApiController).Name), applicationServiceFactory)
         {
-            _ApplicationServiceFactory = applicationServiceFactory;
         }
 
         [HttpPost]

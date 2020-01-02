@@ -104,6 +104,7 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IProposalScxDataPrep, ProposalScxDataPrep>();
             unityContainer.RegisterType<IInventoryScxDataConverter, InventoryScxDataConverter>();
             unityContainer.RegisterType<IOpenMarketFileImporter, OpenMarketFileImporter>();
+            unityContainer.RegisterType<IUserService, UserService>();
 
             unityContainer.RegisterType<IProposalCalculationEngine, ProposalCalculationEngine>();
             unityContainer.RegisterType<IQuarterCalculationEngine, QuarterCalculationEngine>();

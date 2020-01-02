@@ -1,6 +1,7 @@
 ﻿using Common.Services.WebComponents;
 using Newtonsoft.Json;
 using Services.Broadcast.ApplicationServices;
+using Services.Broadcast.ApplicationServices.Security;
 using Services.Broadcast.Entities;
 using System;
 using System.Collections.Generic;
@@ -16,14 +17,11 @@ namespace BroadcastComposerWeb.Controllers
     [RoutePrefix("api/SpotTracker")]
     public class SpotTrackerController : BroadcastControllerBase
     {
-        private readonly BroadcastApplicationServiceFactory _ApplicationServiceFactory;
-
         public SpotTrackerController(
            IWebLogger logger,
            BroadcastApplicationServiceFactory applicationServiceFactory)
-           : base(logger, new ControllerNameRetriever(typeof(SpotTrackerController).Name))
+           : base(logger, new ControllerNameRetriever(typeof(SpotTrackerController).Name), applicationServiceFactory)
         {
-            _ApplicationServiceFactory = applicationServiceFactory;
         }
         
         [HttpPost]
@@ -37,7 +35,8 @@ namespace BroadcastComposerWeb.Controllers
             }
 
             FileSaveRequest request = JsonConvert.DeserializeObject<FileSaveRequest>(saveRequest.Content.ReadAsStringAsync().Result);
-            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ISpotTrackerService>().SaveSigmaFile(request, Identity.Name));
+            var fullName = _GetCurrentUserFullName();
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ISpotTrackerService>().SaveSigmaFile(request, fullName));
         }
 
         [HttpGet]

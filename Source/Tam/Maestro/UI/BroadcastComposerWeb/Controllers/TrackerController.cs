@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Services.Broadcast.ApplicationServices;
+using Services.Broadcast.ApplicationServices.Security;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
 using System;
@@ -22,16 +23,14 @@ namespace BroadcastComposerWeb.Controllers
     [RestrictedAccess(RequiredRole = RoleType.Broadcast_Proposer)]
     public class TrackerController : BroadcastControllerBase
     {
-        private readonly BroadcastApplicationServiceFactory _ApplicationServiceFactory;
         private readonly IWebLogger _Logger;
 
         public TrackerController(
             IWebLogger logger,
             BroadcastApplicationServiceFactory applicationServiceFactory)
-            : base(logger, new ControllerNameRetriever(typeof(TrackerController).Name))
+            : base(logger, new ControllerNameRetriever(typeof(TrackerController).Name), applicationServiceFactory)
         {
             _Logger = logger;
-            _ApplicationServiceFactory = applicationServiceFactory;
         }
 
         // POST api/Tracker/UploadSchedules
@@ -65,7 +64,8 @@ namespace BroadcastComposerWeb.Controllers
             }
 
             FileSaveRequest bvsRequest = JsonConvert.DeserializeObject<FileSaveRequest>(saveRequest.Content.ReadAsStringAsync().Result);
-            return _ConvertToBaseResponseSuccessWithMessage(() => _ApplicationServiceFactory.GetApplicationService<ITrackerService>().SaveBvsFiles(bvsRequest, Identity.Name));
+            var fullName = _GetCurrentUserFullName();
+            return _ConvertToBaseResponseSuccessWithMessage(() => _ApplicationServiceFactory.GetApplicationService<ITrackerService>().SaveBvsFiles(bvsRequest, fullName));
         }
 
         [HttpPost]
@@ -77,15 +77,17 @@ namespace BroadcastComposerWeb.Controllers
                 throw new Exception("No Sigma file data received.");
             }
 
+            var fullName = _GetCurrentUserFullName();
             FileSaveRequest bvsRequest = JsonConvert.DeserializeObject<FileSaveRequest>(saveRequest.Content.ReadAsStringAsync().Result);
-            return _ConvertToBaseResponseSuccessWithMessage(() => _ApplicationServiceFactory.GetApplicationService<ITrackerService>().SaveBvsFiles(bvsRequest, Identity.Name, true));
+            return _ConvertToBaseResponseSuccessWithMessage(() => _ApplicationServiceFactory.GetApplicationService<ITrackerService>().SaveBvsFiles(bvsRequest, fullName, true));
         }
 
         [HttpPost]
         [Route("UploadBvsFtp")]
         public BaseResponse<string> UploadViaFTP()
         {
-            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ITrackerService>().SaveBvsViaFtp(Identity.Name));
+            var fullName = _GetCurrentUserFullName();
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ITrackerService>().SaveBvsViaFtp(fullName));
         }
 
         [HttpPost]
@@ -97,7 +99,7 @@ namespace BroadcastComposerWeb.Controllers
                 throw new Exception("No Schedule file data received.");
             }
             ScheduleSaveRequest saveRequest = JsonConvert.DeserializeObject<ScheduleSaveRequest>(saveSchedule.Content.ReadAsStringAsync().Result, new IsoDateTimeConverter { DateTimeFormat = "MM-dd-yyyy" });
-            saveRequest.Schedule.UserName = Identity.Name;
+            saveRequest.Schedule.UserName = _GetCurrentUserFullName();
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ITrackerService>().SaveSchedule(saveRequest));
         }
 

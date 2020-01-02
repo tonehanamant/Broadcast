@@ -3,6 +3,7 @@ using Common.Services.WebComponents;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Services.Broadcast.ApplicationServices;
+using Services.Broadcast.ApplicationServices.Security;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.DTO;
 using Services.Broadcast.Helpers;
@@ -24,16 +25,14 @@ namespace BroadcastComposerWeb.Controllers
     [RoutePrefix("api/Proposals")]
     public class ProposalController : BroadcastControllerBase
     {
-        private readonly BroadcastApplicationServiceFactory _ApplicationServiceFactory;
         private readonly IWebLogger _Logger;
 
         public ProposalController(
             IWebLogger logger,
             BroadcastApplicationServiceFactory applicationServiceFactory)
-            : base(logger, new ControllerNameRetriever(typeof(ProposalController).Name))
+            : base(logger, new ControllerNameRetriever(typeof(ProposalController).Name), applicationServiceFactory)
         {
             _Logger = logger;
-            _ApplicationServiceFactory = applicationServiceFactory;
         }
 
         [HttpGet]
@@ -62,11 +61,12 @@ namespace BroadcastComposerWeb.Controllers
         [RestrictedAccess(RequiredRole = RoleType.Broadcast_Proposer)]
         public BaseResponse<ProposalDto> SaveProposal(ProposalDto proposal)
         {
+            var fullName = _GetCurrentUserFullName();
             return
                 _ConvertToBaseResponse(
                     () =>
                         _ApplicationServiceFactory.GetApplicationService<IProposalService>()
-                            .SaveProposal(proposal, Identity.Name, DateTime.Now));
+                            .SaveProposal(proposal, fullName, DateTime.Now));
         }
 
         [HttpDelete]
@@ -86,11 +86,12 @@ namespace BroadcastComposerWeb.Controllers
         [RestrictedAccess(RequiredRole = RoleType.Broadcast_Buyer)]
         public BaseResponse<ProposalDto> UnorderProposal(int proposalId)
         {
+            var fullName = _GetCurrentUserFullName();
             return
                 _ConvertToBaseResponse(
                     () =>
                         _ApplicationServiceFactory.GetApplicationService<IProposalService>()
-                            .UnorderProposal(proposalId, Identity.Name));
+                            .UnorderProposal(proposalId, fullName));
         }
 
         [HttpGet]
@@ -125,10 +126,11 @@ namespace BroadcastComposerWeb.Controllers
                 ProposalDetailId = proposalDetailId
             };
 
+            var fullName = _GetCurrentUserFullName();
             return
                 _ConvertToBaseResponse(() =>
                     _ApplicationServiceFactory.GetApplicationService<IAffidavitService>()
-                        .RescrubProposalDetail(request, Identity.Name, DateTime.Now));
+                        .RescrubProposalDetail(request, fullName, DateTime.Now));
         }
 
         [HttpPost]
@@ -265,7 +267,7 @@ namespace BroadcastComposerWeb.Controllers
                     throw new Exception("No proposal buy file data received.");
                 }
                 ProposalBuySaveRequestDto proposalBuyRequest = JsonConvert.DeserializeObject<ProposalBuySaveRequestDto>(proposalBuy.Content.ReadAsStringAsync().Result, new IsoDateTimeConverter { DateTimeFormat = "MM-dd-yyyy" });
-                proposalBuyRequest.Username = Identity.Name;
+                proposalBuyRequest.Username = _GetCurrentUserFullName();
                 var errors = _ApplicationServiceFactory.GetApplicationService<IProposalService>().SaveProposalBuy(proposalBuyRequest);
                 return errors;
             });

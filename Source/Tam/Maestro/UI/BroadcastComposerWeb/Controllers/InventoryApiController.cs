@@ -17,20 +17,18 @@ using Services.Broadcast.Entities.ProgramGuide;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.Cable.Entities;
 using Tam.Maestro.Web.Common;
+using Services.Broadcast.ApplicationServices.Security;
 
 namespace BroadcastComposerWeb.Controllers
 {
     [RoutePrefix("api/v1/Inventory")]
     public class InventoryApiController : BroadcastControllerBase
     {
-        private readonly BroadcastApplicationServiceFactory _ApplicationServiceFactory;
-
         public InventoryApiController(
             IWebLogger logger,
             BroadcastApplicationServiceFactory applicationServiceFactory)
-            : base(logger, new ControllerNameRetriever(typeof(InventoryApiController).Name))
+            : base(logger, new ControllerNameRetriever(typeof(InventoryApiController).Name), applicationServiceFactory)
         {
-            _ApplicationServiceFactory = applicationServiceFactory;
         }
 
         /// <summary>
@@ -128,7 +126,8 @@ namespace BroadcastComposerWeb.Controllers
         [Authorize]
         public BaseResponse GenerateScxArchiveJob([FromUri(Name = "")]InventoryScxDownloadRequest request)
         {
-            _ApplicationServiceFactory.GetApplicationService<IScxGenerationService>().QueueScxGenerationJob(request, Identity.Name, DateTime.Now);
+            var fullName = _GetCurrentUserFullName();
+            _ApplicationServiceFactory.GetApplicationService<IScxGenerationService>().QueueScxGenerationJob(request, fullName, DateTime.Now);
 
             return new BaseResponse
             {
@@ -166,8 +165,9 @@ namespace BroadcastComposerWeb.Controllers
         {
             try
             {
+                var fullName = _GetCurrentUserFullName();
                 var result = _ApplicationServiceFactory.GetApplicationService<IInventoryService>().IsProprietaryFile(saveRequest.FileName)
-                    ? _ApplicationServiceFactory.GetApplicationService<IProprietaryInventoryService>().SaveProprietaryInventoryFile(saveRequest, Identity.Name, DateTime.Now)
+                    ? _ApplicationServiceFactory.GetApplicationService<IProprietaryInventoryService>().SaveProprietaryInventoryFile(saveRequest, fullName, DateTime.Now)
                     : _ApplicationServiceFactory.GetApplicationService<IInventoryService>().SaveInventoryFile(
                         new InventoryFileSaveRequest
                         {
@@ -175,7 +175,7 @@ namespace BroadcastComposerWeb.Controllers
                             StreamData = saveRequest.StreamData,
                             InventorySource = "Open Market"
                         },
-                        Identity.Name, DateTime.Now);
+                        fullName, DateTime.Now);
 
                 return new BaseResponse<InventoryFileSaveResult>()
                 {

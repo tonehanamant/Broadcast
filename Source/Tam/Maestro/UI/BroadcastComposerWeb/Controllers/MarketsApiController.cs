@@ -15,14 +15,11 @@ namespace BroadcastComposerWeb.Controllers
     [RoutePrefix("api/v1/Markets")]
     public class MarketsApiController : BroadcastControllerBase
     {
-        private readonly BroadcastApplicationServiceFactory _ApplicationServiceFactory;
-
         public MarketsApiController(
             IWebLogger logger,
             BroadcastApplicationServiceFactory applicationServiceFactory)
-            : base(logger, new ControllerNameRetriever(typeof(MarketsApiController).Name))
+            : base(logger, new ControllerNameRetriever(typeof(MarketsApiController).Name), applicationServiceFactory)
         {
-            _ApplicationServiceFactory = applicationServiceFactory;
         }
 
         /// <summary>

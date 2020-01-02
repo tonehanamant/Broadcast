@@ -12,12 +12,9 @@ namespace BroadcastComposerWeb.Controllers
     [RoutePrefix("api/v1/ProgramGuideTest")]
     public class ProgramGuideController : BroadcastControllerBase
     {
-        private readonly BroadcastApplicationServiceFactory _ApplicationServiceFactory;
-
         public ProgramGuideController(IWebLogger logger, BroadcastApplicationServiceFactory applicationServiceFactory) :
-            base(logger, new ControllerNameRetriever(typeof(ProgramGuideController).Name))
+            base(logger, new ControllerNameRetriever(typeof(ProgramGuideController).Name), applicationServiceFactory)
         {
-            _ApplicationServiceFactory = applicationServiceFactory;
         }
 
         [HttpPost]

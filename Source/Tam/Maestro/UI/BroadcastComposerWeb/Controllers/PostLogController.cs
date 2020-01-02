@@ -1,5 +1,6 @@
 ﻿using Common.Services.WebComponents;
 using Services.Broadcast.ApplicationServices;
+using Services.Broadcast.ApplicationServices.Security;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.DTO;
 using System;
@@ -15,15 +16,13 @@ namespace BroadcastComposerWeb.Controllers
     public class PostLogController : BroadcastControllerBase
     {
         private readonly IWebLogger _Logger;
-        private readonly BroadcastApplicationServiceFactory _ApplicationServiceFactory;
 
         public PostLogController(
             IWebLogger logger,
             BroadcastApplicationServiceFactory applicationServiceFactory)
-            : base(logger, new ControllerNameRetriever(typeof(PostLogController).Name))
+            : base(logger, new ControllerNameRetriever(typeof(PostLogController).Name), applicationServiceFactory)
         {
             _Logger = logger;
-            _ApplicationServiceFactory = applicationServiceFactory;
         }
 
         [Route("")]
@@ -81,9 +80,10 @@ namespace BroadcastComposerWeb.Controllers
         [Authorize]
         public BaseResponse<bool> ScrubUnlinkedIsci(ScrubIsciRequest request)
         {
+            var fullName = _GetCurrentUserFullName();
             return
                 _ConvertToBaseResponse(() =>
-                    _ApplicationServiceFactory.GetApplicationService<IPostLogService>().ScrubUnlinkedPostLogDetailsByIsci(request.Isci, DateTime.Now, Identity.Name));
+                    _ApplicationServiceFactory.GetApplicationService<IPostLogService>().ScrubUnlinkedPostLogDetailsByIsci(request.Isci, DateTime.Now, fullName));
         }
 
         [HttpPost]
@@ -91,8 +91,9 @@ namespace BroadcastComposerWeb.Controllers
         [Authorize]
         public BaseResponse<bool> ArchiveUnlinkedIsci(List<string> iscis)
         {
+            var fullName = _GetCurrentUserFullName();
             return _ConvertToBaseResponse(() =>
-            _ApplicationServiceFactory.GetApplicationService<IPostLogService>().ArchiveUnlinkedIsci(iscis, Identity.Name));
+            _ApplicationServiceFactory.GetApplicationService<IPostLogService>().ArchiveUnlinkedIsci(iscis, fullName));
         }
 
         [HttpPost]
@@ -100,8 +101,9 @@ namespace BroadcastComposerWeb.Controllers
         [Authorize]
         public BaseResponse<bool> UndoArchiveUnlinkedIsci(List<long> FileDetailsIds)
         {
+            var fullName = _GetCurrentUserFullName();
             return _ConvertToBaseResponse(() =>
-            _ApplicationServiceFactory.GetApplicationService<IPostLogService>().UndoArchiveUnlinkedIsci(FileDetailsIds, DateTime.Now, Identity.Name));
+            _ApplicationServiceFactory.GetApplicationService<IPostLogService>().UndoArchiveUnlinkedIsci(FileDetailsIds, DateTime.Now, fullName));
         }
 
         [HttpGet]
@@ -117,8 +119,9 @@ namespace BroadcastComposerWeb.Controllers
         [Authorize]
         public BaseResponse<bool> MapIsci(MapIsciDto mapIsciDto)
         {
+            var fullName = _GetCurrentUserFullName();
             return _ConvertToBaseResponse(() =>
-            _ApplicationServiceFactory.GetApplicationService<IPostLogService>().MapIsci(mapIsciDto, DateTime.Now, Identity.Name));
+            _ApplicationServiceFactory.GetApplicationService<IPostLogService>().MapIsci(mapIsciDto, DateTime.Now, fullName));
         }
 
         [HttpPost]
@@ -126,8 +129,9 @@ namespace BroadcastComposerWeb.Controllers
         [Authorize]
         public BaseResponse<bool> SwapProposalDetail(SwapProposalDetailRequest requestData)
         {
+            var fullName = _GetCurrentUserFullName();
             return _ConvertToBaseResponse(
-                () => _ApplicationServiceFactory.GetApplicationService<IPostLogService>().SwapProposalDetails(requestData, DateTime.Now, Identity.Name));
+                () => _ApplicationServiceFactory.GetApplicationService<IPostLogService>().SwapProposalDetails(requestData, DateTime.Now, fullName));
         }
     }
 }

@@ -17,18 +17,16 @@ using System.Net.Http;
 using System.Net;
 using System.Net.Http.Headers;
 using Services.Broadcast.Entities.Campaign;
+using Services.Broadcast.ApplicationServices.Security;
 
 namespace BroadcastComposerWeb.Controllers
 {
     [RoutePrefix("api/v1/Campaigns")]
     public class CampaignApiController : BroadcastControllerBase
     {
-        private readonly BroadcastApplicationServiceFactory _ApplicationServiceFactory;
-
         public CampaignApiController(IWebLogger logger, BroadcastApplicationServiceFactory applicationServiceFactory) : 
-            base(logger, new ControllerNameRetriever(typeof(CampaignApiController).Name))
+            base(logger, new ControllerNameRetriever(typeof(CampaignApiController).Name), applicationServiceFactory)
         {
-            _ApplicationServiceFactory = applicationServiceFactory;
         }
 
         /// <summary>
@@ -81,9 +79,10 @@ namespace BroadcastComposerWeb.Controllers
         [RestrictedAccess(RequiredRole = RoleType.Broadcast_Proposer)]
         public BaseResponse<int> CreateCampaign(SaveCampaignDto campaign)
         {
+            var fullName = _GetCurrentUserFullName();
             return
                 _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ICampaignService>()
-                .SaveCampaign(campaign, FullName, DateTime.Now));
+                .SaveCampaign(campaign, fullName, DateTime.Now));
         }
 
         /// <summary>
@@ -187,7 +186,8 @@ namespace BroadcastComposerWeb.Controllers
         [Authorize]
         public BaseResponse<string> TriggerCampaignAggregation(int campaignId)
         {
-            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ICampaignService>().TriggerCampaignAggregationJob(campaignId, Identity.Name));
+            var fullName = _GetCurrentUserFullName();
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ICampaignService>().TriggerCampaignAggregationJob(campaignId, fullName));
         }
 
         /// <summary>

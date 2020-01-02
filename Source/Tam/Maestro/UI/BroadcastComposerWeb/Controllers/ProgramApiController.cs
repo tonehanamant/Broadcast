@@ -1,5 +1,6 @@
 ﻿using Common.Services.WebComponents;
 using Services.Broadcast.ApplicationServices;
+using Services.Broadcast.ApplicationServices.Security;
 using Services.Broadcast.Entities.DTO.Program;
 using System.Collections.Generic;
 using System.Web.Http;
@@ -11,12 +12,9 @@ namespace BroadcastComposerWeb.Controllers
     [RoutePrefix("api/v1/Programs")]
     public class ProgramApiController : BroadcastControllerBase
     {
-        private readonly BroadcastApplicationServiceFactory _ApplicationServiceFactory;
-
         public ProgramApiController(IWebLogger logger, BroadcastApplicationServiceFactory applicationServiceFactory) :
-            base(logger, new ControllerNameRetriever(typeof(ProgramApiController).Name))
+            base(logger, new ControllerNameRetriever(typeof(ProgramApiController).Name), applicationServiceFactory)
         {
-            _ApplicationServiceFactory = applicationServiceFactory;
         }
 
         /// <summary>
@@ -27,7 +25,8 @@ namespace BroadcastComposerWeb.Controllers
         [Route("")]
         public BaseResponse<List<ProgramDto>> GetPrograms(SearchRequestProgramDto searchRequest)
         {
-            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IProgramService>().GetPrograms(searchRequest, Identity.Name));
+            var fullName = _GetCurrentUserFullName();
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IProgramService>().GetPrograms(searchRequest, fullName));
         }
     }
 }

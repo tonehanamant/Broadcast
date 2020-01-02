@@ -11,6 +11,7 @@ using Tam.Maestro.Services.Cable.Entities;
 using Tam.Maestro.Services.Cable.Security;
 using Tam.Maestro.Web.Common;
 using Services.Broadcast.Entities.OpenMarketInventory;
+using Services.Broadcast.ApplicationServices.Security;
 
 namespace BroadcastComposerWeb.Controllers
 {
@@ -18,12 +19,9 @@ namespace BroadcastComposerWeb.Controllers
     [RestrictedAccess(RequiredRole = RoleType.Broadcast_Proposer)]
     public class ProposalInventoryController : BroadcastControllerBase
     {
-        private readonly BroadcastApplicationServiceFactory _ApplicationServiceFactory;
-
         public ProposalInventoryController(IWebLogger logger, BroadcastApplicationServiceFactory applicationServiceFactory)
-            : base(logger, new ControllerNameRetriever(typeof(ProposalInventoryController).Name))
+            : base(logger, new ControllerNameRetriever(typeof(ProposalInventoryController).Name), applicationServiceFactory)
         {
-            _ApplicationServiceFactory = applicationServiceFactory;
         }
 
         [HttpGet]
@@ -67,7 +65,7 @@ namespace BroadcastComposerWeb.Controllers
         [Route("OpenMarket")]
         public BaseResponse<ProposalDetailOpenMarketInventoryDto> SaveOpenMarketInventoryAllocations(OpenMarketAllocationSaveRequest request)
         {
-            request.Username = Identity.Name;
+            request.Username = _GetCurrentUserFullName();
             return
                 _ConvertToBaseResponse(
                     () =>

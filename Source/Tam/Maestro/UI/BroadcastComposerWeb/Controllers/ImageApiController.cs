@@ -1,6 +1,7 @@
 ﻿using Common.Services.WebComponents;
 using Services.Broadcast;
 using Services.Broadcast.ApplicationServices;
+using Services.Broadcast.ApplicationServices.Security;
 using Services.Broadcast.Entities;
 using System;
 using System.IO;
@@ -17,16 +18,14 @@ namespace BroadcastComposerWeb.Controllers
     [RoutePrefix("api/Images")]
     public class ImageApiController : BroadcastControllerBase
     {
-        private readonly BroadcastApplicationServiceFactory _ApplicationServiceFactory;
         private readonly IWebLogger _Logger;
 
         public ImageApiController(
             IWebLogger logger,
             BroadcastApplicationServiceFactory applicationServiceFactory)
-            : base(logger, new ControllerNameRetriever(typeof(ImageApiController).Name))
+            : base(logger, new ControllerNameRetriever(typeof(ImageApiController).Name), applicationServiceFactory)
         {
             _Logger = logger;
-            _ApplicationServiceFactory = applicationServiceFactory;
         }
 
         [HttpGet]
@@ -86,7 +85,8 @@ namespace BroadcastComposerWeb.Controllers
             try
             {
                 var service = _ApplicationServiceFactory.GetApplicationService<ILogoService>();
-                service.SaveInventoryLogo(inventorySourceId, saveRequest, Identity.Name, DateTime.Now);
+                var fullName = _GetCurrentUserFullName();
+                service.SaveInventoryLogo(inventorySourceId, saveRequest, fullName, DateTime.Now);
 
                 return new BaseResponse
                 {

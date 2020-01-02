@@ -10,12 +10,9 @@ namespace BroadcastComposerWeb.Controllers
     [RoutePrefix("api/v1/MockDativaProgramSearch")]
     public class MockDativaProgramSearchApiController : BroadcastControllerBase
     {
-        private readonly BroadcastApplicationServiceFactory _ApplicationServiceFactory;
-
         public MockDativaProgramSearchApiController(IWebLogger logger, BroadcastApplicationServiceFactory applicationServiceFactory) :
-            base(logger, new ControllerNameRetriever(typeof(ProgramGuideController).Name))
+            base(logger, new ControllerNameRetriever(typeof(ProgramGuideController).Name), applicationServiceFactory)
         {
-            _ApplicationServiceFactory = applicationServiceFactory;
         }
 
         // TODO after switching to the real Dativa API: remove this

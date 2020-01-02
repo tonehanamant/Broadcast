@@ -11,14 +11,11 @@ namespace BroadcastComposerWeb.Controllers
     [RoutePrefix("api/v1/AudienceTypes")]
     public class AudienceTypesApiController : BroadcastControllerBase
     {
-        private readonly BroadcastApplicationServiceFactory _ApplicationServiceFactory;
-
         public AudienceTypesApiController(
             IWebLogger logger,
             BroadcastApplicationServiceFactory applicationServiceFactory)
-            : base(logger, new ControllerNameRetriever(typeof(AudienceTypesApiController).Name))
+            : base(logger, new ControllerNameRetriever(typeof(AudienceTypesApiController).Name), applicationServiceFactory)
         {
-            _ApplicationServiceFactory = applicationServiceFactory;
         }
 
         /// <summary>

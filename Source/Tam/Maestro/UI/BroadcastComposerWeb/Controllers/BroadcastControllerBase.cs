@@ -1,13 +1,12 @@
-﻿using System.Runtime.Serialization;
+﻿using Common.Services.WebComponents;
+using Services.Broadcast.ApplicationServices;
+using Services.Broadcast.ApplicationServices.Security;
 using System.Collections.Generic;
-using System.DirectoryServices.AccountManagement;
+using System.Runtime.Serialization;
 using System.Security.Principal;
-using Tam.Maestro.Web.Common;
 using System.Web;
-using Common.Services.WebComponents;
 using Tam.Maestro.Services.Cable.Entities;
-using System.Web.Http.Cors;
-using Tam.Maestro.Services.Clients;
+using Tam.Maestro.Web.Common;
 
 namespace BroadcastComposerWeb.Controllers
 {
@@ -21,9 +20,12 @@ namespace BroadcastComposerWeb.Controllers
     //[EnableCors(origins: "*", headers: "*", methods: "*")] //CORS enabled in global.asax file
     public class BroadcastControllerBase : ControllerBase
     {
-        public BroadcastControllerBase(IWebLogger logger, ControllerNameRetriever controllerNameRetriever) 
+        protected readonly BroadcastApplicationServiceFactory _ApplicationServiceFactory;
+
+        public BroadcastControllerBase(IWebLogger logger, ControllerNameRetriever controllerNameRetriever, BroadcastApplicationServiceFactory applicationServiceFactory) 
             : base(logger, controllerNameRetriever)
         {
+            _ApplicationServiceFactory = applicationServiceFactory;
         }
 
         public WindowsIdentity Identity
@@ -31,19 +33,7 @@ namespace BroadcastComposerWeb.Controllers
             get { return HttpContext.Current.Request.LogonUserIdentity; }
         }
 
-        public string FullName
-        {
-            get
-            {
-                var ssid = HttpContext.Current.Request.LogonUserIdentity.User.Value;
-                var employee = SMSClient.Handler.GetEmployee(ssid, false);
-                if (employee == null)
-                {
-                    return null;
-                }
-
-                return employee.Employee.FullName;
-            }
-        }
+        protected string _GetCurrentUserFullName() =>
+            _ApplicationServiceFactory.GetApplicationService<IUserService>().GetCurrentUserFullName();
     }
 }

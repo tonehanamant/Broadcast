@@ -1,6 +1,7 @@
 ﻿using Common.Services.WebComponents;
 using Newtonsoft.Json;
 using Services.Broadcast.ApplicationServices;
+using Services.Broadcast.ApplicationServices.Security;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Exceptions;
 using System;
@@ -19,14 +20,11 @@ namespace BroadcastComposerWeb.Controllers
     [RoutePrefix("api/RatesManager")]
     public class RatesApiController : BroadcastControllerBase
     {
-        private readonly BroadcastApplicationServiceFactory _ApplicationServiceFactory;
-
         public RatesApiController(
             IWebLogger logger,
             BroadcastApplicationServiceFactory applicationServiceFactory)
-            : base(logger, new ControllerNameRetriever(typeof(RatesApiController).Name))
+            : base(logger, new ControllerNameRetriever(typeof(RatesApiController).Name), applicationServiceFactory)
         {
-            _ApplicationServiceFactory = applicationServiceFactory;
         }
 
         [HttpGet]
@@ -54,11 +52,12 @@ namespace BroadcastComposerWeb.Controllers
         [Authorize]
         public BaseResponse<bool> SaveStationContact(StationContact stationContact)
         {
+            var fullName = _GetCurrentUserFullName();
             return
                 _ConvertToBaseResponse(
                     () =>
                         _ApplicationServiceFactory.GetApplicationService<IInventoryService>()
-                            .SaveStationContact(stationContact, Identity.Name));
+                            .SaveStationContact(stationContact, fullName));
         }
 
         [HttpDelete]
@@ -66,10 +65,11 @@ namespace BroadcastComposerWeb.Controllers
         [Authorize]
         public BaseResponse<bool> DeleteStationContact(string inventorySource, int stationContactId)
         {
+            var fullName = _GetCurrentUserFullName();
             return
                 _ConvertToBaseResponse(
                     () => _ApplicationServiceFactory.GetApplicationService<IInventoryService>()
-                        .DeleteStationContact(inventorySource, stationContactId, Identity.Name));
+                        .DeleteStationContact(inventorySource, stationContactId, fullName));
         }
 
         [HttpPost]
@@ -85,9 +85,10 @@ namespace BroadcastComposerWeb.Controllers
             var ratesSaveRequest = JsonConvert.DeserializeObject<InventoryFileSaveRequest>(saveRequest.Content.ReadAsStringAsync().Result);
             try
             {
+                var fullName = _GetCurrentUserFullName();
                 var result = string.Equals(ratesSaveRequest.InventorySource, "Barter", StringComparison.InvariantCultureIgnoreCase)
-                    ? _ApplicationServiceFactory.GetApplicationService<IProprietaryInventoryService>().SaveProprietaryInventoryFile(ratesSaveRequest, Identity.Name, DateTime.Now)
-                    : _ApplicationServiceFactory.GetApplicationService<IInventoryService>().SaveInventoryFile(ratesSaveRequest, Identity.Name, DateTime.Now);
+                    ? _ApplicationServiceFactory.GetApplicationService<IProprietaryInventoryService>().SaveProprietaryInventoryFile(ratesSaveRequest, fullName, DateTime.Now)
+                    : _ApplicationServiceFactory.GetApplicationService<IInventoryService>().SaveInventoryFile(ratesSaveRequest, fullName, DateTime.Now);
 
                 return new BaseResponse<InventoryFileSaveResult>()
                 {
@@ -174,10 +175,11 @@ namespace BroadcastComposerWeb.Controllers
         [Authorize]
         public BaseResponse<bool> DeleteProgram(string inventorySourceString, int stationCode, int programId)
         {
+            var fullName = _GetCurrentUserFullName();
             return
                 _ConvertToBaseResponse(
                     () => _ApplicationServiceFactory.GetApplicationService<IInventoryService>()
-                        .DeleteProgram(programId, inventorySourceString, stationCode, Identity.Name));
+                        .DeleteProgram(programId, inventorySourceString, stationCode, fullName));
         }
 
         [HttpGet]

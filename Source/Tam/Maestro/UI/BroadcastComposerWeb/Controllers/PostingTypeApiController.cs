@@ -11,14 +11,11 @@ namespace BroadcastComposerWeb.Controllers
     [RoutePrefix("api/v1/PostingTypes")]
     public class PostingTypeApiController : BroadcastControllerBase
     {
-        private readonly BroadcastApplicationServiceFactory _ApplicationServiceFactory;
-
         public PostingTypeApiController(
             IWebLogger logger,
             BroadcastApplicationServiceFactory applicationServiceFactory)
-            : base(logger, new ControllerNameRetriever(typeof(PostingTypeApiController).Name))
+            : base(logger, new ControllerNameRetriever(typeof(PostingTypeApiController).Name), applicationServiceFactory)
         {
-            _ApplicationServiceFactory = applicationServiceFactory;
         }
 
         /// <summary>

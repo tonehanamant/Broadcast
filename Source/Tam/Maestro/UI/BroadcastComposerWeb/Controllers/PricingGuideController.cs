@@ -4,22 +4,21 @@ using Tam.Maestro.Web.Common;
 using System.Web.Http;
 using Common.Services.WebComponents;
 using Services.Broadcast.Entities.DTO.PricingGuide;
+using Services.Broadcast.ApplicationServices.Security;
 
 namespace BroadcastComposerWeb.Controllers
 {
     [RoutePrefix("api/PricingGuide")]
     public class PricingGuideController : BroadcastControllerBase
     {
-        private readonly BroadcastApplicationServiceFactory _ApplicationServiceFactory;
         private readonly IWebLogger _Logger;
 
         public PricingGuideController(
             IWebLogger logger,
             BroadcastApplicationServiceFactory applicationServiceFactory)
-            : base(logger, new ControllerNameRetriever(typeof(PricingGuideController).Name))
+            : base(logger, new ControllerNameRetriever(typeof(PricingGuideController).Name), applicationServiceFactory)
         {
             _Logger = logger;
-            _ApplicationServiceFactory = applicationServiceFactory;
         }
 
         [HttpGet]
@@ -36,9 +35,10 @@ namespace BroadcastComposerWeb.Controllers
         [Authorize]
         public BaseResponse<bool> SavePricingGuideModel(ProposalDetailPricingGuideSaveRequestDto model)
         {
+            var fullName = _GetCurrentUserFullName();
             return
                 _ConvertToBaseResponse(
-                    () => _ApplicationServiceFactory.GetApplicationService<IPricingGuideService>().SaveDistribution(model, Identity.Name));
+                    () => _ApplicationServiceFactory.GetApplicationService<IPricingGuideService>().SaveDistribution(model, fullName));
         }
 
         [HttpPost]
