@@ -173,24 +173,44 @@
   "DaypartsData": [
     {
       "DaypartCode": "MDN",
+      "DaypartCodeId": 2,
       "DaysLabel": null,
       "EndTime": "01:00pm",
+      "GenreContainType": 0,
+      "Genres": null,
+      "ProgramContainType": 0,
+      "Programs": null,
       "StartTime": "11:00am"
     },
     {
       "DaypartCode": "EF",
+      "DaypartCodeId": 6,
       "DaysLabel": null,
       "EndTime": "06:00pm",
+      "GenreContainType": 0,
+      "Genres": null,
+      "ProgramContainType": 0,
+      "Programs": null,
       "StartTime": "03:00pm"
     },
     {
       "DaypartCode": "EM",
+      "DaypartCodeId": 14,
       "DaysLabel": null,
       "EndTime": "09:00am",
+      "GenreContainType": 0,
+      "Genres": null,
+      "ProgramContainType": 0,
+      "Programs": null,
       "StartTime": "06:00am"
     }
   ],
-  "FlightHiatuses": [],
+  "FlightHiatuses": [
+    "03/16-03/21/2020",
+    "03/25-03/29/2020",
+    "4/3/2020",
+    "04/08-04/10/2020"
+  ],
   "GuaranteedDemo": [
     "A21-24"
   ],
@@ -208,7 +228,7 @@
       "Binghamton"
     ]
   },
-  "Notes": null,
+  "Notes": "All CPMs are derived from 100% broadcast deliveries, no cable unless otherwise noted.",
   "PostingType": "NTI",
   "QuarterTables": [
     {

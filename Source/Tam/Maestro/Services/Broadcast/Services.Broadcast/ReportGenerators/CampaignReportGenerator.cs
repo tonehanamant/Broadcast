@@ -1,6 +1,7 @@
 ﻿using OfficeOpenXml;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Campaign;
+using Services.Broadcast.Entities.Enums;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -98,6 +99,9 @@ namespace Services.Broadcast.ReportGenerators
             _PopulateProposaTabTotalsTable(proposalWorksheet, campaignReportData.GuaranteedDemo, campaignReportData.CampaignTotalsTable);
             _PopulateMarketCoverage(proposalWorksheet, campaignReportData.MarketCoverageData);
             _PopulateDayparts(proposalWorksheet, campaignReportData.DaypartsData);
+            _PopulateContentRestrictions(proposalWorksheet, campaignReportData.DaypartsData);
+            _PopulateFlightHiatuses(proposalWorksheet, campaignReportData.FlightHiatuses);
+            _PopulateNotes(proposalWorksheet, campaignReportData.Notes);
             if (campaignReportData.Status.Equals("Proposal"))
             {
                 package.Workbook.Worksheets.Delete(CONTRACT_WORKSHEET_NAME);
@@ -124,9 +128,65 @@ namespace Services.Broadcast.ReportGenerators
             return package;
         }
 
+        private void _PopulateNotes(ExcelWorksheet proposalWorksheet, string notes)
+        {
+            //notes row is the second row after current index
+            currentRowIndex += 2;
+            if (!string.IsNullOrWhiteSpace(notes))
+            {
+                proposalWorksheet.Cells[$"{FOOTER_INFO_COLUMN_INDEX}{currentRowIndex}"].Value = notes;
+            }
+        }
+
+        private void _PopulateFlightHiatuses(ExcelWorksheet proposalWorksheet, List<string> flightHiatuses)
+        {
+            //flight hiatuses row is the second row after current index
+            currentRowIndex += 2;
+            if (flightHiatuses.Any())
+            {
+                proposalWorksheet.Cells[$"{FOOTER_INFO_COLUMN_INDEX}{currentRowIndex}"].Value = string.Join(", ", flightHiatuses);
+            }
+        }
+
+        private void _PopulateContentRestrictions(ExcelWorksheet proposalWorksheet, List<DaypartData> daypartsData)
+        {
+            //content restrictions row is the second row after current index
+            currentRowIndex += 2;
+            if (daypartsData.Any())
+            {
+                string contentRestrictionsRowText = string.Empty;
+                foreach(var daypart in daypartsData)
+                {
+                    if (daypart.Genres.Any())
+                    {
+                        //contain type is the same for all genres
+                        contentRestrictionsRowText += $"{daypart.DaypartCode}: Genres {(daypart.GenreContainType.Equals(ContainTypeEnum.Include) ? "include " : "exclude ")}";
+                        contentRestrictionsRowText += string.Join(", ", daypart.Genres);
+                    }
+                    if (daypart.Programs.Any())
+                    {
+                        //if the content restrictions string contains Genres, we need to add the separator
+                        if (!string.IsNullOrWhiteSpace(contentRestrictionsRowText))
+                        {
+                            contentRestrictionsRowText += " | ";
+                        }
+                        else
+                        {
+                            contentRestrictionsRowText = $"{daypart.DaypartCode}: ";
+                        }
+                        //contain type is the same for all programs
+                        contentRestrictionsRowText += $"Programs {(daypart.ProgramContainType.Equals(ContainTypeEnum.Include) ? "include " : "exclude ")}";
+                        contentRestrictionsRowText += string.Join(", ", daypart.Programs);
+                    }
+                }
+                
+                proposalWorksheet.Cells[$"{FOOTER_INFO_COLUMN_INDEX}{currentRowIndex}"].Value = contentRestrictionsRowText;
+            }
+        }
+
         private void _PopulateDayparts(ExcelWorksheet proposalWorksheet, List<DaypartData> daypartsData)
         {
-            //markets row is the second row after current index
+            //dayparts row is the second row after current index
             currentRowIndex += 2;
             if (daypartsData.Any())
             {

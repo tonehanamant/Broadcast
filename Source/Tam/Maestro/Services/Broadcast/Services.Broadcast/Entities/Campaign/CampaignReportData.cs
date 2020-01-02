@@ -1,4 +1,5 @@
 ﻿using Services.Broadcast.BusinessEngines;
+using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
 using Services.Broadcast.Extensions;
 using Services.Broadcast.Helpers;
@@ -28,10 +29,12 @@ namespace Services.Broadcast.Entities.Campaign
         public ProposalQuarterTableData CampaignTotalsTable { get; set; } = new ProposalQuarterTableData();
         public MarketCoverageData MarketCoverageData { get; set; }
         public List<DaypartData> DaypartsData { get; set; } = new List<DaypartData>();
-        public List<DateTime> FlightHiatuses { get; set; } = new List<DateTime>();
+        public List<string> FlightHiatuses { get; set; } = new List<string>();
         public string Notes { get; set; }
 
         private const string DATE_FORMAT_SHORT_YEAR = "MM/dd/yy";
+        private const string DATE_FORMAT_LONG_YEAR = "MM/dd/yyyy";
+        private const string DATE_FORMAT_NO_YEAR = "MM/dd";
         private const string DATE_FORMAT_FILENAME = "MM-dd";
         private const string FILENAME_FORMAT = "{0} {1} {2} Plan Rev - {3}.xlsx";
 
@@ -50,17 +53,72 @@ namespace Services.Broadcast.Entities.Campaign
             _PopulateCampaignTotalsTable();
             _PopulateMarketCoverate(plans);
             _PopulateDaypartsData(projectedPlans);
+            _PopulateContentRestrictions(plans);
+            _PopulateFlightHiatuses(plans);
+            _PopulateNotes();
             _SetExportFileName(projectedPlans, campaign.ModifiedDate);
+        }
+
+        private void _PopulateNotes()
+        {
+            Notes = "All CPMs are derived from 100% broadcast deliveries, no cable unless otherwise noted.";
+        }
+
+        private void _PopulateFlightHiatuses(List<PlanDto> plans)
+        {
+            List<DateTime> hiatusDays = plans.SelectMany(x => x.FlightHiatusDays).Distinct().ToList();
+            foreach(var group in hiatusDays.GroupConsecutiveDays())
+            {
+                if(group.Count == 1)
+                {
+                    FlightHiatuses.Add($"{group.First().ToShortDateString()}");
+                }
+                if(group.Count > 1)
+                {
+                    FlightHiatuses.Add($"{group.First().ToString(DATE_FORMAT_NO_YEAR)}-{group.Last().ToString(DATE_FORMAT_LONG_YEAR)}");
+                }
+            }
         }
 
         private void _PopulateDaypartsData(List<ProjectedPlan> projectedPlans)
         {
             DaypartsData = projectedPlans.Select(x => new DaypartData
             {
+                DaypartCodeId = x.DaypartCodeId,
                 DaypartCode = x.DaypartCode,
                 EndTime = x.DaypartEndTime,
                 StartTime = x.DaypartStartTime
             }).Distinct(new DaypartDataEqualityComparer()).ToList();
+        }
+
+        private void _PopulateContentRestrictions(List<PlanDto> plans)
+        {
+            foreach(var daypart in DaypartsData)
+            {
+                var daypartsWithRestrictions = plans.SelectMany(x => x.Dayparts.Where(y => y.DaypartCodeId == daypart.DaypartCodeId)
+                                                                   .Where(y=>(y.Restrictions.GenreRestrictions != null && y.Restrictions.GenreRestrictions.Genres.Any())
+                                                                            || (y.Restrictions.ProgramRestrictions != null && y.Restrictions.ProgramRestrictions.Programs.Any()))
+                                                   ).ToList();
+                if (!daypartsWithRestrictions.Any())
+                {
+                    continue;
+                }
+                var genreRestrictions = daypartsWithRestrictions.Select(x => x.Restrictions.GenreRestrictions).ToList();
+                if (genreRestrictions.Select(x=>x.ContainType).Distinct().Count() > 1)
+                {
+                    throw new Exception("You cannot have different genre contain types ........");
+                }
+                daypart.GenreContainType = genreRestrictions.Select(x => x.ContainType).Distinct().Single();
+                daypart.Genres = genreRestrictions.SelectMany(x => x.Genres).Distinct().Select(x=>x.Display).ToList();
+
+                var programRestrictions = daypartsWithRestrictions.Select(x => x.Restrictions.ProgramRestrictions).ToList();
+                if (programRestrictions.Select(x => x.ContainType).Distinct().Count() > 1)
+                {
+                    throw new Exception("You cannot have different program contain types ........");
+                }
+                daypart.ProgramContainType = programRestrictions.Select(x => x.ContainType).Distinct().Single();
+                daypart.Programs = programRestrictions.SelectMany(x => x.Programs).Distinct().Select(x => x.Name).ToList();
+            }
         }
 
         private void _PopulateMarketCoverate(List<PlanDto> plans)
@@ -135,6 +193,7 @@ namespace Services.Broadcast.Entities.Campaign
                         {
                             QuarterYear = quarter.Year,
                             QuarterNumber = quarter.Quarter,
+                            DaypartCodeId = daypartCode.Id,
                             DaypartCode = daypartCode.Code,
                             DaypartStartTime = DaypartTimeHelper.ConvertSecondsToFormattedTime(daypart.StartTimeSeconds),
                             DaypartEndTime = DaypartTimeHelper.ConvertSecondsToFormattedTime(daypart.EndTimeSeconds),
@@ -352,6 +411,7 @@ namespace Services.Broadcast.Entities.Campaign
         {
             public int QuarterNumber { get; set; }
             public int QuarterYear { get; set; }
+            public int DaypartCodeId { get; set; }
             public string DaypartCode { get; set; }
             public string DaypartStartTime { get; set; }
             public string DaypartEndTime { get; set; }
@@ -432,10 +492,15 @@ namespace Services.Broadcast.Entities.Campaign
 
     public class DaypartData
     {
+        public int DaypartCodeId { get; set; }
         public string DaypartCode { get; set; }
         public string DaysLabel { get; set; }
         public string StartTime { get; set; }
         public string EndTime { get; set; }
+        public ContainTypeEnum GenreContainType { get; set; }
+        public List<string> Genres { get; set; }
+        public ContainTypeEnum ProgramContainType { get; set; }
+        public List<string> Programs { get; set; }
     }
 
     public class DaypartDataEqualityComparer : IEqualityComparer<DaypartData>

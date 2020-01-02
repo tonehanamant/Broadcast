@@ -1,0 +1,176 @@
+﻿{
+  "AgencyName": "Stub Agency",
+  "CampaignEndQuarter": "Q2'20",
+  "CampaignExportFileName": "Stub Advertiser MDN Q1'20-Q2'20 Plan Rev - 12-16.xlsx",
+  "CampaignFlightEndDate": "06/28/20",
+  "CampaignFlightStartDate": "12/30/19",
+  "CampaignName": "Campaign with all types of plans",
+  "CampaignStartQuarter": "Q1'20",
+  "CampaignTotalsTable": {
+    "QuarterLabel": null,
+    "Rows": [
+      {
+        "DaypartCode": "MDN",
+        "GuaranteedAudienceData": {
+          "CPM": 25.00000,
+          "CPP": 3345.6900000000002205478848,
+          "Impressions": 0.0,
+          "RatingPoints": 0.0,
+          "TotalImpressions": 20000.0,
+          "TotalRatingPoints": 149.44600366,
+          "VPVH": 0.5
+        },
+        "HHAudienceData": {
+          "CPM": 12.50000,
+          "CPP": 13777.265000000003333891471025,
+          "Impressions": 0.0,
+          "RatingPoints": 0.0,
+          "TotalImpressions": 40000.0,
+          "TotalRatingPoints": 36.29167327
+        },
+        "SpotLength": "90",
+        "TotalCost": 500000.00000,
+        "UnitCost": 0.0,
+        "Units": 0
+      }
+    ],
+    "TotalCost": 500000.00000,
+    "TotalGuaranteeedData": {
+      "TotalCPM": 25.00000,
+      "TotalCPP": 3345.6900000000002205478848,
+      "TotalImpressions": 20000.0,
+      "TotalRatingPoints": 149.44600366
+    },
+    "TotalHHData": {
+      "TotalCPM": 12.50000,
+      "TotalCPP": 13777.265000000003333891471025,
+      "TotalImpressions": 40000.0,
+      "TotalRatingPoints": 36.29167327
+    },
+    "TotalUnits": 0
+  },
+  "ClientName": "Stub Advertiser",
+  "DaypartsData": [
+    {
+      "DaypartCode": "MDN",
+      "DaypartCodeId": 2,
+      "DaysLabel": null,
+      "EndTime": "01:00pm",
+      "GenreContainType": 2,
+      "Genres": [
+        "Documentary",
+        "Action/Adventure",
+        "Children"
+      ],
+      "ProgramContainType": 1,
+      "Programs": [
+        "Big Bang Theory/Young Sheldon-CBS",
+        "BIG BANG THEORY"
+      ],
+      "StartTime": "11:00am"
+    }
+  ],
+  "FlightHiatuses": [],
+  "GuaranteedDemo": [
+    "A21-24"
+  ],
+  "MarketCoverageData": {
+    "BlackoutMarketsName": [],
+    "CoveragePercentage": 80.0,
+    "PreferentialMarketsName": []
+  },
+  "Notes": "All CPMs are derived from 100% broadcast deliveries, no cable unless otherwise noted.",
+  "PostingType": "NTI",
+  "QuarterTables": [
+    {
+      "QuarterLabel": "Q1 2020",
+      "Rows": [
+        {
+          "DaypartCode": "MDN",
+          "GuaranteedAudienceData": {
+            "CPM": 25.00000,
+            "CPP": 3345.6900000000002205478848,
+            "Impressions": 0.0,
+            "RatingPoints": 0.0,
+            "TotalImpressions": 10000.0,
+            "TotalRatingPoints": 74.72300183,
+            "VPVH": 0.5
+          },
+          "HHAudienceData": {
+            "CPM": 12.50000,
+            "CPP": 13777.26499999996537128529498,
+            "Impressions": 0.0,
+            "RatingPoints": 0.0,
+            "TotalImpressions": 20000.0,
+            "TotalRatingPoints": 18.14583664
+          },
+          "SpotLength": "90",
+          "TotalCost": 250000.00000,
+          "UnitCost": 0.0,
+          "Units": 0
+        }
+      ],
+      "TotalCost": 250000.00000,
+      "TotalGuaranteeedData": {
+        "TotalCPM": 25.00000,
+        "TotalCPP": 3345.6900000000002205478848,
+        "TotalImpressions": 10000.0,
+        "TotalRatingPoints": 74.72300183
+      },
+      "TotalHHData": {
+        "TotalCPM": 12.50000,
+        "TotalCPP": 13777.26499999996537128529498,
+        "TotalImpressions": 20000.0,
+        "TotalRatingPoints": 18.14583664
+      },
+      "TotalUnits": 0
+    },
+    {
+      "QuarterLabel": "Q2 2020",
+      "Rows": [
+        {
+          "DaypartCode": "MDN",
+          "GuaranteedAudienceData": {
+            "CPM": 25.00000,
+            "CPP": 3345.6900000000002205478848,
+            "Impressions": 0.0,
+            "RatingPoints": 0.0,
+            "TotalImpressions": 10000.0,
+            "TotalRatingPoints": 74.72300183,
+            "VPVH": 0.5
+          },
+          "HHAudienceData": {
+            "CPM": 12.50000,
+            "CPP": 13777.26499999996537128529498,
+            "Impressions": 0.0,
+            "RatingPoints": 0.0,
+            "TotalImpressions": 20000.0,
+            "TotalRatingPoints": 18.14583664
+          },
+          "SpotLength": "90",
+          "TotalCost": 250000.00000,
+          "UnitCost": 0.0,
+          "Units": 0
+        }
+      ],
+      "TotalCost": 250000.00000,
+      "TotalGuaranteeedData": {
+        "TotalCPM": 25.00000,
+        "TotalCPP": 3345.6900000000002205478848,
+        "TotalImpressions": 10000.0,
+        "TotalRatingPoints": 74.72300183
+      },
+      "TotalHHData": {
+        "TotalCPM": 12.50000,
+        "TotalCPP": 13777.26499999996537128529498,
+        "TotalImpressions": 20000.0,
+        "TotalRatingPoints": 18.14583664
+      },
+      "TotalUnits": 0
+    }
+  ],
+  "SpotLengths": [
+    ":90"
+  ],
+  "Status": "Proposal"
+}

@@ -632,7 +632,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             var weekNumber = 1;
             foreach (DisplayMediaWeek week in weeks)
             {
-                var activeDays = _CalculateActiveDays(week, flightHiatusDays, out string activeDaysString);
+                var activeDays = _CalculateActiveDays(week.WeekStartDate, week.WeekEndDate, flightHiatusDays, out string activeDaysString);
                 var weeklyBreakdown = new WeeklyBreakdownWeek
                 {
                     ActiveDays = activeDaysString,
@@ -672,7 +672,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             //update ActiveDays remain weeks
             foreach (var week in result.Weeks)
             {
-                week.NumberOfActiveDays = _CalculateActiveDays(week, request.FlightHiatusDays, out string activeDaysString);
+                week.NumberOfActiveDays = _CalculateActiveDays(week.StartDate, week.EndDate, request.FlightHiatusDays, out string activeDaysString);
                 week.ActiveDays = activeDaysString;
                 if (week.NumberOfActiveDays < 1)
                 {
@@ -813,16 +813,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
             activeDaysString = string.Join(",", activeDaysList);
             //number of active days this week is 7 minus number of hiatus days
             return 7 - hiatusDaysInWeek.Count();
-        }
-
-        private int _CalculateActiveDays(DisplayMediaWeek week, List<DateTime> hiatusDays, out string activeDaysString)
-        {
-            return _CalculateActiveDays(week.WeekStartDate, week.WeekEndDate, hiatusDays, out activeDaysString);
-        }
-
-        private int _CalculateActiveDays(WeeklyBreakdownWeek week, List<DateTime> hiatusDays, out string activeDaysString)
-        {
-            return _CalculateActiveDays(week.StartDate, week.EndDate, hiatusDays, out activeDaysString);
         }
 
         private void _DispatchPlanAggregation(PlanDto plan, bool aggregatePlanSynchronously)
