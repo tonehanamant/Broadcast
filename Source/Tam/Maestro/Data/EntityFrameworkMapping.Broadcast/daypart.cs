@@ -18,14 +18,15 @@ namespace EntityFrameworkMapping.Broadcast
         {
             this.days = new HashSet<day>();
             this.schedule_details = new HashSet<schedule_details>();
-            this.station_inventory_manifest_dayparts = new HashSet<station_inventory_manifest_dayparts>();
             this.proposal_buy_file_details = new HashSet<proposal_buy_file_details>();
             this.station_inventory_manifest_staging = new HashSet<station_inventory_manifest_staging>();
             this.proposal_version_details = new HashSet<proposal_version_details>();
             this.pricing_guide_distribution_open_market_inventory = new HashSet<pricing_guide_distribution_open_market_inventory>();
             this.station_inventory_spot_snapshots = new HashSet<station_inventory_spot_snapshots>();
-            this.inventory_file_proprietary_header = new HashSet<inventory_file_proprietary_header>();
             this.plan_version_pricing_api_result_spots = new HashSet<plan_version_pricing_api_result_spots>();
+            this.inventory_file_proprietary_header = new HashSet<inventory_file_proprietary_header>();
+            this.station_inventory_manifest_dayparts = new HashSet<station_inventory_manifest_dayparts>();
+            this.daypart_defaults = new HashSet<daypart_defaults>();
         }
     
         public int id { get; set; }
@@ -38,14 +39,15 @@ namespace EntityFrameworkMapping.Broadcast
     
         public virtual ICollection<day> days { get; set; }
         public virtual ICollection<schedule_details> schedule_details { get; set; }
-        public virtual ICollection<station_inventory_manifest_dayparts> station_inventory_manifest_dayparts { get; set; }
         public virtual ICollection<proposal_buy_file_details> proposal_buy_file_details { get; set; }
         public virtual ICollection<station_inventory_manifest_staging> station_inventory_manifest_staging { get; set; }
         public virtual ICollection<proposal_version_details> proposal_version_details { get; set; }
         public virtual ICollection<pricing_guide_distribution_open_market_inventory> pricing_guide_distribution_open_market_inventory { get; set; }
         public virtual ICollection<station_inventory_spot_snapshots> station_inventory_spot_snapshots { get; set; }
-        public virtual ICollection<inventory_file_proprietary_header> inventory_file_proprietary_header { get; set; }
         public virtual timespan timespan { get; set; }
         public virtual ICollection<plan_version_pricing_api_result_spots> plan_version_pricing_api_result_spots { get; set; }
+        public virtual ICollection<inventory_file_proprietary_header> inventory_file_proprietary_header { get; set; }
+        public virtual ICollection<station_inventory_manifest_dayparts> station_inventory_manifest_dayparts { get; set; }
+        public virtual ICollection<daypart_defaults> daypart_defaults { get; set; }
     }
 }

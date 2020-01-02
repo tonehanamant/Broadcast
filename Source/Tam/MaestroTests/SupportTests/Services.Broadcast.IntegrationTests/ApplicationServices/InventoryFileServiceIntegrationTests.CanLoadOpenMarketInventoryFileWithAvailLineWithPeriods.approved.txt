@@ -37,7 +37,7 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "WINDY CITY WKND"
       }
@@ -140,7 +140,7 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "WINDY CITY LIVE B"
       }
@@ -243,7 +243,7 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "SCANDAL"
       }
@@ -346,7 +346,7 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "SCANDAL"
       }
@@ -449,7 +449,7 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "NIGHTLINE"
       }
@@ -552,7 +552,7 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "JIMMY KIMMEL"
       }
@@ -655,7 +655,7 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "INSIDE EDITION W"
       }
@@ -758,7 +758,7 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "CASTLE"
       }
@@ -861,7 +861,7 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "CASTLE"
       }
@@ -964,7 +964,7 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "CASTLE"
       }
@@ -1067,7 +1067,7 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "CASTLE"
       }
@@ -1170,7 +1170,7 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "ABC7 LATE NEWS (R)"
       }
@@ -1273,7 +1273,7 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "ABC7 LATE NEWS (R)"
       }
@@ -1376,7 +1376,7 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "JEOPARDY"
       }
@@ -1479,7 +1479,7 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "INSIDE EDITION"
       }
@@ -1582,7 +1582,7 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "WINDY CITY LIVE"
       }
@@ -1685,7 +1685,7 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "THE VIEW"
       }
@@ -1788,7 +1788,7 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "THE CHEW"
       }
@@ -1891,7 +1891,7 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "LIVE WITH KELLY"
       }
@@ -1994,7 +1994,7 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "GENERAL HOSPITAL"
       }

@@ -448,10 +448,10 @@ namespace Services.Broadcast.Repositories
                                 Display = program.daypart.daypart_text,
                                 Id = program.daypart_id
                             },
-                            Genres = program.station_inventory_manifest_dayparts.station_inventory_manifest_daypart_genres.Select(x=> new LookupDto {
+                            Genres = program.station_inventory_manifest.station_inventory_manifest_dayparts.SelectMany(s => s.station_inventory_manifest_daypart_genres.Select(x=> new LookupDto {
                                 Display = x.genre.name,
                                 Id = x.genre_id
-                            }).ToList()
+                            })).ToList()
                         }).ToList();
             });
         }

@@ -23,9 +23,9 @@ namespace EntityFrameworkMapping.Broadcast
         public int spots { get; set; }
         public int daypart_id { get; set; }
     
+        public virtual daypart daypart { get; set; }
         public virtual media_weeks media_weeks { get; set; }
         public virtual plan_version_pricing_api_results plan_version_pricing_api_results { get; set; }
         public virtual station_inventory_manifest station_inventory_manifest { get; set; }
-        public virtual daypart daypart { get; set; }
     }
 }

@@ -322,7 +322,7 @@ namespace Services.Broadcast.Repositories
                         TargetAudienceId = x.target_audience_id,
                         Dayparts = x.plan_version_dayparts.Select(y => new PlanDaypartDto
                         {
-                            DaypartCodeId = y.daypart_code_id,
+                            DaypartCodeId = y.daypart_default_id,
                             EndTimeSeconds = y.end_time_seconds,
                             IsEndTimeModified = y.is_end_time_modified,
                             IsStartTimeModified = y.is_start_time_modified,
@@ -621,7 +621,7 @@ namespace Services.Broadcast.Repositories
         {
             var dto = new PlanDaypartDto
             {
-                DaypartCodeId = entity.daypart_code_id,
+                DaypartCodeId = entity.daypart_default_id,
                 DaypartTypeId = EnumHelper.GetEnum<DaypartTypeEnum>(entity.daypart_type),
                 StartTimeSeconds = entity.start_time_seconds,
                 IsStartTimeModified = entity.is_start_time_modified,
@@ -720,7 +720,7 @@ namespace Services.Broadcast.Repositories
             {
                 var newDaypart = new plan_version_dayparts
                 {
-                    daypart_code_id = daypart.DaypartCodeId,
+                    daypart_default_id = daypart.DaypartCodeId,
                     daypart_type = (int)daypart.DaypartTypeId,
                     start_time_seconds = daypart.StartTimeSeconds,
                     is_start_time_modified = daypart.IsStartTimeModified,

@@ -58,7 +58,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var broadcastDataRepositoryFactory = new Mock<IDataRepositoryFactory>();
             var planValidator = new Mock<IPlanValidator>();
             var planBudgetDeliveryCalculator = new Mock<IPlanBudgetDeliveryCalculator>();
-            var daypartCodeRepository = new Mock<IDaypartCodeRepository>();
+            var daypartCodeRepository = new Mock<IDaypartDefaultRepository>();
             var planRepository = new Mock<IPlanRepository>();
             var mediaMonthAndWeekAggregateCache = new Mock<IMediaMonthAndWeekAggregateCache>();
             var audiencesCache = new Mock<IBroadcastAudiencesCache>();
@@ -82,8 +82,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Callback(() => saveNewPlanCalls.Add(DateTime.Now));
             broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IPlanRepository>())
                 .Returns(planRepository.Object);
-            daypartCodeRepository.Setup(s => s.GetDaypartCodeDefaults()).Returns(_GetDaypartCodeDefaults());
-            broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IDaypartCodeRepository>())
+            daypartCodeRepository.Setup(s => s.GetAllActiveDaypartDefaultsWithAllData()).Returns(_GetDaypartCodeDefaults());
+            broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IDaypartDefaultRepository>())
                 .Returns(daypartCodeRepository.Object);
             var planSummaryRepo = new Mock<IPlanSummaryRepository>();
             var setStatusCalls = new List<Tuple<int, PlanAggregationProcessingStatusEnum, DateTime>>();
@@ -154,7 +154,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var planBudgetDeliveryCalculator = new Mock<IPlanBudgetDeliveryCalculator>();
             var mediaMonthAndWeekAggregateCache = new Mock<IMediaMonthAndWeekAggregateCache>();
             var planRepository = new Mock<IPlanRepository>();
-            var daypartCodeRepository = new Mock<IDaypartCodeRepository>();
+            var daypartCodeRepository = new Mock<IDaypartDefaultRepository>();
             var audiencesCache = new Mock<IBroadcastAudiencesCache>();
             var quarterCalculationEngineMock = new Mock<IQuarterCalculationEngine>();
             var spotLengthEngine = new Mock<ISpotLengthEngine>();
@@ -186,8 +186,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Callback<PlanSummaryDto>((s) => saveSummaryCalls.Add(new Tuple<int, PlanSummaryDto, DateTime>(Thread.CurrentThread.ManagedThreadId, s, DateTime.Now)));
             broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IPlanSummaryRepository>())
                 .Returns(planSummaryRepo.Object);
-            daypartCodeRepository.Setup(s => s.GetDaypartCodeDefaults()).Returns(_GetDaypartCodeDefaults());
-            broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IDaypartCodeRepository>())
+            daypartCodeRepository.Setup(s => s.GetAllActiveDaypartDefaultsWithAllData()).Returns(_GetDaypartCodeDefaults());
+            broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IDaypartDefaultRepository>())
                 .Returns(daypartCodeRepository.Object);
             var planAggregator = new Mock<IPlanAggregator>();
             var aggregateCallCount = 0;
@@ -252,7 +252,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var broadcastDataRepositoryFactory = new Mock<IDataRepositoryFactory>();
             var planValidator = new Mock<IPlanValidator>();
             var planBudgetDeliveryCalculator = new Mock<IPlanBudgetDeliveryCalculator>();
-            var daypartCodeRepository = new Mock<IDaypartCodeRepository>();
+            var daypartCodeRepository = new Mock<IDaypartDefaultRepository>();
             var planRepository = new Mock<IPlanRepository>();
             var mediaMonthAndWeekAggregateCache = new Mock<IMediaMonthAndWeekAggregateCache>();
             var audiencesCache = new Mock<IBroadcastAudiencesCache>();
@@ -276,8 +276,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Callback(() => saveNewPlanCalls.Add(DateTime.Now));
             broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IPlanRepository>())
                 .Returns(planRepository.Object);
-            daypartCodeRepository.Setup(s => s.GetDaypartCodeDefaults()).Returns(_GetDaypartCodeDefaults());
-            broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IDaypartCodeRepository>())
+            daypartCodeRepository.Setup(s => s.GetAllActiveDaypartDefaultsWithAllData()).Returns(_GetDaypartCodeDefaults());
+            broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IDaypartDefaultRepository>())
                 .Returns(daypartCodeRepository.Object);
             var planSummaryRepo = new Mock<IPlanSummaryRepository>();
             var setStatusCalls = new List<Tuple<int, PlanAggregationProcessingStatusEnum, DateTime>>();
@@ -406,12 +406,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             };
         }
 
-        private static List<DaypartCodeDefaultDto> _GetDaypartCodeDefaults()
+        private static List<DaypartDefaultFullDto> _GetDaypartCodeDefaults()
         {
-            return new List<DaypartCodeDefaultDto>
+            return new List<DaypartDefaultFullDto>
             {
-                new DaypartCodeDefaultDto { Id = 2, DaypartType = DaypartTypeEnum.News, DefaultEndTimeSeconds = 0, DefaultStartTimeSeconds = 2000 },
-                new DaypartCodeDefaultDto { Id = 11, DaypartType = DaypartTypeEnum.News, DefaultEndTimeSeconds = 5000, DefaultStartTimeSeconds = 6000 },
+                new DaypartDefaultFullDto { Id = 2, DaypartType = DaypartTypeEnum.News, DefaultEndTimeSeconds = 0, DefaultStartTimeSeconds = 2000 },
+                new DaypartDefaultFullDto { Id = 11, DaypartType = DaypartTypeEnum.News, DefaultEndTimeSeconds = 5000, DefaultStartTimeSeconds = 6000 },
             };
         }
     }

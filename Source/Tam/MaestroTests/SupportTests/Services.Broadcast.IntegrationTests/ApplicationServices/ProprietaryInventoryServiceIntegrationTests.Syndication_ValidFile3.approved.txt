@@ -50,7 +50,7 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "House"
       }
@@ -132,7 +132,7 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "Modern Family Weekend"
       }
@@ -214,7 +214,7 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "Page Six"
       }
@@ -296,7 +296,7 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "True Crime Files"
       }
@@ -378,7 +378,7 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "Wendy Williams"
       }
@@ -460,7 +460,7 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "Cleveland/King of the Hill Combo"
       }

@@ -392,7 +392,7 @@ namespace Services.Broadcast.Repositories
                                         {
                                             daypart_id = md.Daypart.Id,
                                             program_name = md.ProgramName,
-                                            daypart_code_id = md.DaypartCode?.Id
+                                            daypart_default_id = md.DaypartDefault?.Id
                                         }).ToList(),
                 station_inventory_manifest_rates =
                                         manifest.ManifestRates.Select(mr => new station_inventory_manifest_rates()
@@ -424,7 +424,7 @@ namespace Services.Broadcast.Repositories
                                 .Include(x => x.station_inventory_manifest_weeks)
                                 .Include(x => x.station_inventory_manifest_rates)
                                 .Include(x => x.station_inventory_manifest_dayparts)
-                                .Include(x => x.station_inventory_manifest_dayparts.Select(d => d.daypart_codes))
+                                .Include(x => x.station_inventory_manifest_dayparts.Select(d => d.daypart_defaults.daypart))
                                 .Include(s => s.station)
                          join g in context.station_inventory_group on m.station_inventory_group_id equals g.id
                          where m.file_id == fileId
@@ -447,7 +447,7 @@ namespace Services.Broadcast.Repositories
                                 .Include(x => x.station_inventory_manifest_weeks)
                                 .Include(x => x.station_inventory_manifest_rates)
                                 .Include(x => x.station_inventory_manifest_dayparts)
-                                .Include(x => x.station_inventory_manifest_dayparts.Select(d => d.daypart_codes))
+                                .Include(x => x.station_inventory_manifest_dayparts.Select(d => d.daypart_defaults.daypart))
                                 .Include(s => s.station)
                                 .Include(x => x.inventory_files)
                                 .Include(x => x.inventory_files.inventory_file_proprietary_header)
@@ -455,7 +455,7 @@ namespace Services.Broadcast.Repositories
                          select m).ToList();
 
                     return manifests
-                        .Select(manifest => _MapToInventoryManifest(manifest, manifest.inventory_files.inventory_file_proprietary_header.SingleOrDefault()?.daypart_codes?.code))
+                        .Select(manifest => _MapToInventoryManifest(manifest, manifest.inventory_files.inventory_file_proprietary_header.SingleOrDefault()?.daypart_defaults?.daypart.code))
                         .ToList();
                 });
         }
@@ -469,7 +469,8 @@ namespace Services.Broadcast.Repositories
                     var query = c.station_inventory_manifest
                         .Include(x => x.station)
                         .Include(x => x.station_inventory_manifest_dayparts)
-                        .Include(x => x.station_inventory_manifest_dayparts.Select(d => d.daypart_codes))
+                        .Include(x => x.station_inventory_manifest_dayparts.Select(d => d.daypart_defaults))
+                        .Include(x => x.station_inventory_manifest_dayparts.Select(d => d.daypart_defaults.daypart))
                         .Include(x => x.station_inventory_manifest_audiences)
                         .Include(x => x.station_inventory_manifest_rates)
                         .Include(x => x.station_inventory_manifest_weeks)
@@ -482,7 +483,7 @@ namespace Services.Broadcast.Repositories
 
         private StationInventoryGroup _MapToInventoryGroup(station_inventory_group stationInventoryGroup)
         {
-            var headerDaypartCode = stationInventoryGroup.station_inventory_manifest.FirstOrDefault().inventory_files.inventory_file_proprietary_header.FirstOrDefault().daypart_codes.code;
+            var headerDaypartCode = stationInventoryGroup.station_inventory_manifest.FirstOrDefault().inventory_files.inventory_file_proprietary_header.FirstOrDefault().daypart_defaults.daypart.code;
             var sig = new StationInventoryGroup()
             {
                 Id = stationInventoryGroup.id,
@@ -520,14 +521,14 @@ namespace Services.Broadcast.Repositories
                     Id = md.id,
                     Daypart = DaypartCache.Instance.GetDisplayDaypart(md.daypart_id),
                     ProgramName = md.program_name,
-                    DaypartCode = md.daypart_codes == null ? null : new DaypartCode
+                    DaypartDefault = md.daypart_defaults == null ? null : new DaypartDefaultDto
                     {
-                        Id = md.daypart_codes.id,
-                        Code = md.daypart_codes.code,
-                        FullName = md.daypart_codes.full_name
+                        Id = md.daypart_defaults.id,
+                        Code = md.daypart_defaults.daypart.code,
+                        FullName = md.daypart_defaults.daypart.name
                     }
                 }).ToList(),
-                ManifestAudiences = manifest.station_inventory_manifest_audiences.Where(ma => ma.is_reference == false).Select(
+                ManifestAudiences = manifest.station_inventory_manifest_audiences.Where(ma => !ma.is_reference).Select(
                                 audience => new StationInventoryManifestAudience()
                                 {
                                     Audience = new DisplayAudience()
@@ -955,7 +956,7 @@ namespace Services.Broadcast.Repositories
                         .Where(x => x.start_date <= endDate && x.end_date >= startDate) //filter by start/end date
                         .Where(x => unitNames.Contains(x.station_inventory_manifest.station_inventory_group.name))   //filter by units name
                         .Where(x => x.station_inventory_manifest.inventory_files.inventory_source_id == inventorySourceId)   //filter by source
-                        .Where(x => x.station_inventory_manifest.inventory_files.inventory_file_proprietary_header.FirstOrDefault().daypart_code_id == daypartCodeId) //filter by daypart code
+                        .Where(x => x.station_inventory_manifest.inventory_files.inventory_file_proprietary_header.FirstOrDefault().daypart_default_id == daypartCodeId) //filter by daypart code
                         .Where(x => x.station_inventory_manifest.inventory_files.inventory_file_ratings_jobs.FirstOrDefault().status == (int)BackgroundJobProcessingStatus.Succeeded) // take only weeks with ratings calculated
                         .GroupBy(x => x.station_inventory_manifest.station_inventory_group_id)
                         .Select(x => x.FirstOrDefault().station_inventory_manifest.station_inventory_group)
@@ -993,7 +994,7 @@ namespace Services.Broadcast.Repositories
                 {
                     var manifests = context.station_inventory_manifest
                         .Where(x => x.inventory_source_id == inventorySourceId)
-                        .Where(x => x.inventory_files.inventory_file_proprietary_header.FirstOrDefault().daypart_code_id == daypartCodeId)
+                        .Where(x => x.inventory_files.inventory_file_proprietary_header.FirstOrDefault().daypart_default_id == daypartCodeId)
                         .Where(x => x.inventory_files.inventory_file_ratings_jobs.FirstOrDefault().status == (int)BackgroundJobProcessingStatus.Succeeded) // take only manifests with ratings calculated
                         .Include(x => x.station_inventory_manifest_audiences)
                         .Include(x => x.station_inventory_manifest_weeks)
@@ -1002,7 +1003,7 @@ namespace Services.Broadcast.Repositories
                         .Include(x => x.inventory_sources)
                         .Select(x => x)
                         .ToList()
-                        .Select(x => _MapToInventoryManifest(x, x.inventory_files.inventory_file_proprietary_header.SingleOrDefault()?.daypart_codes.code))
+                        .Select(x => _MapToInventoryManifest(x, x.inventory_files.inventory_file_proprietary_header.SingleOrDefault()?.daypart_defaults.daypart.code))
                         .ToList();
 
                     foreach (var manifest in manifests)
@@ -1030,7 +1031,7 @@ namespace Services.Broadcast.Repositories
                         Audience = new BroadcastAudience { Id = x.audience_id.Value },
                         ContractedDaypartId = x.contracted_daypart_id,
                         Cpm = x.cpm,
-                        DaypartCode = x.daypart_codes.code,
+                        DaypartCode = x.daypart_defaults.daypart.code,
                         EffectiveDate = x.effective_date,
                         EndDate = x.end_date,
                         HutBookId = x.hut_projection_book_id,
@@ -1201,7 +1202,7 @@ namespace Services.Broadcast.Repositories
                                 join inventoryFileHeader in context.inventory_file_proprietary_header on inventoryFile.id equals inventoryFileHeader.inventory_file_id
                                 join ratingProcessingJob in context.inventory_file_ratings_jobs on inventoryFile.id equals ratingProcessingJob.inventory_file_id
                                 where manifest.inventory_source_id == inventorySourceId &&
-                                      inventoryFileHeader.daypart_code_id == daypartCodeId &&
+                                      inventoryFileHeader.daypart_default_id == daypartCodeId &&
                                       week.spots > 0 &&
                                       ratingProcessingJob.status == (int)BackgroundJobProcessingStatus.Succeeded
                                 group week by week.id into weekGroup
@@ -1215,7 +1216,7 @@ namespace Services.Broadcast.Repositories
         }
 
         ///<inheritdoc/>
-        public List<StationInventoryGroup> GetInventoryGroups(int inventorySourceId, int daypartCodeId, DateTime startDate, DateTime endDate)
+        public List<StationInventoryGroup> GetInventoryGroups(int inventorySourceId, int daypartDefaultId, DateTime startDate, DateTime endDate)
         {
             return _InReadUncommitedTransaction(
                context =>
@@ -1227,7 +1228,7 @@ namespace Services.Broadcast.Repositories
                                       join inventoryFileHeader in context.inventory_file_proprietary_header on inventoryFile.id equals inventoryFileHeader.inventory_file_id
                                       join ratingProcessingJob in context.inventory_file_ratings_jobs on inventoryFile.id equals ratingProcessingJob.inventory_file_id
                                       where manifest.inventory_source_id == inventorySourceId &&
-                                            inventoryFileHeader.daypart_code_id == daypartCodeId &&
+                                            inventoryFileHeader.daypart_default_id == daypartDefaultId &&
                                             week.start_date <= endDate && week.end_date >= startDate &&
                                             week.spots > 0 &&
                                             ratingProcessingJob.status == (int)BackgroundJobProcessingStatus.Succeeded
@@ -1270,7 +1271,8 @@ namespace Services.Broadcast.Repositories
                                 .Include(x => x.station_inventory_manifest_weeks)
                                 .Include(x => x.station_inventory_manifest_rates)
                                 .Include(x => x.station_inventory_manifest_dayparts)
-                                .Include(x => x.station_inventory_manifest_dayparts.Select(d => d.daypart_codes))
+                                .Include(x => x.station_inventory_manifest_dayparts.Select(d => d.daypart_defaults))
+                                .Include(x => x.station_inventory_manifest_dayparts.Select(d => d.daypart_defaults.daypart))
                                 .Include(x => x.station)
                                 .Where(x => chunk.Contains(x.id))
                                 .ToList()
@@ -1303,15 +1305,15 @@ namespace Services.Broadcast.Repositories
             return _InReadUncommitedTransaction(
                 context =>
                 {
-                    var files = context.inventory_files
-                             .Include(x => x.inventory_file_proprietary_header)
-                             .Include(x => x.inventory_file_proprietary_header.Select(h => h.daypart_codes))
-                             .Include(x => x.inventory_file_proprietary_header.Select(h => h.share_media_months))
-                             .Include(x => x.inventory_file_proprietary_header.Select(h => h.hut_media_months));
+                var files = context.inventory_files
+                         .Include(x => x.inventory_file_proprietary_header)
+                         .Include(x => x.inventory_file_proprietary_header.Select(h => h.daypart_defaults.daypart))
+                             .Include(x => x.inventory_file_proprietary_header.Select(h => h.media_months))
+                             .Include(x => x.inventory_file_proprietary_header.Select(h => h.media_months1));
                     //skip daypart codes for open market
                     if(inventorySourceId != (int) InventorySourceEnum.OpenMarket)
                     {
-                        files = files.Include(x => x.station_inventory_manifest.Select(h => h.station_inventory_manifest_dayparts.Select(d => d.daypart_codes)));
+                        files = files.Include(x => x.station_inventory_manifest.Select(h => h.station_inventory_manifest_dayparts.Select(d => d.daypart_defaults.daypart)));
                     }
                              
                     files = files
@@ -1352,26 +1354,26 @@ namespace Services.Broadcast.Repositories
                             }
                             else
                             {
-                                fileHistory.DaypartCodes = new List<String>() { header.daypart_codes.code };
+                                fileHistory.DaypartCodes = new List<String>() { header.daypart_defaults.daypart.code };
                             }
 
-                            if (header.hut_media_months != null)
+                            if (header.media_months1 != null)
                             {
                                 fileHistory.HutBook = new MediaMonthDto
                                 {
-                                    Id = header.hut_media_months.id,
-                                    Year = header.hut_media_months.year,
-                                    Month = header.hut_media_months.month
+                                    Id = header.media_months1.id,
+                                    Year = header.media_months1.year,
+                                    Month = header.media_months1.month
                                 };
                             }
 
-                            if (header.share_media_months != null)
+                            if (header.media_months != null)
                             {
                                 fileHistory.ShareBook = new MediaMonthDto
                                 {
-                                    Id = header.share_media_months.id,
-                                    Year = header.share_media_months.year,
-                                    Month = header.share_media_months.month
+                                    Id = header.media_months.id,
+                                    Year = header.media_months.year,
+                                    Month = header.media_months.month
                                 };
                             }
                         }
@@ -1416,7 +1418,7 @@ namespace Services.Broadcast.Repositories
 
             if (manifests != null && manifests.Count > 0)
             {
-                result = manifests.SelectMany(m => m.station_inventory_manifest_dayparts.Select(d => d.daypart_codes.code)).Distinct().ToList();
+                result = manifests.SelectMany(m => m.station_inventory_manifest_dayparts.Select(d => d.daypart_defaults.daypart.code)).Distinct().ToList();
             }
 
             return result;

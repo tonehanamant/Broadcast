@@ -102,7 +102,7 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "MEGYN KELLY TODAY"
       }
@@ -262,7 +262,7 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "TODAY SHOW 3"
       }
@@ -422,7 +422,7 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "ACCESS"
       }
@@ -582,7 +582,7 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "MILLIONAIRE"
       }
@@ -742,7 +742,7 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "DAYS OF OUR LIVES"
       }
@@ -902,7 +902,7 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "DR. OZ"
       }
@@ -1062,7 +1062,7 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "RACHAEL RAY"
       }
@@ -1222,7 +1222,7 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "ENTERTAINMENT TONIGHT"
       }
@@ -1382,7 +1382,7 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "INSIDE EDITION"
       }
@@ -1542,7 +1542,7 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "ET WEEKEND"
       }
@@ -1702,7 +1702,7 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "TONIGHT SHOW W/ FALLON"
       }
@@ -1862,7 +1862,7 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "LATE NIGHT W/ MEYERS"
       }
@@ -2022,7 +2022,7 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "LAST CALL W/ DALY"
       }
@@ -2182,7 +2182,7 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "SATURDAY NIGHT LIVE"
       }
@@ -2342,7 +2342,7 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "COMEDY TV"
       }
@@ -2502,7 +2502,7 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "AMERICAN NINJA WARRIOR"
       }
@@ -2662,7 +2662,7 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "ROOKIE BLUE"
       }
@@ -2822,7 +2822,7 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "MEGYN KELLY TODAY"
       }
@@ -2982,7 +2982,7 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "TODAY SHOW 3"
       }
@@ -3142,7 +3142,7 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "ACCESS"
       }
@@ -3302,7 +3302,7 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "MILLIONAIRE"
       }
@@ -3462,7 +3462,7 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "DAYS OF OUR LIVES"
       }
@@ -3622,7 +3622,7 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "DR. OZ"
       }
@@ -3782,7 +3782,7 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "RACHAEL RAY"
       }
@@ -3942,7 +3942,7 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "ENTERTAINMENT TONIGHT"
       }
@@ -4102,7 +4102,7 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "INSIDE EDITION"
       }
@@ -4262,7 +4262,7 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "ET WEEKEND"
       }
@@ -4422,7 +4422,7 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "TONIGHT SHOW W/ FALLON"
       }
@@ -4582,7 +4582,7 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "LATE NIGHT W/ MEYERS"
       }
@@ -4742,7 +4742,7 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "LAST CALL W/ DALY"
       }
@@ -4902,7 +4902,7 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "SATURDAY NIGHT LIVE"
       }
@@ -5062,7 +5062,7 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "COMEDY TV"
       }
@@ -5222,7 +5222,7 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "AMERICAN NINJA WARRIOR"
       }
@@ -5382,7 +5382,7 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "ROOKIE BLUE"
       }
@@ -5477,7 +5477,7 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "NEWSCHANNEL 13 LIVE AT NOON"
       }
@@ -5580,7 +5580,7 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "MEET THE PRESS"
       }
@@ -5683,7 +5683,7 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "SUNDAY TODAY"
       }
@@ -5786,7 +5786,7 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "NEWSCHANNEL 13 TODAY SUN-8A"
       }
@@ -5889,7 +5889,7 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "NEWSCHANNEL 13 TODAY SUN-7A"
       }
@@ -5992,7 +5992,7 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "FORUM 13"
       }
@@ -6095,7 +6095,7 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "SAT TODAY SHOW - HR 2"
       }
@@ -6198,7 +6198,7 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "NEWSCHANNEL 13 TODAY"
       }
@@ -6301,7 +6301,7 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "SAT TODAY SHOW - HR 1"
       }
@@ -6404,7 +6404,7 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "NEWSCHANNEL 13 TODAY"
       }
@@ -6507,7 +6507,7 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "ON THE MONEY"
       }
@@ -6610,7 +6610,7 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "TODAY SHOW"
       }
@@ -6713,7 +6713,7 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "NEWSCHANNEL 13 EARLY TODAY-6A"
       }
@@ -6816,7 +6816,7 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "NEWSCHANNEL 13 EARLY TODAY-530A"
       }
@@ -6919,7 +6919,7 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "NEWSCHANNEL 13 EARLY TODAY-5A"
       }
@@ -7022,7 +7022,7 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "NBC EARLY TODAY"
       }

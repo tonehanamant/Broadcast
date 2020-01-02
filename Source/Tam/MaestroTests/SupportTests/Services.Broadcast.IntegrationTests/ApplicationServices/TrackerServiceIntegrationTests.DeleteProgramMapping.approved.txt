@@ -428,6 +428,10 @@
     },
     {
       "BvsValue": "CASTLE",
+      "ScheduleValue": ""
+    },
+    {
+      "BvsValue": "CASTLE",
       "ScheduleValue": "CASTLE"
     },
     {
@@ -629,6 +633,10 @@
     {
       "BvsValue": "COPS RELOADED",
       "ScheduleValue": "COPS RELOADED/COPS RELOAD B"
+    },
+    {
+      "BvsValue": "CRIME WATCH DAILY WITH CHRIS HANSEN",
+      "ScheduleValue": "VARIOUS"
     },
     {
       "BvsValue": "DAYBREAK SATURDAY",
@@ -845,6 +853,10 @@
     {
       "BvsValue": "FABLIFE",
       "ScheduleValue": "FAB LIFE"
+    },
+    {
+      "BvsValue": "FAMILY FEUD",
+      "ScheduleValue": ""
     },
     {
       "BvsValue": "FAMILY GUY",
@@ -1235,6 +1247,10 @@
       "ScheduleValue": "58NWS AT 5.30P"
     },
     {
+      "BvsValue": "JUDGE ALEX",
+      "ScheduleValue": "VARIOUS"
+    },
+    {
       "BvsValue": "JUDGE FAITH",
       "ScheduleValue": "JUDGE FAITH"
     },
@@ -1249,6 +1265,14 @@
     {
       "BvsValue": "JUDGE JUDY",
       "ScheduleValue": "JUDGE JUDY/JUDGE JUDY B"
+    },
+    {
+      "BvsValue": "JUDGE JUDY",
+      "ScheduleValue": "VARIOUS"
+    },
+    {
+      "BvsValue": "JUDGE MATHIS",
+      "ScheduleValue": ""
     },
     {
       "BvsValue": "JUDGE MATHIS",
@@ -1392,7 +1416,15 @@
     },
     {
       "BvsValue": "LAW & ORDER: CRIMINAL INTENT",
+      "ScheduleValue": "LAW&ORD SVU MF"
+    },
+    {
+      "BvsValue": "LAW & ORDER: CRIMINAL INTENT",
       "ScheduleValue": "LAW&ORDER"
+    },
+    {
+      "BvsValue": "LAW & ORDER: CRIMINAL INTENT",
+      "ScheduleValue": "VARIOUS"
     },
     {
       "BvsValue": "LIVE ON FIVE",
@@ -1461,6 +1493,10 @@
     {
       "BvsValue": "MIKE & MOLLY",
       "ScheduleValue": "2 BROKE/M&m"
+    },
+    {
+      "BvsValue": "MIKE & MOLLY",
+      "ScheduleValue": "AVG. ALL WKS"
     },
     {
       "BvsValue": "MIKE & MOLLY",
@@ -2164,7 +2200,15 @@
     },
     {
       "BvsValue": "THIS WEEK WITH GEORGE STEPHANOPOULOS",
+      "ScheduleValue": "ABC7 NW SU-9AM/AVG. ALL WKS"
+    },
+    {
+      "BvsValue": "THIS WEEK WITH GEORGE STEPHANOPOULOS",
       "ScheduleValue": "THIS WEEK-ABC"
+    },
+    {
+      "BvsValue": "TMZ",
+      "ScheduleValue": ""
     },
     {
       "BvsValue": "TMZ",
@@ -2176,7 +2220,15 @@
     },
     {
       "BvsValue": "TMZ LIVE",
+      "ScheduleValue": ""
+    },
+    {
+      "BvsValue": "TMZ LIVE",
       "ScheduleValue": "TMZ LIVE!"
+    },
+    {
+      "BvsValue": "TMZ LIVE",
+      "ScheduleValue": "VARIOUS"
     },
     {
       "BvsValue": "TMZ WEEKEND",

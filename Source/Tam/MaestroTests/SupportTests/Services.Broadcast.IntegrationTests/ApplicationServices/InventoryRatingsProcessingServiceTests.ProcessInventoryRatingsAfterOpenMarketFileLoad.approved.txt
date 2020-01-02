@@ -312,7 +312,7 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "News 10 @ Noon"
       }
@@ -750,7 +750,7 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "News 10 @ Noon"
       }

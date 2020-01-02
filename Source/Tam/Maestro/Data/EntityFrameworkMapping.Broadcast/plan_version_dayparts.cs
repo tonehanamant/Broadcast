@@ -16,14 +16,14 @@ namespace EntityFrameworkMapping.Broadcast
     {
         public plan_version_dayparts()
         {
+            this.plan_version_daypart_affiliate_restrictions = new HashSet<plan_version_daypart_affiliate_restrictions>();
             this.plan_version_daypart_genre_restrictions = new HashSet<plan_version_daypart_genre_restrictions>();
             this.plan_version_daypart_program_restrictions = new HashSet<plan_version_daypart_program_restrictions>();
             this.plan_version_daypart_show_type_restrictions = new HashSet<plan_version_daypart_show_type_restrictions>();
-            this.plan_version_daypart_affiliate_restrictions = new HashSet<plan_version_daypart_affiliate_restrictions>();
         }
     
         public int id { get; set; }
-        public int daypart_code_id { get; set; }
+        public int daypart_default_id { get; set; }
         public int start_time_seconds { get; set; }
         public int end_time_seconds { get; set; }
         public Nullable<double> weighting_goal_percent { get; set; }
@@ -36,11 +36,11 @@ namespace EntityFrameworkMapping.Broadcast
         public Nullable<int> program_restrictions_contain_type { get; set; }
         public Nullable<int> affiliate_restrictions_contain_type { get; set; }
     
+        public virtual ICollection<plan_version_daypart_affiliate_restrictions> plan_version_daypart_affiliate_restrictions { get; set; }
         public virtual ICollection<plan_version_daypart_genre_restrictions> plan_version_daypart_genre_restrictions { get; set; }
         public virtual ICollection<plan_version_daypart_program_restrictions> plan_version_daypart_program_restrictions { get; set; }
         public virtual ICollection<plan_version_daypart_show_type_restrictions> plan_version_daypart_show_type_restrictions { get; set; }
         public virtual plan_versions plan_versions { get; set; }
-        public virtual daypart_codes daypart_codes { get; set; }
-        public virtual ICollection<plan_version_daypart_affiliate_restrictions> plan_version_daypart_affiliate_restrictions { get; set; }
+        public virtual daypart_defaults daypart_defaults { get; set; }
     }
 }

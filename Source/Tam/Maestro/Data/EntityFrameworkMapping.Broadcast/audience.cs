@@ -32,10 +32,10 @@ namespace EntityFrameworkMapping.Broadcast
             this.station_inventory_spot_snapshots = new HashSet<station_inventory_spot_snapshots>();
             this.nti_transmittals_audiences = new HashSet<nti_transmittals_audiences>();
             this.station_inventory_manifest_audiences = new HashSet<station_inventory_manifest_audiences>();
-            this.inventory_file_proprietary_header = new HashSet<inventory_file_proprietary_header>();
             this.audience_maps = new HashSet<audience_maps>();
             this.plan_version_secondary_audiences = new HashSet<plan_version_secondary_audiences>();
             this.plan_versions = new HashSet<plan_versions>();
+            this.inventory_file_proprietary_header = new HashSet<inventory_file_proprietary_header>();
         }
     
         public int id { get; set; }
@@ -64,9 +64,9 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<station_inventory_spot_snapshots> station_inventory_spot_snapshots { get; set; }
         public virtual ICollection<nti_transmittals_audiences> nti_transmittals_audiences { get; set; }
         public virtual ICollection<station_inventory_manifest_audiences> station_inventory_manifest_audiences { get; set; }
-        public virtual ICollection<inventory_file_proprietary_header> inventory_file_proprietary_header { get; set; }
         public virtual ICollection<audience_maps> audience_maps { get; set; }
         public virtual ICollection<plan_version_secondary_audiences> plan_version_secondary_audiences { get; set; }
         public virtual ICollection<plan_versions> plan_versions { get; set; }
+        public virtual ICollection<inventory_file_proprietary_header> inventory_file_proprietary_header { get; set; }
     }
 }

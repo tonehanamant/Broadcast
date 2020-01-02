@@ -13,7 +13,7 @@ namespace Services.Broadcast.Helpers
     {
         private static readonly Dictionary<Type,string> _RegisteredTypesAndProperties = new Dictionary<Type, string>
         {
-            {typeof(DaypartCodeDefaultDto), nameof(DaypartCodeDefaultDto.DefaultEndTimeSeconds)},
+            {typeof(DaypartDefaultFullDto), nameof(DaypartDefaultFullDto.DefaultEndTimeSeconds)},
             {typeof(PlanDaypartDto), nameof(PlanDaypartDto.EndTimeSeconds)}
         };
 

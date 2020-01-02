@@ -50,7 +50,7 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "American Dad@31231"
       }
@@ -132,7 +132,7 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "Bob's Burgers M-F"
       }
@@ -214,7 +214,7 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "Bob's Burgers"
       }
@@ -296,7 +296,7 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "Bones Weekend"
       }
@@ -378,7 +378,7 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "Caught in Providence"
       }
@@ -460,7 +460,7 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "Cops"
       }
@@ -542,7 +542,7 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "Divorce Court"
       }
@@ -624,7 +624,7 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "FAMILY FEUD M-F"
       }
@@ -706,7 +706,7 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "FAMILY FEUD WKND"
       }
@@ -788,7 +788,7 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "Family Guy"
       }
@@ -870,7 +870,7 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "Family Guy Weekend"
       }
@@ -952,7 +952,7 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "How I Met Your Mother"
       }
@@ -1034,7 +1034,7 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "Last Man Standing"
       }
@@ -1116,7 +1116,7 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "Last Man Standing Weekend"
       }
@@ -1198,7 +1198,7 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "Modern Family"
       }
@@ -1280,7 +1280,7 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "Modern Family Weekend"
       }
@@ -1362,7 +1362,7 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "Page Six"
       }
@@ -1444,7 +1444,7 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "TRUE Crime Files"
       }
@@ -1526,7 +1526,7 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "WENDY WILLIAMS"
       }

@@ -399,7 +399,7 @@
     <Compile Include="daypart.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="daypart_codes.cs">
+    <Compile Include="daypart_defaults.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
     <Compile Include="genre.cs">

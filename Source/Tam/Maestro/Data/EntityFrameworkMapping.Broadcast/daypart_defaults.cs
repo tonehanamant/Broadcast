@@ -12,9 +12,9 @@ namespace EntityFrameworkMapping.Broadcast
     using System;
     using System.Collections.Generic;
     
-    public partial class daypart_codes
+    public partial class daypart_defaults
     {
-        public daypart_codes()
+        public daypart_defaults()
         {
             this.inventory_file_proprietary_header = new HashSet<inventory_file_proprietary_header>();
             this.inventory_summary_quarter_details = new HashSet<inventory_summary_quarter_details>();
@@ -25,13 +25,10 @@ namespace EntityFrameworkMapping.Broadcast
         }
     
         public int id { get; set; }
-        public string code { get; set; }
-        public bool is_active { get; set; }
-        public string full_name { get; set; }
         public int daypart_type { get; set; }
-        public int default_start_time_seconds { get; set; }
-        public int default_end_time_seconds { get; set; }
+        public int daypart_id { get; set; }
     
+        public virtual daypart daypart { get; set; }
         public virtual ICollection<inventory_file_proprietary_header> inventory_file_proprietary_header { get; set; }
         public virtual ICollection<inventory_summary_quarter_details> inventory_summary_quarter_details { get; set; }
         public virtual ICollection<plan_version_dayparts> plan_version_dayparts { get; set; }

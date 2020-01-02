@@ -79,7 +79,7 @@ namespace Services.Broadcast.Repositories
             instance.RegisterType<ISpotTrackerRepository, SpotTrackerRepository>();
             instance.RegisterType<IStationProcessingEngine, StationProcessingEngine>();
             instance.RegisterType<IProprietaryRepository, ProprietaryInventoryRepository>();
-            instance.RegisterType<IDaypartCodeRepository, DaypartCodeRepository>();
+            instance.RegisterType<IDaypartDefaultRepository, DaypartDefaultRepository>();
             instance.RegisterType<IInventorySummaryRepository, InventorySummaryRepository>();
             instance.RegisterType<IProgramRepository, ProgramRepository>();
             instance.RegisterType<ICampaignRepository, CampaignRepository>();

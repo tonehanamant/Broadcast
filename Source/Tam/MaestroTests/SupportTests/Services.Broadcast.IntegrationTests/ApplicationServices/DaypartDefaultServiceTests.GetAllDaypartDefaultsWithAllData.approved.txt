@@ -1,0 +1,170 @@
+﻿[
+  {
+    "Code": "AMN",
+    "DaypartType": 1,
+    "DefaultEndTimeSeconds": 46800,
+    "DefaultStartTimeSeconds": 14400,
+    "FullName": "AM News",
+    "Id": 23
+  },
+  {
+    "Code": "DAY",
+    "DaypartType": 2,
+    "DefaultEndTimeSeconds": 57600,
+    "DefaultStartTimeSeconds": 32400,
+    "FullName": "Daytime",
+    "Id": 12
+  },
+  {
+    "Code": "EF",
+    "DaypartType": 2,
+    "DefaultEndTimeSeconds": 64800,
+    "DefaultStartTimeSeconds": 54000,
+    "FullName": "Early Fringe",
+    "Id": 6
+  },
+  {
+    "Code": "EM",
+    "DaypartType": 2,
+    "DefaultEndTimeSeconds": 32400,
+    "DefaultStartTimeSeconds": 21600,
+    "FullName": "Early morning",
+    "Id": 14
+  },
+  {
+    "Code": "EMN",
+    "DaypartType": 1,
+    "DefaultEndTimeSeconds": 36000,
+    "DefaultStartTimeSeconds": 14400,
+    "FullName": "Early Morning News",
+    "Id": 1
+  },
+  {
+    "Code": "EN",
+    "DaypartType": 1,
+    "DefaultEndTimeSeconds": 68400,
+    "DefaultStartTimeSeconds": 57600,
+    "FullName": "Evening News",
+    "Id": 3
+  },
+  {
+    "Code": "ENLN",
+    "DaypartType": 1,
+    "DefaultEndTimeSeconds": 68400,
+    "DefaultStartTimeSeconds": 57600,
+    "FullName": "Evening News/Late News",
+    "Id": 5
+  },
+  {
+    "Code": "LF",
+    "DaypartType": 2,
+    "DefaultEndTimeSeconds": 7200,
+    "DefaultStartTimeSeconds": 82800,
+    "FullName": "Late Fringe",
+    "Id": 9
+  },
+  {
+    "Code": "LN",
+    "DaypartType": 1,
+    "DefaultEndTimeSeconds": 68400,
+    "DefaultStartTimeSeconds": 57600,
+    "FullName": "Late News",
+    "Id": 4
+  },
+  {
+    "Code": "MDN",
+    "DaypartType": 1,
+    "DefaultEndTimeSeconds": 46800,
+    "DefaultStartTimeSeconds": 39600,
+    "FullName": "Midday News",
+    "Id": 2
+  },
+  {
+    "Code": "OVN",
+    "DaypartType": 2,
+    "DefaultEndTimeSeconds": 21600,
+    "DefaultStartTimeSeconds": 7200,
+    "FullName": "Overnights",
+    "Id": 11
+  },
+  {
+    "Code": "PA",
+    "DaypartType": 2,
+    "DefaultEndTimeSeconds": 72000,
+    "DefaultStartTimeSeconds": 64800,
+    "FullName": "Prime Access",
+    "Id": 7
+  },
+  {
+    "Code": "PMN",
+    "DaypartType": 1,
+    "DefaultEndTimeSeconds": 68400,
+    "DefaultStartTimeSeconds": 57600,
+    "FullName": "PM News",
+    "Id": 24
+  },
+  {
+    "Code": "PT",
+    "DaypartType": 2,
+    "DefaultEndTimeSeconds": 82800,
+    "DefaultStartTimeSeconds": 72000,
+    "FullName": "Prime",
+    "Id": 8
+  },
+  {
+    "Code": "ROSN",
+    "DaypartType": 1,
+    "DefaultEndTimeSeconds": 68400,
+    "DefaultStartTimeSeconds": 57600,
+    "FullName": "ROS News",
+    "Id": 26
+  },
+  {
+    "Code": "ROSP",
+    "DaypartType": 2,
+    "DefaultEndTimeSeconds": 32400,
+    "DefaultStartTimeSeconds": 21600,
+    "FullName": "ROS Programming",
+    "Id": 29
+  },
+  {
+    "Code": "ROSS",
+    "DaypartType": 2,
+    "DefaultEndTimeSeconds": 32400,
+    "DefaultStartTimeSeconds": 21600,
+    "FullName": "ROS Syndication",
+    "Id": 27
+  },
+  {
+    "Code": "SPORTS",
+    "DaypartType": 2,
+    "DefaultEndTimeSeconds": 32400,
+    "DefaultStartTimeSeconds": 21600,
+    "FullName": "ROS Sports",
+    "Id": 28
+  },
+  {
+    "Code": "SYN",
+    "DaypartType": 2,
+    "DefaultEndTimeSeconds": 7200,
+    "DefaultStartTimeSeconds": 82800,
+    "FullName": "Total Day Syndication",
+    "Id": 10
+  },
+  {
+    "Code": "TDN",
+    "DaypartType": 1,
+    "DefaultEndTimeSeconds": 68400,
+    "DefaultStartTimeSeconds": 57600,
+    "FullName": "Total Day News",
+    "Id": 25
+  },
+  {
+    "Code": "TDNS",
+    "DaypartType": 3,
+    "DefaultEndTimeSeconds": 32400,
+    "DefaultStartTimeSeconds": 21600,
+    "FullName": "Total Day News and Syndication",
+    "Id": 30
+  }
+]

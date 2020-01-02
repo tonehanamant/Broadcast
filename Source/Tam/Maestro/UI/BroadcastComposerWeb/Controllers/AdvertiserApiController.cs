@@ -12,7 +12,7 @@ namespace BroadcastComposerWeb.Controllers
     public class AdvertiserApiController : BroadcastControllerBase
     {
         public AdvertiserApiController(IWebLogger logger, BroadcastApplicationServiceFactory applicationServiceFactory) :
-            base(logger, new ControllerNameRetriever(typeof(DaypartCodeApiController).Name), applicationServiceFactory)
+            base(logger, new ControllerNameRetriever(typeof(AdvertiserApiController).Name), applicationServiceFactory)
         {
         }
 

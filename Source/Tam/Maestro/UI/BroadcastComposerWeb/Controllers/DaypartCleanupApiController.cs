@@ -13,7 +13,7 @@ namespace BroadcastComposerWeb.Controllers
     public class DaypartCleanupApiController : BroadcastControllerBase
     {
         public DaypartCleanupApiController(IWebLogger logger, BroadcastApplicationServiceFactory applicationServiceFactory) :
-            base(logger, new ControllerNameRetriever(typeof(DaypartCodeApiController).Name), applicationServiceFactory)
+            base(logger, new ControllerNameRetriever(typeof(DaypartCleanupApiController).Name), applicationServiceFactory)
         {
         }
 

@@ -20,12 +20,12 @@ namespace Services.Broadcast.ApplicationServices
     public interface IInventorySummaryService : IApplicationService
     {
         List<InventorySource> GetInventorySources();
-        InventoryQuartersDto GetInventoryQuarters(int inventorySourceId, int daypartCodeId);
+        InventoryQuartersDto GetInventoryQuarters(int inventorySourceId, int daypartDefaultId);
         InventoryQuartersDto GetInventoryQuarters(DateTime currentDate);
         List<InventorySummaryDto> GetInventorySummaries(InventorySummaryFilterDto inventorySummaryFilterDto, DateTime currentDate);
         List<InventorySummaryDto> GetInventorySummariesWithCache(InventorySummaryFilterDto inventorySummaryFilterDto, DateTime currentDate);
-        List<DaypartCodeDto> GetDaypartCodes(int inventorySourceId);
-        List<string> GetInventoryUnits(int inventorySourceId, int daypartCodeId, DateTime startDate, DateTime endDate);
+        List<DaypartDefaultDto> GetDaypartDefaults(int inventorySourceId);
+        List<string> GetInventoryUnits(int inventorySourceId, int daypartDefaultId, DateTime startDate, DateTime endDate);
         List<LookupDto> GetInventorySourceTypes();
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IInventoryRepository _InventoryRepository;
         private readonly IInventorySummaryRepository _InventorySummaryRepository;
         private readonly IProgramRepository _ProgramRepository;
-        private readonly IDaypartCodeRepository _DaypartCodeRepository;
+        private readonly IDaypartDefaultRepository _DaypartDefaultRepository;
         private readonly List<InventorySourceTypeEnum> SummariesSourceTypes = new List<InventorySourceTypeEnum>
         {
             InventorySourceTypeEnum.Barter,
@@ -76,7 +76,7 @@ namespace Services.Broadcast.ApplicationServices
             _InventoryRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>(); ;
             _InventorySummaryRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventorySummaryRepository>();
             _ProgramRepository = broadcastDataRepositoryFactory.GetDataRepository<IProgramRepository>();
-            _DaypartCodeRepository = broadcastDataRepositoryFactory.GetDataRepository<IDaypartCodeRepository>();
+            _DaypartDefaultRepository = broadcastDataRepositoryFactory.GetDataRepository<IDaypartDefaultRepository>();
             _MarketCoverageCache = marketCoverageCache;
             _MediaMonthAndWeekAggregateCache = mediaMonthAndWeekAggregateCache;
             _InventoryGapCalculationEngine = inventoryGapCalculationEngine;
@@ -107,9 +107,9 @@ namespace Services.Broadcast.ApplicationServices
             };
         }
 
-        public InventoryQuartersDto GetInventoryQuarters(int inventorySourceId, int daypartCodeId)
+        public InventoryQuartersDto GetInventoryQuarters(int inventorySourceId, int daypartDefaultId)
         {
-            var weeks = _InventoryRepository.GetStationInventoryManifestWeeks(inventorySourceId, daypartCodeId);
+            var weeks = _InventoryRepository.GetStationInventoryManifestWeeks(inventorySourceId, daypartDefaultId);
             var mediaMonthIds = weeks.Select(x => x.MediaWeek.MediaMonthId).Distinct();
             var mediaMonths = _MediaMonthAndWeekAggregateCache.GetMediaMonthsByIds(mediaMonthIds);
             var quarters = mediaMonths
@@ -166,18 +166,18 @@ namespace Services.Broadcast.ApplicationServices
                 var data = _InventorySummaryRepository.GetInventorySummaryDataForSources(inventorySource, quarterDetail.Quarter, quarterDetail.Year);
 
                 //check if I should filter by daypart code
-                if (data != null && inventorySummaryFilterDto.DaypartCodeId.HasValue)
+                if (data != null && inventorySummaryFilterDto.DaypartDefaultId.HasValue)
                 {
-                    var daypartCodes = data.Details.Select(m => m.DaypartCodeId).Distinct().ToList();
+                    var daypartDefaults = data.Details.Select(m => m.DaypartDefaultId).Distinct().ToList();
 
-                    if (_ShouldFilterByDaypartCode(daypartCodes, inventorySummaryFilterDto.DaypartCodeId))
+                    if (_ShouldFilterByDaypartDefault(daypartDefaults, inventorySummaryFilterDto.DaypartDefaultId))
                     {
                         continue;
                     }
                 }
 
                 //don't add empty objects if I filter by daypart
-                if(data == null && inventorySummaryFilterDto.DaypartCodeId.HasValue)
+                if(data == null && inventorySummaryFilterDto.DaypartDefaultId.HasValue)
                 {
                     continue;
                 }
@@ -199,11 +199,11 @@ namespace Services.Broadcast.ApplicationServices
             {
                 var data = _InventorySummaryRepository.GetInventorySummaryDataForSources(inventorySource, quarterDetail.Quarter, quarterDetail.Year);
 
-                if (data != null && inventorySummaryFilterDto.DaypartCodeId.HasValue)
+                if (data != null && inventorySummaryFilterDto.DaypartDefaultId.HasValue)
                 {
-                    var daypartCodes = data.Details.Select(m => m.DaypartCodeId).Distinct().ToList();
+                    var daypartDefaults = data.Details.Select(m => m.DaypartDefaultId).Distinct().ToList();
 
-                    if (_ShouldFilterByDaypartCode(daypartCodes, inventorySummaryFilterDto.DaypartCodeId))
+                    if (_ShouldFilterByDaypartDefault(daypartDefaults, inventorySummaryFilterDto.DaypartDefaultId))
                     {
                         continue;
                     }
@@ -231,7 +231,7 @@ namespace Services.Broadcast.ApplicationServices
             Debug.WriteLine($"Got quarters in date range in {sw.Elapsed}");
 
             var inventoryAvailability = inventorySummaryFactory.GetInventoryAvailabilityBySource(inventorySource);
-            List<DaypartCodeDto> daypartCodesAndIds = _DaypartCodeRepository.GetAllActiveDaypartCodes();
+            var daypartCodesAndIds = _DaypartDefaultRepository.GetAllActiveDaypartDefaults();
             foreach (var quarterDetail in allQuartersBetweenDates)
             {
                 InventoryQuarterSummary summaryData;
@@ -284,11 +284,11 @@ namespace Services.Broadcast.ApplicationServices
             }
         }
 
-        private bool _ShouldFilterByDaypartCode(List<int> daypartCodeIds, int? daypartCodeId)
+        private bool _ShouldFilterByDaypartDefault(List<int> daypartDefaultIds, int? daypartDefaultId)
         {
-            if (!daypartCodeId.HasValue)
+            if (!daypartDefaultId.HasValue)
                 return false;
-            return !daypartCodeIds.Contains(daypartCodeId.Value);
+            return !daypartDefaultIds.Contains(daypartDefaultId.Value);
         }
 
         private bool _ShouldFilterBySourceType(InventorySummaryFilterDto inventorySummaryFilterDto, InventorySource inventorySource)
@@ -430,19 +430,19 @@ namespace Services.Broadcast.ApplicationServices
             return new DateRange(datesTuple.Item1, datesTuple.Item2);
         }
 
-        public List<DaypartCodeDto> GetDaypartCodes(int inventorySourceId)
+        public List<DaypartDefaultDto> GetDaypartDefaults(int inventorySourceId)
         {
-            return _DaypartCodeRepository.GetDaypartCodesByInventorySource(inventorySourceId);
+            return _DaypartDefaultRepository.GetDaypartDefaultsByInventorySource(inventorySourceId);
         }
 
-        public List<string> GetInventoryUnits(int inventorySourceId, int daypartCodeId, DateTime startDate, DateTime endDate)
+        public List<string> GetInventoryUnits(int inventorySourceId, int daypartDefaultId, DateTime startDate, DateTime endDate)
         {
             if (startDate > endDate)
             {
                 return new List<string>();
             }
 
-            var groups = _InventoryRepository.GetInventoryGroups(inventorySourceId, daypartCodeId, startDate, endDate);
+            var groups = _InventoryRepository.GetInventoryGroups(inventorySourceId, daypartDefaultId, startDate, endDate);
 
             return groups.Select(x => x.Name).Distinct(StringComparer.OrdinalIgnoreCase).ToList();
         }

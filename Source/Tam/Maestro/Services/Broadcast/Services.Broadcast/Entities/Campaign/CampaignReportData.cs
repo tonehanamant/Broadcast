@@ -42,12 +42,12 @@ namespace Services.Broadcast.Entities.Campaign
             , List<PlanDto> plans, AgencyDto agency, AdvertiserDto advertiser
             , List<PlanAudienceDisplay> guaranteedDemos
             , List<LookupDto> spotLenghts
-            , List<DaypartCodeDto> daypartCodes
+            , List<DaypartDefaultDto> daypartDefaults
             , List<PlanAudienceDisplay> orderedAudiences
             , IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache
             , IQuarterCalculationEngine quarterCalculationEngine)
         {
-            List<ProjectedPlan> projectedPlans = _ProjectPlansForQuarterExport(plans, spotLenghts, daypartCodes, mediaMonthAndWeekAggregateCache, quarterCalculationEngine);
+            List<ProjectedPlan> projectedPlans = _ProjectPlansForQuarterExport(plans, spotLenghts, daypartDefaults, mediaMonthAndWeekAggregateCache, quarterCalculationEngine);
             _PopulateHeaderData(exportType, campaign, plans, agency, advertiser, guaranteedDemos, spotLenghts, orderedAudiences, quarterCalculationEngine);
             _PopulateQuarterTableData(projectedPlans, quarterCalculationEngine);
             _PopulateCampaignTotalsTable();
@@ -149,7 +149,7 @@ namespace Services.Broadcast.Entities.Campaign
         }
 
         private List<ProjectedPlan> _ProjectPlansForQuarterExport(List<PlanDto> plans, List<LookupDto> spotLenghts
-            , List<DaypartCodeDto> daypartCodes
+            , List<DaypartDefaultDto> daypartDefaults
             , IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache
             , IQuarterCalculationEngine quarterCalculationEngine)
         {
@@ -188,7 +188,7 @@ namespace Services.Broadcast.Entities.Campaign
                                     ? (daypart.WeightingGoalPercent.Value / 100) * quarterFactor
                                     : (weightingGoalFactor / 100) * quarterFactor;
 
-                        var daypartCode = daypartCodes.Single(dc => dc.Id == daypart.DaypartCodeId);
+                        var daypartCode = daypartDefaults.Single(dc => dc.Id == daypart.DaypartCodeId);
                         var newProjectedPlan = new ProjectedPlan
                         {
                             QuarterYear = quarter.Year,

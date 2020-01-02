@@ -37,7 +37,7 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartCode": {
+        "DaypartDefault": {
           "Code": "OVN",
           "FullName": "Overnights",
           "Id": 11
@@ -62,9 +62,9 @@
           "_Tuesday": false,
           "_Wednesday": true
         },
-        "DaypartCode": {
+        "DaypartDefault": {
           "Code": "EM",
-          "FullName": "Early Morning",
+          "FullName": "Early morning",
           "Id": 14
         },
         "Genres": [],
@@ -135,7 +135,7 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartCode": {
+        "DaypartDefault": {
           "Code": "DAY",
           "FullName": "Daytime",
           "Id": 12
@@ -160,7 +160,7 @@
           "_Tuesday": false,
           "_Wednesday": true
         },
-        "DaypartCode": {
+        "DaypartDefault": {
           "Code": "EF",
           "FullName": "Early Fringe",
           "Id": 6
@@ -233,7 +233,7 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartCode": {
+        "DaypartDefault": {
           "Code": "DAY",
           "FullName": "Daytime",
           "Id": 12
@@ -258,7 +258,7 @@
           "_Tuesday": false,
           "_Wednesday": true
         },
-        "DaypartCode": {
+        "DaypartDefault": {
           "Code": "DAY",
           "FullName": "Daytime",
           "Id": 12
@@ -331,7 +331,7 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartCode": {
+        "DaypartDefault": {
           "Code": "EF",
           "FullName": "Early Fringe",
           "Id": 6
@@ -356,7 +356,7 @@
           "_Tuesday": false,
           "_Wednesday": true
         },
-        "DaypartCode": {
+        "DaypartDefault": {
           "Code": "EF",
           "FullName": "Early Fringe",
           "Id": 6
@@ -429,7 +429,7 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartCode": {
+        "DaypartDefault": {
           "Code": "PA",
           "FullName": "Prime Access",
           "Id": 7
@@ -454,7 +454,7 @@
           "_Tuesday": false,
           "_Wednesday": true
         },
-        "DaypartCode": {
+        "DaypartDefault": {
           "Code": "PT",
           "FullName": "Prime",
           "Id": 8
@@ -527,7 +527,7 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartCode": {
+        "DaypartDefault": {
           "Code": "LF",
           "FullName": "Late Fringe",
           "Id": 9
@@ -552,7 +552,7 @@
           "_Tuesday": false,
           "_Wednesday": true
         },
-        "DaypartCode": {
+        "DaypartDefault": {
           "Code": "LF",
           "FullName": "Late Fringe",
           "Id": 9
@@ -625,7 +625,7 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartCode": {
+        "DaypartDefault": {
           "Code": "LF",
           "FullName": "Late Fringe",
           "Id": 9
@@ -650,7 +650,7 @@
           "_Tuesday": false,
           "_Wednesday": true
         },
-        "DaypartCode": {
+        "DaypartDefault": {
           "Code": "DAY",
           "FullName": "Daytime",
           "Id": 12
@@ -723,7 +723,7 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartCode": {
+        "DaypartDefault": {
           "Code": "DAY",
           "FullName": "Daytime",
           "Id": 12
@@ -796,7 +796,7 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartCode": {
+        "DaypartDefault": {
           "Code": "EF",
           "FullName": "Early Fringe",
           "Id": 6

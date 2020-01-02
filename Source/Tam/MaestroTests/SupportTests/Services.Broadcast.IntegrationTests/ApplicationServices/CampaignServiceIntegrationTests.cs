@@ -182,7 +182,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     IntegrationTestApplicationServiceFactory.Instance.Resolve<ITrafficApiCache>(),
                     IntegrationTestApplicationServiceFactory.Instance.Resolve<IAudienceService>(),
                     IntegrationTestApplicationServiceFactory.Instance.Resolve<ISpotLengthService>(),
-                    IntegrationTestApplicationServiceFactory.Instance.Resolve<IDaypartCodeService>()
+                    IntegrationTestApplicationServiceFactory.Instance.Resolve<IDaypartDefaultService>()
                     );
 
                 var campaign = _GetValidCampaignForSave();

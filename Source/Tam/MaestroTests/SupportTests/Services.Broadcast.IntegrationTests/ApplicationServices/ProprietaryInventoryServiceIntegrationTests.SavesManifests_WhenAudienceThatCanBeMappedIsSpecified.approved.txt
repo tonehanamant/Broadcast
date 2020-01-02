@@ -50,9 +50,9 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartCode": {
+        "DaypartDefault": {
           "Code": "EM",
-          "FullName": "Early Morning",
+          "FullName": "Early morning",
           "Id": 14
         },
         "Genres": [],
@@ -148,7 +148,7 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartCode": {
+        "DaypartDefault": {
           "Code": "DAY",
           "FullName": "Daytime",
           "Id": 12
@@ -173,9 +173,9 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
-        "DaypartCode": {
+        "DaypartDefault": {
           "Code": "EM",
-          "FullName": "Early Morning",
+          "FullName": "Early morning",
           "Id": 14
         },
         "Genres": [],

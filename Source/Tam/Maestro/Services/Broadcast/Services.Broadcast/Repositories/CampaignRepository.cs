@@ -243,7 +243,8 @@ namespace Services.Broadcast.Repositories
                         .Include(z => z.plans.Select(x => x.plan_versions))
                         .Include(z => z.plans.Select(x => x.plan_versions.Select(y => y.plan_version_summaries)))
                         .Include(z => z.plans.Select(x => x.plan_versions.Select(y => y.plan_version_dayparts)))
-                        .Include(z => z.plans.Select(x => x.plan_versions.Select(y => y.plan_version_dayparts.Select(t=>t.daypart_codes))))
+                        .Include(z => z.plans.Select(x => x.plan_versions.Select(y => y.plan_version_dayparts.Select(t=>t.daypart_defaults))))
+                        .Include(z => z.plans.Select(x => x.plan_versions.Select(y => y.plan_version_dayparts.Select(t => t.daypart_defaults.daypart))))
                         .Include(z => z.plans.Select(x => x.plan_versions.Select(y => y.spot_lengths)))
                         .Include(z => z.plans.Select(x => x.plan_versions.Select(y => y.plan_version_summaries.Select(t=>t.plan_version_summary_quarters))))
                         .Single(c => c.id.Equals(campaignId), $"Could not find existing campaign with id '{campaignId}'");
@@ -291,7 +292,7 @@ namespace Services.Broadcast.Repositories
                             VersionId = version.id,
                             ModifiedDate = version.modified_date ?? version.created_date,
                             ModifiedBy = version.modified_by ?? version.created_by,
-                            Dayparts = version.plan_version_dayparts.Select(d => d.daypart_codes.code).ToList(),
+                            Dayparts = version.plan_version_dayparts.Select(d => d.daypart_defaults.daypart.code).ToList(),
                             TargetImpressions = version.target_impression,
                             TRP = version.target_rating_points,
                             TotalActiveDays = summary.active_day_count,

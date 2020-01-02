@@ -323,8 +323,8 @@
     <Compile Include="Controllers\BroadcastControllerBase.cs" />
     <Compile Include="Controllers\CampaignApiController.cs" />
     <Compile Include="Controllers\ContainTypeApiController.cs" />
+    <Compile Include="Controllers\DaypartDefaultApiController.cs" />
     <Compile Include="Controllers\DaypartCleanupApiController.cs" />
-    <Compile Include="Controllers\DaypartCodeApiController.cs" />
     <Compile Include="Controllers\DaypartTypeApiController.cs" />
     <Compile Include="Controllers\EnvironmentController.cs" />
     <Compile Include="Controllers\GenreApiController.cs" />

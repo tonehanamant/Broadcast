@@ -13,12 +13,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
         [Test]
         [TestCase(nameof(DaypartTimeHelper.AddOneSecondToEndTime), typeof(PlanDaypartDto), nameof(PlanDaypartDto.EndTimeSeconds), 400, 401)]
         [TestCase(nameof(DaypartTimeHelper.AddOneSecondToEndTime), typeof(PlanDaypartDto), nameof(PlanDaypartDto.StartTimeSeconds), 400, 400)]
-        [TestCase(nameof(DaypartTimeHelper.AddOneSecondToEndTime), typeof(DaypartCodeDefaultDto), nameof(DaypartCodeDefaultDto.DefaultEndTimeSeconds), 400, 401)]
-        [TestCase(nameof(DaypartTimeHelper.AddOneSecondToEndTime), typeof(DaypartCodeDefaultDto), nameof(DaypartCodeDefaultDto.DefaultStartTimeSeconds), 400, 400)]
+        [TestCase(nameof(DaypartTimeHelper.AddOneSecondToEndTime), typeof(DaypartDefaultFullDto), nameof(DaypartDefaultFullDto.DefaultEndTimeSeconds), 400, 401)]
+        [TestCase(nameof(DaypartTimeHelper.AddOneSecondToEndTime), typeof(DaypartDefaultFullDto), nameof(DaypartDefaultFullDto.DefaultStartTimeSeconds), 400, 400)]
         [TestCase(nameof(DaypartTimeHelper.SubtractOneSecondToEndTime), typeof(PlanDaypartDto), nameof(PlanDaypartDto.EndTimeSeconds), 400, 399)]
         [TestCase(nameof(DaypartTimeHelper.SubtractOneSecondToEndTime), typeof(PlanDaypartDto), nameof(PlanDaypartDto.StartTimeSeconds), 400, 400)]
-        [TestCase(nameof(DaypartTimeHelper.SubtractOneSecondToEndTime), typeof(DaypartCodeDefaultDto), nameof(DaypartCodeDefaultDto.DefaultEndTimeSeconds), 400, 399)]
-        [TestCase(nameof(DaypartTimeHelper.SubtractOneSecondToEndTime), typeof(DaypartCodeDefaultDto), nameof(DaypartCodeDefaultDto.DefaultStartTimeSeconds), 400, 400)]
+        [TestCase(nameof(DaypartTimeHelper.SubtractOneSecondToEndTime), typeof(DaypartDefaultFullDto), nameof(DaypartDefaultFullDto.DefaultEndTimeSeconds), 400, 399)]
+        [TestCase(nameof(DaypartTimeHelper.SubtractOneSecondToEndTime), typeof(DaypartDefaultFullDto), nameof(DaypartDefaultFullDto.DefaultStartTimeSeconds), 400, 400)]
         public void InvokeMethodAndCheckProperty(string methodName, Type t, string propertyName, int testValue, int expectedValue)
         {
             var candidates = ReflectionTestHelper.CreateGenericList(t);

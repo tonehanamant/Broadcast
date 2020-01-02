@@ -15,7 +15,7 @@ namespace BroadcastComposerWeb.Controllers
     public class ShowTypeApiController : BroadcastControllerBase
     {
         public ShowTypeApiController(IWebLogger logger, BroadcastApplicationServiceFactory applicationServiceFactory) :
-            base(logger, new ControllerNameRetriever(typeof(DaypartCodeApiController).Name), applicationServiceFactory)
+            base(logger, new ControllerNameRetriever(typeof(ShowTypeApiController).Name), applicationServiceFactory)
         {
         }
 

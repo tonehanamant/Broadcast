@@ -92,7 +92,7 @@ namespace Services.Broadcast.Converters.RateImport
 
             var daypartCode = worksheet.Cells[DAYPART_CODE_CELL.ToString()].GetStringValue();
 
-            if (!DaypartCodeRepository.ActiveDaypartCodeExists(daypartCode))
+            if (!DaypartDefaultRepository.ActiveDaypartDefaultExists(daypartCode))
             {
                 var errorMessage = "Not acceptable daypart code is specified";
                 validationProblems.Add(errorMessage);

@@ -3,9 +3,9 @@
 namespace Services.Broadcast.Entities
 {
     /// <summary>
-    /// Default data for daypart codes.
+    /// Default data for daypart defaults.
     /// </summary>
-    public class DaypartCodeDefaultDto : DaypartCodeDto
+    public class DaypartDefaultFullDto : DaypartDefaultDto
     {
         /// <summary>
         /// Gets or sets the daypart type.

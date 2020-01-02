@@ -23,10 +23,10 @@ namespace EntityFrameworkMapping.Broadcast
             this.proposal_version_details1 = new HashSet<proposal_version_details>();
             this.proposal_version_details2 = new HashSet<proposal_version_details>();
             this.proposal_version_details3 = new HashSet<proposal_version_details>();
-            this.inventory_file_proprietary_header = new HashSet<inventory_file_proprietary_header>();
-            this.inventory_file_proprietary_header1 = new HashSet<inventory_file_proprietary_header>();
             this.plan_version_share_book = new HashSet<plan_versions>();
             this.plan_version_hut_book = new HashSet<plan_versions>();
+            this.inventory_file_proprietary_header = new HashSet<inventory_file_proprietary_header>();
+            this.inventory_file_proprietary_header1 = new HashSet<inventory_file_proprietary_header>();
         }
     
         public int id { get; set; }
@@ -44,9 +44,9 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<proposal_version_details> proposal_version_details1 { get; set; }
         public virtual ICollection<proposal_version_details> proposal_version_details2 { get; set; }
         public virtual ICollection<proposal_version_details> proposal_version_details3 { get; set; }
-        public virtual ICollection<inventory_file_proprietary_header> inventory_file_proprietary_header { get; set; }
-        public virtual ICollection<inventory_file_proprietary_header> inventory_file_proprietary_header1 { get; set; }
         public virtual ICollection<plan_versions> plan_version_share_book { get; set; }
         public virtual ICollection<plan_versions> plan_version_hut_book { get; set; }
+        public virtual ICollection<inventory_file_proprietary_header> inventory_file_proprietary_header { get; set; }
+        public virtual ICollection<inventory_file_proprietary_header> inventory_file_proprietary_header1 { get; set; }
     }
 }

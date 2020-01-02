@@ -1,0 +1,107 @@
+﻿[
+  {
+    "Code": "AMN",
+    "FullName": "AM News",
+    "Id": 23
+  },
+  {
+    "Code": "DAY",
+    "FullName": "Daytime",
+    "Id": 12
+  },
+  {
+    "Code": "EF",
+    "FullName": "Early Fringe",
+    "Id": 6
+  },
+  {
+    "Code": "EM",
+    "FullName": "Early morning",
+    "Id": 14
+  },
+  {
+    "Code": "EMN",
+    "FullName": "Early Morning News",
+    "Id": 1
+  },
+  {
+    "Code": "EN",
+    "FullName": "Evening News",
+    "Id": 3
+  },
+  {
+    "Code": "ENLN",
+    "FullName": "Evening News/Late News",
+    "Id": 5
+  },
+  {
+    "Code": "LF",
+    "FullName": "Late Fringe",
+    "Id": 9
+  },
+  {
+    "Code": "LN",
+    "FullName": "Late News",
+    "Id": 4
+  },
+  {
+    "Code": "MDN",
+    "FullName": "Midday News",
+    "Id": 2
+  },
+  {
+    "Code": "OVN",
+    "FullName": "Overnights",
+    "Id": 11
+  },
+  {
+    "Code": "PA",
+    "FullName": "Prime Access",
+    "Id": 7
+  },
+  {
+    "Code": "PMN",
+    "FullName": "PM News",
+    "Id": 24
+  },
+  {
+    "Code": "PT",
+    "FullName": "Prime",
+    "Id": 8
+  },
+  {
+    "Code": "ROSN",
+    "FullName": "ROS News",
+    "Id": 26
+  },
+  {
+    "Code": "ROSP",
+    "FullName": "ROS Programming",
+    "Id": 29
+  },
+  {
+    "Code": "ROSS",
+    "FullName": "ROS Syndication",
+    "Id": 27
+  },
+  {
+    "Code": "SPORTS",
+    "FullName": "ROS Sports",
+    "Id": 28
+  },
+  {
+    "Code": "SYN",
+    "FullName": "Total Day Syndication",
+    "Id": 10
+  },
+  {
+    "Code": "TDN",
+    "FullName": "Total Day News",
+    "Id": 25
+  },
+  {
+    "Code": "TDNS",
+    "FullName": "Total Day News and Syndication",
+    "Id": 30
+  }
+]

@@ -23,7 +23,7 @@ namespace EntityFrameworkMapping.Broadcast
         public int plan_version_id { get; set; }
         public decimal optimal_cpm { get; set; }
     
-        public virtual ICollection<plan_version_pricing_api_result_spots> plan_version_pricing_api_result_spots { get; set; }
         public virtual plan_versions plan_versions { get; set; }
+        public virtual ICollection<plan_version_pricing_api_result_spots> plan_version_pricing_api_result_spots { get; set; }
     }
 }

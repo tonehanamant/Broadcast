@@ -29,7 +29,6 @@ namespace EntityFrameworkMapping.Broadcast
         public int station_id { get; set; }
     
         public virtual daypart daypart { get; set; }
-        public virtual station_inventory_manifest_dayparts station_inventory_manifest_dayparts { get; set; }
         public virtual station_inventory_manifest station_inventory_manifest { get; set; }
         public virtual pricing_guide_distributions pricing_guide_distributions { get; set; }
         public virtual market market { get; set; }

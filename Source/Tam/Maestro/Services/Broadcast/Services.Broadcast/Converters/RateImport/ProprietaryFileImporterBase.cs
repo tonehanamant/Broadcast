@@ -73,7 +73,7 @@ namespace Services.Broadcast.Converters.RateImport
         protected readonly IMediaMonthAndWeekAggregateCache MediaMonthAndWeekAggregateCache;
         protected readonly IStationProcessingEngine StationProcessingEngine;
         protected readonly ISpotLengthEngine SpotLengthEngine;
-        protected readonly IDaypartCodeRepository DaypartCodeRepository;
+        protected readonly IDaypartDefaultRepository DaypartDefaultRepository;
         private readonly IFileService _FileService;
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace Services.Broadcast.Converters.RateImport
         {
             _InventoryFileRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryFileRepository>();
             _InventoryRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
-            DaypartCodeRepository = broadcastDataRepositoryFactory.GetDataRepository<IDaypartCodeRepository>();
+            DaypartDefaultRepository = broadcastDataRepositoryFactory.GetDataRepository<IDaypartDefaultRepository>();
             AudienceCache = broadcastAudiencesCache;
             DaypartParsingEngine = inventoryDaypartParsingEngine;
             MediaMonthAndWeekAggregateCache = mediaMonthAndWeekAggregateCache;

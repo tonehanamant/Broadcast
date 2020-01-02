@@ -29,7 +29,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         private readonly IInventorySummaryService _InventorySummaryService = IntegrationTestApplicationServiceFactory.GetApplicationService<IInventorySummaryService>();
         private readonly IInventorySummaryCache _InventorySummaryCache = IntegrationTestApplicationServiceFactory.Instance.Resolve<IInventorySummaryCache>();
         private readonly IInventoryRepository _InventoryRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
-        private readonly IDaypartCodeRepository _DaypartCodeRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IDaypartCodeRepository>();
+        private readonly IDaypartDefaultRepository _DaypartDefaultRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IDaypartDefaultRepository>();
         private InventoryFileTestHelper _InventoryFileTestHelper;
         private int nbcOAndO_InventorySourceId = 0;
 
@@ -299,7 +299,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 _InventoryFileTestHelper.UploadProprietaryInventoryFile("OAndO_2021_Q1.xlsx");
                 _InventoryFileTestHelper.UploadProprietaryInventoryFile("OAndO_2022_Q2.xlsx");
 
-                var daypartCodeId = _DaypartCodeRepository.GetDaypartCodeByCode("OVN").Id;
+                var daypartCodeId = _DaypartDefaultRepository.GetDaypartDefaultByCode("OVN").Id;
 
                 var quarters = _InventorySummaryService.GetInventoryQuarters(nbcOAndO_InventorySourceId, daypartCodeId);
 
@@ -309,12 +309,12 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void GetDaypartCodesTest()
+        public void GetDaypartDefaultTest()
         {
-            var daypartCodes = _InventorySummaryService.GetDaypartCodes(nbcOAndO_InventorySourceId);
+            var daypartCodes = _InventorySummaryService.GetDaypartDefaults(nbcOAndO_InventorySourceId);
 
             var jsonResolver = new IgnorableSerializerContractResolver();
-            jsonResolver.Ignore(typeof(DaypartCode), "Id");
+            jsonResolver.Ignore(typeof(DaypartDefaultDto), "Id");
             var jsonSettings = new JsonSerializerSettings()
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
@@ -478,7 +478,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     Quarter = 1,
                     Year = 2019
                 },
-                DaypartCodeId = 1
+                DaypartDefaultId = 1
             }, new DateTime(2019, 04, 01));
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(inventoryCards));

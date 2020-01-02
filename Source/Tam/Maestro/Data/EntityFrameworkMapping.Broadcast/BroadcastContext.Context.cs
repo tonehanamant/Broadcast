@@ -69,7 +69,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<station_inventory_group> station_inventory_group { get; set; }
         public virtual DbSet<station_inventory_manifest_generation> station_inventory_manifest_generation { get; set; }
         public virtual DbSet<spot_lengths> spot_lengths { get; set; }
-        public virtual DbSet<station_inventory_manifest_dayparts> station_inventory_manifest_dayparts { get; set; }
         public virtual DbSet<station_inventory_manifest> station_inventory_manifest { get; set; }
         public virtual DbSet<station_inventory_spot_audiences> station_inventory_spot_audiences { get; set; }
         public virtual DbSet<station_inventory_spots> station_inventory_spots { get; set; }
@@ -130,18 +129,14 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<station_inventory_manifest_weeks> station_inventory_manifest_weeks { get; set; }
         public virtual DbSet<station> stations { get; set; }
         public virtual DbSet<inventory_file_ratings_jobs> inventory_file_ratings_jobs { get; set; }
-        public virtual DbSet<inventory_file_proprietary_header> inventory_file_proprietary_header { get; set; }
         public virtual DbSet<station_inventory_manifest_weeks_history> station_inventory_manifest_weeks_history { get; set; }
         public virtual DbSet<inventory_source_logos> inventory_source_logos { get; set; }
         public virtual DbSet<audience_maps> audience_maps { get; set; }
-        public virtual DbSet<scx_generation_job_files> scx_generation_job_files { get; set; }
         public virtual DbSet<scx_generation_job_units> scx_generation_job_units { get; set; }
-        public virtual DbSet<scx_generation_jobs> scx_generation_jobs { get; set; }
         public virtual DbSet<inventory_summary> inventory_summary { get; set; }
         public virtual DbSet<inventory_summary_gap_ranges> inventory_summary_gap_ranges { get; set; }
         public virtual DbSet<inventory_summary_gaps> inventory_summary_gaps { get; set; }
         public virtual DbSet<inventory_summary_quarters> inventory_summary_quarters { get; set; }
-        public virtual DbSet<inventory_summary_quarter_details> inventory_summary_quarter_details { get; set; }
         public virtual DbSet<campaign> campaigns { get; set; }
         public virtual DbSet<campaign_summaries> campaign_summaries { get; set; }
         public virtual DbSet<inventory_file_ratings_job_notes> inventory_file_ratings_job_notes { get; set; }
@@ -161,17 +156,22 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<station_inventory_manifest_daypart_programs> station_inventory_manifest_daypart_programs { get; set; }
         public virtual DbSet<plan_version_daypart_genre_restrictions> plan_version_daypart_genre_restrictions { get; set; }
         public virtual DbSet<plan_version_daypart_program_restrictions> plan_version_daypart_program_restrictions { get; set; }
-        public virtual DbSet<plan_version_dayparts> plan_version_dayparts { get; set; }
         public virtual DbSet<plan_version_pricing_execution_markets> plan_version_pricing_execution_markets { get; set; }
         public virtual DbSet<plan_version_pricing_executions> plan_version_pricing_executions { get; set; }
         public virtual DbSet<plan_version_pricing_job> plan_version_pricing_job { get; set; }
         public virtual DbSet<plan_version_pricing_inventory_source_percentages> plan_version_pricing_inventory_source_percentages { get; set; }
         public virtual DbSet<plan_version_pricing_parameters> plan_version_pricing_parameters { get; set; }
         public virtual DbSet<plan_version_pricing_parameters_inventory_source_percentages> plan_version_pricing_parameters_inventory_source_percentages { get; set; }
-        public virtual DbSet<plan_version_pricing_api_result_spots> plan_version_pricing_api_result_spots { get; set; }
         public virtual DbSet<plan_version_pricing_api_results> plan_version_pricing_api_results { get; set; }
-        public virtual DbSet<daypart_codes> daypart_codes { get; set; }
         public virtual DbSet<affiliate> affiliates { get; set; }
         public virtual DbSet<plan_version_daypart_affiliate_restrictions> plan_version_daypart_affiliate_restrictions { get; set; }
+        public virtual DbSet<plan_version_pricing_api_result_spots> plan_version_pricing_api_result_spots { get; set; }
+        public virtual DbSet<inventory_file_proprietary_header> inventory_file_proprietary_header { get; set; }
+        public virtual DbSet<inventory_summary_quarter_details> inventory_summary_quarter_details { get; set; }
+        public virtual DbSet<plan_version_dayparts> plan_version_dayparts { get; set; }
+        public virtual DbSet<scx_generation_job_files> scx_generation_job_files { get; set; }
+        public virtual DbSet<scx_generation_jobs> scx_generation_jobs { get; set; }
+        public virtual DbSet<station_inventory_manifest_dayparts> station_inventory_manifest_dayparts { get; set; }
+        public virtual DbSet<daypart_defaults> daypart_defaults { get; set; }
     }
 }

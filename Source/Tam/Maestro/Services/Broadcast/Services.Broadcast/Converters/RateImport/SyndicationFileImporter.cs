@@ -666,7 +666,7 @@ namespace Services.Broadcast.Converters.RateImport
                 validationProblems.Add(errorMessage);
                 worksheet.Cells[$"{HEADER_ERROR_COLUMN}{DAYPART_CODE_CELL.RowIndex}"].Value = errorMessage;
             }
-            else if (!DaypartCodeRepository.ActiveDaypartCodeExists(daypartCode))
+            else if (!DaypartDefaultRepository.ActiveDaypartDefaultExists(daypartCode))
             {
                 var errorMessage = "Not acceptable daypart code is specified";
                 validationProblems.Add(errorMessage);

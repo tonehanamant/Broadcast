@@ -1,6 +1,6 @@
 ﻿namespace Services.Broadcast.Entities
 {
-    public class DaypartCode
+    public class DaypartDefaultDto
     {
         public int Id { get; set; }
         public string Code { get; set; }

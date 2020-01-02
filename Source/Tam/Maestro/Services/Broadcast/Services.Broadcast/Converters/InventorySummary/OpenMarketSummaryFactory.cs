@@ -39,7 +39,8 @@ namespace Services.Broadcast.Converters.InventorySummary
         public override InventoryQuarterSummary CreateInventorySummary(InventorySource inventorySource,
                                                                    int householdAudienceId,
                                                                    QuarterDetailDto quarterDetail,
-                                                                   List<DaypartCodeDto> daypartCodes,
+                                                                   List<InventorySummaryManifestDto> quarterInventorySummaryManifests,
+                                                                   List<DaypartDefaultDto> daypartDefaults,
                                                                    InventoryAvailability inventoryAvailability)
         {
 
@@ -137,7 +138,7 @@ namespace Services.Broadcast.Converters.InventorySummary
             };
         }
 
-        public override InventoryQuarterSummary CreateInventorySummary(InventorySource inventorySource, int householdAudienceId, QuarterDetailDto quarterDetail, List<InventorySummaryManifestDto> manifests, List<DaypartCodeDto> daypartCodes, InventoryAvailability inventoryAvailability)
+        public override InventoryQuarterSummary CreateInventorySummary(InventorySource inventorySource, int householdAudienceId, QuarterDetailDto quarterDetail, List<DaypartDefaultDto> daypartDefaults, InventoryAvailability inventoryAvailability)
         {
             throw new NotImplementedException();
         }

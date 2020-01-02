@@ -37,7 +37,7 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "Eyewitness News/GMA Weekend"
       }
@@ -135,7 +135,7 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "Eyewitness News/GMA Weekend"
       }
@@ -221,7 +221,7 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "Eyewitness News/GMA Weekend"
       }

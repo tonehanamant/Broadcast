@@ -16,7 +16,6 @@ namespace EntityFrameworkMapping.Broadcast
     {
         public station_inventory_manifest()
         {
-            this.station_inventory_manifest_dayparts = new HashSet<station_inventory_manifest_dayparts>();
             this.station_inventory_manifest_generation = new HashSet<station_inventory_manifest_generation>();
             this.station_inventory_spots = new HashSet<station_inventory_spots>();
             this.station_inventory_manifest_genres = new HashSet<station_inventory_manifest_genres>();
@@ -25,6 +24,7 @@ namespace EntityFrameworkMapping.Broadcast
             this.station_inventory_manifest_rates = new HashSet<station_inventory_manifest_rates>();
             this.station_inventory_manifest_weeks = new HashSet<station_inventory_manifest_weeks>();
             this.plan_version_pricing_api_result_spots = new HashSet<plan_version_pricing_api_result_spots>();
+            this.station_inventory_manifest_dayparts = new HashSet<station_inventory_manifest_dayparts>();
         }
     
         public int id { get; set; }
@@ -40,7 +40,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual inventory_sources inventory_sources { get; set; }
         public virtual spot_lengths spot_lengths { get; set; }
         public virtual station_inventory_group station_inventory_group { get; set; }
-        public virtual ICollection<station_inventory_manifest_dayparts> station_inventory_manifest_dayparts { get; set; }
         public virtual ICollection<station_inventory_manifest_generation> station_inventory_manifest_generation { get; set; }
         public virtual ICollection<station_inventory_spots> station_inventory_spots { get; set; }
         public virtual ICollection<station_inventory_manifest_genres> station_inventory_manifest_genres { get; set; }
@@ -51,5 +50,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<station_inventory_manifest_weeks> station_inventory_manifest_weeks { get; set; }
         public virtual station station { get; set; }
         public virtual ICollection<plan_version_pricing_api_result_spots> plan_version_pricing_api_result_spots { get; set; }
+        public virtual ICollection<station_inventory_manifest_dayparts> station_inventory_manifest_dayparts { get; set; }
     }
 }

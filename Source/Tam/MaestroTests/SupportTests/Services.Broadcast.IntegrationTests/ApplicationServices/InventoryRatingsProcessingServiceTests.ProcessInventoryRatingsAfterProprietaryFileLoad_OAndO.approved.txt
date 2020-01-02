@@ -312,7 +312,7 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "Eyewitness News at 430a"
       }
@@ -666,7 +666,7 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "Eyewitness News/GMA Weekend"
       }
@@ -1044,7 +1044,7 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "Eyewitness News/GMA Weekend"
       }
@@ -1410,7 +1410,7 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "Eyewitness News at Noon"
       }
@@ -1764,7 +1764,7 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "Eyewitness News at 4p"
       }
@@ -2154,7 +2154,7 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "Eyewitness News at 5p"
       }
@@ -2532,7 +2532,7 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "Eyewitness News at 11p"
       }
@@ -2648,7 +2648,7 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "Eyewitness 11p News Encore"
       }
@@ -3038,7 +3038,7 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "Eyewitness News at 430a"
       }
@@ -3392,7 +3392,7 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "Eyewitness News/GMA Weekend"
       }
@@ -3770,7 +3770,7 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "Eyewitness News/GMA Weekend"
       }
@@ -4136,7 +4136,7 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
-        "DaypartCode": null,
+        "DaypartDefault": null,
         "Genres": [],
         "ProgramName": "Eyewitness News/GMA Weekend"
       }

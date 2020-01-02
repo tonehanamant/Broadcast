@@ -137,7 +137,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private readonly IMediaMonthAndWeekAggregateCache _MediaWeekCache;
         private readonly IPlanAggregator _PlanAggregator;
         private readonly IPlanSummaryRepository _PlanSummaryRepository;
-        private readonly IDaypartCodeRepository _DaypartCodeRepository;
+        private readonly IDaypartDefaultRepository _DaypartDefaultRepository;
         private readonly ICampaignAggregationJobTrigger _CampaignAggregationJobTrigger;
         private readonly INsiUniverseService _NsiUniverseService;
         private readonly IBroadcastAudiencesCache _BroadcastAudiencesCache;
@@ -146,7 +146,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private readonly IPlanPricingService _PlanPricingService;
         private readonly IQuarterCalculationEngine _QuarterCalculationEngine;
 
-        private const string _DaypartCodeNotFoundMessage = "Unable to find daypart code";
+        private const string _DaypartDefaultNotFoundMessage = "Unable to find daypart default";
 
         public PlanService(IDataRepositoryFactory broadcastDataRepositoryFactory
             , IPlanValidator planValidator
@@ -167,7 +167,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
             _PlanRepository = broadcastDataRepositoryFactory.GetDataRepository<IPlanRepository>();
             _PlanSummaryRepository = broadcastDataRepositoryFactory.GetDataRepository<IPlanSummaryRepository>();
-            _DaypartCodeRepository = broadcastDataRepositoryFactory.GetDataRepository<IDaypartCodeRepository>();
+            _DaypartDefaultRepository = broadcastDataRepositoryFactory.GetDataRepository<IDaypartDefaultRepository>();
             _PlanAggregator = planAggregator;
             _CampaignAggregationJobTrigger = campaignAggregationJobTrigger;
             _NsiUniverseService = nsiUniverseService;
@@ -266,21 +266,21 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
         private void _CalculateDaypartOverrides(List<PlanDaypartDto> dayparts)
         {
-            var daypartCodeDefaults = _DaypartCodeRepository.GetDaypartCodeDefaults();
+            var daypartDefaults = _DaypartDefaultRepository.GetAllActiveDaypartDefaultsWithAllData();
 
             foreach (var planDaypart in dayparts)
             {
-                var daypartCodeDefault = daypartCodeDefaults.Single(x => x.Id == planDaypart.DaypartCodeId, _DaypartCodeNotFoundMessage);
+                var daypartDefault = daypartDefaults.Single(x => x.Id == planDaypart.DaypartCodeId, _DaypartDefaultNotFoundMessage);
 
-                planDaypart.IsStartTimeModified = planDaypart.StartTimeSeconds != daypartCodeDefault.DefaultStartTimeSeconds;
-                planDaypart.IsEndTimeModified = planDaypart.EndTimeSeconds != daypartCodeDefault.DefaultEndTimeSeconds;
+                planDaypart.IsStartTimeModified = planDaypart.StartTimeSeconds != daypartDefault.DefaultStartTimeSeconds;
+                planDaypart.IsEndTimeModified = planDaypart.EndTimeSeconds != daypartDefault.DefaultEndTimeSeconds;
             }
         }
 
         ///<inheritdoc/>
         public PlanDto GetPlan(int planId, int? versionId = null)
         {
-            PlanDto plan = _PlanRepository.GetPlan(planId, versionId);
+            var plan = _PlanRepository.GetPlan(planId, versionId);
             
             plan.IsPricingModelRunning = _PlanPricingService.IsPricingModelRunningForPlan(planId);
 

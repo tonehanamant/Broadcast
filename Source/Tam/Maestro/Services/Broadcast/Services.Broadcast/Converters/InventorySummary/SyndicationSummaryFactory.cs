@@ -32,7 +32,7 @@ namespace Services.Broadcast.Converters.InventorySummary
                                                                    int householdAudienceId,
                                                                    QuarterDetailDto quarterDetail,
                                                                    List<InventorySummaryManifestDto> manifests,
-                                                                   List<DaypartCodeDto> daypartCodes,
+                                                                   List<DaypartDefaultDto> daypartDefaults,
                                                                    InventoryAvailability inventoryAvailability)
         {
             
