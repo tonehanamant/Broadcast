@@ -33,8 +33,8 @@ namespace Services.Broadcast.Entities.Campaign
         public string Notes { get; set; }
 
         private const string DATE_FORMAT_SHORT_YEAR = "MM/dd/yy";
-        private const string DATE_FORMAT_LONG_YEAR = "MM/dd/yyyy";
-        private const string DATE_FORMAT_NO_YEAR = "MM/dd";
+        private const string DATE_FORMAT_SHORT_YEAR_SINGLE_DIGIT = "M/d/yy";
+        private const string DATE_FORMAT_NO_YEAR_SINGLE_DIGIT = "M/d";
         private const string DATE_FORMAT_FILENAME = "MM-dd";
         private const string FILENAME_FORMAT = "{0} {1} {2} Plan Rev - {3}.xlsx";
 
@@ -71,11 +71,11 @@ namespace Services.Broadcast.Entities.Campaign
             {
                 if(group.Count == 1)
                 {
-                    FlightHiatuses.Add($"{group.First().ToShortDateString()}");
+                    FlightHiatuses.Add($"{group.First().ToString(DATE_FORMAT_SHORT_YEAR_SINGLE_DIGIT)}");
                 }
                 if(group.Count > 1)
                 {
-                    FlightHiatuses.Add($"{group.First().ToString(DATE_FORMAT_NO_YEAR)}-{group.Last().ToString(DATE_FORMAT_LONG_YEAR)}");
+                    FlightHiatuses.Add($"{group.First().ToString(DATE_FORMAT_NO_YEAR_SINGLE_DIGIT)}-{group.Last().ToString(DATE_FORMAT_SHORT_YEAR_SINGLE_DIGIT)}");
                 }
             }
         }
