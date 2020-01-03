@@ -157,13 +157,13 @@ namespace Services.Broadcast.ReportGenerators
                 string contentRestrictionsRowText = string.Empty;
                 foreach(var daypart in daypartsData)
                 {
-                    if (daypart.Genres.Any())
+                    if (daypart.Genres != null && daypart.Genres.Any())
                     {
                         //contain type is the same for all genres
                         contentRestrictionsRowText += $"{daypart.DaypartCode}: Genres {(daypart.GenreContainType.Equals(ContainTypeEnum.Include) ? "include " : "exclude ")}";
                         contentRestrictionsRowText += string.Join(", ", daypart.Genres);
                     }
-                    if (daypart.Programs.Any())
+                    if (daypart.Programs != null && daypart.Programs.Any())
                     {
                         //if the content restrictions string contains Genres, we need to add the separator
                         if (!string.IsNullOrWhiteSpace(contentRestrictionsRowText))
