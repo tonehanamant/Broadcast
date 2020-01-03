@@ -4,7 +4,7 @@ using Common.Services.Repositories;
 using Hangfire;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Cache;
-using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.DTO;
 using Services.Broadcast.Entities.DTO.Program;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
@@ -126,7 +126,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// <param name="aggregatePlanSynchronously"></param>
         void AutomaticStatusTransitions(DateTime transitionDate, string updatedBy, DateTime updatedDate, bool aggregatePlanSynchronously = false);
 
-        List<QuarterDetailDto> GetCurrentQuarters(DateTime currentDateTime);
+        CurrentQuartersDto GetCurrentQuarters(DateTime currentDateTime);
     }
 
     public class PlanService : IPlanService
@@ -521,24 +521,34 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// <summary>
         /// Gets the current quarters.
         ///
+        /// The first start date is "the following Monday" from "today".
         /// The list contains the current quarter and the following four quarters.
-        /// The current quarter's start date is "the following Monday" from "today".
         /// </summary>
         /// <param name="currentDateTime">The current date time.</param>
         /// <returns></returns>
-        public List<QuarterDetailDto> GetCurrentQuarters(DateTime currentDateTime)
+        public CurrentQuartersDto GetCurrentQuarters(DateTime currentDateTime)
         {
             const int monthModifierForQuery = 14;
             const int totalQuartersToReturn = 5;
+            const int daysOfTheWeek = 7;
+            const string dateFormat = "MM/dd/yyyy 00:00:00";
 
+            // ... + 7) % 7) to ensure we get range between 0 and 7.
+            var daysToAdd = currentDateTime.DayOfWeek == DayOfWeek.Monday ? daysOfTheWeek
+                : ((int)DayOfWeek.Monday - (int)currentDateTime.DayOfWeek + daysOfTheWeek) % daysOfTheWeek;
+            var followingMonday = DateTime.Parse(currentDateTime.AddDays(daysToAdd).ToString(dateFormat));
+            
             var endDate = currentDateTime.AddMonths(monthModifierForQuery);
             var quarters = _QuarterCalculationEngine.GetAllQuartersBetweenDates(currentDateTime, endDate)
                 .Take(totalQuartersToReturn).ToList();
-            // ... + 7) % 7) to ensure we get range between 0 and 7.
-            var daysToAdd = currentDateTime.DayOfWeek == DayOfWeek.Monday ? 7 
-                : ((int)DayOfWeek.Monday - (int)currentDateTime.DayOfWeek + 7) % 7;
-            quarters[0].StartDate = DateTime.Parse(currentDateTime.AddDays(daysToAdd).ToString("MM/dd/yyyy 00:00:00"));
-            return quarters;
+
+            var currentQuarters = new CurrentQuartersDto
+            {
+                FirstStartDate = followingMonday,
+                Quarters = quarters
+            };
+            
+            return currentQuarters;
         }
 
         ///<inheritdoc/>

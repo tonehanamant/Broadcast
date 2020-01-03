@@ -1624,10 +1624,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var currentDateTime = DateTime.Parse(currentDateTimeString);
             var expectedStartDateTime = DateTime.Parse(expectedStartDateTimeString);
 
-            var resultQuarters = _PlanService.GetCurrentQuarters(currentDateTime);
+            var currentQuartersResult = _PlanService.GetCurrentQuarters(currentDateTime);
 
-            Assert.AreEqual(expectedStartDateTime, resultQuarters[0].StartDate);
-            Assert.AreEqual(5, resultQuarters.Count);
+            Assert.AreEqual(expectedStartDateTime, currentQuartersResult.FirstStartDate);
+            Assert.AreEqual(5, currentQuartersResult.Quarters.Count);
         }
 
         [Test]

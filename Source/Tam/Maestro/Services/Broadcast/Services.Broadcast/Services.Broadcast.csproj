@@ -349,6 +349,7 @@
     <Compile Include="Entities\CampaignListItemDto.cs" />
     <Compile Include="Entities\CampaignQuarterDto.cs" />
     <Compile Include="Entities\DaypartCleanupDto.cs" />
+    <Compile Include="Entities\DTO\CurrentQuartersDto.cs" />
     <Compile Include="Entities\DTO\Program\ProgramDto.cs" />
     <Compile Include="Entities\DTO\Program\SearchRequestProgramDto.cs" />
     <Compile Include="Entities\Enums\GenreSourceEnum.cs" />

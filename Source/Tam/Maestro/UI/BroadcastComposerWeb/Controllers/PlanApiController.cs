@@ -1,13 +1,12 @@
-﻿using Common.Services.ApplicationServices;
-using Common.Services.WebComponents;
+﻿using Common.Services.WebComponents;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.ApplicationServices.Plan;
+using Services.Broadcast.Entities.DTO;
 using Services.Broadcast.Entities.Plan;
 using Services.Broadcast.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Web.Http;
-using Services.Broadcast.Entities;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.Cable.Entities;
 using Tam.Maestro.Services.ContractInterfaces;
@@ -192,7 +191,7 @@ namespace BroadcastComposerWeb.Controllers
 
         [HttpGet]
         [Route("CurrentQuarters")]
-        public BaseResponse<List<QuarterDetailDto>> GetCurrentQuarters()
+        public BaseResponse<CurrentQuartersDto> GetCurrentQuarters()
         {
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanService>().GetCurrentQuarters(DateTime.Now));
         }
