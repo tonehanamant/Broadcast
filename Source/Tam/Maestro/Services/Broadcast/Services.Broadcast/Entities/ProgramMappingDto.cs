@@ -11,7 +11,7 @@ namespace Services.Broadcast.Entities
 
     public class ProgramMappingDto
     {
-        public string BvsProgramName { get; set; }
+        public string DetectionProgramName { get; set; }
         public List<ScheduleProgramMappingDto> PrimaryScheduleMatches { get; set; }
         public List<ScheduleProgramMappingDto> FollowingScheduleMatches { get; set; }
     }

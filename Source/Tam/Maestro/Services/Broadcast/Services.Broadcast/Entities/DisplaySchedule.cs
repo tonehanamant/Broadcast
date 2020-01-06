@@ -28,7 +28,7 @@ namespace Services.Broadcast.Entities
         public List<short> MarketRestrictions { get; set; }
         public int DaypartRestrictionId { get; set; }
         public DaypartDto DaypartRestriction { get; set; }
-        public List<BvsTrackingAudience> Audiences { get; set; }
+        public List<DetectionTrackingAudience> Audiences { get; set; }
         public List<IsciDto> Iscis { get; set; }
         public List<ScheduleDeliveryDetails> DeliveryDetails { get; set; }
 

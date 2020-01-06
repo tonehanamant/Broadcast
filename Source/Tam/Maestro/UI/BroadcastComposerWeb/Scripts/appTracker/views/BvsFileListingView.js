@@ -109,7 +109,7 @@
         },
 
         bvsFileDelete: function (rec) {
-            var title = "Delete BVS File",
+            var title = "Delete Detected File",
                 message = "Are you sure you want to delete " + rec.FileName + "?";
             var callback = this.onBvsFileDelete.bind(this, rec.recid);
             util.confirm(title, message, view.controller.apiDeleteBvsFile.bind(view.controller, rec, callback));
@@ -117,7 +117,7 @@
 
         onBvsFileDelete: function (id) {
             this.bvsFilesGrid.remove(id);
-            util.notify("BVS File Deleted.");
+            util.notify("Detected File Deleted.");
         }
     }
 }

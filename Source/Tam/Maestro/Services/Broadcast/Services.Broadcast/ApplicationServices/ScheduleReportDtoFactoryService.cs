@@ -68,28 +68,28 @@ namespace Services.Broadcast.ApplicationServices
             var advertiserDataDto = new AdvertiserDataDto(scheduleAudiences);
             var coreDataList = new List<AdvertiserCoreData>();
 
-            var bvsDetailList = _GatherCoreDataAndBvsDetails(schedulesAggregate, scheduleAudiences, coreDataList);
+            var detectionDetailList = _GatherCoreDataAndDetectionDetails(schedulesAggregate, scheduleAudiences, coreDataList);
 
             _GatherAdvertiserData(schedulesAggregate, scheduleAudiences, coreDataList, advertiserDataDto);
             //END Advertiser Data
 
             //BEGIN Weekly Data
-            var weeklyData = _GatherWeeklyData(schedulesAggregate, scheduleAudiences, coreDataList, bvsDetailList);
+            var weeklyData = _GatherWeeklyData(schedulesAggregate, scheduleAudiences, coreDataList, detectionDetailList);
             //END Weekly Data
 
             //BEGIN Station Summary
             var stationSummaryData = new StationSummaryDto(scheduleAudiences);
-            var outOfSpecBvsDetails = _GatherStationSummaryData(schedulesAggregate, scheduleAudiences, coreDataList,
-                stationSummaryData, bvsDetailList);
+            var outOfSpecDetectionServiceDetails = _GatherStationSummaryData(schedulesAggregate, scheduleAudiences, coreDataList,
+                stationSummaryData, detectionDetailList);
             //END Station Summary
 
             // BEGIN out of spec to date
             var outOfSpecToDate =
-                _GatherOutOfSpecToDateData(schedulesAggregate, scheduleAudiences, outOfSpecBvsDetails);
+                _GatherOutOfSpecToDateData(schedulesAggregate, scheduleAudiences, outOfSpecDetectionServiceDetails);
             // END out of spec to date
 
             //BEGIN spot details
-            var prePostDataList = schedulesAggregate.GetBroadcastPrePostData(bvsDetailList);
+            var prePostDataList = schedulesAggregate.GetBroadcastPrePostData(detectionDetailList);
 
             //Order of adjustments is important. If main delivery is calculated first, the NsiDelivery would get discounted twice. We may need to consider how to make this more resilient.
             prePostDataList.ForEach(d => d.AudienceImpressions.ForEach(a =>
@@ -112,7 +112,7 @@ namespace Services.Broadcast.ApplicationServices
             };
 
             var deliveryByAdvertiser =
-                _GatherDeliveryByAdvertiser(schedulesAggregate, bvsDetailList, scheduleAudiences);
+                _GatherDeliveryByAdvertiser(schedulesAggregate, detectionDetailList, scheduleAudiences);
 
             // construct dtos
             var reportDto = new ScheduleReportDto
@@ -157,11 +157,11 @@ namespace Services.Broadcast.ApplicationServices
 
         private List<SpotsAndImpressionsDeliveryByAdvertiser> _GatherDeliveryByAdvertiser(
             SchedulesAggregate schedulesAggregate,
-            IEnumerable<bvs_file_details> bvsDetailList,
+            IEnumerable<detection_file_details> detectionFileDetailList,
             List<ScheduleAudience> scheduleAudiences)
         {
             var inSpecDetailsByAdvertiserAndSpotLength =
-                bvsDetailList.Where(
+                detectionFileDetailList.Where(
                         d => d.status == 1 &&
                              schedulesAggregate.AllowedForReport(d.station, d.date_aired, d.time_aired))
                     .GroupBy(
@@ -205,11 +205,11 @@ namespace Services.Broadcast.ApplicationServices
 
         private OutOfSpecToDateDto _GatherOutOfSpecToDateData(SchedulesAggregate schedulesAggregate,
             List<ScheduleAudience> scheduleAudiences,
-            IEnumerable<bvs_file_details> outOfSpecBvsDetails)
+            IEnumerable<detection_file_details> outOfSpecDetectionFileDetails)
         {
             var outOfSpecToDate = new OutOfSpecToDateDto(scheduleAudiences);
 
-            var outOfSpecGroupedData = outOfSpecBvsDetails.GroupBy(x => new
+            var outOfSpecGroupedData = outOfSpecDetectionFileDetails.GroupBy(x => new
             {
                 Rank = x.rank,
                 Market = x.market,
@@ -228,54 +228,54 @@ namespace Services.Broadcast.ApplicationServices
                 MatchSpotLength = x.match_spot_length
             });
 
-            foreach (var bvsDetailGroup in outOfSpecGroupedData)
+            foreach (var detectionDetailGroup in outOfSpecGroupedData)
             {
-                var bvsReportData = new BvsReportOutOfSpecData
+                var detectionReportData = new DetectionReportOutOfSpecData
                 {
-                    Rank = bvsDetailGroup.Key.Rank,
-                    Market = bvsDetailGroup.Key.Market,
-                    Station = bvsDetailGroup.Key.Station,
-                    Affiliate = bvsDetailGroup.Key.Affiliate,
-                    SpotLength = bvsDetailGroup.Key.SpotLength,
-                    ProgramName = bvsDetailGroup.Key.ProgramName,
-                    Isci = bvsDetailGroup.Key.Isci,
+                    Rank = detectionDetailGroup.Key.Rank,
+                    Market = detectionDetailGroup.Key.Market,
+                    Station = detectionDetailGroup.Key.Station,
+                    Affiliate = detectionDetailGroup.Key.Affiliate,
+                    SpotLength = detectionDetailGroup.Key.SpotLength,
+                    ProgramName = detectionDetailGroup.Key.ProgramName,
+                    Isci = detectionDetailGroup.Key.Isci,
                     Status = 0,
-                    BvsDate = bvsDetailGroup.Key.BvsDateAired,
-                    BroadcastDate = bvsDetailGroup.Key.BroadcastDate,
-                    TimeAired = bvsDetailGroup.Key.TimeAired,
-                    MatchAirTime = bvsDetailGroup.Key.MatchAirTime,
-                    MatchIsci = bvsDetailGroup.Key.MatchIsci,
-                    MatchProgram = bvsDetailGroup.Key.MatchProgram,
-                    MatchStation = bvsDetailGroup.Key.MatchStation,
-                    MatchSpotLength = bvsDetailGroup.Key.MatchSpotLength,
-                    OutOfSpecSpots = bvsDetailGroup.Count(),
+                    DetectionDate = detectionDetailGroup.Key.BvsDateAired,
+                    BroadcastDate = detectionDetailGroup.Key.BroadcastDate,
+                    TimeAired = detectionDetailGroup.Key.TimeAired,
+                    MatchAirTime = detectionDetailGroup.Key.MatchAirTime,
+                    MatchIsci = detectionDetailGroup.Key.MatchIsci,
+                    MatchProgram = detectionDetailGroup.Key.MatchProgram,
+                    MatchStation = detectionDetailGroup.Key.MatchStation,
+                    MatchSpotLength = detectionDetailGroup.Key.MatchSpotLength,
+                    OutOfSpecSpots = detectionDetailGroup.Count(),
                 };
-                bvsReportData.SpecStatus = schedulesAggregate.GetSpecStatusText(bvsReportData);
+                detectionReportData.SpecStatus = schedulesAggregate.GetSpecStatusText(detectionReportData);
 
-                var bvsDetails = bvsDetailGroup.Select(x => x).ToList();
+                var detectionDetails = detectionDetailGroup.Select(x => x).ToList();
                 foreach (var audience in scheduleAudiences)
                 {
                     var audienceImpressionsAndDeliveries = new AudienceImpressionsAndDelivery();
                     audienceImpressionsAndDeliveries.AudienceId = audience.AudienceId;
                     audienceImpressionsAndDeliveries.Delivery = 0;
 
-                    foreach (var bvsDetail in bvsDetails)
+                    foreach (var detectionDetail in detectionDetails)
                     {
-                        if (schedulesAggregate.AllowedForReport(bvsReportData.Station, bvsDetail.date_aired,
-                            bvsDetail.time_aired))
+                        if (schedulesAggregate.AllowedForReport(detectionReportData.Station, detectionDetail.date_aired,
+                            detectionDetail.time_aired))
                         {
-                            var data = GetOutOfScopeTotalDeliveryDetailsByAudienceId(bvsDetail, audience.AudienceId);
+                            var data = GetOutOfScopeTotalDeliveryDetailsByAudienceId(detectionDetail, audience.AudienceId);
                             audienceImpressionsAndDeliveries.Delivery +=
                                 _ImpressionAdjustmentEngine.AdjustImpression(data.Item2,
-                                    schedulesAggregate.IsEquivalized, bvsReportData.SpotLength,
+                                    schedulesAggregate.IsEquivalized, detectionReportData.SpotLength,
                                     schedulesAggregate.PostType, schedulesAggregate.PostingBookId);
                         }
                     }
 
-                    bvsReportData.AudienceImpressions.Add(audienceImpressionsAndDeliveries);
+                    detectionReportData.AudienceImpressions.Add(audienceImpressionsAndDeliveries);
                 }
 
-                outOfSpecToDate.ReportData.Add(bvsReportData);
+                outOfSpecToDate.ReportData.Add(detectionReportData);
             }
 
             //OUT OF SPEC TOTALS
@@ -304,11 +304,11 @@ namespace Services.Broadcast.ApplicationServices
             return outOfSpecToDate;
         }
 
-        private List<bvs_file_details> _GatherStationSummaryData(SchedulesAggregate schedulesAggregate,
+        private List<detection_file_details> _GatherStationSummaryData(SchedulesAggregate schedulesAggregate,
             List<ScheduleAudience> scheduleAudiences,
             List<AdvertiserCoreData> coreDataList,
             StationSummaryDto stationSummaryData,
-            List<bvs_file_details> bvsDetailList)
+            List<detection_file_details> detectionDetailList)
         {
             foreach (var coreData in coreDataList)
             {
@@ -322,7 +322,7 @@ namespace Services.Broadcast.ApplicationServices
                     continue;
 
                 var specStatus = deliveredSpots > 0 ? "Match" : string.Empty;
-                var bvsReportData = new BvsReportData
+                var detectionReportData = new DetectionReportData
                 {
                     Rank = coreData.Rank,
                     Market = coreData.Market,
@@ -356,24 +356,24 @@ namespace Services.Broadcast.ApplicationServices
 
                     var audienceAndDeliver =
                         coreData.BvsDetails
-                            .SelectMany(x => x.bvs_post_details)
+                            .SelectMany(x => x.detection_post_details)
                             .Where(x => x.audience_id == audience.AudienceId)
                             .ToList();
                     audienceImpressionAndDelivery.Delivery = _ImpressionAdjustmentEngine.AdjustImpression(
                         audienceAndDeliver.Sum(x => x.delivery), schedulesAggregate.IsEquivalized,
-                        bvsReportData.SpotLength,
+                        detectionReportData.SpotLength,
                         schedulesAggregate.PostType, schedulesAggregate.PostingBookId);
 
-                    bvsReportData.AudienceImpressions.Add(audienceImpressionAndDelivery);
+                    detectionReportData.AudienceImpressions.Add(audienceImpressionAndDelivery);
                 }
 
-                stationSummaryData.ReportData.Add(bvsReportData);
+                stationSummaryData.ReportData.Add(detectionReportData);
             }
 
             //Out of Spec
-            var outOfSpecBvsDetails = bvsDetailList.Where(x => x.IsOutOfSpec()).ToList();
+            var outOfSpecDetectionServiceDetails = detectionDetailList.Where(x => x.IsOutOfSpec()).ToList();
 
-            var groupedOutOfSpecBvsDetailsList = outOfSpecBvsDetails.GroupBy(x => new
+            var groupedOutOfSpecDetectionServiceDetailsList = outOfSpecDetectionServiceDetails.GroupBy(x => new
             {
                 Rank = x.rank,
                 Market = x.market,
@@ -387,50 +387,50 @@ namespace Services.Broadcast.ApplicationServices
                 MatchSpotLength = x.match_spot_length
             }).ToList();
 
-            foreach (var groupedOutOfSpecBvsDetails in groupedOutOfSpecBvsDetailsList)
+            foreach (var groupedOutOfSpecDetectionServiceDetails in groupedOutOfSpecDetectionServiceDetailsList)
             {
-                var bvsReportData = new BvsReportOutOfSpecData
+                var detectionReportData = new DetectionReportOutOfSpecData
                 {
-                    Rank = groupedOutOfSpecBvsDetails.Key.Rank,
-                    Market = groupedOutOfSpecBvsDetails.Key.Market,
-                    Station = groupedOutOfSpecBvsDetails.Key.Station,
-                    Affiliate = groupedOutOfSpecBvsDetails.Key.Affiliate,
-                    SpotLength = groupedOutOfSpecBvsDetails.Key.SpotLength,
+                    Rank = groupedOutOfSpecDetectionServiceDetails.Key.Rank,
+                    Market = groupedOutOfSpecDetectionServiceDetails.Key.Market,
+                    Station = groupedOutOfSpecDetectionServiceDetails.Key.Station,
+                    Affiliate = groupedOutOfSpecDetectionServiceDetails.Key.Affiliate,
+                    SpotLength = groupedOutOfSpecDetectionServiceDetails.Key.SpotLength,
                     ProgramName = null,
                     Status = 0,
-                    MatchAirTime = groupedOutOfSpecBvsDetails.Key.MatchAirTime,
-                    MatchIsci = groupedOutOfSpecBvsDetails.Key.MatchIsci,
-                    MatchProgram = groupedOutOfSpecBvsDetails.Key.MatchProgram,
-                    MatchStation = groupedOutOfSpecBvsDetails.Key.MatchStation,
-                    MatchSpotLength = groupedOutOfSpecBvsDetails.Key.MatchSpotLength,
-                    OutOfSpecSpots = groupedOutOfSpecBvsDetails.Count(),
+                    MatchAirTime = groupedOutOfSpecDetectionServiceDetails.Key.MatchAirTime,
+                    MatchIsci = groupedOutOfSpecDetectionServiceDetails.Key.MatchIsci,
+                    MatchProgram = groupedOutOfSpecDetectionServiceDetails.Key.MatchProgram,
+                    MatchStation = groupedOutOfSpecDetectionServiceDetails.Key.MatchStation,
+                    MatchSpotLength = groupedOutOfSpecDetectionServiceDetails.Key.MatchSpotLength,
+                    OutOfSpecSpots = groupedOutOfSpecDetectionServiceDetails.Count(),
                 };
-                bvsReportData.SpecStatus = schedulesAggregate.GetSpecStatusText(bvsReportData);
+                detectionReportData.SpecStatus = schedulesAggregate.GetSpecStatusText(detectionReportData);
 
-                var bvsDetails = groupedOutOfSpecBvsDetails.Select(x => x).ToList();
+                var detectionDetails = groupedOutOfSpecDetectionServiceDetails.Select(x => x).ToList();
                 foreach (var audience in scheduleAudiences)
                 {
                     var audienceImpressionsAndDeliveries = new AudienceImpressionsAndDelivery();
                     audienceImpressionsAndDeliveries.AudienceId = audience.AudienceId;
                     audienceImpressionsAndDeliveries.Delivery = 0;
 
-                    foreach (var bvsDetail in bvsDetails)
+                    foreach (var detectionDetail in detectionDetails)
                     {
-                        if (schedulesAggregate.AllowedForReport(bvsDetail.station, bvsDetail.date_aired,
-                            bvsDetail.time_aired))
+                        if (schedulesAggregate.AllowedForReport(detectionDetail.station, detectionDetail.date_aired,
+                            detectionDetail.time_aired))
                         {
-                            var data = GetOutOfScopeTotalDeliveryDetailsByAudienceId(bvsDetail, audience.AudienceId);
+                            var data = GetOutOfScopeTotalDeliveryDetailsByAudienceId(detectionDetail, audience.AudienceId);
                             audienceImpressionsAndDeliveries.Delivery +=
                                 _ImpressionAdjustmentEngine.AdjustImpression(data.Item2,
-                                    schedulesAggregate.IsEquivalized, bvsReportData.SpotLength,
+                                    schedulesAggregate.IsEquivalized, detectionReportData.SpotLength,
                                     schedulesAggregate.PostType, schedulesAggregate.PostingBookId);
                         }
                     }
 
-                    bvsReportData.AudienceImpressions.Add(audienceImpressionsAndDeliveries);
+                    detectionReportData.AudienceImpressions.Add(audienceImpressionsAndDeliveries);
                 }
 
-                stationSummaryData.ReportData.Add(bvsReportData);
+                stationSummaryData.ReportData.Add(detectionReportData);
             }
 
             stationSummaryData.ReportData =
@@ -463,17 +463,17 @@ namespace Services.Broadcast.ApplicationServices
                     });
             }
 
-            return outOfSpecBvsDetails;
+            return outOfSpecDetectionServiceDetails;
         }
 
 
-        private List<bvs_file_details> _GatherCoreDataAndBvsDetails(SchedulesAggregate schedulesAggregate,
+        private List<detection_file_details> _GatherCoreDataAndDetectionDetails(SchedulesAggregate schedulesAggregate,
             List<ScheduleAudience> scheduleAudiences,
             List<AdvertiserCoreData> coreDataList)
         {
             var marketRanksByStations = GetMarketRanksByStations(schedulesAggregate);
             var spotLengthRepo = _BroadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>();
-            var bvsDetailList = schedulesAggregate.GetBvsDetails();
+            var detectionDetailList = schedulesAggregate.GetBvsDetails();
             var details = schedulesAggregate.GetScheduleDetails();
 
             foreach (var scheduleDetail in details) //in-spec
@@ -501,19 +501,19 @@ namespace Services.Broadcast.ApplicationServices
                 coreDataList.Add(coreReportData);
             }
 
-            foreach (var bvsFileDetail in bvsDetailList)
+            foreach (var detectionFileDetail in detectionDetailList)
             {
-                if (marketRanksByStations.TryGetValue(bvsFileDetail.station, out var rank))
+                if (marketRanksByStations.TryGetValue(detectionFileDetail.station, out var rank))
                 {
-                    bvsFileDetail.rank = rank;
+                    detectionFileDetail.rank = rank;
                 }
                 else
                 {
-                    bvsFileDetail.rank = 0;
+                    detectionFileDetail.rank = 0;
                 }
             }
 
-            return bvsDetailList;
+            return detectionDetailList;
         }
 
         private void _GatherAdvertiserData(SchedulesAggregate schedulesAggregate,
@@ -533,7 +533,7 @@ namespace Services.Broadcast.ApplicationServices
                 if (orderedSpots == 0 && deliveredSpots == 0)
                     continue;
 
-                var bvsReportData = new BvsReportData
+                var detectionReportData = new DetectionReportData
                 {
                     Rank = coreData.Rank,
                     Market = coreData.Market,
@@ -548,7 +548,7 @@ namespace Services.Broadcast.ApplicationServices
                     DeliveredSpots = deliveredSpots,
                     SpotClearance = deliveredSpots / (double) orderedSpots,
                 };
-                advertiserDataDto.ReportData.Add(bvsReportData);
+                advertiserDataDto.ReportData.Add(detectionReportData);
 
                 foreach (var audience in scheduleAudiences)
                 {
@@ -557,7 +557,7 @@ namespace Services.Broadcast.ApplicationServices
                             a => a.audience_id == audience.AudienceId);
 
                     var delivery =
-                        coreData.BvsDetails.SelectMany(b => b.bvs_post_details)
+                        coreData.BvsDetails.SelectMany(b => b.detection_post_details)
                             .Where(p => p.audience_id == audience.AudienceId)
                             .Sum(p => p.delivery);
 
@@ -568,10 +568,10 @@ namespace Services.Broadcast.ApplicationServices
                             scheduleDetail.total_spots * (audienceData == null ? 0 : audienceData.impressions),
                         Delivery =
                             _ImpressionAdjustmentEngine.AdjustImpression(delivery,
-                                schedulesAggregate.IsEquivalized, bvsReportData.SpotLength, schedulesAggregate.PostType,
+                                schedulesAggregate.IsEquivalized, detectionReportData.SpotLength, schedulesAggregate.PostType,
                                 schedulesAggregate.PostingBookId),
                     };
-                    bvsReportData.AudienceImpressions.Add(audienceImpressionAndDelivery);
+                    detectionReportData.AudienceImpressions.Add(audienceImpressionAndDelivery);
                 }
             }
 
@@ -605,12 +605,12 @@ namespace Services.Broadcast.ApplicationServices
         private WeeklyDataDto _GatherWeeklyData(SchedulesAggregate schedulesAggregate,
             List<ScheduleAudience> scheduleAudiences,
             List<AdvertiserCoreData> coreDataList,
-            List<bvs_file_details> bvsDetailList)
+            List<detection_file_details> detectionDetailList)
         {
             var weeklyData = new WeeklyDataDto(scheduleAudiences);
             var scheduleWeeks = schedulesAggregate.GetScheduleWeeks().ToList();
-            var bvsDetailDateAired = schedulesAggregate.GetBvsDetailDateAired();
-            bvsDetailDateAired.ForEach(mw =>
+            var detectionDetailDateAired = schedulesAggregate.GetBvsDetailDateAired();
+            detectionDetailDateAired.ForEach(mw =>
             {
                 var mediaWeek = _MediaMonthAndWeekAggregateCache.GetMediaWeekContainingDate(mw);
                 if (!scheduleWeeks.Contains(mediaWeek.Id))
@@ -642,7 +642,7 @@ namespace Services.Broadcast.ApplicationServices
                         continue;
 
                     var status = deliveredSpots > 0 ? "Match" : string.Empty;
-                    var bvsReportData = new BvsReportData
+                    var detectionReportData = new DetectionReportData
                     {
                         Rank = detail.Rank,
                         Market = detail.Market,
@@ -668,73 +668,73 @@ namespace Services.Broadcast.ApplicationServices
                         var audienceImpressions = (audienceData == null ? 0 : audienceData.impressions);
                         var deliveries =
                             detail.BvsDetails.Where(dg => dg.schedule_detail_weeks.media_week_id == week.Id)
-                                .SelectMany(x => x.bvs_post_details)
+                                .SelectMany(x => x.detection_post_details)
                                 .Where(x => x.audience_id == audience.AudienceId)
                                 .ToList();
 
                         var audienceImpressionAndDelivery = new AudienceImpressionsAndDelivery
                         {
                             AudienceId = audience.AudienceId,
-                            Impressions = bvsReportData.OrderedSpots * audienceImpressions,
+                            Impressions = detectionReportData.OrderedSpots * audienceImpressions,
                             Delivery =
                                 _ImpressionAdjustmentEngine.AdjustImpression(deliveries.Sum(x => x.delivery),
-                                    schedulesAggregate.IsEquivalized, bvsReportData.SpotLength,
+                                    schedulesAggregate.IsEquivalized, detectionReportData.SpotLength,
                                     schedulesAggregate.PostType, schedulesAggregate.PostingBookId)
                         };
-                        bvsReportData.AudienceImpressions.Add(audienceImpressionAndDelivery);
+                        detectionReportData.AudienceImpressions.Add(audienceImpressionAndDelivery);
                     }
 
-                    weeklyDto.ReportData.Add(bvsReportData);
+                    weeklyDto.ReportData.Add(detectionReportData);
                 }
 
                 //Out of Spec
-                foreach (var bvsDetail in bvsDetailList.OutOfSpec().ToList())
+                foreach (var detectionDetail in detectionDetailList.OutOfSpec().ToList())
                 {
-                    var mediaWeek = _MediaMonthAndWeekAggregateCache.GetMediaWeekContainingDate(bvsDetail.date_aired);
+                    var mediaWeek = _MediaMonthAndWeekAggregateCache.GetMediaWeekContainingDate(detectionDetail.date_aired);
                     if (mediaWeek.Id != week.Id) continue;
 
-                    var bvsReportData = new BvsReportOutOfSpecData
+                    var detectionReportData = new DetectionReportOutOfSpecData
                     {
-                        Rank = bvsDetail.rank,
-                        Market = bvsDetail.market,
-                        Station = bvsDetail.station,
-                        Affiliate = bvsDetail.affiliate,
-                        ProgramName = bvsDetail.program_name,
-                        SpotLength = bvsDetail.spot_length,
-                        Isci = bvsDetail.isci,
+                        Rank = detectionDetail.rank,
+                        Market = detectionDetail.market,
+                        Station = detectionDetail.station,
+                        Affiliate = detectionDetail.affiliate,
+                        ProgramName = detectionDetail.program_name,
+                        SpotLength = detectionDetail.spot_length,
+                        Isci = detectionDetail.isci,
                         Status = 0, //out-of-spec,
-                        BvsDate = bvsDetail.date_aired,
-                        BroadcastDate = _GetBroadcastDate(bvsDetail, schedulesAggregate),
-                        TimeAired = new DateTime().AddSeconds(bvsDetail.time_aired),
-                        MatchAirTime = bvsDetail.match_airtime,
-                        MatchIsci = bvsDetail.match_isci,
-                        MatchProgram = bvsDetail.match_program,
-                        MatchStation = bvsDetail.match_station,
-                        MatchSpotLength = bvsDetail.match_spot_length
+                        DetectionDate = detectionDetail.date_aired,
+                        BroadcastDate = _GetBroadcastDate(detectionDetail, schedulesAggregate),
+                        TimeAired = new DateTime().AddSeconds(detectionDetail.time_aired),
+                        MatchAirTime = detectionDetail.match_airtime,
+                        MatchIsci = detectionDetail.match_isci,
+                        MatchProgram = detectionDetail.match_program,
+                        MatchStation = detectionDetail.match_station,
+                        MatchSpotLength = detectionDetail.match_spot_length
                     };
 
-                    bvsReportData.SpecStatus = schedulesAggregate.GetSpecStatusText(bvsReportData);
+                    detectionReportData.SpecStatus = schedulesAggregate.GetSpecStatusText(detectionReportData);
 
                     foreach (var audience in scheduleAudiences)
                     {
-                        if (schedulesAggregate.AllowedForReport(bvsDetail.station, bvsDetail.date_aired,
-                            bvsDetail.time_aired))
+                        if (schedulesAggregate.AllowedForReport(detectionDetail.station, detectionDetail.date_aired,
+                            detectionDetail.time_aired))
                         {
                             var audienceImpressionsAndDeliveries =
-                                GetOutOfScopeTotalDeliveryDetailsByAudienceId(bvsDetail, audience.AudienceId).Item1;
+                                GetOutOfScopeTotalDeliveryDetailsByAudienceId(detectionDetail, audience.AudienceId).Item1;
 
                             audienceImpressionsAndDeliveries.ForEach(
                                 a =>
                                     a.Delivery =
                                         _ImpressionAdjustmentEngine.AdjustImpression(a.Delivery,
                                             schedulesAggregate.IsEquivalized,
-                                            bvsReportData.SpotLength, schedulesAggregate.PostType,
+                                            detectionReportData.SpotLength, schedulesAggregate.PostType,
                                             schedulesAggregate.PostingBookId));
-                            bvsReportData.AudienceImpressions.AddRange(audienceImpressionsAndDeliveries);
+                            detectionReportData.AudienceImpressions.AddRange(audienceImpressionsAndDeliveries);
                         }
                     }
 
-                    weeklyDto.ReportData.Add(bvsReportData);
+                    weeklyDto.ReportData.Add(detectionReportData);
                 }
 
                 //TOTALS FOR WEEKLY
@@ -772,9 +772,9 @@ namespace Services.Broadcast.ApplicationServices
             return weeklyData;
         }
 
-        private DateTime _GetBroadcastDate(bvs_file_details bvsDetail, SchedulesAggregate schedulesAggregate)
+        private DateTime _GetBroadcastDate(detection_file_details detectionFileDetail, SchedulesAggregate schedulesAggregate)
         {
-            return schedulesAggregate.PostType == PostingTypeEnum.NSI ? bvsDetail.nsi_date : bvsDetail.nti_date;
+            return schedulesAggregate.PostType == PostingTypeEnum.NSI ? detectionFileDetail.nsi_date : detectionFileDetail.nti_date;
         }
 
         private Dictionary<string, int> GetMarketRanksByStations(SchedulesAggregate schedulesAggregate)
@@ -820,14 +820,14 @@ namespace Services.Broadcast.ApplicationServices
         }
 
         private static Tuple<List<AudienceImpressionsAndDelivery>, double>
-            GetOutOfScopeTotalDeliveryDetailsByAudienceId(bvs_file_details bfd, int audienceId)
+            GetOutOfScopeTotalDeliveryDetailsByAudienceId(detection_file_details bfd, int audienceId)
         {
             var list = new List<AudienceImpressionsAndDelivery>();
             double delivery = 0;
 
-            for (var j = 0; j < bfd.bvs_post_details.Count; j++)
+            for (var j = 0; j < bfd.detection_post_details.Count; j++)
             {
-                var bpd = bfd.bvs_post_details.ElementAt(j);
+                var bpd = bfd.detection_post_details.ElementAt(j);
                 if (bpd.audience_id != audienceId)
                     continue;
                 list.Add(new AudienceImpressionsAndDelivery
@@ -859,14 +859,14 @@ namespace Services.Broadcast.ApplicationServices
     }
 
 
-    public class WeeklyImpressionAndDeliveryDto : BvsReportDataContainer
+    public class WeeklyImpressionAndDeliveryDto : DetectionReportDataContainer
     {
         public LookupDto Week { get; set; }
     }
 
     public class SpotDetailDto
     {
-        public SpotDetailDto(IEnumerable<ScheduleAudience> scheduleAudiences, List<BvsPrePostReportData> reportData,
+        public SpotDetailDto(IEnumerable<ScheduleAudience> scheduleAudiences, List<DetectionPrePostReportData> reportData,
             SchedulesAggregate aggregate)
         {
             ImpressionsAndDelivery = new List<ImpressionAndDeliveryDto>();
@@ -889,6 +889,6 @@ namespace Services.Broadcast.ApplicationServices
         }
 
         public List<ImpressionAndDeliveryDto> ImpressionsAndDelivery { get; private set; }
-        public List<BvsPrePostReportData> ReportData { get; set; }
+        public List<DetectionPrePostReportData> ReportData { get; set; }
     }
 }

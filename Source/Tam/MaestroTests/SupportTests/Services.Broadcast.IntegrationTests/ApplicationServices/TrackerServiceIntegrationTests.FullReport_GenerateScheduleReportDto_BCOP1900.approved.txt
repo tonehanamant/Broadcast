@@ -2,19 +2,19 @@
   {
     "AudienceId": 31,
     "AudienceRank": 1,
-    "BvsDetailId": 76802,
     "Delivery": 2754.6
+    "DetectionServiceDetailId": 76802,
   },
   {
     "AudienceId": 31,
     "AudienceRank": 1,
-    "BvsDetailId": 76806,
     "Delivery": 0.0
+    "DetectionServiceDetailId": 76806,
   },
   {
     "AudienceId": 31,
     "AudienceRank": 1,
-    "BvsDetailId": 76810,
     "Delivery": 0.0
+    "DetectionServiceDetailId": 76810,
   }
 ]

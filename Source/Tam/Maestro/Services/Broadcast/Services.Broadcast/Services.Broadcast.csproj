@@ -313,6 +313,7 @@
     <Compile Include="ApplicationServices\RecurringJobsFactory.cs" />
     <Compile Include="ApplicationServices\Security\UserService.cs" />
     <Compile Include="ApplicationServices\ShowTypeService.cs" />
+    <Compile Include="BusinessEngines\DetectionPostingEngine.cs" />
     <Compile Include="BusinessEngines\ImpressionsCalculationEngine.cs" />
     <Compile Include="BusinessEngines\PlanPricingInventoryEngine.cs" />
     <Compile Include="BusinessEngines\PlanPricingInventorySourceSortEngine.cs" />
@@ -321,6 +322,7 @@
     <Compile Include="Clients\ProgramGuideApiClient.cs" />
     <Compile Include="Clients\ProgramGuideApiClientSimulator.cs" />
     <Compile Include="Clients\ProgramsSearchApiClient.cs" />
+    <Compile Include="Converters\DetectionConverter.cs" />
     <Compile Include="Converters\RateImport\BaseInventoryFileImporter.cs" />
     <Compile Include="Entities\Campaign\CampaignExportTypeEnum.cs" />
     <Compile Include="Entities\Campaign\CampaignReportData.cs" />
@@ -351,6 +353,15 @@
     <Compile Include="Entities\CampaignQuarterDto.cs" />
     <Compile Include="Entities\DaypartCleanupDto.cs" />
     <Compile Include="Entities\DTO\CurrentQuartersDto.cs" />
+    <Compile Include="Entities\DetectionFileDetail.cs" />
+    <Compile Include="Entities\DetectionFileSummary.cs" />
+    <Compile Include="Entities\DetectionMap.cs" />
+    <Compile Include="Entities\DetectionPostDetail.cs" />
+    <Compile Include="Entities\DetectionPostDetailAudience.cs" />
+    <Compile Include="Entities\DetectionReportData.cs" />
+    <Compile Include="Entities\DetectionScrubbingDto.cs" />
+    <Compile Include="Entities\DetectionTrackingAudience.cs" />
+    <Compile Include="Entities\DetectionTrackingDetail.cs" />
     <Compile Include="Entities\DTO\Program\ProgramDto.cs" />
     <Compile Include="Entities\DTO\Program\SearchRequestProgramDto.cs" />
     <Compile Include="Entities\Enums\GenreSourceEnum.cs" />
@@ -433,6 +444,7 @@
     <Compile Include="Entities\Scx\ScxFileGenerationDetail.cs" />
     <Compile Include="Entities\StationInventory\StationInventoryManifestDaypartProgram.cs" />
     <Compile Include="Exceptions\UnknownGenreException.cs" />
+    <Compile Include="Extensions\DetectionExtensions.cs" />
     <Compile Include="Extensions\HttpExtensions.cs" />
     <Compile Include="Extensions\QuarterDetailExtension.cs" />
     <Compile Include="Helpers\DaypartTimeHelper.cs" />
@@ -440,8 +452,12 @@
     <Compile Include="Helpers\SystemComponentParameterHelper.cs" />
     <Compile Include="ReflectionHelper.cs" />
     <Compile Include="ReportGenerators\CampaignReportGenerator.cs" />
+    <Compile Include="ReportGenerators\DetectionExcelReportGenerator.cs" />
     <Compile Include="Repositories\AffiliateRepository.cs" />
     <Compile Include="Repositories\CampaignSummaryRepository.cs" />
+    <Compile Include="Repositories\DetectionPostDetailsRepository.cs" />
+    <Compile Include="Repositories\DetectionRepository.cs" />
+    <Compile Include="Repositories\DetectionTestDataGeneratorRepository.cs" />
     <Compile Include="Repositories\InventoryFileProgramEnrichmentJobsRepository.cs" />
     <Compile Include="Repositories\PlanRepository.cs" />
     <Compile Include="Repositories\PlanSummaryRepository.cs" />
@@ -622,7 +638,6 @@
     <Compile Include="Cache\MediaMonthCrunchCache.cs" />
     <Compile Include="Converters\SigmaConverter.cs" />
     <Compile Include="Entities\TrackerFile.cs" />
-    <Compile Include="Entities\BvsFileDetail.cs" />
     <Compile Include="Entities\ProposalDetailPostScrubbing.cs" />
     <Compile Include="FileService.cs" />
     <Compile Include="BusinessEngines\StationProcessingEngine.cs" />
@@ -666,7 +681,6 @@
     <Compile Include="Entities\WWTVSaveResult.cs" />
     <Compile Include="Entities\MatchingProposalWeek.cs" />
     <Compile Include="Entities\BroadcastAudience.cs" />
-    <Compile Include="Entities\BvsTrackingAudience.cs" />
     <Compile Include="Entities\MyEventsReportDataLine.cs" />
     <Compile Include="Entities\DTO\PostedContractedProposalsDto.cs" />
     <Compile Include="Entities\DTO\ClientPostScrubbingProposalDto.cs" />
@@ -734,7 +748,6 @@
     <Compile Include="Entities\WhosWatchingTVPostProcessingFile.cs" />
     <Compile Include="Exceptions\BroadcastAffidavitException.cs" />
     <Compile Include="Exceptions\FileUploadException.cs" />
-    <Compile Include="Extensions\BvsExtensions.cs" />
     <Compile Include="ReportGenerators\IReportGenerator.cs" />
     <Compile Include="ReportGenerators\MyEventsReportGenerator.cs" />
     <Compile Include="ReportGenerators\PostReportGenerator.cs" />
@@ -747,7 +760,6 @@
     <Compile Include="BusinessEngines\PostEngine.cs" />
     <Compile Include="BusinessEngines\ProposalCalculationEngine.cs" />
     <Compile Include="Converters\AssemblyImportHelper.cs" />
-    <Compile Include="ReportGenerators\BvsExcelReportGenerator.cs" />
     <Compile Include="Converters\Post\PostFileParser.cs" />
     <Compile Include="Converters\RateImport\OpenMarketFileImporter.cs" />
     <Compile Include="Converters\ScheduleConverterBase.cs" />
@@ -799,17 +811,14 @@
     <Compile Include="ApplicationServices\BroadcastApplicationServiceFactory.cs" />
     <Compile Include="Cache\BroadcastAudiencesCache.cs" />
     <Compile Include="BroadcastConstants.cs" />
-    <Compile Include="BusinessEngines\BvsPostingEngine.cs" />
     <Compile Include="BusinessEngines\ProposalProgramsCalculationEngine.cs" />
     <Compile Include="BusinessEngines\QuarterCalculationEngine.cs" />
     <Compile Include="BusinessEngines\TrackingEngine.cs" />
-    <Compile Include="Converters\BvsConverter.cs" />
     <Compile Include="Converters\Scx\ScxScheduleConverter.cs" />
     <Compile Include="Entities\AcceptScheduleLeadinRequest.cs" />
     <Compile Include="Entities\AcceptScheduleBlockRequest.cs" />
     <Compile Include="Entities\AdvertiserCoreData.cs" />
     <Compile Include="Entities\AdvertiserDataDto.cs" />
-    <Compile Include="Entities\BvsReportData.cs" />
     <Compile Include="Entities\DisplayProposal.cs" />
     <Compile Include="Entities\DisplayScheduleStation.cs" />
     <Compile Include="Entities\DisplayProposalVersion.cs" />
@@ -832,12 +841,7 @@
     <Compile Include="Entities\InventoryOpenMarketFileXml.cs" />
     <Compile Include="Entities\InventoryFileSaveRequest.cs" />
     <Compile Include="Entities\DisplayBroadcastStation.cs" />
-    <Compile Include="Entities\BvsMap.cs" />
-    <Compile Include="Entities\BvsPostDetail.cs" />
-    <Compile Include="Entities\BvsPostDetailAudience.cs" />
     <Compile Include="Entities\FileSaveRequest.cs" />
-    <Compile Include="Entities\BvsTrackingDetail.cs" />
-    <Compile Include="Entities\BvsScrubbingDto.cs" />
     <Compile Include="Entities\DisplaySchedule.cs" />
     <Compile Include="Entities\LoadSchedulesDto.cs" />
     <Compile Include="Entities\ScheduleDetail.cs" />
@@ -869,8 +873,6 @@
     <Compile Include="Repositories\BroadcastForecastRepositoryBase.cs" />
     <Compile Include="Entities\BvsFileDetailFilterResult.cs" />
     <Compile Include="Repositories\BroadcastRepositoryBase.cs" />
-    <Compile Include="Entities\BvsFileSummary.cs" />
-    <Compile Include="Repositories\BvsPostDetailsRepository.cs" />
     <Compile Include="Repositories\InventoryFileRatingsJobsRepository.cs" />
     <Compile Include="Repositories\DaypartDefaultRepository.cs" />
     <Compile Include="Entities\InventorySummary\InventorySummaryManifestDto.cs" />
@@ -880,8 +882,6 @@
     <Compile Include="Repositories\PricingGuideRepository.cs" />
     <Compile Include="Repositories\ProgramRepository.cs" />
     <Compile Include="Repositories\SpotTrackerRepository.cs" />
-    <Compile Include="Repositories\BvsRepository.cs" />
-    <Compile Include="Repositories\BvsTestDataGeneratorRepository.cs" />
     <Compile Include="Repositories\DisplayDaypartBroadcastRepository.cs" />
     <Compile Include="Entities\OpenMarketAllocationDto.cs" />
     <Compile Include="Entities\InventoryDetailSlotProposalDto.cs" />

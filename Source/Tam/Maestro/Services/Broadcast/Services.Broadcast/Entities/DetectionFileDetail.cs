@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Services.Broadcast.Entities
 {
-    public class BvsFileDetail : TrackerFileDetail
+    public class DetectionFileDetail : TrackerFileDetail
     {        
         public int? ScheduleDetailWeekId { get; set; }
         public bool MatchStation { get; set; }
@@ -18,9 +18,9 @@ namespace Services.Broadcast.Entities
         public bool LinkedToLeadin { get; set; }
         public bool MatchSpotLength { get; set; }
         
-        public List<BvsPostDetail> BvsPostDetails { get; set; } = new List<BvsPostDetail>();
+        public List<DetectionPostDetail> DetectionPostDetails { get; set; } = new List<DetectionPostDetail>();
         
-        public bool Equals(BvsFileDetail other)
+        public bool Equals(DetectionFileDetail other)
         {
             return string.Equals(Advertiser, other.Advertiser)
                 && DateAired.Equals(other.DateAired)

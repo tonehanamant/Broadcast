@@ -17,7 +17,6 @@ namespace EntityFrameworkMapping.Broadcast
         public audience()
         {
             this.audience_audiences = new HashSet<audience_audiences>();
-            this.bvs_post_details = new HashSet<bvs_post_details>();
             this.post_file_detail_impressions = new HashSet<post_file_detail_impressions>();
             this.schedule_detail_audiences = new HashSet<schedule_detail_audiences>();
             this.proposal_version_audiences = new HashSet<proposal_version_audiences>();
@@ -36,6 +35,7 @@ namespace EntityFrameworkMapping.Broadcast
             this.plan_version_secondary_audiences = new HashSet<plan_version_secondary_audiences>();
             this.plan_versions = new HashSet<plan_versions>();
             this.inventory_file_proprietary_header = new HashSet<inventory_file_proprietary_header>();
+            this.detection_post_details = new HashSet<detection_post_details>();
         }
     
         public int id { get; set; }
@@ -48,7 +48,6 @@ namespace EntityFrameworkMapping.Broadcast
         public string name { get; set; }
     
         public virtual ICollection<audience_audiences> audience_audiences { get; set; }
-        public virtual ICollection<bvs_post_details> bvs_post_details { get; set; }
         public virtual ICollection<post_file_detail_impressions> post_file_detail_impressions { get; set; }
         public virtual ICollection<schedule_detail_audiences> schedule_detail_audiences { get; set; }
         public virtual ICollection<proposal_version_audiences> proposal_version_audiences { get; set; }
@@ -68,5 +67,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<plan_version_secondary_audiences> plan_version_secondary_audiences { get; set; }
         public virtual ICollection<plan_versions> plan_versions { get; set; }
         public virtual ICollection<inventory_file_proprietary_header> inventory_file_proprietary_header { get; set; }
+        public virtual ICollection<detection_post_details> detection_post_details { get; set; }
     }
 }

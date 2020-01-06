@@ -247,6 +247,7 @@
     <Compile Include="ApplicationServices\AffidavitValidationEngineTests.cs" />
     <Compile Include="ApplicationServices\CampaignServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\DaypartTypeServiceTests.cs" />
+    <Compile Include="ApplicationServices\DetectionConverterTests.cs" />
     <Compile Include="ApplicationServices\GenreServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\InventoryProgramEnrichmentServiceTests.cs" />
     <Compile Include="ApplicationServices\PlanPricingInventoryEngineTests.cs" />
@@ -364,7 +365,6 @@
     <Compile Include="ApplicationServices\InventoryFileServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\ScheduleReportDtoFactoryServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\SchedulesReportServiceIntegrationTest.cs" />
-    <Compile Include="ApplicationServices\BvsConverterTests.cs" />
     <Compile Include="ApplicationServices\StationContactFileImportIntegationTest.cs" />
     <Compile Include="ApplicationServices\TrackerServiceIntegrationTests.cs" />
     <Compile Include="IntegrationTestApplicationServiceFactory.cs" />

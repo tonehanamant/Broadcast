@@ -16,23 +16,23 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
     [TestFixture]
     public class BvsRepositoryIntegrationTests
     {
-        private readonly IBvsRepository BvsRepository;
+        private readonly IDetectionRepository BvsRepository;
 
         public BvsRepositoryIntegrationTests()
         {
-            BvsRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IBvsRepository>();
+            BvsRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IDetectionRepository>();
         }
 
         [Test]
         public void FilterOutExistingDetails_Filters_Out_Different_Station()
         {
-            var existingDetail = BvsRepository.GetBvsFileDetailsByIds(new List<int> { 10525 }).Single();
+            var existingDetail = BvsRepository.GetDetectionFileDetailsByIds(new List<int> { 10525 }).Single();
             var newDetail = _DuplicateBvsFileDetail(existingDetail);
             newDetail.Station += "DIFFERENT";
 
             using (new TransactionScopeWrapper())
             {
-                var nonDuplicates = BvsRepository.FilterOutExistingDetails(new List<BvsFileDetail> { existingDetail, newDetail });
+                var nonDuplicates = BvsRepository.FilterOutExistingDetails(new List<DetectionFileDetail> { existingDetail, newDetail });
 
                 Assert.True(nonDuplicates.Ignored.Single().Equals(existingDetail));
                 Assert.True(nonDuplicates.New.Single().Equals(newDetail));
@@ -42,13 +42,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         public void FilterOutExistingDetails_Filters_Out_Different_DateAired()
         {
-            var existingDetail = BvsRepository.GetBvsFileDetailsByIds(new List<int> { 10525 }).Single();
+            var existingDetail = BvsRepository.GetDetectionFileDetailsByIds(new List<int> { 10525 }).Single();
             var newDetail = _DuplicateBvsFileDetail(existingDetail);
             newDetail.DateAired = existingDetail.DateAired.AddSeconds(5);
 
             using (new TransactionScopeWrapper())
             {
-                var nonDuplicates = BvsRepository.FilterOutExistingDetails(new List<BvsFileDetail> { existingDetail, newDetail });
+                var nonDuplicates = BvsRepository.FilterOutExistingDetails(new List<DetectionFileDetail> { existingDetail, newDetail });
 
                 Assert.True(nonDuplicates.Ignored.Single().Equals(existingDetail));
                 Assert.True(nonDuplicates.New.Single().Equals(newDetail));
@@ -58,13 +58,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         public void FilterOutExistingDetails_Filters_Out_Different_ISCI()
         {
-            var existingDetail = BvsRepository.GetBvsFileDetailsByIds(new List<int> { 10525 }).Single();
+            var existingDetail = BvsRepository.GetDetectionFileDetailsByIds(new List<int> { 10525 }).Single();
             var newDetail = _DuplicateBvsFileDetail(existingDetail);
             newDetail.Isci += "12";
 
             using (new TransactionScopeWrapper())
             {
-                var nonDuplicates = BvsRepository.FilterOutExistingDetails(new List<BvsFileDetail> { existingDetail, newDetail });
+                var nonDuplicates = BvsRepository.FilterOutExistingDetails(new List<DetectionFileDetail> { existingDetail, newDetail });
 
                 Assert.True(nonDuplicates.Ignored.Single().Equals(existingDetail));
                 Assert.True(nonDuplicates.New.Single().Equals(newDetail));
@@ -74,13 +74,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         public void FilterOutExistingDetails_Filters_Out_Different_SpotLength()
         {
-            var existingDetail = BvsRepository.GetBvsFileDetailsByIds(new List<int> { 10525 }).Single();
+            var existingDetail = BvsRepository.GetDetectionFileDetailsByIds(new List<int> { 10525 }).Single();
             var newDetail = _DuplicateBvsFileDetail(existingDetail);
             newDetail.SpotLengthId = 0;
 
             using (new TransactionScopeWrapper())
             {
-                var nonDuplicates = BvsRepository.FilterOutExistingDetails(new List<BvsFileDetail> { existingDetail, newDetail });
+                var nonDuplicates = BvsRepository.FilterOutExistingDetails(new List<DetectionFileDetail> { existingDetail, newDetail });
 
                 Assert.True(nonDuplicates.Ignored.Single().Equals(existingDetail));
                 Assert.True(nonDuplicates.New.Single().Equals(newDetail));
@@ -90,13 +90,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         public void FilterOutExistingDetails_Filters_Out_Different_Estimate()
         {
-            var existingDetail = BvsRepository.GetBvsFileDetailsByIds(new List<int> { 10525 }).Single();
+            var existingDetail = BvsRepository.GetDetectionFileDetailsByIds(new List<int> { 10525 }).Single();
             var newDetail = _DuplicateBvsFileDetail(existingDetail);
             newDetail.EstimateId += 1;
 
             using (new TransactionScopeWrapper())
             {
-                var nonDuplicates = BvsRepository.FilterOutExistingDetails(new List<BvsFileDetail> { existingDetail, newDetail });
+                var nonDuplicates = BvsRepository.FilterOutExistingDetails(new List<DetectionFileDetail> { existingDetail, newDetail });
 
                 Assert.True(nonDuplicates.Ignored.Single().Equals(existingDetail));
                 Assert.True(nonDuplicates.New.Single().Equals(newDetail));
@@ -107,13 +107,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         public void FilterOutExistingDetails_Filters_Out_Different_Advertiser()
         {
-            var existingDetail = BvsRepository.GetBvsFileDetailsByIds(new List<int> { 10525 }).Single();
+            var existingDetail = BvsRepository.GetDetectionFileDetailsByIds(new List<int> { 10525 }).Single();
             var newDetail = _DuplicateBvsFileDetail(existingDetail);
             newDetail.Advertiser += "NOTMATCH";
 
             using (new TransactionScopeWrapper())
             {
-                var nonDuplicates = BvsRepository.FilterOutExistingDetails(new List<BvsFileDetail> { existingDetail, newDetail });
+                var nonDuplicates = BvsRepository.FilterOutExistingDetails(new List<DetectionFileDetail> { existingDetail, newDetail });
                 
                 Assert.True(nonDuplicates.Ignored.Single().Equals(existingDetail));
                 Assert.True(nonDuplicates.New.Single().Equals(newDetail));
@@ -124,12 +124,12 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         public void FilterOutExistingDetails_Returns_Nothing_When_All_Exist()
         {
-            var existingDetail = BvsRepository.GetBvsFileDetailsByIds(new List<int> { 10525 }).Single();
+            var existingDetail = BvsRepository.GetDetectionFileDetailsByIds(new List<int> { 10525 }).Single();
             var duplicateDetail = _DuplicateBvsFileDetail(existingDetail);
 
             using (new TransactionScopeWrapper())
             {
-                var input = new List<BvsFileDetail> { existingDetail, duplicateDetail };
+                var input = new List<DetectionFileDetail> { existingDetail, duplicateDetail };
                 var result = BvsRepository.FilterOutExistingDetails(input);
                 
                 Assert.That(result.New, Is.Empty);
@@ -140,19 +140,19 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         public void FilterOutExistingDetails_Updates_ProgramName_When_ProgramName_Different()
         {
-            var existingDetail = BvsRepository.GetBvsFileDetailsByIds(new List<int> { 10525 }).Single();
+            var existingDetail = BvsRepository.GetDetectionFileDetailsByIds(new List<int> { 10525 }).Single();
             var duplicateNewName = _DuplicateBvsFileDetail(existingDetail);
             duplicateNewName.ProgramName += "test";
             
             using (new TransactionScopeWrapper())
             {
-                var result = BvsRepository.FilterOutExistingDetails(new List<BvsFileDetail> { existingDetail, duplicateNewName });
+                var result = BvsRepository.FilterOutExistingDetails(new List<DetectionFileDetail> { existingDetail, duplicateNewName });
 
                 Assert.True(result.Ignored.Single().Equals(existingDetail));
                 Assert.That(result.New, Is.Empty);
                 Assert.True(result.Updated.Single().Equals(duplicateNewName));
 
-                var detail = BvsRepository.GetBvsFileDetailsByIds(new List<int> { 10525 }).Single();
+                var detail = BvsRepository.GetDetectionFileDetailsByIds(new List<int> { 10525 }).Single();
 
                 Assert.AreEqual(duplicateNewName.ProgramName, detail.ProgramName);
             }
@@ -164,7 +164,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         public void GetBvsFileSummaries()
         {
             var jsonResolver = new IgnorableSerializerContractResolver();
-            jsonResolver.Ignore(typeof(BvsFileSummary), "Id");
+            jsonResolver.Ignore(typeof(DetectionFileSummary), "Id");
 
             var jsonSettings = new JsonSerializerSettings
             {
@@ -172,13 +172,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 ContractResolver = jsonResolver
             };
 
-            var bvsFileSummaries = IntegrationTestHelper.ConvertToJson(BvsRepository.GetBvsFileSummaries(), jsonSettings);
+            var bvsFileSummaries = IntegrationTestHelper.ConvertToJson(BvsRepository.GetDetectionFileSummaries(), jsonSettings);
             Approvals.Verify(bvsFileSummaries);
         }
 
-        private BvsFileDetail _DuplicateBvsFileDetail(BvsFileDetail existingDetail)
+        private DetectionFileDetail _DuplicateBvsFileDetail(DetectionFileDetail existingDetail)
         {
-            return new BvsFileDetail
+            return new DetectionFileDetail
             {
                 Station = existingDetail.Station,
                 DateAired = existingDetail.DateAired,

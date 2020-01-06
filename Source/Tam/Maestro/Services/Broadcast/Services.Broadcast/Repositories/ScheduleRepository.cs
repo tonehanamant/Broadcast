@@ -27,7 +27,7 @@ namespace Services.Broadcast.Repositories
         void DeleteScheduleById(int scheduleId);
         ScheduleDTO GetScheduleDtoByEstimateId(int estimateId);
         ScheduleDTO GetScheduleDtoById(int id);
-        List<int> GetScheduleEstimateIdsByBvsFile(int bvsFileId);
+        List<int> GetScheduleEstimateIdsByDetectionFile(int bvsFileId);
         Dictionary<int, int> GetDictionaryOfScheduleAudiencesByRank(int estimateId);
         List<ScheduleAudience> GetListOfScheduleAudiences(int scheduleId);
         List<ScheduleDetail> GetScheduleTrackingDetails(int estimateId);
@@ -114,11 +114,11 @@ namespace Services.Broadcast.Repositories
                         SpotsBooked = (from sd in context.schedule_details
                                        where sd.schedule_id == s.id
                                        select sd.total_spots).Sum(),
-                        SpotsDelivered = (from x in context.bvs_file_details
+                        SpotsDelivered = (from x in context.detection_file_details
                                           where x.estimate_id == s.estimate_id
                                                 && x.status == (int)TrackingStatus.InSpec
                                           select x).Count(),
-                        OutOfSpec = (from x in context.bvs_file_details
+                        OutOfSpec = (from x in context.detection_file_details
                                      where x.estimate_id == s.estimate_id
                                            && x.status != (int)TrackingStatus.InSpec
                                      select x).Count(),
@@ -128,14 +128,14 @@ namespace Services.Broadcast.Repositories
                                              where sd.schedule_id == s.id
                                                    && sda.audience_rank == 1
                                              select sd.total_spots * sda.impressions).Sum(),
-                        DeliveryDetails = (from bfd in context.bvs_file_details
+                        DeliveryDetails = (from bfd in context.detection_file_details
                                            where bfd.estimate_id == s.estimate_id
                                                  && bfd.status == (int)TrackingStatus.InSpec
                                            select new ScheduleDeliveryDetails
                                            {
                                                SpotLength = bfd.spot_length,
-                                               Impressions = (from x in context.bvs_post_details
-                                                              where x.bvs_file_detail_id == bfd.id &&
+                                               Impressions = (from x in context.detection_post_details
+                                                              where x.detection_file_detail_id == bfd.id &&
                                                                     x.audience_rank == 1
                                                               select x.delivery).Sum()
                                            }).ToList()
@@ -277,11 +277,11 @@ namespace Services.Broadcast.Repositories
                 });
         }
 
-        public List<int> GetScheduleEstimateIdsByBvsFile(int bvsFileId)
+        public List<int> GetScheduleEstimateIdsByDetectionFile(int bvsFileId)
         {
-            return _InReadUncommitedTransaction(context => (from bvs in context.bvs_file_details
+            return _InReadUncommitedTransaction(context => (from bvs in context.detection_file_details
                                                             join s in context.schedules on bvs.estimate_id equals s.estimate_id
-                                                            where s.estimate_id != null && bvs.bvs_file_id == bvsFileId
+                                                            where s.estimate_id != null && bvs.detection_file_id == bvsFileId
                                                             select (int)s.estimate_id).Distinct().ToList());
         }
 
@@ -562,11 +562,11 @@ namespace Services.Broadcast.Repositories
                                            where sd.schedule_id == s.id
                                            select sd.total_spots).Sum(),
 
-                            SpotsDelivered = (from x in context.bvs_file_details
+                            SpotsDelivered = (from x in context.detection_file_details
                                               where x.estimate_id == s.estimate_id && x.status == (int)TrackingStatus.InSpec
                                               select x).Count(),
 
-                            OutOfSpec = (from x in context.bvs_file_details
+                            OutOfSpec = (from x in context.detection_file_details
                                          where x.estimate_id == s.estimate_id && x.status != (int)TrackingStatus.InSpec
                                          select x).Count(),
 
@@ -585,7 +585,7 @@ namespace Services.Broadcast.Repositories
 
                             Audiences = (from a in s.schedule_audiences
                                          orderby a.rank
-                                         select new BvsTrackingAudience()
+                                         select new DetectionTrackingAudience()
                                          {
                                              AudienceId = a.audience_id,
                                              Rank = a.rank

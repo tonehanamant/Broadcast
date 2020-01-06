@@ -1,5 +1,5 @@
 ﻿{
-  "BvsDetails": [
+  "DetectionDetails": [
     {
       "Affiliate": "CBS",
       "AirTime": 68399,

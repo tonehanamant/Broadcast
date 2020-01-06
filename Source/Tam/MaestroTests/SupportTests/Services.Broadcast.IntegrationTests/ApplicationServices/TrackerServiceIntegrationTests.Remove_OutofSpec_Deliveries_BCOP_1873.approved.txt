@@ -39,9 +39,9 @@
           }
         ],
         "BroadcastDate": "0001-01-01T00:00:00",
-        "BvsDate": "0001-01-01T00:00:00",
         "Cost": 0.00,
         "DeliveredSpots": 0,
+        "DetectionServiceDate": "0001-01-01T00:00:00",
         "DisplayDaypart": {
           "_Code": "",
           "_EndTime": 35999,
@@ -90,9 +90,9 @@
           }
         ],
         "BroadcastDate": "0001-01-01T00:00:00",
-        "BvsDate": "0001-01-01T00:00:00",
         "Cost": 10.00,
         "DeliveredSpots": 1,
+        "DetectionServiceDate": "0001-01-01T00:00:00",
         "DisplayDaypart": {
           "_Code": "",
           "_EndTime": 35999,
@@ -179,9 +179,9 @@
           }
         ],
         "BroadcastDate": "2017-03-13T00:00:00",
-        "BvsDate": "2017-03-13T00:00:00",
         "Cost": null,
         "DateAired": "0001-01-01T00:00:00",
+        "DetectionServiceDate": "2017-03-13T00:00:00",
         "DeliveredSpots": null,
         "DisplayDaypart": null,
         "Isci": "AAABBB",
@@ -221,9 +221,9 @@
           }
         ],
         "BroadcastDate": "2017-03-13T00:00:00",
-        "BvsDate": "2017-03-13T00:00:00",
         "Cost": null,
         "DateAired": "0001-01-01T00:00:00",
+        "DetectionServiceDate": "2017-03-13T00:00:00",
         "DeliveredSpots": null,
         "DisplayDaypart": null,
         "Isci": "AAABBB",
@@ -382,9 +382,9 @@
           }
         ],
         "BroadcastDate": "0001-01-01T00:00:00",
-        "BvsDate": "0001-01-01T00:00:00",
         "Cost": 10.00,
         "DeliveredSpots": 1,
+        "DetectionServiceDate": "0001-01-01T00:00:00",
         "DisplayDaypart": {
           "_Code": "",
           "_EndTime": 35999,
@@ -433,9 +433,9 @@
           }
         ],
         "BroadcastDate": "0001-01-01T00:00:00",
-        "BvsDate": "0001-01-01T00:00:00",
         "Cost": null,
         "DateAired": "0001-01-01T00:00:00",
+        "DetectionServiceDate": "0001-01-01T00:00:00",
         "DeliveredSpots": null,
         "DisplayDaypart": null,
         "Isci": null,
@@ -475,9 +475,9 @@
           }
         ],
         "BroadcastDate": "0001-01-01T00:00:00",
-        "BvsDate": "0001-01-01T00:00:00",
         "Cost": 0.00,
         "DeliveredSpots": 0,
+        "DetectionServiceDate": "0001-01-01T00:00:00",
         "DisplayDaypart": {
           "_Code": "",
           "_EndTime": 35999,
@@ -526,9 +526,9 @@
           }
         ],
         "BroadcastDate": "0001-01-01T00:00:00",
-        "BvsDate": "0001-01-01T00:00:00",
         "Cost": null,
         "DateAired": "0001-01-01T00:00:00",
+        "DetectionServiceDate": "0001-01-01T00:00:00",
         "DeliveredSpots": null,
         "DisplayDaypart": null,
         "Isci": null,
@@ -609,9 +609,9 @@
               }
             ],
             "BroadcastDate": "0001-01-01T00:00:00",
-            "BvsDate": "0001-01-01T00:00:00",
             "Cost": 0.00,
             "DeliveredSpots": 0,
+            "DetectionServiceDate": "0001-01-01T00:00:00",
             "DisplayDaypart": {
               "_Code": "",
               "_EndTime": 35999,
@@ -660,9 +660,9 @@
               }
             ],
             "BroadcastDate": "0001-01-01T00:00:00",
-            "BvsDate": "0001-01-01T00:00:00",
             "Cost": 0.00,
             "DeliveredSpots": 0,
+            "DetectionServiceDate": "0001-01-01T00:00:00",
             "DisplayDaypart": {
               "_Code": "",
               "_EndTime": 35999,
@@ -737,9 +737,9 @@
               }
             ],
             "BroadcastDate": "0001-01-01T00:00:00",
-            "BvsDate": "0001-01-01T00:00:00",
             "Cost": 0.00,
             "DeliveredSpots": 0,
+            "DetectionServiceDate": "0001-01-01T00:00:00",
             "DisplayDaypart": {
               "_Code": "",
               "_EndTime": 35999,
@@ -788,9 +788,9 @@
               }
             ],
             "BroadcastDate": "0001-01-01T00:00:00",
-            "BvsDate": "0001-01-01T00:00:00",
             "Cost": 10.00,
             "DeliveredSpots": 1,
+            "DetectionServiceDate": "0001-01-01T00:00:00",
             "DisplayDaypart": {
               "_Code": "",
               "_EndTime": 35999,
@@ -839,9 +839,9 @@
               }
             ],
             "BroadcastDate": "2017-03-13T00:00:00",
-            "BvsDate": "2017-03-13T00:00:00",
             "Cost": null,
             "DateAired": "0001-01-01T00:00:00",
+            "DetectionServiceDate": "2017-03-13T00:00:00",
             "DeliveredSpots": null,
             "DisplayDaypart": null,
             "Isci": "AAABBB",
@@ -881,9 +881,9 @@
               }
             ],
             "BroadcastDate": "2017-03-13T00:00:00",
-            "BvsDate": "2017-03-13T00:00:00",
             "Cost": null,
             "DateAired": "0001-01-01T00:00:00",
+            "DetectionServiceDate": "2017-03-13T00:00:00",
             "DeliveredSpots": null,
             "DisplayDaypart": null,
             "Isci": "AAABBB",
@@ -923,9 +923,9 @@
               }
             ],
             "BroadcastDate": "2017-03-13T00:00:00",
-            "BvsDate": "2017-03-13T00:00:00",
             "Cost": null,
             "DateAired": "0001-01-01T00:00:00",
+            "DetectionServiceDate": "2017-03-13T00:00:00",
             "DeliveredSpots": null,
             "DisplayDaypart": null,
             "Isci": "AAABBB",

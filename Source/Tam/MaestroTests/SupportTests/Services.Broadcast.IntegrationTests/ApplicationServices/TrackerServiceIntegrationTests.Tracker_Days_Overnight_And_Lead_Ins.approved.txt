@@ -53,9 +53,9 @@
           }
         ],
         "BroadcastDate": "0001-01-01T00:00:00",
-        "BvsDate": "0001-01-01T00:00:00",
         "Cost": 21.00,
         "DeliveredSpots": 1,
+        "DetectionServiceDate": "0001-01-01T00:00:00",
         "DisplayDaypart": {
           "_Code": "CUS",
           "_EndTime": 3599,
@@ -111,9 +111,9 @@
           }
         ],
         "BroadcastDate": "0001-01-01T00:00:00",
-        "BvsDate": "0001-01-01T00:00:00",
         "Cost": 22.00,
         "DeliveredSpots": 1,
+        "DetectionServiceDate": "0001-01-01T00:00:00",
         "DisplayDaypart": {
           "_Code": "CUS",
           "_EndTime": 3599,
@@ -169,9 +169,9 @@
           }
         ],
         "BroadcastDate": "0001-01-01T00:00:00",
-        "BvsDate": "0001-01-01T00:00:00",
         "Cost": 21.00,
         "DeliveredSpots": 1,
+        "DetectionServiceDate": "0001-01-01T00:00:00",
         "DisplayDaypart": {
           "_Code": "CUS",
           "_EndTime": 3599,
@@ -227,9 +227,9 @@
           }
         ],
         "BroadcastDate": "0001-01-01T00:00:00",
-        "BvsDate": "0001-01-01T00:00:00",
         "Cost": 21.00,
         "DeliveredSpots": 1,
+        "DetectionServiceDate": "0001-01-01T00:00:00",
         "DisplayDaypart": {
           "_Code": "CUS",
           "_EndTime": 46799,
@@ -285,9 +285,9 @@
           }
         ],
         "BroadcastDate": "0001-01-01T00:00:00",
-        "BvsDate": "0001-01-01T00:00:00",
         "Cost": 21.00,
         "DeliveredSpots": 1,
+        "DetectionServiceDate": "0001-01-01T00:00:00",
         "DisplayDaypart": {
           "_Code": "CUS",
           "_EndTime": 46799,
@@ -343,9 +343,9 @@
           }
         ],
         "BroadcastDate": "0001-01-01T00:00:00",
-        "BvsDate": "0001-01-01T00:00:00",
         "Cost": 21.00,
         "DeliveredSpots": 1,
+        "DetectionServiceDate": "0001-01-01T00:00:00",
         "DisplayDaypart": {
           "_Code": "CUS",
           "_EndTime": 46799,
@@ -401,9 +401,9 @@
           }
         ],
         "BroadcastDate": "0001-01-01T00:00:00",
-        "BvsDate": "0001-01-01T00:00:00",
         "Cost": 21.00,
         "DeliveredSpots": 1,
+        "DetectionServiceDate": "0001-01-01T00:00:00",
         "DisplayDaypart": {
           "_Code": "CUS",
           "_EndTime": 14399,
@@ -459,9 +459,9 @@
           }
         ],
         "BroadcastDate": "0001-01-01T00:00:00",
-        "BvsDate": "0001-01-01T00:00:00",
         "Cost": 0.00,
         "DeliveredSpots": 0,
+        "DetectionServiceDate": "0001-01-01T00:00:00",
         "DisplayDaypart": {
           "_Code": "CUS",
           "_EndTime": 3599,
@@ -570,10 +570,10 @@
           }
         ],
         "BroadcastDate": "2017-03-19T00:00:00",
-        "BvsDate": "2017-03-20T00:00:00",
         "Cost": null,
         "DateAired": "0001-01-01T00:00:00",
         "DeliveredSpots": null,
+        "DetectionServiceDate": "2017-03-20T00:00:00",
         "DisplayDaypart": null,
         "Isci": "O_N_RR",
         "Market": "TAMPA",
@@ -1038,9 +1038,9 @@
           }
         ],
         "BroadcastDate": "0001-01-01T00:00:00",
-        "BvsDate": "0001-01-01T00:00:00",
         "Cost": null,
         "DeliveredSpots": 0,
+        "DetectionServiceDate": "0001-01-01T00:00:00",
         "DisplayDaypart": null,
         "Isci": null,
         "Market": "TAMPA",
@@ -1080,9 +1080,9 @@
           }
         ],
         "BroadcastDate": "0001-01-01T00:00:00",
-        "BvsDate": "0001-01-01T00:00:00",
         "Cost": null,
         "DeliveredSpots": 1,
+        "DetectionServiceDate": "0001-01-01T00:00:00",
         "DisplayDaypart": null,
         "Isci": null,
         "Market": "CHICAGO",
@@ -1122,9 +1122,9 @@
           }
         ],
         "BroadcastDate": "0001-01-01T00:00:00",
-        "BvsDate": "0001-01-01T00:00:00",
         "Cost": null,
         "DeliveredSpots": 3,
+        "DetectionServiceDate": "0001-01-01T00:00:00",
         "DisplayDaypart": null,
         "Isci": null,
         "Market": "TAMPA",
@@ -1164,9 +1164,9 @@
           }
         ],
         "BroadcastDate": "0001-01-01T00:00:00",
-        "BvsDate": "0001-01-01T00:00:00",
         "Cost": null,
         "DateAired": "0001-01-01T00:00:00",
+        "DetectionServiceDate": "0001-01-01T00:00:00",
         "DeliveredSpots": 0,
         "DisplayDaypart": null,
         "Isci": null,
@@ -1212,9 +1212,9 @@
           }
         ],
         "BroadcastDate": "0001-01-01T00:00:00",
-        "BvsDate": "0001-01-01T00:00:00",
         "Cost": null,
         "DeliveredSpots": 1,
+        "DetectionServiceDate": "0001-01-01T00:00:00",
         "DisplayDaypart": null,
         "Isci": null,
         "Market": "ST LOUIS",
@@ -1254,9 +1254,9 @@
           }
         ],
         "BroadcastDate": "0001-01-01T00:00:00",
-        "BvsDate": "0001-01-01T00:00:00",
         "Cost": null,
         "DeliveredSpots": 1,
+        "DetectionServiceDate": "0001-01-01T00:00:00",
         "DisplayDaypart": null,
         "Isci": null,
         "Market": "CHARLOTTE",
@@ -1296,9 +1296,9 @@
           }
         ],
         "BroadcastDate": "0001-01-01T00:00:00",
-        "BvsDate": "0001-01-01T00:00:00",
         "Cost": null,
         "DeliveredSpots": 1,
+        "DetectionServiceDate": "0001-01-01T00:00:00",
         "DisplayDaypart": null,
         "Isci": null,
         "Market": "PORTLAND,OR",
@@ -1394,9 +1394,9 @@
               }
             ],
             "BroadcastDate": "0001-01-01T00:00:00",
-            "BvsDate": "0001-01-01T00:00:00",
             "Cost": 21.00,
             "DeliveredSpots": 1,
+            "DetectionServiceDate": "0001-01-01T00:00:00",
             "DisplayDaypart": {
               "_Code": "CUS",
               "_EndTime": 3599,
@@ -1452,9 +1452,9 @@
               }
             ],
             "BroadcastDate": "0001-01-01T00:00:00",
-            "BvsDate": "0001-01-01T00:00:00",
             "Cost": 22.00,
             "DeliveredSpots": 1,
+            "DetectionServiceDate": "0001-01-01T00:00:00",
             "DisplayDaypart": {
               "_Code": "CUS",
               "_EndTime": 3599,
@@ -1510,9 +1510,9 @@
               }
             ],
             "BroadcastDate": "0001-01-01T00:00:00",
-            "BvsDate": "0001-01-01T00:00:00",
             "Cost": 21.00,
             "DeliveredSpots": 1,
+            "DetectionServiceDate": "0001-01-01T00:00:00",
             "DisplayDaypart": {
               "_Code": "CUS",
               "_EndTime": 3599,
@@ -1568,9 +1568,9 @@
               }
             ],
             "BroadcastDate": "0001-01-01T00:00:00",
-            "BvsDate": "0001-01-01T00:00:00",
             "Cost": 21.00,
             "DeliveredSpots": 1,
+            "DetectionServiceDate": "0001-01-01T00:00:00",
             "DisplayDaypart": {
               "_Code": "CUS",
               "_EndTime": 46799,
@@ -1626,9 +1626,9 @@
               }
             ],
             "BroadcastDate": "0001-01-01T00:00:00",
-            "BvsDate": "0001-01-01T00:00:00",
             "Cost": 21.00,
             "DeliveredSpots": 1,
+            "DetectionServiceDate": "0001-01-01T00:00:00",
             "DisplayDaypart": {
               "_Code": "CUS",
               "_EndTime": 46799,
@@ -1684,9 +1684,9 @@
               }
             ],
             "BroadcastDate": "0001-01-01T00:00:00",
-            "BvsDate": "0001-01-01T00:00:00",
             "Cost": 21.00,
             "DeliveredSpots": 1,
+            "DetectionServiceDate": "0001-01-01T00:00:00",
             "DisplayDaypart": {
               "_Code": "CUS",
               "_EndTime": 46799,
@@ -1742,9 +1742,9 @@
               }
             ],
             "BroadcastDate": "0001-01-01T00:00:00",
-            "BvsDate": "0001-01-01T00:00:00",
             "Cost": 21.00,
             "DeliveredSpots": 1,
+            "DetectionServiceDate": "0001-01-01T00:00:00",
             "DisplayDaypart": {
               "_Code": "CUS",
               "_EndTime": 14399,
@@ -1800,9 +1800,9 @@
               }
             ],
             "BroadcastDate": "0001-01-01T00:00:00",
-            "BvsDate": "0001-01-01T00:00:00",
             "Cost": 0.00,
             "DeliveredSpots": 0,
+            "DetectionServiceDate": "0001-01-01T00:00:00",
             "DisplayDaypart": {
               "_Code": "CUS",
               "_EndTime": 3599,
@@ -1892,10 +1892,10 @@
               }
             ],
             "BroadcastDate": "2017-03-19T00:00:00",
-            "BvsDate": "2017-03-20T00:00:00",
             "Cost": 0.0,
             "DateAired": "0001-01-01T00:00:00",
             "DeliveredSpots": 0,
+            "DetectionServiceDate": "2017-03-20T00:00:00",
             "DisplayDaypart": null,
             "Isci": "O_N_RR",
             "Market": "TAMPA",

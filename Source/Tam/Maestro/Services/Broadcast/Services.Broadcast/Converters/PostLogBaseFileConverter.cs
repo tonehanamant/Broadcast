@@ -42,7 +42,7 @@ namespace Services.Broadcast.Converters
             {
                 string message = "";
                 rowValidationErrors.ForEach(err => message += err + "<br />" + Environment.NewLine);
-                throw new ExtractBvsException(message);
+                throw new ExtractDetectionException(message);
             }
         }
 
@@ -56,7 +56,7 @@ namespace Services.Broadcast.Converters
             {
                 string message = "";
                 validationErrors.ForEach(err => message += err + "<br />" + Environment.NewLine);
-                throw new ExtractBvsException(message);
+                throw new ExtractDetectionException(message);
             }
 
             return GetHeaderDictionary(fileColumns, fileFields);
@@ -151,11 +151,11 @@ namespace Services.Broadcast.Converters
 
             if (!int.TryParse(spot_length, out int spotLength))
             {
-                throw new ExtractBvsException(string.Format("Invalid spot length '{0}' found.", spotLength));
+                throw new ExtractDetectionException(string.Format("Invalid spot length '{0}' found.", spotLength));
             }
 
             if (!_SpotLengthsAndIds.ContainsKey(spotLength))
-                throw new ExtractBvsException(string.Format("Invalid spot length '{0}' found.", spotLength));
+                throw new ExtractDetectionException(string.Format("Invalid spot length '{0}' found.", spotLength));
 
             detail.SpotLength = spotLength;
             detail.SpotLengthId = _SpotLengthsAndIds[spotLength];

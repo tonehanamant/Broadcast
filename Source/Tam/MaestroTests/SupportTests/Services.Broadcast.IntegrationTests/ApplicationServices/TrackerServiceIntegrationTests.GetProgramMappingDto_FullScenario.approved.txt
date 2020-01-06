@@ -1,5 +1,5 @@
 ﻿{
-  "BvsProgramName": "Friends (Season Finale)",
+  "DetectionProgramName": "Friends (Season Finale)",
   "FollowingScheduleMatches": [
     {
       "ProgramName": "Gummybears",

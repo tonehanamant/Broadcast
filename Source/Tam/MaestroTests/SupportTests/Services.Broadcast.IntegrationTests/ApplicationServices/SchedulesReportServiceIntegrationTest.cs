@@ -26,10 +26,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             var stationProcessingEngine = new StationProcessingEngine();
 
-            var aggregate = new SchedulesAggregate(new schedule { markets = new List<market>() }, new List<ScheduleAudience>(), null, null, null, null, new List<bvs_file_details>(), null, null,
+            var aggregate = new SchedulesAggregate(new schedule { markets = new List<market>() }, new List<ScheduleAudience>(), null, null, null, null, new List<detection_file_details>(), null, null,
                 PostingTypeEnum.NSI, InventorySourceEnum.Assembly, true, DateTime.MaxValue, DateTime.MaxValue, null, stationProcessingEngine);
 
-            var relatedAggregate = new SchedulesAggregate(new schedule(), null, null, null, null, null, new List<bvs_file_details>(), null, null,
+            var relatedAggregate = new SchedulesAggregate(new schedule(), null, null, null, null, null, new List<detection_file_details>(), null, null,
                 PostingTypeEnum.NTI, InventorySourceEnum.Assembly, true, DateTime.MaxValue, DateTime.MaxValue, null, stationProcessingEngine);
 
             var scheduleReportDto = new ScheduleReportDto { ScheduleId = 420 };

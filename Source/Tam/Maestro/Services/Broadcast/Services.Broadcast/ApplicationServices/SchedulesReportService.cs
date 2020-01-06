@@ -65,7 +65,7 @@ namespace Services.Broadcast.ApplicationServices
         {
             var scheduleReportDto = GenerateScheduleReportDto(scheduleId);
 
-            var excelGenerator = new BvsExcelReportGenerator(scheduleReportDto, _LogoImage.Value);
+            var excelGenerator = new DetectionExcelReportGenerator(scheduleReportDto, _LogoImage.Value);
             var result = excelGenerator.GetScheduleReport();
 
             return result;
@@ -85,7 +85,7 @@ namespace Services.Broadcast.ApplicationServices
         {
             var scheduleReportDto = GenerateClientReportDto(scheduleId);
 
-            var excelGenerator = new BvsExcelReportGenerator(scheduleReportDto, _LogoImage.Value);
+            var excelGenerator = new DetectionExcelReportGenerator(scheduleReportDto, _LogoImage.Value);
             var result = excelGenerator.GetClientReport();
 
             return result;
@@ -100,7 +100,7 @@ namespace Services.Broadcast.ApplicationServices
         public ReportOutput Generate3rdPartyProviderReport(int scheduleId)
         {
             var scheduleReportDto = Generate3rdPartyProviderReportDto(scheduleId);
-            var excelGenerator = new BvsExcelReportGenerator(scheduleReportDto, _LogoImage.Value);
+            var excelGenerator = new DetectionExcelReportGenerator(scheduleReportDto, _LogoImage.Value);
             var result = excelGenerator.GetProviderReport();
 
             return result;
@@ -267,7 +267,7 @@ namespace Services.Broadcast.ApplicationServices
                     g.Status,
                     g.SpecStatus
                 }).Select(
-                    g => g.Key.Status == (int)TrackingStatus.InSpec ? new BvsReportData
+                    g => g.Key.Status == (int)TrackingStatus.InSpec ? new DetectionReportData
                     {
                         Rank = g.Key.Rank,
                         Market = g.Key.Market,
@@ -286,7 +286,7 @@ namespace Services.Broadcast.ApplicationServices
                             g.ToList(),
                             scheduleAudiences)
 
-                    } : new BvsReportOutOfSpecData
+                    } : new DetectionReportOutOfSpecData
                     {
                         Rank = g.Key.Rank,
                         Market = g.Key.Market,
@@ -383,7 +383,7 @@ namespace Services.Broadcast.ApplicationServices
                         g.SpotLength,
                         g.ProgramName,
                         g.Isci,
-                        g.BvsDate,
+                        g.DetectionDate,
                         g.BroadcastDate,
                         g.TimeAired,
                         g.DisplayDaypart,
@@ -392,7 +392,7 @@ namespace Services.Broadcast.ApplicationServices
                         g.SpotCost
                     }).Select(
                         g => g.Key.Status == (int)TrackingStatus.InSpec ?
-                            new BvsReportData
+                            new DetectionReportData
                             {
                                 Rank = g.Key.Rank,
                                 Market = g.Key.Market,
@@ -415,7 +415,7 @@ namespace Services.Broadcast.ApplicationServices
                                 g.ToList(),
                                 scheduleAudiences)
                             } :
-                        new BvsReportOutOfSpecData
+                        new DetectionReportOutOfSpecData
                         {
                             Rank = g.Key.Rank,
                             Market = g.Key.Market,
@@ -424,7 +424,7 @@ namespace Services.Broadcast.ApplicationServices
                             SpotLength = g.Key.SpotLength,
                             ProgramName = g.Key.ProgramName,
                             Isci = g.Key.Isci,
-                            BvsDate = g.Key.BvsDate,
+                            DetectionDate = g.Key.DetectionDate,
                             BroadcastDate = g.Key.BroadcastDate,
                             TimeAired = g.Key.TimeAired,
                             DisplayDaypart = g.Key.DisplayDaypart,
@@ -449,7 +449,7 @@ namespace Services.Broadcast.ApplicationServices
 
         private static void _UpdateTotalsPerAudience(
             IEnumerable<ImpressionAndDeliveryDto> impressionAndDeliveryList,
-            List<BvsReportData> detailedRecords,
+            List<DetectionReportData> detailedRecords,
             bool separateOutOfSpec)
         {
             foreach (var impressionsAndDelivery in impressionAndDeliveryList)
@@ -486,7 +486,7 @@ namespace Services.Broadcast.ApplicationServices
             List<ScheduleAudience> scheduleAudiences)
         {
             var advertisersData = scheduleReportDto.AdvertiserData;
-            var reportRows = new List<BvsReportData>();
+            var reportRows = new List<DetectionReportData>();
             reportRows.AddRange(advertisersData.ReportData);
             foreach (var relatedScheduleReportDto in relatedScheduleReportDtoList)
             {
@@ -505,7 +505,7 @@ namespace Services.Broadcast.ApplicationServices
                     g.SpotLength,
                     g.SpotCost
                 }).Select(
-                    g => new BvsReportData
+                    g => new DetectionReportData
                     {
                         Rank = g.Key.Rank,
                         Affiliate = g.Key.Affiliate,
@@ -528,7 +528,7 @@ namespace Services.Broadcast.ApplicationServices
         }
 
         private static List<AudienceImpressionsAndDelivery> _AddUpAudienceImpressions(
-            List<BvsReportData> rows,
+            List<DetectionReportData> rows,
             IEnumerable<ScheduleAudience> scheduleAudiences)
         {
             var result = scheduleAudiences.Select(

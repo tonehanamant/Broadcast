@@ -4,14 +4,14 @@ using System.Linq;
 
 namespace Services.Broadcast.Entities
 {
-    public class OutOfSpecToDateDto : BvsReportDataContainer
+    public class OutOfSpecToDateDto : DetectionReportDataContainer
     {
         public readonly List<ScheduleAudience> ScheduleAudiences;
 
         public OutOfSpecToDateDto(IEnumerable<ScheduleAudience> scheduleAudiences)
         {
             ScheduleAudiences = scheduleAudiences.ToList();
-            ReportData = new List<BvsReportData>();
+            ReportData = new List<DetectionReportData>();
         }
     }
 }

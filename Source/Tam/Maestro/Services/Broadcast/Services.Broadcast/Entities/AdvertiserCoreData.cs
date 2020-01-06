@@ -15,7 +15,7 @@ namespace Services.Broadcast.Entities
         public string GroupedByName { get; set; }
         public int SpotLength { get; set; }
         public schedule_details ScheduleDetail { get; set; }
-        public List<bvs_file_details> BvsDetails { get; set; }
+        public List<detection_file_details> BvsDetails { get; set; }
         //public List<AudienceImpressionsAndDelivery> AudienceImpressions { get; set; }
        
     }

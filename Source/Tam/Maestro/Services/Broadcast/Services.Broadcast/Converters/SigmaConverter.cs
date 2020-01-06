@@ -15,7 +15,7 @@ namespace Services.Broadcast.Converters
 {
     public interface ISigmaConverter : IApplicationService
     {
-        TrackerFile<BvsFileDetail> ExtractSigmaData(Stream rawStream, string hash, string userName, string bvsFileName, out Dictionary<TrackerFileDetailKey<BvsFileDetail>, int> lineInfo);
+        TrackerFile<DetectionFileDetail> ExtractSigmaData(Stream rawStream, string hash, string userName, string bvsFileName, out Dictionary<TrackerFileDetailKey<DetectionFileDetail>, int> lineInfo);
 
         /// <summary>
         /// Extracts A to AA columns from a sigma file
@@ -139,14 +139,14 @@ namespace Services.Broadcast.Converters
             return validationResults;
         }
 
-        public TrackerFile<BvsFileDetail> ExtractSigmaData(Stream rawStream
+        public TrackerFile<DetectionFileDetail> ExtractSigmaData(Stream rawStream
             , string hash
             , string userName
             , string bvsFileName
-            , out Dictionary<TrackerFileDetailKey<BvsFileDetail>, int> lineInfo)
+            , out Dictionary<TrackerFileDetailKey<DetectionFileDetail>, int> lineInfo)
         {
-            lineInfo = new Dictionary<TrackerFileDetailKey<BvsFileDetail>, int>();
-            var bvsFile = new TrackerFile<BvsFileDetail>();
+            lineInfo = new Dictionary<TrackerFileDetailKey<DetectionFileDetail>, int>();
+            var bvsFile = new TrackerFile<DetectionFileDetail>();
 
             int rowNumber = 0;
             using (var parser = _PostLogBaseFileConverter.SetupCSVParser(rawStream))
@@ -158,15 +158,15 @@ namespace Services.Broadcast.Converters
                     var fields = parser.ReadFields();
                     _ValidateSigmaFieldData(fields, headers, rowNumber, _RequiredSigmaFields);
 
-                    BvsFileDetail bvsDetail = _LoadBvsSigmaFileDetail(fields, headers, rowNumber);
-                    lineInfo[new TrackerFileDetailKey<BvsFileDetail>(bvsDetail)] = rowNumber;
+                    DetectionFileDetail bvsDetail = _LoadBvsSigmaFileDetail(fields, headers, rowNumber);
+                    lineInfo[new TrackerFileDetailKey<DetectionFileDetail>(bvsDetail)] = rowNumber;
                     bvsFile.FileDetails.Add(bvsDetail);
                 }
             }
 
             if (!bvsFile.FileDetails.Any())
             {
-                throw new ExtractBvsExceptionEmptyFiles();
+                throw new ExtractDetectionExceptionEmptyFiles();
             }
             bvsFile.Name = bvsFileName;
             bvsFile.CreatedBy = userName;
@@ -215,7 +215,7 @@ namespace Services.Broadcast.Converters
 
             if (!spotTrackerFile.FileDetails.Any())
             {
-                throw new ExtractBvsExceptionEmptyFiles();
+                throw new ExtractDetectionExceptionEmptyFiles();
             }
             spotTrackerFile.Name = fileName;
             spotTrackerFile.CreatedBy = username;
@@ -227,25 +227,25 @@ namespace Services.Broadcast.Converters
             return spotTrackerFile;
         }
 
-        private BvsFileDetail _LoadBvsSigmaFileDetail(string[] fields, Dictionary<string, int> headers, int row)
+        private DetectionFileDetail _LoadBvsSigmaFileDetail(string[] fields, Dictionary<string, int> headers, int row)
         {
             if (!int.TryParse(fields[headers["RANK"]].Trim(), out int rankNumber))
             {
-                throw new ExtractBvsException("Invalid 'rank'", row);
+                throw new ExtractDetectionException("Invalid 'rank'", row);
             }
             var rawDate = fields[headers["DATE AIRED"]].Trim();
             var rawAiredDateTime = fields[headers["AIR START TIME"]].Trim().ToUpper();
             string someDate = rawDate + " " + rawAiredDateTime;
             if (!DateTime.TryParse(someDate, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime parsedDate))
-                throw new ExtractBvsException("Invalid 'date aired' or 'air start time'", row);
+                throw new ExtractDetectionException("Invalid 'date aired' or 'air start time'", row);
             var time = parsedDate.TimeOfDay;
 
             if (!int.TryParse(fields[headers["IDENTIFIER 1"]].Trim(), out int estimateId))
             {
-                throw new ExtractBvsException("Invalid 'identifier 1'", row);
+                throw new ExtractDetectionException("Invalid 'identifier 1'", row);
             }
 
-            BvsFileDetail bvsDetail = new BvsFileDetail()
+            DetectionFileDetail bvsDetail = new DetectionFileDetail()
             {
                 Advertiser = fields[headers["PRODUCT"]].Trim().ToUpper(),
                 Market = fields[headers["DMA"]].Trim().ToUpper(),
@@ -272,17 +272,17 @@ namespace Services.Broadcast.Converters
         {
             if (!int.TryParse(fields[headers["RANK"]].Trim(), out int rankNumber))
             {
-                throw new ExtractBvsException("Invalid 'rank'", row);
+                throw new ExtractDetectionException("Invalid 'rank'", row);
             }
             var rawDate = fields[headers["DATE AIRED"]].Trim();
             var rawAiredDateTime = fields[headers["AIR START TIME"]].Trim().ToUpper();
             if (!DateTime.TryParse(rawDate + " " + rawAiredDateTime, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime parsedDate))
-                throw new ExtractBvsException("Invalid 'date aired' or 'air start time'", row);
+                throw new ExtractDetectionException("Invalid 'date aired' or 'air start time'", row);
             var time = parsedDate.TimeOfDay;
 
             if (!int.TryParse(fields[headers["IDENTIFIER 1"]].Trim(), out int estimateId))
             {
-                throw new ExtractBvsException("Invalid 'identifier 1'", row);
+                throw new ExtractDetectionException("Invalid 'identifier 1'", row);
             }
             DateTime encodedDate = DateTime.Parse(fields[headers["ENCODE DATE"]].Trim() + " " + fields[headers["ENCODE TIME"]].Trim());
 
@@ -327,11 +327,11 @@ namespace Services.Broadcast.Converters
 
             if (!int.TryParse(spot_length, out int spotLength))
             {
-                throw new ExtractBvsException(string.Format("Invalid spot length '{0}' found.", spotLength));
+                throw new ExtractDetectionException(string.Format("Invalid spot length '{0}' found.", spotLength));
             }
 
             if (!_SpotLengthsAndIds.ContainsKey(spotLength))
-                throw new ExtractBvsException(string.Format("Invalid spot length '{0}' found.", spotLength));
+                throw new ExtractDetectionException(string.Format("Invalid spot length '{0}' found.", spotLength));
 
             detail.SpotLength = spotLength;
             detail.SpotLengthId = _SpotLengthsAndIds[spotLength];
@@ -344,7 +344,7 @@ namespace Services.Broadcast.Converters
             {
                 string message = "";
                 rowValidationErrors.ForEach(err => message += err + "<br />" + Environment.NewLine);
-                throw new ExtractBvsException(message);
+                throw new ExtractDetectionException(message);
             }
         }
     }

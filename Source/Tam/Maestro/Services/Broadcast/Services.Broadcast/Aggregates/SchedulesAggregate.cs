@@ -20,8 +20,8 @@ namespace Services.Broadcast.Aggregates
         private List<schedule_iscis> _ScheduleIscis;
         public readonly List<schedule_detail_audiences> _ScheduleDetailAudiences;
         private List<schedule_detail_weeks> _ScheduleDetailWeeks;
-        private List<bvs_file_details> _BvsFileDetails;
-        private List<bvs_post_details> _BvsPostDetails;
+        private List<detection_file_details> _BvsFileDetails;
+        private List<detection_post_details> _BvsPostDetails;
         private List<DisplayMediaWeek> _MediaWeeks;
         private DateTime _StartDate;
         private DateTime _EndDate;
@@ -41,8 +41,8 @@ namespace Services.Broadcast.Aggregates
                                     List<schedule_iscis> scheduleIscis,
                                     List<schedule_detail_audiences> scheduleDetailAudiences,
                                     List<schedule_detail_weeks> scheduleDetailWeeks,
-                                    List<bvs_file_details> bvsFileDetails,
-                                    List<bvs_post_details> bvsPostDetails,
+                                    List<detection_file_details> bvsFileDetails,
+                                    List<detection_post_details> bvsPostDetails,
                                     List<DisplayMediaWeek> mediaWeeks,
                                     PostingTypeEnum postType,
                                     InventorySourceEnum inventorySource,
@@ -139,7 +139,7 @@ namespace Services.Broadcast.Aggregates
         {
             return _BvsPostDetails.Where(
                 bpd =>
-                    bpd.bvs_file_details.IsInSpec() &&
+                    bpd.detection_file_details.IsInSpec() &&
                     bpd.audience_id == audienceId).Sum(bpd => bpd.delivery);
         }
 
@@ -147,19 +147,19 @@ namespace Services.Broadcast.Aggregates
         {
             return _BvsPostDetails.Where(
                 bpd =>
-                    bpd.bvs_file_details.IsInSpec() &&
+                    bpd.detection_file_details.IsInSpec() &&
                     bpd.audience_id == audienceId &&
-                    bpd.bvs_file_details.schedule_detail_week_id == mediaWeekId).Sum(bpd => bpd.delivery);
+                    bpd.detection_file_details.schedule_detail_week_id == mediaWeekId).Sum(bpd => bpd.delivery);
         }
 
         public double GetRestrictedDeliveredImpressionsByAudienceAndAdvertiserName(string advertiserName, int audienceId)
         {
             return _BvsPostDetails.Where(
                 bpd =>
-                    AllowedForReport(bpd.bvs_file_details.station, bpd.bvs_file_details.date_aired, bpd.bvs_file_details.time_aired) &&
-                    bpd.bvs_file_details.IsInSpec() &&
+                    AllowedForReport(bpd.detection_file_details.station, bpd.detection_file_details.date_aired, bpd.detection_file_details.time_aired) &&
+                    bpd.detection_file_details.IsInSpec() &&
                     bpd.audience_id == audienceId &&
-                    bpd.bvs_file_details.advertiser == advertiserName).Sum(bpd => bpd.delivery);
+                    bpd.detection_file_details.advertiser == advertiserName).Sum(bpd => bpd.delivery);
         }
 
         public int GetDaypartIdByScheduleDetailWeek(int scheduleDetailWeekId)
@@ -215,7 +215,7 @@ namespace Services.Broadcast.Aggregates
             return week;
         }
 
-        public List<bvs_file_details> GetBvsDetailsByScheduleId(int scheduleDetailId)
+        public List<detection_file_details> GetBvsDetailsByScheduleId(int scheduleDetailId)
         {
             var scheduleWeeks = _ScheduleDetailWeeks.Where(x => x.schedule_detail_id == scheduleDetailId).Select(w => w.id).ToList();
             // yes, this can be null
@@ -229,12 +229,12 @@ namespace Services.Broadcast.Aggregates
                                                 && b.schedule_detail_week_id.HasValue
                                                 && scheduleWeekIds.Contains(b.schedule_detail_week_id.Value));
         }
-        public List<bvs_file_details> GetBvsDetails()
+        public List<detection_file_details> GetBvsDetails()
         {
             return _BvsFileDetails.ToList();
         }
 
-        public List<BvsPrePostReportData> GetBroadcastPrePostData(List<bvs_file_details> fileDetails)
+        public List<DetectionPrePostReportData> GetBroadcastPrePostData(List<detection_file_details> fileDetails)
         {
             var query = _BuildPrePostDataQuery(fileDetails).ToList();
 
@@ -248,7 +248,7 @@ namespace Services.Broadcast.Aggregates
             return query;
         }
 
-        public string GetSpecStatusText(BvsReportOutOfSpecData row)
+        public string GetSpecStatusText(DetectionReportOutOfSpecData row)
         {
             var textList = new List<string>();
 
@@ -270,7 +270,7 @@ namespace Services.Broadcast.Aggregates
             return string.Join(",", textList);
         }
 
-        public void ConvertDateToMediaWeek(BvsReportOutOfSpecData outOfSpecRow)
+        public void ConvertDateToMediaWeek(DetectionReportOutOfSpecData outOfSpecRow)
         {
             outOfSpecRow.MediaWeekId = _MediaWeeks.First(mw => mw.WeekStartDate <= outOfSpecRow.DateAired && outOfSpecRow.DateAired <= mw.WeekEndDate).Id;
         }
@@ -286,18 +286,18 @@ namespace Services.Broadcast.Aggregates
             _ScheduleAudiences = newScheduleAudiences;
         }
 
-        private IEnumerable<BvsPrePostReportData> _BuildPrePostDataQuery(List<bvs_file_details> fileDetails)
+        private IEnumerable<DetectionPrePostReportData> _BuildPrePostDataQuery(List<detection_file_details> fileDetails)
         {
             var estimateId = _Schedule.estimate_id;
             if (estimateId == null)
             {
-                return Enumerable.Empty<BvsPrePostReportData>();
+                return Enumerable.Empty<DetectionPrePostReportData>();
             }
 
             var query =
                 (from bfd in fileDetails
                  where bfd.IsInSpec()
-                 select new BvsPrePostReportData
+                 select new DetectionPrePostReportData
                  {
                      Rank = bfd.rank,
                      Market = bfd.market,
@@ -321,7 +321,7 @@ namespace Services.Broadcast.Aggregates
                      Advertiser = bfd.advertiser,
                      Brand = String.Join("+", _ScheduleIscis.Where(i => i.house_isci.Equals(bfd.isci, StringComparison.InvariantCultureIgnoreCase)).Select(a => a.brand).Distinct().ToArray()),
                      InventorySource = (InventorySourceEnum)_Schedule.inventory_source,
-                     AudienceImpressions = bfd.bvs_post_details
+                     AudienceImpressions = bfd.detection_post_details
                                                 .Where(bpd => AllowedForReport(bfd.station, bfd.date_aired, bfd.time_aired))
                                                 .Select(bpd => new AudienceImpressionsAndDelivery
                                                 {
@@ -333,7 +333,7 @@ namespace Services.Broadcast.Aggregates
             return query;
         }
 
-        private DateTime _GetBVSFileDetailDate(bvs_file_details bvsFile)
+        private DateTime _GetBVSFileDetailDate(detection_file_details bvsFile)
         {
             return PostType == PostingTypeEnum.NSI ? bvsFile.nsi_date : bvsFile.nti_date;
         }
@@ -396,7 +396,7 @@ namespace Services.Broadcast.Aggregates
         }
     }
 
-    public class BvsPrePostReportData
+    public class DetectionPrePostReportData
     {
         public int Rank { get; set; }
         public string Market { get; set; }

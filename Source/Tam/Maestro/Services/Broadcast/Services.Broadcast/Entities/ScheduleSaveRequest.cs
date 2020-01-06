@@ -52,13 +52,13 @@ namespace Services.Broadcast.Entities
         public string UserName { get; set; }
         public string RawData { get; set; }
         public int Id { get; set; }
-        public List<BvsTrackingDetail> BvsTrackingDetails { get; set; }
+        public List<DetectionTrackingDetail> BvsTrackingDetails { get; set; }
         public List<int> MarketRestrictions { get; set; }
         public DaypartDto DaypartRestriction { get; set; }
         public PostingTypeEnum PostType { get; set; }
         public InventorySourceEnum? InventorySource { get; set; }
         public bool Equivalized { get; set; }
-        public List<BvsTrackingAudience> Audiences { get; set; }
+        public List<DetectionTrackingAudience> Audiences { get; set; }
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
         public bool IsBlank { get; set; }

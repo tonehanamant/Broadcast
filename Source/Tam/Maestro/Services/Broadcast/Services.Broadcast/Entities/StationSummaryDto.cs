@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Services.Broadcast.Entities
 {
-    public class StationSummaryDto : BvsReportDataContainer
+    public class StationSummaryDto : DetectionReportDataContainer
     {
         public StationSummaryDto() { }
 
@@ -14,7 +14,7 @@ namespace Services.Broadcast.Entities
         {
             ScheduleAudiences = scheduleAudiences.ToList();
 
-            ReportData = new List<BvsReportData>();
+            ReportData = new List<DetectionReportData>();
         }
     }
 }

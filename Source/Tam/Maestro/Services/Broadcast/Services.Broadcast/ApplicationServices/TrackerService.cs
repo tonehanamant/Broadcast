@@ -25,29 +25,29 @@ namespace Services.Broadcast.ApplicationServices
     public interface ITrackerService : IApplicationService
     {
         LoadSchedulesDto GetSchedulesByDate(DateTime? startDate, DateTime? endDate);
-        BvsLoadDto GetBvsLoadData(DateTime currentDateTime);
+        DetectionLoadDto GetDetectionLoadData(DateTime currentDateTime);
         int SaveSchedule(ScheduleSaveRequest request);
-        Tuple<List<int>, string> SaveBvsFiles(FileSaveRequest request, string username, bool isSigmaUpload = false);
-        string SaveBvsViaFtp(string userName);
+        Tuple<List<int>, string> SaveDetectionFiles(FileSaveRequest request, string username, bool isSigmaUpload = false);
+        string SaveDetectionFileViaFtp(string userName);
         bool ScheduleExists(int estimateIds);
-        BvsScrubbingDto GetBvsScrubbingData(int estimateId);
+        DetectionScrubbingDto GetDetectionScrubbingData(int estimateId);
         List<LookupDto> GetSchedulePrograms(int scheduleId);
         List<LookupDto> GetScheduleStations(int scheduleId);
-        List<BvsTrackingDetail> SaveScrubbingMapping(ScrubbingMap map);
+        List<DetectionTrackingDetail> SaveScrubbingMapping(ScrubbingMap map);
         List<ScheduleDetail> GetScheduleDetailsByEstimateId(int estimateId);
         Dictionary<int, int> GetScheduleAudiences(int estimateId);
         bool ScrubSchedule(ScheduleScrubbing scheduleScrubbing);
-        BvsMap GetBvsMapByType(string mappingType);
+        DetectionMap GetDetectionMapByType(string mappingType);
         bool DeleteMapping(string mappingType, TrackingMapValue mapping);
         ScheduleHeaderDto GetScheduleHeader(int estimateId);
         DisplaySchedule GetDisplayScheduleById(int scheduleId);
         bool UpdateRatingAdjustments(List<RatingAdjustmentsDto> ratingAdjustments);
         RatingAdjustmentsResponse GetRatingAdjustments();
-        List<BvsFileSummary> GetBvsFileSummaries();
+        List<DetectionFileSummary> GetDetectionFileSummaries();
         bool TrackSchedule(int scheduleId);
-        bool DeleteBvsFile(int bvsFileId);
+        bool DeleteDetectionFile(int detectionFileId);
         List<DisplaySchedule> GetDisplaySchedulesWithAdjustedImpressions(DateTime? startDate, DateTime? endDate);
-        List<BvsTrackingDetail> GetBvsDetailsWithAdjustedImpressions(int estimateId, ScheduleDTO schedule);       
+        List<DetectionTrackingDetail> GetDetectionDetailsWithAdjustedImpressions(int estimateId, ScheduleDTO schedule);       
     }
 
     public class TrackerService : ITrackerService
@@ -55,10 +55,10 @@ namespace Services.Broadcast.ApplicationServices
         private const int MaxFTPFailuresAllow = 1; // 1 for now, maybe more in the future
 
         private readonly IDataRepositoryFactory _BroadcastDataRepositoryFactory;
-        private readonly IBvsPostingEngine _BvsPostingEngine;
+        private readonly IDetectionPostingEngine _DetectionPostingEngine;
         private readonly ITrackingEngine _TrackingEngine;
         private readonly IScxScheduleConverter _ScxConverter;
-        private readonly IBvsConverter _BvsConverter;
+        private readonly IDetectionConverter _DetectionConverter;
         private readonly ISigmaConverter _SigmaConverter;
         private readonly IAssemblyScheduleConverter _AssemblyFileConverter;
         private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekAggregateCache;
@@ -73,10 +73,10 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IProposalRepository _ProposalRepository;
         
         public TrackerService(IDataRepositoryFactory broadcastDataRepositoryFactory
-            , IBvsPostingEngine bvsPostingEngine
+            , IDetectionPostingEngine detectionPostingEngine
             , ITrackingEngine trackingEngine
             , IScxScheduleConverter scxConverter
-            , IBvsConverter bvsConverter
+            , IDetectionConverter detectionConverter
             , ISigmaConverter sigmaConverter
             , IAssemblyScheduleConverter assemblyFileConverter
             , IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache
@@ -88,10 +88,10 @@ namespace Services.Broadcast.ApplicationServices
             , IFileService fileService)
         {
             _BroadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
-            _BvsPostingEngine = bvsPostingEngine;
+            _DetectionPostingEngine = detectionPostingEngine;
             _TrackingEngine = trackingEngine;
             _ScxConverter = scxConverter;
-            _BvsConverter = bvsConverter;
+            _DetectionConverter = detectionConverter;
             _SigmaConverter = sigmaConverter;
             _AssemblyFileConverter = assemblyFileConverter;
             _MediaMonthAndWeekAggregateCache = mediaMonthAndWeekAggregateCache;
@@ -146,9 +146,9 @@ namespace Services.Broadcast.ApplicationServices
             return displaySchedules;
         }
 
-        public BvsLoadDto GetBvsLoadData(DateTime currentDateTime)
+        public DetectionLoadDto GetDetectionLoadData(DateTime currentDateTime)
         {
-            var ret = new BvsLoadDto
+            var ret = new DetectionLoadDto
             {
                 Advertisers = _SmsClient.GetActiveAdvertisers(),
                 Quarters = _GetQuarters(),
@@ -291,14 +291,14 @@ namespace Services.Broadcast.ApplicationServices
             //we need to re-post the bvs data for this estimate id
             if (scheduleDto.EstimateId != null)
             {
-                _BvsPostingEngine.PostBvsDataByEstimate((int)scheduleDto.EstimateId);
-                _TrackingEngine.TrackBvsByEstimateId((int)scheduleDto.EstimateId);
+                _DetectionPostingEngine.PostDetectionDataByEstimate((int)scheduleDto.EstimateId);
+                _TrackingEngine.TrackDetectionByEstimateId((int)scheduleDto.EstimateId);
             }
             else if (converter is IDefaultScheduleConverter)
             {
                 var iscis = efSchedule.schedule_iscis.Select(si => si.house_isci).ToList();
                 var scheduleAudiences = efSchedule.schedule_audiences.ToDictionary(sa => sa.rank, sa => sa.audience_id);
-                _BvsPostingEngine.PostBvsData(iscis, scheduleAudiences, scheduleDto.PostingBookId);
+                _DetectionPostingEngine.PostDetectionData(iscis, scheduleAudiences, scheduleDto.PostingBookId);
             }
 
             return scheduleId;
@@ -329,7 +329,7 @@ namespace Services.Broadcast.ApplicationServices
             if (schedule.EstimateId.HasValue && ScheduleExists(schedule.EstimateId.Value))
             {
                 // update BVS detail records' schedule_detail_week_id column to null for the schedule's estimate ID prior to deleting the schedule data
-                var bvsRepo = _BroadcastDataRepositoryFactory.GetDataRepository<IBvsRepository>();
+                var bvsRepo = _BroadcastDataRepositoryFactory.GetDataRepository<IDetectionRepository>();
                 bvsRepo.ClearTrackingDetailsByEstimateId(schedule.EstimateId.Value);
                 broadcastRepo.DeleteSchedule(schedule.EstimateId.Value);
             }
@@ -344,10 +344,10 @@ namespace Services.Broadcast.ApplicationServices
             // Update the bvsDetails as 'Officialy Out of Spec'
             if (scheduleScrubbing.OfficiallyOutOfSpecIds != null && scheduleScrubbing.OfficiallyOutOfSpecIds.Count > 0)
             {
-                var bvsRepo = _BroadcastDataRepositoryFactory.GetDataRepository<IBvsRepository>();
-                var officiallyOutOfSpecBvsItems = bvsRepo.GetBvsTrackingDetailsByDetailIds(scheduleScrubbing.OfficiallyOutOfSpecIds);
+                var bvsRepo = _BroadcastDataRepositoryFactory.GetDataRepository<IDetectionRepository>();
+                var officiallyOutOfSpecBvsItems = bvsRepo.GetDetectionTrackingDetailsByDetailIds(scheduleScrubbing.OfficiallyOutOfSpecIds);
                 officiallyOutOfSpecBvsItems.ForEach(c => c.Status = TrackingStatus.OfficialOutOfSpec);
-                bvsRepo.PersistBvsDetails(officiallyOutOfSpecBvsItems);
+                bvsRepo.PersistDetectionDetails(officiallyOutOfSpecBvsItems);
             }
 
             var scheduleRepo = _BroadcastDataRepositoryFactory.GetDataRepository<IScheduleRepository>();
@@ -359,7 +359,7 @@ namespace Services.Broadcast.ApplicationServices
                 scheduleRepo.UpdateSchedulePostingBook(efSchedule.id, scheduleScrubbing.PostingBookId);
 
                 // Reevaluates the RatingsAggregates (delivery) for each station
-                _BvsPostingEngine.PostBvsDataByEstimate((int)efSchedule.estimate_id);
+                _DetectionPostingEngine.PostDetectionDataByEstimate((int)efSchedule.estimate_id);
             }
 
             return true;
@@ -368,42 +368,42 @@ namespace Services.Broadcast.ApplicationServices
         /// <summary>
         /// Returns bvsID.
         /// </summary>
-        public Tuple<List<int>, string> SaveBvsFiles(FileSaveRequest request, string username, bool isSigmaUpload = false)
+        public Tuple<List<int>, string> SaveDetectionFiles(FileSaveRequest request, string username, bool isSigmaUpload = false)
         {
             var duplicateMessage = string.Empty;
 
             var bvsIds = new List<int>();
-            var bvsRepo = _BroadcastDataRepositoryFactory.GetDataRepository<IBvsRepository>();
+            var bvsRepo = _BroadcastDataRepositoryFactory.GetDataRepository<IDetectionRepository>();
             var errorMessage = string.Empty;
             var hasErrors = false;
 
-            foreach (var requestBvsFile in request.Files)
+            foreach (var requestDetectionFile in request.Files)
             {
                 try
                 {
-                    errorMessage += string.Format("Starting upload for file '{0}' . . .", requestBvsFile.FileName);
+                    errorMessage += string.Format("Starting upload for file '{0}' . . .", requestDetectionFile.FileName);
 
                     //compute file hash to check against duplicate files being loaded
-                    var hash = HashGenerator.ComputeHash(StreamHelper.ReadToEnd(requestBvsFile.StreamData));
+                    var hash = HashGenerator.ComputeHash(StreamHelper.ReadToEnd(requestDetectionFile.StreamData));
 
                     //check if file has already been loaded
-                    if (bvsRepo.GetBvsFileIdByHash(hash) > 0)
+                    if (bvsRepo.GetDetectionFileIdByHash(hash) > 0)
                     {
                         throw new ApplicationException("Unable to load post log file. The selected post log file has already been loaded.");
                     }
 
                     //we made it this far, it must be a new file - persist the file
                     string message = string.Empty;
-                    TrackerFile<BvsFileDetail> bvsFile = new TrackerFile<BvsFileDetail>();
-                    Dictionary<TrackerFileDetailKey<BvsFileDetail>, int> lineInfo = new Dictionary<TrackerFileDetailKey<BvsFileDetail>, int>();
+                    TrackerFile<DetectionFileDetail> detectionFile = new TrackerFile<DetectionFileDetail>();
+                    Dictionary<TrackerFileDetailKey<DetectionFileDetail>, int> lineInfo = new Dictionary<TrackerFileDetailKey<DetectionFileDetail>, int>();
 
                     if (isSigmaUpload)
                     {
-                        bvsFile = _SigmaConverter.ExtractSigmaData(requestBvsFile.StreamData, hash, username, requestBvsFile.FileName, out lineInfo);
+                        detectionFile = _SigmaConverter.ExtractSigmaData(requestDetectionFile.StreamData, hash, username, requestDetectionFile.FileName, out lineInfo);
                     }
                     else
                     {
-                        bvsFile = _BvsConverter.ExtractBvsData(requestBvsFile.StreamData, hash, username, requestBvsFile.FileName, out message, out lineInfo);
+                        detectionFile = _DetectionConverter.ExtractDetectionData(requestDetectionFile.StreamData, hash, username, requestDetectionFile.FileName, out message, out lineInfo);
                     }
 
                     if (!string.IsNullOrEmpty(message))
@@ -412,8 +412,8 @@ namespace Services.Broadcast.ApplicationServices
                         hasErrors = true;
                     }
 
-                    var filterResult = bvsRepo.FilterOutExistingDetails(bvsFile.FileDetails.ToList());
-                    bvsFile.FileDetails = filterResult.New;
+                    var filterResult = bvsRepo.FilterOutExistingDetails(detectionFile.FileDetails.ToList());
+                    detectionFile.FileDetails = filterResult.New;
 
                     if (filterResult.Ignored.Any())
                     {
@@ -421,7 +421,7 @@ namespace Services.Broadcast.ApplicationServices
                         foreach (var file in filterResult.Ignored)
                         {
                             duplicateMessage += string.Format("<li>Line {0}: Station {1}, Date {2}, Time Aired {3}, ISCI {4}, Spot Length {5}, Campaign {6}, Advertiser {7}</li>",
-                                lineInfo[new TrackerFileDetailKey<BvsFileDetail>(file)], file.Station, file.DateAired, file.TimeAired, file.Isci, file.SpotLength, file.EstimateId, file.Advertiser);
+                                lineInfo[new TrackerFileDetailKey<DetectionFileDetail>(file)], file.Station, file.DateAired, file.TimeAired, file.Isci, file.SpotLength, file.EstimateId, file.Advertiser);
                         }
 
                         duplicateMessage += "</ul>";
@@ -433,34 +433,34 @@ namespace Services.Broadcast.ApplicationServices
                         foreach (var file in filterResult.Updated)
                         {
                             duplicateMessage += string.Format("<li>Line {0}: Station {1}, Date {2}, Time Aired {3}, ISCI {4}, Spot Length {5}, Campaign {6}, Advertiser {7}, Program Name {8}</li>",
-                                lineInfo[new TrackerFileDetailKey<BvsFileDetail>(file)], file.Station, file.DateAired, file.TimeAired, file.Isci, file.SpotLength, file.EstimateId, file.Advertiser, file.ProgramName);
+                                lineInfo[new TrackerFileDetailKey<DetectionFileDetail>(file)], file.Station, file.DateAired, file.TimeAired, file.Isci, file.SpotLength, file.EstimateId, file.Advertiser, file.ProgramName);
                         }
 
                         duplicateMessage += "</ul>";
                     }
 
-                    bvsIds.Add(bvsRepo.SaveBvsFile(bvsFile));
-                    errorMessage += string.Format("File '{0}' uploaded successfully.<br />", requestBvsFile.FileName);
+                    bvsIds.Add(bvsRepo.SaveDetectionFile(detectionFile));
+                    errorMessage += string.Format("File '{0}' uploaded successfully.<br />", requestDetectionFile.FileName);
                 }
                 catch (Exception e)
                 {
                     hasErrors = true;
-                    errorMessage += string.Format("<br /> Error processing file '{0}'. <br />Message:<br />{1}<br />", requestBvsFile.FileName, e.Message);
+                    errorMessage += string.Format("<br /> Error processing file '{0}'. <br />Message:<br />{1}<br />", requestDetectionFile.FileName, e.Message);
                 }
             }
 
 
-            var estimateIds = _BroadcastDataRepositoryFactory.GetDataRepository<IBvsRepository>().GetEstimateIdsWithSchedulesByFileIds(bvsIds);
+            var estimateIds = _BroadcastDataRepositoryFactory.GetDataRepository<IDetectionRepository>().GetEstimateIdsWithSchedulesByFileIds(bvsIds);
             foreach (var estimateId in estimateIds)
             {
                 //post for delivery
-                _BvsPostingEngine.PostBvsDataByEstimate(estimateId);
+                _DetectionPostingEngine.PostDetectionDataByEstimate(estimateId);
 
-                _TrackingEngine.TrackBvsByEstimateId(estimateId);
+                _TrackingEngine.TrackDetectionByEstimateId(estimateId);
             }
 
             if (hasErrors)
-                throw new ExtractBvsException(errorMessage);
+                throw new ExtractDetectionException(errorMessage);
 
             return Tuple.Create(bvsIds, duplicateMessage);
         }
@@ -484,7 +484,7 @@ namespace Services.Broadcast.ApplicationServices
             return target;
         }
 
-        public string SaveBvsViaFtp(string userName)
+        public string SaveDetectionFileViaFtp(string userName)
         {
             var successFiles = string.Empty;
             var failMessages = string.Empty;
@@ -529,16 +529,16 @@ namespace Services.Broadcast.ApplicationServices
                             request.Files.Add(new FileRequest { FileName = fileName, StreamData = stream });
 
                             //Requirements are to ignore this for FTP for now
-                            SaveBvsFiles(request, userName);
+                            SaveDetectionFiles(request, userName);
 
                             successFiles += fileName + Environment.NewLine;
                         }
-                        catch (ExtractBvsExceptionEmptyFiles)
+                        catch (ExtractDetectionExceptionEmptyFiles)
                         {
                             failMessages += string.Format("<br />Empty File: <i>{0}</i><br />", fileName);
                             continue;
                         }
-                        catch (ExtractBvsExceptionCableTv)
+                        catch (ExtractDetectionExceptionCableTv)
                         {
                             cableTvMessage += string.Format("<br /><i>{0}</i><br />", fileName);
                             continue;
@@ -652,9 +652,9 @@ namespace Services.Broadcast.ApplicationServices
             return _BroadcastDataRepositoryFactory.GetDataRepository<IScheduleRepository>().ScheduleExists(estimateId);
         }
 
-        public BvsScrubbingDto GetBvsScrubbingData(int estimateId)
+        public DetectionScrubbingDto GetDetectionScrubbingData(int estimateId)
         {
-            var scrubbingDto = new BvsScrubbingDto();
+            var scrubbingDto = new DetectionScrubbingDto();
 
             var schedule = _BroadcastDataRepositoryFactory.GetDataRepository<IScheduleRepository>().GetScheduleDtoByEstimateId(estimateId);
 
@@ -663,16 +663,16 @@ namespace Services.Broadcast.ApplicationServices
             scrubbingDto.ScheduleName = schedule.ScheduleName;
             scrubbingDto.ISCIs = string.Join(",", schedule.ISCIs.Select(i => i.House));
             scrubbingDto.PostingBooks = _NsiPostingBookService.GetNsiPostingBookMonths();
-            scrubbingDto.BvsDetails = GetBvsDetailsWithAdjustedImpressions(estimateId, schedule);
+            scrubbingDto.DetectionDetails = GetDetectionDetailsWithAdjustedImpressions(estimateId, schedule);
             scrubbingDto.SchedulePrograms = _BroadcastDataRepositoryFactory.GetDataRepository<IScheduleRepository>().GetScheduleLookupPrograms(schedule.Id);
             scrubbingDto.ScheduleNetworks = _BroadcastDataRepositoryFactory.GetDataRepository<IScheduleRepository>().GetScheduleLookupStations(schedule.Id);
 
             return scrubbingDto;
         }
 
-        public List<BvsTrackingDetail> GetBvsDetailsWithAdjustedImpressions(int estimateId, ScheduleDTO schedule)
+        public List<DetectionTrackingDetail> GetDetectionDetailsWithAdjustedImpressions(int estimateId, ScheduleDTO schedule)
         {
-            var details = _BroadcastDataRepositoryFactory.GetDataRepository<IBvsRepository>().GetBvsTrackingDetailsByEstimateId(estimateId);
+            var details = _BroadcastDataRepositoryFactory.GetDataRepository<IDetectionRepository>().GetDetectionTrackingDetailsByEstimateId(estimateId);
 
             foreach (var detail in details)
             {
@@ -697,7 +697,7 @@ namespace Services.Broadcast.ApplicationServices
             return response;
         }
 
-        public List<BvsTrackingDetail> SaveScrubbingMapping(ScrubbingMap map)
+        public List<DetectionTrackingDetail> SaveScrubbingMapping(ScrubbingMap map)
         {
             TrackingMapType mapType;
             if (map.BvsProgram != null && map.ScheduleProgram != null)
@@ -709,8 +709,8 @@ namespace Services.Broadcast.ApplicationServices
                 mapType = TrackingMapType.Station;
             }
             _BroadcastDataRepositoryFactory.GetDataRepository<ITrackerMappingRepository>().SaveScrubbingMapping(map, mapType);
-            _TrackingEngine.TrackBvsByBvsDetails(map.DetailIds, map.EstimateId);
-            return _BroadcastDataRepositoryFactory.GetDataRepository<IBvsRepository>().GetBvsTrackingDetailsByDetailIds(map.DetailIds);
+            _TrackingEngine.TrackDetectionByDetectionDetails(map.DetailIds, map.EstimateId);
+            return _BroadcastDataRepositoryFactory.GetDataRepository<IDetectionRepository>().GetDetectionTrackingDetailsByDetailIds(map.DetailIds);
         }
 
         public Dictionary<int, int> GetScheduleAudiences(int estimateId)
@@ -723,7 +723,7 @@ namespace Services.Broadcast.ApplicationServices
             return _BroadcastDataRepositoryFactory.GetDataRepository<IScheduleRepository>().GetScheduleTrackingDetails(estimateId);
         }
 
-        public BvsMap GetBvsMapByType(string mappingTypeString)
+        public DetectionMap GetDetectionMapByType(string mappingTypeString)
         {
             var mapType = _ParseTrackingMapType(mappingTypeString);
 
@@ -748,7 +748,7 @@ namespace Services.Broadcast.ApplicationServices
         {
             var mappingType = _ParseTrackingMapType(mappingTypeString);
             _BroadcastDataRepositoryFactory.GetDataRepository<ITrackerMappingRepository>()
-                .DeleteMapping(mapping.BvsValue, mapping.ScheduleValue, mappingType);
+                .DeleteMapping(mapping.DetectionValue, mapping.ScheduleValue, mappingType);
             return true;
         }
 
@@ -808,9 +808,9 @@ namespace Services.Broadcast.ApplicationServices
             return ratingAdjustments;
         }
 
-        public List<BvsFileSummary> GetBvsFileSummaries()
+        public List<DetectionFileSummary> GetDetectionFileSummaries()
         {
-            return _BroadcastDataRepositoryFactory.GetDataRepository<IBvsRepository>().GetBvsFileSummaries();
+            return _BroadcastDataRepositoryFactory.GetDataRepository<IDetectionRepository>().GetDetectionFileSummaries();
         }
 
         public bool TrackSchedule(int scheduleId)
@@ -820,14 +820,14 @@ namespace Services.Broadcast.ApplicationServices
             if (scheduleDto == null || scheduleDto.estimate_id == null)
                 throw new Exception("Could not load schedule from Id=" + scheduleId);
 
-            _TrackingEngine.TrackBvsByEstimateId(scheduleDto.estimate_id.Value);
+            _TrackingEngine.TrackDetectionByEstimateId(scheduleDto.estimate_id.Value);
 
             return true;
         }
 
-        public bool DeleteBvsFile(int bvsFileId)
+        public bool DeleteDetectionFile(int bvsFileId)
         {
-            _BroadcastDataRepositoryFactory.GetDataRepository<IBvsRepository>().DeleteById(bvsFileId);
+            _BroadcastDataRepositoryFactory.GetDataRepository<IDetectionRepository>().DeleteById(bvsFileId);
             return true;
         }
     }

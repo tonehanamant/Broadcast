@@ -10,12 +10,12 @@ using System.Linq;
 
 namespace Services.Broadcast.Converters
 {
-    public interface IBvsConverter : IApplicationService
+    public interface IDetectionConverter : IApplicationService
     {
-        TrackerFile<BvsFileDetail> ExtractBvsData(Stream rawStream, string hash, string userName, string bvsFileName, out string message, out Dictionary<TrackerFileDetailKey<BvsFileDetail>, int> lineInfo);        
+        TrackerFile<DetectionFileDetail> ExtractDetectionData(Stream rawStream, string hash, string userName, string detectionFileName, out string message, out Dictionary<TrackerFileDetailKey<DetectionFileDetail>, int> lineInfo);        
     }
 
-    public class ExtractBvsException : Exception
+    public class ExtractDetectionException : Exception
     {
         private string _Message;
 
@@ -24,7 +24,7 @@ namespace Services.Broadcast.Converters
             get { return _Message; }
         }
 
-        public ExtractBvsException(string message, int? row = null)
+        public ExtractDetectionException(string message, int? row = null)
         {
             if (row.HasValue)
             {
@@ -37,18 +37,18 @@ namespace Services.Broadcast.Converters
         }
     }
 
-    public class ExtractBvsExceptionEmptyFiles : Exception
+    public class ExtractDetectionExceptionEmptyFiles : Exception
     {
         public override string Message
         {
             get
             {
-                return "File does not contain valid BVS detail data.";
+                return "File does not contain valid detection detail data.";
             }
         }
     }
 
-    public class ExtractBvsExceptionCableTv : Exception
+    public class ExtractDetectionExceptionCableTv : Exception
     {
         public override string Message
         {
@@ -59,13 +59,13 @@ namespace Services.Broadcast.Converters
         }
     }
     
-    public class BvsConverter : IBvsConverter
+    public class DetectionConverter : IDetectionConverter
     {
         private readonly IDataRepositoryFactory _DataRepositoryFactory;
         private readonly IDateAdjustmentEngine _DateAdjustmentEngine;
         private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekAggregateCache;
 
-        public BvsConverter(
+        public DetectionConverter(
             IDataRepositoryFactory dataRepositoryFactory, 
             IDateAdjustmentEngine dateAdjustment,
             IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache)
@@ -98,27 +98,27 @@ namespace Services.Broadcast.Converters
             ,"Advertiser"
         };
 
-        //public Dictionary<BvsFileDetailKey, int> FileDetailLineInfo { get; set; }
-        public TrackerFile<BvsFileDetail> ExtractBvsData(Stream rawStream, string hash, string userName, string bvsFileName, out string message, out Dictionary<TrackerFileDetailKey<BvsFileDetail>, int> lineInfo)
+        //public Dictionary<DetectionFileDetailKey, int> FileDetailLineInfo { get; set; }
+        public TrackerFile<DetectionFileDetail> ExtractDetectionData(Stream rawStream, string hash, string userName, string detectionFileName, out string message, out Dictionary<TrackerFileDetailKey<DetectionFileDetail>, int> lineInfo)
         {
-            //return ExtractBvsDataCsv(rawStream,hash,userName,bvsFileName);
-            return ExtractBvsDataXls(rawStream, hash, userName, bvsFileName, out message, out lineInfo);
+            //return ExtractDetectionDataCsv(rawStream,hash,userName,detectionFileName);
+            return ExtractDetectionDataXls(rawStream, hash, userName, detectionFileName, out message, out lineInfo);
         }
         
-        private void _SetSpotLengths(BvsFileDetail bvsDetail, string spot_length, Dictionary<int, int> spotLengthDict)
+        private void _SetSpotLengths(DetectionFileDetail detectionFileDetail, string spot_length, Dictionary<int, int> spotLengthDict)
         {
             spot_length = spot_length.Trim().Replace(":", "");
 
             if (!int.TryParse(spot_length, out int spotLength))
             {
-                throw new ExtractBvsException(string.Format("Invalid spot length '{0}' found.", spotLength));
+                throw new ExtractDetectionException(string.Format("Invalid spot length '{0}' found.", spotLength));
             }
 
             if (!spotLengthDict.ContainsKey(spotLength))
-                throw new ExtractBvsException(string.Format("Invalid spot length '{0}' found.", spotLength));
+                throw new ExtractDetectionException(string.Format("Invalid spot length '{0}' found.", spotLength));
 
-            bvsDetail.SpotLength = spotLength;
-            bvsDetail.SpotLengthId = spotLengthDict[spotLength];
+            detectionFileDetail.SpotLength = spotLength;
+            detectionFileDetail.SpotLengthId = spotLengthDict[spotLength];
         }
 
         private bool _IsEmptyRow(int row)
@@ -129,12 +129,12 @@ namespace Services.Broadcast.Converters
             return true;
         }
 
-        public TrackerFile<BvsFileDetail> ExtractBvsDataXls(Stream rawStream, string hash, string userName, string bvsFileName, out string message, out Dictionary<TrackerFileDetailKey<BvsFileDetail>, int> lineInfo)
+        public TrackerFile<DetectionFileDetail> ExtractDetectionDataXls(Stream rawStream, string hash, string userName, string detectionFileName, out string message, out Dictionary<TrackerFileDetailKey<DetectionFileDetail>, int> lineInfo)
         {
-            lineInfo = new Dictionary<TrackerFileDetailKey<BvsFileDetail>, int>();
+            lineInfo = new Dictionary<TrackerFileDetailKey<DetectionFileDetail>, int>();
 
             Dictionary<int, int> spotLengthDict = _DataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthAndIds();
-            TrackerFile<BvsFileDetail> bvsFile = new TrackerFile<BvsFileDetail>();
+            TrackerFile<DetectionFileDetail> detectionFile = new TrackerFile<DetectionFileDetail>();
             int row;
             int cableTvCount = 0;
             message = string.Empty;
@@ -149,13 +149,13 @@ namespace Services.Broadcast.Converters
                     if (_IsEmptyRow(row))
                         break;  // empty row, done!
 
-                    var bvsDetail = new BvsFileDetail
+                    var detectionFileDetail = new DetectionFileDetail
                     {
                         Market = _GetCellValue(row, "Market").ToUpper()
                     };
-                    if (string.IsNullOrEmpty(bvsDetail.Market))
+                    if (string.IsNullOrEmpty(detectionFileDetail.Market))
                     {
-                        throw new ExtractBvsException("'Market' field is missing.", row);
+                        throw new ExtractDetectionException("'Market' field is missing.", row);
                     }
 
                     var cellContent = _GetCellValue(row, "Rank");
@@ -163,68 +163,68 @@ namespace Services.Broadcast.Converters
                         continue;
                     if (!int.TryParse(cellContent, out int rankNumber))
                     {
-                        throw new ExtractBvsException(string.Format("Invalid rank value \"{0}\".", cellContent), row);
+                        throw new ExtractDetectionException(string.Format("Invalid rank value \"{0}\".", cellContent), row);
                     }
-                    bvsDetail.Rank = rankNumber;
-                    bvsDetail.Station = _GetCellValue(row, "Station").ToUpper();
-                    bvsDetail.Affiliate = _GetCellValue(row, "Affiliate").ToUpper();
+                    detectionFileDetail.Rank = rankNumber;
+                    detectionFileDetail.Station = _GetCellValue(row, "Station").ToUpper();
+                    detectionFileDetail.Affiliate = _GetCellValue(row, "Affiliate").ToUpper();
                     
                     var extractedDate = _GetAirTime(row);
-                    bvsDetail.DateAired = extractedDate.Date;
+                    detectionFileDetail.DateAired = extractedDate.Date;
                     
                     var time = extractedDate.TimeOfDay;
-                    bvsDetail.TimeAired = (int)time.TotalSeconds;
-                    bvsDetail.NsiDate = _DateAdjustmentEngine.ConvertToNSITime(bvsDetail.DateAired, time);
-                    bvsDetail.NtiDate = _DateAdjustmentEngine.ConvertToNTITime(bvsDetail.DateAired, time);
+                    detectionFileDetail.TimeAired = (int)time.TotalSeconds;
+                    detectionFileDetail.NsiDate = _DateAdjustmentEngine.ConvertToNSITime(detectionFileDetail.DateAired, time);
+                    detectionFileDetail.NtiDate = _DateAdjustmentEngine.ConvertToNTITime(detectionFileDetail.DateAired, time);
 
-                    bvsDetail.ProgramName = _GetCellValue(row, "Program Name").ToUpper();
+                    detectionFileDetail.ProgramName = _GetCellValue(row, "Program Name").ToUpper();
 
-                    bvsDetail.SpotLength = int.Parse(_GetCellValue(row, "Length"));
+                    detectionFileDetail.SpotLength = int.Parse(_GetCellValue(row, "Length"));
                     var spot_length = _GetCellValue(row, "Length");
-                    _SetSpotLengths(bvsDetail, spot_length, spotLengthDict);
+                    _SetSpotLengths(detectionFileDetail, spot_length, spotLengthDict);
 
-                    bvsDetail.Isci = _GetCellValue(row, "ISCI").ToUpper();
-                    bvsDetail.Advertiser = _GetCellValue(row, "Advertiser").ToUpper();
+                    detectionFileDetail.Isci = _GetCellValue(row, "ISCI").ToUpper();
+                    detectionFileDetail.Advertiser = _GetCellValue(row, "Advertiser").ToUpper();
                     int estimateId;
                     if (!int.TryParse(_GetCellValue(row, "Campaign"), out estimateId))
                     {
                         message += string.Format("Invalid campaign field in row={0}, skipping. <br />", row);
                         continue;   // go to next line
                     }
-                    bvsDetail.EstimateId = estimateId;
-                    lineInfo[new TrackerFileDetailKey<BvsFileDetail>(bvsDetail)] = row;
-                    bvsFile.FileDetails.Add(bvsDetail);
+                    detectionFileDetail.EstimateId = estimateId;
+                    lineInfo[new TrackerFileDetailKey<DetectionFileDetail>(detectionFileDetail)] = row;
+                    detectionFile.FileDetails.Add(detectionFileDetail);
                 }
             }
-            if (!bvsFile.FileDetails.Any())
+            if (!detectionFile.FileDetails.Any())
             {
                 if (row == cableTvCount) // if entire file is made of cable tv record, treat as empty.
-                    throw new ExtractBvsExceptionCableTv();
+                    throw new ExtractDetectionExceptionCableTv();
 
-                throw new ExtractBvsExceptionEmptyFiles();
+                throw new ExtractDetectionExceptionEmptyFiles();
             }
-            bvsFile.Name = bvsFileName;
-            bvsFile.CreatedBy = userName;
-            bvsFile.CreatedDate = DateTime.Now;
-            bvsFile.FileHash = hash;
-            bvsFile.StartDate = bvsFile.FileDetails.Min(x => x.DateAired).Date;
-            bvsFile.EndDate = bvsFile.FileDetails.Max(x => x.DateAired).Date;
+            detectionFile.Name = detectionFileName;
+            detectionFile.CreatedBy = userName;
+            detectionFile.CreatedDate = DateTime.Now;
+            detectionFile.FileHash = hash;
+            detectionFile.StartDate = detectionFile.FileDetails.Min(x => x.DateAired).Date;
+            detectionFile.EndDate = detectionFile.FileDetails.Max(x => x.DateAired).Date;
 
-            return bvsFile;
+            return detectionFile;
         }
 
-        private static bool EnsureRank(string cellContent, BvsFileDetail bvsDetail, int row)
+        private static bool EnsureRank(string cellContent, DetectionFileDetail detectionFileDetail, int row)
         {
             var numTestResult = int.TryParse(cellContent, out int rankNumber);
             if (!numTestResult)
             {
-                if (bvsDetail.Market == CABLE_TV || bvsDetail.Market == NETWORK_TV)
+                if (detectionFileDetail.Market == CABLE_TV || detectionFileDetail.Market == NETWORK_TV)
                 {
                     return true;
                 }
-                throw new ExtractBvsException("Rank field required for non-CABLE TV and non-Netowrk TV records.", row);
+                throw new ExtractDetectionException("Rank field required for non-CABLE TV and non-Netowrk TV records.", row);
             }
-            bvsDetail.Rank = rankNumber;
+            detectionFileDetail.Rank = rankNumber;
             return false;
         }
 
@@ -234,7 +234,7 @@ namespace Services.Broadcast.Converters
 
             if (_MediaMonthAndWeekAggregateCache.GetMediaWeekContainingDateOrNull(dateTime.Date) == null)
             {
-                throw new ExtractBvsException("Invalid Media Week for Time Aired", row);
+                throw new ExtractDetectionException("Invalid Media Week for Time Aired", row);
             }
 
             return dateTime;

@@ -39,9 +39,9 @@
           }
         ],
         "BroadcastDate": "0001-01-01T00:00:00",
-        "BvsDate": "0001-01-01T00:00:00",
         "Cost": 0.00,
         "DeliveredSpots": 0,
+        "DetectionDate": "0001-01-01T00:00:00",
         "DisplayDaypart": {
           "_Code": "",
           "_EndTime": 2219,
@@ -91,9 +91,9 @@
           }
         ],
         "BroadcastDate": "0001-01-01T00:00:00",
-        "BvsDate": "0001-01-01T00:00:00",
         "Cost": 0.00,
         "DeliveredSpots": 0,
+        "DetectionDate": "0001-01-01T00:00:00",
         "DisplayDaypart": {
           "_Code": "CUS",
           "_EndTime": 39599,
@@ -246,9 +246,9 @@
           }
         ],
         "BroadcastDate": "0001-01-01T00:00:00",
-        "BvsDate": "0001-01-01T00:00:00",
         "Cost": 0.00,
         "DeliveredSpots": 0,
+        "DetectionDate": "0001-01-01T00:00:00",
         "DisplayDaypart": {
           "_Code": "",
           "_EndTime": 2219,
@@ -298,9 +298,9 @@
           }
         ],
         "BroadcastDate": "0001-01-01T00:00:00",
-        "BvsDate": "0001-01-01T00:00:00",
         "Cost": 0.00,
         "DeliveredSpots": 0,
+        "DetectionDate": "0001-01-01T00:00:00",
         "DisplayDaypart": {
           "_Code": "CUS",
           "_EndTime": 39599,
@@ -350,9 +350,9 @@
           }
         ],
         "BroadcastDate": "0001-01-01T00:00:00",
-        "BvsDate": "0001-01-01T00:00:00",
         "Cost": 0.00,
         "DeliveredSpots": 0,
+        "DetectionDate": "0001-01-01T00:00:00",
         "DisplayDaypart": {
           "_Code": "CUS",
           "_EndTime": 35999,
@@ -441,9 +441,9 @@
               }
             ],
             "BroadcastDate": "0001-01-01T00:00:00",
-            "BvsDate": "0001-01-01T00:00:00",
             "Cost": 0.00,
             "DeliveredSpots": 0,
+            "DetectionDate": "0001-01-01T00:00:00",
             "DisplayDaypart": {
               "_Code": "CUS",
               "_EndTime": 35999,
@@ -519,9 +519,9 @@
               }
             ],
             "BroadcastDate": "0001-01-01T00:00:00",
-            "BvsDate": "0001-01-01T00:00:00",
             "Cost": 0.00,
             "DeliveredSpots": 0,
+            "DetectionDate": "0001-01-01T00:00:00",
             "DisplayDaypart": {
               "_Code": "CUS",
               "_EndTime": 35999,
@@ -597,9 +597,9 @@
               }
             ],
             "BroadcastDate": "0001-01-01T00:00:00",
-            "BvsDate": "0001-01-01T00:00:00",
             "Cost": 0.00,
             "DeliveredSpots": 0,
+            "DetectionDate": "0001-01-01T00:00:00",
             "DisplayDaypart": {
               "_Code": "CUS",
               "_EndTime": 35999,
@@ -649,9 +649,9 @@
               }
             ],
             "BroadcastDate": "0001-01-01T00:00:00",
-            "BvsDate": "0001-01-01T00:00:00",
             "Cost": 0.00,
             "DeliveredSpots": 0,
+            "DetectionDate": "0001-01-01T00:00:00",
             "DisplayDaypart": {
               "_Code": "",
               "_EndTime": 2219,
@@ -701,9 +701,9 @@
               }
             ],
             "BroadcastDate": "0001-01-01T00:00:00",
-            "BvsDate": "0001-01-01T00:00:00",
             "Cost": 0.00,
             "DeliveredSpots": 0,
+            "DetectionDate": "0001-01-01T00:00:00",
             "DisplayDaypart": {
               "_Code": "CUS",
               "_EndTime": 39599,
@@ -779,9 +779,9 @@
               }
             ],
             "BroadcastDate": "0001-01-01T00:00:00",
-            "BvsDate": "0001-01-01T00:00:00",
             "Cost": 0.00,
             "DeliveredSpots": 0,
+            "DetectionDate": "0001-01-01T00:00:00",
             "DisplayDaypart": {
               "_Code": "CUS",
               "_EndTime": 35999,

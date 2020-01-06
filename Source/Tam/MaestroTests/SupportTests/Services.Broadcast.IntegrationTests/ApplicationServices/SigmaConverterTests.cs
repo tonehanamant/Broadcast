@@ -23,7 +23,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        [ExpectedException(typeof(ExtractBvsException), ExpectedMessage = "Required field IDENTIFIER 1 is null or empty", MatchType = MessageMatch.Contains)]
+        [ExpectedException(typeof(ExtractDetectionException), ExpectedMessage = "Required field IDENTIFIER 1 is null or empty", MatchType = MessageMatch.Contains)]
         public void SigmaConverter_SigmaFile_RequiredFieldEmpty()
         {
             using (new TransactionScopeWrapper())
@@ -32,13 +32,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var fileName = "SigmaImportRequiredFieldEmpty.csv";
                 var userName = "BvsConverter_SigmaFile";
 
-                var sigmaFile = _ISigmaConverter.ExtractSigmaData(stream, "hash", userName, fileName, out Dictionary<TrackerFileDetailKey<BvsFileDetail>, int> line);
+                var sigmaFile = _ISigmaConverter.ExtractSigmaData(stream, "hash", userName, fileName, out Dictionary<TrackerFileDetailKey<DetectionFileDetail>, int> line);
             }
         }
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        [ExpectedException(typeof(ExtractBvsException), ExpectedMessage = "Could not find required column IDENTIFIER 1.", MatchType = MessageMatch.Contains)]
+        [ExpectedException(typeof(ExtractDetectionException), ExpectedMessage = "Could not find required column IDENTIFIER 1.", MatchType = MessageMatch.Contains)]
         public void SigmaConverter_SigmaFile_RequiredColumnMissing()
         {
             using (new TransactionScopeWrapper())
@@ -48,7 +48,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var userName = "BvsConverter_SigmaFile";
                 string message = string.Empty;
 
-                var sigmaFile = _ISigmaConverter.ExtractSigmaData(stream, "hash", userName, fileName, out Dictionary<TrackerFileDetailKey<BvsFileDetail>, int> line);
+                var sigmaFile = _ISigmaConverter.ExtractSigmaData(stream, "hash", userName, fileName, out Dictionary<TrackerFileDetailKey<DetectionFileDetail>, int> line);
             }
         }
 
@@ -62,7 +62,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var fileName = "SigmaImport.csv";
                 var userName = "BvsConverter_SigmaFile";
 
-                var sigmaFile = _ISigmaConverter.ExtractSigmaData(stream, "hash", userName, fileName, out Dictionary<TrackerFileDetailKey<BvsFileDetail>, int> line);
+                var sigmaFile = _ISigmaConverter.ExtractSigmaData(stream, "hash", userName, fileName, out Dictionary<TrackerFileDetailKey<DetectionFileDetail>, int> line);
 
                 _VerifySigmaFile(sigmaFile);
             }
@@ -70,7 +70,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        [ExpectedException(typeof(ExtractBvsException), ExpectedMessage = "Required field IDENTIFIER 1 is null or empty", MatchType = MessageMatch.Contains)]
+        [ExpectedException(typeof(ExtractDetectionException), ExpectedMessage = "Required field IDENTIFIER 1 is null or empty", MatchType = MessageMatch.Contains)]
         public void SigmaConverter_ExtendedSigmaFile_RequiredFieldsNullOrEmpty()
         {
             using (new TransactionScopeWrapper())
@@ -85,7 +85,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        [ExpectedException(typeof(ExtractBvsException), ExpectedMessage = "Could not find required column ISCI/AD-ID", MatchType = MessageMatch.Contains)]
+        [ExpectedException(typeof(ExtractDetectionException), ExpectedMessage = "Could not find required column ISCI/AD-ID", MatchType = MessageMatch.Contains)]
         public void SigmaConverter_ExtendedSigmaFile_MissingRequiredField()
         {
             using (new TransactionScopeWrapper())

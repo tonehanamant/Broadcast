@@ -73,13 +73,13 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<ILogoService, LogoService>();
             unityContainer.RegisterType<ITransactionHelper, TransactionHelper>();
             unityContainer.RegisterType<ITrackerService, TrackerService>();
-            unityContainer.RegisterType<IBvsPostingEngine, BvsBvsPostingEngine>();
+            unityContainer.RegisterType<IDetectionPostingEngine, DetectionPostingEngine>();
             unityContainer.RegisterType<IDateAdjustmentEngine, DateAdjustmentEngine>();
             unityContainer.RegisterType<ITrackingEngine, TrackingEngine>();
             unityContainer.RegisterType<IScxScheduleConverter, ScxScheduleConverter>();
             unityContainer.RegisterType<ICsvHelper, CsvHelper>();
             unityContainer.RegisterType<IPostLogBaseFileConverter, PostLogBaseFileConverter>();
-            unityContainer.RegisterType<IBvsConverter, BvsConverter>();
+            unityContainer.RegisterType<IDetectionConverter, DetectionConverter>();
             unityContainer.RegisterType<ISigmaConverter, SigmaConverter>();
             unityContainer.RegisterType<IDefaultScheduleConverter, DefaultScheduleConverter>();
             unityContainer.RegisterType<IAssemblyScheduleConverter, AssemblyScheduleConverter>();

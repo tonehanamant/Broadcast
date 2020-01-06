@@ -2,7 +2,7 @@
 {
     public class AcceptScheduleLeadinRequest
     {
-        public int BvsDetailId { get; set; }
+        public int DetectionDetailId { get; set; }
         public int ScheduleDetailWeekId { get; set; }
     }
 }

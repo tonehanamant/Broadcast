@@ -16,7 +16,6 @@ namespace EntityFrameworkMapping.Broadcast
     {
         public spot_lengths()
         {
-            this.bvs_file_details = new HashSet<bvs_file_details>();
             this.post_file_details = new HashSet<post_file_details>();
             this.proposal_version_spot_length = new HashSet<proposal_version_spot_length>();
             this.schedule_details = new HashSet<schedule_details>();
@@ -30,6 +29,7 @@ namespace EntityFrameworkMapping.Broadcast
             this.station_inventory_spot_snapshots = new HashSet<station_inventory_spot_snapshots>();
             this.station_inventory_manifest_rates = new HashSet<station_inventory_manifest_rates>();
             this.plan_versions = new HashSet<plan_versions>();
+            this.detection_file_details = new HashSet<detection_file_details>();
         }
     
         public int id { get; set; }
@@ -38,7 +38,6 @@ namespace EntityFrameworkMapping.Broadcast
         public int order_by { get; set; }
         public bool is_default { get; set; }
     
-        public virtual ICollection<bvs_file_details> bvs_file_details { get; set; }
         public virtual ICollection<post_file_details> post_file_details { get; set; }
         public virtual ICollection<proposal_version_spot_length> proposal_version_spot_length { get; set; }
         public virtual ICollection<schedule_details> schedule_details { get; set; }
@@ -52,5 +51,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<station_inventory_spot_snapshots> station_inventory_spot_snapshots { get; set; }
         public virtual ICollection<station_inventory_manifest_rates> station_inventory_manifest_rates { get; set; }
         public virtual ICollection<plan_versions> plan_versions { get; set; }
+        public virtual ICollection<detection_file_details> detection_file_details { get; set; }
     }
 }

@@ -49,23 +49,24 @@ namespace BroadcastComposerWeb.Controllers
 
         [HttpGet]
         [Route("GetInitialData")]
-        public BaseResponse<BvsLoadDto> GetInitialData()
+        public BaseResponse<DetectionLoadDto> GetInitialData()
         {
-            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ITrackerService>().GetBvsLoadData(DateTime.Now));
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ITrackerService>().GetDetectionLoadData(DateTime.Now));
         }
 
         [HttpPost]
-        [Route("UploadBvsFile")]
-        public BaseResponse<List<int>> UploadBvsFile(HttpRequestMessage saveRequest)
+        [Route("UploadDetectionFile")]
+        public BaseResponse<List<int>> UploadDetectionFile(HttpRequestMessage saveRequest)
         {
             if (saveRequest == null)
             {
-                throw new Exception("No BVS file data received.");
+                throw new Exception("No detection service file data received.");
             }
 
             FileSaveRequest bvsRequest = JsonConvert.DeserializeObject<FileSaveRequest>(saveRequest.Content.ReadAsStringAsync().Result);
             var fullName = _GetCurrentUserFullName();
-            return _ConvertToBaseResponseSuccessWithMessage(() => _ApplicationServiceFactory.GetApplicationService<ITrackerService>().SaveBvsFiles(bvsRequest, fullName));
+            FileSaveRequest detectionRequest = JsonConvert.DeserializeObject<FileSaveRequest>(saveRequest.Content.ReadAsStringAsync().Result);
+            return _ConvertToBaseResponseSuccessWithMessage(() => _ApplicationServiceFactory.GetApplicationService<ITrackerService>().SaveDetectionFiles(detectionRequest, fullName));
         }
 
         [HttpPost]
@@ -78,16 +79,16 @@ namespace BroadcastComposerWeb.Controllers
             }
 
             var fullName = _GetCurrentUserFullName();
-            FileSaveRequest bvsRequest = JsonConvert.DeserializeObject<FileSaveRequest>(saveRequest.Content.ReadAsStringAsync().Result);
-            return _ConvertToBaseResponseSuccessWithMessage(() => _ApplicationServiceFactory.GetApplicationService<ITrackerService>().SaveBvsFiles(bvsRequest, fullName, true));
+            FileSaveRequest detectionRequest = JsonConvert.DeserializeObject<FileSaveRequest>(saveRequest.Content.ReadAsStringAsync().Result);
+            return _ConvertToBaseResponseSuccessWithMessage(() => _ApplicationServiceFactory.GetApplicationService<ITrackerService>().SaveDetectionFiles(detectionRequest, fullName, true));
         }
 
         [HttpPost]
-        [Route("UploadBvsFtp")]
+        [Route("UploadDetectionFileFtp")]
         public BaseResponse<string> UploadViaFTP()
         {
             var fullName = _GetCurrentUserFullName();
-            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ITrackerService>().SaveBvsViaFtp(fullName));
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ITrackerService>().SaveDetectionFileViaFtp(fullName));
         }
 
         [HttpPost]
@@ -118,10 +119,10 @@ namespace BroadcastComposerWeb.Controllers
         }
 
         [HttpGet]
-        [Route("GetBvsScrubbingData")]
-        public BaseResponse<BvsScrubbingDto> GetBvsScrubbingData(int estimateId)
+        [Route("GetDetectionScrubbingData")]
+        public BaseResponse<DetectionScrubbingDto> GetDetectionScrubbingData(int estimateId)
         {
-            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ITrackerService>().GetBvsScrubbingData(estimateId));
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ITrackerService>().GetDetectionScrubbingData(estimateId));
         }
 
         public BaseResponse<List<LookupDto>> GetSchedulePrograms(int scheduleId)
@@ -136,7 +137,7 @@ namespace BroadcastComposerWeb.Controllers
 
         [HttpPost]
         [Route("SaveScrubbingMappings")]
-        public BaseResponse<List<BvsTrackingDetail>> SaveScrubbingMappings(ScrubbingMap map)
+        public BaseResponse<List<DetectionTrackingDetail>> SaveScrubbingMappings(ScrubbingMap map)
         {
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ITrackerService>().SaveScrubbingMapping(map));
         }
@@ -150,7 +151,7 @@ namespace BroadcastComposerWeb.Controllers
 
         [HttpPost]
         [Route("AcceptScheduleLeadin")]
-        public BaseResponse<BvsTrackingDetail> AcceptScheduleLeadin(AcceptScheduleLeadinRequest request)
+        public BaseResponse<DetectionTrackingDetail> AcceptScheduleLeadin(AcceptScheduleLeadinRequest request)
         {
             return
                 _ConvertToBaseResponse(() =>
@@ -159,7 +160,7 @@ namespace BroadcastComposerWeb.Controllers
 
         [HttpPost]
         [Route("AcceptScheduleBlock")]
-        public BaseResponse<BvsTrackingDetail> AcceptScheduleBlock(AcceptScheduleBlockRequest request)
+        public BaseResponse<DetectionTrackingDetail> AcceptScheduleBlock(AcceptScheduleBlockRequest request)
         {
             return
                 _ConvertToBaseResponse(() =>
@@ -168,11 +169,11 @@ namespace BroadcastComposerWeb.Controllers
 
         [HttpGet]
         [Route("GetProgramMapping")]
-        public BaseResponse<ProgramMappingDto> GetProgramMapping(int bvsDetailId)
+        public BaseResponse<ProgramMappingDto> GetProgramMapping(int detectionDetailId)
         {
             return _ConvertToBaseResponse(
                 () =>
-                        _ApplicationServiceFactory.GetApplicationService<ITrackingEngine>().GetProgramMappingDto(bvsDetailId));
+                        _ApplicationServiceFactory.GetApplicationService<ITrackingEngine>().GetProgramMappingDto(detectionDetailId));
         }
 
         [HttpGet]
@@ -228,13 +229,13 @@ namespace BroadcastComposerWeb.Controllers
 
         [HttpGet]
         [Route("Mappings/{mappingType}")]
-        public BaseResponse<BvsMap>  GetMappingsList(string mappingType)
+        public BaseResponse<DetectionMap>  GetMappingsList(string mappingType)
         {
             return
                 _ConvertToBaseResponse(
                     () =>
                         _ApplicationServiceFactory.GetApplicationService<ITrackerService>()
-                            .GetBvsMapByType(mappingType));
+                            .GetDetectionMapByType(mappingType));
         }
 
         [HttpPost]
@@ -270,11 +271,11 @@ namespace BroadcastComposerWeb.Controllers
         }
 
         [HttpGet]
-        [Route("BvsFileSummaries")]
-        public BaseResponse<List<BvsFileSummary>> GetBvsFileSummaries()
+        [Route("DetectionFileSummaries")]
+        public BaseResponse<List<DetectionFileSummary>> GetDetectionFileSummaries()
         {
             return _ConvertToBaseResponse(
-                () => _ApplicationServiceFactory.GetApplicationService<ITrackerService>().GetBvsFileSummaries());
+                () => _ApplicationServiceFactory.GetApplicationService<ITrackerService>().GetDetectionFileSummaries());
         }
         [HttpPut]
         [Route("TrackSchedule/{scheduleId}")]
@@ -284,11 +285,11 @@ namespace BroadcastComposerWeb.Controllers
                 () => _ApplicationServiceFactory.GetApplicationService<ITrackerService>().TrackSchedule(scheduleId));
         }
         [HttpDelete]
-        [Route("BvsFile/{bvsFileId}")]
-        public BaseResponse<bool> DeleteBvsFile(int bvsFileId)
+        [Route("DetectionFile/{detectionFileId}")]
+        public BaseResponse<bool> DeleteDetectionFile(int detectionFileId)
         {
             return _ConvertToBaseResponse(
-                () => _ApplicationServiceFactory.GetApplicationService<ITrackerService>().DeleteBvsFile(bvsFileId));
+                () => _ApplicationServiceFactory.GetApplicationService<ITrackerService>().DeleteDetectionFile(detectionFileId));
         }        
     }
 }

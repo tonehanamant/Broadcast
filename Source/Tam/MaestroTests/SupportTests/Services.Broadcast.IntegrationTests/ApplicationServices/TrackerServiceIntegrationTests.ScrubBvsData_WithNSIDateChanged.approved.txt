@@ -1,5 +1,5 @@
 ﻿{
-  "BvsDetails": [
+  "DetectionServiceDetails": [
     {
       "Affiliate": "IND",
       "AirTime": 67506,

@@ -7,7 +7,7 @@ namespace Services.Broadcast.Entities
     public class AdvertiserDataDto
     {
         public List<ScheduleAudience> ScheduleAudiences { get; set; }
-        public List<BvsReportData> ReportData { get; set; }
+        public List<DetectionReportData> ReportData { get; set; }
 
         public int? OrderedSpots
         {
@@ -23,7 +23,7 @@ namespace Services.Broadcast.Entities
         {
             ImpressionsAndDelivey = new List<ImpressionAndDeliveryDto>();
             ScheduleAudiences = scheduleAudiences.ToList();
-            ReportData = new List<BvsReportData>();
+            ReportData = new List<DetectionReportData>();
         }
     }
 }

@@ -173,79 +173,6 @@
           <Property Name="code" Type="varchar" MaxLength="15" Nullable="false" />
           <Property Name="name" Type="varchar" MaxLength="127" Nullable="false" />
         </EntityType>
-        <EntityType Name="bvs_file_details">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="bvs_file_id" Type="int" Nullable="false" />
-          <Property Name="rank" Type="int" Nullable="false" />
-          <Property Name="market" Type="varchar" MaxLength="63" Nullable="false" />
-          <Property Name="station" Type="varchar" MaxLength="15" Nullable="false" />
-          <Property Name="affiliate" Type="varchar" MaxLength="15" Nullable="false" />
-          <Property Name="date_aired" Type="date" Nullable="false" />
-          <Property Name="time_aired" Type="int" Nullable="false" />
-          <Property Name="program_name" Type="varchar" MaxLength="255" Nullable="false" />
-          <Property Name="spot_length" Type="int" Nullable="false" />
-          <Property Name="spot_length_id" Type="int" />
-          <Property Name="isci" Type="varchar" MaxLength="63" Nullable="false" />
-          <Property Name="estimate_id" Type="int" Nullable="false" />
-          <Property Name="schedule_detail_week_id" Type="int" />
-          <Property Name="match_station" Type="bit" Nullable="false" />
-          <Property Name="match_program" Type="bit" Nullable="false" />
-          <Property Name="match_airtime" Type="bit" Nullable="false" />
-          <Property Name="match_isci" Type="bit" Nullable="false" />
-          <Property Name="status" Type="int" Nullable="false" />
-          <Property Name="nsi_date" Type="date" Nullable="false" />
-          <Property Name="nti_date" Type="date" Nullable="false" />
-          <Property Name="has_lead_in_schedule_matches" Type="bit" Nullable="false" />
-          <Property Name="linked_to_block" Type="bit" Nullable="false" />
-          <Property Name="linked_to_leadin" Type="bit" Nullable="false" />
-          <Property Name="match_spot_length" Type="bit" Nullable="false" />
-          <Property Name="advertiser" Type="varchar" MaxLength="63" />
-        </EntityType>
-        <EntityType Name="bvs_files">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="name" Type="varchar" MaxLength="127" Nullable="false" />
-          <Property Name="start_date" Type="date" Nullable="false" />
-          <Property Name="end_date" Type="date" Nullable="false" />
-          <Property Name="file_hash" Type="varchar" MaxLength="63" Nullable="false" />
-          <Property Name="created_by" Type="varchar" MaxLength="63" Nullable="false" />
-          <Property Name="created_date" Type="datetime" Nullable="false" />
-        </EntityType>
-        <EntityType Name="bvs_map_types">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="display" Type="nvarchar" MaxLength="16" Nullable="false" />
-          <Property Name="version" Type="int" Nullable="false" />
-          <Property Name="modified_by" Type="varchar" MaxLength="63" Nullable="false" />
-          <Property Name="modified_date" Type="datetime" Nullable="false" />
-        </EntityType>
-        <EntityType Name="bvs_maps">
-          <Key>
-            <PropertyRef Name="bvs_map_type_id" />
-            <PropertyRef Name="bvs_value" />
-            <PropertyRef Name="schedule_value" />
-          </Key>
-          <Property Name="bvs_map_type_id" Type="int" Nullable="false" />
-          <Property Name="bvs_value" Type="nvarchar" MaxLength="255" Nullable="false" />
-          <Property Name="schedule_value" Type="nvarchar" MaxLength="255" Nullable="false" />
-        </EntityType>
-        <EntityType Name="bvs_post_details">
-          <Key>
-            <PropertyRef Name="bvs_file_detail_id" />
-            <PropertyRef Name="audience_id" />
-          </Key>
-          <Property Name="bvs_file_detail_id" Type="int" Nullable="false" />
-          <Property Name="audience_id" Type="int" Nullable="false" />
-          <Property Name="delivery" Type="float" Nullable="false" />
-          <Property Name="audience_rank" Type="int" />
-        </EntityType>
         <EntityType Name="campaign_summaries">
           <Key>
             <PropertyRef Name="id" />
@@ -329,6 +256,79 @@
           <Property Name="code_3" Type="char" MaxLength="10" Nullable="false" />
           <Property Name="name" Type="varchar" MaxLength="15" Nullable="false" />
           <Property Name="ordinal" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="detection_file_details">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="detection_file_id" Type="int" Nullable="false" />
+          <Property Name="rank" Type="int" Nullable="false" />
+          <Property Name="market" Type="varchar" MaxLength="63" Nullable="false" />
+          <Property Name="station" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="affiliate" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="date_aired" Type="date" Nullable="false" />
+          <Property Name="time_aired" Type="int" Nullable="false" />
+          <Property Name="program_name" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="spot_length" Type="int" Nullable="false" />
+          <Property Name="spot_length_id" Type="int" />
+          <Property Name="isci" Type="varchar" MaxLength="63" Nullable="false" />
+          <Property Name="estimate_id" Type="int" Nullable="false" />
+          <Property Name="schedule_detail_week_id" Type="int" />
+          <Property Name="match_station" Type="bit" Nullable="false" />
+          <Property Name="match_program" Type="bit" Nullable="false" />
+          <Property Name="match_airtime" Type="bit" Nullable="false" />
+          <Property Name="match_isci" Type="bit" Nullable="false" />
+          <Property Name="status" Type="int" Nullable="false" />
+          <Property Name="nsi_date" Type="date" Nullable="false" />
+          <Property Name="nti_date" Type="date" Nullable="false" />
+          <Property Name="has_lead_in_schedule_matches" Type="bit" Nullable="false" />
+          <Property Name="linked_to_block" Type="bit" Nullable="false" />
+          <Property Name="linked_to_leadin" Type="bit" Nullable="false" />
+          <Property Name="match_spot_length" Type="bit" Nullable="false" />
+          <Property Name="advertiser" Type="varchar" MaxLength="63" />
+        </EntityType>
+        <EntityType Name="detection_files">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="127" Nullable="false" />
+          <Property Name="start_date" Type="date" Nullable="false" />
+          <Property Name="end_date" Type="date" Nullable="false" />
+          <Property Name="file_hash" Type="varchar" MaxLength="63" Nullable="false" />
+          <Property Name="created_by" Type="varchar" MaxLength="63" Nullable="false" />
+          <Property Name="created_date" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="detection_map_types">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="display" Type="nvarchar" MaxLength="16" Nullable="false" />
+          <Property Name="version" Type="int" Nullable="false" />
+          <Property Name="modified_by" Type="varchar" MaxLength="63" Nullable="false" />
+          <Property Name="modified_date" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="detection_maps">
+          <Key>
+            <PropertyRef Name="detection_map_type_id" />
+            <PropertyRef Name="detection_value" />
+            <PropertyRef Name="schedule_value" />
+          </Key>
+          <Property Name="detection_map_type_id" Type="int" Nullable="false" />
+          <Property Name="detection_value" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="schedule_value" Type="nvarchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="detection_post_details">
+          <Key>
+            <PropertyRef Name="detection_file_detail_id" />
+            <PropertyRef Name="audience_id" />
+          </Key>
+          <Property Name="detection_file_detail_id" Type="int" Nullable="false" />
+          <Property Name="audience_id" Type="int" Nullable="false" />
+          <Property Name="delivery" Type="float" Nullable="false" />
+          <Property Name="audience_rank" Type="int" />
         </EntityType>
         <EntityType Name="genre_mappings">
           <Key>
@@ -2156,82 +2156,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_bvs_file_bvs_file_details">
-          <End Role="bvs_files" Type="Self.bvs_files" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="bvs_file_details" Type="Self.bvs_file_details" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="bvs_files">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="bvs_file_details">
-              <PropertyRef Name="bvs_file_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_bvs_file_details_schedule_detail_weeks">
-          <End Role="schedule_detail_weeks" Type="Self.schedule_detail_weeks" Multiplicity="0..1" />
-          <End Role="bvs_file_details" Type="Self.bvs_file_details" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="schedule_detail_weeks">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="bvs_file_details">
-              <PropertyRef Name="schedule_detail_week_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_bvs_file_details_spot_lengths">
-          <End Role="spot_lengths" Type="Self.spot_lengths" Multiplicity="0..1" />
-          <End Role="bvs_file_details" Type="Self.bvs_file_details" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="spot_lengths">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="bvs_file_details">
-              <PropertyRef Name="spot_length_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_bvs_maps_bvs_map_types">
-          <End Role="bvs_map_types" Type="Self.bvs_map_types" Multiplicity="1" />
-          <End Role="bvs_maps" Type="Self.bvs_maps" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="bvs_map_types">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="bvs_maps">
-              <PropertyRef Name="bvs_map_type_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_bvs_post_details_audiences">
-          <End Role="audiences" Type="Self.audiences" Multiplicity="1" />
-          <End Role="bvs_post_details" Type="Self.bvs_post_details" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="audiences">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="bvs_post_details">
-              <PropertyRef Name="audience_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_bvs_post_details_bvs_file_details">
-          <End Role="bvs_file_details" Type="Self.bvs_file_details" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="bvs_post_details" Type="Self.bvs_post_details" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="bvs_file_details">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="bvs_post_details">
-              <PropertyRef Name="bvs_file_detail_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_campaign_summaries_campaign">
           <End Role="campaigns" Type="Self.campaigns" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -2291,6 +2215,82 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Principal>
             <Dependent Role="dayparts">
               <PropertyRef Name="timespan_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_detection_file_details_schedule_detail_weeks">
+          <End Role="schedule_detail_weeks" Type="Self.schedule_detail_weeks" Multiplicity="0..1" />
+          <End Role="detection_file_details" Type="Self.detection_file_details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="schedule_detail_weeks">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="detection_file_details">
+              <PropertyRef Name="schedule_detail_week_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_detection_file_details_spot_lengths">
+          <End Role="spot_lengths" Type="Self.spot_lengths" Multiplicity="0..1" />
+          <End Role="detection_file_details" Type="Self.detection_file_details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="spot_lengths">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="detection_file_details">
+              <PropertyRef Name="spot_length_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_detection_file_detection_file_details">
+          <End Role="detection_files" Type="Self.detection_files" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="detection_file_details" Type="Self.detection_file_details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="detection_files">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="detection_file_details">
+              <PropertyRef Name="detection_file_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_detection_maps_detection_map_types">
+          <End Role="detection_map_types" Type="Self.detection_map_types" Multiplicity="1" />
+          <End Role="detection_maps" Type="Self.detection_maps" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="detection_map_types">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="detection_maps">
+              <PropertyRef Name="detection_map_type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_detection_post_details_audiences">
+          <End Role="audiences" Type="Self.audiences" Multiplicity="1" />
+          <End Role="detection_post_details" Type="Self.detection_post_details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="audiences">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="detection_post_details">
+              <PropertyRef Name="audience_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_detection_post_details_detection_file_details">
+          <End Role="detection_file_details" Type="Self.detection_file_details" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="detection_post_details" Type="Self.detection_post_details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="detection_file_details">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="detection_post_details">
+              <PropertyRef Name="detection_file_detail_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -4906,17 +4906,17 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySet Name="audience_audiences" EntityType="Self.audience_audiences" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="audience_maps" EntityType="Self.audience_maps" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="audiences" EntityType="Self.audiences" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="bvs_file_details" EntityType="Self.bvs_file_details" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="bvs_files" EntityType="Self.bvs_files" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="bvs_map_types" EntityType="Self.bvs_map_types" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="bvs_maps" EntityType="Self.bvs_maps" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="bvs_post_details" EntityType="Self.bvs_post_details" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="campaign_summaries" EntityType="Self.campaign_summaries" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="campaigns" EntityType="Self.campaigns" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="daypart_days" EntityType="Self.daypart_days" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="daypart_defaults" EntityType="Self.daypart_defaults" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="dayparts" EntityType="Self.dayparts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="days" EntityType="Self.days" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="detection_file_details" EntityType="Self.detection_file_details" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="detection_files" EntityType="Self.detection_files" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="detection_map_types" EntityType="Self.detection_map_types" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="detection_maps" EntityType="Self.detection_maps" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="detection_post_details" EntityType="Self.detection_post_details" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="genre_mappings" EntityType="Self.genre_mappings" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="genre_sources" EntityType="Self.genre_sources" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="genres" EntityType="Self.genres" Schema="dbo" store:Type="Tables" />
@@ -5134,30 +5134,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="audiences" EntitySet="audiences" />
             <End Role="audience_maps" EntitySet="audience_maps" />
           </AssociationSet>
-          <AssociationSet Name="FK_bvs_file_bvs_file_details" Association="Self.FK_bvs_file_bvs_file_details">
-            <End Role="bvs_files" EntitySet="bvs_files" />
-            <End Role="bvs_file_details" EntitySet="bvs_file_details" />
-          </AssociationSet>
-          <AssociationSet Name="FK_bvs_file_details_schedule_detail_weeks" Association="Self.FK_bvs_file_details_schedule_detail_weeks">
-            <End Role="schedule_detail_weeks" EntitySet="schedule_detail_weeks" />
-            <End Role="bvs_file_details" EntitySet="bvs_file_details" />
-          </AssociationSet>
-          <AssociationSet Name="FK_bvs_file_details_spot_lengths" Association="Self.FK_bvs_file_details_spot_lengths">
-            <End Role="spot_lengths" EntitySet="spot_lengths" />
-            <End Role="bvs_file_details" EntitySet="bvs_file_details" />
-          </AssociationSet>
-          <AssociationSet Name="FK_bvs_maps_bvs_map_types" Association="Self.FK_bvs_maps_bvs_map_types">
-            <End Role="bvs_map_types" EntitySet="bvs_map_types" />
-            <End Role="bvs_maps" EntitySet="bvs_maps" />
-          </AssociationSet>
-          <AssociationSet Name="FK_bvs_post_details_audiences" Association="Self.FK_bvs_post_details_audiences">
-            <End Role="audiences" EntitySet="audiences" />
-            <End Role="bvs_post_details" EntitySet="bvs_post_details" />
-          </AssociationSet>
-          <AssociationSet Name="FK_bvs_post_details_bvs_file_details" Association="Self.FK_bvs_post_details_bvs_file_details">
-            <End Role="bvs_file_details" EntitySet="bvs_file_details" />
-            <End Role="bvs_post_details" EntitySet="bvs_post_details" />
-          </AssociationSet>
           <AssociationSet Name="FK_campaign_summaries_campaign" Association="Self.FK_campaign_summaries_campaign">
             <End Role="campaigns" EntitySet="campaigns" />
             <End Role="campaign_summaries" EntitySet="campaign_summaries" />
@@ -5177,6 +5153,30 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <AssociationSet Name="FK_dayparts_timespans" Association="Self.FK_dayparts_timespans">
             <End Role="timespans" EntitySet="timespans" />
             <End Role="dayparts" EntitySet="dayparts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_detection_file_details_schedule_detail_weeks" Association="Self.FK_detection_file_details_schedule_detail_weeks">
+            <End Role="schedule_detail_weeks" EntitySet="schedule_detail_weeks" />
+            <End Role="detection_file_details" EntitySet="detection_file_details" />
+          </AssociationSet>
+          <AssociationSet Name="FK_detection_file_details_spot_lengths" Association="Self.FK_detection_file_details_spot_lengths">
+            <End Role="spot_lengths" EntitySet="spot_lengths" />
+            <End Role="detection_file_details" EntitySet="detection_file_details" />
+          </AssociationSet>
+          <AssociationSet Name="FK_detection_file_detection_file_details" Association="Self.FK_detection_file_detection_file_details">
+            <End Role="detection_files" EntitySet="detection_files" />
+            <End Role="detection_file_details" EntitySet="detection_file_details" />
+          </AssociationSet>
+          <AssociationSet Name="FK_detection_maps_detection_map_types" Association="Self.FK_detection_maps_detection_map_types">
+            <End Role="detection_map_types" EntitySet="detection_map_types" />
+            <End Role="detection_maps" EntitySet="detection_maps" />
+          </AssociationSet>
+          <AssociationSet Name="FK_detection_post_details_audiences" Association="Self.FK_detection_post_details_audiences">
+            <End Role="audiences" EntitySet="audiences" />
+            <End Role="detection_post_details" EntitySet="detection_post_details" />
+          </AssociationSet>
+          <AssociationSet Name="FK_detection_post_details_detection_file_details" Association="Self.FK_detection_post_details_detection_file_details">
+            <End Role="detection_file_details" EntitySet="detection_file_details" />
+            <End Role="detection_post_details" EntitySet="detection_post_details" />
           </AssociationSet>
           <AssociationSet Name="FK_inventory_file_problems_inventory_files" Association="Self.FK_inventory_file_problems_inventory_files">
             <End Role="inventory_files" EntitySet="inventory_files" />
@@ -5994,10 +5994,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
         <EntityContainer Name="BroadcastContext" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="audience_audiences" EntityType="BroadcastModel.audience_audiences" />
           <EntitySet Name="audiences" EntityType="BroadcastModel.audience" />
-          <EntitySet Name="bvs_file_details" EntityType="BroadcastModel.bvs_file_details" />
-          <EntitySet Name="bvs_files" EntityType="BroadcastModel.bvs_files" />
-          <EntitySet Name="bvs_maps" EntityType="BroadcastModel.bvs_maps" />
-          <EntitySet Name="bvs_post_details" EntityType="BroadcastModel.bvs_post_details" />
           <EntitySet Name="dayparts" EntityType="BroadcastModel.daypart" />
           <EntitySet Name="days" EntityType="BroadcastModel.day" />
           <EntitySet Name="market_dma_map" EntityType="BroadcastModel.market_dma_map" />
@@ -6022,18 +6018,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySet Name="station_contacts" EntityType="BroadcastModel.station_contacts" />
           <EntitySet Name="system_component_parameters" EntityType="BroadcastModel.system_component_parameters" />
           <EntitySet Name="timespans" EntityType="BroadcastModel.timespan" />
-          <AssociationSet Name="FK_bvs_file_bvs_file_details" Association="BroadcastModel.FK_bvs_file_bvs_file_details">
-            <End Role="bvs_files" EntitySet="bvs_files" />
-            <End Role="bvs_file_details" EntitySet="bvs_file_details" />
-          </AssociationSet>
-          <AssociationSet Name="FK_bvs_file_details_schedule_detail_weeks" Association="BroadcastModel.FK_bvs_file_details_schedule_detail_weeks">
-            <End Role="schedule_detail_weeks" EntitySet="schedule_detail_weeks" />
-            <End Role="bvs_file_details" EntitySet="bvs_file_details" />
-          </AssociationSet>
-          <AssociationSet Name="FK_bvs_post_details_bvs_file_details" Association="BroadcastModel.FK_bvs_post_details_bvs_file_details">
-            <End Role="bvs_file_details" EntitySet="bvs_file_details" />
-            <End Role="bvs_post_details" EntitySet="bvs_post_details" />
-          </AssociationSet>
           <AssociationSet Name="FK_post_file_demos_post_files" Association="BroadcastModel.FK_post_file_demos_post_files">
             <End Role="post_files" EntitySet="post_files" />
             <End Role="post_file_demos" EntitySet="post_file_demos" />
@@ -6074,10 +6058,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <AssociationSet Name="FK_audience_audiences_audiences" Association="BroadcastModel.FK_audience_audiences_audiences">
             <End Role="audience" EntitySet="audiences" />
             <End Role="audience_audiences" EntitySet="audience_audiences" />
-          </AssociationSet>
-          <AssociationSet Name="FK_bvs_post_details_audiences" Association="BroadcastModel.FK_bvs_post_details_audiences">
-            <End Role="audience" EntitySet="audiences" />
-            <End Role="bvs_post_details" EntitySet="bvs_post_details" />
           </AssociationSet>
           <AssociationSet Name="FK_post_file_detail_impressions_audiences" Association="BroadcastModel.FK_post_file_detail_impressions_audiences">
             <End Role="audience" EntitySet="audiences" />
@@ -6138,11 +6118,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="proposal_version_detail_criteria_genres" EntitySet="proposal_version_detail_criteria_genres" />
           </AssociationSet>
           <EntitySet Name="rep_firms" EntityType="BroadcastModel.rep_firms" />
-          <EntitySet Name="bvs_map_types" EntityType="BroadcastModel.bvs_map_types" />
-          <AssociationSet Name="FK_bvs_maps_bvs_map_types" Association="BroadcastModel.FK_bvs_maps_bvs_map_types">
-            <End Role="bvs_map_types" EntitySet="bvs_map_types" />
-            <End Role="bvs_maps" EntitySet="bvs_maps" />
-          </AssociationSet>
           <EntitySet Name="schedule_audiences" EntityType="BroadcastModel.schedule_audiences" />
           <AssociationSet Name="FK_schedule_audiences_audiences" Association="BroadcastModel.FK_schedule_audiences_audiences">
             <End Role="audience" EntitySet="audiences" />
@@ -6164,10 +6139,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="station_inventory_manifest_generation" EntitySet="station_inventory_manifest_generation" />
           </AssociationSet>
           <EntitySet Name="spot_lengths" EntityType="BroadcastModel.spot_lengths" />
-          <AssociationSet Name="FK_bvs_file_details_spot_lengths" Association="BroadcastModel.FK_bvs_file_details_spot_lengths">
-            <End Role="spot_lengths" EntitySet="spot_lengths" />
-            <End Role="bvs_file_details" EntitySet="bvs_file_details" />
-          </AssociationSet>
           <AssociationSet Name="FK_post_file_details_spot_lengths" Association="BroadcastModel.FK_post_file_details_spot_lengths">
             <End Role="spot_lengths" EntitySet="spot_lengths" />
             <End Role="post_file_details" EntitySet="post_file_details" />
@@ -7046,6 +7017,35 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="inventory_summary_quarters" EntitySet="inventory_summary_quarters" />
             <End Role="inventory_summary_quarter_details" EntitySet="inventory_summary_quarter_details" />
           </AssociationSet>
+          <EntitySet Name="detection_file_details" EntityType="BroadcastModel.detection_file_details" />
+          <EntitySet Name="detection_files" EntityType="BroadcastModel.detection_files" />
+          <EntitySet Name="detection_map_types" EntityType="BroadcastModel.detection_map_types" />
+          <EntitySet Name="detection_maps" EntityType="BroadcastModel.detection_maps" />
+          <EntitySet Name="detection_post_details" EntityType="BroadcastModel.detection_post_details" />
+          <AssociationSet Name="FK_detection_post_details_audiences" Association="BroadcastModel.FK_detection_post_details_audiences">
+            <End Role="audience" EntitySet="audiences" />
+            <End Role="detection_post_details" EntitySet="detection_post_details" />
+          </AssociationSet>
+          <AssociationSet Name="FK_detection_file_details_schedule_detail_weeks" Association="BroadcastModel.FK_detection_file_details_schedule_detail_weeks">
+            <End Role="schedule_detail_weeks" EntitySet="schedule_detail_weeks" />
+            <End Role="detection_file_details" EntitySet="detection_file_details" />
+          </AssociationSet>
+          <AssociationSet Name="FK_detection_file_details_spot_lengths" Association="BroadcastModel.FK_detection_file_details_spot_lengths">
+            <End Role="spot_lengths" EntitySet="spot_lengths" />
+            <End Role="detection_file_details" EntitySet="detection_file_details" />
+          </AssociationSet>
+          <AssociationSet Name="FK_detection_file_detection_file_details" Association="BroadcastModel.FK_detection_file_detection_file_details">
+            <End Role="detection_files" EntitySet="detection_files" />
+            <End Role="detection_file_details" EntitySet="detection_file_details" />
+          </AssociationSet>
+          <AssociationSet Name="FK_detection_post_details_detection_file_details" Association="BroadcastModel.FK_detection_post_details_detection_file_details">
+            <End Role="detection_file_details" EntitySet="detection_file_details" />
+            <End Role="detection_post_details" EntitySet="detection_post_details" />
+          </AssociationSet>
+          <AssociationSet Name="FK_detection_maps_detection_map_types" Association="BroadcastModel.FK_detection_maps_detection_map_types">
+            <End Role="detection_map_types" EntitySet="detection_map_types" />
+            <End Role="detection_maps" EntitySet="detection_maps" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="audience_audiences">
           <Key>
@@ -7071,7 +7071,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="code" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
           <Property Name="name" Type="String" Nullable="false" MaxLength="127" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="audience_audiences" Relationship="BroadcastModel.FK_audience_audiences_audiences" FromRole="audience" ToRole="audience_audiences" />
-          <NavigationProperty Name="bvs_post_details" Relationship="BroadcastModel.FK_bvs_post_details_audiences" FromRole="audience" ToRole="bvs_post_details" />
           <NavigationProperty Name="post_file_detail_impressions" Relationship="BroadcastModel.FK_post_file_detail_impressions_audiences" FromRole="audience" ToRole="post_file_detail_impressions" />
           <NavigationProperty Name="schedule_detail_audiences" Relationship="BroadcastModel.FK_schedule_detail_audiences_audiences" FromRole="audience" ToRole="schedule_detail_audiences" />
           <NavigationProperty Name="proposal_version_audiences" Relationship="BroadcastModel.FK_proposal_version_audiences_audiences" FromRole="audience" ToRole="proposal_version_audiences" />
@@ -7091,77 +7090,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="plan_version_secondary_audiences" Relationship="BroadcastModel.FK_plan_secondary_audiences_audiences" FromRole="audience" ToRole="plan_version_secondary_audiences" />
           <NavigationProperty Name="plan_versions" Relationship="BroadcastModel.FK_plan_versions_audiences" FromRole="audience" ToRole="plan_versions" />
           <NavigationProperty Name="inventory_file_proprietary_header" Relationship="BroadcastModel.FK_inventory_file_proprietary_header_audiences" FromRole="audience" ToRole="inventory_file_proprietary_header" />
-        </EntityType>
-        <EntityType Name="bvs_file_details">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="bvs_file_id" Type="Int32" Nullable="false" />
-          <Property Name="rank" Type="Int32" Nullable="false" />
-          <Property Name="market" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
-          <Property Name="station" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="affiliate" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="date_aired" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="time_aired" Type="Int32" Nullable="false" />
-          <Property Name="program_name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="spot_length" Type="Int32" Nullable="false" />
-          <Property Name="spot_length_id" Type="Int32" />
-          <Property Name="isci" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
-          <Property Name="estimate_id" Type="Int32" Nullable="false" />
-          <Property Name="schedule_detail_week_id" Type="Int32" />
-          <Property Name="match_station" Type="Boolean" Nullable="false" />
-          <Property Name="match_program" Type="Boolean" Nullable="false" />
-          <Property Name="match_airtime" Type="Boolean" Nullable="false" />
-          <Property Name="match_isci" Type="Boolean" Nullable="false" />
-          <Property Name="status" Type="Int32" Nullable="false" />
-          <Property Name="nsi_date" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="nti_date" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="has_lead_in_schedule_matches" Type="Boolean" Nullable="false" />
-          <Property Name="linked_to_block" Type="Boolean" Nullable="false" />
-          <Property Name="linked_to_leadin" Type="Boolean" Nullable="false" />
-          <Property Name="match_spot_length" Type="Boolean" Nullable="false" />
-          <Property Name="advertiser" Type="String" MaxLength="63" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="bvs_files" Relationship="BroadcastModel.FK_bvs_file_bvs_file_details" FromRole="bvs_file_details" ToRole="bvs_files" />
-          <NavigationProperty Name="schedule_detail_weeks" Relationship="BroadcastModel.FK_bvs_file_details_schedule_detail_weeks" FromRole="bvs_file_details" ToRole="schedule_detail_weeks" />
-          <NavigationProperty Name="bvs_post_details" Relationship="BroadcastModel.FK_bvs_post_details_bvs_file_details" FromRole="bvs_file_details" ToRole="bvs_post_details" />
-          <NavigationProperty Name="spot_lengths" Relationship="BroadcastModel.FK_bvs_file_details_spot_lengths" FromRole="bvs_file_details" ToRole="spot_lengths" />
-        </EntityType>
-        <EntityType Name="bvs_files">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" Nullable="false" MaxLength="127" FixedLength="false" Unicode="false" />
-          <Property Name="start_date" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="end_date" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="file_hash" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
-          <Property Name="created_by" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
-          <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="bvs_file_details" Relationship="BroadcastModel.FK_bvs_file_bvs_file_details" FromRole="bvs_files" ToRole="bvs_file_details" />
-        </EntityType>
-        <EntityType Name="bvs_maps">
-          <Key>
-            <PropertyRef Name="bvs_map_type_id" />
-            <PropertyRef Name="bvs_value" />
-            <PropertyRef Name="schedule_value" />
-          </Key>
-          <Property Name="bvs_map_type_id" Type="Int32" Nullable="false" />
-          <Property Name="bvs_value" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="schedule_value" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="bvs_map_types" Relationship="BroadcastModel.FK_bvs_maps_bvs_map_types" FromRole="bvs_maps" ToRole="bvs_map_types" />
-        </EntityType>
-        <EntityType Name="bvs_post_details">
-          <Key>
-            <PropertyRef Name="bvs_file_detail_id" />
-            <PropertyRef Name="audience_id" />
-          </Key>
-          <Property Name="bvs_file_detail_id" Type="Int32" Nullable="false" />
-          <Property Name="audience_id" Type="Int32" Nullable="false" />
-          <Property Name="delivery" Type="Double" Nullable="false" />
-          <Property Name="audience_rank" Type="Int32" />
-          <NavigationProperty Name="bvs_file_details" Relationship="BroadcastModel.FK_bvs_post_details_bvs_file_details" FromRole="bvs_post_details" ToRole="bvs_file_details" />
-          <NavigationProperty Name="audience" Relationship="BroadcastModel.FK_bvs_post_details_audiences" FromRole="bvs_post_details" ToRole="audience" />
+          <NavigationProperty Name="detection_post_details" Relationship="BroadcastModel.FK_detection_post_details_audiences" FromRole="audience" ToRole="detection_post_details" />
         </EntityType>
         <EntityType Name="daypart">
           <Key>
@@ -7398,9 +7327,9 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="end_date" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="spots" Type="Int32" Nullable="false" />
           <Property Name="filled_spots" Type="Int16" Nullable="false" />
-          <NavigationProperty Name="bvs_file_details" Relationship="BroadcastModel.FK_bvs_file_details_schedule_detail_weeks" FromRole="schedule_detail_weeks" ToRole="bvs_file_details" />
           <NavigationProperty Name="schedule_details" Relationship="BroadcastModel.FK_schedule_detail_weeks_schedule_details" FromRole="schedule_detail_weeks" ToRole="schedule_details" />
           <NavigationProperty Name="media_weeks" Relationship="BroadcastModel.FK_schedule_detail_weeks_media_weeks" FromRole="schedule_detail_weeks" ToRole="media_weeks" />
+          <NavigationProperty Name="detection_file_details" Relationship="BroadcastModel.FK_detection_file_details_schedule_detail_weeks" FromRole="schedule_detail_weeks" ToRole="detection_file_details" />
         </EntityType>
         <EntityType Name="schedule_details">
           <Key>
@@ -7520,46 +7449,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="end_time" Type="Int32" Nullable="false" />
           <NavigationProperty Name="dayparts" Relationship="BroadcastModel.FK_dayparts_timespans" FromRole="timespan" ToRole="daypart" />
         </EntityType>
-        <Association Name="FK_bvs_file_bvs_file_details">
-          <End Type="BroadcastModel.bvs_files" Role="bvs_files" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="BroadcastModel.bvs_file_details" Role="bvs_file_details" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="bvs_files">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="bvs_file_details">
-              <PropertyRef Name="bvs_file_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_bvs_file_details_schedule_detail_weeks">
-          <End Type="BroadcastModel.schedule_detail_weeks" Role="schedule_detail_weeks" Multiplicity="0..1" />
-          <End Type="BroadcastModel.bvs_file_details" Role="bvs_file_details" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="schedule_detail_weeks">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="bvs_file_details">
-              <PropertyRef Name="schedule_detail_week_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_bvs_post_details_bvs_file_details">
-          <End Type="BroadcastModel.bvs_file_details" Role="bvs_file_details" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="BroadcastModel.bvs_post_details" Role="bvs_post_details" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="bvs_file_details">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="bvs_post_details">
-              <PropertyRef Name="bvs_file_detail_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_post_file_demos_post_files">
           <End Type="BroadcastModel.post_files" Role="post_files" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -7712,18 +7601,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Principal>
             <Dependent Role="audience_audiences">
               <PropertyRef Name="custom_audience_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_bvs_post_details_audiences">
-          <End Type="BroadcastModel.audience" Role="audience" Multiplicity="1" />
-          <End Type="BroadcastModel.bvs_post_details" Role="bvs_post_details" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="audience">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="bvs_post_details">
-              <PropertyRef Name="audience_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -7988,29 +7865,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="parent_name" Type="String" Nullable="false" MaxLength="127" FixedLength="false" Unicode="false" />
           <Property Name="team_name" Type="String" Nullable="false" MaxLength="127" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityType Name="bvs_map_types">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="display" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="true" />
-          <Property Name="version" Type="Int32" Nullable="false" />
-          <Property Name="modified_by" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
-          <Property Name="modified_date" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="bvs_maps" Relationship="BroadcastModel.FK_bvs_maps_bvs_map_types" FromRole="bvs_map_types" ToRole="bvs_maps" />
-        </EntityType>
-        <Association Name="FK_bvs_maps_bvs_map_types">
-          <End Type="BroadcastModel.bvs_map_types" Role="bvs_map_types" Multiplicity="1" />
-          <End Type="BroadcastModel.bvs_maps" Role="bvs_maps" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="bvs_map_types">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="bvs_maps">
-              <PropertyRef Name="bvs_map_type_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="schedule_audiences">
           <Key>
             <PropertyRef Name="id" />
@@ -8137,7 +7991,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="delivery_multiplier" Type="Double" Nullable="false" />
           <Property Name="order_by" Type="Int32" Nullable="false" />
           <Property Name="is_default" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="bvs_file_details" Relationship="BroadcastModel.FK_bvs_file_details_spot_lengths" FromRole="spot_lengths" ToRole="bvs_file_details" />
           <NavigationProperty Name="post_file_details" Relationship="BroadcastModel.FK_post_file_details_spot_lengths" FromRole="spot_lengths" ToRole="post_file_details" />
           <NavigationProperty Name="proposal_version_spot_length" Relationship="BroadcastModel.FK_proposal_version_spot_length_spot_lengths" FromRole="spot_lengths" ToRole="proposal_version_spot_length" />
           <NavigationProperty Name="schedule_details" Relationship="BroadcastModel.FK_schedule_details_spot_lengths" FromRole="spot_lengths" ToRole="schedule_details" />
@@ -8151,6 +8004,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="station_inventory_spot_snapshots" Relationship="BroadcastModel.FK_station_inventory_spot_snapshots_spot_lengths" FromRole="spot_lengths" ToRole="station_inventory_spot_snapshots" />
           <NavigationProperty Name="station_inventory_manifest_rates" Relationship="BroadcastModel.FK_station_inventory_manifest_rates_spot_lengths" FromRole="spot_lengths" ToRole="station_inventory_manifest_rates" />
           <NavigationProperty Name="plan_versions" Relationship="BroadcastModel.FK_plan_versions_spot_lengths" FromRole="spot_lengths" ToRole="plan_versions" />
+          <NavigationProperty Name="detection_file_details" Relationship="BroadcastModel.FK_detection_file_details_spot_lengths" FromRole="spot_lengths" ToRole="detection_file_details" />
         </EntityType>
         <EntityType Name="station_inventory_manifest_audiences">
           <Key>
@@ -8169,18 +8023,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="share_playback_type" Type="Int32" />
           <Property Name="hut_playback_type" Type="Int32" />
         </EntityType>
-        <Association Name="FK_bvs_file_details_spot_lengths">
-          <End Type="BroadcastModel.spot_lengths" Role="spot_lengths" Multiplicity="0..1" />
-          <End Type="BroadcastModel.bvs_file_details" Role="bvs_file_details" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="spot_lengths">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="bvs_file_details">
-              <PropertyRef Name="spot_length_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_post_file_details_spot_lengths">
           <End Type="BroadcastModel.spot_lengths" Role="spot_lengths" Multiplicity="1" />
           <End Type="BroadcastModel.post_file_details" Role="post_file_details" Multiplicity="*" />
@@ -12316,6 +12158,164 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="detection_file_details">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="detection_file_id" Type="Int32" Nullable="false" />
+          <Property Name="rank" Type="Int32" Nullable="false" />
+          <Property Name="market" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
+          <Property Name="station" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="affiliate" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="date_aired" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="time_aired" Type="Int32" Nullable="false" />
+          <Property Name="program_name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="spot_length" Type="Int32" Nullable="false" />
+          <Property Name="spot_length_id" Type="Int32" />
+          <Property Name="isci" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
+          <Property Name="estimate_id" Type="Int32" Nullable="false" />
+          <Property Name="schedule_detail_week_id" Type="Int32" />
+          <Property Name="match_station" Type="Boolean" Nullable="false" />
+          <Property Name="match_program" Type="Boolean" Nullable="false" />
+          <Property Name="match_airtime" Type="Boolean" Nullable="false" />
+          <Property Name="match_isci" Type="Boolean" Nullable="false" />
+          <Property Name="status" Type="Int32" Nullable="false" />
+          <Property Name="nsi_date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="nti_date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="has_lead_in_schedule_matches" Type="Boolean" Nullable="false" />
+          <Property Name="linked_to_block" Type="Boolean" Nullable="false" />
+          <Property Name="linked_to_leadin" Type="Boolean" Nullable="false" />
+          <Property Name="match_spot_length" Type="Boolean" Nullable="false" />
+          <Property Name="advertiser" Type="String" MaxLength="63" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="schedule_detail_weeks" Relationship="BroadcastModel.FK_detection_file_details_schedule_detail_weeks" FromRole="detection_file_details" ToRole="schedule_detail_weeks" />
+          <NavigationProperty Name="spot_lengths" Relationship="BroadcastModel.FK_detection_file_details_spot_lengths" FromRole="detection_file_details" ToRole="spot_lengths" />
+          <NavigationProperty Name="detection_files" Relationship="BroadcastModel.FK_detection_file_detection_file_details" FromRole="detection_file_details" ToRole="detection_files" />
+          <NavigationProperty Name="detection_post_details" Relationship="BroadcastModel.FK_detection_post_details_detection_file_details" FromRole="detection_file_details" ToRole="detection_post_details" />
+        </EntityType>
+        <EntityType Name="detection_files">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="127" FixedLength="false" Unicode="false" />
+          <Property Name="start_date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="end_date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="file_hash" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
+          <Property Name="created_by" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
+          <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="detection_file_details" Relationship="BroadcastModel.FK_detection_file_detection_file_details" FromRole="detection_files" ToRole="detection_file_details" />
+        </EntityType>
+        <EntityType Name="detection_map_types">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="display" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="true" />
+          <Property Name="version" Type="Int32" Nullable="false" />
+          <Property Name="modified_by" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
+          <Property Name="modified_date" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="detection_maps" Relationship="BroadcastModel.FK_detection_maps_detection_map_types" FromRole="detection_map_types" ToRole="detection_maps" />
+        </EntityType>
+        <EntityType Name="detection_maps">
+          <Key>
+            <PropertyRef Name="detection_map_type_id" />
+            <PropertyRef Name="detection_value" />
+            <PropertyRef Name="schedule_value" />
+          </Key>
+          <Property Name="detection_map_type_id" Type="Int32" Nullable="false" />
+          <Property Name="detection_value" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="schedule_value" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="detection_map_types" Relationship="BroadcastModel.FK_detection_maps_detection_map_types" FromRole="detection_maps" ToRole="detection_map_types" />
+        </EntityType>
+        <EntityType Name="detection_post_details">
+          <Key>
+            <PropertyRef Name="detection_file_detail_id" />
+            <PropertyRef Name="audience_id" />
+          </Key>
+          <Property Name="detection_file_detail_id" Type="Int32" Nullable="false" />
+          <Property Name="audience_id" Type="Int32" Nullable="false" />
+          <Property Name="delivery" Type="Double" Nullable="false" />
+          <Property Name="audience_rank" Type="Int32" />
+          <NavigationProperty Name="audience" Relationship="BroadcastModel.FK_detection_post_details_audiences" FromRole="detection_post_details" ToRole="audience" />
+          <NavigationProperty Name="detection_file_details" Relationship="BroadcastModel.FK_detection_post_details_detection_file_details" FromRole="detection_post_details" ToRole="detection_file_details" />
+        </EntityType>
+        <Association Name="FK_detection_post_details_audiences">
+          <End Type="BroadcastModel.audience" Role="audience" Multiplicity="1" />
+          <End Type="BroadcastModel.detection_post_details" Role="detection_post_details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="audience">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="detection_post_details">
+              <PropertyRef Name="audience_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_detection_file_details_schedule_detail_weeks">
+          <End Type="BroadcastModel.schedule_detail_weeks" Role="schedule_detail_weeks" Multiplicity="0..1" />
+          <End Type="BroadcastModel.detection_file_details" Role="detection_file_details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="schedule_detail_weeks">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="detection_file_details">
+              <PropertyRef Name="schedule_detail_week_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_detection_file_details_spot_lengths">
+          <End Type="BroadcastModel.spot_lengths" Role="spot_lengths" Multiplicity="0..1" />
+          <End Type="BroadcastModel.detection_file_details" Role="detection_file_details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="spot_lengths">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="detection_file_details">
+              <PropertyRef Name="spot_length_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_detection_file_detection_file_details">
+          <End Type="BroadcastModel.detection_files" Role="detection_files" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BroadcastModel.detection_file_details" Role="detection_file_details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="detection_files">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="detection_file_details">
+              <PropertyRef Name="detection_file_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_detection_post_details_detection_file_details">
+          <End Type="BroadcastModel.detection_file_details" Role="detection_file_details" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BroadcastModel.detection_post_details" Role="detection_post_details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="detection_file_details">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="detection_post_details">
+              <PropertyRef Name="detection_file_detail_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_detection_maps_detection_map_types">
+          <End Type="BroadcastModel.detection_map_types" Role="detection_map_types" Multiplicity="1" />
+          <End Type="BroadcastModel.detection_maps" Role="detection_maps" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="detection_map_types">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="detection_maps">
+              <PropertyRef Name="detection_map_type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -12342,70 +12342,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
                 <ScalarProperty Name="sub_category_code" ColumnName="sub_category_code" />
                 <ScalarProperty Name="category_code" ColumnName="category_code" />
                 <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="bvs_file_details">
-            <EntityTypeMapping TypeName="BroadcastModel.bvs_file_details">
-              <MappingFragment StoreEntitySet="bvs_file_details">
-                <ScalarProperty Name="advertiser" ColumnName="advertiser" />
-                <ScalarProperty Name="match_spot_length" ColumnName="match_spot_length" />
-                <ScalarProperty Name="linked_to_leadin" ColumnName="linked_to_leadin" />
-                <ScalarProperty Name="linked_to_block" ColumnName="linked_to_block" />
-                <ScalarProperty Name="has_lead_in_schedule_matches" ColumnName="has_lead_in_schedule_matches" />
-                <ScalarProperty Name="nti_date" ColumnName="nti_date" />
-                <ScalarProperty Name="nsi_date" ColumnName="nsi_date" />
-                <ScalarProperty Name="status" ColumnName="status" />
-                <ScalarProperty Name="match_isci" ColumnName="match_isci" />
-                <ScalarProperty Name="match_airtime" ColumnName="match_airtime" />
-                <ScalarProperty Name="match_program" ColumnName="match_program" />
-                <ScalarProperty Name="match_station" ColumnName="match_station" />
-                <ScalarProperty Name="schedule_detail_week_id" ColumnName="schedule_detail_week_id" />
-                <ScalarProperty Name="estimate_id" ColumnName="estimate_id" />
-                <ScalarProperty Name="isci" ColumnName="isci" />
-                <ScalarProperty Name="spot_length_id" ColumnName="spot_length_id" />
-                <ScalarProperty Name="spot_length" ColumnName="spot_length" />
-                <ScalarProperty Name="program_name" ColumnName="program_name" />
-                <ScalarProperty Name="time_aired" ColumnName="time_aired" />
-                <ScalarProperty Name="date_aired" ColumnName="date_aired" />
-                <ScalarProperty Name="affiliate" ColumnName="affiliate" />
-                <ScalarProperty Name="station" ColumnName="station" />
-                <ScalarProperty Name="market" ColumnName="market" />
-                <ScalarProperty Name="rank" ColumnName="rank" />
-                <ScalarProperty Name="bvs_file_id" ColumnName="bvs_file_id" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="bvs_files">
-            <EntityTypeMapping TypeName="BroadcastModel.bvs_files">
-              <MappingFragment StoreEntitySet="bvs_files">
-                <ScalarProperty Name="created_date" ColumnName="created_date" />
-                <ScalarProperty Name="created_by" ColumnName="created_by" />
-                <ScalarProperty Name="file_hash" ColumnName="file_hash" />
-                <ScalarProperty Name="end_date" ColumnName="end_date" />
-                <ScalarProperty Name="start_date" ColumnName="start_date" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="bvs_maps">
-            <EntityTypeMapping TypeName="BroadcastModel.bvs_maps">
-              <MappingFragment StoreEntitySet="bvs_maps">
-                <ScalarProperty Name="schedule_value" ColumnName="schedule_value" />
-                <ScalarProperty Name="bvs_value" ColumnName="bvs_value" />
-                <ScalarProperty Name="bvs_map_type_id" ColumnName="bvs_map_type_id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="bvs_post_details">
-            <EntityTypeMapping TypeName="BroadcastModel.bvs_post_details">
-              <MappingFragment StoreEntitySet="bvs_post_details">
-                <ScalarProperty Name="audience_rank" ColumnName="audience_rank" />
-                <ScalarProperty Name="delivery" ColumnName="delivery" />
-                <ScalarProperty Name="audience_id" ColumnName="audience_id" />
-                <ScalarProperty Name="bvs_file_detail_id" ColumnName="bvs_file_detail_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -12819,17 +12755,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
               <MappingFragment StoreEntitySet="rep_firms">
                 <ScalarProperty Name="team_name" ColumnName="team_name" />
                 <ScalarProperty Name="parent_name" ColumnName="parent_name" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="bvs_map_types">
-            <EntityTypeMapping TypeName="BroadcastModel.bvs_map_types">
-              <MappingFragment StoreEntitySet="bvs_map_types">
-                <ScalarProperty Name="modified_date" ColumnName="modified_date" />
-                <ScalarProperty Name="modified_by" ColumnName="modified_by" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="display" ColumnName="display" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -14391,6 +14316,81 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
                 <ScalarProperty Name="quarter_number" ColumnName="quarter_number" />
                 <ScalarProperty Name="inventory_source_id" ColumnName="inventory_source_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="detection_file_details">
+            <EntityTypeMapping TypeName="BroadcastModel.detection_file_details">
+              <MappingFragment StoreEntitySet="detection_file_details">
+                <ScalarProperty Name="advertiser" ColumnName="advertiser" />
+                <ScalarProperty Name="match_spot_length" ColumnName="match_spot_length" />
+                <ScalarProperty Name="linked_to_leadin" ColumnName="linked_to_leadin" />
+                <ScalarProperty Name="linked_to_block" ColumnName="linked_to_block" />
+                <ScalarProperty Name="has_lead_in_schedule_matches" ColumnName="has_lead_in_schedule_matches" />
+                <ScalarProperty Name="nti_date" ColumnName="nti_date" />
+                <ScalarProperty Name="nsi_date" ColumnName="nsi_date" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="match_isci" ColumnName="match_isci" />
+                <ScalarProperty Name="match_airtime" ColumnName="match_airtime" />
+                <ScalarProperty Name="match_program" ColumnName="match_program" />
+                <ScalarProperty Name="match_station" ColumnName="match_station" />
+                <ScalarProperty Name="schedule_detail_week_id" ColumnName="schedule_detail_week_id" />
+                <ScalarProperty Name="estimate_id" ColumnName="estimate_id" />
+                <ScalarProperty Name="isci" ColumnName="isci" />
+                <ScalarProperty Name="spot_length_id" ColumnName="spot_length_id" />
+                <ScalarProperty Name="spot_length" ColumnName="spot_length" />
+                <ScalarProperty Name="program_name" ColumnName="program_name" />
+                <ScalarProperty Name="time_aired" ColumnName="time_aired" />
+                <ScalarProperty Name="date_aired" ColumnName="date_aired" />
+                <ScalarProperty Name="affiliate" ColumnName="affiliate" />
+                <ScalarProperty Name="station" ColumnName="station" />
+                <ScalarProperty Name="market" ColumnName="market" />
+                <ScalarProperty Name="rank" ColumnName="rank" />
+                <ScalarProperty Name="detection_file_id" ColumnName="detection_file_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="detection_files">
+            <EntityTypeMapping TypeName="BroadcastModel.detection_files">
+              <MappingFragment StoreEntitySet="detection_files">
+                <ScalarProperty Name="created_date" ColumnName="created_date" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="file_hash" ColumnName="file_hash" />
+                <ScalarProperty Name="end_date" ColumnName="end_date" />
+                <ScalarProperty Name="start_date" ColumnName="start_date" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="detection_map_types">
+            <EntityTypeMapping TypeName="BroadcastModel.detection_map_types">
+              <MappingFragment StoreEntitySet="detection_map_types">
+                <ScalarProperty Name="modified_date" ColumnName="modified_date" />
+                <ScalarProperty Name="modified_by" ColumnName="modified_by" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="display" ColumnName="display" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="detection_maps">
+            <EntityTypeMapping TypeName="BroadcastModel.detection_maps">
+              <MappingFragment StoreEntitySet="detection_maps">
+                <ScalarProperty Name="schedule_value" ColumnName="schedule_value" />
+                <ScalarProperty Name="detection_value" ColumnName="detection_value" />
+                <ScalarProperty Name="detection_map_type_id" ColumnName="detection_map_type_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="detection_post_details">
+            <EntityTypeMapping TypeName="BroadcastModel.detection_post_details">
+              <MappingFragment StoreEntitySet="detection_post_details">
+                <ScalarProperty Name="audience_rank" ColumnName="audience_rank" />
+                <ScalarProperty Name="delivery" ColumnName="delivery" />
+                <ScalarProperty Name="audience_id" ColumnName="audience_id" />
+                <ScalarProperty Name="detection_file_detail_id" ColumnName="detection_file_detail_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -23,8 +23,8 @@
 
     //RENDERER related: also see global renderers as needed (in config.js)
 
-    //correspond to class and icon for BVS status in grid: 1 in spec, 2 needs attention , 3 officiall out of spec
-    bvsStatusStates: [
+    //correspond to class and icon for detected status in grid: 1 in spec, 2 needs attention , 3 officiall out of spec
+    detectedStatusStates: [
         ['status-green', 'thumbs-up', 'in spec'], // InSpec = 1
         ['status-warning', 'alert', 'out of spec'], // OutOfSpec = 2 
         ['status-red', 'thumbs-down', 'officially out of spec']
@@ -148,11 +148,11 @@
                         var display = '';
 
                         if (stat) {
-                            var states = me.bvsStatusStates[stat - 1];
-                            display = '<span title="' + states[2] + '" style="font-size: 14px;" id="bvs_status_item_' + record.recid + '" class="' + states[0] + ' glyphicon glyphicon-' + states[1] + '" aria-hidden="true"></span>';
+                            var states = me.detectedStatusStates[stat - 1];
+                            display = '<span title="' + states[2] + '" style="font-size: 14px;" id="detected_status_item_' + record.recid + '" class="' + states[0] + ' glyphicon glyphicon-' + states[1] + '" aria-hidden="true"></span>';
 
                             if (record.HasLeadInScheduleMatches && !record.LinkedToLeadin) {
-                                display += ' <span title="timeslot mismatch" style="font-size: 14px; display: inline;" id="bvs_status_item_' + record.recid + '" class="status-red fa fa-clock-o" aria-hidden="true"></span>';
+                                display += ' <span title="timeslot mismatch" style="font-size: 14px; display: inline;" id="detected_status_item_' + record.recid + '" class="status-red fa fa-clock-o" aria-hidden="true"></span>';
                             }
                         }
 
@@ -291,7 +291,7 @@
 
             columns: [
                 { field: 'ScheduleValue', caption: 'Schedule Value', size: '50%', sortable: true, searchable: true},
-                { field: 'BvsValue', caption: 'Bvs Value', size: '50%', sortable: true, searchable: true }
+                { field: 'DetectionValue', caption: 'Detection Value', size: '50%', sortable: true, searchable: true }
             ],
 
             sortData: [{ field: 'ScheduleValue', direction: 'asc' }]

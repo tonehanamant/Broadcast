@@ -16,11 +16,11 @@ namespace Services.Broadcast.BusinessEngines
 {
     public interface ITrackingEngine : IApplicationService
     {
-        void TrackBvsByEstimateId(int estimateId);
-        void TrackBvsByBvsDetails(List<int> bvsDetailIds, int estimateId);
-        void TrackBvsByBvsFileId(int bvsId);
-        BvsTrackingDetail AcceptScheduleLeadIn(AcceptScheduleLeadinRequest request);
-        BvsTrackingDetail AcceptScheduleBlock(AcceptScheduleBlockRequest request);
+        void TrackDetectionByEstimateId(int estimateId);
+        void TrackDetectionByDetectionDetails(List<int> bvsDetailIds, int estimateId);
+        void TrackDetectionByDetectionFileId(int bvsId);
+        DetectionTrackingDetail AcceptScheduleLeadIn(AcceptScheduleLeadinRequest request);
+        DetectionTrackingDetail AcceptScheduleBlock(AcceptScheduleBlockRequest request);
         ProgramMappingDto GetProgramMappingDto(int bvsDetailId);
     }
 
@@ -28,7 +28,7 @@ namespace Services.Broadcast.BusinessEngines
     {
         private readonly IDataRepositoryFactory _DataRepositoryFactory;
         private readonly IDaypartCache _DaypartCache;
-        private enum BvsMapTypes
+        private enum DetectionMapTypes
         {
             Station = 1
             , Program = 2
@@ -44,21 +44,21 @@ namespace Services.Broadcast.BusinessEngines
             _DaypartCache = daypartCache;
         }
 
-        public BvsTrackingDetail AcceptScheduleLeadIn(AcceptScheduleLeadinRequest request)
+        public DetectionTrackingDetail AcceptScheduleLeadIn(AcceptScheduleLeadinRequest request)
         {
             using (var trx = new TransactionScopeWrapper())
             {
                 var scheduleDetailWeek = _DataRepositoryFactory.GetDataRepository<IScheduleRepository>().GetScheduleDetailWeek(request.ScheduleDetailWeekId);
-                var bvsDetail = _DataRepositoryFactory.GetDataRepository<IBvsRepository>().GetBvsTrackingDetailById(request.BvsDetailId);
+                var detectionDetail = _DataRepositoryFactory.GetDataRepository<IDetectionRepository>().GetDetectionTrackingDetailById(request.DetectionDetailId);
 
-                bvsDetail.LinkedToLeadin = true;
-                bvsDetail.ScheduleDetailWeekId = request.ScheduleDetailWeekId;
-                bvsDetail.Status = TrackingStatus.InSpec;
+                detectionDetail.LinkedToLeadin = true;
+                detectionDetail.ScheduleDetailWeekId = request.ScheduleDetailWeekId;
+                detectionDetail.Status = TrackingStatus.InSpec;
 
-                _DataRepositoryFactory.GetDataRepository<IBvsRepository>().PersistBvsDetails(
-                    new List<BvsTrackingDetail>
+                _DataRepositoryFactory.GetDataRepository<IDetectionRepository>().PersistDetectionDetails(
+                    new List<DetectionTrackingDetail>
                     {
-                        bvsDetail
+                        detectionDetail
                     });
 
                 scheduleDetailWeek.FilledSpots++;
@@ -74,25 +74,25 @@ namespace Services.Broadcast.BusinessEngines
 
                 trx.Complete();
 
-                return bvsDetail;
+                return detectionDetail;
             }
         }
 
-        public BvsTrackingDetail AcceptScheduleBlock(AcceptScheduleBlockRequest request)
+        public DetectionTrackingDetail AcceptScheduleBlock(AcceptScheduleBlockRequest request)
         {
             using (var trx = new TransactionScopeWrapper())
             {
                 var scheduleDetailWeek = _DataRepositoryFactory.GetDataRepository<IScheduleRepository>().GetScheduleDetailWeek(request.ScheduleDetailWeekId);
-                var bvsDetail = _DataRepositoryFactory.GetDataRepository<IBvsRepository>().GetBvsTrackingDetailById(request.BvsDetailId);
+                var detectionDetail = _DataRepositoryFactory.GetDataRepository<IDetectionRepository>().GetDetectionTrackingDetailById(request.DetectionDetailId);
 
-                bvsDetail.LinkedToBlock = true;
-                bvsDetail.ScheduleDetailWeekId = request.ScheduleDetailWeekId;
-                bvsDetail.Status = TrackingStatus.InSpec;
+                detectionDetail.LinkedToBlock = true;
+                detectionDetail.ScheduleDetailWeekId = request.ScheduleDetailWeekId;
+                detectionDetail.Status = TrackingStatus.InSpec;
 
-                _DataRepositoryFactory.GetDataRepository<IBvsRepository>().PersistBvsDetails(
-                    new List<BvsTrackingDetail>
+                _DataRepositoryFactory.GetDataRepository<IDetectionRepository>().PersistDetectionDetails(
+                    new List<DetectionTrackingDetail>
                     {
-                        bvsDetail
+                        detectionDetail
                     });
 
                 scheduleDetailWeek.FilledSpots++;
@@ -108,35 +108,35 @@ namespace Services.Broadcast.BusinessEngines
 
                 trx.Complete();
 
-                return bvsDetail;
+                return detectionDetail;
             }
         }
 
-        public void TrackBvsByBvsFileId(int bvsId)
+        public void TrackDetectionByDetectionFileId(int bvsId)
         {
             //get the unique estimates with matching schedules from the BVS details
-            var estimateIds = _DataRepositoryFactory.GetDataRepository<IScheduleRepository>().GetScheduleEstimateIdsByBvsFile(bvsId);
+            var estimateIds = _DataRepositoryFactory.GetDataRepository<IScheduleRepository>().GetScheduleEstimateIdsByDetectionFile(bvsId);
             foreach (var estimateId in estimateIds)
             {
-                TrackBvsByEstimateId(estimateId);
+                TrackDetectionByEstimateId(estimateId);
             }
         }
 
-        public void TrackBvsByEstimateId(int estimateId)
+        public void TrackDetectionByEstimateId(int estimateId)
         {
             var scheduleItems = _DataRepositoryFactory.GetDataRepository<IScheduleRepository>().GetScheduleTrackingDetails(estimateId);
-            var bvsItems = _DataRepositoryFactory.GetDataRepository<IBvsRepository>().GetBvsTrackingDetailsByEstimateId(estimateId);
+            var bvsItems = _DataRepositoryFactory.GetDataRepository<IDetectionRepository>().GetDetectionTrackingDetailsByEstimateId(estimateId);
             _TrackBvsData(bvsItems, scheduleItems, estimateId);
         }
 
-        public void TrackBvsByBvsDetails(List<int> bvsDetailIds, int estimateId)
+        public void TrackDetectionByDetectionDetails(List<int> bvsDetailIds, int estimateId)
         {
             var scheduleItems = _DataRepositoryFactory.GetDataRepository<IScheduleRepository>().GetScheduleTrackingDetails(estimateId);
-            var bvsItems = _DataRepositoryFactory.GetDataRepository<IBvsRepository>().GetBvsTrackingDetailsByDetailIds(bvsDetailIds);
+            var bvsItems = _DataRepositoryFactory.GetDataRepository<IDetectionRepository>().GetDetectionTrackingDetailsByDetailIds(bvsDetailIds);
             _TrackBvsData(bvsItems, scheduleItems, estimateId);
         }
 
-        private void _TrackBvsData(List<BvsTrackingDetail> bvsDetails, List<ScheduleDetail> scheduleItems, int estimateId)
+        private void _TrackBvsData(List<DetectionTrackingDetail> bvsDetails, List<ScheduleDetail> scheduleItems, int estimateId)
         {
             var scheduleSpotTargets = scheduleItems.SelectMany(x => x.ToScheduleSpotTargets()).ToList();
             var bvsDetailsToProcess = bvsDetails.Where(x => !x.LinkedToBlock && !x.LinkedToLeadin).ToList();
@@ -270,15 +270,15 @@ namespace Services.Broadcast.BusinessEngines
             }
 
             _DataRepositoryFactory.GetDataRepository<IScheduleRepository>().PersistScheduleSpotTargets(scheduleSpotTargets);
-            _DataRepositoryFactory.GetDataRepository<IBvsRepository>().PersistBvsDetails(bvsDetails);
+            _DataRepositoryFactory.GetDataRepository<IDetectionRepository>().PersistDetectionDetails(bvsDetails);
         }
 
-        private bool _BvsDetailIsInSpec(BvsTrackingDetail bvsDetail)
+        private bool _BvsDetailIsInSpec(DetectionTrackingDetail bvsDetail)
         {
             return (bvsDetail.MatchAirtime && bvsDetail.MatchStation && bvsDetail.MatchIsci && bvsDetail.ScheduleDetailWeekId != null && bvsDetail.MatchSpotLength);
         }
 
-        private void _ClearTrackingInfo(List<BvsTrackingDetail> bvsDetails)
+        private void _ClearTrackingInfo(List<DetectionTrackingDetail> bvsDetails)
         {
             foreach (var bvsDetail in bvsDetails)
             {
@@ -326,7 +326,7 @@ namespace Services.Broadcast.BusinessEngines
         }
 
         private List<ScheduleSpotTarget> _FindDeliveryTimeMatch(
-                                                    BvsTrackingDetail bvsTrackingDetail, 
+                                                    DetectionTrackingDetail bvsTrackingDetail, 
                                                     List<ScheduleSpotTarget> scheduleDetails)
         {
             var ret = new List<ScheduleSpotTarget>();
@@ -400,7 +400,7 @@ namespace Services.Broadcast.BusinessEngines
         {
             if (_StationMaps == null)
             {
-                _StationMaps = _GetMapDictionary((int)BvsMapTypes.Station);
+                _StationMaps = _GetMapDictionary((int)DetectionMapTypes.Station);
             }
 
             List<string> mappedStation;
@@ -411,7 +411,7 @@ namespace Services.Broadcast.BusinessEngines
         {
             if (_ProgramMaps == null)
             {
-                _ProgramMaps = _GetMapDictionary((int)BvsMapTypes.Program);
+                _ProgramMaps = _GetMapDictionary((int)DetectionMapTypes.Program);
             }
             return _ProgramMaps.ContainsKey(affidavitProgram) ? _ProgramMaps[affidavitProgram].ToList() : new List<string>();
         }
@@ -423,15 +423,15 @@ namespace Services.Broadcast.BusinessEngines
 
             foreach (var mapValue in map.TrackingMapValues)
             {
-                if (!ret.ContainsKey(mapValue.BvsValue)) ret[mapValue.BvsValue] = new List<string>();
-                ret[mapValue.BvsValue].Add(mapValue.ScheduleValue);
+                if (!ret.ContainsKey(mapValue.DetectionValue)) ret[mapValue.DetectionValue] = new List<string>();
+                ret[mapValue.DetectionValue].Add(mapValue.ScheduleValue);
             }
             return ret;
         }
 
         public ProgramMappingDto GetProgramMappingDto(int bvsDetailId)
         {
-            var bvsDetail = _DataRepositoryFactory.GetDataRepository<IBvsRepository>().GetBvsTrackingDetailById(bvsDetailId);
+            var bvsDetail = _DataRepositoryFactory.GetDataRepository<IDetectionRepository>().GetDetectionTrackingDetailById(bvsDetailId);
 
             if (string.IsNullOrWhiteSpace(bvsDetail.Program))
                 return new ProgramMappingDto();
@@ -446,7 +446,7 @@ namespace Services.Broadcast.BusinessEngines
 
             return new ProgramMappingDto
             {
-                BvsProgramName = bvsDetail.Program,
+                DetectionProgramName = bvsDetail.Program,
                 PrimaryScheduleMatches = potentialMatches.Where(x => !x.IsLeadInMatch).Select(
                     x => new ScheduleProgramMappingDto
                     {

@@ -68,11 +68,11 @@ namespace Services.Broadcast.Repositories
 
                     var scheduleDetailWeeks = schedule.schedule_details.SelectMany(sd => sd.schedule_detail_weeks).ToList();
 
-                    var bvsFileDetails = context.bvs_file_details
-                        .Include(f => f.bvs_post_details)
+                    var bvsFileDetails = context.detection_file_details
+                        .Include(f => f.detection_post_details)
                         .Where(bfd => bfd.estimate_id == schedule.estimate_id).ToList();
 
-                    var bvsPostDetails = bvsFileDetails.SelectMany(fd => fd.bvs_post_details).ToList();
+                    var bvsPostDetails = bvsFileDetails.SelectMany(fd => fd.detection_post_details).ToList();
                     var stationNames = scheduleDetails.Select(d => _StationProcessingEngine.StripStationSuffix(d.network)).Distinct().ToList();
                     var stationToAffiliateDict =
                         context.stations.Where(s => stationNames.Contains(s.legacy_call_letters))

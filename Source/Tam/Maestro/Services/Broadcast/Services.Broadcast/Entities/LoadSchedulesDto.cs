@@ -5,7 +5,7 @@ using Tam.Maestro.Data.Entities.DataTransferObjects;
 namespace Services.Broadcast.Entities
 {
 
-    public class BvsLoadDto
+    public class DetectionLoadDto
     {
         public List<Quarter> Quarters { get; set; }
         public Quarter CurrentQuarter { get; set; }
@@ -16,7 +16,7 @@ namespace Services.Broadcast.Entities
         public List<LookupDto> Markets { get; set; }
         public List<LookupDto> Audiences { get; set; }
 
-        public BvsLoadDto()
+        public DetectionLoadDto()
         {
             Quarters = new List<Quarter>();
             CurrentQuarter = new Quarter();

@@ -4,13 +4,9 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="25447c09bb944d43b4309b552b8ef2c5" Name="Diagram1" ZoomLevel="90">
+      <Diagram DiagramId="25447c09bb944d43b4309b552b8ef2c5" Name="Diagram1" ZoomLevel="78">
         <EntityTypeShape EntityType="BroadcastModel.audience_audiences" Width="1.5" PointX="0.75" PointY="2.75" />
         <EntityTypeShape EntityType="BroadcastModel.audience" Width="1.5" PointX="2.75" PointY="0.5" />
-        <EntityTypeShape EntityType="BroadcastModel.bvs_file_details" Width="1.5" PointX="15" PointY="35" />
-        <EntityTypeShape EntityType="BroadcastModel.bvs_files" Width="1.5" PointX="12.75" PointY="33" />
-        <EntityTypeShape EntityType="BroadcastModel.bvs_maps" Width="1.5" PointX="18" PointY="6.625" />
-        <EntityTypeShape EntityType="BroadcastModel.bvs_post_details" Width="1.5" PointX="17.25" PointY="37.375" />
         <EntityTypeShape EntityType="BroadcastModel.daypart" Width="1.5" PointX="13.75" PointY="2.5" />
         <EntityTypeShape EntityType="BroadcastModel.day" Width="1.5" PointX="16" PointY="2.5" />
         <EntityTypeShape EntityType="BroadcastModel.market_dma_map" Width="1.5" PointX="5.75" PointY="4.5" />
@@ -35,9 +31,6 @@
         <EntityTypeShape EntityType="BroadcastModel.station_contacts" Width="1.5" PointX="10.5" PointY="7.25" />
         <EntityTypeShape EntityType="BroadcastModel.system_component_parameters" Width="1.5" PointX="20.75" PointY="2.25" />
         <EntityTypeShape EntityType="BroadcastModel.timespan" Width="1.5" PointX="20.75" PointY="5.25" />
-        <AssociationConnector Association="BroadcastModel.FK_bvs_file_bvs_file_details" />
-        <AssociationConnector Association="BroadcastModel.FK_bvs_file_details_schedule_detail_weeks" />
-        <AssociationConnector Association="BroadcastModel.FK_bvs_post_details_bvs_file_details" />
         <AssociationConnector Association="BroadcastModel.FK_post_file_demos_post_files" />
         <AssociationConnector Association="BroadcastModel.FK_post_file_details_impressions_post_file_details" />
         <AssociationConnector Association="BroadcastModel.FK_post_file_details_post_files" />
@@ -49,7 +42,6 @@
         <AssociationConnector Association="BroadcastModel.daypart_days" />
         <EntityTypeShape EntityType="BroadcastModel.vw_ccc_daypart" Width="1.5" PointX="21.375" PointY="20.75" />
         <AssociationConnector Association="BroadcastModel.FK_audience_audiences_audiences" />
-        <AssociationConnector Association="BroadcastModel.FK_bvs_post_details_audiences" />
         <AssociationConnector Association="BroadcastModel.FK_post_file_detail_impressions_audiences" />
         <AssociationConnector Association="BroadcastModel.FK_schedule_detail_audiences_audiences" />
         <AssociationConnector Association="BroadcastModel.FK_schedule_details_dayparts" />
@@ -70,8 +62,6 @@
         <EntityTypeShape EntityType="BroadcastModel.proposal_version_detail_criteria_genres" Width="1.5" PointX="9.75" PointY="19.5" />
         <AssociationConnector Association="BroadcastModel.FK_proposal_version_detail_criteria_genres_genres" />
         <EntityTypeShape EntityType="BroadcastModel.rep_firms" Width="1.5" PointX="18.5" PointY="2.375" />
-        <EntityTypeShape EntityType="BroadcastModel.bvs_map_types" Width="1.5" PointX="16" PointY="6.5" />
-        <AssociationConnector Association="BroadcastModel.FK_bvs_maps_bvs_map_types" />
         <EntityTypeShape EntityType="BroadcastModel.schedule_audiences" Width="1.5" PointX="5.875" PointY="39" />
         <AssociationConnector Association="BroadcastModel.FK_schedule_audiences_audiences" />
         <AssociationConnector Association="BroadcastModel.FK_schedule_audiences_schedule" />
@@ -81,7 +71,6 @@
         <EntityTypeShape EntityType="BroadcastModel.station_inventory_manifest_generation" Width="1.5" PointX="0.5" PointY="32.375" />
         <AssociationConnector Association="BroadcastModel.FK_station_inventory_manifest_generation_media_weeks" />
         <EntityTypeShape EntityType="BroadcastModel.spot_lengths" Width="1.5" PointX="0.75" PointY="22.625" />
-        <AssociationConnector Association="BroadcastModel.FK_bvs_file_details_spot_lengths" />
         <AssociationConnector Association="BroadcastModel.FK_post_file_details_spot_lengths" />
         <AssociationConnector Association="BroadcastModel.FK_proposal_version_spot_length_spot_lengths" />
         <AssociationConnector Association="BroadcastModel.FK_schedule_details_spot_lengths" />
@@ -292,7 +281,7 @@
         <EntityTypeShape EntityType="BroadcastModel.plan_version_available_markets" Width="1.5" PointX="32.5" PointY="16.5" />
         <EntityTypeShape EntityType="BroadcastModel.plan_version_blackout_markets" Width="1.5" PointX="33.5" PointY="20.625" />
         <EntityTypeShape EntityType="BroadcastModel.plan_version_flight_hiatus_days" Width="1.5" PointX="19" PointY="58.125" />
-        <EntityTypeShape EntityType="BroadcastModel.plan_version_secondary_audiences" Width="1.5" PointX="16.125" PointY="6.625" />
+        <EntityTypeShape EntityType="BroadcastModel.plan_version_secondary_audiences" Width="1.5" PointX="16.125" PointY="7.5" />
         <EntityTypeShape EntityType="BroadcastModel.plan_version_summaries" Width="1.5" PointX="14.625" PointY="59.875" />
         <EntityTypeShape EntityType="BroadcastModel.plan_version_weeks" Width="1.5" PointX="18.875" PointY="6.75" />
         <EntityTypeShape EntityType="BroadcastModel.plan" Width="1.5" PointX="3" PointY="33.875" />
@@ -399,6 +388,17 @@
         <AssociationConnector Association="BroadcastModel.FK_plan_version_pricing_parameters_inventory_source_type_percentages_plan_version_pricing_parameters" />
         <EntityTypeShape EntityType="BroadcastModel.plan_version_pricing_inventory_source_type_percentages" Width="1.5" PointX="16.75" PointY="64.5" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_pricing_inventory_source_type_percentages_plan_version_pricing_executions" />
+        <EntityTypeShape EntityType="BroadcastModel.detection_file_details" Width="1.5" PointX="29" PointY="42.625" />
+        <EntityTypeShape EntityType="BroadcastModel.detection_files" Width="1.5" PointX="26.75" PointY="45.75" />
+        <EntityTypeShape EntityType="BroadcastModel.detection_map_types" Width="1.5" PointX="30.375" PointY="7.5" />
+        <EntityTypeShape EntityType="BroadcastModel.detection_maps" Width="1.5" PointX="32.625" PointY="7.75" />
+        <EntityTypeShape EntityType="BroadcastModel.detection_post_details" Width="1.5" PointX="34.25" PointY="29.125" />
+        <AssociationConnector Association="BroadcastModel.FK_detection_post_details_audiences" />
+        <AssociationConnector Association="BroadcastModel.FK_detection_file_details_schedule_detail_weeks" />
+        <AssociationConnector Association="BroadcastModel.FK_detection_file_details_spot_lengths" />
+        <AssociationConnector Association="BroadcastModel.FK_detection_file_detection_file_details" />
+        <AssociationConnector Association="BroadcastModel.FK_detection_post_details_detection_file_details" />
+        <AssociationConnector Association="BroadcastModel.FK_detection_maps_detection_map_types" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

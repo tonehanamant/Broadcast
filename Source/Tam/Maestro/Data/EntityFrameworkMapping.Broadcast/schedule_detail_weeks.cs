@@ -16,7 +16,7 @@ namespace EntityFrameworkMapping.Broadcast
     {
         public schedule_detail_weeks()
         {
-            this.bvs_file_details = new HashSet<bvs_file_details>();
+            this.detection_file_details = new HashSet<detection_file_details>();
         }
     
         public int id { get; set; }
@@ -27,8 +27,8 @@ namespace EntityFrameworkMapping.Broadcast
         public int spots { get; set; }
         public short filled_spots { get; set; }
     
-        public virtual ICollection<bvs_file_details> bvs_file_details { get; set; }
         public virtual schedule_details schedule_details { get; set; }
         public virtual media_weeks media_weeks { get; set; }
+        public virtual ICollection<detection_file_details> detection_file_details { get; set; }
     }
 }

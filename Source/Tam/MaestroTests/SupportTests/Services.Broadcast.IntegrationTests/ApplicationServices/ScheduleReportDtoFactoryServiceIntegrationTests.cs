@@ -282,7 +282,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             bvsRequest.Files.Add(new FileRequest() {FileName = fileName, StreamData = stream});
             ITrackerService sut = IntegrationTestApplicationServiceFactory.GetApplicationService<ITrackerService>();
 
-            sut.SaveBvsFiles(bvsRequest, "LoadBvsFile User");
+            sut.SaveDetectionFiles(bvsRequest, "LoadBvsFile User");
         }
 
         private int _CreateBlankScheduleWithRelatedSchedules()
@@ -405,11 +405,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 new IsciDto {House = "CCCDDD", Client = "cl_CCCDDD"}
             };
             schedule.PostType = PostingTypeEnum.NTI;
-            schedule.Audiences = new List<BvsTrackingAudience>
+            schedule.Audiences = new List<DetectionTrackingAudience>
             {
-                new BvsTrackingAudience() {AudienceId = 33, Rank = 0}, 
-                new BvsTrackingAudience() {AudienceId = 61, Rank = 1},
-                new BvsTrackingAudience() {AudienceId = 53, Rank = 3}
+                new DetectionTrackingAudience() {AudienceId = 33, Rank = 0}, 
+                new DetectionTrackingAudience() {AudienceId = 61, Rank = 1},
+                new DetectionTrackingAudience() {AudienceId = 53, Rank = 3}
             };
             schedule.StartDate = new DateTime(2017, 1, 20);
             schedule.EndDate = new DateTime(2018, 1, 20);
@@ -598,7 +598,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 bvsRequest.Files.Add(new FileRequest() { FileName = fileName, StreamData = stream });
                 ITrackerService trackerService = IntegrationTestApplicationServiceFactory.GetApplicationService<ITrackerService>();
 
-                trackerService.SaveBvsFiles(bvsRequest, "LoadBvsFile User");
+                trackerService.SaveDetectionFiles(bvsRequest, "LoadBvsFile User");
 
                 ITrackerService sut = IntegrationTestApplicationServiceFactory.GetApplicationService<ITrackerService>();
 

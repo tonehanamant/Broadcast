@@ -339,7 +339,7 @@ namespace Services.Broadcast.Converters
         {
             var parser = new TextFieldParser(rawStream);
             if (parser.EndOfData)
-                throw new ExtractBvsExceptionEmptyFiles();
+                throw new ExtractDetectionExceptionEmptyFiles();
 
             parser.SetDelimiters(new string[] { "," });
 

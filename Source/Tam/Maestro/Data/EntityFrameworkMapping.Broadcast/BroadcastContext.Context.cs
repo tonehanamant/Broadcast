@@ -27,10 +27,6 @@ namespace EntityFrameworkMapping.Broadcast
     
         public virtual DbSet<audience_audiences> audience_audiences { get; set; }
         public virtual DbSet<audience> audiences { get; set; }
-        public virtual DbSet<bvs_file_details> bvs_file_details { get; set; }
-        public virtual DbSet<bvs_files> bvs_files { get; set; }
-        public virtual DbSet<bvs_maps> bvs_maps { get; set; }
-        public virtual DbSet<bvs_post_details> bvs_post_details { get; set; }
         public virtual DbSet<daypart> dayparts { get; set; }
         public virtual DbSet<day> days { get; set; }
         public virtual DbSet<market_dma_map> market_dma_map { get; set; }
@@ -63,7 +59,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<proposal_version_detail_criteria_cpm> proposal_version_detail_criteria_cpm { get; set; }
         public virtual DbSet<proposal_version_detail_criteria_genres> proposal_version_detail_criteria_genres { get; set; }
         public virtual DbSet<rep_firms> rep_firms { get; set; }
-        public virtual DbSet<bvs_map_types> bvs_map_types { get; set; }
         public virtual DbSet<schedule_audiences> schedule_audiences { get; set; }
         public virtual DbSet<inventory_sources> inventory_sources { get; set; }
         public virtual DbSet<station_inventory_group> station_inventory_group { get; set; }
@@ -175,5 +170,10 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<daypart_defaults> daypart_defaults { get; set; }
         public virtual DbSet<plan_version_pricing_parameters_inventory_source_type_percentages> plan_version_pricing_parameters_inventory_source_type_percentages { get; set; }
         public virtual DbSet<plan_version_pricing_inventory_source_type_percentages> plan_version_pricing_inventory_source_type_percentages { get; set; }
+        public virtual DbSet<detection_file_details> detection_file_details { get; set; }
+        public virtual DbSet<detection_files> detection_files { get; set; }
+        public virtual DbSet<detection_map_types> detection_map_types { get; set; }
+        public virtual DbSet<detection_maps> detection_maps { get; set; }
+        public virtual DbSet<detection_post_details> detection_post_details { get; set; }
     }
 }

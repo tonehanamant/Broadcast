@@ -159,9 +159,9 @@ var TrackerMainController = BaseController.extend({
         this.refreshApiLoadSchedules();
     },
 
-    //upload BVS file
+    //upload file
     apiUploadBVSFile: function (bvsFileRequest) {
-        var url = baseUrl + 'api/Tracker/UploadBvsFile';
+        var url = baseUrl + 'api/Tracker/UploadDetectionFile';
         var jsonObj = JSON.stringify(bvsFileRequest);
         httpService.post(url,
             this.onApiUploadBVSFile.bind(this),
@@ -171,13 +171,13 @@ var TrackerMainController = BaseController.extend({
                 $ViewElement: $('#schedule_view'),
                 ErrorMessage: 'Error Uploading File',
                 TitleErrorMessage: 'File Not Uploaded',
-                StatusMessage: 'Upload BVS File'
+                StatusMessage: 'Upload Detected File'
             });
     },
 
     //handle BVS upload return
     onApiUploadBVSFile: function (data) {
-        util.notify("BVS File Uploaded");
+        util.notify("Detected File Uploaded");
         this.refreshApiLoadSchedules();
     },
 
@@ -354,7 +354,7 @@ var TrackerMainController = BaseController.extend({
     //body: schedule and bvs vals from rec
     apiDeleteMapping: function (type, rec, callback) {
         //url and params; callback
-        var jsonObj = JSON.stringify({ BvsValue: rec.BvsValue || '', ScheduleValue: rec.ScheduleValue || '' });
+        var jsonObj = JSON.stringify({ DetectionValue: rec.BvsValue || '', ScheduleValue: rec.ScheduleValue || '' });
         var url = baseUrl + 'api/Tracker/Mappings/' + type + '/Delete';
         httpService.post(url,
             callback.bind(this),//needs to pass back id and type (todo: check callee)
@@ -409,7 +409,7 @@ var TrackerMainController = BaseController.extend({
     //call the API to load the list of files
     apiBvsFileListing: function () {
         var self = this;
-        var url = baseUrl + 'api/tracker/BvsFileSummaries';
+        var url = baseUrl + 'api/tracker/DetectionFileSummaries';
 
         httpService.get(url, function (bvsFilesData) {
             self.view.onBvsFileListingSet(bvsFilesData);
@@ -417,9 +417,9 @@ var TrackerMainController = BaseController.extend({
             null,
             {
                 $ViewElement: $('#schedule_view'),
-                ErrorMessage: 'BVS Files',
-                TitleErrorMessage: 'No BVS File data returned',
-                StatusMessage: 'BVS Files'
+                ErrorMessage: 'Detected Files',
+                TitleErrorMessage: 'No Detected File data returned',
+                StatusMessage: 'Detected Files'
             });
     },
 
@@ -441,7 +441,7 @@ var TrackerMainController = BaseController.extend({
 
     apiDeleteBvsFile: function (rec, callback) {
         var jsonObj = JSON.stringify(rec);
-        var url = baseUrl + 'api/Tracker/BvsFile/' + rec.Id;
+        var url = baseUrl + 'api/Tracker/DetectionFile/' + rec.Id;
         httpService.remove(url,
             callback.bind(this),
             null,

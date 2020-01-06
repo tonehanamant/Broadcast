@@ -909,6 +909,73 @@ BEGIN
 END
 /*************************************** END PRI-19211 *****************************************************/
 
+/*************************************** START PRI-15810 *****************************************************/
+IF OBJECT_ID('dbo.bvs_file_details') IS NOT NULL
+BEGIN
+	-- table name
+	EXEC sp_rename 'dbo.bvs_file_details', 'detection_file_details'
+	-- column names
+	EXEC sp_rename 'dbo.detection_file_details.bvs_file_id', 'detection_file_id', 'COLUMN'
+	-- key names
+	EXEC sp_rename 'dbo.detection_file_details.PK_bvs_file_details', 'PK_detection_file_details'
+	EXEC sp_rename 'dbo.FK_bvs_file_bvs_file_details', 'FK_detection_file_detection_file_details'
+	EXEC sp_rename 'dbo.FK_bvs_file_details_schedule_detail_weeks', 'FK_detection_file_details_schedule_detail_weeks'
+	EXEC sp_rename 'dbo.FK_bvs_file_details_spot_lengths', 'FK_detection_file_details_spot_lengths'
+	-- constraint names
+	EXEC sp_rename 'dbo.DF_bvs_file_details_has_lead_in_schedule_matches', 'DF_detection_file_details_has_lead_in_schedule_matches'
+	EXEC sp_rename 'dbo.DF_bvs_file_details_linked_to_block', 'DF_detection_file_details_linked_to_block'
+	EXEC sp_rename 'dbo.DF_bvs_file_details_linked_to_leadin', 'DF_detection_file_details_linked_to_leadin'
+	EXEC sp_rename 'dbo.DF_bvs_file_details_match_airtime', 'DF_detection_file_details_match_airtime'
+	EXEC sp_rename 'dbo.DF_bvs_file_details_match_isci', 'DF_detection_file_details_match_isci'
+	EXEC sp_rename 'dbo.DF_bvs_file_details_match_program', 'DF_detection_file_details_match_program'
+	EXEC sp_rename 'dbo.DF_bvs_file_details_match_spot_length', 'DF_detection_file_details_match_spot_length'
+	EXEC sp_rename 'dbo.DF_bvs_file_details_match_station', 'DF_detection_file_details_match_station'
+	EXEC sp_rename 'dbo.DF_bvs_file_details_status', 'DF_detection_file_details_status'
+END
+
+IF OBJECT_ID('dbo.bvs_files') IS NOT NULL
+BEGIN
+	-- table name
+	EXEC sp_rename 'dbo.bvs_files', 'detection_files'
+	-- key names
+	EXEC sp_rename 'dbo.detection_files.PK_bvs_files', 'PK_detection_files'
+END
+
+IF OBJECT_ID('dbo.bvs_map_types') IS NOT NULL
+BEGIN
+	-- table name
+	EXEC sp_rename 'dbo.bvs_map_types', 'detection_map_types'
+	-- key names
+	EXEC sp_rename 'dbo.detection_map_types.PK_bvs_map_types', 'PK_detection_map_types'
+	-- constraint names
+	EXEC sp_rename 'dbo.DF_bvs_map_types_version', 'DF_detection_map_types_version'
+END
+
+IF OBJECT_ID('dbo.bvs_maps') IS NOT NULL
+BEGIN
+	-- table name
+	EXEC sp_rename 'dbo.bvs_maps', 'detection_maps'
+	-- column names
+	EXEC sp_rename 'dbo.detection_maps.bvs_map_type_id', 'detection_map_type_id', 'COLUMN'
+	EXEC sp_rename 'dbo.detection_maps.bvs_value', 'detection_value', 'COLUMN'
+	-- key names
+	EXEC sp_rename 'dbo.detection_maps.PK_bvs_maps', 'PK_detection_maps'
+	EXEC sp_rename 'dbo.FK_bvs_maps_bvs_map_types', 'FK_detection_maps_detection_map_types'
+END
+
+IF OBJECT_ID('dbo.bvs_post_details') IS NOT NULL
+BEGIN
+	-- table name
+	EXEC sp_rename 'dbo.bvs_post_details', 'detection_post_details'	
+	-- column name
+	EXEC sp_rename 'dbo.detection_post_details.bvs_file_detail_id', 'detection_file_detail_id', 'COLUMN'
+	-- key names
+	EXEC sp_rename 'dbo.detection_post_details.PK_bvs_post_details', 'PK_detection_post_details'
+	EXEC sp_rename 'dbo.FK_bvs_post_details_audiences', 'FK_detection_post_details_audiences'
+	EXEC sp_rename 'dbo.FK_bvs_post_details_bvs_file_details', 'FK_detection_post_details_detection_file_details'
+END
+/*************************************** END PRI-15810 *****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

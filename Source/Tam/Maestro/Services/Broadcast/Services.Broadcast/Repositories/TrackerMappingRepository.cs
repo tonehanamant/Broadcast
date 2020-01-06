@@ -13,7 +13,7 @@ namespace Services.Broadcast.Repositories
 {
     public interface ITrackerMappingRepository : IDataRepository
     {
-        BvsMap GetMap(int mapId);
+        DetectionMap GetMap(int mapId);
         void SaveScrubbingMapping(ScrubbingMap map, TrackingMapType mapType);
         void DeleteMapping(string bvsValue, string scheduleValue, TrackingMapType mappingType);
     }
@@ -23,21 +23,21 @@ namespace Services.Broadcast.Repositories
             ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient)
             : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
 
-        public BvsMap GetMap(int mapId)
+        public DetectionMap GetMap(int mapId)
         {
             return _InReadUncommitedTransaction(
                      context =>
                      {
-                         var map = new BvsMap();
+                         var map = new DetectionMap();
 
-                         var mapTypeQuery = (from x in context.bvs_map_types
+                         var mapTypeQuery = (from x in context.detection_map_types
                                              where x.id == mapId
                                              select x);
                          var mapType = mapTypeQuery.Single();
 
                          var query = (
-                             from x in context.bvs_maps
-                             where x.bvs_map_type_id == mapId
+                             from x in context.detection_maps
+                             where x.detection_map_type_id == mapId
                              select x);
 
                          map.Id = mapId;
@@ -46,7 +46,7 @@ namespace Services.Broadcast.Repositories
                          map.TrackingMapValues = query.ToList().Select(
                              x => new TrackingMapValue
                              {
-                                 BvsValue = x.bvs_value,
+                                 DetectionValue = x.detection_value,
                                  ScheduleValue = x.schedule_value
                              }).ToList();
                          return map;
@@ -58,11 +58,11 @@ namespace Services.Broadcast.Repositories
             _InReadUncommitedTransaction(
                 context =>
                 {
-                    var bvsMap = new bvs_maps();
-                    bvsMap.bvs_map_type_id = (int)mapType;
-                    bvsMap.bvs_value = mapType == TrackingMapType.Program ? map.BvsProgram : map.BvsStation ;
+                    var bvsMap = new detection_maps();
+                    bvsMap.detection_map_type_id = (int)mapType;
+                    bvsMap.detection_value = mapType == TrackingMapType.Program ? map.BvsProgram : map.BvsStation ;
                     bvsMap.schedule_value = mapType == TrackingMapType.Program ? map.ScheduleProgram : map.ScheduleStation;
-                    context.bvs_maps.Add(bvsMap);
+                    context.detection_maps.Add(bvsMap);
 
                     try
                     {
@@ -86,14 +86,14 @@ namespace Services.Broadcast.Repositories
                 context =>
                 {
                     var bvsMap =
-                        context.bvs_maps.Where(
+                        context.detection_maps.Where(
                             m =>
-                                m.bvs_map_type_id == (int) mappingType &&
-                                m.bvs_value.Equals(bvsValue, StringComparison.InvariantCultureIgnoreCase) &&
+                                m.detection_map_type_id == (int) mappingType &&
+                                m.detection_value.Equals(bvsValue, StringComparison.InvariantCultureIgnoreCase) &&
                                 m.schedule_value.Equals(scheduleValue, StringComparison.InvariantCultureIgnoreCase))
                             .Single(
                                 string.Format("Unable to find mapping to delete for {0}, {1}", bvsValue, scheduleValue));
-                    context.bvs_maps.Remove(bvsMap);
+                    context.detection_maps.Remove(bvsMap);
                     context.SaveChanges();
 
                 });

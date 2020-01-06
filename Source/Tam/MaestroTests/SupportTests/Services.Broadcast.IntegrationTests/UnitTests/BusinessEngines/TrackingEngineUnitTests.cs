@@ -17,14 +17,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
         private TrackingEngine _TrackingEngine;
         private Mock<IDataRepositoryFactory> _DataRepositoryFactoryMock;
         private Mock<IDaypartCache> _DaypartCacheMock;
-        private Mock<IBvsRepository> _BvsRepositoryMock;
+        private Mock<IDetectionRepository> _DetectionRepositoryMock;
 
         [SetUp]
         public void Setup()
         {
             _DataRepositoryFactoryMock = new Mock<IDataRepositoryFactory>();
-            _BvsRepositoryMock = new Mock<IBvsRepository>();
-            _DataRepositoryFactoryMock.Setup(s => s.GetDataRepository<IBvsRepository>()).Returns(_BvsRepositoryMock.Object);
+            _DetectionRepositoryMock = new Mock<IDetectionRepository>();
+            _DataRepositoryFactoryMock.Setup(s => s.GetDataRepository<IDetectionRepository>()).Returns(_DetectionRepositoryMock.Object);
             _DaypartCacheMock = new Mock<IDaypartCache>();
 
             var stubbedConfigurationClient = new StubbedConfigurationWebApiClient();
@@ -37,7 +37,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
         [UseReporter(typeof(DiffReporter))]
         public void GetProgramMappingDto_EmptyProgramNull()
         {
-            _BvsRepositoryMock.Setup(b => b.GetBvsTrackingDetailById(It.IsAny<int>())).Returns(new Entities.BvsTrackingDetail());
+            _DetectionRepositoryMock.Setup(b => b.GetDetectionTrackingDetailById(It.IsAny<int>())).Returns(new Entities.DetectionTrackingDetail());
 
             var programMapping = _TrackingEngine.GetProgramMappingDto(15350);
 
@@ -48,7 +48,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
         [UseReporter(typeof(DiffReporter))]
         public void GetProgramMappingDto_EmptyProgramEmpty()
         {
-            _BvsRepositoryMock.Setup(b => b.GetBvsTrackingDetailById(It.IsAny<int>())).Returns(new Entities.BvsTrackingDetail { Program = string.Empty});
+            _DetectionRepositoryMock.Setup(b => b.GetDetectionTrackingDetailById(It.IsAny<int>())).Returns(new Entities.DetectionTrackingDetail { Program = string.Empty});
 
             var programMapping = _TrackingEngine.GetProgramMappingDto(15350);
 

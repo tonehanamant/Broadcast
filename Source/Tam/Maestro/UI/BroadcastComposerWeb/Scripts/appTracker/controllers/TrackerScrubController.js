@@ -28,7 +28,7 @@ var TrackerScrubController = BaseController.extend({
     },
 
     apiGetScrub: function (estimateId, refreshOnly) {
-        var url = baseUrl + 'api/Tracker/GetBvsScrubbingData';
+        var url = baseUrl + 'api/Tracker/GetDetectionScrubbingData';
         var queryData = { estimateId: estimateId };
         httpService.get(url,
            this.onApiGetScrub.bind(this, refreshOnly),
@@ -121,7 +121,7 @@ var TrackerScrubController = BaseController.extend({
     //pass Id from the record as bvsDetailId
     apiGetScheduleProgram: function (detailRec) {
         var url = baseUrl + 'api/Tracker/GetProgramMapping';
-        var queryData = { bvsDetailId: detailRec.Id };
+        var queryData = { detectionDetailId: detailRec.Id };
 
         httpService.get(url,
             this.onApiGetScheduleProgram.bind(this, detailRec),

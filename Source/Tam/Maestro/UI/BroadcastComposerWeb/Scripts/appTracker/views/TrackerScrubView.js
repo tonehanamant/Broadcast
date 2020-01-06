@@ -82,7 +82,7 @@ var TrackerScrubView = BaseView.extend({
 
     // prepares W2UI grid add and clear its filters
     setScrubGrid: function () {
-        var scrubData = this.prepareScrubGridData(this.activeScrubData.BvsDetails);
+        var scrubData = this.prepareScrubGridData(this.activeScrubData.DetectionDetails);
         var filterInputValue = $('#scrub_status_filter_input').val();
         this.$ScrubGrid.searchReset();
         this.$ScrubGrid.clear(false);

@@ -33,10 +33,10 @@ namespace Services.Broadcast.Repositories
             instance.RegisterType<IDisplayDaypartRepository, DisplayDaypartBroadcastRepository>();
             instance.RegisterType<IAudienceRepository, AudienceRepository>();
             instance.RegisterType<IScheduleRepository, ScheduleRepository>();
-            instance.RegisterType<IBvsRepository, BvsRepository>();
+            instance.RegisterType<IDetectionRepository, DetectionRepository>();
             instance.RegisterType<IPostingBookRepository, PostingBookRepository>();
             instance.RegisterType<IRatingsRepository, RatingsRepository>();
-            instance.RegisterType<IBvsPostDetailsRepository, BvsPostDetailsRepository>();
+            instance.RegisterType<IDetectionPostDetailsRepository, DetectionPostDetailsRepository>();
             instance.RegisterType<ITrackerMappingRepository, TrackerMappingRepository>();
             instance.RegisterType<IStationRepository, StationRepository>();
             instance.RegisterType<ISpotLengthRepository, SpotLengthBroadcastRepository>();
@@ -48,7 +48,7 @@ namespace Services.Broadcast.Repositories
             instance.RegisterType<IProposalRepository, ProposalRepository>();
             instance.RegisterType<IProposalInventoryRepository, ProposalInventoryRepository>();
             instance.RegisterType<IProposalOpenMarketInventoryRepository, ProposalOpenMarketInventoryRepository>();
-            instance.RegisterType<IBvsTestDataGeneratorRepository, BvsTestDataGeneratorRepository>();
+            instance.RegisterType<IDetectionTestDataGeneratorRepository, DetectionTestDataGeneratorRepository>();
             instance.RegisterType<INsiUniverseRepository, NsiUniverseRepository>();
             instance.RegisterType<INsiMarketRepository, NsiMarketRepository>();
             instance.RegisterType<IRatingForecastRepository, RatingForecastRepository>();

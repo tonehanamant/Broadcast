@@ -192,10 +192,10 @@ var TrackerScrubViewModel = function (controller) {
             if (schedulePrograms && schedulePrograms.PrimaryScheduleMatches) {
                 $("#scrub_mapping_program_modal").modal('show');
             } else {
-                util.notify('No programs available for the selected BVS detail', 'danger');
+                util.notify('No programs available for the selected detail', 'danger');
             }
         } else {
-            util.notify('Nothing to map in the selected BVS detail', 'danger');
+            util.notify('Nothing to map in the selected detail', 'danger');
         }
     };
 
@@ -246,7 +246,7 @@ var TrackerScrubViewModel = function (controller) {
             var scheduleProgram = $scope.SingleProgramMapping() ? $scope.MappedItem().SchedulePrograms[0] : $scope.SelectedProgram();
 
             var acceptScheduleBlockRequest = {
-                BvsDetailId: $scope.MappedItem().recid,
+                DetectionDetailId: $scope.MappedItem().recid,
                 ScheduleDetailWeekId: scheduleProgram.ScheduleDetailWeekId
             };
 
@@ -309,7 +309,7 @@ var TrackerScrubViewModel = function (controller) {
 
     $scope.verifySpot = function () {
         var acceptScheduleLeadinRequest = {
-            BvsDetailId: $scope.MappedItem().recid,
+            DetectionDetailId: $scope.MappedItem().recid,
             ScheduleDetailWeekId: $scope.SelectedNextContractedTimeslot().ScheduleDetailWeekId
         };
 
