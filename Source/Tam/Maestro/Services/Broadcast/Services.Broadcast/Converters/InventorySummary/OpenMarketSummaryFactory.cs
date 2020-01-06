@@ -31,15 +31,9 @@ namespace Services.Broadcast.Converters.InventorySummary
         {
         }
 
-        private DateTime? GetFileLastCreatedDate(List<InventorySummaryManifestFileDto> inventorySummaryManifestFiles)
-        {
-            return inventorySummaryManifestFiles.Max(x => (DateTime?)x.CreatedDate);
-        }
-
         public override InventoryQuarterSummary CreateInventorySummary(InventorySource inventorySource,
                                                                    int householdAudienceId,
                                                                    QuarterDetailDto quarterDetail,
-                                                                   List<InventorySummaryManifestDto> quarterInventorySummaryManifests,
                                                                    List<DaypartDefaultDto> daypartDefaults,
                                                                    InventoryAvailability inventoryAvailability)
         {
@@ -109,36 +103,40 @@ namespace Services.Broadcast.Converters.InventorySummary
         /// <returns>InventorySummaryDto object</returns>
         public override InventorySummaryDto LoadInventorySummary(InventorySource inventorySource, InventoryQuarterSummary openMarketData, QuarterDetailDto quarterDetail)
         {
-            if (openMarketData == null) return new OpenMarketInventorySummaryDto()
+            var result = new OpenMarketInventorySummaryDto
             {
                 Quarter = quarterDetail,
-                InventorySourceId = inventorySource.Id,
-                InventorySourceName = inventorySource.Name
-            };
-            
-            GetLatestInventoryPostingBook(openMarketData.ShareBookId, openMarketData.HutBookId, out var shareBook, out var hutBook);
-            return new OpenMarketInventorySummaryDto
-            {
-                HasInventoryGaps = openMarketData.InventoryGaps.Any(),
-                HutBook = hutBook,
-                ShareBook = shareBook,
-                InventoryGaps = openMarketData.InventoryGaps,
-                HouseholdImpressions = openMarketData.TotalProjectedHouseholdImpressions,
                 InventorySourceId = inventorySource.Id,
                 InventorySourceName = inventorySource.Name,
-                LastUpdatedDate = openMarketData.LastUpdatedDate,
-                Quarter = quarterDetail,
-                RatesAvailableFromQuarter = GetQuarter(openMarketData.RatesAvailableFromQuarter.Quarter, openMarketData.RatesAvailableFromQuarter.Year),
-                RatesAvailableToQuarter = GetQuarter(openMarketData.RatesAvailableToQuarter.Quarter, openMarketData.RatesAvailableToQuarter.Year),
-                TotalMarkets = openMarketData.TotalMarkets,
-                TotalStations = openMarketData.TotalStations,
-                TotalPrograms = openMarketData.TotalPrograms ?? 0,
-                HasRatesAvailableForQuarter = openMarketData.TotalMarkets > 0,
-                Details = null  //open market does not have details
+                Details = null // OpenMarket does not have details
             };
+
+            if (openMarketData.HasInventorySourceSummary)
+            {
+                result.HasInventoryGaps = openMarketData.InventoryGaps.Any();
+                result.InventoryGaps = openMarketData.InventoryGaps;
+                result.LastUpdatedDate = openMarketData.LastUpdatedDate;
+                result.RatesAvailableFromQuarter = GetQuarter(openMarketData.RatesAvailableFromQuarter.Quarter, openMarketData.RatesAvailableFromQuarter.Year);
+                result.RatesAvailableToQuarter = GetQuarter(openMarketData.RatesAvailableToQuarter.Quarter, openMarketData.RatesAvailableToQuarter.Year);
+            }
+
+            if (openMarketData.HasInventorySourceSummaryQuarterDetails)
+            {
+                GetLatestInventoryPostingBook(openMarketData.ShareBookId, openMarketData.HutBookId, out var shareBook, out var hutBook);
+
+                result.HutBook = hutBook;
+                result.ShareBook = shareBook;
+                result.HouseholdImpressions = openMarketData.TotalProjectedHouseholdImpressions;
+                result.TotalMarkets = openMarketData.TotalMarkets;
+                result.TotalStations = openMarketData.TotalStations;
+                result.TotalPrograms = openMarketData.TotalPrograms ?? 0;
+                result.HasRatesAvailableForQuarter = openMarketData.TotalMarkets > 0;
+            }
+
+            return result;
         }
 
-        public override InventoryQuarterSummary CreateInventorySummary(InventorySource inventorySource, int householdAudienceId, QuarterDetailDto quarterDetail, List<DaypartDefaultDto> daypartDefaults, InventoryAvailability inventoryAvailability)
+        public override InventoryQuarterSummary CreateInventorySummary(InventorySource inventorySource, int householdAudienceId, QuarterDetailDto quarterDetail, List<InventorySummaryManifestDto> manifests, List<DaypartDefaultDto> daypartDefaults, InventoryAvailability inventoryAvailability)
         {
             throw new NotImplementedException();
         }

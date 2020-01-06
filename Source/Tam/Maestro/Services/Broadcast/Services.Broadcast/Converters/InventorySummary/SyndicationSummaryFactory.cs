@@ -61,33 +61,37 @@ namespace Services.Broadcast.Converters.InventorySummary
         /// <returns>InventorySummaryDto object</returns>
         public override InventorySummaryDto LoadInventorySummary(InventorySource inventorySource, InventoryQuarterSummary syndicationData, QuarterDetailDto quarterDetail)
         {
-            if (syndicationData == null) return new SyndicationInventorySummaryDto()
+            var result = new SyndicationInventorySummaryDto
             {
                 Quarter = quarterDetail,
-                InventorySourceId = inventorySource.Id,
-                InventorySourceName = inventorySource.Name
-            };
-
-            GetLatestInventoryPostingBook(syndicationData.ShareBookId, syndicationData.HutBookId, out var shareBook, out var hutBook);
-            return new SyndicationInventorySummaryDto
-            {
-                HutBook = hutBook,
-                ShareBook = shareBook,
-                InventoryGaps = syndicationData.InventoryGaps,
-                HouseholdImpressions = syndicationData.TotalProjectedHouseholdImpressions,
                 InventorySourceId = inventorySource.Id,
                 InventorySourceName = inventorySource.Name,
-                LastUpdatedDate = syndicationData.LastUpdatedDate,
-                Quarter = quarterDetail,
-                RatesAvailableFromQuarter = GetQuarter(syndicationData.RatesAvailableFromQuarter.Quarter, syndicationData.RatesAvailableFromQuarter.Year),
-                RatesAvailableToQuarter = GetQuarter(syndicationData.RatesAvailableToQuarter.Quarter, syndicationData.RatesAvailableToQuarter.Year),
-                TotalMarkets = syndicationData.TotalMarkets,
-                TotalStations = syndicationData.TotalStations,
-                TotalPrograms = syndicationData.TotalPrograms ?? 0,
-                HasRatesAvailableForQuarter = syndicationData.TotalPrograms > 0,
-                HasInventoryGaps = syndicationData.InventoryGaps.Any(),                
-                Details = null //Syndication does not have details
+                Details = null // Syndication does not have details
             };
+
+            if (syndicationData.HasInventorySourceSummary)
+            {
+                result.InventoryGaps = syndicationData.InventoryGaps;
+                result.LastUpdatedDate = syndicationData.LastUpdatedDate;
+                result.RatesAvailableFromQuarter = GetQuarter(syndicationData.RatesAvailableFromQuarter.Quarter, syndicationData.RatesAvailableFromQuarter.Year);
+                result.RatesAvailableToQuarter = GetQuarter(syndicationData.RatesAvailableToQuarter.Quarter, syndicationData.RatesAvailableToQuarter.Year);
+                result.HasInventoryGaps = syndicationData.InventoryGaps.Any();
+            }
+
+            if (syndicationData.HasInventorySourceSummaryQuarterDetails)
+            {
+                GetLatestInventoryPostingBook(syndicationData.ShareBookId, syndicationData.HutBookId, out var shareBook, out var hutBook);
+
+                result.HutBook = hutBook;
+                result.ShareBook = shareBook;
+                result.HouseholdImpressions = syndicationData.TotalProjectedHouseholdImpressions;
+                result.TotalMarkets = syndicationData.TotalMarkets;
+                result.TotalStations = syndicationData.TotalStations;
+                result.TotalPrograms = syndicationData.TotalPrograms ?? 0;
+                result.HasRatesAvailableForQuarter = syndicationData.TotalPrograms > 0;
+            }
+
+            return result;
         }
     }
 }

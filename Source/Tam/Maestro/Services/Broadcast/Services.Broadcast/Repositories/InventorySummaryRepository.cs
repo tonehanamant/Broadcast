@@ -28,7 +28,8 @@ namespace Services.Broadcast.Repositories
         /// Saves the inventory summary aggregated data for the source
         /// </summary>
         /// <param name="inventorySummaryAggregation">InventorySummaryAggregation object to be saved</param>
-        void SaveInventoryAggregatedData(InventoryQuarterSummary inventorySummaryAggregation);
+        /// <param name="inventorySourceId">Inventory source id</param>
+        void SaveInventoryAggregatedData(List<InventoryQuarterSummary> inventorySummaryAggregation, int inventorySourceId);
 
         /// <summary>
         /// Gets the aggregated summary data for the source and selected quarter
@@ -75,43 +76,52 @@ namespace Services.Broadcast.Repositories
         }
 
         /// <inheritdoc/>
-        public void SaveInventoryAggregatedData(InventoryQuarterSummary inventorySummaryAggregation)
+        public void SaveInventoryAggregatedData(List<InventoryQuarterSummary> inventorySummaryAggregation, int inventorySourceId)
         {
             _InReadUncommitedTransaction(
                 context =>
                 {
-                    _RemoveExistingAggregationData(inventorySummaryAggregation.InventorySourceId, inventorySummaryAggregation.Quarter.Quarter, inventorySummaryAggregation.Quarter.Year, context);
+                    _RemoveExistingAggregationData(inventorySourceId, context);
+
+                    var first = inventorySummaryAggregation.FirstOrDefault();
+
+                    if (first == null)
+                        return;
 
                     //add new data
-                    context.inventory_summary.Add(_MapInventorySummaryData(inventorySummaryAggregation));
-                    context.inventory_summary_quarters.Add(new inventory_summary_quarters
+                    context.inventory_summary.Add(_MapInventorySummaryData(first));
+
+                    foreach (var summaryForQuarter in inventorySummaryAggregation)
                     {
-                        inventory_source_id = inventorySummaryAggregation.InventorySourceId,
-                        quarter_number = inventorySummaryAggregation.Quarter.Quarter,
-                        quarter_year = inventorySummaryAggregation.Quarter.Year,
-                        total_daypart_codes = inventorySummaryAggregation.TotalDaypartCodes,
-                        total_markets = inventorySummaryAggregation.TotalMarkets,
-                        total_stations = inventorySummaryAggregation.TotalStations,
-                        total_projected_impressions = inventorySummaryAggregation.TotalProjectedHouseholdImpressions,
-                        total_units = inventorySummaryAggregation.TotalUnits,
-                        share_book_id = inventorySummaryAggregation.ShareBookId,
-                        hut_book_id = inventorySummaryAggregation.HutBookId,
-                        total_programs = inventorySummaryAggregation.TotalPrograms,
-                        cpm = inventorySummaryAggregation.CPM,
-                        inventory_summary_quarter_details = inventorySummaryAggregation.Details?.Select(x => new inventory_summary_quarter_details
+                        context.inventory_summary_quarters.Add(new inventory_summary_quarters
                         {
-                            daypart_default_id = x.DaypartDefaultId,
-                            cpm = x.CPM,
-                            total_coverage = x.TotalCoverage,
-                            total_markets = x.TotalMarkets,
-                            total_units = x.TotalUnits,
-                            total_projected_impressions = x.TotalProjectedHouseholdImpressions,
-                            total_programs = x.TotalPrograms,
-                            min_spots_per_week = x.MinSpotsPerWeek,
-                            max_spots_per_week = x.MaxSpotsPerWeek
-                        }).ToList()
-                    });
-                    context.inventory_summary_gaps.AddRange(_MapInventorySummaryGapsData(inventorySummaryAggregation));
+                            inventory_source_id = summaryForQuarter.InventorySourceId,
+                            quarter_number = summaryForQuarter.Quarter.Quarter,
+                            quarter_year = summaryForQuarter.Quarter.Year,
+                            total_daypart_codes = summaryForQuarter.TotalDaypartCodes,
+                            total_markets = summaryForQuarter.TotalMarkets,
+                            total_stations = summaryForQuarter.TotalStations,
+                            total_projected_impressions = summaryForQuarter.TotalProjectedHouseholdImpressions,
+                            total_units = summaryForQuarter.TotalUnits,
+                            share_book_id = summaryForQuarter.ShareBookId,
+                            hut_book_id = summaryForQuarter.HutBookId,
+                            total_programs = summaryForQuarter.TotalPrograms,
+                            cpm = summaryForQuarter.CPM,
+                            inventory_summary_quarter_details = summaryForQuarter.Details?.Select(x => new inventory_summary_quarter_details
+                            {
+                                daypart_default_id = x.DaypartDefaultId,
+                                cpm = x.CPM,
+                                total_coverage = x.TotalCoverage,
+                                total_markets = x.TotalMarkets,
+                                total_units = x.TotalUnits,
+                                total_projected_impressions = x.TotalProjectedHouseholdImpressions,
+                                total_programs = x.TotalPrograms,
+                                min_spots_per_week = x.MinSpotsPerWeek,
+                                max_spots_per_week = x.MaxSpotsPerWeek
+                            }).ToList()
+                        });
+                    }
+
                     context.SaveChanges();
                 });
         }
@@ -270,20 +280,17 @@ namespace Services.Broadcast.Repositories
                 last_quarter_number = inventorySummaryAggregation.RatesAvailableToQuarter.Quarter,
                 last_quarter_year = inventorySummaryAggregation.RatesAvailableToQuarter.Year,
                 last_update_date = inventorySummaryAggregation.LastUpdatedDate,
+                inventory_summary_gaps = _MapInventorySummaryGapsData(inventorySummaryAggregation)
             };
         }
 
-        private static void _RemoveExistingAggregationData(int inventorySourceId, int quarterNumber, int year, QueryHintBroadcastContext context)
+        private static void _RemoveExistingAggregationData(int inventorySourceId, QueryHintBroadcastContext context)
         {
             context.inventory_summary.RemoveRange(context.inventory_summary.Where(x => x.inventory_source_id == inventorySourceId).ToList());
-            context.inventory_summary_quarters.RemoveRange(
-                context.inventory_summary_quarters
-                .Where(x => x.inventory_source_id == inventorySourceId
-                        && x.quarter_number == quarterNumber
-                        && x.quarter_year == year).ToList());
+            context.inventory_summary_quarters.RemoveRange(context.inventory_summary_quarters.Where(x => x.inventory_source_id == inventorySourceId).ToList());
         }
 
-        private List<inventory_summary_gaps> _MapInventorySummaryGapsData(InventoryQuarterSummary inventorySummaryAggregation)
+        private static List<inventory_summary_gaps> _MapInventorySummaryGapsData(InventoryQuarterSummary inventorySummaryAggregation)
         {
             return inventorySummaryAggregation.InventoryGaps.Select(x => new inventory_summary_gaps
             {
@@ -312,55 +319,47 @@ namespace Services.Broadcast.Repositories
             {
                 var summaryData = (from summary in context.inventory_summary
                                    where summary.inventory_source_id == inventorySource.Id
-                                   select new
-                                   {
-                                       summary.inventory_source_id,
-                                       summary.first_quarter_number,
-                                       summary.last_quarter_number,
-                                       summary.first_quarter_year,
-                                       summary.last_quarter_year,
-                                       summary.last_update_date
-                                   }).SingleOrDefault();
-
-                //summaryData will be null when there is no inventory for a specific source
-                if (summaryData == null)
-                {
-                    return null;
-                }
-
-                var quarterData = (from summaryQuarter in context.inventory_summary_quarters
-                                   .Include(x => x.inventory_summary_quarter_details)
-                                   .Include(x => x.inventory_summary_gaps)
-                                   .Include(x => x.inventory_summary_gaps.Select(y => y.inventory_summary_gap_ranges))
-                                   where summaryQuarter.inventory_source_id == inventorySource.Id && summaryQuarter.quarter_number == quarter && summaryQuarter.quarter_year == year
-                                   select summaryQuarter).SingleOrDefault();
-                //quarterData will be null when there is no inventory for a specific quarter
-                if (quarterData == null) return null;
+                                   select summary).SingleOrDefault();
 
                 var summaryAggregationData = new InventoryQuarterSummary
                 {
-                    LastUpdatedDate = summaryData.last_update_date,
-                    RatesAvailableFromQuarter = new QuarterDto { Quarter = summaryData.first_quarter_number, Year = summaryData.first_quarter_year },
-                    RatesAvailableToQuarter = new QuarterDto { Quarter = summaryData.last_quarter_number, Year = summaryData.last_quarter_year },
                     InventorySourceId = inventorySource.Id,
                     InventorySourceName = inventorySource.Name,
-                    TotalProjectedHouseholdImpressions = quarterData.total_projected_impressions,
-                    HutBookId = quarterData.hut_book_id,
-                    ShareBookId = quarterData.share_book_id,
-                    TotalDaypartCodes = quarterData.total_daypart_codes,
-                    TotalMarkets = quarterData.total_markets,
-                    TotalStations = quarterData.total_stations,
-                    TotalPrograms = quarterData.total_programs,
-                    TotalUnits = quarterData.total_units,
-                    CPM = quarterData.cpm,
-                    Quarter = new QuarterDto { Quarter = quarterData.quarter_number, Year = quarterData.quarter_year },
-                    InventoryGaps = _MapInventorySummaryGapsData(quarterData.inventory_summary_gaps),
                     IsUpdating = (from file in context.inventory_files
                                   from job in file.inventory_file_ratings_jobs
                                   where file.inventory_source_id == inventorySource.Id
                                   && (job.status == (int)BackgroundJobProcessingStatus.Queued || job.status == (int)BackgroundJobProcessingStatus.Processing)
-                                  select job).Any(),
-                    Details = quarterData.inventory_summary_quarter_details.Select(x => new InventoryQuarterSummary.Detail
+                                  select job).Any()
+                };
+                
+                if (summaryData != null)
+                {
+                    summaryAggregationData.HasInventorySourceSummary = true;
+                    summaryAggregationData.LastUpdatedDate = summaryData.last_update_date;
+                    summaryAggregationData.RatesAvailableFromQuarter = new QuarterDto { Quarter = summaryData.first_quarter_number, Year = summaryData.first_quarter_year };
+                    summaryAggregationData.RatesAvailableToQuarter = new QuarterDto { Quarter = summaryData.last_quarter_number, Year = summaryData.last_quarter_year };
+                    summaryAggregationData.InventoryGaps = _MapInventorySummaryGapsData(summaryData.inventory_summary_gaps);
+                }
+
+                var quarterData = (from summaryQuarter in context.inventory_summary_quarters
+                                   .Include(x => x.inventory_summary_quarter_details)
+                                   where summaryQuarter.inventory_source_id == inventorySource.Id && summaryQuarter.quarter_number == quarter && summaryQuarter.quarter_year == year
+                                   select summaryQuarter).SingleOrDefault();
+                
+                if (quarterData != null)
+                {
+                    summaryAggregationData.HasInventorySourceSummaryQuarterDetails = true;
+                    summaryAggregationData.TotalProjectedHouseholdImpressions = quarterData.total_projected_impressions;
+                    summaryAggregationData.HutBookId = quarterData.hut_book_id;
+                    summaryAggregationData.ShareBookId = quarterData.share_book_id;
+                    summaryAggregationData.TotalDaypartCodes = quarterData.total_daypart_codes;
+                    summaryAggregationData.TotalMarkets = quarterData.total_markets;
+                    summaryAggregationData.TotalStations = quarterData.total_stations;
+                    summaryAggregationData.TotalPrograms = quarterData.total_programs;
+                    summaryAggregationData.TotalUnits = quarterData.total_units;
+                    summaryAggregationData.CPM = quarterData.cpm;
+                    summaryAggregationData.Quarter = new QuarterDto { Quarter = quarterData.quarter_number, Year = quarterData.quarter_year };
+                    summaryAggregationData.Details = quarterData.inventory_summary_quarter_details.Select(x => new InventoryQuarterSummary.Detail
                     {
                         CPM = x.cpm,
                         DaypartDefaultId = x.daypart_default_id,
@@ -372,8 +371,9 @@ namespace Services.Broadcast.Repositories
                         MaxSpotsPerWeek = x.max_spots_per_week,
                         MinSpotsPerWeek = x.min_spots_per_week,
                         TotalPrograms = x.total_programs
-                    }).OrderBy(x=>x.DaypartDefaultId).ToList()
-                };
+                    }).OrderBy(x => x.DaypartDefaultId).ToList();
+                }
+
                 return summaryAggregationData;
             });
         }

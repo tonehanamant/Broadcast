@@ -25,6 +25,8 @@ namespace Services.Broadcast.Entities.InventorySummary
         public int? TotalPrograms { get; set; }
         public decimal? CPM { get; set; }
         public List<Detail> Details { get; set; }
+        public bool HasInventorySourceSummary { get; set; }
+        public bool HasInventorySourceSummaryQuarterDetails { get; set; }
 
         public class Detail
         {

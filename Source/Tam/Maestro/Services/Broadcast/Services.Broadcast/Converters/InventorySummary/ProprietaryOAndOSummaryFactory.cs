@@ -159,33 +159,35 @@ namespace Services.Broadcast.Converters.InventorySummary
         /// <returns>InventorySummaryDto object</returns>
         public override InventorySummaryDto LoadInventorySummary(InventorySource inventorySource, InventoryQuarterSummary proprietaryData, QuarterDetailDto quarterDetail)
         {
-            if (proprietaryData == null) return new ProprietaryOAndOInventorySummaryDto()
+            var result = new ProprietaryOAndOInventorySummaryDto
             {
                 Quarter = quarterDetail,
                 InventorySourceId = inventorySource.Id,
                 InventorySourceName = inventorySource.Name
             };
 
-            GetLatestInventoryPostingBook(proprietaryData.ShareBookId, proprietaryData.HutBookId, out var shareBook, out var hutBook);
-            return new ProprietaryOAndOInventorySummaryDto
+            if (proprietaryData.HasInventorySourceSummary)
             {
-                HasInventoryGaps = proprietaryData.InventoryGaps.Any(),
-                HutBook = hutBook,
-                ShareBook = shareBook,
-                InventoryGaps = proprietaryData.InventoryGaps,
-                HouseholdImpressions = proprietaryData.TotalProjectedHouseholdImpressions,
-                InventorySourceId = inventorySource.Id,
-                InventorySourceName = inventorySource.Name,
-                LastUpdatedDate = proprietaryData.LastUpdatedDate,
-                Quarter = quarterDetail,
-                RatesAvailableFromQuarter = GetQuarter(proprietaryData.RatesAvailableFromQuarter.Quarter, proprietaryData.RatesAvailableFromQuarter.Year),
-                RatesAvailableToQuarter = GetQuarter(proprietaryData.RatesAvailableToQuarter.Quarter, proprietaryData.RatesAvailableToQuarter.Year),
-                TotalMarkets = proprietaryData.TotalMarkets,
-                TotalStations = proprietaryData.TotalStations,
-                TotalDaypartCodes = proprietaryData.TotalDaypartCodes ?? 0,
-                HasRatesAvailableForQuarter = proprietaryData.TotalMarkets > 0,
-                TotalPrograms = proprietaryData.TotalPrograms ?? 0,
-                Details = proprietaryData.Details.Select(x => new ProprietaryOAndOInventorySummaryDto.Detail
+                result.HasInventoryGaps = proprietaryData.InventoryGaps.Any();
+                result.InventoryGaps = proprietaryData.InventoryGaps;
+                result.LastUpdatedDate = proprietaryData.LastUpdatedDate;
+                result.RatesAvailableFromQuarter = GetQuarter(proprietaryData.RatesAvailableFromQuarter.Quarter, proprietaryData.RatesAvailableFromQuarter.Year);
+                result.RatesAvailableToQuarter = GetQuarter(proprietaryData.RatesAvailableToQuarter.Quarter, proprietaryData.RatesAvailableToQuarter.Year);
+            }
+
+            if (proprietaryData.HasInventorySourceSummaryQuarterDetails)
+            {
+                GetLatestInventoryPostingBook(proprietaryData.ShareBookId, proprietaryData.HutBookId, out var shareBook, out var hutBook);
+
+                result.HutBook = hutBook;
+                result.ShareBook = shareBook;
+                result.HouseholdImpressions = proprietaryData.TotalProjectedHouseholdImpressions;
+                result.TotalMarkets = proprietaryData.TotalMarkets;
+                result.TotalStations = proprietaryData.TotalStations;
+                result.TotalDaypartCodes = proprietaryData.TotalDaypartCodes ?? 0;
+                result.HasRatesAvailableForQuarter = proprietaryData.TotalMarkets > 0;
+                result.TotalPrograms = proprietaryData.TotalPrograms ?? 0;
+                result.Details = proprietaryData.Details.Select(x => new ProprietaryOAndOInventorySummaryDto.Detail
                 {
                     CPM = x.CPM,
                     Daypart = x.DaypartCode,
@@ -195,8 +197,10 @@ namespace Services.Broadcast.Converters.InventorySummary
                     MaxSpotsPerWeek = x.MaxSpotsPerWeek ?? 0,
                     MinSpotsPerWeek = x.MinSpotsPerWeek ?? 0,
                     TotalPrograms = x.TotalPrograms ?? 0
-                }).ToList()
-            };
+                }).ToList();
+            }
+
+            return result;
         }
 
     }

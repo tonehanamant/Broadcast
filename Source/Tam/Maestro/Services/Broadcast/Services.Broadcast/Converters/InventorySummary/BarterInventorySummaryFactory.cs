@@ -161,42 +161,46 @@ namespace Services.Broadcast.Converters.InventorySummary
         /// <returns>InventorySummaryDto object</returns>
         public override InventorySummaryDto LoadInventorySummary(InventorySource inventorySource, InventoryQuarterSummary barterData, QuarterDetailDto quarterDetail)
         {
-            if (barterData == null) return new BarterInventorySummaryDto()
+            var result = new BarterInventorySummaryDto
             {
                 Quarter = quarterDetail,
                 InventorySourceId = inventorySource.Id,
                 InventorySourceName = inventorySource.Name
             };
 
-            GetLatestInventoryPostingBook(barterData.ShareBookId, barterData.HutBookId, out var shareBook, out var hutBook);
-            return new BarterInventorySummaryDto
+            if (barterData.HasInventorySourceSummary)
             {
-                HasInventoryGaps = barterData.InventoryGaps.Any(),
-                HutBook = hutBook,
-                ShareBook = shareBook,
-                InventoryGaps = barterData.InventoryGaps,
-                HouseholdImpressions = barterData.TotalProjectedHouseholdImpressions,
-                InventorySourceId = inventorySource.Id,
-                InventorySourceName = inventorySource.Name,
-                LastUpdatedDate = barterData.LastUpdatedDate,
-                Quarter = quarterDetail,
-                RatesAvailableFromQuarter = GetQuarter(barterData.RatesAvailableFromQuarter.Quarter, barterData.RatesAvailableFromQuarter.Year),
-                RatesAvailableToQuarter = GetQuarter(barterData.RatesAvailableToQuarter.Quarter, barterData.RatesAvailableToQuarter.Year),
-                TotalMarkets = barterData.TotalMarkets,
-                TotalStations = barterData.TotalStations,
-                TotalUnits = barterData.TotalUnits ?? 0,
-                TotalDaypartCodes = barterData.TotalDaypartCodes ?? 0,
-                HasRatesAvailableForQuarter = barterData.TotalUnits > 0,
-                Details = barterData.Details.Select(x=> new BarterInventorySummaryDto.Detail
+                result.HasInventoryGaps = barterData.InventoryGaps.Any();
+                result.InventoryGaps = barterData.InventoryGaps;
+                result.LastUpdatedDate = barterData.LastUpdatedDate;
+                result.RatesAvailableFromQuarter = GetQuarter(barterData.RatesAvailableFromQuarter.Quarter, barterData.RatesAvailableFromQuarter.Year);
+                result.RatesAvailableToQuarter = GetQuarter(barterData.RatesAvailableToQuarter.Quarter, barterData.RatesAvailableToQuarter.Year);
+            }
+
+            if (barterData.HasInventorySourceSummaryQuarterDetails)
+            {
+                GetLatestInventoryPostingBook(barterData.ShareBookId, barterData.HutBookId, out var shareBook, out var hutBook);
+
+                result.HutBook = hutBook;
+                result.ShareBook = shareBook;
+                result.HouseholdImpressions = barterData.TotalProjectedHouseholdImpressions;
+                result.TotalMarkets = barterData.TotalMarkets;
+                result.TotalStations = barterData.TotalStations;
+                result.TotalUnits = barterData.TotalUnits ?? 0;
+                result.TotalDaypartCodes = barterData.TotalDaypartCodes ?? 0;
+                result.HasRatesAvailableForQuarter = barterData.TotalUnits > 0;
+                result.Details = barterData.Details.Select(x => new BarterInventorySummaryDto.Detail
                 {
                     CPM = x.CPM,
                     TotalUnits = x.TotalUnits ?? 0,
                     Daypart = x.DaypartCode,
                     HouseholdImpressions = x.TotalProjectedHouseholdImpressions,
-                    TotalCoverage =  x.TotalCoverage,
+                    TotalCoverage = x.TotalCoverage,
                     TotalMarkets = x.TotalMarkets
-                }).ToList()
-            };
+                }).ToList();
+            }
+
+            return result;
         }
 
     }

@@ -16,7 +16,6 @@ namespace EntityFrameworkMapping.Broadcast
     {
         public inventory_summary_quarters()
         {
-            this.inventory_summary_gaps = new HashSet<inventory_summary_gaps>();
             this.inventory_summary_quarter_details = new HashSet<inventory_summary_quarter_details>();
         }
     
@@ -35,7 +34,6 @@ namespace EntityFrameworkMapping.Broadcast
         public Nullable<decimal> cpm { get; set; }
     
         public virtual inventory_sources inventory_sources { get; set; }
-        public virtual ICollection<inventory_summary_gaps> inventory_summary_gaps { get; set; }
         public virtual ICollection<inventory_summary_quarter_details> inventory_summary_quarter_details { get; set; }
     }
 }

@@ -165,39 +165,43 @@ namespace Services.Broadcast.Converters.InventorySummary
         /// <returns>InventorySummaryDto object</returns>
         public override InventorySummaryDto LoadInventorySummary(InventorySource inventorySource, InventoryQuarterSummary diginetData, QuarterDetailDto quarterDetail)
         {
-            if (diginetData == null) return new DiginetInventorySummaryDto()
+            var result = new DiginetInventorySummaryDto
             {
                 Quarter = quarterDetail,
                 InventorySourceId = inventorySource.Id,
                 InventorySourceName = inventorySource.Name
             };
 
-            GetLatestInventoryPostingBook(diginetData.ShareBookId, diginetData.HutBookId, out var shareBook, out var hutBook);
-            return new DiginetInventorySummaryDto
+            if (diginetData.HasInventorySourceSummary)
             {
-                InventorySourceId = inventorySource.Id,
-                InventorySourceName = inventorySource.Name,
-                HutBook = hutBook,
-                ShareBook = shareBook,
-                InventoryGaps = diginetData.InventoryGaps,
-                HouseholdImpressions = diginetData.TotalProjectedHouseholdImpressions,                
-                LastUpdatedDate = diginetData.LastUpdatedDate,
-                Quarter = quarterDetail,
-                RatesAvailableFromQuarter = GetQuarter(diginetData.RatesAvailableFromQuarter.Quarter, diginetData.RatesAvailableFromQuarter.Year),
-                RatesAvailableToQuarter = GetQuarter(diginetData.RatesAvailableToQuarter.Quarter, diginetData.RatesAvailableToQuarter.Year),
-                TotalMarkets = diginetData.TotalMarkets,
-                TotalStations = diginetData.TotalStations,
-                TotalDaypartCodes = diginetData.TotalDaypartCodes ?? 0,
-                HasRatesAvailableForQuarter = diginetData.TotalDaypartCodes > 0,
-                HasInventoryGaps = diginetData.InventoryGaps.Any(),
-                CPM = diginetData.CPM,
-                Details = diginetData.Details.Select(x => new DiginetInventorySummaryDto.Detail
+                result.InventoryGaps = diginetData.InventoryGaps;
+                result.LastUpdatedDate = diginetData.LastUpdatedDate;
+                result.RatesAvailableFromQuarter = GetQuarter(diginetData.RatesAvailableFromQuarter.Quarter, diginetData.RatesAvailableFromQuarter.Year);
+                result.RatesAvailableToQuarter = GetQuarter(diginetData.RatesAvailableToQuarter.Quarter, diginetData.RatesAvailableToQuarter.Year);
+                result.HasInventoryGaps = diginetData.InventoryGaps.Any();
+            }
+
+            if (diginetData.HasInventorySourceSummaryQuarterDetails)
+            {
+                GetLatestInventoryPostingBook(diginetData.ShareBookId, diginetData.HutBookId, out var shareBook, out var hutBook);
+
+                result.HutBook = hutBook;
+                result.ShareBook = shareBook;
+                result.HouseholdImpressions = diginetData.TotalProjectedHouseholdImpressions;
+                result.TotalMarkets = diginetData.TotalMarkets;
+                result.TotalStations = diginetData.TotalStations;
+                result.TotalDaypartCodes = diginetData.TotalDaypartCodes ?? 0;
+                result.HasRatesAvailableForQuarter = diginetData.TotalDaypartCodes > 0;
+                result.CPM = diginetData.CPM;
+                result.Details = diginetData.Details.Select(x => new DiginetInventorySummaryDto.Detail
                 {
                     CPM = x.CPM,
                     Daypart = x.DaypartCode,
                     HouseholdImpressions = x.TotalProjectedHouseholdImpressions
-                }).ToList()
-            };
+                }).ToList();
+            }
+
+            return result;
         }
 
     }

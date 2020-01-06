@@ -50,7 +50,6 @@ GO
 
 /*************************************** START UPDATE SCRIPT *****************************************************/
 
-
 /*************************************** START - PRI-19871 ****************************************************/
 IF NOT EXISTS
 	(SELECT 1 
@@ -865,6 +864,50 @@ BEGIN
 	UNIQUE ([plan_version_pricing_execution_id], [inventory_source_type])
 END
 /*************************************** END - PRI-19669 ****************************************************/
+
+/*************************************** START PRI-19211 *****************************************************/
+IF EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID('FK_inventory_summary_gaps_inventory_summary') AND parent_object_id = OBJECT_ID('inventory_summary_gaps'))
+BEGIN
+	-- simplify the PK in inventory_summary so that the table can be pointed easier
+	ALTER TABLE inventory_summary DROP CONSTRAINT PK_inventory_summary
+	ALTER TABLE inventory_summary ADD CONSTRAINT PK_inventory_summary PRIMARY KEY (id)
+
+	-- drop the old index
+	DROP INDEX inventory_summary_gaps.IX_inventory_summary_gaps_inventory_summary_id
+
+	-- drop the old constraint
+	ALTER TABLE [inventory_summary_gaps] DROP CONSTRAINT [FK_inventory_summary_gaps_inventory_summary]
+
+	-- add a new column inventory_summary_id1 (1 in the end is needed because there is inventory_summary_id column in the table at the moment and it points to a wrong table)
+	ALTER TABLE [inventory_summary_gaps] ADD [inventory_summary_id1] int NULL
+
+	-- set inventory_summary_id1 column from inventory_summary.id based on inventory_summary_quarters. Right now inventory_summary_id points to inventory_summary_quarters
+	EXEC('
+	UPDATE [inventory_summary_gaps] 
+	SET [inventory_summary_id1] = 
+		(select top 1 id from inventory_summary where inventory_source_id = 
+			(select top 1 inventory_source_id from inventory_summary_quarters where id = inventory_summary_id))')
+
+	-- make inventory_summary_id1 to be not nullable
+	ALTER TABLE [inventory_summary_gaps] ALTER COLUMN [inventory_summary_id1] int NOT NULL
+
+	-- now we can drop old inventory_summary_id column
+	ALTER TABLE [inventory_summary_gaps] DROP COLUMN [inventory_summary_id]
+
+	-- let`s rename the new inventory_summary_id1 to inventory_summary_id
+	EXEC sp_rename 'dbo.inventory_summary_gaps.inventory_summary_id1', 'inventory_summary_id', 'COLUMN';
+
+	-- naming the new constraint [FK_inventory_summary_gaps_inventory_summary1] because name FK_inventory_summary_gaps_inventory_summary is used in the IF EXISTS operator to prevent multiple running of the script
+	ALTER TABLE [inventory_summary_gaps]  WITH CHECK ADD  CONSTRAINT [FK_inventory_summary_gaps_inventory_summary1] FOREIGN KEY([inventory_summary_id]) 
+	REFERENCES [dbo].[inventory_summary] ([id])
+	ON DELETE CASCADE	
+
+	ALTER TABLE [inventory_summary_gaps] CHECK CONSTRAINT [FK_inventory_summary_gaps_inventory_summary1]
+
+	-- add the index back
+	EXEC('CREATE NONCLUSTERED INDEX IX_inventory_summary_gaps_inventory_summary_id ON inventory_summary_gaps(inventory_summary_id)')
+END
+/*************************************** END PRI-19211 *****************************************************/
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 

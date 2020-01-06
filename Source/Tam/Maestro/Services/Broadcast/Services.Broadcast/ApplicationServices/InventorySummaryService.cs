@@ -165,19 +165,7 @@ namespace Services.Broadcast.ApplicationServices
                                 
                 var data = _InventorySummaryRepository.GetInventorySummaryDataForSources(inventorySource, quarterDetail.Quarter, quarterDetail.Year);
 
-                //check if I should filter by daypart code
-                if (data != null && inventorySummaryFilterDto.DaypartDefaultId.HasValue)
-                {
-                    var daypartDefaults = data.Details.Select(m => m.DaypartDefaultId).Distinct().ToList();
-
-                    if (_ShouldFilterByDaypartDefault(daypartDefaults, inventorySummaryFilterDto.DaypartDefaultId))
-                    {
-                        continue;
-                    }
-                }
-
-                //don't add empty objects if I filter by daypart
-                if(data == null && inventorySummaryFilterDto.DaypartDefaultId.HasValue)
+                if (_ShouldFilterOutDataByDaypartDefault(data, inventorySummaryFilterDto))
                 {
                     continue;
                 }
@@ -199,14 +187,9 @@ namespace Services.Broadcast.ApplicationServices
             {
                 var data = _InventorySummaryRepository.GetInventorySummaryDataForSources(inventorySource, quarterDetail.Quarter, quarterDetail.Year);
 
-                if (data != null && inventorySummaryFilterDto.DaypartDefaultId.HasValue)
+                if (_ShouldFilterOutDataByDaypartDefault(data, inventorySummaryFilterDto))
                 {
-                    var daypartDefaults = data.Details.Select(m => m.DaypartDefaultId).Distinct().ToList();
-
-                    if (_ShouldFilterByDaypartDefault(daypartDefaults, inventorySummaryFilterDto.DaypartDefaultId))
-                    {
-                        continue;
-                    }
+                    continue;
                 }
 
                 yield return _LoadInventorySummary(inventorySource, data, quarterDetail);
@@ -231,7 +214,7 @@ namespace Services.Broadcast.ApplicationServices
             Debug.WriteLine($"Got quarters in date range in {sw.Elapsed}");
 
             var inventoryAvailability = inventorySummaryFactory.GetInventoryAvailabilityBySource(inventorySource);
-            var daypartCodesAndIds = _DaypartDefaultRepository.GetAllActiveDaypartDefaults();
+            var daypartDefaultsAndIds = _DaypartDefaultRepository.GetAllActiveDaypartDefaults();
             foreach (var quarterDetail in allQuartersBetweenDates)
             {
                 InventoryQuarterSummary summaryData;
@@ -240,20 +223,25 @@ namespace Services.Broadcast.ApplicationServices
                 {
                     summaryData = inventorySummaryFactory.CreateInventorySummary
                         (inventorySource, householdAudienceId, quarterDetail,
-                        daypartCodesAndIds, inventoryAvailability);
+                        daypartDefaultsAndIds, inventoryAvailability);
                 }
                 else
                 {
                     var manifests = _GetInventorySummaryManifests(inventorySource, quarterDetail);
                     summaryData = inventorySummaryFactory.CreateInventorySummary
                     (inventorySource, householdAudienceId, quarterDetail, manifests,
-                    daypartCodesAndIds, inventoryAvailability);
+                    daypartDefaultsAndIds, inventoryAvailability);
                 }
                 sw.Stop();
                 Debug.WriteLine($"Created inventory summary in {sw.Elapsed}");
 
-                result.Add(summaryData);
+                // add summary only if there is some inventory during the quarter
+                if (summaryData.TotalStations > 0)
+                {
+                    result.Add(summaryData);
+                }
             }
+
             return result;
         }
         
@@ -284,11 +272,24 @@ namespace Services.Broadcast.ApplicationServices
             }
         }
 
-        private bool _ShouldFilterByDaypartDefault(List<int> daypartDefaultIds, int? daypartDefaultId)
+        private bool _ShouldFilterOutDataByDaypartDefault(InventoryQuarterSummary data, InventorySummaryFilterDto inventorySummaryFilterDto)
         {
-            if (!daypartDefaultId.HasValue)
-                return false;
-            return !daypartDefaultIds.Contains(daypartDefaultId.Value);
+            var daypartDefaultId = inventorySummaryFilterDto.DaypartDefaultId;
+
+            if (daypartDefaultId.HasValue)
+            {
+                // don't add empty objects
+                if (!data.HasInventorySourceSummary || !data.HasInventorySourceSummaryQuarterDetails)
+                {
+                    return true;
+                }
+
+                var daypartDefaultIds = data.Details.Select(m => m.DaypartDefaultId).Distinct().ToList();
+
+                return !daypartDefaultIds.Contains(daypartDefaultId.Value);
+            }
+
+            return false;
         }
 
         private bool _ShouldFilterBySourceType(InventorySummaryFilterDto inventorySummaryFilterDto, InventorySource inventorySource)
@@ -320,14 +321,15 @@ namespace Services.Broadcast.ApplicationServices
         private InventorySummaryDto _LoadInventorySummary(InventorySource inventorySource, InventoryQuarterSummary data, QuarterDetailDto quarterDetail)
         {
             var inventorySummaryFactory = _GetInventorySummaryFactory(inventorySource.InventoryType);
-            if (data != null && data.InventoryGaps.Any())
+
+            if (data.HasInventorySourceSummary)
             {
                 foreach (var gap in data.InventoryGaps)
                 {
                     gap.Quarter = _QuarterCalculationEngine.GetQuarterDetail(gap.Quarter.Quarter, gap.Quarter.Year);
                 }
             }
-            
+
             return inventorySummaryFactory.LoadInventorySummary(inventorySource, data, quarterDetail);
         }
 
@@ -387,41 +389,26 @@ namespace Services.Broadcast.ApplicationServices
 
         private List<QuarterDetailDto> _GetInventorySummaryQuarters(DateTime currentDate)
         {
-            var inventoriesDateRange = _GetAllInventoriesDateRange() ?? _GetCurrentQuarterDateRange(currentDate);
-            return _QuarterCalculationEngine.GetAllQuartersBetweenDates(inventoriesDateRange.Start.Value, inventoriesDateRange.End.Value);
+            var dateRange = _InventoryRepository.GetAllInventoriesDateRange();
+
+            if (dateRange.IsEmpty())
+            {
+                dateRange = _GetCurrentQuarterDateRange(currentDate);
+            }
+            
+            return _QuarterCalculationEngine.GetAllQuartersBetweenDates(dateRange.Start.Value, dateRange.End.Value);
         }
 
         private DateRange _GetInventorySourceOrCurrentQuarterDateRange(int inventorySourceId, DateTime currentDate)
         {
-            return _GetInventorySourceDateRange(inventorySourceId) ??
-                   _GetCurrentQuarterDateRange(currentDate);
-        }
+            var dateRange = _InventoryRepository.GetInventorySourceDateRange(inventorySourceId);
 
-        private DateRange _GetAllInventoriesDateRange()
-        {
-            var allInventoriesDateRange = _InventoryRepository.GetAllInventoriesDateRange();
+            if (dateRange.IsEmpty())
+            {
+                dateRange = _GetCurrentQuarterDateRange(currentDate);
+            }
 
-            return _GetDateRangeOrNull(allInventoriesDateRange);
-        }
-
-        private DateRange _GetInventorySourceDateRange(int inventorySourceId)
-        {
-            var inventorySourceDateRange = _InventoryRepository.GetInventorySourceDateRange(inventorySourceId);
-
-            return _GetDateRangeOrNull(inventorySourceDateRange);
-        }
-
-        private DateRange _GetDateRangeOrNull(DateRange dateRange)
-        {
-            var startDate = dateRange.Start;
-
-            if (!startDate.HasValue)
-                return null;
-
-            var startDateValue = startDate.Value;
-            var endDate = dateRange.End == null ? startDateValue.AddYears(1) : dateRange.End.Value;
-
-            return new DateRange(startDateValue, endDate);
+            return dateRange;
         }
 
         private DateRange _GetCurrentQuarterDateRange(DateTime currentDate)
@@ -465,10 +452,8 @@ namespace Services.Broadcast.ApplicationServices
                 var inventorySource = _InventoryRepository.GetInventorySource(inventorySourceId);
                 var inventorySummaryFactory = _GetInventorySummaryFactory(inventorySource.InventoryType);
                 var summaryData = _CreateInventorySummariesForSource(inventorySource, inventorySummaryFactory, houseHoldAudienceId, DateTime.Now);
-                foreach(var data in summaryData)
-                {
-                    _InventorySummaryRepository.SaveInventoryAggregatedData(data);
-                }                
+
+                _InventorySummaryRepository.SaveInventoryAggregatedData(summaryData, inventorySourceId);
             }
         }
     }
