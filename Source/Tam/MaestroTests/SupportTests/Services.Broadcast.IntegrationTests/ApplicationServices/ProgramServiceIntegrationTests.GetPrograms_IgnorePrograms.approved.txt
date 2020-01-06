@@ -14,13 +14,6 @@
     "Name": "Batman inicia"
   },
   {
-    "ContentRating": "PG-13",
-    "Genre": {
-      "Display": "Action/Adventure"
-    },
-    "Name": "Batman: Asalto en Arkham"
-  },
-  {
     "ContentRating": "",
     "Genre": {
       "Display": "Action/Adventure"

@@ -4,10 +4,10 @@ namespace Services.Broadcast.Entities.DTO.Program
 {
     public class SearchProgramDativaResponseDto
     {
-        [JsonProperty(PropertyName = "id")]
+        [JsonProperty(PropertyName = "program_id")]
         public string ProgramId { get; set; }
 
-        [JsonProperty(PropertyName = "program")]
+        [JsonProperty(PropertyName = "title")]
         public string ProgramName { get; set; }
 
         [JsonProperty(PropertyName = "genreid")]
@@ -16,13 +16,13 @@ namespace Services.Broadcast.Entities.DTO.Program
         [JsonProperty(PropertyName = "genre")]
         public string Genre { get; set; }
 
-        [JsonProperty(PropertyName = "showtype")]
+        [JsonProperty(PropertyName = "show_type")]
         public string ShowType { get; set; }
 
-        [JsonProperty(PropertyName = "mpaarating")]
+        [JsonProperty(PropertyName = "mpaa_rating")]
         public string MpaaRating { get; set; }
 
-        [JsonProperty(PropertyName = "syndicationtype")]
+        [JsonProperty(PropertyName = "syn_type")]
         public string SyndicationType { get; set; }
     }
 }

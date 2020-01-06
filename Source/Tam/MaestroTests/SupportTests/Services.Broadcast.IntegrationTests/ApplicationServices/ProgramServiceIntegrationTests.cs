@@ -1,51 +1,96 @@
 ﻿using ApprovalTests;
 using ApprovalTests.Reporters;
 using IntegrationTests.Common;
-using Moq;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
-using Services.Broadcast.Clients;
-using System.Collections.Generic;
-using Tam.Maestro.Data.Entities.DataTransferObjects;
-using Microsoft.Practices.Unity;
 using Services.Broadcast.Entities.DTO.Program;
+using System.Collections.Generic;
+using System.Linq;
+using Tam.Maestro.Data.Entities.DataTransferObjects;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
     [TestFixture]
     public class ProgramServiceIntegrationTests
     {
+        private readonly IProgramService _ProgramService = IntegrationTestApplicationServiceFactory.GetApplicationService<IProgramService>();
+
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void GetPrograms()
         {
-            var programService = _ResolveProgramService();
             var searchRequest = new SearchRequestProgramDto
             {
-                ProgramName = "search string",
-                IgnorePrograms = new List<string>
-                {
-                    "Ignore this program",
-                    "18 AgaiN!"
-                }
+                ProgramName = "batman"
             };
 
-            var programs = programService.GetPrograms(searchRequest, "IntegrationTestsUser");
+            var programs = _ProgramService.GetPrograms(searchRequest, "IntegrationTestsUser");
 
             _VerifyPrograms(programs);
         }
 
-        private static IProgramService _ResolveProgramService()
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetPrograms_Limited()
         {
-            var programsSearchApiClientMock = new Mock<IProgramsSearchApiClient>();
-            programsSearchApiClientMock
-                .Setup(x => x.GetPrograms(It.IsAny<SearchRequestProgramDto>()))
-                .Returns(_ProgramSearchApiClientPrograms);
+            var searchRequest = new SearchRequestProgramDto
+            {
+                ProgramName = "batman",
+                Start = 1,
+                Limit = 2
+            };
 
-            IntegrationTestApplicationServiceFactory.Instance.RegisterInstance(programsSearchApiClientMock.Object);
+            var programs = _ProgramService.GetPrograms(searchRequest, "IntegrationTestsUser");
 
-            return IntegrationTestApplicationServiceFactory.GetApplicationService<IProgramService>();
+            _VerifyPrograms(programs);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetPrograms_StartAt2ndIndex()
+        {
+            var searchRequest = new SearchRequestProgramDto
+            {
+                ProgramName = "batman",
+                Start = 2,
+                Limit = 2
+            };
+
+            var programs = _ProgramService.GetPrograms(searchRequest, "IntegrationTestsUser");
+
+            _VerifyPrograms(programs);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetPrograms_IgnorePrograms()
+        {
+            var searchRequest = new SearchRequestProgramDto
+            {
+                ProgramName = "batman",
+                IgnorePrograms = new List<string>
+                {
+                    "Batman: Asalto en Arkham"
+                }
+            };
+
+            var programs = _ProgramService.GetPrograms(searchRequest, "IntegrationTestsUser");
+
+            _VerifyPrograms(programs);
+        }
+
+        [Test]
+        public void GetPrograms_NoPrograms()
+        {
+            var searchRequest = new SearchRequestProgramDto
+            {
+                ProgramName = "00000000000000"
+            };
+
+            var programs = _ProgramService.GetPrograms(searchRequest, "IntegrationTestsUser");
+
+            Assert.IsFalse(programs.Any());
         }
 
         private static void _VerifyPrograms(List<ProgramDto> programs)
@@ -60,49 +105,5 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(programs, jsonSettings));
         }
-
-        private static readonly List<SearchProgramDativaResponseDto> _ProgramSearchApiClientPrograms = new List<SearchProgramDativaResponseDto>
-        {
-            new SearchProgramDativaResponseDto
-            {
-                ProgramId = "1",
-                ProgramName = "18 Again!",
-                GenreId = "1",
-                Genre = "Comedy",
-                ShowType = "Movie",
-                MpaaRating = "PG",
-                SyndicationType = "Syn"
-            },
-            new SearchProgramDativaResponseDto
-            {
-                ProgramId = "2",
-                ProgramName = "Z_ABBA: The Movie",
-                GenreId = "2",
-                Genre = "Investigative",
-                ShowType = "Movie",
-                MpaaRating = "PG1",
-                SyndicationType = "Syn"
-            },
-            new SearchProgramDativaResponseDto
-            {
-                ProgramId = "2",
-                ProgramName = "ABBA: The Movie",
-                GenreId = "2",
-                Genre = "Investigative",
-                ShowType = "Movie",
-                MpaaRating = "PG1",
-                SyndicationType = "Syn"
-            },
-            new SearchProgramDativaResponseDto
-            {
-                ProgramId = "2",
-                ProgramName = "Ignore this program",
-                GenreId = "2",
-                Genre = "Investigative",
-                ShowType = "Movie",
-                MpaaRating = "PG1",
-                SyndicationType = "Syn"
-            }
-        };
     }
 }

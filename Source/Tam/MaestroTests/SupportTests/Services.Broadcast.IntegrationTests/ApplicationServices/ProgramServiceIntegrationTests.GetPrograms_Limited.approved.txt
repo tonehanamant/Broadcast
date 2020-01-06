@@ -1,19 +1,5 @@
 ﻿[
   {
-    "ContentRating": "",
-    "Genre": {
-      "Display": "Action/Adventure"
-    },
-    "Name": "Batman"
-  },
-  {
-    "ContentRating": "PG-13",
-    "Genre": {
-      "Display": "Action/Adventure"
-    },
-    "Name": "Batman inicia"
-  },
-  {
     "ContentRating": "PG-13",
     "Genre": {
       "Display": "Action/Adventure"

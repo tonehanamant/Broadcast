@@ -242,6 +242,18 @@ namespace Services.Broadcast.IntegrationTests.Stubs
                 case "EnableProprietaryOAndOInventoryForPricingModel":
                     result = "True";
                     break;
+                case "ProgramsSearchUrl":
+                    result = @"https://h0ix5d7yhb.execute-api.us-east-1.amazonaws.com/staging/v1/programs/search/";
+                    break;
+                case "ProgramsSearchTokenUrl":
+                    result = @"https://dev-cmw.auth.us-east-1.amazoncognito.com/oauth2/token";
+                    break;
+                case "ProgramsSearchClientId":
+                    result = @"5e9kdecif9k6r7ttetgd4e500t";
+                    break;
+                case "ProgramsSearchEncryptedSecret":
+                    result = @"OJE8vVrWiuZrou5oVn/uVdCmMSCRf/7vhlBB9Uz9bG/dQkN8WKjS1gXV01ANViI+UvbDSI8XjCs=";
+                    break;
                 default:
                     throw new Exception("Unknown SystemComponentParameter: " + parameterId);
             }
