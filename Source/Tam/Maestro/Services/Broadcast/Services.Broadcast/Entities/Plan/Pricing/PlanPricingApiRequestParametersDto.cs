@@ -20,5 +20,6 @@ namespace Services.Broadcast.Entities.Plan.Pricing
         public List<PlanPricingMarketDto> Markets { get; set; }
         public double CoverageGoalPercent { get; set; }
         public List<PlanPricingInventorySourceDto> InventorySourcePercentages { get; set; }
+        public List<PlanPricingInventorySourceTypeDto> InventorySourceTypePercentages { get; set; }
     }
 }

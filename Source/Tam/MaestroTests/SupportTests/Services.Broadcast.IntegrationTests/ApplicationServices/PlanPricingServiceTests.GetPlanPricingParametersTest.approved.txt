@@ -106,9 +106,9 @@
     "InflationFactor": 0.5,
     "InventorySourcePercentages": [
       {
-        "Id": 3,
-        "Name": "TVB",
-        "Percentage": 12
+        "Id": 10,
+        "Name": "ABC O&O",
+        "Percentage": 16
       },
       {
         "Id": 5,
@@ -116,9 +116,9 @@
         "Percentage": 13
       },
       {
-        "Id": 6,
-        "Name": "Sinclair",
-        "Percentage": 14
+        "Id": 12,
+        "Name": "KATZ",
+        "Percentage": 8
       },
       {
         "Id": 7,
@@ -126,21 +126,22 @@
         "Percentage": 15
       },
       {
-        "Id": 10,
-        "Name": "ABC O&O",
-        "Percentage": 16
-      },
-      {
         "Id": 11,
         "Name": "NBC O&O",
         "Percentage": 17
       },
       {
-        "Id": 12,
-        "Name": "KATZ",
-        "Percentage": 8
+        "Id": 6,
+        "Name": "Sinclair",
+        "Percentage": 14
+      },
+      {
+        "Id": 3,
+        "Name": "TVB",
+        "Percentage": 12
       }
     ],
+    "InventorySourceTypePercentages": [],
     "MaxCpm": 10.0000,
     "MinCpm": 1.0000,
     "PlanId": 1197,

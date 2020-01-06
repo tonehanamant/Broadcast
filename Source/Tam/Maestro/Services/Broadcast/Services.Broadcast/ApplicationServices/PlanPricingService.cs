@@ -15,6 +15,7 @@ using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Tam.Maestro.Common;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 
@@ -43,9 +44,7 @@ namespace Services.Broadcast.ApplicationServices
     public class PlanPricingService : IPlanPricingService
     {
         private readonly IPlanRepository _PlanRepository;
-        private readonly IBroadcastAudienceRepository _BroadcastAudienceRepository;
         private readonly IPlanPricingInventoryEngine _PlanPricingInventoryEngine;
-        private readonly IBroadcastAudiencesCache _AudienceCache;
         private readonly ISpotLengthEngine _SpotLengthEngine;
         private readonly ISpotLengthRepository _SpotLengthRepository;
         private readonly IPricingApiClient _PricingApiClient;
@@ -54,26 +53,19 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IBroadcastLockingManagerApplicationService _LockingManagerApplicationService;
 
         public PlanPricingService(IDataRepositoryFactory broadcastDataRepositoryFactory,
-                                  IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
-                                  IDaypartCache daypartCache,
-                                  IBroadcastAudiencesCache audienceCache,
-                                  IImpressionAdjustmentEngine impressionAdjustmentEngine,
-                                  IImpressionsCalculationEngine impressionsCalculationEngine,
                                   ISpotLengthEngine spotLengthEngine,
                                   IPricingApiClient pricingApiClient,
                                   IBackgroundJobClient backgroundJobClient,
                                   IPlanPricingInventoryEngine planPricingInventoryEngine,
                                   IBroadcastLockingManagerApplicationService lockingManagerApplicationService)
         {
-            _BroadcastAudienceRepository = broadcastDataRepositoryFactory.GetDataRepository<IBroadcastAudienceRepository>();
             _PlanRepository = broadcastDataRepositoryFactory.GetDataRepository<IPlanRepository>();
             _SpotLengthRepository = broadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>();
-            _AudienceCache = audienceCache;
+            _InventoryRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
             _SpotLengthEngine = spotLengthEngine;
             _PricingApiClient = pricingApiClient;
             _BackgroundJobClient = backgroundJobClient;
             _PlanPricingInventoryEngine = planPricingInventoryEngine;
-            _InventoryRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
             _LockingManagerApplicationService = lockingManagerApplicationService;
         }
 
@@ -131,29 +123,14 @@ namespace Services.Broadcast.ApplicationServices
 
         public PlanPricingDefaults GetPlanPricingDefaults()
         {
-            // ids are different between environments so must go off the name
-            var planPricingSourceNames = new List<string>
-            {
-                "CNN", 
-                "TVB", 
-                "Sinclair",
-                "LilaMax",
-                "ABC O&O",
-                "KATZ",
-                "NBC O&O"
-            };
+            const int default_percent = 10;
+            var allSources = _InventoryRepository.GetInventorySources();
 
             var ppDefaults = new PlanPricingDefaults
             {
                 UnitCaps = 1,
-                InventorySourcePercentages = _InventoryRepository.GetInventorySources().Where(
-                        s => planPricingSourceNames.Contains(s.Name))
-                    .Select(s => new PlanPricingInventorySourceDto
-                    {
-                        Id = s.Id,
-                        Name = s.Name,
-                        Percentage = 10
-                    }).ToList()
+                InventorySourcePercentages = PlanPricingInventorySourceSortEngine.GetSortedInventorySourcePercents(default_percent, allSources),
+                InventorySourceTypePercentages = PlanPricingInventorySourceSortEngine.GetSortedInventorySourceTypePercents(default_percent)
             };
 
             return ppDefaults;
@@ -326,7 +303,8 @@ namespace Services.Broadcast.ApplicationServices
                 InflationFactor = planPricingParametersDto.InflationFactor,
                 UnitCaps = planPricingParametersDto.UnitCaps,
                 UnitCapType = planPricingParametersDto.UnitCapsType,
-                InventorySourcePercentages = planPricingParametersDto.InventorySourcePercentages
+                InventorySourcePercentages = planPricingParametersDto.InventorySourcePercentages,
+                InventorySourceTypePercentages = planPricingParametersDto.InventorySourceTypePercentages
             };
 
             return parameters;

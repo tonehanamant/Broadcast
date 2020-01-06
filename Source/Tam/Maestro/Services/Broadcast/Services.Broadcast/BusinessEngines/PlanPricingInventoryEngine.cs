@@ -1,5 +1,4 @@
-﻿using Common.Services;
-using Common.Services.ApplicationServices;
+﻿using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
 using Services.Broadcast.Cache;
 using Services.Broadcast.Entities;
@@ -25,24 +24,17 @@ namespace Services.Broadcast.BusinessEngines
 
     public class PlanPricingInventoryEngine : IPlanPricingInventoryEngine
     {
-        private readonly IPlanRepository _PlanRepository;
         private readonly IStationProgramRepository _StationProgramRepository;
         private readonly IImpressionsCalculationEngine _ImpressionsCalculationEngine;
-        private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekAggregateCache;
-        private readonly IDaypartCache _DaypartCache;
         private readonly IGenreCache _GenreCache;
+        
 
         public PlanPricingInventoryEngine(IDataRepositoryFactory broadcastDataRepositoryFactory,
-                                          IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
                                           IImpressionsCalculationEngine impressionsCalculationEngine,
-                                          IDaypartCache daypartCache,
                                           IGenreCache genreCache)
         {
-            _PlanRepository = broadcastDataRepositoryFactory.GetDataRepository<IPlanRepository>();
             _StationProgramRepository = broadcastDataRepositoryFactory.GetDataRepository<IStationProgramRepository>();
-            _MediaMonthAndWeekAggregateCache = mediaMonthAndWeekAggregateCache;
             _ImpressionsCalculationEngine = impressionsCalculationEngine;
-            _DaypartCache = daypartCache;
             _GenreCache = genreCache;
         }
 

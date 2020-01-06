@@ -6,5 +6,6 @@ namespace Services.Broadcast.Entities.Plan.Pricing
     {
         public int UnitCaps { get; set; }
         public List<PlanPricingInventorySourceDto> InventorySourcePercentages { get; set; }
+        public List<PlanPricingInventorySourceTypeDto> InventorySourceTypePercentages { get; set; }
     }
 }

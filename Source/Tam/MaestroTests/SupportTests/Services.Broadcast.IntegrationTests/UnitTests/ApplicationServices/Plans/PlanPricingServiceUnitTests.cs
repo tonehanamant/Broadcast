@@ -18,11 +18,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
     public class PlanPricingServiceUnitTests
     {
         private readonly Mock<IDataRepositoryFactory> _DataRepositoryFactoryMock;
-        private readonly Mock<IMediaMonthAndWeekAggregateCache> _MediaMonthAndWeekAggregateCacheMock;
-        private readonly Mock<IDaypartCache> _DaypartCacheMock;
-        private readonly Mock<IBroadcastAudiencesCache> _BroadcastAudiencesCacheMock;
-        private readonly Mock<IImpressionAdjustmentEngine> _ImpressionAdjustmentEngineMock;
-        private readonly Mock<IImpressionsCalculationEngine> _ImpressionsCalculationEngineMock;
         private readonly Mock<ISpotLengthEngine> _SpotLengthEngineMock;
         private readonly Mock<IPricingApiClient> _PricingApiClientMock;
         private readonly Mock<IBackgroundJobClient> _BackgroundJobClientMock;
@@ -32,11 +27,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         public PlanPricingServiceUnitTests()
         {
             _DataRepositoryFactoryMock = new Mock<IDataRepositoryFactory>();
-            _MediaMonthAndWeekAggregateCacheMock = new Mock<IMediaMonthAndWeekAggregateCache>();
-            _DaypartCacheMock = new Mock<IDaypartCache>();
-            _BroadcastAudiencesCacheMock = new Mock<IBroadcastAudiencesCache>();
-            _ImpressionAdjustmentEngineMock = new Mock<IImpressionAdjustmentEngine>();
-            _ImpressionsCalculationEngineMock = new Mock<IImpressionsCalculationEngine>();
             _SpotLengthEngineMock = new Mock<ISpotLengthEngine>();
             _PricingApiClientMock = new Mock<IPricingApiClient>();
             _BackgroundJobClientMock = new Mock<IBackgroundJobClient>();
@@ -66,11 +56,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             var service = new PlanPricingService(
                 _DataRepositoryFactoryMock.Object,
-                _MediaMonthAndWeekAggregateCacheMock.Object,
-                _DaypartCacheMock.Object,
-                _BroadcastAudiencesCacheMock.Object,
-                _ImpressionAdjustmentEngineMock.Object,
-                _ImpressionsCalculationEngineMock.Object,
                 _SpotLengthEngineMock.Object,
                 _PricingApiClientMock.Object,
                 _BackgroundJobClientMock.Object,

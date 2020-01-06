@@ -173,5 +173,7 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<scx_generation_jobs> scx_generation_jobs { get; set; }
         public virtual DbSet<station_inventory_manifest_dayparts> station_inventory_manifest_dayparts { get; set; }
         public virtual DbSet<daypart_defaults> daypart_defaults { get; set; }
+        public virtual DbSet<plan_version_pricing_parameters_inventory_source_type_percentages> plan_version_pricing_parameters_inventory_source_type_percentages { get; set; }
+        public virtual DbSet<plan_version_pricing_inventory_source_type_percentages> plan_version_pricing_inventory_source_type_percentages { get; set; }
     }
 }

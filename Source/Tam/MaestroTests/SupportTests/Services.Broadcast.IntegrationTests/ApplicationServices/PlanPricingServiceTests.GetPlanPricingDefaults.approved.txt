@@ -1,8 +1,8 @@
 ﻿{
   "InventorySourcePercentages": [
     {
-      "Id": 3,
-      "Name": "TVB",
+      "Id": 10,
+      "Name": "ABC O&O",
       "Percentage": 10
     },
     {
@@ -11,8 +11,8 @@
       "Percentage": 10
     },
     {
-      "Id": 6,
-      "Name": "Sinclair",
+      "Id": 12,
+      "Name": "KATZ",
       "Percentage": 10
     },
     {
@@ -21,18 +21,30 @@
       "Percentage": 10
     },
     {
-      "Id": 10,
-      "Name": "ABC O&O",
-      "Percentage": 10
-    },
-    {
       "Id": 11,
       "Name": "NBC O&O",
       "Percentage": 10
     },
     {
-      "Id": 12,
-      "Name": "KATZ",
+      "Id": 6,
+      "Name": "Sinclair",
+      "Percentage": 10
+    },
+    {
+      "Id": 3,
+      "Name": "TVB",
+      "Percentage": 10
+    }
+  ],
+  "InventorySourceTypePercentages": [
+    {
+      "Id": 4,
+      "Name": "Syndication",
+      "Percentage": 10
+    },
+    {
+      "Id": 5,
+      "Name": "Diginet",
       "Percentage": 10
     }
   ],

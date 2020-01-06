@@ -21,18 +21,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
     public class PlanPricingInventoryEngineUnitTests
     {
         private readonly Mock<IDataRepositoryFactory> _DataRepositoryFactoryMock;
-        private readonly Mock<IMediaMonthAndWeekAggregateCache> _MediaMonthAndWeekAggregateCacheMock;
         private readonly Mock<IImpressionsCalculationEngine> _ImpressionsCalculationEngineMock;
-        private readonly Mock<IDaypartCache> _DaypartCacheMock;
         private readonly Mock<IGenreCache> _GenreCache;
         private readonly PlanPricingInventoryEngine _PlanPricingInventoryEngine;
 
         public PlanPricingInventoryEngineUnitTests()
         {
             _DataRepositoryFactoryMock = new Mock<IDataRepositoryFactory>();
-            _MediaMonthAndWeekAggregateCacheMock = new Mock<IMediaMonthAndWeekAggregateCache>();
             _ImpressionsCalculationEngineMock = new Mock<IImpressionsCalculationEngine>();
-            _DaypartCacheMock = new Mock<IDaypartCache>();
             _GenreCache = new Mock<IGenreCache>();
 
             _GenreCache
@@ -41,9 +37,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
 
             _PlanPricingInventoryEngine = new PlanPricingInventoryEngine(
                 _DataRepositoryFactoryMock.Object,
-                _MediaMonthAndWeekAggregateCacheMock.Object,
                 _ImpressionsCalculationEngineMock.Object,
-                _DaypartCacheMock.Object,
                 _GenreCache.Object);
         }
 

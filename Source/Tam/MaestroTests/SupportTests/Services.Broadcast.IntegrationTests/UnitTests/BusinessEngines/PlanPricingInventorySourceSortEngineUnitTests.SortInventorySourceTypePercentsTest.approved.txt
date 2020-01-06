@@ -1,0 +1,22 @@
+﻿[
+  {
+    "Id": 4,
+    "Name": "Syndication",
+    "Percentage": 4
+  },
+  {
+    "Id": 5,
+    "Name": "Diginet",
+    "Percentage": 5
+  },
+  {
+    "Id": 20,
+    "Name": "Stranger2",
+    "Percentage": 20
+  },
+  {
+    "Id": 20,
+    "Name": "Stranger",
+    "Percentage": 20
+  }
+]

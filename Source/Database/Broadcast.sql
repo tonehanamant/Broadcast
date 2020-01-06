@@ -812,6 +812,60 @@ END
 /*************************************** END PRI-18256 *****************************************************/
 
 
+/*************************************** START - PRI-19669 ****************************************************/
+IF OBJECT_ID('plan_version_pricing_parameters_inventory_source_type_percentages') IS NULL
+BEGIN
+	CREATE TABLE [dbo].[plan_version_pricing_parameters_inventory_source_type_percentages](
+		[id] [int] IDENTITY(1,1) NOT NULL,
+		[plan_version_pricing_parameter_id] [int] NOT NULL,
+		[inventory_source_type] [tinyint] NOT NULL,
+		[percentage] [int] NOT NULL
+	 CONSTRAINT [PK_plan_version_pricing_parameters_inventory_source_type_percentages] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY]
+		
+	ALTER TABLE [dbo].[plan_version_pricing_parameters_inventory_source_type_percentages] 
+	WITH CHECK ADD CONSTRAINT [FK_plan_version_pricing_parameters_inventory_source_type_percentages_plan_version_pricing_parameters] FOREIGN KEY([plan_version_pricing_parameter_id])
+	REFERENCES [dbo].[plan_version_pricing_parameters] ([id])
+	ON DELETE CASCADE
+	
+	ALTER TABLE [dbo].[plan_version_pricing_parameters_inventory_source_type_percentages]
+	CHECK CONSTRAINT [FK_plan_version_pricing_parameters_inventory_source_type_percentages_plan_version_pricing_parameters]
+
+	ALTER TABLE [dbo].[plan_version_pricing_parameters_inventory_source_type_percentages]
+	ADD CONSTRAINT [UQ_plan_version_pricing_parameters_inventory_source_type_percentages_plan_version_pricing_parameter_id_inventory_source_type] 
+	UNIQUE ([plan_version_pricing_parameter_id], [inventory_source_type])
+END
+
+IF OBJECT_ID('plan_version_pricing_inventory_source_type_percentages') IS NULL
+BEGIN
+	CREATE TABLE [dbo].[plan_version_pricing_inventory_source_type_percentages](
+		[id] [int] IDENTITY(1,1) NOT NULL,
+		[plan_version_pricing_execution_id] [int] NOT NULL,
+		[inventory_source_type] [tinyint] NOT NULL,
+		[percentage] [int] NOT NULL
+	 CONSTRAINT [PK_plan_version_pricing_inventory_source_type_percentages] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY]
+		
+	ALTER TABLE [dbo].[plan_version_pricing_inventory_source_type_percentages] 
+	WITH CHECK ADD CONSTRAINT [FK_plan_version_pricing_inventory_source_type_percentages_plan_version_pricing_executions] FOREIGN KEY([plan_version_pricing_execution_id])
+	REFERENCES [dbo].[plan_version_pricing_executions] ([id])
+	ON DELETE CASCADE
+	
+	ALTER TABLE [dbo].[plan_version_pricing_inventory_source_type_percentages]
+	CHECK CONSTRAINT [FK_plan_version_pricing_inventory_source_type_percentages_plan_version_pricing_executions]
+
+	ALTER TABLE [dbo].[plan_version_pricing_inventory_source_type_percentages]
+	ADD CONSTRAINT [UQ_plan_version_pricing_inventory_source_type_percentages_plan_version_pricing_execution_id_inventory_source_type] 
+	UNIQUE ([plan_version_pricing_execution_id], [inventory_source_type])
+END
+/*************************************** END - PRI-19669 ****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

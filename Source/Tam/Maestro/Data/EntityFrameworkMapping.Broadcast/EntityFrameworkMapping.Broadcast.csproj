@@ -538,6 +538,9 @@
     <Compile Include="plan_version_pricing_inventory_source_percentages.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="plan_version_pricing_inventory_source_type_percentages.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="plan_version_pricing_job.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
@@ -545,6 +548,9 @@
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
     <Compile Include="plan_version_pricing_parameters_inventory_source_percentages.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="plan_version_pricing_parameters_inventory_source_type_percentages.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
     <Compile Include="plan_version_secondary_audiences.cs">
