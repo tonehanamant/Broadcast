@@ -4,167 +4,146 @@
     "DaypartType": 1,
     "DefaultEndTimeSeconds": 46800,
     "DefaultStartTimeSeconds": 14400,
-    "FullName": "AM News",
-    "Id": 23
+    "FullName": "AM News"
   },
   {
     "Code": "DAY",
     "DaypartType": 2,
     "DefaultEndTimeSeconds": 57600,
     "DefaultStartTimeSeconds": 32400,
-    "FullName": "Daytime",
-    "Id": 12
+    "FullName": "Daytime"
   },
   {
     "Code": "EF",
     "DaypartType": 2,
     "DefaultEndTimeSeconds": 64800,
     "DefaultStartTimeSeconds": 54000,
-    "FullName": "Early Fringe",
-    "Id": 6
+    "FullName": "Early Fringe"
   },
   {
     "Code": "EM",
     "DaypartType": 2,
     "DefaultEndTimeSeconds": 32400,
     "DefaultStartTimeSeconds": 21600,
-    "FullName": "Early morning",
-    "Id": 14
+    "FullName": "Early morning"
   },
   {
     "Code": "EMN",
     "DaypartType": 1,
     "DefaultEndTimeSeconds": 36000,
     "DefaultStartTimeSeconds": 14400,
-    "FullName": "Early Morning News",
-    "Id": 1
+    "FullName": "Early Morning News"
   },
   {
     "Code": "EN",
     "DaypartType": 1,
     "DefaultEndTimeSeconds": 68400,
     "DefaultStartTimeSeconds": 57600,
-    "FullName": "Evening News",
-    "Id": 3
+    "FullName": "Evening News"
   },
   {
     "Code": "ENLN",
     "DaypartType": 1,
     "DefaultEndTimeSeconds": 68400,
     "DefaultStartTimeSeconds": 57600,
-    "FullName": "Evening News/Late News",
-    "Id": 5
+    "FullName": "Evening News/Late News"
   },
   {
     "Code": "LF",
     "DaypartType": 2,
     "DefaultEndTimeSeconds": 7200,
     "DefaultStartTimeSeconds": 82800,
-    "FullName": "Late Fringe",
-    "Id": 9
+    "FullName": "Late Fringe"
   },
   {
     "Code": "LN",
     "DaypartType": 1,
     "DefaultEndTimeSeconds": 68400,
     "DefaultStartTimeSeconds": 57600,
-    "FullName": "Late News",
-    "Id": 4
+    "FullName": "Late News"
   },
   {
     "Code": "MDN",
     "DaypartType": 1,
     "DefaultEndTimeSeconds": 46800,
     "DefaultStartTimeSeconds": 39600,
-    "FullName": "Midday News",
-    "Id": 2
+    "FullName": "Midday News"
   },
   {
     "Code": "OVN",
     "DaypartType": 2,
     "DefaultEndTimeSeconds": 21600,
     "DefaultStartTimeSeconds": 7200,
-    "FullName": "Overnights",
-    "Id": 11
+    "FullName": "Overnights"
   },
   {
     "Code": "PA",
     "DaypartType": 2,
     "DefaultEndTimeSeconds": 72000,
     "DefaultStartTimeSeconds": 64800,
-    "FullName": "Prime Access",
-    "Id": 7
+    "FullName": "Prime Access"
   },
   {
     "Code": "PMN",
     "DaypartType": 1,
     "DefaultEndTimeSeconds": 68400,
     "DefaultStartTimeSeconds": 57600,
-    "FullName": "PM News",
-    "Id": 24
+    "FullName": "PM News"
   },
   {
     "Code": "PT",
     "DaypartType": 2,
     "DefaultEndTimeSeconds": 82800,
     "DefaultStartTimeSeconds": 72000,
-    "FullName": "Prime",
-    "Id": 8
+    "FullName": "Prime"
   },
   {
     "Code": "ROSN",
     "DaypartType": 1,
     "DefaultEndTimeSeconds": 68400,
     "DefaultStartTimeSeconds": 57600,
-    "FullName": "ROS News",
-    "Id": 26
+    "FullName": "ROS News"
   },
   {
     "Code": "ROSP",
     "DaypartType": 2,
     "DefaultEndTimeSeconds": 32400,
     "DefaultStartTimeSeconds": 21600,
-    "FullName": "ROS Programming",
-    "Id": 29
+    "FullName": "ROS Programming"
   },
   {
     "Code": "ROSS",
     "DaypartType": 2,
     "DefaultEndTimeSeconds": 32400,
     "DefaultStartTimeSeconds": 21600,
-    "FullName": "ROS Syndication",
-    "Id": 27
+    "FullName": "ROS Syndication"
   },
   {
     "Code": "SPORTS",
     "DaypartType": 2,
     "DefaultEndTimeSeconds": 32400,
     "DefaultStartTimeSeconds": 21600,
-    "FullName": "ROS Sports",
-    "Id": 28
+    "FullName": "ROS Sports"
   },
   {
     "Code": "SYN",
     "DaypartType": 2,
     "DefaultEndTimeSeconds": 7200,
     "DefaultStartTimeSeconds": 82800,
-    "FullName": "Total Day Syndication",
-    "Id": 10
+    "FullName": "Total Day Syndication"
   },
   {
     "Code": "TDN",
     "DaypartType": 1,
     "DefaultEndTimeSeconds": 68400,
     "DefaultStartTimeSeconds": 57600,
-    "FullName": "Total Day News",
-    "Id": 25
+    "FullName": "Total Day News"
   },
   {
     "Code": "TDNS",
     "DaypartType": 3,
     "DefaultEndTimeSeconds": 32400,
     "DefaultStartTimeSeconds": 21600,
-    "FullName": "Total Day News and Syndication",
-    "Id": 30
+    "FullName": "Total Day News and Syndication"
   }
 ]

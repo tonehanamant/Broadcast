@@ -1,8 +1,10 @@
 ﻿using ApprovalTests;
 using ApprovalTests.Reporters;
 using IntegrationTests.Common;
+using Newtonsoft.Json;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
+using Services.Broadcast.Entities;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
@@ -17,7 +19,15 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             var daypartCodes = _DaypartDefaultService.GetAllDaypartDefaults();
 
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(daypartCodes));
+            var jsonResolver = new IgnorableSerializerContractResolver();
+            jsonResolver.Ignore(typeof(DaypartDefaultDto), "Id");
+            var jsonSettings = new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                ContractResolver = jsonResolver
+            };
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(daypartCodes, jsonSettings));
         }
 
         [Test]
@@ -26,7 +36,15 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             var daypartDefaults = _DaypartDefaultService.GetAllDaypartDefaultsWithAllData();
 
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(daypartDefaults));
+            var jsonResolver = new IgnorableSerializerContractResolver();
+            jsonResolver.Ignore(typeof(DaypartDefaultDto), "Id");
+            var jsonSettings = new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                ContractResolver = jsonResolver
+            };
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(daypartDefaults, jsonSettings));
         }
     }
 }

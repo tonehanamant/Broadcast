@@ -97,693 +97,738 @@ BEGIN
 
 	-------------------------- BEGIN INSERT NEW DAYPART DEFAULTS ---------------------
 
-	DECLARE @INSERTED_DAYPART_ID INT
+	----------------- BEGIN EMN - Early Morning News ----------------------------
+	EXEC('DECLARE @INSERTED_DAYPART_ID INT
 	DECLARE @TIMESPAM_ID INT
 
-	----------------- BEGIN EMN - Early Morning News ----------------------------
 	SELECT @TIMESPAM_ID = id FROM timespans
-	WHERE start_time = DATEDIFF(second, 0, '4:00') AND end_time = DATEDIFF(second, 0, '10:00') -1
+	WHERE start_time = DATEDIFF(second, 0, ''4:00'') AND end_time = DATEDIFF(second, 0, ''10:00'') -1
 	IF @TIMESPAM_ID IS NULL
 	BEGIN 
 		INSERT INTO timespans
-		VALUES (DATEDIFF(second, 0, '4:00'), DATEDIFF(second, 0, '10:00') -1)
+		VALUES (DATEDIFF(second, 0, ''4:00''), DATEDIFF(second, 0, ''10:00'') -1)
 
 		SELECT @TIMESPAM_ID = SCOPE_IDENTITY()
 	END
 	INSERT INTO dayparts (timespan_id, code, name, tier, daypart_text, total_hours) VALUES 
-	(@TIMESPAM_ID, 'EMN', 'Early Morning News', 1, 'M-SU 4AM-10AM', 42)
+	(@TIMESPAM_ID, ''EMN'', ''Early Morning News'', 1, ''M-SU 4AM-10AM'', 42)
 
 	SELECT @INSERTED_DAYPART_ID = SCOPE_IDENTITY()
 
 	INSERT INTO daypart_days 
 	VALUES (@INSERTED_DAYPART_ID, 1), (@INSERTED_DAYPART_ID, 2), (@INSERTED_DAYPART_ID, 3), (@INSERTED_DAYPART_ID, 4), (@INSERTED_DAYPART_ID, 5), (@INSERTED_DAYPART_ID, 6), (@INSERTED_DAYPART_ID, 7)
 
-	IF EXISTS(SELECT 1 FROM daypart_defaults WHERE code = 'EMN')
+	IF EXISTS(SELECT 1 FROM daypart_defaults WHERE code = ''EMN'')
 	BEGIN
 		UPDATE daypart_defaults
 		SET daypart_id = @INSERTED_DAYPART_ID
-		WHERE code = 'EMN'
+		WHERE code = ''EMN''
 	END
 	ELSE
 	BEGIN
 		INSERT INTO daypart_defaults (daypart_id, daypart_type, code)
-		VALUES (@INSERTED_DAYPART_ID, 1, 'EMN')
-	END
+		VALUES (@INSERTED_DAYPART_ID, 1, ''EMN'')
+	END')
 
 	----------------- END EMN - Early Morning News ----------------------------
 
 	----------------- BEGIN MDN - Midday News ----------------------------
+	EXEC('DECLARE @INSERTED_DAYPART_ID INT
+	DECLARE @TIMESPAM_ID INT
+
 	SELECT @TIMESPAM_ID = id FROM timespans
-	WHERE start_time = DATEDIFF(second, 0, '11:00') AND end_time = DATEDIFF(second, 0, '13:00') -1
+	WHERE start_time = DATEDIFF(second, 0, ''11:00'') AND end_time = DATEDIFF(second, 0, ''13:00'') -1
 	IF @TIMESPAM_ID IS NULL
 	BEGIN 
 		INSERT INTO timespans
-		VALUES (DATEDIFF(second, 0, '11:00'), DATEDIFF(second, 0, '13:00') -1)
+		VALUES (DATEDIFF(second, 0, ''11:00''), DATEDIFF(second, 0, ''13:00'') -1)
 
 		SELECT @TIMESPAM_ID = SCOPE_IDENTITY()
 	END
 	INSERT INTO dayparts (timespan_id, code, name, tier, daypart_text, total_hours) VALUES 
-	(@TIMESPAM_ID,'MDN','Midday News', 1,'M-SU 11AM-1PM', 14)
+	(@TIMESPAM_ID,''MDN'',''Midday News'', 1,''M-SU 11AM-1PM'', 14)
 
 	SELECT @INSERTED_DAYPART_ID = SCOPE_IDENTITY()
 
 	INSERT INTO daypart_days 
 	VALUES (@INSERTED_DAYPART_ID, 1), (@INSERTED_DAYPART_ID, 2), (@INSERTED_DAYPART_ID, 3), (@INSERTED_DAYPART_ID, 4), (@INSERTED_DAYPART_ID, 5), (@INSERTED_DAYPART_ID, 6), (@INSERTED_DAYPART_ID, 7)
 
-	IF EXISTS(SELECT 1 FROM daypart_defaults WHERE code = 'MDN')
+	IF EXISTS(SELECT 1 FROM daypart_defaults WHERE code = ''MDN'')
 	BEGIN
 		UPDATE daypart_defaults
 		SET daypart_id = @INSERTED_DAYPART_ID
-		WHERE code = 'MDN'
+		WHERE code = ''MDN''
 	END
 	ELSE
 	BEGIN
 		INSERT INTO daypart_defaults (daypart_id, daypart_type, code)
-		VALUES (@INSERTED_DAYPART_ID, 1, 'MDN')
-	END
+		VALUES (@INSERTED_DAYPART_ID, 1, ''MDN'')
+	END')
 
 	----------------- END MDN - Midday News ----------------------------
 
 	----------------- BEGIN AMN - AM News ----------------------------
+	EXEC('DECLARE @INSERTED_DAYPART_ID INT
+	DECLARE @TIMESPAM_ID INT
+
 	SELECT @TIMESPAM_ID = id FROM timespans
-	WHERE start_time = DATEDIFF(second, 0, '4:00') AND end_time = DATEDIFF(second, 0, '13:00') -1
+	WHERE start_time = DATEDIFF(second, 0, ''4:00'') AND end_time = DATEDIFF(second, 0, ''13:00'') -1
 	IF @TIMESPAM_ID IS NULL
 	BEGIN 
 		INSERT INTO timespans
-		VALUES (DATEDIFF(second, 0, '4:00'), DATEDIFF(second, 0, '13:00') -1)
+		VALUES (DATEDIFF(second, 0, ''4:00''), DATEDIFF(second, 0, ''13:00'') -1)
 
 		SELECT @TIMESPAM_ID = SCOPE_IDENTITY()
 	END
 	INSERT INTO dayparts (timespan_id, code, name, tier, daypart_text, total_hours) VALUES 
-	(@TIMESPAM_ID,'AMN','AM News', 1,'M-SU 4AM-1PM', 63)
+	(@TIMESPAM_ID,''AMN'',''AM News'', 1,''M-SU 4AM-1PM'', 63)
 
 	SELECT @INSERTED_DAYPART_ID = SCOPE_IDENTITY()
 
 	INSERT INTO daypart_days 
 	VALUES (@INSERTED_DAYPART_ID, 1), (@INSERTED_DAYPART_ID, 2), (@INSERTED_DAYPART_ID, 3), (@INSERTED_DAYPART_ID, 4), (@INSERTED_DAYPART_ID, 5), (@INSERTED_DAYPART_ID, 6), (@INSERTED_DAYPART_ID, 7)
 
-	IF EXISTS(SELECT 1 FROM daypart_defaults WHERE code = 'AMN')
+	IF EXISTS(SELECT 1 FROM daypart_defaults WHERE code = ''AMN'')
 	BEGIN
 		UPDATE daypart_defaults
 		SET daypart_id = @INSERTED_DAYPART_ID
-		WHERE code = 'AMN'
+		WHERE code = ''AMN''
 	END
 	ELSE
 	BEGIN
 		INSERT INTO daypart_defaults (daypart_id, daypart_type, code)
-		VALUES (@INSERTED_DAYPART_ID, 1, 'AMN')
-	END
+		VALUES (@INSERTED_DAYPART_ID, 1, ''AMN'')
+	END')
 
 	----------------- END AMN - AM News ----------------------------
 
 	----------------- BEGIN EN - Evening News ----------------------------
+	EXEC('DECLARE @INSERTED_DAYPART_ID INT
+	DECLARE @TIMESPAM_ID INT
 
 	SELECT @TIMESPAM_ID = id FROM timespans
-	WHERE start_time = DATEDIFF(second, 0, '16:00') AND end_time = DATEDIFF(second, 0, '19:00') -1
+	WHERE start_time = DATEDIFF(second, 0, ''16:00'') AND end_time = DATEDIFF(second, 0, ''19:00'') -1
 	IF @TIMESPAM_ID IS NULL
 	BEGIN 
 		INSERT INTO timespans
-		VALUES (DATEDIFF(second, 0, '16:00'), DATEDIFF(second, 0, '19:00') -1)
+		VALUES (DATEDIFF(second, 0, ''16:00''), DATEDIFF(second, 0, ''19:00'') -1)
 
 		SELECT @TIMESPAM_ID = SCOPE_IDENTITY()
 	END
 	INSERT INTO dayparts (timespan_id, code, name, tier, daypart_text, total_hours) VALUES 
-	(@TIMESPAM_ID,'EN','Evening News', 1,'M-SU 4PM-7PM', 21)
+	(@TIMESPAM_ID,''EN'',''Evening News'', 1,''M-SU 4PM-7PM'', 21)
 
 	SELECT @INSERTED_DAYPART_ID = SCOPE_IDENTITY()
 
 	INSERT INTO daypart_days 
 	VALUES (@INSERTED_DAYPART_ID, 1), (@INSERTED_DAYPART_ID, 2), (@INSERTED_DAYPART_ID, 3), (@INSERTED_DAYPART_ID, 4), (@INSERTED_DAYPART_ID, 5), (@INSERTED_DAYPART_ID, 6), (@INSERTED_DAYPART_ID, 7)
 
-	IF EXISTS(SELECT 1 FROM daypart_defaults WHERE code = 'EN')
+	IF EXISTS(SELECT 1 FROM daypart_defaults WHERE code = ''EN'')
 	BEGIN
 		UPDATE daypart_defaults
 		SET daypart_id = @INSERTED_DAYPART_ID
-		WHERE code = 'EN'
+		WHERE code = ''EN''
 	END
 	ELSE
 	BEGIN
 		INSERT INTO daypart_defaults (daypart_id, daypart_type, code)
-		VALUES (@INSERTED_DAYPART_ID, 1, 'EN')
-	END
+		VALUES (@INSERTED_DAYPART_ID, 1, ''EN'')
+	END')
 
 	----------------- END EN - Evening News ----------------------------
 
 	----------------- BEGIN PMN - PM News ----------------------------
+	EXEC('DECLARE @INSERTED_DAYPART_ID INT
+	DECLARE @TIMESPAM_ID INT
 
 	SELECT @TIMESPAM_ID = id FROM timespans
-	WHERE start_time = DATEDIFF(second, 0, '13:00') AND end_time = DATEDIFF(second, 0, '0:05') -1
+	WHERE start_time = DATEDIFF(second, 0, ''13:00'') AND end_time = DATEDIFF(second, 0, ''0:05'') -1
 	IF @TIMESPAM_ID IS NULL
 	BEGIN 
 		INSERT INTO timespans
-		VALUES (DATEDIFF(second, 0, '13:00'), DATEDIFF(second, 0, '0:05') -1)
+		VALUES (DATEDIFF(second, 0, ''13:00''), DATEDIFF(second, 0, ''0:05'') -1)
 
 		SELECT @TIMESPAM_ID = SCOPE_IDENTITY()
 	END
 	INSERT INTO dayparts (timespan_id, code, name, tier, daypart_text, total_hours) VALUES 
-	(@TIMESPAM_ID,'PMN','PM News', 1,'M-SU 1PM-12:05AM', 77)
+	(@TIMESPAM_ID,''PMN'',''PM News'', 1,''M-SU 1PM-12:05AM'', 77)
 
 	SELECT @INSERTED_DAYPART_ID = SCOPE_IDENTITY()
 
 	INSERT INTO daypart_days 
 	VALUES (@INSERTED_DAYPART_ID, 1), (@INSERTED_DAYPART_ID, 2), (@INSERTED_DAYPART_ID, 3), (@INSERTED_DAYPART_ID, 4), (@INSERTED_DAYPART_ID, 5), (@INSERTED_DAYPART_ID, 6), (@INSERTED_DAYPART_ID, 7)
 
-	IF EXISTS(SELECT 1 FROM daypart_defaults WHERE code = 'PMN')
+	IF EXISTS(SELECT 1 FROM daypart_defaults WHERE code = ''PMN'')
 	BEGIN
 		UPDATE daypart_defaults
 		SET daypart_id = @INSERTED_DAYPART_ID
-		WHERE code = 'PMN'
+		WHERE code = ''PMN''
 	END
 	ELSE
 	BEGIN
 		INSERT INTO daypart_defaults (daypart_id, daypart_type, code)
-		VALUES (@INSERTED_DAYPART_ID, 1, 'PMN')
-	END
+		VALUES (@INSERTED_DAYPART_ID, 1, ''PMN'')
+	END')
 
 	----------------- END PMN - PM News ----------------------------
 
 	----------------- BEGIN LN - Late News ----------------------------
+	EXEC('DECLARE @INSERTED_DAYPART_ID INT
+	DECLARE @TIMESPAM_ID INT
 
 	SELECT @TIMESPAM_ID = id FROM timespans
-	WHERE start_time = DATEDIFF(second, 0, '20:00') AND end_time = DATEDIFF(second, 0, '0:05') -1
+	WHERE start_time = DATEDIFF(second, 0, ''20:00'') AND end_time = DATEDIFF(second, 0, ''0:05'') -1
 	IF @TIMESPAM_ID IS NULL
 	BEGIN 
 		INSERT INTO timespans
-		VALUES (DATEDIFF(second, 0, '20:00'), DATEDIFF(second, 0, '0:05') -1)
+		VALUES (DATEDIFF(second, 0, ''20:00''), DATEDIFF(second, 0, ''0:05'') -1)
 
 		SELECT @TIMESPAM_ID = SCOPE_IDENTITY()
 	END
 	INSERT INTO dayparts (timespan_id, code, name, tier, daypart_text, total_hours) VALUES 
-	(@TIMESPAM_ID,'LN','Late News', 1,'M-SU 8PM-12:05AM', 28)
+	(@TIMESPAM_ID,''LN'',''Late News'', 1,''M-SU 8PM-12:05AM'', 28)
 
 	SELECT @INSERTED_DAYPART_ID = SCOPE_IDENTITY()
 
 	INSERT INTO daypart_days 
 	VALUES (@INSERTED_DAYPART_ID, 1), (@INSERTED_DAYPART_ID, 2), (@INSERTED_DAYPART_ID, 3), (@INSERTED_DAYPART_ID, 4), (@INSERTED_DAYPART_ID, 5), (@INSERTED_DAYPART_ID, 6), (@INSERTED_DAYPART_ID, 7)
 
-	IF EXISTS(SELECT 1 FROM daypart_defaults WHERE code = 'LN')
+	IF EXISTS(SELECT 1 FROM daypart_defaults WHERE code = ''LN'')
 	BEGIN
 		UPDATE daypart_defaults
 		SET daypart_id = @INSERTED_DAYPART_ID
-		WHERE code = 'LN'
+		WHERE code = ''LN''
 	END
 	ELSE
 	BEGIN
 		INSERT INTO daypart_defaults (daypart_id, daypart_type, code)
-		VALUES (@INSERTED_DAYPART_ID, 1, 'LN')
-	END
+		VALUES (@INSERTED_DAYPART_ID, 1, ''LN'')
+	END')
 
 	----------------- END LN - Late News ----------------------------
 
 	----------------- BEGIN ENLN - Evening News/Late News ----------------------------
+	EXEC('DECLARE @INSERTED_DAYPART_ID INT
+	DECLARE @TIMESPAM_ID INT
 
 	SELECT @TIMESPAM_ID = id FROM timespans
-	WHERE start_time = DATEDIFF(second, 0, '16:00') AND end_time = DATEDIFF(second, 0, '0:05') -1
+	WHERE start_time = DATEDIFF(second, 0, ''16:00'') AND end_time = DATEDIFF(second, 0, ''0:05'') -1
 	IF @TIMESPAM_ID IS NULL
 	BEGIN 
 		INSERT INTO timespans
-		VALUES (DATEDIFF(second, 0, '16:00'), DATEDIFF(second, 0, '0:05') -1)
+		VALUES (DATEDIFF(second, 0, ''16:00''), DATEDIFF(second, 0, ''0:05'') -1)
 
 		SELECT @TIMESPAM_ID = SCOPE_IDENTITY()
 	END
 	INSERT INTO dayparts (timespan_id, code, name, tier, daypart_text, total_hours) VALUES 
-	(@TIMESPAM_ID,'ENLN','Evening News/Late News', 1,'M-SU 4PM-12:05AM', 56)
+	(@TIMESPAM_ID,''ENLN'',''Evening News/Late News'', 1,''M-SU 4PM-12:05AM'', 56)
 
 	SELECT @INSERTED_DAYPART_ID = SCOPE_IDENTITY()
 
 	INSERT INTO daypart_days 
 	VALUES (@INSERTED_DAYPART_ID, 1), (@INSERTED_DAYPART_ID, 2), (@INSERTED_DAYPART_ID, 3), (@INSERTED_DAYPART_ID, 4), (@INSERTED_DAYPART_ID, 5), (@INSERTED_DAYPART_ID, 6), (@INSERTED_DAYPART_ID, 7)
 
-	IF EXISTS(SELECT 1 FROM daypart_defaults WHERE code = 'ENLN')
+	IF EXISTS(SELECT 1 FROM daypart_defaults WHERE code = ''ENLN'')
 	BEGIN
 		UPDATE daypart_defaults
 		SET daypart_id = @INSERTED_DAYPART_ID
-		WHERE code = 'ENLN'
+		WHERE code = ''ENLN''
 	END
 	ELSE
 	BEGIN
 		INSERT INTO daypart_defaults (daypart_id, daypart_type, code)
-		VALUES (@INSERTED_DAYPART_ID, 1, 'ENLN')
-	END
+		VALUES (@INSERTED_DAYPART_ID, 1, ''ENLN'')
+	END')
 
 	----------------- END ENLN - Evening News/Late News ----------------------------
-
+	
 	----------------- BEGIN TDN - Total Day News ----------------------------
+	EXEC('DECLARE @INSERTED_DAYPART_ID INT
+	DECLARE @TIMESPAM_ID INT
 
 	SELECT @TIMESPAM_ID = id FROM timespans
-	WHERE start_time = DATEDIFF(second, 0, '16:00') AND end_time = DATEDIFF(second, 0, '0:05') -1
+	WHERE start_time = DATEDIFF(second, 0, ''4:00'') AND end_time = DATEDIFF(second, 0, ''0:05'') -1
 	IF @TIMESPAM_ID IS NULL
 	BEGIN 
 		INSERT INTO timespans
-		VALUES (DATEDIFF(second, 0, '16:00'), DATEDIFF(second, 0, '0:05') -1)
+		VALUES (DATEDIFF(second, 0, ''4:00''), DATEDIFF(second, 0, ''0:05'') -1)
 
 		SELECT @TIMESPAM_ID = SCOPE_IDENTITY()
 	END
 	INSERT INTO dayparts (timespan_id, code, name, tier, daypart_text, total_hours) VALUES 
-	(@TIMESPAM_ID,'TDN','Total Day News', 1,'M-SU 4AM-12:05AM', 140)
+	(@TIMESPAM_ID,''TDN'',''Total Day News'', 1,''M-SU 4AM-12:05AM'', 140)
 
 	SELECT @INSERTED_DAYPART_ID = SCOPE_IDENTITY()
 
 	INSERT INTO daypart_days 
 	VALUES (@INSERTED_DAYPART_ID, 1), (@INSERTED_DAYPART_ID, 2), (@INSERTED_DAYPART_ID, 3), (@INSERTED_DAYPART_ID, 4), (@INSERTED_DAYPART_ID, 5), (@INSERTED_DAYPART_ID, 6), (@INSERTED_DAYPART_ID, 7)
 
-	IF EXISTS(SELECT 1 FROM daypart_defaults WHERE code = 'TDN')
+	IF EXISTS(SELECT 1 FROM daypart_defaults WHERE code = ''TDN'')
 	BEGIN
 		UPDATE daypart_defaults
 		SET daypart_id = @INSERTED_DAYPART_ID
-		WHERE code = 'TDN'
+		WHERE code = ''TDN''
 	END
 	ELSE
 	BEGIN
 		INSERT INTO daypart_defaults (daypart_id, daypart_type, code)
-		VALUES (@INSERTED_DAYPART_ID, 1, 'TDN')
-	END
+		VALUES (@INSERTED_DAYPART_ID, 1, ''TDN'')
+	END')
 
 	----------------- END TDN - Total Day News ----------------------------
 
 	----------------- BEGIN ROSN - ROS News ----------------------------
+	EXEC('DECLARE @INSERTED_DAYPART_ID INT
+	DECLARE @TIMESPAM_ID INT
+
 	SELECT @TIMESPAM_ID = id FROM timespans
-	WHERE start_time = DATEDIFF(second, 0, '4:00') AND end_time = DATEDIFF(second, 0, '0:05') -1
+	WHERE start_time = DATEDIFF(second, 0, ''4:00'') AND end_time = DATEDIFF(second, 0, ''0:05'') -1
 	IF @TIMESPAM_ID IS NULL
 	BEGIN 
 		INSERT INTO timespans
-		VALUES (DATEDIFF(second, 0, '4:00'), DATEDIFF(second, 0, '0:05') -1)
+		VALUES (DATEDIFF(second, 0, ''4:00''), DATEDIFF(second, 0, ''0:05'') -1)
 
 		SELECT @TIMESPAM_ID = SCOPE_IDENTITY()
 	END
 	INSERT INTO dayparts (timespan_id, code, name, tier, daypart_text, total_hours) VALUES 
-	(@TIMESPAM_ID,'ROSN','ROS News', 1,'M-SU 4AM-12:05AM', 140)
+	(@TIMESPAM_ID,''ROSN'',''ROS News'', 1,''M-SU 4AM-12:05AM'', 140)
 
 	SELECT @INSERTED_DAYPART_ID = SCOPE_IDENTITY()
 
 	INSERT INTO daypart_days 
 	VALUES (@INSERTED_DAYPART_ID, 1), (@INSERTED_DAYPART_ID, 2), (@INSERTED_DAYPART_ID, 3), (@INSERTED_DAYPART_ID, 4), (@INSERTED_DAYPART_ID, 5), (@INSERTED_DAYPART_ID, 6), (@INSERTED_DAYPART_ID, 7)
 
-	IF EXISTS(SELECT 1 FROM daypart_defaults WHERE code = 'ROSN')
+	IF EXISTS(SELECT 1 FROM daypart_defaults WHERE code = ''ROSN'')
 	BEGIN
 		UPDATE daypart_defaults
 		SET daypart_id = @INSERTED_DAYPART_ID
-		WHERE code = 'ROSN'
+		WHERE code = ''ROSN''
 	END
 	ELSE
 	BEGIN
 		INSERT INTO daypart_defaults (daypart_id, daypart_type, code)
-		VALUES (@INSERTED_DAYPART_ID, 1, 'ROSN')
-	END
+		VALUES (@INSERTED_DAYPART_ID, 1, ''ROSN'')
+	END')
 
 	----------------- END ROSN - ROS News ----------------------------
 
 	----------------- BEGIN EF - Early Fringe ----------------------------
+	EXEC('DECLARE @INSERTED_DAYPART_ID INT
+	DECLARE @TIMESPAM_ID INT
+
 	SELECT @TIMESPAM_ID = id FROM timespans
-	WHERE start_time = DATEDIFF(second, 0, '15:00') AND end_time = DATEDIFF(second, 0, '18:00') -1
+	WHERE start_time = DATEDIFF(second, 0, ''15:00'') AND end_time = DATEDIFF(second, 0, ''18:00'') -1
 	IF @TIMESPAM_ID IS NULL
 	BEGIN 
 		INSERT INTO timespans
-		VALUES (DATEDIFF(second, 0, '15:00'), DATEDIFF(second, 0, '18:00') -1)
+		VALUES (DATEDIFF(second, 0, ''15:00''), DATEDIFF(second, 0, ''18:00'') -1)
 
 		SELECT @TIMESPAM_ID = SCOPE_IDENTITY()
 	END
 	INSERT INTO dayparts (timespan_id, code, name, tier, daypart_text, total_hours) VALUES 
-	(@TIMESPAM_ID,'EF','Early Fringe', 1,'M-SU 3PM-6PM', 21)
+	(@TIMESPAM_ID,''EF'',''Early Fringe'', 1,''M-SU 3PM-6PM'', 21)
 
 	SELECT @INSERTED_DAYPART_ID = SCOPE_IDENTITY()
 
 	INSERT INTO daypart_days 
 	VALUES (@INSERTED_DAYPART_ID, 1), (@INSERTED_DAYPART_ID, 2), (@INSERTED_DAYPART_ID, 3), (@INSERTED_DAYPART_ID, 4), (@INSERTED_DAYPART_ID, 5), (@INSERTED_DAYPART_ID, 6), (@INSERTED_DAYPART_ID, 7)
 
-	IF EXISTS(SELECT 1 FROM daypart_defaults WHERE code = 'EF')
+	IF EXISTS(SELECT 1 FROM daypart_defaults WHERE code = ''EF'')
 	BEGIN
 		UPDATE daypart_defaults
 		SET daypart_id = @INSERTED_DAYPART_ID
-		WHERE code = 'EF'
+		WHERE code = ''EF''
 	END
 	ELSE
 	BEGIN
 		INSERT INTO daypart_defaults (daypart_id, daypart_type, code)
-		VALUES (@INSERTED_DAYPART_ID, 2, 'EF')
-	END
+		VALUES (@INSERTED_DAYPART_ID, 2, ''EF'')
+	END')
 
 	----------------- END EF - Early Fringe ----------------------------
 
 	----------------- BEGIN PA - Prime Access ----------------------------
+	EXEC('DECLARE @INSERTED_DAYPART_ID INT
+	DECLARE @TIMESPAM_ID INT
+
 	SELECT @TIMESPAM_ID = id FROM timespans
-	WHERE start_time = DATEDIFF(second, 0, '18:00') AND end_time = DATEDIFF(second, 0, '20:00') -1
+	WHERE start_time = DATEDIFF(second, 0, ''18:00'') AND end_time = DATEDIFF(second, 0, ''20:00'') -1
 	IF @TIMESPAM_ID IS NULL
 	BEGIN 
 		INSERT INTO timespans
-		VALUES (DATEDIFF(second, 0, '18:00'), DATEDIFF(second, 0, '20:00') -1)
+		VALUES (DATEDIFF(second, 0, ''18:00''), DATEDIFF(second, 0, ''20:00'') -1)
 
 		SELECT @TIMESPAM_ID = SCOPE_IDENTITY()
 	END
 	INSERT INTO dayparts (timespan_id, code, name, tier, daypart_text, total_hours) VALUES 
-	(@TIMESPAM_ID,'PA','Prime Access', 1,'M-SU 6PM-8PM', 14)
+	(@TIMESPAM_ID,''PA'',''Prime Access'', 1,''M-SU 6PM-8PM'', 14)
 
 	SELECT @INSERTED_DAYPART_ID = SCOPE_IDENTITY()
 
 	INSERT INTO daypart_days 
 	VALUES (@INSERTED_DAYPART_ID, 1), (@INSERTED_DAYPART_ID, 2), (@INSERTED_DAYPART_ID, 3), (@INSERTED_DAYPART_ID, 4), (@INSERTED_DAYPART_ID, 5), (@INSERTED_DAYPART_ID, 6), (@INSERTED_DAYPART_ID, 7)
 
-	IF EXISTS(SELECT 1 FROM daypart_defaults WHERE code = 'PA')
+	IF EXISTS(SELECT 1 FROM daypart_defaults WHERE code = ''PA'')
 	BEGIN
 		UPDATE daypart_defaults
 		SET daypart_id = @INSERTED_DAYPART_ID
-		WHERE code = 'PA'
+		WHERE code = ''PA''
 	END
 	ELSE
 	BEGIN
 		INSERT INTO daypart_defaults (daypart_id, daypart_type, code)
-		VALUES (@INSERTED_DAYPART_ID, 2, 'PA')
-	END
+		VALUES (@INSERTED_DAYPART_ID, 2, ''PA'')
+	END')
 
 	----------------- END PA - Prime Access ----------------------------
 
 	----------------- BEGIN PT - Prime ----------------------------
+	EXEC('DECLARE @INSERTED_DAYPART_ID INT
+	DECLARE @TIMESPAM_ID INT
 
 	SELECT @TIMESPAM_ID = id FROM timespans
-	WHERE start_time = DATEDIFF(second, 0, '20:00') AND end_time = DATEDIFF(second, 0, '23:00') -1
+	WHERE start_time = DATEDIFF(second, 0, ''20:00'') AND end_time = DATEDIFF(second, 0, ''23:00'') -1
 	IF @TIMESPAM_ID IS NULL
 	BEGIN 
 		INSERT INTO timespans
-		VALUES (DATEDIFF(second, 0, '20:00'), DATEDIFF(second, 0, '23:00') -1)
+		VALUES (DATEDIFF(second, 0, ''20:00''), DATEDIFF(second, 0, ''23:00'') -1)
 
 		SELECT @TIMESPAM_ID = SCOPE_IDENTITY()
 	END
 	INSERT INTO dayparts (timespan_id, code, name, tier, daypart_text, total_hours) VALUES 
-	(@TIMESPAM_ID,'PT','Prime', 1,'M-SU 8PM-11PM', 21)
+	(@TIMESPAM_ID,''PT'',''Prime'', 1,''M-SU 8PM-11PM'', 21)
 
 	SELECT @INSERTED_DAYPART_ID = SCOPE_IDENTITY()
 
 	INSERT INTO daypart_days 
 	VALUES (@INSERTED_DAYPART_ID, 1), (@INSERTED_DAYPART_ID, 2), (@INSERTED_DAYPART_ID, 3), (@INSERTED_DAYPART_ID, 4), (@INSERTED_DAYPART_ID, 5), (@INSERTED_DAYPART_ID, 6), (@INSERTED_DAYPART_ID, 7)
 
-	IF EXISTS(SELECT 1 FROM daypart_defaults WHERE code = 'PT')
+	IF EXISTS(SELECT 1 FROM daypart_defaults WHERE code = ''PT'')
 	BEGIN
 		UPDATE daypart_defaults
 		SET daypart_id = @INSERTED_DAYPART_ID
-		WHERE code = 'PT'
+		WHERE code = ''PT''
 	END
 	ELSE
 	BEGIN
 		INSERT INTO daypart_defaults (daypart_id, daypart_type, code)
-		VALUES (@INSERTED_DAYPART_ID, 2, 'PT')
-	END
+		VALUES (@INSERTED_DAYPART_ID, 2, ''PT'')
+	END')
 
 	----------------- END PT - Prime ----------------------------
 
 	----------------- BEGIN LF - Late Fringe ----------------------------
+	EXEC('DECLARE @INSERTED_DAYPART_ID INT
+	DECLARE @TIMESPAM_ID INT
 
 	SELECT @TIMESPAM_ID = id FROM timespans
-	WHERE start_time = DATEDIFF(second, 0, '23:00') AND end_time = DATEDIFF(second, 0, '2:00') -1
+	WHERE start_time = DATEDIFF(second, 0, ''23:00'') AND end_time = DATEDIFF(second, 0, ''2:00'') -1
 	IF @TIMESPAM_ID IS NULL
 	BEGIN 
 		INSERT INTO timespans
-		VALUES (DATEDIFF(second, 0, '23:00'), DATEDIFF(second, 0, '2:00') -1)
+		VALUES (DATEDIFF(second, 0, ''23:00''), DATEDIFF(second, 0, ''2:00'') -1)
 
 		SELECT @TIMESPAM_ID = SCOPE_IDENTITY()
 	END
 	INSERT INTO dayparts (timespan_id, code, name, tier, daypart_text, total_hours) VALUES 
-	(@TIMESPAM_ID,'LF','Late Fringe', 1,'M-SU 11PM-2AM', 21)
+	(@TIMESPAM_ID,''LF'',''Late Fringe'', 1,''M-SU 11PM-2AM'', 21)
 
 	SELECT @INSERTED_DAYPART_ID = SCOPE_IDENTITY()
 
 	INSERT INTO daypart_days 
 	VALUES (@INSERTED_DAYPART_ID, 1), (@INSERTED_DAYPART_ID, 2), (@INSERTED_DAYPART_ID, 3), (@INSERTED_DAYPART_ID, 4), (@INSERTED_DAYPART_ID, 5), (@INSERTED_DAYPART_ID, 6), (@INSERTED_DAYPART_ID, 7)
 
-	IF EXISTS(SELECT 1 FROM daypart_defaults WHERE code = 'LF')
+	IF EXISTS(SELECT 1 FROM daypart_defaults WHERE code = ''LF'')
 	BEGIN
 		UPDATE daypart_defaults
 		SET daypart_id = @INSERTED_DAYPART_ID
-		WHERE code = 'LF'
+		WHERE code = ''LF''
 	END
 	ELSE
 	BEGIN
 		INSERT INTO daypart_defaults (daypart_id, daypart_type, code)
-		VALUES (@INSERTED_DAYPART_ID, 2, 'LF')
-	END
+		VALUES (@INSERTED_DAYPART_ID, 2, ''LF'')
+	END')
 
 	----------------- END LF - Late Fringe ----------------------------
 
 	----------------- BEGIN SYN - Total Day Syndication ----------------------------
+	EXEC('DECLARE @INSERTED_DAYPART_ID INT
+	DECLARE @TIMESPAM_ID INT
 
 	SELECT @TIMESPAM_ID = id FROM timespans
-	WHERE start_time = DATEDIFF(second, 0, '6:00') AND end_time = DATEDIFF(second, 0, '2:05') -1
+	WHERE start_time = DATEDIFF(second, 0, ''6:00'') AND end_time = DATEDIFF(second, 0, ''2:05'') -1
 	IF @TIMESPAM_ID IS NULL
 	BEGIN 
 		INSERT INTO timespans
-		VALUES (DATEDIFF(second, 0, '6:00'), DATEDIFF(second, 0, '2:05') -1)
+		VALUES (DATEDIFF(second, 0, ''6:00''), DATEDIFF(second, 0, ''2:05'') -1)
 
 		SELECT @TIMESPAM_ID = SCOPE_IDENTITY()
 	END
 	INSERT INTO dayparts (timespan_id, code, name, tier, daypart_text, total_hours) VALUES 
-	(@TIMESPAM_ID,'SYN','Total Day Syndication', 1,'M-SU 6AM-2:05AM', 126)
+	(@TIMESPAM_ID,''SYN'',''Total Day Syndication'', 1,''M-SU 6AM-2:05AM'', 126)
 
 	SELECT @INSERTED_DAYPART_ID = SCOPE_IDENTITY()
 
 	INSERT INTO daypart_days 
 	VALUES (@INSERTED_DAYPART_ID, 1), (@INSERTED_DAYPART_ID, 2), (@INSERTED_DAYPART_ID, 3), (@INSERTED_DAYPART_ID, 4), (@INSERTED_DAYPART_ID, 5), (@INSERTED_DAYPART_ID, 6), (@INSERTED_DAYPART_ID, 7)
 
-	IF EXISTS(SELECT 1 FROM daypart_defaults WHERE code = 'SYN')
+	IF EXISTS(SELECT 1 FROM daypart_defaults WHERE code = ''SYN'')
 	BEGIN
 		UPDATE daypart_defaults
 		SET daypart_id = @INSERTED_DAYPART_ID
-		WHERE code = 'SYN'
+		WHERE code = ''SYN''
 	END
 	ELSE
 	BEGIN
 		INSERT INTO daypart_defaults (daypart_id, daypart_type, code)
-		VALUES (@INSERTED_DAYPART_ID, 2, 'SYN')
-	END
+		VALUES (@INSERTED_DAYPART_ID, 2, ''SYN'')
+	END')
 
 	----------------- END SYN - Total Day Syndication ----------------------------
 
 	----------------- BEGIN DAY - Daytime ----------------------------
+	EXEC('DECLARE @INSERTED_DAYPART_ID INT
+	DECLARE @TIMESPAM_ID INT
 
 	SELECT @TIMESPAM_ID = id FROM timespans
-	WHERE start_time = DATEDIFF(second, 0, '9:00') AND end_time = DATEDIFF(second, 0, '16:00') -1
+	WHERE start_time = DATEDIFF(second, 0, ''9:00'') AND end_time = DATEDIFF(second, 0, ''16:00'') -1
 	IF @TIMESPAM_ID IS NULL
 	BEGIN 
 		INSERT INTO timespans
-		VALUES (DATEDIFF(second, 0, '9:00'), DATEDIFF(second, 0, '16:00') -1)
+		VALUES (DATEDIFF(second, 0, ''9:00''), DATEDIFF(second, 0, ''16:00'') -1)
 
 		SELECT @TIMESPAM_ID = SCOPE_IDENTITY()
 	END
 	INSERT INTO dayparts (timespan_id, code, name, tier, daypart_text, total_hours) VALUES 
-	(@TIMESPAM_ID,'DAY','Daytime', 1,'M-SU 9AM-4PM', 49)
+	(@TIMESPAM_ID,''DAY'',''Daytime'', 1,''M-SU 9AM-4PM'', 49)
 
 	SELECT @INSERTED_DAYPART_ID = SCOPE_IDENTITY()
 
 	INSERT INTO daypart_days 
 	VALUES (@INSERTED_DAYPART_ID, 1), (@INSERTED_DAYPART_ID, 2), (@INSERTED_DAYPART_ID, 3), (@INSERTED_DAYPART_ID, 4), (@INSERTED_DAYPART_ID, 5), (@INSERTED_DAYPART_ID, 6), (@INSERTED_DAYPART_ID, 7)
 
-	IF EXISTS(SELECT 1 FROM daypart_defaults WHERE code = 'DAY')
+	IF EXISTS(SELECT 1 FROM daypart_defaults WHERE code = ''DAY'')
 	BEGIN
 		UPDATE daypart_defaults
 		SET daypart_id = @INSERTED_DAYPART_ID
-		WHERE code = 'DAY'
+		WHERE code = ''DAY''
 	END
 	ELSE
 	BEGIN
 		INSERT INTO daypart_defaults (daypart_id, daypart_type, code)
-		VALUES (@INSERTED_DAYPART_ID, 2, 'DAY')
-	END
+		VALUES (@INSERTED_DAYPART_ID, 2, ''DAY'')
+	END')
 
 	----------------- END DAY - Daytime ----------------------------
 
 	----------------- BEGIN OVN - Overnights ----------------------------
+	EXEC('DECLARE @INSERTED_DAYPART_ID INT
+	DECLARE @TIMESPAM_ID INT
 
 	SELECT @TIMESPAM_ID = id FROM timespans
-	WHERE start_time = DATEDIFF(second, 0, '2:00') AND end_time = DATEDIFF(second, 0, '6:00') -1
+	WHERE start_time = DATEDIFF(second, 0, ''2:00'') AND end_time = DATEDIFF(second, 0, ''6:00'') -1
 	IF @TIMESPAM_ID IS NULL
 	BEGIN 
 		INSERT INTO timespans
-		VALUES (DATEDIFF(second, 0, '2:00'), DATEDIFF(second, 0, '6:00') -1)
+		VALUES (DATEDIFF(second, 0, ''2:00''), DATEDIFF(second, 0, ''6:00'') -1)
 
 		SELECT @TIMESPAM_ID = SCOPE_IDENTITY()
 	END
 	INSERT INTO dayparts (timespan_id, code, name, tier, daypart_text, total_hours) VALUES 
-	(@TIMESPAM_ID,'OVN','Overnights', 1,'M-SU 2AM-6AM', 28)
+	(@TIMESPAM_ID,''OVN'',''Overnights'', 1,''M-SU 2AM-6AM'', 28)
 
 	SELECT @INSERTED_DAYPART_ID = SCOPE_IDENTITY()
 
 	INSERT INTO daypart_days 
 	VALUES (@INSERTED_DAYPART_ID, 1), (@INSERTED_DAYPART_ID, 2), (@INSERTED_DAYPART_ID, 3), (@INSERTED_DAYPART_ID, 4), (@INSERTED_DAYPART_ID, 5), (@INSERTED_DAYPART_ID, 6), (@INSERTED_DAYPART_ID, 7)
 
-	IF EXISTS(SELECT 1 FROM daypart_defaults WHERE code = 'OVN')
+	IF EXISTS(SELECT 1 FROM daypart_defaults WHERE code = ''OVN'')
 	BEGIN
 		UPDATE daypart_defaults
 		SET daypart_id = @INSERTED_DAYPART_ID
-		WHERE code = 'OVN'
+		WHERE code = ''OVN''
 	END
 	ELSE
 	BEGIN
 		INSERT INTO daypart_defaults (daypart_id, daypart_type, code)
-		VALUES (@INSERTED_DAYPART_ID, 2, 'OVN')
-	END
+		VALUES (@INSERTED_DAYPART_ID, 2, ''OVN'')
+	END')
 
 	----------------- END OVN - Overnights ----------------------------
 
 	----------------- BEGIN EM - Early morning ----------------------------
+	EXEC('DECLARE @INSERTED_DAYPART_ID INT
+	DECLARE @TIMESPAM_ID INT
 
 	SELECT @TIMESPAM_ID = id FROM timespans
-	WHERE start_time = DATEDIFF(second, 0, '6:00') AND end_time = DATEDIFF(second, 0, '9:00') -1
+	WHERE start_time = DATEDIFF(second, 0, ''6:00'') AND end_time = DATEDIFF(second, 0, ''9:00'') -1
 	IF @TIMESPAM_ID IS NULL
 	BEGIN 
 		INSERT timespans
-		VALUES (DATEDIFF(second, 0, '6:00'), DATEDIFF(second, 0, '9:00') -1)
+		VALUES (DATEDIFF(second, 0, ''6:00''), DATEDIFF(second, 0, ''9:00'') -1)
 
 		SELECT @TIMESPAM_ID = SCOPE_IDENTITY()
 	END
 	INSERT dayparts (timespan_id, code, name, tier, daypart_text, total_hours) VALUES 
-	(@TIMESPAM_ID,'EM','Early morning', 1,'M-SU 6AM-9AM', 21)
+	(@TIMESPAM_ID,''EM'',''Early morning'', 1,''M-SU 6AM-9AM'', 21)
 
 	SELECT @INSERTED_DAYPART_ID = SCOPE_IDENTITY()
 
 	INSERT daypart_days 
 	VALUES (@INSERTED_DAYPART_ID, 1), (@INSERTED_DAYPART_ID, 2), (@INSERTED_DAYPART_ID, 3), (@INSERTED_DAYPART_ID, 4), (@INSERTED_DAYPART_ID, 5), (@INSERTED_DAYPART_ID, 6), (@INSERTED_DAYPART_ID, 7)
 
-	IF EXISTS(SELECT 1 FROM daypart_defaults WHERE code = 'EM')
+	IF EXISTS(SELECT 1 FROM daypart_defaults WHERE code = ''EM'')
 	BEGIN
 		UPDATE daypart_defaults
 		SET daypart_id = @INSERTED_DAYPART_ID
-		WHERE code = 'EM'
+		WHERE code = ''EM''
 	END
 	ELSE
 	BEGIN
 		INSERT INTO daypart_defaults (daypart_id, daypart_type, code)
-		VALUES (@INSERTED_DAYPART_ID, 2, 'EM')
-	END
+		VALUES (@INSERTED_DAYPART_ID, 2, ''EM'')
+	END')
 
 	----------------- END EM - Early morning ----------------------------
 
 	----------------- BEGIN ROSS - ROS Syndication ----------------------------
+	EXEC('DECLARE @INSERTED_DAYPART_ID INT
+	DECLARE @TIMESPAM_ID INT
 
 	SELECT @TIMESPAM_ID = id FROM timespans
-	WHERE start_time = DATEDIFF(second, 0, '6:00') AND end_time = DATEDIFF(second, 0, '2:05') -1
+	WHERE start_time = DATEDIFF(second, 0, ''6:00'') AND end_time = DATEDIFF(second, 0, ''2:05'') -1
 	IF @TIMESPAM_ID IS NULL
 	BEGIN 
 		INSERT INTO timespans
-		VALUES (DATEDIFF(second, 0, '6:00'), DATEDIFF(second, 0, '2:05') -1)
+		VALUES (DATEDIFF(second, 0, ''6:00''), DATEDIFF(second, 0, ''2:05'') -1)
 
 		SELECT @TIMESPAM_ID = SCOPE_IDENTITY()
 	END
 	INSERT INTO dayparts (timespan_id, code, name, tier, daypart_text, total_hours) VALUES 
-	(@TIMESPAM_ID,'ROSS','ROS Syndication', 1,'M-SU 6AM-2:05AM', 126)
+	(@TIMESPAM_ID,''ROSS'',''ROS Syndication'', 1,''M-SU 6AM-2:05AM'', 126)
 
 	SELECT @INSERTED_DAYPART_ID = SCOPE_IDENTITY()
 
 	INSERT INTO daypart_days 
 	VALUES (@INSERTED_DAYPART_ID, 1), (@INSERTED_DAYPART_ID, 2), (@INSERTED_DAYPART_ID, 3), (@INSERTED_DAYPART_ID, 4), (@INSERTED_DAYPART_ID, 5), (@INSERTED_DAYPART_ID, 6), (@INSERTED_DAYPART_ID, 7)
 
-	IF EXISTS(SELECT 1 FROM daypart_defaults WHERE code = 'ROSS')
+	IF EXISTS(SELECT 1 FROM daypart_defaults WHERE code = ''ROSS'')
 	BEGIN
 		UPDATE daypart_defaults
 		SET daypart_id = @INSERTED_DAYPART_ID
-		WHERE code = 'ROSS'
+		WHERE code = ''ROSS''
 	END
 	ELSE
 	BEGIN
 		INSERT INTO daypart_defaults (daypart_id, daypart_type, code)
-		VALUES (@INSERTED_DAYPART_ID, 2, 'ROSS')
-	END
+		VALUES (@INSERTED_DAYPART_ID, 2, ''ROSS'')
+	END')
 
 	----------------- END ROSS - ROS Syndication ----------------------------
 
 	----------------- BEGIN SPORTS - ROS Sports ----------------------------
+	EXEC('DECLARE @INSERTED_DAYPART_ID INT
+	DECLARE @TIMESPAM_ID INT
 
 	SELECT @TIMESPAM_ID = id FROM timespans
-	WHERE start_time = DATEDIFF(second, 0, '6:00') AND end_time = DATEDIFF(second, 0, '2:05') -1
+	WHERE start_time = DATEDIFF(second, 0, ''6:00'') AND end_time = DATEDIFF(second, 0, ''2:05'') -1
 	IF @TIMESPAM_ID IS NULL
 	BEGIN 
 		INSERT INTO timespans
-		VALUES (DATEDIFF(second, 0, '6:00'), DATEDIFF(second, 0, '2:05') -1)
+		VALUES (DATEDIFF(second, 0, ''6:00''), DATEDIFF(second, 0, ''2:05'') -1)
 
 		SELECT @TIMESPAM_ID = SCOPE_IDENTITY()
 	END
 	INSERT INTO dayparts (timespan_id, code, name, tier, daypart_text, total_hours) VALUES 
-	(@TIMESPAM_ID,'SPORTS','ROS Sports', 1,'M-SU 6AM-2:05AM', 126)
+	(@TIMESPAM_ID,''SPORTS'',''ROS Sports'', 1,''M-SU 6AM-2:05AM'', 126)
 
 	SELECT @INSERTED_DAYPART_ID = SCOPE_IDENTITY()
 
 	INSERT INTO daypart_days 
 	VALUES (@INSERTED_DAYPART_ID, 1), (@INSERTED_DAYPART_ID, 2), (@INSERTED_DAYPART_ID, 3), (@INSERTED_DAYPART_ID, 4), (@INSERTED_DAYPART_ID, 5), (@INSERTED_DAYPART_ID, 6), (@INSERTED_DAYPART_ID, 7)
 
-	IF EXISTS(SELECT 1 FROM daypart_defaults WHERE code = 'SPORTS')
+	IF EXISTS(SELECT 1 FROM daypart_defaults WHERE code = ''SPORTS'')
 	BEGIN
 		UPDATE daypart_defaults
 		SET daypart_id = @INSERTED_DAYPART_ID
-		WHERE code = 'SPORTS'
+		WHERE code = ''SPORTS''
 	END
 	ELSE
 	BEGIN
 		INSERT INTO daypart_defaults (daypart_id, daypart_type, code)
-		VALUES (@INSERTED_DAYPART_ID, 2, 'SPORTS')
-	END
+		VALUES (@INSERTED_DAYPART_ID, 2, ''SPORTS'')
+	END')
 
 	----------------- END SPORTS - ROS Sports ----------------------------
 
 	----------------- BEGIN ROSP - ROS Programming ----------------------------
+	EXEC('DECLARE @INSERTED_DAYPART_ID INT
+	DECLARE @TIMESPAM_ID INT
 
 	SELECT @TIMESPAM_ID = id FROM timespans
-	WHERE start_time = DATEDIFF(second, 0, '6:00') AND end_time = DATEDIFF(second, 0, '2:05') -1
+	WHERE start_time = DATEDIFF(second, 0, ''6:00'') AND end_time = DATEDIFF(second, 0, ''2:05'') -1
 	IF @TIMESPAM_ID IS NULL
 	BEGIN 
 		INSERT INTO timespans
-		VALUES (DATEDIFF(second, 0, '6:00'), DATEDIFF(second, 0, '2:05') -1)
+		VALUES (DATEDIFF(second, 0, ''6:00''), DATEDIFF(second, 0, ''2:05'') -1)
 
 		SELECT @TIMESPAM_ID = SCOPE_IDENTITY()
 	END
 	INSERT INTO dayparts (timespan_id, code, name, tier, daypart_text, total_hours) VALUES 
-	(@TIMESPAM_ID,'ROSP','ROS Programming', 1, 'M-SU 6AM-2:05AM', 126)
+	(@TIMESPAM_ID,''ROSP'',''ROS Programming'', 1, ''M-SU 6AM-2:05AM'', 126)
 
 	SELECT @INSERTED_DAYPART_ID = SCOPE_IDENTITY()
 
 	INSERT INTO daypart_days 
 	VALUES (@INSERTED_DAYPART_ID, 1), (@INSERTED_DAYPART_ID, 2), (@INSERTED_DAYPART_ID, 3), (@INSERTED_DAYPART_ID, 4), (@INSERTED_DAYPART_ID, 5), (@INSERTED_DAYPART_ID, 6), (@INSERTED_DAYPART_ID, 7)
 
-	IF EXISTS(SELECT 1 FROM daypart_defaults WHERE code = 'ROSP')
+	IF EXISTS(SELECT 1 FROM daypart_defaults WHERE code = ''ROSP'')
 	BEGIN
 		UPDATE daypart_defaults
 		SET daypart_id = @INSERTED_DAYPART_ID
-		WHERE code = 'ROSP'
+		WHERE code = ''ROSP''
 	END
 	ELSE
 	BEGIN
 		INSERT INTO daypart_defaults (daypart_id, daypart_type, code)
-		VALUES (@INSERTED_DAYPART_ID, 2, 'ROSP')
-	END
+		VALUES (@INSERTED_DAYPART_ID, 2, ''ROSP'')
+	END')
 
 	----------------- END ROSP - ROS Programming ----------------------------
 
 	----------------- BEGIN TDNS - Total Day News and Syndication ----------------------------
+	EXEC('DECLARE @INSERTED_DAYPART_ID INT
+	DECLARE @TIMESPAM_ID INT
 
 	SELECT @TIMESPAM_ID = id FROM timespans
-	WHERE start_time = DATEDIFF(second, 0, '4:00') AND end_time = DATEDIFF(second, 0, '2:05') -1
+	WHERE start_time = DATEDIFF(second, 0, ''4:00'') AND end_time = DATEDIFF(second, 0, ''2:05'') -1
 	IF @TIMESPAM_ID IS NULL
 	BEGIN 
 		INSERT INTO timespans
-		VALUES (DATEDIFF(second, 0, '4:00'), DATEDIFF(second, 0, '2:05') -1)
+		VALUES (DATEDIFF(second, 0, ''4:00''), DATEDIFF(second, 0, ''2:05'') -1)
 
 		SELECT @TIMESPAM_ID = SCOPE_IDENTITY()
 	END
 	INSERT INTO dayparts (timespan_id, code, name, tier, daypart_text, total_hours) VALUES 
-	(@TIMESPAM_ID,'TDNS','Total Day News and Syndication', 1,'M-SU 4AM-2:05AM',140)
+	(@TIMESPAM_ID,''TDNS'',''Total Day News and Syndication'', 1,''M-SU 4AM-2:05AM'',140)
 
 	SELECT @INSERTED_DAYPART_ID = SCOPE_IDENTITY()
 
 	INSERT INTO daypart_days 
 	VALUES (@INSERTED_DAYPART_ID, 1), (@INSERTED_DAYPART_ID, 2), (@INSERTED_DAYPART_ID, 3), (@INSERTED_DAYPART_ID, 4), (@INSERTED_DAYPART_ID, 5), (@INSERTED_DAYPART_ID, 6), (@INSERTED_DAYPART_ID, 7)
 
-	IF EXISTS(SELECT 1 FROM daypart_defaults WHERE code = 'TDNS')
+	IF EXISTS(SELECT 1 FROM daypart_defaults WHERE code = ''TDNS'')
 	BEGIN
 		UPDATE daypart_defaults
 		SET daypart_id = @INSERTED_DAYPART_ID
-		WHERE code = 'TDNS'
+		WHERE code = ''TDNS''
 	END
 	ELSE
 	BEGIN
 		INSERT INTO daypart_defaults (daypart_id, daypart_type, code)
-		VALUES (@INSERTED_DAYPART_ID, 3, 'TDNS')
-	END
+		VALUES (@INSERTED_DAYPART_ID, 3, ''TDNS'')
+	END')
 
 	----------------- END TDNS - Total Day News and Syndication ----------------------------
 
@@ -791,11 +836,11 @@ BEGIN
 
 	-------------------------- BEGIN REMOVE COLUMNS, UNUSED REGISTERS AND RENAMING COLUMNS ---------------------
 
-	ALTER TABLE daypart_defaults
-	DROP COLUMN code
+	EXEC('ALTER TABLE daypart_defaults
+	DROP COLUMN code')
 
-	ALTER TABLE daypart_defaults
-	ALTER COLUMN daypart_id INT NOT NULL
+	EXEC('ALTER TABLE daypart_defaults
+	ALTER COLUMN daypart_id INT NOT NULL')
 
 	EXEC sp_rename 'inventory_file_proprietary_header.daypart_code_id', 'daypart_default_id', 'COLUMN'
 	EXEC sp_rename 'inventory_summary_quarter_details.daypart_code_id', 'daypart_default_id', 'COLUMN'

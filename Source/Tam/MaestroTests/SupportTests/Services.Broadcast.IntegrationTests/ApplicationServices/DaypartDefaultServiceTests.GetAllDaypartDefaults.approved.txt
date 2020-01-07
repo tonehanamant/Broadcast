@@ -1,107 +1,86 @@
 ﻿[
   {
     "Code": "AMN",
-    "FullName": "AM News",
-    "Id": 23
+    "FullName": "AM News"
   },
   {
     "Code": "DAY",
-    "FullName": "Daytime",
-    "Id": 12
+    "FullName": "Daytime"
   },
   {
     "Code": "EF",
-    "FullName": "Early Fringe",
-    "Id": 6
+    "FullName": "Early Fringe"
   },
   {
     "Code": "EM",
-    "FullName": "Early morning",
-    "Id": 14
+    "FullName": "Early morning"
   },
   {
     "Code": "EMN",
-    "FullName": "Early Morning News",
-    "Id": 1
+    "FullName": "Early Morning News"
   },
   {
     "Code": "EN",
-    "FullName": "Evening News",
-    "Id": 3
+    "FullName": "Evening News"
   },
   {
     "Code": "ENLN",
-    "FullName": "Evening News/Late News",
-    "Id": 5
+    "FullName": "Evening News/Late News"
   },
   {
     "Code": "LF",
-    "FullName": "Late Fringe",
-    "Id": 9
+    "FullName": "Late Fringe"
   },
   {
     "Code": "LN",
-    "FullName": "Late News",
-    "Id": 4
+    "FullName": "Late News"
   },
   {
     "Code": "MDN",
-    "FullName": "Midday News",
-    "Id": 2
+    "FullName": "Midday News"
   },
   {
     "Code": "OVN",
-    "FullName": "Overnights",
-    "Id": 11
+    "FullName": "Overnights"
   },
   {
     "Code": "PA",
-    "FullName": "Prime Access",
-    "Id": 7
+    "FullName": "Prime Access"
   },
   {
     "Code": "PMN",
-    "FullName": "PM News",
-    "Id": 24
+    "FullName": "PM News"
   },
   {
     "Code": "PT",
-    "FullName": "Prime",
-    "Id": 8
+    "FullName": "Prime"
   },
   {
     "Code": "ROSN",
-    "FullName": "ROS News",
-    "Id": 26
+    "FullName": "ROS News"
   },
   {
     "Code": "ROSP",
-    "FullName": "ROS Programming",
-    "Id": 29
+    "FullName": "ROS Programming"
   },
   {
     "Code": "ROSS",
-    "FullName": "ROS Syndication",
-    "Id": 27
+    "FullName": "ROS Syndication"
   },
   {
     "Code": "SPORTS",
-    "FullName": "ROS Sports",
-    "Id": 28
+    "FullName": "ROS Sports"
   },
   {
     "Code": "SYN",
-    "FullName": "Total Day Syndication",
-    "Id": 10
+    "FullName": "Total Day Syndication"
   },
   {
     "Code": "TDN",
-    "FullName": "Total Day News",
-    "Id": 25
+    "FullName": "Total Day News"
   },
   {
     "Code": "TDNS",
-    "FullName": "Total Day News and Syndication",
-    "Id": 30
+    "FullName": "Total Day News and Syndication"
   }
 ]
