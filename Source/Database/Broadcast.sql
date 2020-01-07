@@ -1021,6 +1021,67 @@ BEGIN
 END
 /*************************************** END PRI-15810 *****************************************************/
 
+/*************************************** START PRI-20459 *****************************************************/
+IF (SELECT start_time FROM dayparts
+INNER JOIN timespans
+ON timespans.id = dayparts.timespan_id
+WHERE code = 'PMN' and daypart_text = 'M-SU 1PM-12:05AM') = 57600
+BEGIN
+	DECLARE @timespanIdPMN INT
+	SELECT @timespanIdPMN = Id FROM timespans WHERE start_time = 46800 AND end_time = 299
+	
+	IF @timespanIdPMN IS NULL
+	BEGIN
+		INSERT INTO timespans VALUES (46800, 299)
+		SELECT @timespanIdPMN = SCOPE_IDENTITY()
+	END
+
+	UPDATE dayparts
+	SET timespan_id = @timespanIdPMN
+	WHERE  code = 'PMN' and daypart_text = 'M-SU 1PM-12:05AM'
+END
+
+
+IF (SELECT start_time FROM dayparts
+INNER JOIN timespans
+ON timespans.id = dayparts.timespan_id
+WHERE code = 'LN' and daypart_text = 'M-SU 8PM-12:05AM') = 57600
+BEGIN
+	DECLARE @timespanIdLN INT
+	SELECT @timespanIdLN = Id FROM timespans WHERE start_time = 72000 AND end_time = 299
+	
+	IF @timespanIdLN IS NULL
+	BEGIN
+		INSERT INTO timespans VALUES (72000, 299)
+		SELECT @timespanIdLN = SCOPE_IDENTITY()
+	END
+
+	UPDATE dayparts
+	SET timespan_id = @timespanIdLN
+	WHERE  code = 'LN' and daypart_text = 'M-SU 8PM-12:05AM'
+END
+
+
+IF (SELECT start_time FROM dayparts
+INNER JOIN timespans
+ON timespans.id = dayparts.timespan_id
+WHERE code = 'TDN' and daypart_text = 'M-SU 4AM-12:05AM') = 57600
+BEGIN
+	DECLARE @timespanIdTDN INT
+	SELECT @timespanIdTDN = Id FROM timespans WHERE start_time = 14400 AND end_time = 299
+	
+	IF @timespanIdTDN IS NULL
+	BEGIN
+		INSERT INTO timespans VALUES (14400, 299)
+		SELECT @timespanIdTDN = SCOPE_IDENTITY()
+	END
+
+	UPDATE dayparts
+	SET timespan_id = @timespanIdTDN
+	WHERE  code = 'TDN' and daypart_text = 'M-SU 4AM-12:05AM'
+END
+/*************************************** END PRI-20459 *****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

@@ -58,8 +58,8 @@
   {
     "Code": "LN",
     "DaypartType": 1,
-    "DefaultEndTimeSeconds": 68400,
-    "DefaultStartTimeSeconds": 57600,
+    "DefaultEndTimeSeconds": 300,
+    "DefaultStartTimeSeconds": 72000,
     "FullName": "Late News"
   },
   {
@@ -86,8 +86,8 @@
   {
     "Code": "PMN",
     "DaypartType": 1,
-    "DefaultEndTimeSeconds": 68400,
-    "DefaultStartTimeSeconds": 57600,
+    "DefaultEndTimeSeconds": 300,
+    "DefaultStartTimeSeconds": 46800,
     "FullName": "PM News"
   },
   {
@@ -135,8 +135,8 @@
   {
     "Code": "TDN",
     "DaypartType": 1,
-    "DefaultEndTimeSeconds": 68400,
-    "DefaultStartTimeSeconds": 57600,
+    "DefaultEndTimeSeconds": 300,
+    "DefaultStartTimeSeconds": 14400,
     "FullName": "Total Day News"
   },
   {
