@@ -925,21 +925,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
         }
 
         [Test]
-        public void ValidatePlan_SumOfWeeklyBreakdownWeeksDifferentFromBudget()
-        {
-            _ConfigureMocksToReturnTrue();
-
-            var plan = _GetPlan();
-            plan.WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>
-            {
-                new WeeklyBreakdownWeek {WeeklyImpressions = 50, WeeklyImpressionsPercentage=50, WeeklyBudget = 20},
-                new WeeklyBreakdownWeek {WeeklyImpressions = 50, WeeklyImpressionsPercentage = 50, WeeklyBudget = 50}
-            };
-
-            Assert.That(() => _planValidator.ValidatePlan(plan), Throws.TypeOf<Exception>().With.Message.EqualTo("The budget count is different between the delivery and the weekly breakdown"));
-        }
-
-        [Test]
         public void ValidatePlan_SumOfShareOfVoiceDifferentFrom100()
         {
             _ConfigureMocksToReturnTrue();
