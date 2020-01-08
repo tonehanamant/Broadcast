@@ -525,11 +525,12 @@ namespace Services.Broadcast.Repositories
                 ActiveDays = arg.active_days_label,
                 EndDate = arg.media_weeks.end_date,
                 WeeklyImpressions = arg.weekly_impressions,
-                WeeklyRatings = arg.weekly_ratings,
+                WeeklyRatings = arg.weekly_rating_points,
                 NumberOfActiveDays = arg.number_active_days,
                 WeeklyImpressionsPercentage = arg.weekly_impressions_percentage,
                 StartDate = arg.media_weeks.start_date,
-                MediaWeekId = arg.media_weeks.id
+                MediaWeekId = arg.media_weeks.id,
+                WeeklyBudget = arg.weekly_budget
             };
         }
 
@@ -597,9 +598,10 @@ namespace Services.Broadcast.Repositories
                     active_days_label = d.ActiveDays,
                     number_active_days = d.NumberOfActiveDays,
                     weekly_impressions = d.WeeklyImpressions,
-                    weekly_ratings = d.WeeklyRatings,
+                    weekly_rating_points = d.WeeklyRatings,
                     weekly_impressions_percentage = d.WeeklyImpressionsPercentage,
-                    media_week_id = d.MediaWeekId
+                    media_week_id = d.MediaWeekId,
+                    weekly_budget = d.WeeklyBudget
                 });
             });
         }

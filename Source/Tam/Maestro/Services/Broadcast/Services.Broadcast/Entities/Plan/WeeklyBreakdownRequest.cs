@@ -12,6 +12,7 @@ namespace Services.Broadcast.Entities.Plan
         public PlanGoalBreakdownTypeEnum DeliveryType { get; set; }
         public double TotalImpressions { get; set; }        
         public double TotalRatings { get; set; }
+        public decimal TotalBudget { get; set; }
         public WeeklyBreakdownCalculationFrom WeeklyBreakdownCalculationFrom { get; set; }
         public List<WeeklyBreakdownWeek> Weeks { get; set; } = new List<WeeklyBreakdownWeek>();
         //add primary audience and calculate also for  HH

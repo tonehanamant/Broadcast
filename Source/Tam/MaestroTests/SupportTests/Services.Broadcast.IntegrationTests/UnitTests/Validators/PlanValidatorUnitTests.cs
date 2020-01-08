@@ -901,8 +901,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             plan.TargetImpressions = 100;
             plan.WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>
             {
-                new WeeklyBreakdownWeek {WeeklyImpressions = 50, WeeklyImpressionsPercentage=50},
-                new WeeklyBreakdownWeek {WeeklyImpressions = 49.999999, WeeklyImpressionsPercentage = 50}
+                new WeeklyBreakdownWeek {WeeklyImpressions = 50, WeeklyImpressionsPercentage=50, WeeklyBudget = 50},
+                new WeeklyBreakdownWeek {WeeklyImpressions = 49.999999, WeeklyImpressionsPercentage = 50, WeeklyBudget = 50}
             };
 
             Assert.DoesNotThrow(() => _planValidator.ValidatePlan(plan));
@@ -917,11 +917,26 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             plan.TargetImpressions = 90.123;
             plan.WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>
             {
-                new WeeklyBreakdownWeek {WeeklyImpressions = 90, WeeklyImpressionsPercentage=50},
-                new WeeklyBreakdownWeek {WeeklyImpressions = 0.1229999, WeeklyImpressionsPercentage = 50}
+                new WeeklyBreakdownWeek {WeeklyImpressions = 90, WeeklyImpressionsPercentage=50, WeeklyBudget = 50},
+                new WeeklyBreakdownWeek {WeeklyImpressions = 0.1229999, WeeklyImpressionsPercentage = 50, WeeklyBudget = 50}
             };
 
             Assert.DoesNotThrow(() => _planValidator.ValidatePlan(plan));
+        }
+
+        [Test]
+        public void ValidatePlan_SumOfWeeklyBreakdownWeeksDifferentFromBudget()
+        {
+            _ConfigureMocksToReturnTrue();
+
+            var plan = _GetPlan();
+            plan.WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>
+            {
+                new WeeklyBreakdownWeek {WeeklyImpressions = 50, WeeklyImpressionsPercentage=50, WeeklyBudget = 20},
+                new WeeklyBreakdownWeek {WeeklyImpressions = 50, WeeklyImpressionsPercentage = 50, WeeklyBudget = 50}
+            };
+
+            Assert.That(() => _planValidator.ValidatePlan(plan), Throws.TypeOf<Exception>().With.Message.EqualTo("The budget count is different between the delivery and the weekly breakdown"));
         }
 
         [Test]

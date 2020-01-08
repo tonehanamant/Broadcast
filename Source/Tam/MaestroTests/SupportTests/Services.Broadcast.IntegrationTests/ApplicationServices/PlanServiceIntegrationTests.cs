@@ -209,7 +209,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 PlanDto plan = _PlanService.GetPlan(newPlanId);
 
                 //save version 2
-                plan.Budget = 222;  //we change the budget to have different data between versions                 
+                plan.Budget = 222;  //we change the budget to have different data between versions    
+
+                plan.WeeklyBreakdownWeeks.FirstOrDefault().WeeklyBudget = 142;
                 _PlanService.SavePlan(plan, "integration_test", new DateTime(2019, 01, 05));
 
                 //save version 3
@@ -243,6 +245,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 //save version 2
                 plan.Budget = 222;
+                plan.WeeklyBreakdownWeeks.FirstOrDefault().WeeklyBudget = 142;
                 _PlanService.SavePlan(plan, "integration_test", new DateTime(2019, 01, 01));
 
                 //save draft
@@ -294,6 +297,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 //save version 2
                 plan.Budget = 222;
+                plan.WeeklyBreakdownWeeks.FirstOrDefault().WeeklyBudget = 142;
                 _PlanService.SavePlan(plan, "integration_test", new DateTime(2019, 01, 01));
 
                 //get the plan again
@@ -319,6 +323,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 //create draft
                 plan.Budget = 222;
+                plan.WeeklyBreakdownWeeks.LastOrDefault().WeeklyBudget = 142;
                 plan.IsDraft = true;
                 _PlanService.SavePlan(plan, "integration_test", new DateTime(2019, 01, 01));
 
@@ -1811,35 +1816,40 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         WeekNumber = 1, MediaWeekId = 784,
                         StartDate = new DateTime(2018,12,31), EndDate = new DateTime(2019,01,06),
                         NumberOfActiveDays = 6, ActiveDays = "Tu-Su", WeeklyImpressions = 20, WeeklyImpressionsPercentage  = 20,
-                        WeeklyRatings = .0123
+                        WeeklyRatings = .0123,
+                        WeeklyBudget = 20m
                     },
                     new WeeklyBreakdownWeek
                     {
                         WeekNumber = 2, MediaWeekId = 785,
                         StartDate = new DateTime(2019,01,07), EndDate = new DateTime(2019,01,13),
                         NumberOfActiveDays = 7, ActiveDays = "M-Su", WeeklyImpressions = 20, WeeklyImpressionsPercentage  = 20,
-                        WeeklyRatings = .0123
+                        WeeklyRatings = .0123,
+                        WeeklyBudget = 20m
                     },
                     new WeeklyBreakdownWeek
                     {
                         WeekNumber = 3, MediaWeekId = 786,
                         StartDate = new DateTime(2019,01,14), EndDate = new DateTime(2019,01,20),
                         NumberOfActiveDays = 6, ActiveDays = "M-Sa", WeeklyImpressions = 20, WeeklyImpressionsPercentage  = 20,
-                        WeeklyRatings = .0123
+                        WeeklyRatings = .0123,
+                        WeeklyBudget = 20m
                     },
                     new WeeklyBreakdownWeek
                     {
                         WeekNumber = 4, MediaWeekId = 787,
                         StartDate = new DateTime(2019,01,21), EndDate = new DateTime(2019,01,27),
                         NumberOfActiveDays = 6, ActiveDays = "M-W,F-Su", WeeklyImpressions = 20, WeeklyImpressionsPercentage  = 20,
-                        WeeklyRatings = .0123
+                        WeeklyRatings = .0123,
+                        WeeklyBudget = 20m
                     },
                     new WeeklyBreakdownWeek
                     {
                         WeekNumber = 5, MediaWeekId = 788,
                         StartDate = new DateTime(2019,01,28), EndDate = new DateTime(2019,02,03),
                         NumberOfActiveDays = 4, ActiveDays = "M-Th", WeeklyImpressions = 20, WeeklyImpressionsPercentage  = 20,
-                        WeeklyRatings = .0123
+                        WeeklyRatings = .0123,
+                        WeeklyBudget = 20m
                     }
                 }
             };

@@ -21,12 +21,12 @@ namespace EntityFrameworkMapping.Broadcast
             this.plan_version_flight_hiatus_days = new HashSet<plan_version_flight_hiatus_days>();
             this.plan_version_secondary_audiences = new HashSet<plan_version_secondary_audiences>();
             this.plan_version_summaries = new HashSet<plan_version_summaries>();
-            this.plan_version_weeks = new HashSet<plan_version_weeks>();
             this.plan_version_pricing_executions = new HashSet<plan_version_pricing_executions>();
             this.plan_version_pricing_job = new HashSet<plan_version_pricing_job>();
             this.plan_version_pricing_parameters = new HashSet<plan_version_pricing_parameters>();
             this.plan_version_pricing_api_results = new HashSet<plan_version_pricing_api_results>();
             this.plan_version_dayparts = new HashSet<plan_version_dayparts>();
+            this.plan_version_weeks = new HashSet<plan_version_weeks>();
         }
     
         public int id { get; set; }
@@ -72,7 +72,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<plan_version_flight_hiatus_days> plan_version_flight_hiatus_days { get; set; }
         public virtual ICollection<plan_version_secondary_audiences> plan_version_secondary_audiences { get; set; }
         public virtual ICollection<plan_version_summaries> plan_version_summaries { get; set; }
-        public virtual ICollection<plan_version_weeks> plan_version_weeks { get; set; }
         public virtual plan plan { get; set; }
         public virtual spot_lengths spot_lengths { get; set; }
         public virtual ICollection<plan_version_pricing_executions> plan_version_pricing_executions { get; set; }
@@ -80,5 +79,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<plan_version_pricing_parameters> plan_version_pricing_parameters { get; set; }
         public virtual ICollection<plan_version_pricing_api_results> plan_version_pricing_api_results { get; set; }
         public virtual ICollection<plan_version_dayparts> plan_version_dayparts { get; set; }
+        public virtual ICollection<plan_version_weeks> plan_version_weeks { get; set; }
     }
 }

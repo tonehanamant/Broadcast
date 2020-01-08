@@ -128,10 +128,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<inventory_source_logos> inventory_source_logos { get; set; }
         public virtual DbSet<audience_maps> audience_maps { get; set; }
         public virtual DbSet<scx_generation_job_units> scx_generation_job_units { get; set; }
-        public virtual DbSet<inventory_summary> inventory_summary { get; set; }
-        public virtual DbSet<inventory_summary_gap_ranges> inventory_summary_gap_ranges { get; set; }
-        public virtual DbSet<inventory_summary_gaps> inventory_summary_gaps { get; set; }
-        public virtual DbSet<inventory_summary_quarters> inventory_summary_quarters { get; set; }
         public virtual DbSet<campaign> campaigns { get; set; }
         public virtual DbSet<campaign_summaries> campaign_summaries { get; set; }
         public virtual DbSet<inventory_file_ratings_job_notes> inventory_file_ratings_job_notes { get; set; }
@@ -142,7 +138,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<plan_version_flight_hiatus_days> plan_version_flight_hiatus_days { get; set; }
         public virtual DbSet<plan_version_secondary_audiences> plan_version_secondary_audiences { get; set; }
         public virtual DbSet<plan_version_summaries> plan_version_summaries { get; set; }
-        public virtual DbSet<plan_version_weeks> plan_version_weeks { get; set; }
         public virtual DbSet<plan> plans { get; set; }
         public virtual DbSet<plan_versions> plan_versions { get; set; }
         public virtual DbSet<plan_version_summary_quarters> plan_version_summary_quarters { get; set; }
@@ -170,10 +165,15 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<daypart_defaults> daypart_defaults { get; set; }
         public virtual DbSet<plan_version_pricing_parameters_inventory_source_type_percentages> plan_version_pricing_parameters_inventory_source_type_percentages { get; set; }
         public virtual DbSet<plan_version_pricing_inventory_source_type_percentages> plan_version_pricing_inventory_source_type_percentages { get; set; }
+        public virtual DbSet<inventory_summary> inventory_summary { get; set; }
+        public virtual DbSet<inventory_summary_gap_ranges> inventory_summary_gap_ranges { get; set; }
+        public virtual DbSet<inventory_summary_gaps> inventory_summary_gaps { get; set; }
+        public virtual DbSet<inventory_summary_quarters> inventory_summary_quarters { get; set; }
         public virtual DbSet<detection_file_details> detection_file_details { get; set; }
         public virtual DbSet<detection_files> detection_files { get; set; }
         public virtual DbSet<detection_map_types> detection_map_types { get; set; }
         public virtual DbSet<detection_maps> detection_maps { get; set; }
         public virtual DbSet<detection_post_details> detection_post_details { get; set; }
+        public virtual DbSet<plan_version_weeks> plan_version_weeks { get; set; }
     }
 }

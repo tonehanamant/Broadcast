@@ -1082,6 +1082,27 @@ BEGIN
 END
 /*************************************** END PRI-20459 *****************************************************/
 
+/*************************************** START - PRI-19146 ****************************************************/
+IF EXISTS(SELECT 1 FROM sys.columns WHERE  object_id = OBJECT_ID('plan_version_weeks') AND name = 'ratings')
+BEGIN	
+	EXEC sp_rename 'plan_version_weeks.ratings', 'weekly_rating_points', 'COLUMN';  
+
+
+	ALTER TABLE plan_version_weeks
+	ADD weekly_budget MONEY 
+
+	EXEC('UPDATE plan_version_weeks
+	SET weekly_budget = ROUND((plan_version_weeks.weekly_impressions_percentage / 100) * plan_versions.budget, 3)
+	FROM plan_version_weeks
+	INNER JOIN plan_versions 
+	ON plan_versions.id = plan_version_weeks.plan_version_id
+	WHERE plan_version_weeks.weekly_budget IS NULL')
+
+	ALTER TABLE plan_version_weeks
+	ALTER COLUMN weekly_budget MONEY NOT NULL 
+END
+/*************************************** END - PRI-19146 ****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

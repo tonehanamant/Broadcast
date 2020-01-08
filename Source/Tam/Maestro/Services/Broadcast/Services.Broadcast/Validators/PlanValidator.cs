@@ -56,6 +56,7 @@ namespace Services.Broadcast.Validators
         const string INVALID_MARKET_SHARE_OF_VOICE = "Invalid share of voice for market.";
         const string INVALID_REQUEST = "Invalid request";
         const string INVALID_IMPRESSIONS_COUNT = "The impressions count is different between the delivery and the weekly breakdown";
+        const string INVALID_BUDGET_COUNT = "The budget count is different between the delivery and the weekly breakdown";
         const string INVALID_SOV_COUNT = "The share of voice count is not equal to 100%";
         const string INVALID_VPVH = "Invalid VPVH. The value must be between 0.001 and 1.";
         const string INVALID_FLIGHT_NOTES = "Flight notes cannot be longer than 1024 characters.";
@@ -374,6 +375,11 @@ namespace Services.Broadcast.Validators
             if (100 != Math.Round(plan.WeeklyBreakdownWeeks.Select(x => x.WeeklyImpressionsPercentage).Sum()))
             {
                 throw new Exception(INVALID_SOV_COUNT);
+            }
+
+            if(plan.Budget != Math.Round(plan.WeeklyBreakdownWeeks.Select(x => x.WeeklyBudget).Sum(), 3))
+            {
+                throw new Exception(INVALID_BUDGET_COUNT);
             }
         }
 

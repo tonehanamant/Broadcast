@@ -97,14 +97,14 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// <returns></returns>
         PlanLockResponse LockPlan(int planId);
 
-         /// <summary>
+        /// <summary>
         /// Gets the plan history.
         /// </summary>
         /// <param name="planId">Plan identifier</param>
         /// <returns>List of PlanHistoryDto objects</returns>
         List<PlanVersionDto> GetPlanHistory(int planId);
-        
-         /// <summary>
+
+        /// <summary>
         /// Deletes the plan draft.
         /// </summary>        
         /// <param name="planId">The plan identifier.</param>
@@ -238,10 +238,10 @@ namespace Services.Broadcast.ApplicationServices.Plan
         {
             //the UI is sending the user entered value instead of the raw value. BE needs to adjust
             if (plan.TargetImpressions.HasValue)
-            {                
+            {
                 plan.TargetImpressions = plan.TargetImpressions.Value * 1000;
             }
-            foreach(var week in plan.WeeklyBreakdownWeeks)
+            foreach (var week in plan.WeeklyBreakdownWeeks)
             {
                 week.WeeklyImpressions = week.WeeklyImpressions * 1000;
             }
@@ -254,7 +254,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             {
                 plan.TargetImpressions = plan.TargetImpressions.Value / 1000;
             }
-            foreach(var audience in plan.SecondaryAudiences)
+            foreach (var audience in plan.SecondaryAudiences)
             {
                 audience.Impressions = audience.Impressions.Value / 1000;
             }
@@ -281,7 +281,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         public PlanDto GetPlan(int planId, int? versionId = null)
         {
             var plan = _PlanRepository.GetPlan(planId, versionId);
-            
+
             plan.IsPricingModelRunning = _PlanPricingService.IsPricingModelRunningForPlan(planId);
 
             _SetWeekNumber(plan.WeeklyBreakdownWeeks);
@@ -307,7 +307,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         public List<PlanVersionDto> GetPlanHistory(int planId)
         {
             var planVersions = _PlanRepository.GetPlanHistory(planId);
-            
+
             List<PlanVersionDto> result = _MapToPlanHistoryDto(planVersions);
             result = result.OrderByDescending(x => x.IsDraft == true).ThenByDescending(x => x.ModifiedDate).ToList();
 
@@ -321,7 +321,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             //based on the ordering done in the calling method, the version we compare with is the first one in the result list
             var baseVersion = planVersions.Single(x => x.VersionId == result.First().VersionId);
 
-            foreach(var version in planVersions.Where(x=>x.VersionId != baseVersion.VersionId).ToList())
+            foreach (var version in planVersions.Where(x => x.VersionId != baseVersion.VersionId).ToList())
             {
                 var resultedVersion = result.Single(x => x.VersionId == version.VersionId);
                 resultedVersion.IsModifiedBudget = (baseVersion.Budget != version.Budget);
@@ -336,13 +336,13 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private bool _CheckIfDaypartsAreModified(PlanVersion baseVersion, PlanVersion version, PlanVersionDto resultedVersion)
         {
             //check if number of dayparts is different
-            if(baseVersion.Dayparts.Count() != version.Dayparts.Count())
+            if (baseVersion.Dayparts.Count() != version.Dayparts.Count())
             {
                 return true;
             }
 
             //check if the dayparts themselves are different
-            foreach(var daypart in baseVersion.Dayparts)
+            foreach (var daypart in baseVersion.Dayparts)
             {
                 if (!version.Dayparts.Contains(daypart))
                 {
@@ -362,13 +362,13 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
 
             //check if number of hiatus days is different
-            if(baseVersion.HiatusDays.Count() != version.HiatusDays.Count())
+            if (baseVersion.HiatusDays.Count() != version.HiatusDays.Count())
             {
                 return true;
             }
 
             //check if the hiatus days themselves are different
-            foreach(var date in baseVersion.HiatusDays)
+            foreach (var date in baseVersion.HiatusDays)
             {
                 if (!version.HiatusDays.Contains(date))
                 {
@@ -583,7 +583,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             var updatedDate = DateTime.Now;
             AutomaticStatusTransitions(transitionDate, updatedBy, updatedDate, false);
         }
-        
+
         public void AutomaticStatusTransitions(DateTime transitionDate, string updatedBy, DateTime updatedDate, bool aggregatePlanSynchronously = false)
         {
             var plansToTransition = _PlanRepository.GetPlansForAutomaticTransition(transitionDate);
@@ -664,7 +664,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             var result = new WeeklyBreakdownResponseDto();
             _AddMissingWeeks(result, weeks, request.FlightHiatusDays);
 
-            _CalculateRatingsImpressionsAndShareOfVoice(result.Weeks, request.TotalImpressions, request.TotalRatings);
+            _CalculateRatingsImpressionsAndShareOfVoiceAndBudget(result.Weeks, request.TotalImpressions, request.TotalRatings, request.TotalBudget);
             _CalculateWeeklyGoalBreakdownTotals(result);
             return result;
         }
@@ -689,6 +689,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     week.WeeklyImpressions = 0;
                     week.WeeklyRatings = 0;
                     week.WeeklyImpressionsPercentage = 0;
+                    week.WeeklyBudget = 0;
                 }
 
                 double newPercentageRaw;
@@ -698,16 +699,19 @@ namespace Services.Broadcast.ApplicationServices.Plan
                         newPercentageRaw = week.WeeklyRatings / request.TotalRatings;
                         week.WeeklyImpressionsPercentage = newPercentageRaw * 100;
                         week.WeeklyImpressions = newPercentageRaw * request.TotalImpressions;
+                        week.WeeklyBudget = request.TotalBudget * (decimal)newPercentageRaw;
                         break;
                     case WeeklyBreakdownCalculationFrom.Percentage:
                         newPercentageRaw = week.WeeklyImpressionsPercentage / 100;
                         week.WeeklyImpressions = newPercentageRaw * request.TotalImpressions;
                         week.WeeklyRatings = request.TotalRatings * newPercentageRaw;
+                        week.WeeklyBudget = request.TotalBudget * (decimal)newPercentageRaw;
                         break;
                     default:
                         newPercentageRaw = week.WeeklyImpressions / request.TotalImpressions;
                         week.WeeklyImpressionsPercentage = newPercentageRaw * 100;
                         week.WeeklyRatings = request.TotalRatings * newPercentageRaw;
+                        week.WeeklyBudget = request.TotalBudget * (decimal)newPercentageRaw;
                         break;
                 }
             }
@@ -765,14 +769,16 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
         }
 
-        private void _CalculateRatingsImpressionsAndShareOfVoice(List<WeeklyBreakdownWeek> weeks, double totalImpressions, double totalRatings)
+        private void _CalculateRatingsImpressionsAndShareOfVoiceAndBudget(List<WeeklyBreakdownWeek> weeks, double totalImpressions, double totalRatings, decimal totalBudget)
         {
             var activeWeeks = weeks.Where(x => x.NumberOfActiveDays > 0);
+            var totalActiveWeeks = activeWeeks.Count();
             foreach (var week in activeWeeks)
             {
-                week.WeeklyRatings = totalRatings / activeWeeks.Count();
-                week.WeeklyImpressions = totalImpressions / activeWeeks.Count();
-                week.WeeklyImpressionsPercentage = (double)100 / activeWeeks.Count();
+                week.WeeklyRatings = totalRatings / totalActiveWeeks;
+                week.WeeklyImpressions = totalImpressions / totalActiveWeeks;
+                week.WeeklyImpressionsPercentage = (double)100 / totalActiveWeeks;
+                week.WeeklyBudget = totalBudget / totalActiveWeeks;
             }
         }
 

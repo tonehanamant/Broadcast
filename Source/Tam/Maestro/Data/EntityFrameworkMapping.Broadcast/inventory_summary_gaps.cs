@@ -20,10 +20,10 @@ namespace EntityFrameworkMapping.Broadcast
         }
     
         public int id { get; set; }
-        public int inventory_summary_id { get; set; }
         public int quarter_number { get; set; }
         public int quarter_year { get; set; }
         public bool all_quarter_missing { get; set; }
+        public int inventory_summary_id { get; set; }
     
         public virtual inventory_summary inventory_summary { get; set; }
         public virtual ICollection<inventory_summary_gap_ranges> inventory_summary_gap_ranges { get; set; }
