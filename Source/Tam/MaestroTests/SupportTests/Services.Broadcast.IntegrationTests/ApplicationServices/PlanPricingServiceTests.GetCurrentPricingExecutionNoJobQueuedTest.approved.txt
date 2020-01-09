@@ -2,6 +2,7 @@
   "IsPricingModelRunning": false,
   "Job": null,
   "Result": {
+    "OptimalCpm": 0.0,
     "Programs": [],
     "Totals": {
       "AvgCpm": 0.0,

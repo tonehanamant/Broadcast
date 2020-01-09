@@ -1103,6 +1103,58 @@ BEGIN
 END
 /*************************************** END - PRI-19146 ****************************************************/
 
+/*************************************** START - PRI-17881 ****************************************************/
+
+IF OBJECT_ID('plan_version_pricing_results') IS NULL
+BEGIN
+	CREATE TABLE [dbo].[plan_version_pricing_results](
+		[id] [int] IDENTITY(1,1) NOT NULL,
+		[plan_version_id] [int] NOT NULL,
+		[optimal_cpm] [money] NOT NULL,
+		[total_market_count] [int] NOT NULL,
+		[total_station_count] [int] NOT NULL,
+		[total_avg_cpm] [money] NOT NULL,
+		[total_avg_impressions] [float] NOT NULL,
+	 CONSTRAINT [PK_plan_version_pricing_results] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY]
+		
+	ALTER TABLE [dbo].[plan_version_pricing_results]  WITH CHECK ADD  CONSTRAINT [FK_plan_version_pricing_results_plan_versions] FOREIGN KEY([plan_version_id])
+	REFERENCES [dbo].[plan_versions] ([id])
+	ON DELETE CASCADE
+	
+	ALTER TABLE [dbo].[plan_version_pricing_results] CHECK CONSTRAINT [FK_plan_version_pricing_results_plan_versions]
+END
+
+IF OBJECT_ID('plan_version_pricing_result_spots') IS NULL
+BEGIN
+	CREATE TABLE [dbo].[plan_version_pricing_result_spots](
+		[id] [int] IDENTITY(1,1) NOT NULL,
+		[plan_version_pricing_result_id] [int] NOT NULL,
+		[program_name] varchar(255) NOT NULL,
+		[genre] varchar(500) NOT NULL,
+		[avg_impressions] [float] NOT NULL,
+		[avg_cpm] [money] NOT NULL,
+		[station_count] [int] NOT NULL,
+		[market_count] [int] NOT NULL,
+		[percentage_of_buy] [float] NOT NULL,
+	 CONSTRAINT [PK_plan_version_pricing_result_spots] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY]
+		
+	ALTER TABLE [dbo].[plan_version_pricing_result_spots] WITH CHECK ADD CONSTRAINT [FK_plan_version_pricing_result_spots_plan_version_pricing_results] FOREIGN KEY([plan_version_pricing_result_id])
+	REFERENCES [dbo].[plan_version_pricing_results] ([id])
+	ON DELETE CASCADE
+	
+	ALTER TABLE [dbo].[plan_version_pricing_result_spots] CHECK CONSTRAINT [FK_plan_version_pricing_result_spots_plan_version_pricing_results]
+END
+
+/*************************************** END - PRI-17881 ****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

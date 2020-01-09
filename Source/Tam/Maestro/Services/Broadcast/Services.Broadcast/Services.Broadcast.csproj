@@ -389,6 +389,7 @@
     <Compile Include="Entities\Plan\Pricing\PlanPricingJob.cs" />
     <Compile Include="Entities\Plan\Pricing\PlanPricingMarketDto.cs" />
     <Compile Include="Entities\Plan\Pricing\PlanPricingParametersDto.cs" />
+    <Compile Include="Entities\Plan\Pricing\PlanPricingProgram.cs" />
     <Compile Include="Entities\Plan\Pricing\PlanPricingProgramDto.cs" />
     <Compile Include="Entities\Plan\PlanVersion.cs" />
     <Compile Include="Entities\Plan\PlanVersionDto.cs" />
@@ -417,7 +418,6 @@
     <Compile Include="Entities\Enums\PlanGloalBreakdownTypeEnum.cs" />
     <Compile Include="Entities\Enums\PlanCurrenciesEnum.cs" />
     <Compile Include="Entities\Enums\PlanStatusEnum.cs" />
-    <Compile Include="Entities\Enums\QueueEnum.cs" />
     <Compile Include="Entities\InventoryFileRatingsProcessingJob.cs" />
     <Compile Include="Entities\InventorySummary\InventoryQuarterSummary.cs" />
     <Compile Include="Entities\Plan\PlanDefaultsDto.cs" />

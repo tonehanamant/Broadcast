@@ -1,0 +1,31 @@
+﻿{
+  "OptimalCpm": 5.78,
+  "Programs": [
+    {
+      "AvgCpm": 10.322580645161290322580645200,
+      "AvgImpressions": 31000.0,
+      "Genre": "News",
+      "Id": 0,
+      "MarketCount": 3,
+      "PercentageOfBuy": 67.39130435,
+      "ProgramName": "seinfeld",
+      "StationCount": 4
+    },
+    {
+      "AvgCpm": 13.000,
+      "AvgImpressions": 25000.0,
+      "Genre": "Early News",
+      "Id": 0,
+      "MarketCount": 2,
+      "PercentageOfBuy": 32.60869565,
+      "ProgramName": "Good morning america",
+      "StationCount": 3
+    }
+  ],
+  "Totals": {
+    "AvgCpm": 11.195652173913043478260869600,
+    "AvgImpressions": 28750.0,
+    "MarketCount": 3,
+    "StationCount": 4
+  }
+}

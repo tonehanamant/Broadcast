@@ -79,7 +79,45 @@ namespace Services.Broadcast.BusinessEngines
                 return first;
             }).ToList();
 
+            _SetMaestroGenresFromDativaGenres(programs);
+            _SetPrimaryProgramForManifestDayparts(programs);
+
             return programs;
+        }
+
+        private void _SetMaestroGenresFromDativaGenres(List<PlanPricingInventoryProgram> programs)
+        {
+            var daypartPrograms = programs.SelectMany(x => x.ManifestDayparts).SelectMany(x => x.Programs);
+
+            foreach (var daypartProgram in daypartPrograms)
+            {
+                daypartProgram.MaestroGenre = _GenreCache.GetMaestroGenreFromDativaGenre(daypartProgram.DativaGenre).Display;
+            }
+        }
+
+        private void _SetPrimaryProgramForManifestDayparts(List<PlanPricingInventoryProgram> manifests)
+        {
+            var manifestDayparts = manifests.SelectMany(x => x.ManifestDayparts).Where(x => x.Programs.Any());
+
+            foreach (var manifestDaypart in manifestDayparts)
+            {
+                var programs = manifestDaypart.Programs.Select(x => new
+                {
+                    program = x,
+                    totalTimeInSeconds = _GetTotalTimeInSeconds(x.StartTime, x.EndTime)
+                });
+                
+                // PrimaryProgram is the one that has the most time
+                manifestDaypart.PrimaryProgram = programs.OrderByDescending(x => x.totalTimeInSeconds).First().program;
+            }
+        }
+
+        private int _GetTotalTimeInSeconds(int startTime, int endTime)
+        {
+            if (startTime <= endTime)
+                return endTime - startTime;
+
+            return BroadcastConstants.OneDayInSeconds - startTime + endTime;
         }
 
         private List<int> _GetSupportedInventorySourceTypes()
@@ -212,7 +250,7 @@ namespace Services.Broadcast.BusinessEngines
                 return true;
 
             var genres = genreRestrictions.Genres.Select(x => x.Display);
-            var manifestDaypartGenres = programInventoryDaypart.ManifestDaypart.Programs.Select(x => _GenreCache.GetMaestroGenreFromDativaGenre(x.Genre).Display);
+            var manifestDaypartGenres = programInventoryDaypart.ManifestDaypart.Programs.Select(x => x.MaestroGenre);
             var hasIntersections = manifestDaypartGenres.ContainsAny(genres);
 
             return genreRestrictions.ContainType == ContainTypeEnum.Include ?

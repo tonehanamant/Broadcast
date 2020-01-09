@@ -139,34 +139,27 @@ namespace Services.Broadcast.ApplicationServices
         public PlanPricingResponseDto GetCurrentPricingExecution(int planId)
         {
             var job = _PlanRepository.GetLatestPricingJob(planId);
-            var mockPrograms = _GetMockPrograms(job);
+
+            PlanPricingResultDto pricingExecutionResult = null;
+
+            if (job != null && job.Status == BackgroundJobProcessingStatus.Succeeded)
+            {
+                pricingExecutionResult = _PlanRepository.GetPricingResults(planId);
+            }
+            else
+            {
+                pricingExecutionResult = new PlanPricingResultDto
+                {
+                    Totals = new PlanPricingTotalsDto(),
+                    Programs = new List<PlanPricingProgramDto>()
+                };
+            }
 
             return new PlanPricingResponseDto
             {
                 Job = job,
-                Result = new PlanPricingResultDto
-                {
-                    Totals = _GetMockTotals(job),
-                    Programs = mockPrograms
-                        .OrderByDescending(p => p.PercentageOfBuy)
-                        .ThenByDescending(p => p.AvgCpm)
-                        .ThenBy(p => p.ProgramName).ToList()
-                },
+                Result = pricingExecutionResult,
                 IsPricingModelRunning = IsPricingModelRunning(job)
-            };
-        }
-
-        private PlanPricingTotalsDto _GetMockTotals(PlanPricingJob job)
-        {
-            if (job == null || job.Status != BackgroundJobProcessingStatus.Succeeded)
-                return new PlanPricingTotalsDto();
-
-            return new PlanPricingTotalsDto
-            {
-                AvgCpm = 12.5m,
-                AvgImpressions = 124542.221,
-                MarketCount = 2,
-                StationCount = 79
             };
         }
 
@@ -179,86 +172,6 @@ namespace Services.Broadcast.ApplicationServices
         {
             var job = _PlanRepository.GetLatestPricingJob(planId);
             return IsPricingModelRunning(job);
-        }
-
-        private List<PlanPricingProgramDto> _GetMockPrograms(PlanPricingJob job)
-        {
-            if (job == null || job.Status != BackgroundJobProcessingStatus.Succeeded)
-                return new List<PlanPricingProgramDto>();
-
-            return new List<PlanPricingProgramDto>
-            {
-                new PlanPricingProgramDto
-                {
-                    ProgramName = "NFL Sunday Night Football A",
-                    Genre = "Sports",
-                    MarketCount = 72,
-                    StationCount = 72,
-                    AvgCpm = 13.5m,
-                    AvgImpressions = 250,
-                    PercentageOfBuy = 2.05
-                },
-                new PlanPricingProgramDto
-                {
-                    ProgramName = "NFL Sunday Night Football B",
-                    Genre = "Sports",
-                    MarketCount = 72,
-                    StationCount = 72,
-                    AvgCpm = 13.5m,
-                    AvgImpressions = 250,
-                    PercentageOfBuy = 2.05
-                },
-                new PlanPricingProgramDto
-                {
-                    ProgramName = "NFL Sunday Night Football C",
-                    Genre = "Sports",
-                    MarketCount = 72,
-                    StationCount = 72,
-                    AvgCpm = 13.5m,
-                    AvgImpressions = 250,
-                    PercentageOfBuy = 2.05
-                },
-                new PlanPricingProgramDto
-                {
-                    ProgramName = "Good Morning America B",
-                    Genre = "News",
-                    MarketCount = 14,
-                    StationCount = 23,
-                    AvgCpm = 18,
-                    AvgImpressions = 150,
-                    PercentageOfBuy = 10
-                },
-                new PlanPricingProgramDto
-                {
-                    ProgramName = "Good Morning America A",
-                    Genre = "News",
-                    MarketCount = 14,
-                    StationCount = 23,
-                    AvgCpm = 19,
-                    AvgImpressions = 150,
-                    PercentageOfBuy = 10
-                },
-                new PlanPricingProgramDto
-                {
-                    ProgramName = "HOUSE",
-                    Genre = "News",
-                    MarketCount = 14,
-                    StationCount = 23,
-                    AvgCpm = 14,
-                    AvgImpressions = 150,
-                    PercentageOfBuy = 36.925
-                },
-                new PlanPricingProgramDto
-                {
-                    ProgramName = "FRIENDS",
-                    Genre = "News",
-                    MarketCount = 14,
-                    StationCount = 23,
-                    AvgCpm = 99,
-                    AvgImpressions = 150,
-                    PercentageOfBuy = 36.925
-                }
-            };
         }
 
         private PlanPricingApiRequestParametersDto _GetPricingApiRequestParameters(PlanPricingParametersDto planPricingParametersDto, PlanDto plan, List<PlanPricingMarketDto> pricingMarkets)
@@ -428,19 +341,23 @@ namespace Services.Broadcast.ApplicationServices
                     Parameters = parameters
                 };
 
+                _PlanRepository.SavePricingRequest(parameters);
+
                 planPricingJobDiagnostic.RecordApiCallStart();
 
-                var result = _PricingApiClient.GetPricingCalculationResult(pricingApiRequest);
+                var apiResults = _PricingApiClient.GetPricingCalculationResult(pricingApiRequest);
 
                 planPricingJobDiagnostic.RecordApiCallEnd();
 
                 planPricingJobDiagnostic.RecordEnd();
 
+                var aggregatedResults = AggregateResults(inventory, apiResults);
+
                 using (var transaction = new TransactionScopeWrapper())
                 {
-                    _PlanRepository.SavePricingResults(plan.Id, result);
+                    _PlanRepository.SavePricingApiResults(plan.Id, apiResults);
 
-                    _PlanRepository.SavePricingRequest(parameters);
+                    _PlanRepository.SavePricingAggregateResults(plan.Id, aggregatedResults);
 
                     _PlanRepository.UpdatePlanPricingJob(new PlanPricingJob
                     {
@@ -464,6 +381,127 @@ namespace Services.Broadcast.ApplicationServices
             }
         }
 
+        public PlanPricingResultDto AggregateResults(
+            List<PlanPricingInventoryProgram> inventory,
+            PlanPricingApiResponsetDto apiResponse)
+        {
+            var result = new PlanPricingResultDto();
+
+            if (apiResponse.Results == null || !apiResponse.Results.Spots.Any())
+                return result;
+
+            var programs = _GetPrograms(inventory, apiResponse);
+
+            var totalCostForAllPrograms = programs.Sum(x => x.TotalCost);
+            var totalImpressionsForAllProgams = programs.Sum(x => x.TotalImpressions);
+            var totalSpotsForAllPrograms = programs.Sum(x => x.TotalSpots);
+
+            result.Programs.AddRange(programs.Select(x => new PlanPricingProgramDto
+            {
+                ProgramName = x.ProgramName,
+                Genre = x.Genre,
+                StationCount = x.Stations.Count,
+                MarketCount = x.MarketCodes.Count,
+                AvgImpressions = x.AvgImpressions,
+                AvgCpm = x.AvgCpm,
+                PercentageOfBuy = ProposalMath.CalculateImpressionsPercentage(x.TotalImpressions, totalImpressionsForAllProgams)
+            }));
+
+            result.Totals = new PlanPricingTotalsDto
+            {
+                MarketCount = programs.SelectMany(x => x.MarketCodes).Distinct().Count(),
+                StationCount = programs.SelectMany(x => x.Stations).Distinct().Count(),
+                AvgImpressions = ProposalMath.CalculateAvgImpressions(totalImpressionsForAllProgams, totalSpotsForAllPrograms),
+                AvgCpm = ProposalMath.CalculateAvgCpm(totalCostForAllPrograms, totalImpressionsForAllProgams)
+            };
+
+            result.OptimalCpm = apiResponse.Results.OptimalCpm;
+
+            return result;
+        }
+
+        private List<PlanPricingProgram> _GetPrograms(
+            List<PlanPricingInventoryProgram> inventory,
+            PlanPricingApiResponsetDto apiResponse)
+        {
+            var result = new List<PlanPricingProgram>();
+            var inventoryGroupedByProgramName = inventory
+                .SelectMany(x => x.ManifestDayparts.Select(d => new ManifestWithManifestDaypart
+                {
+                    Manifest = x,
+                    ManifestDaypart = d
+                }))
+                .Where(x => x.ManifestDaypart.PrimaryProgram != null)
+                .GroupBy(x => x.ManifestDaypart.PrimaryProgram.Name);
+            
+            foreach (var inventoryByProgramName in inventoryGroupedByProgramName)
+            {
+                var programInventory = inventoryByProgramName.ToList();
+                var allocatedProgramSpots = _GetAllocatedProgramSpots(apiResponse, programInventory);
+
+                _CalculateProgramTotals(allocatedProgramSpots, out var programCost, out var programImpressions, out var programSpots);
+
+                if (programSpots == 0)
+                    continue;
+
+                var program = new PlanPricingProgram
+                {
+                    ProgramName = inventoryByProgramName.Key,
+                    Genre = inventoryByProgramName.First().ManifestDaypart.PrimaryProgram.MaestroGenre,
+                    AvgImpressions = ProposalMath.CalculateAvgImpressions(programImpressions, programSpots),
+                    AvgCpm = ProposalMath.CalculateAvgCpm(programCost, programImpressions),
+                    TotalImpressions = programImpressions,
+                    TotalCost = programCost,
+                    TotalSpots = programSpots,
+                    Stations = programInventory.Select(x => x.Manifest.StationLegacyCallLetters).Distinct().ToList(),
+                    MarketCodes = programInventory.Select(x => x.Manifest.MarketCode).Distinct().ToList()
+                };
+
+                result.Add(program);
+            };
+
+            return result;
+        }
+
+        private List<PlanPricingApiResultSpotDto> _GetAllocatedProgramSpots(PlanPricingApiResponsetDto apiResponse, List<ManifestWithManifestDaypart> programInventory)
+        {
+            var result = new List<PlanPricingApiResultSpotDto>();
+
+            foreach (var spot in apiResponse.Results.Spots)
+            {
+                if (programInventory.Any(x => x.Manifest.ManifestId == spot.Id && x.ManifestDaypart.Daypart.Id == spot.DaypartId))
+                {
+                    result.Add(spot);
+                }
+            }
+
+            return result;
+        }
+
+        private void _CalculateProgramTotals(
+            IEnumerable<PlanPricingApiResultSpotDto> allocatedProgramSpots, 
+            out decimal totalProgramCost,
+            out double totalProgramImpressions,
+            out int totalProgramSpots)
+        {
+            totalProgramCost = 0;
+            totalProgramImpressions = 0;
+            totalProgramSpots = 0;
+
+            foreach (var apiProgram in allocatedProgramSpots)
+            {
+                var spots = apiProgram.Spots;
+                var spotCost = apiProgram.Cost;
+                var totalCost = spots * spotCost;
+                var impressionsPerSpot = apiProgram.Impressions;
+                var totalImpressions = spots * impressionsPerSpot;
+
+                totalProgramCost += totalCost;
+                totalProgramImpressions += totalImpressions;
+                totalProgramSpots += spots;
+            }
+        }
+
         public PlanPricingApiRequestDto GetPricingInventory(int planId)
         {
             var plan = _PlanRepository.GetPlan(planId);
@@ -476,6 +514,13 @@ namespace Services.Broadcast.ApplicationServices
             };
 
             return pricingApiRequest;
+        }
+
+        private class ManifestWithManifestDaypart
+        {
+            public PlanPricingInventoryProgram Manifest { get; set; }
+
+            public PlanPricingInventoryProgram.ManifestDaypart ManifestDaypart { get; set; }
         }
     }
 }

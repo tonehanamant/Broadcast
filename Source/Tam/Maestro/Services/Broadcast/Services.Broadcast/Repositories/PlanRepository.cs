@@ -111,14 +111,13 @@ namespace Services.Broadcast.Repositories
         int GetLatestVersionNumberForPlan(int planId);
 
         int AddPlanPricingJob(PlanPricingJob planPricingJob);
-
         void UpdatePlanPricingJob(PlanPricingJob planPricingJob);
-
         PlanPricingJob GetLatestPricingJob(int planId);
         void SavePlanPricingParameters(PlanPricingParametersDto planPricingRequestDto);
-        void SavePricingResults(int planId, PlanPricingApiResponsetDto result);
-
+        void SavePricingApiResults(int planId, PlanPricingApiResponsetDto result);
         PlanPricingApiResponsetDto GetPricingApiResults(int planId);
+        void SavePricingAggregateResults(int planId, PlanPricingResultDto result);
+        PlanPricingResultDto GetPricingResults(int planId);
     }
 
     public class PlanRepository : BroadcastRepositoryBase, IPlanRepository
@@ -1146,10 +1145,11 @@ namespace Services.Broadcast.Repositories
             });
         }
 
-        public void SavePricingResults(int planId, PlanPricingApiResponsetDto result)
+        public void SavePricingApiResults(int planId, PlanPricingApiResponsetDto result)
         {
             _InReadUncommitedTransaction(context =>
             {
+                var propertiesToIgnore = new List<string>() { "id" };
                 var plan = context.plans.Single(x => x.id == planId);
                 var planVersionId = plan.latest_version_id;
                 var previousResults = context.plan_version_pricing_api_results.Where(x => x.plan_version_id == planVersionId);
@@ -1187,8 +1187,6 @@ namespace Services.Broadcast.Repositories
                     planPricingApiResultSpots.Add(planPricingApiResultSpot);
                 }
 
-                var propertiesToIgnore = new List<string>() { "id" };
-
                 BulkInsert(context, planPricingApiResultSpots, propertiesToIgnore);
             });
         }
@@ -1222,5 +1220,90 @@ namespace Services.Broadcast.Repositories
             });
         }
 
+        public void SavePricingAggregateResults(int planId, PlanPricingResultDto pricingResult)
+        {
+            _InReadUncommitedTransaction(context =>
+            {
+                var propertiesToIgnore = new List<string>() { "id" };
+                var plan = context.plans.Single(x => x.id == planId);
+                var planVersionId = plan.latest_version_id;
+                var previousResults = context.plan_version_pricing_results.Where(x => x.plan_version_id == planVersionId);
+
+                if (previousResults != null)
+                {
+                    context.plan_version_pricing_results.RemoveRange(previousResults);
+                }
+
+                var planPricingResult = new plan_version_pricing_results
+                {
+                    plan_version_id = planVersionId,
+                    optimal_cpm = pricingResult.OptimalCpm,
+                    total_market_count = pricingResult.Totals.MarketCount,
+                    total_station_count = pricingResult.Totals.StationCount,
+                    total_avg_cpm = pricingResult.Totals.AvgCpm,
+                    total_avg_impressions = pricingResult.Totals.AvgImpressions
+                };
+
+                context.plan_version_pricing_results.Add(planPricingResult);
+
+                context.SaveChanges();
+
+                var spots = new List<plan_version_pricing_result_spots>();
+
+                foreach (var program in pricingResult.Programs)
+                {
+                    var planPricingResultSpots = new plan_version_pricing_result_spots
+                    {
+                        plan_version_pricing_result_id = planPricingResult.id,
+                        program_name = program.ProgramName,
+                        genre = program.Genre,
+                        avg_impressions = program.AvgImpressions,
+                        avg_cpm = program.AvgCpm,
+                        percentage_of_buy = program.PercentageOfBuy,
+                        market_count = program.MarketCount,
+                        station_count = program.StationCount
+                    };
+
+                    spots.Add(planPricingResultSpots);
+                }
+
+                BulkInsert(context, spots, propertiesToIgnore);
+            });
+        }
+
+        public PlanPricingResultDto GetPricingResults(int planId)
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                var plan = context.plans.Single(x => x.id == planId);
+                var planVersionId = plan.latest_version_id;
+                var result = context.plan_version_pricing_results.Single(p => p.plan_version_id == planVersionId);
+
+                return new PlanPricingResultDto
+                {
+                    OptimalCpm = result.optimal_cpm,
+                    Totals = new PlanPricingTotalsDto
+                    {
+                        MarketCount = result.total_market_count,
+                        StationCount = result.total_station_count,
+                        AvgCpm = result.total_avg_cpm,
+                        AvgImpressions = result.total_avg_impressions
+                    },
+                    Programs = result.plan_version_pricing_result_spots.Select(r => new PlanPricingProgramDto
+                    {
+                        Id = r.id,
+                        ProgramName = r.program_name,
+                        Genre = r.genre,
+                        AvgCpm = r.avg_cpm,
+                        AvgImpressions = r.avg_impressions,
+                        PercentageOfBuy = r.percentage_of_buy,
+                        MarketCount = r.market_count,
+                        StationCount = r.station_count
+                    }).OrderByDescending(p => p.PercentageOfBuy)
+                       .ThenByDescending(p => p.AvgCpm)
+                       .ThenBy(p => p.ProgramName).ToList()
+                };
+            });
+        }
     }
 }

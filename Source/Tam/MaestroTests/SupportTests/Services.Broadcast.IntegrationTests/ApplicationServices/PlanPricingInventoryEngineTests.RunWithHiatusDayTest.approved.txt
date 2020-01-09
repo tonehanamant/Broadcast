@@ -49,10 +49,28 @@
           "_Wednesday": true
         },
         "Id": 358772,
-        "Programs": []
+        "PrimaryProgram": {
+          "DativaGenre": "Family",
+          "EndTime": 7200,
+          "MaestroGenre": "Children",
+          "Name": "Early news",
+          "ShowType": "Mini-Movie",
+          "StartTime": 3600
+        },
+        "Programs": [
+          {
+            "DativaGenre": "Family",
+            "EndTime": 7200,
+            "MaestroGenre": "Children",
+            "Name": "Early news",
+            "ShowType": "Mini-Movie",
+            "StartTime": 3600
+          }
+        ]
       }
     ],
     "ManifestId": 287146,
+    "MarketCode": 101,
     "MediaWeekIds": [
       771
     ],
@@ -112,10 +130,28 @@
           "_Wednesday": true
         },
         "Id": 358773,
-        "Programs": []
+        "PrimaryProgram": {
+          "DativaGenre": "Family",
+          "EndTime": 7200,
+          "MaestroGenre": "Children",
+          "Name": "Early news",
+          "ShowType": "Mini-Movie",
+          "StartTime": 3600
+        },
+        "Programs": [
+          {
+            "DativaGenre": "Family",
+            "EndTime": 7200,
+            "MaestroGenre": "Children",
+            "Name": "Early news",
+            "ShowType": "Mini-Movie",
+            "StartTime": 3600
+          }
+        ]
       }
     ],
     "ManifestId": 287147,
+    "MarketCode": 101,
     "MediaWeekIds": [
       771
     ],
@@ -175,10 +211,28 @@
           "_Wednesday": true
         },
         "Id": 360318,
-        "Programs": []
+        "PrimaryProgram": {
+          "DativaGenre": "Comedy",
+          "EndTime": 7200,
+          "MaestroGenre": "Comedy",
+          "Name": "Late news",
+          "ShowType": "Sports",
+          "StartTime": 3600
+        },
+        "Programs": [
+          {
+            "DativaGenre": "Comedy",
+            "EndTime": 7200,
+            "MaestroGenre": "Comedy",
+            "Name": "Late news",
+            "ShowType": "Sports",
+            "StartTime": 3600
+          }
+        ]
       }
     ],
     "ManifestId": 288692,
+    "MarketCode": 100,
     "MediaWeekIds": [
       771
     ],
@@ -238,10 +292,28 @@
           "_Wednesday": true
         },
         "Id": 360321,
-        "Programs": []
+        "PrimaryProgram": {
+          "DativaGenre": "Comedy",
+          "EndTime": 7200,
+          "MaestroGenre": "Comedy",
+          "Name": "Late news",
+          "ShowType": "Sports",
+          "StartTime": 3600
+        },
+        "Programs": [
+          {
+            "DativaGenre": "Comedy",
+            "EndTime": 7200,
+            "MaestroGenre": "Comedy",
+            "Name": "Late news",
+            "ShowType": "Sports",
+            "StartTime": 3600
+          }
+        ]
       }
     ],
     "ManifestId": 288695,
+    "MarketCode": 100,
     "MediaWeekIds": [
       771
     ],

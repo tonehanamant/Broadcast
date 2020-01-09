@@ -4,6 +4,7 @@ namespace Services.Broadcast.Entities.PlanPricing
 {
     public class PlanPricingInventoryProgramDto
     {
+        public int ManifestId { get; set; }
         public List<string> ProgramNames { get; set; }
         public PlanPricingMarketDto PlanPricingMarket { get; set; }
         public DisplayScheduleStation Station { get; set; }

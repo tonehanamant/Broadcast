@@ -31,10 +31,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             _ImpressionsCalculationEngineMock = new Mock<IImpressionsCalculationEngine>();
             _GenreCache = new Mock<IGenreCache>();
 
-            _GenreCache
-                .Setup(x => x.GetMaestroGenreFromDativaGenre(It.IsAny<string>()))
-                .Returns<string>(arg1 => new LookupDto { Display = arg1, Id = 1 });
-
             _PlanPricingInventoryEngine = new PlanPricingInventoryEngine(
                 _DataRepositoryFactoryMock.Object,
                 _ImpressionsCalculationEngineMock.Object,
@@ -283,7 +279,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                             {
                                 new PlanPricingInventoryProgram.ManifestDaypart.Program
                                 {
-                                    Genre = inventoryGenre
+                                    MaestroGenre = inventoryGenre
                                 }
                             }
                         }
@@ -504,7 +500,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                                 {
                                     ShowType = "Mini-Movie",
                                     Name = "Early news",
-                                    Genre = "Comedy"
+                                    MaestroGenre = "Comedy"
                                 }
                             }
                         }

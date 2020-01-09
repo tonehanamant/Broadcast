@@ -166,6 +166,7 @@ namespace Services.Broadcast.Repositories
                                 .ToList(),
                             SpotCost = x.station_inventory_manifest_rates.Single(r => r.spot_length_id == spotLengthId).spot_cost,
                             StationLegacyCallLetters = x.station.legacy_call_letters,
+                            MarketCode = x.station.market_code.Value,
                             Unit = x.station_inventory_group?.name,
                             InventorySource = x.inventory_sources.name,
                             InventorySourceType = ((InventorySourceTypeEnum)x.inventory_sources.inventory_source_type).GetDescriptionAttribute(),
@@ -177,7 +178,9 @@ namespace Services.Broadcast.Repositories
                                 {
                                     Name = p.name,
                                     ShowType = p.show_type,
-                                    Genre = p.genre.name
+                                    DativaGenre = p.genre.name,
+                                    StartTime = p.start_time,
+                                    EndTime = p.end_time
                                 }).ToList()
                             }).ToList(),
                             ManifestAudiences = x.station_inventory_manifest_audiences.Select(a => new PlanPricingInventoryProgram.ManifestAudience

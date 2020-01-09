@@ -8,7 +8,7 @@ namespace Services.Broadcast.Entities.Plan.Pricing
         [JsonProperty("optimal_cpm")]
         public decimal OptimalCpm { get; set; }
         [JsonProperty("spots")]
-        public List<PlanPricingApiResultSpotDto> Spots { get; set; }
+        public List<PlanPricingApiResultSpotDto> Spots { get; set; } = new List<PlanPricingApiResultSpotDto>();
     }
 
     public class PlanPricingApiResultSpotDto

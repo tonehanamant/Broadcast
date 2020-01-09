@@ -15,6 +15,8 @@ namespace Services.Broadcast.Entities.Plan.Pricing
 
         public string StationLegacyCallLetters { get; set; }
 
+        public int MarketCode { get; set; }
+
         public string Unit { get; set; }
 
         public string InventorySource { get; set; }
@@ -32,6 +34,8 @@ namespace Services.Broadcast.Entities.Plan.Pricing
             public int Id { get; set; }
 
             public DisplayDaypart Daypart { get; set; }
+            
+            public Program PrimaryProgram { get; set; }
 
             public List<Program> Programs { get; set; }
 
@@ -41,7 +45,13 @@ namespace Services.Broadcast.Entities.Plan.Pricing
 
                 public string ShowType { get; set; }
 
-                public string Genre { get; set; }
+                public string DativaGenre { get; set; }
+
+                public string MaestroGenre { get; set; }
+
+                public int StartTime { get; set; }
+
+                public int EndTime { get; set; }
             }
         }
 

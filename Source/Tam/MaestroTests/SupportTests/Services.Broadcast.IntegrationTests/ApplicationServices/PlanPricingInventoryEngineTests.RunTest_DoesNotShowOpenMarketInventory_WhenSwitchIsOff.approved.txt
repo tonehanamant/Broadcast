@@ -134,30 +134,51 @@
           "_Wednesday": true
         },
         "Id": 633846,
+        "PrimaryProgram": {
+          "DativaGenre": "News",
+          "EndTime": 7200,
+          "MaestroGenre": "News",
+          "Name": "11 NEWS @  5:00AM",
+          "ShowType": "MOVTBA",
+          "StartTime": 3600
+        },
         "Programs": [
           {
-            "Genre": "News",
+            "DativaGenre": "News",
+            "EndTime": 7200,
+            "MaestroGenre": "News",
             "Name": "11 NEWS @  5:00AM",
-            "ShowType": "MOVTBA"
+            "ShowType": "MOVTBA",
+            "StartTime": 3600
           },
           {
-            "Genre": "News",
+            "DativaGenre": "News",
+            "EndTime": 7200,
+            "MaestroGenre": "News",
             "Name": "11 NEWS @  5:00AM",
-            "ShowType": "MOVTBA"
+            "ShowType": "MOVTBA",
+            "StartTime": 3600
           },
           {
-            "Genre": "News",
+            "DativaGenre": "News",
+            "EndTime": 7200,
+            "MaestroGenre": "News",
             "Name": "11 NEWS @  5:00AM",
-            "ShowType": "MOVTBA"
+            "ShowType": "MOVTBA",
+            "StartTime": 3600
           },
           {
-            "Genre": "News",
+            "DativaGenre": "News",
+            "EndTime": 7200,
+            "MaestroGenre": "News",
             "Name": "11 NEWS @  5:00AM",
-            "ShowType": "MOVTBA"
+            "ShowType": "MOVTBA",
+            "StartTime": 3600
           }
         ]
       }
     ],
+    "MarketCode": 101,
     "MediaWeekIds": [
       772,
       773,

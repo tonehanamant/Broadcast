@@ -134,10 +134,12 @@
           "_Wednesday": true
         },
         "Id": 576683,
+        "PrimaryProgram": null,
         "Programs": []
       }
     ],
     "ManifestId": 469330,
+    "MarketCode": 132,
     "MediaWeekIds": [
       744
     ],
@@ -282,10 +284,12 @@
           "_Wednesday": true
         },
         "Id": 576685,
+        "PrimaryProgram": null,
         "Programs": []
       }
     ],
     "ManifestId": 469332,
+    "MarketCode": 132,
     "MediaWeekIds": [
       744
     ],

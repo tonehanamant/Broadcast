@@ -6,7 +6,6 @@ using Owin;
 using Services.Broadcast;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.ApplicationServices.Plan;
-using Services.Broadcast.Entities.Enums;
 using System;
 using System.Configuration;
 using System.Linq;
@@ -32,11 +31,14 @@ namespace BroadcastComposerWeb
             var serviceNameBase = $"{Environment.MachineName}.{applicationName}";
             var quickRunWorkerCount = double.Parse(ConfigurationManager.AppSettings["HangfireQuickWorkerCountPerProcessor"]);
             var longRunWorkerCount = double.Parse(ConfigurationManager.AppSettings["HangfireLongWorkerCountPerProcessor"]); ;
+            // one total.
+            var inventoryAggregationWorkerCount = 1.0 / Environment.ProcessorCount;
 
             if (_AreHangfireServicesEnabled())
             {
-                _AddService($"{serviceNameBase}.QuickRun", GetQuickRunQueueNames(), quickRunWorkerCount, app);
-                _AddService($"{serviceNameBase}.LongRun", GetLongRunQueueNames(), longRunWorkerCount, app);
+                _AddService($"{serviceNameBase}.QuickRun", _GetQuickRunQueueNames(), quickRunWorkerCount, app);
+                _AddService($"{serviceNameBase}.LongRun", _GetQueueNames_LongRunningBackgroundTasks(), longRunWorkerCount, app);
+                _AddService($"{serviceNameBase}.InventoryAggregation", new [] { "inventorysummaryaggregation" }, inventoryAggregationWorkerCount, app);
             }
 
             // set the default retry count.  
@@ -95,24 +97,29 @@ namespace BroadcastComposerWeb
             return options;
         }
 
-        private string[] GetLongRunQueueNames()
+        private string[] _GetQuickRunQueueNames()
         {
             // these are in priority order 
+            // all lower case.
             return new[]
             {
-                Enum.GetName(typeof(QueueEnum), QueueEnum.InventoryRating),
-                Enum.GetName(typeof(QueueEnum), QueueEnum.PlanPricing),
-                Enum.GetName(typeof(QueueEnum), QueueEnum.InventorySummaryAggregation),
-                Enum.GetName(typeof(QueueEnum), QueueEnum.InventoryProgramEnrichment),
-                Enum.GetName(typeof(QueueEnum), QueueEnum.ScxFileGeneration),
-                Enum.GetName(typeof(QueueEnum), QueueEnum.Default),
+                "campaignaggregation",
+                "planstatustransition"
             };
         }
 
-        private string[] GetQuickRunQueueNames()
+        private string[] _GetQueueNames_LongRunningBackgroundTasks()
         {
-            var longs = GetLongRunQueueNames();
-            return Enum.GetNames(typeof(QueueEnum)).Where(n => longs.Contains(n) == false).ToArray();
+            // these are in priority order 
+            // all lower case.
+            return new[]
+            {
+                "inventoryrating", 
+                "planpricing", 
+                "inventoryprogramenrichment", 
+                "scxfilegeneration", 
+                "default"
+            };
         }
 
         private void _AddService(string name, string[] queuesToManage, double workerCountPerProcessor, IAppBuilder app)

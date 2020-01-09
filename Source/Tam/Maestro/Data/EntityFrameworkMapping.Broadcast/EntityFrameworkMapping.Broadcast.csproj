@@ -553,6 +553,12 @@
     <Compile Include="plan_version_pricing_parameters_inventory_source_type_percentages.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="plan_version_pricing_results.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="plan_version_pricing_result_spots.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="plan_version_secondary_audiences.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>

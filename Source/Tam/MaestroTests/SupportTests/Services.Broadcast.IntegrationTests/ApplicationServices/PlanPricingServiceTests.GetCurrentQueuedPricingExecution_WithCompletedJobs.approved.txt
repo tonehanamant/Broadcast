@@ -9,6 +9,7 @@
     "Status": 1
   },
   "Result": {
+    "OptimalCpm": 0.0,
     "Programs": [],
     "Totals": {
       "AvgCpm": 0.0,

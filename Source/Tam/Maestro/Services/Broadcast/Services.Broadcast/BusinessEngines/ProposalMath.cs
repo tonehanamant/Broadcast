@@ -48,5 +48,20 @@ namespace Services.Broadcast.BusinessEngines
 
             return (spotCost / (decimal) impressionsPerSpot) * 1000;
         }
+
+        public static double CalculateAvgImpressions(double totalImpressions, int spots)
+        {
+            return spots == 0 ? 0 : totalImpressions / spots;
+        }
+
+        public static decimal CalculateAvgCpm(decimal totalCost, double totalImpressions)
+        {
+            return totalImpressions == 0 ? 0 : totalCost / (decimal)totalImpressions * 1000;
+        }
+
+        public static double CalculateImpressionsPercentage(double impressions, double totalImpressions)
+        {
+            return totalImpressions == 0 ? 0 : impressions / totalImpressions * 100;
+        }
     }
 }

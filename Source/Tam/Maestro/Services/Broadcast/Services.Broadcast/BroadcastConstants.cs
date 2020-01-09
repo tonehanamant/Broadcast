@@ -15,5 +15,7 @@
         public const int LogoCachingDurationInSeconds = 3600;
 
         public const int NeilsonTimeSlotInSeconds = 900;    // 15 minute timeslot should be moved to System_Settings
+
+        public const int OneDayInSeconds = 86400;
     }
 }
