@@ -127,6 +127,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         void AutomaticStatusTransitions(DateTime transitionDate, string updatedBy, DateTime updatedDate, bool aggregatePlanSynchronously = false);
 
         CurrentQuartersDto GetCurrentQuarters(DateTime currentDateTime);
+        List<VPVHForAudience> GetVPVHForAudiencesWithBooks(VPVHRequest request);
     }
 
     public class PlanService : IPlanService
@@ -940,6 +941,28 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 Error = lockingResponse.Error,
                 PlanName = planName
             };
+        }
+
+        public List<VPVHForAudience> GetVPVHForAudiencesWithBooks(VPVHRequest request)
+        {
+            var result = new List<VPVHForAudience>();
+
+            var mediaMonthId = request.HutBookId.HasValue ? request.HutBookId.Value : request.ShareBookId;
+
+            var householdUniverse = _NsiUniverseService.GetAudienceUniverseForMediaMonth(mediaMonthId, BroadcastConstants.HouseholdAudienceId);
+
+            foreach (var audienceId in request.AudienceIds)
+            {
+                var audienceUniverse = _NsiUniverseService.GetAudienceUniverseForMediaMonth(mediaMonthId, audienceId);
+                var audienceVPVH = audienceUniverse / householdUniverse;
+                result.Add(new VPVHForAudience
+                {
+                    AudienceId = audienceId,
+                    VPVH = audienceVPVH
+                });
+            }
+
+            return result;
         }
     }
 }

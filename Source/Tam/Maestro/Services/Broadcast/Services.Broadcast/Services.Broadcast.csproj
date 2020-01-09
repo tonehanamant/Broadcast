@@ -400,6 +400,8 @@
     <Compile Include="Entities\Plan\Pricing\PlanPricingResponseDto.cs" />
     <Compile Include="Entities\Plan\Pricing\PlanPricingResultDto.cs" />
     <Compile Include="Entities\Plan\PlanLockResponse.cs" />
+    <Compile Include="Entities\Plan\VPVHRequest.cs" />
+    <Compile Include="Entities\Plan\VPVHForAudience.cs" />
     <Compile Include="Entities\ProgramGuide\GuideRequestDaypartDto.cs" />
     <Compile Include="Entities\ProgramGuide\GuideRequestElementDto.cs" />
     <Compile Include="Entities\ProgramGuide\GuideResponseElementDto.cs" />

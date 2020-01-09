@@ -195,5 +195,17 @@ namespace BroadcastComposerWeb.Controllers
         {
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanService>().GetCurrentQuarters(DateTime.Now));
         }
+
+        /// <summary>
+        /// Calculates VPVH for given audiences and posting books
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <returns>WeeklyBreakdownResponse object containing the weekly breakdown</returns>
+        [HttpPost]
+        [Route("VPVH")]
+        public BaseResponse<List<VPVHForAudience>> GetVPVHForAudiencesWithBooks(VPVHRequest request)
+        {
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanService>().GetVPVHForAudiencesWithBooks(request));
+        }
     }
 }
