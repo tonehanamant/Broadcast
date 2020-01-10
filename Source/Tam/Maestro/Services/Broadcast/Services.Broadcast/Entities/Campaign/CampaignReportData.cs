@@ -498,9 +498,9 @@ namespace Services.Broadcast.Entities.Campaign
         public string StartTime { get; set; }
         public string EndTime { get; set; }
         public ContainTypeEnum GenreContainType { get; set; }
-        public List<string> Genres { get; set; }
+        public List<string> Genres { get; set; } = new List<string>();
         public ContainTypeEnum ProgramContainType { get; set; }
-        public List<string> Programs { get; set; }
+        public List<string> Programs { get; set; } = new List<string>();
     }
 
     public class DaypartDataEqualityComparer : IEqualityComparer<DaypartData>

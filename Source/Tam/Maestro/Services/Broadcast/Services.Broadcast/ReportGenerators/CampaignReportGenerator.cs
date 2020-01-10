@@ -157,22 +157,32 @@ namespace Services.Broadcast.ReportGenerators
                 string contentRestrictionsRowText = string.Empty;
                 foreach(var daypart in daypartsData)
                 {
-                    if (daypart.Genres != null && daypart.Genres.Any())
+                    if(daypart.Genres.Any() || daypart.Programs.Any())
                     {
-                        //contain type is the same for all genres
-                        contentRestrictionsRowText += $"{daypart.DaypartCode}: Genres {(daypart.GenreContainType.Equals(ContainTypeEnum.Include) ? "include " : "exclude ")}";
-                        contentRestrictionsRowText += string.Join(", ", daypart.Genres);
-                    }
-                    if (daypart.Programs != null && daypart.Programs.Any())
-                    {
-                        //if the content restrictions string contains Genres, we need to add the separator
-                        if (!string.IsNullOrWhiteSpace(contentRestrictionsRowText))
+                        if (string.IsNullOrWhiteSpace(contentRestrictionsRowText))
                         {
-                            contentRestrictionsRowText += " | ";
+                            contentRestrictionsRowText = $"{daypart.DaypartCode}: ";
                         }
                         else
                         {
-                            contentRestrictionsRowText = $"{daypart.DaypartCode}: ";
+                            contentRestrictionsRowText += $" {daypart.DaypartCode}: ";
+                        }
+                    }
+
+                    bool hasGenres = false;
+                    if (daypart.Genres.Any())
+                    {
+                        //contain type is the same for all genres
+                        contentRestrictionsRowText += $"Genres {(daypart.GenreContainType.Equals(ContainTypeEnum.Include) ? "include " : "exclude ")}";
+                        contentRestrictionsRowText += string.Join(", ", daypart.Genres);
+                        hasGenres = true;
+                    }
+                    if (daypart.Programs.Any())
+                    {
+                        //if the content restrictions string contains Genres, we need to add the separator
+                        if (hasGenres)
+                        {
+                            contentRestrictionsRowText += " | ";
                         }
                         //contain type is the same for all programs
                         contentRestrictionsRowText += $"Programs {(daypart.ProgramContainType.Equals(ContainTypeEnum.Include) ? "include " : "exclude ")}";
