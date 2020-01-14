@@ -154,22 +154,23 @@ namespace Services.Broadcast.ReportGenerators
             currentRowIndex += 2;
             if (daypartsData.Any())
             {
-                string contentRestrictionsRowText = string.Empty;
+               
                 foreach(var daypart in daypartsData)
                 {
                     if(daypart.Genres.Any() || daypart.Programs.Any())
                     {
-                        if (string.IsNullOrWhiteSpace(contentRestrictionsRowText))
+                        if (proposalWorksheet.Cells[$"{FOOTER_INFO_COLUMN_INDEX}{currentRowIndex}"].Value == null)
                         {
-                            contentRestrictionsRowText = $"{daypart.DaypartCode}: ";
+                            proposalWorksheet.Cells[$"{FOOTER_INFO_COLUMN_INDEX}{currentRowIndex}"].RichText.Add($"{daypart.DaypartCode}: ").Bold = true;
                         }
                         else
                         {
-                            contentRestrictionsRowText += $" {daypart.DaypartCode}: ";
+                            proposalWorksheet.Cells[$"{FOOTER_INFO_COLUMN_INDEX}{currentRowIndex}"].RichText.Add($" {daypart.DaypartCode}: ").Bold = true;
                         }
                     }
 
                     bool hasGenres = false;
+                    string contentRestrictionsRowText = string.Empty;
                     if (daypart.Genres.Any())
                     {
                         //contain type is the same for all genres
@@ -188,9 +189,10 @@ namespace Services.Broadcast.ReportGenerators
                         contentRestrictionsRowText += $"Programs {(daypart.ProgramContainType.Equals(ContainTypeEnum.Include) ? "include " : "exclude ")}";
                         contentRestrictionsRowText += string.Join(", ", daypart.Programs);
                     }
+                    proposalWorksheet.Cells[$"{FOOTER_INFO_COLUMN_INDEX}{currentRowIndex}"].RichText.Add(contentRestrictionsRowText).Bold = false;
                 }
                 
-                proposalWorksheet.Cells[$"{FOOTER_INFO_COLUMN_INDEX}{currentRowIndex}"].Value = contentRestrictionsRowText;
+                
             }
         }
 

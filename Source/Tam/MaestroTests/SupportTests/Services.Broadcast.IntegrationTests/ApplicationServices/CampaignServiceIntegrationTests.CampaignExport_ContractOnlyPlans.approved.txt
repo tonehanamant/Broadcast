@@ -177,9 +177,9 @@
       "DaysLabel": null,
       "EndTime": "01:00pm",
       "GenreContainType": 0,
-      "Genres": null,
+      "Genres": [],
       "ProgramContainType": 0,
-      "Programs": null,
+      "Programs": [],
       "StartTime": "11:00am"
     },
     {
@@ -188,9 +188,9 @@
       "DaysLabel": null,
       "EndTime": "06:00pm",
       "GenreContainType": 0,
-      "Genres": null,
+      "Genres": [],
       "ProgramContainType": 0,
-      "Programs": null,
+      "Programs": [],
       "StartTime": "03:00pm"
     },
     {
@@ -199,9 +199,9 @@
       "DaysLabel": null,
       "EndTime": "09:00am",
       "GenreContainType": 0,
-      "Genres": null,
+      "Genres": [],
       "ProgramContainType": 0,
-      "Programs": null,
+      "Programs": [],
       "StartTime": "06:00am"
     }
   ],
