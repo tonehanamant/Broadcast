@@ -62,9 +62,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     EndDate = new DateTime(2019, 03, 31),
                     InventorySourceId = 5,
                     UnitNames = new List<string> { "Unit 1", "Unit 2", "Unit 3", "Unit 4"},
-                    DaypartCodeId = 2
+                    DaypartDefaultId = 2
                 };
-                var result = inventoryScxDataPrep.GetInventoryScxData(scxRequest.InventorySourceId, scxRequest.DaypartCodeId, scxRequest.StartDate, scxRequest.EndDate, scxRequest.UnitNames);
+                var result = inventoryScxDataPrep.GetInventoryScxData(scxRequest.InventorySourceId, scxRequest.DaypartDefaultId, scxRequest.StartDate, scxRequest.EndDate, scxRequest.UnitNames);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(ScxProgram), "ProgramId");
@@ -103,9 +103,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     EndDate = new DateTime(2019, 03, 31),
                     InventorySourceId = 5,
                     UnitNames = new List<string> { "Unit 1", "Unit 2", "Unit 3", "Unit 4" },
-                    DaypartCodeId = 2
+                    DaypartDefaultId = 2
                 };
-                var result = inventoryScxDataPrep.GetInventoryScxData(scxRequest.InventorySourceId, scxRequest.DaypartCodeId, scxRequest.StartDate, scxRequest.EndDate, scxRequest.UnitNames);
+                var result = inventoryScxDataPrep.GetInventoryScxData(scxRequest.InventorySourceId, scxRequest.DaypartDefaultId, scxRequest.StartDate, scxRequest.EndDate, scxRequest.UnitNames);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(ScxProgram), "ProgramId");
@@ -147,9 +147,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     EndDate = new DateTime(2019, 03, 31),
                     InventorySourceId = 5,
                     UnitNames = new List<string> { "Unit 1", "Unit 2", "Unit 3", "Unit 4" },
-                    DaypartCodeId = 2
+                    DaypartDefaultId = 2
                 };
-                var dataList = inventoryScxDataPrep.GetInventoryScxData(scxRequest.InventorySourceId, scxRequest.DaypartCodeId, scxRequest.StartDate, scxRequest.EndDate, scxRequest.UnitNames);
+                var dataList = inventoryScxDataPrep.GetInventoryScxData(scxRequest.InventorySourceId, scxRequest.DaypartDefaultId, scxRequest.StartDate, scxRequest.EndDate, scxRequest.UnitNames);
 
                 var adx = _InventoryScxDataConverter.CreateAdxObject(dataList.First());
 
@@ -180,11 +180,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     EndDate = new DateTime(2020, 03, 01),
                     StartDate = new DateTime(2020, 01, 01),
-                    DaypartCodeId = 4,
+                    DaypartDefaultId = 4,
                     InventorySourceId = 10
                 };
 
-                var result = inventoryScxDataPrep.GetInventoryScxData(request.InventorySourceId, request.DaypartCodeId, request.StartDate, request.EndDate, request.UnitNames);
+                var result = inventoryScxDataPrep.GetInventoryScxData(request.InventorySourceId, request.DaypartDefaultId, request.StartDate, request.EndDate, request.UnitNames);
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 var jsonSettings = new JsonSerializerSettings
                 {
@@ -221,11 +221,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     EndDate = new DateTime(2019, 03, 01),
                     StartDate = new DateTime(2019, 01, 01),
-                    DaypartCodeId = 2,
+                    DaypartDefaultId = 2,
                     InventorySourceId = 11
                 };
 
-                var result = inventoryScxDataPrep.GetInventoryScxData(request.InventorySourceId, request.DaypartCodeId, request.StartDate, request.EndDate, request.UnitNames);
+                var result = inventoryScxDataPrep.GetInventoryScxData(request.InventorySourceId, request.DaypartDefaultId, request.StartDate, request.EndDate, request.UnitNames);
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 var jsonSettings = new JsonSerializerSettings
                 {
@@ -262,11 +262,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     EndDate = new DateTime(2019, 03, 01),
                     StartDate = new DateTime(2019, 01, 01),
-                    DaypartCodeId = 2,
+                    DaypartDefaultId = 2,
                     InventorySourceId = 11
                 };
 
-                var result = inventoryScxDataPrep.GetInventoryScxData(request.InventorySourceId, request.DaypartCodeId, request.StartDate, request.EndDate, request.UnitNames);
+                var result = inventoryScxDataPrep.GetInventoryScxData(request.InventorySourceId, request.DaypartDefaultId, request.StartDate, request.EndDate, request.UnitNames);
 
                 var adx = _InventoryScxDataConverter.CreateAdxObject(result.First());
 

@@ -2,7 +2,7 @@
   {
     "CompletedAt": null,
     "InventoryScxDownloadRequest": {
-      "DaypartCodeId": 1,
+      "DaypartDefaultId": 1,
       "EndDate": "2019-03-31T00:00:00",
       "InventorySourceId": 7,
       "StartDate": "2018-12-31T00:00:00",

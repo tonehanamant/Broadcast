@@ -17,7 +17,7 @@ namespace Services.Broadcast.Entities.Scx
         /// Daypart code id used to filter data
         /// </summary>
         /// <value>12344</value>
-        public int DaypartCodeId { get; set; }
+        public int DaypartDefaultId { get; set; }
 
         /// <summary>
         /// Start Date of the start quarter

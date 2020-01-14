@@ -55,7 +55,7 @@ namespace Services.Broadcast.Repositories
                     var scxJob = new scx_generation_jobs
                     {
                         inventory_source_id = job.InventoryScxDownloadRequest.InventorySourceId,
-                        daypart_default_id = job.InventoryScxDownloadRequest.DaypartCodeId,
+                        daypart_default_id = job.InventoryScxDownloadRequest.DaypartDefaultId,
                         start_date = job.InventoryScxDownloadRequest.StartDate,
                         end_date = job.InventoryScxDownloadRequest.EndDate,
                         status = (int)job.Status,
@@ -129,7 +129,7 @@ namespace Services.Broadcast.Repositories
                 InventoryScxDownloadRequest = new InventoryScxDownloadRequest
                 {
                     InventorySourceId = scxJob.inventory_source_id,
-                    DaypartCodeId = scxJob.daypart_default_id,
+                    DaypartDefaultId = scxJob.daypart_default_id,
                     StartDate = scxJob.start_date,
                     EndDate = scxJob.end_date,
                     UnitNames = scxJob.scx_generation_job_units.Select(u => u.unit_name).ToList()

@@ -221,7 +221,7 @@ namespace Services.Broadcast.ApplicationServices
             var archiveFileName = $"InventoryUnits_{DateTime.Now.ToString("yyyyMMddhhmmss")}.zip";
             var inventorySource = _InventoryRepository.GetInventorySource(request.InventorySourceId);
             var inventoryDataPrep = _InventoryScxDataPrepFactory.GetInventoryDataPrep(inventorySource.InventoryType);
-            var inventoryData = inventoryDataPrep.GetInventoryScxData(request.InventorySourceId, request.DaypartCodeId, request.StartDate, request.EndDate, request.UnitNames);
+            var inventoryData = inventoryDataPrep.GetInventoryScxData(request.InventorySourceId, request.DaypartDefaultId, request.StartDate, request.EndDate, request.UnitNames);
             var scxFiles = _InventoryScxDataConverter.ConvertInventoryData(inventoryData);
             var archiveFile = new MemoryStream();
 
@@ -249,7 +249,7 @@ namespace Services.Broadcast.ApplicationServices
         {
             var inventorySource = _InventoryRepository.GetInventorySource(request.InventorySourceId);
             var inventoryDataPrep = _InventoryScxDataPrepFactory.GetInventoryDataPrep(inventorySource.InventoryType);
-            var inventoryData = inventoryDataPrep.GetInventoryScxData(request.InventorySourceId, request.DaypartCodeId, request.StartDate, request.EndDate, request.UnitNames);
+            var inventoryData = inventoryDataPrep.GetInventoryScxData(request.InventorySourceId, request.DaypartDefaultId, request.StartDate, request.EndDate, request.UnitNames);
 
             return _InventoryScxDataConverter.ConvertInventoryData(inventoryData);
         }

@@ -56,7 +56,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 var request = new InventoryScxDownloadRequest
                 {
-                    DaypartCodeId = 1,
+                    DaypartDefaultId = 1,
                     InventorySourceId = 1,
                     StartDate = new DateTime(2019, 3, 1),
                     EndDate = new DateTime(2019, 3, 15),
@@ -81,7 +81,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     EndDate = new DateTime(2019, 03, 31),
                     StartDate = new DateTime(2018, 12, 31),
-                    DaypartCodeId = 1,
+                    DaypartDefaultId = 1,
                     InventorySourceId = 7,
                     UnitNames = new List<string> { "ExpiresGroupsTest" }
                 };
@@ -108,7 +108,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     EndDate = new DateTime(2019, 03, 31),
                     StartDate = new DateTime(2018, 12, 31),
-                    DaypartCodeId = 1,
+                    DaypartDefaultId = 1,
                     InventorySourceId = 7,
                     UnitNames = new List<string> { "ExpiresGroupsTest" }
                 };
@@ -139,7 +139,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     EndDate = new DateTime(2019, 03, 31),
                     StartDate = new DateTime(2018, 12, 31),
-                    DaypartCodeId = 1,
+                    DaypartDefaultId = 1,
                     InventorySourceId = 7,
                     UnitNames = new List<string> { "ExpiresGroupsTest" }
                 };
@@ -176,7 +176,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     EndDate = new DateTime(2019, 1, 1),
                     StartDate = new DateTime(2018, 3, 20),
-                    DaypartCodeId = 2,
+                    DaypartDefaultId = 2,
                     InventorySourceId = inventorySourceId,
                     UnitNames = new List<string> { "Unit 1" }
                 };
@@ -219,7 +219,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     EndDate = new DateTime(2019, 1, 1),
                     StartDate = new DateTime(2018, 3, 20),
-                    DaypartCodeId = 2,
+                    DaypartDefaultId = 2,
                     InventorySourceId = inventorySourceId,
                     UnitNames = new List<string> { "Unit 1" }
                 };
@@ -266,7 +266,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     EndDate = new DateTime(2019, 1, 1),
                     StartDate = new DateTime(2018, 3, 20),
-                    DaypartCodeId = 2,
+                    DaypartDefaultId = 2,
                     InventorySourceId = inventorySourceId,
                     UnitNames = new List<string> { "Unit 1" }
                 };
@@ -295,7 +295,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     EndDate = new DateTime(2019, 03, 31),
                     StartDate = new DateTime(2018, 12, 31),
-                    DaypartCodeId = 1,
+                    DaypartDefaultId = 1,
                     InventorySourceId = inventorySourceId,
                     UnitNames = new List<string> { "ExpiresGroupsTest" }
                 };
