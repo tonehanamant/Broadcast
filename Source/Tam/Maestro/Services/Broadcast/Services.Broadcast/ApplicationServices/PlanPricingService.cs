@@ -388,7 +388,9 @@ namespace Services.Broadcast.ApplicationServices
             var result = new PlanPricingResultDto();
 
             if (apiResponse.Results == null || !apiResponse.Results.Spots.Any())
+            {
                 return result;
+            }
 
             var programs = _GetPrograms(inventory, apiResponse);
 

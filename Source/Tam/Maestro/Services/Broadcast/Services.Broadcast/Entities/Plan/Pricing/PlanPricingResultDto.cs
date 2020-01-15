@@ -4,7 +4,7 @@ namespace Services.Broadcast.Entities.Plan.Pricing
 {
     public class PlanPricingResultDto
     {
-        public PlanPricingTotalsDto Totals { get; set; }
+        public PlanPricingTotalsDto Totals { get; set; } = new PlanPricingTotalsDto();
         public List<PlanPricingProgramDto> Programs { get; set; } = new List<PlanPricingProgramDto>();
         public decimal OptimalCpm { get; set; }
     }

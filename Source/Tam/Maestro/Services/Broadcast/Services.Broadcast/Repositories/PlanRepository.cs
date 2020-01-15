@@ -1267,7 +1267,10 @@ namespace Services.Broadcast.Repositories
                     spots.Add(planPricingResultSpots);
                 }
 
-                BulkInsert(context, spots, propertiesToIgnore);
+                if (spots.Any())
+                {
+                    BulkInsert(context, spots, propertiesToIgnore);
+                }
             });
         }
 
