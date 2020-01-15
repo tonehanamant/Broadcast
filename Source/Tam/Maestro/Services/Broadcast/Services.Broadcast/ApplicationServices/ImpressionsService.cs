@@ -1,4 +1,5 @@
 ﻿using Common.Services.ApplicationServices;
+using Common.Services.Extensions;
 using Common.Services.Repositories;
 using Microsoft.Practices.ObjectBuilder2;
 using Services.Broadcast.BusinessEngines;
@@ -8,11 +9,9 @@ using Services.Broadcast.Entities.StationInventory;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
 using Tam.Maestro.Common.DataLayer;
-using Tam.Maestro.Services.Cable.SystemComponentParameters;
+using Tam.Maestro.Common.Utilities.Logging;
 using Tam.Maestro.Services.ContractInterfaces.AudienceAndRatingsBusinessObjects;
 using static Services.Broadcast.Entities.Enums.ProposalEnums;
 using StationInventoryManifest = Services.Broadcast.Entities.StationInventory.StationInventoryManifest;
@@ -269,7 +268,7 @@ namespace Services.Broadcast.ApplicationServices
             }
         }
 
-        private List<StationInventoryManifestAudience> _LoadImpressionsForComponents(ManifestDetailDaypart stationDetail, 
+        private List<StationInventoryManifestAudience> _LoadImpressionsForComponents(ManifestDetailDaypart stationDetail,
             int? hutBook, int shareBook, ProposalPlaybackType? playbackType, int marketCode, List<BroadcastAudience> components)
         {
             List<StationImpressionsWithAudience> stationImpressions;
@@ -311,15 +310,32 @@ namespace Services.Broadcast.ApplicationServices
                 }
             }
 
-            var result = components.Select(component => new StationInventoryManifestAudience
+            var result = new List<StationInventoryManifestAudience>();
+            foreach (var component in components)
+            {
+                var resultImpressions = stationImpressions.FirstOrDefault(s => s.AudienceId == component.Id);
+                if (resultImpressions == null)
                 {
-                    Audience = new DisplayAudience {Id = component.Id},
-                    Impressions = stationImpressions.Where(s => s.AudienceId == component.Id).Sum(s => s.Impressions),
+                    var hutValueString = hutBook.HasValue ? $"'{hutBook.Value}'" : "null";
+                    var playbackTypeString = playbackType.HasValue ? $"'{playbackType.Value}'" : "null";
+                    var msg =
+                        $"Audience '{component.Name} (ID={component.Id})' did not return an impressions result."
+                        + $" HutBook={hutValueString}; ShareBook='{shareBook}';)"
+                        + $" PlaybackType={playbackTypeString}; MarketCode='{marketCode}';"
+                        + $" StationDaypart='{stationDetail}'";
+                    LogHelper.Logger.Error(msg);
+                    throw new InvalidOperationException(msg);
+                }
+
+                result.Add(new StationInventoryManifestAudience
+                {
+                    Audience = new DisplayAudience { Id = component.Id },
+                    Impressions = resultImpressions.Impressions,
                     IsReference = false,
                     SharePlaybackType = usedSharePlaybackType,
                     HutPlaybackType = usedHutPlaybackType
-                }).ToList();
-
+                });
+            }
             return result;
         }
     }

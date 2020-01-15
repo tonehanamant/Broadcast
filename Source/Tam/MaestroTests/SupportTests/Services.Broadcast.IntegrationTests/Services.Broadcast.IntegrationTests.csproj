@@ -249,6 +249,7 @@
     <Compile Include="ApplicationServices\DaypartTypeServiceTests.cs" />
     <Compile Include="ApplicationServices\DetectionConverterTests.cs" />
     <Compile Include="ApplicationServices\GenreServiceIntegrationTests.cs" />
+    <Compile Include="ApplicationServices\ImpressionsServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\InventoryProgramEnrichmentServiceTests.cs" />
     <Compile Include="ApplicationServices\PlanPricingInventoryEngineTests.cs" />
     <Compile Include="ApplicationServices\PlanPricingServiceTests.cs" />
