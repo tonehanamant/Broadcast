@@ -665,7 +665,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             var result = new WeeklyBreakdownResponseDto();
             _AddMissingWeeks(result, weeks, request.FlightHiatusDays);
 
-            _CalculateRatingsImpressionsAndShareOfVoiceAndBudget(result.Weeks, request.TotalImpressions, request.TotalRatings, request.TotalBudget);
+            _CalculateRatingsImpressionsAndShareOfVoice(request, result.Weeks);
             _CalculateWeeklyGoalBreakdownTotals(result);
             return result;
         }
@@ -700,21 +700,19 @@ namespace Services.Broadcast.ApplicationServices.Plan
                         newPercentageRaw = week.WeeklyRatings / request.TotalRatings;
                         week.WeeklyImpressionsPercentage = newPercentageRaw * 100;
                         week.WeeklyImpressions = newPercentageRaw * request.TotalImpressions;
-                        week.WeeklyBudget = request.TotalBudget * (decimal)newPercentageRaw;
                         break;
                     case WeeklyBreakdownCalculationFrom.Percentage:
                         newPercentageRaw = week.WeeklyImpressionsPercentage / 100;
                         week.WeeklyImpressions = newPercentageRaw * request.TotalImpressions;
                         week.WeeklyRatings = request.TotalRatings * newPercentageRaw;
-                        week.WeeklyBudget = request.TotalBudget * (decimal)newPercentageRaw;
                         break;
                     default:
                         newPercentageRaw = week.WeeklyImpressions / request.TotalImpressions;
                         week.WeeklyImpressionsPercentage = newPercentageRaw * 100;
                         week.WeeklyRatings = request.TotalRatings * newPercentageRaw;
-                        week.WeeklyBudget = request.TotalBudget * (decimal)newPercentageRaw;
                         break;
                 }
+                _CalculateWeeklyBudget(request, week);
             }
 
             //add the missing weeks
@@ -770,16 +768,29 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
         }
 
-        private void _CalculateRatingsImpressionsAndShareOfVoiceAndBudget(List<WeeklyBreakdownWeek> weeks, double totalImpressions, double totalRatings, decimal totalBudget)
+        private void _CalculateRatingsImpressionsAndShareOfVoice(WeeklyBreakdownRequest request, List<WeeklyBreakdownWeek> weeks)
         {
             var activeWeeks = weeks.Where(x => x.NumberOfActiveDays > 0);
             var totalActiveWeeks = activeWeeks.Count();
             foreach (var week in activeWeeks)
             {
-                week.WeeklyRatings = totalRatings / totalActiveWeeks;
-                week.WeeklyImpressions = totalImpressions / totalActiveWeeks;
+                week.WeeklyRatings = request.TotalRatings / totalActiveWeeks;
+                week.WeeklyImpressions = request.TotalImpressions / totalActiveWeeks;
                 week.WeeklyImpressionsPercentage = (double)100 / totalActiveWeeks;
-                week.WeeklyBudget = totalBudget / totalActiveWeeks;
+                _CalculateWeeklyBudget(request, week);
+            }
+        }
+
+        private void _CalculateWeeklyBudget(WeeklyBreakdownRequest request, WeeklyBreakdownWeek week)
+        {
+            if (request.WeeklyBreakdownCalculationFrom == WeeklyBreakdownCalculationFrom.Ratings)
+            {
+                
+                week.WeeklyBudget = (decimal)week.WeeklyRatings * (request.TotalBudget / (decimal)request.TotalImpressions);
+            }
+            else
+            {
+                week.WeeklyBudget = (decimal)week.WeeklyImpressions * (request.TotalBudget / (decimal)request.TotalImpressions);
             }
         }
 

@@ -1647,6 +1647,27 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(results));
         }
 
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void Plan_WeeklyBreakdown_OneImpressionPerWeek()
+        {
+            var request = new WeeklyBreakdownRequest
+            {
+                DeliveryType = PlanGoalBreakdownTypeEnum.Custom,
+                FlightStartDate = new DateTime(2020, 01, 13),
+                FlightEndDate = new DateTime(2020, 02, 16),
+                TotalImpressions = 5,
+                TotalRatings = 0,
+                WeeklyBreakdownCalculationFrom = WeeklyBreakdownCalculationFrom.Impressions,
+                TotalBudget = 85000,
+                FlightHiatusDays = new List<DateTime>()
+            };
+
+            var result = _PlanService.CalculatePlanWeeklyGoalBreakdown(request);
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
         private static PlanDto _GetNewPlan()
         {
             return new PlanDto
@@ -1877,6 +1898,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 TotalImpressions = 1000,
                 TotalRatings = .1,
                 WeeklyBreakdownCalculationFrom = WeeklyBreakdownCalculationFrom.Impressions,
+                TotalBudget = 20000,
                 Weeks = new List<WeeklyBreakdownWeek>
                 {
                     new WeeklyBreakdownWeek
@@ -1890,6 +1912,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         WeeklyImpressions = 250,
                         WeeklyImpressionsPercentage = 25.0,
                         WeeklyRatings = 0.025,
+                        WeeklyBudget = 5000
                     },
                     new WeeklyBreakdownWeek
                     {
@@ -1902,6 +1925,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         WeeklyImpressions = 250,
                         WeeklyImpressionsPercentage = 25.0,
                         WeeklyRatings = 0.025,
+                        WeeklyBudget = 5000
                     },
                     new WeeklyBreakdownWeek
                     {
@@ -1914,6 +1938,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         WeeklyImpressions = 250,
                         WeeklyImpressionsPercentage = 25.0,
                         WeeklyRatings = 0.025,
+                        WeeklyBudget = 5000
                     },
                     new WeeklyBreakdownWeek
                     {
@@ -1926,6 +1951,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         WeeklyImpressions = 250,
                         WeeklyImpressionsPercentage = 25.0,
                         WeeklyRatings = 0.025,
+                        WeeklyBudget = 5000
                     }
                 }
             };
