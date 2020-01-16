@@ -1,7 +1,10 @@
 ﻿using Common.Services;
+using Newtonsoft.Json;
 using Services.Broadcast;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.ApplicationServices.Helpers;
+using Services.Broadcast.ApplicationServices.Maintenance;
+using Services.Broadcast.ApplicationServices.Security;
 using Services.Broadcast.Entities;
 using System;
 using System.IO;
@@ -9,8 +12,6 @@ using System.Net;
 using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
-using Newtonsoft.Json;
-using Services.Broadcast.ApplicationServices.Maintenance;
 using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Services.Cable.Security;
 
@@ -180,6 +181,26 @@ namespace BroadcastComposerWeb.Controllers
                 service.QueueAggregateInventorySummaryDataJob(inventorySourceId);
 
                 ViewBag.Message = $"Job queued for inventory source '{inventorySourceId}'.";
+            }
+            catch (Exception e)
+            {
+                ViewBag.Message = "Error Processing Job: " + e.Message;
+            }
+
+            return View("Index");
+        }
+
+        [HttpPost]
+        public ActionResult ForceCompletePlanPricingJob(int jobId)
+        {
+            try
+            {
+                var userName = _ApplicationServiceFactory.GetApplicationService<IUserService>()
+                    .GetCurrentUserFullName();
+                var service = _ApplicationServiceFactory.GetApplicationService<IPlanPricingService>();
+                var result = service.ForceCompletePlanPricingJob(jobId, userName);
+
+                ViewBag.Message = result;
             }
             catch (Exception e)
             {

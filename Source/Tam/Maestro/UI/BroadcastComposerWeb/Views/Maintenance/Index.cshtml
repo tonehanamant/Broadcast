@@ -96,6 +96,13 @@
                 <input type="submit" value="Queue Inventory Source Aggregation" id="submit" />
             }
         </div>
+        <div>
+            @using (Html.BeginForm("ForceCompletePlanPricingJob", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <input type="text" name="jobId" />
+                <input type="submit" value="Force complete a Plan Pricing Job" id="submit" />
+            }
+        </div>
     </div>
 
     <div>

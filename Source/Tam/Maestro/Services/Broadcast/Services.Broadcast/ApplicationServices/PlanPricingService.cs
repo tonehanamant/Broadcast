@@ -1,9 +1,7 @@
-﻿using Common.Services;
-using Common.Services.ApplicationServices;
+﻿using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
 using Hangfire;
 using Services.Broadcast.BusinessEngines;
-using Services.Broadcast.Cache;
 using Services.Broadcast.Clients;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
@@ -15,7 +13,6 @@ using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Tam.Maestro.Common;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 
@@ -39,6 +36,8 @@ namespace Services.Broadcast.ApplicationServices
         List<LookupDto> GetUnitCaps();
         PlanPricingDefaults GetPlanPricingDefaults();
         bool IsPricingModelRunningForPlan(int planId);
+
+        string ForceCompletePlanPricingJob(int jobId, string username);
     }
 
     public class PlanPricingService : IPlanPricingService
@@ -345,7 +344,10 @@ namespace Services.Broadcast.ApplicationServices
 
                 planPricingJobDiagnostic.RecordApiCallStart();
 
+                // TODO: When the spots api is implemented make the merging of the results smoother.
                 var apiResults = _PricingApiClient.GetPricingCalculationResult(pricingApiRequest);
+                var apiSpotsResults = _PricingApiClient.GetPricingSpotsResult(pricingApiRequest);
+                apiResults.Results.Spots = apiSpotsResults.Results.Spots;
 
                 planPricingJobDiagnostic.RecordApiCallEnd();
 
@@ -376,8 +378,24 @@ namespace Services.Broadcast.ApplicationServices
                 {
                     Id = jobId,
                     Status = BackgroundJobProcessingStatus.Failed,
-                    ErrorMessage = exception.ToString()
+                    ErrorMessage = exception.ToString(),
+                    Completed = DateTime.Now
                 });
+            }
+        }
+
+        public void _ValidateApiResponse(PlanPricingApiResponsetDto apiResponse)
+        {
+            if (apiResponse.Results == null)
+            {
+                var msg = $"The api returned no results for request '{apiResponse.RequestId}'.";
+                throw new ApplicationException(msg);
+            }
+
+            if (!apiResponse.Results.Spots.Any())
+            {
+                var msg = $"The api returned no spots for request '{apiResponse.RequestId}'.";
+                throw new ApplicationException(msg);
             }
         }
 
@@ -385,12 +403,9 @@ namespace Services.Broadcast.ApplicationServices
             List<PlanPricingInventoryProgram> inventory,
             PlanPricingApiResponsetDto apiResponse)
         {
-            var result = new PlanPricingResultDto();
+            _ValidateApiResponse(apiResponse);
 
-            if (apiResponse.Results == null || !apiResponse.Results.Spots.Any())
-            {
-                return result;
-            }
+            var result = new PlanPricingResultDto();
 
             var programs = _GetPrograms(inventory, apiResponse);
 
@@ -523,6 +538,17 @@ namespace Services.Broadcast.ApplicationServices
             public PlanPricingInventoryProgram Manifest { get; set; }
 
             public PlanPricingInventoryProgram.ManifestDaypart ManifestDaypart { get; set; }
+        }
+
+        public string ForceCompletePlanPricingJob(int jobId, string username)
+        {
+            var job = _PlanRepository.GetPlanPricingJob(jobId);
+            job.Status = BackgroundJobProcessingStatus.Failed;
+            job.ErrorMessage = $"Job status set to error by user '{username}'.";
+            job.Completed = DateTime.Now;
+            _PlanRepository.UpdatePlanPricingJob(job);
+
+            return $"Job Id '{jobId}' has been forced to complete.";
         }
     }
 }

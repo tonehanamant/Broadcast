@@ -27,5 +27,27 @@ namespace Services.Broadcast.IntegrationTests.Stubs
                 }
             };
         }
+
+        public PlanPricingApiResponsetDto GetPricingSpotsResult(PlanPricingApiRequestDto request)
+        {
+            return new PlanPricingApiResponsetDto
+            {
+                RequestId = "a3289ujvb3,s,aksa",
+                Results = new PlanPricingApiResultDto
+                {
+                    Spots = new List<PlanPricingApiResultSpotDto>
+                    {
+                        new PlanPricingApiResultSpotDto
+                        {
+                            Id = 1,
+                            MediaWeekId = 200,
+                            Cost = 1000,
+                            Impressions = 1000,
+                            Spots = 1
+                        }
+                    }
+                }
+            };
+        }
     }
 }

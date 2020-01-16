@@ -118,6 +118,8 @@ namespace Services.Broadcast.Repositories
         PlanPricingApiResponsetDto GetPricingApiResults(int planId);
         void SavePricingAggregateResults(int planId, PlanPricingResultDto result);
         PlanPricingResultDto GetPricingResults(int planId);
+
+        PlanPricingJob GetPlanPricingJob(int jobId);
     }
 
     public class PlanRepository : BroadcastRepositoryBase, IPlanRepository
@@ -1090,6 +1092,26 @@ namespace Services.Broadcast.Repositories
                     Completed = latestJob.completed_at,
                     ErrorMessage = latestJob.error_message,
                     DiagnosticResult = latestJob.diagnostic_result
+                };
+            });
+        }
+
+        public PlanPricingJob GetPlanPricingJob(int jobId)
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                var job = context.plan_version_pricing_job
+                    .Single(x => x.id == jobId, $"Job id {jobId} not found.");
+
+                return new PlanPricingJob
+                {
+                    Id = job.id,
+                    PlanVersionId = job.plan_version_id,
+                    Status = (BackgroundJobProcessingStatus)job.status,
+                    Queued = job.queued_at,
+                    Completed = job.completed_at,
+                    ErrorMessage = job.error_message,
+                    DiagnosticResult = job.diagnostic_result
                 };
             });
         }

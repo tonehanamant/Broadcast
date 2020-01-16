@@ -8,11 +8,26 @@ namespace Services.Broadcast.Clients
     public interface IPricingApiClient
     {
         PlanPricingApiResponsetDto GetPricingCalculationResult(PlanPricingApiRequestDto request);
+
+        PlanPricingApiResponsetDto GetPricingSpotsResult(PlanPricingApiRequestDto request);
     }
 
     public class MockedResultsPricingApiClient : IPricingApiClient
     {
         public PlanPricingApiResponsetDto GetPricingCalculationResult(PlanPricingApiRequestDto request)
+        {
+            return new PlanPricingApiResponsetDto
+            {
+                RequestId = Guid.NewGuid().ToString(),
+                Results = new PlanPricingApiResultDto
+                {
+                    // Mocked.
+                    OptimalCpm = 13.3m
+                }
+            };
+        }
+
+        public PlanPricingApiResponsetDto GetPricingSpotsResult(PlanPricingApiRequestDto request)
         {
             var spots = new List<PlanPricingApiResultSpotDto>();
 
@@ -35,7 +50,6 @@ namespace Services.Broadcast.Clients
                 Results = new PlanPricingApiResultDto
                 {
                     // Mocked.
-                    OptimalCpm = 13.3m,
                     Spots = spots
                 }
             };
@@ -55,6 +69,11 @@ namespace Services.Broadcast.Clients
         {
             var url = $"{_BaseUrl}";
             return _Post<PlanPricingApiResponsetDto>(url, request);
+        }
+
+        public PlanPricingApiResponsetDto GetPricingSpotsResult(PlanPricingApiRequestDto request)
+        {
+            throw new NotImplementedException();
         }
 
         protected virtual T _Post<T>(string url, object data)
