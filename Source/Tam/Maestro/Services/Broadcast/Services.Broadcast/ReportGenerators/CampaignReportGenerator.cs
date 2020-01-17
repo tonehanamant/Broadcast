@@ -153,11 +153,10 @@ namespace Services.Broadcast.ReportGenerators
             //content restrictions row is the second row after current index
             currentRowIndex += 2;
             if (daypartsData.Any())
-            {
-               
+            {               
                 foreach(var daypart in daypartsData)
                 {
-                    if(daypart.Genres.Any() || daypart.Programs.Any())
+                    if (daypart.GenreRestrictions.Any() || daypart.ProgramRestrictions.Any())
                     {
                         if (proposalWorksheet.Cells[$"{FOOTER_INFO_COLUMN_INDEX}{currentRowIndex}"].Value == null)
                         {
@@ -168,32 +167,51 @@ namespace Services.Broadcast.ReportGenerators
                             proposalWorksheet.Cells[$"{FOOTER_INFO_COLUMN_INDEX}{currentRowIndex}"].RichText.Add($" {daypart.DaypartCode}: ").Bold = true;
                         }
                     }
-
-                    bool hasGenres = false;
+                    
                     string contentRestrictionsRowText = string.Empty;
-                    if (daypart.Genres.Any())
+                    string genreRestrictions = _GetRestrictions(daypart.GenreRestrictions, "Genres ");
+                    if (!string.IsNullOrWhiteSpace(genreRestrictions))
                     {
-                        //contain type is the same for all genres
-                        contentRestrictionsRowText += $"Genres {(daypart.GenreContainType.Equals(ContainTypeEnum.Include) ? "include " : "exclude ")}";
-                        contentRestrictionsRowText += string.Join(", ", daypart.Genres);
-                        hasGenres = true;
+                        contentRestrictionsRowText += genreRestrictions;
                     }
-                    if (daypart.Programs.Any())
+                    string programRestrictions = _GetRestrictions(daypart.ProgramRestrictions, "Program ");
+                    if (!string.IsNullOrWhiteSpace(programRestrictions))
                     {
-                        //if the content restrictions string contains Genres, we need to add the separator
-                        if (hasGenres)
+                        //if there are genre restrictions, we need to add the separator
+                        if (!string.IsNullOrWhiteSpace(genreRestrictions))
                         {
                             contentRestrictionsRowText += " | ";
                         }
-                        //contain type is the same for all programs
-                        contentRestrictionsRowText += $"Programs {(daypart.ProgramContainType.Equals(ContainTypeEnum.Include) ? "include " : "exclude ")}";
-                        contentRestrictionsRowText += string.Join(", ", daypart.Programs);
+                        contentRestrictionsRowText += programRestrictions;
                     }
                     proposalWorksheet.Cells[$"{FOOTER_INFO_COLUMN_INDEX}{currentRowIndex}"].RichText.Add(contentRestrictionsRowText).Bold = false;
                 }
-                
-                
             }
+        }
+
+        private static string _GetRestrictions(List<DaypartRestrictionsData> daypartRestrictions, string restrictionTypeLabel)
+        {
+            string restrictionsText = string.Empty;
+            if (daypartRestrictions.Any())
+            {
+                restrictionsText += restrictionTypeLabel;
+                var groupByContainType = daypartRestrictions.GroupBy(x => x.ContainType);
+                foreach (var groupByIncludeType in groupByContainType)
+                {
+                    var items = groupByIncludeType.ToList();
+                    restrictionsText += $"{(groupByIncludeType.Key.Equals(ContainTypeEnum.Include) ? "include " : "exclude ")}";
+                    foreach (var item in items)
+                    {
+                        restrictionsText += string.Join(", ", item.Restrictions);
+                        restrictionsText += $" (Plan ID {item.PlanId})";
+                    }
+                    if (groupByContainType.Count() == 2)
+                    {
+                        restrictionsText += " ";
+                    }
+                }
+            }
+            return restrictionsText;
         }
 
         private void _PopulateDayparts(ExcelWorksheet proposalWorksheet, List<DaypartData> daypartsData)

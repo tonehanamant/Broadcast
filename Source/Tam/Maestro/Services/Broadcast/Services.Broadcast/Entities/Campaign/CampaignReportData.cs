@@ -67,13 +67,13 @@ namespace Services.Broadcast.Entities.Campaign
         private void _PopulateFlightHiatuses(List<PlanDto> plans)
         {
             List<DateTime> hiatusDays = plans.SelectMany(x => x.FlightHiatusDays).Distinct().ToList();
-            foreach(var group in hiatusDays.GroupConsecutiveDays())
+            foreach (var group in hiatusDays.GroupConsecutiveDays())
             {
-                if(group.Count == 1)
+                if (group.Count == 1)
                 {
                     FlightHiatuses.Add($"{group.First().ToString(DATE_FORMAT_SHORT_YEAR_SINGLE_DIGIT)}");
                 }
-                if(group.Count > 1)
+                if (group.Count > 1)
                 {
                     FlightHiatuses.Add($"{group.First().ToString(DATE_FORMAT_NO_YEAR_SINGLE_DIGIT)}-{group.Last().ToString(DATE_FORMAT_SHORT_YEAR_SINGLE_DIGIT)}");
                 }
@@ -93,31 +93,32 @@ namespace Services.Broadcast.Entities.Campaign
 
         private void _PopulateContentRestrictions(List<PlanDto> plans)
         {
-            foreach(var daypart in DaypartsData)
+            foreach (var plan in plans)
             {
-                var daypartsWithRestrictions = plans.SelectMany(x => x.Dayparts.Where(y => y.DaypartCodeId == daypart.DaypartCodeId)
-                                                                   .Where(y=>(y.Restrictions.GenreRestrictions != null && y.Restrictions.GenreRestrictions.Genres.Any())
-                                                                            || (y.Restrictions.ProgramRestrictions != null && y.Restrictions.ProgramRestrictions.Programs.Any()))
-                                                   ).ToList();
-                if (!daypartsWithRestrictions.Any())
+                foreach (var daypart in plan.Dayparts
+                    .Where(x => x.Restrictions.GenreRestrictions != null && x.Restrictions.GenreRestrictions.Genres.Any()).ToList())
                 {
-                    continue;
+                    var mappedDaypart = DaypartsData.Single(x => x.DaypartCodeId == daypart.DaypartCodeId);
+                    var planDaypart = plan.Dayparts.Single(x => x.DaypartCodeId == daypart.DaypartCodeId);
+                    mappedDaypart.GenreRestrictions.Add(new DaypartRestrictionsData
+                    {
+                        PlanId = plan.Id,
+                        ContainType = planDaypart.Restrictions.GenreRestrictions.ContainType,
+                        Restrictions = planDaypart.Restrictions.GenreRestrictions.Genres.Select(x => x.Display).ToList()
+                    });
                 }
-                var genreRestrictions = daypartsWithRestrictions.Select(x => x.Restrictions.GenreRestrictions).ToList();
-                if (genreRestrictions.Select(x=>x.ContainType).Distinct().Count() > 1)
+                foreach (var daypart in plan.Dayparts
+                    .Where(x => x.Restrictions.ProgramRestrictions != null && x.Restrictions.ProgramRestrictions.Programs.Any()).ToList())
                 {
-                    throw new Exception("You cannot have different genre contain types ........");
+                    var mappedDaypart = DaypartsData.Single(x => x.DaypartCodeId == daypart.DaypartCodeId);
+                    var planDaypart = plan.Dayparts.Single(x => x.DaypartCodeId == daypart.DaypartCodeId);
+                    mappedDaypart.ProgramRestrictions.Add(new DaypartRestrictionsData
+                    {
+                        PlanId = plan.Id,
+                        ContainType = planDaypart.Restrictions.ProgramRestrictions.ContainType,
+                        Restrictions = planDaypart.Restrictions.ProgramRestrictions.Programs.Select(x => x.Name).ToList()
+                    });
                 }
-                daypart.GenreContainType = genreRestrictions.Select(x => x.ContainType).Distinct().Single();
-                daypart.Genres = genreRestrictions.SelectMany(x => x.Genres).Distinct().Select(x=>x.Display).ToList();
-
-                var programRestrictions = daypartsWithRestrictions.Select(x => x.Restrictions.ProgramRestrictions).ToList();
-                if (programRestrictions.Select(x => x.ContainType).Distinct().Count() > 1)
-                {
-                    throw new Exception("You cannot have different program contain types ........");
-                }
-                daypart.ProgramContainType = programRestrictions.Select(x => x.ContainType).Distinct().Single();
-                daypart.Programs = programRestrictions.SelectMany(x => x.Programs).Distinct().Select(x => x.Name).ToList();
             }
         }
 
@@ -271,7 +272,7 @@ namespace Services.Broadcast.Entities.Campaign
                         row.GuaranteedAudienceData.CPP = _CalculateCost(row.GuaranteedAudienceData.TotalRatingPoints, row.TotalCost);
                         row.HHAudienceData.CPM = _CalculateCost(row.HHAudienceData.TotalImpressions, row.TotalCost);
                         row.HHAudienceData.CPP = _CalculateCost(row.HHAudienceData.TotalRatingPoints, row.TotalCost);
-                        
+
                         newTable.Rows.Add(row);
 
                     });
@@ -355,7 +356,7 @@ namespace Services.Broadcast.Entities.Campaign
                 TotalCPP = _CalculateCost(totalRatingPoints, table.TotalCost)
             };
         }
-        
+
         private void _PopulateHeaderData(CampaignExportTypeEnum exportType
             , CampaignDto campaign
             , List<PlanDto> plans
@@ -497,10 +498,8 @@ namespace Services.Broadcast.Entities.Campaign
         public string DaysLabel { get; set; }
         public string StartTime { get; set; }
         public string EndTime { get; set; }
-        public ContainTypeEnum GenreContainType { get; set; }
-        public List<string> Genres { get; set; } = new List<string>();
-        public ContainTypeEnum ProgramContainType { get; set; }
-        public List<string> Programs { get; set; } = new List<string>();
+        public List<DaypartRestrictionsData> GenreRestrictions { get; set; } = new List<DaypartRestrictionsData>();
+        public List<DaypartRestrictionsData> ProgramRestrictions { get; set; } = new List<DaypartRestrictionsData>();
     }
 
     public class DaypartDataEqualityComparer : IEqualityComparer<DaypartData>
@@ -516,5 +515,12 @@ namespace Services.Broadcast.Entities.Campaign
         {
             return $"{obj.DaypartCode} {obj.StartTime} {obj.EndTime}".GetHashCode();
         }
+    }
+
+    public class DaypartRestrictionsData
+    {
+        public int PlanId { get; set; }
+        public ContainTypeEnum ContainType { get; set; }
+        public List<string> Restrictions { get; set; } = new List<string>();
     }
 }

@@ -176,10 +176,8 @@
       "DaypartCodeId": 2,
       "DaysLabel": null,
       "EndTime": "01:00pm",
-      "GenreContainType": 0,
-      "Genres": [],
-      "ProgramContainType": 0,
-      "Programs": [],
+      "GenreRestrictions": [],
+      "ProgramRestrictions": [],
       "StartTime": "11:00am"
     },
     {
@@ -187,10 +185,8 @@
       "DaypartCodeId": 6,
       "DaysLabel": null,
       "EndTime": "06:00pm",
-      "GenreContainType": 0,
-      "Genres": [],
-      "ProgramContainType": 0,
-      "Programs": [],
+      "GenreRestrictions": [],
+      "ProgramRestrictions": [],
       "StartTime": "03:00pm"
     },
     {
@@ -198,10 +194,8 @@
       "DaypartCodeId": 14,
       "DaysLabel": null,
       "EndTime": "09:00am",
-      "GenreContainType": 0,
-      "Genres": [],
-      "ProgramContainType": 0,
-      "Programs": [],
+      "GenreRestrictions": [],
+      "ProgramRestrictions": [],
       "StartTime": "06:00am"
     }
   ],
