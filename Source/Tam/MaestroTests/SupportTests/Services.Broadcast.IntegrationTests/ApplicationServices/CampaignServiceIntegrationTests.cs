@@ -579,7 +579,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     CampaignId = 652,
                     ExportType = CampaignExportTypeEnum.Contract,
-                    SelectedPlans = new List<int> { 1852, 1853, 1854}
+                    SelectedPlans = new List<int> { 1852, 1853}
                 });
 
                 //write excel file to file system(this is used for manual testing only)
@@ -644,6 +644,25 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     SelectedPlans = new List<int> { 1852, 1853, 1854 }
                 }));
                 Assert.That(exception.Message, Is.EqualTo("Invalid export type for selected plans."));
+            }
+        }
+
+        [Test]
+        public void CampaignExport_ValidateGuaranteedAudience()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<ITrafficApiCache>(new TrafficApiCacheStub());
+                var _CampaignService = IntegrationTestApplicationServiceFactory.GetApplicationService<ICampaignService>();
+
+                var exception = Assert.Throws<Exception>(() =>
+                _CampaignService.GetCampaignReportData(new CampaignReportRequest
+                {
+                    CampaignId = 652,
+                    ExportType = CampaignExportTypeEnum.Proposal,
+                    SelectedPlans = new List<int> { 1854, 1855 }
+                }));
+                Assert.That(exception.Message, Is.EqualTo("Cannot have multiple guaranteed audiences in the export. Please select only plans with the same guaranteed audience."));
             }
         }
 

@@ -16,6 +16,16 @@ namespace Services.Broadcast.Extensions
         }
 
         /// <summary>
+        /// Formats the quarter object to "4Q '19"
+        /// </summary>
+        /// <param name="quarter">The quarter to be formated.</param>
+        /// <returns>string</returns>
+        public static string ShortFormatQuarterNumberFirst(this QuarterDetailDto quarter)
+        {
+            return $"{quarter.Quarter}Q '{quarter.Year.ToString().Substring(2)}";
+        }
+
+        /// <summary>
         /// Formats the quarter object to "Q4 2019"
         /// </summary>
         /// <param name="quarter">The quarter to be formated.</param>

@@ -300,7 +300,7 @@ namespace Services.Broadcast.ApplicationServices
                     }
                     else
                     {
-                        throw new Exception($"The chosen campaign has been locked by {lockingResult.LockedUserName}");
+                        throw new ApplicationException($"The chosen campaign has been locked by {lockingResult.LockedUserName}");
                     }
                 }
                 else
@@ -465,7 +465,7 @@ namespace Services.Broadcast.ApplicationServices
                     DaypartTimeHelper.AddOneSecondToEndTime(plan.Dayparts);
                     return plan;
                 }).ToList();
-
+            _ValidateGuaranteedAudiences(plans);
             List<PlanAudienceDisplay> guaranteedDemos = plans.Select(x => x.AudienceId).Distinct()
                 .Select(x => _AudienceService.GetAudienceById(x)).ToList();
 
@@ -489,7 +489,17 @@ namespace Services.Broadcast.ApplicationServices
 
             if (plans.Select(x => x.PostingType).Distinct().Count() != 1)
             {
-                throw new Exception(MULTIPLE_POSTING_TYPES_EXCEPTION);
+                throw new ApplicationException(MULTIPLE_POSTING_TYPES_EXCEPTION);
+            }
+        }
+
+        private static void _ValidateGuaranteedAudiences(List<PlanDto> plans)
+        {
+            const string MULTIPLE_GUARANTEED_AUDIENCES_EXCEPTION = "Cannot have multiple guaranteed audiences in the export. Please select only plans with the same guaranteed audience.";
+
+            if (plans.Select(x => x.AudienceId).Distinct().Count() != 1)
+            {
+                throw new ApplicationException(MULTIPLE_GUARANTEED_AUDIENCES_EXCEPTION);
             }
         }
 
@@ -503,7 +513,7 @@ namespace Services.Broadcast.ApplicationServices
             {
                 if (!exportType.Equals(CampaignExportTypeEnum.Proposal))
                 {
-                    throw new Exception(INVALID_EXPORT_TYPE_FOR_SELECTED_PLANS);
+                    throw new ApplicationException(INVALID_EXPORT_TYPE_FOR_SELECTED_PLANS);
                 }
             }
             else if (distinctPlansStatuses.Contains(PlanStatusEnum.Complete)
@@ -512,14 +522,14 @@ namespace Services.Broadcast.ApplicationServices
             {
                 if (!exportType.Equals(CampaignExportTypeEnum.Contract))
                 {
-                    throw new Exception(INVALID_EXPORT_TYPE_FOR_SELECTED_PLANS);
+                    throw new ApplicationException(INVALID_EXPORT_TYPE_FOR_SELECTED_PLANS);
                 }
             }
             else
             {
                 if (!exportType.Equals(CampaignExportTypeEnum.Proposal))
                 {
-                    throw new Exception(INVALID_EXPORT_TYPE_FOR_SELECTED_PLANS);
+                    throw new ApplicationException(INVALID_EXPORT_TYPE_FOR_SELECTED_PLANS);
                 }
             }
         }

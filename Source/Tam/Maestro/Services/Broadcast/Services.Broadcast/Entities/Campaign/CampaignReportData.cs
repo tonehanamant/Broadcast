@@ -6,6 +6,7 @@ using Services.Broadcast.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 
 namespace Services.Broadcast.Entities.Campaign
@@ -25,12 +26,13 @@ namespace Services.Broadcast.Entities.Campaign
         public List<string> SpotLengths { get; set; }
         public string PostingType { get; set; }
         public string Status { get; set; }
-        public List<ProposalQuarterTableData> QuarterTables { get; set; } = new List<ProposalQuarterTableData>();
-        public ProposalQuarterTableData CampaignTotalsTable { get; set; } = new ProposalQuarterTableData();
+        public List<ProposalQuarterTableData> ProposalQuarterTables { get; set; } = new List<ProposalQuarterTableData>();
+        public ProposalQuarterTableData ProposalCampaignTotalsTable { get; set; } = new ProposalQuarterTableData();
         public MarketCoverageData MarketCoverageData { get; set; }
         public List<DaypartData> DaypartsData { get; set; } = new List<DaypartData>();
         public List<string> FlightHiatuses { get; set; } = new List<string>();
         public string Notes { get; set; }
+        public List<FlowChartQuarterTableData> FlowChartQuarterTables { get; set; } = new List<FlowChartQuarterTableData>();
 
         private const string DATE_FORMAT_SHORT_YEAR = "MM/dd/yy";
         private const string DATE_FORMAT_SHORT_YEAR_SINGLE_DIGIT = "M/d/yy";
@@ -47,15 +49,22 @@ namespace Services.Broadcast.Entities.Campaign
             , IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache
             , IQuarterCalculationEngine quarterCalculationEngine)
         {
-            List<ProjectedPlan> projectedPlans = _ProjectPlansForQuarterExport(plans, spotLenghts, daypartDefaults, mediaMonthAndWeekAggregateCache, quarterCalculationEngine);
+            List<ProjectedPlan> projectedPlans = _ProjectPlansForProposalExport(plans, spotLenghts, daypartDefaults, mediaMonthAndWeekAggregateCache, quarterCalculationEngine);
             _PopulateHeaderData(exportType, campaign, plans, agency, advertiser, guaranteedDemos, spotLenghts, orderedAudiences, quarterCalculationEngine);
-            _PopulateQuarterTableData(projectedPlans, quarterCalculationEngine);
+
+            //proposal tab
+            _PopulateProposalQuarterTableData(projectedPlans);
             _PopulateCampaignTotalsTable();
             _PopulateMarketCoverate(plans);
             _PopulateDaypartsData(projectedPlans);
             _PopulateContentRestrictions(plans);
             _PopulateFlightHiatuses(plans);
             _PopulateNotes();
+
+            //flow chart tab
+            projectedPlans = _ProjectPlansForQuarterExport(plans, spotLenghts, daypartDefaults, mediaMonthAndWeekAggregateCache, quarterCalculationEngine);
+            _PopulateFlowChartQuarterTableData(projectedPlans);
+
             _SetExportFileName(projectedPlans, campaign.ModifiedDate);
         }
 
@@ -149,7 +158,8 @@ namespace Services.Broadcast.Entities.Campaign
                 , campaignModifiedDate.ToString(DATE_FORMAT_FILENAME));
         }
 
-        private List<ProjectedPlan> _ProjectPlansForQuarterExport(List<PlanDto> plans, List<LookupDto> spotLenghts
+        private List<ProjectedPlan> _ProjectPlansForProposalExport(List<PlanDto> plans
+            , List<LookupDto> spotLenghts
             , List<DaypartDefaultDto> daypartDefaults
             , IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache
             , IQuarterCalculationEngine quarterCalculationEngine)
@@ -190,34 +200,26 @@ namespace Services.Broadcast.Entities.Campaign
                                     : (weightingGoalFactor / 100) * quarterFactor;
 
                         var daypartCode = daypartDefaults.Single(dc => dc.Id == daypart.DaypartCodeId);
-                        var newProjectedPlan = new ProjectedPlan
-                        {
-                            QuarterYear = quarter.Year,
-                            QuarterNumber = quarter.Quarter,
-                            DaypartCodeId = daypartCode.Id,
-                            DaypartCode = daypartCode.Code,
-                            DaypartStartTime = DaypartTimeHelper.ConvertSecondsToFormattedTime(daypart.StartTimeSeconds),
-                            DaypartEndTime = DaypartTimeHelper.ConvertSecondsToFormattedTime(daypart.EndTimeSeconds),
-                            SpotLengthId = plan.SpotLengthId,
-                            SpotLength = spotLenghts.Single(y => y.Id == plan.SpotLengthId).Display,
-                            Equivalized = plan.Equivalized,
-                            TotalCost = plan.Budget.Value * (decimal)multiplicationFactor,
-                            Units = 0, //we have no value calculated and stored for this property at the moment                            
+                        var newProjectedPlan = _GetEmptyWeek(null, plan, quarter, null, daypartDefaults, spotLenghts, daypart);
 
-                            //HH data
-                            TotalHHImpressions = plan.HHImpressions * multiplicationFactor,
-                            TotalHHRatingPoints = plan.HHRatingPoints * multiplicationFactor,
+                        newProjectedPlan.TotalCost = plan.Budget.Value * (decimal)multiplicationFactor;
+                        newProjectedPlan.Units = 0; //we have no value calculated and stored for this property at the moment                            
 
-                            //guaranteed audience data
-                            AudienceId = plan.AudienceId,
-                            VPVH = plan.Vpvh,
-                            TotalImpressions = plan.TargetImpressions.Value * multiplicationFactor,
-                            TotalRatingPoints = plan.TargetRatingPoints.Value * multiplicationFactor
-                        };
-                        newProjectedPlan.CPM = newProjectedPlan.TotalImpressions == 0 ? 0 : newProjectedPlan.TotalCost / (decimal)newProjectedPlan.TotalImpressions * 1000;
-                        newProjectedPlan.CPP = newProjectedPlan.TotalRatingPoints == 0 ? 0 : newProjectedPlan.TotalCost / (decimal)newProjectedPlan.TotalRatingPoints;
+                        //HH data
+                        newProjectedPlan.TotalHHImpressions = plan.HHImpressions * multiplicationFactor;
+                        newProjectedPlan.TotalHHRatingPoints = plan.HHRatingPoints * multiplicationFactor;
                         newProjectedPlan.HHCPM = newProjectedPlan.TotalHHImpressions == 0 ? 0 : newProjectedPlan.TotalCost / (decimal)newProjectedPlan.TotalHHImpressions * 1000;
                         newProjectedPlan.HHCPP = newProjectedPlan.TotalHHRatingPoints == 0 ? 0 : newProjectedPlan.TotalCost / (decimal)newProjectedPlan.TotalHHRatingPoints;
+
+                        //guaranteed audience data
+                        newProjectedPlan.AudienceId = plan.AudienceId;
+                        newProjectedPlan.VPVH = plan.Vpvh;
+                        newProjectedPlan.TotalImpressions = plan.TargetImpressions.Value * multiplicationFactor;
+                        newProjectedPlan.TotalRatingPoints = plan.TargetRatingPoints.Value * multiplicationFactor;
+
+                        newProjectedPlan.CPM = newProjectedPlan.TotalImpressions == 0 ? 0 : newProjectedPlan.TotalCost / (decimal)newProjectedPlan.TotalImpressions * 1000;
+                        newProjectedPlan.CPP = newProjectedPlan.TotalRatingPoints == 0 ? 0 : newProjectedPlan.TotalCost / (decimal)newProjectedPlan.TotalRatingPoints;
+
                         result.Add(newProjectedPlan);
                     });
 
@@ -227,7 +229,111 @@ namespace Services.Broadcast.Entities.Campaign
             return result;
         }
 
-        private void _PopulateQuarterTableData(List<ProjectedPlan> projectedPlans, IQuarterCalculationEngine quarterCalculationEngine)
+        private List<ProjectedPlan> _ProjectPlansForQuarterExport(List<PlanDto> plans
+            , List<LookupDto> spotLenghts
+            , List<DaypartDefaultDto> daypartDefaults
+            , IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache
+            , IQuarterCalculationEngine quarterCalculationEngine)
+        {
+            List<ProjectedPlan> result = new List<ProjectedPlan>();
+            plans.ForEach(plan =>
+            {
+                List<QuarterDetailDto> planQuarters = quarterCalculationEngine.GetAllQuartersBetweenDates(plan.FlightStartDate.Value, plan.FlightEndDate.Value);
+                var planMediaWeeks = mediaMonthAndWeekAggregateCache.GetMediaWeeksIntersecting(plan.FlightStartDate.Value, plan.FlightEndDate.Value);
+                planQuarters.ForEach(quarter =>
+                {
+                    var quarterMediaMonth = mediaMonthAndWeekAggregateCache.GetMediaMonthsBetweenDatesInclusive(quarter.StartDate, quarter.EndDate);
+
+                    //foreach week in this quarter calculate imps, cost, etc and add empty weeks for the missing ones
+                    foreach (var week in mediaMonthAndWeekAggregateCache.GetMediaWeeksInRange(quarter.StartDate, quarter.EndDate))
+                    {
+                        //not all quarter weeks are in the plan, that's why we do OrDefault here
+                        var planWeek = plan.WeeklyBreakdownWeeks.Where(x => x.MediaWeekId == week.Id).SingleOrDefault();
+                        if (planWeek == null)
+                        {
+                            result.AddRange(_AddEmptyWeekForPlanDayparts(week, plan, quarter, quarterMediaMonth, daypartDefaults, spotLenghts));
+                            continue;
+                        }
+
+                        //weekly factor
+                        double weeklyFactor = planWeek.WeeklyImpressionsPercentage / 100;
+
+                        //dayparts that don't have set a value for weighting goal will get an even part from the remaining goal
+                        //calculate remaining goal by substracting the user set goal from 100
+                        double remainingWeightingGoal = 100 - plan.Dayparts.Select(wg => wg.WeightingGoalPercent ?? 0).Sum();
+                        //count total dayparts without weighting goal
+                        int daypartsWithoutWeightingGoal = plan.Dayparts.Where(wg => !wg.WeightingGoalPercent.HasValue).Count();
+                        //calculate weighting goal factor
+                        double weightingGoalFactor = daypartsWithoutWeightingGoal == 0
+                                    ? 1
+                                    : remainingWeightingGoal / daypartsWithoutWeightingGoal;
+
+                        plan.Dayparts.ForEach(daypart =>
+                        {
+                            //if the daypart has weighting goal set, we use that and only apply the quarter factor
+                            //if the daypart does not have weighting goal, we use the weighting goal and quarter factors together
+                            double multiplicationFactor = daypart.WeightingGoalPercent.HasValue
+                                        ? (daypart.WeightingGoalPercent.Value / 100) * weeklyFactor
+                                        : (weightingGoalFactor / 100) * weeklyFactor;
+
+                            var newProjectedPlan = _GetEmptyWeek(week, plan, quarter, quarterMediaMonth, daypartDefaults, spotLenghts, daypart);
+                            newProjectedPlan.TotalCost = plan.Budget.Value * (decimal)multiplicationFactor;
+                            newProjectedPlan.Units = 0; //we have no value calculated and stored for this property at the moment                            
+
+                            //HH data
+                            newProjectedPlan.TotalHHImpressions = plan.HHImpressions * multiplicationFactor;
+                            newProjectedPlan.TotalHHRatingPoints = plan.HHRatingPoints * multiplicationFactor;
+                            newProjectedPlan.HHCPM = newProjectedPlan.TotalHHImpressions == 0 ? 0 : newProjectedPlan.TotalCost / (decimal)newProjectedPlan.TotalHHImpressions * 1000;
+                            newProjectedPlan.HHCPP = newProjectedPlan.TotalHHRatingPoints == 0 ? 0 : newProjectedPlan.TotalCost / (decimal)newProjectedPlan.TotalHHRatingPoints;
+
+                            //guaranteed audience data
+                            newProjectedPlan.AudienceId = plan.AudienceId;
+                            newProjectedPlan.WeightedPercentage = multiplicationFactor;
+                            newProjectedPlan.VPVH = plan.Vpvh;
+                            newProjectedPlan.TotalImpressions = plan.TargetImpressions.Value * multiplicationFactor;
+                            newProjectedPlan.TotalRatingPoints = plan.TargetRatingPoints.Value * multiplicationFactor;
+                            newProjectedPlan.CPM = newProjectedPlan.TotalImpressions == 0 ? 0 : newProjectedPlan.TotalCost / (decimal)newProjectedPlan.TotalImpressions * 1000;
+                            newProjectedPlan.CPP = newProjectedPlan.TotalRatingPoints == 0 ? 0 : newProjectedPlan.TotalCost / (decimal)newProjectedPlan.TotalRatingPoints;
+
+                            result.Add(newProjectedPlan);
+                        });
+                    }
+                });
+            });
+
+            return result;
+        }
+
+        private List<ProjectedPlan> _AddEmptyWeekForPlanDayparts(MediaWeek mediaWeek, PlanDto plan,
+            QuarterDetailDto quarter, List<MediaMonth> mediaMonths, List<DaypartDefaultDto> dayparts,
+            List<LookupDto> spotLenghts)
+        {
+            return plan.Dayparts.Select(x => _GetEmptyWeek(mediaWeek, plan, quarter, mediaMonths, dayparts, spotLenghts, x)).ToList();
+        }
+
+        //Returns a ProjectedPlan object that will contain media and plan data without imps and cost data
+        private static ProjectedPlan _GetEmptyWeek(MediaWeek mediaWeek, PlanDto plan, QuarterDetailDto quarter
+            , List<MediaMonth> mediaMonths, List<DaypartDefaultDto> daypartsDefault, List<LookupDto> spotLenghts, PlanDaypartDto daypart)
+        {
+            return new ProjectedPlan
+            {
+                QuarterYear = quarter.Year,
+                QuarterNumber = quarter.Quarter,
+                MediaWeekId = mediaWeek?.Id,
+                MediaMonthId = mediaWeek?.MediaMonthId,
+                WeekStartDate = mediaWeek?.StartDate,
+                MediaMonthName = mediaWeek != null ? mediaMonths.Single(y => y.Id == mediaWeek.MediaMonthId).LongMonthName : null,
+                DaypartCodeId = daypart.DaypartCodeId,
+                DaypartCode = daypartsDefault.Single(y => y.Id == daypart.DaypartCodeId).Code,
+                DaypartStartTime = DaypartTimeHelper.ConvertSecondsToFormattedTime(daypart.StartTimeSeconds),
+                DaypartEndTime = DaypartTimeHelper.ConvertSecondsToFormattedTime(daypart.EndTimeSeconds),
+                SpotLengthId = plan.SpotLengthId,
+                SpotLength = spotLenghts.Single(y => y.Id == plan.SpotLengthId).Display,
+                Equivalized = plan.Equivalized,
+            };
+        }
+
+        private void _PopulateProposalQuarterTableData(List<ProjectedPlan> projectedPlans)
         {
             projectedPlans.GroupBy(x => new { x.QuarterNumber, x.QuarterYear })
                 .ToList()
@@ -277,8 +383,111 @@ namespace Services.Broadcast.Entities.Campaign
 
                     });
                     _SetTableTotals(newTable);
-                    QuarterTables.Add(newTable);
+                    ProposalQuarterTables.Add(newTable);
                 });
+        }
+
+        private void _PopulateFlowChartQuarterTableData(List<ProjectedPlan> projectedPlans)
+        {
+            projectedPlans.GroupBy(x => new { x.QuarterNumber, x.QuarterYear, x.DaypartCode })
+                .ToList()
+                .ForEach(qDGrp =>   //quarter daypart group
+                {
+                    QuarterDetailDto quarter = new QuarterDetailDto
+                    {
+                        Quarter = qDGrp.Key.QuarterNumber,
+                        Year = qDGrp.Key.QuarterYear
+                    };
+
+                    List<FlowChartQuarterTableData> tablesInQuarterDaypart = new List<FlowChartQuarterTableData>();
+                    qDGrp.ToList().GroupBy(y => new { y.SpotLength, y.Equivalized })
+                    .ToList()
+                    .ForEach(qDSGrp =>  //quarter daypart spot length equivalized group
+                    {
+                        FlowChartQuarterTableData newTable = new FlowChartQuarterTableData
+                        {
+                            TableTitle = $"{quarter.ShortFormatQuarterNumberFirst()} {qDGrp.Key.DaypartCode} :{qDSGrp.Key.SpotLength}s {(qDSGrp.Key.Equivalized ? "eq." : string.Empty)}",
+                            DaypartCode = qDGrp.Key.DaypartCode,
+                            QuarterLabel = quarter.ShortFormatQuarterNumberFirst()
+                        };
+                        qDSGrp.GroupBy(x => new { x.MediaMonthId, x.MediaMonthName })
+                            .ToList()
+                            .ForEach(monthGroup =>
+                            {
+                                var monthItems = monthGroup.ToList();
+
+                                var month = new FlowChartQuarterTableMonthData
+                                {
+                                    MediaMonthId = monthGroup.Key.MediaMonthId.Value,
+                                    MonthName = monthGroup.Key.MediaMonthName
+                                };
+                                monthItems
+                                        .GroupBy(x => x.WeekStartDate)
+                                        .ToList()
+                                        .ForEach(x =>
+                                        {
+                                            var weeks = x.ToList();
+                                            var newWeek = new FlowChartQuarterTableWeekData
+                                            {
+                                                DistributionPercentage = weeks.Average(y => y.WeightedPercentage),
+                                                Impressions = weeks.Sum(y => y.TotalImpressions) / 1000,
+                                                Units = 0,
+                                                WeekStartDate = x.Key.Value,
+                                                Cost = weeks.Sum(y => y.TotalCost)
+                                            };
+                                            newWeek.CPM = _CalculateCost(newWeek.Impressions, newWeek.Cost);
+                                            month.Weeks.Add(newWeek);
+                                        });
+                                newTable.Months.Add(month);
+                            });
+                        newTable.Total = _CalculateTotalsForTable(newTable.Months);
+                        tablesInQuarterDaypart.Add(newTable);
+                        FlowChartQuarterTables.Add(newTable);
+                    });
+                    FlowChartQuarterTableData totalTable = _CalculateTotalTableData(tablesInQuarterDaypart);
+                    FlowChartQuarterTables.Add(totalTable);
+                });
+        }
+
+        //this is total on each table
+        private FlowChartQuarterTableWeekData _CalculateTotalsForTable(List<FlowChartQuarterTableMonthData> months)
+        {
+            var totalTable = new FlowChartQuarterTableWeekData
+            {
+                Units = months.SelectMany(x => x.Weeks).Sum(x => x.Units),
+                Impressions = months.SelectMany(x => x.Weeks).Sum(x => x.Impressions),
+                Cost = months.SelectMany(x => x.Weeks).Sum(x => x.Cost)
+            };
+            totalTable.CPM = totalTable.Impressions == 0 ? 0 : totalTable.Cost / (decimal)totalTable.Impressions;
+            return totalTable;
+        }
+
+        //this is the total table
+        private FlowChartQuarterTableData _CalculateTotalTableData(List<FlowChartQuarterTableData> tablesInQuarterDaypart)
+        {
+            var firstTable = tablesInQuarterDaypart.First();
+            var tableData = new FlowChartQuarterTableData
+            {
+                TableTitle = $"{firstTable.QuarterLabel} {firstTable.DaypartCode} Total",
+                Months = firstTable.Months
+            };
+            tableData.Months.ForEach(
+                month =>
+                {
+                    month.Weeks.ForEach(
+                        week =>
+                        {
+                            var weeks = tablesInQuarterDaypart
+                                    .SelectMany(x => x.Months.SelectMany(y => y.Weeks.Where(w => w.WeekStartDate.Equals(week.WeekStartDate))))
+                                    .ToList();
+                            week.Impressions = weeks.Sum(x => x.Impressions);
+                            week.Cost = weeks.Sum(x => x.Cost);
+                            week.CPM = week.Impressions == 0 ? 0 : week.Cost / (decimal)week.Impressions;
+                            week.Units = weeks.Sum(x => x.Units);
+                        });
+                });
+            tableData.Total = _CalculateTotalsForTable(tableData.Months);
+            return tableData;
         }
 
         /// <summary>
@@ -294,7 +503,7 @@ namespace Services.Broadcast.Entities.Campaign
 
         private void _PopulateCampaignTotalsTable()
         {
-            QuarterTables.SelectMany(x => x.Rows)
+            ProposalQuarterTables.SelectMany(x => x.Rows)
                 .GroupBy(x => new { x.SpotLength, x.DaypartCode })
                 .ToList()
                 .ForEach(group =>
@@ -328,9 +537,9 @@ namespace Services.Broadcast.Entities.Campaign
                     row.HHAudienceData.CPM = _CalculateCost(row.HHAudienceData.TotalImpressions, row.TotalCost);
                     row.HHAudienceData.CPP = _CalculateCost(row.HHAudienceData.TotalRatingPoints, row.TotalCost);
 
-                    CampaignTotalsTable.Rows.Add(row);
+                    ProposalCampaignTotalsTable.Rows.Add(row);
                 });
-            _SetTableTotals(CampaignTotalsTable);
+            _SetTableTotals(ProposalCampaignTotalsTable);
         }
 
         private static void _SetTableTotals(ProposalQuarterTableData table)
@@ -412,10 +621,16 @@ namespace Services.Broadcast.Entities.Campaign
         {
             public int QuarterNumber { get; set; }
             public int QuarterYear { get; set; }
+            public int? MediaWeekId { get; set; }
+            public DateTime? WeekStartDate { get; set; }
+            public int? MediaMonthId { get; set; }
+            public string MediaMonthName { get; set; }
+
             public int DaypartCodeId { get; set; }
             public string DaypartCode { get; set; }
             public string DaypartStartTime { get; set; }
             public string DaypartEndTime { get; set; }
+
             public List<string> GuaranteedDemo { get; set; }
             public string SpotLength { get; set; }
             public int SpotLengthId { get; set; }
@@ -435,6 +650,7 @@ namespace Services.Broadcast.Entities.Campaign
             public double TotalImpressions { get; set; }
             public decimal CPM { get; set; }
             public decimal CPP { get; set; }
+            public double WeightedPercentage { get; set; }
         }
     }
 
@@ -486,8 +702,8 @@ namespace Services.Broadcast.Entities.Campaign
 
     public class MarketCoverageData
     {
-        public List<string> BlackoutMarketsName { get; set; }
-        public List<string> PreferentialMarketsName { get; set; }
+        public List<string> BlackoutMarketsName { get; set; } = new List<string>();
+        public List<string> PreferentialMarketsName { get; set; } = new List<string>();
         public double CoveragePercentage { get; set; }
     }
 
@@ -522,5 +738,31 @@ namespace Services.Broadcast.Entities.Campaign
         public int PlanId { get; set; }
         public ContainTypeEnum ContainType { get; set; }
         public List<string> Restrictions { get; set; } = new List<string>();
+    }
+
+    public class FlowChartQuarterTableData
+    {
+        public string TableTitle { get; set; }
+        public string QuarterLabel { get; set; }
+        public string DaypartCode { get; set; }
+        public List<FlowChartQuarterTableMonthData> Months { get; set; } = new List<FlowChartQuarterTableMonthData>();
+        public FlowChartQuarterTableWeekData Total { get; set; }
+    }
+
+    public class FlowChartQuarterTableMonthData
+    {
+        public string MonthName { get; set; }
+        public int MediaMonthId { get; set; }
+        public List<FlowChartQuarterTableWeekData> Weeks { get; set; } = new List<FlowChartQuarterTableWeekData>();
+    }
+
+    public class FlowChartQuarterTableWeekData
+    {
+        public DateTime WeekStartDate { get; set; }
+        public double DistributionPercentage { get; set; }
+        public int Units { get; set; }
+        public double Impressions { get; set; }
+        public decimal CPM { get; set; }
+        public decimal Cost { get; set; }
     }
 }
