@@ -57,7 +57,12 @@ namespace Services.Broadcast.ReportGenerators.CampaignExport
             _PopulateProposalTabTotalsTable(proposalWorksheet, campaignReportData.GuaranteedDemo, campaignReportData.ProposalCampaignTotalsTable);
             _PopulateMarketCoverage(proposalWorksheet, campaignReportData.MarketCoverageData);
             _PopulateDayparts(proposalWorksheet, campaignReportData.DaypartsData);
-            _PopulateContentRestrictions(proposalWorksheet, campaignReportData.DaypartsData);
+
+            //content restrictions row is the second row after current index
+            currentRowIndex += 2;
+            ExportSharedLogic.PopulateContentRestrictions(proposalWorksheet, campaignReportData.DaypartsData
+                , $"{FOOTER_INFO_COLUMN_INDEX}{currentRowIndex}");
+
             _PopulateFlightHiatuses(proposalWorksheet, campaignReportData.FlightHiatuses);
             _PopulateNotes(proposalWorksheet, campaignReportData.Notes);
         }
@@ -81,72 +86,7 @@ namespace Services.Broadcast.ReportGenerators.CampaignExport
                 proposalWorksheet.Cells[$"{FOOTER_INFO_COLUMN_INDEX}{currentRowIndex}"].Value = string.Join(", ", flightHiatuses);
             }
         }
-
-        private void _PopulateContentRestrictions(ExcelWorksheet proposalWorksheet, List<DaypartData> daypartsData)
-        {
-            //content restrictions row is the second row after current index
-            currentRowIndex += 2;
-            if (daypartsData.Any())
-            {
-                foreach (var daypart in daypartsData)
-                {
-                    if (daypart.GenreRestrictions.Any() || daypart.ProgramRestrictions.Any())
-                    {
-                        if (proposalWorksheet.Cells[$"{FOOTER_INFO_COLUMN_INDEX}{currentRowIndex}"].Value == null)
-                        {
-                            proposalWorksheet.Cells[$"{FOOTER_INFO_COLUMN_INDEX}{currentRowIndex}"].RichText.Add($"{daypart.DaypartCode}: ").Bold = true;
-                        }
-                        else
-                        {
-                            proposalWorksheet.Cells[$"{FOOTER_INFO_COLUMN_INDEX}{currentRowIndex}"].RichText.Add($" {daypart.DaypartCode}: ").Bold = true;
-                        }
-                    }
-
-                    string contentRestrictionsRowText = string.Empty;
-                    string genreRestrictions = _GetRestrictions(daypart.GenreRestrictions, "Genres ");
-                    if (!string.IsNullOrWhiteSpace(genreRestrictions))
-                    {
-                        contentRestrictionsRowText += genreRestrictions;
-                    }
-                    string programRestrictions = _GetRestrictions(daypart.ProgramRestrictions, "Program ");
-                    if (!string.IsNullOrWhiteSpace(programRestrictions))
-                    {
-                        //if there are genre restrictions, we need to add the separator
-                        if (!string.IsNullOrWhiteSpace(genreRestrictions))
-                        {
-                            contentRestrictionsRowText += " | ";
-                        }
-                        contentRestrictionsRowText += programRestrictions;
-                    }
-                    proposalWorksheet.Cells[$"{FOOTER_INFO_COLUMN_INDEX}{currentRowIndex}"].RichText.Add(contentRestrictionsRowText).Bold = false;
-                }
-            }
-        }
-
-        private static string _GetRestrictions(List<DaypartRestrictionsData> daypartRestrictions, string restrictionTypeLabel)
-        {
-            string restrictionsText = string.Empty;
-            if (daypartRestrictions.Any())
-            {
-                restrictionsText += restrictionTypeLabel;
-                var groupByContainType = daypartRestrictions.GroupBy(x => x.ContainType);
-                foreach (var groupByIncludeType in groupByContainType)
-                {
-                    var items = groupByIncludeType.ToList();
-                    restrictionsText += $"{(groupByIncludeType.Key.Equals(ContainTypeEnum.Include) ? "include " : "exclude ")}";
-                    foreach (var item in items)
-                    {
-                        restrictionsText += string.Join(", ", item.Restrictions);
-                        restrictionsText += $" (Plan ID {item.PlanId})";
-                    }
-                    if (groupByContainType.Count() == 2)
-                    {
-                        restrictionsText += " ";
-                    }
-                }
-            }
-            return restrictionsText;
-        }
+        
 
         private void _PopulateDayparts(ExcelWorksheet proposalWorksheet, List<DaypartData> daypartsData)
         {

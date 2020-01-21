@@ -55,7 +55,7 @@ namespace Services.Broadcast.ReportGenerators
             else
             {
                 ExcelWorksheet contractWorksheet = ExportSharedLogic.GetWorksheet(TEMPLATE_FILENAME, package, CONTRACT_WORKSHEET_NAME);
-                // _PopulateContractWorksheet(contractWorksheet, dataObject);
+                new ContractReportGenerator().PopulateContractTab(campaignReportData, contractWorksheet);
             }
 
             //set the first tab as the active tab in the file

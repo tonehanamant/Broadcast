@@ -33,6 +33,8 @@ namespace Services.Broadcast.Entities.Campaign
         public List<string> FlightHiatuses { get; set; } = new List<string>();
         public string Notes { get; set; }
         public List<FlowChartQuarterTableData> FlowChartQuarterTables { get; set; } = new List<FlowChartQuarterTableData>();
+        public List<ContractQuarterTableData> ContractQuarterTables { get; set; } = new List<ContractQuarterTableData>();
+        public List<object> ContractTotals { get; set; } = new List<object>();
 
         private const string DATE_FORMAT_SHORT_YEAR = "MM/dd/yy";
         private const string DATE_FORMAT_SHORT_YEAR_SINGLE_DIGIT = "M/d/yy";
@@ -64,6 +66,11 @@ namespace Services.Broadcast.Entities.Campaign
             //flow chart tab
             projectedPlans = _ProjectPlansForQuarterExport(plans, spotLenghts, daypartDefaults, mediaMonthAndWeekAggregateCache, quarterCalculationEngine);
             _PopulateFlowChartQuarterTableData(projectedPlans);
+
+            if (exportType.Equals(CampaignExportTypeEnum.Contract))
+            {
+                _PopulateContractQuarterTableData(projectedPlans);
+            }
 
             _SetExportFileName(projectedPlans, campaign.ModifiedDate);
         }
@@ -386,6 +393,47 @@ namespace Services.Broadcast.Entities.Campaign
                     ProposalQuarterTables.Add(newTable);
                 });
         }
+        
+        //this is total on each table
+        private FlowChartQuarterTableWeekData _CalculateTotalsForTable(List<FlowChartQuarterTableMonthData> months)
+        {
+            var totalTable = new FlowChartQuarterTableWeekData
+            {
+                Units = months.SelectMany(x => x.Weeks).Sum(x => x.Units),
+                Impressions = months.SelectMany(x => x.Weeks).Sum(x => x.Impressions),
+                Cost = months.SelectMany(x => x.Weeks).Sum(x => x.Cost)
+            };
+            totalTable.CPM = totalTable.Impressions == 0 ? 0 : totalTable.Cost / (decimal)totalTable.Impressions;
+            return totalTable;
+        }
+
+        //this is the total table
+        private FlowChartQuarterTableData _CalculateTotalTableData(List<FlowChartQuarterTableData> tablesInQuarterDaypart)
+        {
+            var firstTable = tablesInQuarterDaypart.First();
+            var tableData = new FlowChartQuarterTableData
+            {
+                TableTitle = $"{firstTable.QuarterLabel} {firstTable.DaypartCode} Total",
+                Months = firstTable.Months
+            };
+            tableData.Months.ForEach(
+                month =>
+                {
+                    month.Weeks.ForEach(
+                        week =>
+                        {
+                            var weeks = tablesInQuarterDaypart
+                                    .SelectMany(x => x.Months.SelectMany(y => y.Weeks.Where(w => w.WeekStartDate.Equals(week.WeekStartDate))))
+                                    .ToList();
+                            week.Impressions = weeks.Sum(x => x.Impressions);
+                            week.Cost = weeks.Sum(x => x.Cost);
+                            week.CPM = week.Impressions == 0 ? 0 : week.Cost / (decimal)week.Impressions;
+                            week.Units = weeks.Sum(x => x.Units);
+                        });
+                });
+            tableData.Total = _CalculateTotalsForTable(tableData.Months);
+            return tableData;
+        }
 
         private void _PopulateFlowChartQuarterTableData(List<ProjectedPlan> projectedPlans)
         {
@@ -449,47 +497,91 @@ namespace Services.Broadcast.Entities.Campaign
                 });
         }
 
-        //this is total on each table
-        private FlowChartQuarterTableWeekData _CalculateTotalsForTable(List<FlowChartQuarterTableMonthData> months)
+        private void _PopulateContractQuarterTableData(List<ProjectedPlan> projectedPlans)
         {
-            var totalTable = new FlowChartQuarterTableWeekData
-            {
-                Units = months.SelectMany(x => x.Weeks).Sum(x => x.Units),
-                Impressions = months.SelectMany(x => x.Weeks).Sum(x => x.Impressions),
-                Cost = months.SelectMany(x => x.Weeks).Sum(x => x.Cost)
-            };
-            totalTable.CPM = totalTable.Impressions == 0 ? 0 : totalTable.Cost / (decimal)totalTable.Impressions;
-            return totalTable;
-        }
-
-        //this is the total table
-        private FlowChartQuarterTableData _CalculateTotalTableData(List<FlowChartQuarterTableData> tablesInQuarterDaypart)
-        {
-            var firstTable = tablesInQuarterDaypart.First();
-            var tableData = new FlowChartQuarterTableData
-            {
-                TableTitle = $"{firstTable.QuarterLabel} {firstTable.DaypartCode} Total",
-                Months = firstTable.Months
-            };
-            tableData.Months.ForEach(
-                month =>
+            projectedPlans.GroupBy(x => new { x.QuarterNumber, x.QuarterYear })
+                .ToList()
+                .ForEach(qDGrp =>   //quarter daypart group
                 {
-                    month.Weeks.ForEach(
-                        week =>
+                    QuarterDetailDto quarter = new QuarterDetailDto
+                    {
+                        Quarter = qDGrp.Key.QuarterNumber,
+                        Year = qDGrp.Key.QuarterYear
+                    };
+                    var quarterTable = new ContractQuarterTableData
+                    {
+                        Title = quarter.LongFormat(),
+                    };
+                    qDGrp.ToList().GroupBy(y => new { y.DaypartCode, y.SpotLength, y.Equivalized, y.WeekStartDate })
+                    .ToList()
+                    .ForEach(row =>  //quarter daypart spot length equivalized group in the same week
+                    {
+                        var items = row.ToList();
+                        decimal totalCost = items.Sum(y => y.TotalCost);
+                        double totalImpressions = items.Sum(y => y.TotalImpressions);
+                        if(totalImpressions == 0 && totalCost == 0)
                         {
-                            var weeks = tablesInQuarterDaypart
-                                    .SelectMany(x => x.Months.SelectMany(y => y.Weeks.Where(w => w.WeekStartDate.Equals(week.WeekStartDate))))
-                                    .ToList();
-                            week.Impressions = weeks.Sum(x => x.Impressions);
-                            week.Cost = weeks.Sum(x => x.Cost);
-                            week.CPM = week.Impressions == 0 ? 0 : week.Cost / (decimal)week.Impressions;
-                            week.Units = weeks.Sum(x => x.Units);
-                        });
+                            return; //don't add empty weeks
+                        }
+                        int units = items.Sum(y => y.Units);
+                        
+                        
+                        List<object> tableRow = new List<object>
+                        {
+                            row.Key.DaypartCode,
+                            row.Key.WeekStartDate.Value.ToShortDateString(),
+                            units,
+                            $":{row.Key.SpotLength}s{(row.Key.Equivalized && !row.Key.SpotLength.Equals("30") ? " eq." : string.Empty)}",
+                            units == 0 ? 0 : totalCost / units,   //cost per unit
+                            totalCost,
+                            units == 0 ? 0 : (totalImpressions / units) / 1000,    //impressions per unit
+                            totalImpressions / 1000,
+                            _CalculateCost(totalImpressions/1000, totalCost)
+                        };
+
+                        quarterTable.Rows.Add(tableRow);
+                    });
+                    quarterTable.TotalRow = _CalculateTotalsForContractTable(quarterTable.Rows, quarter.ShortFormatQuarterNumberFirst());
+                    ContractQuarterTables.Add(quarterTable);
                 });
-            tableData.Total = _CalculateTotalsForTable(tableData.Months);
-            return tableData;
+            _CalculateContractTabTotals();
         }
 
+        private void _CalculateContractTabTotals()
+        {
+            ContractTotals = new List<object>
+            {
+                ContractQuarterTables.SelectMany(x=>x.Rows).Sum(x=>int.Parse(x[2].ToString())), //units
+                ContractQuarterTables.SelectMany(x=>x.Rows).Sum(x=>decimal.Parse(x[5].ToString())), //total cost
+                null,   //empty cell in the excel
+                ContractQuarterTables.SelectMany(x=>x.Rows).Sum(x=>double.Parse(x[7].ToString())), //total demo
+                null   //empty cell in the excel
+            };
+            //CPM
+            ContractTotals.Add(_CalculateCost(double.Parse(ContractTotals[3].ToString()), decimal.Parse(ContractTotals[1].ToString())));
+        }
+
+        private List<object> _CalculateTotalsForContractTable(List<List<object>> rows, string quarterLabel)
+        {
+            //add null for all the cells that don't have data
+
+            decimal totalCost = rows.Sum(x => decimal.Parse(x[5].ToString()));
+            double totalImpressions = rows.Sum(x => double.Parse(x[7].ToString()));
+
+            return new List<object>
+            {
+                null,
+                $"{quarterLabel} Totals",
+                rows.Sum(x => int.Parse(x[2].ToString())),    //units
+                "-",
+                "-",
+                totalCost,     //cost
+                "-",
+                totalImpressions,
+                _CalculateCost(totalImpressions, totalCost)
+            };
+        }
+        
         /// <summary>
         /// Calculate CPM or CPP depending on the value sent in the points property   
         /// </summary>
@@ -764,5 +856,12 @@ namespace Services.Broadcast.Entities.Campaign
         public double Impressions { get; set; }
         public decimal CPM { get; set; }
         public decimal Cost { get; set; }
+    }
+
+    public class ContractQuarterTableData
+    {
+        public string Title { get; set; }
+        public List<List<object>> Rows { get; set; } = new List<List<object>>();
+        public List<object> TotalRow { get; set; }
     }
 }

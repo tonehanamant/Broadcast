@@ -454,6 +454,7 @@
     <Compile Include="Helpers\KeyHelper.cs" />
     <Compile Include="Helpers\SystemComponentParameterHelper.cs" />
     <Compile Include="ReflectionHelper.cs" />
+    <Compile Include="ReportGenerators\CampaignExport\ContractReportGenerator.cs" />
     <Compile Include="ReportGenerators\CampaignExport\ExportSharedLogic.cs" />
     <Compile Include="ReportGenerators\CampaignExport\FlowChartReportGenerator.cs" />
     <Compile Include="ReportGenerators\CampaignExport\ProposalReportGenerator.cs" />

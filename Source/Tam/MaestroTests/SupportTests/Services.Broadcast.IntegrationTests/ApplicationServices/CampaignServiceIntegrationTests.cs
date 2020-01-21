@@ -629,6 +629,37 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void CampaignExport_ContractTypeWithRestrictions()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<ITrafficApiCache>(new TrafficApiCacheStub());
+                var _CampaignService = IntegrationTestApplicationServiceFactory.GetApplicationService<ICampaignService>();
+
+                var reportData = _CampaignService.GetCampaignReportData(new CampaignReportRequest
+                {
+                    CampaignId = 652,
+                    ExportType = CampaignExportTypeEnum.Contract,
+                    SelectedPlans = new List<int> { 1850, 1851, 1852, 1853 }
+                });
+
+                //write excel file to file system(this is used for manual testing only)
+                var reportOutput = new CampaignReportGenerator().Generate(reportData);
+                using (var destinationFileStream = new FileStream($@"C:\temp\plan-excel-generation\{reportOutput.Filename}", FileMode.OpenOrCreate))
+                {
+                    while (reportOutput.Stream.Position < reportOutput.Stream.Length)
+                    {
+                        destinationFileStream.WriteByte((byte)reportOutput.Stream.ReadByte());
+                    }
+                }
+
+                    Assert.IsTrue(DateTime.Now.ToString("MM/dd/yy").Equals(reportData.CreatedDate));
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(reportData, _GetJsonSettingsForCampaignExport()));
+            }
+        }
+
+        [Test]
         public void CampaignExport_ValidateExportType_Contracted()
         {
             using (new TransactionScopeWrapper())
@@ -636,7 +667,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<ITrafficApiCache>(new TrafficApiCacheStub());
                 var _CampaignService = IntegrationTestApplicationServiceFactory.GetApplicationService<ICampaignService>();
 
-                var exception = Assert.Throws<Exception>(() =>
+                var exception = Assert.Throws<ApplicationException>(() =>
                 _CampaignService.GetCampaignReportData(new CampaignReportRequest
                 {
                     CampaignId = 652,
@@ -655,7 +686,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<ITrafficApiCache>(new TrafficApiCacheStub());
                 var _CampaignService = IntegrationTestApplicationServiceFactory.GetApplicationService<ICampaignService>();
 
-                var exception = Assert.Throws<Exception>(() =>
+                var exception = Assert.Throws<ApplicationException>(() =>
                 _CampaignService.GetCampaignReportData(new CampaignReportRequest
                 {
                     CampaignId = 652,
@@ -665,7 +696,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Assert.That(exception.Message, Is.EqualTo("Cannot have multiple guaranteed audiences in the export. Please select only plans with the same guaranteed audience."));
             }
         }
-
+        
         [Test]
         public void CampaignExport_ValidateExportType_ContractedWithProposal()
         {
@@ -674,7 +705,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<ITrafficApiCache>(new TrafficApiCacheStub());
                 var _CampaignService = IntegrationTestApplicationServiceFactory.GetApplicationService<ICampaignService>();
 
-                var exception = Assert.Throws<Exception>(() =>
+                var exception = Assert.Throws<ApplicationException>(() =>
                 _CampaignService.GetCampaignReportData(new CampaignReportRequest
                 {
                     CampaignId = 652,
@@ -693,7 +724,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<ITrafficApiCache>(new TrafficApiCacheStub());
                 var _CampaignService = IntegrationTestApplicationServiceFactory.GetApplicationService<ICampaignService>();
 
-                var exception = Assert.Throws<Exception>(() =>
+                var exception = Assert.Throws<ApplicationException>(() =>
                 _CampaignService.GetCampaignReportData(new CampaignReportRequest
                 {
                     CampaignId = 652,
@@ -712,7 +743,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<ITrafficApiCache>(new TrafficApiCacheStub());
                 var _CampaignService = IntegrationTestApplicationServiceFactory.GetApplicationService<ICampaignService>();
 
-                var exception = Assert.Throws<Exception>(() =>
+                var exception = Assert.Throws<ApplicationException>(() =>
                 _CampaignService.GetCampaignReportData(new CampaignReportRequest
                 {
                     CampaignId = 652,
@@ -731,7 +762,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<ITrafficApiCache>(new TrafficApiCacheStub());
                 var _CampaignService = IntegrationTestApplicationServiceFactory.GetApplicationService<ICampaignService>();
 
-                var exception = Assert.Throws<Exception>(() =>
+                var exception = Assert.Throws<ApplicationException>(() =>
                 _CampaignService.GetCampaignReportData(new CampaignReportRequest
                 {
                     CampaignId = 652,

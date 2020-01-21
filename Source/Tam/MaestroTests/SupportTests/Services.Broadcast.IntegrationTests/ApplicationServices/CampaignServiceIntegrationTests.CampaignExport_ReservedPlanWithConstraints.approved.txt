@@ -7,6 +7,8 @@
   "CampaignName": "Campaign with all types of plans",
   "CampaignStartQuarter": "Q1'20",
   "ClientName": "Stub Advertiser",
+  "ContractQuarterTables": [],
+  "ContractTotals": [],
   "DaypartsData": [
     {
       "DaypartCode": "MDN",
