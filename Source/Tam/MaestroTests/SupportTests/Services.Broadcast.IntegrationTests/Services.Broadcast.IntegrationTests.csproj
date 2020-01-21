@@ -380,6 +380,7 @@
     <Compile Include="UnitTests\InventoryFileValidatorUnitTests.cs" />
     <Compile Include="UnitTests\ScxFileGeneration\ScxGenerationServiceUnitTestClass.cs" />
     <Compile Include="UnitTests\ScxFileGeneration\ScxGenerationServiceUnitTests.cs" />
+    <Compile Include="UnitTests\Validators\PlanValidatorUnitTestClass.cs" />
     <Compile Include="UnitTests\Validators\PlanValidatorUnitTests.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -1,28 +1,25 @@
-﻿using Moq;
+﻿using Common.Services.Repositories;
+using Moq;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Cache;
-using Services.Broadcast.Clients;
+using Services.Broadcast.Entities.DTO.Program;
+using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
+using Services.Broadcast.IntegrationTests.Stubs;
+using Services.Broadcast.Repositories;
 using Services.Broadcast.Validators;
 using System;
 using System.Collections.Generic;
-using Services.Broadcast.Entities.DTO;
-using Services.Broadcast.Entities.Enums;
-using Services.Broadcast.IntegrationTests.Stubs;
-using Common.Services.Repositories;
-using Services.Broadcast.Repositories;
-using Services.Broadcast.Helpers;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
-using Services.Broadcast.Entities.DTO.Program;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
 {
     [TestFixture]
     public class PlanValidatorUnitTest
     {
-        private PlanValidator _planValidator;
+        private PlanValidatorUnitTestClass _planValidator;
         private Mock<IRatingForecastService> _ratingForecastServiceMock;
         private Mock<ISpotLengthEngine> _spotLengthEngineMock;
         private Mock<IBroadcastAudiencesCache> _broadcastAudiencesCacheMock;
@@ -69,7 +66,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             _planRepositoryMock = new Mock<IPlanRepository>();
             _broadcastDataRepositoryFactoryMock = new Mock<IDataRepositoryFactory>();
             _broadcastDataRepositoryFactoryMock.Setup(f => f.GetDataRepository<IPlanRepository>()).Returns(_planRepositoryMock.Object);
-            _planValidator = new PlanValidator(_spotLengthEngineMock.Object, _broadcastAudiencesCacheMock.Object,
+            _planValidator = new PlanValidatorUnitTestClass(_spotLengthEngineMock.Object, _broadcastAudiencesCacheMock.Object,
                 _ratingForecastServiceMock.Object, new TrafficApiCache(new TrafficApiClientStub()), _broadcastDataRepositoryFactoryMock.Object);
         }
 
@@ -996,6 +993,65 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             Assert.That(() => _planValidator.ValidateWeeklyBreakdown(request),
                 Throws.TypeOf<Exception>().With.Message
                     .EqualTo("Invalid flight dates.  The end date cannot be before the start date."));
+        }
+
+        [Test]
+        public void ValidateWeeklyBreakdownWeeks_WithoutWeeklyBreakdown()
+        {
+            var plan = new PlanDto();
+
+            _ValidateWeeklyBreakdownWeeks(plan);
+        }
+
+        [Test]
+        [TestCase(12.121212121212123, 6.060606060606061, 6.060606060606061, false)]
+        [TestCase(12.5, 6.060606060606061, 6.060606060606061, true)]
+        public void ValidateWeeklyBreakdownWeeks_ImpressionTotal(double targetImpressions, double weeklyImpressionsOne, double weeklyImpressionsTwo, bool shouldThrow)
+        {
+            var plan = new PlanDto
+            {
+                TargetImpressions = targetImpressions,
+                WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>
+                {
+                    new WeeklyBreakdownWeek { WeeklyImpressions = weeklyImpressionsOne, WeeklyImpressionsPercentage = 50 },
+                    new WeeklyBreakdownWeek { WeeklyImpressions = weeklyImpressionsTwo, WeeklyImpressionsPercentage = 50 }
+                }
+            };
+
+            _ValidateWeeklyBreakdownWeeks(plan, shouldThrow, PlanValidator.INVALID_IMPRESSIONS_COUNT);
+        }
+
+        [Test]
+        [TestCase(50, 50, false)]
+        [TestCase(25, 50, true)]
+        [TestCase(50.5, 49.5, false)]
+        [TestCase(25.5, 49.7, true)]
+        public void ValidateWeeklyBreakdownWeeks_SOVTotal(double weeklyImpressionsOne, double weeklyImpressionsTwo, bool shouldThrow)
+        {
+            var plan = new PlanDto
+            {
+                TargetImpressions = 12,
+                WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>
+                {
+                    new WeeklyBreakdownWeek { WeeklyImpressions = 6, WeeklyImpressionsPercentage = weeklyImpressionsOne },
+                    new WeeklyBreakdownWeek { WeeklyImpressions = 6, WeeklyImpressionsPercentage = weeklyImpressionsTwo }
+                }
+            };
+
+            _ValidateWeeklyBreakdownWeeks(plan, shouldThrow, PlanValidator.INVALID_SOV_COUNT);
+        }
+
+        private void _ValidateWeeklyBreakdownWeeks(PlanDto plan, bool shouldThrow = false, string errorMessageIfShouldThrow = null)
+        {
+            if (shouldThrow)
+            {
+                var e = Assert.Throws<Exception>(() => _planValidator.UT_ValidateWeeklyBreakdownWeeks(plan));
+                Assert.AreEqual(errorMessageIfShouldThrow, e.Message);
+            }
+            else
+            {
+                Assert.DoesNotThrow(() => _planValidator.UT_ValidateWeeklyBreakdownWeeks(plan));
+            }
         }
 
         private void _ConfigureSpotLenghtEngineMockToReturnTrue() =>

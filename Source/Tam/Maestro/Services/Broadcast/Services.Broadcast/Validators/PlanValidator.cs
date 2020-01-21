@@ -55,9 +55,9 @@ namespace Services.Broadcast.Validators
         const string INVALID_TOTAL_MARKET_COVERAGE = "Invalid total market coverage.";
         const string INVALID_MARKET_SHARE_OF_VOICE = "Invalid share of voice for market.";
         const string INVALID_REQUEST = "Invalid request";
-        const string INVALID_IMPRESSIONS_COUNT = "The impressions count is different between the delivery and the weekly breakdown";
-        const string INVALID_SOV_COUNT = "The share of voice count is not equal to 100%";
-        const string INVALID_VPVH = "Invalid VPVH. The value must be between 0.001 and 10.";
+        public const string INVALID_IMPRESSIONS_COUNT = "The impressions count is different between the delivery and the weekly breakdown";
+        public const string INVALID_SOV_COUNT = "The share of voice count is not equal to 100%";
+        const string INVALID_VPVH = "Invalid VPVH. The value must be between 0.001 and 1.";
         const string INVALID_FLIGHT_NOTES = "Flight notes cannot be longer than 1024 characters.";
         const string STOP_WORD_DETECTED = "Stop word detected in plan name";
         const string SUM_OF_DAYPART_WEIGHTINGS_EXCEEDS_LIMIT = "Sum of weighting is greater than 100%";
@@ -359,19 +359,23 @@ namespace Services.Broadcast.Validators
             }
         }
 
-        private void _ValidateWeeklyBreakdownWeeks(PlanDto plan)
+        protected void _ValidateWeeklyBreakdownWeeks(PlanDto plan)
         {
             if (!plan.WeeklyBreakdownWeeks.Any())
             {
                 return;
             }
 
-            if (plan.TargetImpressions != Math.Round(plan.WeeklyBreakdownWeeks.Select(x => x.WeeklyImpressions).Sum(), 3))
+            const int roundToDecimal = 3;
+            var roundedTargetImpressions = Math.Round(plan.TargetImpressions.GetValueOrDefault(), roundToDecimal);
+            var roundedWeeklyImpressionsSum = Math.Round(plan.WeeklyBreakdownWeeks.Select(x => x.WeeklyImpressions).Sum(), roundToDecimal);
+            if (roundedTargetImpressions.Equals(roundedWeeklyImpressionsSum) == false)
             {
                 throw new Exception(INVALID_IMPRESSIONS_COUNT);
             }
 
-            if (100 != Math.Round(plan.WeeklyBreakdownWeeks.Select(x => x.WeeklyImpressionsPercentage).Sum()))
+            var roundedWeeklyImpressionsPercentageSum = Math.Round(plan.WeeklyBreakdownWeeks.Select(x => x.WeeklyImpressionsPercentage).Sum());
+            if ((100d).Equals(roundedWeeklyImpressionsPercentageSum) == false)
             {
                 throw new Exception(INVALID_SOV_COUNT);
             }
