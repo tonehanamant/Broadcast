@@ -22,15 +22,19 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
     [TestFixture]
     public class PlansServiceUnitTests
     {
-        [Test]
-        public void Construction()
+        private PlanService _PlanService;
+        private Mock<INsiUniverseService> _NsiUniverseService;
+
+        [SetUp]
+        public void CreatePlanService()
         {
             var broadcastDataRepositoryFactory = new Mock<IDataRepositoryFactory>();
             var planValidator = new Mock<IPlanValidator>();
             var planBudgetDeliveryCalculator = new Mock<IPlanBudgetDeliveryCalculator>();
             var mediaMonthAndWeekAggregateCache = new Mock<IMediaMonthAndWeekAggregateCache>();
             var planAggregator = new Mock<IPlanAggregator>();
-            var nsiUniverseService = new Mock<INsiUniverseService>();
+            _NsiUniverseService = new Mock<INsiUniverseService>();
+            _NsiUniverseService.Setup(n => n.GetAudienceUniverseForMediaMonth(It.IsAny<int>(), It.IsAny<int>())).Returns(1000000);
             var broadcastAudienceCacheMock = new Mock<IBroadcastAudiencesCache>();
             var spotLengthEngine = new Mock<ISpotLengthEngine>();
             var lockingManagerApplicationServiceMock = new Mock<IBroadcastLockingManagerApplicationService>();
@@ -43,13 +47,19 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 LockedUserName = "IntegrationUser"
             });
 
-            var tc = new PlanService(broadcastDataRepositoryFactory.Object, planValidator.Object,
+            _PlanService = new PlanService(broadcastDataRepositoryFactory.Object, planValidator.Object,
                 planBudgetDeliveryCalculator.Object, mediaMonthAndWeekAggregateCache.Object, planAggregator.Object,
                 IntegrationTestApplicationServiceFactory.Instance.Resolve<ICampaignAggregationJobTrigger>(),
-                nsiUniverseService.Object, broadcastAudienceCacheMock.Object, spotLengthEngine.Object, lockingManagerApplicationServiceMock.Object,
+                _NsiUniverseService.Object, broadcastAudienceCacheMock.Object, spotLengthEngine.Object, lockingManagerApplicationServiceMock.Object,
                 planPricingServiceMock.Object, quarterCalculationEngineMock.Object);
 
-            Assert.IsNotNull(tc);
+        }
+
+        [Test]
+        public void Construction()
+        {
+            
+            Assert.IsNotNull(_PlanService);
         }
 
         [Test]
@@ -356,6 +366,37 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var exception = Assert.Throws<Exception>(() => service.SavePlan(plan, "IntegrationUser", new DateTime(2019, 10, 23)));
 
             Assert.AreEqual(expectedMessage, exception.Message);
+        }
+
+        [Test]
+        public void getVPVHForMaestroAudience()
+        {
+            var vpvhRequest = new VPVHRequest
+            {
+                AudienceIds = new List<int> { 38 },
+                ShareBookId = 422
+            };
+            _NsiUniverseService
+                .Setup(n => n.GetAudienceUniverseForMediaMonth(It.IsAny<int>(), It.IsAny<int>()))
+                .Returns((int month, int audience) =>
+                {
+                    if (audience == 38) return 20000;
+                    else return 10000;
+                });
+            var result = _PlanService.GetVPVHForAudiencesWithBooks(vpvhRequest);
+            Assert.IsTrue(result.Exists(i => i.AudienceId == 38 && i.VPVH == 2));
+        }
+
+        [Test]
+        public void getVPVHForHouseholds()
+        {
+            var vpvhRequest = new VPVHRequest
+            {
+                AudienceIds = new List<int> { 31 },
+                ShareBookId = 422
+            };
+            var result = _PlanService.GetVPVHForAudiencesWithBooks(vpvhRequest);
+            Assert.IsTrue(result.Exists(i => i.AudienceId == 31 && i.VPVH == 1));
         }
 
         private static PlanDto _GetNewPlan()

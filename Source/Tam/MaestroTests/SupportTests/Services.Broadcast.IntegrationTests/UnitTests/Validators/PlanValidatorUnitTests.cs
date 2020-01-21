@@ -670,7 +670,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
 
             Assert.That(() => _planValidator.ValidatePlan(plan),
                 Throws.TypeOf<Exception>().With.Message
-                    .EqualTo("Invalid VPVH. The value must be between 0.001 and 1."));
+                    .EqualTo("Invalid VPVH. The value must be between 0.001 and 10."));
         }
 
         [Test]
@@ -683,7 +683,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
 
             Assert.That(() => _planValidator.ValidatePlan(plan),
                 Throws.TypeOf<Exception>().With.Message
-                    .EqualTo("Invalid VPVH. The value must be between 0.001 and 1."));
+                    .EqualTo("Invalid VPVH. The value must be between 0.001 and 10."));
         }
 
         [Test]
@@ -692,11 +692,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             _ConfigureMocksToReturnTrue();
 
             var plan = _GetPlan();
-            plan.Vpvh = 2;
+            plan.Vpvh = 12;
 
             Assert.That(() => _planValidator.ValidatePlan(plan),
                 Throws.TypeOf<Exception>().With.Message
-                    .EqualTo("Invalid VPVH. The value must be between 0.001 and 1."));
+                    .EqualTo("Invalid VPVH. The value must be between 0.001 and 10."));
         }
 
         [Test]
@@ -761,7 +761,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
 
             Assert.That(() => _planValidator.ValidatePlan(plan),
                 Throws.TypeOf<Exception>().With.Message
-                    .EqualTo("Invalid VPVH. The value must be between 0.001 and 1."));
+                    .EqualTo("Invalid VPVH. The value must be between 0.001 and 10."));
         }
 
         [Test]
@@ -774,13 +774,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             {
                 new PlanAudienceDto
                 {
-                    AudienceId = 11, Vpvh = 1.5
+                    AudienceId = 11, Vpvh = 10.5
                 },
             };
 
             Assert.That(() => _planValidator.ValidatePlan(plan),
                 Throws.TypeOf<Exception>().With.Message
-                    .EqualTo("Invalid VPVH. The value must be between 0.001 and 1."));
+                    .EqualTo("Invalid VPVH. The value must be between 0.001 and 10."));
         }
 
         [Test]
