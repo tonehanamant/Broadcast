@@ -579,7 +579,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     CampaignId = 652,
                     ExportType = CampaignExportTypeEnum.Contract,
-                    SelectedPlans = new List<int> { 1852, 1853}
+                    SelectedPlans = new List<int> { 1852, 1853 }
                 });
 
                 //write excel file to file system(this is used for manual testing only)
@@ -645,16 +645,16 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 });
 
                 //write excel file to file system(this is used for manual testing only)
-                var reportOutput = new CampaignReportGenerator().Generate(reportData);
-                using (var destinationFileStream = new FileStream($@"C:\temp\plan-excel-generation\{reportOutput.Filename}", FileMode.OpenOrCreate))
-                {
-                    while (reportOutput.Stream.Position < reportOutput.Stream.Length)
-                    {
-                        destinationFileStream.WriteByte((byte)reportOutput.Stream.ReadByte());
-                    }
-                }
+                //var reportOutput = new CampaignReportGenerator().Generate(reportData);
+                //using (var destinationFileStream = new FileStream($@"C:\temp\plan-excel-generation\{reportOutput.Filename}", FileMode.OpenOrCreate))
+                //{
+                //    while (reportOutput.Stream.Position < reportOutput.Stream.Length)
+                //    {
+                //        destinationFileStream.WriteByte((byte)reportOutput.Stream.ReadByte());
+                //    }
+                //}
 
-                    Assert.IsTrue(DateTime.Now.ToString("MM/dd/yy").Equals(reportData.CreatedDate));
+                Assert.IsTrue(DateTime.Now.ToString("MM/dd/yy").Equals(reportData.CreatedDate));
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(reportData, _GetJsonSettingsForCampaignExport()));
             }
         }
@@ -696,7 +696,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Assert.That(exception.Message, Is.EqualTo("Cannot have multiple guaranteed audiences in the export. Please select only plans with the same guaranteed audience."));
             }
         }
-        
+
         [Test]
         public void CampaignExport_ValidateExportType_ContractedWithProposal()
         {
@@ -748,7 +748,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     CampaignId = 652,
                     ExportType = CampaignExportTypeEnum.Contract,
-                    SelectedPlans = new List<int> { 1849, 1856}
+                    SelectedPlans = new List<int> { 1849, 1856 }
                 }));
                 Assert.That(exception.Message, Is.EqualTo("Invalid export type for selected plans."));
             }
