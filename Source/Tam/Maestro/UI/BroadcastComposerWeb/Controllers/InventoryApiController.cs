@@ -276,7 +276,7 @@ namespace BroadcastComposerWeb.Controllers
             }
             catch (Exception ex)
             {
-                var message = $"Exception caught attempting to download error files with ids '{string.Join(",", fileIds)}'";
+                var message = $"Exception caught attempting to download error files with ids '{string.Join(",", fileIds)}'.";
                 LogHelper.Logger.Error(message, ex);
                 return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, message, ex);
             }
@@ -288,17 +288,25 @@ namespace BroadcastComposerWeb.Controllers
         {
             if (fileId == 0)
                 return new HttpResponseMessage { StatusCode = HttpStatusCode.NoContent, ReasonPhrase = "No file id was supplied" };
-
-            var file = _ApplicationServiceFactory.GetApplicationService<IInventoryService>().DownloadErrorFile(fileId);
-
-            var result = Request.CreateResponse(HttpStatusCode.OK);
-            result.Content = new StreamContent(file.Item2);
-            result.Content.Headers.ContentType = new MediaTypeHeaderValue(file.Item3);
-            result.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
+            try
             {
-                FileName = file.Item1
-            };
-            return result;
+                var file = _ApplicationServiceFactory.GetApplicationService<IInventoryService>().DownloadErrorFile(fileId);
+
+                var result = Request.CreateResponse(HttpStatusCode.OK);
+                result.Content = new StreamContent(file.Item2);
+                result.Content.Headers.ContentType = new MediaTypeHeaderValue(file.Item3);
+                result.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
+                {
+                    FileName = file.Item1
+                };
+                return result;
+            }
+            catch (Exception ex)
+            {
+                var message = $"Exception caught attempting to download error files with ids '{fileId}'.";
+                LogHelper.Logger.Error(message, ex);
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, message, ex);
+            }
         }
 
         [HttpGet]
