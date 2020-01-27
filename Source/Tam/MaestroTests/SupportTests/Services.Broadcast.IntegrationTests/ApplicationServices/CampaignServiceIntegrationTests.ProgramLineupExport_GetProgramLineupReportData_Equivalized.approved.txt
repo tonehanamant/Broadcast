@@ -1,0 +1,15 @@
+﻿{
+  "AccountExecutive": "",
+  "AccuracyEstimateDate": "12/05/19",
+  "Agency": "Stub Agency",
+  "Client": "Stub Advertiser",
+  "ClientContact": "",
+  "ExportFileName": "program_lineup_report_20200204.xlsx",
+  "FlightEndDate": "04/12/20",
+  "FlightStartDate": "03/14/20",
+  "GuaranteedDemo": "A21-24",
+  "PlanHeaderName": "Plan in contracted | Program Lineup*",
+  "PostingType": "NTI",
+  "ReportGeneratedDate": "02/04/20",
+  "SpotLength": ":45 eq."
+}

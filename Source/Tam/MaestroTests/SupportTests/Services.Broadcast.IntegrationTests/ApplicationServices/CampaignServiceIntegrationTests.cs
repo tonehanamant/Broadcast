@@ -1,6 +1,5 @@
 ﻿using ApprovalTests;
 using ApprovalTests.Reporters;
-using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
 using IntegrationTests.Common;
 using Microsoft.Practices.Unity;
@@ -26,6 +25,8 @@ using Services.Broadcast.ReportGenerators;
 using Services.Broadcast.IntegrationTests.Stubs;
 using System.IO;
 using Common.Services;
+using Services.Broadcast.ReportGenerators.ProgramLineup;
+using Services.Broadcast.Entities.Plan.Pricing;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
@@ -36,6 +37,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         private readonly DateTime CreatedDate = new DateTime(2019, 5, 14);
         private readonly ICampaignService _CampaignService = IntegrationTestApplicationServiceFactory.GetApplicationService<ICampaignService>();
         private readonly ICampaignSummaryRepository _CampaignSummaryRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<ICampaignSummaryRepository>();
+        private readonly IPlanRepository _PlanRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IPlanRepository>();
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
@@ -848,6 +850,161 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                 ContractResolver = jsonResolver
             };
+        }
+        
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void ProgramLineupExport_GetProgramLineupReportData()
+        {
+            const int planId = 1850;
+            var now = new DateTime(2020, 2, 4);
+
+            using (new TransactionScopeWrapper())
+            {
+                IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<ITrafficApiCache>(new TrafficApiCacheStub());
+                var _CampaignService = IntegrationTestApplicationServiceFactory.GetApplicationService<ICampaignService>();
+                _AddPricingJob(planId, new DateTime(2019, 12, 05), BackgroundJobProcessingStatus.Succeeded);
+
+                var reportData = _CampaignService.GetProgramLineupReportData(new ProgramLineupReportRequest
+                {
+                    SelectedPlans = new List<int> { planId }
+                }, now);
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(reportData));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void ProgramLineupExport_GetProgramLineupReportData_Equivalized()
+        {
+            const int planId = 1852;
+            var now = new DateTime(2020, 2, 4);
+
+            using (new TransactionScopeWrapper())
+            {
+                IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<ITrafficApiCache>(new TrafficApiCacheStub());
+                var _CampaignService = IntegrationTestApplicationServiceFactory.GetApplicationService<ICampaignService>();
+                _AddPricingJob(planId, new DateTime(2019, 12, 05), BackgroundJobProcessingStatus.Succeeded);
+
+                var reportData = _CampaignService.GetProgramLineupReportData(new ProgramLineupReportRequest
+                {
+                    SelectedPlans = new List<int> { planId }
+                }, now);
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(reportData));
+            }
+        }
+
+        [Test]
+        public void ProgramLineupExport_GetProgramLineupReportData_NoPlansSelected()
+        {
+            const string expectedMessage = "Choose at least one plan";
+
+            var now = new DateTime(2020, 2, 4);
+
+            using (new TransactionScopeWrapper())
+            {
+                IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<ITrafficApiCache>(new TrafficApiCacheStub());
+                var _CampaignService = IntegrationTestApplicationServiceFactory.GetApplicationService<ICampaignService>();
+
+                var exception = Assert.Throws<Exception>(() => _CampaignService.GetProgramLineupReportData(new ProgramLineupReportRequest
+                {
+                    SelectedPlans = new List<int>()
+                }, now));
+
+                Assert.AreEqual(expectedMessage, exception.Message);
+            }
+        }
+
+        [Test]
+        public void ProgramLineupExport_GetProgramLineupReportData_NoPricingRuns()
+        {
+            const string expectedMessage = "There are no completed pricing runs for the chosen plan. Please run pricing";
+            const int planId = 1852;
+
+            var now = new DateTime(2020, 2, 4);
+
+            using (new TransactionScopeWrapper())
+            {
+                IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<ITrafficApiCache>(new TrafficApiCacheStub());
+                var _CampaignService = IntegrationTestApplicationServiceFactory.GetApplicationService<ICampaignService>();
+
+                var exception = Assert.Throws<Exception>(() => _CampaignService.GetProgramLineupReportData(new ProgramLineupReportRequest
+                {
+                    SelectedPlans = new List<int> { planId }
+                }, now));
+
+                Assert.AreEqual(expectedMessage, exception.Message);
+            }
+        }
+
+        [Test]
+        [TestCase(BackgroundJobProcessingStatus.Failed, "The latest pricing run was failed. Please run pricing again or contact the support")]
+        [TestCase(BackgroundJobProcessingStatus.Queued, "There is a pricing run in progress right now. Please wait until it is completed")]
+        [TestCase(BackgroundJobProcessingStatus.Processing, "There is a pricing run in progress right now. Please wait until it is completed")]
+        public void ProgramLineupExport_GetProgramLineupReportData_LatestPricingRunWasFailed(BackgroundJobProcessingStatus jobStatus, string expectedMessage)
+        {
+            const int planId = 1852;
+
+            var now = new DateTime(2020, 2, 4);
+
+            using (new TransactionScopeWrapper())
+            {
+                IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<ITrafficApiCache>(new TrafficApiCacheStub());
+                var _CampaignService = IntegrationTestApplicationServiceFactory.GetApplicationService<ICampaignService>();
+                _AddPricingJob(planId, new DateTime(2019, 12, 05), jobStatus);
+
+                var exception = Assert.Throws<Exception>(() => _CampaignService.GetProgramLineupReportData(new ProgramLineupReportRequest
+                {
+                    SelectedPlans = new List<int> { planId }
+                }, now));
+
+                Assert.AreEqual(expectedMessage, exception.Message);
+            }
+        }
+
+        [Test]
+        [Ignore] //write excel file to file system(this is used for manual testing only)
+        public void ProgramLineupExport()
+        {
+            const int planId = 1852;
+            var now = new DateTime(2020, 4, 4);
+
+            using (new TransactionScopeWrapper())
+            {
+                IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<ITrafficApiCache>(new TrafficApiCacheStub());
+                var _CampaignService = IntegrationTestApplicationServiceFactory.GetApplicationService<ICampaignService>();
+                _AddPricingJob(planId, new DateTime(2019, 12, 05), BackgroundJobProcessingStatus.Succeeded);
+                
+                var reportData = _CampaignService.GetProgramLineupReportData(new ProgramLineupReportRequest
+                {
+                    SelectedPlans = new List<int> { planId }
+                }, now);
+
+                var reportOutput = new ProgramLineupReportGenerator().Generate(reportData);
+
+                using (var destinationFileStream = new FileStream($@"D:\Users\achyzh\results\{reportOutput.Filename}", FileMode.OpenOrCreate))
+                {
+                    while (reportOutput.Stream.Position < reportOutput.Stream.Length)
+                    {
+                        destinationFileStream.WriteByte((byte)reportOutput.Stream.ReadByte());
+                    }
+                }
+            }
+        }
+
+        private void _AddPricingJob(int planId, DateTime currentDate, BackgroundJobProcessingStatus status)
+        {
+            var plan = _PlanRepository.GetPlan(planId);
+
+            _PlanRepository.AddPlanPricingJob(new PlanPricingJob
+            {
+                PlanVersionId = plan.VersionId,
+                Status = status,
+                Queued = currentDate.AddSeconds(4),
+                Completed = currentDate.AddSeconds(5)
+            });
         }
     }
 }

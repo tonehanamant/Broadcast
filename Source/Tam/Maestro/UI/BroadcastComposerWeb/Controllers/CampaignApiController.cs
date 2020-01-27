@@ -213,5 +213,20 @@ namespace BroadcastComposerWeb.Controllers
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ICampaignService>()
                 .GenerateCampaignReport(request, fullName, DateTime.Now));
         }
+        
+        /// <summary>
+        /// Generates the program lineup report.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <returns>Identifier of the generated report</returns>
+        [HttpPost]
+        [Route("GenerateProgramLineupReport")]
+        [RestrictedAccess(RequiredRole = RoleType.Broadcast_Proposer)]
+        public BaseResponse<Guid> GenerateProgramLineupReport([FromBody]ProgramLineupReportRequest request)
+        {
+            var fullName = _GetCurrentUserFullName();
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ICampaignService>()
+                .GenerateProgramLineupReport(request, fullName, DateTime.Now));
+        }
     }
 }

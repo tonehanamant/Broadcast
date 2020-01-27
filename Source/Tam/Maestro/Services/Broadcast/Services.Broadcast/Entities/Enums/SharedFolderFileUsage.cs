@@ -2,6 +2,7 @@
 {
     public enum SharedFolderFileUsage
     {
-        CampaignExport = 1
+        CampaignExport = 1,
+        ProgramLineup = 2
     }
 }

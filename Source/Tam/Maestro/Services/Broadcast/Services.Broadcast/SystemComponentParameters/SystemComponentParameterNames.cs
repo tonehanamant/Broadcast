@@ -708,6 +708,11 @@ namespace Tam.Maestro.Common.SystemComponentParameter
             get { return "ProgramGuideUrl"; }
         }
 	 
+		public static string ProgramLineupReportsFolder  
+		{
+            get { return "ProgramLineupReportsFolder"; }
+        }
+	 
 		public static string ProgramSearchApiUrl  
 		{
             get { return "ProgramSearchApiUrl"; }

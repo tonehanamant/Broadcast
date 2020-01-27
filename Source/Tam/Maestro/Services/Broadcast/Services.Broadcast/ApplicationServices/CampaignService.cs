@@ -8,15 +8,17 @@ using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Campaign;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
+using Services.Broadcast.Entities.Plan.Pricing;
+using Services.Broadcast.Extensions;
 using Services.Broadcast.Helpers;
 using Services.Broadcast.ReportGenerators;
+using Services.Broadcast.ReportGenerators.ProgramLineup;
 using Services.Broadcast.Repositories;
 using Services.Broadcast.Validators;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Tam.Maestro.Common;
-using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 
@@ -101,6 +103,23 @@ namespace Services.Broadcast.ApplicationServices
         /// <param name="request">The request.</param>
         /// <returns>CampaignReport object</returns>
         CampaignReportData GetCampaignReportData(CampaignReportRequest request);
+
+        /// <summary>
+        /// Generates the program lineup report.
+        /// </summary>
+        /// <param name="request">ProgramLineupReportRequest object contains selected plan ids</param>
+        /// <param name="userName"></param>
+        /// <param name="currentDate"></param>
+        /// <returns>The report id</returns>
+        Guid GenerateProgramLineupReport(ProgramLineupReportRequest request, string userName, DateTime currentDate);
+
+        /// <summary>
+        /// Gets the program lineup report data. Method used for testing purposes
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <param name="currentDate"></param>
+        /// <returns>ProgramLineupReportData object</returns>
+        ProgramLineupReportData GetProgramLineupReportData(ProgramLineupReportRequest request, DateTime currentDate);
     }
 
     /// <summary>
@@ -550,6 +569,57 @@ namespace Services.Broadcast.ApplicationServices
                 }
             }
         }
+        
+        public Guid GenerateProgramLineupReport(ProgramLineupReportRequest request, string userName, DateTime currentDate)
+        {
+            var programLineupReportData = GetProgramLineupReportData(request, currentDate);
+            var reportGenerator = new ProgramLineupReportGenerator();
+            var report = reportGenerator.Generate(programLineupReportData);
+
+            return _SharedFolderService.SaveFile(new SharedFolderFile
+            {
+                FolderPath = $@"{BroadcastServiceSystemParameter.BroadcastSharedFolder}\{BroadcastServiceSystemParameter.ProgramLineupReportsFolder}",
+                FileNameWithExtension = report.Filename,
+                FileMediaType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                FileUsage = SharedFolderFileUsage.ProgramLineup,
+                CreatedDate = currentDate,
+                CreatedBy = userName,
+                FileContent = report.Stream
+            });
+        }
+        
+        public ProgramLineupReportData GetProgramLineupReportData(ProgramLineupReportRequest request, DateTime currentDate)
+        {
+            if (request.SelectedPlans.IsEmpty())
+                throw new Exception("Choose at least one plan");
+
+            // for now we generate reports only for one plan
+            var planId = request.SelectedPlans.First();
+            var plan = _PlanRepository.GetPlan(planId);
+            var campaign = _CampaignRepository.GetCampaign(plan.CampaignId);
+            var pricingJob = _GetLatestPricingJob(planId);
+            var agency = _TrafficApiCache.GetAgency(campaign.AgencyId);
+            var advertiser = _TrafficApiCache.GetAdvertiser(campaign.AdvertiserId);
+            var guaranteedDemo = _AudienceService.GetAudienceById(plan.AudienceId);
+            var spotLengths = _SpotLengthService.GetAllSpotLengths();
+
+            return new ProgramLineupReportData(plan, pricingJob, agency, advertiser, guaranteedDemo, spotLengths, currentDate);
+        }
+
+        private PlanPricingJob _GetLatestPricingJob(int planId)
+        {
+            var job = _PlanRepository.GetLatestPricingJob(planId);
+
+            if (job == null)
+                throw new Exception("There are no completed pricing runs for the chosen plan. Please run pricing");
+
+            if (job.Status == BackgroundJobProcessingStatus.Failed)
+                throw new Exception("The latest pricing run was failed. Please run pricing again or contact the support");
+
+            if (job.Status == BackgroundJobProcessingStatus.Queued || job.Status == BackgroundJobProcessingStatus.Processing)
+                throw new Exception("There is a pricing run in progress right now. Please wait until it is completed");
+
+            return job;
+        }
     }
 }
-

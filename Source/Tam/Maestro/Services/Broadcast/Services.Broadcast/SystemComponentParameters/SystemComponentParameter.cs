@@ -792,6 +792,12 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.ProgramGuideUrl); }
         }
 	 
+		public static string ProgramLineupReportsFolder  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<string>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.ProgramLineupReportsFolder); }
+        }
+	 
 		public static string ProgramSearchApiUrl  
 		{
             get { return SystemComponentParameterHelper.GetPropertyValue<string>
