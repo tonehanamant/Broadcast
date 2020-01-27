@@ -59,6 +59,7 @@ namespace Services.Broadcast.ApplicationServices
             {
                 _SharedFolderFilesRepository.RemoveFile(fileId);
                 _RemoveFileContent(file);
+                transaction.Complete();
             }
         }
 
