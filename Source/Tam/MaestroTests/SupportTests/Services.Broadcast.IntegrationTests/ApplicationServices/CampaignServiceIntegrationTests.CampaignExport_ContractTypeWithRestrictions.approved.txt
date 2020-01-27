@@ -486,10 +486,10 @@
           0,
           ":45s eq.",
           0.0,
-          200.00000000,
+          20000.000000,
           0.0,
-          8.0,
-          25.00000000
+          800.0,
+          25.000000
         ],
         [
           "Even",
@@ -499,10 +499,10 @@
           0,
           ":45s eq.",
           0.0,
-          400.00000000,
+          40000.000000,
           0.0,
-          16.0,
-          25.00000000
+          1600.0,
+          25.000000
         ],
         [
           "Odd",
@@ -512,10 +512,10 @@
           0,
           ":45s eq.",
           0.0,
-          99400.00000000,
+          40000.000000,
           0.0,
-          3976.0,
-          25.00000000
+          1600.0,
+          25.000000
         ],
         [
           "Even",
@@ -525,10 +525,10 @@
           0,
           ":45s eq.",
           0.0,
-          200.00000000,
+          20000.000000,
           0.0,
-          8.0,
-          25.00000000
+          800.0,
+          25.000000
         ],
         [
           "Odd",
@@ -538,10 +538,10 @@
           0,
           ":45s eq.",
           0.0,
-          400.00000000,
+          40000.000000,
           0.0,
-          16.0,
-          25.00000000
+          1600.0,
+          25.000000
         ],
         [
           "Even",
@@ -551,10 +551,10 @@
           0,
           ":45s eq.",
           0.0,
-          99400.00000000,
+          40000.000000,
           0.0,
-          3976.0,
-          25.00000000
+          1600.0,
+          25.000000
         ],
         [
           "Odd",
@@ -564,10 +564,10 @@
           0,
           ":45s eq.",
           0.0,
-          200.00000000,
+          20000.000000,
           0.0,
-          8.0,
-          25.00000000
+          800.0,
+          25.000000
         ],
         [
           "Even",
@@ -577,10 +577,10 @@
           0,
           ":45s eq.",
           0.0,
-          400.00000000,
+          40000.000000,
           0.0,
-          16.0,
-          25.00000000
+          1600.0,
+          25.000000
         ],
         [
           "Odd",
@@ -590,10 +590,10 @@
           0,
           ":45s eq.",
           0.0,
-          99400.00000000,
+          40000.000000,
           0.0,
-          3976.0,
-          25.00000000
+          1600.0,
+          25.000000
         ],
         [
           "Even",
@@ -1128,10 +1128,10 @@
           0,
           ":45s eq.",
           0.0,
-          200.00000000,
+          20000.000000,
           0.0,
-          8.0,
-          25.00000000
+          800.0,
+          25.000000
         ],
         [
           "Even",
@@ -1141,10 +1141,10 @@
           0,
           ":45s eq.",
           0.0,
-          400.00000000,
+          40000.000000,
           0.0,
-          16.0,
-          25.00000000
+          1600.0,
+          25.000000
         ],
         [
           "Odd",
@@ -1154,10 +1154,10 @@
           0,
           ":45s eq.",
           0.0,
-          99400.00000000,
+          40000.000000,
           0.0,
-          3976.0,
-          25.00000000
+          1600.0,
+          25.000000
         ],
         [
           "Even",
@@ -1167,10 +1167,10 @@
           0,
           ":45s eq.",
           0.0,
-          200.00000000,
+          20000.000000,
           0.0,
-          8.0,
-          25.00000000
+          800.0,
+          25.000000
         ],
         [
           "Odd",
@@ -1180,10 +1180,10 @@
           0,
           ":45s eq.",
           0.0,
-          400.00000000,
+          40000.000000,
           0.0,
-          16.0,
-          25.00000000
+          1600.0,
+          25.000000
         ],
         [
           "Even",
@@ -1193,10 +1193,10 @@
           0,
           ":45s eq.",
           0.0,
-          99400.00000000,
+          40000.000000,
           0.0,
-          3976.0,
-          25.00000000
+          1600.0,
+          25.000000
         ],
         [
           "Odd",
@@ -1389,9 +1389,11 @@
     }
   ],
   "FlightHiatuses": [
-    "3/16-3/21/20",
+    "3/15-3/17/20",
+    "3/19-3/21/20",
+    "3/24/20",
     "3/26-3/29/20",
-    "4/8-4/10/20"
+    "4/7-4/11/20"
   ],
   "FlowChartQuarterTables": [
     {
@@ -1494,26 +1496,26 @@
               "WeekStartDate": "2020-03-02T00:00:00"
             },
             {
-              "Cost": 10443.9560439560285000000000,
-              "CPM": 24.999999999999948534827441077,
+              "Cost": 30243.9560439560285000000000,
+              "CPM": 25.000000000000023558425986484,
               "DistributionPercentage": 0.01004396,
-              "Impressions": 417.75824176,
+              "Impressions": 1209.75824176,
               "Units": 0,
               "WeekStartDate": "2020-03-09T00:00:00"
             },
             {
-              "Cost": 10443.9560439560285000000000,
-              "CPM": 24.999999999999948534827441077,
+              "Cost": 30243.9560439560285000000000,
+              "CPM": 25.000000000000023558425986484,
               "DistributionPercentage": 0.01004396,
-              "Impressions": 417.75824176,
+              "Impressions": 1209.75824176,
               "Units": 0,
               "WeekStartDate": "2020-03-16T00:00:00"
             },
             {
-              "Cost": 10443.9560439560285000000000,
-              "CPM": 24.999999999999948534827441077,
+              "Cost": 30243.9560439560285000000000,
+              "CPM": 25.000000000000023558425986484,
               "DistributionPercentage": 0.01004396,
-              "Impressions": 417.75824176,
+              "Impressions": 1209.75824176,
               "Units": 0,
               "WeekStartDate": "2020-03-23T00:00:00"
             }
@@ -1631,26 +1633,26 @@
               "WeekStartDate": "2020-03-02T00:00:00"
             },
             {
-              "Cost": 200.00000000,
-              "CPM": 25.00000000,
-              "DistributionPercentage": 0.0004,
-              "Impressions": 8.0,
+              "Cost": 20000.000000,
+              "CPM": 25.000000,
+              "DistributionPercentage": 0.04,
+              "Impressions": 800.0,
               "Units": 0,
               "WeekStartDate": "2020-03-09T00:00:00"
             },
             {
-              "Cost": 200.00000000,
-              "CPM": 25.00000000,
-              "DistributionPercentage": 0.0004,
-              "Impressions": 8.0,
+              "Cost": 20000.000000,
+              "CPM": 25.000000,
+              "DistributionPercentage": 0.04,
+              "Impressions": 800.0,
               "Units": 0,
               "WeekStartDate": "2020-03-16T00:00:00"
             },
             {
-              "Cost": 200.00000000,
-              "CPM": 25.00000000,
-              "DistributionPercentage": 0.0004,
-              "Impressions": 8.0,
+              "Cost": 20000.000000,
+              "CPM": 25.000000,
+              "DistributionPercentage": 0.04,
+              "Impressions": 800.0,
               "Units": 0,
               "WeekStartDate": "2020-03-23T00:00:00"
             }
@@ -1660,10 +1662,10 @@
       "QuarterLabel": "1Q '20",
       "TableTitle": "1Q '20 MDN :45s eq.",
       "Total": {
-        "Cost": 600.00000000,
-        "CPM": 25.00000000,
+        "Cost": 60000.000000,
+        "CPM": 25.000000,
         "DistributionPercentage": 0.0,
-        "Impressions": 24.0,
+        "Impressions": 2400.0,
         "Units": 0,
         "WeekStartDate": "0001-01-01T00:00:00"
       }
@@ -1905,26 +1907,26 @@
               "WeekStartDate": "2020-03-02T00:00:00"
             },
             {
-              "Cost": 10443.9560439560285000000000,
-              "CPM": 24.999999999999948534827441077,
+              "Cost": 30243.9560439560285000000000,
+              "CPM": 25.000000000000023558425986484,
               "DistributionPercentage": 0.01004396,
-              "Impressions": 417.75824176,
+              "Impressions": 1209.75824176,
               "Units": 0,
               "WeekStartDate": "2020-03-09T00:00:00"
             },
             {
-              "Cost": 10443.9560439560285000000000,
-              "CPM": 24.999999999999948534827441077,
+              "Cost": 30243.9560439560285000000000,
+              "CPM": 25.000000000000023558425986484,
               "DistributionPercentage": 0.01004396,
-              "Impressions": 417.75824176,
+              "Impressions": 1209.75824176,
               "Units": 0,
               "WeekStartDate": "2020-03-16T00:00:00"
             },
             {
-              "Cost": 10443.9560439560285000000000,
-              "CPM": 24.999999999999948534827441077,
+              "Cost": 30243.9560439560285000000000,
+              "CPM": 25.000000000000023558425986484,
               "DistributionPercentage": 0.01004396,
-              "Impressions": 417.75824176,
+              "Impressions": 1209.75824176,
               "Units": 0,
               "WeekStartDate": "2020-03-23T00:00:00"
             }
@@ -1934,10 +1936,10 @@
       "QuarterLabel": null,
       "TableTitle": "1Q '20 MDN Total",
       "Total": {
-        "Cost": 128342.8571428569425000000000,
-        "CPM": 24.999999999999940101847729297,
+        "Cost": 187742.8571428569425000000000,
+        "CPM": 24.99999999999995905303606757,
         "DistributionPercentage": 0.0,
-        "Impressions": 5133.71428571,
+        "Impressions": 7509.71428571,
         "Units": 0,
         "WeekStartDate": "0001-01-01T00:00:00"
       }
@@ -2217,6 +2219,1102 @@
       }
     },
     {
+      "DaypartCode": "EF",
+      "Months": [
+        {
+          "MediaMonthId": 460,
+          "MonthName": "January",
+          "Weeks": [
+            {
+              "Cost": 0.0,
+              "CPM": 0.0,
+              "DistributionPercentage": 0.0,
+              "Impressions": 0.0,
+              "Units": 0,
+              "WeekStartDate": "2019-12-30T00:00:00"
+            },
+            {
+              "Cost": 0.0,
+              "CPM": 0.0,
+              "DistributionPercentage": 0.0,
+              "Impressions": 0.0,
+              "Units": 0,
+              "WeekStartDate": "2020-01-06T00:00:00"
+            },
+            {
+              "Cost": 0.0,
+              "CPM": 0.0,
+              "DistributionPercentage": 0.0,
+              "Impressions": 0.0,
+              "Units": 0,
+              "WeekStartDate": "2020-01-13T00:00:00"
+            },
+            {
+              "Cost": 0.0,
+              "CPM": 0.0,
+              "DistributionPercentage": 0.0,
+              "Impressions": 0.0,
+              "Units": 0,
+              "WeekStartDate": "2020-01-20T00:00:00"
+            }
+          ]
+        },
+        {
+          "MediaMonthId": 461,
+          "MonthName": "February",
+          "Weeks": [
+            {
+              "Cost": 0.0,
+              "CPM": 0.0,
+              "DistributionPercentage": 0.0,
+              "Impressions": 0.0,
+              "Units": 0,
+              "WeekStartDate": "2020-01-27T00:00:00"
+            },
+            {
+              "Cost": 0.0,
+              "CPM": 0.0,
+              "DistributionPercentage": 0.0,
+              "Impressions": 0.0,
+              "Units": 0,
+              "WeekStartDate": "2020-02-03T00:00:00"
+            },
+            {
+              "Cost": 0.0,
+              "CPM": 0.0,
+              "DistributionPercentage": 0.0,
+              "Impressions": 0.0,
+              "Units": 0,
+              "WeekStartDate": "2020-02-10T00:00:00"
+            },
+            {
+              "Cost": 0.0,
+              "CPM": 0.0,
+              "DistributionPercentage": 0.0,
+              "Impressions": 0.0,
+              "Units": 0,
+              "WeekStartDate": "2020-02-17T00:00:00"
+            }
+          ]
+        },
+        {
+          "MediaMonthId": 462,
+          "MonthName": "March",
+          "Weeks": [
+            {
+              "Cost": 35500.0000000,
+              "CPM": 25.0000000,
+              "DistributionPercentage": 0.071,
+              "Impressions": 1420.0,
+              "Units": 0,
+              "WeekStartDate": "2020-02-24T00:00:00"
+            },
+            {
+              "Cost": 35500.0000000,
+              "CPM": 25.0000000,
+              "DistributionPercentage": 0.071,
+              "Impressions": 1420.0,
+              "Units": 0,
+              "WeekStartDate": "2020-03-02T00:00:00"
+            },
+            {
+              "Cost": 75900.00000000,
+              "CPM": 25.00000000,
+              "DistributionPercentage": 0.071,
+              "Impressions": 3036.0,
+              "Units": 0,
+              "WeekStartDate": "2020-03-09T00:00:00"
+            },
+            {
+              "Cost": 75900.00000000,
+              "CPM": 25.00000000,
+              "DistributionPercentage": 0.071,
+              "Impressions": 3036.0,
+              "Units": 0,
+              "WeekStartDate": "2020-03-16T00:00:00"
+            },
+            {
+              "Cost": 75900.00000000,
+              "CPM": 25.00000000,
+              "DistributionPercentage": 0.071,
+              "Impressions": 3036.0,
+              "Units": 0,
+              "WeekStartDate": "2020-03-23T00:00:00"
+            }
+          ]
+        }
+      ],
+      "QuarterLabel": "1Q '20",
+      "TableTitle": "1Q '20 EF :90s ",
+      "Total": {
+        "Cost": 177500.0000000,
+        "CPM": 25.0000000,
+        "DistributionPercentage": 0.0,
+        "Impressions": 7100.0,
+        "Units": 0,
+        "WeekStartDate": "0001-01-01T00:00:00"
+      }
+    },
+    {
+      "DaypartCode": "EF",
+      "Months": [
+        {
+          "MediaMonthId": 460,
+          "MonthName": "January",
+          "Weeks": [
+            {
+              "Cost": 0.0,
+              "CPM": 0.0,
+              "DistributionPercentage": 0.0,
+              "Impressions": 0.0,
+              "Units": 0,
+              "WeekStartDate": "2019-12-30T00:00:00"
+            },
+            {
+              "Cost": 0.0,
+              "CPM": 0.0,
+              "DistributionPercentage": 0.0,
+              "Impressions": 0.0,
+              "Units": 0,
+              "WeekStartDate": "2020-01-06T00:00:00"
+            },
+            {
+              "Cost": 0.0,
+              "CPM": 0.0,
+              "DistributionPercentage": 0.0,
+              "Impressions": 0.0,
+              "Units": 0,
+              "WeekStartDate": "2020-01-13T00:00:00"
+            },
+            {
+              "Cost": 0.0,
+              "CPM": 0.0,
+              "DistributionPercentage": 0.0,
+              "Impressions": 0.0,
+              "Units": 0,
+              "WeekStartDate": "2020-01-20T00:00:00"
+            }
+          ]
+        },
+        {
+          "MediaMonthId": 461,
+          "MonthName": "February",
+          "Weeks": [
+            {
+              "Cost": 0.0,
+              "CPM": 0.0,
+              "DistributionPercentage": 0.0,
+              "Impressions": 0.0,
+              "Units": 0,
+              "WeekStartDate": "2020-01-27T00:00:00"
+            },
+            {
+              "Cost": 0.0,
+              "CPM": 0.0,
+              "DistributionPercentage": 0.0,
+              "Impressions": 0.0,
+              "Units": 0,
+              "WeekStartDate": "2020-02-03T00:00:00"
+            },
+            {
+              "Cost": 0.0,
+              "CPM": 0.0,
+              "DistributionPercentage": 0.0,
+              "Impressions": 0.0,
+              "Units": 0,
+              "WeekStartDate": "2020-02-10T00:00:00"
+            },
+            {
+              "Cost": 0.0,
+              "CPM": 0.0,
+              "DistributionPercentage": 0.0,
+              "Impressions": 0.0,
+              "Units": 0,
+              "WeekStartDate": "2020-02-17T00:00:00"
+            }
+          ]
+        },
+        {
+          "MediaMonthId": 462,
+          "MonthName": "March",
+          "Weeks": [
+            {
+              "Cost": 0.0,
+              "CPM": 0.0,
+              "DistributionPercentage": 0.0,
+              "Impressions": 0.0,
+              "Units": 0,
+              "WeekStartDate": "2020-02-24T00:00:00"
+            },
+            {
+              "Cost": 0.0,
+              "CPM": 0.0,
+              "DistributionPercentage": 0.0,
+              "Impressions": 0.0,
+              "Units": 0,
+              "WeekStartDate": "2020-03-02T00:00:00"
+            },
+            {
+              "Cost": 40000.000000,
+              "CPM": 25.000000,
+              "DistributionPercentage": 0.08,
+              "Impressions": 1600.0,
+              "Units": 0,
+              "WeekStartDate": "2020-03-09T00:00:00"
+            },
+            {
+              "Cost": 40000.000000,
+              "CPM": 25.000000,
+              "DistributionPercentage": 0.08,
+              "Impressions": 1600.0,
+              "Units": 0,
+              "WeekStartDate": "2020-03-16T00:00:00"
+            },
+            {
+              "Cost": 40000.000000,
+              "CPM": 25.000000,
+              "DistributionPercentage": 0.08,
+              "Impressions": 1600.0,
+              "Units": 0,
+              "WeekStartDate": "2020-03-23T00:00:00"
+            }
+          ]
+        }
+      ],
+      "QuarterLabel": "1Q '20",
+      "TableTitle": "1Q '20 EF :45s eq.",
+      "Total": {
+        "Cost": 120000.000000,
+        "CPM": 25.000000,
+        "DistributionPercentage": 0.0,
+        "Impressions": 4800.0,
+        "Units": 0,
+        "WeekStartDate": "0001-01-01T00:00:00"
+      }
+    },
+    {
+      "DaypartCode": "EF",
+      "Months": [
+        {
+          "MediaMonthId": 460,
+          "MonthName": "January",
+          "Weeks": [
+            {
+              "Cost": 0.0,
+              "CPM": 0.0,
+              "DistributionPercentage": 0.0,
+              "Impressions": 0.0,
+              "Units": 0,
+              "WeekStartDate": "2019-12-30T00:00:00"
+            },
+            {
+              "Cost": 0.0,
+              "CPM": 0.0,
+              "DistributionPercentage": 0.0,
+              "Impressions": 0.0,
+              "Units": 0,
+              "WeekStartDate": "2020-01-06T00:00:00"
+            },
+            {
+              "Cost": 0.0,
+              "CPM": 0.0,
+              "DistributionPercentage": 0.0,
+              "Impressions": 0.0,
+              "Units": 0,
+              "WeekStartDate": "2020-01-13T00:00:00"
+            },
+            {
+              "Cost": 0.0,
+              "CPM": 0.0,
+              "DistributionPercentage": 0.0,
+              "Impressions": 0.0,
+              "Units": 0,
+              "WeekStartDate": "2020-01-20T00:00:00"
+            }
+          ]
+        },
+        {
+          "MediaMonthId": 461,
+          "MonthName": "February",
+          "Weeks": [
+            {
+              "Cost": 0.0,
+              "CPM": 0.0,
+              "DistributionPercentage": 0.0,
+              "Impressions": 0.0,
+              "Units": 0,
+              "WeekStartDate": "2020-01-27T00:00:00"
+            },
+            {
+              "Cost": 0.0,
+              "CPM": 0.0,
+              "DistributionPercentage": 0.0,
+              "Impressions": 0.0,
+              "Units": 0,
+              "WeekStartDate": "2020-02-03T00:00:00"
+            },
+            {
+              "Cost": 0.0,
+              "CPM": 0.0,
+              "DistributionPercentage": 0.0,
+              "Impressions": 0.0,
+              "Units": 0,
+              "WeekStartDate": "2020-02-10T00:00:00"
+            },
+            {
+              "Cost": 0.0,
+              "CPM": 0.0,
+              "DistributionPercentage": 0.0,
+              "Impressions": 0.0,
+              "Units": 0,
+              "WeekStartDate": "2020-02-17T00:00:00"
+            }
+          ]
+        },
+        {
+          "MediaMonthId": 462,
+          "MonthName": "March",
+          "Weeks": [
+            {
+              "Cost": 0.0,
+              "CPM": 0.0,
+              "DistributionPercentage": 0.0,
+              "Impressions": 0.0,
+              "Units": 0,
+              "WeekStartDate": "2020-02-24T00:00:00"
+            },
+            {
+              "Cost": 0.0,
+              "CPM": 0.0,
+              "DistributionPercentage": 0.0,
+              "Impressions": 0.0,
+              "Units": 0,
+              "WeekStartDate": "2020-03-02T00:00:00"
+            },
+            {
+              "Cost": 400.00000000,
+              "CPM": 25.00000000,
+              "DistributionPercentage": 0.0008,
+              "Impressions": 16.0,
+              "Units": 0,
+              "WeekStartDate": "2020-03-09T00:00:00"
+            },
+            {
+              "Cost": 400.00000000,
+              "CPM": 25.00000000,
+              "DistributionPercentage": 0.0008,
+              "Impressions": 16.0,
+              "Units": 0,
+              "WeekStartDate": "2020-03-16T00:00:00"
+            },
+            {
+              "Cost": 400.00000000,
+              "CPM": 25.00000000,
+              "DistributionPercentage": 0.0008,
+              "Impressions": 16.0,
+              "Units": 0,
+              "WeekStartDate": "2020-03-23T00:00:00"
+            }
+          ]
+        }
+      ],
+      "QuarterLabel": "1Q '20",
+      "TableTitle": "1Q '20 EF :30s eq.",
+      "Total": {
+        "Cost": 1200.00000000,
+        "CPM": 25.00000000,
+        "DistributionPercentage": 0.0,
+        "Impressions": 48.0,
+        "Units": 0,
+        "WeekStartDate": "0001-01-01T00:00:00"
+      }
+    },
+    {
+      "DaypartCode": null,
+      "Months": [
+        {
+          "MediaMonthId": 460,
+          "MonthName": "January",
+          "Weeks": [
+            {
+              "Cost": 0.0,
+              "CPM": 0.0,
+              "DistributionPercentage": 0.0,
+              "Impressions": 0.0,
+              "Units": 0,
+              "WeekStartDate": "2019-12-30T00:00:00"
+            },
+            {
+              "Cost": 0.0,
+              "CPM": 0.0,
+              "DistributionPercentage": 0.0,
+              "Impressions": 0.0,
+              "Units": 0,
+              "WeekStartDate": "2020-01-06T00:00:00"
+            },
+            {
+              "Cost": 0.0,
+              "CPM": 0.0,
+              "DistributionPercentage": 0.0,
+              "Impressions": 0.0,
+              "Units": 0,
+              "WeekStartDate": "2020-01-13T00:00:00"
+            },
+            {
+              "Cost": 0.0,
+              "CPM": 0.0,
+              "DistributionPercentage": 0.0,
+              "Impressions": 0.0,
+              "Units": 0,
+              "WeekStartDate": "2020-01-20T00:00:00"
+            }
+          ]
+        },
+        {
+          "MediaMonthId": 461,
+          "MonthName": "February",
+          "Weeks": [
+            {
+              "Cost": 0.0,
+              "CPM": 0.0,
+              "DistributionPercentage": 0.0,
+              "Impressions": 0.0,
+              "Units": 0,
+              "WeekStartDate": "2020-01-27T00:00:00"
+            },
+            {
+              "Cost": 0.0,
+              "CPM": 0.0,
+              "DistributionPercentage": 0.0,
+              "Impressions": 0.0,
+              "Units": 0,
+              "WeekStartDate": "2020-02-03T00:00:00"
+            },
+            {
+              "Cost": 0.0,
+              "CPM": 0.0,
+              "DistributionPercentage": 0.0,
+              "Impressions": 0.0,
+              "Units": 0,
+              "WeekStartDate": "2020-02-10T00:00:00"
+            },
+            {
+              "Cost": 0.0,
+              "CPM": 0.0,
+              "DistributionPercentage": 0.0,
+              "Impressions": 0.0,
+              "Units": 0,
+              "WeekStartDate": "2020-02-17T00:00:00"
+            }
+          ]
+        },
+        {
+          "MediaMonthId": 462,
+          "MonthName": "March",
+          "Weeks": [
+            {
+              "Cost": 35500.0000000,
+              "CPM": 25.0000000,
+              "DistributionPercentage": 0.071,
+              "Impressions": 1420.0,
+              "Units": 0,
+              "WeekStartDate": "2020-02-24T00:00:00"
+            },
+            {
+              "Cost": 35500.0000000,
+              "CPM": 25.0000000,
+              "DistributionPercentage": 0.071,
+              "Impressions": 1420.0,
+              "Units": 0,
+              "WeekStartDate": "2020-03-02T00:00:00"
+            },
+            {
+              "Cost": 75900.00000000,
+              "CPM": 25.00000000,
+              "DistributionPercentage": 0.071,
+              "Impressions": 3036.0,
+              "Units": 0,
+              "WeekStartDate": "2020-03-09T00:00:00"
+            },
+            {
+              "Cost": 75900.00000000,
+              "CPM": 25.00000000,
+              "DistributionPercentage": 0.071,
+              "Impressions": 3036.0,
+              "Units": 0,
+              "WeekStartDate": "2020-03-16T00:00:00"
+            },
+            {
+              "Cost": 75900.00000000,
+              "CPM": 25.00000000,
+              "DistributionPercentage": 0.071,
+              "Impressions": 3036.0,
+              "Units": 0,
+              "WeekStartDate": "2020-03-23T00:00:00"
+            }
+          ]
+        }
+      ],
+      "QuarterLabel": null,
+      "TableTitle": "1Q '20 EF Total",
+      "Total": {
+        "Cost": 298700.00000000,
+        "CPM": 25.00000000,
+        "DistributionPercentage": 0.0,
+        "Impressions": 11948.0,
+        "Units": 0,
+        "WeekStartDate": "0001-01-01T00:00:00"
+      }
+    },
+    {
+      "DaypartCode": "EM",
+      "Months": [
+        {
+          "MediaMonthId": 460,
+          "MonthName": "January",
+          "Weeks": [
+            {
+              "Cost": 0.0,
+              "CPM": 0.0,
+              "DistributionPercentage": 0.0,
+              "Impressions": 0.0,
+              "Units": 0,
+              "WeekStartDate": "2019-12-30T00:00:00"
+            },
+            {
+              "Cost": 0.0,
+              "CPM": 0.0,
+              "DistributionPercentage": 0.0,
+              "Impressions": 0.0,
+              "Units": 0,
+              "WeekStartDate": "2020-01-06T00:00:00"
+            },
+            {
+              "Cost": 0.0,
+              "CPM": 0.0,
+              "DistributionPercentage": 0.0,
+              "Impressions": 0.0,
+              "Units": 0,
+              "WeekStartDate": "2020-01-13T00:00:00"
+            },
+            {
+              "Cost": 0.0,
+              "CPM": 0.0,
+              "DistributionPercentage": 0.0,
+              "Impressions": 0.0,
+              "Units": 0,
+              "WeekStartDate": "2020-01-20T00:00:00"
+            }
+          ]
+        },
+        {
+          "MediaMonthId": 461,
+          "MonthName": "February",
+          "Weeks": [
+            {
+              "Cost": 0.0,
+              "CPM": 0.0,
+              "DistributionPercentage": 0.0,
+              "Impressions": 0.0,
+              "Units": 0,
+              "WeekStartDate": "2020-01-27T00:00:00"
+            },
+            {
+              "Cost": 0.0,
+              "CPM": 0.0,
+              "DistributionPercentage": 0.0,
+              "Impressions": 0.0,
+              "Units": 0,
+              "WeekStartDate": "2020-02-03T00:00:00"
+            },
+            {
+              "Cost": 0.0,
+              "CPM": 0.0,
+              "DistributionPercentage": 0.0,
+              "Impressions": 0.0,
+              "Units": 0,
+              "WeekStartDate": "2020-02-10T00:00:00"
+            },
+            {
+              "Cost": 0.0,
+              "CPM": 0.0,
+              "DistributionPercentage": 0.0,
+              "Impressions": 0.0,
+              "Units": 0,
+              "WeekStartDate": "2020-02-17T00:00:00"
+            }
+          ]
+        },
+        {
+          "MediaMonthId": 462,
+          "MonthName": "March",
+          "Weeks": [
+            {
+              "Cost": 35500.0000000,
+              "CPM": 25.0000000,
+              "DistributionPercentage": 0.071,
+              "Impressions": 1420.0,
+              "Units": 0,
+              "WeekStartDate": "2020-02-24T00:00:00"
+            },
+            {
+              "Cost": 35500.0000000,
+              "CPM": 25.0000000,
+              "DistributionPercentage": 0.071,
+              "Impressions": 1420.0,
+              "Units": 0,
+              "WeekStartDate": "2020-03-02T00:00:00"
+            },
+            {
+              "Cost": 174900.00000000,
+              "CPM": 25.00000000,
+              "DistributionPercentage": 0.071,
+              "Impressions": 6996.0,
+              "Units": 0,
+              "WeekStartDate": "2020-03-09T00:00:00"
+            },
+            {
+              "Cost": 174900.00000000,
+              "CPM": 25.00000000,
+              "DistributionPercentage": 0.071,
+              "Impressions": 6996.0,
+              "Units": 0,
+              "WeekStartDate": "2020-03-16T00:00:00"
+            },
+            {
+              "Cost": 174900.00000000,
+              "CPM": 25.00000000,
+              "DistributionPercentage": 0.071,
+              "Impressions": 6996.0,
+              "Units": 0,
+              "WeekStartDate": "2020-03-23T00:00:00"
+            }
+          ]
+        }
+      ],
+      "QuarterLabel": "1Q '20",
+      "TableTitle": "1Q '20 EM :90s ",
+      "Total": {
+        "Cost": 177500.0000000,
+        "CPM": 25.0000000,
+        "DistributionPercentage": 0.0,
+        "Impressions": 7100.0,
+        "Units": 0,
+        "WeekStartDate": "0001-01-01T00:00:00"
+      }
+    },
+    {
+      "DaypartCode": "EM",
+      "Months": [
+        {
+          "MediaMonthId": 460,
+          "MonthName": "January",
+          "Weeks": [
+            {
+              "Cost": 0.0,
+              "CPM": 0.0,
+              "DistributionPercentage": 0.0,
+              "Impressions": 0.0,
+              "Units": 0,
+              "WeekStartDate": "2019-12-30T00:00:00"
+            },
+            {
+              "Cost": 0.0,
+              "CPM": 0.0,
+              "DistributionPercentage": 0.0,
+              "Impressions": 0.0,
+              "Units": 0,
+              "WeekStartDate": "2020-01-06T00:00:00"
+            },
+            {
+              "Cost": 0.0,
+              "CPM": 0.0,
+              "DistributionPercentage": 0.0,
+              "Impressions": 0.0,
+              "Units": 0,
+              "WeekStartDate": "2020-01-13T00:00:00"
+            },
+            {
+              "Cost": 0.0,
+              "CPM": 0.0,
+              "DistributionPercentage": 0.0,
+              "Impressions": 0.0,
+              "Units": 0,
+              "WeekStartDate": "2020-01-20T00:00:00"
+            }
+          ]
+        },
+        {
+          "MediaMonthId": 461,
+          "MonthName": "February",
+          "Weeks": [
+            {
+              "Cost": 0.0,
+              "CPM": 0.0,
+              "DistributionPercentage": 0.0,
+              "Impressions": 0.0,
+              "Units": 0,
+              "WeekStartDate": "2020-01-27T00:00:00"
+            },
+            {
+              "Cost": 0.0,
+              "CPM": 0.0,
+              "DistributionPercentage": 0.0,
+              "Impressions": 0.0,
+              "Units": 0,
+              "WeekStartDate": "2020-02-03T00:00:00"
+            },
+            {
+              "Cost": 0.0,
+              "CPM": 0.0,
+              "DistributionPercentage": 0.0,
+              "Impressions": 0.0,
+              "Units": 0,
+              "WeekStartDate": "2020-02-10T00:00:00"
+            },
+            {
+              "Cost": 0.0,
+              "CPM": 0.0,
+              "DistributionPercentage": 0.0,
+              "Impressions": 0.0,
+              "Units": 0,
+              "WeekStartDate": "2020-02-17T00:00:00"
+            }
+          ]
+        },
+        {
+          "MediaMonthId": 462,
+          "MonthName": "March",
+          "Weeks": [
+            {
+              "Cost": 0.0,
+              "CPM": 0.0,
+              "DistributionPercentage": 0.0,
+              "Impressions": 0.0,
+              "Units": 0,
+              "WeekStartDate": "2020-02-24T00:00:00"
+            },
+            {
+              "Cost": 0.0,
+              "CPM": 0.0,
+              "DistributionPercentage": 0.0,
+              "Impressions": 0.0,
+              "Units": 0,
+              "WeekStartDate": "2020-03-02T00:00:00"
+            },
+            {
+              "Cost": 40000.000000,
+              "CPM": 25.000000,
+              "DistributionPercentage": 0.08,
+              "Impressions": 1600.0,
+              "Units": 0,
+              "WeekStartDate": "2020-03-09T00:00:00"
+            },
+            {
+              "Cost": 40000.000000,
+              "CPM": 25.000000,
+              "DistributionPercentage": 0.08,
+              "Impressions": 1600.0,
+              "Units": 0,
+              "WeekStartDate": "2020-03-16T00:00:00"
+            },
+            {
+              "Cost": 40000.000000,
+              "CPM": 25.000000,
+              "DistributionPercentage": 0.08,
+              "Impressions": 1600.0,
+              "Units": 0,
+              "WeekStartDate": "2020-03-23T00:00:00"
+            }
+          ]
+        }
+      ],
+      "QuarterLabel": "1Q '20",
+      "TableTitle": "1Q '20 EM :45s eq.",
+      "Total": {
+        "Cost": 120000.000000,
+        "CPM": 25.000000,
+        "DistributionPercentage": 0.0,
+        "Impressions": 4800.0,
+        "Units": 0,
+        "WeekStartDate": "0001-01-01T00:00:00"
+      }
+    },
+    {
+      "DaypartCode": "EM",
+      "Months": [
+        {
+          "MediaMonthId": 460,
+          "MonthName": "January",
+          "Weeks": [
+            {
+              "Cost": 0.0,
+              "CPM": 0.0,
+              "DistributionPercentage": 0.0,
+              "Impressions": 0.0,
+              "Units": 0,
+              "WeekStartDate": "2019-12-30T00:00:00"
+            },
+            {
+              "Cost": 0.0,
+              "CPM": 0.0,
+              "DistributionPercentage": 0.0,
+              "Impressions": 0.0,
+              "Units": 0,
+              "WeekStartDate": "2020-01-06T00:00:00"
+            },
+            {
+              "Cost": 0.0,
+              "CPM": 0.0,
+              "DistributionPercentage": 0.0,
+              "Impressions": 0.0,
+              "Units": 0,
+              "WeekStartDate": "2020-01-13T00:00:00"
+            },
+            {
+              "Cost": 0.0,
+              "CPM": 0.0,
+              "DistributionPercentage": 0.0,
+              "Impressions": 0.0,
+              "Units": 0,
+              "WeekStartDate": "2020-01-20T00:00:00"
+            }
+          ]
+        },
+        {
+          "MediaMonthId": 461,
+          "MonthName": "February",
+          "Weeks": [
+            {
+              "Cost": 0.0,
+              "CPM": 0.0,
+              "DistributionPercentage": 0.0,
+              "Impressions": 0.0,
+              "Units": 0,
+              "WeekStartDate": "2020-01-27T00:00:00"
+            },
+            {
+              "Cost": 0.0,
+              "CPM": 0.0,
+              "DistributionPercentage": 0.0,
+              "Impressions": 0.0,
+              "Units": 0,
+              "WeekStartDate": "2020-02-03T00:00:00"
+            },
+            {
+              "Cost": 0.0,
+              "CPM": 0.0,
+              "DistributionPercentage": 0.0,
+              "Impressions": 0.0,
+              "Units": 0,
+              "WeekStartDate": "2020-02-10T00:00:00"
+            },
+            {
+              "Cost": 0.0,
+              "CPM": 0.0,
+              "DistributionPercentage": 0.0,
+              "Impressions": 0.0,
+              "Units": 0,
+              "WeekStartDate": "2020-02-17T00:00:00"
+            }
+          ]
+        },
+        {
+          "MediaMonthId": 462,
+          "MonthName": "March",
+          "Weeks": [
+            {
+              "Cost": 0.0,
+              "CPM": 0.0,
+              "DistributionPercentage": 0.0,
+              "Impressions": 0.0,
+              "Units": 0,
+              "WeekStartDate": "2020-02-24T00:00:00"
+            },
+            {
+              "Cost": 0.0,
+              "CPM": 0.0,
+              "DistributionPercentage": 0.0,
+              "Impressions": 0.0,
+              "Units": 0,
+              "WeekStartDate": "2020-03-02T00:00:00"
+            },
+            {
+              "Cost": 99400.00000000,
+              "CPM": 25.00000000,
+              "DistributionPercentage": 0.1988,
+              "Impressions": 3976.0,
+              "Units": 0,
+              "WeekStartDate": "2020-03-09T00:00:00"
+            },
+            {
+              "Cost": 99400.00000000,
+              "CPM": 25.00000000,
+              "DistributionPercentage": 0.1988,
+              "Impressions": 3976.0,
+              "Units": 0,
+              "WeekStartDate": "2020-03-16T00:00:00"
+            },
+            {
+              "Cost": 99400.00000000,
+              "CPM": 25.00000000,
+              "DistributionPercentage": 0.1988,
+              "Impressions": 3976.0,
+              "Units": 0,
+              "WeekStartDate": "2020-03-23T00:00:00"
+            }
+          ]
+        }
+      ],
+      "QuarterLabel": "1Q '20",
+      "TableTitle": "1Q '20 EM :30s eq.",
+      "Total": {
+        "Cost": 298200.00000000,
+        "CPM": 25.00000000,
+        "DistributionPercentage": 0.0,
+        "Impressions": 11928.0,
+        "Units": 0,
+        "WeekStartDate": "0001-01-01T00:00:00"
+      }
+    },
+    {
+      "DaypartCode": null,
+      "Months": [
+        {
+          "MediaMonthId": 460,
+          "MonthName": "January",
+          "Weeks": [
+            {
+              "Cost": 0.0,
+              "CPM": 0.0,
+              "DistributionPercentage": 0.0,
+              "Impressions": 0.0,
+              "Units": 0,
+              "WeekStartDate": "2019-12-30T00:00:00"
+            },
+            {
+              "Cost": 0.0,
+              "CPM": 0.0,
+              "DistributionPercentage": 0.0,
+              "Impressions": 0.0,
+              "Units": 0,
+              "WeekStartDate": "2020-01-06T00:00:00"
+            },
+            {
+              "Cost": 0.0,
+              "CPM": 0.0,
+              "DistributionPercentage": 0.0,
+              "Impressions": 0.0,
+              "Units": 0,
+              "WeekStartDate": "2020-01-13T00:00:00"
+            },
+            {
+              "Cost": 0.0,
+              "CPM": 0.0,
+              "DistributionPercentage": 0.0,
+              "Impressions": 0.0,
+              "Units": 0,
+              "WeekStartDate": "2020-01-20T00:00:00"
+            }
+          ]
+        },
+        {
+          "MediaMonthId": 461,
+          "MonthName": "February",
+          "Weeks": [
+            {
+              "Cost": 0.0,
+              "CPM": 0.0,
+              "DistributionPercentage": 0.0,
+              "Impressions": 0.0,
+              "Units": 0,
+              "WeekStartDate": "2020-01-27T00:00:00"
+            },
+            {
+              "Cost": 0.0,
+              "CPM": 0.0,
+              "DistributionPercentage": 0.0,
+              "Impressions": 0.0,
+              "Units": 0,
+              "WeekStartDate": "2020-02-03T00:00:00"
+            },
+            {
+              "Cost": 0.0,
+              "CPM": 0.0,
+              "DistributionPercentage": 0.0,
+              "Impressions": 0.0,
+              "Units": 0,
+              "WeekStartDate": "2020-02-10T00:00:00"
+            },
+            {
+              "Cost": 0.0,
+              "CPM": 0.0,
+              "DistributionPercentage": 0.0,
+              "Impressions": 0.0,
+              "Units": 0,
+              "WeekStartDate": "2020-02-17T00:00:00"
+            }
+          ]
+        },
+        {
+          "MediaMonthId": 462,
+          "MonthName": "March",
+          "Weeks": [
+            {
+              "Cost": 35500.0000000,
+              "CPM": 25.0000000,
+              "DistributionPercentage": 0.071,
+              "Impressions": 1420.0,
+              "Units": 0,
+              "WeekStartDate": "2020-02-24T00:00:00"
+            },
+            {
+              "Cost": 35500.0000000,
+              "CPM": 25.0000000,
+              "DistributionPercentage": 0.071,
+              "Impressions": 1420.0,
+              "Units": 0,
+              "WeekStartDate": "2020-03-02T00:00:00"
+            },
+            {
+              "Cost": 174900.00000000,
+              "CPM": 25.00000000,
+              "DistributionPercentage": 0.071,
+              "Impressions": 6996.0,
+              "Units": 0,
+              "WeekStartDate": "2020-03-09T00:00:00"
+            },
+            {
+              "Cost": 174900.00000000,
+              "CPM": 25.00000000,
+              "DistributionPercentage": 0.071,
+              "Impressions": 6996.0,
+              "Units": 0,
+              "WeekStartDate": "2020-03-16T00:00:00"
+            },
+            {
+              "Cost": 174900.00000000,
+              "CPM": 25.00000000,
+              "DistributionPercentage": 0.071,
+              "Impressions": 6996.0,
+              "Units": 0,
+              "WeekStartDate": "2020-03-23T00:00:00"
+            }
+          ]
+        }
+      ],
+      "QuarterLabel": null,
+      "TableTitle": "1Q '20 EM Total",
+      "Total": {
+        "Cost": 595700.00000000,
+        "CPM": 25.00000000,
+        "DistributionPercentage": 0.0,
+        "Impressions": 23828.0,
+        "Units": 0,
+        "WeekStartDate": "0001-01-01T00:00:00"
+      }
+    },
+    {
       "DaypartCode": "MDN",
       "Months": [
         {
@@ -2224,18 +3322,18 @@
           "MonthName": "April",
           "Weeks": [
             {
-              "Cost": 10443.9560439560285000000000,
-              "CPM": 24.999999999999948534827441077,
+              "Cost": 30243.9560439560285000000000,
+              "CPM": 25.000000000000023558425986484,
               "DistributionPercentage": 0.01004396,
-              "Impressions": 417.75824176,
+              "Impressions": 1209.75824176,
               "Units": 0,
               "WeekStartDate": "2020-03-30T00:00:00"
             },
             {
-              "Cost": 10443.9560439560285000000000,
-              "CPM": 24.999999999999948534827441077,
+              "Cost": 30243.9560439560285000000000,
+              "CPM": 25.000000000000023558425986484,
               "DistributionPercentage": 0.01004396,
-              "Impressions": 417.75824176,
+              "Impressions": 1209.75824176,
               "Units": 0,
               "WeekStartDate": "2020-04-06T00:00:00"
             },
@@ -2361,18 +3459,18 @@
           "MonthName": "April",
           "Weeks": [
             {
-              "Cost": 200.00000000,
-              "CPM": 25.00000000,
-              "DistributionPercentage": 0.0004,
-              "Impressions": 8.0,
+              "Cost": 20000.000000,
+              "CPM": 25.000000,
+              "DistributionPercentage": 0.04,
+              "Impressions": 800.0,
               "Units": 0,
               "WeekStartDate": "2020-03-30T00:00:00"
             },
             {
-              "Cost": 200.00000000,
-              "CPM": 25.00000000,
-              "DistributionPercentage": 0.0004,
-              "Impressions": 8.0,
+              "Cost": 20000.000000,
+              "CPM": 25.000000,
+              "DistributionPercentage": 0.04,
+              "Impressions": 800.0,
               "Units": 0,
               "WeekStartDate": "2020-04-06T00:00:00"
             },
@@ -2482,10 +3580,10 @@
       "QuarterLabel": "2Q '20",
       "TableTitle": "2Q '20 MDN :45s eq.",
       "Total": {
-        "Cost": 400.00000000,
-        "CPM": 25.00000000,
+        "Cost": 40000.000000,
+        "CPM": 25.000000,
         "DistributionPercentage": 0.0,
-        "Impressions": 16.0,
+        "Impressions": 1600.0,
         "Units": 0,
         "WeekStartDate": "0001-01-01T00:00:00"
       }
@@ -2635,18 +3733,18 @@
           "MonthName": "April",
           "Weeks": [
             {
-              "Cost": 10443.9560439560285000000000,
-              "CPM": 24.999999999999948534827441077,
+              "Cost": 30243.9560439560285000000000,
+              "CPM": 25.000000000000023558425986484,
               "DistributionPercentage": 0.01004396,
-              "Impressions": 417.75824176,
+              "Impressions": 1209.75824176,
               "Units": 0,
               "WeekStartDate": "2020-03-30T00:00:00"
             },
             {
-              "Cost": 10443.9560439560285000000000,
-              "CPM": 24.999999999999948534827441077,
+              "Cost": 30243.9560439560285000000000,
+              "CPM": 25.000000000000023558425986484,
               "DistributionPercentage": 0.01004396,
-              "Impressions": 417.75824176,
+              "Impressions": 1209.75824176,
               "Units": 0,
               "WeekStartDate": "2020-04-06T00:00:00"
             },
@@ -2756,10 +3854,10 @@
       "QuarterLabel": null,
       "TableTitle": "2Q '20 MDN Total",
       "Total": {
-        "Cost": 126657.1428571426570000000000,
-        "CPM": 24.999999999999932297541168509,
+        "Cost": 166257.1428571426570000000000,
+        "CPM": 24.999999999999948423268602853,
         "DistributionPercentage": 0.0,
-        "Impressions": 5066.28571429,
+        "Impressions": 6650.28571429,
         "Units": 0,
         "WeekStartDate": "0001-01-01T00:00:00"
       }
@@ -3042,1118 +4140,22 @@
       "DaypartCode": "EF",
       "Months": [
         {
-          "MediaMonthId": 460,
-          "MonthName": "January",
-          "Weeks": [
-            {
-              "Cost": 0.0,
-              "CPM": 0.0,
-              "DistributionPercentage": 0.0,
-              "Impressions": 0.0,
-              "Units": 0,
-              "WeekStartDate": "2019-12-30T00:00:00"
-            },
-            {
-              "Cost": 0.0,
-              "CPM": 0.0,
-              "DistributionPercentage": 0.0,
-              "Impressions": 0.0,
-              "Units": 0,
-              "WeekStartDate": "2020-01-06T00:00:00"
-            },
-            {
-              "Cost": 0.0,
-              "CPM": 0.0,
-              "DistributionPercentage": 0.0,
-              "Impressions": 0.0,
-              "Units": 0,
-              "WeekStartDate": "2020-01-13T00:00:00"
-            },
-            {
-              "Cost": 0.0,
-              "CPM": 0.0,
-              "DistributionPercentage": 0.0,
-              "Impressions": 0.0,
-              "Units": 0,
-              "WeekStartDate": "2020-01-20T00:00:00"
-            }
-          ]
-        },
-        {
-          "MediaMonthId": 461,
-          "MonthName": "February",
-          "Weeks": [
-            {
-              "Cost": 0.0,
-              "CPM": 0.0,
-              "DistributionPercentage": 0.0,
-              "Impressions": 0.0,
-              "Units": 0,
-              "WeekStartDate": "2020-01-27T00:00:00"
-            },
-            {
-              "Cost": 0.0,
-              "CPM": 0.0,
-              "DistributionPercentage": 0.0,
-              "Impressions": 0.0,
-              "Units": 0,
-              "WeekStartDate": "2020-02-03T00:00:00"
-            },
-            {
-              "Cost": 0.0,
-              "CPM": 0.0,
-              "DistributionPercentage": 0.0,
-              "Impressions": 0.0,
-              "Units": 0,
-              "WeekStartDate": "2020-02-10T00:00:00"
-            },
-            {
-              "Cost": 0.0,
-              "CPM": 0.0,
-              "DistributionPercentage": 0.0,
-              "Impressions": 0.0,
-              "Units": 0,
-              "WeekStartDate": "2020-02-17T00:00:00"
-            }
-          ]
-        },
-        {
-          "MediaMonthId": 462,
-          "MonthName": "March",
-          "Weeks": [
-            {
-              "Cost": 35500.0000000,
-              "CPM": 25.0000000,
-              "DistributionPercentage": 0.071,
-              "Impressions": 1420.0,
-              "Units": 0,
-              "WeekStartDate": "2020-02-24T00:00:00"
-            },
-            {
-              "Cost": 35500.0000000,
-              "CPM": 25.0000000,
-              "DistributionPercentage": 0.071,
-              "Impressions": 1420.0,
-              "Units": 0,
-              "WeekStartDate": "2020-03-02T00:00:00"
-            },
-            {
-              "Cost": 36300.00000000,
-              "CPM": 25.00000000,
-              "DistributionPercentage": 0.071,
-              "Impressions": 1452.0,
-              "Units": 0,
-              "WeekStartDate": "2020-03-09T00:00:00"
-            },
-            {
-              "Cost": 36300.00000000,
-              "CPM": 25.00000000,
-              "DistributionPercentage": 0.071,
-              "Impressions": 1452.0,
-              "Units": 0,
-              "WeekStartDate": "2020-03-16T00:00:00"
-            },
-            {
-              "Cost": 36300.00000000,
-              "CPM": 25.00000000,
-              "DistributionPercentage": 0.071,
-              "Impressions": 1452.0,
-              "Units": 0,
-              "WeekStartDate": "2020-03-23T00:00:00"
-            }
-          ]
-        }
-      ],
-      "QuarterLabel": "1Q '20",
-      "TableTitle": "1Q '20 EF :90s ",
-      "Total": {
-        "Cost": 177500.0000000,
-        "CPM": 25.0000000,
-        "DistributionPercentage": 0.0,
-        "Impressions": 7100.0,
-        "Units": 0,
-        "WeekStartDate": "0001-01-01T00:00:00"
-      }
-    },
-    {
-      "DaypartCode": "EF",
-      "Months": [
-        {
-          "MediaMonthId": 460,
-          "MonthName": "January",
-          "Weeks": [
-            {
-              "Cost": 0.0,
-              "CPM": 0.0,
-              "DistributionPercentage": 0.0,
-              "Impressions": 0.0,
-              "Units": 0,
-              "WeekStartDate": "2019-12-30T00:00:00"
-            },
-            {
-              "Cost": 0.0,
-              "CPM": 0.0,
-              "DistributionPercentage": 0.0,
-              "Impressions": 0.0,
-              "Units": 0,
-              "WeekStartDate": "2020-01-06T00:00:00"
-            },
-            {
-              "Cost": 0.0,
-              "CPM": 0.0,
-              "DistributionPercentage": 0.0,
-              "Impressions": 0.0,
-              "Units": 0,
-              "WeekStartDate": "2020-01-13T00:00:00"
-            },
-            {
-              "Cost": 0.0,
-              "CPM": 0.0,
-              "DistributionPercentage": 0.0,
-              "Impressions": 0.0,
-              "Units": 0,
-              "WeekStartDate": "2020-01-20T00:00:00"
-            }
-          ]
-        },
-        {
-          "MediaMonthId": 461,
-          "MonthName": "February",
-          "Weeks": [
-            {
-              "Cost": 0.0,
-              "CPM": 0.0,
-              "DistributionPercentage": 0.0,
-              "Impressions": 0.0,
-              "Units": 0,
-              "WeekStartDate": "2020-01-27T00:00:00"
-            },
-            {
-              "Cost": 0.0,
-              "CPM": 0.0,
-              "DistributionPercentage": 0.0,
-              "Impressions": 0.0,
-              "Units": 0,
-              "WeekStartDate": "2020-02-03T00:00:00"
-            },
-            {
-              "Cost": 0.0,
-              "CPM": 0.0,
-              "DistributionPercentage": 0.0,
-              "Impressions": 0.0,
-              "Units": 0,
-              "WeekStartDate": "2020-02-10T00:00:00"
-            },
-            {
-              "Cost": 0.0,
-              "CPM": 0.0,
-              "DistributionPercentage": 0.0,
-              "Impressions": 0.0,
-              "Units": 0,
-              "WeekStartDate": "2020-02-17T00:00:00"
-            }
-          ]
-        },
-        {
-          "MediaMonthId": 462,
-          "MonthName": "March",
-          "Weeks": [
-            {
-              "Cost": 0.0,
-              "CPM": 0.0,
-              "DistributionPercentage": 0.0,
-              "Impressions": 0.0,
-              "Units": 0,
-              "WeekStartDate": "2020-02-24T00:00:00"
-            },
-            {
-              "Cost": 0.0,
-              "CPM": 0.0,
-              "DistributionPercentage": 0.0,
-              "Impressions": 0.0,
-              "Units": 0,
-              "WeekStartDate": "2020-03-02T00:00:00"
-            },
-            {
-              "Cost": 400.00000000,
-              "CPM": 25.00000000,
-              "DistributionPercentage": 0.0008,
-              "Impressions": 16.0,
-              "Units": 0,
-              "WeekStartDate": "2020-03-09T00:00:00"
-            },
-            {
-              "Cost": 400.00000000,
-              "CPM": 25.00000000,
-              "DistributionPercentage": 0.0008,
-              "Impressions": 16.0,
-              "Units": 0,
-              "WeekStartDate": "2020-03-16T00:00:00"
-            },
-            {
-              "Cost": 400.00000000,
-              "CPM": 25.00000000,
-              "DistributionPercentage": 0.0008,
-              "Impressions": 16.0,
-              "Units": 0,
-              "WeekStartDate": "2020-03-23T00:00:00"
-            }
-          ]
-        }
-      ],
-      "QuarterLabel": "1Q '20",
-      "TableTitle": "1Q '20 EF :45s eq.",
-      "Total": {
-        "Cost": 1200.00000000,
-        "CPM": 25.00000000,
-        "DistributionPercentage": 0.0,
-        "Impressions": 48.0,
-        "Units": 0,
-        "WeekStartDate": "0001-01-01T00:00:00"
-      }
-    },
-    {
-      "DaypartCode": "EF",
-      "Months": [
-        {
-          "MediaMonthId": 460,
-          "MonthName": "January",
-          "Weeks": [
-            {
-              "Cost": 0.0,
-              "CPM": 0.0,
-              "DistributionPercentage": 0.0,
-              "Impressions": 0.0,
-              "Units": 0,
-              "WeekStartDate": "2019-12-30T00:00:00"
-            },
-            {
-              "Cost": 0.0,
-              "CPM": 0.0,
-              "DistributionPercentage": 0.0,
-              "Impressions": 0.0,
-              "Units": 0,
-              "WeekStartDate": "2020-01-06T00:00:00"
-            },
-            {
-              "Cost": 0.0,
-              "CPM": 0.0,
-              "DistributionPercentage": 0.0,
-              "Impressions": 0.0,
-              "Units": 0,
-              "WeekStartDate": "2020-01-13T00:00:00"
-            },
-            {
-              "Cost": 0.0,
-              "CPM": 0.0,
-              "DistributionPercentage": 0.0,
-              "Impressions": 0.0,
-              "Units": 0,
-              "WeekStartDate": "2020-01-20T00:00:00"
-            }
-          ]
-        },
-        {
-          "MediaMonthId": 461,
-          "MonthName": "February",
-          "Weeks": [
-            {
-              "Cost": 0.0,
-              "CPM": 0.0,
-              "DistributionPercentage": 0.0,
-              "Impressions": 0.0,
-              "Units": 0,
-              "WeekStartDate": "2020-01-27T00:00:00"
-            },
-            {
-              "Cost": 0.0,
-              "CPM": 0.0,
-              "DistributionPercentage": 0.0,
-              "Impressions": 0.0,
-              "Units": 0,
-              "WeekStartDate": "2020-02-03T00:00:00"
-            },
-            {
-              "Cost": 0.0,
-              "CPM": 0.0,
-              "DistributionPercentage": 0.0,
-              "Impressions": 0.0,
-              "Units": 0,
-              "WeekStartDate": "2020-02-10T00:00:00"
-            },
-            {
-              "Cost": 0.0,
-              "CPM": 0.0,
-              "DistributionPercentage": 0.0,
-              "Impressions": 0.0,
-              "Units": 0,
-              "WeekStartDate": "2020-02-17T00:00:00"
-            }
-          ]
-        },
-        {
-          "MediaMonthId": 462,
-          "MonthName": "March",
-          "Weeks": [
-            {
-              "Cost": 0.0,
-              "CPM": 0.0,
-              "DistributionPercentage": 0.0,
-              "Impressions": 0.0,
-              "Units": 0,
-              "WeekStartDate": "2020-02-24T00:00:00"
-            },
-            {
-              "Cost": 0.0,
-              "CPM": 0.0,
-              "DistributionPercentage": 0.0,
-              "Impressions": 0.0,
-              "Units": 0,
-              "WeekStartDate": "2020-03-02T00:00:00"
-            },
-            {
-              "Cost": 400.00000000,
-              "CPM": 25.00000000,
-              "DistributionPercentage": 0.0008,
-              "Impressions": 16.0,
-              "Units": 0,
-              "WeekStartDate": "2020-03-09T00:00:00"
-            },
-            {
-              "Cost": 400.00000000,
-              "CPM": 25.00000000,
-              "DistributionPercentage": 0.0008,
-              "Impressions": 16.0,
-              "Units": 0,
-              "WeekStartDate": "2020-03-16T00:00:00"
-            },
-            {
-              "Cost": 400.00000000,
-              "CPM": 25.00000000,
-              "DistributionPercentage": 0.0008,
-              "Impressions": 16.0,
-              "Units": 0,
-              "WeekStartDate": "2020-03-23T00:00:00"
-            }
-          ]
-        }
-      ],
-      "QuarterLabel": "1Q '20",
-      "TableTitle": "1Q '20 EF :30s eq.",
-      "Total": {
-        "Cost": 1200.00000000,
-        "CPM": 25.00000000,
-        "DistributionPercentage": 0.0,
-        "Impressions": 48.0,
-        "Units": 0,
-        "WeekStartDate": "0001-01-01T00:00:00"
-      }
-    },
-    {
-      "DaypartCode": null,
-      "Months": [
-        {
-          "MediaMonthId": 460,
-          "MonthName": "January",
-          "Weeks": [
-            {
-              "Cost": 0.0,
-              "CPM": 0.0,
-              "DistributionPercentage": 0.0,
-              "Impressions": 0.0,
-              "Units": 0,
-              "WeekStartDate": "2019-12-30T00:00:00"
-            },
-            {
-              "Cost": 0.0,
-              "CPM": 0.0,
-              "DistributionPercentage": 0.0,
-              "Impressions": 0.0,
-              "Units": 0,
-              "WeekStartDate": "2020-01-06T00:00:00"
-            },
-            {
-              "Cost": 0.0,
-              "CPM": 0.0,
-              "DistributionPercentage": 0.0,
-              "Impressions": 0.0,
-              "Units": 0,
-              "WeekStartDate": "2020-01-13T00:00:00"
-            },
-            {
-              "Cost": 0.0,
-              "CPM": 0.0,
-              "DistributionPercentage": 0.0,
-              "Impressions": 0.0,
-              "Units": 0,
-              "WeekStartDate": "2020-01-20T00:00:00"
-            }
-          ]
-        },
-        {
-          "MediaMonthId": 461,
-          "MonthName": "February",
-          "Weeks": [
-            {
-              "Cost": 0.0,
-              "CPM": 0.0,
-              "DistributionPercentage": 0.0,
-              "Impressions": 0.0,
-              "Units": 0,
-              "WeekStartDate": "2020-01-27T00:00:00"
-            },
-            {
-              "Cost": 0.0,
-              "CPM": 0.0,
-              "DistributionPercentage": 0.0,
-              "Impressions": 0.0,
-              "Units": 0,
-              "WeekStartDate": "2020-02-03T00:00:00"
-            },
-            {
-              "Cost": 0.0,
-              "CPM": 0.0,
-              "DistributionPercentage": 0.0,
-              "Impressions": 0.0,
-              "Units": 0,
-              "WeekStartDate": "2020-02-10T00:00:00"
-            },
-            {
-              "Cost": 0.0,
-              "CPM": 0.0,
-              "DistributionPercentage": 0.0,
-              "Impressions": 0.0,
-              "Units": 0,
-              "WeekStartDate": "2020-02-17T00:00:00"
-            }
-          ]
-        },
-        {
-          "MediaMonthId": 462,
-          "MonthName": "March",
-          "Weeks": [
-            {
-              "Cost": 35500.0000000,
-              "CPM": 25.0000000,
-              "DistributionPercentage": 0.071,
-              "Impressions": 1420.0,
-              "Units": 0,
-              "WeekStartDate": "2020-02-24T00:00:00"
-            },
-            {
-              "Cost": 35500.0000000,
-              "CPM": 25.0000000,
-              "DistributionPercentage": 0.071,
-              "Impressions": 1420.0,
-              "Units": 0,
-              "WeekStartDate": "2020-03-02T00:00:00"
-            },
-            {
-              "Cost": 36300.00000000,
-              "CPM": 25.00000000,
-              "DistributionPercentage": 0.071,
-              "Impressions": 1452.0,
-              "Units": 0,
-              "WeekStartDate": "2020-03-09T00:00:00"
-            },
-            {
-              "Cost": 36300.00000000,
-              "CPM": 25.00000000,
-              "DistributionPercentage": 0.071,
-              "Impressions": 1452.0,
-              "Units": 0,
-              "WeekStartDate": "2020-03-16T00:00:00"
-            },
-            {
-              "Cost": 36300.00000000,
-              "CPM": 25.00000000,
-              "DistributionPercentage": 0.071,
-              "Impressions": 1452.0,
-              "Units": 0,
-              "WeekStartDate": "2020-03-23T00:00:00"
-            }
-          ]
-        }
-      ],
-      "QuarterLabel": null,
-      "TableTitle": "1Q '20 EF Total",
-      "Total": {
-        "Cost": 179900.00000000,
-        "CPM": 25.00000000,
-        "DistributionPercentage": 0.0,
-        "Impressions": 7196.0,
-        "Units": 0,
-        "WeekStartDate": "0001-01-01T00:00:00"
-      }
-    },
-    {
-      "DaypartCode": "EM",
-      "Months": [
-        {
-          "MediaMonthId": 460,
-          "MonthName": "January",
-          "Weeks": [
-            {
-              "Cost": 0.0,
-              "CPM": 0.0,
-              "DistributionPercentage": 0.0,
-              "Impressions": 0.0,
-              "Units": 0,
-              "WeekStartDate": "2019-12-30T00:00:00"
-            },
-            {
-              "Cost": 0.0,
-              "CPM": 0.0,
-              "DistributionPercentage": 0.0,
-              "Impressions": 0.0,
-              "Units": 0,
-              "WeekStartDate": "2020-01-06T00:00:00"
-            },
-            {
-              "Cost": 0.0,
-              "CPM": 0.0,
-              "DistributionPercentage": 0.0,
-              "Impressions": 0.0,
-              "Units": 0,
-              "WeekStartDate": "2020-01-13T00:00:00"
-            },
-            {
-              "Cost": 0.0,
-              "CPM": 0.0,
-              "DistributionPercentage": 0.0,
-              "Impressions": 0.0,
-              "Units": 0,
-              "WeekStartDate": "2020-01-20T00:00:00"
-            }
-          ]
-        },
-        {
-          "MediaMonthId": 461,
-          "MonthName": "February",
-          "Weeks": [
-            {
-              "Cost": 0.0,
-              "CPM": 0.0,
-              "DistributionPercentage": 0.0,
-              "Impressions": 0.0,
-              "Units": 0,
-              "WeekStartDate": "2020-01-27T00:00:00"
-            },
-            {
-              "Cost": 0.0,
-              "CPM": 0.0,
-              "DistributionPercentage": 0.0,
-              "Impressions": 0.0,
-              "Units": 0,
-              "WeekStartDate": "2020-02-03T00:00:00"
-            },
-            {
-              "Cost": 0.0,
-              "CPM": 0.0,
-              "DistributionPercentage": 0.0,
-              "Impressions": 0.0,
-              "Units": 0,
-              "WeekStartDate": "2020-02-10T00:00:00"
-            },
-            {
-              "Cost": 0.0,
-              "CPM": 0.0,
-              "DistributionPercentage": 0.0,
-              "Impressions": 0.0,
-              "Units": 0,
-              "WeekStartDate": "2020-02-17T00:00:00"
-            }
-          ]
-        },
-        {
-          "MediaMonthId": 462,
-          "MonthName": "March",
-          "Weeks": [
-            {
-              "Cost": 35500.0000000,
-              "CPM": 25.0000000,
-              "DistributionPercentage": 0.071,
-              "Impressions": 1420.0,
-              "Units": 0,
-              "WeekStartDate": "2020-02-24T00:00:00"
-            },
-            {
-              "Cost": 35500.0000000,
-              "CPM": 25.0000000,
-              "DistributionPercentage": 0.071,
-              "Impressions": 1420.0,
-              "Units": 0,
-              "WeekStartDate": "2020-03-02T00:00:00"
-            },
-            {
-              "Cost": 234300.00000000,
-              "CPM": 25.00000000,
-              "DistributionPercentage": 0.071,
-              "Impressions": 9372.0,
-              "Units": 0,
-              "WeekStartDate": "2020-03-09T00:00:00"
-            },
-            {
-              "Cost": 234300.00000000,
-              "CPM": 25.00000000,
-              "DistributionPercentage": 0.071,
-              "Impressions": 9372.0,
-              "Units": 0,
-              "WeekStartDate": "2020-03-16T00:00:00"
-            },
-            {
-              "Cost": 234300.00000000,
-              "CPM": 25.00000000,
-              "DistributionPercentage": 0.071,
-              "Impressions": 9372.0,
-              "Units": 0,
-              "WeekStartDate": "2020-03-23T00:00:00"
-            }
-          ]
-        }
-      ],
-      "QuarterLabel": "1Q '20",
-      "TableTitle": "1Q '20 EM :90s ",
-      "Total": {
-        "Cost": 177500.0000000,
-        "CPM": 25.0000000,
-        "DistributionPercentage": 0.0,
-        "Impressions": 7100.0,
-        "Units": 0,
-        "WeekStartDate": "0001-01-01T00:00:00"
-      }
-    },
-    {
-      "DaypartCode": "EM",
-      "Months": [
-        {
-          "MediaMonthId": 460,
-          "MonthName": "January",
-          "Weeks": [
-            {
-              "Cost": 0.0,
-              "CPM": 0.0,
-              "DistributionPercentage": 0.0,
-              "Impressions": 0.0,
-              "Units": 0,
-              "WeekStartDate": "2019-12-30T00:00:00"
-            },
-            {
-              "Cost": 0.0,
-              "CPM": 0.0,
-              "DistributionPercentage": 0.0,
-              "Impressions": 0.0,
-              "Units": 0,
-              "WeekStartDate": "2020-01-06T00:00:00"
-            },
-            {
-              "Cost": 0.0,
-              "CPM": 0.0,
-              "DistributionPercentage": 0.0,
-              "Impressions": 0.0,
-              "Units": 0,
-              "WeekStartDate": "2020-01-13T00:00:00"
-            },
-            {
-              "Cost": 0.0,
-              "CPM": 0.0,
-              "DistributionPercentage": 0.0,
-              "Impressions": 0.0,
-              "Units": 0,
-              "WeekStartDate": "2020-01-20T00:00:00"
-            }
-          ]
-        },
-        {
-          "MediaMonthId": 461,
-          "MonthName": "February",
-          "Weeks": [
-            {
-              "Cost": 0.0,
-              "CPM": 0.0,
-              "DistributionPercentage": 0.0,
-              "Impressions": 0.0,
-              "Units": 0,
-              "WeekStartDate": "2020-01-27T00:00:00"
-            },
-            {
-              "Cost": 0.0,
-              "CPM": 0.0,
-              "DistributionPercentage": 0.0,
-              "Impressions": 0.0,
-              "Units": 0,
-              "WeekStartDate": "2020-02-03T00:00:00"
-            },
-            {
-              "Cost": 0.0,
-              "CPM": 0.0,
-              "DistributionPercentage": 0.0,
-              "Impressions": 0.0,
-              "Units": 0,
-              "WeekStartDate": "2020-02-10T00:00:00"
-            },
-            {
-              "Cost": 0.0,
-              "CPM": 0.0,
-              "DistributionPercentage": 0.0,
-              "Impressions": 0.0,
-              "Units": 0,
-              "WeekStartDate": "2020-02-17T00:00:00"
-            }
-          ]
-        },
-        {
-          "MediaMonthId": 462,
-          "MonthName": "March",
-          "Weeks": [
-            {
-              "Cost": 0.0,
-              "CPM": 0.0,
-              "DistributionPercentage": 0.0,
-              "Impressions": 0.0,
-              "Units": 0,
-              "WeekStartDate": "2020-02-24T00:00:00"
-            },
-            {
-              "Cost": 0.0,
-              "CPM": 0.0,
-              "DistributionPercentage": 0.0,
-              "Impressions": 0.0,
-              "Units": 0,
-              "WeekStartDate": "2020-03-02T00:00:00"
-            },
-            {
-              "Cost": 99400.00000000,
-              "CPM": 25.00000000,
-              "DistributionPercentage": 0.1988,
-              "Impressions": 3976.0,
-              "Units": 0,
-              "WeekStartDate": "2020-03-09T00:00:00"
-            },
-            {
-              "Cost": 99400.00000000,
-              "CPM": 25.00000000,
-              "DistributionPercentage": 0.1988,
-              "Impressions": 3976.0,
-              "Units": 0,
-              "WeekStartDate": "2020-03-16T00:00:00"
-            },
-            {
-              "Cost": 99400.00000000,
-              "CPM": 25.00000000,
-              "DistributionPercentage": 0.1988,
-              "Impressions": 3976.0,
-              "Units": 0,
-              "WeekStartDate": "2020-03-23T00:00:00"
-            }
-          ]
-        }
-      ],
-      "QuarterLabel": "1Q '20",
-      "TableTitle": "1Q '20 EM :45s eq.",
-      "Total": {
-        "Cost": 298200.00000000,
-        "CPM": 25.00000000,
-        "DistributionPercentage": 0.0,
-        "Impressions": 11928.0,
-        "Units": 0,
-        "WeekStartDate": "0001-01-01T00:00:00"
-      }
-    },
-    {
-      "DaypartCode": "EM",
-      "Months": [
-        {
-          "MediaMonthId": 460,
-          "MonthName": "January",
-          "Weeks": [
-            {
-              "Cost": 0.0,
-              "CPM": 0.0,
-              "DistributionPercentage": 0.0,
-              "Impressions": 0.0,
-              "Units": 0,
-              "WeekStartDate": "2019-12-30T00:00:00"
-            },
-            {
-              "Cost": 0.0,
-              "CPM": 0.0,
-              "DistributionPercentage": 0.0,
-              "Impressions": 0.0,
-              "Units": 0,
-              "WeekStartDate": "2020-01-06T00:00:00"
-            },
-            {
-              "Cost": 0.0,
-              "CPM": 0.0,
-              "DistributionPercentage": 0.0,
-              "Impressions": 0.0,
-              "Units": 0,
-              "WeekStartDate": "2020-01-13T00:00:00"
-            },
-            {
-              "Cost": 0.0,
-              "CPM": 0.0,
-              "DistributionPercentage": 0.0,
-              "Impressions": 0.0,
-              "Units": 0,
-              "WeekStartDate": "2020-01-20T00:00:00"
-            }
-          ]
-        },
-        {
-          "MediaMonthId": 461,
-          "MonthName": "February",
-          "Weeks": [
-            {
-              "Cost": 0.0,
-              "CPM": 0.0,
-              "DistributionPercentage": 0.0,
-              "Impressions": 0.0,
-              "Units": 0,
-              "WeekStartDate": "2020-01-27T00:00:00"
-            },
-            {
-              "Cost": 0.0,
-              "CPM": 0.0,
-              "DistributionPercentage": 0.0,
-              "Impressions": 0.0,
-              "Units": 0,
-              "WeekStartDate": "2020-02-03T00:00:00"
-            },
-            {
-              "Cost": 0.0,
-              "CPM": 0.0,
-              "DistributionPercentage": 0.0,
-              "Impressions": 0.0,
-              "Units": 0,
-              "WeekStartDate": "2020-02-10T00:00:00"
-            },
-            {
-              "Cost": 0.0,
-              "CPM": 0.0,
-              "DistributionPercentage": 0.0,
-              "Impressions": 0.0,
-              "Units": 0,
-              "WeekStartDate": "2020-02-17T00:00:00"
-            }
-          ]
-        },
-        {
-          "MediaMonthId": 462,
-          "MonthName": "March",
-          "Weeks": [
-            {
-              "Cost": 0.0,
-              "CPM": 0.0,
-              "DistributionPercentage": 0.0,
-              "Impressions": 0.0,
-              "Units": 0,
-              "WeekStartDate": "2020-02-24T00:00:00"
-            },
-            {
-              "Cost": 0.0,
-              "CPM": 0.0,
-              "DistributionPercentage": 0.0,
-              "Impressions": 0.0,
-              "Units": 0,
-              "WeekStartDate": "2020-03-02T00:00:00"
-            },
-            {
-              "Cost": 99400.00000000,
-              "CPM": 25.00000000,
-              "DistributionPercentage": 0.1988,
-              "Impressions": 3976.0,
-              "Units": 0,
-              "WeekStartDate": "2020-03-09T00:00:00"
-            },
-            {
-              "Cost": 99400.00000000,
-              "CPM": 25.00000000,
-              "DistributionPercentage": 0.1988,
-              "Impressions": 3976.0,
-              "Units": 0,
-              "WeekStartDate": "2020-03-16T00:00:00"
-            },
-            {
-              "Cost": 99400.00000000,
-              "CPM": 25.00000000,
-              "DistributionPercentage": 0.1988,
-              "Impressions": 3976.0,
-              "Units": 0,
-              "WeekStartDate": "2020-03-23T00:00:00"
-            }
-          ]
-        }
-      ],
-      "QuarterLabel": "1Q '20",
-      "TableTitle": "1Q '20 EM :30s eq.",
-      "Total": {
-        "Cost": 298200.00000000,
-        "CPM": 25.00000000,
-        "DistributionPercentage": 0.0,
-        "Impressions": 11928.0,
-        "Units": 0,
-        "WeekStartDate": "0001-01-01T00:00:00"
-      }
-    },
-    {
-      "DaypartCode": null,
-      "Months": [
-        {
-          "MediaMonthId": 460,
-          "MonthName": "January",
-          "Weeks": [
-            {
-              "Cost": 0.0,
-              "CPM": 0.0,
-              "DistributionPercentage": 0.0,
-              "Impressions": 0.0,
-              "Units": 0,
-              "WeekStartDate": "2019-12-30T00:00:00"
-            },
-            {
-              "Cost": 0.0,
-              "CPM": 0.0,
-              "DistributionPercentage": 0.0,
-              "Impressions": 0.0,
-              "Units": 0,
-              "WeekStartDate": "2020-01-06T00:00:00"
-            },
-            {
-              "Cost": 0.0,
-              "CPM": 0.0,
-              "DistributionPercentage": 0.0,
-              "Impressions": 0.0,
-              "Units": 0,
-              "WeekStartDate": "2020-01-13T00:00:00"
-            },
-            {
-              "Cost": 0.0,
-              "CPM": 0.0,
-              "DistributionPercentage": 0.0,
-              "Impressions": 0.0,
-              "Units": 0,
-              "WeekStartDate": "2020-01-20T00:00:00"
-            }
-          ]
-        },
-        {
-          "MediaMonthId": 461,
-          "MonthName": "February",
-          "Weeks": [
-            {
-              "Cost": 0.0,
-              "CPM": 0.0,
-              "DistributionPercentage": 0.0,
-              "Impressions": 0.0,
-              "Units": 0,
-              "WeekStartDate": "2020-01-27T00:00:00"
-            },
-            {
-              "Cost": 0.0,
-              "CPM": 0.0,
-              "DistributionPercentage": 0.0,
-              "Impressions": 0.0,
-              "Units": 0,
-              "WeekStartDate": "2020-02-03T00:00:00"
-            },
-            {
-              "Cost": 0.0,
-              "CPM": 0.0,
-              "DistributionPercentage": 0.0,
-              "Impressions": 0.0,
-              "Units": 0,
-              "WeekStartDate": "2020-02-10T00:00:00"
-            },
-            {
-              "Cost": 0.0,
-              "CPM": 0.0,
-              "DistributionPercentage": 0.0,
-              "Impressions": 0.0,
-              "Units": 0,
-              "WeekStartDate": "2020-02-17T00:00:00"
-            }
-          ]
-        },
-        {
-          "MediaMonthId": 462,
-          "MonthName": "March",
-          "Weeks": [
-            {
-              "Cost": 35500.0000000,
-              "CPM": 25.0000000,
-              "DistributionPercentage": 0.071,
-              "Impressions": 1420.0,
-              "Units": 0,
-              "WeekStartDate": "2020-02-24T00:00:00"
-            },
-            {
-              "Cost": 35500.0000000,
-              "CPM": 25.0000000,
-              "DistributionPercentage": 0.071,
-              "Impressions": 1420.0,
-              "Units": 0,
-              "WeekStartDate": "2020-03-02T00:00:00"
-            },
-            {
-              "Cost": 234300.00000000,
-              "CPM": 25.00000000,
-              "DistributionPercentage": 0.071,
-              "Impressions": 9372.0,
-              "Units": 0,
-              "WeekStartDate": "2020-03-09T00:00:00"
-            },
-            {
-              "Cost": 234300.00000000,
-              "CPM": 25.00000000,
-              "DistributionPercentage": 0.071,
-              "Impressions": 9372.0,
-              "Units": 0,
-              "WeekStartDate": "2020-03-16T00:00:00"
-            },
-            {
-              "Cost": 234300.00000000,
-              "CPM": 25.00000000,
-              "DistributionPercentage": 0.071,
-              "Impressions": 9372.0,
-              "Units": 0,
-              "WeekStartDate": "2020-03-23T00:00:00"
-            }
-          ]
-        }
-      ],
-      "QuarterLabel": null,
-      "TableTitle": "1Q '20 EM Total",
-      "Total": {
-        "Cost": 773900.00000000,
-        "CPM": 25.00000000,
-        "DistributionPercentage": 0.0,
-        "Impressions": 30956.0,
-        "Units": 0,
-        "WeekStartDate": "0001-01-01T00:00:00"
-      }
-    },
-    {
-      "DaypartCode": "EF",
-      "Months": [
-        {
           "MediaMonthId": 463,
           "MonthName": "April",
           "Weeks": [
             {
-              "Cost": 36300.00000000,
+              "Cost": 75900.00000000,
               "CPM": 25.00000000,
               "DistributionPercentage": 0.071,
-              "Impressions": 1452.0,
+              "Impressions": 3036.0,
               "Units": 0,
               "WeekStartDate": "2020-03-30T00:00:00"
             },
             {
-              "Cost": 36300.00000000,
+              "Cost": 75900.00000000,
               "CPM": 25.00000000,
               "DistributionPercentage": 0.071,
-              "Impressions": 1452.0,
+              "Impressions": 3036.0,
               "Units": 0,
               "WeekStartDate": "2020-04-06T00:00:00"
             },
@@ -4279,18 +4281,18 @@
           "MonthName": "April",
           "Weeks": [
             {
-              "Cost": 400.00000000,
-              "CPM": 25.00000000,
-              "DistributionPercentage": 0.0008,
-              "Impressions": 16.0,
+              "Cost": 40000.000000,
+              "CPM": 25.000000,
+              "DistributionPercentage": 0.08,
+              "Impressions": 1600.0,
               "Units": 0,
               "WeekStartDate": "2020-03-30T00:00:00"
             },
             {
-              "Cost": 400.00000000,
-              "CPM": 25.00000000,
-              "DistributionPercentage": 0.0008,
-              "Impressions": 16.0,
+              "Cost": 40000.000000,
+              "CPM": 25.000000,
+              "DistributionPercentage": 0.08,
+              "Impressions": 1600.0,
               "Units": 0,
               "WeekStartDate": "2020-04-06T00:00:00"
             },
@@ -4400,10 +4402,10 @@
       "QuarterLabel": "2Q '20",
       "TableTitle": "2Q '20 EF :45s eq.",
       "Total": {
-        "Cost": 800.00000000,
-        "CPM": 25.00000000,
+        "Cost": 80000.000000,
+        "CPM": 25.000000,
         "DistributionPercentage": 0.0,
-        "Impressions": 32.0,
+        "Impressions": 3200.0,
         "Units": 0,
         "WeekStartDate": "0001-01-01T00:00:00"
       }
@@ -4553,18 +4555,18 @@
           "MonthName": "April",
           "Weeks": [
             {
-              "Cost": 36300.00000000,
+              "Cost": 75900.00000000,
               "CPM": 25.00000000,
               "DistributionPercentage": 0.071,
-              "Impressions": 1452.0,
+              "Impressions": 3036.0,
               "Units": 0,
               "WeekStartDate": "2020-03-30T00:00:00"
             },
             {
-              "Cost": 36300.00000000,
+              "Cost": 75900.00000000,
               "CPM": 25.00000000,
               "DistributionPercentage": 0.071,
-              "Impressions": 1452.0,
+              "Impressions": 3036.0,
               "Units": 0,
               "WeekStartDate": "2020-04-06T00:00:00"
             },
@@ -4674,10 +4676,10 @@
       "QuarterLabel": null,
       "TableTitle": "2Q '20 EF Total",
       "Total": {
-        "Cost": 72600.00000000,
+        "Cost": 151800.00000000,
         "CPM": 25.00000000,
         "DistributionPercentage": 0.0,
-        "Impressions": 2904.0,
+        "Impressions": 6072.0,
         "Units": 0,
         "WeekStartDate": "0001-01-01T00:00:00"
       }
@@ -4690,18 +4692,18 @@
           "MonthName": "April",
           "Weeks": [
             {
-              "Cost": 234300.00000000,
+              "Cost": 174900.00000000,
               "CPM": 25.00000000,
               "DistributionPercentage": 0.071,
-              "Impressions": 9372.0,
+              "Impressions": 6996.0,
               "Units": 0,
               "WeekStartDate": "2020-03-30T00:00:00"
             },
             {
-              "Cost": 234300.00000000,
+              "Cost": 174900.00000000,
               "CPM": 25.00000000,
               "DistributionPercentage": 0.071,
-              "Impressions": 9372.0,
+              "Impressions": 6996.0,
               "Units": 0,
               "WeekStartDate": "2020-04-06T00:00:00"
             },
@@ -4827,18 +4829,18 @@
           "MonthName": "April",
           "Weeks": [
             {
-              "Cost": 99400.00000000,
-              "CPM": 25.00000000,
-              "DistributionPercentage": 0.1988,
-              "Impressions": 3976.0,
+              "Cost": 40000.000000,
+              "CPM": 25.000000,
+              "DistributionPercentage": 0.08,
+              "Impressions": 1600.0,
               "Units": 0,
               "WeekStartDate": "2020-03-30T00:00:00"
             },
             {
-              "Cost": 99400.00000000,
-              "CPM": 25.00000000,
-              "DistributionPercentage": 0.1988,
-              "Impressions": 3976.0,
+              "Cost": 40000.000000,
+              "CPM": 25.000000,
+              "DistributionPercentage": 0.08,
+              "Impressions": 1600.0,
               "Units": 0,
               "WeekStartDate": "2020-04-06T00:00:00"
             },
@@ -4948,10 +4950,10 @@
       "QuarterLabel": "2Q '20",
       "TableTitle": "2Q '20 EM :45s eq.",
       "Total": {
-        "Cost": 198800.00000000,
-        "CPM": 25.00000000,
+        "Cost": 80000.000000,
+        "CPM": 25.000000,
         "DistributionPercentage": 0.0,
-        "Impressions": 7952.0,
+        "Impressions": 3200.0,
         "Units": 0,
         "WeekStartDate": "0001-01-01T00:00:00"
       }
@@ -5101,18 +5103,18 @@
           "MonthName": "April",
           "Weeks": [
             {
-              "Cost": 234300.00000000,
+              "Cost": 174900.00000000,
               "CPM": 25.00000000,
               "DistributionPercentage": 0.071,
-              "Impressions": 9372.0,
+              "Impressions": 6996.0,
               "Units": 0,
               "WeekStartDate": "2020-03-30T00:00:00"
             },
             {
-              "Cost": 234300.00000000,
+              "Cost": 174900.00000000,
               "CPM": 25.00000000,
               "DistributionPercentage": 0.071,
-              "Impressions": 9372.0,
+              "Impressions": 6996.0,
               "Units": 0,
               "WeekStartDate": "2020-04-06T00:00:00"
             },
@@ -5222,10 +5224,10 @@
       "QuarterLabel": null,
       "TableTitle": "2Q '20 EM Total",
       "Total": {
-        "Cost": 468600.00000000,
+        "Cost": 349800.00000000,
         "CPM": 25.00000000,
         "DistributionPercentage": 0.0,
-        "Impressions": 18744.0,
+        "Impressions": 13992.0,
         "Units": 0,
         "WeekStartDate": "0001-01-01T00:00:00"
       }
@@ -5352,72 +5354,72 @@
       {
         "DaypartCode": "MDN",
         "GuaranteedAudienceData": {
-          "CPM": 25.00000000,
+          "CPM": 25.000000,
           "CPP": 3345.6900000000002205478848,
           "Impressions": 0.0,
           "RatingPoints": 0.0,
-          "TotalImpressions": 40.0,
-          "TotalRatingPoints": 0.29889201,
+          "TotalImpressions": 4000.0,
+          "TotalRatingPoints": 29.88920073,
           "VPVH": 0.5
         },
         "HHAudienceData": {
-          "CPM": 12.50000000,
+          "CPM": 12.500000,
           "CPP": 13777.265000000003333891471025,
           "Impressions": 0.0,
           "RatingPoints": 0.0,
-          "TotalImpressions": 80.0,
-          "TotalRatingPoints": 0.07258335
+          "TotalImpressions": 8000.0,
+          "TotalRatingPoints": 7.25833465
         },
         "SpotLength": "45 eq.",
-        "TotalCost": 1000.00000000,
+        "TotalCost": 100000.000000,
         "UnitCost": 0.0,
         "Units": 0
       },
       {
         "DaypartCode": "EF",
         "GuaranteedAudienceData": {
-          "CPM": 25.00000000,
+          "CPM": 25.000000,
           "CPP": 3345.6900000000002205478848,
           "Impressions": 0.0,
           "RatingPoints": 0.0,
-          "TotalImpressions": 80.0,
-          "TotalRatingPoints": 0.59778401,
+          "TotalImpressions": 8000.0,
+          "TotalRatingPoints": 59.77840147,
           "VPVH": 0.5
         },
         "HHAudienceData": {
-          "CPM": 12.50000000,
+          "CPM": 12.500000,
           "CPP": 13777.265000000003333891471025,
           "Impressions": 0.0,
           "RatingPoints": 0.0,
-          "TotalImpressions": 160.0,
-          "TotalRatingPoints": 0.14516669
+          "TotalImpressions": 16000.0,
+          "TotalRatingPoints": 14.51666931
         },
         "SpotLength": "45 eq.",
-        "TotalCost": 2000.00000000,
+        "TotalCost": 200000.000000,
         "UnitCost": 0.0,
         "Units": 0
       },
       {
         "DaypartCode": "EM",
         "GuaranteedAudienceData": {
-          "CPM": 25.00000000,
-          "CPP": 3345.6899999999890494287263582,
+          "CPM": 25.000000,
+          "CPP": 3345.6900000000002205478848,
           "Impressions": 0.0,
           "RatingPoints": 0.0,
-          "TotalImpressions": 19880.0,
-          "TotalRatingPoints": 148.54932764,
+          "TotalImpressions": 8000.0,
+          "TotalRatingPoints": 59.77840147,
           "VPVH": 0.5
         },
         "HHAudienceData": {
-          "CPM": 12.50000000,
-          "CPP": 13777.264999999983092260411363,
+          "CPM": 12.500000,
+          "CPP": 13777.265000000003333891471025,
           "Impressions": 0.0,
           "RatingPoints": 0.0,
-          "TotalImpressions": 39760.0,
-          "TotalRatingPoints": 36.07392324
+          "TotalImpressions": 16000.0,
+          "TotalRatingPoints": 14.51666931
         },
         "SpotLength": "45 eq.",
-        "TotalCost": 497000.00000000,
+        "TotalCost": 200000.000000,
         "UnitCost": 0.0,
         "Units": 0
       },
@@ -5440,7 +5442,7 @@
           "TotalImpressions": 80.0,
           "TotalRatingPoints": 0.07258335
         },
-        "SpotLength": "30 eq.",
+        "SpotLength": "30",
         "TotalCost": 1000.00000000,
         "UnitCost": 0.0,
         "Units": 0
@@ -5464,7 +5466,7 @@
           "TotalImpressions": 160.0,
           "TotalRatingPoints": 0.14516669
         },
-        "SpotLength": "30 eq.",
+        "SpotLength": "30",
         "TotalCost": 2000.00000000,
         "UnitCost": 0.0,
         "Units": 0
@@ -5488,7 +5490,7 @@
           "TotalImpressions": 39760.0,
           "TotalRatingPoints": 36.07392324
         },
-        "SpotLength": "30 eq.",
+        "SpotLength": "30",
         "TotalCost": 497000.00000000,
         "UnitCost": 0.0,
         "Units": 0
@@ -5612,72 +5614,72 @@
         {
           "DaypartCode": "MDN",
           "GuaranteedAudienceData": {
-            "CPM": 25.00000000,
+            "CPM": 25.000000,
             "CPP": 3345.6900000000039517617435,
             "Impressions": 0.0,
             "RatingPoints": 0.0,
-            "TotalImpressions": 24.0,
-            "TotalRatingPoints": 0.1793352,
+            "TotalImpressions": 2400.0,
+            "TotalRatingPoints": 17.93352044,
             "VPVH": 0.5
           },
           "HHAudienceData": {
-            "CPM": 12.50000000,
+            "CPM": 12.500000,
             "CPP": 13777.265000000003333891471025,
             "Impressions": 0.0,
             "RatingPoints": 0.0,
-            "TotalImpressions": 48.0,
-            "TotalRatingPoints": 0.04355001
+            "TotalImpressions": 4800.0,
+            "TotalRatingPoints": 4.35500079
           },
           "SpotLength": "45 eq.",
-          "TotalCost": 600.00000000,
+          "TotalCost": 60000.000000,
           "UnitCost": 0.0,
           "Units": 0
         },
         {
           "DaypartCode": "EF",
           "GuaranteedAudienceData": {
-            "CPM": 25.00000000,
+            "CPM": 25.000000,
             "CPP": 3345.6900000000039517617435,
             "Impressions": 0.0,
             "RatingPoints": 0.0,
-            "TotalImpressions": 48.0,
-            "TotalRatingPoints": 0.35867041,
+            "TotalImpressions": 4800.0,
+            "TotalRatingPoints": 35.86704088,
             "VPVH": 0.5
           },
           "HHAudienceData": {
-            "CPM": 12.50000000,
+            "CPM": 12.500000,
             "CPP": 13777.265000000003333891471025,
             "Impressions": 0.0,
             "RatingPoints": 0.0,
-            "TotalImpressions": 96.0,
-            "TotalRatingPoints": 0.08710002
+            "TotalImpressions": 9600.0,
+            "TotalRatingPoints": 8.71000159
           },
           "SpotLength": "45 eq.",
-          "TotalCost": 1200.00000000,
+          "TotalCost": 120000.000000,
           "UnitCost": 0.0,
           "Units": 0
         },
         {
           "DaypartCode": "EM",
           "GuaranteedAudienceData": {
-            "CPM": 25.00000000,
-            "CPP": 3345.6900000000003106375554326,
+            "CPM": 25.000000,
+            "CPP": 3345.6900000000039517617435,
             "Impressions": 0.0,
             "RatingPoints": 0.0,
-            "TotalImpressions": 11928.0,
-            "TotalRatingPoints": 89.12959659,
+            "TotalImpressions": 4800.0,
+            "TotalRatingPoints": 35.86704088,
             "VPVH": 0.5
           },
           "HHAudienceData": {
-            "CPM": 12.50000000,
-            "CPP": 13777.265000000008553431555592,
+            "CPM": 12.500000,
+            "CPP": 13777.265000000003333891471025,
             "Impressions": 0.0,
             "RatingPoints": 0.0,
-            "TotalImpressions": 23856.0,
-            "TotalRatingPoints": 21.64435394
+            "TotalImpressions": 9600.0,
+            "TotalRatingPoints": 8.71000159
           },
           "SpotLength": "45 eq.",
-          "TotalCost": 298200.00000000,
+          "TotalCost": 120000.000000,
           "UnitCost": 0.0,
           "Units": 0
         },
@@ -5700,7 +5702,7 @@
             "TotalImpressions": 48.0,
             "TotalRatingPoints": 0.04355001
           },
-          "SpotLength": "30 eq.",
+          "SpotLength": "30",
           "TotalCost": 600.00000000,
           "UnitCost": 0.0,
           "Units": 0
@@ -5724,7 +5726,7 @@
             "TotalImpressions": 96.0,
             "TotalRatingPoints": 0.08710002
           },
-          "SpotLength": "30 eq.",
+          "SpotLength": "30",
           "TotalCost": 1200.00000000,
           "UnitCost": 0.0,
           "Units": 0
@@ -5748,7 +5750,7 @@
             "TotalImpressions": 23856.0,
             "TotalRatingPoints": 21.64435394
           },
-          "SpotLength": "30 eq.",
+          "SpotLength": "30",
           "TotalCost": 298200.00000000,
           "UnitCost": 0.0,
           "Units": 0
@@ -5871,72 +5873,72 @@
         {
           "DaypartCode": "MDN",
           "GuaranteedAudienceData": {
-            "CPM": 25.00000000,
+            "CPM": 25.000000,
             "CPP": 3345.68999999999462372709675,
             "Impressions": 0.0,
             "RatingPoints": 0.0,
-            "TotalImpressions": 16.0,
-            "TotalRatingPoints": 0.1195568,
+            "TotalImpressions": 1600.0,
+            "TotalRatingPoints": 11.95568029,
             "VPVH": 0.5
           },
           "HHAudienceData": {
-            "CPM": 12.50000000,
+            "CPM": 12.500000,
             "CPP": 13777.265000000003333891471025,
             "Impressions": 0.0,
             "RatingPoints": 0.0,
-            "TotalImpressions": 32.0,
-            "TotalRatingPoints": 0.02903334
+            "TotalImpressions": 3200.0,
+            "TotalRatingPoints": 2.90333386
           },
           "SpotLength": "45 eq.",
-          "TotalCost": 400.00000000,
+          "TotalCost": 40000.000000,
           "UnitCost": 0.0,
           "Units": 0
         },
         {
           "DaypartCode": "EF",
           "GuaranteedAudienceData": {
-            "CPM": 25.00000000,
+            "CPM": 25.000000,
             "CPP": 3345.68999999999462372709675,
             "Impressions": 0.0,
             "RatingPoints": 0.0,
-            "TotalImpressions": 32.0,
-            "TotalRatingPoints": 0.23911361,
+            "TotalImpressions": 3200.0,
+            "TotalRatingPoints": 23.91136059,
             "VPVH": 0.5
           },
           "HHAudienceData": {
-            "CPM": 12.50000000,
+            "CPM": 12.500000,
             "CPP": 13777.265000000003333891471025,
             "Impressions": 0.0,
             "RatingPoints": 0.0,
-            "TotalImpressions": 64.0,
-            "TotalRatingPoints": 0.05806668
+            "TotalImpressions": 6400.0,
+            "TotalRatingPoints": 5.80666772
           },
           "SpotLength": "45 eq.",
-          "TotalCost": 800.00000000,
+          "TotalCost": 80000.000000,
           "UnitCost": 0.0,
           "Units": 0
         },
         {
           "DaypartCode": "EM",
           "GuaranteedAudienceData": {
-            "CPM": 25.00000000,
-            "CPP": 3345.6900000000003106375554326,
+            "CPM": 25.000000,
+            "CPP": 3345.68999999999462372709675,
             "Impressions": 0.0,
             "RatingPoints": 0.0,
-            "TotalImpressions": 7952.0,
-            "TotalRatingPoints": 59.41973106,
+            "TotalImpressions": 3200.0,
+            "TotalRatingPoints": 23.91136059,
             "VPVH": 0.5
           },
           "HHAudienceData": {
-            "CPM": 12.50000000,
-            "CPP": 13777.265000000040379895485878,
+            "CPM": 12.500000,
+            "CPP": 13777.265000000003333891471025,
             "Impressions": 0.0,
             "RatingPoints": 0.0,
-            "TotalImpressions": 15904.0,
-            "TotalRatingPoints": 14.42956929
+            "TotalImpressions": 6400.0,
+            "TotalRatingPoints": 5.80666772
           },
           "SpotLength": "45 eq.",
-          "TotalCost": 198800.00000000,
+          "TotalCost": 80000.000000,
           "UnitCost": 0.0,
           "Units": 0
         },
@@ -5959,7 +5961,7 @@
             "TotalImpressions": 32.0,
             "TotalRatingPoints": 0.02903334
           },
-          "SpotLength": "30 eq.",
+          "SpotLength": "30",
           "TotalCost": 400.00000000,
           "UnitCost": 0.0,
           "Units": 0
@@ -5983,7 +5985,7 @@
             "TotalImpressions": 64.0,
             "TotalRatingPoints": 0.05806668
           },
-          "SpotLength": "30 eq.",
+          "SpotLength": "30",
           "TotalCost": 800.00000000,
           "UnitCost": 0.0,
           "Units": 0
@@ -6007,7 +6009,7 @@
             "TotalImpressions": 15904.0,
             "TotalRatingPoints": 14.42956929
           },
-          "SpotLength": "30 eq.",
+          "SpotLength": "30",
           "TotalCost": 198800.00000000,
           "UnitCost": 0.0,
           "Units": 0
@@ -6030,7 +6032,7 @@
     }
   ],
   "SpotLengths": [
-    ":30 eq.",
+    ":30",
     ":45 eq.",
     ":90"
   ],

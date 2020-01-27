@@ -343,6 +343,7 @@ namespace Services.Broadcast.Entities.Campaign
         private void _PopulateProposalQuarterTableData(List<ProjectedPlan> projectedPlans)
         {
             projectedPlans.GroupBy(x => new { x.QuarterNumber, x.QuarterYear })
+                .OrderBy(x => x.Key.QuarterYear).ThenBy(x => x.Key.QuarterNumber)
                 .ToList()
                 .ForEach(planGroup =>
                 {
@@ -361,7 +362,7 @@ namespace Services.Broadcast.Entities.Campaign
                         var row = new ProposalQuarterTableRowData
                         {
                             DaypartCode = daypartGroup.Key.DaypartCode,
-                            SpotLength = $"{daypartGroup.Key.SpotLength}{(daypartGroup.Key.Equivalized ? $" eq." : string.Empty)}",
+                            SpotLength = $"{daypartGroup.Key.SpotLength}{(daypartGroup.Key.Equivalized && ! daypartGroup.Key.SpotLength.Equals("30") ? $" eq." : string.Empty)}",
                             TotalCost = items.Sum(x => x.TotalCost),
                             UnitCost = (unitsSum == 0 ? 0 : items.Sum(x => x.TotalCost) / unitsSum),
                             Units = unitsSum,
@@ -438,6 +439,7 @@ namespace Services.Broadcast.Entities.Campaign
         private void _PopulateFlowChartQuarterTableData(List<ProjectedPlan> projectedPlans)
         {
             projectedPlans.GroupBy(x => new { x.QuarterNumber, x.QuarterYear, x.DaypartCode })
+                .OrderBy(x => x.Key.QuarterYear).ThenBy(x => x.Key.QuarterNumber)
                 .ToList()
                 .ForEach(qDGrp =>   //quarter daypart group
                 {
@@ -500,6 +502,7 @@ namespace Services.Broadcast.Entities.Campaign
         private void _PopulateContractQuarterTableData(List<ProjectedPlan> projectedPlans)
         {
             projectedPlans.GroupBy(x => new { x.QuarterNumber, x.QuarterYear })
+                .OrderBy(x => x.Key.QuarterYear).ThenBy(x => x.Key.QuarterNumber)
                 .ToList()
                 .ForEach(qDGrp =>   //quarter daypart group
                 {
@@ -688,7 +691,7 @@ namespace Services.Broadcast.Entities.Campaign
                             .Select(x => new { spotLenghts.Single(y => y.Id == x.SpotLengthId).Display, x.Equivalized })
                             .Distinct()
                             .OrderBy(x => int.Parse(x.Display))
-                            .Select(x => $":{x.Display}{(x.Equivalized ? " eq." : string.Empty)}")
+                            .Select(x => $":{x.Display}{(x.Equivalized && !x.Display.Equals("30") ? " eq." : string.Empty)}")
                             .ToList();
         }
 

@@ -647,554 +647,6 @@
       }
     },
     {
-      "DaypartCode": "MDN",
-      "Months": [
-        {
-          "MediaMonthId": 463,
-          "MonthName": "April",
-          "Weeks": [
-            {
-              "Cost": 10043.9560439560285000000000,
-              "CPM": 24.9999999999999464852297593,
-              "DistributionPercentage": 0.01004396,
-              "Impressions": 401.75824176,
-              "Units": 0,
-              "WeekStartDate": "2020-03-30T00:00:00"
-            },
-            {
-              "Cost": 10043.9560439560285000000000,
-              "CPM": 24.9999999999999464852297593,
-              "DistributionPercentage": 0.01004396,
-              "Impressions": 401.75824176,
-              "Units": 0,
-              "WeekStartDate": "2020-04-06T00:00:00"
-            },
-            {
-              "Cost": 9615.38461538460000000000,
-              "CPM": 24.999999999999935,
-              "DistributionPercentage": 0.00961538,
-              "Impressions": 384.61538462,
-              "Units": 0,
-              "WeekStartDate": "2020-04-13T00:00:00"
-            },
-            {
-              "Cost": 9615.38461538460000000000,
-              "CPM": 24.999999999999935,
-              "DistributionPercentage": 0.00961538,
-              "Impressions": 384.61538462,
-              "Units": 0,
-              "WeekStartDate": "2020-04-20T00:00:00"
-            }
-          ]
-        },
-        {
-          "MediaMonthId": 464,
-          "MonthName": "May",
-          "Weeks": [
-            {
-              "Cost": 9615.38461538460000000000,
-              "CPM": 24.999999999999935,
-              "DistributionPercentage": 0.00961538,
-              "Impressions": 384.61538462,
-              "Units": 0,
-              "WeekStartDate": "2020-04-27T00:00:00"
-            },
-            {
-              "Cost": 9615.38461538460000000000,
-              "CPM": 24.999999999999935,
-              "DistributionPercentage": 0.00961538,
-              "Impressions": 384.61538462,
-              "Units": 0,
-              "WeekStartDate": "2020-05-04T00:00:00"
-            },
-            {
-              "Cost": 9615.38461538460000000000,
-              "CPM": 24.999999999999935,
-              "DistributionPercentage": 0.00961538,
-              "Impressions": 384.61538462,
-              "Units": 0,
-              "WeekStartDate": "2020-05-11T00:00:00"
-            },
-            {
-              "Cost": 9615.38461538460000000000,
-              "CPM": 24.999999999999935,
-              "DistributionPercentage": 0.00961538,
-              "Impressions": 384.61538462,
-              "Units": 0,
-              "WeekStartDate": "2020-05-18T00:00:00"
-            },
-            {
-              "Cost": 9615.38461538460000000000,
-              "CPM": 24.999999999999935,
-              "DistributionPercentage": 0.00961538,
-              "Impressions": 384.61538462,
-              "Units": 0,
-              "WeekStartDate": "2020-05-25T00:00:00"
-            }
-          ]
-        },
-        {
-          "MediaMonthId": 465,
-          "MonthName": "June",
-          "Weeks": [
-            {
-              "Cost": 9615.38461538460000000000,
-              "CPM": 24.999999999999935,
-              "DistributionPercentage": 0.00961538,
-              "Impressions": 384.61538462,
-              "Units": 0,
-              "WeekStartDate": "2020-06-01T00:00:00"
-            },
-            {
-              "Cost": 9615.38461538460000000000,
-              "CPM": 24.999999999999935,
-              "DistributionPercentage": 0.00961538,
-              "Impressions": 384.61538462,
-              "Units": 0,
-              "WeekStartDate": "2020-06-08T00:00:00"
-            },
-            {
-              "Cost": 9615.38461538460000000000,
-              "CPM": 24.999999999999935,
-              "DistributionPercentage": 0.00961538,
-              "Impressions": 384.61538462,
-              "Units": 0,
-              "WeekStartDate": "2020-06-15T00:00:00"
-            },
-            {
-              "Cost": 9615.38461538460000000000,
-              "CPM": 24.999999999999935,
-              "DistributionPercentage": 0.00961538,
-              "Impressions": 384.61538462,
-              "Units": 0,
-              "WeekStartDate": "2020-06-22T00:00:00"
-            }
-          ]
-        }
-      ],
-      "QuarterLabel": "2Q '20",
-      "TableTitle": "2Q '20 MDN :90s ",
-      "Total": {
-        "Cost": 125857.1428571426570000000000,
-        "CPM": 24.999999999999931867196367764,
-        "DistributionPercentage": 0.0,
-        "Impressions": 5034.28571429,
-        "Units": 0,
-        "WeekStartDate": "0001-01-01T00:00:00"
-      }
-    },
-    {
-      "DaypartCode": null,
-      "Months": [
-        {
-          "MediaMonthId": 463,
-          "MonthName": "April",
-          "Weeks": [
-            {
-              "Cost": 10043.9560439560285000000000,
-              "CPM": 24.9999999999999464852297593,
-              "DistributionPercentage": 0.01004396,
-              "Impressions": 401.75824176,
-              "Units": 0,
-              "WeekStartDate": "2020-03-30T00:00:00"
-            },
-            {
-              "Cost": 10043.9560439560285000000000,
-              "CPM": 24.9999999999999464852297593,
-              "DistributionPercentage": 0.01004396,
-              "Impressions": 401.75824176,
-              "Units": 0,
-              "WeekStartDate": "2020-04-06T00:00:00"
-            },
-            {
-              "Cost": 9615.38461538460000000000,
-              "CPM": 24.999999999999935,
-              "DistributionPercentage": 0.00961538,
-              "Impressions": 384.61538462,
-              "Units": 0,
-              "WeekStartDate": "2020-04-13T00:00:00"
-            },
-            {
-              "Cost": 9615.38461538460000000000,
-              "CPM": 24.999999999999935,
-              "DistributionPercentage": 0.00961538,
-              "Impressions": 384.61538462,
-              "Units": 0,
-              "WeekStartDate": "2020-04-20T00:00:00"
-            }
-          ]
-        },
-        {
-          "MediaMonthId": 464,
-          "MonthName": "May",
-          "Weeks": [
-            {
-              "Cost": 9615.38461538460000000000,
-              "CPM": 24.999999999999935,
-              "DistributionPercentage": 0.00961538,
-              "Impressions": 384.61538462,
-              "Units": 0,
-              "WeekStartDate": "2020-04-27T00:00:00"
-            },
-            {
-              "Cost": 9615.38461538460000000000,
-              "CPM": 24.999999999999935,
-              "DistributionPercentage": 0.00961538,
-              "Impressions": 384.61538462,
-              "Units": 0,
-              "WeekStartDate": "2020-05-04T00:00:00"
-            },
-            {
-              "Cost": 9615.38461538460000000000,
-              "CPM": 24.999999999999935,
-              "DistributionPercentage": 0.00961538,
-              "Impressions": 384.61538462,
-              "Units": 0,
-              "WeekStartDate": "2020-05-11T00:00:00"
-            },
-            {
-              "Cost": 9615.38461538460000000000,
-              "CPM": 24.999999999999935,
-              "DistributionPercentage": 0.00961538,
-              "Impressions": 384.61538462,
-              "Units": 0,
-              "WeekStartDate": "2020-05-18T00:00:00"
-            },
-            {
-              "Cost": 9615.38461538460000000000,
-              "CPM": 24.999999999999935,
-              "DistributionPercentage": 0.00961538,
-              "Impressions": 384.61538462,
-              "Units": 0,
-              "WeekStartDate": "2020-05-25T00:00:00"
-            }
-          ]
-        },
-        {
-          "MediaMonthId": 465,
-          "MonthName": "June",
-          "Weeks": [
-            {
-              "Cost": 9615.38461538460000000000,
-              "CPM": 24.999999999999935,
-              "DistributionPercentage": 0.00961538,
-              "Impressions": 384.61538462,
-              "Units": 0,
-              "WeekStartDate": "2020-06-01T00:00:00"
-            },
-            {
-              "Cost": 9615.38461538460000000000,
-              "CPM": 24.999999999999935,
-              "DistributionPercentage": 0.00961538,
-              "Impressions": 384.61538462,
-              "Units": 0,
-              "WeekStartDate": "2020-06-08T00:00:00"
-            },
-            {
-              "Cost": 9615.38461538460000000000,
-              "CPM": 24.999999999999935,
-              "DistributionPercentage": 0.00961538,
-              "Impressions": 384.61538462,
-              "Units": 0,
-              "WeekStartDate": "2020-06-15T00:00:00"
-            },
-            {
-              "Cost": 9615.38461538460000000000,
-              "CPM": 24.999999999999935,
-              "DistributionPercentage": 0.00961538,
-              "Impressions": 384.61538462,
-              "Units": 0,
-              "WeekStartDate": "2020-06-22T00:00:00"
-            }
-          ]
-        }
-      ],
-      "QuarterLabel": null,
-      "TableTitle": "2Q '20 MDN Total",
-      "Total": {
-        "Cost": 125857.1428571426570000000000,
-        "CPM": 24.999999999999931867196367764,
-        "DistributionPercentage": 0.0,
-        "Impressions": 5034.28571429,
-        "Units": 0,
-        "WeekStartDate": "0001-01-01T00:00:00"
-      }
-    },
-    {
-      "DaypartCode": "PA",
-      "Months": [
-        {
-          "MediaMonthId": 463,
-          "MonthName": "April",
-          "Weeks": [
-            {
-              "Cost": 9615.38461538460000000000,
-              "CPM": 24.999999999999935,
-              "DistributionPercentage": 0.01923077,
-              "Impressions": 384.61538462,
-              "Units": 0,
-              "WeekStartDate": "2020-03-30T00:00:00"
-            },
-            {
-              "Cost": 9615.38461538460000000000,
-              "CPM": 24.999999999999935,
-              "DistributionPercentage": 0.01923077,
-              "Impressions": 384.61538462,
-              "Units": 0,
-              "WeekStartDate": "2020-04-06T00:00:00"
-            },
-            {
-              "Cost": 9615.38461538460000000000,
-              "CPM": 24.999999999999935,
-              "DistributionPercentage": 0.01923077,
-              "Impressions": 384.61538462,
-              "Units": 0,
-              "WeekStartDate": "2020-04-13T00:00:00"
-            },
-            {
-              "Cost": 9615.38461538460000000000,
-              "CPM": 24.999999999999935,
-              "DistributionPercentage": 0.01923077,
-              "Impressions": 384.61538462,
-              "Units": 0,
-              "WeekStartDate": "2020-04-20T00:00:00"
-            }
-          ]
-        },
-        {
-          "MediaMonthId": 464,
-          "MonthName": "May",
-          "Weeks": [
-            {
-              "Cost": 9615.38461538460000000000,
-              "CPM": 24.999999999999935,
-              "DistributionPercentage": 0.01923077,
-              "Impressions": 384.61538462,
-              "Units": 0,
-              "WeekStartDate": "2020-04-27T00:00:00"
-            },
-            {
-              "Cost": 9615.38461538460000000000,
-              "CPM": 24.999999999999935,
-              "DistributionPercentage": 0.01923077,
-              "Impressions": 384.61538462,
-              "Units": 0,
-              "WeekStartDate": "2020-05-04T00:00:00"
-            },
-            {
-              "Cost": 9615.38461538460000000000,
-              "CPM": 24.999999999999935,
-              "DistributionPercentage": 0.01923077,
-              "Impressions": 384.61538462,
-              "Units": 0,
-              "WeekStartDate": "2020-05-11T00:00:00"
-            },
-            {
-              "Cost": 9615.38461538460000000000,
-              "CPM": 24.999999999999935,
-              "DistributionPercentage": 0.01923077,
-              "Impressions": 384.61538462,
-              "Units": 0,
-              "WeekStartDate": "2020-05-18T00:00:00"
-            },
-            {
-              "Cost": 9615.38461538460000000000,
-              "CPM": 24.999999999999935,
-              "DistributionPercentage": 0.01923077,
-              "Impressions": 384.61538462,
-              "Units": 0,
-              "WeekStartDate": "2020-05-25T00:00:00"
-            }
-          ]
-        },
-        {
-          "MediaMonthId": 465,
-          "MonthName": "June",
-          "Weeks": [
-            {
-              "Cost": 9615.38461538460000000000,
-              "CPM": 24.999999999999935,
-              "DistributionPercentage": 0.01923077,
-              "Impressions": 384.61538462,
-              "Units": 0,
-              "WeekStartDate": "2020-06-01T00:00:00"
-            },
-            {
-              "Cost": 9615.38461538460000000000,
-              "CPM": 24.999999999999935,
-              "DistributionPercentage": 0.01923077,
-              "Impressions": 384.61538462,
-              "Units": 0,
-              "WeekStartDate": "2020-06-08T00:00:00"
-            },
-            {
-              "Cost": 9615.38461538460000000000,
-              "CPM": 24.999999999999935,
-              "DistributionPercentage": 0.01923077,
-              "Impressions": 384.61538462,
-              "Units": 0,
-              "WeekStartDate": "2020-06-15T00:00:00"
-            },
-            {
-              "Cost": 9615.38461538460000000000,
-              "CPM": 24.999999999999935,
-              "DistributionPercentage": 0.01923077,
-              "Impressions": 384.61538462,
-              "Units": 0,
-              "WeekStartDate": "2020-06-22T00:00:00"
-            }
-          ]
-        }
-      ],
-      "QuarterLabel": "2Q '20",
-      "TableTitle": "2Q '20 PA :90s ",
-      "Total": {
-        "Cost": 124999.99999999980000000000,
-        "CPM": 24.99999999999996000000,
-        "DistributionPercentage": 0.0,
-        "Impressions": 5000.0,
-        "Units": 0,
-        "WeekStartDate": "0001-01-01T00:00:00"
-      }
-    },
-    {
-      "DaypartCode": null,
-      "Months": [
-        {
-          "MediaMonthId": 463,
-          "MonthName": "April",
-          "Weeks": [
-            {
-              "Cost": 9615.38461538460000000000,
-              "CPM": 24.999999999999935,
-              "DistributionPercentage": 0.01923077,
-              "Impressions": 384.61538462,
-              "Units": 0,
-              "WeekStartDate": "2020-03-30T00:00:00"
-            },
-            {
-              "Cost": 9615.38461538460000000000,
-              "CPM": 24.999999999999935,
-              "DistributionPercentage": 0.01923077,
-              "Impressions": 384.61538462,
-              "Units": 0,
-              "WeekStartDate": "2020-04-06T00:00:00"
-            },
-            {
-              "Cost": 9615.38461538460000000000,
-              "CPM": 24.999999999999935,
-              "DistributionPercentage": 0.01923077,
-              "Impressions": 384.61538462,
-              "Units": 0,
-              "WeekStartDate": "2020-04-13T00:00:00"
-            },
-            {
-              "Cost": 9615.38461538460000000000,
-              "CPM": 24.999999999999935,
-              "DistributionPercentage": 0.01923077,
-              "Impressions": 384.61538462,
-              "Units": 0,
-              "WeekStartDate": "2020-04-20T00:00:00"
-            }
-          ]
-        },
-        {
-          "MediaMonthId": 464,
-          "MonthName": "May",
-          "Weeks": [
-            {
-              "Cost": 9615.38461538460000000000,
-              "CPM": 24.999999999999935,
-              "DistributionPercentage": 0.01923077,
-              "Impressions": 384.61538462,
-              "Units": 0,
-              "WeekStartDate": "2020-04-27T00:00:00"
-            },
-            {
-              "Cost": 9615.38461538460000000000,
-              "CPM": 24.999999999999935,
-              "DistributionPercentage": 0.01923077,
-              "Impressions": 384.61538462,
-              "Units": 0,
-              "WeekStartDate": "2020-05-04T00:00:00"
-            },
-            {
-              "Cost": 9615.38461538460000000000,
-              "CPM": 24.999999999999935,
-              "DistributionPercentage": 0.01923077,
-              "Impressions": 384.61538462,
-              "Units": 0,
-              "WeekStartDate": "2020-05-11T00:00:00"
-            },
-            {
-              "Cost": 9615.38461538460000000000,
-              "CPM": 24.999999999999935,
-              "DistributionPercentage": 0.01923077,
-              "Impressions": 384.61538462,
-              "Units": 0,
-              "WeekStartDate": "2020-05-18T00:00:00"
-            },
-            {
-              "Cost": 9615.38461538460000000000,
-              "CPM": 24.999999999999935,
-              "DistributionPercentage": 0.01923077,
-              "Impressions": 384.61538462,
-              "Units": 0,
-              "WeekStartDate": "2020-05-25T00:00:00"
-            }
-          ]
-        },
-        {
-          "MediaMonthId": 465,
-          "MonthName": "June",
-          "Weeks": [
-            {
-              "Cost": 9615.38461538460000000000,
-              "CPM": 24.999999999999935,
-              "DistributionPercentage": 0.01923077,
-              "Impressions": 384.61538462,
-              "Units": 0,
-              "WeekStartDate": "2020-06-01T00:00:00"
-            },
-            {
-              "Cost": 9615.38461538460000000000,
-              "CPM": 24.999999999999935,
-              "DistributionPercentage": 0.01923077,
-              "Impressions": 384.61538462,
-              "Units": 0,
-              "WeekStartDate": "2020-06-08T00:00:00"
-            },
-            {
-              "Cost": 9615.38461538460000000000,
-              "CPM": 24.999999999999935,
-              "DistributionPercentage": 0.01923077,
-              "Impressions": 384.61538462,
-              "Units": 0,
-              "WeekStartDate": "2020-06-15T00:00:00"
-            },
-            {
-              "Cost": 9615.38461538460000000000,
-              "CPM": 24.999999999999935,
-              "DistributionPercentage": 0.01923077,
-              "Impressions": 384.61538462,
-              "Units": 0,
-              "WeekStartDate": "2020-06-22T00:00:00"
-            }
-          ]
-        }
-      ],
-      "QuarterLabel": null,
-      "TableTitle": "2Q '20 PA Total",
-      "Total": {
-        "Cost": 124999.99999999980000000000,
-        "CPM": 24.99999999999996000000,
-        "DistributionPercentage": 0.0,
-        "Impressions": 5000.0,
-        "Units": 0,
-        "WeekStartDate": "0001-01-01T00:00:00"
-      }
-    },
-    {
       "DaypartCode": "EF",
       "Months": [
         {
@@ -1738,6 +1190,554 @@
         "CPM": 25.0000000,
         "DistributionPercentage": 0.0,
         "Impressions": 7100.0,
+        "Units": 0,
+        "WeekStartDate": "0001-01-01T00:00:00"
+      }
+    },
+    {
+      "DaypartCode": "MDN",
+      "Months": [
+        {
+          "MediaMonthId": 463,
+          "MonthName": "April",
+          "Weeks": [
+            {
+              "Cost": 10043.9560439560285000000000,
+              "CPM": 24.9999999999999464852297593,
+              "DistributionPercentage": 0.01004396,
+              "Impressions": 401.75824176,
+              "Units": 0,
+              "WeekStartDate": "2020-03-30T00:00:00"
+            },
+            {
+              "Cost": 10043.9560439560285000000000,
+              "CPM": 24.9999999999999464852297593,
+              "DistributionPercentage": 0.01004396,
+              "Impressions": 401.75824176,
+              "Units": 0,
+              "WeekStartDate": "2020-04-06T00:00:00"
+            },
+            {
+              "Cost": 9615.38461538460000000000,
+              "CPM": 24.999999999999935,
+              "DistributionPercentage": 0.00961538,
+              "Impressions": 384.61538462,
+              "Units": 0,
+              "WeekStartDate": "2020-04-13T00:00:00"
+            },
+            {
+              "Cost": 9615.38461538460000000000,
+              "CPM": 24.999999999999935,
+              "DistributionPercentage": 0.00961538,
+              "Impressions": 384.61538462,
+              "Units": 0,
+              "WeekStartDate": "2020-04-20T00:00:00"
+            }
+          ]
+        },
+        {
+          "MediaMonthId": 464,
+          "MonthName": "May",
+          "Weeks": [
+            {
+              "Cost": 9615.38461538460000000000,
+              "CPM": 24.999999999999935,
+              "DistributionPercentage": 0.00961538,
+              "Impressions": 384.61538462,
+              "Units": 0,
+              "WeekStartDate": "2020-04-27T00:00:00"
+            },
+            {
+              "Cost": 9615.38461538460000000000,
+              "CPM": 24.999999999999935,
+              "DistributionPercentage": 0.00961538,
+              "Impressions": 384.61538462,
+              "Units": 0,
+              "WeekStartDate": "2020-05-04T00:00:00"
+            },
+            {
+              "Cost": 9615.38461538460000000000,
+              "CPM": 24.999999999999935,
+              "DistributionPercentage": 0.00961538,
+              "Impressions": 384.61538462,
+              "Units": 0,
+              "WeekStartDate": "2020-05-11T00:00:00"
+            },
+            {
+              "Cost": 9615.38461538460000000000,
+              "CPM": 24.999999999999935,
+              "DistributionPercentage": 0.00961538,
+              "Impressions": 384.61538462,
+              "Units": 0,
+              "WeekStartDate": "2020-05-18T00:00:00"
+            },
+            {
+              "Cost": 9615.38461538460000000000,
+              "CPM": 24.999999999999935,
+              "DistributionPercentage": 0.00961538,
+              "Impressions": 384.61538462,
+              "Units": 0,
+              "WeekStartDate": "2020-05-25T00:00:00"
+            }
+          ]
+        },
+        {
+          "MediaMonthId": 465,
+          "MonthName": "June",
+          "Weeks": [
+            {
+              "Cost": 9615.38461538460000000000,
+              "CPM": 24.999999999999935,
+              "DistributionPercentage": 0.00961538,
+              "Impressions": 384.61538462,
+              "Units": 0,
+              "WeekStartDate": "2020-06-01T00:00:00"
+            },
+            {
+              "Cost": 9615.38461538460000000000,
+              "CPM": 24.999999999999935,
+              "DistributionPercentage": 0.00961538,
+              "Impressions": 384.61538462,
+              "Units": 0,
+              "WeekStartDate": "2020-06-08T00:00:00"
+            },
+            {
+              "Cost": 9615.38461538460000000000,
+              "CPM": 24.999999999999935,
+              "DistributionPercentage": 0.00961538,
+              "Impressions": 384.61538462,
+              "Units": 0,
+              "WeekStartDate": "2020-06-15T00:00:00"
+            },
+            {
+              "Cost": 9615.38461538460000000000,
+              "CPM": 24.999999999999935,
+              "DistributionPercentage": 0.00961538,
+              "Impressions": 384.61538462,
+              "Units": 0,
+              "WeekStartDate": "2020-06-22T00:00:00"
+            }
+          ]
+        }
+      ],
+      "QuarterLabel": "2Q '20",
+      "TableTitle": "2Q '20 MDN :90s ",
+      "Total": {
+        "Cost": 125857.1428571426570000000000,
+        "CPM": 24.999999999999931867196367764,
+        "DistributionPercentage": 0.0,
+        "Impressions": 5034.28571429,
+        "Units": 0,
+        "WeekStartDate": "0001-01-01T00:00:00"
+      }
+    },
+    {
+      "DaypartCode": null,
+      "Months": [
+        {
+          "MediaMonthId": 463,
+          "MonthName": "April",
+          "Weeks": [
+            {
+              "Cost": 10043.9560439560285000000000,
+              "CPM": 24.9999999999999464852297593,
+              "DistributionPercentage": 0.01004396,
+              "Impressions": 401.75824176,
+              "Units": 0,
+              "WeekStartDate": "2020-03-30T00:00:00"
+            },
+            {
+              "Cost": 10043.9560439560285000000000,
+              "CPM": 24.9999999999999464852297593,
+              "DistributionPercentage": 0.01004396,
+              "Impressions": 401.75824176,
+              "Units": 0,
+              "WeekStartDate": "2020-04-06T00:00:00"
+            },
+            {
+              "Cost": 9615.38461538460000000000,
+              "CPM": 24.999999999999935,
+              "DistributionPercentage": 0.00961538,
+              "Impressions": 384.61538462,
+              "Units": 0,
+              "WeekStartDate": "2020-04-13T00:00:00"
+            },
+            {
+              "Cost": 9615.38461538460000000000,
+              "CPM": 24.999999999999935,
+              "DistributionPercentage": 0.00961538,
+              "Impressions": 384.61538462,
+              "Units": 0,
+              "WeekStartDate": "2020-04-20T00:00:00"
+            }
+          ]
+        },
+        {
+          "MediaMonthId": 464,
+          "MonthName": "May",
+          "Weeks": [
+            {
+              "Cost": 9615.38461538460000000000,
+              "CPM": 24.999999999999935,
+              "DistributionPercentage": 0.00961538,
+              "Impressions": 384.61538462,
+              "Units": 0,
+              "WeekStartDate": "2020-04-27T00:00:00"
+            },
+            {
+              "Cost": 9615.38461538460000000000,
+              "CPM": 24.999999999999935,
+              "DistributionPercentage": 0.00961538,
+              "Impressions": 384.61538462,
+              "Units": 0,
+              "WeekStartDate": "2020-05-04T00:00:00"
+            },
+            {
+              "Cost": 9615.38461538460000000000,
+              "CPM": 24.999999999999935,
+              "DistributionPercentage": 0.00961538,
+              "Impressions": 384.61538462,
+              "Units": 0,
+              "WeekStartDate": "2020-05-11T00:00:00"
+            },
+            {
+              "Cost": 9615.38461538460000000000,
+              "CPM": 24.999999999999935,
+              "DistributionPercentage": 0.00961538,
+              "Impressions": 384.61538462,
+              "Units": 0,
+              "WeekStartDate": "2020-05-18T00:00:00"
+            },
+            {
+              "Cost": 9615.38461538460000000000,
+              "CPM": 24.999999999999935,
+              "DistributionPercentage": 0.00961538,
+              "Impressions": 384.61538462,
+              "Units": 0,
+              "WeekStartDate": "2020-05-25T00:00:00"
+            }
+          ]
+        },
+        {
+          "MediaMonthId": 465,
+          "MonthName": "June",
+          "Weeks": [
+            {
+              "Cost": 9615.38461538460000000000,
+              "CPM": 24.999999999999935,
+              "DistributionPercentage": 0.00961538,
+              "Impressions": 384.61538462,
+              "Units": 0,
+              "WeekStartDate": "2020-06-01T00:00:00"
+            },
+            {
+              "Cost": 9615.38461538460000000000,
+              "CPM": 24.999999999999935,
+              "DistributionPercentage": 0.00961538,
+              "Impressions": 384.61538462,
+              "Units": 0,
+              "WeekStartDate": "2020-06-08T00:00:00"
+            },
+            {
+              "Cost": 9615.38461538460000000000,
+              "CPM": 24.999999999999935,
+              "DistributionPercentage": 0.00961538,
+              "Impressions": 384.61538462,
+              "Units": 0,
+              "WeekStartDate": "2020-06-15T00:00:00"
+            },
+            {
+              "Cost": 9615.38461538460000000000,
+              "CPM": 24.999999999999935,
+              "DistributionPercentage": 0.00961538,
+              "Impressions": 384.61538462,
+              "Units": 0,
+              "WeekStartDate": "2020-06-22T00:00:00"
+            }
+          ]
+        }
+      ],
+      "QuarterLabel": null,
+      "TableTitle": "2Q '20 MDN Total",
+      "Total": {
+        "Cost": 125857.1428571426570000000000,
+        "CPM": 24.999999999999931867196367764,
+        "DistributionPercentage": 0.0,
+        "Impressions": 5034.28571429,
+        "Units": 0,
+        "WeekStartDate": "0001-01-01T00:00:00"
+      }
+    },
+    {
+      "DaypartCode": "PA",
+      "Months": [
+        {
+          "MediaMonthId": 463,
+          "MonthName": "April",
+          "Weeks": [
+            {
+              "Cost": 9615.38461538460000000000,
+              "CPM": 24.999999999999935,
+              "DistributionPercentage": 0.01923077,
+              "Impressions": 384.61538462,
+              "Units": 0,
+              "WeekStartDate": "2020-03-30T00:00:00"
+            },
+            {
+              "Cost": 9615.38461538460000000000,
+              "CPM": 24.999999999999935,
+              "DistributionPercentage": 0.01923077,
+              "Impressions": 384.61538462,
+              "Units": 0,
+              "WeekStartDate": "2020-04-06T00:00:00"
+            },
+            {
+              "Cost": 9615.38461538460000000000,
+              "CPM": 24.999999999999935,
+              "DistributionPercentage": 0.01923077,
+              "Impressions": 384.61538462,
+              "Units": 0,
+              "WeekStartDate": "2020-04-13T00:00:00"
+            },
+            {
+              "Cost": 9615.38461538460000000000,
+              "CPM": 24.999999999999935,
+              "DistributionPercentage": 0.01923077,
+              "Impressions": 384.61538462,
+              "Units": 0,
+              "WeekStartDate": "2020-04-20T00:00:00"
+            }
+          ]
+        },
+        {
+          "MediaMonthId": 464,
+          "MonthName": "May",
+          "Weeks": [
+            {
+              "Cost": 9615.38461538460000000000,
+              "CPM": 24.999999999999935,
+              "DistributionPercentage": 0.01923077,
+              "Impressions": 384.61538462,
+              "Units": 0,
+              "WeekStartDate": "2020-04-27T00:00:00"
+            },
+            {
+              "Cost": 9615.38461538460000000000,
+              "CPM": 24.999999999999935,
+              "DistributionPercentage": 0.01923077,
+              "Impressions": 384.61538462,
+              "Units": 0,
+              "WeekStartDate": "2020-05-04T00:00:00"
+            },
+            {
+              "Cost": 9615.38461538460000000000,
+              "CPM": 24.999999999999935,
+              "DistributionPercentage": 0.01923077,
+              "Impressions": 384.61538462,
+              "Units": 0,
+              "WeekStartDate": "2020-05-11T00:00:00"
+            },
+            {
+              "Cost": 9615.38461538460000000000,
+              "CPM": 24.999999999999935,
+              "DistributionPercentage": 0.01923077,
+              "Impressions": 384.61538462,
+              "Units": 0,
+              "WeekStartDate": "2020-05-18T00:00:00"
+            },
+            {
+              "Cost": 9615.38461538460000000000,
+              "CPM": 24.999999999999935,
+              "DistributionPercentage": 0.01923077,
+              "Impressions": 384.61538462,
+              "Units": 0,
+              "WeekStartDate": "2020-05-25T00:00:00"
+            }
+          ]
+        },
+        {
+          "MediaMonthId": 465,
+          "MonthName": "June",
+          "Weeks": [
+            {
+              "Cost": 9615.38461538460000000000,
+              "CPM": 24.999999999999935,
+              "DistributionPercentage": 0.01923077,
+              "Impressions": 384.61538462,
+              "Units": 0,
+              "WeekStartDate": "2020-06-01T00:00:00"
+            },
+            {
+              "Cost": 9615.38461538460000000000,
+              "CPM": 24.999999999999935,
+              "DistributionPercentage": 0.01923077,
+              "Impressions": 384.61538462,
+              "Units": 0,
+              "WeekStartDate": "2020-06-08T00:00:00"
+            },
+            {
+              "Cost": 9615.38461538460000000000,
+              "CPM": 24.999999999999935,
+              "DistributionPercentage": 0.01923077,
+              "Impressions": 384.61538462,
+              "Units": 0,
+              "WeekStartDate": "2020-06-15T00:00:00"
+            },
+            {
+              "Cost": 9615.38461538460000000000,
+              "CPM": 24.999999999999935,
+              "DistributionPercentage": 0.01923077,
+              "Impressions": 384.61538462,
+              "Units": 0,
+              "WeekStartDate": "2020-06-22T00:00:00"
+            }
+          ]
+        }
+      ],
+      "QuarterLabel": "2Q '20",
+      "TableTitle": "2Q '20 PA :90s ",
+      "Total": {
+        "Cost": 124999.99999999980000000000,
+        "CPM": 24.99999999999996000000,
+        "DistributionPercentage": 0.0,
+        "Impressions": 5000.0,
+        "Units": 0,
+        "WeekStartDate": "0001-01-01T00:00:00"
+      }
+    },
+    {
+      "DaypartCode": null,
+      "Months": [
+        {
+          "MediaMonthId": 463,
+          "MonthName": "April",
+          "Weeks": [
+            {
+              "Cost": 9615.38461538460000000000,
+              "CPM": 24.999999999999935,
+              "DistributionPercentage": 0.01923077,
+              "Impressions": 384.61538462,
+              "Units": 0,
+              "WeekStartDate": "2020-03-30T00:00:00"
+            },
+            {
+              "Cost": 9615.38461538460000000000,
+              "CPM": 24.999999999999935,
+              "DistributionPercentage": 0.01923077,
+              "Impressions": 384.61538462,
+              "Units": 0,
+              "WeekStartDate": "2020-04-06T00:00:00"
+            },
+            {
+              "Cost": 9615.38461538460000000000,
+              "CPM": 24.999999999999935,
+              "DistributionPercentage": 0.01923077,
+              "Impressions": 384.61538462,
+              "Units": 0,
+              "WeekStartDate": "2020-04-13T00:00:00"
+            },
+            {
+              "Cost": 9615.38461538460000000000,
+              "CPM": 24.999999999999935,
+              "DistributionPercentage": 0.01923077,
+              "Impressions": 384.61538462,
+              "Units": 0,
+              "WeekStartDate": "2020-04-20T00:00:00"
+            }
+          ]
+        },
+        {
+          "MediaMonthId": 464,
+          "MonthName": "May",
+          "Weeks": [
+            {
+              "Cost": 9615.38461538460000000000,
+              "CPM": 24.999999999999935,
+              "DistributionPercentage": 0.01923077,
+              "Impressions": 384.61538462,
+              "Units": 0,
+              "WeekStartDate": "2020-04-27T00:00:00"
+            },
+            {
+              "Cost": 9615.38461538460000000000,
+              "CPM": 24.999999999999935,
+              "DistributionPercentage": 0.01923077,
+              "Impressions": 384.61538462,
+              "Units": 0,
+              "WeekStartDate": "2020-05-04T00:00:00"
+            },
+            {
+              "Cost": 9615.38461538460000000000,
+              "CPM": 24.999999999999935,
+              "DistributionPercentage": 0.01923077,
+              "Impressions": 384.61538462,
+              "Units": 0,
+              "WeekStartDate": "2020-05-11T00:00:00"
+            },
+            {
+              "Cost": 9615.38461538460000000000,
+              "CPM": 24.999999999999935,
+              "DistributionPercentage": 0.01923077,
+              "Impressions": 384.61538462,
+              "Units": 0,
+              "WeekStartDate": "2020-05-18T00:00:00"
+            },
+            {
+              "Cost": 9615.38461538460000000000,
+              "CPM": 24.999999999999935,
+              "DistributionPercentage": 0.01923077,
+              "Impressions": 384.61538462,
+              "Units": 0,
+              "WeekStartDate": "2020-05-25T00:00:00"
+            }
+          ]
+        },
+        {
+          "MediaMonthId": 465,
+          "MonthName": "June",
+          "Weeks": [
+            {
+              "Cost": 9615.38461538460000000000,
+              "CPM": 24.999999999999935,
+              "DistributionPercentage": 0.01923077,
+              "Impressions": 384.61538462,
+              "Units": 0,
+              "WeekStartDate": "2020-06-01T00:00:00"
+            },
+            {
+              "Cost": 9615.38461538460000000000,
+              "CPM": 24.999999999999935,
+              "DistributionPercentage": 0.01923077,
+              "Impressions": 384.61538462,
+              "Units": 0,
+              "WeekStartDate": "2020-06-08T00:00:00"
+            },
+            {
+              "Cost": 9615.38461538460000000000,
+              "CPM": 24.999999999999935,
+              "DistributionPercentage": 0.01923077,
+              "Impressions": 384.61538462,
+              "Units": 0,
+              "WeekStartDate": "2020-06-15T00:00:00"
+            },
+            {
+              "Cost": 9615.38461538460000000000,
+              "CPM": 24.999999999999935,
+              "DistributionPercentage": 0.01923077,
+              "Impressions": 384.61538462,
+              "Units": 0,
+              "WeekStartDate": "2020-06-22T00:00:00"
+            }
+          ]
+        }
+      ],
+      "QuarterLabel": null,
+      "TableTitle": "2Q '20 PA Total",
+      "Total": {
+        "Cost": 124999.99999999980000000000,
+        "CPM": 24.99999999999996000000,
+        "DistributionPercentage": 0.0,
+        "Impressions": 5000.0,
         "Units": 0,
         "WeekStartDate": "0001-01-01T00:00:00"
       }
