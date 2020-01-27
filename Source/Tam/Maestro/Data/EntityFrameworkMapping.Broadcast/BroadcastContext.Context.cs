@@ -177,5 +177,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<plan_version_weeks> plan_version_weeks { get; set; }
         public virtual DbSet<plan_version_pricing_result_spots> plan_version_pricing_result_spots { get; set; }
         public virtual DbSet<plan_version_pricing_results> plan_version_pricing_results { get; set; }
+        public virtual DbSet<shared_folder_files> shared_folder_files { get; set; }
     }
 }

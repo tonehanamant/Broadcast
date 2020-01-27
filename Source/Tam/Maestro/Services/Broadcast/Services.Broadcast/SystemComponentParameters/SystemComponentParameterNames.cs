@@ -563,6 +563,16 @@ namespace Tam.Maestro.Common.SystemComponentParameter
             get { return "BroadcastNTIUploadApiUrl"; }
         }
 	 
+		public static string BroadcastSharedFolder  
+		{
+            get { return "BroadcastSharedFolder"; }
+        }
+	 
+		public static string CampaignExportReportsFolder  
+		{
+            get { return "CampaignExportReportsFolder"; }
+        }
+	 
 		public static string DataLake_NotificationEmail  
 		{
             get { return "DataLake_NotificationEmail"; }

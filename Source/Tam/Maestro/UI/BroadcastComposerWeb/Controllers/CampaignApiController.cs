@@ -1,5 +1,4 @@
-﻿using Common.Services.ApplicationServices;
-using Common.Services.WebComponents;
+﻿using Common.Services.WebComponents;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Helpers;
@@ -17,7 +16,6 @@ using System.Net.Http;
 using System.Net;
 using System.Net.Http.Headers;
 using Services.Broadcast.Entities.Campaign;
-using Services.Broadcast.ApplicationServices.Security;
 
 namespace BroadcastComposerWeb.Controllers
 {
@@ -202,26 +200,18 @@ namespace BroadcastComposerWeb.Controllers
         }
 
         /// <summary>
-        /// Downloads the campaign report.
+        /// Generates the campaign report.
         /// </summary>
         /// <param name="request">The request.</param>
-        /// <returns>Excel file containing the campaign report</returns>
+        /// <returns>Campaign report identifier</returns>
         [HttpPost]
-        [Route("DownloadCampaignReport")]
+        [Route("GenerateCampaignReport")]
         [RestrictedAccess(RequiredRole = RoleType.Broadcast_Proposer)]
-        public HttpResponseMessage DownloadCampaignReport([FromBody]CampaignReportRequest request)
+        public BaseResponse<Guid> GenerateCampaignReport([FromBody]CampaignReportRequest request)
         {
-            var report = _ApplicationServiceFactory.GetApplicationService<ICampaignService>().GenerateCampaignReport(request);
-
-            var result = Request.CreateResponse(HttpStatusCode.OK);
-            result.Content = new StreamContent(report.Stream);
-            result.Content.Headers.ContentType = new MediaTypeHeaderValue("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-            result.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
-            {
-                FileName = report.Filename
-            };
-
-            return result;
+            var fullName = _GetCurrentUserFullName();
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ICampaignService>()
+                .GenerateCampaignReport(request, fullName, DateTime.Now));
         }
     }
 }

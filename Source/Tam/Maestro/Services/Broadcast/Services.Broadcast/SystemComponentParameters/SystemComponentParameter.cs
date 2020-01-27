@@ -618,6 +618,18 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.BroadcastNTIUploadApiUrl); }
         }
 	 
+		public static string BroadcastSharedFolder  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<string>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.BroadcastSharedFolder); }
+        }
+	 
+		public static string CampaignExportReportsFolder  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<string>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.CampaignExportReportsFolder); }
+        }
+	 
 		public static string DataLake_NotificationEmail  
 		{
             get { return SystemComponentParameterHelper.GetPropertyValue<string>

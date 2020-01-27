@@ -25,6 +25,7 @@ using Services.Broadcast.Entities.Campaign;
 using Services.Broadcast.ReportGenerators;
 using Services.Broadcast.IntegrationTests.Stubs;
 using System.IO;
+using Common.Services;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
@@ -182,13 +183,14 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     IntegrationTestApplicationServiceFactory.Instance.Resolve<ITrafficApiCache>(),
                     IntegrationTestApplicationServiceFactory.Instance.Resolve<IAudienceService>(),
                     IntegrationTestApplicationServiceFactory.Instance.Resolve<ISpotLengthService>(),
-                    IntegrationTestApplicationServiceFactory.Instance.Resolve<IDaypartDefaultService>()
+                    IntegrationTestApplicationServiceFactory.Instance.Resolve<IDaypartDefaultService>(),
+                    IntegrationTestApplicationServiceFactory.Instance.Resolve<ISharedFolderService>()
                     );
 
                 var campaign = _GetValidCampaignForSave();
                 campaign.Id = 1;
 
-                var exception = Assert.Throws<Exception>(() => service.SaveCampaign(campaign, IntegrationTestUser, CreatedDate));
+                var exception = Assert.Throws<ApplicationException>(() => service.SaveCampaign(campaign, IntegrationTestUser, CreatedDate));
 
                 Assert.AreEqual(expectedMessage, exception.Message);
             }
@@ -599,6 +601,67 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        public void CampaignExport_GenerateCampaignReport()
+        {
+            var now = new DateTime(2020, 1, 1);
+            var user = "IntegrationTestsUser";
+
+            var fileServiceMock = new Mock<IFileService>();
+            fileServiceMock.Setup(x => x.Create(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<Stream>()));
+            var campaignService = _SetupCampaignService(fileServiceMock.Object);
+            var fileId = Guid.Empty;
+            var sharedFolderRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<ISharedFolderFilesRepository>();
+            SharedFolderFile sharedFolderFile = null;
+
+            using (new TransactionScopeWrapper())
+            {
+                fileId = campaignService.GenerateCampaignReport(new CampaignReportRequest
+                {
+                    CampaignId = 652,
+                    ExportType = CampaignExportTypeEnum.Contract,
+                    SelectedPlans = new List<int> { 1852, 1853 }
+                }, user, now);
+
+                sharedFolderFile = sharedFolderRepository.GetFileById(fileId);
+            }
+            
+            Assert.AreNotEqual(Guid.Empty, fileId);
+
+            fileServiceMock.Verify(x => x.Create(
+                @"\\cadfs11\Broadcast\IntegrationTests\CampaignExportReports",
+                fileId + ".xlsx",
+                It.Is<Stream>(y => y != null && y.Length > 0)), Times.Once);
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(sharedFolderFile, _GetJsonSettingsForCampaignExport()));
+        }
+
+        private ICampaignService _SetupCampaignService(IFileService fileService)
+        {
+            var sharedFolderService = new SharedFolderService(
+                fileService,
+                IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory);
+
+            var campaignService = new CampaignService(
+                IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory,
+                IntegrationTestApplicationServiceFactory.Instance.Resolve<ICampaignValidator>(),
+                IntegrationTestApplicationServiceFactory.Instance.Resolve<IMediaMonthAndWeekAggregateCache>(),
+                IntegrationTestApplicationServiceFactory.Instance.Resolve<IQuarterCalculationEngine>(),
+
+                IntegrationTestApplicationServiceFactory.Instance.Resolve<IBroadcastLockingManagerApplicationService>(),
+                IntegrationTestApplicationServiceFactory.Instance.Resolve<ICampaignAggregator>(),
+                IntegrationTestApplicationServiceFactory.Instance.Resolve<ICampaignAggregationJobTrigger>(),
+                new TrafficApiCacheStub(),
+                IntegrationTestApplicationServiceFactory.Instance.Resolve<IAudienceService>(),
+                IntegrationTestApplicationServiceFactory.Instance.Resolve<ISpotLengthService>(),
+                IntegrationTestApplicationServiceFactory.Instance.Resolve<IDaypartDefaultService>(),
+                sharedFolderService
+                );
+
+            return campaignService;
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
         public void CampaignExport_ReservedPlanWithConstraints()
         {
             using (new TransactionScopeWrapper())
@@ -778,6 +841,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var jsonResolver = new IgnorableSerializerContractResolver();
 
             jsonResolver.Ignore(typeof(CampaignReportData), "CreatedDate");
+            jsonResolver.Ignore(typeof(SharedFolderFile), "Id");
 
             return new JsonSerializerSettings
             {

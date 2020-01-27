@@ -73,6 +73,15 @@ namespace Services.Broadcast.IntegrationTests
         {
             throw new NotImplementedException();
         }
+
+        public Stream GetFileStream(string folderPath, string fileName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Create(string folderPath, string fileName, Stream stream)
+        {
+        }
     }
 
     public class InMemoryFileServiceStubb : FileServiceStub

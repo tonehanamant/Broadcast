@@ -72,7 +72,9 @@ namespace Common.Services
         /// <param name="filePaths">Dictionary of path and name file pairs</param>
         /// <returns>Stream containing the zip archive</returns>
         Stream CreateZipArchive(IDictionary<string, string> filePaths);
+
         Stream GetFileStream(string filePath);
+        Stream GetFileStream(string folderPath, string fileName);
 
         /// <summary>
         /// Creates a txt file with the content passed
@@ -80,6 +82,14 @@ namespace Common.Services
         /// <param name="filePath">File path where to create the file</param>
         /// <param name="lines">New file content</param>
         void CreateTextFile(string filePath, List<string> lines);
+
+        /// <summary>
+        /// Creates a file with the content passed
+        /// </summary>
+        /// <param name="folderPath">Folder path where file should be created. The folder will be created automatically if it does not exist</param>
+        /// <param name="fileName">File name</param>
+        /// <param name="stream">File content</param>
+        void Create(string folderPath, string fileName, Stream stream);
     }
 
     public class FileService : IFileService
@@ -218,7 +228,15 @@ namespace Common.Services
                 var stream = File.OpenRead(filePath);
                 return stream;
             }
+
             throw new ApplicationException($"File not found: {filePath}");
+        }
+
+        public Stream GetFileStream(string folderPath, string fileName)
+        {
+            var filePath = $@"{folderPath}\{fileName}";
+
+            return GetFileStream(filePath);
         }
 
         ///<inheritdoc/>
@@ -238,6 +256,15 @@ namespace Common.Services
                 stream.Seek(0, SeekOrigin.Begin);
                 stream.CopyTo(file);
             }
+        }
+
+        public void Create(string folderPath, string fileName, Stream stream)
+        {
+            Directory.CreateDirectory(folderPath);
+
+            var filePath = $@"{folderPath}\{fileName}";
+
+            Create(filePath, stream);
         }
     }
 }

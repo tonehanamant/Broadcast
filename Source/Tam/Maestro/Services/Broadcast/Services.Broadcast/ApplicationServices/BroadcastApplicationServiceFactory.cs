@@ -211,7 +211,8 @@ namespace Services.Broadcast.ApplicationServices
 
             unityContainer.RegisterType<IEnvironmentService, EnvironmentService>();
             unityContainer.RegisterType<IDaypartTypeService, DaypartTypeService>();
-            
+            unityContainer.RegisterType<ISharedFolderService, SharedFolderService>();
+
             unityContainer.RegisterType<IDaypartCleanupService, DaypartCleanupService>();
 
             unityContainer.RegisterType<ITrafficApiClient, TrafficApiClient>();

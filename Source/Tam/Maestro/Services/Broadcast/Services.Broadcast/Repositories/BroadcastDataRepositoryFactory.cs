@@ -90,6 +90,7 @@ namespace Services.Broadcast.Repositories
             instance.RegisterType<ICampaignSummaryRepository, CampaignSummaryRepository>();
             instance.RegisterType<IInventoryFileProgramEnrichmentJobsRepository, InventoryFileProgramEnrichmentJobsRepository>();
             instance.RegisterType<IAffiliateRepository, AffiliateRepository>();
+            instance.RegisterType<ISharedFolderFilesRepository, SharedFolderFilesRepository>();
 
             WasRegistered = true;
         }

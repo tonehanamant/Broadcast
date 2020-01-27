@@ -18,6 +18,7 @@ using System.Linq;
 using Tam.Maestro.Common;
 using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
+using Tam.Maestro.Services.Cable.SystemComponentParameters;
 
 namespace Services.Broadcast.ApplicationServices
 {
@@ -89,8 +90,10 @@ namespace Services.Broadcast.ApplicationServices
         /// Generates the campaign report.
         /// </summary>
         /// <param name="request">CampaignReportRequest object containing the campaign id and the selected plans id</param>
-        /// <returns>ReportOutput object</returns>
-        ReportOutput GenerateCampaignReport(CampaignReportRequest request);
+        /// <param name="userName"></param>
+        /// <param name="currentDate"></param>
+        /// <returns>Campaign report identifier</returns>
+        Guid GenerateCampaignReport(CampaignReportRequest request, string userName, DateTime currentDate);
 
         /// <summary>
         /// Gets the campaign report data. Method used for testing purposes
@@ -119,6 +122,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IAudienceService _AudienceService;
         private readonly ISpotLengthService _SpotLengthService;
         private readonly IDaypartDefaultService _DaypartDefaultService;
+        private readonly ISharedFolderService _SharedFolderService;
 
         public CampaignService(
             IDataRepositoryFactory dataRepositoryFactory,
@@ -131,7 +135,8 @@ namespace Services.Broadcast.ApplicationServices
             ITrafficApiCache trafficApiCache,
             IAudienceService audienceService,
             ISpotLengthService spotLengthService,
-            IDaypartDefaultService daypartDefaultService)
+            IDaypartDefaultService daypartDefaultService,
+            ISharedFolderService sharedFolderService)
         {
             _CampaignRepository = dataRepositoryFactory.GetDataRepository<ICampaignRepository>();
             _CampaignValidator = campaignValidator;
@@ -146,6 +151,7 @@ namespace Services.Broadcast.ApplicationServices
             _AudienceService = audienceService;
             _SpotLengthService = spotLengthService;
             _DaypartDefaultService = daypartDefaultService;
+            _SharedFolderService = sharedFolderService;
         }
 
         /// <inheritdoc />
@@ -435,11 +441,22 @@ namespace Services.Broadcast.ApplicationServices
         }
 
         /// <inheritdoc/>
-        public ReportOutput GenerateCampaignReport(CampaignReportRequest request)
+        public Guid GenerateCampaignReport(CampaignReportRequest request, string userName, DateTime currentDate)
         {
             var campaignReportData = GetCampaignReportData(request);
             var reportGenerator = new CampaignReportGenerator();
-            return reportGenerator.Generate(campaignReportData);
+            var report = reportGenerator.Generate(campaignReportData);
+
+            return _SharedFolderService.SaveFile(new SharedFolderFile
+            {
+                FolderPath = $@"{BroadcastServiceSystemParameter.BroadcastSharedFolder}\{BroadcastServiceSystemParameter.CampaignExportReportsFolder}",
+                FileNameWithExtension = report.Filename,
+                FileMediaType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                FileUsage = SharedFolderFileUsage.CampaignExport,
+                CreatedDate = currentDate,
+                CreatedBy = userName,
+                FileContent = report.Stream
+            });
         }
 
         /// <inheritdoc/>

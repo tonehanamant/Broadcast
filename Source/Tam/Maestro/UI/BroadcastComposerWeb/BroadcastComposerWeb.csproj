@@ -327,6 +327,7 @@
     <Compile Include="Controllers\DaypartCleanupApiController.cs" />
     <Compile Include="Controllers\DaypartTypeApiController.cs" />
     <Compile Include="Controllers\EnvironmentController.cs" />
+    <Compile Include="Controllers\FileApiController.cs" />
     <Compile Include="Controllers\GenreApiController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ImageApiController.cs" />

@@ -1,0 +1,11 @@
+﻿{
+  "CreatedBy": "UnitTestsUser",
+  "CreatedDate": "2020-01-01T00:00:00",
+  "FileContent": null,
+  "FileExtension": ".xlsx",
+  "FileMediaType": "media-type",
+  "FileName": "report",
+  "FileNameWithExtension": "report.xlsx",
+  "FileUsage": 0,
+  "FolderPath": "D:\\\\files"
+}

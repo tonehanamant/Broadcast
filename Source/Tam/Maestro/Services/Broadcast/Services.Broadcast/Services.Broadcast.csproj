@@ -312,6 +312,7 @@
     <Compile Include="ApplicationServices\ProgramService.cs" />
     <Compile Include="ApplicationServices\RecurringJobsFactory.cs" />
     <Compile Include="ApplicationServices\Security\UserService.cs" />
+    <Compile Include="ApplicationServices\SharedFolderService.cs" />
     <Compile Include="ApplicationServices\ShowTypeService.cs" />
     <Compile Include="BusinessEngines\DetectionPostingEngine.cs" />
     <Compile Include="BusinessEngines\ImpressionsCalculationEngine.cs" />
@@ -367,6 +368,7 @@
     <Compile Include="Entities\DTO\Program\SearchRequestProgramDto.cs" />
     <Compile Include="Entities\Enums\GenreSourceEnum.cs" />
     <Compile Include="Entities\Enums\ContainTypeEnum.cs" />
+    <Compile Include="Entities\Enums\SharedFolderFileUsage.cs" />
     <Compile Include="Entities\Enums\UnitCapEnum.cs" />
     <Compile Include="Entities\Enums\InventoryFileProgramEnrichmentJobStatus.cs" />
     <Compile Include="Entities\Enums\WeeklyBreakdownCalculationFrom.cs" />
@@ -445,6 +447,7 @@
     <Compile Include="Entities\ScxGenerationJob.cs" />
     <Compile Include="Entities\Scx\ScxFileGenerationDetailDto.cs" />
     <Compile Include="Entities\Scx\ScxFileGenerationDetail.cs" />
+    <Compile Include="Entities\SharedFolderFile.cs" />
     <Compile Include="Entities\StationInventory\StationInventoryManifestDaypartProgram.cs" />
     <Compile Include="Exceptions\UnknownGenreException.cs" />
     <Compile Include="Extensions\DetectionExtensions.cs" />
@@ -888,6 +891,7 @@
     <Compile Include="Repositories\NtiTransmittalsRepository.cs" />
     <Compile Include="Repositories\PricingGuideRepository.cs" />
     <Compile Include="Repositories\ProgramRepository.cs" />
+    <Compile Include="Repositories\SharedFolderFilesRepository.cs" />
     <Compile Include="Repositories\SpotTrackerRepository.cs" />
     <Compile Include="Repositories\DisplayDaypartBroadcastRepository.cs" />
     <Compile Include="Entities\OpenMarketAllocationDto.cs" />

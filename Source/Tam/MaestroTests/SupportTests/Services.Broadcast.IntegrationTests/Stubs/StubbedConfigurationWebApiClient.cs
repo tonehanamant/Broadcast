@@ -107,6 +107,12 @@ namespace Services.Broadcast.IntegrationTests.Stubs
             
             switch (parameterId)
             {
+                case "BroadcastSharedFolder":
+                    result = @"\\cadfs11\Broadcast\IntegrationTests";
+                    break;
+                case "CampaignExportReportsFolder":
+                    result = "CampaignExportReports";
+                    break;
                 case "BroadcastMatchingBuffer":
                     result = "120";
                     break;

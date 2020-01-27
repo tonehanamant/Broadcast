@@ -50,6 +50,25 @@ GO
 
 /*************************************** START UPDATE SCRIPT *****************************************************/
 
+/*************************************** START - PRI-20845 ****************************************************/
+IF OBJECT_ID('shared_folder_files') IS NULL
+BEGIN
+	CREATE TABLE [dbo].[shared_folder_files](
+		[id] uniqueidentifier NOT NULL,
+		[folder_path] varchar(MAX) NOT NULL,
+		[file_name] varchar(255) NOT NULL,
+		[file_extension] varchar(15) NOT NULL,
+		[file_media_type] varchar(255) NOT NULL,
+		[file_usage] int NOT NULL,
+		[created_date] datetime2(7) NOT NULL,
+		[created_by] varchar(63) NOT NULL,
+	 CONSTRAINT [PK_shared_folder_files] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY]
+END
+/*************************************** END - PRI-20845 ****************************************************/
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
