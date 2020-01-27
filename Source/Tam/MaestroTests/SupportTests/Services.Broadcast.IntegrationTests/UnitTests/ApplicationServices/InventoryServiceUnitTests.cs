@@ -13,6 +13,7 @@ using Services.Broadcast.Repositories;
 using Services.Broadcast.Validators;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Tam.Maestro.Services.Clients;
 
@@ -40,6 +41,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         private readonly Mock<IInventoryProgramEnrichmentService> _InventoryProgramEnrichmentServiceMock = new Mock<IInventoryProgramEnrichmentService>();
         private readonly Mock<IInventoryRepository> _InventoryRepositoryMock = new Mock<IInventoryRepository>();
         private readonly Mock<ISpotLengthRepository> _SpotLengthRepository = new Mock<ISpotLengthRepository>();
+        private readonly Mock<IInventoryFileRepository> _InventoryFileRepositoryMock = new Mock<IInventoryFileRepository>();
 
         [Test]
         [TestCase(FileStatusEnum.Failed, 0, 0, "Validation Error")]
@@ -64,8 +66,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             InventoryFileProgramEnrichmentJobStatus programEnrichmentJobStatus,
             string expectedStatus)
         {
-            _SetupInventoryServiceDependencies();
-
             _QuarterCalculationEngineMock
                 .Setup(x => x.GetQuarterDateRange(It.IsAny<int?>(), It.IsAny<int?>()))
                 .Returns(new DateRange(new DateTime(2019, 1, 1), new DateTime(2019, 4, 1)));
@@ -81,26 +81,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                         ProgramEnrichmentJobStatus = programEnrichmentJobStatus
                     }
                 });
-            
-            var service = new InventoryService(
-                _BroadcastDataRepositoryFactoryMock.Object,
-                _InventoryFileValidatorMock.Object,
-                _DaypartCacheMock.Object,
-                _QuarterCalculationEngineMock.Object,
-                _SmsClientMock.Object,
-                _ProprietarySpotCostCalculationEngineMock.Object,
-                _StationInventoryGroupServiceMock.Object,
-                _AudiencesCacheMock.Object,
-                _RatingForecastServiceMock.Object,
-                _NsiPostingBookServiceMock.Object,
-                _DataLakeFileServiceMock.Object,
-                _LockingEngineMock.Object,
-                _StationProcessingEngineMock.Object,
-                _ImpressionsServiceMock.Object,
-                _OpenMarketFileImporterMock.Object,
-                _FileServiceMock.Object,
-                _InventoryRatingsServiceMock.Object,
-                _InventoryProgramEnrichmentServiceMock.Object);
+
+            var service = _GetInventoryService();
 
             var result = service.GetInventoryUploadHistory(
                 inventorySourceId: 1,
@@ -108,6 +90,194 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 year: null);
 
             Assert.AreEqual(expectedStatus, result.First().Status);
+        }
+
+        [Test]
+        public void DownloadErrorFile()
+        {
+            const int fileId = 23;
+            const string fileName = "InventoryErrorFile.xlsx";
+
+            var getInventoryFileByIdCalledCount = 0;
+            _InventoryFileRepositoryMock.Setup(s => s.GetInventoryFileById(It.IsAny<int>()))
+                .Callback(() => getInventoryFileByIdCalledCount++)
+                .Returns(new InventoryFile
+                {
+                    Id = fileId,
+                    FileName = fileName,
+                });
+
+            var fileExistsCalledCount = 0;
+            _FileServiceMock.Setup(s => s.Exists(It.IsAny<string>()))
+                .Callback(() => fileExistsCalledCount++)
+                .Returns(true);
+
+            var getFileStreamCalled = 0;
+            _FileServiceMock.Setup(s => s.GetFileStream(It.IsAny<string>()))
+                .Callback(() => getFileStreamCalled++)
+                .Returns(new MemoryStream());
+
+            var service = _GetInventoryService();
+
+            var result = service.DownloadErrorFile(fileId);
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(fileName, result.Item1);
+            Assert.IsNotNull(result.Item2); // stream
+            Assert.AreEqual(@"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", result.Item3); // mimeType
+
+            Assert.AreEqual(1, getInventoryFileByIdCalledCount);
+            Assert.AreEqual(1, service.GetInventoryUploadErrorsFolderCalledCount);
+            Assert.AreEqual(1, fileExistsCalledCount);
+            Assert.AreEqual(1, getFileStreamCalled);
+        }
+
+        [Test]
+        public void DownloadErrorFile_XmlFile()
+        {
+            const int fileId = 23;
+            const string fileName = "InventoryErrorFile.xml";
+
+            var getInventoryFileByIdCalledCount = 0;
+            _InventoryFileRepositoryMock.Setup(s => s.GetInventoryFileById(It.IsAny<int>()))
+                .Callback(() => getInventoryFileByIdCalledCount++)
+                .Returns(new InventoryFile
+                {
+                    Id = fileId,
+                    FileName = fileName,
+                });
+
+            var fileExistsCalledCount = 0;
+            _FileServiceMock.Setup(s => s.Exists(It.IsAny<string>()))
+                .Callback(() => fileExistsCalledCount++)
+                .Returns(true);
+
+            var getFileStreamCalled = 0;
+            _FileServiceMock.Setup(s => s.GetFileStream(It.IsAny<string>()))
+                .Callback(() => getFileStreamCalled++)
+                .Returns(new MemoryStream());
+
+            var service = _GetInventoryService();
+
+            var result = service.DownloadErrorFile(fileId);
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(fileName, result.Item1);
+            Assert.IsNotNull(result.Item2); // stream
+            Assert.AreEqual(@"text/xml", result.Item3); // mimeType
+
+            Assert.AreEqual(1, getInventoryFileByIdCalledCount);
+            Assert.AreEqual(1, service.GetInventoryUploadErrorsFolderCalledCount);
+            Assert.AreEqual(1, fileExistsCalledCount);
+            Assert.AreEqual(1, getFileStreamCalled);
+        }
+
+        [Test]
+        public void DownloadErrorFile_IdNotFound()
+        {
+            const int fileId = 23;
+
+            var getInventoryFileByIdCalledCount = 0;
+            _InventoryFileRepositoryMock.Setup(s => s.GetInventoryFileById(It.IsAny<int>()))
+                .Callback(() => getInventoryFileByIdCalledCount++)
+                .Throws(new Exception("Test message for id not found."));
+
+            var fileExistsCalledCount = 0;
+            _FileServiceMock.Setup(s => s.Exists(It.IsAny<string>()))
+                .Callback(() => fileExistsCalledCount++)
+                .Returns(true);
+
+            var getFileStreamCalled = 0;
+            _FileServiceMock.Setup(s => s.GetFileStream(It.IsAny<string>()))
+                .Callback(() => getFileStreamCalled++)
+                .Returns(new MemoryStream());
+
+            var service = _GetInventoryService();
+
+            var caught = Assert.Throws<InvalidOperationException>(() => service.DownloadErrorFile(fileId));
+
+            Assert.AreEqual($"File record for id '{fileId}' not found.", caught.Message);
+            Assert.AreEqual(1, getInventoryFileByIdCalledCount);
+            Assert.AreEqual(0, service.GetInventoryUploadErrorsFolderCalledCount);
+            Assert.AreEqual(0, fileExistsCalledCount);
+            Assert.AreEqual(0, getFileStreamCalled);
+        }
+
+        [Test]
+        public void DownloadErrorFile_FileNotFound()
+        {
+            const int fileId = 23;
+            const string fileName = "InventoryErrorFile.xlsx";
+
+            var getInventoryFileByIdCalledCount = 0;
+            _InventoryFileRepositoryMock.Setup(s => s.GetInventoryFileById(It.IsAny<int>()))
+                .Callback(() => getInventoryFileByIdCalledCount++)
+                .Returns(new InventoryFile
+                {
+                    Id = fileId,
+                    FileName = fileName,
+                });
+
+            var fileExistsCalledCount = 0;
+            _FileServiceMock.Setup(s => s.Exists(It.IsAny<string>()))
+                .Callback(() => fileExistsCalledCount++)
+                .Returns(false);
+
+            var getFileStreamCalled = 0;
+            _FileServiceMock.Setup(s => s.GetFileStream(It.IsAny<string>()))
+                .Callback(() => getFileStreamCalled++)
+                .Returns(new MemoryStream());
+
+            var service = _GetInventoryService();
+
+            var caught = Assert.Throws<FileNotFoundException>(() => service.DownloadErrorFile(fileId));
+
+            Assert.AreEqual($"File '{fileName}' with id '{fileId}' not found.", caught.Message);
+            Assert.AreEqual(1, getInventoryFileByIdCalledCount);
+            Assert.AreEqual(1, service.GetInventoryUploadErrorsFolderCalledCount);
+            Assert.AreEqual(1, fileExistsCalledCount);
+            Assert.AreEqual(0, getFileStreamCalled);
+        }
+
+        [Test]
+        public void DownloadErrorFiles()
+        {
+            var fileIds = new List<int> { 27, 28, 52 };
+            var expectedArchiveFileName = $"InventoryErrorFiles_01242020123007.zip";
+            var testDateTimeNow = new DateTime(2020, 01, 24, 12, 30, 07);
+
+            var getInventoryFileByIdCalledCount = 0;
+            _InventoryFileRepositoryMock.Setup(s => s.GetInventoryFileById(It.IsAny<int>()))
+                .Callback(() => getInventoryFileByIdCalledCount++)
+                .Returns<int>((fileId) =>  new InventoryFile
+                {
+                    Id = fileId,
+                    FileName = "InventoryErrorFile.xlsx",
+                });
+
+            var fileExistsCalledCount = 0;
+            _FileServiceMock.Setup(s => s.Exists(It.IsAny<string>()))
+                .Callback(() => fileExistsCalledCount++)
+                .Returns(true);
+
+            var createZipArchiveCalled = 0;
+            _FileServiceMock.Setup(s => s.CreateZipArchive(It.IsAny<Dictionary<string, string>>()))
+                .Callback(() => createZipArchiveCalled++)
+                .Returns(new MemoryStream());
+
+            var service = _GetInventoryService();
+            service.UTDateTimeNow = testDateTimeNow;
+
+            var result = service.DownloadErrorFiles(fileIds);
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(expectedArchiveFileName, result.Item1);
+            Assert.IsNotNull(result.Item2); // stream
+
+            Assert.AreEqual(3, getInventoryFileByIdCalledCount);
+            Assert.AreEqual(3, service.GetInventoryUploadErrorsFolderCalledCount);
+            Assert.AreEqual(3, fileExistsCalledCount);
+            Assert.AreEqual(1, createZipArchiveCalled);
         }
 
         private void _SetupInventoryServiceDependencies()
@@ -127,6 +297,35 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _BroadcastDataRepositoryFactoryMock
                 .Setup(x => x.GetDataRepository<ISpotLengthRepository>())
                 .Returns(_SpotLengthRepository.Object);
+
+            _BroadcastDataRepositoryFactoryMock
+                .Setup(x => x.GetDataRepository<IInventoryFileRepository>())
+                .Returns(_InventoryFileRepositoryMock.Object);
+        }
+
+        private InventoryServiceUnitTestClass _GetInventoryService()
+        {
+            _SetupInventoryServiceDependencies();
+
+            return new InventoryServiceUnitTestClass(
+                _BroadcastDataRepositoryFactoryMock.Object,
+                _InventoryFileValidatorMock.Object,
+                _DaypartCacheMock.Object,
+                _QuarterCalculationEngineMock.Object,
+                _SmsClientMock.Object,
+                _ProprietarySpotCostCalculationEngineMock.Object,
+                _StationInventoryGroupServiceMock.Object,
+                _AudiencesCacheMock.Object,
+                _RatingForecastServiceMock.Object,
+                _NsiPostingBookServiceMock.Object,
+                _DataLakeFileServiceMock.Object,
+                _LockingEngineMock.Object,
+                _StationProcessingEngineMock.Object,
+                _ImpressionsServiceMock.Object,
+                _OpenMarketFileImporterMock.Object,
+                _FileServiceMock.Object,
+                _InventoryRatingsServiceMock.Object,
+                _InventoryProgramEnrichmentServiceMock.Object);
         }
     }
 }

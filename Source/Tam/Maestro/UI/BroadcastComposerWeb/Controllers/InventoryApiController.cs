@@ -18,6 +18,7 @@ using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.Cable.Entities;
 using Tam.Maestro.Web.Common;
 using Services.Broadcast.ApplicationServices.Security;
+using Tam.Maestro.Common.Utilities.Logging;
 
 namespace BroadcastComposerWeb.Controllers
 {
@@ -259,16 +260,26 @@ namespace BroadcastComposerWeb.Controllers
             if (!fileIds.Any())
                 return new HttpResponseMessage { StatusCode = HttpStatusCode.NoContent, ReasonPhrase = "No file ids were supplied" };
 
-            var archive = _ApplicationServiceFactory.GetApplicationService<IInventoryService>().DownloadErrorFiles(fileIds);
-
-            var result = Request.CreateResponse(HttpStatusCode.OK);
-            result.Content = new StreamContent(archive.Item2);
-            result.Content.Headers.ContentType = new MediaTypeHeaderValue("application/zip");
-            result.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
+            try
             {
-                FileName = archive.Item1
-            };
-            return result;
+                var archive = _ApplicationServiceFactory.GetApplicationService<IInventoryService>()
+                    .DownloadErrorFiles(fileIds);
+
+                var result = Request.CreateResponse(HttpStatusCode.OK);
+                result.Content = new StreamContent(archive.Item2);
+                result.Content.Headers.ContentType = new MediaTypeHeaderValue("application/zip");
+                result.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
+                {
+                    FileName = archive.Item1
+                };
+                return result;
+            }
+            catch (Exception ex)
+            {
+                var message = $"Exception caught attempting to download error files with ids '{string.Join(",", fileIds)}'";
+                LogHelper.Logger.Error(message, ex);
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, message, ex);
+            }
         }
 
         [HttpGet]

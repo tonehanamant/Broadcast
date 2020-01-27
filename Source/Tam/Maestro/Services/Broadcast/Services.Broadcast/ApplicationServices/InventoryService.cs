@@ -21,6 +21,7 @@ using System.Linq;
 using System.Web;
 using Tam.Maestro.Common;
 using Tam.Maestro.Common.DataLayer;
+using Tam.Maestro.Common.Utilities.Logging;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 using Tam.Maestro.Services.Clients;
@@ -306,7 +307,7 @@ namespace Services.Broadcast.ApplicationServices
 
         private void _WriteErrorFileToDisk(int fileId, string fileName, List<string> validationErrors)
         {
-            string path = $@"{BroadcastServiceSystemParameter.InventoryUploadErrorsFolder}\{fileId}_{fileName}.txt";
+            string path = $@"{_GetInventoryUploadErrorsFolder()}\{fileId}_{fileName}.txt";
 
             _FileService.CreateTextFile(path, validationErrors);
         }
@@ -789,19 +790,12 @@ namespace Services.Broadcast.ApplicationServices
 
         public Tuple<string, Stream, string> DownloadErrorFile(int fileId)
         {
-            var errorFiles = _FileService.GetFiles(BroadcastServiceSystemParameter.InventoryUploadErrorsFolder);
+            var fileInfo = _GetExistingInventoryErrorFileInfo(fileId);
+            var fileMimeType = MimeMapping.GetMimeMapping(fileInfo.FriendlyFileName);
+            Stream fileStream = _FileService.GetFileStream(fileInfo.FilePath);
 
-            //get the file by looking in the errors folder for a file with the name starting with the current id
-            var filePath = errorFiles.Where(x => Path.GetFileName(x).StartsWith($"{fileId}_")).SingleOrDefault();
-            if (filePath != null)
-            {
-                var fileName = Path.GetFileName(filePath).Replace($"{fileId}_", string.Empty);   //remove the added id from the filename
-                Stream fileStream = _FileService.GetFileStream(filePath);
-                var fileMimeType = MimeMapping.GetMimeMapping(fileName);
-                return new Tuple<string, Stream, string>(fileName, fileStream, fileMimeType);
-            }
-
-            throw new ApplicationException($"Error file {fileId} not found!");
+            var response = new Tuple<string, Stream, string>(fileInfo.FriendlyFileName, fileStream, fileMimeType);
+            return response;
         }
 
         /// <summary>
@@ -811,25 +805,52 @@ namespace Services.Broadcast.ApplicationServices
         /// <returns>Returns a zip archive as stream and the zip name</returns>
         public Tuple<string, Stream> DownloadErrorFiles(List<int> fileIds)
         {
-            string archiveFileName = $"InventoryErrorFiles_{DateTime.Now.ToString("MMddyyyyhhmmss")}.zip";
-            var errorFiles = _FileService.GetFiles(BroadcastServiceSystemParameter.InventoryUploadErrorsFolder);
-            Dictionary<string, string> errorsFilesToProcess = new Dictionary<string, string>();
+            string archiveFileName = $"InventoryErrorFiles_{_GetDateTimeNow().ToString("MMddyyyyhhmmss")}.zip";
 
-            foreach (var id in fileIds)
-            {
-                //get the file by looking in the errors folder for a file with the name starting with the current id
-                string filePath = errorFiles.Where(x => Path.GetFileName(x).StartsWith($"{id}_")).SingleOrDefault();
-                if (filePath != null)
-                {
-                    string fileName = Path.GetFileName(filePath).Replace($"{id}_", string.Empty);   //remove the added id from the filename
-                    errorsFilesToProcess.Add(filePath, fileName);
-                }
-            }
+            var errorsFilesToProcess = fileIds.Select(_GetExistingInventoryErrorFileInfo).ToDictionary(fi => fi.FilePath, fi => fi.FriendlyFileName);
 
             Stream archiveFile = _FileService.CreateZipArchive(errorsFilesToProcess);
-            return new Tuple<string, Stream>(archiveFileName, archiveFile);
+            var result = new Tuple<string, Stream>(archiveFileName, archiveFile);
+            return result;
         }
-        
+
+        private ExistingInventoryErrorFileInfo _GetExistingInventoryErrorFileInfo(int fileId)
+        {
+            InventoryFile fileDetails;
+            try
+            {
+                fileDetails = _InventoryFileRepository.GetInventoryFileById(fileId);
+            }
+            catch (Exception ex)
+            {
+                var message = $"File record for id '{fileId}' not found.";
+                LogHelper.Logger.Error(message, ex);
+                throw new InvalidOperationException(message, ex);
+            }
+
+            var fileNameSuffix = string.Empty;
+            if (Path.GetExtension(fileDetails.FileName)?.Equals(".XML", StringComparison.OrdinalIgnoreCase) == true)
+            {
+                fileNameSuffix = ".txt";
+            }
+            var transformedFileName = $"{fileDetails.Id}_{fileDetails.FileName}{fileNameSuffix}";
+            var filePath = Path.Combine(_GetInventoryUploadErrorsFolder(), transformedFileName);
+
+            if (_FileService.Exists(filePath) == false)
+            {
+                var message = $"File '{fileDetails.FileName}' with id '{fileId}' not found.";
+                LogHelper.Logger.Error(message);
+                throw new FileNotFoundException(message, fileDetails.FileName);
+            }
+
+            var result = new ExistingInventoryErrorFileInfo
+            {
+                FriendlyFileName = fileDetails.FileName,
+                FilePath = filePath
+            };
+            return result;
+        }
+
         /// <summary>
         /// Checks if the filepath is an excel file or not
         /// </summary>
@@ -846,6 +867,36 @@ namespace Services.Broadcast.ApplicationServices
             var quarters = _QuarterCalculationEngine.GetQuartersForDateRanges(uploadHistoryDates);
 
             return quarters.OrderByDescending(q => q.Year).ThenByDescending(q => q.Quarter).ToList();
+        }
+
+        /// <summary>
+        /// For unit testing.  Abstracts from the static Configuration Service.
+        /// </summary>
+        protected virtual string _GetInventoryUploadErrorsFolder()
+        {
+            var settingValue = BroadcastServiceSystemParameter.InventoryUploadErrorsFolder;
+            return settingValue;
+        }
+
+        /// <summary>
+        /// For unit testing.  To control the "now".
+        /// </summary>
+        protected virtual DateTime _GetDateTimeNow()
+        {
+            return DateTime.Now;
+        }
+
+        private class ExistingInventoryErrorFileInfo
+        {
+            /// <summary>
+            /// The friendly name of the file without the system prefix and suffix. 
+            /// </summary>
+            public string FriendlyFileName { get; set; }
+
+            /// <summary>
+            /// The path to the file.
+            /// </summary>
+            public string FilePath { get; set; }
         }
     }
 }

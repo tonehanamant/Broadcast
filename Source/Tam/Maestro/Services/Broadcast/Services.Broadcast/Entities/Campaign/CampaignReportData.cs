@@ -394,7 +394,7 @@ namespace Services.Broadcast.Entities.Campaign
                     ProposalQuarterTables.Add(newTable);
                 });
         }
-        
+
         //this is total on each table
         private FlowChartQuarterTableWeekData _CalculateTotalsForTable(List<FlowChartQuarterTableMonthData> months)
         {
@@ -414,24 +414,34 @@ namespace Services.Broadcast.Entities.Campaign
             var firstTable = tablesInQuarterDaypart.First();
             var tableData = new FlowChartQuarterTableData
             {
-                TableTitle = $"{firstTable.QuarterLabel} {firstTable.DaypartCode} Total",
-                Months = firstTable.Months
+                TableTitle = $"{firstTable.QuarterLabel} {firstTable.DaypartCode} Total"
             };
-            tableData.Months.ForEach(
-                month =>
+
+            foreach (var month in firstTable.Months)
+            {
+                var tableMonth = new FlowChartQuarterTableMonthData()
                 {
-                    month.Weeks.ForEach(
-                        week =>
-                        {
-                            var weeks = tablesInQuarterDaypart
-                                    .SelectMany(x => x.Months.SelectMany(y => y.Weeks.Where(w => w.WeekStartDate.Equals(week.WeekStartDate))))
-                                    .ToList();
-                            week.Impressions = weeks.Sum(x => x.Impressions);
-                            week.Cost = weeks.Sum(x => x.Cost);
-                            week.CPM = week.Impressions == 0 ? 0 : week.Cost / (decimal)week.Impressions;
-                            week.Units = weeks.Sum(x => x.Units);
-                        });
-                });
+                    MediaMonthId = month.MediaMonthId,
+                    MonthName = month.MonthName
+                };
+                foreach (var week in month.Weeks)
+                {
+                    var items = tablesInQuarterDaypart
+                                .SelectMany(x => x.Months.SelectMany(y => y.Weeks.Where(w=>w.WeekStartDate == week.WeekStartDate)))
+                                .ToList();
+                    var tableWeek = new FlowChartQuarterTableWeekData
+                    {
+                        Impressions = items.Sum(x => x.Impressions),
+                        Cost = items.Sum(x => x.Cost),
+                        Units = items.Sum(x => x.Units),
+                        WeekStartDate = week.WeekStartDate,
+                        DistributionPercentage = items.Average(x => x.DistributionPercentage)
+                    };
+                    tableWeek.CPM = _CalculateCost(tableWeek.Impressions, tableWeek.Cost);
+                    tableMonth.Weeks.Add(tableWeek);
+                }
+                tableData.Months.Add(tableMonth);
+            };
             tableData.Total = _CalculateTotalsForTable(tableData.Months);
             return tableData;
         }
@@ -456,7 +466,7 @@ namespace Services.Broadcast.Entities.Campaign
                     {
                         FlowChartQuarterTableData newTable = new FlowChartQuarterTableData
                         {
-                            TableTitle = $"{quarter.ShortFormatQuarterNumberFirst()} {qDGrp.Key.DaypartCode} :{qDSGrp.Key.SpotLength}s {(qDSGrp.Key.Equivalized ? "eq." : string.Empty)}",
+                            TableTitle = $"{quarter.ShortFormatQuarterNumberFirst()} {qDGrp.Key.DaypartCode} :{qDSGrp.Key.SpotLength}s {(qDSGrp.Key.Equivalized && !qDSGrp.Key.SpotLength.Equals("30") ? "eq." : string.Empty)}",
                             DaypartCode = qDGrp.Key.DaypartCode,
                             QuarterLabel = quarter.ShortFormatQuarterNumberFirst()
                         };
@@ -522,13 +532,13 @@ namespace Services.Broadcast.Entities.Campaign
                         var items = row.ToList();
                         decimal totalCost = items.Sum(y => y.TotalCost);
                         double totalImpressions = items.Sum(y => y.TotalImpressions);
-                        if(totalImpressions == 0 && totalCost == 0)
+                        if (totalImpressions == 0 && totalCost == 0)
                         {
                             return; //don't add empty weeks
                         }
                         int units = items.Sum(y => y.Units);
-                        
-                        
+
+
                         List<object> tableRow = new List<object>
                         {
                             row.Key.DaypartCode,
@@ -584,7 +594,7 @@ namespace Services.Broadcast.Entities.Campaign
                 _CalculateCost(totalImpressions, totalCost)
             };
         }
-        
+
         /// <summary>
         /// Calculate CPM or CPP depending on the value sent in the points property   
         /// </summary>
