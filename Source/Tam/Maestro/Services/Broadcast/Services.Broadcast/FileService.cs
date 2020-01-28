@@ -225,7 +225,10 @@ namespace Common.Services
         {
             if (File.Exists(filePath))
             {
-                return new MemoryStream(File.ReadAllBytes(filePath));
+                var bytes = File.ReadAllBytes(filePath);
+                var memoryStream = new MemoryStream(bytes);
+                memoryStream.Seek(0, SeekOrigin.Begin);
+                return memoryStream;
             }
 
             throw new ApplicationException($"File not found: {filePath}");
