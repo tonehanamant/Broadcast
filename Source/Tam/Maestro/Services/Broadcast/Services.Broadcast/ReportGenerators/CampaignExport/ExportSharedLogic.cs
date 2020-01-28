@@ -13,6 +13,7 @@ namespace Services.Broadcast.ReportGenerators.CampaignExport
     public static class ExportSharedLogic
     {
         public static readonly int ROW_HEIGHT = 24;
+        public static readonly int ROW_HEIGHT_LARGE = 30;
         public static readonly int END_COLUMN_INDEX = 25;
         public static readonly string FONT_COLOR = "#3d5261";
         public static readonly int FIRST_COLUMNS_INDEX = 1;

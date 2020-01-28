@@ -74,7 +74,7 @@ namespace Services.Broadcast.ReportGenerators.CampaignExport
             currentRowIndex++;
 
             //add hiatus days
-            flowChartWorksheet.Row(currentRowIndex).Height = ExportSharedLogic.ROW_HEIGHT;
+            flowChartWorksheet.Row(currentRowIndex).Height = ExportSharedLogic.ROW_HEIGHT_LARGE;
             flowChartWorksheet.Cells[$"C{currentRowIndex}"]
                 .LoadFromArrays(new List<object[]> { table.HiatusDaysFormattedValues.ToArray() });
 
