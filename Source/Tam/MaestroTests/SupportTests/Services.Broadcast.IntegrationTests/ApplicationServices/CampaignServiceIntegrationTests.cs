@@ -24,6 +24,7 @@ using Services.Broadcast.Entities.Campaign;
 using Services.Broadcast.ReportGenerators;
 using Services.Broadcast.IntegrationTests.Stubs;
 using System.IO;
+using Services.Broadcast.ReportGenerators.CampaignExport;
 using Common.Services;
 using Services.Broadcast.ReportGenerators.ProgramLineup;
 using Services.Broadcast.Entities.Plan.Pricing;

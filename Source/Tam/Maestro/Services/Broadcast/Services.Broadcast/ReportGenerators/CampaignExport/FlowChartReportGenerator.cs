@@ -1,8 +1,6 @@
 ﻿using OfficeOpenXml;
 using Services.Broadcast.Entities.Campaign;
 using System.Collections.Generic;
-using System.Data;
-using System.Linq;
 
 namespace Services.Broadcast.ReportGenerators.CampaignExport
 {
@@ -12,8 +10,8 @@ namespace Services.Broadcast.ReportGenerators.CampaignExport
         private readonly string SECOND_MONTH_COLUMN = "G";
         private readonly string THIRD_MONTH_COLUMN = "K";
         private readonly string TABLE_TITLE_COLUMN = "B";
-        
-        private readonly int ROWS_TO_COPY = 7;
+
+        private readonly int ROWS_TO_COPY = 8;
         private int planNameRowIndex = 7;
         private int currentRowIndex = 0;
 
@@ -33,50 +31,53 @@ namespace Services.Broadcast.ReportGenerators.CampaignExport
         {
             //add table title and months label
             flowChartWorksheet.Cells[$"{TABLE_TITLE_COLUMN}{currentRowIndex}"].Value = table.TableTitle;
-            flowChartWorksheet.Cells[$"{FIRST_MONTH_COLUMN}{currentRowIndex}"].Value = table.Months[0].MonthName;
-            flowChartWorksheet.Cells[$"{SECOND_MONTH_COLUMN}{currentRowIndex}"].Value = table.Months[1].MonthName;
-            flowChartWorksheet.Cells[$"{THIRD_MONTH_COLUMN}{currentRowIndex}"].Value = table.Months[2].MonthName;
-            
+            flowChartWorksheet.Cells[$"{FIRST_MONTH_COLUMN}{currentRowIndex}"].Value = table.MonthsLabel[0];
+            flowChartWorksheet.Cells[$"{SECOND_MONTH_COLUMN}{currentRowIndex}"].Value = table.MonthsLabel[1];
+            flowChartWorksheet.Cells[$"{THIRD_MONTH_COLUMN}{currentRowIndex}"].Value = table.MonthsLabel[2];
+
             currentRowIndex++;
 
             //add week start dates
             flowChartWorksheet.Row(currentRowIndex).Height = ExportSharedLogic.ROW_HEIGHT;
-            flowChartWorksheet.Cells[$"C{currentRowIndex++}"]
-                .LoadFromArrays(new List<object[]> { table.Months.SelectMany(x => x.Weeks.Select(y => (object)y.WeekStartDate)).ToArray() });
+            flowChartWorksheet.Cells[$"C{currentRowIndex}"]
+                .LoadFromArrays(new List<object[]> { table.WeeksStartDate.ToArray() });
+            currentRowIndex++;
 
             //add distribution percentages
             flowChartWorksheet.Row(currentRowIndex).Height = ExportSharedLogic.ROW_HEIGHT;
-            flowChartWorksheet.Cells[$"C{currentRowIndex++}"]
-                .LoadFromArrays(new List<object[]> { table.Months.SelectMany(x => x.Weeks.Select(y => (object)y.DistributionPercentage)).ToArray() });
-            
+            flowChartWorksheet.Cells[$"C{currentRowIndex}"]
+                .LoadFromArrays(new List<object[]> { table.DistributionPercentages.ToArray() });
+            currentRowIndex++;
+
             //add units
-            List<object> rowData = table.Months.SelectMany(x => x.Weeks.Select(y => (object)y.Units)).ToList();
-            rowData.Add(table.Total.Units);
-            flowChartWorksheet.Row(currentRowIndex).Height = ExportSharedLogic.ROW_HEIGHT;
-            flowChartWorksheet.Cells[$"C{currentRowIndex++}"]
-                .LoadFromArrays(new List<object[]> {rowData.ToArray()});
-
-            //add impressions
-            rowData = table.Months.SelectMany(x => x.Weeks.Select(y => (object)y.Impressions)).ToList();
-            rowData.Add(table.Total.Impressions);
-            flowChartWorksheet.Row(currentRowIndex).Height = ExportSharedLogic.ROW_HEIGHT;
-            flowChartWorksheet.Cells[$"C{currentRowIndex++}"]
-                .LoadFromArrays(new List<object[]>{ rowData.ToArray() });
-
-            //add CPM
-            rowData = table.Months.SelectMany(x => x.Weeks.Select(y => (object)y.CPM)).ToList();
-            rowData.Add(table.Total.CPM);
-            flowChartWorksheet.Row(currentRowIndex).Height = ExportSharedLogic.ROW_HEIGHT;
-            flowChartWorksheet.Cells[$"C{currentRowIndex++}"]
-                .LoadFromArrays(new List<object[]> { rowData.ToArray() });
-
-            //add cost
-            rowData = table.Months.SelectMany(x => x.Weeks.Select(y => (object)y.Cost)).ToList();
-            rowData.Add(table.Total.Cost);
             flowChartWorksheet.Row(currentRowIndex).Height = ExportSharedLogic.ROW_HEIGHT;
             flowChartWorksheet.Cells[$"C{currentRowIndex}"]
-                .LoadFromArrays(new List<object[]> { rowData.ToArray() });
-            
+                .LoadFromArrays(new List<object[]> { table.UnitsValues.ToArray() });
+            currentRowIndex++;
+
+            //add impressions
+            flowChartWorksheet.Row(currentRowIndex).Height = ExportSharedLogic.ROW_HEIGHT;
+            flowChartWorksheet.Cells[$"C{currentRowIndex}"]
+                .LoadFromArrays(new List<object[]> { table.ImpressionsValues.ToArray() });
+            currentRowIndex++;
+
+            //add CPM
+            flowChartWorksheet.Row(currentRowIndex).Height = ExportSharedLogic.ROW_HEIGHT;
+            flowChartWorksheet.Cells[$"C{currentRowIndex}"]
+                .LoadFromArrays(new List<object[]> { table.CPMValues.ToArray() });
+            currentRowIndex++;
+
+            //add cost
+            flowChartWorksheet.Row(currentRowIndex).Height = ExportSharedLogic.ROW_HEIGHT;
+            flowChartWorksheet.Cells[$"C{currentRowIndex}"]
+                .LoadFromArrays(new List<object[]> { table.CostValues.ToArray() });
+            currentRowIndex++;
+
+            //add hiatus days
+            flowChartWorksheet.Row(currentRowIndex).Height = ExportSharedLogic.ROW_HEIGHT;
+            flowChartWorksheet.Cells[$"C{currentRowIndex}"]
+                .LoadFromArrays(new List<object[]> { table.HiatusDaysFormattedValues.ToArray() });
+
             //next table will be starting 2 rows down
             currentRowIndex += 2;
         }

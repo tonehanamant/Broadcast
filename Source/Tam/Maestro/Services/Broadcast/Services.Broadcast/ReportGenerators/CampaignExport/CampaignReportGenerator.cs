@@ -6,7 +6,7 @@ using System.IO;
 using System.Linq;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 
-namespace Services.Broadcast.ReportGenerators
+namespace Services.Broadcast.ReportGenerators.CampaignExport
 {
     public class CampaignReportGenerator : IReportGenerator<CampaignReportData>
     {

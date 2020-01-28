@@ -464,7 +464,7 @@
     <Compile Include="ReportGenerators\CampaignExport\ExportSharedLogic.cs" />
     <Compile Include="ReportGenerators\CampaignExport\FlowChartReportGenerator.cs" />
     <Compile Include="ReportGenerators\CampaignExport\ProposalReportGenerator.cs" />
-    <Compile Include="ReportGenerators\CampaignReportGenerator.cs" />
+    <Compile Include="ReportGenerators\CampaignExport\CampaignReportGenerator.cs" />
     <Compile Include="ReportGenerators\DetectionExcelReportGenerator.cs" />
     <Compile Include="ReportGenerators\ProgramLineup\ProgramLineupReportGenerator.cs" />
     <Compile Include="ReportGenerators\ProgramLineup\AllocationsReportGenerator.cs" />

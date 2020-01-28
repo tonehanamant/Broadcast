@@ -6,6 +6,7 @@ using Services.Broadcast.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 
@@ -54,18 +55,20 @@ namespace Services.Broadcast.Entities.Campaign
             List<ProjectedPlan> projectedPlans = _ProjectPlansForProposalExport(plans, spotLenghts, daypartDefaults, mediaMonthAndWeekAggregateCache, quarterCalculationEngine);
             _PopulateHeaderData(exportType, campaign, plans, agency, advertiser, guaranteedDemos, spotLenghts, orderedAudiences, quarterCalculationEngine);
 
+            List<DateTime> hiatusDays = plans.SelectMany(x => x.FlightHiatusDays).Distinct().ToList();
+
             //proposal tab
             _PopulateProposalQuarterTableData(projectedPlans);
             _PopulateCampaignTotalsTable();
             _PopulateMarketCoverate(plans);
             _PopulateDaypartsData(projectedPlans);
             _PopulateContentRestrictions(plans);
-            _PopulateFlightHiatuses(plans);
+            _PopulateFlightHiatuses(hiatusDays);
             _PopulateNotes();
 
             //flow chart tab
             projectedPlans = _ProjectPlansForQuarterExport(plans, spotLenghts, daypartDefaults, mediaMonthAndWeekAggregateCache, quarterCalculationEngine);
-            _PopulateFlowChartQuarterTableData(projectedPlans);
+            _PopulateFlowChartQuarterTableData(projectedPlans, hiatusDays);
 
             if (exportType.Equals(CampaignExportTypeEnum.Contract))
             {
@@ -80,14 +83,13 @@ namespace Services.Broadcast.Entities.Campaign
             Notes = "All CPMs are derived from 100% broadcast deliveries, no cable unless otherwise noted.";
         }
 
-        private void _PopulateFlightHiatuses(List<PlanDto> plans)
-        {
-            List<DateTime> hiatusDays = plans.SelectMany(x => x.FlightHiatusDays).Distinct().ToList();
-            foreach (var group in hiatusDays.GroupConsecutiveDays())
+        private void _PopulateFlightHiatuses(List<DateTime> plansHiatuses)
+        {            
+            foreach (var group in plansHiatuses.GroupConsecutiveDays())
             {
                 if (group.Count == 1)
                 {
-                    FlightHiatuses.Add($"{group.First().ToString(DATE_FORMAT_SHORT_YEAR_SINGLE_DIGIT)}");
+                    FlightHiatuses.Add(group.First().ToString(DATE_FORMAT_SHORT_YEAR_SINGLE_DIGIT));
                 }
                 if (group.Count > 1)
                 {
@@ -396,57 +398,48 @@ namespace Services.Broadcast.Entities.Campaign
         }
 
         //this is total on each table
-        private FlowChartQuarterTableWeekData _CalculateTotalsForTable(List<FlowChartQuarterTableMonthData> months)
+        private void _CalculateTotalsForTable(FlowChartQuarterTableData tableData)
         {
-            var totalTable = new FlowChartQuarterTableWeekData
-            {
-                Units = months.SelectMany(x => x.Weeks).Sum(x => x.Units),
-                Impressions = months.SelectMany(x => x.Weeks).Sum(x => x.Impressions),
-                Cost = months.SelectMany(x => x.Weeks).Sum(x => x.Cost)
-            };
-            totalTable.CPM = totalTable.Impressions == 0 ? 0 : totalTable.Cost / (decimal)totalTable.Impressions;
-            return totalTable;
+            tableData.DistributionPercentages.Add("-");
+            tableData.UnitsValues.Add(tableData.UnitsValues.Sum(x => int.Parse(x.ToString())));
+            double impressions = tableData.ImpressionsValues.Sum(x => double.Parse(x.ToString()));
+            tableData.ImpressionsValues.Add(impressions);
+            decimal cost = tableData.CostValues.Sum(x => decimal.Parse(x.ToString()));
+            tableData.CostValues.Add(cost);
+            tableData.CPMValues.Add(_CalculateCost(impressions, cost));
+            tableData.HiatusDaysFormattedValues.Add(tableData.HiatusDays.SelectMany(x=>x).Count());
         }
 
         //this is the total table
         private FlowChartQuarterTableData _CalculateTotalTableData(List<FlowChartQuarterTableData> tablesInQuarterDaypart)
         {
+            const int totalWeeksInQuarter = 13;
             var firstTable = tablesInQuarterDaypart.First();
             var tableData = new FlowChartQuarterTableData
             {
                 TableTitle = $"{firstTable.QuarterLabel} {firstTable.DaypartCode} Total"
             };
-
-            foreach (var month in firstTable.Months)
+            tableData.MonthsLabel = firstTable.MonthsLabel;
+            for(int i=0; i< totalWeeksInQuarter; i++)
             {
-                var tableMonth = new FlowChartQuarterTableMonthData()
-                {
-                    MediaMonthId = month.MediaMonthId,
-                    MonthName = month.MonthName
-                };
-                foreach (var week in month.Weeks)
-                {
-                    var items = tablesInQuarterDaypart
-                                .SelectMany(x => x.Months.SelectMany(y => y.Weeks.Where(w=>w.WeekStartDate == week.WeekStartDate)))
-                                .ToList();
-                    var tableWeek = new FlowChartQuarterTableWeekData
-                    {
-                        Impressions = items.Sum(x => x.Impressions),
-                        Cost = items.Sum(x => x.Cost),
-                        Units = items.Sum(x => x.Units),
-                        WeekStartDate = week.WeekStartDate,
-                        DistributionPercentage = items.Average(x => x.DistributionPercentage)
-                    };
-                    tableWeek.CPM = _CalculateCost(tableWeek.Impressions, tableWeek.Cost);
-                    tableMonth.Weeks.Add(tableWeek);
-                }
-                tableData.Months.Add(tableMonth);
-            };
-            tableData.Total = _CalculateTotalsForTable(tableData.Months);
+                tableData.DistributionPercentages.Add(tablesInQuarterDaypart.Average(x => double.Parse(x.DistributionPercentages[i].ToString())));
+                tableData.UnitsValues.Add(tablesInQuarterDaypart.Sum(x => int.Parse(x.UnitsValues[i].ToString())));
+                double impressions = tablesInQuarterDaypart.Sum(x => double.Parse(x.ImpressionsValues[i].ToString()));
+                tableData.ImpressionsValues.Add(impressions);
+                decimal cost = tablesInQuarterDaypart.Sum(x => decimal.Parse(x.CostValues[i].ToString()));
+                tableData.CostValues.Add(cost);
+                tableData.CPMValues.Add(_CalculateCost(impressions, cost));
+
+                var hiatusDaysThisWeek = tablesInQuarterDaypart.SelectMany(x => x.HiatusDays[i]).Distinct().ToList();
+                tableData.HiatusDays.Add(hiatusDaysThisWeek);
+                tableData.HiatusDaysFormattedValues.Add(_GetHiatusDaysFormattedForWeek(hiatusDaysThisWeek));
+            }
+
+            _CalculateTotalsForTable(tableData);
             return tableData;
         }
 
-        private void _PopulateFlowChartQuarterTableData(List<ProjectedPlan> projectedPlans)
+        private void _PopulateFlowChartQuarterTableData(List<ProjectedPlan> projectedPlans, List<DateTime> hiatusDays)
         {
             projectedPlans.GroupBy(x => new { x.QuarterNumber, x.QuarterYear, x.DaypartCode })
                 .OrderBy(x => x.Key.QuarterYear).ThenBy(x => x.Key.QuarterNumber)
@@ -470,43 +463,57 @@ namespace Services.Broadcast.Entities.Campaign
                             DaypartCode = qDGrp.Key.DaypartCode,
                             QuarterLabel = quarter.ShortFormatQuarterNumberFirst()
                         };
-                        qDSGrp.GroupBy(x => new { x.MediaMonthId, x.MediaMonthName })
+                        qDSGrp.GroupBy(x => x.MediaMonthName)
                             .ToList()
                             .ForEach(monthGroup =>
                             {
                                 var monthItems = monthGroup.ToList();
+                                newTable.MonthsLabel.Add(monthGroup.Key);
 
-                                var month = new FlowChartQuarterTableMonthData
-                                {
-                                    MediaMonthId = monthGroup.Key.MediaMonthId.Value,
-                                    MonthName = monthGroup.Key.MediaMonthName
-                                };
                                 monthItems
                                         .GroupBy(x => x.WeekStartDate)
                                         .ToList()
                                         .ForEach(x =>
                                         {
+                                            List<DateTime> hiatusDaysThisWeek = hiatusDays.Where(y => y >= x.Key.Value && y<= x.Key.Value.AddDays(6)).ToList();
                                             var weeks = x.ToList();
-                                            var newWeek = new FlowChartQuarterTableWeekData
-                                            {
-                                                DistributionPercentage = weeks.Average(y => y.WeightedPercentage),
-                                                Impressions = weeks.Sum(y => y.TotalImpressions) / 1000,
-                                                Units = 0,
-                                                WeekStartDate = x.Key.Value,
-                                                Cost = weeks.Sum(y => y.TotalCost)
-                                            };
-                                            newWeek.CPM = _CalculateCost(newWeek.Impressions, newWeek.Cost);
-                                            month.Weeks.Add(newWeek);
+
+                                            newTable.WeeksStartDate.Add(x.Key.Value);
+                                            newTable.DistributionPercentages.Add(weeks.Average(y => y.WeightedPercentage));
+                                            newTable.UnitsValues.Add(0);
+                                            var impressions = weeks.Sum(y => y.TotalImpressions) / 1000;
+                                            newTable.ImpressionsValues.Add(impressions);
+                                            var cost = weeks.Sum(y => y.TotalCost);
+                                            newTable.CostValues.Add(cost);
+                                            newTable.CPMValues.Add(_CalculateCost(impressions, cost));
+                                            newTable.HiatusDaysFormattedValues.Add(_GetHiatusDaysFormattedForWeek(hiatusDaysThisWeek));
+                                            newTable.HiatusDays.Add(hiatusDaysThisWeek);
                                         });
-                                newTable.Months.Add(month);
                             });
-                        newTable.Total = _CalculateTotalsForTable(newTable.Months);
+                        _CalculateTotalsForTable(newTable);
                         tablesInQuarterDaypart.Add(newTable);
                         FlowChartQuarterTables.Add(newTable);
                     });
                     FlowChartQuarterTableData totalTable = _CalculateTotalTableData(tablesInQuarterDaypart);
                     FlowChartQuarterTables.Add(totalTable);
                 });
+        }
+
+        private string _GetHiatusDaysFormattedForWeek(List<DateTime> hiatuseDaysThisWeek)
+        {
+            List<string> formattedGroups = new List<string>();
+            foreach(var group in hiatuseDaysThisWeek.GroupConsecutiveDays())
+            {
+                if(group.Count == 1)
+                {
+                    formattedGroups.Add(group.First().ToString(DATE_FORMAT_NO_YEAR_SINGLE_DIGIT));
+                }
+                if (group.Count > 1)
+                {
+                    formattedGroups.Add($"{group.First().ToString(DATE_FORMAT_NO_YEAR_SINGLE_DIGIT)}-{group.Last().Day}");
+                }
+            }
+            return string.Join(", ", formattedGroups);
         }
 
         private void _PopulateContractQuarterTableData(List<ProjectedPlan> projectedPlans)
@@ -850,25 +857,15 @@ namespace Services.Broadcast.Entities.Campaign
         public string TableTitle { get; set; }
         public string QuarterLabel { get; set; }
         public string DaypartCode { get; set; }
-        public List<FlowChartQuarterTableMonthData> Months { get; set; } = new List<FlowChartQuarterTableMonthData>();
-        public FlowChartQuarterTableWeekData Total { get; set; }
-    }
-
-    public class FlowChartQuarterTableMonthData
-    {
-        public string MonthName { get; set; }
-        public int MediaMonthId { get; set; }
-        public List<FlowChartQuarterTableWeekData> Weeks { get; set; } = new List<FlowChartQuarterTableWeekData>();
-    }
-
-    public class FlowChartQuarterTableWeekData
-    {
-        public DateTime WeekStartDate { get; set; }
-        public double DistributionPercentage { get; set; }
-        public int Units { get; set; }
-        public double Impressions { get; set; }
-        public decimal CPM { get; set; }
-        public decimal Cost { get; set; }
+        public List<object> MonthsLabel { get; set; } = new List<object>();
+        public List<object> WeeksStartDate { get; set; } = new List<object>();
+        public List<object> DistributionPercentages { get; set; } = new List<object>();
+        public List<object> UnitsValues { get; set; } = new List<object>();
+        public List<object> ImpressionsValues { get; set; } = new List<object>();
+        public List<object> CPMValues { get; set; } = new List<object>();
+        public List<object> CostValues { get; set; } = new List<object>();
+        public List<object> HiatusDaysFormattedValues { get; set; } = new List<object>();
+        public List<List<DateTime>> HiatusDays { get; internal set; } = new List<List<DateTime>>();
     }
 
     public class ContractQuarterTableData

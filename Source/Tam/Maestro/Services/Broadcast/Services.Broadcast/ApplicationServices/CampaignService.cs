@@ -12,6 +12,7 @@ using Services.Broadcast.Entities.Plan.Pricing;
 using Services.Broadcast.Extensions;
 using Services.Broadcast.Helpers;
 using Services.Broadcast.ReportGenerators;
+using Services.Broadcast.ReportGenerators.CampaignExport;
 using Services.Broadcast.ReportGenerators.ProgramLineup;
 using Services.Broadcast.Repositories;
 using Services.Broadcast.Validators;
