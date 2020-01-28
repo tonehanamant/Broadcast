@@ -1,5 +1,7 @@
-﻿using Common.Services.ApplicationServices;
+﻿using ApprovalTests;
+using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
+using IntegrationTests.Common;
 using Microsoft.Practices.Unity;
 using Moq;
 using NUnit.Framework;
@@ -10,10 +12,12 @@ using Services.Broadcast.Cache;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
+using Services.Broadcast.Extensions;
 using Services.Broadcast.Repositories;
 using Services.Broadcast.Validators;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using Tam.Maestro.Services.ContractInterfaces;
 
@@ -40,6 +44,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var lockingManagerApplicationServiceMock = new Mock<IBroadcastLockingManagerApplicationService>();
             var planPricingServiceMock = new Mock<IPlanPricingService>();
             var quarterCalculationEngineMock = new Mock<IQuarterCalculationEngine>();
+            var daypartDefaultService = new Mock<IDaypartDefaultService>();
 
             lockingManagerApplicationServiceMock.Setup(x => x.LockObject(It.IsAny<string>())).Returns(new LockResponse
             {
@@ -51,7 +56,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 planBudgetDeliveryCalculator.Object, mediaMonthAndWeekAggregateCache.Object, planAggregator.Object,
                 IntegrationTestApplicationServiceFactory.Instance.Resolve<ICampaignAggregationJobTrigger>(),
                 _NsiUniverseService.Object, broadcastAudienceCacheMock.Object, spotLengthEngine.Object, lockingManagerApplicationServiceMock.Object,
-                planPricingServiceMock.Object, quarterCalculationEngineMock.Object);
+                planPricingServiceMock.Object, quarterCalculationEngineMock.Object, daypartDefaultService.Object);
 
         }
 
@@ -116,6 +121,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             nsiUniverseService.Setup(n => n.GetAudienceUniverseForMediaMonth(It.IsAny<int>(), It.IsAny<int>())).Returns(1000000);
             var broadcastAudienceCacheMock = new Mock<IBroadcastAudiencesCache>();
             broadcastAudienceCacheMock.Setup(a => a.GetDefaultAudience()).Returns(new Entities.BroadcastAudience());
+            var daypartDefaultService = new Mock<IDaypartDefaultService>();
 
             var lockingManagerApplicationServiceMock = new Mock<IBroadcastLockingManagerApplicationService>();
             lockingManagerApplicationServiceMock.Setup(x => x.LockObject(It.IsAny<string>())).Returns(new LockResponse
@@ -128,7 +134,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var tc = new PlanService(broadcastDataRepositoryFactory.Object, planValidator.Object,
                 planBudgetDeliveryCalculator.Object, mediaMonthAndWeekAggregateCache.Object, planAggregator.Object,
                 campaignAggJobTrigger.Object, nsiUniverseService.Object, broadcastAudienceCacheMock.Object, spotLengthEngine.Object,
-                lockingManagerApplicationServiceMock.Object, planPricingServiceMock.Object, quarterCalculationEngineMock.Object);
+                lockingManagerApplicationServiceMock.Object, planPricingServiceMock.Object, quarterCalculationEngineMock.Object, daypartDefaultService.Object);
 
             var plan = _GetNewPlan();
             var campaignId = plan.CampaignId;
@@ -215,6 +221,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             var broadcastAudienceCacheMock = new Mock<IBroadcastAudiencesCache>();
             broadcastAudienceCacheMock.Setup(a => a.GetDefaultAudience()).Returns(new BroadcastAudience());
+            var daypartDefaultService = new Mock<IDaypartDefaultService>();
 
             var lockingManagerApplicationServiceMock = new Mock<IBroadcastLockingManagerApplicationService>();
             lockingManagerApplicationServiceMock.Setup(x => x.LockObject(It.IsAny<string>())).Returns(new LockResponse
@@ -227,7 +234,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var tc = new PlanService(broadcastDataRepositoryFactory.Object, planValidator.Object,
                 planBudgetDeliveryCalculator.Object, mediaMonthAndWeekAggregateCache.Object, planAggregator.Object,
                 campaignAggJobTrigger.Object, nsiUniverseService.Object, broadcastAudienceCacheMock.Object, spotLengthEngine.Object,
-                lockingManagerApplicationServiceMock.Object, planPricingServiceMock.Object, quarterCalculationEngineMock.Object);
+                lockingManagerApplicationServiceMock.Object, planPricingServiceMock.Object, quarterCalculationEngineMock.Object, daypartDefaultService.Object);
             var plan = _GetNewPlan();
             var campaignId = plan.CampaignId;
             var modifiedWho = "ModificationUser";
@@ -310,6 +317,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             nsiUniverseService.Setup(n => n.GetAudienceUniverseForMediaMonth(It.IsAny<int>(), It.IsAny<int>())).Returns(1000000);
             var broadcastAudienceCacheMock = new Mock<IBroadcastAudiencesCache>();
             broadcastAudienceCacheMock.Setup(a => a.GetDefaultAudience()).Returns(new Entities.BroadcastAudience());
+            var daypartDefaultService = new Mock<IDaypartDefaultService>();
 
             var lockingManagerApplicationServiceMock = new Mock<IBroadcastLockingManagerApplicationService>();
             lockingManagerApplicationServiceMock.Setup(x => x.LockObject(It.IsAny<string>())).Returns(new LockResponse
@@ -322,7 +330,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var service = new PlanService(broadcastDataRepositoryFactory.Object, planValidator.Object,
                 planBudgetDeliveryCalculator.Object, mediaMonthAndWeekAggregateCache.Object, planAggregator.Object,
                 campaignAggJobTrigger.Object, nsiUniverseService.Object, broadcastAudienceCacheMock.Object, spotLengthEngine.Object,
-                lockingManagerApplicationServiceMock.Object, planPricingServiceMock.Object, quarterCalculationEngineMock.Object);
+                lockingManagerApplicationServiceMock.Object, planPricingServiceMock.Object, quarterCalculationEngineMock.Object, daypartDefaultService.Object);
 
 
             PlanDto plan = _GetNewPlan();
@@ -351,13 +359,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var lockingManagerApplicationServiceMock = new Mock<IBroadcastLockingManagerApplicationService>();
             var planPricingServiceMock = new Mock<IPlanPricingService>();
             var quarterCalculationEngineMock = new Mock<IQuarterCalculationEngine>();
+            var daypartDefaultService = new Mock<IDaypartDefaultService>();
 
             planPricingServiceMock.Setup(x => x.IsPricingModelRunningForPlan(It.IsAny<int>())).Returns(true);
 
             var service = new PlanService(broadcastDataRepositoryFactory.Object, planValidator.Object,
                 planBudgetDeliveryCalculator.Object, mediaMonthAndWeekAggregateCache.Object, planAggregator.Object,
                 campaignAggJobTrigger.Object, nsiUniverseService.Object, broadcastAudienceCacheMock.Object, spotLengthEngine.Object,
-                lockingManagerApplicationServiceMock.Object, planPricingServiceMock.Object, quarterCalculationEngineMock.Object);
+                lockingManagerApplicationServiceMock.Object, planPricingServiceMock.Object, quarterCalculationEngineMock.Object, daypartDefaultService.Object);
             
             PlanDto plan = _GetNewPlan();
             plan.Id = 1;
@@ -397,6 +406,32 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             };
             var result = _PlanService.GetVPVHForAudiencesWithBooks(vpvhRequest);
             Assert.IsTrue(result.Exists(i => i.AudienceId == 31 && i.VPVH == 1));
+        }
+
+        [Test]
+        public void OrderPlanDaypartsCorrectly()
+        {
+            var planDayparts = new List<PlanDaypartDto>
+            {
+                new PlanDaypartDto{ DaypartCodeId = 1, StartTimeSeconds = 0, EndTimeSeconds = 2000 },
+                new PlanDaypartDto{ DaypartCodeId = 2, StartTimeSeconds = 1500, EndTimeSeconds = 2788 },
+                new PlanDaypartDto{ DaypartCodeId = 3, StartTimeSeconds = 2788, EndTimeSeconds = 3500 },
+                new PlanDaypartDto{ DaypartCodeId = 4, StartTimeSeconds = 3500, EndTimeSeconds = 3600 },
+                new PlanDaypartDto{ DaypartCodeId = 4, StartTimeSeconds = 1500, EndTimeSeconds = 3500 },
+                new PlanDaypartDto{ DaypartCodeId = 4, StartTimeSeconds = 1500, EndTimeSeconds = 2788 },
+            };
+
+            var daypartDefaults = new List<DaypartDefaultDto>
+            {
+                new DaypartDefaultDto { Id = 1, Code = "OVN" },
+                new DaypartDefaultDto { Id = 2, Code = "EF" },
+                new DaypartDefaultDto { Id = 3, Code = "LF" },
+                new DaypartDefaultDto { Id = 4, Code = "PA" },
+            };
+
+            var orderedPlanDayparts = planDayparts.OrderDayparts(daypartDefaults);
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(orderedPlanDayparts));
         }
 
         private static PlanDto _GetNewPlan()

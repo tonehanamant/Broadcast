@@ -146,6 +146,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private readonly IBroadcastLockingManagerApplicationService _LockingManagerApplicationService;
         private readonly IPlanPricingService _PlanPricingService;
         private readonly IQuarterCalculationEngine _QuarterCalculationEngine;
+        private readonly IDaypartDefaultService _DaypartDefaultService;
 
         private const string _DaypartDefaultNotFoundMessage = "Unable to find daypart default";
 
@@ -160,7 +161,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
             , ISpotLengthEngine spotLengthEngine
             , IBroadcastLockingManagerApplicationService lockingManagerApplicationService
             , IPlanPricingService planPricingService
-            , IQuarterCalculationEngine quarterCalculationEngine)
+            , IQuarterCalculationEngine quarterCalculationEngine
+            , IDaypartDefaultService daypartDefaultService)
         {
             _MediaWeekCache = mediaMonthAndWeekAggregateCache;
             _PlanValidator = planValidator;
@@ -177,6 +179,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _LockingManagerApplicationService = lockingManagerApplicationService;
             _PlanPricingService = planPricingService;
             _QuarterCalculationEngine = quarterCalculationEngine;
+            _DaypartDefaultService = daypartDefaultService;
         }
 
         ///<inheritdoc/>
@@ -265,11 +268,11 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
         }
 
-        private void _CalculateDaypartOverrides(List<PlanDaypartDto> dayparts)
+        private void _CalculateDaypartOverrides(List<PlanDaypartDto> planDayparts)
         {
             var daypartDefaults = _DaypartDefaultRepository.GetAllActiveDaypartDefaultsWithAllData();
 
-            foreach (var planDaypart in dayparts)
+            foreach (var planDaypart in planDayparts)
             {
                 var daypartDefault = daypartDefaults.Single(x => x.Id == planDaypart.DaypartCodeId, _DaypartDefaultNotFoundMessage);
 
@@ -291,9 +294,17 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _SetPlanTotals(plan);
             _SetDefaultDaypartRestrictions(plan);
             _ConvertImpressionsToUserFormat(plan);
+
+            _SortPlanDayparts(plan);
             _SortProgramRestrictions(plan);
 
             return plan;
+        }
+
+        private void _SortPlanDayparts(PlanDto plan)
+        {
+            var daypartDefaults = _DaypartDefaultService.GetAllDaypartDefaults();
+            plan.Dayparts = plan.Dayparts.OrderDayparts(daypartDefaults);
         }
 
         private void _SortProgramRestrictions(PlanDto plan)
