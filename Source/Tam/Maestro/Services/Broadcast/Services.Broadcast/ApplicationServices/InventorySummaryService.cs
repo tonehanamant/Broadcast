@@ -1,6 +1,7 @@
 ﻿using Common.Services.ApplicationServices;
 using Common.Services.Extensions;
 using Common.Services.Repositories;
+using Hangfire;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Cache;
 using Services.Broadcast.Converters.InventorySummary;
@@ -12,7 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using Hangfire;
+using Tam.Maestro.Common.Utilities.Logging;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 
 namespace Services.Broadcast.ApplicationServices
@@ -213,7 +214,19 @@ namespace Services.Broadcast.ApplicationServices
             sw.Stop();
             Debug.WriteLine($"Got quarters in date range in {sw.Elapsed}");
 
-            var inventoryAvailability = inventorySummaryFactory.GetInventoryAvailabilityBySource(inventorySource);
+            InventoryAvailability inventoryAvailability;
+            try
+            {
+                inventoryAvailability = inventorySummaryFactory.GetInventoryAvailabilityBySource(inventorySource);
+            }
+            catch (Exception e)
+            {
+                var msg = $"Inventory not found for source '{inventorySource.Name}'.";
+                Debug.WriteLine(msg);
+                LogHelper.Logger.Error(msg, e);
+                return result;
+            }
+            
             var daypartDefaultsAndIds = _DaypartDefaultRepository.GetAllActiveDaypartDefaults();
             foreach (var quarterDetail in allQuartersBetweenDates)
             {
@@ -236,7 +249,7 @@ namespace Services.Broadcast.ApplicationServices
                 Debug.WriteLine($"Created inventory summary in {sw.Elapsed}");
 
                 // add summary only if there is some inventory during the quarter
-                if (summaryData.TotalStations > 0)
+                if (summaryData.TotalPrograms > 0)
                 {
                     result.Add(summaryData);
                 }

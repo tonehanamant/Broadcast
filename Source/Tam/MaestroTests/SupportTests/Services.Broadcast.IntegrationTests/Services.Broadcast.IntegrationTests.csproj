@@ -981,6 +981,7 @@
     <None Include="Files\StrataSBMSInvoicePostExportValid.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Files\Syndicator Template_P55+ FINAL_01.27.20.xlsx" />
     <None Include="Files\ThirdPartyFileMultipleDaypartsWithFixedPriceColumn.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

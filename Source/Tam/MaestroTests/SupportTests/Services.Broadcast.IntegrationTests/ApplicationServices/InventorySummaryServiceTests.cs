@@ -197,6 +197,36 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        public void AggregateInventorySummaryData_Syndication()
+        {
+            const int inventorySourceId = 13;
+            const string testFileName = "Syndication_ValidFile2.xlsx";
+            var currentDateTime = new DateTime(2020, 01, 27);
+
+            using (new TransactionScopeWrapper())
+            {
+                _InventoryFileTestHelper.UploadProprietaryInventoryFile(testFileName, currentDateTime);
+                _InventorySummaryService.AggregateInventorySummaryData(new List<int> { inventorySourceId });
+
+                var inventoryCards = _InventorySummaryService.GetInventorySummariesWithCache(new InventorySummaryFilterDto
+                {
+                    InventorySourceId = inventorySourceId,
+                }, currentDateTime);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(InventorySummaryDto), "LastUpdatedDate");
+                var jsonSerializerSettings = new JsonSerializerSettings
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(inventoryCards, jsonSerializerSettings));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
         public void GetInventorySummaryDetailsTest()
         {
             using (new TransactionScopeWrapper())
