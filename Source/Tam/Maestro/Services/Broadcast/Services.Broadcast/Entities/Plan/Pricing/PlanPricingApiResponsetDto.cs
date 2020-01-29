@@ -2,7 +2,7 @@
 
 namespace Services.Broadcast.Entities.Plan.Pricing
 {
-        public class PlanPricingApiResponsetDto
+    public class PlanPricingApiResponseDto
     {
         [JsonProperty("request_id")]
         public string RequestId { get; set; }

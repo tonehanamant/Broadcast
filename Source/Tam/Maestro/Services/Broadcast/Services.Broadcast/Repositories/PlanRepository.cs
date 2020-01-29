@@ -114,8 +114,8 @@ namespace Services.Broadcast.Repositories
         void UpdatePlanPricingJob(PlanPricingJob planPricingJob);
         PlanPricingJob GetLatestPricingJob(int planId);
         void SavePlanPricingParameters(PlanPricingParametersDto planPricingRequestDto);
-        void SavePricingApiResults(int planId, PlanPricingApiResponsetDto result);
-        PlanPricingApiResponsetDto GetPricingApiResults(int planId);
+        void SavePricingApiResults(int planId, PlanPricingApiResponseDto result);
+        PlanPricingApiResponseDto GetPricingApiResults(int planId);
         void SavePricingAggregateResults(int planId, PlanPricingResultDto result);
         PlanPricingResultDto GetPricingResults(int planId);
 
@@ -1167,7 +1167,7 @@ namespace Services.Broadcast.Repositories
             });
         }
 
-        public void SavePricingApiResults(int planId, PlanPricingApiResponsetDto result)
+        public void SavePricingApiResults(int planId, PlanPricingApiResponseDto result)
         {
             _InReadUncommitedTransaction(context =>
             {
@@ -1213,7 +1213,7 @@ namespace Services.Broadcast.Repositories
             });
         }
 
-        public PlanPricingApiResponsetDto GetPricingApiResults(int planId)
+        public PlanPricingApiResponseDto GetPricingApiResults(int planId)
         {
             return _InReadUncommitedTransaction(context =>
             {
@@ -1223,7 +1223,7 @@ namespace Services.Broadcast.Repositories
                     .Include(x => x.plan_version_pricing_api_result_spots)
                     .Single(p => p.plan_version_id == planVersionId);
 
-                return new PlanPricingApiResponsetDto
+                return new PlanPricingApiResponseDto
                 {
                     Results = new PlanPricingApiResultDto
                     {

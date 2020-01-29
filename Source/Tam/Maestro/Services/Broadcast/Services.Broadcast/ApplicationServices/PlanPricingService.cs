@@ -14,6 +14,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Tam.Maestro.Common.DataLayer;
+using Tam.Maestro.Common.Utilities.Logging;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 
 namespace Services.Broadcast.ApplicationServices
@@ -283,9 +284,10 @@ namespace Services.Broadcast.ApplicationServices
                         DaypartId = daypart.Daypart.Id,
                         Impressions = program.ProvidedImpressions ?? program.ProjectedImpressions,
                         Cost = program.SpotCost,
-                        Unit = program.Unit,
-                        InventorySource = program.InventorySource,
-                        InventorySourceType = program.InventorySourceType
+                        // Data Science API does not yet handle these fields.
+                        //Unit = program.Unit,
+                        //InventorySource = program.InventorySource,
+                        //InventorySourceType = program.InventorySourceType
                     });
 
                     pricingModelSpots.AddRange(spots);
@@ -304,7 +306,8 @@ namespace Services.Broadcast.ApplicationServices
                 pricingModelWeeks.Add(new PlanPricingApiRequestWeekDto
                 {
                     MediaWeekId = week.MediaWeekId,
-                    Impressions = week.WeeklyImpressions
+                    ImpressionGoal = week.WeeklyImpressions,
+                    CpmGoal = (week.WeeklyBudget / (decimal)week.WeeklyImpressions) * 1000
                 });
             }
 
@@ -330,37 +333,48 @@ namespace Services.Broadcast.ApplicationServices
                 var parameters = _GetPricingApiRequestParameters(planPricingParametersDto, plan, pricingMarkets);
 
                 planPricingJobDiagnostic.RecordGatherInventoryStart();
+
                 var inventory = _PlanPricingInventoryEngine.GetInventoryForPlan(plan);
+
                 planPricingJobDiagnostic.RecordGatherInventoryEnd();
-                
+
+                _ValidateInventory(inventory);
+
                 var pricingApiRequest = new PlanPricingApiRequestDto
                 {
                     Weeks = _GetPricingModelWeeks(plan),
-                    Spots = _GetPricingModelSpots(inventory),
-                    Parameters = parameters
+                    Spots = _GetPricingModelSpots(inventory)
                 };
 
                 _PlanRepository.SavePricingRequest(parameters);
 
                 planPricingJobDiagnostic.RecordApiCallStart();
 
-                // TODO: When the spots api is implemented make the merging of the results smoother.
-                var apiResults = _PricingApiClient.GetPricingCalculationResult(pricingApiRequest);
-                var apiSpotsResults = _PricingApiClient.GetPricingSpotsResult(pricingApiRequest);
-                apiResults.Results.Spots = apiSpotsResults.Results.Spots;
+                var apiCpmResult = _PricingApiClient.GetPricingCalculationResult(pricingApiRequest);
+                var apiAllocationResult = _PricingApiClient.GetPricingSpotsResult(pricingApiRequest);
+                var spots = _MapToResultSpots(apiAllocationResult, pricingApiRequest);
+                var combinedApiResponse = new PlanPricingApiResponseDto
+                {
+                    RequestId = apiAllocationResult.RequestId,
+                    Results = new PlanPricingApiResultDto
+                    {
+                        OptimalCpm = apiCpmResult.Results.MinimumCost,
+                        Spots = spots
+                    }
+                };
+
+                _ValidateApiResponse(combinedApiResponse);
 
                 planPricingJobDiagnostic.RecordApiCallEnd();
 
                 planPricingJobDiagnostic.RecordEnd();
 
-                var aggregatedResults = AggregateResults(inventory, apiResults);
+                var aggregatedResults = AggregateResults(inventory, combinedApiResponse);
 
                 using (var transaction = new TransactionScopeWrapper())
                 {
-                    _PlanRepository.SavePricingApiResults(plan.Id, apiResults);
-
+                    _PlanRepository.SavePricingApiResults(plan.Id, combinedApiResponse);
                     _PlanRepository.SavePricingAggregateResults(plan.Id, aggregatedResults);
-
                     _PlanRepository.UpdatePlanPricingJob(new PlanPricingJob
                     {
                         Id = jobId,
@@ -381,34 +395,72 @@ namespace Services.Broadcast.ApplicationServices
                     ErrorMessage = exception.ToString(),
                     Completed = DateTime.Now
                 });
+
+                LogHelper.Logger.Error($"Error attempting to run the pricing model : {exception.Message}", exception);
             }
         }
 
-        public void _ValidateApiResponse(PlanPricingApiResponsetDto apiResponse)
+        private void _ValidateInventory(List<PlanPricingInventoryProgram> inventory)
+        {
+            if (!inventory.Any())
+            {
+                throw new Exception("No inventory found for pricing run");
+            }
+        }
+
+        private List<PlanPricingApiResultSpotDto> _MapToResultSpots(PlanPricingApiSpotsResponseDto apiSpotsResults, PlanPricingApiRequestDto pricingApiRequest)
+        {
+            var results = new List<PlanPricingApiResultSpotDto>();
+
+            foreach (var weeklyAllocation in apiSpotsResults.Results)
+            {
+                foreach (var manifestId in weeklyAllocation.AllocatedManifestIds)
+                {
+                    var originalSpot = pricingApiRequest.Spots
+                                        .FirstOrDefault(x => x.MediaWeekId == weeklyAllocation.MediaWeekId &&
+                                                             manifestId == x.Id);
+
+                    if (originalSpot == null)
+                        throw new Exception("Response from API contains manifest id not found in sent data");
+
+                    var spotResult = new PlanPricingApiResultSpotDto
+                    {
+                        Id = originalSpot.Id,
+                        Cost = originalSpot.Cost,
+                        DaypartId = originalSpot.DaypartId,
+                        Impressions = originalSpot.Impressions,
+                        MediaWeekId = originalSpot.MediaWeekId,
+                        Spots = 1
+                    };
+
+                    results.Add(spotResult);
+                }
+            }
+
+            return results;
+        }
+
+        public void _ValidateApiResponse(PlanPricingApiResponseDto apiResponse)
         {
             if (apiResponse.Results == null)
             {
                 var msg = $"The api returned no results for request '{apiResponse.RequestId}'.";
-                throw new ApplicationException(msg);
+                throw new Exception(msg);
             }
 
             if (!apiResponse.Results.Spots.Any())
             {
                 var msg = $"The api returned no spots for request '{apiResponse.RequestId}'.";
-                throw new ApplicationException(msg);
+                throw new Exception(msg);
             }
         }
 
         public PlanPricingResultDto AggregateResults(
             List<PlanPricingInventoryProgram> inventory,
-            PlanPricingApiResponsetDto apiResponse)
+            PlanPricingApiResponseDto apiResponse)
         {
-            _ValidateApiResponse(apiResponse);
-
             var result = new PlanPricingResultDto();
-
             var programs = _GetPrograms(inventory, apiResponse);
-
             var totalCostForAllPrograms = programs.Sum(x => x.TotalCost);
             var totalImpressionsForAllProgams = programs.Sum(x => x.TotalImpressions);
             var totalSpotsForAllPrograms = programs.Sum(x => x.TotalSpots);
@@ -439,11 +491,11 @@ namespace Services.Broadcast.ApplicationServices
 
         private List<PlanPricingProgram> _GetPrograms(
             List<PlanPricingInventoryProgram> inventory,
-            PlanPricingApiResponsetDto apiResponse)
+            PlanPricingApiResponseDto apiResponse)
         {
             var result = new List<PlanPricingProgram>();
             var inventoryGroupedByProgramName = inventory
-                .SelectMany(x => x.ManifestDayparts.Select(d => new ManifestWithManifestDaypart
+                .SelectMany(x => x.ManifestDayparts.Select(d => new PlanPricingManifestWithManifestDaypart
                 {
                     Manifest = x,
                     ManifestDaypart = d
@@ -480,7 +532,7 @@ namespace Services.Broadcast.ApplicationServices
             return result;
         }
 
-        private List<PlanPricingApiResultSpotDto> _GetAllocatedProgramSpots(PlanPricingApiResponsetDto apiResponse, List<ManifestWithManifestDaypart> programInventory)
+        private List<PlanPricingApiResultSpotDto> _GetAllocatedProgramSpots(PlanPricingApiResponseDto apiResponse, List<PlanPricingManifestWithManifestDaypart> programInventory)
         {
             var result = new List<PlanPricingApiResultSpotDto>();
 
@@ -531,13 +583,6 @@ namespace Services.Broadcast.ApplicationServices
             };
 
             return pricingApiRequest;
-        }
-
-        private class ManifestWithManifestDaypart
-        {
-            public PlanPricingInventoryProgram Manifest { get; set; }
-
-            public PlanPricingInventoryProgram.ManifestDaypart ManifestDaypart { get; set; }
         }
 
         public string ForceCompletePlanPricingJob(int jobId, string username)

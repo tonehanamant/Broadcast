@@ -1,22 +1,27 @@
 ﻿{
   "contract": [
     {
+      "cpm_goal": 1000.0000,
       "impression_goal": 20.0,
       "week_id": 784
     },
     {
+      "cpm_goal": 1000.0000,
       "impression_goal": 20.0,
       "week_id": 785
     },
     {
+      "cpm_goal": 1000.0000,
       "impression_goal": 20.0,
       "week_id": 786
     },
     {
+      "cpm_goal": 1000.0000,
       "impression_goal": 20.0,
       "week_id": 787
     },
     {
+      "cpm_goal": 1000.0000,
       "impression_goal": 20.0,
       "week_id": 788
     }
@@ -27,9 +32,6 @@
       "daypart_id": 32941,
       "id": 287146,
       "impressions": 69000.0,
-      "inventory_source": "Open Market",
-      "inventory_source_type": "Open Market",
-      "unit": null,
       "week_id": 771
     },
     {
@@ -37,9 +39,6 @@
       "daypart_id": 32941,
       "id": 287146,
       "impressions": 69000.0,
-      "inventory_source": "Open Market",
-      "inventory_source_type": "Open Market",
-      "unit": null,
       "week_id": 772
     },
     {
@@ -47,9 +46,6 @@
       "daypart_id": 32941,
       "id": 287146,
       "impressions": 69000.0,
-      "inventory_source": "Open Market",
-      "inventory_source_type": "Open Market",
-      "unit": null,
       "week_id": 773
     },
     {
@@ -57,9 +53,6 @@
       "daypart_id": 32941,
       "id": 287146,
       "impressions": 69000.0,
-      "inventory_source": "Open Market",
-      "inventory_source_type": "Open Market",
-      "unit": null,
       "week_id": 774
     },
     {
@@ -67,9 +60,6 @@
       "daypart_id": 32941,
       "id": 287146,
       "impressions": 69000.0,
-      "inventory_source": "Open Market",
-      "inventory_source_type": "Open Market",
-      "unit": null,
       "week_id": 775
     },
     {
@@ -77,9 +67,6 @@
       "daypart_id": 32055,
       "id": 287147,
       "impressions": 59200.0,
-      "inventory_source": "Open Market",
-      "inventory_source_type": "Open Market",
-      "unit": null,
       "week_id": 771
     },
     {
@@ -87,9 +74,6 @@
       "daypart_id": 32055,
       "id": 287147,
       "impressions": 59200.0,
-      "inventory_source": "Open Market",
-      "inventory_source_type": "Open Market",
-      "unit": null,
       "week_id": 772
     },
     {
@@ -97,9 +81,6 @@
       "daypart_id": 32055,
       "id": 287147,
       "impressions": 59200.0,
-      "inventory_source": "Open Market",
-      "inventory_source_type": "Open Market",
-      "unit": null,
       "week_id": 773
     },
     {
@@ -107,9 +88,6 @@
       "daypart_id": 32055,
       "id": 287147,
       "impressions": 59200.0,
-      "inventory_source": "Open Market",
-      "inventory_source_type": "Open Market",
-      "unit": null,
       "week_id": 774
     },
     {
@@ -117,9 +95,6 @@
       "daypart_id": 32055,
       "id": 287147,
       "impressions": 59200.0,
-      "inventory_source": "Open Market",
-      "inventory_source_type": "Open Market",
-      "unit": null,
       "week_id": 775
     },
     {
@@ -127,9 +102,6 @@
       "daypart_id": 32943,
       "id": 287150,
       "impressions": 60400.0,
-      "inventory_source": "Open Market",
-      "inventory_source_type": "Open Market",
-      "unit": null,
       "week_id": 771
     },
     {
@@ -137,9 +109,6 @@
       "daypart_id": 32943,
       "id": 287150,
       "impressions": 60400.0,
-      "inventory_source": "Open Market",
-      "inventory_source_type": "Open Market",
-      "unit": null,
       "week_id": 772
     },
     {
@@ -147,9 +116,6 @@
       "daypart_id": 32943,
       "id": 287150,
       "impressions": 60400.0,
-      "inventory_source": "Open Market",
-      "inventory_source_type": "Open Market",
-      "unit": null,
       "week_id": 773
     },
     {
@@ -157,9 +123,6 @@
       "daypart_id": 32943,
       "id": 287150,
       "impressions": 60400.0,
-      "inventory_source": "Open Market",
-      "inventory_source_type": "Open Market",
-      "unit": null,
       "week_id": 774
     },
     {
@@ -167,9 +130,6 @@
       "daypart_id": 32943,
       "id": 287150,
       "impressions": 60400.0,
-      "inventory_source": "Open Market",
-      "inventory_source_type": "Open Market",
-      "unit": null,
       "week_id": 775
     },
     {
@@ -177,9 +137,6 @@
       "daypart_id": 32072,
       "id": 287151,
       "impressions": 43600.0,
-      "inventory_source": "Open Market",
-      "inventory_source_type": "Open Market",
-      "unit": null,
       "week_id": 771
     },
     {
@@ -187,9 +144,6 @@
       "daypart_id": 32072,
       "id": 287151,
       "impressions": 43600.0,
-      "inventory_source": "Open Market",
-      "inventory_source_type": "Open Market",
-      "unit": null,
       "week_id": 772
     },
     {
@@ -197,9 +151,6 @@
       "daypart_id": 32072,
       "id": 287151,
       "impressions": 43600.0,
-      "inventory_source": "Open Market",
-      "inventory_source_type": "Open Market",
-      "unit": null,
       "week_id": 773
     },
     {
@@ -207,9 +158,6 @@
       "daypart_id": 32072,
       "id": 287151,
       "impressions": 43600.0,
-      "inventory_source": "Open Market",
-      "inventory_source_type": "Open Market",
-      "unit": null,
       "week_id": 774
     },
     {
@@ -217,9 +165,6 @@
       "daypart_id": 32072,
       "id": 287151,
       "impressions": 43600.0,
-      "inventory_source": "Open Market",
-      "inventory_source_type": "Open Market",
-      "unit": null,
       "week_id": 775
     },
     {
@@ -227,9 +172,6 @@
       "daypart_id": 29548,
       "id": 287154,
       "impressions": 46800.0,
-      "inventory_source": "Open Market",
-      "inventory_source_type": "Open Market",
-      "unit": null,
       "week_id": 771
     },
     {
@@ -237,9 +179,6 @@
       "daypart_id": 29548,
       "id": 287154,
       "impressions": 46800.0,
-      "inventory_source": "Open Market",
-      "inventory_source_type": "Open Market",
-      "unit": null,
       "week_id": 772
     },
     {
@@ -247,9 +186,6 @@
       "daypart_id": 29548,
       "id": 287154,
       "impressions": 46800.0,
-      "inventory_source": "Open Market",
-      "inventory_source_type": "Open Market",
-      "unit": null,
       "week_id": 773
     },
     {
@@ -257,9 +193,6 @@
       "daypart_id": 29548,
       "id": 287154,
       "impressions": 46800.0,
-      "inventory_source": "Open Market",
-      "inventory_source_type": "Open Market",
-      "unit": null,
       "week_id": 774
     },
     {
@@ -267,9 +200,6 @@
       "daypart_id": 29548,
       "id": 287154,
       "impressions": 46800.0,
-      "inventory_source": "Open Market",
-      "inventory_source_type": "Open Market",
-      "unit": null,
       "week_id": 775
     },
     {
@@ -277,9 +207,6 @@
       "daypart_id": 32941,
       "id": 288692,
       "impressions": 600.0,
-      "inventory_source": "Open Market",
-      "inventory_source_type": "Open Market",
-      "unit": null,
       "week_id": 771
     },
     {
@@ -287,9 +214,6 @@
       "daypart_id": 32941,
       "id": 288692,
       "impressions": 600.0,
-      "inventory_source": "Open Market",
-      "inventory_source_type": "Open Market",
-      "unit": null,
       "week_id": 772
     },
     {
@@ -297,9 +221,6 @@
       "daypart_id": 32941,
       "id": 288692,
       "impressions": 600.0,
-      "inventory_source": "Open Market",
-      "inventory_source_type": "Open Market",
-      "unit": null,
       "week_id": 773
     },
     {
@@ -307,9 +228,6 @@
       "daypart_id": 32941,
       "id": 288692,
       "impressions": 600.0,
-      "inventory_source": "Open Market",
-      "inventory_source_type": "Open Market",
-      "unit": null,
       "week_id": 774
     },
     {
@@ -317,9 +235,6 @@
       "daypart_id": 32941,
       "id": 288692,
       "impressions": 600.0,
-      "inventory_source": "Open Market",
-      "inventory_source_type": "Open Market",
-      "unit": null,
       "week_id": 775
     },
     {
@@ -327,9 +242,6 @@
       "daypart_id": 29555,
       "id": 288693,
       "impressions": 600.0,
-      "inventory_source": "Open Market",
-      "inventory_source_type": "Open Market",
-      "unit": null,
       "week_id": 771
     },
     {
@@ -337,9 +249,6 @@
       "daypart_id": 29555,
       "id": 288693,
       "impressions": 600.0,
-      "inventory_source": "Open Market",
-      "inventory_source_type": "Open Market",
-      "unit": null,
       "week_id": 772
     },
     {
@@ -347,9 +256,6 @@
       "daypart_id": 29555,
       "id": 288693,
       "impressions": 600.0,
-      "inventory_source": "Open Market",
-      "inventory_source_type": "Open Market",
-      "unit": null,
       "week_id": 773
     },
     {
@@ -357,9 +263,6 @@
       "daypart_id": 29555,
       "id": 288693,
       "impressions": 600.0,
-      "inventory_source": "Open Market",
-      "inventory_source_type": "Open Market",
-      "unit": null,
       "week_id": 774
     },
     {
@@ -367,9 +270,6 @@
       "daypart_id": 29555,
       "id": 288693,
       "impressions": 600.0,
-      "inventory_source": "Open Market",
-      "inventory_source_type": "Open Market",
-      "unit": null,
       "week_id": 775
     },
     {
@@ -377,9 +277,6 @@
       "daypart_id": 29548,
       "id": 288694,
       "impressions": 400.0,
-      "inventory_source": "Open Market",
-      "inventory_source_type": "Open Market",
-      "unit": null,
       "week_id": 771
     },
     {
@@ -387,9 +284,6 @@
       "daypart_id": 29548,
       "id": 288694,
       "impressions": 400.0,
-      "inventory_source": "Open Market",
-      "inventory_source_type": "Open Market",
-      "unit": null,
       "week_id": 772
     },
     {
@@ -397,9 +291,6 @@
       "daypart_id": 29548,
       "id": 288694,
       "impressions": 400.0,
-      "inventory_source": "Open Market",
-      "inventory_source_type": "Open Market",
-      "unit": null,
       "week_id": 773
     },
     {
@@ -407,9 +298,6 @@
       "daypart_id": 29548,
       "id": 288694,
       "impressions": 400.0,
-      "inventory_source": "Open Market",
-      "inventory_source_type": "Open Market",
-      "unit": null,
       "week_id": 774
     },
     {
@@ -417,9 +305,6 @@
       "daypart_id": 29548,
       "id": 288694,
       "impressions": 400.0,
-      "inventory_source": "Open Market",
-      "inventory_source_type": "Open Market",
-      "unit": null,
       "week_id": 775
     },
     {
@@ -427,9 +312,6 @@
       "daypart_id": 32055,
       "id": 288695,
       "impressions": 400.0,
-      "inventory_source": "Open Market",
-      "inventory_source_type": "Open Market",
-      "unit": null,
       "week_id": 771
     },
     {
@@ -437,9 +319,6 @@
       "daypart_id": 32055,
       "id": 288695,
       "impressions": 400.0,
-      "inventory_source": "Open Market",
-      "inventory_source_type": "Open Market",
-      "unit": null,
       "week_id": 772
     },
     {
@@ -447,9 +326,6 @@
       "daypart_id": 32055,
       "id": 288695,
       "impressions": 400.0,
-      "inventory_source": "Open Market",
-      "inventory_source_type": "Open Market",
-      "unit": null,
       "week_id": 773
     },
     {
@@ -457,9 +333,6 @@
       "daypart_id": 32055,
       "id": 288695,
       "impressions": 400.0,
-      "inventory_source": "Open Market",
-      "inventory_source_type": "Open Market",
-      "unit": null,
       "week_id": 774
     },
     {
@@ -467,11 +340,7 @@
       "daypart_id": 32055,
       "id": 288695,
       "impressions": 400.0,
-      "inventory_source": "Open Market",
-      "inventory_source_type": "Open Market",
-      "unit": null,
       "week_id": 775
     }
-  ],
-  "params": null
+  ]
 }

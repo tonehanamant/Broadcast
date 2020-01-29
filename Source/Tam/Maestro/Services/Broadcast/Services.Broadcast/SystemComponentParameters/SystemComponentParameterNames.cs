@@ -682,8 +682,18 @@ namespace Tam.Maestro.Common.SystemComponentParameter
 		{
             get { return "MediaMonthCruchCacheSlidingExpirationSeconds"; }
         }
-	 
-		public static string ProgramGuideClientId  
+
+        public static string PlanPricingFloorPricingUrl
+        {
+            get { return "PlanPricingFloorPricingUrl"; }
+        }
+
+        public static string PlanPricingAllocationsUrl
+        {
+            get { return "PlanPricingAllocationsUrl"; }
+        }
+
+        public static string ProgramGuideClientId  
 		{
             get { return "ProgramGuideClientId"; }
         }

@@ -1,79 +1,37 @@
 ﻿using Services.Broadcast.Entities.Plan.Pricing;
 using System;
-using System.Collections.Generic;
 using System.Net.Http;
+using Tam.Maestro.Services.Cable.SystemComponentParameters;
 
 namespace Services.Broadcast.Clients
 {
     public interface IPricingApiClient
     {
-        PlanPricingApiResponsetDto GetPricingCalculationResult(PlanPricingApiRequestDto request);
-
-        PlanPricingApiResponsetDto GetPricingSpotsResult(PlanPricingApiRequestDto request);
-    }
-
-    public class MockedResultsPricingApiClient : IPricingApiClient
-    {
-        public PlanPricingApiResponsetDto GetPricingCalculationResult(PlanPricingApiRequestDto request)
-        {
-            return new PlanPricingApiResponsetDto
-            {
-                RequestId = Guid.NewGuid().ToString(),
-                Results = new PlanPricingApiResultDto
-                {
-                    // Mocked.
-                    OptimalCpm = 13.3m
-                }
-            };
-        }
-
-        public PlanPricingApiResponsetDto GetPricingSpotsResult(PlanPricingApiRequestDto request)
-        {
-            var spots = new List<PlanPricingApiResultSpotDto>();
-
-            foreach (var spot in request.Spots)
-            {
-                spots.Add(new PlanPricingApiResultSpotDto
-                {
-                    Id = spot.Id,
-                    MediaWeekId = spot.MediaWeekId,
-                    Cost = spot.Cost,
-                    Impressions = spot.Impressions,
-                    DaypartId = spot.DaypartId,
-                    Spots = 3
-                });
-            }
-
-            return new PlanPricingApiResponsetDto
-            {
-                RequestId = Guid.NewGuid().ToString(),
-                Results = new PlanPricingApiResultDto
-                {
-                    // Mocked.
-                    Spots = spots
-                }
-            };
-        }
+        PlanPricingApiCpmResponseDto GetPricingCalculationResult(PlanPricingApiRequestDto request);
+        PlanPricingApiSpotsResponseDto GetPricingSpotsResult(PlanPricingApiRequestDto request);
     }
 
     public class PricingApiClient : IPricingApiClient
     {
-        private readonly string _BaseUrl;
+        private readonly string _FloorPricingUrl;
+        private readonly string _OpenMarketSpotsAllocationUrl;
 
         public PricingApiClient()
         {
-            _BaseUrl = @"https://datascience-dev.cadent.tv/broadcast-floor-pricing/v1/optimization";
+            _FloorPricingUrl = BroadcastServiceSystemParameter.PlanPricingFloorPricingUrl;
+            _OpenMarketSpotsAllocationUrl = BroadcastServiceSystemParameter.PlanPricingAllocationsUrl;
         }          
 
-        public PlanPricingApiResponsetDto GetPricingCalculationResult(PlanPricingApiRequestDto request)
+        public PlanPricingApiCpmResponseDto GetPricingCalculationResult(PlanPricingApiRequestDto request)
         {
-            var url = $"{_BaseUrl}";
-            return _Post<PlanPricingApiResponsetDto>(url, request);
+            var url = $"{_FloorPricingUrl}";
+            return _Post<PlanPricingApiCpmResponseDto>(url, request);
         }
 
-        public PlanPricingApiResponsetDto GetPricingSpotsResult(PlanPricingApiRequestDto request)
+        public PlanPricingApiSpotsResponseDto GetPricingSpotsResult(PlanPricingApiRequestDto request)
         {
-            throw new NotImplementedException();
+            var url = $"{_OpenMarketSpotsAllocationUrl}";
+            return _Post<PlanPricingApiSpotsResponseDto>(url, request);
         }
 
         protected virtual T _Post<T>(string url, object data)

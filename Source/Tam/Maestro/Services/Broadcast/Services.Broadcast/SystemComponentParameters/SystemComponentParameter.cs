@@ -761,8 +761,20 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
             get { return SystemComponentParameterHelper.GetPropertyValue<string>
 					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.MediaMonthCruchCacheSlidingExpirationSeconds); }
         }
-	 
-		public static string ProgramGuideClientId  
+
+        public static string PlanPricingFloorPricingUrl
+        {
+            get { return SystemComponentParameterHelper.GetPropertyValue<string>
+                  (BroadcastServiceSystemParameterNames.ComponentID, BroadcastServiceSystemParameterNames.PlanPricingFloorPricingUrl); }
+        }
+
+        public static string PlanPricingAllocationsUrl
+        {
+            get { return SystemComponentParameterHelper.GetPropertyValue<string>
+                  (BroadcastServiceSystemParameterNames.ComponentID, BroadcastServiceSystemParameterNames.PlanPricingAllocationsUrl); }
+        }
+
+        public static string ProgramGuideClientId  
 		{
             get { return SystemComponentParameterHelper.GetPropertyValue<string>
 					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.ProgramGuideClientId); }

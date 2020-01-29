@@ -9,8 +9,6 @@ namespace Services.Broadcast.Entities.Plan.Pricing
         public List<PlanPricingApiRequestWeekDto> Weeks { get; set; } = new List<PlanPricingApiRequestWeekDto>();
         [JsonProperty("inventory")]
         public List<PlanPricingApiRequestSpotsDto> Spots { get; set; } = new List<PlanPricingApiRequestSpotsDto>();
-        [JsonProperty("params")]
-        public PlanPricingApiRequestParametersDto Parameters { get; set; }
     }
 
     public class PlanPricingApiRequestSpotsDto
@@ -30,14 +28,16 @@ namespace Services.Broadcast.Entities.Plan.Pricing
         [JsonProperty("cost")]
         public decimal Cost { get; set; }
 
-        [JsonProperty("unit")]
-        public string Unit { get; set; }
+        // Not supported by Data Science API yet.
 
-        [JsonProperty("inventory_source")]
-        public string InventorySource { get; set; }
+        //[JsonProperty("unit")]
+        //public string Unit { get; set; }
 
-        [JsonProperty("inventory_source_type")]
-        public string InventorySourceType { get; set; }
+        //[JsonProperty("inventory_source")]
+        //public string InventorySource { get; set; }
+
+        //[JsonProperty("inventory_source_type")]
+        //public string InventorySourceType { get; set; }
     }
 
     public class PlanPricingApiRequestWeekDto
@@ -45,6 +45,8 @@ namespace Services.Broadcast.Entities.Plan.Pricing
         [JsonProperty("week_id")]
         public int MediaWeekId { get; set; }
         [JsonProperty("impression_goal")]
-        public double Impressions { get; set; }
+        public double ImpressionGoal { get; set; }
+        [JsonProperty("cpm_goal")]
+        public decimal CpmGoal { get; set; }
     }
 }

@@ -252,7 +252,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 }
             };
 
-            var apiResponse = new PlanPricingApiResponsetDto
+            var apiResponse = new PlanPricingApiResponseDto
             {
                 Results = new PlanPricingApiResultDto
                 {

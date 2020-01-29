@@ -1,52 +1,46 @@
 ﻿using Services.Broadcast.Clients;
 using Services.Broadcast.Entities.Plan.Pricing;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Services.Broadcast.IntegrationTests.Stubs
 {
     public class PricingApiClientStub : IPricingApiClient
     {
-        public PlanPricingApiResponsetDto GetPricingCalculationResult(PlanPricingApiRequestDto request)
+        public PlanPricingApiCpmResponseDto GetPricingCalculationResult(PlanPricingApiRequestDto request)
         {
-            return new PlanPricingApiResponsetDto
+            return new PlanPricingApiCpmResponseDto
             {
-                RequestId = "a3289ujvb3,s,aksa",
-                Results = new PlanPricingApiResultDto
+                RequestId = "dwq2994mfm2m3m3,amd",
+                Results = new PlanPricingApiCpmResultDto
                 {
-                    Spots = new List<PlanPricingApiResultSpotDto>
-                    {
-                        new PlanPricingApiResultSpotDto
-                        {
-                            Id = 1,
-                            MediaWeekId = 200,
-                            Cost = 1000,
-                            Impressions = 1000,
-                            Spots = 1
-                        }
-                    }
+                    // Mocked.
+                    MinimumCost = 13.3m
                 }
             };
         }
 
-        public PlanPricingApiResponsetDto GetPricingSpotsResult(PlanPricingApiRequestDto request)
+        public PlanPricingApiSpotsResponseDto GetPricingSpotsResult(PlanPricingApiRequestDto request)
         {
-            return new PlanPricingApiResponsetDto
+            var results = new List<PlanPricingApiSpotsResultDto>();
+
+            var spotsGroupedByWeekId = request.Spots.GroupBy(x => x.MediaWeekId);
+
+            foreach (var spot in spotsGroupedByWeekId)
             {
-                RequestId = "a3289ujvb3,s,aksa",
-                Results = new PlanPricingApiResultDto
+                var result = new PlanPricingApiSpotsResultDto
                 {
-                    Spots = new List<PlanPricingApiResultSpotDto>
-                    {
-                        new PlanPricingApiResultSpotDto
-                        {
-                            Id = 1,
-                            MediaWeekId = 200,
-                            Cost = 1000,
-                            Impressions = 1000,
-                            Spots = 1
-                        }
-                    }
-                }
+                    MediaWeekId = spot.Key,
+                    AllocatedManifestIds = spot.Select(y => y.Id).ToList()
+                };
+
+                results.Add(result);
+            }
+
+            return new PlanPricingApiSpotsResponseDto
+            {
+                RequestId = "djj4j4399fmmf1m212",
+                Results = results
             };
         }
     }

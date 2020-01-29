@@ -10,6 +10,7 @@ using Services.Broadcast.Clients;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
 using Services.Broadcast.Entities.Plan.Pricing;
+using Services.Broadcast.IntegrationTests.Stubs;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
@@ -26,7 +27,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         public PlanPricingServiceTests()
         {
-            IntegrationTestApplicationServiceFactory.Instance.RegisterType<IPricingApiClient, MockedResultsPricingApiClient>();
+            IntegrationTestApplicationServiceFactory.Instance.RegisterType<IPricingApiClient, PricingApiClientStub>();
             _PlanPricingService = IntegrationTestApplicationServiceFactory.GetApplicationService<IPlanPricingService>();
             _PlanService = IntegrationTestApplicationServiceFactory.GetApplicationService<IPlanService>();
             _PlanRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IPlanRepository>();
