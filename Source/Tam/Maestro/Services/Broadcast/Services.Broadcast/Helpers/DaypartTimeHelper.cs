@@ -61,5 +61,16 @@ namespace Services.Broadcast.Helpers
             return DateTime.Today.Add(TimeSpan.FromSeconds(seconds))
                 .ToString("hh:mmtt", new DateTimeFormatInfo { AMDesignator = "am", PMDesignator = "pm"});
         }
+
+        /// <summary>
+        /// Gets the seconds from the string time formatted as "hh:mmtt".
+        /// </summary>
+        /// <param name="formattedTime">The time in "hh:mmtt" format.</param>
+        /// <returns>Integer value representing the time that has elapsed since midnight.</returns>
+        public static int ConvertFormattedTimeToSeconds(string formattedTime)
+        {
+            DateTime.TryParseExact(formattedTime, "hh:mmtt", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime effectiveDate);
+            return Convert.ToInt32(effectiveDate.TimeOfDay.TotalSeconds);
+        }
     }
 }

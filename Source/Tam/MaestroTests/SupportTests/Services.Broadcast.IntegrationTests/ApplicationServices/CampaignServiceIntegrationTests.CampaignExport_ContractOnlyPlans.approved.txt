@@ -381,15 +381,6 @@
   ],
   "DaypartsData": [
     {
-      "DaypartCode": "MDN",
-      "DaypartCodeId": 2,
-      "DaysLabel": null,
-      "EndTime": "01:00pm",
-      "GenreRestrictions": [],
-      "ProgramRestrictions": [],
-      "StartTime": "11:00am"
-    },
-    {
       "DaypartCode": "EF",
       "DaypartCodeId": 6,
       "DaysLabel": null,
@@ -406,6 +397,15 @@
       "GenreRestrictions": [],
       "ProgramRestrictions": [],
       "StartTime": "06:00am"
+    },
+    {
+      "DaypartCode": "MDN",
+      "DaypartCodeId": 2,
+      "DaysLabel": null,
+      "EndTime": "01:00pm",
+      "GenreRestrictions": [],
+      "ProgramRestrictions": [],
+      "StartTime": "11:00am"
     }
   ],
   "FlightHiatuses": [

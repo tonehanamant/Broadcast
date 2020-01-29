@@ -1,5 +1,7 @@
 ﻿using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.Campaign;
 using Services.Broadcast.Entities.Plan;
+using Services.Broadcast.Helpers;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -44,6 +46,15 @@ namespace Services.Broadcast.Extensions
                     Restrictions = item.Restrictions,
                     WeightingGoalPercent = item.WeightingGoalPercent
                 }).ToList();
+        }
+
+        public static List<DaypartData> OrderDayparts(this List<DaypartData> daypartList)
+        {
+            return daypartList
+                .OrderBy(daypart => daypart.DaypartCode)
+                .ThenBy(daypart => DaypartTimeHelper.ConvertFormattedTimeToSeconds(daypart.StartTime))
+                .ThenBy(daypart => DaypartTimeHelper.ConvertFormattedTimeToSeconds(daypart.EndTime))
+                .ToList();
         }
     }
 }

@@ -106,7 +106,7 @@ namespace Services.Broadcast.Entities.Campaign
                 DaypartCode = x.DaypartCode,
                 EndTime = x.DaypartEndTime,
                 StartTime = x.DaypartStartTime
-            }).Distinct(new DaypartDataEqualityComparer()).ToList();
+            }).Distinct(new DaypartDataEqualityComparer()).ToList().OrderDayparts();
         }
 
         private void _PopulateContentRestrictions(List<PlanDto> plans)
