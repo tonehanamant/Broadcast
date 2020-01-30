@@ -21,6 +21,7 @@
                 {
                 <li class="@(ViewContext.RouteData.Values["Controller"].ToString().ToLowerInvariant() == "campaigns" ? "active" : "")"><a href="/broadcastreact/campaigns">Campaigns</a></li>
                 }
+                <li><a href="/broadcastreact/buying">Buying</a></li>
                 <li><a href="/broadcastreact/planning">Planning</a></li>
                 @* Comparing using lowercase because in some cases the framework sends the controller name in lowercase. *@
                 <li class="@(ViewContext.RouteData.Values["Controller"].ToString().ToLowerInvariant() == "traffic" ? "active" : "")">@Html.ActionLink("Traffic", "Index", "Traffic")</li>
