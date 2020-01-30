@@ -308,6 +308,7 @@
     <Compile Include="ApplicationServices\ContainTypeService.cs" />
     <Compile Include="ApplicationServices\InventoryProgramEnrichmentService.cs" />
     <Compile Include="ApplicationServices\PlanPricingService.cs" />
+    <Compile Include="ApplicationServices\Plan\PlanBuyingService.cs" />
     <Compile Include="ApplicationServices\ProgramGuideService.cs" />
     <Compile Include="ApplicationServices\ProgramService.cs" />
     <Compile Include="ApplicationServices\RecurringJobsFactory.cs" />
@@ -354,6 +355,7 @@
     <Compile Include="Entities\CampaignListItemDto.cs" />
     <Compile Include="Entities\CampaignQuarterDto.cs" />
     <Compile Include="Entities\DaypartCleanupDto.cs" />
+    <Compile Include="Entities\InventoryPlannerDetails.cs" />
     <Compile Include="Entities\DTO\CurrentQuartersDto.cs" />
     <Compile Include="Entities\DetectionFileDetail.cs" />
     <Compile Include="Entities\DetectionFileSummary.cs" />
@@ -381,7 +383,18 @@
     <Compile Include="Entities\InventoryFileRatingsJobDiagnostics.cs" />
     <Compile Include="Entities\InventorySummary\InventorySummaryTotals.cs" />
     <Compile Include="Entities\InventorySummary\InventoryUploadHistory.cs" />
+    <Compile Include="Entities\Plan\Buying\PlanBuyingDetailsDaypart.cs" />
+    <Compile Include="Entities\Plan\Buying\PlanBuyingDetails.cs" />
+    <Compile Include="Entities\Plan\Buying\PlanBuyingInventoryPlanner.cs" />
+    <Compile Include="Entities\Plan\Buying\PlanBuyingInventoryPlannerDetail.cs" />
+    <Compile Include="Entities\Plan\Buying\PlanBuyingRequestDetails.cs" />
+    <Compile Include="Entities\Plan\Buying\PlanBuyingRequest.cs" />
+    <Compile Include="Entities\Plan\Buying\PlanBuyingCampaign.cs" />
+    <Compile Include="Entities\Plan\Buying\PlanBuyingInventoryTypeDetail.cs" />
     <Compile Include="Entities\Plan\PlanAudienceDisplay.cs" />
+    <Compile Include="Entities\Plan\Buying\PlanBuyingDaypart.cs" />
+    <Compile Include="Entities\Plan\Buying\PlanBuyingListingItem.cs" />
+    <Compile Include="Entities\Plan\Buying\PlanBuying.cs" />
     <Compile Include="Entities\Plan\Pricing\PlanPricingApiCpmResponseDto.cs" />
     <Compile Include="Entities\Plan\Pricing\PlanPricingApiSpotsResponseDto.cs" />
     <Compile Include="Entities\Plan\Pricing\PlanPricingManifestWithManifestDaypart.cs" />

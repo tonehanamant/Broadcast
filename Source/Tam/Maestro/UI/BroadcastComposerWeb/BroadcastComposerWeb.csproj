@@ -333,6 +333,7 @@
     <Compile Include="Controllers\ImageApiController.cs" />
     <Compile Include="Controllers\AudienceApiController.cs" />
     <Compile Include="Controllers\MarketsApiController.cs" />
+    <Compile Include="Controllers\PlanBuyingApiController.cs" />
     <Compile Include="Controllers\PlanPricingApiController.cs" />
     <Compile Include="Controllers\PostingTypeApiController.cs" />
     <Compile Include="Controllers\PostingBooksApiController.cs" />

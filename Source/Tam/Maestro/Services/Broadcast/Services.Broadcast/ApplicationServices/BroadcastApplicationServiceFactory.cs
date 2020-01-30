@@ -208,6 +208,7 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IPostingBookService, PostingBookService>();
             unityContainer.RegisterType<IPlanBudgetDeliveryCalculator, PlanBudgetDeliveryCalculator>();
             unityContainer.RegisterType<IPlanAggregator, PlanAggregator>();
+            unityContainer.RegisterType<IPlanBuyingService, PlanBuyingService>();
 
             unityContainer.RegisterType<IEnvironmentService, EnvironmentService>();
             unityContainer.RegisterType<IDaypartTypeService, DaypartTypeService>();

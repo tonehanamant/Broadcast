@@ -549,7 +549,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             var daysToAdd = currentDateTime.DayOfWeek == DayOfWeek.Monday ? daysOfTheWeek
                 : ((int)DayOfWeek.Monday - (int)currentDateTime.DayOfWeek + daysOfTheWeek) % daysOfTheWeek;
             var followingMonday = DateTime.Parse(currentDateTime.AddDays(daysToAdd).ToString(dateFormat));
-            
+
             var endDate = currentDateTime.AddMonths(monthModifierForQuery);
             var quarters = _QuarterCalculationEngine.GetAllQuartersBetweenDates(currentDateTime, endDate)
                 .Take(totalQuartersToReturn).ToList();
@@ -559,7 +559,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 FirstStartDate = followingMonday,
                 Quarters = quarters
             };
-            
+
             return currentQuarters;
         }
 
@@ -796,7 +796,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         {
             if (request.WeeklyBreakdownCalculationFrom == WeeklyBreakdownCalculationFrom.Ratings)
             {
-                
+
                 week.WeeklyBudget = (decimal)week.WeeklyRatings * (request.TotalBudget / (decimal)request.TotalImpressions);
             }
             else
