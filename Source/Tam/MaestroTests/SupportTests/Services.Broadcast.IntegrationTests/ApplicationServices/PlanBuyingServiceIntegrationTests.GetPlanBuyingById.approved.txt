@@ -1,0 +1,110 @@
+﻿{
+  "BookedBudget": 197000.0,
+  "BookedCPM": 5.41,
+  "BookedCPMMarginPercent": 31.76,
+  "BookedImpressions": 36600000.0,
+  "BookedImpressionsPercent": 133.0,
+  "BookedMarginPercent": 26.15,
+  "Campaign": {
+    "Id": 456,
+    "Name": "Some Campaign"
+  },
+  "DaypartMakeupDetails": [
+    {
+      "Budget": 18300.0,
+      "CPM": 3.75,
+      "DaypartId": 1,
+      "GoalPercent": 50.0,
+      "Impressions": 3660000.0,
+      "SharePercent": 55.0
+    },
+    {
+      "Budget": 20222.0,
+      "CPM": 4.25,
+      "DaypartId": 2,
+      "GoalPercent": null,
+      "Impressions": 4758000.0,
+      "SharePercent": 45.0
+    }
+  ],
+  "GoalBudget": 199836.0,
+  "GoalCPM": 7.28,
+  "GoalCPMMarginPercent": 20.0,
+  "GoalImpressions": 34313000.0,
+  "GoalImpressionsPercent": 125.0,
+  "GoalMarginPercent": 20.0,
+  "Id": 123,
+  "InventoryPlanner": {
+    "Details": [
+      {
+        "Budget": 18300.0,
+        "CPM": 5.0,
+        "EstimateId": "123A",
+        "Impressions": 3660000.0,
+        "InventorySourceId": 1,
+        "IsBooked": true,
+        "Notes": "Some notes",
+        "SharePercent": 10.0
+      },
+      {
+        "Budget": 20222.0,
+        "CPM": 4.25,
+        "EstimateId": "456",
+        "Impressions": 4758000.0,
+        "InventorySourceId": 2,
+        "IsBooked": true,
+        "Notes": "",
+        "SharePercent": 13.0
+      }
+    ],
+    "Id": 123
+  },
+  "InventoryTypeMakeupDetails": [
+    {
+      "Budget": 18300.0,
+      "CPM": 3.75,
+      "Impressions": 3660000.0,
+      "InventoryTypeId": 1,
+      "SharePercent": 20.0
+    },
+    {
+      "Budget": 18300.0,
+      "CPM": 3.75,
+      "Impressions": 3660000.0,
+      "InventoryTypeId": 2,
+      "SharePercent": 20.0
+    }
+  ],
+  "ModifiedBy": "Johnny Rockets",
+  "ModifiedDate": "2020-01-07T08:30:52",
+  "Notes": "General notes for the buy",
+  "Plan": {
+    "AudienceId": 31,
+    "AvailableMarketsCount": 20,
+    "BlackoutMarketsCount": 3,
+    "Budget": 250000.0,
+    "CoverageGoalPercent": 80.0,
+    "CPM": 9.1,
+    "Dayparts": [
+      {
+        "DaypartCodeId": 7,
+        "DaypartTypeId": 2,
+        "EndTimeSeconds": 72000,
+        "HasRestrictions": true,
+        "IsEndTimeModified": false,
+        "IsStartTimeModified": false,
+        "StartTimeSeconds": 64800
+      }
+    ],
+    "FlightActiveDays": 14,
+    "FlightEndDate": "2020-02-04T09:30:52",
+    "FlightHiatusDays": 3,
+    "FlightStartDate": "2020-03-04T08:30:52",
+    "Id": 123,
+    "Impressions": 27450000.0,
+    "Name": "Some Plan",
+    "PostingType": 1,
+    "SpotLengthId": 1
+  },
+  "Status": 2.0
+}

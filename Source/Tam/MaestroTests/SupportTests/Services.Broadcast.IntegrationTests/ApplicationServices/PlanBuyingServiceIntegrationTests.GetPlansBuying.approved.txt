@@ -1,0 +1,38 @@
+﻿[
+  {
+    "BookedBudget": 198000.0,
+    "BookedCPM": 5.41,
+    "BookedCPMMarginPercent": 31.76,
+    "BookedImpressions": 36600000.0,
+    "BookedImpressionsPercent": 133.0,
+    "BookedMarginPercent": 26.15,
+    "GoalBudget": 199836.0,
+    "GoalCPM": 7.28,
+    "GoalCPMMarginPercent": 20.0,
+    "GoalImpressions": 34313000.0,
+    "GoalImpressionsPercent": 125.0,
+    "GoalMarginPercent": 20.0,
+    "Id": 123,
+    "ModifiedBy": "Johnny Rockets",
+    "ModifiedDate": "2020-01-07T08:30:52",
+    "Status": 2.0
+  },
+  {
+    "BookedBudget": 567000.0,
+    "BookedCPM": 2.11,
+    "BookedCPMMarginPercent": 45.09,
+    "BookedImpressions": 98800000.0,
+    "BookedImpressionsPercent": 177.0,
+    "BookedMarginPercent": 22.09,
+    "GoalBudget": 122678.0,
+    "GoalCPM": 5.88,
+    "GoalCPMMarginPercent": 26.0,
+    "GoalImpressions": 45938000.0,
+    "GoalImpressionsPercent": 159.0,
+    "GoalMarginPercent": 34.0,
+    "Id": 459,
+    "ModifiedBy": "Michael Jordan",
+    "ModifiedDate": "2020-01-06T06:22:33",
+    "Status": 2.0
+  }
+]
