@@ -288,6 +288,12 @@ namespace Services.Broadcast.IntegrationTests.Stubs
                     // TODO: Once we get endpoint version 1.0.1 in place Change this to 100
                     result = "10";
                     break;
+                case "PlanPricingFloorPricingUrl":
+                    result = @"https://datascience-dev.cadent.tv/broadcast-floor-pricing/v1/optimization";
+                    break;
+                case "PlanPricingAllocationsUrl":
+                    result = @"http://datascience-dev.cadent.tv/broadcast-openmarket-allocations/v1/allocation";
+                    break;
                 default:
                     throw new Exception("Unknown SystemComponentParameter: " + parameterId);
             }
