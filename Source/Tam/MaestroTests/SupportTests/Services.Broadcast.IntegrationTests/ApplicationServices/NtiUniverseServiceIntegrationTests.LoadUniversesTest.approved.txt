@@ -1,0 +1,1174 @@
+﻿{
+  "CreatedBy": "IntegrationTestUser",
+  "CreatedDate": "2019-05-14T00:00:00",
+  "Month": 12,
+  "NtiUniverseDetails": [
+    {
+      "NtiAudienceCode": "F2-5",
+      "NtiAudienceId": 1,
+      "Universe": 7660000.0
+    },
+    {
+      "NtiAudienceCode": "F6-8",
+      "NtiAudienceId": 2,
+      "Universe": 5760000.0
+    },
+    {
+      "NtiAudienceCode": "F9-11",
+      "NtiAudienceId": 3,
+      "Universe": 5950000.0
+    },
+    {
+      "NtiAudienceCode": "F12-14",
+      "NtiAudienceId": 4,
+      "Universe": 5950000.0
+    },
+    {
+      "NtiAudienceCode": "F15-17",
+      "NtiAudienceId": 5,
+      "Universe": 6060000.0
+    },
+    {
+      "NtiAudienceCode": "F18-20",
+      "NtiAudienceId": 6,
+      "Universe": 6250000.0
+    },
+    {
+      "NtiAudienceCode": "F21-24",
+      "NtiAudienceId": 7,
+      "Universe": 7900000.0
+    },
+    {
+      "NtiAudienceCode": "F25-29",
+      "NtiAudienceId": 8,
+      "Universe": 10110000.0
+    },
+    {
+      "NtiAudienceCode": "F30-34",
+      "NtiAudienceId": 9,
+      "Universe": 10610000.0
+    },
+    {
+      "NtiAudienceCode": "F35-39",
+      "NtiAudienceId": 10,
+      "Universe": 10270000.0
+    },
+    {
+      "NtiAudienceCode": "F40-44",
+      "NtiAudienceId": 11,
+      "Universe": 9940000.0
+    },
+    {
+      "NtiAudienceCode": "F45-49",
+      "NtiAudienceId": 12,
+      "Universe": 10010000.0
+    },
+    {
+      "NtiAudienceCode": "F50-54",
+      "NtiAudienceId": 13,
+      "Universe": 10420000.0
+    },
+    {
+      "NtiAudienceCode": "F55-64",
+      "NtiAudienceId": 14,
+      "Universe": 21250000.0
+    },
+    {
+      "NtiAudienceCode": "F65+",
+      "NtiAudienceId": 15,
+      "Universe": 28960000.0
+    },
+    {
+      "NtiAudienceCode": "M2-5",
+      "NtiAudienceId": 16,
+      "Universe": 8010000.0
+    },
+    {
+      "NtiAudienceCode": "M6-8",
+      "NtiAudienceId": 17,
+      "Universe": 6020000.0
+    },
+    {
+      "NtiAudienceCode": "M9-11",
+      "NtiAudienceId": 18,
+      "Universe": 6210000.0
+    },
+    {
+      "NtiAudienceCode": "M12-14",
+      "NtiAudienceId": 19,
+      "Universe": 6200000.0
+    },
+    {
+      "NtiAudienceCode": "M15-17",
+      "NtiAudienceId": 20,
+      "Universe": 6270000.0
+    },
+    {
+      "NtiAudienceCode": "M18-20",
+      "NtiAudienceId": 21,
+      "Universe": 6400000.0
+    },
+    {
+      "NtiAudienceCode": "M21-24",
+      "NtiAudienceId": 22,
+      "Universe": 8080000.0
+    },
+    {
+      "NtiAudienceCode": "M25-29",
+      "NtiAudienceId": 23,
+      "Universe": 10170000.0
+    },
+    {
+      "NtiAudienceCode": "M30-34",
+      "NtiAudienceId": 24,
+      "Universe": 10540000.0
+    },
+    {
+      "NtiAudienceCode": "M35-39",
+      "NtiAudienceId": 25,
+      "Universe": 10020000.0
+    },
+    {
+      "NtiAudienceCode": "M40-44",
+      "NtiAudienceId": 26,
+      "Universe": 9580000.0
+    },
+    {
+      "NtiAudienceCode": "M45-49",
+      "NtiAudienceId": 27,
+      "Universe": 9590000.0
+    },
+    {
+      "NtiAudienceCode": "M50-54",
+      "NtiAudienceId": 28,
+      "Universe": 9900000.0
+    },
+    {
+      "NtiAudienceCode": "M55-64",
+      "NtiAudienceId": 29,
+      "Universe": 19650000.0
+    },
+    {
+      "NtiAudienceCode": "M65+",
+      "NtiAudienceId": 30,
+      "Universe": 23560000.0
+    },
+    {
+      "NtiAudienceCode": "HH",
+      "NtiAudienceId": 31,
+      "Universe": 120600000.0
+    }
+  ],
+  "NtiUniverses": [
+    {
+      "Audience": {
+        "_CategoryCode": 0,
+        "_Code": "HH",
+        "_Custom": false,
+        "_Id": 31,
+        "_Name": "Households",
+        "_RangeEnd": 99,
+        "_RangeStart": 0,
+        "_SubCategoryCode": "H",
+        "IsDirty": true
+      },
+      "Universe": 120600000.0
+    },
+    {
+      "Audience": {
+        "_CategoryCode": 0,
+        "_Code": "A18+",
+        "_Custom": true,
+        "_Id": 34,
+        "_Name": "Adults 18+",
+        "_RangeEnd": 99,
+        "_RangeStart": 18,
+        "_SubCategoryCode": "A",
+        "IsDirty": true
+      },
+      "Universe": 243210000.0
+    },
+    {
+      "Audience": {
+        "_CategoryCode": 0,
+        "_Code": "A18-20",
+        "_Custom": true,
+        "_Id": 418,
+        "_Name": "Adults 18-20",
+        "_RangeEnd": 20,
+        "_RangeStart": 18,
+        "_SubCategoryCode": "A",
+        "IsDirty": true
+      },
+      "Universe": 12650000.0
+    },
+    {
+      "Audience": {
+        "_CategoryCode": 0,
+        "_Code": "A18-34",
+        "_Custom": true,
+        "_Id": 32,
+        "_Name": "Adults 18-34",
+        "_RangeEnd": 34,
+        "_RangeStart": 18,
+        "_SubCategoryCode": "A",
+        "IsDirty": true
+      },
+      "Universe": 70060000.0
+    },
+    {
+      "Audience": {
+        "_CategoryCode": 0,
+        "_Code": "A18-49",
+        "_Custom": true,
+        "_Id": 33,
+        "_Name": "Adults 18-49",
+        "_RangeEnd": 49,
+        "_RangeStart": 18,
+        "_SubCategoryCode": "A",
+        "IsDirty": true
+      },
+      "Universe": 129470000.0
+    },
+    {
+      "Audience": {
+        "_CategoryCode": 0,
+        "_Code": "A18-54",
+        "_Custom": true,
+        "_Id": 247,
+        "_Name": "Adults 18-54",
+        "_RangeEnd": 54,
+        "_RangeStart": 18,
+        "_SubCategoryCode": "A",
+        "IsDirty": true
+      },
+      "Universe": 149790000.0
+    },
+    {
+      "Audience": {
+        "_CategoryCode": 0,
+        "_Code": "A21-24",
+        "_Custom": true,
+        "_Id": 249,
+        "_Name": "Adults 21-24",
+        "_RangeEnd": 24,
+        "_RangeStart": 21,
+        "_SubCategoryCode": "A",
+        "IsDirty": true
+      },
+      "Universe": 15980000.0
+    },
+    {
+      "Audience": {
+        "_CategoryCode": 0,
+        "_Code": "A21-49",
+        "_Custom": true,
+        "_Id": 252,
+        "_Name": "Adults 21-49",
+        "_RangeEnd": 49,
+        "_RangeStart": 21,
+        "_SubCategoryCode": "A",
+        "IsDirty": true
+      },
+      "Universe": 116820000.0
+    },
+    {
+      "Audience": {
+        "_CategoryCode": 0,
+        "_Code": "A25+",
+        "_Custom": true,
+        "_Id": 258,
+        "_Name": "Adults 25+",
+        "_RangeEnd": 99,
+        "_RangeStart": 25,
+        "_SubCategoryCode": "A",
+        "IsDirty": true
+      },
+      "Universe": 214580000.0
+    },
+    {
+      "Audience": {
+        "_CategoryCode": 0,
+        "_Code": "A25-34",
+        "_Custom": true,
+        "_Id": 35,
+        "_Name": "Adults 25-34",
+        "_RangeEnd": 34,
+        "_RangeStart": 25,
+        "_SubCategoryCode": "A",
+        "IsDirty": true
+      },
+      "Universe": 41430000.0
+    },
+    {
+      "Audience": {
+        "_CategoryCode": 0,
+        "_Code": "A25-49",
+        "_Custom": true,
+        "_Id": 36,
+        "_Name": "Adults 25-49",
+        "_RangeEnd": 49,
+        "_RangeStart": 25,
+        "_SubCategoryCode": "A",
+        "IsDirty": true
+      },
+      "Universe": 100840000.0
+    },
+    {
+      "Audience": {
+        "_CategoryCode": 0,
+        "_Code": "A25-54",
+        "_Custom": true,
+        "_Id": 37,
+        "_Name": "Adults 25-54",
+        "_RangeEnd": 54,
+        "_RangeStart": 25,
+        "_SubCategoryCode": "A",
+        "IsDirty": true
+      },
+      "Universe": 121160000.0
+    },
+    {
+      "Audience": {
+        "_CategoryCode": 0,
+        "_Code": "A25-64",
+        "_Custom": true,
+        "_Id": 257,
+        "_Name": "Adults 25-64",
+        "_RangeEnd": 64,
+        "_RangeStart": 25,
+        "_SubCategoryCode": "A",
+        "IsDirty": true
+      },
+      "Universe": 162060000.0
+    },
+    {
+      "Audience": {
+        "_CategoryCode": 0,
+        "_Code": "A35+",
+        "_Custom": true,
+        "_Id": 41,
+        "_Name": "Adults 35+",
+        "_RangeEnd": 99,
+        "_RangeStart": 35,
+        "_SubCategoryCode": "A",
+        "IsDirty": true
+      },
+      "Universe": 173150000.0
+    },
+    {
+      "Audience": {
+        "_CategoryCode": 0,
+        "_Code": "A35-49",
+        "_Custom": true,
+        "_Id": 38,
+        "_Name": "Adults 35-49",
+        "_RangeEnd": 49,
+        "_RangeStart": 35,
+        "_SubCategoryCode": "A",
+        "IsDirty": true
+      },
+      "Universe": 59410000.0
+    },
+    {
+      "Audience": {
+        "_CategoryCode": 0,
+        "_Code": "A35-54",
+        "_Custom": true,
+        "_Id": 39,
+        "_Name": "Adults 35-54",
+        "_RangeEnd": 54,
+        "_RangeStart": 35,
+        "_SubCategoryCode": "A",
+        "IsDirty": true
+      },
+      "Universe": 79730000.0
+    },
+    {
+      "Audience": {
+        "_CategoryCode": 0,
+        "_Code": "A35-64",
+        "_Custom": true,
+        "_Id": 40,
+        "_Name": "Adults 35-64",
+        "_RangeEnd": 64,
+        "_RangeStart": 35,
+        "_SubCategoryCode": "A",
+        "IsDirty": true
+      },
+      "Universe": 120630000.0
+    },
+    {
+      "Audience": {
+        "_CategoryCode": 0,
+        "_Code": "A50+",
+        "_Custom": true,
+        "_Id": 42,
+        "_Name": "Adults 50+",
+        "_RangeEnd": 99,
+        "_RangeStart": 50,
+        "_SubCategoryCode": "A",
+        "IsDirty": true
+      },
+      "Universe": 113740000.0
+    },
+    {
+      "Audience": {
+        "_CategoryCode": 0,
+        "_Code": "A50-54",
+        "_Custom": true,
+        "_Id": 264,
+        "_Name": "Adults 50-54",
+        "_RangeEnd": 54,
+        "_RangeStart": 50,
+        "_SubCategoryCode": "A",
+        "IsDirty": true
+      },
+      "Universe": 20320000.0
+    },
+    {
+      "Audience": {
+        "_CategoryCode": 0,
+        "_Code": "A55+",
+        "_Custom": true,
+        "_Id": 43,
+        "_Name": "Adults 55+",
+        "_RangeEnd": 99,
+        "_RangeStart": 55,
+        "_SubCategoryCode": "A",
+        "IsDirty": true
+      },
+      "Universe": 93420000.0
+    },
+    {
+      "Audience": {
+        "_CategoryCode": 0,
+        "_Code": "A55-64",
+        "_Custom": true,
+        "_Id": 266,
+        "_Name": "Adults 55-64",
+        "_RangeEnd": 64,
+        "_RangeStart": 55,
+        "_SubCategoryCode": "A",
+        "IsDirty": true
+      },
+      "Universe": 40900000.0
+    },
+    {
+      "Audience": {
+        "_CategoryCode": 0,
+        "_Code": "A65+",
+        "_Custom": true,
+        "_Id": 44,
+        "_Name": "Adults 65+",
+        "_RangeEnd": 99,
+        "_RangeStart": 65,
+        "_SubCategoryCode": "A",
+        "IsDirty": true
+      },
+      "Universe": 52520000.0
+    },
+    {
+      "Audience": {
+        "_CategoryCode": 0,
+        "_Code": "M12-14",
+        "_Custom": false,
+        "_Id": 19,
+        "_Name": "Men 12-14",
+        "_RangeEnd": 14,
+        "_RangeStart": 12,
+        "_SubCategoryCode": "M",
+        "IsDirty": true
+      },
+      "Universe": 6200000.0
+    },
+    {
+      "Audience": {
+        "_CategoryCode": 0,
+        "_Code": "M15-17",
+        "_Custom": false,
+        "_Id": 20,
+        "_Name": "Men 15-17",
+        "_RangeEnd": 17,
+        "_RangeStart": 15,
+        "_SubCategoryCode": "M",
+        "IsDirty": true
+      },
+      "Universe": 6270000.0
+    },
+    {
+      "Audience": {
+        "_CategoryCode": 0,
+        "_Code": "M18+",
+        "_Custom": true,
+        "_Id": 277,
+        "_Name": "Men 18+",
+        "_RangeEnd": 99,
+        "_RangeStart": 18,
+        "_SubCategoryCode": "M",
+        "IsDirty": true
+      },
+      "Universe": 117490000.0
+    },
+    {
+      "Audience": {
+        "_CategoryCode": 0,
+        "_Code": "M18-20",
+        "_Custom": false,
+        "_Id": 21,
+        "_Name": "Men 18-20",
+        "_RangeEnd": 20,
+        "_RangeStart": 18,
+        "_SubCategoryCode": "M",
+        "IsDirty": true
+      },
+      "Universe": 6400000.0
+    },
+    {
+      "Audience": {
+        "_CategoryCode": 0,
+        "_Code": "M18-34",
+        "_Custom": true,
+        "_Id": 48,
+        "_Name": "Men 18-34",
+        "_RangeEnd": 34,
+        "_RangeStart": 18,
+        "_SubCategoryCode": "M",
+        "IsDirty": true
+      },
+      "Universe": 35190000.0
+    },
+    {
+      "Audience": {
+        "_CategoryCode": 0,
+        "_Code": "M18-49",
+        "_Custom": true,
+        "_Id": 49,
+        "_Name": "Men 18-49",
+        "_RangeEnd": 49,
+        "_RangeStart": 18,
+        "_SubCategoryCode": "M",
+        "IsDirty": true
+      },
+      "Universe": 64380000.0
+    },
+    {
+      "Audience": {
+        "_CategoryCode": 0,
+        "_Code": "M18-54",
+        "_Custom": true,
+        "_Id": 50,
+        "_Name": "Men 18-54",
+        "_RangeEnd": 54,
+        "_RangeStart": 18,
+        "_SubCategoryCode": "M",
+        "IsDirty": true
+      },
+      "Universe": 74280000.0
+    },
+    {
+      "Audience": {
+        "_CategoryCode": 0,
+        "_Code": "M21-24",
+        "_Custom": false,
+        "_Id": 22,
+        "_Name": "Men 21-24",
+        "_RangeEnd": 24,
+        "_RangeStart": 21,
+        "_SubCategoryCode": "M",
+        "IsDirty": true
+      },
+      "Universe": 8080000.0
+    },
+    {
+      "Audience": {
+        "_CategoryCode": 0,
+        "_Code": "M21-49",
+        "_Custom": true,
+        "_Id": 280,
+        "_Name": "Men 21-49",
+        "_RangeEnd": 49,
+        "_RangeStart": 21,
+        "_SubCategoryCode": "M",
+        "IsDirty": true
+      },
+      "Universe": 57980000.0
+    },
+    {
+      "Audience": {
+        "_CategoryCode": 0,
+        "_Code": "M25+",
+        "_Custom": true,
+        "_Id": 288,
+        "_Name": "Men 25+",
+        "_RangeEnd": 99,
+        "_RangeStart": 25,
+        "_SubCategoryCode": "M",
+        "IsDirty": true
+      },
+      "Universe": 103010000.0
+    },
+    {
+      "Audience": {
+        "_CategoryCode": 0,
+        "_Code": "M25-34",
+        "_Custom": false,
+        "_Id": 284,
+        "_Name": "Men 25-34",
+        "_RangeEnd": 34,
+        "_RangeStart": 25,
+        "_SubCategoryCode": "M",
+        "IsDirty": true
+      },
+      "Universe": 20710000.0
+    },
+    {
+      "Audience": {
+        "_CategoryCode": 0,
+        "_Code": "M25-49",
+        "_Custom": true,
+        "_Id": 286,
+        "_Name": "Men 25-49",
+        "_RangeEnd": 49,
+        "_RangeStart": 25,
+        "_SubCategoryCode": "M",
+        "IsDirty": true
+      },
+      "Universe": 49900000.0
+    },
+    {
+      "Audience": {
+        "_CategoryCode": 0,
+        "_Code": "M25-54",
+        "_Custom": true,
+        "_Id": 51,
+        "_Name": "Men 25-54",
+        "_RangeEnd": 54,
+        "_RangeStart": 25,
+        "_SubCategoryCode": "M",
+        "IsDirty": true
+      },
+      "Universe": 59800000.0
+    },
+    {
+      "Audience": {
+        "_CategoryCode": 0,
+        "_Code": "M25-64",
+        "_Custom": true,
+        "_Id": 287,
+        "_Name": "Men 25-64",
+        "_RangeEnd": 64,
+        "_RangeStart": 25,
+        "_SubCategoryCode": "M",
+        "IsDirty": true
+      },
+      "Universe": 79450000.0
+    },
+    {
+      "Audience": {
+        "_CategoryCode": 0,
+        "_Code": "M35+",
+        "_Custom": true,
+        "_Id": 54,
+        "_Name": "Men 35+",
+        "_RangeEnd": 99,
+        "_RangeStart": 35,
+        "_SubCategoryCode": "M",
+        "IsDirty": true
+      },
+      "Universe": 82300000.0
+    },
+    {
+      "Audience": {
+        "_CategoryCode": 0,
+        "_Code": "M35-49",
+        "_Custom": false,
+        "_Id": 290,
+        "_Name": "Men 35-49",
+        "_RangeEnd": 49,
+        "_RangeStart": 35,
+        "_SubCategoryCode": "M",
+        "IsDirty": true
+      },
+      "Universe": 29190000.0
+    },
+    {
+      "Audience": {
+        "_CategoryCode": 0,
+        "_Code": "M35-54",
+        "_Custom": true,
+        "_Id": 52,
+        "_Name": "Men 35-54",
+        "_RangeEnd": 54,
+        "_RangeStart": 35,
+        "_SubCategoryCode": "M",
+        "IsDirty": true
+      },
+      "Universe": 39090000.0
+    },
+    {
+      "Audience": {
+        "_CategoryCode": 0,
+        "_Code": "M35-64",
+        "_Custom": true,
+        "_Id": 53,
+        "_Name": "Men 35-64",
+        "_RangeEnd": 64,
+        "_RangeStart": 35,
+        "_SubCategoryCode": "M",
+        "IsDirty": true
+      },
+      "Universe": 58740000.0
+    },
+    {
+      "Audience": {
+        "_CategoryCode": 0,
+        "_Code": "M50+",
+        "_Custom": true,
+        "_Id": 295,
+        "_Name": "Men 50+",
+        "_RangeEnd": 99,
+        "_RangeStart": 50,
+        "_SubCategoryCode": "M",
+        "IsDirty": true
+      },
+      "Universe": 53110000.0
+    },
+    {
+      "Audience": {
+        "_CategoryCode": 0,
+        "_Code": "M50-54",
+        "_Custom": false,
+        "_Id": 28,
+        "_Name": "Men 50-54",
+        "_RangeEnd": 54,
+        "_RangeStart": 50,
+        "_SubCategoryCode": "M",
+        "IsDirty": true
+      },
+      "Universe": 9900000.0
+    },
+    {
+      "Audience": {
+        "_CategoryCode": 0,
+        "_Code": "M55+",
+        "_Custom": true,
+        "_Id": 296,
+        "_Name": "Men 55+",
+        "_RangeEnd": 99,
+        "_RangeStart": 55,
+        "_SubCategoryCode": "M",
+        "IsDirty": true
+      },
+      "Universe": 43210000.0
+    },
+    {
+      "Audience": {
+        "_CategoryCode": 0,
+        "_Code": "M55-64",
+        "_Custom": false,
+        "_Id": 29,
+        "_Name": "Men 55-64",
+        "_RangeEnd": 64,
+        "_RangeStart": 55,
+        "_SubCategoryCode": "M",
+        "IsDirty": true
+      },
+      "Universe": 19650000.0
+    },
+    {
+      "Audience": {
+        "_CategoryCode": 0,
+        "_Code": "M65+",
+        "_Custom": false,
+        "_Id": 30,
+        "_Name": "Men 65+",
+        "_RangeEnd": 99,
+        "_RangeStart": 65,
+        "_SubCategoryCode": "M",
+        "IsDirty": true
+      },
+      "Universe": 23560000.0
+    },
+    {
+      "Audience": {
+        "_CategoryCode": 0,
+        "_Code": "W12-14",
+        "_Custom": false,
+        "_Id": 4,
+        "_Name": "Women 12-14",
+        "_RangeEnd": 14,
+        "_RangeStart": 12,
+        "_SubCategoryCode": "W",
+        "IsDirty": true
+      },
+      "Universe": 5950000.0
+    },
+    {
+      "Audience": {
+        "_CategoryCode": 0,
+        "_Code": "W15-17",
+        "_Custom": false,
+        "_Id": 5,
+        "_Name": "Women 15-17",
+        "_RangeEnd": 17,
+        "_RangeStart": 15,
+        "_SubCategoryCode": "W",
+        "IsDirty": true
+      },
+      "Universe": 6060000.0
+    },
+    {
+      "Audience": {
+        "_CategoryCode": 0,
+        "_Code": "W18+",
+        "_Custom": true,
+        "_Id": 308,
+        "_Name": "Women 18+",
+        "_RangeEnd": 99,
+        "_RangeStart": 18,
+        "_SubCategoryCode": "W",
+        "IsDirty": true
+      },
+      "Universe": 125720000.0
+    },
+    {
+      "Audience": {
+        "_CategoryCode": 0,
+        "_Code": "W18-20",
+        "_Custom": false,
+        "_Id": 6,
+        "_Name": "Women 18-20",
+        "_RangeEnd": 20,
+        "_RangeStart": 18,
+        "_SubCategoryCode": "W",
+        "IsDirty": true
+      },
+      "Universe": 6250000.0
+    },
+    {
+      "Audience": {
+        "_CategoryCode": 0,
+        "_Code": "W18-34",
+        "_Custom": true,
+        "_Id": 55,
+        "_Name": "Women 18-34",
+        "_RangeEnd": 34,
+        "_RangeStart": 18,
+        "_SubCategoryCode": "W",
+        "IsDirty": true
+      },
+      "Universe": 34870000.0
+    },
+    {
+      "Audience": {
+        "_CategoryCode": 0,
+        "_Code": "W18-49",
+        "_Custom": true,
+        "_Id": 56,
+        "_Name": "Women 18-49",
+        "_RangeEnd": 49,
+        "_RangeStart": 18,
+        "_SubCategoryCode": "W",
+        "IsDirty": true
+      },
+      "Universe": 65090000.0
+    },
+    {
+      "Audience": {
+        "_CategoryCode": 0,
+        "_Code": "W18-54",
+        "_Custom": true,
+        "_Id": 306,
+        "_Name": "Women 18-54",
+        "_RangeEnd": 54,
+        "_RangeStart": 18,
+        "_SubCategoryCode": "W",
+        "IsDirty": true
+      },
+      "Universe": 75510000.0
+    },
+    {
+      "Audience": {
+        "_CategoryCode": 0,
+        "_Code": "W21-24",
+        "_Custom": false,
+        "_Id": 7,
+        "_Name": "Women 21-24",
+        "_RangeEnd": 24,
+        "_RangeStart": 21,
+        "_SubCategoryCode": "W",
+        "IsDirty": true
+      },
+      "Universe": 7900000.0
+    },
+    {
+      "Audience": {
+        "_CategoryCode": 0,
+        "_Code": "W21-49",
+        "_Custom": true,
+        "_Id": 312,
+        "_Name": "Women 21-49",
+        "_RangeEnd": 49,
+        "_RangeStart": 21,
+        "_SubCategoryCode": "W",
+        "IsDirty": true
+      },
+      "Universe": 58840000.0
+    },
+    {
+      "Audience": {
+        "_CategoryCode": 0,
+        "_Code": "W25+",
+        "_Custom": true,
+        "_Id": 319,
+        "_Name": "Women 25+",
+        "_RangeEnd": 99,
+        "_RangeStart": 25,
+        "_SubCategoryCode": "W",
+        "IsDirty": true
+      },
+      "Universe": 111570000.0
+    },
+    {
+      "Audience": {
+        "_CategoryCode": 0,
+        "_Code": "W25-34",
+        "_Custom": false,
+        "_Id": 348,
+        "_Name": "Women 25-34",
+        "_RangeEnd": 34,
+        "_RangeStart": 25,
+        "_SubCategoryCode": "W",
+        "IsDirty": true
+      },
+      "Universe": 20720000.0
+    },
+    {
+      "Audience": {
+        "_CategoryCode": 0,
+        "_Code": "W25-49",
+        "_Custom": true,
+        "_Id": 57,
+        "_Name": "Women 25-49",
+        "_RangeEnd": 49,
+        "_RangeStart": 25,
+        "_SubCategoryCode": "W",
+        "IsDirty": true
+      },
+      "Universe": 50940000.0
+    },
+    {
+      "Audience": {
+        "_CategoryCode": 0,
+        "_Code": "W25-54",
+        "_Custom": true,
+        "_Id": 58,
+        "_Name": "Women 25-54",
+        "_RangeEnd": 54,
+        "_RangeStart": 25,
+        "_SubCategoryCode": "W",
+        "IsDirty": true
+      },
+      "Universe": 61360000.0
+    },
+    {
+      "Audience": {
+        "_CategoryCode": 0,
+        "_Code": "W25-64",
+        "_Custom": true,
+        "_Id": 318,
+        "_Name": "Women 25-64",
+        "_RangeEnd": 64,
+        "_RangeStart": 25,
+        "_SubCategoryCode": "W",
+        "IsDirty": true
+      },
+      "Universe": 82610000.0
+    },
+    {
+      "Audience": {
+        "_CategoryCode": 0,
+        "_Code": "W35+",
+        "_Custom": true,
+        "_Id": 61,
+        "_Name": "Women 35+",
+        "_RangeEnd": 99,
+        "_RangeStart": 35,
+        "_SubCategoryCode": "W",
+        "IsDirty": true
+      },
+      "Universe": 90850000.0
+    },
+    {
+      "Audience": {
+        "_CategoryCode": 0,
+        "_Code": "W35-49",
+        "_Custom": false,
+        "_Id": 347,
+        "_Name": "Women 35-49",
+        "_RangeEnd": 49,
+        "_RangeStart": 35,
+        "_SubCategoryCode": "W",
+        "IsDirty": true
+      },
+      "Universe": 30220000.0
+    },
+    {
+      "Audience": {
+        "_CategoryCode": 0,
+        "_Code": "W35-54",
+        "_Custom": true,
+        "_Id": 59,
+        "_Name": "Women 35-54",
+        "_RangeEnd": 54,
+        "_RangeStart": 35,
+        "_SubCategoryCode": "W",
+        "IsDirty": true
+      },
+      "Universe": 40640000.0
+    },
+    {
+      "Audience": {
+        "_CategoryCode": 0,
+        "_Code": "W35-64",
+        "_Custom": true,
+        "_Id": 60,
+        "_Name": "Women 35-64",
+        "_RangeEnd": 64,
+        "_RangeStart": 35,
+        "_SubCategoryCode": "W",
+        "IsDirty": true
+      },
+      "Universe": 61890000.0
+    },
+    {
+      "Audience": {
+        "_CategoryCode": 0,
+        "_Code": "W50+",
+        "_Custom": true,
+        "_Id": 62,
+        "_Name": "Women 50+",
+        "_RangeEnd": 99,
+        "_RangeStart": 50,
+        "_SubCategoryCode": "W",
+        "IsDirty": true
+      },
+      "Universe": 60630000.0
+    },
+    {
+      "Audience": {
+        "_CategoryCode": 0,
+        "_Code": "W50-54",
+        "_Custom": false,
+        "_Id": 13,
+        "_Name": "Women 50-54",
+        "_RangeEnd": 54,
+        "_RangeStart": 50,
+        "_SubCategoryCode": "W",
+        "IsDirty": true
+      },
+      "Universe": 10420000.0
+    },
+    {
+      "Audience": {
+        "_CategoryCode": 0,
+        "_Code": "W55+",
+        "_Custom": true,
+        "_Id": 329,
+        "_Name": "Women 55+",
+        "_RangeEnd": 99,
+        "_RangeStart": 55,
+        "_SubCategoryCode": "W",
+        "IsDirty": true
+      },
+      "Universe": 50210000.0
+    },
+    {
+      "Audience": {
+        "_CategoryCode": 0,
+        "_Code": "W55-64",
+        "_Custom": false,
+        "_Id": 14,
+        "_Name": "Women 55-64",
+        "_RangeEnd": 64,
+        "_RangeStart": 55,
+        "_SubCategoryCode": "W",
+        "IsDirty": true
+      },
+      "Universe": 21250000.0
+    },
+    {
+      "Audience": {
+        "_CategoryCode": 0,
+        "_Code": "W65+",
+        "_Custom": false,
+        "_Id": 15,
+        "_Name": "Women 65+",
+        "_RangeEnd": 99,
+        "_RangeStart": 65,
+        "_SubCategoryCode": "W",
+        "IsDirty": true
+      },
+      "Universe": 28960000.0
+    },
+    {
+      "Audience": {
+        "_CategoryCode": 0,
+        "_Code": "C2-5",
+        "_Custom": false,
+        "_Id": 339,
+        "_Name": "Children 2-5",
+        "_RangeEnd": 5,
+        "_RangeStart": 2,
+        "_SubCategoryCode": "C",
+        "IsDirty": true
+      },
+      "Universe": 15670000.0
+    },
+    {
+      "Audience": {
+        "_CategoryCode": 0,
+        "_Code": "C6-11",
+        "_Custom": false,
+        "_Id": 46,
+        "_Name": "Children 6-11",
+        "_RangeEnd": 11,
+        "_RangeStart": 6,
+        "_SubCategoryCode": "C",
+        "IsDirty": true
+      },
+      "Universe": 23940000.0
+    },
+    {
+      "Audience": {
+        "_CategoryCode": 0,
+        "_Code": "P12-14",
+        "_Custom": true,
+        "_Id": 416,
+        "_Name": "Persons 12-14",
+        "_RangeEnd": 14,
+        "_RangeStart": 12,
+        "_SubCategoryCode": "P",
+        "IsDirty": true
+      },
+      "Universe": 12150000.0
+    },
+    {
+      "Audience": {
+        "_CategoryCode": 0,
+        "_Code": "P15-17",
+        "_Custom": true,
+        "_Id": 417,
+        "_Name": "Persons 15-17",
+        "_RangeEnd": 17,
+        "_RangeStart": 15,
+        "_SubCategoryCode": "P",
+        "IsDirty": true
+      },
+      "Universe": 12330000.0
+    }
+  ],
+  "WeekNumber": 1,
+  "Year": 2019
+}

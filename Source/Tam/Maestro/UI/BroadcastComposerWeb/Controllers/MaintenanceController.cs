@@ -248,6 +248,40 @@ namespace BroadcastComposerWeb.Controllers
         }
 
         [HttpPost]
+        [Route("UploadNTIUniversesFile")]
+        public ActionResult UploadNTIUniversesFile(HttpPostedFileBase file)
+        {
+            if (file != null && file.ContentLength > 0)
+            {
+                if (!Path.GetFileName(file.FileName).EndsWith(".xlsx"))
+                {
+                    ViewBag.Message = "Only Excel (.xlsx) files supported";
+                }
+                else
+                {
+                    try
+                    {
+                        var userName = _ApplicationServiceFactory
+                            .GetApplicationService<IUserService>()
+                            .GetCurrentUserFullName();
+
+                        _ApplicationServiceFactory
+                            .GetApplicationService<INtiUniverseService>()
+                            .LoadUniverses(file.InputStream, userName, DateTime.Now);
+
+                        ViewBag.Message = "NTI universes file uploaded and processed successfully !";
+                    }
+                    catch (Exception ex)
+                    {
+                        ViewBag.Message = ex.Message;
+                    }
+                }
+            }
+
+            return View("Index");
+        }
+
+        [HttpPost]
         public ActionResult CleanupDaypartsFilterErroneousDayparts()
         {
             var service = _ApplicationServiceFactory.GetApplicationService<IDaypartCleanupService>();

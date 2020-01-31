@@ -7,14 +7,12 @@ using ConfigurationService.Client;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Data.EntityFrameworkMapping;
-using audience = EntityFrameworkMapping.Broadcast.audience;
 using audience_audiences = EntityFrameworkMapping.Broadcast.audience_audiences;
 
 namespace Services.Broadcast.Repositories
 {
     public interface IBroadcastAudienceRepository : IDataRepository
     {
-        List<audience> GetAudiencesByRange(int rangeStart, int rangeEnd);
         List<audience_audiences> GetRatingsAudiencesByMaestroAudience(List<int> maestroAudiences);
         Dictionary<int, List<int>> GetMaestroAudiencesGroupedByRatingAudiences(List<int> maestroAudiences);
         Dictionary<int, List<int>> GetRatingAudiencesGroupedByMaestroAudience(IEnumerable<int> maestroAudiences);
@@ -27,28 +25,6 @@ namespace Services.Broadcast.Repositories
         public BroadcastAudienceRepository(IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
             ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient)
             : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
-
-        public List<audience> GetAudiencesByRange(int rangeStart, int rangeEnd)
-        {
-            using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
-                return _InReadUncommitedTransaction(
-                context =>
-                {
-                    var customAudienceQuery = (
-                    from aa in context.audience_audiences
-                    where aa.rating_category_group_id == 2
-                    select aa.custom_audience_id);
-
-                    var query = (
-                        from a in context.audiences
-                        where customAudienceQuery.Contains(a.id)
-                              && a.range_start == rangeStart
-                              && a.range_end == rangeEnd
-                        select a);
-
-                    return query.ToList();
-                });
-        }
 
         public List<audience_audiences> GetRatingsAudiencesByMaestroAudience(List<int> maestroAudiences)
         {

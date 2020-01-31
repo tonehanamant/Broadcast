@@ -303,6 +303,7 @@
     <Compile Include="ApplicationServices\BroadcastLockingManagerApplicationService.cs" />
     <Compile Include="ApplicationServices\CampaignAggregationJobTrigger.cs" />
     <Compile Include="ApplicationServices\CampaignAggregator.cs" />
+    <Compile Include="ApplicationServices\NtiUniverseService.cs" />
     <Compile Include="ApplicationServices\Maintenance\DaypartCleanupService.cs" />
     <Compile Include="ApplicationServices\GenreService.cs" />
     <Compile Include="ApplicationServices\ContainTypeService.cs" />
@@ -327,6 +328,7 @@
     <Compile Include="Converters\DetectionConverter.cs" />
     <Compile Include="Clients\TokenizedClientBase.cs" />
     <Compile Include="Converters\RateImport\BaseInventoryFileImporter.cs" />
+    <Compile Include="Converters\UniversesImporter.cs" />
     <Compile Include="Entities\Campaign\CampaignExportTypeEnum.cs" />
     <Compile Include="Entities\Campaign\CampaignReportData.cs" />
     <Compile Include="Entities\Campaign\CampaignReportRequest.cs" />
@@ -391,6 +393,11 @@
     <Compile Include="Entities\Plan\Buying\PlanBuyingRequest.cs" />
     <Compile Include="Entities\Plan\Buying\PlanBuyingCampaign.cs" />
     <Compile Include="Entities\Plan\Buying\PlanBuyingInventoryTypeDetail.cs" />
+    <Compile Include="Entities\Nti\NtiUniverseExcelRecord.cs" />
+    <Compile Include="Entities\Nti\NtiUniverse.cs" />
+    <Compile Include="Entities\Nti\NtiUniverseAudienceMapping.cs" />
+    <Compile Include="Entities\Nti\NtiUniverseDetail.cs" />
+    <Compile Include="Entities\Nti\NtiUniverseHeader.cs" />
     <Compile Include="Entities\Plan\PlanAudienceDisplay.cs" />
     <Compile Include="Entities\Plan\Buying\PlanBuyingDaypart.cs" />
     <Compile Include="Entities\Plan\Buying\PlanBuyingListingItem.cs" />
@@ -491,6 +498,7 @@
     <Compile Include="Repositories\DetectionRepository.cs" />
     <Compile Include="Repositories\DetectionTestDataGeneratorRepository.cs" />
     <Compile Include="Repositories\InventoryFileProgramEnrichmentJobsRepository.cs" />
+    <Compile Include="Repositories\NtiUniverseRepository.cs" />
     <Compile Include="Repositories\PlanRepository.cs" />
     <Compile Include="Repositories\PlanSummaryRepository.cs" />
     <Compile Include="Repositories\ScxGenerationJobRepository.cs" />

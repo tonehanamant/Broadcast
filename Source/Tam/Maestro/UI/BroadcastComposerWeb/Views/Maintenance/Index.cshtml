@@ -132,6 +132,21 @@
             </div>
         }
     </div>
+    <div>
+        <h1>Upload NTI Universes</h1>
+        @using (Html.BeginForm("UploadNTIUniversesFile", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            <label for="file">Filename:</label>
+            <input type="file" name="file" id="file" />
+            <br />
+            <input type="submit" text="Upload NTI Universes" />
+            <br />
+            <div>
+                <b>Result:</b>
+                <label style="width: 600px;" id="result_nti_universes">@ViewBag.Message</label>
+            </div>
+        }
+    </div>
 
     <div>
         <h1>Temporal Application Settings</h1>

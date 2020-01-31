@@ -50,6 +50,7 @@ namespace Services.Broadcast.Repositories
             instance.RegisterType<IProposalOpenMarketInventoryRepository, ProposalOpenMarketInventoryRepository>();
             instance.RegisterType<IDetectionTestDataGeneratorRepository, DetectionTestDataGeneratorRepository>();
             instance.RegisterType<INsiUniverseRepository, NsiUniverseRepository>();
+            instance.RegisterType<INtiUniverseRepository, NtiUniverseRepository>();
             instance.RegisterType<INsiMarketRepository, NsiMarketRepository>();
             instance.RegisterType<IRatingForecastRepository, RatingForecastRepository>();
             instance.RegisterType<IMarketRepository, MarketRepository>();

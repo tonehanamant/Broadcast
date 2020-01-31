@@ -391,6 +391,14 @@
         <AssociationConnector Association="BroadcastModel.FK_plan_version_pricing_result_spots_plan_version_pricing_results" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_pricing_results_plan_versions" />
         <EntityTypeShape EntityType="BroadcastModel.shared_folder_files" Width="1.5" PointX="31.375" PointY="10.75" />
+        <EntityTypeShape EntityType="BroadcastModel.nti_universe_audience_mappings" Width="1.5" PointX="5" PointY="52" />
+        <EntityTypeShape EntityType="BroadcastModel.nti_universe_details" Width="1.5" PointX="8" PointY="70.875" />
+        <EntityTypeShape EntityType="BroadcastModel.nti_universe_headers" Width="1.5" PointX="5.75" PointY="70.75" />
+        <EntityTypeShape EntityType="BroadcastModel.nti_universes" Width="1.5" PointX="8" PointY="4.875" />
+        <AssociationConnector Association="BroadcastModel.FK_nti_universe_audience_mappings_audiences" />
+        <AssociationConnector Association="BroadcastModel.FK_nti_universes_audiences" />
+        <AssociationConnector Association="BroadcastModel.FK_nti_universe_details_nti_universe_headers" />
+        <AssociationConnector Association="BroadcastModel.FK_nti_universes_nti_universe_headers" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

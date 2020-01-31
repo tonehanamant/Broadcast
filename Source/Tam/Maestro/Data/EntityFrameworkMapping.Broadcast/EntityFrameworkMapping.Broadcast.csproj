@@ -493,6 +493,18 @@
     <Compile Include="nti_transmittals_file_report_ratings.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="nti_universes.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="nti_universe_audience_mappings.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="nti_universe_details.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="nti_universe_headers.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="plan.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>

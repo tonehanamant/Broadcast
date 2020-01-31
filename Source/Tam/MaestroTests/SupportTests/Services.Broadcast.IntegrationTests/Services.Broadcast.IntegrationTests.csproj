@@ -251,6 +251,7 @@
     <Compile Include="ApplicationServices\GenreServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\ImpressionsServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\InventoryProgramEnrichmentServiceTests.cs" />
+    <Compile Include="ApplicationServices\NtiUniverseServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\PlanPricingInventoryEngineTests.cs" />
     <Compile Include="ApplicationServices\PlanPricingServiceTests.cs" />
     <Compile Include="ApplicationServices\PlanBuyingServiceIntegrationTests.cs" />
@@ -329,6 +330,7 @@
     <Compile Include="Stubs\TrafficApiCacheStub.cs" />
     <Compile Include="Stubs\TrafficApiClientStub.cs" />
     <Compile Include="UnitTests\ApplicationServices\InventoryServiceUnitTestClass.cs" />
+    <Compile Include="UnitTests\ApplicationServices\NtiUniverseServiceUnitTests.cs" />
     <Compile Include="UnitTests\ApplicationServices\Plans\PlanPricingServiceUnitTests.cs" />
     <Compile Include="UnitTests\ApplicationServices\InventoryServiceUnitTests.cs" />
     <Compile Include="UnitTests\ApplicationServices\SharedFolderServiceUnitTests.cs" />
@@ -409,6 +411,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Files\InventoryDaypartParsing\CNN_dayparts_invalid.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\LoadUniversesTest.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Files\Market_Coverages_Pricing_Guide_Updated_Rank.xlsx">

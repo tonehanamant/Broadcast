@@ -109,6 +109,7 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IProposalCalculationEngine, ProposalCalculationEngine>();
             unityContainer.RegisterType<IQuarterCalculationEngine, QuarterCalculationEngine>();
             unityContainer.RegisterType<INsiUniverseService, NsiUniverseService>(new ContainerControlledLifetimeManager()); // singleton
+            unityContainer.RegisterType<INtiUniverseService, NtiUniverseService>();
 
             unityContainer.RegisterType<IMediaMonthAndWeekAggregateCache, MediaMonthAndWeekAggregateCache>();
             unityContainer.RegisterType<IMediaMonthAndWeekAggregateRepository, MediaMonthAndWeekAggregateAndWeekAggregateRepository>();
@@ -116,6 +117,7 @@ namespace Services.Broadcast.ApplicationServices
             //unityContainer.RegisterType<fill, fill>();
             unityContainer.RegisterType<IRatingForecastService, RatingForecastService>();
             unityContainer.RegisterType<IStationContactMasterFileImporter, StationContactMasterFileImporter>();
+            unityContainer.RegisterType<IUniversesFileImporter, UniversesFileImporter>();
 
             unityContainer.RegisterType<IProposalProgramsCalculationEngine, ProposalProgramsCalculationEngine>();
             unityContainer.RegisterType<IProposalMarketsCalculationEngine, ProposalMarketsCalculationEngine>();

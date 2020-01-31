@@ -36,6 +36,8 @@ namespace EntityFrameworkMapping.Broadcast
             this.plan_versions = new HashSet<plan_versions>();
             this.inventory_file_proprietary_header = new HashSet<inventory_file_proprietary_header>();
             this.detection_post_details = new HashSet<detection_post_details>();
+            this.nti_universe_audience_mappings = new HashSet<nti_universe_audience_mappings>();
+            this.nti_universes = new HashSet<nti_universes>();
         }
     
         public int id { get; set; }
@@ -68,5 +70,7 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<plan_versions> plan_versions { get; set; }
         public virtual ICollection<inventory_file_proprietary_header> inventory_file_proprietary_header { get; set; }
         public virtual ICollection<detection_post_details> detection_post_details { get; set; }
+        public virtual ICollection<nti_universe_audience_mappings> nti_universe_audience_mappings { get; set; }
+        public virtual ICollection<nti_universes> nti_universes { get; set; }
     }
 }

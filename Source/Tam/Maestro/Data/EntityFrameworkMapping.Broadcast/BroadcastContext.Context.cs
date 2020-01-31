@@ -178,5 +178,9 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<plan_version_pricing_result_spots> plan_version_pricing_result_spots { get; set; }
         public virtual DbSet<plan_version_pricing_results> plan_version_pricing_results { get; set; }
         public virtual DbSet<shared_folder_files> shared_folder_files { get; set; }
+        public virtual DbSet<nti_universe_audience_mappings> nti_universe_audience_mappings { get; set; }
+        public virtual DbSet<nti_universe_details> nti_universe_details { get; set; }
+        public virtual DbSet<nti_universe_headers> nti_universe_headers { get; set; }
+        public virtual DbSet<nti_universes> nti_universes { get; set; }
     }
 }

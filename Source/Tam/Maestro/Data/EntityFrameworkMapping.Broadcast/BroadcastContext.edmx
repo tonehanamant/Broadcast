@@ -667,6 +667,44 @@
           <Property Name="created_by" Type="varchar" MaxLength="63" Nullable="false" />
           <Property Name="status" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="nti_universe_audience_mappings">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="audience_id" Type="int" Nullable="false" />
+          <Property Name="nti_audience_code" Type="varchar" MaxLength="15" Nullable="false" />
+        </EntityType>
+        <EntityType Name="nti_universe_details">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nti_universe_header_id" Type="int" Nullable="false" />
+          <Property Name="nti_audience_id" Type="int" Nullable="false" />
+          <Property Name="nti_audience_code" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="universe" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="nti_universe_headers">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="created_date" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="created_by" Type="varchar" MaxLength="63" Nullable="false" />
+          <Property Name="year" Type="int" Nullable="false" />
+          <Property Name="month" Type="int" Nullable="false" />
+          <Property Name="week_number" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="nti_universes">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="audience_id" Type="int" Nullable="false" />
+          <Property Name="universe" Type="float" Nullable="false" />
+          <Property Name="nti_universe_header_id" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="plan_version_available_markets">
           <Key>
             <PropertyRef Name="id" />
@@ -2699,6 +2737,54 @@ warning 6002: The table/view 'broadcast_integration.dbo.vw_ccc_daypart' does not
             </Principal>
             <Dependent Role="nti_transmittals_file_reports">
               <PropertyRef Name="nti_transmittals_file_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_nti_universe_audience_mappings_audiences">
+          <End Role="audiences" Type="Self.audiences" Multiplicity="1" />
+          <End Role="nti_universe_audience_mappings" Type="Self.nti_universe_audience_mappings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="audiences">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="nti_universe_audience_mappings">
+              <PropertyRef Name="audience_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_nti_universe_details_nti_universe_headers">
+          <End Role="nti_universe_headers" Type="Self.nti_universe_headers" Multiplicity="1" />
+          <End Role="nti_universe_details" Type="Self.nti_universe_details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="nti_universe_headers">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="nti_universe_details">
+              <PropertyRef Name="nti_universe_header_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_nti_universes_audiences">
+          <End Role="audiences" Type="Self.audiences" Multiplicity="1" />
+          <End Role="nti_universes" Type="Self.nti_universes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="audiences">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="nti_universes">
+              <PropertyRef Name="audience_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_nti_universes_nti_universe_headers">
+          <End Role="nti_universe_headers" Type="Self.nti_universe_headers" Multiplicity="1" />
+          <End Role="nti_universes" Type="Self.nti_universes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="nti_universe_headers">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="nti_universes">
+              <PropertyRef Name="nti_universe_header_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -5015,6 +5101,10 @@ warning 6002: The table/view 'broadcast_integration.dbo.vw_ccc_daypart' does not
           <EntitySet Name="nti_transmittals_file_report_ratings" EntityType="Self.nti_transmittals_file_report_ratings" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="nti_transmittals_file_reports" EntityType="Self.nti_transmittals_file_reports" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="nti_transmittals_files" EntityType="Self.nti_transmittals_files" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="nti_universe_audience_mappings" EntityType="Self.nti_universe_audience_mappings" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="nti_universe_details" EntityType="Self.nti_universe_details" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="nti_universe_headers" EntityType="Self.nti_universe_headers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="nti_universes" EntityType="Self.nti_universes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="plan_version_available_markets" EntityType="Self.plan_version_available_markets" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="plan_version_blackout_markets" EntityType="Self.plan_version_blackout_markets" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="plan_version_daypart_affiliate_restrictions" EntityType="Self.plan_version_daypart_affiliate_restrictions" Schema="dbo" store:Type="Tables" />
@@ -5364,6 +5454,22 @@ warning 6002: The table/view 'broadcast_integration.dbo.vw_ccc_daypart' does not
           <AssociationSet Name="FK_nti_transmittals_file_reports_nti_transmittals_files" Association="Self.FK_nti_transmittals_file_reports_nti_transmittals_files">
             <End Role="nti_transmittals_files" EntitySet="nti_transmittals_files" />
             <End Role="nti_transmittals_file_reports" EntitySet="nti_transmittals_file_reports" />
+          </AssociationSet>
+          <AssociationSet Name="FK_nti_universe_audience_mappings_audiences" Association="Self.FK_nti_universe_audience_mappings_audiences">
+            <End Role="audiences" EntitySet="audiences" />
+            <End Role="nti_universe_audience_mappings" EntitySet="nti_universe_audience_mappings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_nti_universe_details_nti_universe_headers" Association="Self.FK_nti_universe_details_nti_universe_headers">
+            <End Role="nti_universe_headers" EntitySet="nti_universe_headers" />
+            <End Role="nti_universe_details" EntitySet="nti_universe_details" />
+          </AssociationSet>
+          <AssociationSet Name="FK_nti_universes_audiences" Association="Self.FK_nti_universes_audiences">
+            <End Role="audiences" EntitySet="audiences" />
+            <End Role="nti_universes" EntitySet="nti_universes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_nti_universes_nti_universe_headers" Association="Self.FK_nti_universes_nti_universe_headers">
+            <End Role="nti_universe_headers" EntitySet="nti_universe_headers" />
+            <End Role="nti_universes" EntitySet="nti_universes" />
           </AssociationSet>
           <AssociationSet Name="FK_plan_available_markets_market_coverage_file" Association="Self.FK_plan_available_markets_market_coverage_file">
             <End Role="market_coverage_files" EntitySet="market_coverage_files" />
@@ -7136,6 +7242,26 @@ warning 6002: The table/view 'broadcast_integration.dbo.vw_ccc_daypart' does not
             <End Role="plan_version_pricing_results" EntitySet="plan_version_pricing_results" />
           </AssociationSet>
           <EntitySet Name="shared_folder_files" EntityType="BroadcastModel.shared_folder_files" />
+          <EntitySet Name="nti_universe_audience_mappings" EntityType="BroadcastModel.nti_universe_audience_mappings" />
+          <EntitySet Name="nti_universe_details" EntityType="BroadcastModel.nti_universe_details" />
+          <EntitySet Name="nti_universe_headers" EntityType="BroadcastModel.nti_universe_headers" />
+          <EntitySet Name="nti_universes" EntityType="BroadcastModel.nti_universes" />
+          <AssociationSet Name="FK_nti_universe_audience_mappings_audiences" Association="BroadcastModel.FK_nti_universe_audience_mappings_audiences">
+            <End Role="audience" EntitySet="audiences" />
+            <End Role="nti_universe_audience_mappings" EntitySet="nti_universe_audience_mappings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_nti_universes_audiences" Association="BroadcastModel.FK_nti_universes_audiences">
+            <End Role="audience" EntitySet="audiences" />
+            <End Role="nti_universes" EntitySet="nti_universes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_nti_universe_details_nti_universe_headers" Association="BroadcastModel.FK_nti_universe_details_nti_universe_headers">
+            <End Role="nti_universe_headers" EntitySet="nti_universe_headers" />
+            <End Role="nti_universe_details" EntitySet="nti_universe_details" />
+          </AssociationSet>
+          <AssociationSet Name="FK_nti_universes_nti_universe_headers" Association="BroadcastModel.FK_nti_universes_nti_universe_headers">
+            <End Role="nti_universe_headers" EntitySet="nti_universe_headers" />
+            <End Role="nti_universes" EntitySet="nti_universes" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="audience_audiences">
           <Key>
@@ -7181,6 +7307,8 @@ warning 6002: The table/view 'broadcast_integration.dbo.vw_ccc_daypart' does not
           <NavigationProperty Name="plan_versions" Relationship="BroadcastModel.FK_plan_versions_audiences" FromRole="audience" ToRole="plan_versions" />
           <NavigationProperty Name="inventory_file_proprietary_header" Relationship="BroadcastModel.FK_inventory_file_proprietary_header_audiences" FromRole="audience" ToRole="inventory_file_proprietary_header" />
           <NavigationProperty Name="detection_post_details" Relationship="BroadcastModel.FK_detection_post_details_audiences" FromRole="audience" ToRole="detection_post_details" />
+          <NavigationProperty Name="nti_universe_audience_mappings" Relationship="BroadcastModel.FK_nti_universe_audience_mappings_audiences" FromRole="audience" ToRole="nti_universe_audience_mappings" />
+          <NavigationProperty Name="nti_universes" Relationship="BroadcastModel.FK_nti_universes_audiences" FromRole="audience" ToRole="nti_universes" />
         </EntityType>
         <EntityType Name="daypart">
           <Key>
@@ -12480,6 +12608,98 @@ warning 6002: The table/view 'broadcast_integration.dbo.vw_ccc_daypart' does not
           <Property Name="created_date" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="created_by" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="nti_universe_audience_mappings">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="audience_id" Type="Int32" Nullable="false" />
+          <Property Name="nti_audience_code" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="audience" Relationship="BroadcastModel.FK_nti_universe_audience_mappings_audiences" FromRole="nti_universe_audience_mappings" ToRole="audience" />
+        </EntityType>
+        <EntityType Name="nti_universe_details">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nti_universe_header_id" Type="Int32" Nullable="false" />
+          <Property Name="nti_audience_id" Type="Int32" Nullable="false" />
+          <Property Name="nti_audience_code" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="universe" Type="Double" Nullable="false" />
+          <NavigationProperty Name="nti_universe_headers" Relationship="BroadcastModel.FK_nti_universe_details_nti_universe_headers" FromRole="nti_universe_details" ToRole="nti_universe_headers" />
+        </EntityType>
+        <EntityType Name="nti_universe_headers">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="created_date" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="created_by" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
+          <Property Name="year" Type="Int32" Nullable="false" />
+          <Property Name="month" Type="Int32" Nullable="false" />
+          <Property Name="week_number" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="nti_universe_details" Relationship="BroadcastModel.FK_nti_universe_details_nti_universe_headers" FromRole="nti_universe_headers" ToRole="nti_universe_details" />
+          <NavigationProperty Name="nti_universes" Relationship="BroadcastModel.FK_nti_universes_nti_universe_headers" FromRole="nti_universe_headers" ToRole="nti_universes" />
+        </EntityType>
+        <EntityType Name="nti_universes">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="audience_id" Type="Int32" Nullable="false" />
+          <Property Name="universe" Type="Double" Nullable="false" />
+          <Property Name="nti_universe_header_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="audience" Relationship="BroadcastModel.FK_nti_universes_audiences" FromRole="nti_universes" ToRole="audience" />
+          <NavigationProperty Name="nti_universe_headers" Relationship="BroadcastModel.FK_nti_universes_nti_universe_headers" FromRole="nti_universes" ToRole="nti_universe_headers" />
+        </EntityType>
+        <Association Name="FK_nti_universe_audience_mappings_audiences">
+          <End Type="BroadcastModel.audience" Role="audience" Multiplicity="1" />
+          <End Type="BroadcastModel.nti_universe_audience_mappings" Role="nti_universe_audience_mappings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="audience">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="nti_universe_audience_mappings">
+              <PropertyRef Name="audience_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_nti_universes_audiences">
+          <End Type="BroadcastModel.audience" Role="audience" Multiplicity="1" />
+          <End Type="BroadcastModel.nti_universes" Role="nti_universes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="audience">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="nti_universes">
+              <PropertyRef Name="audience_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_nti_universe_details_nti_universe_headers">
+          <End Type="BroadcastModel.nti_universe_headers" Role="nti_universe_headers" Multiplicity="1" />
+          <End Type="BroadcastModel.nti_universe_details" Role="nti_universe_details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="nti_universe_headers">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="nti_universe_details">
+              <PropertyRef Name="nti_universe_header_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_nti_universes_nti_universe_headers">
+          <End Type="BroadcastModel.nti_universe_headers" Role="nti_universe_headers" Multiplicity="1" />
+          <End Type="BroadcastModel.nti_universes" Role="nti_universes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="nti_universe_headers">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="nti_universes">
+              <PropertyRef Name="nti_universe_header_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -14597,6 +14817,48 @@ warning 6002: The table/view 'broadcast_integration.dbo.vw_ccc_daypart' does not
                 <ScalarProperty Name="file_extension" ColumnName="file_extension" />
                 <ScalarProperty Name="file_name" ColumnName="file_name" />
                 <ScalarProperty Name="folder_path" ColumnName="folder_path" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="nti_universe_audience_mappings">
+            <EntityTypeMapping TypeName="BroadcastModel.nti_universe_audience_mappings">
+              <MappingFragment StoreEntitySet="nti_universe_audience_mappings">
+                <ScalarProperty Name="nti_audience_code" ColumnName="nti_audience_code" />
+                <ScalarProperty Name="audience_id" ColumnName="audience_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="nti_universe_details">
+            <EntityTypeMapping TypeName="BroadcastModel.nti_universe_details">
+              <MappingFragment StoreEntitySet="nti_universe_details">
+                <ScalarProperty Name="universe" ColumnName="universe" />
+                <ScalarProperty Name="nti_audience_code" ColumnName="nti_audience_code" />
+                <ScalarProperty Name="nti_audience_id" ColumnName="nti_audience_id" />
+                <ScalarProperty Name="nti_universe_header_id" ColumnName="nti_universe_header_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="nti_universe_headers">
+            <EntityTypeMapping TypeName="BroadcastModel.nti_universe_headers">
+              <MappingFragment StoreEntitySet="nti_universe_headers">
+                <ScalarProperty Name="week_number" ColumnName="week_number" />
+                <ScalarProperty Name="month" ColumnName="month" />
+                <ScalarProperty Name="year" ColumnName="year" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="created_date" ColumnName="created_date" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="nti_universes">
+            <EntityTypeMapping TypeName="BroadcastModel.nti_universes">
+              <MappingFragment StoreEntitySet="nti_universes">
+                <ScalarProperty Name="nti_universe_header_id" ColumnName="nti_universe_header_id" />
+                <ScalarProperty Name="universe" ColumnName="universe" />
+                <ScalarProperty Name="audience_id" ColumnName="audience_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
