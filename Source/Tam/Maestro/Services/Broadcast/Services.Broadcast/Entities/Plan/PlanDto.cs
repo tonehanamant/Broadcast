@@ -403,5 +403,13 @@ namespace Services.Broadcast.Entities.Plan
         /// True - when there is a pricing model execution with status 'Queued' or 'Processing' in the DB
         /// </summary>
         public bool IsPricingModelRunning { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this instance has enable ADUs.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if this instance is enable; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsAduEnabled { get; set; }
     }
 }

@@ -3707,6 +3707,31 @@ EXEC('
 
 /*************************************** END - PRI-17740 ****************************************************/
 
+/*************************************** START PRI-20798 *****************************************************/
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE  object_id = OBJECT_ID('plan_version_weeks') AND name = 'weekly_adu')
+BEGIN	
+	ALTER TABLE plan_version_weeks
+	ADD weekly_adu INT
+
+	EXEC('UPDATE plan_version_weeks SET weekly_adu = 0')
+
+	ALTER TABLE plan_version_weeks
+	ALTER COLUMN weekly_adu INT NOT NULL
+END
+
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE  object_id = OBJECT_ID('plan_versions') AND name = 'is_adu_enabled')
+BEGIN
+	ALTER TABLE plan_versions
+	ADD is_adu_enabled BIT 
+
+	EXEC('UPDATE plan_versions
+	SET is_adu_enabled = 0')
+
+	ALTER TABLE plan_versions
+	ALTER COLUMN is_adu_enabled BIT NOT NULL
+END
+/*************************************** END PRI-20798 *****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

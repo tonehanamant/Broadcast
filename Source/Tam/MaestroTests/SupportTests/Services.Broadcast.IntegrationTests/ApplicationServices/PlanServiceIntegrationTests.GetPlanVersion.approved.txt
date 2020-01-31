@@ -114,6 +114,7 @@
   "HHRatingPoints": 2.0,
   "HHUniverse": 10000.0,
   "HUTBookId": 428,
+  "IsAduEnabled": false,
   "IsDraft": false,
   "IsPricingModelRunning": false,
   "ModifiedBy": "IntegrationTestUser",

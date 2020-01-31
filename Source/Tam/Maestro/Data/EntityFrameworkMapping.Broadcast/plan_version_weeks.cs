@@ -23,6 +23,7 @@ namespace EntityFrameworkMapping.Broadcast
         public int plan_version_id { get; set; }
         public double weekly_rating_points { get; set; }
         public decimal weekly_budget { get; set; }
+        public int weekly_adu { get; set; }
     
         public virtual media_weeks media_weeks { get; set; }
         public virtual plan_versions plan_versions { get; set; }

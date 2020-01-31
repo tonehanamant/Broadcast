@@ -381,11 +381,6 @@
         <EntityTypeShape EntityType="BroadcastModel.plan_version_weeks" Width="1.5" PointX="20" PointY="12.25" />
         <AssociationConnector Association="BroadcastModel.FK_plan_weeks_media_weeks" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_weeks_plan_versions" />
-        <EntityTypeShape EntityType="BroadcastModel.plan_version_pricing_api_result_spots" Width="1.5" PointX="20.75" PointY="41.125" />
-        <AssociationConnector Association="BroadcastModel.FK_plan_version_pricing_api_result_spots_dayparts" />
-        <AssociationConnector Association="BroadcastModel.FK_plan_version_pricing_api_result_spots_media_weeks" />
-        <AssociationConnector Association="BroadcastModel.FK_plan_version_pricing_api_result_spots_plan_version_pricing_api_results" />
-        <AssociationConnector Association="BroadcastModel.FK_plan_version_pricing_api_result_spots_station_inventory_manifest" />
         <EntityTypeShape EntityType="BroadcastModel.plan_version_pricing_result_spots" Width="1.5" PointX="16.75" PointY="74.75" />
         <EntityTypeShape EntityType="BroadcastModel.plan_version_pricing_results" Width="1.5" PointX="14.5" PointY="74.75" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_pricing_result_spots_plan_version_pricing_results" />

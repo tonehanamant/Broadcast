@@ -202,6 +202,13 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _CalculateSecondaryAudiencesDeliveryData(plan);
             _SetPlanVersionNumber(plan);
 
+            if(plan.Status == PlanStatusEnum.Contracted && plan.GoalBreakdownType != PlanGoalBreakdownTypeEnum.Custom)
+            {
+                plan.GoalBreakdownType = PlanGoalBreakdownTypeEnum.Custom;
+            }
+
+            _VerifyWeeklyAdu(plan.IsAduEnabled, plan.WeeklyBreakdownWeeks);
+
             if (plan.VersionId == 0 || plan.Id == 0)
             {
                 _PlanRepository.SaveNewPlan(plan, createdBy, createdDate);
@@ -236,6 +243,14 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
 
             return plan.Id;
+        }
+
+        private void _VerifyWeeklyAdu(bool isAduEnabled, List<WeeklyBreakdownWeek> weeks)
+        {
+            if (isAduEnabled) return;
+
+            foreach (var week in weeks)
+                week.WeeklyAdu = 0;
         }
 
         private static void _ConvertImpressionsToRawFormat(PlanDto plan)

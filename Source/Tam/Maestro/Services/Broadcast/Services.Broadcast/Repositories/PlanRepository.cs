@@ -470,7 +470,8 @@ namespace Services.Broadcast.Repositories
                 PricingParameters = _MapPricingParameters(latestPlanVersion.plan_version_pricing_parameters.SingleOrDefault()),
                 IsDraft = latestPlanVersion.is_draft,
                 VersionNumber = latestPlanVersion.version_number,
-                VersionId = latestPlanVersion.id
+                VersionId = latestPlanVersion.id,
+                IsAduEnabled = latestPlanVersion.is_adu_enabled
             };
             return dto;
         }
@@ -531,7 +532,8 @@ namespace Services.Broadcast.Repositories
                 WeeklyImpressionsPercentage = arg.weekly_impressions_percentage,
                 StartDate = arg.media_weeks.start_date,
                 MediaWeekId = arg.media_weeks.id,
-                WeeklyBudget = arg.weekly_budget
+                WeeklyBudget = arg.weekly_budget,
+                WeeklyAdu = arg.weekly_adu
             };
         }
 
@@ -573,6 +575,7 @@ namespace Services.Broadcast.Repositories
             version.hh_universe = planDto.HHUniverse;
             version.is_draft = planDto.IsDraft;
             version.version_number = planDto.VersionNumber;
+            version.is_adu_enabled = planDto.IsAduEnabled;
 
             _MapPlanAudienceInfo(version, planDto);
             _MapPlanBudget(version, planDto);
@@ -602,7 +605,8 @@ namespace Services.Broadcast.Repositories
                     weekly_rating_points = d.WeeklyRatings,
                     weekly_impressions_percentage = d.WeeklyImpressionsPercentage,
                     media_week_id = d.MediaWeekId,
-                    weekly_budget = d.WeeklyBudget
+                    weekly_budget = d.WeeklyBudget,
+                    weekly_adu = d.WeeklyAdu
                 });
             });
         }

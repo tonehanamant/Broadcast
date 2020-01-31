@@ -667,7 +667,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
 
             Assert.That(() => _planValidator.ValidatePlan(plan),
                 Throws.TypeOf<Exception>().With.Message
-                    .EqualTo("Invalid VPVH. The value must be between 0.001 and 10."));
+                    .EqualTo("Invalid VPVH. The value must be between 0.001 and 1."));
         }
 
         [Test]
@@ -680,7 +680,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
 
             Assert.That(() => _planValidator.ValidatePlan(plan),
                 Throws.TypeOf<Exception>().With.Message
-                    .EqualTo("Invalid VPVH. The value must be between 0.001 and 10."));
+                    .EqualTo("Invalid VPVH. The value must be between 0.001 and 1."));
         }
 
         [Test]
@@ -693,7 +693,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
 
             Assert.That(() => _planValidator.ValidatePlan(plan),
                 Throws.TypeOf<Exception>().With.Message
-                    .EqualTo("Invalid VPVH. The value must be between 0.001 and 10."));
+                    .EqualTo("Invalid VPVH. The value must be between 0.001 and 1."));
         }
 
         [Test]
@@ -758,7 +758,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
 
             Assert.That(() => _planValidator.ValidatePlan(plan),
                 Throws.TypeOf<Exception>().With.Message
-                    .EqualTo("Invalid VPVH. The value must be between 0.001 and 10."));
+                    .EqualTo("Invalid VPVH. The value must be between 0.001 and 1."));
         }
 
         [Test]
@@ -777,7 +777,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
 
             Assert.That(() => _planValidator.ValidatePlan(plan),
                 Throws.TypeOf<Exception>().With.Message
-                    .EqualTo("Invalid VPVH. The value must be between 0.001 and 10."));
+                    .EqualTo("Invalid VPVH. The value must be between 0.001 and 1."));
         }
 
         [Test]

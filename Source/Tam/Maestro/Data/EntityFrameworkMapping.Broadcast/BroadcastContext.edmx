@@ -984,6 +984,7 @@
           <Property Name="plan_version_id" Type="int" Nullable="false" />
           <Property Name="weekly_rating_points" Type="float" Nullable="false" />
           <Property Name="weekly_budget" Type="money" Nullable="false" />
+          <Property Name="weekly_adu" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="plan_versions">
           <Key>
@@ -1023,6 +1024,7 @@
           <Property Name="modified_by" Type="varchar" MaxLength="63" />
           <Property Name="modified_date" Type="datetime" />
           <Property Name="version_number" Type="int" />
+          <Property Name="is_adu_enabled" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="plans">
           <Key>
@@ -1914,7 +1916,7 @@
           <Property Name="sys_end_date" Type="datetime2" Precision="7" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'broadcast_integration.dbo.station_inventory_manifest_weeks_history' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'broadcast_integration_staging.dbo.station_inventory_manifest_weeks_history' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="station_inventory_manifest_weeks_history">
           <Key>
             <PropertyRef Name="id" />
@@ -2010,7 +2012,7 @@ warning 6002: The table/view 'broadcast_integration.dbo.station_inventory_manife
           <Property Name="end_time" Type="int" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'broadcast_integration.dbo.vw_ccc_daypart' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vw_ccc_daypart">
           <Key>
             <PropertyRef Name="id" />
@@ -11118,6 +11120,7 @@ warning 6002: The table/view 'broadcast_integration.dbo.vw_ccc_daypart' does not
           <NavigationProperty Name="plan_version_dayparts" Relationship="BroadcastModel.FK_plan_version_dayparts_plan_versions" FromRole="plan_versions" ToRole="plan_version_dayparts" />
           <NavigationProperty Name="plan_version_weeks" Relationship="BroadcastModel.FK_plan_version_weeks_plan_versions" FromRole="plan_versions" ToRole="plan_version_weeks" />
           <NavigationProperty Name="plan_version_pricing_results" Relationship="BroadcastModel.FK_plan_version_pricing_results_plan_versions" FromRole="plan_versions" ToRole="plan_version_pricing_results" />
+          <Property Name="is_adu_enabled" Type="Boolean" Nullable="false" />
         </EntityType>
         <Association Name="FK_plan_versions_audiences">
           <End Type="BroadcastModel.audience" Role="audience" Multiplicity="1" />
@@ -12511,6 +12514,7 @@ warning 6002: The table/view 'broadcast_integration.dbo.vw_ccc_daypart' does not
           <Property Name="weekly_budget" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
           <NavigationProperty Name="media_weeks" Relationship="BroadcastModel.FK_plan_weeks_media_weeks" FromRole="plan_version_weeks" ToRole="media_weeks" />
           <NavigationProperty Name="plan_versions" Relationship="BroadcastModel.FK_plan_version_weeks_plan_versions" FromRole="plan_version_weeks" ToRole="plan_versions" />
+          <Property Name="weekly_adu" Type="Int32" Nullable="false" />
         </EntityType>
         <Association Name="FK_plan_weeks_media_weeks">
           <End Type="BroadcastModel.media_weeks" Role="media_weeks" Multiplicity="1" />
@@ -14280,6 +14284,7 @@ warning 6002: The table/view 'broadcast_integration.dbo.vw_ccc_daypart' does not
           <EntitySetMapping Name="plan_versions">
             <EntityTypeMapping TypeName="BroadcastModel.plan_versions">
               <MappingFragment StoreEntitySet="plan_versions">
+                <ScalarProperty Name="is_adu_enabled" ColumnName="is_adu_enabled" />
                 <ScalarProperty Name="version_number" ColumnName="version_number" />
                 <ScalarProperty Name="modified_date" ColumnName="modified_date" />
                 <ScalarProperty Name="modified_by" ColumnName="modified_by" />
@@ -14795,6 +14800,7 @@ warning 6002: The table/view 'broadcast_integration.dbo.vw_ccc_daypart' does not
           <EntitySetMapping Name="plan_version_weeks">
             <EntityTypeMapping TypeName="BroadcastModel.plan_version_weeks">
               <MappingFragment StoreEntitySet="plan_version_weeks">
+                <ScalarProperty Name="weekly_adu" ColumnName="weekly_adu" />
                 <ScalarProperty Name="weekly_budget" ColumnName="weekly_budget" />
                 <ScalarProperty Name="weekly_rating_points" ColumnName="weekly_rating_points" />
                 <ScalarProperty Name="plan_version_id" ColumnName="plan_version_id" />

@@ -14,5 +14,6 @@ namespace Services.Broadcast.Entities.Plan
         public double WeeklyImpressionsPercentage { get; set; }
         public double WeeklyRatings { get; set; }
         public decimal WeeklyBudget { get; set; }
+        public int WeeklyAdu { get; set; }
     }
 }

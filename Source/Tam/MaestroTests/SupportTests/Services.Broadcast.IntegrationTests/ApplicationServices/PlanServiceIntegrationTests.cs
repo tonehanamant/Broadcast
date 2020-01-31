@@ -50,6 +50,23 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        public void CreateNewPlan_WithAduDisabled()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                PlanDto newPlan = _GetNewPlan();
+                newPlan.IsAduEnabled = false;
+
+                var newPlanId = _PlanService.SavePlan(newPlan, "integration_test", new System.DateTime(2019, 01, 01));
+
+                Assert.IsTrue(newPlanId > 0);
+                var planVersion = _PlanService.GetPlan(newPlanId);
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(planVersion, _GetJsonSettings()));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
         public void CreateNewPlan_NullHutBook()
         {
             using (new TransactionScopeWrapper())
@@ -542,6 +559,29 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     new DateTime(2019, 1, 28),
                     new DateTime(2019, 1, 4)
                 };
+
+                var modifedPlanId = _PlanService.SavePlan(testPlan, "integration_test", new System.DateTime(2019, 01, 15));
+                PlanDto finalPlan = _PlanService.GetPlan(modifedPlanId);
+
+                Assert.IsTrue(modifedPlanId > 0);
+                Assert.AreEqual(newPlanId, modifedPlanId);
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(finalPlan, _GetJsonSettings()));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void SavePlan_WithAduDisabled()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                // generate a plan for test
+                PlanDto newPlan = _GetNewPlan();
+                var newPlanId = _PlanService.SavePlan(newPlan, "integration_test", new System.DateTime(2019, 01, 01));
+                // modify the plan
+                PlanDto testPlan = _PlanService.GetPlan(newPlanId);
+
+                testPlan.IsAduEnabled = false;
 
                 var modifedPlanId = _PlanService.SavePlan(testPlan, "integration_test", new System.DateTime(2019, 01, 15));
                 PlanDto finalPlan = _PlanService.GetPlan(modifedPlanId);
@@ -1668,6 +1708,95 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
 
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void Plan_WeeklyBreakdown_LessImpressionThenWeeks()
+        {
+            var request = new WeeklyBreakdownRequest
+            {
+                DeliveryType = PlanGoalBreakdownTypeEnum.Custom,
+                FlightStartDate = new DateTime(2019, 12, 30),
+                FlightEndDate = new DateTime(2020, 02, 02),
+                TotalImpressions = 3,
+                TotalRatings = 0.002721875495608163,
+                WeeklyBreakdownCalculationFrom = WeeklyBreakdownCalculationFrom.Impressions,
+                TotalBudget = 75000,
+                FlightHiatusDays = new List<DateTime>(),
+                Weeks = new List<WeeklyBreakdownWeek>
+                {
+                    new WeeklyBreakdownWeek
+                    {
+                        WeekNumber = 1,
+                        MediaWeekId = 836,
+                        StartDate = new DateTime(2019,12,30),
+                        EndDate = new DateTime(2020,01,05),
+                        NumberOfActiveDays = 7,
+                        ActiveDays = "M-Su",
+                        WeeklyImpressions = 0.4,
+                        WeeklyImpressionsPercentage = 20,
+                        WeeklyRatings = 0.00036291673274775507,
+                        WeeklyBudget = 15000
+                    },
+                    new WeeklyBreakdownWeek
+                    {
+                        WeekNumber = 2,
+                        MediaWeekId = 837,
+                        StartDate = new DateTime(2020,01,06),
+                        EndDate = new DateTime(2020,01,12),
+                        NumberOfActiveDays = 7,
+                        ActiveDays = "M-Su",
+                        WeeklyImpressions = 0.4,
+                        WeeklyImpressionsPercentage = 20,
+                        WeeklyRatings = 0.00036291673274775507,
+                        WeeklyBudget = 15000
+                    },
+                    new WeeklyBreakdownWeek
+                    {
+                        WeekNumber = 3,
+                        MediaWeekId = 838,
+                        StartDate = new DateTime(2020,01,13),
+                        EndDate = new DateTime(2020,01,19),
+                        NumberOfActiveDays = 7,
+                        ActiveDays = "M-Su",
+                        WeeklyImpressions = 0.4,
+                        WeeklyImpressionsPercentage = 20,
+                        WeeklyBudget = 15000,
+                        WeeklyRatings = 0.00036291673274775507
+                    },
+                    new WeeklyBreakdownWeek
+                    {
+                        WeekNumber = 4,
+                        MediaWeekId = 839,
+                        StartDate = new DateTime(2020,01,20),
+                        EndDate = new DateTime(2020,01,26),
+                        NumberOfActiveDays = 7,
+                        ActiveDays = "M-Su",
+                        WeeklyImpressions = 0.4,
+                        WeeklyImpressionsPercentage = 20,
+                        WeeklyBudget = 15000,
+                        WeeklyRatings = 0.00036291673274775507
+                    },
+                    new WeeklyBreakdownWeek
+                    {
+                        WeekNumber = 5,
+                        MediaWeekId = 840,
+                        StartDate = new DateTime(2020,01,27),
+                        EndDate = new DateTime(2020,02,02),
+                        NumberOfActiveDays = 7,
+                        ActiveDays = "M-Su",
+                        WeeklyImpressions = 0.4,
+                        WeeklyImpressionsPercentage = 20,
+                        WeeklyBudget = 15000,
+                        WeeklyRatings = 0.00036291673274775507
+                    }
+                }
+            };
+
+            var result = _PlanService.CalculatePlanWeeklyGoalBreakdown(request);
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
         private static PlanDto _GetNewPlan()
         {
             return new PlanDto
@@ -1830,6 +1959,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     }
                 },
                 Vpvh = 0.012,
+                IsAduEnabled = true,
                 WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>
                 {
                     new WeeklyBreakdownWeek
@@ -1838,7 +1968,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         StartDate = new DateTime(2018,12,31), EndDate = new DateTime(2019,01,06),
                         NumberOfActiveDays = 6, ActiveDays = "Tu-Su", WeeklyImpressions = 20, WeeklyImpressionsPercentage  = 20,
                         WeeklyRatings = .0123,
-                        WeeklyBudget = 20m
+                        WeeklyBudget = 20m,
+                        WeeklyAdu = 5
                     },
                     new WeeklyBreakdownWeek
                     {
@@ -1862,7 +1993,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         StartDate = new DateTime(2019,01,21), EndDate = new DateTime(2019,01,27),
                         NumberOfActiveDays = 6, ActiveDays = "M-W,F-Su", WeeklyImpressions = 20, WeeklyImpressionsPercentage  = 20,
                         WeeklyRatings = .0123,
-                        WeeklyBudget = 20m
+                        WeeklyBudget = 20m,
+                        WeeklyAdu = 0
                     },
                     new WeeklyBreakdownWeek
                     {
@@ -1870,7 +2002,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         StartDate = new DateTime(2019,01,28), EndDate = new DateTime(2019,02,03),
                         NumberOfActiveDays = 4, ActiveDays = "M-Th", WeeklyImpressions = 20, WeeklyImpressionsPercentage  = 20,
                         WeeklyRatings = .0123,
-                        WeeklyBudget = 20m
+                        WeeklyBudget = 20m,
+                        WeeklyAdu = 30
                     }
                 }
             };
@@ -1912,7 +2045,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         WeeklyImpressions = 250,
                         WeeklyImpressionsPercentage = 25.0,
                         WeeklyRatings = 0.025,
-                        WeeklyBudget = 5000
+                        WeeklyBudget = 5000,
+                        WeeklyAdu = 0
                     },
                     new WeeklyBreakdownWeek
                     {
@@ -1938,7 +2072,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         WeeklyImpressions = 250,
                         WeeklyImpressionsPercentage = 25.0,
                         WeeklyRatings = 0.025,
-                        WeeklyBudget = 5000
+                        WeeklyBudget = 5000,
+                        WeeklyAdu = 5
                     },
                     new WeeklyBreakdownWeek
                     {
@@ -1951,7 +2086,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         WeeklyImpressions = 250,
                         WeeklyImpressionsPercentage = 25.0,
                         WeeklyRatings = 0.025,
-                        WeeklyBudget = 5000
+                        WeeklyBudget = 5000,
+                        WeeklyAdu = 30
                     }
                 }
             };
