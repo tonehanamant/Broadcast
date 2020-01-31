@@ -237,7 +237,7 @@ namespace Services.Broadcast.IntegrationTests.Stubs
                     result = "True";
                     break;
                 case "BroadcastExcelTemplatesPath":
-                    result = @"\\cadfs11\\Inventory Management UI";
+                    result = @"\\cadfs11\\Inventory Management UI\Continuous Deployment";
                     break;
                 case "EnableBarterInventoryForPricingModel":
                     result = "True";
