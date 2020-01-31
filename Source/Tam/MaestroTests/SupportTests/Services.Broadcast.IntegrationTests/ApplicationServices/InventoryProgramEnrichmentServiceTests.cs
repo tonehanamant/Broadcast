@@ -1,10 +1,13 @@
 ﻿using ApprovalTests;
 using ApprovalTests.Reporters;
 using IntegrationTests.Common;
+using Microsoft.Practices.Unity;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
+using Services.Broadcast.Clients;
 using Services.Broadcast.Entities;
+using Services.Broadcast.IntegrationTests.Stubs;
 using System;
 using Tam.Maestro.Common.DataLayer;
 
@@ -13,8 +16,15 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
     [TestFixture]
     public class InventoryProgramEnrichmentServiceTests
     {
-        private readonly IInventoryProgramEnrichmentService _InventoryProgramEnrichmentService = IntegrationTestApplicationServiceFactory.GetApplicationService<IInventoryProgramEnrichmentService>();
+        private IInventoryProgramEnrichmentService _InventoryProgramEnrichmentService;
         private const string TEST_USERNAME = "TestUser";
+
+        [TestFixtureSetUp]
+        public void SetUp()
+        {
+            IntegrationTestApplicationServiceFactory.Instance.RegisterType<IProgramGuideApiClient, ProgramGuideApiClientStub>();
+            _InventoryProgramEnrichmentService = IntegrationTestApplicationServiceFactory.GetApplicationService<IInventoryProgramEnrichmentService>();
+        }
 
         [Test]
         public void QueueInventoryScheduleMergeJob_FileNotExist()
@@ -63,19 +73,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         public void ProcessInventoryProgramsJob_OpenMarket_ManifestCount2_DaypartCount2_WeekCount7()
         {
             var fileId = 233317;
-            using (new TransactionScopeWrapper())
-            {
-                var jobId = _InventoryProgramEnrichmentService.QueueInventoryFileProgramEnrichmentJob(fileId, TEST_USERNAME);
-                var result = _InventoryProgramEnrichmentService.PerformInventoryFileProgramEnrichmentJob(jobId);
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, _GetJsonSettings()));
-            }
-        }
-
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
-        public void ProcessInventoryProgramsJob_ABCOO_ManifestCount2_DaypartCount2_WeeksCount2()
-        {
-            var fileId = 236654;
             using (new TransactionScopeWrapper())
             {
                 var jobId = _InventoryProgramEnrichmentService.QueueInventoryFileProgramEnrichmentJob(fileId, TEST_USERNAME);

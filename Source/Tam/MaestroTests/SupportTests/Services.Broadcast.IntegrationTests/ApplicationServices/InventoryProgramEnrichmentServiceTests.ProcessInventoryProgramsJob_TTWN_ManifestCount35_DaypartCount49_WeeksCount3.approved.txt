@@ -6,14 +6,14 @@
     "IsActive": true,
     "Name": "TTWN"
   },
-  "RequestChunkSize": 1000,
+  "RequestChunkSize": 10,
   "SaveChunkSize": 1000,
-  "TotalApiCallCount": 3,
+  "TotalApiCallCount": 15,
   "TotalDaypartCount": 49,
   "TotalManifestCount": 35,
   "TotalProgramsSaved": 903,
   "TotalRequestCount": 147,
   "TotalResponseCount": 147,
-  "TotalSavesCount": 3,
+  "TotalSavesCount": 15,
   "TotalWeekCount": 3
 }

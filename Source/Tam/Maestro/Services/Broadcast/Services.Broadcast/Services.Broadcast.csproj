@@ -323,7 +323,6 @@
     <Compile Include="Clients\PricingApiClient.cs" />
     <Compile Include="Cache\GenreCache.cs" />
     <Compile Include="Clients\ProgramGuideApiClient.cs" />
-    <Compile Include="Clients\ProgramGuideApiClientSimulator.cs" />
     <Compile Include="Clients\ProgramsSearchApiClient.cs" />
     <Compile Include="Converters\DetectionConverter.cs" />
     <Compile Include="Clients\TokenizedClientBase.cs" />
@@ -428,10 +427,14 @@
     <Compile Include="Entities\Campaign\ProgramLineupReportRequest.cs" />
     <Compile Include="Entities\Plan\VPVHRequest.cs" />
     <Compile Include="Entities\Plan\VPVHForAudience.cs" />
-    <Compile Include="Entities\ProgramGuide\GuideRequestDaypartDto.cs" />
-    <Compile Include="Entities\ProgramGuide\GuideRequestElementDto.cs" />
-    <Compile Include="Entities\ProgramGuide\GuideResponseElementDto.cs" />
     <Compile Include="Entities\ProgramGuide\GuideResponseProgramDto.cs" />
+    <Compile Include="Entities\ProgramGuide\GuideResponseElementDto.cs" />
+    <Compile Include="Entities\ProgramGuide\GuideRequestDaypartDto.cs" />
+    <Compile Include="Entities\ProgramGuide\GuideApiRequestDaypartDto.cs" />
+    <Compile Include="Entities\ProgramGuide\GuideRequestElementDto.cs" />
+    <Compile Include="Entities\ProgramGuide\GuideApiRequestElementDto.cs" />
+    <Compile Include="Entities\ProgramGuide\GuideApiResponseElementDto.cs" />
+    <Compile Include="Entities\ProgramGuide\GuideApiResponseProgramDto.cs" />
     <Compile Include="Entities\ProgramGuide\GuideRequestResponseMapping.cs" />
     <Compile Include="Entities\DTO\Program\SearchProgramDativaRequestDto.cs" />
     <Compile Include="Entities\DTO\Program\SearchProgramDativaResponseDto.cs" />

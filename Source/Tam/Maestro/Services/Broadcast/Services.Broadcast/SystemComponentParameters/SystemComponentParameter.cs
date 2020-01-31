@@ -103,6 +103,39 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
         }
 	}
 	 
+	public static class AmazonS3SystemParameter 
+	{ 
+		public static string AABAccessKey  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<string>
+					(AmazonS3SystemParameterNames.ComponentID , AmazonS3SystemParameterNames.AABAccessKey); }
+        }
+	 
+		public static string AABBucket  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<string>
+					(AmazonS3SystemParameterNames.ComponentID , AmazonS3SystemParameterNames.AABBucket); }
+        }
+	 
+		public static string AABClientSecret  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<string>
+					(AmazonS3SystemParameterNames.ComponentID , AmazonS3SystemParameterNames.AABClientSecret); }
+        }
+	 
+		public static string AABCloudFrontURL  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<string>
+					(AmazonS3SystemParameterNames.ComponentID , AmazonS3SystemParameterNames.AABCloudFrontURL); }
+        }
+	 
+		public static string AABRegion  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<string>
+					(AmazonS3SystemParameterNames.ComponentID , AmazonS3SystemParameterNames.AABRegion); }
+        }
+	}
+	 
 	public static class AppSettings_ResourceSystemParameter 
 	{ 
 		public static string Broadcast  
@@ -761,20 +794,20 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
             get { return SystemComponentParameterHelper.GetPropertyValue<string>
 					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.MediaMonthCruchCacheSlidingExpirationSeconds); }
         }
-
-        public static string PlanPricingFloorPricingUrl
-        {
+	 
+		public static string PlanPricingAllocationsUrl  
+		{
             get { return SystemComponentParameterHelper.GetPropertyValue<string>
-                  (BroadcastServiceSystemParameterNames.ComponentID, BroadcastServiceSystemParameterNames.PlanPricingFloorPricingUrl); }
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.PlanPricingAllocationsUrl); }
         }
-
-        public static string PlanPricingAllocationsUrl
-        {
+	 
+		public static string PlanPricingFloorPricingUrl  
+		{
             get { return SystemComponentParameterHelper.GetPropertyValue<string>
-                  (BroadcastServiceSystemParameterNames.ComponentID, BroadcastServiceSystemParameterNames.PlanPricingAllocationsUrl); }
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.PlanPricingFloorPricingUrl); }
         }
-
-        public static string ProgramGuideClientId  
+	 
+		public static string ProgramGuideClientId  
 		{
             get { return SystemComponentParameterHelper.GetPropertyValue<string>
 					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.ProgramGuideClientId); }
@@ -784,6 +817,12 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 		{
             get { return SystemComponentParameterHelper.GetPropertyValue<string>
 					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.ProgramGuideEncryptedSecret); }
+        }
+	 
+		public static int ProgramGuideRequestElementMaxCount  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<int>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.ProgramGuideRequestElementMaxCount); }
         }
 	 
 		public static int ProgramGuideTimeoutSeconds  
@@ -1375,6 +1414,36 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 		{
             get { return SystemComponentParameterHelper.GetPropertyValue<string>
 					(MarryWizardWebSystemParameterNames.ComponentID , MarryWizardWebSystemParameterNames.MarryWizardAPIUrl); }
+        }
+	 
+		public static float NetworkTierHourlyUnitCap1  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<float>
+					(MarryWizardWebSystemParameterNames.ComponentID , MarryWizardWebSystemParameterNames.NetworkTierHourlyUnitCap1); }
+        }
+	 
+		public static float NetworkTierHourlyUnitCap2  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<float>
+					(MarryWizardWebSystemParameterNames.ComponentID , MarryWizardWebSystemParameterNames.NetworkTierHourlyUnitCap2); }
+        }
+	 
+		public static float NetworkTierHourlyUnitCap3  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<float>
+					(MarryWizardWebSystemParameterNames.ComponentID , MarryWizardWebSystemParameterNames.NetworkTierHourlyUnitCap3); }
+        }
+	 
+		public static float NetworkTierHourlyUnitCap4  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<float>
+					(MarryWizardWebSystemParameterNames.ComponentID , MarryWizardWebSystemParameterNames.NetworkTierHourlyUnitCap4); }
+        }
+	 
+		public static float NetworkTierHourlyUnitCap5  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<float>
+					(MarryWizardWebSystemParameterNames.ComponentID , MarryWizardWebSystemParameterNames.NetworkTierHourlyUnitCap5); }
         }
 	 
 		public static string OpenNetworks  
@@ -2058,6 +2127,12 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 					(ProposalComposerWebSystemParameterNames.ComponentID , ProposalComposerWebSystemParameterNames.DativaUri); }
         }
 	 
+		public static string ForecastUri  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<string>
+					(ProposalComposerWebSystemParameterNames.ComponentID , ProposalComposerWebSystemParameterNames.ForecastUri); }
+        }
+	 
 		public static bool ShowAdvancedTV  
 		{
             get { return SystemComponentParameterHelper.GetPropertyValue<bool>
@@ -2203,6 +2278,18 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 		{
             get { return SystemComponentParameterHelper.GetPropertyValue<string>
 					(ProposalsServiceSystemParameterNames.ComponentID , ProposalsServiceSystemParameterNames.MediaOceanTECCServiceUserName); }
+        }
+	 
+		public static int MsaDataFileExportDatabricksJobId  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<int>
+					(ProposalsServiceSystemParameterNames.ComponentID , ProposalsServiceSystemParameterNames.MsaDataFileExportDatabricksJobId); }
+        }
+	 
+		public static string MsaDataFileExportMode  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<string>
+					(ProposalsServiceSystemParameterNames.ComponentID , ProposalsServiceSystemParameterNames.MsaDataFileExportMode); }
         }
 	 
 		public static string PostingPlanEmailBodyFailure  
@@ -2359,6 +2446,12 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 		{
             get { return SystemComponentParameterHelper.GetPropertyValue<string>
 					(Releases2ServiceSystemParameterNames.ComponentID , Releases2ServiceSystemParameterNames.PDFPath); }
+        }
+	 
+		public static bool TrafficAlertMvpdFlightingFeatureToggle  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<bool>
+					(Releases2ServiceSystemParameterNames.ComponentID , Releases2ServiceSystemParameterNames.TrafficAlertMvpdFlightingFeatureToggle); }
         }
 	 
 		public static string TrafficAlertsPath  

@@ -8,7 +8,6 @@ using Tam.Maestro.Web.Common;
 
 namespace BroadcastComposerWeb.Controllers
 {
-    // TODO: Remove this during PRI-17014.  Reroute consumers to ProgramGuideApiClient.
     [RoutePrefix("api/v1/ProgramGuideTest")]
     public class ProgramGuideController : BroadcastControllerBase
     {
@@ -18,10 +17,16 @@ namespace BroadcastComposerWeb.Controllers
         }
 
         [HttpPost]
-        public BaseResponse<List<GuideResponseElementDto>> GetProgramsForGuide(List<GuideRequestElementDto> guideRequestElements, bool simulate = true)
+        public BaseResponse<List<GuideResponseElementDto>> GetProgramsForGuide(List<GuideRequestElementDto> guideRequestElements)
         {
-            var fullName = "testUser";
-            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IProgramGuideService>().GetProgramsForGuide(guideRequestElements, fullName, simulate));
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IProgramGuideService>().GetProgramsForGuide(guideRequestElements));
+        }
+
+        [HttpPost]
+        [Route("Test")]
+        public BaseResponse<List<GuideResponseElementDto>> PerformGetProgramsForGuideTest()
+        {
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IProgramGuideService>().PerformGetProgramsForGuideTest());
         }
     }
 }

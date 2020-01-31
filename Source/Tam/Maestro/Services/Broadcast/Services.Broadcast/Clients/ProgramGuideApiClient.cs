@@ -1,6 +1,7 @@
 ﻿using Services.Broadcast.Entities.ProgramGuide;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Threading;
 using Tam.Maestro.Common;
@@ -12,68 +13,143 @@ namespace Services.Broadcast.Clients
     public interface IProgramGuideApiClient
     {
         List<GuideResponseElementDto> GetProgramsForGuide(List<GuideRequestElementDto> requestElements);
-
-        // TODO: PRI-17014 : Remove this. It's only for POC and testing
-        string GetProgramsForGuideAsString(List<GuideRequestElementDto> requestElements);
     }
 
     public class ProgramGuideApiClient : IProgramGuideApiClient
     {
         private const string AUTHORIZATION = "Authorization";
         private const string BEARER = "Bearer";
-
-        protected readonly string _UrlProgramGuides;
-        protected readonly string _ProgramGuidesUrlBase;
-        private readonly string _TokenUrl;
-        private readonly string _ClientId;
-        private readonly string _EncryptedSecret;
-        private readonly string _ClientSecret;
-        private readonly int _TimeoutSeconds;
-        private readonly int _ResponseNotReadyPauseMs;
+        private const string DATE_FORMAT = "yyyy-MM-dd";
+        private const int RESPONSE_NOT_READY_PAUSE_MS = 500;
 
         private readonly IAwsCognitoClient _TokenClient;
+        private readonly string _ProgramGuideUrl;
+        private readonly string _TokenUrl;
+        private readonly string _ClientId;
+        private readonly string _ClientSecret;
+        private readonly int _TimeoutSeconds;
+
+        public static int RequestElementMaxCount => BroadcastServiceSystemParameter.ProgramGuideRequestElementMaxCount;
 
         public ProgramGuideApiClient(IAwsCognitoClient tokenClient)
         {
             _TokenClient = tokenClient;
 
-            // Dev url
-            _ProgramGuidesUrlBase = @"https://qye2zoq6d0.execute-api.us-east-1.amazonaws.com/dev-abr";
-            // Staging Url 
-            //_ProgramGuidesUrlBase = @"https://h0ix5d7yhb.execute-api.us-east-1.amazonaws.com/staging";
-            _UrlProgramGuides = @"/v1/programs/guide/";
-            _TokenUrl = @"https://dev-cmw.auth.us-east-1.amazoncognito.com/oauth2/token";
-            _ClientId = @"5e9kdecif9k6r7ttetgd4e500t";
-            _EncryptedSecret = @"OJE8vVrWiuZrou5oVn/uVdCmMSCRf/7vhlBB9Uz9bG/dQkN8WKjS1gXV01ANViI+UvbDSI8XjCs=";
-            _ClientSecret = EncryptionHelper.DecryptString(_EncryptedSecret, EncryptionHelper.EncryptionKey);
-            _TimeoutSeconds = 20 * 60;
-
-            // TODO : Populate the existing settings with the actual values.
-            //_ProgramGuidesUrlBase = BroadcastServiceSystemParameter.ProgramGuideUrl;
-            //_TokenUrl = BroadcastServiceSystemParameter.ProgramGuideTokenUrl;
-            //_ClientId = BroadcastServiceSystemParameter.ProgramGuideClientId;
-            //_EncryptedSecret = BroadcastServiceSystemParameter.ProgramGuideEncryptedSecret;
-            //_ClientSecret = EncryptionHelper.DecryptString(_EncryptedSecret, EncryptionHelper.EncryptionKey);
-            //_TimeoutSeconds = BroadcastServiceSystemParameter.ProgramGuideTimeoutSeconds;
+            var encryptedSecret = BroadcastServiceSystemParameter.ProgramGuideEncryptedSecret;
+            _ClientSecret = EncryptionHelper.DecryptString(encryptedSecret, EncryptionHelper.EncryptionKey);
+            _ClientId = BroadcastServiceSystemParameter.ProgramGuideClientId;
+            _TokenUrl = BroadcastServiceSystemParameter.ProgramGuideTokenUrl;
+            _ProgramGuideUrl = BroadcastServiceSystemParameter.ProgramGuideUrl;
+            _TimeoutSeconds = BroadcastServiceSystemParameter.ProgramGuideTimeoutSeconds;
         }
 
         public List<GuideResponseElementDto> GetProgramsForGuide(List<GuideRequestElementDto> requestElements)
         {
-            return _PostAndGet<List<GuideResponseElementDto>>($"{_ProgramGuidesUrlBase}{_UrlProgramGuides}", requestElements);
-        }
+            _ValidateSettings();
+            _ValidateRequests(requestElements);
 
-        private AwsToken _GetToken()
+            var apiRequests = requestElements.Select(_MapRequest).ToList();
+            var apiResult = _PostAndGet($"{_ProgramGuideUrl}", apiRequests);
+            var result = apiResult.Select(_MapResponse).ToList();
+
+            return result;
+        }
+        
+        private GuideApiRequestElementDto _MapRequest(GuideRequestElementDto requestElement)
         {
-            return _TokenClient.GetToken(new AwsTokenRequest { TokenUrl = _TokenUrl, ClientId = _ClientId, ClientSecret = _ClientSecret });
+            var apiRequestElement = new GuideApiRequestElementDto
+            {
+                RequestElementId = requestElement.Id,
+                StartDate = requestElement.StartDate.ToString(DATE_FORMAT),
+                EndDate = requestElement.EndDate.ToString(DATE_FORMAT),
+                StationCallLetters = requestElement.StationCallLetters,
+                NetworkAffiliate = requestElement.NetworkAffiliate,
+                Daypart = _MapRequestDaypart(requestElement.Daypart)
+            };
+
+            return apiRequestElement;
         }
 
-        protected virtual T _PostAndGet<T>(string url, object data)
+        private GuideApiRequestDaypartDto _MapRequestDaypart(GuideRequestDaypartDto requestDaypart)
+        {
+            var apiRequestDaypart = new GuideApiRequestDaypartDto
+            {
+                RequestDaypartId = requestDaypart.Id,
+                Daypart = requestDaypart.Name,
+                Monday = requestDaypart.Monday,
+                Tuesday = requestDaypart.Tuesday,
+                Wednesday = requestDaypart.Wednesday,
+                Thursday = requestDaypart.Thursday,
+                Friday = requestDaypart.Friday,
+                Saturday = requestDaypart.Saturday,
+                Sunday = requestDaypart.Sunday,
+                StartTime = requestDaypart.StartTime,
+                EndTime = requestDaypart.EndTime
+            };
+
+            return apiRequestDaypart;
+        }
+
+        private GuideResponseElementDto _MapResponse(GuideApiResponseElementDto apiResponseElement)
+        {
+            var responseElement = new GuideResponseElementDto
+            {
+                RequestElementId = apiResponseElement.RequestElementId,
+                RequestDaypartId = apiResponseElement.RequestDaypartId,
+                Station = apiResponseElement.Station,
+                Affiliate = apiResponseElement.Affiliate,
+                StartDate = DateTime.Parse(apiResponseElement.StartDate),
+                EndDate = DateTime.Parse(apiResponseElement.EndDate),
+                Programs = apiResponseElement.Programs.Select(_MapResponseProgram).ToList()
+            };
+
+            return responseElement;
+        }
+
+        private GuideResponseProgramDto _MapResponseProgram(GuideApiResponseProgramDto apiResponseProgram)
+        {
+            var responseProgram = new GuideResponseProgramDto
+            {
+                ProgramName = apiResponseProgram.ProgramName,
+                SourceGenre = apiResponseProgram.Genre,
+                ShowType = apiResponseProgram.ShowType,
+                SyndicationType = apiResponseProgram.SyndicationType,
+                Occurrences = apiResponseProgram.Occurrences,
+                StartDate = apiResponseProgram.StartDate,
+                EndDate = apiResponseProgram.EndDate,
+                StartTime = _ConvertTimeStringToSecondsFromMidnight(apiResponseProgram.StartTimeString),
+                EndTime = _ConvertTimeStringToSecondsFromMidnight(apiResponseProgram.EndTimeString) - 1, // make it :59
+                Monday = apiResponseProgram.Monday,
+                Tuesday = apiResponseProgram.Tuesday,
+                Wednesday = apiResponseProgram.Wednesday,
+                Thursday = apiResponseProgram.Thursday,
+                Friday = apiResponseProgram.Friday,
+                Saturday = apiResponseProgram.Saturday,
+                Sunday = apiResponseProgram.Sunday
+            };
+
+            return responseProgram;
+        }
+
+        private int _ConvertTimeStringToSecondsFromMidnight(string timeString)
+        {
+            var result = 0;
+            if (string.IsNullOrWhiteSpace(timeString) == false)
+            {
+                var parts = timeString.Split(':');
+                var hoursAsSeconds = int.Parse(parts[0]) * 60 * 60;
+                var minutesAsSeconds = int.Parse(parts[1]) * 60;
+                result = hoursAsSeconds + minutesAsSeconds;
+            }
+
+            return result;
+        }
+
+        protected virtual List<GuideApiResponseElementDto> _PostAndGet(string url, List<GuideApiRequestElementDto> data)
         {
             var timeoutTime = DateTime.Now.AddSeconds(_TimeoutSeconds);
             var token = _GetToken();
 
-            // TODO: PRI-17014 - change to use the IRestClient 
-            // Will complete this in PRI-17014 when we get the actual API.
             string queryId;
             using (var client = new HttpClient())
             {
@@ -83,7 +159,6 @@ namespace Services.Broadcast.Clients
                 {
                     throw new Exception($"Error connecting to ProgramGuide for post data. : {serviceResponse}");
                 }
-                // this returns a guid now.  Then we want to do a Get with that Guid.
 
                 try
                 {
@@ -99,7 +174,7 @@ namespace Services.Broadcast.Clients
             var queryUrl = $"{chompedUrl}?query_execution_id={queryId}";
             string queryResponse;
             var keepGoing = true;
-            T output = default(T);
+            List<GuideApiResponseElementDto> output = null;
             do
             {
                 using (var client = new HttpClient())
@@ -127,11 +202,11 @@ namespace Services.Broadcast.Clients
                             throw new TimeoutException($"ProgramGuideApi Query Timeout exceeded. TimeoutSeconds : '{_TimeoutSeconds}'");
                         }
 
-                        Thread.Sleep(_ResponseNotReadyPauseMs);
+                        Thread.Sleep(RESPONSE_NOT_READY_PAUSE_MS);
                         continue;
                     }
-                    // if we're here then we have a value
-                    output = serviceResponse.Content.ReadAsAsync<T>().Result;
+
+                    output = serviceResponse.Content.ReadAsAsync<List<GuideApiResponseElementDto>>().Result;
                     keepGoing = false;
                 }
             } while (keepGoing);
@@ -139,78 +214,47 @@ namespace Services.Broadcast.Clients
             return output;
         }
 
-        // TODO: PRI-17014 : Remove this. It's only for POC and testing
-        public string GetProgramsForGuideAsString(List<GuideRequestElementDto> requestElements)
+        private AwsToken _GetToken()
         {
-            return _PostAndGetAsString($"{_ProgramGuidesUrlBase}{_UrlProgramGuides}", requestElements);
+            return _TokenClient.GetToken(new AwsTokenRequest { TokenUrl = _TokenUrl, ClientId = _ClientId, ClientSecret = _ClientSecret });
         }
 
-        // TODO: PRI-17014 : Remove this. It's only for POC and testing
-        protected string _PostAndGetAsString(string url, object data)
+        private void _ValidateSettings()
         {
-            var timeoutTime = DateTime.Now.AddSeconds(_TimeoutSeconds);
-            var token = _GetToken();
+            _ValidateSetting("ProgramGuideClientId", _ClientId);
+            _ValidateSetting("ProgramGuideEncryptedSecret", _ClientSecret);
+            _ValidateSetting("ProgramGuideTokenUrl", _TokenUrl);
+            _ValidateSetting("ProgramGuideUrl", _ProgramGuideUrl);
+        }
 
-            string queryId;
-            using (var client = new HttpClient())
+        private void _ValidateSetting(string key, string value)
+        {
+            if (string.IsNullOrEmpty(value))
             {
-                client.DefaultRequestHeaders.Add(AUTHORIZATION, $"{BEARER} {token.AccessToken}");
-                var serviceResponse = client.PostAsJsonAsync(url, data).Result;
-                if (serviceResponse.IsSuccessStatusCode == false)
-                {
-                    throw new Exception($"Error connecting to ProgramGuide for post data. : {serviceResponse}");
-                }
-                // this returns a guid now.  Then we want to do a Get with that Guid.
+                throw new InvalidOperationException($"Setting '{key}' is not set.");
+            }
+        }
 
-                try
-                {
-                    queryId = serviceResponse.Content.ReadAsStringAsync().Result;
-                }
-                catch (Exception e)
-                {
-                    throw new Exception("Error calling the ProgramGuide for post data during post-get.", e);
-                }
+        private void _ValidateRequests(List<GuideRequestElementDto> requestElements)
+        {
+            if (requestElements.Count > RequestElementMaxCount)
+            {
+                throw new InvalidOperationException($"The request element count of {requestElements.Count} exceeds the max acceptable count of {RequestElementMaxCount}.");
             }
 
-            var chompedUrl = url.EndsWith(@"/") ? url.Remove((url.Length - 1), 1) : url;
-            var queryUrl = $"{chompedUrl}?query_execution_id={queryId}";
-            string output;
-            var keepGoing = true;
-            do
+            requestElements.ForEach(_ValidateRequest);
+        }
+
+        private void _ValidateRequest(GuideRequestElementDto requestElement)
+        {
+            if (string.IsNullOrEmpty(requestElement.NetworkAffiliate))
             {
-                using (var client = new HttpClient())
-                {
-                    client.DefaultRequestHeaders.Add(AUTHORIZATION, $"{BEARER} {token.AccessToken}");
-                    var serviceResponse = client.GetAsync(queryUrl).Result;
-                    if (serviceResponse.IsSuccessStatusCode == false)
-                    {
-                        throw new Exception($"Error connecting to ProgramGuide for post data. : {serviceResponse}");
-                    }
-                    try
-                    {
-                        output = serviceResponse.Content.ReadAsStringAsync().Result;
-                    }
-                    catch (Exception e)
-                    {
-                        throw new Exception("Error calling the ProgramGuide for post data during post-get.", e);
-                    }
-
-                    if (output.Equals("Query not yet completed")
-                        || string.IsNullOrWhiteSpace(output))
-                    {
-                        if ((timeoutTime.Subtract(DateTime.Now).TotalSeconds) < 0)
-                        {
-                            throw new TimeoutException($"ProgramGuideApi Query Timeout exceeded. TimeoutSeconds : '{_TimeoutSeconds}'");
-                        }
-
-                        Thread.Sleep(_ResponseNotReadyPauseMs);
-                        continue;
-                    }
-                    keepGoing = false;
-                }
-            } while (keepGoing);
-
-            return output;
+                throw new InvalidOperationException($"Bad Request.  Request '{requestElement.Id}' requires a NetworkAffiliate.");
+            }
+            if (string.IsNullOrEmpty(requestElement.StationCallLetters))
+            {
+                throw new InvalidOperationException($"Bad Request.  Request '{requestElement.Id}' requires StationCallLetters.");
+            }
         }
     }
 }

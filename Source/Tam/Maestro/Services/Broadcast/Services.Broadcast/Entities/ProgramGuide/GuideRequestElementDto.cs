@@ -1,25 +1,22 @@
-﻿using Newtonsoft.Json;
+﻿using System;
 
 namespace Services.Broadcast.Entities.ProgramGuide
 {
+    /// <summary>
+    /// A request element for the internal client.
+    /// </summary>
     public class GuideRequestElementDto
     {
-        [JsonProperty(PropertyName = "id")]
-        public string RequestElementId { get; set; }
+        public string Id { get; set; }
 
-        [JsonProperty(PropertyName = "daypart")]
         public GuideRequestDaypartDto Daypart { get; set; }
 
-        [JsonProperty(PropertyName = "startdate")]
-        public string StartDate { get; set; }
+        public DateTime StartDate { get; set; }
 
-        [JsonProperty(PropertyName = "enddate")]
-        public string EndDate { get; set; }
+        public DateTime EndDate { get; set; }
 
-        [JsonProperty(PropertyName = "station")]
-        public string NielsenLegacyStationCallLetters { get; set; }
+        public string StationCallLetters { get; set; }
 
-        [JsonProperty(PropertyName = "affiliate")]
         public string NetworkAffiliate { get; set; }
     }
 }

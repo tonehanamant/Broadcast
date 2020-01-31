@@ -32,12 +32,12 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IInventoryRepository _InventoryRepository;
         private readonly IGenreRepository _GenreRepository;
         private readonly IInventoryFileProgramEnrichmentJobsRepository _InventoryFileProgramEnrichmentJobsRepository;
-        private readonly IProgramGuideApiClientSimulator _ProgramGuideApiClient;
+        private readonly IProgramGuideApiClient _ProgramGuideApiClient;
 
         public InventoryProgramEnrichmentService(
             IDataRepositoryFactory broadcastDataRepositoryFactory,
             IBackgroundJobClient backgroundJobClient,
-            IProgramGuideApiClientSimulator programGuideApiClient)
+            IProgramGuideApiClient programGuideApiClient)
         {
             _BackgroundJobClient = backgroundJobClient;
             _InventoryFileRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryFileRepository>();
@@ -62,13 +62,17 @@ namespace Services.Broadcast.ApplicationServices
         /// </remarks>
         public InventoryFileProgramEnrichmentJobDiagnostics PerformInventoryFileProgramEnrichmentJob(int jobId)
         {
-            const string dateFormat = "MM/dd/yyyy";
             const int genreSourceId = (int)GenreSourceEnum.Dativa;
-            const int requestChunkSize = 1000; // PRI-17014 will make this configurable
-            const int saveChunkSize = 1000; // PRI-17014 will make this configurable
+            const int saveChunkSize = 1000;
 
+            int requestElementMaxCount = ProgramGuideApiClient.RequestElementMaxCount;
             var requestElementNumber = 0;
-            var processDiagnostics = new InventoryFileProgramEnrichmentJobDiagnostics { JobId = jobId, RequestChunkSize = requestChunkSize, SaveChunkSize = saveChunkSize };
+            var processDiagnostics = new InventoryFileProgramEnrichmentJobDiagnostics
+            {
+                JobId = jobId,
+                RequestChunkSize = requestElementMaxCount,
+                SaveChunkSize = saveChunkSize 
+            };
 
             try
             {
@@ -106,9 +110,6 @@ namespace Services.Broadcast.ApplicationServices
                     processDiagnostics.RecordIterationStart(weekNumber, distinctWeeks.Count);
                     processDiagnostics.RecordTransformToInputStart();
 
-                    var startDateString = week.StartDate.ToString(dateFormat);
-                    var endDateString = week.EndDate.ToString(dateFormat);
-
                     var requestMappings = new List<GuideRequestResponseMapping>();
                     var requestElements = new List<GuideRequestElementDto>();
 
@@ -130,15 +131,15 @@ namespace Services.Broadcast.ApplicationServices
                             requestElements.Add(
                                 new GuideRequestElementDto
                                 {
-                                    RequestElementId = requestElementMapping.RequestEntryId,
-                                    StartDate = startDateString,
-                                    EndDate = endDateString,
-                                    NielsenLegacyStationCallLetters = _GetManifestStationCallLetters(manifest, inventorySource),
+                                    Id = requestElementMapping.RequestEntryId,
+                                    StartDate = week.StartDate,
+                                    EndDate = week.EndDate,
+                                    StationCallLetters = _GetManifestStationCallLetters(manifest, inventorySource),
                                     NetworkAffiliate = _GetManifestNetworkAffiliation(manifest, inventorySource),
                                     Daypart = new GuideRequestDaypartDto
                                     {
-                                        RequestDaypartId = requestElementMapping.RequestEntryId,
-                                        Daypart = daypart.Daypart.Preview,
+                                        Id = requestElementMapping.RequestEntryId,
+                                        Name = daypart.Daypart.Preview,
                                         Monday = daypart.Daypart.Monday,
                                         Tuesday = daypart.Daypart.Tuesday,
                                         Wednesday = daypart.Daypart.Wednesday,
@@ -156,7 +157,7 @@ namespace Services.Broadcast.ApplicationServices
                     processDiagnostics.RecordTransformToInputStop(requestElements.Count);
 
                     var requestChunks = requestElements.Select((x, i) => new { Index = i, Value = x })
-                        .GroupBy(x => x.Index / requestChunkSize)
+                        .GroupBy(x => x.Index / requestElementMaxCount)
                         .Select(x => x.Select(v => v.Value).ToList())
                         .ToList();
 
@@ -191,11 +192,11 @@ namespace Services.Broadcast.ApplicationServices
                                     StationInventoryManifestDaypartId = mapping.ManifestDaypartId,
                                     ProgramName = p.ProgramName,
                                     ShowType = p.ShowType,
-                                    Genre = p.Genre,
-                                    GenreSourceId = genreSourceId,
-                                    GenreId = genres.Single(g => g.Display.Equals(p.Genre)).Id,
-                                    StartDate = DateTime.Parse(responseEntry.StartDate),
-                                    EndDate = DateTime.Parse(responseEntry.EndDate),
+                                    Genre = p.SourceGenre, 
+                                    GenreSourceId = genreSourceId, 
+                                    GenreId = genres.Single(g => g.Display.Equals(p.SourceGenre)).Id,
+                                    StartDate = responseEntry.StartDate,
+                                    EndDate = responseEntry.EndDate,
                                     StartTime = p.StartTime,
                                     EndTime = p.EndTime
                                 }).ForEach(a => programs.Add(a));

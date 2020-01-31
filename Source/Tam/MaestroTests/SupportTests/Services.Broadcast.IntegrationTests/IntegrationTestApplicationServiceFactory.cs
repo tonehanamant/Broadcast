@@ -67,10 +67,6 @@ namespace Services.Broadcast.IntegrationTests
                     _instance.RegisterType<ICampaignAggregator, CampaignAggregator>();
                     _instance.RegisterType<ITrafficApiClient, TrafficApiClientStub>();
                     _instance.RegisterType<ITrafficApiCache, TrafficApiCache>();
-
-                    _instance.RegisterType<IProgramGuideApiClient, ProgramGuideApiClient>();
-                    _instance.RegisterType<IProgramGuideService, ProgramGuideService>();
-                    _instance.RegisterType<IProgramGuideApiClientSimulator, ProgramGuideApiClientSimulator>();
                 }
             }
         }

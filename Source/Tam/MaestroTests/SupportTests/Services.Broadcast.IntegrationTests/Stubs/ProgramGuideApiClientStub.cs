@@ -1,215 +1,71 @@
-﻿using Services.Broadcast.Entities.DTO.Program;
+﻿using Services.Broadcast.Clients;
+using Services.Broadcast.Entities.DTO.Program;
 using Services.Broadcast.Entities.ProgramGuide;
 using System;
 using System.Collections.Generic;
+using Tam.Maestro.Common.Clients;
 
-namespace Services.Broadcast.Clients
+namespace Services.Broadcast.IntegrationTests.Stubs
 {
     /// <summary>
-    /// Simulates the functionality of the Dativa ProgramGuideApi.
-    /// Using a canned list of programs :
-    ///     - GetPrograms returns the full list of canned programs.
-    ///     - GuidePrograms assigns programs to inventory elements.
-    ///         - iterates through the full list and assigns in ascending order
-    ///         - the number of programs assigned to an inventory element is "how many 30m programs can fit in it?" rounded up.
-    ///             - if the inventory element is 4h long then 8 programs
-    ///             - if the inventory element is 3h40m long then 8 programs
-    ///             - if the inventory element is 30m long then 1 program
-    ///             - if the inventory element is 15m long then 1 program
+    /// A unit testing mock.
     /// </summary>
-    public interface IProgramGuideApiClientSimulator
+    /// <seealso cref="Services.Broadcast.Clients.ProgramGuideApiClient" />
+    public class ProgramGuideApiClientStub : ProgramGuideApiClient
     {
-        List<GuideResponseElementDto> GetProgramsForGuide(List<GuideRequestElementDto> requestElements);
-    }
-
-    public class ProgramGuideApiClientSimulator : IProgramGuideApiClientSimulator
-    {
-        public List<GuideResponseElementDto> GetProgramsForGuide(List<GuideRequestElementDto> requestElements)
+        public ProgramGuideApiClientStub(IAwsCognitoClient tokenClient)
+            : base (tokenClient)
         {
-            const double thirtyMinutesAsSeconds = 30 * 60;
-            var simulatedResult = new List<GuideResponseElementDto>();
+        }
+        
+        protected override List<GuideApiResponseElementDto> _PostAndGet(string url, List<GuideApiRequestElementDto> data)
+        {
+            var result = new List<GuideApiResponseElementDto>();
             var currentProgramIndex = 0;
-            var currentRequestElementIndex = 0;
-            foreach (var requestElement in requestElements)
+            foreach (var requestElement in data)
             {
-                //if (requestElement.Daypart.EndTime <= requestElement.Daypart.StartTime)
-                //{
-                //    throw new InvalidOperationException("given daypart end time must be greater than the start time.");
-                //}
-
-                var responseElements = _GetScenarioResponse(requestElement, ref currentProgramIndex, currentRequestElementIndex);
-                simulatedResult.AddRange(responseElements);
-                currentRequestElementIndex++;
+                var responseElements = _GetResponse(requestElement, ref currentProgramIndex);
+                result.AddRange(responseElements);
             }
 
-            return simulatedResult;
+            return result;
         }
 
-        private enum RequestScenario
-        {
-            One,
-            Two,
-            Three,
-            Four
-        }
-
-        private static RequestScenario _GetScenario(int scenarioIndicator)
-        {
-            var scenarioIndex = scenarioIndicator % 2;
-            var scenario = (RequestScenario) scenarioIndex;
-            return scenario;
-        }
-
-        private static List<GuideResponseElementDto> _GetScenarioResponse(GuideRequestElementDto requestElement, ref int currentProgramIndex, int currentRequestElementIndex)
-        {
-            return _GetResponseForScenarioDefault(requestElement, ref currentProgramIndex);
-
-
-            //switch (_GetScenario(currentRequestElementIndex))
-            //{
-            //    case RequestScenario.One:
-            //        return _GetResponseForScenarioOne(requestElement, ref currentProgramIndex);
-            //    case RequestScenario.Two:
-            //        return _GetResponseForScenarioTwo(requestElement, ref currentProgramIndex);
-            //    case RequestScenario.Three:
-            //        return _GetResponseForScenarioThree(requestElement, ref currentProgramIndex);
-            //    case RequestScenario.Four:
-            //        return _GetResponseForScenarioFour(requestElement, ref currentProgramIndex);
-            //    default:
-            //        return _GetResponseForScenarioDefault(requestElement, ref currentProgramIndex);
-            //}
-        }
-
-        /// <summary>
-        /// One program overlaps
-        /// </summary>
-        private static List<GuideResponseElementDto> _GetResponseForScenarioOne(GuideRequestElementDto requestElement, ref int currentProgramIndex)
-        {
-            const int programCount = 1;
-            var responseElement = GetResponseElement(requestElement, ref currentProgramIndex, programCount);
-            return new List<GuideResponseElementDto> { responseElement };
-        }
-
-        /// <summary>
-        /// Two programs overlap
-        /// </summary>
-        private static List<GuideResponseElementDto> _GetResponseForScenarioTwo(GuideRequestElementDto requestElement, ref int currentProgramIndex)
-        {
-            const int programCount = 2;
-            var responseElement = GetResponseElement(requestElement, ref currentProgramIndex, programCount);
-            return new List<GuideResponseElementDto> { responseElement };
-        }
-
-        /// <summary>
-        /// Split the daterange into 2 and assign one program to each.
-        /// </summary>
-        private static List<GuideResponseElementDto> _GetResponseForScenarioThree(GuideRequestElementDto requestElement, ref int currentProgramIndex)
-        {
-            const int programCount = 1;
-            const int dateRangeCount = 2;
-            var responseElement = GetResponseElementSplitDates(requestElement, ref currentProgramIndex, programCount, dateRangeCount);
-            return responseElement;
-        }
-
-        /// <summary>
-        /// Split the daterange into 3 and assign Two programs to each.
-        /// </summary>
-        private static List<GuideResponseElementDto> _GetResponseForScenarioFour(GuideRequestElementDto requestElement, ref int currentProgramIndex)
-        {
-            const int programCount = 2;
-            const int dateRangeCount = 3;
-            var responseElement = GetResponseElementSplitDates(requestElement, ref currentProgramIndex, programCount, dateRangeCount);
-            return responseElement;
-        }
-
-        private static List<GuideResponseElementDto> _GetResponseForScenarioDefault(GuideRequestElementDto requestElement, ref int currentProgramIndex)
+        private static List<GuideApiResponseElementDto> _GetResponse(GuideApiRequestElementDto requestElement, ref int currentProgramIndex)
         {
             const double thirtyMinutesAsSeconds = 30 * 60;
-            var duration = (requestElement.Daypart.EndTime + 1)- requestElement.Daypart.StartTime;
+            var duration = (requestElement.Daypart.EndTime + 1) - requestElement.Daypart.StartTime;
             var programCount = (int)Math.Ceiling(duration / thirtyMinutesAsSeconds);
             var responseElement = GetResponseElement(requestElement, ref currentProgramIndex, programCount);
-            return new List<GuideResponseElementDto> { responseElement };
+            var result = new List<GuideApiResponseElementDto> { responseElement };
+            return result;
         }
 
-        private static GuideResponseElementDto GetResponseElement(GuideRequestElementDto requestElement,
+        private static GuideApiResponseElementDto GetResponseElement(GuideApiRequestElementDto requestElement,
             ref int currentProgramIndex, int programCount)
         {
-            var programs = _GetProgramsList(ref currentProgramIndex, programCount);
+            var programs = _GetProgramsList(ref currentProgramIndex, programCount, requestElement);
 
-            var responseElement = new GuideResponseElementDto
+            var responseElement = new GuideApiResponseElementDto
             {
                 RequestElementId = requestElement.RequestElementId,
                 Programs = programs,
                 RequestDaypartId = requestElement.Daypart.RequestDaypartId,
-                Station = requestElement.NielsenLegacyStationCallLetters,
+                Station = requestElement.StationCallLetters,
                 StartDate = requestElement.StartDate,
-                EndDate = requestElement.EndDate
+                EndDate = requestElement.EndDate,
+                Affiliate = requestElement.NetworkAffiliate
             };
             return responseElement;
         }
 
-        private static List<DateRange> _GetSplitDateRanges(string startDateString, string endDateString, int rangeCount)
+        private static List<GuideApiResponseProgramDto> _GetProgramsList(ref int currentProgramIndex, int programCount, GuideApiRequestElementDto requestElement)
         {
-            var resultRange = new List<DateRange>();
-            var startDate = DateTime.Parse(startDateString);
-            var endDate = DateTime.Parse(endDateString);
-            var deltaDays = endDate.Subtract(startDate).TotalDays;
-            var splitDays = (int)Math.Round(deltaDays / rangeCount, MidpointRounding.AwayFromZero);
-
-            var totalDaysAccountedFor = 0;
-            var currentStartDate = startDate;
-            
-            do
-            {
-                var currentEndDate = currentStartDate.AddDays(splitDays);
-                var daysOver = (int)currentEndDate.Subtract(endDate).TotalDays;
-                if (daysOver > 0)
-                {
-                    currentEndDate = currentEndDate.AddDays(daysOver * -1);
-                }
-
-                resultRange.Add(new DateRange{StartDate = currentStartDate, EndDate = currentEndDate});
-                currentStartDate = currentEndDate.AddDays(1);
-
-                totalDaysAccountedFor += splitDays;
-            } while (totalDaysAccountedFor < deltaDays);
-
-            return resultRange;
-        }
-
-        private const string DATE_FORMAT = "MM/dd/yyyy";
-
-        private static List<GuideResponseElementDto> GetResponseElementSplitDates(GuideRequestElementDto requestElement,
-            ref int currentProgramIndex, int programCount, int dateRangeCount)
-        {
-            
-            var dateRanges = _GetSplitDateRanges(requestElement.StartDate, requestElement.EndDate, dateRangeCount);
-            var programs = _GetProgramsList(ref currentProgramIndex, programCount);
-            var responseElements = new List<GuideResponseElementDto>();
-
-            foreach (var dateRange in dateRanges)
-            {
-                var responseElement = new GuideResponseElementDto
-                {
-                    RequestElementId = requestElement.RequestElementId,
-                    Programs = programs,
-                    RequestDaypartId = requestElement.Daypart.RequestDaypartId,
-                    Station = requestElement.NielsenLegacyStationCallLetters,
-                    StartDate = dateRange.StartDate.ToString(DATE_FORMAT),
-                    EndDate = dateRange.EndDate.ToString(DATE_FORMAT)
-                };
-                responseElements.Add(responseElement);
-            }
-            return responseElements;
-        }
-
-        private static List<GuideResponseProgramDto> _GetProgramsList(ref int currentProgramIndex, int programCount)
-        {
-            var programs = new List<GuideResponseProgramDto>();
+            var programs = new List<GuideApiResponseProgramDto>();
             for (var i = 0; i < programCount; i++)
             {
                 var program = _CannedPrograms[currentProgramIndex];
-                programs.Add(new GuideResponseProgramDto
+                programs.Add(new GuideApiResponseProgramDto
                 {
                     ProgramId = program.ProgramId,
                     ProgramName = program.ProgramName,
@@ -217,9 +73,18 @@ namespace Services.Broadcast.Clients
                     Genre = program.Genre,
                     ShowType = program.ShowType,
                     SyndicationType = program.SyndicationType,
-                    StartTime = 3600,
-                    EndTime = 7200,
-                    Occurances = 1
+                    Monday = requestElement.Daypart.Monday,
+                    Tuesday = requestElement.Daypart.Tuesday,
+                    Wednesday = requestElement.Daypart.Wednesday,
+                    Thursday = requestElement.Daypart.Thursday,
+                    Friday = requestElement.Daypart.Friday,
+                    Saturday = requestElement.Daypart.Saturday,
+                    Sunday = requestElement.Daypart.Sunday,
+                    StartDate = DateTime.Parse(requestElement.StartDate),
+                    EndDate = DateTime.Parse(requestElement.EndDate),
+                    StartTimeString = "03:00",
+                    EndTimeString = "03:30",
+                    Occurrences = 1
                 });
 
                 currentProgramIndex = (currentProgramIndex + 1) >= _CannedPrograms.Count ? 0 : currentProgramIndex + 1;
@@ -228,11 +93,7 @@ namespace Services.Broadcast.Clients
             return programs;
         }
 
-        private class DateRange
-        {
-            public DateTime StartDate { get; set; }
-            public DateTime EndDate { get; set; }
-        }
+        #region CannedPrograms
 
         private static List<SearchProgramDativaResponseDto> _CannedPrograms = new List<SearchProgramDativaResponseDto>
         {
@@ -1402,5 +1263,7 @@ namespace Services.Broadcast.Clients
             new SearchProgramDativaResponseDto {ProgramId = "1164", ProgramName = "YOLO, TX", GenreId = "27", Genre = "Interview", ShowType = "SER", SyndicationType = null, MpaaRating = "X"},
             new SearchProgramDativaResponseDto {ProgramId = "1165", ProgramName = "Young & The Restless", GenreId = "28", Genre = "Investigative", ShowType = "SER", SyndicationType = "S", MpaaRating = "NR"},
         };
+
+        #endregion // #region CannedPrograms
     }
 }

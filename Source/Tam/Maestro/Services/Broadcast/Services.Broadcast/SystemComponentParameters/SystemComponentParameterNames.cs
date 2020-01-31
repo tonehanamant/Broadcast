@@ -101,6 +101,39 @@ namespace Tam.Maestro.Common.SystemComponentParameter
         }
 	}
 	 
+	public static class AmazonS3SystemParameterNames
+	{
+		public static string ComponentID
+        {
+            get { return "AmazonS3" ; }
+        }
+	  
+		public static string AABAccessKey  
+		{
+            get { return "AABAccessKey"; }
+        }
+	 
+		public static string AABBucket  
+		{
+            get { return "AABBucket"; }
+        }
+	 
+		public static string AABClientSecret  
+		{
+            get { return "AABClientSecret"; }
+        }
+	 
+		public static string AABCloudFrontURL  
+		{
+            get { return "AABCloudFrontURL"; }
+        }
+	 
+		public static string AABRegion  
+		{
+            get { return "AABRegion"; }
+        }
+	}
+	 
 	public static class AppSettings_ResourceSystemParameterNames
 	{
 		public static string ComponentID
@@ -682,18 +715,18 @@ namespace Tam.Maestro.Common.SystemComponentParameter
 		{
             get { return "MediaMonthCruchCacheSlidingExpirationSeconds"; }
         }
-
-        public static string PlanPricingFloorPricingUrl
-        {
-            get { return "PlanPricingFloorPricingUrl"; }
-        }
-
-        public static string PlanPricingAllocationsUrl
-        {
+	 
+		public static string PlanPricingAllocationsUrl  
+		{
             get { return "PlanPricingAllocationsUrl"; }
         }
-
-        public static string ProgramGuideClientId  
+	 
+		public static string PlanPricingFloorPricingUrl  
+		{
+            get { return "PlanPricingFloorPricingUrl"; }
+        }
+	 
+		public static string ProgramGuideClientId  
 		{
             get { return "ProgramGuideClientId"; }
         }
@@ -701,6 +734,11 @@ namespace Tam.Maestro.Common.SystemComponentParameter
 		public static string ProgramGuideEncryptedSecret  
 		{
             get { return "ProgramGuideEncryptedSecret"; }
+        }
+	 
+		public static string ProgramGuideRequestElementMaxCount  
+		{
+            get { return "ProgramGuideRequestElementMaxCount"; }
         }
 	 
 		public static string ProgramGuideTimeoutSeconds  
@@ -1254,6 +1292,31 @@ namespace Tam.Maestro.Common.SystemComponentParameter
 		public static string MarryWizardAPIUrl  
 		{
             get { return "MarryWizardAPIUrl"; }
+        }
+	 
+		public static string NetworkTierHourlyUnitCap1  
+		{
+            get { return "NetworkTierHourlyUnitCap1"; }
+        }
+	 
+		public static string NetworkTierHourlyUnitCap2  
+		{
+            get { return "NetworkTierHourlyUnitCap2"; }
+        }
+	 
+		public static string NetworkTierHourlyUnitCap3  
+		{
+            get { return "NetworkTierHourlyUnitCap3"; }
+        }
+	 
+		public static string NetworkTierHourlyUnitCap4  
+		{
+            get { return "NetworkTierHourlyUnitCap4"; }
+        }
+	 
+		public static string NetworkTierHourlyUnitCap5  
+		{
+            get { return "NetworkTierHourlyUnitCap5"; }
         }
 	 
 		public static string OpenNetworks  
@@ -1851,6 +1914,11 @@ namespace Tam.Maestro.Common.SystemComponentParameter
             get { return "DativaUri"; }
         }
 	 
+		public static string ForecastUri  
+		{
+            get { return "ForecastUri"; }
+        }
+	 
 		public static string ShowAdvancedTV  
 		{
             get { return "ShowAdvancedTV"; }
@@ -1977,6 +2045,16 @@ namespace Tam.Maestro.Common.SystemComponentParameter
 		public static string MediaOceanTECCServiceUserName  
 		{
             get { return "MediaOceanTECCServiceUserName"; }
+        }
+	 
+		public static string MsaDataFileExportDatabricksJobId  
+		{
+            get { return "MsaDataFileExportDatabricksJobId"; }
+        }
+	 
+		public static string MsaDataFileExportMode  
+		{
+            get { return "MsaDataFileExportMode"; }
         }
 	 
 		public static string PostingPlanEmailBodyFailure  
@@ -2118,6 +2196,11 @@ namespace Tam.Maestro.Common.SystemComponentParameter
 		public static string PDFPath  
 		{
             get { return "PDFPath"; }
+        }
+	 
+		public static string TrafficAlertMvpdFlightingFeatureToggle  
+		{
+            get { return "TrafficAlertMvpdFlightingFeatureToggle"; }
         }
 	 
 		public static string TrafficAlertsPath  

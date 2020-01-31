@@ -6,7 +6,7 @@
     "IsActive": true,
     "Name": "Open Market"
   },
-  "RequestChunkSize": 1000,
+  "RequestChunkSize": 10,
   "SaveChunkSize": 1000,
   "TotalApiCallCount": 1,
   "TotalDaypartCount": 2,

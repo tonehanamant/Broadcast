@@ -261,6 +261,7 @@
     <Compile Include="ApplicationServices\InventoryGapCalculationEngineTests.cs" />
     <Compile Include="ApplicationServices\AudienceServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\PostingBookServiceIntegrationTests.cs" />
+    <Compile Include="ApplicationServices\ProgramGuideServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\ProgramServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\ProprietaryFileImporterIntegrationTests.cs" />
     <Compile Include="ApplicationServices\ProprietaryInventoryServiceIntegrationTests.cs" />
@@ -323,6 +324,7 @@
     <Compile Include="Repositories\DisplayDaypartRepositoryTests.cs" />
     <Compile Include="Stubs\EmailerServicedStub.cs" />
     <Compile Include="Stubs\PricingApiClientStub.cs" />
+    <Compile Include="Stubs\ProgramGuideApiClientStub.cs" />
     <Compile Include="Stubs\StubbedConfigurationWebApiClient.cs" />
     <Compile Include="Stubs\StubbedSMSClient.cs" />
     <Compile Include="ApplicationServices\EmailerServiceTests.cs" />
@@ -1089,6 +1091,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Maestro\Common.Clients\Common.Clients.csproj">
+      <Project>{B984AAAC-0379-4DDC-9A55-EF7F047D2103}</Project>
+      <Name>Common.Clients</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\Maestro\Common.DataLayer\Common.DataLayer.csproj">
       <Project>{ee3106ac-43d6-4ea7-b439-0ca5f06f9ba7}</Project>
       <Name>Common.DataLayer</Name>

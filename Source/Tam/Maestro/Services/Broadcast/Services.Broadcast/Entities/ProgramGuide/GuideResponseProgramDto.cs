@@ -1,34 +1,48 @@
-﻿using Newtonsoft.Json;
+﻿using System;
 
 namespace Services.Broadcast.Entities.ProgramGuide
 {
+    /// <summary>
+    /// A response program returned from the internal client.
+    /// </summary>
     public class GuideResponseProgramDto
     {
-        [JsonProperty(PropertyName = "programid")]
-        public string ProgramId { get; set; }
-
-        [JsonProperty(PropertyName = "program")]
         public string ProgramName { get; set; }
 
-        [JsonProperty(PropertyName = "genreid")]
-        public string GenreId { get; set; }
+        public string SourceGenre { get; set; }
 
-        [JsonProperty(PropertyName = "genre")]
-        public string Genre { get; set; }
-
-        [JsonProperty(PropertyName = "showtype")]
         public string ShowType { get; set; }
 
-        [JsonProperty(PropertyName = "syndicationtype")]
         public string SyndicationType { get; set; }
 
-        [JsonProperty(PropertyName = "occurances")]
-        public int Occurances { get; set; }
+        public int Occurrences { get; set; }
 
-        [JsonProperty(PropertyName = "start_time")]
+        public DateTime StartDate { get; set; }
+
+        public DateTime EndDate { get; set; }
+        
+        /// <summary>
+        /// Seconds since midnight.
+        /// </summary>
         public int StartTime { get; set; }
 
-        [JsonProperty(PropertyName = "end_time")]
+        /// <summary>
+        /// Seconds since midnight.
+        /// </summary>
         public int EndTime { get; set; }
+
+        public bool Monday { get; set; }
+
+        public bool Tuesday { get; set; }
+
+        public bool Wednesday { get; set; }
+
+        public bool Thursday { get; set; }
+
+        public bool Friday { get; set; }
+
+        public bool Saturday { get; set; }
+
+        public bool Sunday { get; set; }
     }
 }

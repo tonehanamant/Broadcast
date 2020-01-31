@@ -1,0 +1,8 @@
+﻿[
+  {
+    "Affiliate": "FOX",
+    "RequestDaypartId": "TestElement1_Daypart1",
+    "RequestElementId": "RequestScenarioOne",
+    "Station": "WGHP-DT"
+  }
+]
