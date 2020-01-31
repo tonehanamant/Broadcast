@@ -215,7 +215,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var planPricingRequestDto = new PlanPricingParametersDto
                 {
                     PlanId = 1197,
-                    MaxCpm = 10m,
+                    MaxCpm = 100m,
                     MinCpm = 1m,
                     Budget = 1000,
                     CompetitionFactor = 0.1,
@@ -333,7 +333,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var planPricingRequestDto = new PlanPricingParametersDto
                 {
                     PlanId = 1197,
-                    MaxCpm = 10m,
+                    MaxCpm = 100m,
                     MinCpm = 1m,
                     Budget = 1000,
                     CompetitionFactor = 0.1,
@@ -382,7 +382,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var planPricingRequestDto = new PlanPricingParametersDto
                 {
                     PlanId = 1197,
-                    MaxCpm = 10m,
+                    MaxCpm = 100m,
                     MinCpm = 1m,
                     Budget = 1000,
                     CompetitionFactor = 0.1,
@@ -435,7 +435,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var planPricingRequestDto = new PlanPricingParametersDto
                 {
                     PlanId = 1197,
-                    MaxCpm = 10m,
+                    MaxCpm = 100m,
                     MinCpm = 1m,
                     Budget = 1000,
                     CompetitionFactor = 0.1,

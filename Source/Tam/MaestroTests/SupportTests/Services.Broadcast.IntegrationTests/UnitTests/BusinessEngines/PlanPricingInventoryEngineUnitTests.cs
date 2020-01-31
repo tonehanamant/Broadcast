@@ -513,6 +513,47 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             Assert.AreEqual(expectedCount, result.Count);
         }
 
+        [Test]
+        [TestCase(null, null, 4)]
+        [TestCase(12.00, null, 3)]
+        [TestCase(null, 15.00, 3)]
+        [TestCase(12.00, 15.00, 2)]
+        public void ExcludeProgramsWithOutOfBoundsMinAndMaxCPM(double? minCPM, double? maxCPM, int expectedCount)
+        {
+            var plan = _GetPlan();
+
+            var programs = new List<PlanPricingInventoryProgram>
+            {
+                new PlanPricingInventoryProgram
+                {
+                    SpotCost = 350.00M,
+                    ProjectedImpressions = 33615.275,
+                    ProvidedImpressions = 29600.0
+                },
+                new PlanPricingInventoryProgram
+                {
+                    SpotCost = 400.00M,
+                    ProjectedImpressions = 44998.25,
+                    ProvidedImpressions = 30200.0
+                },
+                new PlanPricingInventoryProgram
+                {
+                    SpotCost = 375.00M,
+                    ProjectedImpressions = 30683.0,
+                    ProvidedImpressions = 21800.0
+                },
+                new PlanPricingInventoryProgram
+                {
+                    SpotCost = 300.00M,
+                    ProjectedImpressions = 40034.6875,
+                    ProvidedImpressions = 23400.0
+                }
+            };
+            var result = _PlanPricingInventoryEngine.FilterProgramsByMinAndMaxCPM(programs, (decimal?)minCPM, (decimal?)maxCPM);
+
+            Assert.AreEqual(expectedCount, result.Count);
+        }
+
         private PlanDto _GetPlan()
         {
             return new PlanDto

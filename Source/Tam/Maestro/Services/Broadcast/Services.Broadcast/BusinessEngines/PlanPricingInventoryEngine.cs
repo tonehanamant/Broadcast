@@ -19,7 +19,7 @@ namespace Services.Broadcast.BusinessEngines
 {
     public interface IPlanPricingInventoryEngine : IApplicationService
     {
-        List<PlanPricingInventoryProgram> GetInventoryForPlan(PlanDto plan);
+        List<PlanPricingInventoryProgram> GetInventoryForPlan(PlanDto plan, decimal? minCPM = null, decimal? maxCPM = null);
     }
 
     public class PlanPricingInventoryEngine : IPlanPricingInventoryEngine
@@ -38,7 +38,7 @@ namespace Services.Broadcast.BusinessEngines
             _GenreCache = genreCache;
         }
 
-        public List<PlanPricingInventoryProgram> GetInventoryForPlan(PlanDto plan)
+        public List<PlanPricingInventoryProgram> GetInventoryForPlan(PlanDto plan, decimal? minCPM = null, decimal? maxCPM = null)
         {
             var planFlightDateRanges = _GetPlanDateRanges(plan);
             var programs = _GetPrograms(plan, planFlightDateRanges);
@@ -47,6 +47,8 @@ namespace Services.Broadcast.BusinessEngines
 
             _ApplyProjectedImpressions(programs, plan);
             _ApplyProvidedImpressions(programs, plan);
+
+            programs = FilterProgramsByMinAndMaxCPM(programs, minCPM, maxCPM);
 
             return programs;
         }
@@ -201,6 +203,35 @@ namespace Services.Broadcast.BusinessEngines
                 var inventoryDayparts = _GetInventoryDaypartsThatMatchProgram(plan.Dayparts, planDisplayDaypart, program);
                 
                 if (inventoryDayparts.Any() && _IsProgramAllowedByRestrictions(inventoryDayparts))
+                {
+                    result.Add(program);
+                }
+            }
+
+            return result;
+        }
+
+        public List<PlanPricingInventoryProgram> FilterProgramsByMinAndMaxCPM(
+            List<PlanPricingInventoryProgram> programs,
+            decimal? minCPM,
+            decimal? maxCPM)
+        {
+            if (!minCPM.HasValue && !maxCPM.HasValue)
+            {
+                return programs;
+            }
+
+            var result = new List<PlanPricingInventoryProgram>();
+
+            foreach (var program in programs)
+            {
+                var programCPM = 
+                    ProposalMath.CalculateCpm(
+                        program.SpotCost,
+                        program.ProvidedImpressions.HasValue ? program.ProvidedImpressions.Value : program.ProjectedImpressions);
+
+                if (!(minCPM.HasValue && programCPM < minCPM.Value) 
+                    && !(maxCPM.HasValue && programCPM > maxCPM.Value))
                 {
                     result.Add(program);
                 }

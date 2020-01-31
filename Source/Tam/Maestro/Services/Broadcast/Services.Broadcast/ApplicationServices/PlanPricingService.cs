@@ -334,7 +334,7 @@ namespace Services.Broadcast.ApplicationServices
 
                 planPricingJobDiagnostic.RecordGatherInventoryStart();
 
-                var inventory = _PlanPricingInventoryEngine.GetInventoryForPlan(plan);
+                var inventory = _PlanPricingInventoryEngine.GetInventoryForPlan(plan, planPricingParametersDto.MinCpm, planPricingParametersDto.MaxCpm);
 
                 planPricingJobDiagnostic.RecordGatherInventoryEnd();
 
