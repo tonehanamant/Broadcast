@@ -1,5 +1,4 @@
 ﻿using System;
-using Newtonsoft.Json;
 
 namespace Services.Broadcast.Entities.ProgramGuide
 {
@@ -8,58 +7,40 @@ namespace Services.Broadcast.Entities.ProgramGuide
     /// </summary>
     public class GuideApiResponseProgramDto
     {
-        [JsonProperty(PropertyName = "program_id")]
-        public string ProgramId { get; set; }
+        public string program_id { get; set; }
 
-        [JsonProperty(PropertyName = "program")]
-        public string ProgramName { get; set; }
+        public string program { get; set; }
 
-        [JsonProperty(PropertyName = "genreid")]
-        public string GenreId { get; set; }
+        public string genreid { get; set; }
 
-        [JsonProperty(PropertyName = "genre")]
-        public string Genre { get; set; }
+        public string genre { get; set; }
 
-        [JsonProperty(PropertyName = "showtype")]
-        public string ShowType { get; set; }
+        public string showtype { get; set; }
 
-        [JsonProperty(PropertyName = "syndicationtype")]
-        public string SyndicationType { get; set; }
+        public string syndicationtype { get; set; }
 
-        [JsonProperty(PropertyName = "occurances")]
-        public int Occurrences { get; set; }
+        public int occurances { get; set; }
 
-        [JsonProperty(PropertyName = "startdate")]
-        public DateTime StartDate { get; set; }
+        public DateTime startdate { get; set; }
 
-        [JsonProperty(PropertyName = "enddate")]
-        public DateTime EndDate { get; set; }
+        public DateTime enddate { get; set; }
 
-        [JsonProperty(PropertyName = "starttime")]
-        public string StartTimeString { get; set; }
+        public string starttime { get; set; }
 
-        [JsonProperty(PropertyName = "endtime")]
-        public string EndTimeString { get; set; }
+        public string endtime { get; set; }
 
-        [JsonProperty(PropertyName = "mon")]
-        public bool Monday { get; set; }
+        public bool mon { get; set; }
 
-        [JsonProperty(PropertyName = "tue")]
-        public bool Tuesday { get; set; }
+        public bool tue { get; set; }
 
-        [JsonProperty(PropertyName = "wed")]
-        public bool Wednesday { get; set; }
+        public bool wed { get; set; }
 
-        [JsonProperty(PropertyName = "thu")]
-        public bool Thursday { get; set; }
+        public bool thu { get; set; }
 
-        [JsonProperty(PropertyName = "fri")]
-        public bool Friday { get; set; }
+        public bool fri { get; set; }
 
-        [JsonProperty(PropertyName = "sat")]
-        public bool Saturday { get; set; }
+        public bool sat { get; set; }
 
-        [JsonProperty(PropertyName = "sun")]
-        public bool Sunday { get; set; }
+        public bool sun { get; set; }
     }
 }

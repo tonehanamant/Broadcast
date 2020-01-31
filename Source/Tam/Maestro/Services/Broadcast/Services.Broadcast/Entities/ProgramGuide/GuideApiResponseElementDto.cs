@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Services.Broadcast.Entities.ProgramGuide
 {
@@ -8,25 +7,18 @@ namespace Services.Broadcast.Entities.ProgramGuide
     /// </summary>
     public class GuideApiResponseElementDto
     {
-        [JsonProperty(PropertyName = "id")]
-        public string RequestElementId { get; set; }
+        public string id { get; set; }
 
-        [JsonProperty(PropertyName = "programs")]
-        public List<GuideApiResponseProgramDto> Programs { get; set; }
+        public List<GuideApiResponseProgramDto> programs { get; set; }
 
-        [JsonProperty(PropertyName = "daypart")]
-        public string RequestDaypartId { get; set; }
+        public string daypart { get; set; }
 
-        [JsonProperty(PropertyName = "station")]
-        public string Station { get; set; }
+        public string station { get; set; }
 
-        [JsonProperty(PropertyName = "affiliate")]
-        public string Affiliate { get; set; }
+        public string affiliate { get; set; }
 
-        [JsonProperty(PropertyName = "start_date")]
-        public string StartDate { get; set; }
+        public string start_date { get; set; }
 
-        [JsonProperty(PropertyName = "end_date")]
-        public string EndDate { get; set; }
+        public string end_date { get; set; }
     }
 }

@@ -34,7 +34,7 @@ namespace Services.Broadcast.IntegrationTests.Stubs
         private static List<GuideApiResponseElementDto> _GetResponse(GuideApiRequestElementDto requestElement, ref int currentProgramIndex)
         {
             const double thirtyMinutesAsSeconds = 30 * 60;
-            var duration = (requestElement.Daypart.EndTime + 1) - requestElement.Daypart.StartTime;
+            var duration = (requestElement.daypart.endtime + 1) - requestElement.daypart.starttime;
             var programCount = (int)Math.Ceiling(duration / thirtyMinutesAsSeconds);
             var responseElement = GetResponseElement(requestElement, ref currentProgramIndex, programCount);
             var result = new List<GuideApiResponseElementDto> { responseElement };
@@ -48,13 +48,13 @@ namespace Services.Broadcast.IntegrationTests.Stubs
 
             var responseElement = new GuideApiResponseElementDto
             {
-                RequestElementId = requestElement.RequestElementId,
-                Programs = programs,
-                RequestDaypartId = requestElement.Daypart.RequestDaypartId,
-                Station = requestElement.StationCallLetters,
-                StartDate = requestElement.StartDate,
-                EndDate = requestElement.EndDate,
-                Affiliate = requestElement.NetworkAffiliate
+                id = requestElement.id,
+                programs = programs,
+                daypart = requestElement.daypart.id,
+                station = requestElement.station,
+                start_date = requestElement.startdate,
+                end_date = requestElement.enddate,
+                affiliate = requestElement.affiliate
             };
             return responseElement;
         }
@@ -67,24 +67,24 @@ namespace Services.Broadcast.IntegrationTests.Stubs
                 var program = _CannedPrograms[currentProgramIndex];
                 programs.Add(new GuideApiResponseProgramDto
                 {
-                    ProgramId = program.ProgramId,
-                    ProgramName = program.ProgramName,
-                    GenreId = program.GenreId,
-                    Genre = program.Genre,
-                    ShowType = program.ShowType,
-                    SyndicationType = program.SyndicationType,
-                    Monday = requestElement.Daypart.Monday,
-                    Tuesday = requestElement.Daypart.Tuesday,
-                    Wednesday = requestElement.Daypart.Wednesday,
-                    Thursday = requestElement.Daypart.Thursday,
-                    Friday = requestElement.Daypart.Friday,
-                    Saturday = requestElement.Daypart.Saturday,
-                    Sunday = requestElement.Daypart.Sunday,
-                    StartDate = DateTime.Parse(requestElement.StartDate),
-                    EndDate = DateTime.Parse(requestElement.EndDate),
-                    StartTimeString = "03:00",
-                    EndTimeString = "03:30",
-                    Occurrences = 1
+                    program_id = program.ProgramId,
+                    program = program.ProgramName,
+                    genreid = program.GenreId,
+                    genre = program.Genre,
+                    showtype = program.ShowType,
+                    syndicationtype = program.SyndicationType,
+                    mon = requestElement.daypart.mon,
+                    tue = requestElement.daypart.tue,
+                    wed = requestElement.daypart.wed,
+                    thu = requestElement.daypart.thu,
+                    fri = requestElement.daypart.fri,
+                    sat = requestElement.daypart.sat,
+                    sun = requestElement.daypart.sun,
+                    startdate = DateTime.Parse(requestElement.startdate),
+                    enddate = DateTime.Parse(requestElement.enddate),
+                    starttime = "03:00",
+                    endtime = "03:30",
+                    occurances = 1
                 });
 
                 currentProgramIndex = (currentProgramIndex + 1) >= _CannedPrograms.Count ? 0 : currentProgramIndex + 1;

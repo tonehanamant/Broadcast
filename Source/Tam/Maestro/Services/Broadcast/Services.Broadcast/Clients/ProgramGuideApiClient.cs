@@ -59,12 +59,12 @@ namespace Services.Broadcast.Clients
         {
             var apiRequestElement = new GuideApiRequestElementDto
             {
-                RequestElementId = requestElement.Id,
-                StartDate = requestElement.StartDate.ToString(DATE_FORMAT),
-                EndDate = requestElement.EndDate.ToString(DATE_FORMAT),
-                StationCallLetters = requestElement.StationCallLetters,
-                NetworkAffiliate = requestElement.NetworkAffiliate,
-                Daypart = _MapRequestDaypart(requestElement.Daypart)
+                id = requestElement.Id,
+                startdate = requestElement.StartDate.ToString(DATE_FORMAT),
+                enddate = requestElement.EndDate.ToString(DATE_FORMAT),
+                station = requestElement.StationCallLetters,
+                affiliate = requestElement.NetworkAffiliate,
+                daypart = _MapRequestDaypart(requestElement.Daypart)
             };
 
             return apiRequestElement;
@@ -74,17 +74,17 @@ namespace Services.Broadcast.Clients
         {
             var apiRequestDaypart = new GuideApiRequestDaypartDto
             {
-                RequestDaypartId = requestDaypart.Id,
-                Daypart = requestDaypart.Name,
-                Monday = requestDaypart.Monday,
-                Tuesday = requestDaypart.Tuesday,
-                Wednesday = requestDaypart.Wednesday,
-                Thursday = requestDaypart.Thursday,
-                Friday = requestDaypart.Friday,
-                Saturday = requestDaypart.Saturday,
-                Sunday = requestDaypart.Sunday,
-                StartTime = requestDaypart.StartTime,
-                EndTime = requestDaypart.EndTime
+                id = requestDaypart.Id,
+                dayparttext = requestDaypart.Name,
+                mon = requestDaypart.Monday,
+                tue = requestDaypart.Tuesday,
+                wed = requestDaypart.Wednesday,
+                thu = requestDaypart.Thursday,
+                fri = requestDaypart.Friday,
+                sat = requestDaypart.Saturday,
+                sun = requestDaypart.Sunday,
+                starttime = requestDaypart.StartTime,
+                endtime = requestDaypart.EndTime
             };
 
             return apiRequestDaypart;
@@ -94,13 +94,13 @@ namespace Services.Broadcast.Clients
         {
             var responseElement = new GuideResponseElementDto
             {
-                RequestElementId = apiResponseElement.RequestElementId,
-                RequestDaypartId = apiResponseElement.RequestDaypartId,
-                Station = apiResponseElement.Station,
-                Affiliate = apiResponseElement.Affiliate,
-                StartDate = DateTime.Parse(apiResponseElement.StartDate),
-                EndDate = DateTime.Parse(apiResponseElement.EndDate),
-                Programs = apiResponseElement.Programs.Select(_MapResponseProgram).ToList()
+                RequestElementId = apiResponseElement.id,
+                RequestDaypartId = apiResponseElement.daypart,
+                Station = apiResponseElement.station,
+                Affiliate = apiResponseElement.affiliate,
+                StartDate = DateTime.Parse(apiResponseElement.start_date),
+                EndDate = DateTime.Parse(apiResponseElement.end_date),
+                Programs = apiResponseElement.programs.Select(_MapResponseProgram).ToList()
             };
 
             return responseElement;
@@ -110,22 +110,22 @@ namespace Services.Broadcast.Clients
         {
             var responseProgram = new GuideResponseProgramDto
             {
-                ProgramName = apiResponseProgram.ProgramName,
-                SourceGenre = apiResponseProgram.Genre,
-                ShowType = apiResponseProgram.ShowType,
-                SyndicationType = apiResponseProgram.SyndicationType,
-                Occurrences = apiResponseProgram.Occurrences,
-                StartDate = apiResponseProgram.StartDate,
-                EndDate = apiResponseProgram.EndDate,
-                StartTime = _ConvertTimeStringToSecondsFromMidnight(apiResponseProgram.StartTimeString),
-                EndTime = _ConvertTimeStringToSecondsFromMidnight(apiResponseProgram.EndTimeString) - 1, // make it :59
-                Monday = apiResponseProgram.Monday,
-                Tuesday = apiResponseProgram.Tuesday,
-                Wednesday = apiResponseProgram.Wednesday,
-                Thursday = apiResponseProgram.Thursday,
-                Friday = apiResponseProgram.Friday,
-                Saturday = apiResponseProgram.Saturday,
-                Sunday = apiResponseProgram.Sunday
+                ProgramName = apiResponseProgram.program,
+                SourceGenre = apiResponseProgram.genre,
+                ShowType = apiResponseProgram.showtype,
+                SyndicationType = apiResponseProgram.syndicationtype,
+                Occurrences = apiResponseProgram.occurances,
+                StartDate = apiResponseProgram.startdate,
+                EndDate = apiResponseProgram.enddate,
+                StartTime = _ConvertTimeStringToSecondsFromMidnight(apiResponseProgram.starttime),
+                EndTime = _ConvertTimeStringToSecondsFromMidnight(apiResponseProgram.endtime) - 1, // make it :59
+                Monday = apiResponseProgram.mon,
+                Tuesday = apiResponseProgram.tue,
+                Wednesday = apiResponseProgram.wed,
+                Thursday = apiResponseProgram.thu,
+                Friday = apiResponseProgram.fri,
+                Saturday = apiResponseProgram.sat,
+                Sunday = apiResponseProgram.sun
             };
 
             return responseProgram;

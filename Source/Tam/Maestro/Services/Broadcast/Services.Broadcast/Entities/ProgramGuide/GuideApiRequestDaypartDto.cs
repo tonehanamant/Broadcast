@@ -1,49 +1,36 @@
-﻿using Newtonsoft.Json;
-
-namespace Services.Broadcast.Entities.ProgramGuide
+﻿namespace Services.Broadcast.Entities.ProgramGuide
 {
     /// <summary>
     /// A request daypart sent to the external api.
     /// </summary>
     public class GuideApiRequestDaypartDto
     {
-        [JsonProperty(PropertyName = "id")]
-        public string RequestDaypartId { get; set; }
+        public string id { get; set; }
 
-        [JsonProperty(PropertyName = "dayparttext")]
-        public string Daypart { get; set; }
+        public string dayparttext { get; set; }
 
-        [JsonProperty(PropertyName = "mon")]
-        public bool Monday { get; set; }
+        public bool mon { get; set; }
 
-        [JsonProperty(PropertyName = "tue")]
-        public bool Tuesday { get; set; }
+        public bool tue { get; set; }
 
-        [JsonProperty(PropertyName = "wed")]
-        public bool Wednesday { get; set; }
+        public bool wed { get; set; }
 
-        [JsonProperty(PropertyName = "thu")]
-        public bool Thursday { get; set; }
+        public bool thu { get; set; }
 
-        [JsonProperty(PropertyName = "fri")]
-        public bool Friday { get; set; }
+        public bool fri { get; set; }
 
-        [JsonProperty(PropertyName = "sat")]
-        public bool Saturday { get; set; }
+        public bool sat { get; set; }
 
-        [JsonProperty(PropertyName = "sun")]
-        public bool Sunday { get; set; }
+        public bool sun { get; set; }
 
         /// <summary>
         /// Seconds since midnight.
         /// </summary>
-        [JsonProperty(PropertyName = "starttime")]
-        public int StartTime { get; set; }
+        public int starttime { get; set; }
 
         /// <summary>
         /// Seconds since midnight.
         /// </summary>
-        [JsonProperty(PropertyName = "endtime")]
-        public int EndTime { get; set; }
+        public int endtime { get; set; }
     }
 }

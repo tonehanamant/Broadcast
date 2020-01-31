@@ -1,28 +1,20 @@
-﻿using Newtonsoft.Json;
-
-namespace Services.Broadcast.Entities.ProgramGuide
+﻿namespace Services.Broadcast.Entities.ProgramGuide
 {
     /// <summary>
     /// A request element sent to the external api.
     /// </summary>
     public class GuideApiRequestElementDto
     {
-        [JsonProperty(PropertyName = "id")]
-        public string RequestElementId { get; set; }
+        public string id { get; set; }
 
-        [JsonProperty(PropertyName = "daypart")]
-        public GuideApiRequestDaypartDto Daypart { get; set; }
+        public GuideApiRequestDaypartDto daypart { get; set; }
 
-        [JsonProperty(PropertyName = "startdate")]
-        public string StartDate { get; set; }
+        public string startdate { get; set; }
 
-        [JsonProperty(PropertyName = "enddate")]
-        public string EndDate { get; set; }
+        public string enddate { get; set; }
 
-        [JsonProperty(PropertyName = "station")]
-        public string StationCallLetters { get; set; }
+        public string station { get; set; }
 
-        [JsonProperty(PropertyName = "affiliate")]
-        public string NetworkAffiliate { get; set; }
+        public string affiliate { get; set; }
     }
 }
