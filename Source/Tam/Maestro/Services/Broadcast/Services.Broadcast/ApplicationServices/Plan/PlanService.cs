@@ -8,6 +8,7 @@ using Services.Broadcast.Entities.DTO;
 using Services.Broadcast.Entities.DTO.Program;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
+using Services.Broadcast.Entities.Plan.Pricing;
 using Services.Broadcast.Extensions;
 using Services.Broadcast.Helpers;
 using Services.Broadcast.Repositories;
@@ -235,14 +236,40 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 }
             }
 
-            //we only aggregate data for versions, not drafts
+            _SetPlanPricingParameters(plan);
+
+            // We only aggregate data and run pricing for versions, not drafts.
             if (!plan.IsDraft)
             {
                 _DispatchPlanAggregation(plan, aggregatePlanSynchronously);
                 _CampaignAggregationJobTrigger.TriggerJob(plan.CampaignId, createdBy);
+                _PlanPricingService.QueuePricingJob(plan.PricingParameters, createdDate);
             }
 
             return plan.Id;
+        }
+
+        private void _SetPlanPricingParameters(PlanDto plan)
+        {
+            if (plan.PricingParameters == null)
+            {
+                var pricingDefaults = _PlanPricingService.GetPlanPricingDefaults();
+
+                plan.PricingParameters = new PlanPricingParametersDto
+                {
+                    PlanId = plan.Id,
+                    Budget = (decimal)plan.Budget,
+                    CPM = (decimal)plan.TargetCPM,
+                    CPP = (decimal)plan.TargetCPP,
+                    Currency = plan.Currency,
+                    DeliveryImpressions = (double)plan.TargetImpressions / 1000,
+                    DeliveryRatingPoints = (double)plan.TargetRatingPoints,
+                    UnitCaps = pricingDefaults.UnitCaps,
+                    UnitCapsType = pricingDefaults.UnitCapType,
+                    InventorySourcePercentages = pricingDefaults.InventorySourcePercentages,
+                    InventorySourceTypePercentages = pricingDefaults.InventorySourceTypePercentages
+                };
+            }
         }
 
         private void _VerifyWeeklyAdu(bool isAduEnabled, List<WeeklyBreakdownWeek> weeks)

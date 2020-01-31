@@ -129,6 +129,7 @@ namespace Services.Broadcast.ApplicationServices
             var ppDefaults = new PlanPricingDefaults
             {
                 UnitCaps = 1,
+                UnitCapType = UnitCapEnum.Per30Min,
                 InventorySourcePercentages = PlanPricingInventorySourceSortEngine.GetSortedInventorySourcePercents(default_percent, allSources),
                 InventorySourceTypePercentages = PlanPricingInventorySourceSortEngine.GetSortedInventorySourceTypePercents(default_percent)
             };

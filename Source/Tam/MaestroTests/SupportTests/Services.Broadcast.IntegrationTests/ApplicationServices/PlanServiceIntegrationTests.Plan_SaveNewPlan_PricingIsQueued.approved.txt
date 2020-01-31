@@ -1,0 +1,20 @@
+﻿{
+  "IsPricingModelRunning": true,
+  "Job": {
+    "Completed": null,
+    "DiagnosticResult": null,
+    "ErrorMessage": null,
+    "Queued": "2019-01-01T00:00:00",
+    "Status": 1
+  },
+  "Result": {
+    "OptimalCpm": 0.0,
+    "Programs": [],
+    "Totals": {
+      "AvgCpm": 0.0,
+      "AvgImpressions": 0.0,
+      "MarketCount": 0,
+      "StationCount": 0
+    }
+  }
+}

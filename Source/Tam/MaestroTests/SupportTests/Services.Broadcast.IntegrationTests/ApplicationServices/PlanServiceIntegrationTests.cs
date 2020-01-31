@@ -11,6 +11,7 @@ using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.DTO.Program;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
+using Services.Broadcast.Entities.Plan.Pricing;
 using Services.Broadcast.IntegrationTests.Stubs;
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
     {
         private readonly IPlanService _PlanService = IntegrationTestApplicationServiceFactory.GetApplicationService<IPlanService>();
         private readonly ICampaignService _CampaignService = IntegrationTestApplicationServiceFactory.GetApplicationService<ICampaignService>();
+        private readonly IPlanPricingService _PlanPricingService = IntegrationTestApplicationServiceFactory.GetApplicationService<IPlanPricingService>();
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
@@ -1797,6 +1799,22 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
 
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void Plan_SaveNewPlan_PricingIsQueued()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var newPlan = _GetNewPlan();
+
+                var newPlanId = _PlanService.SavePlan(newPlan, "integration_test", new System.DateTime(2019, 01, 01));
+
+                var execution = _PlanPricingService.GetCurrentPricingExecution(newPlanId);
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(execution, _GetJsonSettings()));
+            }
+        }
+
         private static PlanDto _GetNewPlan()
         {
             return new PlanDto
@@ -2104,6 +2122,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             jsonResolver.Ignore(typeof(PlanSummaryDto), "PlanId");
             jsonResolver.Ignore(typeof(PlanSummaryDto), "VersionId");
             jsonResolver.Ignore(typeof(PlanVersionDto), "VersionId");
+            jsonResolver.Ignore(typeof(PlanPricingJob), "Id");
+            jsonResolver.Ignore(typeof(PlanPricingJob), "PlanVersionId");
 
             return new JsonSerializerSettings
             {
