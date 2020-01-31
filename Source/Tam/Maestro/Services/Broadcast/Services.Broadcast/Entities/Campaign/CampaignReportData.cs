@@ -417,7 +417,8 @@ namespace Services.Broadcast.Entities.Campaign
             var firstTable = tablesInQuarterDaypart.First();
             var tableData = new FlowChartQuarterTableData
             {
-                TableTitle = $"{firstTable.QuarterLabel} {firstTable.DaypartCode} Total"
+                TableTitle = $"{firstTable.QuarterLabel} {firstTable.DaypartCode} Total",
+                WeeksStartDate = firstTable.WeeksStartDate
             };
             tableData.MonthsLabel = firstTable.MonthsLabel;
             for(int i=0; i< totalWeeksInQuarter; i++)
