@@ -3778,6 +3778,27 @@ BEGIN
 		ON dayparts.id = daypart_defaults.daypart_id
 		WHERE daypart_text = @DAYPART_TEXT
 
+    UPDATE station_inventory_manifest_dayparts
+		SET daypart_id = @MIN_ID
+		FROM station_inventory_manifest_dayparts
+		INNER JOIN dayparts
+		ON dayparts.id = station_inventory_manifest_dayparts.daypart_id
+		WHERE daypart_text = @DAYPART_TEXT
+
+    UPDATE proposal_version_details 
+		SET daypart_id = @MIN_ID
+		FROM proposal_version_details 
+		INNER JOIN dayparts
+		ON dayparts.id = proposal_version_details.daypart_id
+		WHERE daypart_text = @DAYPART_TEXT
+
+    UPDATE schedule_details
+		SET daypart_id = @MIN_ID
+		FROM schedule_details
+		INNER JOIN dayparts
+		ON dayparts.id = schedule_details.daypart_id
+		WHERE daypart_text = @DAYPART_TEXT
+
 		DELETE FROM daypart_days WHERE daypart_id IN (SELECT id from dayparts where daypart_text = @DAYPART_TEXT AND id <> @MIN_ID)
 	
 		DELETE from dayparts where daypart_text = @DAYPART_TEXT AND id <> @MIN_ID
