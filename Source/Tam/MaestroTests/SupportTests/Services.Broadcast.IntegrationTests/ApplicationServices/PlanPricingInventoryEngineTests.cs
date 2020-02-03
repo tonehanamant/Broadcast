@@ -81,27 +81,32 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 StubbedConfigurationWebApiClient.RunTimeParameters["EnableOpenMarketInventoryForPricingModel"] = "False";
 
-                _InventoryFileTestHelper.UploadProprietaryInventoryFile(
-                    "PricingModel_OAndO.xlsx", 
-                    processInventoryRatings: true,
-                    processProgramEnrichmentJob: true);
-
-                var plan = _PlanRepository.GetPlan(1198);
-                var result = _PlanPricingInventoryEngine.GetInventoryForPlan(plan);
-
-                var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(PlanPricingInventoryProgram), "ManifestId");
-                jsonResolver.Ignore(typeof(ManifestDaypartDto), "Id");
-                var jsonSettings = new JsonSerializerSettings()
+                try
                 {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                    ContractResolver = jsonResolver
-                };
-                var json = IntegrationTestHelper.ConvertToJson(result, jsonSettings);
+                    _InventoryFileTestHelper.UploadProprietaryInventoryFile(
+                        "PricingModel_OAndO.xlsx",
+                        processInventoryRatings: true,
+                        processProgramEnrichmentJob: true);
 
-                Approvals.Verify(json);
+                    var plan = _PlanRepository.GetPlan(1198);
+                    var result = _PlanPricingInventoryEngine.GetInventoryForPlan(plan);
 
-                StubbedConfigurationWebApiClient.RunTimeParameters.Clear();
+                    var jsonResolver = new IgnorableSerializerContractResolver();
+                    jsonResolver.Ignore(typeof(PlanPricingInventoryProgram), "ManifestId");
+                    jsonResolver.Ignore(typeof(ManifestDaypartDto), "Id");
+                    var jsonSettings = new JsonSerializerSettings()
+                    {
+                        ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                        ContractResolver = jsonResolver
+                    };
+                    var json = IntegrationTestHelper.ConvertToJson(result, jsonSettings);
+
+                    Approvals.Verify(json);
+                }
+                finally
+                {
+                    StubbedConfigurationWebApiClient.RunTimeParameters.Clear();
+                }
             }
         }
 
