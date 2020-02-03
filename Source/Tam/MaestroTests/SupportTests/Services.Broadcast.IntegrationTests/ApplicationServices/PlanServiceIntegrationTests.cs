@@ -13,6 +13,7 @@ using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
 using Services.Broadcast.Entities.Plan.Pricing;
 using Services.Broadcast.IntegrationTests.Stubs;
+using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -150,6 +151,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 //save version 1
                 int newPlanId = _PlanService.SavePlan(newPlan, "integration_test", new DateTime(2019, 01, 01));
+                _ForceCompletePlanPricingJob(newPlanId);
 
                 //get the plan and format the impressions
                 PlanDto plan = _PlanService.GetPlan(newPlanId);
@@ -223,6 +225,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 //save version 1
                 int newPlanId = _PlanService.SavePlan(newPlan, "integration_test", new DateTime(2019, 01, 01));
+                _ForceCompletePlanPricingJob(newPlanId);
 
                 //get the plan and format the impressions
                 PlanDto plan = _PlanService.GetPlan(newPlanId);
@@ -232,6 +235,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 plan.WeeklyBreakdownWeeks.FirstOrDefault().WeeklyBudget = 142;
                 _PlanService.SavePlan(plan, "integration_test", new DateTime(2019, 01, 05));
+                _ForceCompletePlanPricingJob(newPlanId);
 
                 //save version 3
                 plan.Dayparts.RemoveAt(1); //we remove a daypart to have different data between versions
@@ -258,6 +262,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 //save version 1
                 int newPlanId = _PlanService.SavePlan(newPlan, "integration_test", new DateTime(2019, 01, 01));
+                _ForceCompletePlanPricingJob(newPlanId);
 
                 //get the plan and format the impressions
                 PlanDto plan = _PlanService.GetPlan(newPlanId);
@@ -266,6 +271,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 plan.Budget = 222;
                 plan.WeeklyBreakdownWeeks.FirstOrDefault().WeeklyBudget = 142;
                 _PlanService.SavePlan(plan, "integration_test", new DateTime(2019, 01, 01));
+                _ForceCompletePlanPricingJob(newPlanId);
 
                 //save draft
                 plan.IsDraft = true;
@@ -310,6 +316,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 //save version 1
                 int newPlanId = _PlanService.SavePlan(newPlan, "integration_test", new DateTime(2019, 01, 01));
+                _ForceCompletePlanPricingJob(newPlanId);
 
                 //get the plan
                 PlanDto plan = _PlanService.GetPlan(newPlanId);
@@ -336,6 +343,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 //save version 1
                 int newPlanId = _PlanService.SavePlan(newPlan, "integration_test", new DateTime(2019, 01, 01));
+
+                _ForceCompletePlanPricingJob(newPlanId);
 
                 //get the plan
                 PlanDto plan = _PlanService.GetPlan(newPlanId);
@@ -434,6 +443,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 PlanDto newPlan = _GetNewPlan();
                 newPlan.CampaignId = newCampaignId;
                 var newPlanId = _PlanService.SavePlan(newPlan, "integration_test", new DateTime(2019, 10, 30), true);
+
+                _ForceCompletePlanPricingJob(newPlanId);
 
                 var planFromDB = _PlanService.GetPlan(newPlanId);
                 planFromDB.IsDraft = true;
@@ -549,6 +560,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 // generate a plan for test
                 PlanDto newPlan = _GetNewPlan();
                 var newPlanId = _PlanService.SavePlan(newPlan, "integration_test", new System.DateTime(2019, 01, 01));
+                _ForceCompletePlanPricingJob(newPlanId);
+
                 // modify the plan
                 PlanDto testPlan = _PlanService.GetPlan(newPlanId);
 
@@ -580,6 +593,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 // generate a plan for test
                 PlanDto newPlan = _GetNewPlan();
                 var newPlanId = _PlanService.SavePlan(newPlan, "integration_test", new System.DateTime(2019, 01, 01));
+                _ForceCompletePlanPricingJob(newPlanId);
+
                 // modify the plan
                 PlanDto testPlan = _PlanService.GetPlan(newPlanId);
 
@@ -603,6 +618,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 // generate a plan for test
                 PlanDto newPlan = _GetNewPlan();
                 var newPlanId = _PlanService.SavePlan(newPlan, "integration_test", new System.DateTime(2019, 01, 01));
+                _ForceCompletePlanPricingJob(newPlanId);
+
                 // modify the plan
                 PlanDto testPlan = _PlanService.GetPlan(newPlanId);
 
@@ -782,6 +799,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 PlanDto newPlan = _GetNewPlan();
                 var planId = _PlanService.SavePlan(newPlan, "integration_test", new System.DateTime(2019, 01, 15));
+                _ForceCompletePlanPricingJob(planId);
+
                 PlanDto modifiedPlan = _PlanService.GetPlan(planId);
                 modifiedPlan.Dayparts.Add(new PlanDaypartDto
                 {
@@ -821,6 +840,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 PlanDto newPlan = _GetNewPlan();
                 var planId = _PlanService.SavePlan(newPlan, "integration_test", new System.DateTime(2019, 01, 15));
+                _ForceCompletePlanPricingJob(planId);
                 PlanDto modifiedPlan = _PlanService.GetPlan(planId);
                 modifiedPlan.Dayparts.RemoveAt(modifiedPlan.Dayparts.Count - 1);
 
@@ -1307,6 +1327,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 PlanDto newPlan = _GetNewPlan();
                 newPlan.BlackoutMarkets.Clear();
                 var newPlanId = _PlanService.SavePlan(newPlan, "integration_test", new System.DateTime(2019, 01, 01));
+                _ForceCompletePlanPricingJob(newPlanId);
                 // modify the plan
                 PlanDto testPlan = _PlanService.GetPlan(newPlanId);
 
@@ -2124,12 +2145,22 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             jsonResolver.Ignore(typeof(PlanVersionDto), "VersionId");
             jsonResolver.Ignore(typeof(PlanPricingJob), "Id");
             jsonResolver.Ignore(typeof(PlanPricingJob), "PlanVersionId");
+            jsonResolver.Ignore(typeof(PlanPricingParametersDto), "PlanId");
 
             return new JsonSerializerSettings
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                 ContractResolver = jsonResolver
             };
+        }
+
+        private void _ForceCompletePlanPricingJob(int planId)
+        {
+            var planRepo = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IPlanRepository>();
+            var job = planRepo.GetLatestPricingJob(planId);
+            job.Status = BackgroundJobProcessingStatus.Succeeded;
+            job.Completed = DateTime.Now;
+            planRepo.UpdatePlanPricingJob(job);
         }
     }
 }
