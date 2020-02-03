@@ -38,32 +38,32 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         private readonly Mock<IOpenMarketFileImporter> _OpenMarketFileImporterMock = new Mock<IOpenMarketFileImporter>();
         private readonly Mock<IFileService> _FileServiceMock = new Mock<IFileService>();
         private readonly Mock<IInventoryRatingsProcessingService> _InventoryRatingsServiceMock = new Mock<IInventoryRatingsProcessingService>();
-        private readonly Mock<IInventoryProgramEnrichmentService> _InventoryProgramEnrichmentServiceMock = new Mock<IInventoryProgramEnrichmentService>();
+        private readonly Mock<IInventoryProgramsProcessingService> _InventoryProgramsProcessingServiceMock = new Mock<IInventoryProgramsProcessingService>();
         private readonly Mock<IInventoryRepository> _InventoryRepositoryMock = new Mock<IInventoryRepository>();
         private readonly Mock<ISpotLengthRepository> _SpotLengthRepository = new Mock<ISpotLengthRepository>();
         private readonly Mock<IInventoryFileRepository> _InventoryFileRepositoryMock = new Mock<IInventoryFileRepository>();
 
         [Test]
         [TestCase(FileStatusEnum.Failed, 0, 0, "Validation Error")]
-        [TestCase(FileStatusEnum.Loaded, BackgroundJobProcessingStatus.Failed, InventoryFileProgramEnrichmentJobStatus.Completed, "Processing Error")]
-        [TestCase(FileStatusEnum.Loaded, BackgroundJobProcessingStatus.Succeeded, InventoryFileProgramEnrichmentJobStatus.Error, "Processing Error")]
-        [TestCase(FileStatusEnum.Loaded, BackgroundJobProcessingStatus.Succeeded, InventoryFileProgramEnrichmentJobStatus.Completed, "Succeeded")]
-        [TestCase(FileStatusEnum.Loaded, BackgroundJobProcessingStatus.Queued, InventoryFileProgramEnrichmentJobStatus.ApplyProgramData, "Processing")]
-        [TestCase(FileStatusEnum.Loaded, BackgroundJobProcessingStatus.Queued, InventoryFileProgramEnrichmentJobStatus.CallApi, "Processing")]
-        [TestCase(FileStatusEnum.Loaded, BackgroundJobProcessingStatus.Queued, InventoryFileProgramEnrichmentJobStatus.Completed, "Processing")]
-        [TestCase(FileStatusEnum.Loaded, BackgroundJobProcessingStatus.Queued, InventoryFileProgramEnrichmentJobStatus.GatherInventory, "Processing")]
-        [TestCase(FileStatusEnum.Loaded, BackgroundJobProcessingStatus.Queued, InventoryFileProgramEnrichmentJobStatus.Queued, "Processing")]
-        [TestCase(FileStatusEnum.Loaded, BackgroundJobProcessingStatus.Queued, InventoryFileProgramEnrichmentJobStatus.SavePrograms, "Processing")]
-        [TestCase(FileStatusEnum.Loaded, BackgroundJobProcessingStatus.Processing, InventoryFileProgramEnrichmentJobStatus.ApplyProgramData, "Processing")]
-        [TestCase(FileStatusEnum.Loaded, BackgroundJobProcessingStatus.Processing, InventoryFileProgramEnrichmentJobStatus.CallApi, "Processing")]
-        [TestCase(FileStatusEnum.Loaded, BackgroundJobProcessingStatus.Processing, InventoryFileProgramEnrichmentJobStatus.Completed, "Processing")]
-        [TestCase(FileStatusEnum.Loaded, BackgroundJobProcessingStatus.Processing, InventoryFileProgramEnrichmentJobStatus.GatherInventory, "Processing")]
-        [TestCase(FileStatusEnum.Loaded, BackgroundJobProcessingStatus.Processing, InventoryFileProgramEnrichmentJobStatus.Queued, "Processing")]
-        [TestCase(FileStatusEnum.Loaded, BackgroundJobProcessingStatus.Processing, InventoryFileProgramEnrichmentJobStatus.SavePrograms, "Processing")]
+        [TestCase(FileStatusEnum.Loaded, BackgroundJobProcessingStatus.Failed, InventoryProgramsJobStatus.Completed, "Processing Error")]
+        [TestCase(FileStatusEnum.Loaded, BackgroundJobProcessingStatus.Succeeded, InventoryProgramsJobStatus.Error, "Processing Error")]
+        [TestCase(FileStatusEnum.Loaded, BackgroundJobProcessingStatus.Succeeded, InventoryProgramsJobStatus.Completed, "Succeeded")]
+        [TestCase(FileStatusEnum.Loaded, BackgroundJobProcessingStatus.Queued, InventoryProgramsJobStatus.ApplyProgramData, "Processing")]
+        [TestCase(FileStatusEnum.Loaded, BackgroundJobProcessingStatus.Queued, InventoryProgramsJobStatus.CallApi, "Processing")]
+        [TestCase(FileStatusEnum.Loaded, BackgroundJobProcessingStatus.Queued, InventoryProgramsJobStatus.Completed, "Processing")]
+        [TestCase(FileStatusEnum.Loaded, BackgroundJobProcessingStatus.Queued, InventoryProgramsJobStatus.GatherInventory, "Processing")]
+        [TestCase(FileStatusEnum.Loaded, BackgroundJobProcessingStatus.Queued, InventoryProgramsJobStatus.Queued, "Processing")]
+        [TestCase(FileStatusEnum.Loaded, BackgroundJobProcessingStatus.Queued, InventoryProgramsJobStatus.SavePrograms, "Processing")]
+        [TestCase(FileStatusEnum.Loaded, BackgroundJobProcessingStatus.Processing, InventoryProgramsJobStatus.ApplyProgramData, "Processing")]
+        [TestCase(FileStatusEnum.Loaded, BackgroundJobProcessingStatus.Processing, InventoryProgramsJobStatus.CallApi, "Processing")]
+        [TestCase(FileStatusEnum.Loaded, BackgroundJobProcessingStatus.Processing, InventoryProgramsJobStatus.Completed, "Processing")]
+        [TestCase(FileStatusEnum.Loaded, BackgroundJobProcessingStatus.Processing, InventoryProgramsJobStatus.GatherInventory, "Processing")]
+        [TestCase(FileStatusEnum.Loaded, BackgroundJobProcessingStatus.Processing, InventoryProgramsJobStatus.Queued, "Processing")]
+        [TestCase(FileStatusEnum.Loaded, BackgroundJobProcessingStatus.Processing, InventoryProgramsJobStatus.SavePrograms, "Processing")]
         public void GetInventoryUploadHistory_ReturnsCorrectStatuses(
             FileStatusEnum fileLoadStatus,
             BackgroundJobProcessingStatus ratingProcessingJobStatus,
-            InventoryFileProgramEnrichmentJobStatus programEnrichmentJobStatus,
+            InventoryProgramsJobStatus programsJobStatus,
             string expectedStatus)
         {
             _QuarterCalculationEngineMock
@@ -78,7 +78,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     {
                         FileLoadStatus = fileLoadStatus,
                         RatingProcessingJobStatus = ratingProcessingJobStatus,
-                        ProgramEnrichmentJobStatus = programEnrichmentJobStatus
+                        ProgramsJobStatus = programsJobStatus
                     }
                 });
 
@@ -325,7 +325,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 _OpenMarketFileImporterMock.Object,
                 _FileServiceMock.Object,
                 _InventoryRatingsServiceMock.Object,
-                _InventoryProgramEnrichmentServiceMock.Object);
+                _InventoryProgramsProcessingServiceMock.Object);
         }
     }
 }

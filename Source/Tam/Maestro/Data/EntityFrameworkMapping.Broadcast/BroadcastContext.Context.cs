@@ -142,7 +142,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<plan_versions> plan_versions { get; set; }
         public virtual DbSet<plan_version_summary_quarters> plan_version_summary_quarters { get; set; }
         public virtual DbSet<plan_version_daypart_show_type_restrictions> plan_version_daypart_show_type_restrictions { get; set; }
-        public virtual DbSet<inventory_file_program_enrichment_jobs> inventory_file_program_enrichment_jobs { get; set; }
         public virtual DbSet<station_inventory_manifest_daypart_programs> station_inventory_manifest_daypart_programs { get; set; }
         public virtual DbSet<plan_version_daypart_genre_restrictions> plan_version_daypart_genre_restrictions { get; set; }
         public virtual DbSet<plan_version_daypart_program_restrictions> plan_version_daypart_program_restrictions { get; set; }
@@ -182,5 +181,9 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<nti_universe_details> nti_universe_details { get; set; }
         public virtual DbSet<nti_universe_headers> nti_universe_headers { get; set; }
         public virtual DbSet<nti_universes> nti_universes { get; set; }
+        public virtual DbSet<inventory_programs_by_file_job_notes> inventory_programs_by_file_job_notes { get; set; }
+        public virtual DbSet<inventory_programs_by_file_jobs> inventory_programs_by_file_jobs { get; set; }
+        public virtual DbSet<inventory_programs_by_source_job_notes> inventory_programs_by_source_job_notes { get; set; }
+        public virtual DbSet<inventory_programs_by_source_jobs> inventory_programs_by_source_jobs { get; set; }
     }
 }

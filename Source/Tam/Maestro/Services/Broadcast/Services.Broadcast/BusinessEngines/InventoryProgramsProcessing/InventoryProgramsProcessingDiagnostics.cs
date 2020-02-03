@@ -4,15 +4,24 @@ using System.Text;
 
 namespace Services.Broadcast.Entities
 {
-    public class InventoryFileProgramEnrichmentJobDiagnostics
+    public abstract class InventoryProgramsProcessingJobDiagnostics
     {
+        public delegate void OnMessageUpdatedDelegate(int jobId, string message);
+
+        private readonly OnMessageUpdatedDelegate _OnMessageUpdated;
+
+        public InventoryProgramsProcessingJobDiagnostics(OnMessageUpdatedDelegate onMessageUpdated)
+        {
+            _OnMessageUpdated = onMessageUpdated;
+        }
+
         public int JobId { get; set; }
-        public int FileId { get; set; }
-        public InventorySource InventorySource { get; set; }
 
         public int RequestChunkSize { get; set; }
         public int SaveChunkSize { get; set; }
-        
+
+        public InventorySource InventorySource { get; set; }
+
         public int TotalManifestCount { get; set; }
         public int TotalWeekCount { get; set; }
         public int TotalDaypartCount { get; set; }
@@ -38,19 +47,20 @@ namespace Services.Broadcast.Entities
 
         public void RecordStart()
         {
-            Report("**************************************");
-            Report($"Starting jobId {JobId}.");
-            Report($"Config values : RequestChunkSize = {RequestChunkSize}");
-            Report($"Config values : SaveChunkSize = {SaveChunkSize}");
+            _ReportToConsole("**************************************");
+            _ReportToConsole($"Starting jobId {JobId}.");
+            _ReportToConsoleAndJobNotes($"Config values : RequestChunkSize = {RequestChunkSize}");
+            _ReportToConsoleAndJobNotes($"Config values : SaveChunkSize = {SaveChunkSize}");
 
             _StartTimer(SW_KEY_TOTAL_DURATION);
         }
 
-        public void RecordFileInfo(int fileId, InventorySource inventorySource)
+        public void RecordInventorySource(InventorySource inventorySource)
         {
-            FileId = fileId;
             InventorySource = inventorySource;
-            Report($"JobId {JobId} processes fileId {FileId}.");
+
+            _ReportToConsoleAndJobNotes($"InventorySource : {InventorySource.Name}");
+            _ReportToConsoleAndJobNotes($"InventorySourceType : {InventorySource.InventoryType}");
         }
 
         public void RecordGatherInventoryStart()
@@ -61,7 +71,7 @@ namespace Services.Broadcast.Entities
         public void RecordGatherInventoryStop()
         {
             _StopTimer(SW_KEY_TOTAL_DURATION_GATHER_INVENTORY);
-            Report(GetDurationString(SW_KEY_TOTAL_DURATION_GATHER_INVENTORY));
+            _ReportToConsoleAndJobNotes(GetDurationString(SW_KEY_TOTAL_DURATION_GATHER_INVENTORY));
         }
 
         public void RecordManifestDetails(int manifestCount, int weekCount, int daypartCount)
@@ -70,12 +80,12 @@ namespace Services.Broadcast.Entities
             TotalWeekCount = weekCount;
             TotalDaypartCount = daypartCount;
 
-            Report($"Inventory manifest count {TotalManifestCount} translated to {TotalWeekCount} distinct weeks for {TotalDaypartCount} dayparts.");
+            _ReportToConsoleAndJobNotes($"Inventory manifest count {TotalManifestCount} translated to {TotalWeekCount} distinct weeks for {TotalDaypartCount} dayparts.");
         }
 
         public void RecordIterationStart(int iterationNumber, int iterationTotalNumber)
         {
-            Report($"Beginning manifest processing iteration {iterationNumber} of {iterationTotalNumber}.");
+            _ReportToConsoleAndJobNotes($"Beginning manifest processing iteration {iterationNumber} of {iterationTotalNumber}.");
         }
         
         public void RecordTransformToInputStart()
@@ -90,27 +100,27 @@ namespace Services.Broadcast.Entities
 
             _StopTimer(SW_KEY_TOTAL_DURATION_TRANSFORM_TO_INPUT);
             _StopTimer(SW_KEY_ITERATION_TRANSFORM_TO_INPUT);
-            Report(GetDurationString(SW_KEY_ITERATION_TRANSFORM_TO_INPUT));
-            Report($"Transformed to {requestElementCount} requestElements.");
+            _ReportToConsoleAndJobNotes(GetDurationString(SW_KEY_ITERATION_TRANSFORM_TO_INPUT));
+            _ReportToConsoleAndJobNotes($"Transformed to {requestElementCount} requestElements.");
         }
 
         public void RecordIterationStartCallToApi(int iterationNumber, int iterationTotalNumber)
         {
             TotalApiCallCount++;
-            Report($"Beginning call to api iteration {iterationNumber} of {iterationTotalNumber}.");
+            _ReportToConsoleAndJobNotes($"Beginning call to api iteration {iterationNumber} of {iterationTotalNumber}.");
             _StartTimer(SW_KEY_TOTAL_DURATION_CALL_TO_API);
             _RestartTimer(SW_KEY_ITERATION_CALL_TO_API);
         }
 
         public void RecordIterationStopCallToApi(int responseCount)
         {
-            Report($"Response contained {responseCount} response elements.");
+            _ReportToConsoleAndJobNotes($"Response contained {responseCount} response elements.");
             TotalResponseCount += responseCount;
 
             _StopTimer(SW_KEY_TOTAL_DURATION_CALL_TO_API);
             _StopTimer(SW_KEY_ITERATION_CALL_TO_API);
 
-            Report(GetDurationString(SW_KEY_ITERATION_CALL_TO_API));
+            _ReportToConsoleAndJobNotes(GetDurationString(SW_KEY_ITERATION_CALL_TO_API));
         }
 
         public void RecordIterationStartApplyApiResponse()
@@ -126,8 +136,8 @@ namespace Services.Broadcast.Entities
             _StopTimer(SW_KEY_TOTAL_DURATION_APPLY_API_RESPONSE);
             _StopTimer(SW_KEY_ITERATION_APPLY_API_RESPONSE);
 
-            Report($"Resulted in {programCount} Programs to save.");
-            Report(GetDurationString(SW_KEY_ITERATION_APPLY_API_RESPONSE));
+            _ReportToConsoleAndJobNotes($"Resulted in {programCount} Programs to save.");
+            _ReportToConsoleAndJobNotes(GetDurationString(SW_KEY_ITERATION_APPLY_API_RESPONSE));
         }
 
         public void RecordIterationStartSavePrograms()
@@ -142,18 +152,20 @@ namespace Services.Broadcast.Entities
 
             _StopTimer(SW_KEY_TOTAL_DURATION_SAVE_PROGRAMS);
             _StopTimer(SW_KEY_ITERATION_SAVE_PROGRAMS);
-            Report($"Resulted in {saveChunkCount} programs save chunks.");
-            Report(GetDurationString(SW_KEY_ITERATION_SAVE_PROGRAMS));
+            _ReportToConsoleAndJobNotes($"Resulted in {saveChunkCount} programs save chunks.");
+            _ReportToConsoleAndJobNotes(GetDurationString(SW_KEY_ITERATION_SAVE_PROGRAMS));
         }
 
         public void RecordStop()
         {
             _StopTimer(SW_KEY_TOTAL_DURATION);
-            Report("Process completed.");
-            Report("");
-            Report(ToString());
-            Report("**************************************");
+            _ReportToConsoleAndJobNotes("Process completed.");
+            _ReportToConsole("");
+            _ReportToConsole(ToString());
+            _ReportToConsole("**************************************");
         }
+
+        protected abstract string OnToString();
 
         public override string ToString()
         {
@@ -162,7 +174,9 @@ namespace Services.Broadcast.Entities
 
             var sb = new StringBuilder();
             sb.AppendLine($"JobId : {JobId}");
-            sb.AppendLine($"FileId : {FileId}");
+            sb.AppendLine();
+            sb.AppendLine(OnToString());
+            sb.AppendLine();
             sb.AppendLine($"InventorySource : {inventorySourceName}");
             sb.AppendLine($"InventorySourceType : {inventorySourceType}");
             sb.AppendLine();
@@ -227,9 +241,15 @@ namespace Services.Broadcast.Entities
             return $"{key} = {sw.Elapsed.Hours}:{sw.Elapsed.Minutes}:{sw.Elapsed.Seconds}.{sw.Elapsed.Milliseconds}";
         }
 
-        private void Report(string message)
+        protected void _ReportToConsole(string message)
         {
             Debug.WriteLine(message);
+        }
+
+        protected void _ReportToConsoleAndJobNotes(string message)
+        {
+            _ReportToConsole(message);
+            _OnMessageUpdated?.Invoke(JobId, message);
         }
     }
 }

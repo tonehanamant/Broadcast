@@ -38,6 +38,8 @@ namespace Services.Broadcast.Repositories
         List<StationInventoryManifestWeekHistory> GetStationInventoryManifestWeeksHistory(IEnumerable<int> manifestIds);
         List<StationInventoryManifest> GetInventoryManifestsBySource(InventorySource source);
 
+        List<StationInventoryManifest> GetInventoryManifestsBySourceAndMediaWeek(int sourceId, List<int> mediaWeekIds);
+
         InventorySummaryTotals GetInventorySummaryDateRangeTotalsForSource(InventorySource inventorySource, DateTime startDate, DateTime endDate);
 
         /// <summary>
@@ -476,6 +478,27 @@ namespace Services.Broadcast.Repositories
                         .Include(x => x.station_inventory_manifest_weeks)
                         .Where(x => x.inventory_source_id == source.Id &&
                                     x.inventory_files.status == (int)FileStatusEnum.Loaded);
+
+                    return query.ToList().Select(x => _MapToInventoryManifest(x)).ToList();
+                });
+        }
+
+        public List<StationInventoryManifest> GetInventoryManifestsBySourceAndMediaWeek(int sourceId, List<int> mediaWeekIds)
+        {
+            return _InReadUncommitedTransaction(
+                c =>
+                {
+                    var query = c.station_inventory_manifest
+                        .Include(x => x.station)
+                        .Include(x => x.station_inventory_manifest_dayparts)
+                        .Include(x => x.station_inventory_manifest_dayparts.Select(d => d.daypart_defaults))
+                        .Include(x => x.station_inventory_manifest_dayparts.Select(d => d.daypart_defaults.daypart))
+                        .Include(x => x.station_inventory_manifest_audiences)
+                        .Include(x => x.station_inventory_manifest_rates)
+                        .Include(x => x.station_inventory_manifest_weeks.Where(w => mediaWeekIds.Contains(w.media_week_id)))
+                        .Where(x => x.inventory_source_id == sourceId &&
+                                    x.inventory_files.status == (int)FileStatusEnum.Loaded)
+                        ;
 
                     return query.ToList().Select(x => _MapToInventoryManifest(x)).ToList();
                 });
@@ -1319,7 +1342,7 @@ namespace Services.Broadcast.Repositories
                     files = files
                              .Include(x => x.inventory_sources)
                              .Include(x => x.inventory_file_ratings_jobs)
-                             .Include(x => x.inventory_file_program_enrichment_jobs)
+                             .Include(x => x.inventory_programs_by_file_jobs)
                              .Where(x => x.inventory_source_id == inventorySourceId);
 
                     if (startDate.HasValue && endDate.HasValue)
@@ -1384,10 +1407,10 @@ namespace Services.Broadcast.Repositories
                             fileHistory.RatingProcessingJobStatus = (BackgroundJobProcessingStatus)ratingProcessingJob.status;
                         }
 
-                        if (file.inventory_file_program_enrichment_jobs.Any())
+                        if (file.inventory_programs_by_file_jobs.Any())
                         {
-                            var programEnrichmentJob = file.inventory_file_program_enrichment_jobs.OrderBy(x => x.id).Last();
-                            fileHistory.ProgramEnrichmentJobStatus = (InventoryFileProgramEnrichmentJobStatus)programEnrichmentJob.status;
+                            var programsJob = file.inventory_programs_by_file_jobs.OrderBy(x => x.id).Last();
+                            fileHistory.ProgramsJobStatus = (InventoryProgramsJobStatus)programsJob.status;
                         }
 
                         result.Add(fileHistory);

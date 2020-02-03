@@ -202,23 +202,7 @@ namespace BroadcastComposerWeb.Controllers
                 };
             }
         }
-
-        [HttpGet]
-        [Route("QueueInventoryFileProgramEnrichmentJob")]
-        public BaseResponse<int> QueueInventoryFileProgramEnrichmentJob(int fileId, string username)
-        {
-            return _ConvertToBaseResponse(() =>
-                _ApplicationServiceFactory.GetApplicationService<IInventoryProgramEnrichmentService>().QueueInventoryFileProgramEnrichmentJob(fileId, username));
-        }
-
-        [HttpGet]
-        [Route("PerformInventoryFileProgramEnrichmentJob")]
-        public BaseResponse<InventoryFileProgramEnrichmentJobDiagnostics> PerformInventoryFileProgramEnrichmentJob(int jobId)
-        {
-            return _ConvertToBaseResponse(() =>
-                _ApplicationServiceFactory.GetApplicationService<IInventoryProgramEnrichmentService>().PerformInventoryFileProgramEnrichmentJob(jobId));
-        }
-
+        
         /// <summary>
         /// Get all daypart defaults for inventory
         /// </summary>

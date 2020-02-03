@@ -3,7 +3,7 @@
     /// <summary>
     /// Step \ status for the job.
     /// </summary>
-    public enum InventoryFileProgramEnrichmentJobStatus
+    public enum InventoryProgramsJobStatus
     {
         /// <summary>
         /// The job has been queued for processing.

@@ -70,7 +70,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IInventoryWeekEngine _InventoryWeekEngine;
         private readonly IFileService _FileService;
         private readonly IInventoryScxDataPrepFactory _InventoryScxDataPrepFactory;
-        private readonly IInventoryProgramEnrichmentService _InventoryProgramEnrichmentService;
+        private readonly IInventoryProgramsProcessingService _InventoryProgramsProcessingService;
 
         public ProprietaryInventoryService(IDataRepositoryFactory broadcastDataRepositoryFactory
             , IProprietaryFileImporterFactory proprietaryFileImporterFactory
@@ -87,7 +87,7 @@ namespace Services.Broadcast.ApplicationServices
             , IInventoryWeekEngine inventoryWeekEngine
             , IFileService fileService
             , IInventoryScxDataPrepFactory inventoryScxDataPrepFactory
-            ,IInventoryProgramEnrichmentService inventoryProgramEnrichmentService)
+            ,IInventoryProgramsProcessingService inventoryProgramsProcessingService)
         {
             _ProprietaryRepository = broadcastDataRepositoryFactory.GetDataRepository<IProprietaryRepository>();
             _InventoryRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
@@ -107,7 +107,7 @@ namespace Services.Broadcast.ApplicationServices
             _InventoryWeekEngine = inventoryWeekEngine;
             _FileService = fileService;
             _InventoryScxDataPrepFactory = inventoryScxDataPrepFactory;
-            _InventoryProgramEnrichmentService = inventoryProgramEnrichmentService;
+            _InventoryProgramsProcessingService = inventoryProgramsProcessingService;
         }
 
         ///<inheritdoc/>
@@ -181,8 +181,7 @@ namespace Services.Broadcast.ApplicationServices
             if (!proprietaryFile.ValidationProblems.Any())
             {
                 _InventoryRatingsService.QueueInventoryFileRatingsJob(proprietaryFile.Id);
-                // TODO: Enable this when ready.
-                _InventoryProgramEnrichmentService.QueueInventoryFileProgramEnrichmentJob(proprietaryFile.Id, userName);
+                _InventoryProgramsProcessingService.QueueProcessInventoryProgramsByFileJob(proprietaryFile.Id, userName);
 
                 try
                 {

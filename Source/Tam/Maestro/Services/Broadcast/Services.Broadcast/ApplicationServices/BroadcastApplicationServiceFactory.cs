@@ -15,6 +15,7 @@ using Services.Broadcast.ApplicationServices.Plan;
 using Services.Broadcast.ApplicationServices.Security;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.BusinessEngines.InventoryDaypartParsing;
+using Services.Broadcast.BusinessEngines.InventoryProgramsProcessing;
 using Services.Broadcast.Cache;
 using Services.Broadcast.Clients;
 using Services.Broadcast.Converters;
@@ -179,7 +180,8 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IInventoryDaypartParsingEngine, InventoryDaypartParsingEngine>();
             unityContainer.RegisterType<ILockingEngine, LockingEngine>();
             unityContainer.RegisterType<IInventoryRatingsProcessingService, InventoryRatingsProcessingService>();
-            unityContainer.RegisterType<IInventoryProgramEnrichmentService, InventoryProgramEnrichmentService>();
+            unityContainer.RegisterType<IInventoryProgramsProcessingService, InventoryProgramsProcessingService>();
+            unityContainer.RegisterType<IInventoryProgramsProcessingEngine, InventoryProgramsProcessingEngine>();
             unityContainer.RegisterType<IInventoryWeekEngine, InventoryWeekEngine>();
 
             unityContainer.RegisterType<IDataLakeFileService, DataLakeFileService>();

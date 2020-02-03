@@ -8,6 +8,7 @@ using Services.Broadcast.ApplicationServices.Security;
 using Services.Broadcast.Entities;
 using System;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Web;
@@ -27,6 +28,9 @@ namespace BroadcastComposerWeb.Controllers
         {
             _ApplicationServiceFactory = applicationServiceFactory;
         }
+
+        protected string _GetCurrentUserFullName() =>
+            _ApplicationServiceFactory.GetApplicationService<IUserService>().GetCurrentUserFullName();
 
         // GET
         public ActionResult Index()
@@ -112,6 +116,110 @@ namespace BroadcastComposerWeb.Controllers
                 var service = _ApplicationServiceFactory.GetApplicationService<IInventoryRatingsProcessingService>();
                 service.RequeueInventoryFileRatingsJob(jobId);
                 ViewBag.Message = $"Job '{jobId}' queued.";
+            }
+            catch (Exception e)
+            {
+                ViewBag.Message = "Error Processing Job: " + e.Message;
+            }
+
+            return View("Index");
+        }
+
+        [HttpPost]
+        public ActionResult QueueInventoryProgramsFileJob(int fileId)
+        {
+            try
+            {
+                var service = _ApplicationServiceFactory.GetApplicationService<IInventoryProgramsProcessingService>();
+                var result = service.QueueProcessInventoryProgramsByFileJob(fileId, _GetCurrentUserFullName());
+
+                ViewBag.Message = $"Job queued as Job {result.Job.Id}. {result}";
+            }
+            catch (Exception e)
+            {
+                ViewBag.Message = "Error Processing Job: " + e.Message;
+            }
+
+            return View("Index");
+        }
+
+        [HttpPost]
+        public ActionResult RequeueInventoryProgramsByFileJob(int jobId)
+        {
+            try
+            {
+                var service = _ApplicationServiceFactory.GetApplicationService<IInventoryProgramsProcessingService>();
+                var result = service.ReQueueProcessInventoryProgramsByFileJob(jobId, _GetCurrentUserFullName());
+
+                ViewBag.Message = $"Job '{jobId}' requeued as new Job {result.Job.Id}. {result}";
+            }
+            catch (Exception e)
+            {
+                ViewBag.Message = "Error Processing Job: " + e.Message;
+            }
+
+            return View("Index");
+        }
+
+        public DateTime ParseDateTimeString(string dateTimeString, string fieldName)
+        {
+            if (DateTime.TryParse(dateTimeString, out var result))
+            {
+                return result;
+            }
+            throw new InvalidOperationException($"'{fieldName}' was not in correct format.  Try 'yyyy/MM/dd'.");
+        }
+
+        [HttpPost]
+        public ActionResult QueueInventoryProgramsSourceJob(int inventorySourceId, string startDateString, string endDateString)
+        {
+            try
+            {
+                var startDate = ParseDateTimeString(startDateString, "StartDate");
+                var endDate = ParseDateTimeString(endDateString, "EndDate");
+
+                var service = _ApplicationServiceFactory.GetApplicationService<IInventoryProgramsProcessingService>();
+                var result = service.QueueProcessInventoryProgramsBySourceJob(inventorySourceId, startDate, endDate,_GetCurrentUserFullName());
+
+                ViewBag.Message = $"Job queued as Job {result.Jobs.First().Id}. {result}";
+            }
+            catch (Exception e)
+            {
+                ViewBag.Message = "Error Processing Job: " + e.Message;
+            }
+
+            return View("Index");
+        }
+
+        [HttpPost]
+        public ActionResult QueueProcessInventoryProgramsBySourceForWeeks(string orientByDateString)
+        {
+            try
+            {
+                var orientByDate = ParseDateTimeString(orientByDateString, "OrientByDate");
+
+                var service = _ApplicationServiceFactory.GetApplicationService<IInventoryProgramsProcessingService>();
+                var result = service.QueueProcessInventoryProgramsBySourceForWeeks(orientByDate, _GetCurrentUserFullName());
+
+                ViewBag.Message = $"Job queued as Job {result.Jobs.First().Id}. {result}";
+            }
+            catch (Exception e)
+            {
+                ViewBag.Message = "Error Processing Job: " + e.Message;
+            }
+
+            return View("Index");
+        }
+
+        [HttpPost]
+        public ActionResult RequeueInventoryProgramsSourceJob(int jobId)
+        {
+            try
+            {
+                var service = _ApplicationServiceFactory.GetApplicationService<IInventoryProgramsProcessingService>();
+                var result = service.ReQueueProcessInventoryProgramsBySourceJob(jobId, _GetCurrentUserFullName());
+
+                ViewBag.Message = $"Job '{jobId}' requeued as new Job {result.Jobs.First().Id}.";
             }
             catch (Exception e)
             {

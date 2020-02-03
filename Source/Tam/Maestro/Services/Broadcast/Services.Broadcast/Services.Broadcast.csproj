@@ -307,7 +307,7 @@
     <Compile Include="ApplicationServices\Maintenance\DaypartCleanupService.cs" />
     <Compile Include="ApplicationServices\GenreService.cs" />
     <Compile Include="ApplicationServices\ContainTypeService.cs" />
-    <Compile Include="ApplicationServices\InventoryProgramEnrichmentService.cs" />
+    <Compile Include="ApplicationServices\InventoryProgramsProcessingService.cs" />
     <Compile Include="ApplicationServices\PlanPricingService.cs" />
     <Compile Include="ApplicationServices\Plan\PlanBuyingService.cs" />
     <Compile Include="ApplicationServices\ProgramGuideService.cs" />
@@ -318,6 +318,9 @@
     <Compile Include="ApplicationServices\ShowTypeService.cs" />
     <Compile Include="BusinessEngines\DetectionPostingEngine.cs" />
     <Compile Include="BusinessEngines\ImpressionsCalculationEngine.cs" />
+    <Compile Include="BusinessEngines\InventoryProgramsProcessing\InventoryProgramsProcessingBySourceDiagnostics.cs" />
+    <Compile Include="BusinessEngines\InventoryProgramsProcessing\InventoryProgramsProcessingByFileDiagnostics.cs" />
+    <Compile Include="BusinessEngines\InventoryProgramsProcessing\InventoryProgramsProcessingEngine.cs" />
     <Compile Include="BusinessEngines\PlanPricingInventoryEngine.cs" />
     <Compile Include="BusinessEngines\PlanPricingInventorySourceSortEngine.cs" />
     <Compile Include="Clients\PricingApiClient.cs" />
@@ -373,13 +376,15 @@
     <Compile Include="Entities\Enums\ContainTypeEnum.cs" />
     <Compile Include="Entities\Enums\SharedFolderFileUsage.cs" />
     <Compile Include="Entities\Enums\UnitCapEnum.cs" />
-    <Compile Include="Entities\Enums\InventoryFileProgramEnrichmentJobStatus.cs" />
+    <Compile Include="Entities\Enums\InventoryProgramsJobStatus.cs" />
     <Compile Include="Entities\Enums\WeeklyBreakdownCalculationFrom.cs" />
     <Compile Include="Entities\Genre.cs" />
     <Compile Include="Entities\GenreMapping.cs" />
     <Compile Include="Entities\ImpressionsRequestDto.cs" />
-    <Compile Include="Entities\InventoryFileProgramEnrichmentJob.cs" />
-    <Compile Include="Entities\InventoryFileProgramEnrichmentJobDiagnostics.cs" />
+    <Compile Include="Entities\InventoryProgramsByFileJob.cs" />
+    <Compile Include="BusinessEngines\InventoryProgramsProcessing\InventoryProgramsProcessingDiagnostics.cs" />
+    <Compile Include="Entities\InventoryProgramsBySourceJobEnqueueResultDto.cs" />
+    <Compile Include="Entities\InventoryProgramsBySourceJob.cs" />
     <Compile Include="Entities\InventorySummary\InventoryAvailability.cs" />
     <Compile Include="Entities\InventoryFileRatingsJobDiagnostics.cs" />
     <Compile Include="Entities\InventorySummary\InventorySummaryTotals.cs" />
@@ -438,6 +443,7 @@
     <Compile Include="Entities\ProgramGuide\GuideRequestResponseMapping.cs" />
     <Compile Include="Entities\DTO\Program\SearchProgramDativaRequestDto.cs" />
     <Compile Include="Entities\DTO\Program\SearchProgramDativaResponseDto.cs" />
+    <Compile Include="Entities\InventoryProgramsByFileJobEnqueueResultDto.cs" />
     <Compile Include="Entities\SaveCampaignDto.cs" />
     <Compile Include="Entities\DTO\EnvironmentDto.cs" />
     <Compile Include="Entities\DTO\ProductDto.cs" />
@@ -500,7 +506,9 @@
     <Compile Include="Repositories\DetectionPostDetailsRepository.cs" />
     <Compile Include="Repositories\DetectionRepository.cs" />
     <Compile Include="Repositories\DetectionTestDataGeneratorRepository.cs" />
-    <Compile Include="Repositories\InventoryFileProgramEnrichmentJobsRepository.cs" />
+    <Compile Include="Repositories\InventoryProgramsByFileJobsRepository.cs" />
+    <Compile Include="Repositories\InventoryProgramsBySourceJobsRepository.cs" />
+    <Compile Include="Repositories\InventoryProgramsJobsRepositoryBase.cs" />
     <Compile Include="Repositories\NtiUniverseRepository.cs" />
     <Compile Include="Repositories\PlanRepository.cs" />
     <Compile Include="Repositories\PlanSummaryRepository.cs" />

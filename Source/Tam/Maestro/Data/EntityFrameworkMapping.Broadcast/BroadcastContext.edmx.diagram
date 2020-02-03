@@ -307,7 +307,6 @@
         <EntityTypeShape EntityType="BroadcastModel.plan_version_daypart_show_type_restrictions" Width="1.5" PointX="26.25" PointY="19.75" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_daypart_show_type_restrictions_show_types" />
         <AssociationConnector Association="BroadcastModel.FK_station_inventory_manifest_daypart_programs_genres" />
-        <AssociationConnector Association="BroadcastModel.FK_inventory_file_program_enrichment_jobs_inventory_file" />
 		<EntityTypeShape EntityType="BroadcastModel.plan_version_daypart_genre_restrictions" Width="1.5" PointX="26.75" PointY="30.875" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_daypart_genre_restrictions_genres" />
         <EntityTypeShape EntityType="BroadcastModel.plan_version_daypart_program_restrictions" Width="1.5" PointX="31.375" PointY="26.5" />
@@ -394,6 +393,14 @@
         <AssociationConnector Association="BroadcastModel.FK_nti_universes_audiences" />
         <AssociationConnector Association="BroadcastModel.FK_nti_universe_details_nti_universe_headers" />
         <AssociationConnector Association="BroadcastModel.FK_nti_universes_nti_universe_headers" />
+        <EntityTypeShape EntityType="BroadcastModel.inventory_programs_by_file_job_notes" Width="1.5" PointX="7.25" PointY="74.875" />
+        <EntityTypeShape EntityType="BroadcastModel.inventory_programs_by_file_jobs" Width="1.5" PointX="5" PointY="74.625" />
+        <EntityTypeShape EntityType="BroadcastModel.inventory_programs_by_source_job_notes" Width="1.5" PointX="5" PointY="79.375" />
+        <EntityTypeShape EntityType="BroadcastModel.inventory_programs_by_source_jobs" Width="1.5" PointX="2.75" PointY="78.875" />
+        <AssociationConnector Association="BroadcastModel.FK_inventory_programs_by_file_jobs_inventory_file" />
+        <AssociationConnector Association="BroadcastModel.FK_inventory_programs_by_file_job_notes_job" />
+        <AssociationConnector Association="BroadcastModel.FK_inventory_programs_by_source_job_notes_job" />
+        <AssociationConnector Association="BroadcastModel.FK_inventory_programs_by_source_jobs_inventory_source" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

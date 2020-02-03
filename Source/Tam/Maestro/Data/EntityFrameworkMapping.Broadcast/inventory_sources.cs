@@ -28,6 +28,7 @@ namespace EntityFrameworkMapping.Broadcast
             this.plan_version_pricing_parameters_inventory_source_percentages = new HashSet<plan_version_pricing_parameters_inventory_source_percentages>();
             this.scx_generation_job_files = new HashSet<scx_generation_job_files>();
             this.scx_generation_jobs = new HashSet<scx_generation_jobs>();
+            this.inventory_programs_by_source_jobs = new HashSet<inventory_programs_by_source_jobs>();
         }
     
         public int id { get; set; }
@@ -47,5 +48,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<plan_version_pricing_parameters_inventory_source_percentages> plan_version_pricing_parameters_inventory_source_percentages { get; set; }
         public virtual ICollection<scx_generation_job_files> scx_generation_job_files { get; set; }
         public virtual ICollection<scx_generation_jobs> scx_generation_jobs { get; set; }
+        public virtual ICollection<inventory_programs_by_source_jobs> inventory_programs_by_source_jobs { get; set; }
     }
 }

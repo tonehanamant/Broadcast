@@ -89,7 +89,8 @@ namespace Services.Broadcast.Repositories
             instance.RegisterType<IPlanRepository, PlanRepository>();
             instance.RegisterType<IPlanSummaryRepository, PlanSummaryRepository>();
             instance.RegisterType<ICampaignSummaryRepository, CampaignSummaryRepository>();
-            instance.RegisterType<IInventoryFileProgramEnrichmentJobsRepository, InventoryFileProgramEnrichmentJobsRepository>();
+            instance.RegisterType<IInventoryProgramsByFileJobsRepository, InventoryProgramsByFileJobsRepository>();
+            instance.RegisterType<IInventoryProgramsBySourceJobsRepository, InventoryProgramsBySourceJobsRepository>();
             instance.RegisterType<IAffiliateRepository, AffiliateRepository>();
             instance.RegisterType<ISharedFolderFilesRepository, SharedFolderFilesRepository>();
 

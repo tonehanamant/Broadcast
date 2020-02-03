@@ -98,7 +98,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IAudienceRepository _AudienceRepository;
         private readonly IFileService _FileService;
         private readonly IInventoryRatingsProcessingService _InventoryRatingsService;
-        private readonly IInventoryProgramEnrichmentService _InventoryProgramEnrichmentService;
+        private readonly IInventoryProgramsProcessingService _InventoryProgramsProcessingService;
 
         public InventoryService(IDataRepositoryFactory broadcastDataRepositoryFactory,
             IInventoryFileValidator inventoryFileValidator,
@@ -117,7 +117,7 @@ namespace Services.Broadcast.ApplicationServices
             IOpenMarketFileImporter openMarketFileImporter,
             IFileService fileService,
             IInventoryRatingsProcessingService inventoryRatingsService,
-            IInventoryProgramEnrichmentService inventoryProgramEnrichmentService)
+            IInventoryProgramsProcessingService inventoryProgramsProcessingService)
         {
             _broadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
             _StationRepository = broadcastDataRepositoryFactory.GetDataRepository<IStationRepository>();
@@ -143,7 +143,7 @@ namespace Services.Broadcast.ApplicationServices
             _AudienceRepository = broadcastDataRepositoryFactory.GetDataRepository<IAudienceRepository>();
             _FileService = fileService;
             _InventoryRatingsService = inventoryRatingsService;
-            _InventoryProgramEnrichmentService = inventoryProgramEnrichmentService;
+            _InventoryProgramsProcessingService = inventoryProgramsProcessingService;
         }
 
         public bool GetStationProgramConflicted(StationProgramConflictRequest conflict, int manifestId)
@@ -279,7 +279,7 @@ namespace Services.Broadcast.ApplicationServices
             if (!inventoryFile.ValidationProblems.Any())
             {
                 _InventoryRatingsService.QueueInventoryFileRatingsJob(inventoryFile.Id);
-                _InventoryProgramEnrichmentService.QueueInventoryFileProgramEnrichmentJob(inventoryFile.Id, userName);
+                _InventoryProgramsProcessingService.QueueProcessInventoryProgramsByFileJob(inventoryFile.Id, userName);
 
                 try
                 {
@@ -774,13 +774,13 @@ namespace Services.Broadcast.ApplicationServices
             }
 
             if (inventoryUploadHistory.RatingProcessingJobStatus == BackgroundJobProcessingStatus.Failed ||
-                inventoryUploadHistory.ProgramEnrichmentJobStatus == InventoryFileProgramEnrichmentJobStatus.Error)
+                inventoryUploadHistory.ProgramsJobStatus == InventoryProgramsJobStatus.Error)
             {
                 return "Processing Error";
             }
 
             if (inventoryUploadHistory.RatingProcessingJobStatus == BackgroundJobProcessingStatus.Succeeded &&
-                inventoryUploadHistory.ProgramEnrichmentJobStatus == InventoryFileProgramEnrichmentJobStatus.Completed)
+                inventoryUploadHistory.ProgramsJobStatus == InventoryProgramsJobStatus.Completed)
             {
                 return "Succeeded";
             }

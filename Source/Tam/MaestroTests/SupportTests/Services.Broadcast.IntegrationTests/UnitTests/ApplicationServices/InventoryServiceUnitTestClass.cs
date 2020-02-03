@@ -29,7 +29,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             IOpenMarketFileImporter openMarketFileImporter,
             IFileService fileService,
             IInventoryRatingsProcessingService inventoryRatingsService,
-            IInventoryProgramEnrichmentService inventoryProgramEnrichmentService)
+            IInventoryProgramsProcessingService inventoryProgramsProcessingService)
         : base(broadcastDataRepositoryFactory,
             inventoryFileValidator,
             daypartCache,
@@ -47,7 +47,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             openMarketFileImporter,
             fileService,
             inventoryRatingsService,
-            inventoryProgramEnrichmentService)
+            inventoryProgramsProcessingService)
         {
         }
 

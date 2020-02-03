@@ -3813,6 +3813,115 @@ BEGIN
 END
 /*************************************** END - PRI-21850 ****************************************************/
 
+/*************************************** START PRI-15880 *****************************************************/
+
+IF OBJECT_ID('inventory_file_program_enrichment_jobs') IS NOT NULL
+BEGIN
+	DROP TABLE inventory_file_program_enrichment_jobs
+END
+
+IF OBJECT_ID('inventory_programs_by_file_jobs') IS NULL
+BEGIN
+
+	CREATE TABLE [dbo].[inventory_programs_by_file_jobs]
+	(
+		[id] INT IDENTITY(1,1) NOT NULL,
+		[status] INT NOT NULL,
+		[inventory_file_id] INT NOT NULL,
+		[queued_at] DATETIME2(7) NOT NULL,
+		[queued_by] VARCHAR(63) NOT NULL,
+		[completed_at] DATETIME2(7) NULL,
+		CONSTRAINT [PK_inventory_programs_by_file_jobs] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY]
+
+	ALTER TABLE [dbo].[inventory_programs_by_file_jobs]  WITH CHECK ADD  CONSTRAINT [FK_inventory_programs_by_file_jobs_inventory_file] FOREIGN KEY([inventory_file_id])
+	REFERENCES [dbo].[inventory_files] ([id])
+	ON DELETE CASCADE
+
+	ALTER TABLE [dbo].[inventory_programs_by_file_jobs] CHECK CONSTRAINT [FK_inventory_programs_by_file_jobs_inventory_file]
+
+END
+
+IF OBJECT_ID('inventory_programs_by_file_job_notes') IS NULL
+BEGIN
+
+	CREATE TABLE [dbo].[inventory_programs_by_file_job_notes]
+	(
+		[id] INT IDENTITY(1,1) NOT NULL,
+		[job_id] INT NOT NULL,
+		[text] VARCHAR(MAX) NOT NULL,
+		[created_at] DATETIME2(7) NOT NULL,
+		CONSTRAINT [PK_inventory_programs_by_file_job_notes] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY]
+
+	ALTER TABLE [dbo].[inventory_programs_by_file_job_notes]  WITH CHECK ADD  CONSTRAINT [FK_inventory_programs_by_file_job_notes_job] FOREIGN KEY([job_id])
+	REFERENCES [dbo].[inventory_programs_by_file_jobs] ([id])
+	ON DELETE CASCADE
+
+	ALTER TABLE [dbo].[inventory_programs_by_file_job_notes] CHECK CONSTRAINT [FK_inventory_programs_by_file_job_notes_job]
+
+END
+
+IF OBJECT_ID('inventory_programs_by_source_jobs') IS NULL
+BEGIN
+
+	CREATE TABLE [dbo].[inventory_programs_by_source_jobs]
+	(
+		[id] INT IDENTITY(1,1) NOT NULL,
+		[status] INT NOT NULL,
+		[inventory_source_id] INT NOT NULL,
+		[start_date] DATE NOT NULL,
+		[end_date] DATE NOT NULL,
+		[queued_at] DATETIME2(7) NOT NULL,
+		[queued_by] VARCHAR(63) NOT NULL,
+		[completed_at] DATETIME2(7) NULL,
+		CONSTRAINT [PK_inventory_programs_by_source_jobs] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY]
+
+	ALTER TABLE [dbo].[inventory_programs_by_source_jobs]  WITH CHECK ADD  CONSTRAINT [FK_inventory_programs_by_source_jobs_inventory_source] FOREIGN KEY([inventory_source_id])
+	REFERENCES [dbo].[inventory_sources] ([id])
+	ON DELETE CASCADE
+
+	ALTER TABLE [dbo].[inventory_programs_by_source_jobs] CHECK CONSTRAINT [FK_inventory_programs_by_source_jobs_inventory_source]
+
+END
+
+IF OBJECT_ID('inventory_programs_by_source_job_notes') IS NULL
+BEGIN
+
+	CREATE TABLE [dbo].[inventory_programs_by_source_job_notes]
+	(
+		[id] INT IDENTITY(1,1) NOT NULL,
+		[job_id] INT NOT NULL,
+		[text] VARCHAR(MAX) NOT NULL,
+		[created_at] DATETIME2(7) NOT NULL,
+		CONSTRAINT [PK_inventory_programs_by_source_job_notes] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY]
+
+	ALTER TABLE [dbo].[inventory_programs_by_source_job_notes]  WITH CHECK ADD  CONSTRAINT [FK_inventory_programs_by_source_job_notes_job] FOREIGN KEY([job_id])
+	REFERENCES [dbo].[inventory_programs_by_source_jobs] ([id])
+	ON DELETE CASCADE
+
+	ALTER TABLE [dbo].[inventory_programs_by_source_job_notes] CHECK CONSTRAINT [FK_inventory_programs_by_source_job_notes_job]
+
+END
+
+GO
+
+/*************************************** END PRI-15880 *****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

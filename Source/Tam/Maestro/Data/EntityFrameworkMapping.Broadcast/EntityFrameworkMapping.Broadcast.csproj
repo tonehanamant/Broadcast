@@ -418,9 +418,6 @@
     <Compile Include="inventory_file_problems.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="inventory_file_program_enrichment_jobs.cs">
-      <DependentUpon>BroadcastContext.tt</DependentUpon>
-    </Compile>
     <Compile Include="inventory_file_proprietary_header.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
@@ -428,6 +425,18 @@
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
     <Compile Include="inventory_file_ratings_job_notes.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="inventory_programs_by_file_jobs.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="inventory_programs_by_file_job_notes.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="inventory_programs_by_source_jobs.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="inventory_programs_by_source_job_notes.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
     <Compile Include="inventory_sources.cs">

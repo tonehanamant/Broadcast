@@ -1,0 +1,19 @@
+﻿{
+  "FileId": 251391,
+  "InventorySource": {
+    "Id": 4,
+    "InventoryType": 2,
+    "IsActive": true,
+    "Name": "TTWN"
+  },
+  "RequestChunkSize": 10,
+  "SaveChunkSize": 1000,
+  "TotalApiCallCount": 15,
+  "TotalDaypartCount": 49,
+  "TotalManifestCount": 35,
+  "TotalProgramsSaved": 903,
+  "TotalRequestCount": 147,
+  "TotalResponseCount": 147,
+  "TotalSavesCount": 15,
+  "TotalWeekCount": 3
+}

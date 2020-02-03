@@ -18,6 +18,6 @@ namespace Services.Broadcast.Entities.InventorySummary
         public int Rows { get; set; }
         public FileStatusEnum FileLoadStatus { get; set; }
         public BackgroundJobProcessingStatus RatingProcessingJobStatus { get; set; }
-        public InventoryFileProgramEnrichmentJobStatus ProgramEnrichmentJobStatus { get; set; }
+        public InventoryProgramsJobStatus ProgramsJobStatus { get; set; }
     }
 }

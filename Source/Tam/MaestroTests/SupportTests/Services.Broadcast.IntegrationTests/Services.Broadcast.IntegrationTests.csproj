@@ -250,7 +250,7 @@
     <Compile Include="ApplicationServices\DetectionConverterTests.cs" />
     <Compile Include="ApplicationServices\GenreServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\ImpressionsServiceIntegrationTests.cs" />
-    <Compile Include="ApplicationServices\InventoryProgramEnrichmentServiceTests.cs" />
+    <Compile Include="ApplicationServices\InventoryProgramsProcessingServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\NtiUniverseServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\PlanPricingInventoryEngineTests.cs" />
     <Compile Include="ApplicationServices\PlanPricingServiceTests.cs" />
@@ -331,11 +331,15 @@
     <Compile Include="ApplicationServices\ProgramScrubbingEngineTests.cs" />
     <Compile Include="Stubs\TrafficApiCacheStub.cs" />
     <Compile Include="Stubs\TrafficApiClientStub.cs" />
+    <Compile Include="UnitTests\ApplicationServices\InventoryProgramsProcessingServiceTestClass.cs" />
+    <Compile Include="UnitTests\ApplicationServices\InventoryProgramsProcessingServiceUnitTests.cs" />
     <Compile Include="UnitTests\ApplicationServices\InventoryServiceUnitTestClass.cs" />
     <Compile Include="UnitTests\ApplicationServices\NtiUniverseServiceUnitTests.cs" />
     <Compile Include="UnitTests\ApplicationServices\Plans\PlanPricingServiceUnitTests.cs" />
     <Compile Include="UnitTests\ApplicationServices\InventoryServiceUnitTests.cs" />
     <Compile Include="UnitTests\ApplicationServices\SharedFolderServiceUnitTests.cs" />
+    <Compile Include="UnitTests\BusinessEngines\InventoryProgramsProcessingEngineTestClass.cs" />
+    <Compile Include="UnitTests\BusinessEngines\InventoryProgramsProcessingEngineUnitTests.cs" />
     <Compile Include="UnitTests\BusinessEngines\PlanPricingInventoryEngineUnitTests.cs" />
     <Compile Include="UnitTests\BusinessEngines\PlanPricingInventorySourceSortEngineUnitTests.cs" />
     <Compile Include="UnitTests\BusinessEngines\TrackingEngineUnitTests.cs" />

@@ -12,16 +12,13 @@ namespace EntityFrameworkMapping.Broadcast
     using System;
     using System.Collections.Generic;
     
-    public partial class inventory_file_program_enrichment_jobs
+    public partial class inventory_programs_by_file_job_notes
     {
         public int id { get; set; }
-        public int inventory_file_id { get; set; }
-        public int status { get; set; }
-        public string error_message { get; set; }
-        public System.DateTime queued_at { get; set; }
-        public string queued_by { get; set; }
-        public Nullable<System.DateTime> completed_at { get; set; }
+        public int job_id { get; set; }
+        public string text { get; set; }
+        public System.DateTime created_at { get; set; }
     
-        public virtual inventory_files inventory_files { get; set; }
+        public virtual inventory_programs_by_file_jobs inventory_programs_by_file_jobs { get; set; }
     }
 }

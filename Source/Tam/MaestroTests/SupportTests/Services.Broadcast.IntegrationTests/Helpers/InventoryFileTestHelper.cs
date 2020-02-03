@@ -12,24 +12,24 @@ namespace Services.Broadcast.IntegrationTests.Helpers
         private readonly IInventoryFileRatingsJobsRepository _InventoryFileRatingsJobsRepository;
         private readonly IProprietaryInventoryService _ProprietaryInventoryService;
         private readonly IInventoryService _InventoryService;
-        private readonly IInventoryFileProgramEnrichmentJobsRepository _InventoryFileProgramEnrichmentJobsRepository;
-        private readonly IInventoryProgramEnrichmentService _InventoryProgramEnrichmentService;
+        private readonly IInventoryProgramsByFileJobsRepository _InventoryProgramsByFileJobsRepository;
+        private readonly IInventoryProgramsProcessingService _InventoryProgramsProcessingService;
 
         public InventoryFileTestHelper()
         {
             _InventoryRatingsProcessingService = IntegrationTestApplicationServiceFactory.GetApplicationService<IInventoryRatingsProcessingService>();
             _InventoryFileRatingsJobsRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryFileRatingsJobsRepository>();
-            _InventoryFileProgramEnrichmentJobsRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryFileProgramEnrichmentJobsRepository>();
+            _InventoryProgramsByFileJobsRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryProgramsByFileJobsRepository>();
             _ProprietaryInventoryService = IntegrationTestApplicationServiceFactory.GetApplicationService<IProprietaryInventoryService>();
             _InventoryService = IntegrationTestApplicationServiceFactory.GetApplicationService<IInventoryService>();
-            _InventoryProgramEnrichmentService = IntegrationTestApplicationServiceFactory.GetApplicationService<IInventoryProgramEnrichmentService>();
+            _InventoryProgramsProcessingService = IntegrationTestApplicationServiceFactory.GetApplicationService<IInventoryProgramsProcessingService>();
         }
 
         public void UploadProprietaryInventoryFile(
             string fileName, 
             DateTime? date = null, 
             bool processInventoryRatings = true,
-            bool processProgramEnrichmentJob = false)
+            bool processInventoryProgramsJob = false)
         {
             var request = new FileRequest
             {
@@ -46,10 +46,10 @@ namespace Services.Broadcast.IntegrationTests.Helpers
                 _InventoryRatingsProcessingService.ProcessInventoryRatingsJob(job.Id);
             }
 
-            if (processProgramEnrichmentJob)
+            if (processInventoryProgramsJob)
             {
-                var job = _InventoryFileProgramEnrichmentJobsRepository.GetLatestJob();
-                _InventoryProgramEnrichmentService.PerformInventoryFileProgramEnrichmentJob(job.Id);
+                var job = _InventoryProgramsByFileJobsRepository.GetLatestJob();
+                _InventoryProgramsProcessingService.ProcessInventoryProgramsByFileJob(job.Id);
             }
         }
 
