@@ -44,7 +44,7 @@
   {
     "Code": "ENLN",
     "DaypartType": 1,
-    "DefaultEndTimeSeconds": 68400,
+    "DefaultEndTimeSeconds": 300,
     "DefaultStartTimeSeconds": 57600,
     "FullName": "Evening News/Late News"
   },
@@ -100,36 +100,36 @@
   {
     "Code": "ROSN",
     "DaypartType": 1,
-    "DefaultEndTimeSeconds": 68400,
-    "DefaultStartTimeSeconds": 57600,
+    "DefaultEndTimeSeconds": 300,
+    "DefaultStartTimeSeconds": 14400,
     "FullName": "ROS News"
   },
   {
     "Code": "ROSP",
     "DaypartType": 2,
-    "DefaultEndTimeSeconds": 32400,
+    "DefaultEndTimeSeconds": 7500,
     "DefaultStartTimeSeconds": 21600,
     "FullName": "ROS Programming"
   },
   {
     "Code": "ROSS",
     "DaypartType": 2,
-    "DefaultEndTimeSeconds": 32400,
+    "DefaultEndTimeSeconds": 7500,
     "DefaultStartTimeSeconds": 21600,
     "FullName": "ROS Syndication"
   },
   {
     "Code": "SPORTS",
     "DaypartType": 2,
-    "DefaultEndTimeSeconds": 32400,
+    "DefaultEndTimeSeconds": 7500,
     "DefaultStartTimeSeconds": 21600,
     "FullName": "ROS Sports"
   },
   {
     "Code": "SYN",
     "DaypartType": 2,
-    "DefaultEndTimeSeconds": 7200,
-    "DefaultStartTimeSeconds": 82800,
+    "DefaultEndTimeSeconds": 7500,
+    "DefaultStartTimeSeconds": 21600,
     "FullName": "Total Day Syndication"
   },
   {
@@ -142,8 +142,8 @@
   {
     "Code": "TDNS",
     "DaypartType": 3,
-    "DefaultEndTimeSeconds": 32400,
-    "DefaultStartTimeSeconds": 21600,
+    "DefaultEndTimeSeconds": 7500,
+    "DefaultStartTimeSeconds": 14400,
     "FullName": "Total Day News and Syndication"
   }
 ]

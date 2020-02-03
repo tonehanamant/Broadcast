@@ -45,7 +45,7 @@ namespace Services.Broadcast.Repositories
 
         public bool ActiveDaypartDefaultExists(string daypartCode)
         {
-            return _InReadUncommitedTransaction(context => context.daypart_defaults.Any(x => x.daypart.code == daypartCode));
+            return _InReadUncommitedTransaction(context => context.daypart_defaults.Any(x => x.code == daypartCode));
         }
 
         public List<DaypartDefaultDto> GetDaypartDefaultsByInventorySource(int inventorySourceId)
@@ -65,18 +65,18 @@ namespace Services.Broadcast.Repositories
                              group daypartDefault by daypartDefault.id into daypartCodeGroup
                              select daypartCodeGroup.FirstOrDefault());
 
-                return query.Include(d => d.daypart).Select(_MapToDaypartDefaultDto).ToList();
+                return query.Select(_MapToDaypartDefaultDto).ToList();
             });
         }
 
         public DaypartDefaultDto GetDaypartDefaultByCode(string daypartCode)
         {
-            return _InReadUncommitedTransaction(context => _MapToDaypartDefaultDto(context.daypart_defaults.Include(d => d.daypart).Single(x => x.daypart.code == daypartCode, DaypartDefaultNotFoundMessage)));
+            return _InReadUncommitedTransaction(context => _MapToDaypartDefaultDto(context.daypart_defaults.Single(x => x.code == daypartCode, DaypartDefaultNotFoundMessage)));
         }
 
         public DaypartDefaultDto GetDaypartDefaultById(int daypartDefaulId)
         {
-            return _InReadUncommitedTransaction(context => _MapToDaypartDefaultDto(context.daypart_defaults.Include(d => d.daypart).Single(x => x.id == daypartDefaulId, DaypartDefaultNotFoundMessage)));
+            return _InReadUncommitedTransaction(context => _MapToDaypartDefaultDto(context.daypart_defaults.Single(x => x.id == daypartDefaulId, DaypartDefaultNotFoundMessage)));
         }
 
         ///<inheritdoc/>
@@ -89,7 +89,6 @@ namespace Services.Broadcast.Repositories
         {
             return _InReadUncommitedTransaction(context => {
                 return context.daypart_defaults
-                    .Include(d => d.daypart)
                     .Select(_MapToDaypartDefaultDto)
                     .OrderBy(x => x.Code)
                     .ToList();
@@ -118,8 +117,8 @@ namespace Services.Broadcast.Repositories
             return new DaypartDefaultDto
             {
                 Id = daypartDefault.id,
-                Code = daypartDefault.daypart.code,
-                FullName = daypartDefault.daypart.name
+                Code = daypartDefault.code,
+                FullName = daypartDefault.name
             };
         }
 
@@ -131,8 +130,8 @@ namespace Services.Broadcast.Repositories
             return new DaypartDefaultFullDto
             {
                 Id = daypartDefault.id,
-                Code = daypartDefault.daypart.code,
-                FullName = daypartDefault.daypart.name,
+                Code = daypartDefault.code,
+                FullName = daypartDefault.name,
                 DaypartType = (DaypartTypeEnum)daypartDefault.daypart_type,
                 DefaultStartTimeSeconds = daypartDefault.daypart.timespan.start_time,
                 DefaultEndTimeSeconds = daypartDefault.daypart.timespan.end_time,

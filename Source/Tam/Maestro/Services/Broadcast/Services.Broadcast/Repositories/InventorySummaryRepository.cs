@@ -363,7 +363,7 @@ namespace Services.Broadcast.Repositories
                     {
                         CPM = x.cpm,
                         DaypartDefaultId = x.daypart_default_id,
-                        DaypartCode = x.daypart_defaults?.daypart.code,
+                        DaypartCode = x.daypart_defaults?.code,
                         TotalCoverage = x.total_coverage,
                         TotalMarkets = x.total_markets,
                         TotalProjectedHouseholdImpressions = x.total_projected_impressions,

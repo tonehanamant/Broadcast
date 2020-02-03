@@ -455,7 +455,7 @@ namespace Services.Broadcast.Repositories
                          select m).ToList();
 
                     return manifests
-                        .Select(manifest => _MapToInventoryManifest(manifest, manifest.inventory_files.inventory_file_proprietary_header.SingleOrDefault()?.daypart_defaults?.daypart.code))
+                        .Select(manifest => _MapToInventoryManifest(manifest, manifest.inventory_files.inventory_file_proprietary_header.SingleOrDefault()?.daypart_defaults?.code))
                         .ToList();
                 });
         }
@@ -483,7 +483,7 @@ namespace Services.Broadcast.Repositories
 
         private StationInventoryGroup _MapToInventoryGroup(station_inventory_group stationInventoryGroup)
         {
-            var headerDaypartCode = stationInventoryGroup.station_inventory_manifest.FirstOrDefault().inventory_files.inventory_file_proprietary_header.FirstOrDefault().daypart_defaults.daypart.code;
+            var headerDaypartCode = stationInventoryGroup.station_inventory_manifest.FirstOrDefault().inventory_files.inventory_file_proprietary_header.FirstOrDefault().daypart_defaults.code;
             var sig = new StationInventoryGroup()
             {
                 Id = stationInventoryGroup.id,
@@ -524,8 +524,8 @@ namespace Services.Broadcast.Repositories
                     DaypartDefault = md.daypart_defaults == null ? null : new DaypartDefaultDto
                     {
                         Id = md.daypart_defaults.id,
-                        Code = md.daypart_defaults.daypart.code,
-                        FullName = md.daypart_defaults.daypart.name
+                        Code = md.daypart_defaults.code,
+                        FullName = md.daypart_defaults.name
                     }
                 }).ToList(),
                 ManifestAudiences = manifest.station_inventory_manifest_audiences.Where(ma => !ma.is_reference).Select(
@@ -1003,7 +1003,7 @@ namespace Services.Broadcast.Repositories
                         .Include(x => x.inventory_sources)
                         .Select(x => x)
                         .ToList()
-                        .Select(x => _MapToInventoryManifest(x, x.inventory_files.inventory_file_proprietary_header.SingleOrDefault()?.daypart_defaults.daypart.code))
+                        .Select(x => _MapToInventoryManifest(x, x.inventory_files.inventory_file_proprietary_header.SingleOrDefault()?.daypart_defaults.code))
                         .ToList();
 
                     foreach (var manifest in manifests)
@@ -1031,7 +1031,7 @@ namespace Services.Broadcast.Repositories
                         Audience = new BroadcastAudience { Id = x.audience_id.Value },
                         ContractedDaypartId = x.contracted_daypart_id,
                         Cpm = x.cpm,
-                        DaypartCode = x.daypart_defaults.daypart.code,
+                        DaypartCode = x.daypart_defaults.code,
                         EffectiveDate = x.effective_date,
                         EndDate = x.end_date,
                         HutBookId = x.hut_projection_book_id,
@@ -1354,7 +1354,7 @@ namespace Services.Broadcast.Repositories
                             }
                             else
                             {
-                                fileHistory.DaypartCodes = new List<String>() { header.daypart_defaults.daypart.code };
+                                fileHistory.DaypartCodes = new List<String>() { header.daypart_defaults.code };
                             }
 
                             if (header.media_months1 != null)
@@ -1418,7 +1418,7 @@ namespace Services.Broadcast.Repositories
 
             if (manifests != null && manifests.Count > 0)
             {
-                result = manifests.SelectMany(m => m.station_inventory_manifest_dayparts.Select(d => d.daypart_defaults.daypart.code)).Distinct().ToList();
+                result = manifests.SelectMany(m => m.station_inventory_manifest_dayparts.Select(d => d.daypart_defaults.code)).Distinct().ToList();
             }
 
             return result;

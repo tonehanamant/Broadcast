@@ -71,7 +71,7 @@ namespace Services.Broadcast.Repositories
                     {
                         ContractedDaypartId = header.contracted_daypart_id,
                         Cpm = header.cpm,
-                        DaypartCode = header.daypart_defaults?.daypart.code,
+                        DaypartCode = header.daypart_defaults?.code,
                         EffectiveDate = header.effective_date,
                         EndDate = header.end_date,
                         HutBookId = header.hut_projection_book_id,
@@ -120,7 +120,7 @@ namespace Services.Broadcast.Repositories
                     {
                         ContractedDaypartId = queryResult.contracted_daypart_id,
                         Cpm = queryResult.cpm,
-                        DaypartCode = queryResult.daypart_defaults.daypart.code,
+                        DaypartCode = queryResult.daypart_defaults.code,
                         EffectiveDate = queryResult.effective_date,
                         EndDate = queryResult.end_date,
                         HutBookId = queryResult.hut_projection_book_id,
@@ -170,7 +170,7 @@ namespace Services.Broadcast.Repositories
                                 cpm = proprietaryFile.Header.Cpm,
                                 daypart_default_id = proprietaryFile.Header.DaypartCode == null ?
                                     (int?)null : 
-                                    context.daypart_defaults.Single(x => x.daypart.code.Equals(proprietaryFile.Header.DaypartCode, StringComparison.InvariantCultureIgnoreCase)).id,
+                                    context.daypart_defaults.Single(x => x.code.Equals(proprietaryFile.Header.DaypartCode, StringComparison.InvariantCultureIgnoreCase)).id,
                                 effective_date = proprietaryFile.Header.EffectiveDate,
                                 end_date = proprietaryFile.Header.EndDate,
                                 hut_projection_book_id = proprietaryFile.Header.HutBookId,

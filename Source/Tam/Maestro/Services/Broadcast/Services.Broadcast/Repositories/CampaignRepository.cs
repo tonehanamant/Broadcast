@@ -292,7 +292,7 @@ namespace Services.Broadcast.Repositories
                             VersionId = version.id,
                             ModifiedDate = version.modified_date ?? version.created_date,
                             ModifiedBy = version.modified_by ?? version.created_by,
-                            Dayparts = version.plan_version_dayparts.Select(d => d.daypart_defaults.daypart.code).ToList(),
+                            Dayparts = version.plan_version_dayparts.Select(d => d.daypart_defaults.code).ToList(),
                             TargetImpressions = version.target_impression,
                             TRP = version.target_rating_points,
                             TotalActiveDays = summary.active_day_count,

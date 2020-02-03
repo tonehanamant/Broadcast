@@ -27,6 +27,8 @@ namespace EntityFrameworkMapping.Broadcast
         public int id { get; set; }
         public int daypart_type { get; set; }
         public int daypart_id { get; set; }
+        public string code { get; set; }
+        public string name { get; set; }
     
         public virtual daypart daypart { get; set; }
         public virtual ICollection<inventory_file_proprietary_header> inventory_file_proprietary_header { get; set; }

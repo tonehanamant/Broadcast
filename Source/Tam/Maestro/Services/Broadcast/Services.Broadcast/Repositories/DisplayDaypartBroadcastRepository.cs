@@ -48,7 +48,7 @@ namespace Services.Broadcast.Repositories
         Dictionary<int, DisplayDaypart> GetDisplayDayparts(IEnumerable<int> pDaypartIds);
         int SaveDaypart(DisplayDaypart pDaypart);
         int GetDisplayDaypartIdByText(string pDaypartText);
-        int OnlyForTests_SaveDaypartInternal(DisplayDaypart pDaypart);
+        int SaveDaypartInternal(DisplayDaypart pDaypart);
         List<DaypartCleanupDto> GetAllDaypartsIncludeDays();
         DaypartCleanupDto UpdateDaysForDayparts(DaypartCleanupDto daypartCleanupDto);
     }
@@ -63,13 +63,13 @@ namespace Services.Broadcast.Repositories
         {
             using (var trx = new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
             {
-                var daypartId = OnlyForTests_SaveDaypartInternal(pDaypart);
+                var daypartId = SaveDaypartInternal(pDaypart);
                 trx.Complete();
                 return daypartId;
             }
         }
 
-        public int OnlyForTests_SaveDaypartInternal(DisplayDaypart pDaypart)
+        public int SaveDaypartInternal(DisplayDaypart pDaypart)
         {
             using (var trx = new TransactionScopeWrapper())
             {
@@ -142,7 +142,7 @@ namespace Services.Broadcast.Repositories
                             new System.Data.SqlClient.SqlParameter("@fri", pDaypart.Friday ? 1 : 0),
                             new System.Data.SqlClient.SqlParameter("@sat", pDaypart.Saturday ? 1 : 0),
                             new System.Data.SqlClient.SqlParameter("@sun", pDaypart.Sunday ? 1 : 0)
-                        ).SingleOrDefault();
+                        ).SingleOrDefault($"More than one daypart was found for '{pDaypart.Preview}'.");
                     });
             }
         }

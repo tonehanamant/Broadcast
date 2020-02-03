@@ -192,7 +192,7 @@ namespace Services.Broadcast.Repositories
                         FileId = f.id,
                         Filename = f.file_name,
                         UnitName = f.unit_name,
-                        DaypartCode = d.daypart.code,
+                        DaypartCode = d.code,
                         StartDateTime = f.start_date,
                         EndDateTime = f.end_date,
                         ProcessingStatusId = j.status

@@ -3732,6 +3732,66 @@ BEGIN
 END
 /*************************************** END PRI-20798 *****************************************************/
 
+/*************************************** START - PRI-21850 ****************************************************/
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE  object_id = OBJECT_ID('daypart_defaults') AND name = 'code')
+BEGIN	
+
+	EXEC('ALTER TABLE daypart_defaults
+	ADD code VARCHAR(15)
+
+	ALTER TABLE daypart_defaults
+	ADD name VARCHAR(63)')
+
+	EXEC ('UPDATE daypart_defaults
+	SET name = dayparts.name,
+	code = dayparts.code
+	FROM daypart_defaults
+	INNER JOIN dayparts
+	ON dayparts.id = daypart_defaults.daypart_id')
+
+	EXEC('ALTER TABLE daypart_defaults
+	ALTER COLUMN code VARCHAR(15) NOT NULL
+
+	ALTER TABLE daypart_defaults
+	ALTER COLUMN name VARCHAR(63) NOT NULL')
+
+	-- Delete delete duplicate dayparts
+
+	EXEC('
+	DECLARE @DAYPART_TEXT VARCHAR(63)
+	DECLARE @MIN_ID INTEGER
+
+	SELECT daypart_text INTO #daypartduplicated FROM dayparts
+	GROUP BY daypart_text
+	HAVING COUNT(*) > 1
+
+	select TOP 1 @DAYPART_TEXT = daypart_text from #daypartduplicated
+
+	while @@rowcount <> 0
+	begin
+		select @MIN_ID = MIN(id) from dayparts where daypart_text = @DAYPART_TEXT
+
+		UPDATE daypart_defaults
+		SET daypart_id = @MIN_ID
+		FROM daypart_defaults
+		INNER JOIN dayparts
+		ON dayparts.id = daypart_defaults.daypart_id
+		WHERE daypart_text = @DAYPART_TEXT
+
+		DELETE FROM daypart_days WHERE daypart_id IN (SELECT id from dayparts where daypart_text = @DAYPART_TEXT AND id <> @MIN_ID)
+	
+		DELETE from dayparts where daypart_text = @DAYPART_TEXT AND id <> @MIN_ID
+		
+		DELETE FROM #daypartduplicated where daypart_text = @DAYPART_TEXT
+
+    		select TOP 1 @DAYPART_TEXT = daypart_text from #daypartduplicated
+	end
+ 
+	DROP TABLE #daypartduplicated
+	')
+END
+/*************************************** END - PRI-21850 ****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

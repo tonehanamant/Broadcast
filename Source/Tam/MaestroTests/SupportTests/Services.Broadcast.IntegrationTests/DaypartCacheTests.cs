@@ -61,7 +61,7 @@ namespace Services.Broadcast.IntegrationTests
                 throw new NotImplementedException();
             }
 
-            public int OnlyForTests_SaveDaypartInternal(DisplayDaypart pDaypart)
+            public int SaveDaypartInternal(DisplayDaypart pDaypart)
             {
                 throw new NotImplementedException();
             }

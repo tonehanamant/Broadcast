@@ -233,6 +233,8 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="daypart_type" Type="int" Nullable="false" />
           <Property Name="daypart_id" Type="int" Nullable="false" />
+          <Property Name="code" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="63" Nullable="false" />
         </EntityType>
         <EntityType Name="dayparts">
           <Key>
@@ -12085,6 +12087,8 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="scx_generation_job_files" Relationship="BroadcastModel.FK_scx_generation_job_files_daypart_codes" FromRole="daypart_defaults" ToRole="scx_generation_job_files" />
           <NavigationProperty Name="scx_generation_jobs" Relationship="BroadcastModel.FK_scx_generation_jobs_daypart_codes" FromRole="daypart_defaults" ToRole="scx_generation_jobs" />
           <NavigationProperty Name="station_inventory_manifest_dayparts" Relationship="BroadcastModel.FK_station_inventory_manifest_dayparts_daypart_codes" FromRole="daypart_defaults" ToRole="station_inventory_manifest_dayparts" />
+          <Property Name="code" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK_daypart_defaults_dayparts">
           <End Type="BroadcastModel.daypart" Role="daypart" Multiplicity="1" />
@@ -14643,6 +14647,8 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="daypart_defaults">
             <EntityTypeMapping TypeName="BroadcastModel.daypart_defaults">
               <MappingFragment StoreEntitySet="daypart_defaults">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="code" ColumnName="code" />
                 <ScalarProperty Name="daypart_id" ColumnName="daypart_id" />
                 <ScalarProperty Name="daypart_type" ColumnName="daypart_type" />
                 <ScalarProperty Name="id" ColumnName="id" />
