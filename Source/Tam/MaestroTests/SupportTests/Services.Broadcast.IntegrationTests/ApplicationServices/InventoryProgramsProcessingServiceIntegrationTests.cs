@@ -45,7 +45,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void ProcessInventoryProgramsJob_OpenMarket_ManifestCount2_DaypartCount2_WeekCount7()
+        public void QueueProcessInventoryProgramsByFileJob()
         {
             var fileId = 233317;
             using (new TransactionScopeWrapper())
