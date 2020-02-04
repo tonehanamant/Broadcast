@@ -217,7 +217,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             else
             {
                 var key = KeyHelper.GetPlanLockingKey(plan.Id);
-                var lockingResult = _LockingManagerApplicationService.LockObject(key);
+                var lockingResult = _LockingManagerApplicationService.GetLockObject(key);
 
                 if (lockingResult.Success)
                 {

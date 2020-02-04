@@ -274,6 +274,7 @@ namespace Services.Broadcast.Repositories
 
                         return new PlanSummaryDto
                         {
+                            ProcessingStatus = (PlanAggregationProcessingStatusEnum)summary.processing_status,
                             ProductName = summary.product_name,
                             AudienceId = version.target_audience_id,
                             PostingType = (PostingTypeEnum)version.posting_type,

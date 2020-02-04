@@ -11,6 +11,8 @@ namespace Services.Broadcast.ApplicationServices
     public interface IBroadcastLockingManagerApplicationService : ILockingManagerApplicationService
     {
         object GetNotUserBasedLockObjectForKey(string key);
+
+        LockResponse GetLockObject(string key);
     }
 
     public class BroadcastLockingManagerApplicationService : IBroadcastLockingManagerApplicationService
@@ -59,6 +61,25 @@ namespace Services.Broadcast.ApplicationServices
         public object GetNotUserBasedLockObjectForKey(string key)
         {
             return _NotUserBasedLockObjects.GetOrAdd(key, new object());
+        }
+
+        public LockResponse GetLockObject(string key)
+        {
+            if (IsObjectLocked(key))
+            {
+                // if the key is locked you won`t be able to lock it but you can get the person`s name who has locked it
+                return LockObject(key);
+            }
+            else
+            {
+                // this is a usual Success = true response
+                return new LockResponse
+                {
+                    Key = key,
+                    Success = true,
+                    LockTimeoutInSeconds = 900
+                };
+            }
         }
     }
 }

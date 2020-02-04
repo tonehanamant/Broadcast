@@ -1,6 +1,5 @@
 ﻿using ApprovalTests;
 using ApprovalTests.Reporters;
-using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
 using IntegrationTests.Common;
 using Microsoft.Practices.Unity;
@@ -8,7 +7,6 @@ using Moq;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.BusinessEngines;
-using Services.Broadcast.Clients;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.IntegrationTests.Stubs;
@@ -18,6 +16,9 @@ using System;
 using System.Collections.Generic;
 using Services.Broadcast.Cache;
 using Services.Broadcast.Entities.Campaign;
+using Tam.Maestro.Services.ContractInterfaces;
+using Services.Broadcast.Entities.Plan;
+using Services.Broadcast.Helpers;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 {
@@ -818,6 +819,314 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             campaignAggregator.Verify(s => s.Aggregate(campaignId), Times.Once);
             campaignSummaryRepository.Verify(s => s.SaveSummary(It.IsAny<CampaignSummaryDto>()), Times.Once);
             campaignSummaryRepository.Verify(s => s.SetSummaryProcessingStatusToError(campaignId, $"Exception caught during processing : Error from SaveSummary"), Times.Once);
+        }
+
+        [Test]
+        public void CanNotGenerateReport_WhenCampaignIsLocked()
+        {
+            // Arrange
+            const int campaignId = 5;
+            const string lockedUserName = "UnitTestsUser2";
+            var expectedMessage = $"Campaign with id {campaignId} has been locked by {lockedUserName}";
+
+            var request = new CampaignReportRequest
+            {
+                CampaignId = campaignId,
+                ExportType = CampaignExportTypeEnum.Contract
+            };
+
+            var dataRepositoryFactoryMock = new Mock<IDataRepositoryFactory>();
+            var campaignRepositoryMock = new Mock<ICampaignRepository>();
+            var campaignValidatorMock = new Mock<ICampaignValidator>();
+            var mediaMonthAndWeekAggregateCache = new Mock<IMediaMonthAndWeekAggregateCache>();
+            var quarterCalculationEngineMock = new Mock<IQuarterCalculationEngine>();
+            var campaignAggregator = new Mock<ICampaignAggregator>();
+            var trafficApiCache = new Mock<ITrafficApiCache>();
+            var audienceService = new Mock<IAudienceService>();
+            var spotLengthService = new Mock<ISpotLengthService>();
+            var daypartDefaultService = new Mock<IDaypartDefaultService>();
+            var sharedFolderServiceMock = new Mock<ISharedFolderService>();
+
+            campaignRepositoryMock
+                .Setup(x => x.GetCampaign(campaignId))
+                .Returns(new CampaignDto
+                {
+                    Id = campaignId
+                });
+
+            _LockingManagerApplicationServiceMock
+                .Setup(x => x.GetLockObject(KeyHelper.GetCampaignLockingKey(campaignId)))
+                .Returns(new LockResponse
+                {
+                    Success = false,
+                    LockedUserName = lockedUserName
+                });
+            
+            dataRepositoryFactoryMock
+                .Setup(s => s.GetDataRepository<ICampaignRepository>())
+                .Returns(campaignRepositoryMock.Object);
+
+            var tc = new CampaignService(
+                dataRepositoryFactoryMock.Object,
+                campaignValidatorMock.Object,
+                mediaMonthAndWeekAggregateCache.Object,
+                quarterCalculationEngineMock.Object,
+                _LockingManagerApplicationServiceMock.Object,
+                campaignAggregator.Object,
+                IntegrationTestApplicationServiceFactory.Instance.Resolve<ICampaignAggregationJobTrigger>(),
+                trafficApiCache.Object, audienceService.Object, spotLengthService.Object,
+                daypartDefaultService.Object,
+                sharedFolderServiceMock.Object);
+
+            // Act
+            var caught = Assert.Throws<ApplicationException>(() => tc.GetAndValidateCampaignReportData(request));
+
+            // Assert
+            Assert.AreEqual(expectedMessage, caught.Message);
+        }
+
+        [Test]
+        public void CanNotGenerateReport_WhenPlanIsLocked()
+        {
+            // Arrange
+            const int campaignId = 5;
+            const int planId = 7;
+            const string lockedUserName = "UnitTestsUser2";
+            var expectedMessage = $"Plan with id {planId} has been locked by {lockedUserName}";
+
+            var request = new CampaignReportRequest
+            {
+                CampaignId = campaignId,
+                SelectedPlans = new List<int> { planId },
+                ExportType = CampaignExportTypeEnum.Contract
+            };
+
+            var dataRepositoryFactoryMock = new Mock<IDataRepositoryFactory>();
+            var campaignRepositoryMock = new Mock<ICampaignRepository>();
+            var campaignValidatorMock = new Mock<ICampaignValidator>();
+            var mediaMonthAndWeekAggregateCache = new Mock<IMediaMonthAndWeekAggregateCache>();
+            var quarterCalculationEngineMock = new Mock<IQuarterCalculationEngine>();
+            var campaignAggregator = new Mock<ICampaignAggregator>();
+            var trafficApiCache = new Mock<ITrafficApiCache>();
+            var audienceService = new Mock<IAudienceService>();
+            var spotLengthService = new Mock<ISpotLengthService>();
+            var daypartDefaultService = new Mock<IDaypartDefaultService>();
+            var sharedFolderServiceMock = new Mock<ISharedFolderService>();
+
+            campaignRepositoryMock
+                .Setup(x => x.GetCampaign(campaignId))
+                .Returns(new CampaignDto
+                {
+                    Id = campaignId,
+                    Plans = new List<PlanSummaryDto>
+                    {
+                        new PlanSummaryDto
+                        {
+                            PlanId = planId,
+                            PostingType = PostingTypeEnum.NSI,
+                            Status = PlanStatusEnum.Complete
+                        }
+                    }
+                });
+
+            _LockingManagerApplicationServiceMock
+                .Setup(x => x.GetLockObject(KeyHelper.GetCampaignLockingKey(campaignId)))
+                .Returns(new LockResponse
+                {
+                    Success = true
+                });
+
+            _LockingManagerApplicationServiceMock
+                .Setup(x => x.GetLockObject(KeyHelper.GetPlanLockingKey(planId)))
+                .Returns(new LockResponse
+                {
+                    Success = false,
+                    LockedUserName = lockedUserName
+                });
+
+            dataRepositoryFactoryMock
+                .Setup(s => s.GetDataRepository<ICampaignRepository>())
+                .Returns(campaignRepositoryMock.Object);
+
+            var tc = new CampaignService(
+                dataRepositoryFactoryMock.Object,
+                campaignValidatorMock.Object,
+                mediaMonthAndWeekAggregateCache.Object,
+                quarterCalculationEngineMock.Object,
+                _LockingManagerApplicationServiceMock.Object,
+                campaignAggregator.Object,
+                IntegrationTestApplicationServiceFactory.Instance.Resolve<ICampaignAggregationJobTrigger>(),
+                trafficApiCache.Object, audienceService.Object, spotLengthService.Object,
+                daypartDefaultService.Object,
+                sharedFolderServiceMock.Object);
+
+            // Act
+            var caught = Assert.Throws<ApplicationException>(() => tc.GetAndValidateCampaignReportData(request));
+
+            // Assert
+            Assert.AreEqual(expectedMessage, caught.Message);
+        }
+
+        [Test]
+        public void CanNotGenerateReport_WhenPlanAggregation_IsInProgress()
+        {
+            // Arrange
+            const int campaignId = 5;
+            const int planId = 7;
+            var expectedMessage = $"Data aggregation for the plan with id {planId} is in progress. Please wait until the process is done";
+
+            var request = new CampaignReportRequest
+            {
+                CampaignId = campaignId,
+                SelectedPlans = new List<int> { planId },
+                ExportType = CampaignExportTypeEnum.Contract
+            };
+
+            var dataRepositoryFactoryMock = new Mock<IDataRepositoryFactory>();
+            var campaignRepositoryMock = new Mock<ICampaignRepository>();
+            var campaignValidatorMock = new Mock<ICampaignValidator>();
+            var mediaMonthAndWeekAggregateCache = new Mock<IMediaMonthAndWeekAggregateCache>();
+            var quarterCalculationEngineMock = new Mock<IQuarterCalculationEngine>();
+            var campaignAggregator = new Mock<ICampaignAggregator>();
+            var trafficApiCache = new Mock<ITrafficApiCache>();
+            var audienceService = new Mock<IAudienceService>();
+            var spotLengthService = new Mock<ISpotLengthService>();
+            var daypartDefaultService = new Mock<IDaypartDefaultService>();
+            var sharedFolderServiceMock = new Mock<ISharedFolderService>();
+
+            campaignRepositoryMock
+                .Setup(x => x.GetCampaign(campaignId))
+                .Returns(new CampaignDto
+                {
+                    Id = campaignId,
+                    Plans = new List<PlanSummaryDto>
+                    {
+                        new PlanSummaryDto
+                        {
+                            PlanId = planId,
+                            PostingType = PostingTypeEnum.NSI,
+                            Status = PlanStatusEnum.Complete,
+                            ProcessingStatus = PlanAggregationProcessingStatusEnum.InProgress
+                        }
+                    }
+                });
+
+            _LockingManagerApplicationServiceMock
+                .Setup(x => x.GetLockObject(KeyHelper.GetCampaignLockingKey(campaignId)))
+                .Returns(new LockResponse
+                {
+                    Success = true
+                });
+
+            _LockingManagerApplicationServiceMock
+                .Setup(x => x.GetLockObject(KeyHelper.GetPlanLockingKey(planId)))
+                .Returns(new LockResponse
+                {
+                    Success = true
+                });
+
+            dataRepositoryFactoryMock
+                .Setup(s => s.GetDataRepository<ICampaignRepository>())
+                .Returns(campaignRepositoryMock.Object);
+
+            var tc = new CampaignService(
+                dataRepositoryFactoryMock.Object,
+                campaignValidatorMock.Object,
+                mediaMonthAndWeekAggregateCache.Object,
+                quarterCalculationEngineMock.Object,
+                _LockingManagerApplicationServiceMock.Object,
+                campaignAggregator.Object,
+                IntegrationTestApplicationServiceFactory.Instance.Resolve<ICampaignAggregationJobTrigger>(),
+                trafficApiCache.Object, audienceService.Object, spotLengthService.Object,
+                daypartDefaultService.Object,
+                sharedFolderServiceMock.Object);
+
+            // Act
+            var caught = Assert.Throws<ApplicationException>(() => tc.GetAndValidateCampaignReportData(request));
+
+            // Assert
+            Assert.AreEqual(expectedMessage, caught.Message);
+        }
+
+        [Test]
+        public void CanNotGenerateReport_WhenPlanAggregation_HasFailed()
+        {
+            // Arrange
+            const int campaignId = 5;
+            const int planId = 7;
+            var expectedMessage = $"Data aggregation for the plan with id {planId} has failed. Please contact the support";
+
+            var request = new CampaignReportRequest
+            {
+                CampaignId = campaignId,
+                SelectedPlans = new List<int> { planId },
+                ExportType = CampaignExportTypeEnum.Contract
+            };
+
+            var dataRepositoryFactoryMock = new Mock<IDataRepositoryFactory>();
+            var campaignRepositoryMock = new Mock<ICampaignRepository>();
+            var campaignValidatorMock = new Mock<ICampaignValidator>();
+            var mediaMonthAndWeekAggregateCache = new Mock<IMediaMonthAndWeekAggregateCache>();
+            var quarterCalculationEngineMock = new Mock<IQuarterCalculationEngine>();
+            var campaignAggregator = new Mock<ICampaignAggregator>();
+            var trafficApiCache = new Mock<ITrafficApiCache>();
+            var audienceService = new Mock<IAudienceService>();
+            var spotLengthService = new Mock<ISpotLengthService>();
+            var daypartDefaultService = new Mock<IDaypartDefaultService>();
+            var sharedFolderServiceMock = new Mock<ISharedFolderService>();
+
+            campaignRepositoryMock
+                .Setup(x => x.GetCampaign(campaignId))
+                .Returns(new CampaignDto
+                {
+                    Id = campaignId,
+                    Plans = new List<PlanSummaryDto>
+                    {
+                        new PlanSummaryDto
+                        {
+                            PlanId = planId,
+                            PostingType = PostingTypeEnum.NSI,
+                            Status = PlanStatusEnum.Complete,
+                            ProcessingStatus = PlanAggregationProcessingStatusEnum.Error
+                        }
+                    }
+                });
+
+            _LockingManagerApplicationServiceMock
+                .Setup(x => x.GetLockObject(KeyHelper.GetCampaignLockingKey(campaignId)))
+                .Returns(new LockResponse
+                {
+                    Success = true
+                });
+
+            _LockingManagerApplicationServiceMock
+                .Setup(x => x.GetLockObject(KeyHelper.GetPlanLockingKey(planId)))
+                .Returns(new LockResponse
+                {
+                    Success = true
+                });
+
+            dataRepositoryFactoryMock
+                .Setup(s => s.GetDataRepository<ICampaignRepository>())
+                .Returns(campaignRepositoryMock.Object);
+
+            var tc = new CampaignService(
+                dataRepositoryFactoryMock.Object,
+                campaignValidatorMock.Object,
+                mediaMonthAndWeekAggregateCache.Object,
+                quarterCalculationEngineMock.Object,
+                _LockingManagerApplicationServiceMock.Object,
+                campaignAggregator.Object,
+                IntegrationTestApplicationServiceFactory.Instance.Resolve<ICampaignAggregationJobTrigger>(),
+                trafficApiCache.Object, audienceService.Object, spotLengthService.Object,
+                daypartDefaultService.Object,
+                sharedFolderServiceMock.Object);
+
+            // Act
+            var caught = Assert.Throws<ApplicationException>(() => tc.GetAndValidateCampaignReportData(request));
+
+            // Assert
+            Assert.AreEqual(expectedMessage, caught.Message);
         }
     }
 }

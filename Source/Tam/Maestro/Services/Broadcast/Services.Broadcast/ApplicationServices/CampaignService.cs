@@ -103,7 +103,7 @@ namespace Services.Broadcast.ApplicationServices
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns>CampaignReport object</returns>
-        CampaignReportData GetCampaignReportData(CampaignReportRequest request);
+        CampaignReportData GetAndValidateCampaignReportData(CampaignReportRequest request);
 
         /// <summary>
         /// Generates the program lineup report.
@@ -463,7 +463,7 @@ namespace Services.Broadcast.ApplicationServices
         /// <inheritdoc/>
         public Guid GenerateCampaignReport(CampaignReportRequest request, string userName, DateTime currentDate)
         {
-            var campaignReportData = GetCampaignReportData(request);
+            var campaignReportData = GetAndValidateCampaignReportData(request);
             var reportGenerator = new CampaignReportGenerator();
             var report = reportGenerator.Generate(campaignReportData);
 
@@ -480,17 +480,16 @@ namespace Services.Broadcast.ApplicationServices
         }
 
         /// <inheritdoc/>
-        public CampaignReportData GetCampaignReportData(CampaignReportRequest request)
+        public CampaignReportData GetAndValidateCampaignReportData(CampaignReportRequest request)
         {
             var campaign = _CampaignRepository.GetCampaign(request.CampaignId);
-            var summary = _CampaignSummaryRepository.GetSummaryForCampaign(request.CampaignId);
-            _HydrateCampaignWithSummary(campaign, summary);
-
-            if (request.SelectedPlans != null && request.SelectedPlans.Any())
+            
+            if (!request.SelectedPlans.IsEmpty())
             {
                 campaign.Plans = campaign.Plans.Where(x => request.SelectedPlans.Contains(x.PlanId)).ToList();
             }
-
+            
+            _ValidateCampaignLocking(campaign.Id);
             _ValidateSelectedPlans(request.ExportType, campaign.Plans);
 
             AgencyDto agency = _TrafficApiCache.GetAgency(campaign.AgencyId);
@@ -514,10 +513,64 @@ namespace Services.Broadcast.ApplicationServices
                 _QuarterCalculationEngine);
         }
 
+        private void _ValidateCampaignLocking(int campaignId)
+        {
+            const string CAMPAIGN_IS_LOCKED_EXCEPTION = "Campaign with id {0} has been locked by {1}";
+
+            var campaignLockingKey = KeyHelper.GetCampaignLockingKey(campaignId);
+            var lockObject = _LockingManagerApplicationService.GetLockObject(campaignLockingKey);
+
+            if (!lockObject.Success)
+            {
+                var message = string.Format(CAMPAIGN_IS_LOCKED_EXCEPTION, campaignId, lockObject.LockedUserName);
+                throw new ApplicationException(message);
+            }
+        }
+
         private void _ValidateSelectedPlans(CampaignExportTypeEnum exportType, List<PlanSummaryDto> plans)
         {
             _ValidatePostingType(plans);
             _ValidateExportType(exportType, plans);
+            
+            foreach (var plan in plans)
+            {
+                _ValidatePlanLocking(plan.PlanId);
+                _ValidatePlanAggregationStatus(plan);
+            }
+        }
+
+        private void _ValidatePlanLocking(int planId)
+        {
+            const string PLAN_IS_LOCKED_EXCEPTION = "Plan with id {0} has been locked by {1}";
+
+            var planLockingKey = KeyHelper.GetPlanLockingKey(planId);
+            var lockObject = _LockingManagerApplicationService.GetLockObject(planLockingKey);
+
+            if (!lockObject.Success)
+            {
+                var message = string.Format(PLAN_IS_LOCKED_EXCEPTION, planId, lockObject.LockedUserName);
+                throw new ApplicationException(message);
+            }
+        }
+
+        private void _ValidatePlanAggregationStatus(PlanSummaryDto plan)
+        {
+            const string PLAN_AGGREGATION_IS_IN_PROGRESS_EXCEPTION = "Data aggregation for the plan with id {0} is in progress. Please wait until the process is done";
+            const string PLAN_AGGREGATION_FAILED_EXCEPTION = "Data aggregation for the plan with id {0} has failed. Please contact the support";
+
+            var processingStatus = plan.ProcessingStatus;
+
+            if (processingStatus == PlanAggregationProcessingStatusEnum.InProgress)
+            {
+                var message = string.Format(PLAN_AGGREGATION_IS_IN_PROGRESS_EXCEPTION, plan.PlanId);
+                throw new ApplicationException(message);
+            }
+
+            if (processingStatus == PlanAggregationProcessingStatusEnum.Error)
+            {
+                var message = string.Format(PLAN_AGGREGATION_FAILED_EXCEPTION, plan.PlanId);
+                throw new ApplicationException(message);
+            }
         }
 
         private static void _ValidatePostingType(List<PlanSummaryDto> plans)

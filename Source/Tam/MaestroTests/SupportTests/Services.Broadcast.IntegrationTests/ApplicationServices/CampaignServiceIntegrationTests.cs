@@ -580,7 +580,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<ITrafficApiCache>(new TrafficApiCacheStub());
                 var _CampaignService = IntegrationTestApplicationServiceFactory.GetApplicationService<ICampaignService>();
 
-                var reportData = _CampaignService.GetCampaignReportData(new CampaignReportRequest
+                var reportData = _CampaignService.GetAndValidateCampaignReportData(new CampaignReportRequest
                 {
                     CampaignId = 652,
                     ExportType = CampaignExportTypeEnum.Contract,
@@ -672,7 +672,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<ITrafficApiCache>(new TrafficApiCacheStub());
                 var _CampaignService = IntegrationTestApplicationServiceFactory.GetApplicationService<ICampaignService>();
 
-                var reportData = _CampaignService.GetCampaignReportData(new CampaignReportRequest
+                var reportData = _CampaignService.GetAndValidateCampaignReportData(new CampaignReportRequest
                 {
                     CampaignId = 652,
                     ExportType = CampaignExportTypeEnum.Proposal,
@@ -703,7 +703,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<ITrafficApiCache>(new TrafficApiCacheStub());
                 var _CampaignService = IntegrationTestApplicationServiceFactory.GetApplicationService<ICampaignService>();
 
-                var reportData = _CampaignService.GetCampaignReportData(new CampaignReportRequest
+                var reportData = _CampaignService.GetAndValidateCampaignReportData(new CampaignReportRequest
                 {
                     CampaignId = 652,
                     ExportType = CampaignExportTypeEnum.Contract,
@@ -734,7 +734,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var _CampaignService = IntegrationTestApplicationServiceFactory.GetApplicationService<ICampaignService>();
 
                 var exception = Assert.Throws<ApplicationException>(() =>
-                _CampaignService.GetCampaignReportData(new CampaignReportRequest
+                _CampaignService.GetAndValidateCampaignReportData(new CampaignReportRequest
                 {
                     CampaignId = 652,
                     ExportType = CampaignExportTypeEnum.Proposal,
@@ -753,7 +753,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var _CampaignService = IntegrationTestApplicationServiceFactory.GetApplicationService<ICampaignService>();
 
                 var exception = Assert.Throws<ApplicationException>(() =>
-                _CampaignService.GetCampaignReportData(new CampaignReportRequest
+                _CampaignService.GetAndValidateCampaignReportData(new CampaignReportRequest
                 {
                     CampaignId = 652,
                     ExportType = CampaignExportTypeEnum.Proposal,
@@ -772,7 +772,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var _CampaignService = IntegrationTestApplicationServiceFactory.GetApplicationService<ICampaignService>();
 
                 var exception = Assert.Throws<ApplicationException>(() =>
-                _CampaignService.GetCampaignReportData(new CampaignReportRequest
+                _CampaignService.GetAndValidateCampaignReportData(new CampaignReportRequest
                 {
                     CampaignId = 652,
                     ExportType = CampaignExportTypeEnum.Proposal,
@@ -791,7 +791,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var _CampaignService = IntegrationTestApplicationServiceFactory.GetApplicationService<ICampaignService>();
 
                 var exception = Assert.Throws<ApplicationException>(() =>
-                _CampaignService.GetCampaignReportData(new CampaignReportRequest
+                _CampaignService.GetAndValidateCampaignReportData(new CampaignReportRequest
                 {
                     CampaignId = 652,
                     ExportType = CampaignExportTypeEnum.Contract,
@@ -810,7 +810,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var _CampaignService = IntegrationTestApplicationServiceFactory.GetApplicationService<ICampaignService>();
 
                 var exception = Assert.Throws<ApplicationException>(() =>
-                _CampaignService.GetCampaignReportData(new CampaignReportRequest
+                _CampaignService.GetAndValidateCampaignReportData(new CampaignReportRequest
                 {
                     CampaignId = 652,
                     ExportType = CampaignExportTypeEnum.Contract,
@@ -829,7 +829,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var _CampaignService = IntegrationTestApplicationServiceFactory.GetApplicationService<ICampaignService>();
 
                 var exception = Assert.Throws<ApplicationException>(() =>
-                _CampaignService.GetCampaignReportData(new CampaignReportRequest
+                _CampaignService.GetAndValidateCampaignReportData(new CampaignReportRequest
                 {
                     CampaignId = 652,
                     ExportType = CampaignExportTypeEnum.Contract,

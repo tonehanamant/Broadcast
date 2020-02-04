@@ -7,6 +7,7 @@ using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.ApplicationServices.Plan;
 using Services.Broadcast.Cache;
+using Services.Broadcast.Clients;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.DTO.Program;
 using Services.Broadcast.Entities.Enums;
@@ -25,9 +26,17 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
     [TestFixture]
     public class PlanServiceIntegrationTests
     {
-        private readonly IPlanService _PlanService = IntegrationTestApplicationServiceFactory.GetApplicationService<IPlanService>();
-        private readonly ICampaignService _CampaignService = IntegrationTestApplicationServiceFactory.GetApplicationService<ICampaignService>();
-        private readonly IPlanPricingService _PlanPricingService = IntegrationTestApplicationServiceFactory.GetApplicationService<IPlanPricingService>();
+        private readonly IPlanService _PlanService;
+        private readonly ICampaignService _CampaignService;
+        private readonly IPlanPricingService _PlanPricingService;
+
+        public PlanServiceIntegrationTests()
+        {
+            IntegrationTestApplicationServiceFactory.Instance.RegisterType<IPricingApiClient, PricingApiClientStub>();
+            _PlanService = IntegrationTestApplicationServiceFactory.GetApplicationService<IPlanService>();
+            _CampaignService = IntegrationTestApplicationServiceFactory.GetApplicationService<ICampaignService>();
+            _PlanPricingService = IntegrationTestApplicationServiceFactory.GetApplicationService<IPlanPricingService>();
+        }
 
         [Test]
         [UseReporter(typeof(DiffReporter))]

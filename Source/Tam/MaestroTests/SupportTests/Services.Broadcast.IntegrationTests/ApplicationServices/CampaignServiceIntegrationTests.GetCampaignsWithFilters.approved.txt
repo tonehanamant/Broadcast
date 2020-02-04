@@ -109,7 +109,7 @@
           }
         ],
         "PostingType": 2,
-        "ProcessingStatus": 0,
+        "ProcessingStatus": 1,
         "ProductName": "Product1",
         "SpotLength": 30,
         "Status": 1,
@@ -158,7 +158,7 @@
           }
         ],
         "PostingType": 2,
-        "ProcessingStatus": 0,
+        "ProcessingStatus": 1,
         "ProductName": "Product1",
         "SpotLength": 30,
         "Status": 1,

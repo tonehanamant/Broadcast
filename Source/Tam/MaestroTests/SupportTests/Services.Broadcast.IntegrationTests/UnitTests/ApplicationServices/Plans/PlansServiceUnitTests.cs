@@ -124,7 +124,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var daypartDefaultService = new Mock<IDaypartDefaultService>();
 
             var lockingManagerApplicationServiceMock = new Mock<IBroadcastLockingManagerApplicationService>();
-            lockingManagerApplicationServiceMock.Setup(x => x.LockObject(It.IsAny<string>())).Returns(new LockResponse
+            lockingManagerApplicationServiceMock.Setup(x => x.GetLockObject(It.IsAny<string>())).Returns(new LockResponse
             {
                 Success = true,
                 LockedUserName = "IntegrationUser"
@@ -224,7 +224,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var daypartDefaultService = new Mock<IDaypartDefaultService>();
 
             var lockingManagerApplicationServiceMock = new Mock<IBroadcastLockingManagerApplicationService>();
-            lockingManagerApplicationServiceMock.Setup(x => x.LockObject(It.IsAny<string>())).Returns(new LockResponse
+            lockingManagerApplicationServiceMock.Setup(x => x.GetLockObject(It.IsAny<string>())).Returns(new LockResponse
             {
                 Success = false,
                 LockedUserName = "IntegrationUser"
@@ -320,7 +320,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var daypartDefaultService = new Mock<IDaypartDefaultService>();
 
             var lockingManagerApplicationServiceMock = new Mock<IBroadcastLockingManagerApplicationService>();
-            lockingManagerApplicationServiceMock.Setup(x => x.LockObject(It.IsAny<string>())).Returns(new LockResponse
+            lockingManagerApplicationServiceMock.Setup(x => x.GetLockObject(It.IsAny<string>())).Returns(new LockResponse
             {
                 Success = false,
                 LockedUserName = "IntegrationUser"

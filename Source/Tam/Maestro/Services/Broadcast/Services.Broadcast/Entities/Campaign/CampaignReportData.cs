@@ -689,13 +689,11 @@ namespace Services.Broadcast.Entities.Campaign
             , List<PlanAudienceDisplay> orderedAudiences
             , IQuarterCalculationEngine quarterCalculationEngine)
         {
-            CampaignStartQuarter = quarterCalculationEngine.GetQuarterRangeByDate(campaign.FlightStartDate).ShortFormat();
-            CampaignEndQuarter = quarterCalculationEngine.GetQuarterRangeByDate(campaign.FlightEndDate).ShortFormat();
             CampaignName = campaign.Name;
             CreatedDate = DateTime.Now.ToString(DATE_FORMAT_SHORT_YEAR);
             AgencyName = agency.Name;
             ClientName = advertiser.Name;
-            _SetCampaignFlightDate(plans);
+            _SetCampaignFlightDate(plans, quarterCalculationEngine);
             PostingType = plans.Select(x => x.PostingType).Distinct().Single().ToString();
             Status = exportType.Equals(CampaignExportTypeEnum.Contract) ? "Order" : "Proposal";
 
@@ -722,12 +720,14 @@ namespace Services.Broadcast.Entities.Campaign
                             .ToList();
         }
 
-        private void _SetCampaignFlightDate(List<PlanDto> plans)
+        private void _SetCampaignFlightDate(List<PlanDto> plans, IQuarterCalculationEngine quarterCalculationEngine)
         {
             var minStartDate = plans.Select(x => x.FlightStartDate).Min();
             var maxEndDate = plans.Select(x => x.FlightEndDate).Max();
             CampaignFlightStartDate = minStartDate != null ? minStartDate.Value.ToString(DATE_FORMAT_SHORT_YEAR) : string.Empty;
             CampaignFlightEndDate = maxEndDate != null ? maxEndDate.Value.ToString(DATE_FORMAT_SHORT_YEAR) : string.Empty;
+            CampaignStartQuarter = minStartDate != null ? quarterCalculationEngine.GetQuarterRangeByDate(minStartDate).ShortFormat() : string.Empty;
+            CampaignEndQuarter = maxEndDate != null ? quarterCalculationEngine.GetQuarterRangeByDate(maxEndDate).ShortFormat() : string.Empty;
         }
 
         private class ProjectedPlan
