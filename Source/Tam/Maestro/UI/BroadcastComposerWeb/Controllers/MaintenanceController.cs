@@ -133,7 +133,7 @@ namespace BroadcastComposerWeb.Controllers
                 var service = _ApplicationServiceFactory.GetApplicationService<IInventoryProgramsProcessingService>();
                 var result = service.QueueProcessInventoryProgramsByFileJob(fileId, _GetCurrentUserFullName());
 
-                ViewBag.Message = $"Job queued as Job {result.Job.Id}. {result}";
+                ViewBag.Message = $"Job queued as Job {result.Job.Id}. \r\n{result}";
             }
             catch (Exception e)
             {
@@ -151,7 +151,7 @@ namespace BroadcastComposerWeb.Controllers
                 var service = _ApplicationServiceFactory.GetApplicationService<IInventoryProgramsProcessingService>();
                 var result = service.ReQueueProcessInventoryProgramsByFileJob(jobId, _GetCurrentUserFullName());
 
-                ViewBag.Message = $"Job '{jobId}' requeued as new Job {result.Job.Id}. {result}";
+                ViewBag.Message = $"Job '{jobId}' requeued as new Job {result.Job.Id}. \r\n{result}";
             }
             catch (Exception e)
             {
@@ -181,7 +181,7 @@ namespace BroadcastComposerWeb.Controllers
                 var service = _ApplicationServiceFactory.GetApplicationService<IInventoryProgramsProcessingService>();
                 var result = service.QueueProcessInventoryProgramsBySourceJob(inventorySourceId, startDate, endDate,_GetCurrentUserFullName());
 
-                ViewBag.Message = $"Job queued as Job {result.Jobs.First().Id}. {result}";
+                ViewBag.Message = $"Job queued as Job {result.Jobs.First().Id}. \r\n{result}";
             }
             catch (Exception e)
             {
@@ -201,7 +201,7 @@ namespace BroadcastComposerWeb.Controllers
                 var service = _ApplicationServiceFactory.GetApplicationService<IInventoryProgramsProcessingService>();
                 var result = service.QueueProcessInventoryProgramsBySourceForWeeks(orientByDate, _GetCurrentUserFullName());
 
-                ViewBag.Message = $"Job queued as Job {result.Jobs.First().Id}. {result}";
+                ViewBag.Message = $"Job queued as Job {result.Jobs.First().Id}. \r\n{result}";
             }
             catch (Exception e)
             {

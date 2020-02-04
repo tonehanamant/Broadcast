@@ -126,6 +126,8 @@ namespace Services.Broadcast.Repositories
         void AddNewManifests(IEnumerable<StationInventoryManifest> manifests, int inventoryFileId, int inventorySourceId);
 
         void UpdateInventoryPrograms(List<StationInventoryManifestDaypartProgram> newPrograms, DateTime createdAt, List<int> manifestDaypartIds, DateTime startDate, DateTime endDate);
+
+        List<StationInventoryManifestDaypartProgram> GetDaypartProgramsForInventoryDayparts(List<int> stationInventoryManifestDaypartIds);
     }
 
     public class InventoryRepository : BroadcastRepositoryBase, IInventoryRepository
@@ -1469,6 +1471,40 @@ namespace Services.Broadcast.Repositories
 
             return result;
 
+        }
+
+        public List<StationInventoryManifestDaypartProgram> GetDaypartProgramsForInventoryDayparts(List<int> stationInventoryManifestDaypartIds)
+        {
+            var result = new List<StationInventoryManifestDaypartProgram>();
+            _InReadUncommitedTransaction(
+                context =>
+                {
+                    var items = context.station_inventory_manifest_daypart_programs.Where(p =>
+                        stationInventoryManifestDaypartIds.Contains(p.station_inventory_manifest_daypart_id));
+
+                    result = items.Select(_MapToInventoryManifestDaypartProgram).ToList();
+
+                });
+            return result;
+        }
+
+        private StationInventoryManifestDaypartProgram _MapToInventoryManifestDaypartProgram(
+            station_inventory_manifest_daypart_programs item)
+        {
+            var dto = new StationInventoryManifestDaypartProgram
+            {
+                StationInventoryManifestDaypartId = item.station_inventory_manifest_daypart_id,
+                ProgramName = item.name,
+                ShowType = item.show_type,
+                GenreId = item.genre_id,
+                StartDate = item.start_date,
+                EndDate = item.end_date,
+                StartTime = item.start_time,
+                EndTime = item.end_time,
+                CreatedDate = item.created_date
+            };
+
+            return dto;
         }
 
         public void UpdateInventoryPrograms(List<StationInventoryManifestDaypartProgram> newPrograms, DateTime createdAt, List<int> manifestDaypartIds, DateTime startDate, DateTime endDate)

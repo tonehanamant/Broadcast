@@ -1,0 +1,200 @@
+﻿[
+  {
+    "CreatedDate": "2019-01-25T00:00:00",
+    "EndDate": "2019-02-12T00:00:00",
+    "EndTime": 5400,
+    "GenreId": 57,
+    "ProgramName": "Program 1 For 358772",
+    "ShowType": "movie",
+    "StartDate": "2019-02-01T00:00:00",
+    "StartTime": 3600,
+    "StationInventoryManifestDaypartId": 358772
+  },
+  {
+    "CreatedDate": "2019-01-25T00:00:00",
+    "EndDate": "2019-02-12T00:00:00",
+    "EndTime": 5400,
+    "GenreId": 57,
+    "ProgramName": "Program 2 For 358772",
+    "ShowType": "movie",
+    "StartDate": "2019-02-01T00:00:00",
+    "StartTime": 3600,
+    "StationInventoryManifestDaypartId": 358772
+  },
+  {
+    "CreatedDate": "2019-01-25T00:00:00",
+    "EndDate": "2019-02-12T00:00:00",
+    "EndTime": 5400,
+    "GenreId": 57,
+    "ProgramName": "Program 1 For 358773",
+    "ShowType": "movie",
+    "StartDate": "2019-02-01T00:00:00",
+    "StartTime": 3600,
+    "StationInventoryManifestDaypartId": 358773
+  },
+  {
+    "CreatedDate": "2019-01-25T00:00:00",
+    "EndDate": "2019-02-12T00:00:00",
+    "EndTime": 5400,
+    "GenreId": 57,
+    "ProgramName": "Program 2 For 358773",
+    "ShowType": "movie",
+    "StartDate": "2019-02-01T00:00:00",
+    "StartTime": 3600,
+    "StationInventoryManifestDaypartId": 358773
+  },
+  {
+    "CreatedDate": "2019-01-25T00:00:00",
+    "EndDate": "2019-02-12T00:00:00",
+    "EndTime": 5400,
+    "GenreId": 57,
+    "ProgramName": "Program 1 For 358776",
+    "ShowType": "movie",
+    "StartDate": "2019-02-01T00:00:00",
+    "StartTime": 3600,
+    "StationInventoryManifestDaypartId": 358776
+  },
+  {
+    "CreatedDate": "2019-01-25T00:00:00",
+    "EndDate": "2019-02-12T00:00:00",
+    "EndTime": 5400,
+    "GenreId": 57,
+    "ProgramName": "Program 2 For 358776",
+    "ShowType": "movie",
+    "StartDate": "2019-02-01T00:00:00",
+    "StartTime": 3600,
+    "StationInventoryManifestDaypartId": 358776
+  },
+  {
+    "CreatedDate": "2019-01-25T00:00:00",
+    "EndDate": "2019-02-12T00:00:00",
+    "EndTime": 5400,
+    "GenreId": 57,
+    "ProgramName": "Program 1 For 358777",
+    "ShowType": "movie",
+    "StartDate": "2019-02-01T00:00:00",
+    "StartTime": 3600,
+    "StationInventoryManifestDaypartId": 358777
+  },
+  {
+    "CreatedDate": "2019-01-25T00:00:00",
+    "EndDate": "2019-02-12T00:00:00",
+    "EndTime": 5400,
+    "GenreId": 57,
+    "ProgramName": "Program 2 For 358777",
+    "ShowType": "movie",
+    "StartDate": "2019-02-01T00:00:00",
+    "StartTime": 3600,
+    "StationInventoryManifestDaypartId": 358777
+  },
+  {
+    "CreatedDate": "2019-01-25T00:00:00",
+    "EndDate": "2019-02-12T00:00:00",
+    "EndTime": 5400,
+    "GenreId": 57,
+    "ProgramName": "Program 1 For 358780",
+    "ShowType": "movie",
+    "StartDate": "2019-02-01T00:00:00",
+    "StartTime": 3600,
+    "StationInventoryManifestDaypartId": 358780
+  },
+  {
+    "CreatedDate": "2019-01-25T00:00:00",
+    "EndDate": "2019-02-12T00:00:00",
+    "EndTime": 5400,
+    "GenreId": 57,
+    "ProgramName": "Program 2 For 358780",
+    "ShowType": "movie",
+    "StartDate": "2019-02-01T00:00:00",
+    "StartTime": 3600,
+    "StationInventoryManifestDaypartId": 358780
+  },
+  {
+    "CreatedDate": "2019-01-25T00:00:00",
+    "EndDate": "2019-02-12T00:00:00",
+    "EndTime": 5400,
+    "GenreId": 57,
+    "ProgramName": "Program 1 For 360318",
+    "ShowType": "movie",
+    "StartDate": "2019-02-01T00:00:00",
+    "StartTime": 3600,
+    "StationInventoryManifestDaypartId": 360318
+  },
+  {
+    "CreatedDate": "2019-01-25T00:00:00",
+    "EndDate": "2019-02-12T00:00:00",
+    "EndTime": 5400,
+    "GenreId": 57,
+    "ProgramName": "Program 2 For 360318",
+    "ShowType": "movie",
+    "StartDate": "2019-02-01T00:00:00",
+    "StartTime": 3600,
+    "StationInventoryManifestDaypartId": 360318
+  },
+  {
+    "CreatedDate": "2019-01-25T00:00:00",
+    "EndDate": "2019-02-12T00:00:00",
+    "EndTime": 5400,
+    "GenreId": 57,
+    "ProgramName": "Program 1 For 360319",
+    "ShowType": "movie",
+    "StartDate": "2019-02-01T00:00:00",
+    "StartTime": 3600,
+    "StationInventoryManifestDaypartId": 360319
+  },
+  {
+    "CreatedDate": "2019-01-25T00:00:00",
+    "EndDate": "2019-02-12T00:00:00",
+    "EndTime": 5400,
+    "GenreId": 57,
+    "ProgramName": "Program 2 For 360319",
+    "ShowType": "movie",
+    "StartDate": "2019-02-01T00:00:00",
+    "StartTime": 3600,
+    "StationInventoryManifestDaypartId": 360319
+  },
+  {
+    "CreatedDate": "2019-01-25T00:00:00",
+    "EndDate": "2019-02-12T00:00:00",
+    "EndTime": 5400,
+    "GenreId": 57,
+    "ProgramName": "Program 1 For 360320",
+    "ShowType": "movie",
+    "StartDate": "2019-02-01T00:00:00",
+    "StartTime": 3600,
+    "StationInventoryManifestDaypartId": 360320
+  },
+  {
+    "CreatedDate": "2019-01-25T00:00:00",
+    "EndDate": "2019-02-12T00:00:00",
+    "EndTime": 5400,
+    "GenreId": 57,
+    "ProgramName": "Program 2 For 360320",
+    "ShowType": "movie",
+    "StartDate": "2019-02-01T00:00:00",
+    "StartTime": 3600,
+    "StationInventoryManifestDaypartId": 360320
+  },
+  {
+    "CreatedDate": "2019-01-25T00:00:00",
+    "EndDate": "2019-02-12T00:00:00",
+    "EndTime": 5400,
+    "GenreId": 57,
+    "ProgramName": "Program 1 For 360321",
+    "ShowType": "movie",
+    "StartDate": "2019-02-01T00:00:00",
+    "StartTime": 3600,
+    "StationInventoryManifestDaypartId": 360321
+  },
+  {
+    "CreatedDate": "2019-01-25T00:00:00",
+    "EndDate": "2019-02-12T00:00:00",
+    "EndTime": 5400,
+    "GenreId": 57,
+    "ProgramName": "Program 2 For 360321",
+    "ShowType": "movie",
+    "StartDate": "2019-02-01T00:00:00",
+    "StartTime": 3600,
+    "StationInventoryManifestDaypartId": 360321
+  }
+]

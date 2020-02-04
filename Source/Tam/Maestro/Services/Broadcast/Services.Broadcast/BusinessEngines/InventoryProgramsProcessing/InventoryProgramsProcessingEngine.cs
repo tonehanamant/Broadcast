@@ -88,7 +88,7 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
             {
                 LogHelper.Logger.Error(
                     $"Error caught processing an inventory file for program names.  JobId = '{jobId}'", ex);
-                _InventoryProgramsByFileJobsRepository.SetJobCompleteError(jobId, ex.Message);
+                _InventoryProgramsByFileJobsRepository.SetJobCompleteError(jobId, $"Error caught : {ex.Message} ; {ex.StackTrace}");
 
                 throw;
             }
@@ -139,9 +139,8 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
             }
             catch (Exception ex)
             {
-                LogHelper.Logger.Error(
-                    $"Error caught processing an inventory source for program names.  JobId = '{jobId}'", ex);
-                _InventoryProgramsBySourceJobsRepository.SetJobCompleteError(jobId, ex.Message);
+                LogHelper.Logger.Error($"Error caught processing an inventory source for program names.  JobId = '{jobId}'", ex);
+                _InventoryProgramsBySourceJobsRepository.SetJobCompleteError(jobId, $"Error caught : {ex.Message} ; {ex.StackTrace}");
 
                 throw;
             }
