@@ -488,20 +488,43 @@ namespace Services.Broadcast.Repositories
             return _InReadUncommitedTransaction(
                 c =>
                 {
-                    var query = c.station_inventory_manifest
+                    var foundIds = (from manifest in c.station_inventory_manifest
+                            join week in c.station_inventory_manifest_weeks on manifest.id equals week.station_inventory_manifest_id
+                            join file in c.inventory_files on manifest.file_id equals file.id
+                                   where manifest.inventory_source_id == sourceId &&
+                                   mediaWeekIds.Contains(week.media_week_id) &&
+                                   file.status == (int)FileStatusEnum.Loaded
+                                   select manifest.id
+                        ).Distinct().ToList();
+
+                    var foundManifests = c.station_inventory_manifest
                         .Include(x => x.station)
                         .Include(x => x.station_inventory_manifest_dayparts)
                         .Include(x => x.station_inventory_manifest_dayparts.Select(d => d.daypart_defaults))
                         .Include(x => x.station_inventory_manifest_dayparts.Select(d => d.daypart_defaults.daypart))
                         .Include(x => x.station_inventory_manifest_audiences)
                         .Include(x => x.station_inventory_manifest_rates)
-                        .Include(x => x.station_inventory_manifest_weeks.Where(w => mediaWeekIds.Contains(w.media_week_id)))
-                        .Where(x => x.inventory_source_id == sourceId &&
-                                    x.inventory_files.status == (int)FileStatusEnum.Loaded)
-                        ;
+                        .Include(x => x.station_inventory_manifest_weeks)
+                        .Where(x => foundIds.Contains(x.id))
+                        .ToList();
 
-                    return query.ToList().Select(x => _MapToInventoryManifest(x)).ToList();
+                    var manifestDtos = foundManifests.Select(x => _MapToInventoryManifest(_PruneManifestWeeks(x, mediaWeekIds))).ToList();
+                    return manifestDtos;
                 });
+        }
+
+        private station_inventory_manifest _PruneManifestWeeks(station_inventory_manifest manifest, List<int> keepWeekIds)
+        {
+            var weeksToKeep = new List<station_inventory_manifest_weeks>();
+            foreach (var week in manifest.station_inventory_manifest_weeks)
+            {
+                if (keepWeekIds.Contains(week.media_week_id))
+                {
+                    weeksToKeep.Add(week);
+                }
+            }
+            manifest.station_inventory_manifest_weeks = weeksToKeep;
+            return manifest;
         }
 
         private StationInventoryGroup _MapToInventoryGroup(station_inventory_group stationInventoryGroup)

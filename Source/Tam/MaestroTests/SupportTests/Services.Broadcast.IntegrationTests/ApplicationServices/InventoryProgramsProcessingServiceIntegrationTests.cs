@@ -9,6 +9,7 @@ using Services.Broadcast.Clients;
 using Services.Broadcast.Entities;
 using Services.Broadcast.IntegrationTests.Stubs;
 using System;
+using System.Linq;
 using Tam.Maestro.Common.DataLayer;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
@@ -44,13 +45,29 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void ProcessInventoryProgramsJob_TTWN_ManifestCount35_DaypartCount49_WeeksCount3()
+        public void ProcessInventoryProgramsJob_OpenMarket_ManifestCount2_DaypartCount2_WeekCount7()
         {
-            var fileId = 251391;
+            var fileId = 233317;
             using (new TransactionScopeWrapper())
             {
                 var queueResult = _InventoryProgramsProcessingService.QueueProcessInventoryProgramsByFileJob(fileId, TEST_USERNAME);
                 var result = _InventoryProgramsProcessingService.ProcessInventoryProgramsByFileJob(queueResult.Job.Id);
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, _GetJsonSettings()));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void QueueProcessInventoryProgramsBySourceJob()
+        {
+            var sourceId = 1;
+            var startDate = new DateTime(2018, 09, 20);
+            var endDate = new DateTime(2018, 09, 26);
+
+            using (new TransactionScopeWrapper())
+            {
+                var queueResult = _InventoryProgramsProcessingService.QueueProcessInventoryProgramsBySourceJob(sourceId, startDate, endDate, TEST_USERNAME);
+                var result = _InventoryProgramsProcessingService.ProcessInventoryProgramsBySourceJob(queueResult.Jobs.First().Id);
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, _GetJsonSettings()));
             }
         }
