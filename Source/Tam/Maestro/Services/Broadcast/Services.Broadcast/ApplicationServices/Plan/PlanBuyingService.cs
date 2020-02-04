@@ -58,7 +58,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
             result.Add(new PlanBuyingListingItem
             {
-                Id = 456,
+                Id = 459,
                 BookedBudget = 567000,
                 BookedImpressions = 98800000,
                 BookedCPM = 2.11,
@@ -84,12 +84,12 @@ namespace Services.Broadcast.ApplicationServices.Plan
             var result = new PlanBuying
             {
                 Id = 123,
-                Campaign = new PlanBuyingCampaign
+                Campaign = new PlanBuying.PlanBuyingCampaign
                 {
                     Id = 456,   
                     Name = "Some Campaign"
                 },
-                Plan = new PlanBuyingDetails
+                Plan = new PlanBuying.PlanBuyingDetails
                 {
                     Id = 123,
                     Name = "Some Plan",
@@ -100,9 +100,9 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     Budget = 250000,
                     Impressions = 27450000,
                     CPM = 9.10,
-                    Dayparts = new List<PlanBuyingDetailsDaypart>
+                    Dayparts = new List<PlanBuying.PlanBuyingDetails.PlanBuyingDetailsDaypart>
                     {
-                        new PlanBuyingDetailsDaypart
+                        new PlanBuying.PlanBuyingDetails.PlanBuyingDetailsDaypart
                         {
                             DaypartCodeId = 7,
                             DaypartTypeId = 2,
@@ -120,12 +120,12 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     PostingType = 1,
                     SpotLengthId = 1   
                 },
-                InventoryPlanner = new PlanBuyingInventoryPlanner
+                InventoryPlanner = new PlanBuying.PlanBuyingInventoryPlanner
                 {
                     Id = 123,
-                    Details = new List<PlanBuyingInventoryPlannerDetail>
+                    Details = new List<PlanBuying.PlanBuyingInventoryPlanner.PlanBuyingInventoryPlannerDetail>
                     {
-                        new PlanBuyingInventoryPlannerDetail
+                        new PlanBuying.PlanBuyingInventoryPlanner.PlanBuyingInventoryPlannerDetail
                         {
                             InventorySourceId =  1,
                             Budget = 18300,
@@ -136,7 +136,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                             Notes = "Some notes",
                             IsBooked = true
                          },
-                         new PlanBuyingInventoryPlannerDetail
+                         new PlanBuying.PlanBuyingInventoryPlanner.PlanBuyingInventoryPlannerDetail
                          {
                             InventorySourceId =  2,
                             Budget = 20222,
@@ -149,7 +149,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                          }
                     }
                 },
-                BookedBudget = 198000,
+                BookedBudget = 197000,
                 BookedImpressions = 36600000,
                 BookedCPM = 5.41,
                 GoalBudget = 199836,
@@ -161,9 +161,9 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 GoalImpressionsPercent = 125,
                 BookedCPMMarginPercent = 31.76,
                 GoalCPMMarginPercent = 20,
-                InventoryTypeMakeupDetails = new List<PlanBuyingInventoryTypeDetail>
+                InventoryTypeMakeupDetails = new List<PlanBuying.PlanBuyingInventoryTypeDetail>
                 {
-                    new PlanBuyingInventoryTypeDetail
+                    new PlanBuying.PlanBuyingInventoryTypeDetail
                     {
                         InventoryTypeId = 1,
                         Budget = 18300,
@@ -171,7 +171,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                         Impressions = 3660000,
                         SharePercent = 20
                     },
-                    new PlanBuyingInventoryTypeDetail
+                    new PlanBuying.PlanBuyingInventoryTypeDetail
                     {
                         InventoryTypeId = 2,
                         Budget = 18300,
@@ -180,9 +180,9 @@ namespace Services.Broadcast.ApplicationServices.Plan
                         SharePercent = 20
                     }
                 },
-                DaypartMakeupDetails = new List<PlanBuyingDaypart>
+                DaypartMakeupDetails = new List<PlanBuying.PlanBuyingDaypart>
                 {
-                    new PlanBuyingDaypart
+                    new PlanBuying.PlanBuyingDaypart
                     {
                         DaypartId = 1,
                         GoalPercent = 50,
@@ -191,7 +191,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                         CPM= 3.75,
                         Impressions= 3660000
                     },
-                    new PlanBuyingDaypart
+                    new PlanBuying.PlanBuyingDaypart
                     {
                         DaypartId = 2,
                         GoalPercent = null,
