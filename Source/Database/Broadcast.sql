@@ -3922,6 +3922,97 @@ GO
 
 /*************************************** END PRI-15880 *****************************************************/
 
+/*************************************** START PRI-20794 *****************************************************/
+IF OBJECT_ID('nti_to_nsi_conversion_rates') IS NULL
+BEGIN
+	CREATE TABLE [dbo].[nti_to_nsi_conversion_rates](
+		[id] int IDENTITY(1,1) NOT NULL,
+		[conversion_rate] float NOT NULL,
+		[daypart_default_id] int NOT NULL,
+		[media_month_id] int NOT NULL,
+	 CONSTRAINT [PK_nti_to_nsi_conversion_rates] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY]
+
+	ALTER TABLE [dbo].[nti_to_nsi_conversion_rates]  WITH CHECK ADD CONSTRAINT [FK_nti_to_nsi_conversion_rates_daypart_defaults] FOREIGN KEY([daypart_default_id])
+	REFERENCES [dbo].[daypart_defaults] ([id])
+
+	ALTER TABLE [dbo].[nti_to_nsi_conversion_rates]  WITH CHECK ADD CONSTRAINT [FK_nti_to_nsi_conversion_rates_media_months] FOREIGN KEY([media_month_id])
+	REFERENCES [dbo].[media_months] ([id])
+
+	ALTER TABLE [dbo].[nti_to_nsi_conversion_rates]
+	ADD CONSTRAINT [UQ_nti_to_nsi_conversion_rates_daypart_default_id_media_month_id] 
+	UNIQUE ([daypart_default_id], [media_month_id])
+
+	EXEC('
+		DECLARE @media_month_id int = (SELECT TOP 1 id FROM [dbo].[media_months] WHERE year = 2019 AND month = 2 );
+
+		DECLARE @daypart_default_id int = (SELECT TOP 1 daypart_defaults.id FROM daypart_defaults WHERE daypart_defaults.code = ''EMN'');
+		INSERT INTO nti_to_nsi_conversion_rates(conversion_rate, daypart_default_id, media_month_id) values(0.85, @daypart_default_id, @media_month_id);
+
+		SET @daypart_default_id = (SELECT TOP 1 daypart_defaults.id FROM daypart_defaults WHERE daypart_defaults.code = ''MDN'');
+		INSERT INTO nti_to_nsi_conversion_rates(conversion_rate, daypart_default_id, media_month_id) values(0.85, @daypart_default_id, @media_month_id);
+
+		SET @daypart_default_id = (SELECT TOP 1 daypart_defaults.id FROM daypart_defaults WHERE daypart_defaults.code = ''AMN'');
+		INSERT INTO nti_to_nsi_conversion_rates(conversion_rate, daypart_default_id, media_month_id) values(0.85, @daypart_default_id, @media_month_id);
+		
+		SET @daypart_default_id = (SELECT TOP 1 daypart_defaults.id FROM daypart_defaults WHERE daypart_defaults.code = ''EN'');
+		INSERT INTO nti_to_nsi_conversion_rates(conversion_rate, daypart_default_id, media_month_id) values(0.75, @daypart_default_id, @media_month_id);
+
+		SET @daypart_default_id = (SELECT TOP 1 daypart_defaults.id FROM daypart_defaults WHERE daypart_defaults.code = ''PMN'');
+		INSERT INTO nti_to_nsi_conversion_rates(conversion_rate, daypart_default_id, media_month_id) values(0.75, @daypart_default_id, @media_month_id);
+
+		SET @daypart_default_id = (SELECT TOP 1 daypart_defaults.id FROM daypart_defaults WHERE daypart_defaults.code = ''LN'');
+		INSERT INTO nti_to_nsi_conversion_rates(conversion_rate, daypart_default_id, media_month_id) values(0.75, @daypart_default_id, @media_month_id);
+
+		SET @daypart_default_id = (SELECT TOP 1 daypart_defaults.id FROM daypart_defaults WHERE daypart_defaults.code = ''ENLN'');
+		INSERT INTO nti_to_nsi_conversion_rates(conversion_rate, daypart_default_id, media_month_id) values(0.75, @daypart_default_id, @media_month_id);
+		
+		SET @daypart_default_id = (SELECT TOP 1 daypart_defaults.id FROM daypart_defaults WHERE daypart_defaults.code = ''TDN'');
+		INSERT INTO nti_to_nsi_conversion_rates(conversion_rate, daypart_default_id, media_month_id) values(0.80, @daypart_default_id, @media_month_id);
+
+		SET @daypart_default_id = (SELECT TOP 1 daypart_defaults.id FROM daypart_defaults WHERE daypart_defaults.code = ''EF'');
+		INSERT INTO nti_to_nsi_conversion_rates(conversion_rate, daypart_default_id, media_month_id) values(0.75, @daypart_default_id, @media_month_id);
+
+		SET @daypart_default_id = (SELECT TOP 1 daypart_defaults.id FROM daypart_defaults WHERE daypart_defaults.code = ''PA'');
+		INSERT INTO nti_to_nsi_conversion_rates(conversion_rate, daypart_default_id, media_month_id) values(0.75, @daypart_default_id, @media_month_id);
+
+		SET @daypart_default_id = (SELECT TOP 1 daypart_defaults.id FROM daypart_defaults WHERE daypart_defaults.code = ''PT'');
+		INSERT INTO nti_to_nsi_conversion_rates(conversion_rate, daypart_default_id, media_month_id) values(0.75, @daypart_default_id, @media_month_id);
+
+		SET @daypart_default_id = (SELECT TOP 1 daypart_defaults.id FROM daypart_defaults WHERE daypart_defaults.code = ''LF'');
+		INSERT INTO nti_to_nsi_conversion_rates(conversion_rate, daypart_default_id, media_month_id) values(0.75, @daypart_default_id, @media_month_id);
+
+		SET @daypart_default_id = (SELECT TOP 1 daypart_defaults.id FROM daypart_defaults WHERE daypart_defaults.code = ''SYN'');
+		INSERT INTO nti_to_nsi_conversion_rates(conversion_rate, daypart_default_id, media_month_id) values(0.75, @daypart_default_id, @media_month_id);
+
+		SET @daypart_default_id = (SELECT TOP 1 daypart_defaults.id FROM daypart_defaults WHERE daypart_defaults.code = ''DAY'');
+		INSERT INTO nti_to_nsi_conversion_rates(conversion_rate, daypart_default_id, media_month_id) values(0.75, @daypart_default_id, @media_month_id);
+
+		SET @daypart_default_id = (SELECT TOP 1 daypart_defaults.id FROM daypart_defaults WHERE daypart_defaults.code = ''OVN'');
+		INSERT INTO nti_to_nsi_conversion_rates(conversion_rate, daypart_default_id, media_month_id) values(0.75, @daypart_default_id, @media_month_id);
+
+		SET @daypart_default_id = (SELECT TOP 1 daypart_defaults.id FROM daypart_defaults WHERE daypart_defaults.code = ''EM'');
+		INSERT INTO nti_to_nsi_conversion_rates(conversion_rate, daypart_default_id, media_month_id) values(0.85, @daypart_default_id, @media_month_id);
+
+		SET @daypart_default_id = (SELECT TOP 1 daypart_defaults.id FROM daypart_defaults WHERE daypart_defaults.code = ''ROSS'');
+		INSERT INTO nti_to_nsi_conversion_rates(conversion_rate, daypart_default_id, media_month_id) values(0.75, @daypart_default_id, @media_month_id);
+
+		SET @daypart_default_id = (SELECT TOP 1 daypart_defaults.id FROM daypart_defaults WHERE daypart_defaults.code = ''SPORTS'');
+		INSERT INTO nti_to_nsi_conversion_rates(conversion_rate, daypart_default_id, media_month_id) values(0.75, @daypart_default_id, @media_month_id);
+
+		SET @daypart_default_id = (SELECT TOP 1 daypart_defaults.id FROM daypart_defaults WHERE daypart_defaults.code = ''ROSP'');
+		INSERT INTO nti_to_nsi_conversion_rates(conversion_rate, daypart_default_id, media_month_id) values(0.75, @daypart_default_id, @media_month_id);
+
+		SET @daypart_default_id = (SELECT TOP 1 daypart_defaults.id FROM daypart_defaults WHERE daypart_defaults.code = ''TDNS'');
+		INSERT INTO nti_to_nsi_conversion_rates(conversion_rate, daypart_default_id, media_month_id) values(0.75, @daypart_default_id, @media_month_id);
+	')
+END
+
+/*************************************** END PRI-20794 *****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

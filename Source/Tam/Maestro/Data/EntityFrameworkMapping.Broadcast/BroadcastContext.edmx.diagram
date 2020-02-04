@@ -401,6 +401,9 @@
         <AssociationConnector Association="BroadcastModel.FK_inventory_programs_by_file_job_notes_job" />
         <AssociationConnector Association="BroadcastModel.FK_inventory_programs_by_source_job_notes_job" />
         <AssociationConnector Association="BroadcastModel.FK_inventory_programs_by_source_jobs_inventory_source" />
+        <EntityTypeShape EntityType="BroadcastModel.nti_to_nsi_conversion_rates" Width="1.5" PointX="21.25" PointY="45.625" />
+        <AssociationConnector Association="BroadcastModel.FK_nti_to_nsi_conversion_rates_daypart_defaults" />
+        <AssociationConnector Association="BroadcastModel.FK_nti_to_nsi_conversion_rates_media_months" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

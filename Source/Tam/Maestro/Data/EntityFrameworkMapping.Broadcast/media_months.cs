@@ -27,6 +27,7 @@ namespace EntityFrameworkMapping.Broadcast
             this.plan_version_hut_book = new HashSet<plan_versions>();
             this.inventory_file_proprietary_header = new HashSet<inventory_file_proprietary_header>();
             this.inventory_file_proprietary_header1 = new HashSet<inventory_file_proprietary_header>();
+            this.nti_to_nsi_conversion_rates = new HashSet<nti_to_nsi_conversion_rates>();
         }
     
         public int id { get; set; }
@@ -48,5 +49,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<plan_versions> plan_version_hut_book { get; set; }
         public virtual ICollection<inventory_file_proprietary_header> inventory_file_proprietary_header { get; set; }
         public virtual ICollection<inventory_file_proprietary_header> inventory_file_proprietary_header1 { get; set; }
+        public virtual ICollection<nti_to_nsi_conversion_rates> nti_to_nsi_conversion_rates { get; set; }
     }
 }

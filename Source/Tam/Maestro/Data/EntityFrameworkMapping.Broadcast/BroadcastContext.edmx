@@ -640,6 +640,15 @@
           <Property Name="code" Type="varchar" MaxLength="15" Nullable="false" />
           <Property Name="name" Type="varchar" MaxLength="127" Nullable="false" />
         </EntityType>
+        <EntityType Name="nti_to_nsi_conversion_rates">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="conversion_rate" Type="float" Nullable="false" />
+          <Property Name="daypart_default_id" Type="int" Nullable="false" />
+          <Property Name="media_month_id" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="nti_transmittals_audiences">
           <Key>
             <PropertyRef Name="id" />
@@ -2733,6 +2742,30 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
             </Principal>
             <Dependent Role="nsi_component_audiences">
               <PropertyRef Name="audience_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_nti_to_nsi_conversion_rates_daypart_defaults">
+          <End Role="daypart_defaults" Type="Self.daypart_defaults" Multiplicity="1" />
+          <End Role="nti_to_nsi_conversion_rates" Type="Self.nti_to_nsi_conversion_rates" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="daypart_defaults">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="nti_to_nsi_conversion_rates">
+              <PropertyRef Name="daypart_default_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_nti_to_nsi_conversion_rates_media_months">
+          <End Role="media_months" Type="Self.media_months" Multiplicity="1" />
+          <End Role="nti_to_nsi_conversion_rates" Type="Self.nti_to_nsi_conversion_rates" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="media_months">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="nti_to_nsi_conversion_rates">
+              <PropertyRef Name="media_month_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -5175,6 +5208,7 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
           <EntitySet Name="media_months" EntityType="Self.media_months" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="media_weeks" EntityType="Self.media_weeks" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="nsi_component_audiences" EntityType="Self.nsi_component_audiences" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="nti_to_nsi_conversion_rates" EntityType="Self.nti_to_nsi_conversion_rates" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="nti_transmittals_audiences" EntityType="Self.nti_transmittals_audiences" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="nti_transmittals_file_problems" EntityType="Self.nti_transmittals_file_problems" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="nti_transmittals_file_report_ratings" EntityType="Self.nti_transmittals_file_report_ratings" Schema="dbo" store:Type="Tables" />
@@ -5521,6 +5555,14 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
           <AssociationSet Name="FK_nsi_component_audiences_audiences" Association="Self.FK_nsi_component_audiences_audiences">
             <End Role="audiences" EntitySet="audiences" />
             <End Role="nsi_component_audiences" EntitySet="nsi_component_audiences" />
+          </AssociationSet>
+          <AssociationSet Name="FK_nti_to_nsi_conversion_rates_daypart_defaults" Association="Self.FK_nti_to_nsi_conversion_rates_daypart_defaults">
+            <End Role="daypart_defaults" EntitySet="daypart_defaults" />
+            <End Role="nti_to_nsi_conversion_rates" EntitySet="nti_to_nsi_conversion_rates" />
+          </AssociationSet>
+          <AssociationSet Name="FK_nti_to_nsi_conversion_rates_media_months" Association="Self.FK_nti_to_nsi_conversion_rates_media_months">
+            <End Role="media_months" EntitySet="media_months" />
+            <End Role="nti_to_nsi_conversion_rates" EntitySet="nti_to_nsi_conversion_rates" />
           </AssociationSet>
           <AssociationSet Name="FK_nti_transmittals_audiences_audiences" Association="Self.FK_nti_transmittals_audiences_audiences">
             <End Role="audiences" EntitySet="audiences" />
@@ -7368,6 +7410,15 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
             <End Role="inventory_sources" EntitySet="inventory_sources" />
             <End Role="inventory_programs_by_source_jobs" EntitySet="inventory_programs_by_source_jobs" />
           </AssociationSet>
+          <EntitySet Name="nti_to_nsi_conversion_rates" EntityType="BroadcastModel.nti_to_nsi_conversion_rates" />
+          <AssociationSet Name="FK_nti_to_nsi_conversion_rates_daypart_defaults" Association="BroadcastModel.FK_nti_to_nsi_conversion_rates_daypart_defaults">
+            <End Role="daypart_defaults" EntitySet="daypart_defaults" />
+            <End Role="nti_to_nsi_conversion_rates" EntitySet="nti_to_nsi_conversion_rates" />
+          </AssociationSet>
+          <AssociationSet Name="FK_nti_to_nsi_conversion_rates_media_months" Association="BroadcastModel.FK_nti_to_nsi_conversion_rates_media_months">
+            <End Role="media_months" EntitySet="media_months" />
+            <End Role="nti_to_nsi_conversion_rates" EntitySet="nti_to_nsi_conversion_rates" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="audience_audiences">
           <Key>
@@ -7482,6 +7533,7 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
           <NavigationProperty Name="plan_version_hut_book" Relationship="BroadcastModel.FK_plan_versions_share_media_months" FromRole="media_months" ToRole="plan_versions" />
           <NavigationProperty Name="inventory_file_proprietary_header" Relationship="BroadcastModel.FK_inventory_file_proprietary_header_media_months" FromRole="media_months" ToRole="inventory_file_proprietary_header" />
           <NavigationProperty Name="inventory_file_proprietary_header1" Relationship="BroadcastModel.FK_inventory_file_proprietary_header_media_months_hut_book" FromRole="media_months" ToRole="inventory_file_proprietary_header" />
+          <NavigationProperty Name="nti_to_nsi_conversion_rates" Relationship="BroadcastModel.FK_nti_to_nsi_conversion_rates_media_months" FromRole="media_months" ToRole="nti_to_nsi_conversion_rates" />
           </EntityType>
         <EntityType Name="media_weeks">
           <Key>
@@ -12163,6 +12215,7 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
           <NavigationProperty Name="scx_generation_job_files" Relationship="BroadcastModel.FK_scx_generation_job_files_daypart_codes" FromRole="daypart_defaults" ToRole="scx_generation_job_files" />
           <NavigationProperty Name="scx_generation_jobs" Relationship="BroadcastModel.FK_scx_generation_jobs_daypart_codes" FromRole="daypart_defaults" ToRole="scx_generation_jobs" />
           <NavigationProperty Name="station_inventory_manifest_dayparts" Relationship="BroadcastModel.FK_station_inventory_manifest_dayparts_daypart_codes" FromRole="daypart_defaults" ToRole="station_inventory_manifest_dayparts" />
+          <NavigationProperty Name="nti_to_nsi_conversion_rates" Relationship="BroadcastModel.FK_nti_to_nsi_conversion_rates_daypart_defaults" FromRole="daypart_defaults" ToRole="nti_to_nsi_conversion_rates" />
           <Property Name="code" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
           <Property Name="name" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
         </EntityType>
@@ -12885,6 +12938,41 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
             </Principal>
             <Dependent Role="inventory_programs_by_source_jobs">
               <PropertyRef Name="inventory_source_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="nti_to_nsi_conversion_rates">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="conversion_rate" Type="Double" Nullable="false" />
+          <Property Name="daypart_default_id" Type="Int32" Nullable="false" />
+          <Property Name="media_month_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="daypart_defaults" Relationship="BroadcastModel.FK_nti_to_nsi_conversion_rates_daypart_defaults" FromRole="nti_to_nsi_conversion_rates" ToRole="daypart_defaults" />
+          <NavigationProperty Name="media_months" Relationship="BroadcastModel.FK_nti_to_nsi_conversion_rates_media_months" FromRole="nti_to_nsi_conversion_rates" ToRole="media_months" />
+        </EntityType>
+        <Association Name="FK_nti_to_nsi_conversion_rates_daypart_defaults">
+          <End Type="BroadcastModel.daypart_defaults" Role="daypart_defaults" Multiplicity="1" />
+          <End Type="BroadcastModel.nti_to_nsi_conversion_rates" Role="nti_to_nsi_conversion_rates" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="daypart_defaults">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="nti_to_nsi_conversion_rates">
+              <PropertyRef Name="daypart_default_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_nti_to_nsi_conversion_rates_media_months">
+          <End Type="BroadcastModel.media_months" Role="media_months" Multiplicity="1" />
+          <End Type="BroadcastModel.nti_to_nsi_conversion_rates" Role="nti_to_nsi_conversion_rates" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="media_months">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="nti_to_nsi_conversion_rates">
+              <PropertyRef Name="media_month_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -15084,6 +15172,16 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
                 <ScalarProperty Name="start_date" ColumnName="start_date" />
                 <ScalarProperty Name="inventory_source_id" ColumnName="inventory_source_id" />
                 <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="nti_to_nsi_conversion_rates">
+            <EntityTypeMapping TypeName="BroadcastModel.nti_to_nsi_conversion_rates">
+              <MappingFragment StoreEntitySet="nti_to_nsi_conversion_rates">
+                <ScalarProperty Name="media_month_id" ColumnName="media_month_id" />
+                <ScalarProperty Name="daypart_default_id" ColumnName="daypart_default_id" />
+                <ScalarProperty Name="conversion_rate" ColumnName="conversion_rate" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

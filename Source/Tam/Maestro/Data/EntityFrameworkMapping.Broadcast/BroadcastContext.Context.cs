@@ -181,6 +181,7 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<nti_universe_details> nti_universe_details { get; set; }
         public virtual DbSet<nti_universe_headers> nti_universe_headers { get; set; }
         public virtual DbSet<nti_universes> nti_universes { get; set; }
+        public virtual DbSet<nti_to_nsi_conversion_rates> nti_to_nsi_conversion_rates { get; set; }
         public virtual DbSet<inventory_programs_by_file_job_notes> inventory_programs_by_file_job_notes { get; set; }
         public virtual DbSet<inventory_programs_by_file_jobs> inventory_programs_by_file_jobs { get; set; }
         public virtual DbSet<inventory_programs_by_source_job_notes> inventory_programs_by_source_job_notes { get; set; }

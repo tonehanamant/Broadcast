@@ -487,6 +487,9 @@
     <Compile Include="nsi_component_audiences.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="nti_to_nsi_conversion_rates.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="nti_transmittals_audiences.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
