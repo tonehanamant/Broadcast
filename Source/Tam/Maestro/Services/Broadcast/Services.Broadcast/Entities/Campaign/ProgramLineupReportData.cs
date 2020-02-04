@@ -23,9 +23,9 @@ namespace Services.Broadcast.Entities.Campaign
         public string AccountExecutive { get; set; }
         public string ClientContact { get; set; }
 
-        private const string FILENAME_FORMAT = "program_lineup_report_{0}.xlsx";
+        private const string FILENAME_FORMAT = "Program_Lineup_Report_{0}_{1}.xslx";
         private const string PLAN_HEADER_NAME_FORMAT = "{0} | Program Lineup*";
-        private const string DATE_FORMAT_FILENAME = "yyyyMMdd";
+        private const string DATE_FORMAT_FILENAME = "MMddyyyy";
         private const string DATE_FORMAT_SHORT_YEAR_SLASHES = "MM/dd/yy";
 
         public ProgramLineupReportData(
@@ -37,7 +37,7 @@ namespace Services.Broadcast.Entities.Campaign
             List<LookupDto> spotLenghts,
             DateTime currentDate)
         {
-            ExportFileName = string.Format(FILENAME_FORMAT, currentDate.ToString(DATE_FORMAT_FILENAME));
+            ExportFileName = string.Format(FILENAME_FORMAT, plan.Name, currentDate.ToString(DATE_FORMAT_FILENAME));
 
             _PopulateHeaderData(plan, planPricingJob, agency, advertiser, guaranteedDemo, spotLenghts, currentDate);
         }
