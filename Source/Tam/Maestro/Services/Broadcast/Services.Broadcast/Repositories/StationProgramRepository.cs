@@ -130,8 +130,10 @@ namespace Services.Broadcast.Repositories
                                                 join programEnrichmentJob in context.inventory_programs_by_file_jobs on file.id equals programEnrichmentJob.inventory_file_id
                                                 join source in context.inventory_sources on file.inventory_source_id equals source.id
                                                 where inventorySourceTypes.Contains(source.inventory_source_type) &&
-                                                      ratingJob.status == (int)BackgroundJobProcessingStatus.Succeeded && // take only files with ratings calculated
-                                                      programEnrichmentJob.status == (int)InventoryProgramsJobStatus.Completed // take only files with program data populated
+                                                      ratingJob.status == (int)BackgroundJobProcessingStatus.Succeeded // take only files with ratings calculated
+                                                      // TODO: Bring this back in when ProgramGuide v2 is deployed to Cadent environment.
+                                                      //    Commented out per PRI-22371 : Pricing - remove program job from pricing model
+                                                      // && programEnrichmentJob.status == (int)InventoryProgramsJobStatus.Completed // take only files with program data populated
                                                 group file by file.id into fileGroup
                                                 select fileGroup.Key).ToList();
 
