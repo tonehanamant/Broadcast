@@ -77,7 +77,7 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
 
                 if (manifests.Any() == false)
                 {
-                    _InventoryProgramsByFileJobsRepository.SetJobCompleteSuccess(jobId, "Job ending because no manifest records found to process.");
+                    _InventoryProgramsByFileJobsRepository.SetJobCompleteWarning(jobId, "Job ending because no manifest records found to process.");
                     return processDiagnostics;
                 }
                 var result = _ProcessInventory(jobId, inventorySource, GenreSourceEnum.Dativa, manifests, null, processDiagnostics, _InventoryProgramsByFileJobsRepository);
@@ -142,8 +142,9 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
 
                     if (manifests.Any() == false)
                     {
-                        _InventoryProgramsBySourceJobsRepository.SetJobCompleteSuccess(jobId, "Job ending because no manifest records found to process.");
-                        return processDiagnostics;
+                        finalResult = InventoryProgramsJobStatus.Warning;
+                        _InventoryProgramsBySourceJobsRepository.UpdateJobMessage(jobId, $"Iteration for media week id '{mediaWeekId}' is ending because no manifest records found to process.");
+                        continue;
                     }
 
                     var iterationResult = _ProcessInventory(jobId, inventorySource, GenreSourceEnum.Dativa, manifests, mediaWeekId, processDiagnostics, _InventoryProgramsBySourceJobsRepository);
