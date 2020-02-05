@@ -249,7 +249,7 @@ namespace Services.Broadcast.ApplicationServices
                 Debug.WriteLine($"Created inventory summary in {sw.Elapsed}");
 
                 // add summary only if there is some inventory during the quarter
-                if (summaryData.TotalPrograms > 0)
+                if (summaryData.TotalPrograms > 0 || summaryData.TotalStations > 0 || summaryData.Details?.Any() == true)
                 {
                     result.Add(summaryData);
                 }
