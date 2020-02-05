@@ -62,7 +62,8 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                 var beforePrograms = repo.GetDaypartProgramsForInventoryDayparts(stationInventoryManifestDaypartIds);
                 Assert.AreEqual(expectedBeforeProgramCount, beforePrograms.Count);
 
-                repo.UpdateInventoryPrograms(newPrograms, createdAtDate, stationInventoryManifestDaypartIds, startDate, endDate);
+                repo.DeleteInventoryProgramsFromManifestDayparts(stationInventoryManifestDaypartIds, startDate, endDate);
+                repo.UpdateInventoryPrograms(newPrograms, createdAtDate);
 
                 var afterPrograms = repo.GetDaypartProgramsForInventoryDayparts(stationInventoryManifestDaypartIds);
 

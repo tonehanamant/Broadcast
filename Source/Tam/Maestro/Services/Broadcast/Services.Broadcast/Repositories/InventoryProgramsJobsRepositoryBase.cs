@@ -1,8 +1,8 @@
-﻿using System;
-using Common.Services.Repositories;
+﻿using Common.Services.Repositories;
 using ConfigurationService.Client;
 using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast.Entities.Enums;
+using System;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
 
@@ -15,6 +15,8 @@ namespace Services.Broadcast.Repositories
         void UpdateJobMessage(int jobId, string message);
 
         void SetJobCompleteError(int jobId, string errorMessage);
+
+        void SetJobCompleteWarning(int jobId, string warningMessage = null);
 
         void SetJobCompleteSuccess(int jobId, string message = null);
     }
@@ -49,6 +51,15 @@ namespace Services.Broadcast.Repositories
             if (string.IsNullOrWhiteSpace(errorMessage) == false)
             {
                 _UpdateJobNotes(jobId, errorMessage, DateTime.Now);
+            }
+        }
+
+        public void SetJobCompleteWarning(int jobId, string warningMessage = null)
+        {
+            _UpdateJob(jobId, InventoryProgramsJobStatus.Warning, DateTime.Now);
+            if (string.IsNullOrWhiteSpace(warningMessage) == false)
+            {
+                _UpdateJobNotes(jobId, warningMessage, DateTime.Now);
             }
         }
 

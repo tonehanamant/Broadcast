@@ -38,6 +38,11 @@
         /// <summary>
         /// The job failed with an error.
         /// </summary>
-        Error = 7
+        Error = 7,
+
+        /// <summary>
+        /// The job completed successfully with a warning.
+        /// </summary>
+        Warning = 8
     }
 }

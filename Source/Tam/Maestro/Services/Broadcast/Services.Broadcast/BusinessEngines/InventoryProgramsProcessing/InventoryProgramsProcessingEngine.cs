@@ -80,9 +80,16 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
                     _InventoryProgramsByFileJobsRepository.SetJobCompleteSuccess(jobId, "Job ending because no manifest records found to process.");
                     return processDiagnostics;
                 }
-                _ProcessInventory(jobId, inventorySource, GenreSourceEnum.Dativa, manifests, processDiagnostics, _InventoryProgramsByFileJobsRepository);
+                var result = _ProcessInventory(jobId, inventorySource, GenreSourceEnum.Dativa, manifests, null, processDiagnostics, _InventoryProgramsByFileJobsRepository);
 
-                _InventoryProgramsByFileJobsRepository.SetJobCompleteSuccess(jobId);
+                if (result == InventoryProgramsJobStatus.Warning)
+                {
+                    _InventoryProgramsByFileJobsRepository.SetJobCompleteWarning(jobId);
+                }
+                else
+                {
+                    _InventoryProgramsByFileJobsRepository.SetJobCompleteSuccess(jobId);
+                }
             }
             catch (Exception ex)
             {
@@ -117,25 +124,46 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
 
                 var inventorySource = _InventoryRepository.GetInventorySource(job.InventorySourceId);
                 var mediaWeekIds = _MediaWeekCache.GetDisplayMediaWeekByFlight(job.StartDate, job.EndDate).Select(w => w.Id).ToList();
-
                 processDiagnostics.RecordInventorySource(inventorySource);
                 processDiagnostics.RecordMediaWeekIds(mediaWeekIds);
-                /*** Gather Inventory ***/
-                processDiagnostics.RecordGatherInventoryStart();
-                _InventoryProgramsBySourceJobsRepository.UpdateJobStatus(jobId, InventoryProgramsJobStatus.GatherInventory);
-                // to make it work for Diginet remove from the below : 'm.Station != null &&'
-                var manifests = _InventoryRepository.GetInventoryManifestsBySourceAndMediaWeek(inventorySource.Id, mediaWeekIds);
-                processDiagnostics.RecordGatherInventoryStop();
 
-                if (manifests.Any() == false)
+                // this could be a lot of data, so iteration on weeks.
+                var finalResult = InventoryProgramsJobStatus.Completed;
+                foreach (var mediaWeekId in mediaWeekIds)
                 {
-                    _InventoryProgramsBySourceJobsRepository.SetJobCompleteSuccess(jobId, "Job ending because no manifest records found to process.");
-                    return processDiagnostics;
+                    _InventoryProgramsBySourceJobsRepository.UpdateJobMessage(jobId, $"Beginning iteration for media week id '{mediaWeekId}'.");
+                    
+                    /*** Gather Inventory ***/
+                    processDiagnostics.RecordGatherInventoryStart();
+                    _InventoryProgramsBySourceJobsRepository.UpdateJobStatus(jobId, InventoryProgramsJobStatus.GatherInventory);
+                    // to make it work for Diginet remove from the below : 'm.Station != null &&'
+                    var manifests = _InventoryRepository.GetInventoryManifestsBySourceAndMediaWeek(inventorySource.Id, new List<int> { mediaWeekId });
+                    processDiagnostics.RecordGatherInventoryStop();
+
+                    if (manifests.Any() == false)
+                    {
+                        _InventoryProgramsBySourceJobsRepository.SetJobCompleteSuccess(jobId, "Job ending because no manifest records found to process.");
+                        return processDiagnostics;
+                    }
+
+                    var iterationResult = _ProcessInventory(jobId, inventorySource, GenreSourceEnum.Dativa, manifests, mediaWeekId, processDiagnostics, _InventoryProgramsBySourceJobsRepository);
+                    if (iterationResult == InventoryProgramsJobStatus.Warning)
+                    {
+                        finalResult = InventoryProgramsJobStatus.Warning;
+                        _InventoryProgramsBySourceJobsRepository.UpdateJobMessage(jobId, $"Iteration for media week id '{mediaWeekId}' ended in warning.");
+                    }
                 }
+                _InventoryProgramsBySourceJobsRepository.UpdateJobMessage(jobId, $"Completed '{mediaWeekIds.Count}' iterations for media weeks.");
 
-                _ProcessInventory(jobId, inventorySource, GenreSourceEnum.Dativa, manifests, processDiagnostics, _InventoryProgramsBySourceJobsRepository);
-
-                _InventoryProgramsBySourceJobsRepository.SetJobCompleteSuccess(jobId);
+                if (finalResult == InventoryProgramsJobStatus.Warning)
+                {
+                    _InventoryProgramsBySourceJobsRepository.SetJobCompleteWarning(jobId);
+                }
+                else
+                {
+                    _InventoryProgramsBySourceJobsRepository.SetJobCompleteSuccess(jobId);
+                }
+                
             }
             catch (Exception ex)
             {
@@ -151,9 +179,10 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
             return processDiagnostics;
         }
 
-        private void _ProcessInventory(int jobId, InventorySource inventorySource, GenreSourceEnum genreSource, List<StationInventoryManifest> inventoryManifests,
+        private InventoryProgramsJobStatus _ProcessInventory(int jobId, InventorySource inventorySource, GenreSourceEnum genreSource, List<StationInventoryManifest> inventoryManifests, int? processMediaWeekId,
             InventoryProgramsProcessingJobDiagnostics processDiagnostics, IInventoryProgramsJobsRepository jobsRepository)
         {
+            var result = InventoryProgramsJobStatus.Completed;
             var requestElementNumber = 0;
             var requestElementMaxCount = _GetRequestElementMaxCount(); 
             var genreSourceId = (int) genreSource;
@@ -165,6 +194,16 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
             /*** Transform to ProgramGuideApi Input ***/
             var distinctWeeks = inventoryManifests.SelectMany(m => m.ManifestWeeks).Select(w => w.MediaWeek).Distinct()
                 .OrderBy(w => w.StartDate).ToList();
+
+            if (processMediaWeekId.HasValue)
+            {
+                distinctWeeks = distinctWeeks.Where(s => s.Id == processMediaWeekId).ToList();
+                if (distinctWeeks.Any() == false)
+                {
+                    throw new InvalidOperationException($"ProcessMediaWeekId of {processMediaWeekId} not found in the manifests.");
+                }
+            }
+
             processDiagnostics.RecordManifestDetails(inventoryManifests.Count, distinctWeeks.Count, inventoryManifests.Sum(m => m.ManifestDayparts.Count));
 
             var weekNumber = 0;
@@ -234,6 +273,8 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
                 var currentRequestChunkIndex = 0;
                 foreach (var requestChunk in requestChunks)
                 {
+                    var programs = new ConcurrentBag<StationInventoryManifestDaypartProgram>();
+
                     /*** Call Api ***/
                     jobsRepository.UpdateJobStatus(jobId, InventoryProgramsJobStatus.CallApi);
 
@@ -246,52 +287,63 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
 
                     if (programGuideResponse.Any() == false)
                     {
+                        result = InventoryProgramsJobStatus.Warning;
                         jobsRepository.UpdateJobMessage(jobId, $"Request set {currentRequestChunkIndex} returned no responses.");
-                        continue;
                     }
-
-                    /*** Apply Api Response ***/
-                    processDiagnostics.RecordIterationStartApplyApiResponse();
-
-                    jobsRepository.UpdateJobStatus(jobId, InventoryProgramsJobStatus.ApplyProgramData);
-
-                    var programs = new ConcurrentBag<StationInventoryManifestDaypartProgram>();
-
-                    foreach (var mapping in requestMappings)
+                    else
                     {
-                        // if a requestMapping doesn't havea response then log it
-                        var mappedResponses = programGuideResponse.Where(e => e.RequestDaypartId.Equals(mapping.RequestEntryId)).ToList();
+                        /*** Apply Api Response ***/
+                        processDiagnostics.RecordIterationStartApplyApiResponse();
+                        jobsRepository.UpdateJobStatus(jobId, InventoryProgramsJobStatus.ApplyProgramData);
 
-                        if (mappedResponses.Any() == false)
+                        foreach (var mapping in requestMappings)
                         {
-                            jobsRepository.UpdateJobMessage(jobId, $"A request received no response : {mapping}");
-                            continue;
-                        }
+                            // if a requestMapping doesn't have a response then log it
+                            var mappedResponses = programGuideResponse.Where(e => e.RequestDaypartId.Equals(mapping.RequestEntryId)).ToList();
 
-                        foreach (var responseEntry in mappedResponses)
-                        {
-                            responseEntry.Programs.Select(p => new StationInventoryManifestDaypartProgram
+                            if (mappedResponses.Any() == false)
                             {
-                                StationInventoryManifestDaypartId = mapping.ManifestDaypartId,
-                                ProgramName = p.ProgramName,
-                                ShowType = p.ShowType,
-                                Genre = p.SourceGenre,
-                                GenreSourceId = genreSourceId,
-                                GenreId = genres.Single(g => g.Display.Equals(p.SourceGenre)).Id,
-                                StartDate = p.StartDate,
-                                EndDate = p.EndDate,
-                                StartTime = p.StartTime,
-                                EndTime = p.EndTime
-                            }).ForEach(a => programs.Add(a));
-                        }
-                    }
+                                jobsRepository.UpdateJobMessage(jobId, $"A request received no response : {mapping}");
+                                result = InventoryProgramsJobStatus.Warning;
+                                continue;
+                            }
 
-                    processDiagnostics.RecordIterationStopApplyApiResponse(programs.Count);
+                            foreach (var responseEntry in mappedResponses)
+                            {
+                                responseEntry.Programs.Select(p => new StationInventoryManifestDaypartProgram
+                                {
+                                    StationInventoryManifestDaypartId = mapping.ManifestDaypartId,
+                                    ProgramName = p.ProgramName,
+                                    ShowType = p.ShowType,
+                                    Genre = p.SourceGenre,
+                                    GenreSourceId = genreSourceId,
+                                    GenreId = genres.Single(g => g.Display.Equals(p.SourceGenre)).Id,
+                                    StartDate = p.StartDate,
+                                    EndDate = p.EndDate,
+                                    StartTime = p.StartTime,
+                                    EndTime = p.EndTime
+                                }).ForEach(a => programs.Add(a));
+                            }
+                        }
+
+                        processDiagnostics.RecordIterationStopApplyApiResponse(programs.Count);
+                    }
 
                     /*** Save the programs ***/
                     jobsRepository.UpdateJobStatus(jobId, InventoryProgramsJobStatus.SavePrograms);
                     processDiagnostics.RecordIterationStartSavePrograms();
                     var programSaveChunksCount = 0;
+
+                    // clear out the old programs first.
+                    var manifestDaypartProgramDeleteChunks = requestMappings.Select((x, i) => new { Index = i, Value = x })
+                        .GroupBy(x => x.Index / SAVE_CHUNK_SIZE)
+                        .Select(x => x.Select(v => v.Value).ToList())
+                        .ToList();
+
+                    jobsRepository.UpdateJobMessage(jobId, $"Removing programs from {requestMappings.Count} manifests split into {manifestDaypartProgramDeleteChunks.Count} chunks.");
+                    manifestDaypartProgramDeleteChunks.ForEach(chunk => 
+                        _InventoryRepository.DeleteInventoryProgramsFromManifestDayparts(chunk.Select(c => c.ManifestDaypartId).ToList(), 
+                            week.StartDate, week.EndDate));
 
                     if (programs.Any())
                     {
@@ -301,14 +353,19 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
                             .ToList();
                         programSaveChunksCount = programSaveChunks.Count;
 
-                        programSaveChunks.ForEach(chunk => _InventoryRepository.UpdateInventoryPrograms(chunk,
-                            DateTime.Now, chunk.Select(c => c.StationInventoryManifestDaypartId).ToList(),
-                            week.StartDate, week.EndDate));
+                        programSaveChunks.ForEach(chunk => _InventoryRepository.UpdateInventoryPrograms(chunk, DateTime.Now));
+                    }
+                    else
+                    {
+                        result = InventoryProgramsJobStatus.Warning;
+                        jobsRepository.UpdateJobMessage(jobId, $"Ending iteration without saving programs.");
                     }
 
                     processDiagnostics.RecordIterationStopSavePrograms(programSaveChunksCount);
                 }
             }
+
+            return result;
         }
 
         internal void onMessageUpdated_ByFileJobs(int jobId, string message)

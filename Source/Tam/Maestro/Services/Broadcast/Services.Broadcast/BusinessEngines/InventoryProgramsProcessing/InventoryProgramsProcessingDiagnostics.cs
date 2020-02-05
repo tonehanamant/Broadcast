@@ -76,11 +76,11 @@ namespace Services.Broadcast.Entities
 
         public void RecordManifestDetails(int manifestCount, int weekCount, int daypartCount)
         {
-            TotalManifestCount = manifestCount;
-            TotalWeekCount = weekCount;
-            TotalDaypartCount = daypartCount;
+            TotalManifestCount += manifestCount;
+            TotalWeekCount += weekCount;
+            TotalDaypartCount += daypartCount;
 
-            _ReportToConsoleAndJobNotes($"Inventory manifest count {TotalManifestCount} translated to {TotalWeekCount} distinct weeks for {TotalDaypartCount} dayparts.");
+            _ReportToConsoleAndJobNotes($"Adding Iteration counts : Inventory manifest count {manifestCount} translated to {weekCount} distinct weeks for {daypartCount} dayparts.");
         }
 
         public void RecordIterationStart(int iterationNumber, int iterationTotalNumber)

@@ -157,11 +157,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             _InventoryRepo.Setup(r => r.GetStationInventoryManifestsByFileId(It.IsAny<int>()))
                 .Callback(() => getStationInventoryManifestsByFileIdCalled++)
                 .Returns(manifests);
+
+            var deleteInventoryProgramsFromManifestDaypartsCalled = 0;
+            _InventoryRepo.Setup(r => r.DeleteInventoryProgramsFromManifestDayparts(It.IsAny<List<int>>(),
+                    It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Callback(() => deleteInventoryProgramsFromManifestDaypartsCalled++);
             var updateInventoryProgramsCalled = 0;
             _InventoryRepo.Setup(r => r.UpdateInventoryPrograms(
-                    It.IsAny<List<StationInventoryManifestDaypartProgram>>(), It.IsAny<DateTime>(),
-                    It.IsAny<List<int>>(),
-                    It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                    It.IsAny<List<StationInventoryManifestDaypartProgram>>(), It.IsAny<DateTime>()))
                 .Callback(() => updateInventoryProgramsCalled++);
 
             _InventoryFileRepo.Setup(r => r.GetInventoryFileById(It.IsAny<int>()))
@@ -206,6 +209,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             Assert.AreEqual(1, setJobCompleteSuccessCalled);
             Assert.AreEqual(0, setJobCompleteErrorCalled);
             Assert.AreEqual(3, getProgramsForGuideCalled);
+            Assert.AreEqual(3, deleteInventoryProgramsFromManifestDaypartsCalled);
             Assert.AreEqual(3, updateInventoryProgramsCalled);
         }
 
@@ -371,6 +375,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 IsActive = true,
                 InventoryType = InventorySourceTypeEnum.OpenMarket
             };
+            var mediaWeeks = new List<DisplayMediaWeek>
+            {
+                new DisplayMediaWeek {Id = 1},
+                new DisplayMediaWeek {Id = 2},
+                new DisplayMediaWeek {Id = 3}
+            };
             var manifests = _GetManifests();
             var genres = _GetGenres();
             var guideResponse = _GetGuideResponse();
@@ -383,11 +393,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             _InventoryRepo.Setup(r => r.GetInventorySource(It.IsAny<int>()))
                 .Callback(() => getInventorySourceCalled++)
                 .Returns(inventorySource);
+            var deleteInventoryProgramsFromManifestDaypartsCalled = 0;
+            _InventoryRepo.Setup(r => r.DeleteInventoryProgramsFromManifestDayparts(It.IsAny<List<int>>(),
+                    It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Callback(() => deleteInventoryProgramsFromManifestDaypartsCalled++);
             var updateInventoryProgramsCalled = 0;
             _InventoryRepo.Setup(r => r.UpdateInventoryPrograms(
-                    It.IsAny<List<StationInventoryManifestDaypartProgram>>(), It.IsAny<DateTime>(),
-                    It.IsAny<List<int>>(),
-                    It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                    It.IsAny<List<StationInventoryManifestDaypartProgram>>(), It.IsAny<DateTime>()))
                 .Callback(() => updateInventoryProgramsCalled++);
 
             var inventoryProgramsBySourceJobsRepoCalls = 0;
@@ -407,12 +419,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             var getDisplayMediaWeekByFlightCalled = 0;
             _MediaWeekCache.Setup(c => c.GetDisplayMediaWeekByFlight(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Callback(() => getDisplayMediaWeekByFlightCalled++)
-                .Returns(new List<DisplayMediaWeek>
-                {
-                    new DisplayMediaWeek{Id = 1},
-                    new DisplayMediaWeek{Id = 2},
-                    new DisplayMediaWeek{Id = 3}
-                });
+                .Returns(mediaWeeks);
 
             var getGenresBySourceIdCalled = 0;
             _GenreRepo.Setup(r => r.GetGenresBySourceId(It.IsAny<int>()))
@@ -436,13 +443,110 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             Assert.NotNull(results);
             Assert.AreEqual(1, inventoryProgramsBySourceJobsRepoCalls);
             Assert.AreEqual(1, getInventorySourceCalled);
-            Assert.AreEqual(1, getGenresBySourceIdCalled);
+            Assert.AreEqual(3, getGenresBySourceIdCalled);
             Assert.AreEqual(1, getDisplayMediaWeekByFlightCalled);
-            Assert.AreEqual(1, getInventoryManifestsBySourceAndMediaWeekCalled);
+            Assert.AreEqual(3, getInventoryManifestsBySourceAndMediaWeekCalled);
             Assert.AreEqual(1, setJobCompleteSuccessCalled);
             Assert.AreEqual(0, setJobCompleteErrorCalled);
             Assert.AreEqual(3, getProgramsForGuideCalled);
+            Assert.AreEqual(3, deleteInventoryProgramsFromManifestDaypartsCalled);
             Assert.AreEqual(3, updateInventoryProgramsCalled);
+        }
+
+        [Test]
+        public void ProcessInventoryProgramsBySourceJob_EmptyResponse()
+        {
+            const int jobId = 13;
+            const int sourceID = 1;
+            var startDate = new DateTime(2020, 01, 01);
+            var endDate = new DateTime(2020, 01, 21);
+
+            var inventorySource = new InventorySource
+            {
+                Id = 1,
+                Name = "NumberOneSource",
+                IsActive = true,
+                InventoryType = InventorySourceTypeEnum.OpenMarket
+            };
+            var mediaWeeks = new List<DisplayMediaWeek>
+            {
+                new DisplayMediaWeek {Id = 1},
+                new DisplayMediaWeek {Id = 2},
+                new DisplayMediaWeek {Id = 3}
+            };
+            var manifests = _GetManifests();
+            var genres = _GetGenres();
+            var guideResponse = new List<GuideResponseElementDto>();
+
+            var getInventoryManifestsBySourceAndMediaWeekCalled = 0;
+            _InventoryRepo.Setup(r => r.GetInventoryManifestsBySourceAndMediaWeek(It.IsAny<int>(), It.IsAny<List<int>>()))
+                .Callback(() => getInventoryManifestsBySourceAndMediaWeekCalled++)
+                .Returns(manifests);
+            var getInventorySourceCalled = 0;
+            _InventoryRepo.Setup(r => r.GetInventorySource(It.IsAny<int>()))
+                .Callback(() => getInventorySourceCalled++)
+                .Returns(inventorySource);
+            var deleteInventoryProgramsFromManifestDaypartsCalled = 0;
+            _InventoryRepo.Setup(r => r.DeleteInventoryProgramsFromManifestDayparts(It.IsAny<List<int>>(),
+                    It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Callback(() => deleteInventoryProgramsFromManifestDaypartsCalled++);
+            var updateInventoryProgramsCalled = 0;
+            _InventoryRepo.Setup(r => r.UpdateInventoryPrograms(
+                    It.IsAny<List<StationInventoryManifestDaypartProgram>>(), It.IsAny<DateTime>()))
+                .Callback(() => updateInventoryProgramsCalled++);
+
+            var inventoryProgramsBySourceJobsRepoCalls = 0;
+            _InventoryProgramsBySourceJobsRepo.Setup(r => r.GetJob(It.IsAny<int>()))
+                .Callback(() => inventoryProgramsBySourceJobsRepoCalls++)
+                .Returns<int>((id) => new InventoryProgramsBySourceJob
+                {
+                    Id = id,
+                    InventorySourceId = sourceID,
+                    StartDate = startDate,
+                    EndDate = endDate,
+                    Status = InventoryProgramsJobStatus.Queued,
+                    QueuedAt = DateTime.Now,
+                    QueuedBy = "TestUser"
+                });
+
+            var getDisplayMediaWeekByFlightCalled = 0;
+            _MediaWeekCache.Setup(c => c.GetDisplayMediaWeekByFlight(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Callback(() => getDisplayMediaWeekByFlightCalled++)
+                .Returns(mediaWeeks);
+
+            var getGenresBySourceIdCalled = 0;
+            _GenreRepo.Setup(r => r.GetGenresBySourceId(It.IsAny<int>()))
+                .Callback(() => getGenresBySourceIdCalled++)
+                .Returns(genres);
+
+            var setJobCompleteSuccessCalled = 0;
+            _InventoryProgramsBySourceJobsRepo.Setup(r => r.SetJobCompleteSuccess(It.IsAny<int>(), It.IsAny<string>())).Callback(() => setJobCompleteSuccessCalled++);
+            var setJobCompleteErrorCalled = 0;
+            _InventoryProgramsBySourceJobsRepo.Setup(r => r.SetJobCompleteError(It.IsAny<int>(), It.IsAny<string>())).Callback(() => setJobCompleteErrorCalled++);
+            var setJobCompleteWarningCalled = 0;
+            _InventoryProgramsBySourceJobsRepo.Setup(r => r.SetJobCompleteWarning(It.IsAny<int>(), It.IsAny<string>())).Callback(() => setJobCompleteWarningCalled++);
+
+            var getProgramsForGuideCalled = 0;
+            _ProgramGuidClient.Setup(s => s.GetProgramsForGuide(It.IsAny<List<GuideRequestElementDto>>()))
+                .Callback(() => getProgramsForGuideCalled++)
+                .Returns(guideResponse);
+
+            var engine = _GetInventoryProgramsProcessingEngine();
+
+            var results = engine.ProcessInventoryProgramsBySourceJob(jobId);
+
+            Assert.NotNull(results);
+            Assert.AreEqual(1, inventoryProgramsBySourceJobsRepoCalls);
+            Assert.AreEqual(1, getInventorySourceCalled);
+            Assert.AreEqual(3, getGenresBySourceIdCalled);
+            Assert.AreEqual(1, getDisplayMediaWeekByFlightCalled);
+            Assert.AreEqual(3, getInventoryManifestsBySourceAndMediaWeekCalled);
+            Assert.AreEqual(0, setJobCompleteSuccessCalled);
+            Assert.AreEqual(0, setJobCompleteErrorCalled);
+            Assert.AreEqual(1, setJobCompleteWarningCalled);
+            Assert.AreEqual(3, getProgramsForGuideCalled);
+            Assert.AreEqual(3, deleteInventoryProgramsFromManifestDaypartsCalled);
+            Assert.AreEqual(0, updateInventoryProgramsCalled);
         }
 
         private List<GuideResponseElementDto> _GetGuideResponse()

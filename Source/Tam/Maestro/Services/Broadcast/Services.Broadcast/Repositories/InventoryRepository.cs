@@ -125,9 +125,12 @@ namespace Services.Broadcast.Repositories
         /// <param name="inventorySourceId">The inventory source identifier.</param>
         void AddNewManifests(IEnumerable<StationInventoryManifest> manifests, int inventoryFileId, int inventorySourceId);
 
-        void UpdateInventoryPrograms(List<StationInventoryManifestDaypartProgram> newPrograms, DateTime createdAt, List<int> manifestDaypartIds, DateTime startDate, DateTime endDate);
+        void UpdateInventoryPrograms(List<StationInventoryManifestDaypartProgram> newPrograms, DateTime createdAt);
 
         List<StationInventoryManifestDaypartProgram> GetDaypartProgramsForInventoryDayparts(List<int> stationInventoryManifestDaypartIds);
+
+        void DeleteInventoryProgramsFromManifestDayparts(List<int> manifestDaypartIds, DateTime startDate,
+            DateTime endDate);
     }
 
     public class InventoryRepository : BroadcastRepositoryBase, IInventoryRepository
@@ -490,24 +493,15 @@ namespace Services.Broadcast.Repositories
             return _InReadUncommitedTransaction(
                 c =>
                 {
-                    var foundIds = (from manifest in c.station_inventory_manifest
-                            join week in c.station_inventory_manifest_weeks on manifest.id equals week.station_inventory_manifest_id
-                            join file in c.inventory_files on manifest.file_id equals file.id
-                                   where manifest.inventory_source_id == sourceId &&
-                                   mediaWeekIds.Contains(week.media_week_id) &&
-                                   file.status == (int)FileStatusEnum.Loaded
-                                   select manifest.id
-                        ).Distinct().ToList();
-
-                    var foundManifests = c.station_inventory_manifest
-                        .Include(x => x.station)
-                        .Include(x => x.station_inventory_manifest_dayparts)
-                        .Include(x => x.station_inventory_manifest_dayparts.Select(d => d.daypart_defaults))
-                        .Include(x => x.station_inventory_manifest_dayparts.Select(d => d.daypart_defaults.daypart))
-                        .Include(x => x.station_inventory_manifest_audiences)
-                        .Include(x => x.station_inventory_manifest_rates)
-                        .Include(x => x.station_inventory_manifest_weeks)
-                        .Where(x => foundIds.Contains(x.id))
+                    var foundManifests = c.station_inventory_manifest_weeks
+                        .Include(x => x.station_inventory_manifest)
+                        .Include(x => x.station_inventory_manifest.station_inventory_manifest_dayparts)
+                        .Include(x => x.station_inventory_manifest.station)
+                        .Where(x => mediaWeekIds.Contains(x.media_week_id) &&
+                            x.station_inventory_manifest.inventory_source_id == sourceId &&
+                            x.station_inventory_manifest.inventory_files.status == (int)FileStatusEnum.Loaded)
+                        .Select(x=> x.station_inventory_manifest)
+                        .Distinct()
                         .ToList();
 
                     var manifestDtos = foundManifests.Select(x => _MapToInventoryManifest(_PruneManifestWeeks(x, mediaWeekIds))).ToList();
@@ -1507,19 +1501,29 @@ namespace Services.Broadcast.Repositories
             return dto;
         }
 
-        public void UpdateInventoryPrograms(List<StationInventoryManifestDaypartProgram> newPrograms, DateTime createdAt, List<int> manifestDaypartIds, DateTime startDate, DateTime endDate)
+        public void DeleteInventoryProgramsFromManifestDayparts(List<int> manifestDaypartIds, DateTime startDate, DateTime endDate)
         {
             _InReadUncommitedTransaction(
                 context =>
                 {
-                    var items = context.station_inventory_manifest_daypart_programs.Where(p =>
-                        manifestDaypartIds.Contains(p.station_inventory_manifest_daypart_id));
-                    var toRemove = items.Where(p => p.start_date <= endDate && p.end_date >= startDate);
-                    if (toRemove.Any())
-                    {
-                        context.station_inventory_manifest_daypart_programs.RemoveRange(toRemove);
-                    }
+                    var toRemove = context.station_inventory_manifest_daypart_programs.Where(p =>
+                        manifestDaypartIds.Contains(p.station_inventory_manifest_daypart_id) 
+                        && p.start_date <= endDate && p.end_date >= startDate);
 
+                    if (toRemove.Any() == false)
+                    {
+                        return;
+                    }
+                    context.station_inventory_manifest_daypart_programs.RemoveRange(toRemove);
+                    context.SaveChanges();
+                });
+        }
+
+        public void UpdateInventoryPrograms(List<StationInventoryManifestDaypartProgram> newPrograms, DateTime createdAt)
+        {
+            _InReadUncommitedTransaction(
+                context =>
+                {
                     context.station_inventory_manifest_daypart_programs.AddRange(
                         newPrograms.Select(p => new station_inventory_manifest_daypart_programs
                         {
