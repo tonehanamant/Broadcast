@@ -335,14 +335,15 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
                     var programSaveChunksCount = 0;
 
                     // clear out the old programs first.
-                    var manifestDaypartProgramDeleteChunks = requestMappings.Select((x, i) => new { Index = i, Value = x })
+                    var deleteProgramsForDayparts = requestMappings.Select(m => m.ManifestDaypartId).Distinct().ToList();
+                    var deleteProgramsForDaypartsChunks = deleteProgramsForDayparts.Select((x, i) => new { Index = i, Value = x })
                         .GroupBy(x => x.Index / SAVE_CHUNK_SIZE)
                         .Select(x => x.Select(v => v.Value).ToList())
                         .ToList();
 
-                    jobsRepository.UpdateJobMessage(jobId, $"Removing programs from {requestMappings.Count} manifests split into {manifestDaypartProgramDeleteChunks.Count} chunks.");
-                    manifestDaypartProgramDeleteChunks.ForEach(chunk => 
-                        _InventoryRepository.DeleteInventoryProgramsFromManifestDayparts(chunk.Select(c => c.ManifestDaypartId).ToList(), 
+                    jobsRepository.UpdateJobMessage(jobId, $"Removing programs from {requestMappings.Count} manifests split into {deleteProgramsForDaypartsChunks.Count} chunks.");
+                    deleteProgramsForDaypartsChunks.ForEach(chunk => 
+                        _InventoryRepository.DeleteInventoryProgramsFromManifestDayparts(chunk.Select(c => c).ToList(), 
                             week.StartDate, week.EndDate));
 
                     if (programs.Any())
