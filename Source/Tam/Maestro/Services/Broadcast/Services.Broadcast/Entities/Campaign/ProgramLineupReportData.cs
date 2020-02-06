@@ -23,7 +23,7 @@ namespace Services.Broadcast.Entities.Campaign
         public string AccountExecutive { get; set; }
         public string ClientContact { get; set; }
 
-        private const string FILENAME_FORMAT = "Program_Lineup_Report_{0}_{1}.xslx";
+        private const string FILENAME_FORMAT = "Program_Lineup_Report_{0}_{1}.xlsx";
         private const string PLAN_HEADER_NAME_FORMAT = "{0} | Program Lineup*";
         private const string DATE_FORMAT_FILENAME = "MMddyyyy";
         private const string DATE_FORMAT_SHORT_YEAR_SLASHES = "MM/dd/yy";
