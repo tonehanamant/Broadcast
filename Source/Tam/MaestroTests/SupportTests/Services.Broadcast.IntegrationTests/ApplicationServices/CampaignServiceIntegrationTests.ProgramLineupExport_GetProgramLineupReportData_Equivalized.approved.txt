@@ -4,7 +4,7 @@
   "Agency": "Stub Agency",
   "Client": "Stub Advertiser",
   "ClientContact": "",
-  "ExportFileName": "Program_Lineup_Report_Plan in contracted_02042020.xslx",
+  "ExportFileName": "Program_Lineup_Report_Plan in contracted_02042020.xlsx",
   "FlightEndDate": "04/12/20",
   "FlightStartDate": "03/14/20",
   "GuaranteedDemo": "A21-24",
