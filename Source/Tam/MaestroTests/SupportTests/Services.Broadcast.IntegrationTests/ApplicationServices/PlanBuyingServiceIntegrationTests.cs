@@ -18,7 +18,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void GetPlansBuying()
         {
-            var plans = _PlanBuyingService.GetPlansBuying(1,4000);
+            var plans = _PlanBuyingService.GetPlansBuying(new PlanBuyingListRequest
+            {
+                StatusFilter = 0,
+                FlightFilter =  0
+            });
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(plans));
         }

@@ -13,7 +13,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// Gets plans buying list.
         /// </summary>
         /// <returns></returns>
-        List<PlanBuyingListingItem> GetPlansBuying(int StatusFilter, int FlightFilter);
+        List<PlanBuyingListingItem> GetPlansBuying(PlanBuyingListRequest request);
 
         /// <summary>
         /// Gets the plan buying.
@@ -32,7 +32,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
     public class PlanBuyingService : IPlanBuyingService
     {
-        public List<PlanBuyingListingItem> GetPlansBuying(int StatusFilter, int FlightFilter)
+        public List<PlanBuyingListingItem> GetPlansBuying(PlanBuyingListRequest request)
         {
             var result = new List<PlanBuyingListingItem>();
 

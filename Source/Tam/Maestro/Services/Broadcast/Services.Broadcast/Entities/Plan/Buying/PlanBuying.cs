@@ -162,6 +162,12 @@ namespace Services.Broadcast.Entities.Plan
         public string ModifiedBy { get; set; }
     }
 
+    public class PlanBuyingListRequest
+    {
+        public int StatusFilter { get; set; }
+        public int FlightFilter { get; set; }
+    }
+
     public class PlanBuyingRequest
     {
         public int Id { get; set; }

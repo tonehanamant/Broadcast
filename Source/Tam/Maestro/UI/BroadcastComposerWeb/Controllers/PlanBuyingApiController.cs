@@ -32,11 +32,11 @@ namespace BroadcastComposerWeb.Controllers
         /// <returns>List of plan buying</returns>
         [HttpPost]
         [Route("")]
-        public BaseResponse<List<PlanBuyingListingItem>> GetPlansBuying(int StatusFilter, int FlightFilter)
+        public BaseResponse<List<PlanBuyingListingItem>> GetPlansBuying(PlanBuyingListRequest request)
         {
             return
                 _ConvertToBaseResponse(
-                    () => _ApplicationServiceFactory.GetApplicationService<IPlanBuyingService>().GetPlansBuying(StatusFilter, FlightFilter));
+                    () => _ApplicationServiceFactory.GetApplicationService<IPlanBuyingService>().GetPlansBuying(request));
         }
 
         /// <summary>
