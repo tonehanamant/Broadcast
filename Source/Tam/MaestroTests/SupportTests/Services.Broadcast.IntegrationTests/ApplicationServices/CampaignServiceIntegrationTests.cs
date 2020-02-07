@@ -26,6 +26,7 @@ using System.IO;
 using Common.Services;
 using Services.Broadcast.ReportGenerators.ProgramLineup;
 using Services.Broadcast.Entities.Plan.Pricing;
+using Services.Broadcast.ReportGenerators.CampaignExport;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
@@ -586,8 +587,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 });
 
                 //write excel file to file system(this is used for manual testing only)
-                //var reportOutput = new CampaignReportGenerator().Generate(reportData);
-                //using (var destinationFileStream = new FileStream($@"C:\temp\plan-excel-generation\{reportOutput.Filename}", FileMode.OpenOrCreate))
+                //var reportOutput = new CampaignReportGenerator(@".\Files\Excel templates").Generate(reportData);
+                //using (var destinationFileStream = new FileStream($@"C:\Users\sroibu\Downloads\integration_tests_exports\{reportOutput.Filename}", FileMode.OpenOrCreate))
                 //{
                 //    while (reportOutput.Stream.Position < reportOutput.Stream.Length)
                 //    {
@@ -621,7 +622,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     CampaignId = 652,
                     ExportType = CampaignExportTypeEnum.Contract,
                     SelectedPlans = new List<int> { 1852, 1853 }
-                }, user, now);
+                }, user, now, "./Files/Excel templates");
 
                 sharedFolderFile = sharedFolderRepository.GetFileById(fileId);
             }
@@ -678,8 +679,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 });
 
                 //write excel file to file system(this is used for manual testing only)
-                //var reportOutput = new CampaignReportGenerator().Generate(reportData);
-                //using (var destinationFileStream = new FileStream($@"C:\temp\plan-excel-generation\{reportOutput.Filename}", FileMode.OpenOrCreate))
+                //var reportOutput = new CampaignReportGenerator(@".\Files\Excel templates").Generate(reportData);
+                //using (var destinationFileStream = new FileStream($@"C:\Users\sroibu\Downloads\integration_tests_exports\{reportOutput.Filename}", FileMode.OpenOrCreate))
                 //{
                 //    while (reportOutput.Stream.Position < reportOutput.Stream.Length)
                 //    {
@@ -709,8 +710,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 });
 
                 //write excel file to file system(this is used for manual testing only)
-                //var reportOutput = new CampaignReportGenerator().Generate(reportData);
-                //using (var destinationFileStream = new FileStream($@"C:\temp\plan-excel-generation\{reportOutput.Filename}", FileMode.OpenOrCreate))
+                //var reportOutput = new CampaignReportGenerator(@".\Files\Excel templates").Generate(reportData);
+                //using (var destinationFileStream = new FileStream($@"C:\Users\sroibu\Downloads\integration_tests_exports\{reportOutput.Filename}", FileMode.OpenOrCreate))
                 //{
                 //    while (reportOutput.Stream.Position < reportOutput.Stream.Length)
                 //    {
@@ -981,9 +982,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     SelectedPlans = new List<int> { planId }
                 }, now);
 
-                var reportOutput = new ProgramLineupReportGenerator().Generate(reportData);
+                var reportOutput = new ProgramLineupReportGenerator(@".\Files\Excel templates").Generate(reportData);
 
-                using (var destinationFileStream = new FileStream($@"D:\Users\achyzh\results\{reportOutput.Filename}", FileMode.OpenOrCreate))
+                using (var destinationFileStream = new FileStream($@"C:\Users\sroibu\Downloads\integration_tests_exports\{reportOutput.Filename}", FileMode.OpenOrCreate))
                 {
                     while (reportOutput.Stream.Position < reportOutput.Stream.Length)
                     {

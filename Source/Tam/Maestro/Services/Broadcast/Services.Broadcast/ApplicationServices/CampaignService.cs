@@ -95,8 +95,9 @@ namespace Services.Broadcast.ApplicationServices
         /// <param name="request">CampaignReportRequest object containing the campaign id and the selected plans id</param>
         /// <param name="userName"></param>
         /// <param name="currentDate"></param>
+        /// <param name="templatesFilePath">Path to the template files</param>
         /// <returns>Campaign report identifier</returns>
-        Guid GenerateCampaignReport(CampaignReportRequest request, string userName, DateTime currentDate);
+        Guid GenerateCampaignReport(CampaignReportRequest request, string userName, DateTime currentDate, string templatesFilePath);
 
         /// <summary>
         /// Gets the campaign report data. Method used for testing purposes
@@ -111,8 +112,9 @@ namespace Services.Broadcast.ApplicationServices
         /// <param name="request">ProgramLineupReportRequest object contains selected plan ids</param>
         /// <param name="userName"></param>
         /// <param name="currentDate"></param>
+        /// <param name="templatesFilePath">Path to the template files</param>
         /// <returns>The report id</returns>
-        Guid GenerateProgramLineupReport(ProgramLineupReportRequest request, string userName, DateTime currentDate);
+        Guid GenerateProgramLineupReport(ProgramLineupReportRequest request, string userName, DateTime currentDate, string templatesFilePath);
 
         /// <summary>
         /// Gets the program lineup report data. Method used for testing purposes
@@ -461,10 +463,10 @@ namespace Services.Broadcast.ApplicationServices
         }
 
         /// <inheritdoc/>
-        public Guid GenerateCampaignReport(CampaignReportRequest request, string userName, DateTime currentDate)
+        public Guid GenerateCampaignReport(CampaignReportRequest request, string userName, DateTime currentDate, string templatesFilePath)
         {
             var campaignReportData = GetAndValidateCampaignReportData(request);
-            var reportGenerator = new CampaignReportGenerator();
+            var reportGenerator = new CampaignReportGenerator(templatesFilePath);
             var report = reportGenerator.Generate(campaignReportData);
 
             return _SharedFolderService.SaveFile(new SharedFolderFile
@@ -624,10 +626,10 @@ namespace Services.Broadcast.ApplicationServices
             }
         }
         
-        public Guid GenerateProgramLineupReport(ProgramLineupReportRequest request, string userName, DateTime currentDate)
+        public Guid GenerateProgramLineupReport(ProgramLineupReportRequest request, string userName, DateTime currentDate, string templatesFilePath)
         {
             var programLineupReportData = GetProgramLineupReportData(request, currentDate);
-            var reportGenerator = new ProgramLineupReportGenerator();
+            var reportGenerator = new ProgramLineupReportGenerator(templatesFilePath);
             var report = reportGenerator.Generate(programLineupReportData);
 
             return _SharedFolderService.SaveFile(new SharedFolderFile

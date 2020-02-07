@@ -12,19 +12,20 @@ using Tam.Maestro.Services.ContractInterfaces;
 using Tam.Maestro.Web.Common;
 using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Services.Cable.Security;
-using System.Net.Http;
-using System.Net;
-using System.Net.Http.Headers;
 using Services.Broadcast.Entities.Campaign;
+using System.Web;
 
 namespace BroadcastComposerWeb.Controllers
 {
     [RoutePrefix("api/v1/Campaigns")]
     public class CampaignApiController : BroadcastControllerBase
     {
+        private readonly string AppDataPath;
+
         public CampaignApiController(IWebLogger logger, BroadcastApplicationServiceFactory applicationServiceFactory) : 
             base(logger, new ControllerNameRetriever(typeof(CampaignApiController).Name), applicationServiceFactory)
         {
+            AppDataPath = HttpContext.Current.Server.MapPath("~/App_Data");
         }
 
         /// <summary>
@@ -211,7 +212,7 @@ namespace BroadcastComposerWeb.Controllers
         {
             var fullName = _GetCurrentUserFullName();
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ICampaignService>()
-                .GenerateCampaignReport(request, fullName, DateTime.Now));
+                .GenerateCampaignReport(request, fullName, DateTime.Now, AppDataPath));
         }
         
         /// <summary>
@@ -226,7 +227,7 @@ namespace BroadcastComposerWeb.Controllers
         {
             var fullName = _GetCurrentUserFullName();
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ICampaignService>()
-                .GenerateProgramLineupReport(request, fullName, DateTime.Now));
+                .GenerateProgramLineupReport(request, fullName, DateTime.Now, AppDataPath));
         }
     }
 }

@@ -15,7 +15,13 @@ namespace Services.Broadcast.ReportGenerators.ProgramLineup
         private readonly string DETAILED_VIEW_WORKSHEET_NAME = "Detailed View";
 
         private readonly string TEMPLATE_FILENAME = "Template - Program Lineup.xlsx";
-        
+        private readonly string TEMPLATES_PATH;
+
+        public ProgramLineupReportGenerator(string templatesPath)
+        {
+            TEMPLATES_PATH = templatesPath;
+        }
+
         public ReportOutput Generate(ProgramLineupReportData dataObject)
         {
             var output = new ReportOutput(filename: dataObject.ExportFileName);
@@ -31,7 +37,7 @@ namespace Services.Broadcast.ReportGenerators.ProgramLineup
 
         private ExcelPackage _GetFileWithData(ProgramLineupReportData programLineupReportData)
         {
-            string templateFilePath = $@"{BroadcastServiceSystemParameter.BroadcastExcelTemplatesPath}\{TEMPLATE_FILENAME}";
+            string templateFilePath = Path.Combine(TEMPLATES_PATH, TEMPLATE_FILENAME);
             var package = new ExcelPackage(new FileInfo(templateFilePath), useStream: true);
 
             ExcelWorksheet detailedViewTab = ExportSharedLogic.GetWorksheet(templateFilePath, package, DETAILED_VIEW_WORKSHEET_NAME);

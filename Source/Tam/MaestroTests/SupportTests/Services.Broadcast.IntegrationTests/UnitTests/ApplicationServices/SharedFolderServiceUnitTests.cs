@@ -130,8 +130,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     CreatedDate = now,
                     CreatedBy = user
                 });
-
-
+            
             var result = _SharedFolderService.GetAndRemoveFile(fileId);
 
             _FileServiceMock.Verify(x => x.Delete($@"D:\\files\{fileId}.xlsx"), Times.Once);

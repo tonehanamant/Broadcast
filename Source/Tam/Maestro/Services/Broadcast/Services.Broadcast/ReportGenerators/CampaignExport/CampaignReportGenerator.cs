@@ -1,7 +1,6 @@
 ﻿using OfficeOpenXml;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Campaign;
-using Services.Broadcast.ReportGenerators.CampaignExport;
 using System.IO;
 using System.Linq;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
@@ -16,7 +15,13 @@ namespace Services.Broadcast.ReportGenerators.CampaignExport
         private readonly string FLOW_CHART_WORKSHEET_NAME = "Flow Chart";
         
         private readonly string TEMPLATE_FILENAME = "Template - Campaign Export.xlsx";
-        
+        private readonly string TEMPLATES_FILE_PATH;
+
+        public CampaignReportGenerator(string templatesPath)
+        {
+            TEMPLATES_FILE_PATH = templatesPath;
+        }
+
         /// <summary>
         /// Generates a report of type CampaignReport
         /// </summary>
@@ -39,7 +44,7 @@ namespace Services.Broadcast.ReportGenerators.CampaignExport
 
         private ExcelPackage _GetFileWithData(CampaignReportData campaignReportData)
         {
-            string templateFilePath = $@"{BroadcastServiceSystemParameter.BroadcastExcelTemplatesPath}\{TEMPLATE_FILENAME}";
+            string templateFilePath = $@"{TEMPLATES_FILE_PATH}\{TEMPLATE_FILENAME}";
             var package = new ExcelPackage(new FileInfo(templateFilePath), useStream: true);
             ExcelWorksheet proposalWorksheet = ExportSharedLogic.GetWorksheet(templateFilePath, package, PROPOSAL_WORKSHEET_NAME);
             new ProposalReportGenerator().PopulateProposalTab(campaignReportData, proposalWorksheet);
