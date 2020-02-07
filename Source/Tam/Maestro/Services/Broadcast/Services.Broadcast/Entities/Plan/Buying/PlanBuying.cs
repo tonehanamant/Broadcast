@@ -131,6 +131,10 @@ namespace Services.Broadcast.Entities.Plan
     {
         public int Id { get; set; }
 
+        public PlanBuyingListingItem.PlanBuyingListingItemDetails Plan { get; set; }
+
+        public PlanBuyingListingItem.PlanBuyingListingItemCampaign Campaign { get; set; }
+
         public decimal? BookedBudget { get; set; }
 
         public decimal? BookedImpressions { get; set; }
@@ -155,11 +159,31 @@ namespace Services.Broadcast.Entities.Plan
 
         public double? GoalCPMMarginPercent { get; set; }
 
-        public decimal Status { get; set; }
+        public int Status { get; set; }
 
         public DateTime ModifiedDate { get; set; }
 
         public string ModifiedBy { get; set; }
+
+        public class PlanBuyingListingItemCampaign
+        {
+            public int Id { get; set; }
+
+            public string Name { get; set; }
+        }
+
+        public class PlanBuyingListingItemDetails
+        {
+            public int Id { get; set; }
+            public string Name { get; set; }
+            public DateTime FlightStartDate { get; set; }
+            public DateTime FlightEndDate { get; set; }
+            public int FlightActiveDays { get; set; }
+            public int FlightHiatusDays { get; set; }
+            public decimal? Impressions { get; set; }
+            public decimal? Budget { get; set; }
+            public double? CPM { get; set; }
+        }
     }
 
     public class PlanBuyingListRequest

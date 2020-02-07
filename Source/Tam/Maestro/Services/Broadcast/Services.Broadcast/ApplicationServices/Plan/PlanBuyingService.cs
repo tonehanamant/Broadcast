@@ -39,6 +39,23 @@ namespace Services.Broadcast.ApplicationServices.Plan
             result.Add(new PlanBuyingListingItem
             {
                 Id = 123,
+                Campaign = new PlanBuyingListingItem.PlanBuyingListingItemCampaign
+                {
+                    Id = 456,
+                    Name = "Some Campaign"
+                },
+                Plan = new PlanBuyingListingItem.PlanBuyingListingItemDetails
+                {
+                    Id = 123,
+                    Name = "Some Plan",
+                    FlightStartDate = new DateTime(2020, 3, 4, 8, 30, 52),
+                    FlightEndDate = new DateTime(2020, 2, 4, 9, 30, 52),
+                    FlightActiveDays = 14,
+                    FlightHiatusDays = 3,
+                    Budget = 250000,
+                    Impressions = 27450000,
+                    CPM = 9.10
+                },
                 BookedBudget = 198000,
                 BookedImpressions = 36600000,
                 BookedCPM = 5.41,
@@ -59,6 +76,23 @@ namespace Services.Broadcast.ApplicationServices.Plan
             result.Add(new PlanBuyingListingItem
             {
                 Id = 459,
+                Campaign = new PlanBuyingListingItem.PlanBuyingListingItemCampaign
+                {
+                    Id = 333,
+                    Name = "Some New Campaign"
+                },
+                Plan = new PlanBuyingListingItem.PlanBuyingListingItemDetails
+                {
+                    Id = 459,
+                    Name = "Some New Plan",
+                    FlightStartDate = new DateTime(2020, 3, 4, 8, 30, 52),
+                    FlightEndDate = new DateTime(2020, 2, 4, 9, 30, 52),
+                    FlightActiveDays = 7,
+                    FlightHiatusDays = 2,
+                    Budget = 450000,
+                    Impressions = 27650000,
+                    CPM = 8.9
+                },
                 BookedBudget = 567000,
                 BookedImpressions = 98800000,
                 BookedCPM = 2.11,

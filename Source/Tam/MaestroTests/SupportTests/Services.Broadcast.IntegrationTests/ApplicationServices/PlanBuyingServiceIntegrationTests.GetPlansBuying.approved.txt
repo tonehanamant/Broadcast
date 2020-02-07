@@ -6,6 +6,10 @@
     "BookedImpressions": 36600000.0,
     "BookedImpressionsPercent": 133.0,
     "BookedMarginPercent": 26.15,
+    "Campaign": {
+      "Id": 456,
+      "Name": "Some Campaign"
+    },
     "GoalBudget": 199836.0,
     "GoalCPM": 7.28,
     "GoalCPMMarginPercent": 20.0,
@@ -15,7 +19,18 @@
     "Id": 123,
     "ModifiedBy": "Johnny Rockets",
     "ModifiedDate": "2020-01-07T08:30:52",
-    "Status": 2.0
+    "Plan": {
+      "Budget": 250000.0,
+      "CPM": 9.1,
+      "FlightActiveDays": 14,
+      "FlightEndDate": "2020-02-04T09:30:52",
+      "FlightHiatusDays": 3,
+      "FlightStartDate": "2020-03-04T08:30:52",
+      "Id": 123,
+      "Impressions": 27450000.0,
+      "Name": "Some Plan"
+    },
+    "Status": 2
   },
   {
     "BookedBudget": 567000.0,
@@ -24,6 +39,10 @@
     "BookedImpressions": 98800000.0,
     "BookedImpressionsPercent": 177.0,
     "BookedMarginPercent": 22.09,
+    "Campaign": {
+      "Id": 333,
+      "Name": "Some New Campaign"
+    },
     "GoalBudget": 122678.0,
     "GoalCPM": 5.88,
     "GoalCPMMarginPercent": 26.0,
@@ -33,6 +52,17 @@
     "Id": 459,
     "ModifiedBy": "Michael Jordan",
     "ModifiedDate": "2020-01-06T06:22:33",
-    "Status": 2.0
+    "Plan": {
+      "Budget": 450000.0,
+      "CPM": 8.9,
+      "FlightActiveDays": 7,
+      "FlightEndDate": "2020-02-04T09:30:52",
+      "FlightHiatusDays": 2,
+      "FlightStartDate": "2020-03-04T08:30:52",
+      "Id": 459,
+      "Impressions": 27650000.0,
+      "Name": "Some New Plan"
+    },
+    "Status": 2
   }
 ]
