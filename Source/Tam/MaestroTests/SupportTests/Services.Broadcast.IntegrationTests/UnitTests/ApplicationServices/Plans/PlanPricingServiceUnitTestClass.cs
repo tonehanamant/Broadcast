@@ -4,6 +4,7 @@ using Hangfire;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Clients;
+using Services.Broadcast.Entities.Plan;
 using Services.Broadcast.Entities.Plan.Pricing;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plans
@@ -28,14 +29,24 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             return result;
         }
 
-        public bool UT_IsValidForModelInput(decimal? value)
+        public bool UT_AreImpressionsValidForPricingModelInput(decimal? impressions)
         {
-            return _AreImpressionsValidForPricingModelInput(value);
+            return _AreImpressionsValidForPricingModelInput(impressions);
         }
 
-        public bool UT_IsValidForModelInput(double? value)
+        public bool UT_IsSpotCostValidForPricingModelInput(double? spotCost)
         {
-            return _IsSpotCostValidForPricingModelInput(value);
+            return _IsSpotCostValidForPricingModelInput(spotCost);
+        }
+
+        public List<PlanPricingApiRequestWeekDto> UT_GetPricingModelWeeks(PlanDto plan)
+        {
+            return _GetPricingModelWeeks(plan);
+        }
+
+        public bool UT_AreWeeklyImpressionsValidForPricingModelInput(double? impressions)
+        {
+            return _IsSpotCostValidForPricingModelInput(impressions);
         }
     }
 }

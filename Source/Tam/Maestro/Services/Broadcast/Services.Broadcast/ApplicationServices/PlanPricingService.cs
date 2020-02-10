@@ -320,14 +320,19 @@ namespace Services.Broadcast.ApplicationServices
             return result;
         }
 
-        private List<PlanPricingApiRequestWeekDto> _GetPricingModelWeeks(PlanDto plan)
+        protected bool _AreWeeklyImpressionsValidForPricingModelInput(double? impressions)
+        {
+            var result = impressions > 0;
+            return result;
+        }
+
+        protected List<PlanPricingApiRequestWeekDto> _GetPricingModelWeeks(PlanDto plan)
         {
             var pricingModelWeeks = new List<PlanPricingApiRequestWeekDto>();
 
             foreach (var week in plan.WeeklyBreakdownWeeks)
             {
-                // must be greater than 0.
-                if (week.WeeklyImpressions <= 0)
+                if (_AreWeeklyImpressionsValidForPricingModelInput(week.WeeklyImpressions) == false)
                 {
                     continue;
                 }

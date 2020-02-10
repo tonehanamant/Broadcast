@@ -14,6 +14,7 @@ using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Services.Broadcast.Entities.Plan;
 using Tam.Maestro.Services.ContractInterfaces.Common;
 using static Services.Broadcast.Entities.Plan.Pricing.PlanPricingInventoryProgram;
 using static Services.Broadcast.Entities.Plan.Pricing.PlanPricingInventoryProgram.ManifestDaypart;
@@ -615,21 +616,21 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         [TestCase(0.0, false)]
         [TestCase(0.1, true)]
         [TestCase(1.1, true)]
-        public void IsValidForModelInput_Decimal(decimal spotCost, bool expectedResult)
+        public void AreImpressionsValidForPricingModelInput(decimal spotCost, bool expectedResult)
         {
             var service = _GetService();
 
-            var result = service.UT_IsValidForModelInput(spotCost);
+            var result = service.UT_AreImpressionsValidForPricingModelInput(spotCost);
 
             Assert.AreEqual(expectedResult, result);
         }
 
         [Test]
-        public void IsValidForModelInput_Decimal_WhenNull()
+        public void AreImpressionsValidForPricingModelInput_WhenNull()
         {
             var service = _GetService();
 
-            var result = service.UT_IsValidForModelInput((decimal?) null);
+            var result = service.UT_AreImpressionsValidForPricingModelInput((decimal?) null);
 
             Assert.IsFalse(result);
         }
@@ -640,23 +641,80 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         [TestCase(0.0, false)]
         [TestCase(0.1, true)]
         [TestCase(1.1, true)]
-        public void UT_IsValidForModelInput_Double(double impressions, bool expectedResult)
+        public void IsSpotCostValidForPricingModelInput(double impressions, bool expectedResult)
         {
             var service = _GetService();
 
-            var result = service.UT_IsValidForModelInput(impressions);
+            var result = service.UT_IsSpotCostValidForPricingModelInput(impressions);
 
             Assert.AreEqual(expectedResult, result);
         }
 
         [Test]
-        public void IsValidForModelInput_Double_WhenNull()
+        public void IsSpotCostValidForPricingModelInput_WhenNull()
         {
             var service = _GetService();
 
-            var result = service.UT_IsValidForModelInput((double?) null);
+            var result = service.UT_IsSpotCostValidForPricingModelInput((double?) null);
 
             Assert.IsFalse(result);
+        }
+
+        [Test]
+        [TestCase(-1.1, false)]
+        [TestCase(-0.1, false)]
+        [TestCase(0.0, false)]
+        [TestCase(0.1, true)]
+        [TestCase(1.1, true)]
+        public void AreWeeklyImpressionsValidForPricingModelInput(double impressions, bool expectedResult)
+        {
+            var service = _GetService();
+
+            var result = service.UT_AreWeeklyImpressionsValidForPricingModelInput(impressions);
+
+            Assert.AreEqual(expectedResult, result);
+        }
+
+        [Test]
+        public void AreWeeklyImpressionsValidForPricingModelInput_WhenNull()
+        {
+            var service = _GetService();
+
+            var result = service.UT_AreWeeklyImpressionsValidForPricingModelInput((double?)null);
+
+            Assert.IsFalse(result);
+        }
+
+        [Test]
+        public void GetPricingModelWeeks_Filter()
+        {
+            var plan = new PlanDto
+            {
+                WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>
+                {
+                    // should be filtered out.
+                    new WeeklyBreakdownWeek
+                    {
+                        MediaWeekId = 1,
+                        WeeklyImpressions = 0,
+                        WeeklyBudget = 200000
+                    },
+                    // should stay
+                    new WeeklyBreakdownWeek
+                    {
+                        MediaWeekId = 2,
+                        WeeklyImpressions = 2000,
+                        WeeklyBudget = 200000
+                    }
+                }
+            };
+
+            var service = _GetService();
+
+            var result = service.UT_GetPricingModelWeeks(plan);
+
+            Assert.AreEqual(1, result.Count);
+            Assert.AreEqual(2, result.First()?.MediaWeekId);
         }
 
         private PlanPricingServiceUnitTestClass _GetService()
