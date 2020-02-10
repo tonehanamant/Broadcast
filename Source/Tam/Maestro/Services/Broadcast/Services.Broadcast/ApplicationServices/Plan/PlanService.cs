@@ -691,12 +691,12 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
         }
 
-        private void _AddMissingWeeks(WeeklyBreakdownResponseDto result, List<DisplayMediaWeek> weeks, List<DateTime> flightHiatusDays, bool isCustom = false)
+        private void _AddMissingWeeks(WeeklyBreakdownResponseDto result, List<DisplayMediaWeek> weeks, WeeklyBreakdownRequest request, bool isCustom = false)
         {
             var weekNumber = 1;
             foreach (DisplayMediaWeek week in weeks)
             {
-                var activeDays = _CalculateActiveDays(week.WeekStartDate, week.WeekEndDate, flightHiatusDays, out string activeDaysString);
+                var activeDays = _CalculateActiveDays(week.WeekStartDate, week.WeekEndDate, request.FlightHiatusDays, out string activeDaysString);
                 var weeklyBreakdown = new WeeklyBreakdownWeek
                 {
                     ActiveDays = activeDaysString,
@@ -707,7 +707,14 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 };
 
                 if (!isCustom)
+                {
                     weeklyBreakdown.WeekNumber = weekNumber++;
+
+                    if (request.Weeks?.Any(w => w.StartDate == week.WeekStartDate && w.EndDate == week.WeekEndDate) == true)
+                    {
+                        weeklyBreakdown.WeeklyAdu = request.Weeks.Find(w => w.StartDate == week.WeekStartDate && w.EndDate == week.WeekEndDate).WeeklyAdu;
+                    }
+                }
 
                 result.Weeks.Add(weeklyBreakdown);
             }
@@ -716,7 +723,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private WeeklyBreakdownResponseDto _CalculateEvenPlanWeeklyGoalBreakdown(WeeklyBreakdownRequest request, List<DisplayMediaWeek> weeks)
         {
             var result = new WeeklyBreakdownResponseDto();
-            _AddMissingWeeks(result, weeks, request.FlightHiatusDays);
+            _AddMissingWeeks(result, weeks, request);
 
             _CalculateRatingsImpressionsAndShareOfVoice(request, result.Weeks);
             _CalculateWeeklyGoalBreakdownTotals(result);
@@ -769,7 +776,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
 
             //add the missing weeks
-            _AddMissingWeeks(result, weeks.Where(x => !request.Weeks.Select(y => y.StartDate).Contains(x.WeekStartDate)).ToList(), request.FlightHiatusDays, true);
+            _AddMissingWeeks(result, weeks.Where(x => !request.Weeks.Select(y => y.StartDate).Contains(x.WeekStartDate)).ToList(), request, true);
 
             _CalculateWeeklyGoalBreakdownTotals(result);
 

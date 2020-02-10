@@ -1831,6 +1831,240 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        public void Plan_WeeklyBreakdown_EvenDelivery_WithADU()
+        {
+            var request = new WeeklyBreakdownRequest
+            {
+                DeliveryType = PlanGoalBreakdownTypeEnum.Even,
+                FlightStartDate = new DateTime(2019, 12, 30),
+                FlightEndDate = new DateTime(2020, 02, 02),
+                TotalImpressions = 5,
+                TotalRatings = 0.002721875495608163,
+                WeeklyBreakdownCalculationFrom = WeeklyBreakdownCalculationFrom.Impressions,
+                TotalBudget = 75000,
+                FlightHiatusDays = new List<DateTime>(),
+                Weeks = new List<WeeklyBreakdownWeek>
+                {
+                    new WeeklyBreakdownWeek
+                    {
+                        WeekNumber = 1,
+                        MediaWeekId = 836,
+                        StartDate = new DateTime(2019,12,30),
+                        EndDate = new DateTime(2020,01,05),
+                        NumberOfActiveDays = 7,
+                        ActiveDays = "M-Su",
+                        WeeklyImpressions = 1,
+                        WeeklyImpressionsPercentage = 20,
+                        WeeklyRatings = 0.00036291673274775507,
+                        WeeklyBudget = 15000,
+                        WeeklyAdu = 1
+
+                    },
+                    new WeeklyBreakdownWeek
+                    {
+                        WeekNumber = 2,
+                        MediaWeekId = 837,
+                        StartDate = new DateTime(2020,01,06),
+                        EndDate = new DateTime(2020,01,12),
+                        NumberOfActiveDays = 7,
+                        ActiveDays = "M-Su",
+                        WeeklyImpressions = 1,
+                        WeeklyImpressionsPercentage = 20,
+                        WeeklyRatings = 0.00036291673274775507,
+                        WeeklyBudget = 15000,
+                        WeeklyAdu = 2
+                    },
+                    new WeeklyBreakdownWeek
+                    {
+                        WeekNumber = 3,
+                        MediaWeekId = 838,
+                        StartDate = new DateTime(2020,01,13),
+                        EndDate = new DateTime(2020,01,19),
+                        NumberOfActiveDays = 7,
+                        ActiveDays = "M-Su",
+                        WeeklyImpressions = 1,
+                        WeeklyImpressionsPercentage = 20,
+                        WeeklyBudget = 15000,
+                        WeeklyRatings = 0.00036291673274775507,
+                        WeeklyAdu = 3
+                    },
+                    new WeeklyBreakdownWeek
+                    {
+                        WeekNumber = 4,
+                        MediaWeekId = 839,
+                        StartDate = new DateTime(2020,01,20),
+                        EndDate = new DateTime(2020,01,26),
+                        NumberOfActiveDays = 7,
+                        ActiveDays = "M-Su",
+                        WeeklyImpressions = 1,
+                        WeeklyImpressionsPercentage = 20,
+                        WeeklyBudget = 15000,
+                        WeeklyRatings = 0.00036291673274775507,
+                        WeeklyAdu = 4
+                    },
+                    new WeeklyBreakdownWeek
+                    {
+                        WeekNumber = 5,
+                        MediaWeekId = 840,
+                        StartDate = new DateTime(2020,01,27),
+                        EndDate = new DateTime(2020,02,02),
+                        NumberOfActiveDays = 7,
+                        ActiveDays = "M-Su",
+                        WeeklyImpressions = 1,
+                        WeeklyImpressionsPercentage = 20,
+                        WeeklyBudget = 15000,
+                        WeeklyRatings = 0.00036291673274775507,
+                        WeeklyAdu = 5
+                    }
+                }
+            };
+
+            var result = _PlanService.CalculatePlanWeeklyGoalBreakdown(request);
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void Plan_WeeklyBreakdown_CustomDelivery_WithADU()
+        {
+            var request = new WeeklyBreakdownRequest
+            {
+                DeliveryType = PlanGoalBreakdownTypeEnum.Custom,
+                FlightStartDate = new DateTime(2019, 12, 30),
+                FlightEndDate = new DateTime(2020, 02, 02),
+                TotalImpressions = 5,
+                TotalRatings = 0.002721875495608163,
+                WeeklyBreakdownCalculationFrom = WeeklyBreakdownCalculationFrom.Impressions,
+                TotalBudget = 75000,
+                FlightHiatusDays = new List<DateTime>(),
+                Weeks = new List<WeeklyBreakdownWeek>
+                {
+                    new WeeklyBreakdownWeek
+                    {
+                        WeekNumber = 1,
+                        MediaWeekId = 836,
+                        StartDate = new DateTime(2019,12,30),
+                        EndDate = new DateTime(2020,01,05),
+                        NumberOfActiveDays = 7,
+                        ActiveDays = "M-Su",
+                        WeeklyImpressions = 2,
+                        WeeklyImpressionsPercentage = 40,
+                        WeeklyRatings = 0.00036291673274775507,
+                        WeeklyBudget = 30000,
+                        WeeklyAdu = 1
+
+                    },
+                    new WeeklyBreakdownWeek
+                    {
+                        WeekNumber = 2,
+                        MediaWeekId = 837,
+                        StartDate = new DateTime(2020,01,06),
+                        EndDate = new DateTime(2020,01,12),
+                        NumberOfActiveDays = 7,
+                        ActiveDays = "M-Su",
+                        WeeklyImpressions = 0,
+                        WeeklyImpressionsPercentage = 0,
+                        WeeklyRatings = 0.00036291673274775507,
+                        WeeklyBudget = 0,
+                        WeeklyAdu = 2
+                    },
+                    new WeeklyBreakdownWeek
+                    {
+                        WeekNumber = 3,
+                        MediaWeekId = 838,
+                        StartDate = new DateTime(2020,01,13),
+                        EndDate = new DateTime(2020,01,19),
+                        NumberOfActiveDays = 7,
+                        ActiveDays = "M-Su",
+                        WeeklyImpressions = 1,
+                        WeeklyImpressionsPercentage = 20,
+                        WeeklyBudget = 15000,
+                        WeeklyRatings = 0.00036291673274775507,
+                        WeeklyAdu = 3
+                    },
+                    new WeeklyBreakdownWeek
+                    {
+                        WeekNumber = 4,
+                        MediaWeekId = 839,
+                        StartDate = new DateTime(2020,01,20),
+                        EndDate = new DateTime(2020,01,26),
+                        NumberOfActiveDays = 7,
+                        ActiveDays = "M-Su",
+                        WeeklyImpressions = 1,
+                        WeeklyImpressionsPercentage = 20,
+                        WeeklyBudget = 15000,
+                        WeeklyRatings = 0.00036291673274775507,
+                        WeeklyAdu = 4
+                    },
+                    new WeeklyBreakdownWeek
+                    {
+                        WeekNumber = 5,
+                        MediaWeekId = 840,
+                        StartDate = new DateTime(2020,01,27),
+                        EndDate = new DateTime(2020,02,02),
+                        NumberOfActiveDays = 7,
+                        ActiveDays = "M-Su",
+                        WeeklyImpressions = 1,
+                        WeeklyImpressionsPercentage = 20,
+                        WeeklyBudget = 15000,
+                        WeeklyRatings = 0.00036291673274775507,
+                        WeeklyAdu = 5
+                    }
+                }
+            };
+
+            var result = _PlanService.CalculatePlanWeeklyGoalBreakdown(request);
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void Plan_WeeklyBreakdown_EvenDelivery_EmptyWeeks()
+        {
+            var request = new WeeklyBreakdownRequest
+            {
+                DeliveryType = PlanGoalBreakdownTypeEnum.Even,
+                FlightStartDate = new DateTime(2019, 12, 30),
+                FlightEndDate = new DateTime(2020, 02, 02),
+                TotalImpressions = 5,
+                TotalRatings = 0.002721875495608163,
+                WeeklyBreakdownCalculationFrom = WeeklyBreakdownCalculationFrom.Impressions,
+                TotalBudget = 75000,
+                FlightHiatusDays = new List<DateTime>(),
+                Weeks = null
+            };
+
+            var result = _PlanService.CalculatePlanWeeklyGoalBreakdown(request);
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void Plan_WeeklyBreakdown_CustomDelivery_EmptyWeeks()
+        {
+            var request = new WeeklyBreakdownRequest
+            {
+                DeliveryType = PlanGoalBreakdownTypeEnum.Even,
+                FlightStartDate = new DateTime(2019, 12, 30),
+                FlightEndDate = new DateTime(2020, 02, 02),
+                TotalImpressions = 5,
+                TotalRatings = 0.002721875495608163,
+                WeeklyBreakdownCalculationFrom = WeeklyBreakdownCalculationFrom.Impressions,
+                TotalBudget = 75000,
+                FlightHiatusDays = new List<DateTime>(),
+                Weeks = null
+            };
+
+            var result = _PlanService.CalculatePlanWeeklyGoalBreakdown(request);
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
         public void Plan_SaveNewPlan_PricingIsQueued()
         {
             using (new TransactionScopeWrapper())
