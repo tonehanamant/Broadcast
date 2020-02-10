@@ -129,7 +129,7 @@ namespace Services.Broadcast.ReportGenerators.CampaignExport
             _SetRowData(currentRowIndex, START_TOTAL_COLUMN, campaignReportData.ProposalCampaignTotalsTable.TotalRow);
             
             //this logic needs adjusting when populating secondary audiences tables for campaign totals
-            if (!campaignReportData.ProposalCampaignTotalsTable.HasSecondaryAudiences)
+            if (!campaignReportData.ProposalCampaignTotalsTable.HasSecondaryAudiences && campaignReportData.HasSecondaryAudiences)
             {                
                 _DeleteSecondaryAudienceEmptyTemplateTable();
             }
@@ -234,7 +234,7 @@ namespace Services.Broadcast.ReportGenerators.CampaignExport
                         }
                     }
                 }
-                else
+                if(campaignReportData.HasSecondaryAudiences && !table.HasSecondaryAudiences)
                 {
                     _DeleteSecondaryAudienceEmptyTemplateTable();
                 }

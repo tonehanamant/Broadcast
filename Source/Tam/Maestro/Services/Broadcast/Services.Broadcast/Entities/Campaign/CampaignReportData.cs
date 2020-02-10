@@ -73,7 +73,7 @@ namespace Services.Broadcast.Entities.Campaign
 
             //flow chart tab
             projectedPlans = _ProjectPlansForQuarterExport(plans, spotLenghts, daypartDefaults, mediaMonthAndWeekAggregateCache, quarterCalculationEngine);
-            _PopulateFlowChartQuarterTableData(projectedPlans, hiatusDays);
+            _PopulateFlowChartQuarterTableData(projectedPlans);
 
             if (exportType.Equals(CampaignExportTypeEnum.Contract))
             {
@@ -332,7 +332,7 @@ namespace Services.Broadcast.Entities.Campaign
                             newProjectedPlan.GuaranteedAudience.CPP = newProjectedPlan.GuaranteedAudience.TotalRatingPoints == 0 ? 0
                                     : newProjectedPlan.TotalCost / (decimal)newProjectedPlan.GuaranteedAudience.TotalRatingPoints;
 
-
+                            newProjectedPlan.HiatusDays = plan.FlightHiatusDays.Where(x => x.Date >= week.StartDate && x.Date <= week.EndDate).ToList();
 
                             result.Add(newProjectedPlan);
                         });
@@ -437,7 +437,7 @@ namespace Services.Broadcast.Entities.Campaign
                             row.Insert(5, EMPTY_CELL);
                         }
                         if (secondaryAudiences.Any())   //this check is for the current group 
-                        {  
+                        {
                             foreach (var demo in secondaryAudiences)
                             {
                                 var demoTable = newTable.SecondaryAudiencesTables.Single(x => x.AudienceId == demo.AudienceId);
@@ -507,7 +507,7 @@ namespace Services.Broadcast.Entities.Campaign
             return tableData;
         }
 
-        private void _PopulateFlowChartQuarterTableData(List<ProjectedPlan> projectedPlans, List<DateTime> hiatusDays)
+        private void _PopulateFlowChartQuarterTableData(List<ProjectedPlan> projectedPlans)
         {
             projectedPlans.GroupBy(x => new { x.QuarterNumber, x.QuarterYear, x.DaypartCode })
                 .OrderBy(x => x.Key.QuarterYear).ThenBy(x => x.Key.QuarterNumber)
@@ -543,8 +543,8 @@ namespace Services.Broadcast.Entities.Campaign
                                         .ToList()
                                         .ForEach(x =>
                                         {
-                                            List<DateTime> hiatusDaysThisWeek = hiatusDays.Where(y => y >= x.Key.Value && y <= x.Key.Value.AddDays(6)).ToList();
                                             var weeks = x.ToList();
+                                            List<DateTime> hiatusDaysThisWeek = weeks.SelectMany(y => y.HiatusDays).ToList();
 
                                             newTable.WeeksStartDate.Add(x.Key.Value);
                                             newTable.DistributionPercentages.Add(weeks.Average(y => y.GuaranteedAudience.WeightedPercentage));
@@ -870,6 +870,8 @@ namespace Services.Broadcast.Entities.Campaign
             public Audience GuaranteedAudience { get; set; } = new Audience();
 
             public List<Audience> SecondaryAudiences { get; set; } = new List<Audience>();
+
+            public List<DateTime> HiatusDays { get; set; } = new List<DateTime>();
 
             internal class Audience
             {
