@@ -270,7 +270,7 @@ namespace Services.Broadcast.ApplicationServices
             return pricingPrograms;
         }
 
-        private List<PlanPricingApiRequestSpotsDto> _GetPricingModelSpots(List<PlanPricingInventoryProgram> programs)
+        protected List<PlanPricingApiRequestSpotsDto> _GetPricingModelSpots(List<PlanPricingInventoryProgram> programs)
         {
             var pricingModelSpots = new List<PlanPricingApiRequestSpotsDto>();
 
@@ -278,12 +278,22 @@ namespace Services.Broadcast.ApplicationServices
             {
                 foreach (var daypart in program.ManifestDayparts)
                 {
+                    var impressions = program.ProvidedImpressions ?? program.ProjectedImpressions;
+                    if (_IsSpotCostValidForPricingModelInput(impressions) == false)
+                    {
+                        continue;
+                    }
+                    if (_AreImpressionsValidForPricingModelInput(program.SpotCost) == false)
+                    {
+                        continue;
+                    }
+
                     var spots = program.MediaWeekIds.Select(mediaWeekId => new PlanPricingApiRequestSpotsDto
                     {
                         Id = program.ManifestId,
                         MediaWeekId = mediaWeekId,
                         DaypartId = daypart.Daypart.Id,
-                        Impressions = program.ProvidedImpressions ?? program.ProjectedImpressions,
+                        Impressions = impressions,
                         Cost = program.SpotCost,
                         // Data Science API does not yet handle these fields.
                         //Unit = program.Unit,
@@ -297,6 +307,18 @@ namespace Services.Broadcast.ApplicationServices
 
             return pricingModelSpots;
         }
+        
+        protected bool _AreImpressionsValidForPricingModelInput(decimal? impressions)
+        {
+            var result = impressions > 0;
+            return result;
+        }
+
+        protected bool _IsSpotCostValidForPricingModelInput(double? spotCost)
+        {
+            var result = spotCost > 0;
+            return result;
+        }
 
         private List<PlanPricingApiRequestWeekDto> _GetPricingModelWeeks(PlanDto plan)
         {
@@ -304,6 +326,12 @@ namespace Services.Broadcast.ApplicationServices
 
             foreach (var week in plan.WeeklyBreakdownWeeks)
             {
+                // must be greater than 0.
+                if (week.WeeklyImpressions <= 0)
+                {
+                    continue;
+                }
+
                 pricingModelWeeks.Add(new PlanPricingApiRequestWeekDto
                 {
                     MediaWeekId = week.MediaWeekId,

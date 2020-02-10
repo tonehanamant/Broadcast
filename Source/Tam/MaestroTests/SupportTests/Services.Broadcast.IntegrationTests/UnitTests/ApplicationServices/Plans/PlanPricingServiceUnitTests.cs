@@ -1,6 +1,5 @@
 ﻿using ApprovalTests;
 using ApprovalTests.Reporters;
-using Common.Services;
 using Common.Services.Repositories;
 using Hangfire;
 using IntegrationTests.Common;
@@ -8,13 +7,13 @@ using Moq;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.BusinessEngines;
-using Services.Broadcast.Cache;
 using Services.Broadcast.Clients;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan.Pricing;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Tam.Maestro.Services.ContractInterfaces.Common;
 using static Services.Broadcast.Entities.Plan.Pricing.PlanPricingInventoryProgram;
 using static Services.Broadcast.Entities.Plan.Pricing.PlanPricingInventoryProgram.ManifestDaypart;
@@ -319,13 +318,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 }
             };
 
-            var service = new PlanPricingService(
-                _DataRepositoryFactoryMock.Object,
-                _SpotLengthEngineMock.Object,
-                _PricingApiClientMock.Object,
-                _BackgroundJobClientMock.Object,
-                _PlanPricingInventoryEngineMock.Object,
-                _BroadcastLockingManagerApplicationServiceMock.Object);
+            var service = _GetService();
 
             var result = service.AggregateResults(inventory, apiResponse);
 
@@ -352,7 +345,323 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Setup(x => x.GetNotUserBasedLockObjectForKey(It.IsAny<string>()))
                 .Returns(new object());
 
-            var service = new PlanPricingService(
+            var service = _GetService();
+
+            var exception = Assert.Throws<Exception>(() => service.QueuePricingJob(
+                planPricingParametersDto: new PlanPricingParametersDto(), 
+                currentDate: new DateTime(2019, 10, 23)));
+
+            Assert.AreEqual(expectedMessage, exception.Message);
+        }
+
+        [Test]
+        public void GetPricingModelSpots_Filter()
+        {
+            var inventory = new List<PlanPricingInventoryProgram>
+            {
+                // should keep.  All good.
+                new PlanPricingInventoryProgram
+                {
+                    ManifestId = 1,
+                    StationLegacyCallLetters = "wnbc",
+                    MarketCode = 101,
+                    ProvidedImpressions = 12,
+                    ProjectedImpressions = 13,
+                    SpotCost = 1,
+                    ManifestDayparts = new List<ManifestDaypart>
+                    {
+                        new ManifestDaypart
+                        {
+                            Daypart = new DisplayDaypart
+                            {
+                                Id = 1,
+                            },
+                            Programs = new List<Program>
+                            {
+                                new Program
+                                {
+                                    Name = "seinfeld",
+                                    MaestroGenre = "News"
+                                }
+                            },
+                            PrimaryProgram = new Program
+                            {
+                                Name = "seinfeld",
+                                MaestroGenre = "News"
+                            }
+                        }
+                    },
+                    MediaWeekIds = new List<int> {1, 2}
+                },
+                // should keep.  All good.
+                new PlanPricingInventoryProgram
+                {
+                    ManifestId = 2,
+                    StationLegacyCallLetters = "wabc",
+                    MarketCode = 101,
+                    ProvidedImpressions = 12,
+                    ProjectedImpressions = 13,
+                    SpotCost = 1,
+                    ManifestDayparts = new List<ManifestDaypart>
+                    {
+                        new ManifestDaypart
+                        {
+                            Daypart = new DisplayDaypart
+                            {
+                                Id = 2
+                            },
+                            Programs = new List<Program>
+                            {
+                                new Program
+                                {
+                                    Name = "seinfeld",
+                                    MaestroGenre = "News"
+                                }
+                            },
+                            PrimaryProgram = new Program
+                            {
+                                Name = "seinfeld",
+                                MaestroGenre = "News"
+                            }
+                        }
+                    },
+                    MediaWeekIds = new List<int> {1, 2}
+                },
+                // should keep.  ProvidedImpressions = null but ProjectedImpressions > 0
+                new PlanPricingInventoryProgram
+                {
+                    ManifestId = 3,
+                    StationLegacyCallLetters = "kpdx",
+                    MarketCode = 100,
+                    ProvidedImpressions = null,
+                    ProjectedImpressions = 13,
+                    SpotCost = 1,
+                    ManifestDayparts = new List<ManifestDaypart>
+                    {
+                        new ManifestDaypart
+                        {
+                            Daypart = new DisplayDaypart
+                            {
+                                Id = 3
+                            },
+                            Programs = new List<Program>
+                            {
+                                new Program
+                                {
+                                    Name = "seinfeld",
+                                    MaestroGenre = "News"
+                                }
+                            },
+                            PrimaryProgram = new Program
+                            {
+                                Name = "seinfeld",
+                                MaestroGenre = "News"
+                            }
+                        }
+                    },
+                    MediaWeekIds = new List<int> {1, 2}
+                },
+                // should filter due to ProvidedImpressions = null && ProjectedImpressions = 0
+                new PlanPricingInventoryProgram
+                {
+                    ManifestId = 4,
+                    StationLegacyCallLetters = "kabc",
+                    MarketCode = 302,
+                    ProvidedImpressions = null,
+                    ProjectedImpressions = 0,
+                    SpotCost = 1,
+                    ManifestDayparts = new List<ManifestDaypart>
+                    {
+                        new ManifestDaypart
+                        {
+                            Daypart = new DisplayDaypart
+                            {
+                                Id = 4
+                            },
+                            Programs = new List<Program>
+                            {
+                                new Program
+                                {
+                                    Name = "seinfeld",
+                                    MaestroGenre = "News"
+                                }
+                            },
+                            PrimaryProgram = new Program
+                            {
+                                Name = "seinfeld",
+                                MaestroGenre = "News"
+                            }
+                        }
+                    },
+                    MediaWeekIds = new List<int> {1, 2}
+                },
+                // should filter due to ProvidedImpressions = 0
+                new PlanPricingInventoryProgram
+                {
+                    ManifestId = 5,
+                    StationLegacyCallLetters = "wnbc",
+                    MarketCode = 101,
+                    ProvidedImpressions = 0,
+                    ProjectedImpressions = 13,
+                    SpotCost = 1,
+                    ManifestDayparts = new List<ManifestDaypart>
+                    {
+                        new ManifestDaypart
+                        {
+                            Daypart = new DisplayDaypart
+                            {
+                                Id = 5
+                            },
+                            Programs = new List<Program>
+                            {
+                                new Program
+                                {
+                                    Name = "Good morning america",
+                                    MaestroGenre = "Early News"
+                                }
+                            },
+                            PrimaryProgram = new Program
+                            {
+                                Name = "Good morning america",
+                                MaestroGenre = "Early News"
+                            }
+                        }
+                    },
+                    MediaWeekIds = new List<int> {1, 2}
+                },
+                // should filter due to ProvidedImpressions = null and ProjectedImpressions = 0
+                new PlanPricingInventoryProgram
+                {
+                    ManifestId = 6,
+                    StationLegacyCallLetters = "wabc",
+                    MarketCode = 101,
+                    ProvidedImpressions = null,
+                    ProjectedImpressions = 0,
+                    SpotCost = 1,
+                    ManifestDayparts = new List<ManifestDaypart>
+                    {
+                        new ManifestDaypart
+                        {
+                            Daypart = new DisplayDaypart
+                            {
+                                Id = 6
+                            },
+                            Programs = new List<Program>
+                            {
+                                new Program
+                                {
+                                    Name = "Good morning america",
+                                    MaestroGenre = "Early News"
+                                }
+                            },
+                            PrimaryProgram = new Program
+                            {
+                                Name = "Good morning america",
+                                MaestroGenre = "Early News"
+                            }
+                        }
+                    },
+                    MediaWeekIds = new List<int> {1, 2}
+                },
+                // should filter due to SpotCost = 0
+                new PlanPricingInventoryProgram
+                {
+                    ManifestId = 7,
+                    StationLegacyCallLetters = "kpdx",
+                    MarketCode = 100,
+                    ProvidedImpressions = 12,
+                    ProjectedImpressions = 13,
+                    SpotCost = 0,
+                    ManifestDayparts = new List<ManifestDaypart>
+                    {
+                        new ManifestDaypart
+                        {
+                            Daypart = new DisplayDaypart
+                            {
+                                Id = 7
+                            },
+                            Programs = new List<Program>
+                            {
+                                new Program
+                                {
+                                    Name = "Good morning america",
+                                    MaestroGenre = "Early News"
+                                }
+                            },
+                            PrimaryProgram = new Program
+                            {
+                                Name = "Good morning america",
+                                MaestroGenre = "Early News"
+                            }
+                        }
+                    },
+                    MediaWeekIds = new List<int> {1, 2}
+                }
+            };
+
+            var service = _GetService();
+            var result = service.UT_GetPricingModelSpots(inventory);
+
+            Assert.AreEqual(6, result.Count);
+            // kept these two and filtered out the rest
+            Assert.AreEqual(2, result.Count(i => i.Id == 1));
+            Assert.AreEqual(2, result.Count(i => i.Id == 2));
+            Assert.AreEqual(2, result.Count(i => i.Id == 3));
+        }
+
+        [Test]
+        [TestCase(-1.1, false)]
+        [TestCase(-0.1, false)]
+        [TestCase(0.0, false)]
+        [TestCase(0.1, true)]
+        [TestCase(1.1, true)]
+        public void IsValidForModelInput_Decimal(decimal spotCost, bool expectedResult)
+        {
+            var service = _GetService();
+
+            var result = service.UT_IsValidForModelInput(spotCost);
+
+            Assert.AreEqual(expectedResult, result);
+        }
+
+        [Test]
+        public void IsValidForModelInput_Decimal_WhenNull()
+        {
+            var service = _GetService();
+
+            var result = service.UT_IsValidForModelInput((decimal?) null);
+
+            Assert.IsFalse(result);
+        }
+
+        [Test]
+        [TestCase(-1.1, false)]
+        [TestCase(-0.1, false)]
+        [TestCase(0.0, false)]
+        [TestCase(0.1, true)]
+        [TestCase(1.1, true)]
+        public void UT_IsValidForModelInput_Double(double impressions, bool expectedResult)
+        {
+            var service = _GetService();
+
+            var result = service.UT_IsValidForModelInput(impressions);
+
+            Assert.AreEqual(expectedResult, result);
+        }
+
+        [Test]
+        public void IsValidForModelInput_Double_WhenNull()
+        {
+            var service = _GetService();
+
+            var result = service.UT_IsValidForModelInput((double?) null);
+
+            Assert.IsFalse(result);
+        }
+
+        private PlanPricingServiceUnitTestClass _GetService()
+        {
+            var service = new PlanPricingServiceUnitTestClass(
                 _DataRepositoryFactoryMock.Object,
                 _SpotLengthEngineMock.Object,
                 _PricingApiClientMock.Object,
@@ -360,11 +669,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 _PlanPricingInventoryEngineMock.Object,
                 _BroadcastLockingManagerApplicationServiceMock.Object);
 
-            var exception = Assert.Throws<Exception>(() => service.QueuePricingJob(
-                planPricingParametersDto: new PlanPricingParametersDto(), 
-                currentDate: new DateTime(2019, 10, 23)));
-
-            Assert.AreEqual(expectedMessage, exception.Message);
+            return service;
         }
     }
 }
