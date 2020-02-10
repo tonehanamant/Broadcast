@@ -46,17 +46,16 @@ namespace Services.Broadcast.ReportGenerators.CampaignExport
         /// <param name="worksheet">The worksheet.</param>
         /// <param name="count">Number of tables to add</param>
         /// <param name="firstRowIndex">Row index of the first row from the source table</param>
-        /// <param name="endRowIndex">Row index of the last row from the source table</param>
         /// <param name="rowsToCopy">Number of rows to copy</param>
-        public static void AddEmptyTables(ExcelWorksheet worksheet, int count, int firstRowIndex
-            , int endRowIndex, int rowsToCopy)
+        public static void AddEmptyTables(ExcelWorksheet worksheet, int count, int firstRowIndex, int rowsToCopy)
         {
+            //we are inserting (count -1) and starting the for at 1 because we already have 1 table
             worksheet.InsertRow(firstRowIndex + rowsToCopy, (count - 1) * (rowsToCopy + 1));
 
             for (int i = 1; i < count; i++)
             {
-                worksheet.Cells[firstRowIndex, ExportSharedLogic.FIRST_COLUMNS_INDEX, endRowIndex, ExportSharedLogic.END_COLUMN_INDEX]
-                    .Copy(worksheet.Cells[firstRowIndex + (i * rowsToCopy) + i, ExportSharedLogic.FIRST_COLUMNS_INDEX]);
+                worksheet.Cells[firstRowIndex, FIRST_COLUMNS_INDEX, firstRowIndex + rowsToCopy, END_COLUMN_INDEX]
+                    .Copy(worksheet.Cells[firstRowIndex + (i * rowsToCopy) + i, FIRST_COLUMNS_INDEX]);
             }
         }
 

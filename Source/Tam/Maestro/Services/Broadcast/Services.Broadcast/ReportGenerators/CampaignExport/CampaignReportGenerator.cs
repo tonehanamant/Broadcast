@@ -14,7 +14,8 @@ namespace Services.Broadcast.ReportGenerators.CampaignExport
         private readonly string TERMS_WORKSHEET_NAME = "Terms & Conditions";
         private readonly string FLOW_CHART_WORKSHEET_NAME = "Flow Chart";
         
-        private readonly string TEMPLATE_FILENAME = "Template - Campaign Export.xlsx";
+        private readonly string CAMPAIGN_EXPORT_TEMPLATE_FILENAME = "Template - Campaign Export.xlsx";
+        private readonly string CAMPAIGN_EXPORT_WITH_SECONDARY_DEMOS_TEMPLATE_FILENAME = "Template - Campaign Export With Secondary Audiences.xlsx";
         private readonly string TEMPLATES_FILE_PATH;
 
         public CampaignReportGenerator(string templatesPath)
@@ -44,7 +45,9 @@ namespace Services.Broadcast.ReportGenerators.CampaignExport
 
         private ExcelPackage _GetFileWithData(CampaignReportData campaignReportData)
         {
-            string templateFilePath = $@"{TEMPLATES_FILE_PATH}\{TEMPLATE_FILENAME}";
+            string templateFilePath = campaignReportData.HasSecondaryAudiences
+                ? Path.Combine(TEMPLATES_FILE_PATH, CAMPAIGN_EXPORT_WITH_SECONDARY_DEMOS_TEMPLATE_FILENAME)
+                : Path.Combine(TEMPLATES_FILE_PATH, CAMPAIGN_EXPORT_TEMPLATE_FILENAME);
             var package = new ExcelPackage(new FileInfo(templateFilePath), useStream: true);
             ExcelWorksheet proposalWorksheet = ExportSharedLogic.GetWorksheet(templateFilePath, package, PROPOSAL_WORKSHEET_NAME);
             new ProposalReportGenerator().PopulateProposalTab(campaignReportData, proposalWorksheet);
@@ -59,7 +62,7 @@ namespace Services.Broadcast.ReportGenerators.CampaignExport
             }
             else
             {
-                ExcelWorksheet contractWorksheet = ExportSharedLogic.GetWorksheet(TEMPLATE_FILENAME, package, CONTRACT_WORKSHEET_NAME);
+                ExcelWorksheet contractWorksheet = ExportSharedLogic.GetWorksheet(CAMPAIGN_EXPORT_TEMPLATE_FILENAME, package, CONTRACT_WORKSHEET_NAME);
                 new ContractReportGenerator().PopulateContractTab(campaignReportData, contractWorksheet);
             }
 

@@ -414,6 +414,9 @@
     <None Include="Files\BVS Load For Invalid Media Week right limit.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Files\Excel templates\Template - Campaign Export With Secondary Audiences.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Files\Excel templates\Template - Campaign Export.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

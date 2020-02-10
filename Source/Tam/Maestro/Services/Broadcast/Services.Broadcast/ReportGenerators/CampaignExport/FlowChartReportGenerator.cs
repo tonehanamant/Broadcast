@@ -20,7 +20,7 @@ namespace Services.Broadcast.ReportGenerators.CampaignExport
             currentRowIndex = planNameRowIndex;
             ExportSharedLogic.AddEmptyTables(flowChartWorksheet
                 , campaignReportData.FlowChartQuarterTables.Count
-                , planNameRowIndex, planNameRowIndex + ROWS_TO_COPY, ROWS_TO_COPY);
+                , planNameRowIndex, ROWS_TO_COPY);
             foreach (var table in campaignReportData.FlowChartQuarterTables)
             {
                 _AddFlowChartTable(flowChartWorksheet, table);

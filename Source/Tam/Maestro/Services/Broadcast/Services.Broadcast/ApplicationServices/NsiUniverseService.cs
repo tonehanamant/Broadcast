@@ -3,6 +3,7 @@ using Common.Services.Repositories;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Repositories;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -31,13 +32,13 @@ namespace Services.Broadcast.ApplicationServices
     {
         private readonly INsiUniverseRepository _NsiUniverseRepository;
         private readonly IBroadcastAudienceRepository _AudienceRepository;
-        private Dictionary<Tuple<int, int>, double> UniversesValues;
+        private ConcurrentDictionary<Tuple<int, int>, double> UniversesValues;
 
         public NsiUniverseService(IDataRepositoryFactory dataRepositoryFactory)
         {
             _NsiUniverseRepository = dataRepositoryFactory.GetDataRepository<INsiUniverseRepository>();
             _AudienceRepository = dataRepositoryFactory.GetDataRepository<IBroadcastAudienceRepository>();
-            UniversesValues = new Dictionary<Tuple<int, int>, double>();
+            UniversesValues = new ConcurrentDictionary<Tuple<int, int>, double>();
         }
 
         /// <inheritdoc/>
@@ -63,7 +64,7 @@ namespace Services.Broadcast.ApplicationServices
                 else
                 {
                     var audienceUniverseValue = _NsiUniverseRepository.GetAudienceUniverseForMediaMonth(mediaMonthId, ratingsAudience.rating_audience_id, ProposalEnums.ProposalPlaybackType.LivePlus3);
-                    UniversesValues.Add(currentKey, audienceUniverseValue);
+                    UniversesValues.TryAdd(currentKey, audienceUniverseValue);
                     universeValue += audienceUniverseValue;
                 }
             }

@@ -2278,6 +2278,7 @@
   "GuaranteedDemo": [
     "A21-24"
   ],
+  "HasSecondaryAudiences": false,
   "MarketCoverageData": {
     "BlackoutMarketsName": [],
     "CoveragePercentage": 80.0,
@@ -2286,350 +2287,320 @@
   "Notes": "All CPMs are derived from 100% broadcast deliveries, no cable unless otherwise noted.",
   "PostingType": "NTI",
   "ProposalCampaignTotalsTable": {
-    "QuarterLabel": null,
+    "HasSecondaryAudiences": false,
+    "QuarterLabel": "Campaign Totals",
     "Rows": [
-      {
-        "DaypartCode": "MDN",
-        "GuaranteedAudienceData": {
-          "CPM": 25.000000000000000000000,
-          "CPP": 3345.6900000000000435733144269,
-          "Impressions": 0.0,
-          "RatingPoints": 0.0,
-          "TotalImpressions": 10120.0,
-          "TotalRatingPoints": 75.61967785,
-          "VPVH": 0.5
-        },
-        "HHAudienceData": {
-          "CPM": 12.500000000000000000000,
-          "CPP": 13777.265000000005584638872767,
-          "Impressions": 0.0,
-          "RatingPoints": 0.0,
-          "TotalImpressions": 20240.0,
-          "TotalRatingPoints": 18.36358668
-        },
-        "SpotLength": "90",
-        "TotalCost": 253000.000000000000000000000,
-        "UnitCost": 0.0,
-        "Units": 0
-      },
-      {
-        "DaypartCode": "PA",
-        "GuaranteedAudienceData": {
-          "CPM": 25.000000,
-          "CPP": 3345.6900000000002205478848,
-          "Impressions": 0.0,
-          "RatingPoints": 0.0,
-          "TotalImpressions": 10000.0,
-          "TotalRatingPoints": 74.72300183,
-          "VPVH": 0.5
-        },
-        "HHAudienceData": {
-          "CPM": 12.500000,
-          "CPP": 13777.26499999996537128529498,
-          "Impressions": 0.0,
-          "RatingPoints": 0.0,
-          "TotalImpressions": 20000.0,
-          "TotalRatingPoints": 18.14583664
-        },
-        "SpotLength": "90",
-        "TotalCost": 250000.000000,
-        "UnitCost": 0.0,
-        "Units": 0
-      },
-      {
-        "DaypartCode": "EF",
-        "GuaranteedAudienceData": {
-          "CPM": 25.0000000,
-          "CPP": 3345.6899999999980583957896177,
-          "Impressions": 0.0,
-          "RatingPoints": 0.0,
-          "TotalImpressions": 9940.0,
-          "TotalRatingPoints": 74.27466382,
-          "VPVH": 0.5
-        },
-        "HHAudienceData": {
-          "CPM": 12.5000000,
-          "CPP": 13777.265000000021284017127706,
-          "Impressions": 0.0,
-          "RatingPoints": 0.0,
-          "TotalImpressions": 19880.0,
-          "TotalRatingPoints": 18.03696162
-        },
-        "SpotLength": "90",
-        "TotalCost": 248500.0000000,
-        "UnitCost": 0.0,
-        "Units": 0
-      },
-      {
-        "DaypartCode": "EM",
-        "GuaranteedAudienceData": {
-          "CPM": 25.0000000,
-          "CPP": 3345.6899999999980583957896177,
-          "Impressions": 0.0,
-          "RatingPoints": 0.0,
-          "TotalImpressions": 9940.0,
-          "TotalRatingPoints": 74.27466382,
-          "VPVH": 0.5
-        },
-        "HHAudienceData": {
-          "CPM": 12.5000000,
-          "CPP": 13777.265000000021284017127706,
-          "Impressions": 0.0,
-          "RatingPoints": 0.0,
-          "TotalImpressions": 19880.0,
-          "TotalRatingPoints": 18.03696162
-        },
-        "SpotLength": "90",
-        "TotalCost": 248500.0000000,
-        "UnitCost": 0.0,
-        "Units": 0
-      }
+      [
+        "MDN",
+        "90",
+        0,
+        "-",
+        253000.000000000000000000000,
+        0.0,
+        18.36358668,
+        0.0,
+        20240.0,
+        12.500000000000000000000,
+        13777.265000000005584638872767,
+        0.5,
+        0.0,
+        75.61967785,
+        0.0,
+        10120.0,
+        25.000000000000000000000,
+        3345.6900000000000435733144269
+      ],
+      [
+        "PA",
+        "90",
+        0,
+        "-",
+        250000.000000,
+        0.0,
+        18.14583664,
+        0.0,
+        20000.0,
+        12.500000,
+        13777.26499999996537128529498,
+        0.5,
+        0.0,
+        74.72300183,
+        0.0,
+        10000.0,
+        25.000000,
+        3345.6900000000002205478848
+      ],
+      [
+        "EF",
+        "90",
+        0,
+        "-",
+        248500.0000000,
+        0.0,
+        18.03696162,
+        0.0,
+        19880.0,
+        12.5000000,
+        13777.265000000021284017127706,
+        0.5,
+        0.0,
+        74.27466382,
+        0.0,
+        9940.0,
+        25.0000000,
+        3345.6899999999980583957896177
+      ],
+      [
+        "EM",
+        "90",
+        0,
+        "-",
+        248500.0000000,
+        0.0,
+        18.03696162,
+        0.0,
+        19880.0,
+        12.5000000,
+        13777.265000000021284017127706,
+        0.5,
+        0.0,
+        74.27466382,
+        0.0,
+        9940.0,
+        25.0000000,
+        3345.6899999999980583957896177
+      ]
     ],
-    "TotalCost": 1000000.000000000000000000000,
-    "TotalGuaranteeedData": {
-      "TotalCPM": 25.000000000000000000000,
-      "TotalCPP": 3345.6900000000002205478848,
-      "TotalImpressions": 40000.0,
-      "TotalRatingPoints": 298.89200733
-    },
-    "TotalHHData": {
-      "TotalCPM": 12.500000000000000000000,
-      "TotalCPP": 13777.265000000003333891471025,
-      "TotalImpressions": 80000.0,
-      "TotalRatingPoints": 72.58334655
-    },
-    "TotalUnits": 0
+    "SecondaryAudiencesTables": [],
+    "TotalRow": [
+      0,
+      "-",
+      1000000.000000000000000000000,
+      "-",
+      72.58334655,
+      "-",
+      80000.0,
+      12.500000000000000000000,
+      13777.265000000003333891471025,
+      "-",
+      "-",
+      298.89200733,
+      "-",
+      40000.0,
+      25.000000000000000000000,
+      3345.6900000000002205478848
+    ]
   },
   "ProposalQuarterTables": [
     {
+      "HasSecondaryAudiences": false,
       "QuarterLabel": "Q1 2020",
       "Rows": [
-        {
-          "DaypartCode": "MDN",
-          "GuaranteedAudienceData": {
-            "CPM": 24.99999999999997935393258427,
-            "CPP": 3345.6900000000000253934111798,
-            "Impressions": 0.0,
-            "RatingPoints": 0.0,
-            "TotalImpressions": 5085.71428571,
-            "TotalRatingPoints": 38.00198379,
-            "VPVH": 0.5
-          },
-          "HHAudienceData": {
-            "CPM": 12.499999999999965098314606742,
-            "CPP": 13777.264999999997167900514388,
-            "Impressions": 0.0,
-            "RatingPoints": 0.0,
-            "TotalImpressions": 10171.42857143,
-            "TotalRatingPoints": 9.22845406
-          },
-          "SpotLength": "90",
-          "TotalCost": 127142.857142857145000000000,
-          "UnitCost": 0.0,
-          "Units": 0
-        },
-        {
-          "DaypartCode": "PA",
-          "GuaranteedAudienceData": {
-            "CPM": 25.000000,
-            "CPP": 3345.6900000000002205478848,
-            "Impressions": 0.0,
-            "RatingPoints": 0.0,
-            "TotalImpressions": 5000.0,
-            "TotalRatingPoints": 37.36150092,
-            "VPVH": 0.5
-          },
-          "HHAudienceData": {
-            "CPM": 12.500000,
-            "CPP": 13777.264999999995741370235816,
-            "Impressions": 0.0,
-            "RatingPoints": 0.0,
-            "TotalImpressions": 10000.0,
-            "TotalRatingPoints": 9.07291832
-          },
-          "SpotLength": "90",
-          "TotalCost": 125000.000000,
-          "UnitCost": 0.0,
-          "Units": 0
-        },
-        {
-          "DaypartCode": "EF",
-          "GuaranteedAudienceData": {
-            "CPM": 25.0000000,
-            "CPP": 3345.6899999999989592924959437,
-            "Impressions": 0.0,
-            "RatingPoints": 0.0,
-            "TotalImpressions": 7100.0,
-            "TotalRatingPoints": 53.0533313,
-            "VPVH": 0.5
-          },
-          "HHAudienceData": {
-            "CPM": 12.5000000,
-            "CPP": 13777.265000000006007314441169,
-            "Impressions": 0.0,
-            "RatingPoints": 0.0,
-            "TotalImpressions": 14200.0,
-            "TotalRatingPoints": 12.88354401
-          },
-          "SpotLength": "90",
-          "TotalCost": 177500.0000000,
-          "UnitCost": 0.0,
-          "Units": 0
-        },
-        {
-          "DaypartCode": "EM",
-          "GuaranteedAudienceData": {
-            "CPM": 25.0000000,
-            "CPP": 3345.6899999999989592924959437,
-            "Impressions": 0.0,
-            "RatingPoints": 0.0,
-            "TotalImpressions": 7100.0,
-            "TotalRatingPoints": 53.0533313,
-            "VPVH": 0.5
-          },
-          "HHAudienceData": {
-            "CPM": 12.5000000,
-            "CPP": 13777.265000000006007314441169,
-            "Impressions": 0.0,
-            "RatingPoints": 0.0,
-            "TotalImpressions": 14200.0,
-            "TotalRatingPoints": 12.88354401
-          },
-          "SpotLength": "90",
-          "TotalCost": 177500.0000000,
-          "UnitCost": 0.0,
-          "Units": 0
-        }
+        [
+          "MDN",
+          "90",
+          0,
+          0.0,
+          127142.857142857145000000000,
+          0.0,
+          9.22845406,
+          0.0,
+          10171.42857143,
+          12.499999999999965098314606742,
+          13777.264999999997167900514388,
+          0.5,
+          0.0,
+          38.00198379,
+          0.0,
+          5085.71428571,
+          24.99999999999997935393258427,
+          3345.6900000000000253934111798
+        ],
+        [
+          "PA",
+          "90",
+          0,
+          0.0,
+          125000.000000,
+          0.0,
+          9.07291832,
+          0.0,
+          10000.0,
+          12.500000,
+          13777.264999999995741370235816,
+          0.5,
+          0.0,
+          37.36150092,
+          0.0,
+          5000.0,
+          25.000000,
+          3345.6900000000002205478848
+        ],
+        [
+          "EF",
+          "90",
+          0,
+          0.0,
+          177500.0000000,
+          0.0,
+          12.88354401,
+          0.0,
+          14200.0,
+          12.5000000,
+          13777.265000000006007314441169,
+          0.5,
+          0.0,
+          53.0533313,
+          0.0,
+          7100.0,
+          25.0000000,
+          3345.6899999999989592924959437
+        ],
+        [
+          "EM",
+          "90",
+          0,
+          0.0,
+          177500.0000000,
+          0.0,
+          12.88354401,
+          0.0,
+          14200.0,
+          12.5000000,
+          13777.265000000006007314441169,
+          0.5,
+          0.0,
+          53.0533313,
+          0.0,
+          7100.0,
+          25.0000000,
+          3345.6899999999989592924959437
+        ]
       ],
-      "TotalCost": 607142.857142857145000000000,
-      "TotalGuaranteeedData": {
-        "TotalCPM": 24.999999999999985382352941176,
-        "TotalCPP": 3345.6899999999975985581845412,
-        "TotalImpressions": 24285.71428571,
-        "TotalRatingPoints": 181.47014731
-      },
-      "TotalHHData": {
-        "TotalCPM": 12.499999999999992691176470588,
-        "TotalCPP": 13777.264999999983284666783707,
-        "TotalImpressions": 48571.42857143,
-        "TotalRatingPoints": 44.06846041
-      },
-      "TotalUnits": 0
+      "SecondaryAudiencesTables": [],
+      "TotalRow": [
+        0,
+        "-",
+        607142.857142857145000000000,
+        "-",
+        44.06846041,
+        "-",
+        48571.42857143,
+        12.499999999999992691176470588,
+        13777.264999999983284666783707,
+        "-",
+        "-",
+        181.47014731,
+        "-",
+        24285.71428571,
+        24.999999999999985382352941176,
+        3345.6899999999975985581845412
+      ]
     },
     {
+      "HasSecondaryAudiences": false,
       "QuarterLabel": "Q2 2020",
       "Rows": [
-        {
-          "DaypartCode": "MDN",
-          "GuaranteedAudienceData": {
-            "CPM": 25.000000000000020856980703746,
-            "CPP": 3345.6900000000000619389374574,
-            "Impressions": 0.0,
-            "RatingPoints": 0.0,
-            "TotalImpressions": 5034.28571429,
-            "TotalRatingPoints": 37.61769407,
-            "VPVH": 0.5
-          },
-          "HHAudienceData": {
-            "CPM": 12.500000000000035258229284904,
-            "CPP": 13777.264999999999005734193245,
-            "Impressions": 0.0,
-            "RatingPoints": 0.0,
-            "TotalImpressions": 10068.57142857,
-            "TotalRatingPoints": 9.13513262
-          },
-          "SpotLength": "90",
-          "TotalCost": 125857.142857142855000000000,
-          "UnitCost": 0.0,
-          "Units": 0
-        },
-        {
-          "DaypartCode": "PA",
-          "GuaranteedAudienceData": {
-            "CPM": 25.000000,
-            "CPP": 3345.6900000000002205478848,
-            "Impressions": 0.0,
-            "RatingPoints": 0.0,
-            "TotalImpressions": 5000.0,
-            "TotalRatingPoints": 37.36150092,
-            "VPVH": 0.5
-          },
-          "HHAudienceData": {
-            "CPM": 12.500000,
-            "CPP": 13777.264999999995741370235816,
-            "Impressions": 0.0,
-            "RatingPoints": 0.0,
-            "TotalImpressions": 10000.0,
-            "TotalRatingPoints": 9.07291832
-          },
-          "SpotLength": "90",
-          "TotalCost": 125000.000000,
-          "UnitCost": 0.0,
-          "Units": 0
-        },
-        {
-          "DaypartCode": "EF",
-          "GuaranteedAudienceData": {
-            "CPM": 25.0000000,
-            "CPP": 3345.6899999999958061540238028,
-            "Impressions": 0.0,
-            "RatingPoints": 0.0,
-            "TotalImpressions": 2840.0,
-            "TotalRatingPoints": 21.22133252,
-            "VPVH": 0.5
-          },
-          "HHAudienceData": {
-            "CPM": 12.5000000,
-            "CPP": 13777.265000000006007314441169,
-            "Impressions": 0.0,
-            "RatingPoints": 0.0,
-            "TotalImpressions": 5680.0,
-            "TotalRatingPoints": 5.15341761
-          },
-          "SpotLength": "90",
-          "TotalCost": 71000.0000000,
-          "UnitCost": 0.0,
-          "Units": 0
-        },
-        {
-          "DaypartCode": "EM",
-          "GuaranteedAudienceData": {
-            "CPM": 25.0000000,
-            "CPP": 3345.6899999999958061540238028,
-            "Impressions": 0.0,
-            "RatingPoints": 0.0,
-            "TotalImpressions": 2840.0,
-            "TotalRatingPoints": 21.22133252,
-            "VPVH": 0.5
-          },
-          "HHAudienceData": {
-            "CPM": 12.5000000,
-            "CPP": 13777.265000000006007314441169,
-            "Impressions": 0.0,
-            "RatingPoints": 0.0,
-            "TotalImpressions": 5680.0,
-            "TotalRatingPoints": 5.15341761
-          },
-          "SpotLength": "90",
-          "TotalCost": 71000.0000000,
-          "UnitCost": 0.0,
-          "Units": 0
-        }
+        [
+          "MDN",
+          "90",
+          0,
+          0.0,
+          125857.142857142855000000000,
+          0.0,
+          9.13513262,
+          0.0,
+          10068.57142857,
+          12.500000000000035258229284904,
+          13777.264999999999005734193245,
+          0.5,
+          0.0,
+          37.61769407,
+          0.0,
+          5034.28571429,
+          25.000000000000020856980703746,
+          3345.6900000000000619389374574
+        ],
+        [
+          "PA",
+          "90",
+          0,
+          0.0,
+          125000.000000,
+          0.0,
+          9.07291832,
+          0.0,
+          10000.0,
+          12.500000,
+          13777.264999999995741370235816,
+          0.5,
+          0.0,
+          37.36150092,
+          0.0,
+          5000.0,
+          25.000000,
+          3345.6900000000002205478848
+        ],
+        [
+          "EF",
+          "90",
+          0,
+          0.0,
+          71000.0000000,
+          0.0,
+          5.15341761,
+          0.0,
+          5680.0,
+          12.5000000,
+          13777.265000000006007314441169,
+          0.5,
+          0.0,
+          21.22133252,
+          0.0,
+          2840.0,
+          25.0000000,
+          3345.6899999999958061540238028
+        ],
+        [
+          "EM",
+          "90",
+          0,
+          0.0,
+          71000.0000000,
+          0.0,
+          5.15341761,
+          0.0,
+          5680.0,
+          12.5000000,
+          13777.265000000006007314441169,
+          0.5,
+          0.0,
+          21.22133252,
+          0.0,
+          2840.0,
+          25.0000000,
+          3345.6899999999958061540238028
+        ]
       ],
-      "TotalCost": 392857.142857142855000000000,
-      "TotalGuaranteeedData": {
-        "TotalCPM": 25.000000000000022590909090909,
-        "TotalCPP": 3345.6900000000042727137852,
-        "TotalImpressions": 15714.28571429,
-        "TotalRatingPoints": 117.42186002
-      },
-      "TotalHHData": {
-        "TotalCPM": 12.500000000000011295454545455,
-        "TotalCPP": 13777.264999999986003012672823,
-        "TotalImpressions": 31428.57142857,
-        "TotalRatingPoints": 28.51488614
-      },
-      "TotalUnits": 0
+      "SecondaryAudiencesTables": [],
+      "TotalRow": [
+        0,
+        "-",
+        392857.142857142855000000000,
+        "-",
+        28.51488614,
+        "-",
+        31428.57142857,
+        12.500000000000011295454545455,
+        13777.264999999986003012672823,
+        "-",
+        "-",
+        117.42186002,
+        "-",
+        15714.28571429,
+        25.000000000000022590909090909,
+        3345.6900000000042727137852
+      ]
     }
   ],
   "SpotLengths": [

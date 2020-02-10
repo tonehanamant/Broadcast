@@ -19,7 +19,7 @@ namespace Services.Broadcast.ReportGenerators.CampaignExport
         internal void PopulateContractTab(CampaignReportData campaignReportData, ExcelWorksheet contractWorksheet)
         {
             ExportSharedLogic.AddEmptyTables(contractWorksheet, campaignReportData.ContractQuarterTables.Count()
-                , planNameRowIndex, planNameRowIndex + ROWS_TO_COPY, ROWS_TO_COPY);
+                , planNameRowIndex, ROWS_TO_COPY);
             currentRowIndex = firstDataRow;
             for (int i = 0; i < campaignReportData.ContractQuarterTables.Count(); i++)
             {

@@ -838,6 +838,68 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void CampaignExport_SecondaryAudiences_SinglePlan()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<ITrafficApiCache>(new TrafficApiCacheStub());
+                var _CampaignService = IntegrationTestApplicationServiceFactory.GetApplicationService<ICampaignService>();
+
+                var reportData = _CampaignService.GetAndValidateCampaignReportData(new CampaignReportRequest
+                {
+                    CampaignId = 652,
+                    ExportType = CampaignExportTypeEnum.Proposal,
+                    SelectedPlans = new List<int> { 1848 }
+                });
+
+                //write excel file to file system(this is used for manual testing only)
+                //var reportOutput = new CampaignReportGenerator(@".\Files\Excel templates").Generate(reportData);
+                //using (var destinationFileStream = new FileStream($@"C:\Users\sroibu\Downloads\integration_tests_exports\{reportOutput.Filename}", FileMode.OpenOrCreate))
+                //{
+                //    while (reportOutput.Stream.Position < reportOutput.Stream.Length)
+                //    {
+                //        destinationFileStream.WriteByte((byte)reportOutput.Stream.ReadByte());
+                //    }
+                //}
+
+                Assert.IsTrue(DateTime.Now.ToString("MM/dd/yy").Equals(reportData.CreatedDate));
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(reportData, _GetJsonSettingsForCampaignExport()));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void CampaignExport_SecondaryAudiences_MultiplePlans()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<ITrafficApiCache>(new TrafficApiCacheStub());
+                var _CampaignService = IntegrationTestApplicationServiceFactory.GetApplicationService<ICampaignService>();
+
+                var reportData = _CampaignService.GetAndValidateCampaignReportData(new CampaignReportRequest
+                {
+                    CampaignId = 652,
+                    ExportType = CampaignExportTypeEnum.Proposal,
+                    SelectedPlans = new List<int> { 1848, 1850, 2052 }
+                });
+
+                //write excel file to file system(this is used for manual testing only)
+                //var reportOutput = new CampaignReportGenerator(@".\Files\Excel templates").Generate(reportData);
+                //using (var destinationFileStream = new FileStream($@"C:\Users\sroibu\Downloads\integration_tests_exports\{reportOutput.Filename}", FileMode.OpenOrCreate))
+                //{
+                //    while (reportOutput.Stream.Position < reportOutput.Stream.Length)
+                //    {
+                //        destinationFileStream.WriteByte((byte)reportOutput.Stream.ReadByte());
+                //    }
+                //}
+
+                Assert.IsTrue(DateTime.Now.ToString("MM/dd/yy").Equals(reportData.CreatedDate));
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(reportData, _GetJsonSettingsForCampaignExport()));
+            }
+        }
+
         private JsonSerializerSettings _GetJsonSettingsForCampaignExport()
         {
             var jsonResolver = new IgnorableSerializerContractResolver();
