@@ -1,0 +1,275 @@
+﻿[
+  {
+    "Audience": {
+      "AudienceString": null,
+      "Id": 4
+    },
+    "CPM": null,
+    "HutPlaybackType": 4,
+    "Impressions": 220.875869365928,
+    "IsReference": false,
+    "Rating": null,
+    "SharePlaybackType": 4,
+    "Vpvh": null
+  },
+  {
+    "Audience": {
+      "AudienceString": null,
+      "Id": 5
+    },
+    "CPM": null,
+    "HutPlaybackType": 4,
+    "Impressions": 0.0,
+    "IsReference": false,
+    "Rating": null,
+    "SharePlaybackType": 4,
+    "Vpvh": null
+  },
+  {
+    "Audience": {
+      "AudienceString": null,
+      "Id": 6
+    },
+    "CPM": null,
+    "HutPlaybackType": 4,
+    "Impressions": 143.79879477317371,
+    "IsReference": false,
+    "Rating": null,
+    "SharePlaybackType": 4,
+    "Vpvh": null
+  },
+  {
+    "Audience": {
+      "AudienceString": null,
+      "Id": 7
+    },
+    "CPM": null,
+    "HutPlaybackType": 4,
+    "Impressions": 836.83236325719577,
+    "IsReference": false,
+    "Rating": null,
+    "SharePlaybackType": 4,
+    "Vpvh": null
+  },
+  {
+    "Audience": {
+      "AudienceString": null,
+      "Id": 13
+    },
+    "CPM": null,
+    "HutPlaybackType": 4,
+    "Impressions": 1600.5027325766707,
+    "IsReference": false,
+    "Rating": null,
+    "SharePlaybackType": 4,
+    "Vpvh": null
+  },
+  {
+    "Audience": {
+      "AudienceString": null,
+      "Id": 14
+    },
+    "CPM": null,
+    "HutPlaybackType": 4,
+    "Impressions": 3153.8808389626947,
+    "IsReference": false,
+    "Rating": null,
+    "SharePlaybackType": 4,
+    "Vpvh": null
+  },
+  {
+    "Audience": {
+      "AudienceString": null,
+      "Id": 15
+    },
+    "CPM": null,
+    "HutPlaybackType": 4,
+    "Impressions": 1144.3318317552555,
+    "IsReference": false,
+    "Rating": null,
+    "SharePlaybackType": 4,
+    "Vpvh": null
+  },
+  {
+    "Audience": {
+      "AudienceString": null,
+      "Id": 19
+    },
+    "CPM": null,
+    "HutPlaybackType": 4,
+    "Impressions": 0.0,
+    "IsReference": false,
+    "Rating": null,
+    "SharePlaybackType": 4,
+    "Vpvh": null
+  },
+  {
+    "Audience": {
+      "AudienceString": null,
+      "Id": 20
+    },
+    "CPM": null,
+    "HutPlaybackType": 4,
+    "Impressions": 262.83263964671465,
+    "IsReference": false,
+    "Rating": null,
+    "SharePlaybackType": 4,
+    "Vpvh": null
+  },
+  {
+    "Audience": {
+      "AudienceString": null,
+      "Id": 21
+    },
+    "CPM": null,
+    "HutPlaybackType": 4,
+    "Impressions": 765.13536848065121,
+    "IsReference": false,
+    "Rating": null,
+    "SharePlaybackType": 4,
+    "Vpvh": null
+  },
+  {
+    "Audience": {
+      "AudienceString": null,
+      "Id": 22
+    },
+    "CPM": null,
+    "HutPlaybackType": 4,
+    "Impressions": 570.89900701041222,
+    "IsReference": false,
+    "Rating": null,
+    "SharePlaybackType": 4,
+    "Vpvh": null
+  },
+  {
+    "Audience": {
+      "AudienceString": null,
+      "Id": 28
+    },
+    "CPM": null,
+    "HutPlaybackType": 4,
+    "Impressions": 3156.8476874391558,
+    "IsReference": false,
+    "Rating": null,
+    "SharePlaybackType": 4,
+    "Vpvh": null
+  },
+  {
+    "Audience": {
+      "AudienceString": null,
+      "Id": 29
+    },
+    "CPM": null,
+    "HutPlaybackType": 4,
+    "Impressions": 1191.1390734531583,
+    "IsReference": false,
+    "Rating": null,
+    "SharePlaybackType": 4,
+    "Vpvh": null
+  },
+  {
+    "Audience": {
+      "AudienceString": null,
+      "Id": 30
+    },
+    "CPM": null,
+    "HutPlaybackType": 4,
+    "Impressions": 2510.1892182100746,
+    "IsReference": false,
+    "Rating": null,
+    "SharePlaybackType": 4,
+    "Vpvh": null
+  },
+  {
+    "Audience": {
+      "AudienceString": null,
+      "Id": 31
+    },
+    "CPM": null,
+    "HutPlaybackType": 4,
+    "Impressions": 23526.933151716155,
+    "IsReference": false,
+    "Rating": null,
+    "SharePlaybackType": 4,
+    "Vpvh": null
+  },
+  {
+    "Audience": {
+      "AudienceString": null,
+      "Id": 46
+    },
+    "CPM": null,
+    "HutPlaybackType": 4,
+    "Impressions": 850.35899843101276,
+    "IsReference": false,
+    "Rating": null,
+    "SharePlaybackType": 4,
+    "Vpvh": null
+  },
+  {
+    "Audience": {
+      "AudienceString": null,
+      "Id": 284
+    },
+    "CPM": null,
+    "HutPlaybackType": 4,
+    "Impressions": 1294.0333065500204,
+    "IsReference": false,
+    "Rating": null,
+    "SharePlaybackType": 4,
+    "Vpvh": null
+  },
+  {
+    "Audience": {
+      "AudienceString": null,
+      "Id": 290
+    },
+    "CPM": null,
+    "HutPlaybackType": 4,
+    "Impressions": 2706.7081277833668,
+    "IsReference": false,
+    "Rating": null,
+    "SharePlaybackType": 4,
+    "Vpvh": null
+  },
+  {
+    "Audience": {
+      "AudienceString": null,
+      "Id": 339
+    },
+    "CPM": null,
+    "HutPlaybackType": 4,
+    "Impressions": 0.0,
+    "IsReference": false,
+    "Rating": null,
+    "SharePlaybackType": 4,
+    "Vpvh": null
+  },
+  {
+    "Audience": {
+      "AudienceString": null,
+      "Id": 347
+    },
+    "CPM": null,
+    "HutPlaybackType": 4,
+    "Impressions": 4815.5585812099689,
+    "IsReference": false,
+    "Rating": null,
+    "SharePlaybackType": 4,
+    "Vpvh": null
+  },
+  {
+    "Audience": {
+      "AudienceString": null,
+      "Id": 348
+    },
+    "CPM": null,
+    "HutPlaybackType": 4,
+    "Impressions": 4066.5664206582487,
+    "IsReference": false,
+    "Rating": null,
+    "SharePlaybackType": 4,
+    "Vpvh": null
+  }
+]

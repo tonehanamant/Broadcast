@@ -660,6 +660,9 @@
     <None Include="Files\ProprietaryDataFiles\OAndO_UnknownAudience.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Files\ProprietaryDataFiles\OAndO_ValidFile1a.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Files\ProprietaryDataFiles\OAndO_ValidFile1.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

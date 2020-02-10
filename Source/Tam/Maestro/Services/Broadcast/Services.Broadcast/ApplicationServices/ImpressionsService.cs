@@ -13,6 +13,7 @@ using System.Linq;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Common.Utilities.Logging;
 using Tam.Maestro.Services.ContractInterfaces.AudienceAndRatingsBusinessObjects;
+using Tam.Maestro.Services.ContractInterfaces.Common;
 using static Services.Broadcast.Entities.Enums.ProposalEnums;
 using StationInventoryManifest = Services.Broadcast.Entities.StationInventory.StationInventoryManifest;
 
@@ -279,11 +280,11 @@ namespace Services.Broadcast.ApplicationServices
 
             if (hutBook.HasValue)
             {
-                var impressionsTwoBooksResult = _RatingsRepository.GetImpressionsDaypart(
+                var impressionsTwoBooksResult = _LoadComponentImpressionsForTwoBooks(
                         (short)hutBook.Value,
                         (short)shareBook,
                         componentIds,
-                        new List<ManifestDetailDaypart> { stationDetail },
+                        stationDetail,
                         playbackType);
 
                 stationImpressions = impressionsTwoBooksResult.Impressions;
@@ -296,10 +297,10 @@ namespace Services.Broadcast.ApplicationServices
             }
             else
             {
-                var impressionsSingleBookResult = _RatingsRepository.GetImpressionsDaypart(
+                var impressionsSingleBookResult = _LoadComponentImpressionsForSingleBook(
                         shareBook,
                         componentIds,
-                        new List<ManifestDetailDaypart> { stationDetail },
+                        stationDetail,
                         playbackType);
 
                 stationImpressions = impressionsSingleBookResult.Impressions;
@@ -337,6 +338,105 @@ namespace Services.Broadcast.ApplicationServices
                 });
             }
             return result;
+        }
+
+        private ImpressionsDaypartResultForTwoBooks _LoadComponentImpressionsForTwoBooks(short hutBook, short shareBook, 
+            List<int> componentIds, ManifestDetailDaypart stationDaypart, ProposalPlaybackType? playbackType)
+        {
+            if (stationDaypart.DisplayDaypart.StartTime > stationDaypart.DisplayDaypart.EndTime) // crossing midnight
+            {
+                var splitDaypart = _SplitStationDaypartByMidnight(stationDaypart);
+
+                var impressionsBeforeMidnight = _RatingsRepository.GetImpressionsDaypart(
+                            (short)hutBook,
+                            (short)shareBook,
+                            componentIds,
+                            new List<ManifestDetailDaypart> { splitDaypart.Item1 },
+                            playbackType);
+
+                var impressionsAfterMidnight = _RatingsRepository.GetImpressionsDaypart(
+                            (short)hutBook,
+                            (short)shareBook,
+                            componentIds,
+                            new List<ManifestDetailDaypart> { splitDaypart.Item2 },
+                            playbackType);
+
+                return impressionsBeforeMidnight.AddImpressions(impressionsAfterMidnight);
+
+            }
+            else
+            {
+                return _RatingsRepository.GetImpressionsDaypart(
+                            (short)hutBook,
+                            (short)shareBook,
+                            componentIds,
+                            new List<ManifestDetailDaypart> { stationDaypart },
+                            playbackType);
+            }
+        }
+
+        private ImpressionsDaypartResultForSingleBook _LoadComponentImpressionsForSingleBook(int shareBook, 
+            List<int> componentIds, ManifestDetailDaypart stationDaypart, ProposalPlaybackType? playbackType)
+        {
+            if (stationDaypart.DisplayDaypart.StartTime > stationDaypart.DisplayDaypart.EndTime) //crossing midnight
+            {
+                var splitDaypart = _SplitStationDaypartByMidnight(stationDaypart);
+
+                var impressionsBeforeMidnight = _RatingsRepository.GetImpressionsDaypart(
+                        shareBook,
+                        componentIds,
+                        new List<ManifestDetailDaypart> { splitDaypart.Item1 },
+                        playbackType);
+
+                var impressionsAfterMidnight = _RatingsRepository.GetImpressionsDaypart(
+                        shareBook,
+                        componentIds,
+                        new List<ManifestDetailDaypart> { splitDaypart.Item2 },
+                        playbackType);
+
+                return impressionsBeforeMidnight.AddImpressions(impressionsAfterMidnight);
+
+
+            }
+            else
+            {
+                return _RatingsRepository.GetImpressionsDaypart(
+                        shareBook,
+                        componentIds,
+                        new List<ManifestDetailDaypart> { stationDaypart },
+                        playbackType);
+            }
+        }
+
+        private Tuple<ManifestDetailDaypart, ManifestDetailDaypart> _SplitStationDaypartByMidnight(ManifestDetailDaypart stationDaypart)
+        {
+            if(stationDaypart.DisplayDaypart.StartTime < stationDaypart.DisplayDaypart.EndTime)
+            {
+                throw new ApplicationException("Can't split by midnight if not crossing midnight");
+            }
+
+            var daypartBeforeMidnight = (DisplayDaypart) stationDaypart.DisplayDaypart.Clone();
+            daypartBeforeMidnight.EndTime = 24 * 60 * 60; //24hours in seconds
+
+            var daypartAfterMidnight = (DisplayDaypart)stationDaypart.DisplayDaypart.Clone();
+            daypartAfterMidnight.StartTime = 0;
+
+            var stationDayaprtBeforeMidnight = new ManifestDetailDaypart
+            {
+                Id = 1,
+                LegacyCallLetters = stationDaypart.LegacyCallLetters,
+                DisplayDaypart = daypartBeforeMidnight
+            };
+
+            var stationDayaprtAfterMidnight = new ManifestDetailDaypart
+            {
+                Id = 2,
+                LegacyCallLetters = stationDaypart.LegacyCallLetters,
+                DisplayDaypart = daypartAfterMidnight
+            };
+
+            return new Tuple<ManifestDetailDaypart, ManifestDetailDaypart>(stationDayaprtBeforeMidnight, stationDayaprtAfterMidnight);
+
         }
     }
 }
