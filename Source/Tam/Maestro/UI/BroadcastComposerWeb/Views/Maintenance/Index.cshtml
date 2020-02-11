@@ -151,6 +151,15 @@
                 <input type="submit" value="QueueProcessInventoryProgramsBySourceForWeeks" id="submit"/>
             }
         </div>
+        
+        <div>
+            <h4>RerunPlanPricingJob</h4>
+            @using (Html.BeginForm("RerunPlanPricingJob", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <td>JobId : <input type="text" name="jobId" /></td><br />
+                <input type="submit" value="RerunPlanPricingJob" id="submit" />
+            }
+        </div>
 
     </div>
 

@@ -120,6 +120,8 @@ namespace Services.Broadcast.Repositories
         PlanPricingResultDto GetPricingResults(int planId);
 
         PlanPricingJob GetPlanPricingJob(int jobId);
+
+        PlanPricingParametersDto GetLatestParametersForPlanPricingJob(int jobId);
     }
 
     public class PlanRepository : BroadcastRepositoryBase, IPlanRepository
@@ -1132,6 +1134,82 @@ namespace Services.Broadcast.Repositories
                     DiagnosticResult = job.diagnostic_result
                 };
             });
+        }
+
+        public PlanPricingParametersDto GetLatestParametersForPlanPricingJob(int jobId)
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                var planVersionId = context.plan_version_pricing_job
+                    .Single(x => x.id == jobId, $"Job id {jobId} not found.")
+                    .plan_version_id;
+
+                var latestParametersId = context.plan_version_pricing_parameters
+                    .Where(p => p.plan_version_id == planVersionId)
+                    .Select(p => p.id)
+                    .Max();
+
+                var latestParameters = context.plan_version_pricing_parameters
+                    .Include(x => x.plan_version_pricing_parameters_inventory_source_percentages)
+                    .Include(x => x.plan_version_pricing_parameters_inventory_source_type_percentages)
+                    .Include(x => x.plan_versions)
+                    .Where(x => x.id == latestParametersId)
+                    .Single("Latest pricing job parameters not found.");
+
+                var dto = _MapPlanPricingParameters(latestParameters);
+
+                return dto;
+            });
+        }
+
+        private PlanPricingParametersDto _MapPlanPricingParameters(plan_version_pricing_parameters entity)
+        {
+            var dto = new PlanPricingParametersDto
+            {
+                PlanId = entity.plan_versions.plan_id,
+                MinCpm = entity.min_cpm,
+                MaxCpm = entity.max_cpm,
+                DeliveryImpressions = entity.impressions_goal,
+                Budget = entity.budget_goal,
+                ProprietaryBlend = entity.proprietary_blend,
+                CPM = entity.cpm_goal,
+                CompetitionFactor = entity.competition_factor,
+                InflationFactor = entity.inflation_factor,
+                UnitCaps = entity.unit_caps,
+                UnitCapsType = (UnitCapEnum)entity.unit_caps_type,
+                Currency = (PlanCurrenciesEnum)entity.currency,
+                CPP = entity.cpp,
+                DeliveryRatingPoints = entity.rating_points,
+                InventorySourcePercentages = entity.plan_version_pricing_parameters_inventory_source_percentages.Select(_MapPlanPricingInventorySourceDto).ToList(),
+                InventorySourceTypePercentages = entity.plan_version_pricing_parameters_inventory_source_type_percentages.Select(_MapPlanPricingInventorySourceTypeDto).ToList()
+            };
+            return dto;
+        }
+
+        private PlanPricingInventorySourceDto _MapPlanPricingInventorySourceDto(
+            plan_version_pricing_parameters_inventory_source_percentages entity)
+        {
+            var dto = new PlanPricingInventorySourceDto
+            {
+                Id = entity.inventory_source_id,
+                Name = entity.inventory_sources.name,
+                Percentage = entity.percentage
+            };
+
+            return dto;
+        }
+
+        private PlanPricingInventorySourceTypeDto _MapPlanPricingInventorySourceTypeDto(
+            plan_version_pricing_parameters_inventory_source_type_percentages entity)
+        {
+            var dto = new PlanPricingInventorySourceTypeDto
+            {
+                Id = entity.inventory_source_type,
+                Name = ((InventorySourceTypeEnum)entity.inventory_source_type).ToString(),
+                Percentage = entity.percentage
+            };
+
+            return dto;
         }
 
         public void SavePlanPricingParameters(PlanPricingParametersDto planPricingParametersDto)

@@ -39,6 +39,13 @@ namespace Services.Broadcast.ApplicationServices
         bool IsPricingModelRunningForPlan(int planId);
 
         string ForceCompletePlanPricingJob(int jobId, string username);
+
+        /// <summary>
+        /// For troubleshooting.  This will bypass the queue to allow rerunning directly.
+        /// </summary>
+        /// <param name="jobId">The id of the job to rerun.</param>
+        /// <returns>The new JobId</returns>
+        int ReRunPricingJob(int jobId);
     }
 
     public class PlanPricingService : IPlanPricingService
@@ -91,20 +98,24 @@ namespace Services.Broadcast.ApplicationServices
                     Queued = currentDate
                 };
 
-                using (var transaction = TransactionScopeHelper.CreateTransactionScopeWrapper(TimeSpan.FromMinutes(20)))
-                {
-                    var jobId = _PlanRepository.AddPlanPricingJob(job);
-
-                    job.Id = jobId;
-
-                    _PlanRepository.SavePlanPricingParameters(planPricingParametersDto);
-
-                    transaction.Complete();
-                }
+                _SavePricingJobAndParameters(job, planPricingParametersDto);
 
                 _BackgroundJobClient.Enqueue<IPlanPricingService>(x => x.RunPricingJob(planPricingParametersDto, job.Id));
 
                 return job;
+            }
+        }
+
+        private int _SavePricingJobAndParameters(PlanPricingJob job, PlanPricingParametersDto planPricingParametersDto)
+        {
+            using (var transaction = TransactionScopeHelper.CreateTransactionScopeWrapper(TimeSpan.FromMinutes(20)))
+            {
+                var jobId = _PlanRepository.AddPlanPricingJob(job);
+                job.Id = jobId;
+                _PlanRepository.SavePlanPricingParameters(planPricingParametersDto);
+
+                transaction.Complete();
+                return jobId;
             }
         }
 
@@ -346,6 +357,28 @@ namespace Services.Broadcast.ApplicationServices
             }
 
             return pricingModelWeeks;
+        }
+
+        /// <inheritdoc />
+        public int ReRunPricingJob(int jobId)
+        {
+            var originalJob = _PlanRepository.GetPlanPricingJob(jobId);
+            // get the plan params
+            var jobParams = _PlanRepository.GetLatestParametersForPlanPricingJob(jobId);
+
+            // create the artifacts
+            var newJob = new PlanPricingJob
+            {
+                PlanVersionId = originalJob.PlanVersionId,
+                Status = BackgroundJobProcessingStatus.Queued,
+                Queued = DateTime.Now
+            };
+            var newJobId = _SavePricingJobAndParameters(newJob, jobParams);
+            
+            // call the job directly
+            RunPricingJob(jobParams, newJobId);
+
+            return newJobId;
         }
 
         public void RunPricingJob(PlanPricingParametersDto planPricingParametersDto, int jobId)

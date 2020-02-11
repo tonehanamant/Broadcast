@@ -13,6 +13,7 @@ using System.Net;
 using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI;
 using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Services.Cable.Security;
 
@@ -404,6 +405,15 @@ namespace BroadcastComposerWeb.Controllers
             var service = _ApplicationServiceFactory.GetApplicationService<IDaypartCleanupService>();
             var results = service.RepairErroneousDayparts();
             ViewBag.DaypartCleanupMessage = JsonConvert.SerializeObject(results, Formatting.Indented);
+            return View("Index");
+        }
+
+        [HttpPost]
+        public ActionResult RerunPlanPricingJob(int jobId)
+        {
+            var service = _ApplicationServiceFactory.GetApplicationService<IPlanPricingService>();
+            var results = service.ReRunPricingJob(jobId);
+            ViewBag.Message = $"Reprocessed job {jobId} as job {results}";
             return View("Index");
         }
     }
