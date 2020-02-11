@@ -34,7 +34,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 var plan = _PlanRepository.GetPlan(1196);
-                var result = _PlanPricingInventoryEngine.GetInventoryForPlan(plan);
+                var result = _PlanPricingInventoryEngine.GetInventoryForPlan(plan, new PlanPricingInventoryEngine.ProgramInventoryOptionalParametersDto());
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
             }
@@ -57,7 +57,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     processInventoryProgramsJob: true);
 
                 var plan = _PlanRepository.GetPlan(1198);
-                var result = _PlanPricingInventoryEngine.GetInventoryForPlan(plan);
+                var result = _PlanPricingInventoryEngine.GetInventoryForPlan(plan, new PlanPricingInventoryEngine.ProgramInventoryOptionalParametersDto());
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(PlanPricingInventoryProgram), "ManifestId");
@@ -89,7 +89,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         processInventoryProgramsJob: true);
 
                     var plan = _PlanRepository.GetPlan(1198);
-                    var result = _PlanPricingInventoryEngine.GetInventoryForPlan(plan);
+                    var result = _PlanPricingInventoryEngine.GetInventoryForPlan(plan, new PlanPricingInventoryEngine.ProgramInventoryOptionalParametersDto());
 
                     var jsonResolver = new IgnorableSerializerContractResolver();
                     jsonResolver.Ignore(typeof(PlanPricingInventoryProgram), "ManifestId");
@@ -117,7 +117,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 var plan = _PlanRepository.GetPlan(1199);
-                var result = _PlanPricingInventoryEngine.GetInventoryForPlan(plan);
+                var result = _PlanPricingInventoryEngine.GetInventoryForPlan(plan, new PlanPricingInventoryEngine.ProgramInventoryOptionalParametersDto());
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
             }
@@ -130,7 +130,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 var plan = _PlanRepository.GetPlan(1197);
-                var result = _PlanPricingInventoryEngine.GetInventoryForPlan(plan);
+                var result = _PlanPricingInventoryEngine.GetInventoryForPlan(plan, new PlanPricingInventoryEngine.ProgramInventoryOptionalParametersDto());
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
             }
@@ -143,7 +143,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 var plan = _PlanRepository.GetPlan(1200);
-                var result = _PlanPricingInventoryEngine.GetInventoryForPlan(plan);
+                var result = _PlanPricingInventoryEngine.GetInventoryForPlan(plan, new PlanPricingInventoryEngine.ProgramInventoryOptionalParametersDto());
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
             }

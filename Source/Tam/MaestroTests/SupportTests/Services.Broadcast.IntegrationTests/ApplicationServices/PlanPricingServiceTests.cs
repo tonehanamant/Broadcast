@@ -278,7 +278,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void GetPricingInventoryTest()
         {
-            var result = _PlanPricingService.GetPricingInventory(1197);
+            var result = _PlanPricingService.GetPricingInventory(1197, null, null, null);
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
 

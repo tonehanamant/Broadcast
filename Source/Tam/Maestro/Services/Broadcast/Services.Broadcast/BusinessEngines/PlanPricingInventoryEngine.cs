@@ -20,7 +20,7 @@ namespace Services.Broadcast.BusinessEngines
 {
     public interface IPlanPricingInventoryEngine : IApplicationService
     {
-        List<PlanPricingInventoryProgram> GetInventoryForPlan(PlanDto plan, ProgramInventoryOptionalParametersDto parameters = null);
+        List<PlanPricingInventoryProgram> GetInventoryForPlan(PlanDto plan, ProgramInventoryOptionalParametersDto parameters);
     }
 
     public class PlanPricingInventoryEngine : IPlanPricingInventoryEngine
@@ -39,7 +39,7 @@ namespace Services.Broadcast.BusinessEngines
             _GenreCache = genreCache;
         }
 
-        public List<PlanPricingInventoryProgram> GetInventoryForPlan(PlanDto plan, ProgramInventoryOptionalParametersDto parameters = null)
+        public List<PlanPricingInventoryProgram> GetInventoryForPlan(PlanDto plan, ProgramInventoryOptionalParametersDto parameters)
         {
             var planFlightDateRanges = _GetPlanDateRanges(plan);
             var programs = _GetPrograms(plan, planFlightDateRanges);

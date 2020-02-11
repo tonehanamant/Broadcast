@@ -34,9 +34,9 @@ namespace BroadcastComposerWeb.Controllers
 
         [HttpPost]
         [Route("Inventory")]
-        public BaseResponse<PlanPricingApiRequestDto> GetPricingInventory(int planId)
+        public BaseResponse<PlanPricingApiRequestDto> GetPricingInventory(int planId, decimal? minCpm, decimal? maxCpm, double? inflationFactor)
         {
-            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanPricingService>().GetPricingInventory(planId));
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanPricingService>().GetPricingInventory(planId, minCpm, maxCpm, inflationFactor));
         }
 
         /// <summary>
