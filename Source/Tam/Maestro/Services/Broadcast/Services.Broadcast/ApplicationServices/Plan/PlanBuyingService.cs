@@ -38,15 +38,15 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
             result.Add(new PlanBuyingListingItem
             {
-                Id = 123,
+                Id = 1,
                 Campaign = new PlanBuyingListingItem.PlanBuyingListingItemCampaign
                 {
-                    Id = 456,
+                    Id = 1,
                     Name = "Some Campaign"
                 },
                 Plan = new PlanBuyingListingItem.PlanBuyingListingItemDetails
                 {
-                    Id = 123,
+                    Id = 1,
                     Name = "Some Plan",
                     FlightStartDate = new DateTime(2020, 3, 4, 8, 30, 52),
                     FlightEndDate = new DateTime(2020, 2, 4, 9, 30, 52),
@@ -75,15 +75,15 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
             result.Add(new PlanBuyingListingItem
             {
-                Id = 459,
+                Id = 2,
                 Campaign = new PlanBuyingListingItem.PlanBuyingListingItemCampaign
                 {
-                    Id = 333,
+                    Id = 2,
                     Name = "Some New Campaign"
                 },
                 Plan = new PlanBuyingListingItem.PlanBuyingListingItemDetails
                 {
-                    Id = 459,
+                    Id = 2,
                     Name = "Some New Plan",
                     FlightStartDate = new DateTime(2020, 3, 4, 8, 30, 52),
                     FlightEndDate = new DateTime(2020, 2, 4, 9, 30, 52),
@@ -117,15 +117,15 @@ namespace Services.Broadcast.ApplicationServices.Plan
         {
             var result = new PlanBuying
             {
-                Id = 123,
+                Id = 1,
                 Campaign = new PlanBuying.PlanBuyingCampaign
                 {
-                    Id = 456,   
+                    Id = 1,   
                     Name = "Some Campaign"
                 },
                 Plan = new PlanBuying.PlanBuyingDetails
                 {
-                    Id = 123,
+                    Id = 1,
                     Name = "Some Plan",
                     FlightStartDate = new DateTime(2020, 3, 4, 8, 30, 52),
                     FlightEndDate = new DateTime(2020, 2, 4, 9, 30, 52),
@@ -156,7 +156,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 },
                 InventoryPlanner = new PlanBuying.PlanBuyingInventoryPlanner
                 {
-                    Id = 123,
+                    Id = 1,
                     Details = new List<PlanBuying.PlanBuyingInventoryPlanner.PlanBuyingInventoryPlannerDetail>
                     {
                         new PlanBuying.PlanBuyingInventoryPlanner.PlanBuyingInventoryPlannerDetail
@@ -166,7 +166,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                             CPM = 5.00,
                             Impressions = 3660000,
                             SharePercent = 10,
-                            EstimateId = "123A",
+                            EstimateId = "1",
                             Notes = "Some notes",
                             IsBooked = true
                          },
@@ -177,7 +177,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                             CPM = 4.25,
                             Impressions = 4758000,
                             SharePercent = 13,
-                            EstimateId = "456",
+                            EstimateId = "2",
                             Notes = "",
                             IsBooked = true
                          }

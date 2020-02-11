@@ -6,7 +6,7 @@
   "BookedImpressionsPercent": 133.0,
   "BookedMarginPercent": 26.15,
   "Campaign": {
-    "Id": 456,
+    "Id": 1,
     "Name": "Some Campaign"
   },
   "DaypartMakeupDetails": [
@@ -33,13 +33,13 @@
   "GoalImpressions": 34313000.0,
   "GoalImpressionsPercent": 125.0,
   "GoalMarginPercent": 20.0,
-  "Id": 123,
+  "Id": 1,
   "InventoryPlanner": {
     "Details": [
       {
         "Budget": 18300.0,
         "CPM": 5.0,
-        "EstimateId": "123A",
+        "EstimateId": "1",
         "Impressions": 3660000.0,
         "InventorySourceId": 1,
         "IsBooked": true,
@@ -49,7 +49,7 @@
       {
         "Budget": 20222.0,
         "CPM": 4.25,
-        "EstimateId": "456",
+        "EstimateId": "2",
         "Impressions": 4758000.0,
         "InventorySourceId": 2,
         "IsBooked": true,
@@ -57,7 +57,7 @@
         "SharePercent": 13.0
       }
     ],
-    "Id": 123
+    "Id": 1
   },
   "InventoryTypeMakeupDetails": [
     {
@@ -100,7 +100,7 @@
     "FlightEndDate": "2020-02-04T09:30:52",
     "FlightHiatusDays": 3,
     "FlightStartDate": "2020-03-04T08:30:52",
-    "Id": 123,
+    "Id": 1,
     "Impressions": 27450000.0,
     "Name": "Some Plan",
     "PostingType": 1,
