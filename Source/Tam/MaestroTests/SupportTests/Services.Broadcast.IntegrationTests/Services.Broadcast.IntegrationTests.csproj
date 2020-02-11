@@ -415,6 +415,21 @@
     <None Include="Files\BVS Load For Invalid Media Week right limit.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Files\Campaign export\Stub Advertiser DAY EMN MDN PA PT Q4%2719-Q2%2720 Plan Rev - 12-16.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\Campaign export\Stub Advertiser DAY EMN PT Q4%2719 Plan Rev - 12-16.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\Campaign export\Stub Advertiser EF EM MDN PA Q1%2720-Q2%2720 Plan Rev - 12-16 v2.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\Campaign export\Stub Advertiser EF EM MDN PA Q1%2720-Q2%2720 Plan Rev - 12-16.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\Campaign export\Stub Advertiser EF EM MDN Q1%2720-Q2%2720 Plan Rev - 12-16.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Files\Excel templates\Template - Campaign Export With Secondary Audiences.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

@@ -14,15 +14,15 @@ namespace Services.Broadcast.ReportGenerators.CampaignExport
         private readonly string START_TOTAL_COLUMN = "E";
         private readonly string START_SECONDARY_AUDIENCE_COLUMN = "H";
 
-        private readonly string CREATED_DATE_CELL = "T2";
-        private readonly string CAMPAIGN_NAME_CELL = "F2";
-        private readonly string AGENCY_NAME_CELL = "C5";
-        private readonly string CLIENT_NAME_CELL = "E5";
-        private readonly string CAMPAIGN_FLIGHT_CELL = "H5";
-        private readonly string GUARANTEED_DEMO_CELL = "J5";
-        private readonly string CAMPAIGN_SPOT_LENGTH_CELL = "L5";
-        private readonly string POSTING_TYPE_CELL = "N5";
-        private readonly string STATUS_CELL = "T5";
+        private readonly (int ColumnIndex, int RowIndex) CREATED_DATE_CELL = (20, 2);
+        private readonly (int ColumnIndex, int RowIndex) CAMPAIGN_NAME_CELL = (6, 2);
+        private readonly (int ColumnIndex, int RowIndex) AGENCY_NAME_CELL = (3, 5);
+        private readonly (int ColumnIndex, int RowIndex) CLIENT_NAME_CELL = (5, 5);
+        private readonly (int ColumnIndex, int RowIndex) CAMPAIGN_FLIGHT_CELL = (8, 5);
+        private readonly (int ColumnIndex, int RowIndex) GUARANTEED_DEMO_CELL = (10, 5);
+        private readonly (int ColumnIndex, int RowIndex) CAMPAIGN_SPOT_LENGTH_CELL = (12, 5);
+        private readonly (int ColumnIndex, int RowIndex) POSTING_TYPE_CELL = (14, 5);
+        private readonly (int ColumnIndex, int RowIndex) STATUS_CELL = (20, 5);
         private readonly string PLAN_NAME_COLUMN = "C";
         private readonly string GUARANTEED_DEMO_COLUMN = "N";
         private readonly string FOOTER_INFO_COLUMN_INDEX = "F";
@@ -115,37 +115,41 @@ namespace Services.Broadcast.ReportGenerators.CampaignExport
         {
             //if the last quarter had secondary audiences, we need to account for the additional space between the tables
             currentRowIndex += campaignReportData.ProposalQuarterTables.Last().HasSecondaryAudiences
-                ? SPACE_BETWEEN_QUARTER_TABLES_WITH_SECONDARY_AUDIENCES 
+                ? SPACE_BETWEEN_QUARTER_TABLES_WITH_SECONDARY_AUDIENCES
                 : SPACE_BETWEEN_QUARTER_TABLES;
 
             //plan name row is 2 rows before the data row
             quarterLabelRowIndex = currentRowIndex - 2;
             firstDataRowIndex = currentRowIndex;
 
-            _InsertQuarterMainTableRowsData(campaignReportData.GuaranteedDemo, 
+            _InsertQuarterMainTableRowsData(campaignReportData.GuaranteedDemo,
                 campaignReportData.ProposalCampaignTotalsTable, campaignReportData.HasSecondaryAudiences);
 
             //add total row data
             _SetRowData(currentRowIndex, START_TOTAL_COLUMN, campaignReportData.ProposalCampaignTotalsTable.TotalRow);
-            
+
             //this logic needs adjusting when populating secondary audiences tables for campaign totals
             if (!campaignReportData.ProposalCampaignTotalsTable.HasSecondaryAudiences && campaignReportData.HasSecondaryAudiences)
-            {                
+            {
                 _DeleteSecondaryAudienceEmptyTemplateTable();
             }
         }
 
         private void _PopulateHeader(CampaignReportData data)
         {
-            WORKSHEET.Cells[CREATED_DATE_CELL].Value += data.CreatedDate;
-            WORKSHEET.Cells[CAMPAIGN_NAME_CELL].Value += data.CampaignName;
-            WORKSHEET.Cells[AGENCY_NAME_CELL].Value = data.AgencyName;
-            WORKSHEET.Cells[CLIENT_NAME_CELL].Value = data.ClientName;
-            WORKSHEET.Cells[CAMPAIGN_FLIGHT_CELL].Value = $"{data.CampaignFlightStartDate} - {data.CampaignFlightEndDate}";
-            WORKSHEET.Cells[GUARANTEED_DEMO_CELL].Value = string.Join(",", data.GuaranteedDemo);
-            WORKSHEET.Cells[CAMPAIGN_SPOT_LENGTH_CELL].Value = string.Join(", ", data.SpotLengths);
-            WORKSHEET.Cells[POSTING_TYPE_CELL].Value = data.PostingType;
-            WORKSHEET.Cells[STATUS_CELL].Value = data.Status;
+            int offset = data.HasSecondaryAudiences ? 1 : 0;
+            WORKSHEET.Cells[CREATED_DATE_CELL.RowIndex, CREATED_DATE_CELL.ColumnIndex + offset].Value += data.CreatedDate;
+            WORKSHEET.Cells[CAMPAIGN_NAME_CELL.RowIndex, CAMPAIGN_NAME_CELL.ColumnIndex].Value += data.CampaignName;
+            WORKSHEET.Cells[AGENCY_NAME_CELL.RowIndex, AGENCY_NAME_CELL.ColumnIndex].Value = data.AgencyName;
+            WORKSHEET.Cells[CLIENT_NAME_CELL.RowIndex, CLIENT_NAME_CELL.ColumnIndex].Value = data.ClientName;
+            WORKSHEET.Cells[CAMPAIGN_FLIGHT_CELL.RowIndex, CAMPAIGN_FLIGHT_CELL.ColumnIndex + offset].Value
+                = $"{data.CampaignFlightStartDate} - {data.CampaignFlightEndDate}";
+            WORKSHEET.Cells[GUARANTEED_DEMO_CELL.RowIndex, GUARANTEED_DEMO_CELL.ColumnIndex + offset].Value
+                = string.Join(",", data.GuaranteedDemo);
+            WORKSHEET.Cells[CAMPAIGN_SPOT_LENGTH_CELL.RowIndex, CAMPAIGN_SPOT_LENGTH_CELL.ColumnIndex + offset].Value
+                = string.Join(", ", data.SpotLengths);
+            WORKSHEET.Cells[POSTING_TYPE_CELL.RowIndex, POSTING_TYPE_CELL.ColumnIndex + offset].Value = data.PostingType;
+            WORKSHEET.Cells[STATUS_CELL.RowIndex, STATUS_CELL.ColumnIndex + offset].Value = data.Status;
         }
 
         private void _PutDataIntoPlanQuarterTables(CampaignReportData campaignReportData)
@@ -163,7 +167,7 @@ namespace Services.Broadcast.ReportGenerators.CampaignExport
                     currentRowIndex += (campaignReportData.ProposalQuarterTables[j - 1].HasSecondaryAudiences)
                         ? SPACE_BETWEEN_QUARTER_TABLES_WITH_SECONDARY_AUDIENCES
                         : SPACE_BETWEEN_QUARTER_TABLES;
-                        
+
                     //plan name row is 2 rows before the data row
                     quarterLabelRowIndex = currentRowIndex - 2;
                     firstDataRowIndex = currentRowIndex;
@@ -234,7 +238,7 @@ namespace Services.Broadcast.ReportGenerators.CampaignExport
                         }
                     }
                 }
-                if(campaignReportData.HasSecondaryAudiences && !table.HasSecondaryAudiences)
+                if (campaignReportData.HasSecondaryAudiences && !table.HasSecondaryAudiences)
                 {
                     _DeleteSecondaryAudienceEmptyTemplateTable();
                 }
@@ -246,7 +250,7 @@ namespace Services.Broadcast.ReportGenerators.CampaignExport
             //because the template file has secondary audiences tables for all the quarters
             //we need to adjust the template dynamically if the current quarter does not have 
             //secondary audiences tables
-            for(int i=0;i< ROWS_SECONDARY_TABLE_WITH_SEPARATOR; i++)
+            for (int i = 0; i < ROWS_SECONDARY_TABLE_WITH_SEPARATOR; i++)
             {   //always delete the currentRowIndex + 1 row because once the row gets deleted
                 //the next iteration will skip rows if we use "i" instead of "1"
                 WORKSHEET.DeleteRow(currentRowIndex + 1);

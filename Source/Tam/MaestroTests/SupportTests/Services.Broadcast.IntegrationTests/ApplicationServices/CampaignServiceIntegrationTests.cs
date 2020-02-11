@@ -587,15 +587,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 });
 
                 //write excel file to file system(this is used for manual testing only)
-                //var reportOutput = new CampaignReportGenerator(@".\Files\Excel templates").Generate(reportData);
-                //using (var destinationFileStream = new FileStream($@"C:\Users\sroibu\Downloads\integration_tests_exports\{reportOutput.Filename}", FileMode.OpenOrCreate))
-                //{
-                //    while (reportOutput.Stream.Position < reportOutput.Stream.Length)
-                //    {
-                //        destinationFileStream.WriteByte((byte)reportOutput.Stream.ReadByte());
-                //    }
-                //}
+                var reportOutput = new CampaignReportGenerator(@".\Files\Excel templates").Generate(reportData);
+                
+                //uncomment this line if you need to see the actual file
+                //_WriteFileToLocalFileSystem(reportOutput);
 
+                Assert.AreEqual(reportOutput.Stream.Length,
+                    File.ReadAllBytes(@".\Files\Campaign export\Stub Advertiser EF EM MDN Q1'20-Q2'20 Plan Rev - 12-16.xlsx").LongLength);
                 Assert.IsTrue(DateTime.Now.ToString("MM/dd/yy").Equals(reportData.CreatedDate));
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(reportData, _GetJsonSettingsForCampaignExport()));
             }
@@ -679,15 +677,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 });
 
                 //write excel file to file system(this is used for manual testing only)
-                //var reportOutput = new CampaignReportGenerator(@".\Files\Excel templates").Generate(reportData);
-                //using (var destinationFileStream = new FileStream($@"C:\Users\sroibu\Downloads\integration_tests_exports\{reportOutput.Filename}", FileMode.OpenOrCreate))
-                //{
-                //    while (reportOutput.Stream.Position < reportOutput.Stream.Length)
-                //    {
-                //        destinationFileStream.WriteByte((byte)reportOutput.Stream.ReadByte());
-                //    }
-                //}
+                var reportOutput = new CampaignReportGenerator(@".\Files\Excel templates").Generate(reportData);
 
+                //uncomment this line if you need to see the actual file
+                //_WriteFileToLocalFileSystem(reportOutput);
+
+                Assert.AreEqual(reportOutput.Stream.Length,
+                    File.ReadAllBytes(@".\Files\Campaign export\Stub Advertiser EF EM MDN PA Q1'20-Q2'20 Plan Rev - 12-16.xlsx").LongLength);
                 Assert.IsTrue(DateTime.Now.ToString("MM/dd/yy").Equals(reportData.CreatedDate));
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(reportData, _GetJsonSettingsForCampaignExport()));
             }
@@ -710,15 +706,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 });
 
                 //write excel file to file system(this is used for manual testing only)
-                //var reportOutput = new CampaignReportGenerator(@".\Files\Excel templates").Generate(reportData);
-                //using (var destinationFileStream = new FileStream($@"C:\Users\sroibu\Downloads\integration_tests_exports\{reportOutput.Filename}", FileMode.OpenOrCreate))
-                //{
-                //    while (reportOutput.Stream.Position < reportOutput.Stream.Length)
-                //    {
-                //        destinationFileStream.WriteByte((byte)reportOutput.Stream.ReadByte());
-                //    }
-                //}
+                var reportOutput = new CampaignReportGenerator(@".\Files\Excel templates").Generate(reportData);
 
+                //uncomment this line if you need to see the actual file
+                //_WriteFileToLocalFileSystem(reportOutput);
+
+                Assert.AreEqual(reportOutput.Stream.Length,
+                    File.ReadAllBytes(@".\Files\Campaign export\Stub Advertiser EF EM MDN PA Q1'20-Q2'20 Plan Rev - 12-16 v2.xlsx").LongLength);
                 Assert.IsTrue(DateTime.Now.ToString("MM/dd/yy").Equals(reportData.CreatedDate));
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(reportData, _GetJsonSettingsForCampaignExport()));
             }
@@ -855,15 +849,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 });
 
                 //write excel file to file system(this is used for manual testing only)
-                //var reportOutput = new CampaignReportGenerator(@".\Files\Excel templates").Generate(reportData);
-                //using (var destinationFileStream = new FileStream($@"C:\Users\sroibu\Downloads\integration_tests_exports\{reportOutput.Filename}", FileMode.OpenOrCreate))
-                //{
-                //    while (reportOutput.Stream.Position < reportOutput.Stream.Length)
-                //    {
-                //        destinationFileStream.WriteByte((byte)reportOutput.Stream.ReadByte());
-                //    }
-                //}
+                var reportOutput = new CampaignReportGenerator(@".\Files\Excel templates").Generate(reportData);
 
+                //uncomment this line if you need to see the actual file
+                //_WriteFileToLocalFileSystem(reportOutput);
+
+                Assert.AreEqual(reportOutput.Stream.Length,
+                    File.ReadAllBytes(@".\Files\Campaign export\Stub Advertiser DAY EMN PT Q4'19 Plan Rev - 12-16.xlsx").LongLength);
                 Assert.IsTrue(DateTime.Now.ToString("MM/dd/yy").Equals(reportData.CreatedDate));
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(reportData, _GetJsonSettingsForCampaignExport()));
             }
@@ -886,17 +878,17 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 });
 
                 //write excel file to file system(this is used for manual testing only)
-                //var reportOutput = new CampaignReportGenerator(@".\Files\Excel templates").Generate(reportData);
-                //using (var destinationFileStream = new FileStream($@"C:\Users\sroibu\Downloads\integration_tests_exports\{reportOutput.Filename}", FileMode.OpenOrCreate))
-                //{
-                //    while (reportOutput.Stream.Position < reportOutput.Stream.Length)
-                //    {
-                //        destinationFileStream.WriteByte((byte)reportOutput.Stream.ReadByte());
-                //    }
-                //}
+                var reportOutput = new CampaignReportGenerator(@".\Files\Excel templates").Generate(reportData);
 
+                //uncomment this line if you need to see the actual file
+                //_WriteFileToLocalFileSystem(reportOutput);
+
+                Assert.AreEqual(reportOutput.Stream.Length,
+                    File.ReadAllBytes(@".\Files\Campaign export\Stub Advertiser DAY EMN MDN PA PT Q4'19-Q2'20 Plan Rev - 12-16.xlsx").LongLength);
                 Assert.IsTrue(DateTime.Now.ToString("MM/dd/yy").Equals(reportData.CreatedDate));
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(reportData, _GetJsonSettingsForCampaignExport()));
+
+                
             }
         }
 
@@ -1067,6 +1059,17 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Queued = currentDate.AddSeconds(4),
                 Completed = currentDate.AddSeconds(5)
             });
+        }
+
+        private static void _WriteFileToLocalFileSystem(ReportOutput reportOutput)
+        {
+            using (var destinationFileStream = new FileStream($@"C:\Users\sroibu\Downloads\integration_tests_exports\{reportOutput.Filename}", FileMode.OpenOrCreate))
+            {
+                while (reportOutput.Stream.Position < reportOutput.Stream.Length)
+                {
+                    destinationFileStream.WriteByte((byte)reportOutput.Stream.ReadByte());
+                }
+            }
         }
     }
 }
