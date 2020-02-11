@@ -368,7 +368,14 @@ namespace Services.Broadcast.ApplicationServices
 
                 planPricingJobDiagnostic.RecordGatherInventoryStart();
 
-                var inventory = _PlanPricingInventoryEngine.GetInventoryForPlan(plan, planPricingParametersDto.MinCpm, planPricingParametersDto.MaxCpm);
+                var inventory = _PlanPricingInventoryEngine.GetInventoryForPlan(
+                    plan,
+                    new PlanPricingInventoryEngine.ProgramInventoryOptionalParametersDto
+                    {
+                        MinCPM = planPricingParametersDto.MinCpm,
+                        MaxCPM = planPricingParametersDto.MaxCpm,
+                        InflationFactor = planPricingParametersDto.InflationFactor
+                    });
 
                 planPricingJobDiagnostic.RecordGatherInventoryEnd();
 

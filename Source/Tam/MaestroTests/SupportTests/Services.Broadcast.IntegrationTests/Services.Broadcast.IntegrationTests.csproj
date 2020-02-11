@@ -342,6 +342,7 @@
     <Compile Include="UnitTests\ApplicationServices\SharedFolderServiceUnitTests.cs" />
     <Compile Include="UnitTests\BusinessEngines\InventoryProgramsProcessingEngineTestClass.cs" />
     <Compile Include="UnitTests\BusinessEngines\InventoryProgramsProcessingEngineUnitTests.cs" />
+    <Compile Include="UnitTests\BusinessEngines\PlanPricingInventoryEngineTestClass.cs" />
     <Compile Include="UnitTests\BusinessEngines\PlanPricingInventoryEngineUnitTests.cs" />
     <Compile Include="UnitTests\BusinessEngines\PlanPricingInventorySourceSortEngineUnitTests.cs" />
     <Compile Include="UnitTests\BusinessEngines\TrackingEngineUnitTests.cs" />

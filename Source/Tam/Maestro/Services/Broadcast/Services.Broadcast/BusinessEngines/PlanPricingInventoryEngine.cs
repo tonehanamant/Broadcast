@@ -13,13 +13,14 @@ using System.Linq;
 using Tam.Maestro.Common;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 using Tam.Maestro.Services.ContractInterfaces.Common;
+using static Services.Broadcast.BusinessEngines.PlanPricingInventoryEngine;
 using static Services.Broadcast.Entities.Enums.ProposalEnums;
 
 namespace Services.Broadcast.BusinessEngines
 {
     public interface IPlanPricingInventoryEngine : IApplicationService
     {
-        List<PlanPricingInventoryProgram> GetInventoryForPlan(PlanDto plan, decimal? minCPM = null, decimal? maxCPM = null);
+        List<PlanPricingInventoryProgram> GetInventoryForPlan(PlanDto plan, ProgramInventoryOptionalParametersDto parameters = null);
     }
 
     public class PlanPricingInventoryEngine : IPlanPricingInventoryEngine
@@ -38,19 +39,27 @@ namespace Services.Broadcast.BusinessEngines
             _GenreCache = genreCache;
         }
 
-        public List<PlanPricingInventoryProgram> GetInventoryForPlan(PlanDto plan, decimal? minCPM = null, decimal? maxCPM = null)
+        public List<PlanPricingInventoryProgram> GetInventoryForPlan(PlanDto plan, ProgramInventoryOptionalParametersDto parameters = null)
         {
             var planFlightDateRanges = _GetPlanDateRanges(plan);
             var programs = _GetPrograms(plan, planFlightDateRanges);
 
-            programs = FilterProgramsByDayparts(plan, programs, planFlightDateRanges);
+            programs = _FilterProgramsByDayparts(plan, programs, planFlightDateRanges, parameters?.InflationFactor);
 
             _ApplyProjectedImpressions(programs, plan);
             _ApplyProvidedImpressions(programs, plan);
 
-            programs = FilterProgramsByMinAndMaxCPM(programs, minCPM, maxCPM);
+            programs = _FilterProgramsByMinAndMaxCPM(programs, parameters?.MinCPM, parameters?.MaxCPM);
 
             return programs;
+        }
+
+        protected void _ApplyInflationFactorToSpotCost(PlanPricingInventoryProgram program, double? inflationFactor)
+        {
+            if (inflationFactor.HasValue)
+            {
+                program.SpotCost = program.SpotCost + (program.SpotCost * (decimal)inflationFactor.Value / 100);
+            }
         }
 
         private List<PlanPricingInventoryProgram> _GetPrograms(PlanDto plan, List<DateRange> planFlightDateRanges)
@@ -187,10 +196,11 @@ namespace Services.Broadcast.BusinessEngines
             return dateRanges;
         }
 
-        public List<PlanPricingInventoryProgram> FilterProgramsByDayparts(
+        protected List<PlanPricingInventoryProgram> _FilterProgramsByDayparts(
             PlanDto plan, 
             List<PlanPricingInventoryProgram> programs,
-            List<DateRange> planFlightDateRanges)
+            List<DateRange> planFlightDateRanges,
+            double? inflationFactor = null)
         {
             if (plan.Dayparts.IsEmpty())
                 return programs;
@@ -204,6 +214,7 @@ namespace Services.Broadcast.BusinessEngines
                 
                 if (inventoryDayparts.Any() && _IsProgramAllowedByRestrictions(inventoryDayparts))
                 {
+                    _ApplyInflationFactorToSpotCost(program, inflationFactor);
                     result.Add(program);
                 }
             }
@@ -211,7 +222,7 @@ namespace Services.Broadcast.BusinessEngines
             return result;
         }
 
-        public List<PlanPricingInventoryProgram> FilterProgramsByMinAndMaxCPM(
+        protected List<PlanPricingInventoryProgram> _FilterProgramsByMinAndMaxCPM(
             List<PlanPricingInventoryProgram> programs,
             decimal? minCPM,
             decimal? maxCPM)
@@ -407,6 +418,15 @@ namespace Services.Broadcast.BusinessEngines
             public PlanDaypartDto PlanDaypart { get; set; }
 
             public PlanPricingInventoryProgram.ManifestDaypart ManifestDaypart { get; set; }
+        }
+
+        public class ProgramInventoryOptionalParametersDto
+        {
+            public decimal? MinCPM { get; set; }
+
+            public decimal? MaxCPM { get; set; }
+
+            public double? InflationFactor { get; set; }
         }
     }
 }

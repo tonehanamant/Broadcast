@@ -1,6 +1,4 @@
-﻿using ApprovalTests.Reporters;
-using Common.Services;
-using Common.Services.Repositories;
+﻿using Common.Services.Repositories;
 using Moq;
 using NUnit.Framework;
 using Services.Broadcast.BusinessEngines;
@@ -23,7 +21,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
         private readonly Mock<IDataRepositoryFactory> _DataRepositoryFactoryMock;
         private readonly Mock<IImpressionsCalculationEngine> _ImpressionsCalculationEngineMock;
         private readonly Mock<IGenreCache> _GenreCache;
-        private readonly PlanPricingInventoryEngine _PlanPricingInventoryEngine;
+        private readonly PlanPricingInventoryEngineTestClass _PlanPricingInventoryEngine;
 
         public PlanPricingInventoryEngineUnitTests()
         {
@@ -31,7 +29,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             _ImpressionsCalculationEngineMock = new Mock<IImpressionsCalculationEngine>();
             _GenreCache = new Mock<IGenreCache>();
 
-            _PlanPricingInventoryEngine = new PlanPricingInventoryEngine(
+            _PlanPricingInventoryEngine = new PlanPricingInventoryEngineTestClass(
                 _DataRepositoryFactoryMock.Object,
                 _ImpressionsCalculationEngineMock.Object,
                 _GenreCache.Object);
@@ -47,7 +45,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
 
             plan.Dayparts = new List<PlanDaypartDto>();
 
-            var result = _PlanPricingInventoryEngine.FilterProgramsByDayparts(plan, programs, planFlightDateRanges);
+            var result = _PlanPricingInventoryEngine.UT_FilterProgramsByDayparts(plan, programs, planFlightDateRanges);
 
             Assert.AreEqual(expectedCount, result.Count);
         }
@@ -85,7 +83,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 }
             };
 
-            var result = _PlanPricingInventoryEngine.FilterProgramsByDayparts(plan, programs, planFlightDateRanges);
+            var result = _PlanPricingInventoryEngine.UT_FilterProgramsByDayparts(plan, programs, planFlightDateRanges);
 
             Assert.AreEqual(expectedCount, result.Count);
         }
@@ -123,7 +121,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 }
             };
 
-            var result = _PlanPricingInventoryEngine.FilterProgramsByDayparts(plan, programs, planFlightDateRanges);
+            var result = _PlanPricingInventoryEngine.UT_FilterProgramsByDayparts(plan, programs, planFlightDateRanges);
 
             Assert.AreEqual(expectedCount, result.Count);
         }
@@ -161,7 +159,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 }
             };
 
-            var result = _PlanPricingInventoryEngine.FilterProgramsByDayparts(plan, programs, planFlightDateRanges);
+            var result = _PlanPricingInventoryEngine.UT_FilterProgramsByDayparts(plan, programs, planFlightDateRanges);
 
             Assert.AreEqual(expectedCount, result.Count);
         }
@@ -224,7 +222,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 }
             };
 
-            var result = _PlanPricingInventoryEngine.FilterProgramsByDayparts(plan, programs, planFlightDateRanges);
+            var result = _PlanPricingInventoryEngine.UT_FilterProgramsByDayparts(plan, programs, planFlightDateRanges);
 
             Assert.AreEqual(expectedCount, result.Count);
         }
@@ -287,7 +285,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 }
             };
 
-            var result = _PlanPricingInventoryEngine.FilterProgramsByDayparts(plan, programs, planFlightDateRanges);
+            var result = _PlanPricingInventoryEngine.UT_FilterProgramsByDayparts(plan, programs, planFlightDateRanges);
 
             Assert.AreEqual(expectedCount, result.Count);
         }
@@ -350,7 +348,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 }
             };
 
-            var result = _PlanPricingInventoryEngine.FilterProgramsByDayparts(plan, programs, planFlightDateRanges);
+            var result = _PlanPricingInventoryEngine.UT_FilterProgramsByDayparts(plan, programs, planFlightDateRanges);
 
             Assert.AreEqual(expectedCount, result.Count);
         }
@@ -426,7 +424,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 EndTimeSeconds = 39599 // 11am
             });
 
-            var result = _PlanPricingInventoryEngine.FilterProgramsByDayparts(plan, programs, planFlightDateRanges);
+            var result = _PlanPricingInventoryEngine.UT_FilterProgramsByDayparts(plan, programs, planFlightDateRanges);
 
             Assert.AreEqual(expectedCount, result.Count);
         }
@@ -508,7 +506,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 }
             };
 
-            var result = _PlanPricingInventoryEngine.FilterProgramsByDayparts(plan, programs, planFlightDateRanges);
+            var result = _PlanPricingInventoryEngine.UT_FilterProgramsByDayparts(plan, programs, planFlightDateRanges);
 
             Assert.AreEqual(expectedCount, result.Count);
         }
@@ -520,8 +518,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
         [TestCase(12.00, 15.00, 2)]
         public void ExcludeProgramsWithOutOfBoundsMinAndMaxCPM(double? minCPM, double? maxCPM, int expectedCount)
         {
-            var plan = _GetPlan();
-
             var programs = new List<PlanPricingInventoryProgram>
             {
                 new PlanPricingInventoryProgram
@@ -549,7 +545,62 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                     ProvidedImpressions = 23400.0
                 }
             };
-            var result = _PlanPricingInventoryEngine.FilterProgramsByMinAndMaxCPM(programs, (decimal?)minCPM, (decimal?)maxCPM);
+            var result = _PlanPricingInventoryEngine.UT_FilterProgramsByMinAndMaxCPM(programs, (decimal?)minCPM, (decimal?)maxCPM);
+
+            Assert.AreEqual(expectedCount, result.Count);
+        }
+
+        [Test]
+        [TestCase(null, 300.0)]
+        [TestCase(5.0, 315.0)]
+        [TestCase(10.0, 330.0)]
+        [TestCase(4.5, 313.5)]
+        public void ApplyInflationToSpotCost(double? inflationFactor, double expectedResult)
+        {
+            var program = new PlanPricingInventoryProgram
+            {
+                SpotCost = 300.00M,
+            };
+
+            _PlanPricingInventoryEngine.UT_ApplyInflationFactorToSpotCost(program, inflationFactor);
+
+            Assert.AreEqual((decimal)expectedResult, program.SpotCost);
+        }
+
+        [Test]
+        [TestCase(null, null, null, 4)]
+        [TestCase(null, null, 10.0, 4)]
+        [TestCase(14.0, null, 10.0, 3)]
+        [TestCase(null, 18.0, 10.0, 3)]
+        [TestCase(14.00, 18.00, 10.0, 2)]
+        public void ExcludeProgramsWithOutOfBoundsMinAndMaxCPMAfterInflationApplied(double? minCPM, double? maxCPM, double? inflationFactor, int expectedCount)
+        {
+            var programs = new List<PlanPricingInventoryProgram>
+            {
+                new PlanPricingInventoryProgram // CPM 11.8243
+                {
+                    SpotCost = 350.00M,
+                    ProvidedImpressions = 29600.0
+                },
+                new PlanPricingInventoryProgram // CPM 13.2450
+                {
+                    SpotCost = 400.00M,
+                    ProvidedImpressions = 30200.0
+                },
+                new PlanPricingInventoryProgram // CPM 17.2018
+                {
+                    SpotCost = 375.00M,
+                    ProvidedImpressions = 21800.0
+                },
+                new PlanPricingInventoryProgram // CPM 12.8205
+                {
+                    SpotCost = 300.00M,
+                    ProvidedImpressions = 23400.0
+                }
+            };
+            
+            programs.ForEach(program => _PlanPricingInventoryEngine.UT_ApplyInflationFactorToSpotCost(program, inflationFactor));
+            var result = _PlanPricingInventoryEngine.UT_FilterProgramsByMinAndMaxCPM(programs, (decimal?)minCPM, (decimal?)maxCPM);
 
             Assert.AreEqual(expectedCount, result.Count);
         }
