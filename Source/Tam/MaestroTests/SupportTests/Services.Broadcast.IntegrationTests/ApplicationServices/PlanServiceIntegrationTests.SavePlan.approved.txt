@@ -45,6 +45,60 @@
   "Currency": 1,
   "Dayparts": [
     {
+      "DaypartCodeId": 3,
+      "DaypartTypeId": 3,
+      "EndTimeSeconds": 68400,
+      "IsEndTimeModified": false,
+      "IsStartTimeModified": false,
+      "Restrictions": {
+        "AffiliateRestrictions": {
+          "Affiliates": [],
+          "ContainType": 2
+        },
+        "GenreRestrictions": {
+          "ContainType": 2,
+          "Genres": [
+            {
+              "Display": "Documentary",
+              "Id": 12
+            },
+            {
+              "Display": "Drama",
+              "Id": 14
+            }
+          ]
+        },
+        "ProgramRestrictions": {
+          "ContainType": 1,
+          "Programs": [
+            {
+              "ContentRating": "R",
+              "Genre": {
+                "Display": "Horror",
+                "Id": 25
+              },
+              "Name": "Power Rangers"
+            }
+          ]
+        },
+        "ShowTypeRestrictions": {
+          "ContainType": 1,
+          "ShowTypes": [
+            {
+              "Display": "Special Event",
+              "Id": 9
+            },
+            {
+              "Display": "TBA Movie",
+              "Id": 11
+            }
+          ]
+        }
+      },
+      "StartTimeSeconds": 57600,
+      "WeightingGoalPercent": 25.0
+    },
+    {
       "DaypartCodeId": 2,
       "DaypartTypeId": 2,
       "EndTimeSeconds": 2000,
@@ -140,63 +194,18 @@
       },
       "StartTimeSeconds": 1500,
       "WeightingGoalPercent": 33.2
-    },
-    {
-      "DaypartCodeId": 3,
-      "DaypartTypeId": 3,
-      "EndTimeSeconds": 68400,
-      "IsEndTimeModified": false,
-      "IsStartTimeModified": false,
-      "Restrictions": {
-        "AffiliateRestrictions": {
-          "Affiliates": [],
-          "ContainType": 2
-        },
-        "GenreRestrictions": {
-          "ContainType": 2,
-          "Genres": [
-            {
-              "Display": "Documentary",
-              "Id": 12
-            },
-            {
-              "Display": "Drama",
-              "Id": 14
-            }
-          ]
-        },
-        "ProgramRestrictions": {
-          "ContainType": 1,
-          "Programs": [
-            {
-              "ContentRating": "R",
-              "Genre": {
-                "Display": "Horror",
-                "Id": 25
-              },
-              "Name": "Power Rangers"
-            }
-          ]
-        },
-        "ShowTypeRestrictions": {
-          "ContainType": 1,
-          "ShowTypes": [
-            {
-              "Display": "Special Event",
-              "Id": 9
-            },
-            {
-              "Display": "TBA Movie",
-              "Id": 11
-            }
-          ]
-        }
-      },
-      "StartTimeSeconds": 57600,
-      "WeightingGoalPercent": 25.0
     }
   ],
   "Equivalized": true,
+  "FlightDays": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
   "FlightEndDate": "2019-01-31T00:00:00",
   "FlightHiatusDays": [
     "2019-01-28T00:00:00",

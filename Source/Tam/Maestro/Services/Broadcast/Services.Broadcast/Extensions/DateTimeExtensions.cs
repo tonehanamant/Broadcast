@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Services.Broadcast.Entities.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -66,6 +67,11 @@ namespace Services.Broadcast.Extensions
             }
 
             return groups;
+        }
+
+        public static BroadcastDayOfWeek GetBroadcastDayOfWeek(this DateTime date)
+        {
+            return date.DayOfWeek == DayOfWeek.Sunday ? Entities.Enums.BroadcastDayOfWeek.Sunday : (BroadcastDayOfWeek)(int)date.DayOfWeek;
         }
     }
 }

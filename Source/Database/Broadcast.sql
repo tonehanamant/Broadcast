@@ -4013,6 +4013,41 @@ END
 
 /*************************************** END PRI-20794 *****************************************************/
 
+/*************************************** START PRI-20800 *****************************************************/
+IF OBJECT_ID('plan_version_flight_days') IS NULL
+BEGIN
+	CREATE TABLE [dbo].[plan_version_flight_days](
+		[id] int IDENTITY(1,1) NOT NULL,
+		[plan_version_id] int NOT NULL,
+		[day_id] int NOT NULL,
+	 CONSTRAINT [PK_plan_version_flight_days] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY]
+
+	ALTER TABLE [dbo].[plan_version_flight_days]  WITH CHECK ADD CONSTRAINT [FK_plan_version_flight_days_plan_versions] FOREIGN KEY([plan_version_id])
+	REFERENCES [dbo].[plan_versions] ([id])
+	ON DELETE CASCADE
+
+	ALTER TABLE [dbo].[plan_version_flight_days]  WITH CHECK ADD CONSTRAINT [FK_plan_version_flight_days_days] FOREIGN KEY([day_id])
+	REFERENCES [dbo].[days] ([id])
+
+	ALTER TABLE [dbo].[plan_version_flight_days]
+	ADD CONSTRAINT [UQ_plan_version_flight_days_plan_version_id_day_id] 
+	UNIQUE ([plan_version_id], [day_id])
+
+	EXEC('
+		INSERT INTO [dbo].[plan_version_flight_days] (plan_version_id, day_id)
+		SELECT pv.id AS plan_version_id, d.id AS day_id
+		FROM plans AS p
+		INNER JOIN plan_versions AS pv ON p.id = pv.plan_id
+		CROSS JOIN days AS d
+		WHERE p.latest_version_id = pv.id
+	')
+END
+/*************************************** END PRI-20800 *****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

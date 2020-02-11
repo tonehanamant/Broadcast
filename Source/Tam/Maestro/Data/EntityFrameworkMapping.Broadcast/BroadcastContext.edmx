@@ -821,6 +821,14 @@
           <Property Name="program_restrictions_contain_type" Type="int" />
           <Property Name="affiliate_restrictions_contain_type" Type="int" />
         </EntityType>
+        <EntityType Name="plan_version_flight_days">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="plan_version_id" Type="int" Nullable="false" />
+          <Property Name="day_id" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="plan_version_flight_hiatus_days">
           <Key>
             <PropertyRef Name="id" />
@@ -1957,7 +1965,7 @@
           <Property Name="sys_end_date" Type="datetime2" Precision="7" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'broadcast.dbo.station_inventory_manifest_weeks_history' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'broadcast_integration_staging.dbo.station_inventory_manifest_weeks_history' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="station_inventory_manifest_weeks_history">
           <Key>
             <PropertyRef Name="id" />
@@ -2053,7 +2061,7 @@ warning 6002: The table/view 'broadcast.dbo.station_inventory_manifest_weeks_his
           <Property Name="end_time" Type="int" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vw_ccc_daypart">
           <Key>
             <PropertyRef Name="id" />
@@ -2081,7 +2089,7 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
           <Property Name="daypart_text" Type="varchar" MaxLength="63" Nullable="false" />
           <Property Name="total_hours" Type="float" Nullable="false" />
         </EntityType>
-        <Association Name="FK__genre_map__maest__2B947552">
+        <Association Name="FK__genre_map__maest__27114E05">
           <End Role="genres" Type="Self.genres" Multiplicity="1" />
           <End Role="genre_mappings" Type="Self.genre_mappings" Multiplicity="*" />
           <ReferentialConstraint>
@@ -2093,7 +2101,7 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__genre_map__mappe__2C88998B">
+        <Association Name="FK__genre_map__mappe__2805723E">
           <End Role="genres" Type="Self.genres" Multiplicity="1" />
           <End Role="genre_mappings" Type="Self.genre_mappings" Multiplicity="*" />
           <ReferentialConstraint>
@@ -2105,7 +2113,7 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__genres__source_i__2D7CBDC4">
+        <Association Name="FK__genres__source_i__2434E15A">
           <End Role="genre_sources" Type="Self.genre_sources" Multiplicity="1" />
           <End Role="genres" Type="Self.genres" Multiplicity="*" />
           <ReferentialConstraint>
@@ -2117,7 +2125,7 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__plan_vers__genre__5772F790">
+        <Association Name="FK__plan_vers__genre__6CAFA246">
           <End Role="genres" Type="Self.genres" Multiplicity="0..1" />
           <End Role="plan_version_daypart_program_restrictions" Type="Self.plan_version_daypart_program_restrictions" Multiplicity="*" />
           <ReferentialConstraint>
@@ -3113,6 +3121,32 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="plan_version_dayparts">
+              <PropertyRef Name="plan_version_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_version_flight_days_days">
+          <End Role="days" Type="Self.days" Multiplicity="1" />
+          <End Role="plan_version_flight_days" Type="Self.plan_version_flight_days" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="days">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_flight_days">
+              <PropertyRef Name="day_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_version_flight_days_plan_versions">
+          <End Role="plan_versions" Type="Self.plan_versions" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="plan_version_flight_days" Type="Self.plan_version_flight_days" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="plan_versions">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_flight_days">
               <PropertyRef Name="plan_version_id" />
             </Dependent>
           </ReferentialConstraint>
@@ -5225,6 +5259,7 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
           <EntitySet Name="plan_version_daypart_program_restrictions" EntityType="Self.plan_version_daypart_program_restrictions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="plan_version_daypart_show_type_restrictions" EntityType="Self.plan_version_daypart_show_type_restrictions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="plan_version_dayparts" EntityType="Self.plan_version_dayparts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="plan_version_flight_days" EntityType="Self.plan_version_flight_days" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="plan_version_flight_hiatus_days" EntityType="Self.plan_version_flight_hiatus_days" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="plan_version_pricing_api_result_spots" EntityType="Self.plan_version_pricing_api_result_spots" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="plan_version_pricing_api_results" EntityType="Self.plan_version_pricing_api_results" Schema="dbo" store:Type="Tables" />
@@ -5348,19 +5383,19 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
     [vw_ccc_daypart].[total_hours] AS [total_hours]
     FROM [dbo].[vw_ccc_daypart] AS [vw_ccc_daypart]</DefiningQuery>
           </EntitySet>
-          <AssociationSet Name="FK__genre_map__maest__2B947552" Association="Self.FK__genre_map__maest__2B947552">
+          <AssociationSet Name="FK__genre_map__maest__27114E05" Association="Self.FK__genre_map__maest__27114E05">
             <End Role="genres" EntitySet="genres" />
             <End Role="genre_mappings" EntitySet="genre_mappings" />
           </AssociationSet>
-          <AssociationSet Name="FK__genre_map__mappe__2C88998B" Association="Self.FK__genre_map__mappe__2C88998B">
+          <AssociationSet Name="FK__genre_map__mappe__2805723E" Association="Self.FK__genre_map__mappe__2805723E">
             <End Role="genres" EntitySet="genres" />
             <End Role="genre_mappings" EntitySet="genre_mappings" />
           </AssociationSet>
-          <AssociationSet Name="FK__genres__source_i__2D7CBDC4" Association="Self.FK__genres__source_i__2D7CBDC4">
+          <AssociationSet Name="FK__genres__source_i__2434E15A" Association="Self.FK__genres__source_i__2434E15A">
             <End Role="genre_sources" EntitySet="genre_sources" />
             <End Role="genres" EntitySet="genres" />
           </AssociationSet>
-          <AssociationSet Name="FK__plan_vers__genre__5772F790" Association="Self.FK__plan_vers__genre__5772F790">
+          <AssociationSet Name="FK__plan_vers__genre__6CAFA246" Association="Self.FK__plan_vers__genre__6CAFA246">
             <End Role="genres" EntitySet="genres" />
             <End Role="plan_version_daypart_program_restrictions" EntitySet="plan_version_daypart_program_restrictions" />
           </AssociationSet>
@@ -5671,6 +5706,14 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
           <AssociationSet Name="FK_plan_version_dayparts_plan_versions" Association="Self.FK_plan_version_dayparts_plan_versions">
             <End Role="plan_versions" EntitySet="plan_versions" />
             <End Role="plan_version_dayparts" EntitySet="plan_version_dayparts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_version_flight_days_days" Association="Self.FK_plan_version_flight_days_days">
+            <End Role="days" EntitySet="days" />
+            <End Role="plan_version_flight_days" EntitySet="plan_version_flight_days" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_version_flight_days_plan_versions" Association="Self.FK_plan_version_flight_days_plan_versions">
+            <End Role="plan_versions" EntitySet="plan_versions" />
+            <End Role="plan_version_flight_days" EntitySet="plan_version_flight_days" />
           </AssociationSet>
           <AssociationSet Name="FK_plan_version_flight_hiatus_days_plan_versions" Association="Self.FK_plan_version_flight_hiatus_days_plan_versions">
             <End Role="plan_versions" EntitySet="plan_versions" />
@@ -7419,6 +7462,15 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
             <End Role="media_months" EntitySet="media_months" />
             <End Role="nti_to_nsi_conversion_rates" EntitySet="nti_to_nsi_conversion_rates" />
           </AssociationSet>
+          <EntitySet Name="plan_version_flight_days" EntityType="BroadcastModel.plan_version_flight_days" />
+          <AssociationSet Name="FK_plan_version_flight_days_days" Association="BroadcastModel.FK_plan_version_flight_days_days">
+            <End Role="day" EntitySet="days" />
+            <End Role="plan_version_flight_days" EntitySet="plan_version_flight_days" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_version_flight_days_plan_versions" Association="BroadcastModel.FK_plan_version_flight_days_plan_versions">
+            <End Role="plan_versions" EntitySet="plan_versions" />
+            <End Role="plan_version_flight_days" EntitySet="plan_version_flight_days" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="audience_audiences">
           <Key>
@@ -7502,6 +7554,7 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
           <Property Name="name" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
           <Property Name="ordinal" Type="Int32" Nullable="false" />
           <NavigationProperty Name="dayparts" Relationship="BroadcastModel.daypart_days" FromRole="day" ToRole="daypart" />
+          <NavigationProperty Name="plan_version_flight_days" Relationship="BroadcastModel.FK_plan_version_flight_days_days" FromRole="day" ToRole="plan_version_flight_days" />
         </EntityType>
         <EntityType Name="market_dma_map">
           <Key>
@@ -11278,6 +11331,7 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
           <NavigationProperty Name="plan_version_weeks" Relationship="BroadcastModel.FK_plan_version_weeks_plan_versions" FromRole="plan_versions" ToRole="plan_version_weeks" />
           <NavigationProperty Name="plan_version_pricing_results" Relationship="BroadcastModel.FK_plan_version_pricing_results_plan_versions" FromRole="plan_versions" ToRole="plan_version_pricing_results" />
           <Property Name="is_adu_enabled" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="plan_version_flight_days" Relationship="BroadcastModel.FK_plan_version_flight_days_plan_versions" FromRole="plan_versions" ToRole="plan_version_flight_days" />
         </EntityType>
         <Association Name="FK_plan_versions_audiences">
           <End Type="BroadcastModel.audience" Role="audience" Multiplicity="1" />
@@ -12973,6 +13027,40 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
             </Principal>
             <Dependent Role="nti_to_nsi_conversion_rates">
               <PropertyRef Name="media_month_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="plan_version_flight_days">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="plan_version_id" Type="Int32" Nullable="false" />
+          <Property Name="day_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="day" Relationship="BroadcastModel.FK_plan_version_flight_days_days" FromRole="plan_version_flight_days" ToRole="day" />
+          <NavigationProperty Name="plan_versions" Relationship="BroadcastModel.FK_plan_version_flight_days_plan_versions" FromRole="plan_version_flight_days" ToRole="plan_versions" />
+        </EntityType>
+        <Association Name="FK_plan_version_flight_days_days">
+          <End Type="BroadcastModel.day" Role="day" Multiplicity="1" />
+          <End Type="BroadcastModel.plan_version_flight_days" Role="plan_version_flight_days" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="day">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_flight_days">
+              <PropertyRef Name="day_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_version_flight_days_plan_versions">
+          <End Type="BroadcastModel.plan_versions" Role="plan_versions" Multiplicity="1" />
+          <End Type="BroadcastModel.plan_version_flight_days" Role="plan_version_flight_days" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="plan_versions">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_flight_days">
+              <PropertyRef Name="plan_version_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -15182,6 +15270,15 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
                 <ScalarProperty Name="media_month_id" ColumnName="media_month_id" />
                 <ScalarProperty Name="daypart_default_id" ColumnName="daypart_default_id" />
                 <ScalarProperty Name="conversion_rate" ColumnName="conversion_rate" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="plan_version_flight_days">
+            <EntityTypeMapping TypeName="BroadcastModel.plan_version_flight_days">
+              <MappingFragment StoreEntitySet="plan_version_flight_days">
+                <ScalarProperty Name="day_id" ColumnName="day_id" />
+                <ScalarProperty Name="plan_version_id" ColumnName="plan_version_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

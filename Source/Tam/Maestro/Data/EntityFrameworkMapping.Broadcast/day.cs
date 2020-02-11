@@ -17,6 +17,7 @@ namespace EntityFrameworkMapping.Broadcast
         public day()
         {
             this.dayparts = new HashSet<daypart>();
+            this.plan_version_flight_days = new HashSet<plan_version_flight_days>();
         }
     
         public int id { get; set; }
@@ -27,5 +28,6 @@ namespace EntityFrameworkMapping.Broadcast
         public int ordinal { get; set; }
     
         public virtual ICollection<daypart> dayparts { get; set; }
+        public virtual ICollection<plan_version_flight_days> plan_version_flight_days { get; set; }
     }
 }

@@ -4,6 +4,7 @@ using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Cache;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
+using Services.Broadcast.Extensions;
 using Services.Broadcast.Helpers;
 using Services.Broadcast.Repositories;
 using System;
@@ -42,9 +43,12 @@ namespace Services.Broadcast.Validators
         const string INVALID_SHARE_BOOK = "Invalid share book";
         const string INVALID_HUT_BOOK = "Invalid HUT book.";
         const string INVALID_FLIGHT_DATES = "Invalid flight dates.  The end date cannot be before the start date.";
+        const string INVALID_FLIGHT_DAYS = "Invalid flight days. The plan should have at least one flight day";
+        const string INVALID_FLIGHT_DATES_WITH_FLIGHT_DAYS = "Invalid flight dates. The flight cannot start or end, with non-flight days";
         const string INVALID_FLIGHT_DATE = "Invalid flight start/end date.";
         const string INVALID_FLIGHT_HIATUS_DAY =
             "Invalid flight hiatus day.  All days must be within the flight date range.";
+        const string INVALID_FLIGHT_HIATUS_DAY_WITH_FLIGHT_DAYS = "Invalid flight hiatus day. Hiatus day cannot be a non-flight day.";
         const string INVALID_AUDIENCE = "Invalid audience";
         const string INVALID_AUDIENCE_DUPLICATE = "An audience cannot appear multiple times";
         const string INVALID_SHARE_HUT_BOOKS = "HUT Book must be prior to Share Book";
@@ -161,6 +165,11 @@ namespace Services.Broadcast.Validators
                 throw new Exception(INVALID_FLIGHT_DATES);
             }
 
+            if (plan.FlightDays == null || !plan.FlightDays.Any())
+            {
+                throw new Exception(INVALID_FLIGHT_DAYS);
+            }
+
             if (plan.FlightHiatusDays?.Any() == true)
             {
                 var hasInvalids =
@@ -169,10 +178,27 @@ namespace Services.Broadcast.Validators
                 {
                     throw new Exception(INVALID_FLIGHT_HIATUS_DAY);
                 }
+
+                var hasInvalidHiatusDaysWithFlightDays =
+                    plan.FlightHiatusDays
+                    .Select(hiatus => (int)hiatus.GetBroadcastDayOfWeek()).Distinct()
+                    .Any(hiatusDay => !plan.FlightDays.Contains(hiatusDay));
+                if (hasInvalidHiatusDaysWithFlightDays)
+                {
+                    throw new Exception(INVALID_FLIGHT_HIATUS_DAY_WITH_FLIGHT_DAYS);
+                }
+                
             }
 
             if (!string.IsNullOrEmpty(plan.FlightNotes) && plan.FlightNotes.Length > 1024)
                 throw new Exception(INVALID_FLIGHT_NOTES);
+
+            var planFlightStartDateDayofWeek = (int)plan.FlightStartDate.Value.GetBroadcastDayOfWeek();
+            var planFlightEndDateDayofWeek = (int)plan.FlightEndDate.Value.GetBroadcastDayOfWeek();
+            if (!plan.FlightDays.Any(day => day == planFlightStartDateDayofWeek || day == planFlightEndDateDayofWeek))
+            {
+                throw new Exception(INVALID_FLIGHT_DATES_WITH_FLIGHT_DAYS);
+            }
         }
 
         private void _ValidatePrimaryAudience(PlanDto plan)

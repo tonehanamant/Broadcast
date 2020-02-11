@@ -251,6 +251,7 @@ namespace Services.Broadcast.Repositories
                                   select plan)
                         .Include(x => x.campaign)
                         .Include(x => x.plan_versions)
+                        .Include(p => p.plan_versions.Select(x => x.plan_version_flight_days.Select(d => d.day)))
                         .Include(p => p.plan_versions.Select(x => x.plan_version_flight_hiatus_days))
                         .Include(p => p.plan_versions.Select(x => x.plan_version_secondary_audiences))
                         .Include(p => p.plan_versions.Select(x => x.plan_version_dayparts))
@@ -347,6 +348,7 @@ namespace Services.Broadcast.Repositories
                                    where plan.campaign_id == campaignId && plan.latest_version_id == planVersion.id
                                    select plan)
                         .Include(x => x.plan_versions)
+                        .Include(p => p.plan_versions.Select(x => x.plan_version_flight_days.Select(y => y.day)))
                         .Include(p => p.plan_versions.Select(x => x.plan_version_flight_hiatus_days))
                         .Include(p => p.plan_versions.Select(x => x.plan_version_secondary_audiences))
                         .Include(p => p.plan_versions.Select(x => x.plan_version_dayparts))
@@ -380,6 +382,7 @@ namespace Services.Broadcast.Repositories
                                    )
                                    select plan)
                         .Include(x => x.plan_versions)
+                        .Include(p => p.plan_versions.Select(x => x.plan_version_flight_days.Select(y => y.day)))
                         .Include(p => p.plan_versions.Select(x => x.plan_version_flight_hiatus_days))
                         .Include(p => p.plan_versions.Select(x => x.plan_version_secondary_audiences))
                         .Include(p => p.plan_versions.Select(x => x.plan_version_dayparts))
@@ -433,6 +436,7 @@ namespace Services.Broadcast.Repositories
                 Equivalized = latestPlanVersion.equivalized,
                 Status = EnumHelper.GetEnum<PlanStatusEnum>(latestPlanVersion.status),
                 ProductId = entity.product_id,
+                FlightDays = latestPlanVersion.plan_version_flight_days.Select(flightDay => flightDay.day.id).ToList(),
                 FlightStartDate = latestPlanVersion.flight_start_date,
                 FlightEndDate = latestPlanVersion.flight_end_date,
                 FlightNotes = latestPlanVersion.flight_notes,
@@ -579,6 +583,7 @@ namespace Services.Broadcast.Repositories
 
             _MapPlanAudienceInfo(version, planDto);
             _MapPlanBudget(version, planDto);
+            _MapPlanFlightDays(version, planDto, context);
             _MapPlanFlightHiatus(version, planDto, context);
             _MapDayparts(version, planDto, context);
             _MapPlanSecondaryAudiences(version, planDto, context);
@@ -628,6 +633,15 @@ namespace Services.Broadcast.Repositories
             entity.target_rating_points = planDto.TargetRatingPoints.Value;
             entity.target_cpp = planDto.TargetCPP.Value;
             entity.currency = (int)planDto.Currency;
+        }
+
+        private void _MapPlanFlightDays(plan_versions entity, PlanDto planDto, QueryHintBroadcastContext context)
+        {
+            context.plan_version_flight_days.RemoveRange(entity.plan_version_flight_days);
+            planDto.FlightDays.ForEach(d =>
+            {
+                entity.plan_version_flight_days.Add(new plan_version_flight_days { day_id = d });
+            });
         }
 
         private static void _MapPlanFlightHiatus(plan_versions entity, PlanDto planDto, QueryHintBroadcastContext context)

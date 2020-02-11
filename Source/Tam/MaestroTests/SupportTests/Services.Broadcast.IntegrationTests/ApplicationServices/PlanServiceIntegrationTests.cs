@@ -2091,6 +2091,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Status = PlanStatusEnum.Working,
                 FlightStartDate = new DateTime(2019, 1, 1),
                 FlightEndDate = new DateTime(2019, 1, 31),
+                FlightDays = new List<int> { 1, 2, 3, 4, 5, 6, 7 },
                 FlightNotes = "Sample notes",
                 FlightHiatusDays = new List<DateTime>
                 {

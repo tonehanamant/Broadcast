@@ -182,6 +182,55 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
         }
 
         [Test]
+        public void ValidatePlan_InvalidFligthCannotStartOnNonFlightDay()
+        {
+            _ConfigureSpotLenghtEngineMockToReturnTrue();
+
+            var plan = _GetPlan();
+            plan.FlightStartDate = new DateTime(2020, 2, 1);
+            plan.FlightEndDate = new DateTime(2020, 2, 29);
+            plan.FlightDays = new List<int> { 1, 2, 3, 4, 5, 7 };
+
+            Assert.That(() => _planValidator.ValidatePlan(plan),
+                Throws.TypeOf<Exception>().With.Message
+                    .EqualTo("Invalid flight dates. The flight cannot start or end, with non-flight days"));
+        }
+
+        [Test]
+        public void ValidatePlan_InvalidFligthDaysThereShouldBeAtLeastOne()
+        {
+            _ConfigureSpotLenghtEngineMockToReturnTrue();
+
+            var plan = _GetPlan();
+            plan.FlightStartDate = new DateTime(2020, 2, 1);
+            plan.FlightEndDate = new DateTime(2020, 2, 29);
+            plan.FlightDays = new List<int>();
+
+            Assert.That(() => _planValidator.ValidatePlan(plan),
+                Throws.TypeOf<Exception>().With.Message
+                    .EqualTo("Invalid flight days. The plan should have at least one flight day"));
+        }
+
+        [Test]
+        public void ValidatePlan_InvalidFligthHiatusDaysCannotIntersectWithNonFlightDays()
+        {
+            _ConfigureSpotLenghtEngineMockToReturnTrue();
+
+            var plan = _GetPlan();
+            plan.FlightStartDate = new DateTime(2020, 2, 1);
+            plan.FlightEndDate = new DateTime(2020, 2, 29);
+            plan.FlightHiatusDays = new List<DateTime>
+            {
+                new DateTime(2020, 2, 12)
+            };
+            plan.FlightDays = new List<int> { 1, 2, 4, 5, 7 };
+
+            Assert.That(() => _planValidator.ValidatePlan(plan),
+                Throws.TypeOf<Exception>().With.Message
+                    .EqualTo("Invalid flight hiatus day. Hiatus day cannot be a non-flight day."));
+        }
+
+        [Test]
         [TestCase(null)]
         [TestCase(0)]
         [TestCase(-25)]
@@ -1119,6 +1168,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
                 Status = PlanStatusEnum.Scenario,
                 ModifiedBy = "UnitTestUser",
                 ModifiedDate = new DateTime(2019, 9, 16, 12, 31, 33),
+                FlightDays = new List<int> { 1, 2, 3, 4, 5, 6, 7 },
                 FlightStartDate = new DateTime(2019, 08, 01),
                 FlightEndDate = new DateTime(2019, 09, 01),
                 FlightNotes = "Notes for this flight.",

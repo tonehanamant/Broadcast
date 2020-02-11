@@ -28,6 +28,7 @@ namespace EntityFrameworkMapping.Broadcast
             this.plan_version_dayparts = new HashSet<plan_version_dayparts>();
             this.plan_version_weeks = new HashSet<plan_version_weeks>();
             this.plan_version_pricing_results = new HashSet<plan_version_pricing_results>();
+            this.plan_version_flight_days = new HashSet<plan_version_flight_days>();
         }
     
         public int id { get; set; }
@@ -83,5 +84,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<plan_version_dayparts> plan_version_dayparts { get; set; }
         public virtual ICollection<plan_version_weeks> plan_version_weeks { get; set; }
         public virtual ICollection<plan_version_pricing_results> plan_version_pricing_results { get; set; }
+        public virtual ICollection<plan_version_flight_days> plan_version_flight_days { get; set; }
     }
 }

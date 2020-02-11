@@ -75,6 +75,14 @@ namespace Services.Broadcast.Entities.Plan
         public int ProductId { get; set; }
 
         /// <summary>
+        /// Gets or sets the flight days.
+        /// </summary>
+        /// <value>
+        /// The flight days.
+        /// </value>
+        public List<int> FlightDays { get; set; }
+
+        /// <summary>
         /// Gets or sets the flight start date.
         /// </summary>
         /// <value>

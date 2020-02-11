@@ -77,6 +77,15 @@
     }
   ],
   "Equivalized": true,
+  "FlightDays": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
   "FlightEndDate": "2018-10-31T00:00:00",
   "FlightHiatusDays": [],
   "FlightNotes": "Sample notes",
