@@ -27,6 +27,7 @@ namespace Services.Broadcast.Entities.Campaign
         private const string PLAN_HEADER_NAME_FORMAT = "{0} | Program Lineup*";
         private const string DATE_FORMAT_FILENAME = "MMddyyyy";
         private const string DATE_FORMAT_SHORT_YEAR_SLASHES = "MM/dd/yy";
+        private const string DATE_FORMAT_SHORT_YEAR_SINGLE_DIGIT = "M/d/yy";
 
         public ProgramLineupReportData(
             PlanDto plan,
@@ -52,8 +53,8 @@ namespace Services.Broadcast.Entities.Campaign
             DateTime currentDate)
         {
             PlanHeaderName = string.Format(PLAN_HEADER_NAME_FORMAT, plan.Name);
-            ReportGeneratedDate = currentDate.ToString(DATE_FORMAT_SHORT_YEAR_SLASHES);
-            AccuracyEstimateDate = planPricingJob.Completed.Value.ToString(DATE_FORMAT_SHORT_YEAR_SLASHES);
+            ReportGeneratedDate = currentDate.ToString(DATE_FORMAT_SHORT_YEAR_SINGLE_DIGIT);
+            AccuracyEstimateDate = planPricingJob.Completed.Value.ToString(DATE_FORMAT_SHORT_YEAR_SINGLE_DIGIT);
             Agency = agency.Name;
             Client = advertiser.Name;
             FlightStartDate = plan.FlightStartDate.Value.ToString(DATE_FORMAT_SHORT_YEAR_SLASHES);

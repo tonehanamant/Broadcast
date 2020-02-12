@@ -1,6 +1,6 @@
 ﻿{
   "AccountExecutive": "",
-  "AccuracyEstimateDate": "12/05/19",
+  "AccuracyEstimateDate": "12/5/19",
   "Agency": "Stub Agency",
   "Client": "Stub Advertiser",
   "ClientContact": "",
@@ -10,6 +10,6 @@
   "GuaranteedDemo": "A21-24",
   "PlanHeaderName": "Plan in reserved | Program Lineup*",
   "PostingType": "NTI",
-  "ReportGeneratedDate": "02/04/20",
+  "ReportGeneratedDate": "2/4/20",
   "SpotLength": ":90"
 }
