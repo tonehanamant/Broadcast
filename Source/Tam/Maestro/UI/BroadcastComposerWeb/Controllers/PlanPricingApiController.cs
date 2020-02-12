@@ -4,6 +4,7 @@ using Services.Broadcast.Entities.Plan.Pricing;
 using System;
 using System.Collections.Generic;
 using System.Web.Http;
+using Services.Broadcast.Entities;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.Cable.Entities;
 using Tam.Maestro.Web.Common;
@@ -34,9 +35,9 @@ namespace BroadcastComposerWeb.Controllers
 
         [HttpPost]
         [Route("Inventory")]
-        public BaseResponse<PlanPricingApiRequestDto> GetPricingInventory(int planId, decimal? minCpm, decimal? maxCpm, double? inflationFactor)
+        public BaseResponse<PlanPricingApiRequestDto> GetPricingInventory(int planId, PricingInventoryGetRequestParametersDto requestParameters)
         {
-            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanPricingService>().GetPricingInventory(planId, minCpm, maxCpm, inflationFactor));
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanPricingService>().GetPricingInventory(planId, requestParameters));
         }
 
         /// <summary>

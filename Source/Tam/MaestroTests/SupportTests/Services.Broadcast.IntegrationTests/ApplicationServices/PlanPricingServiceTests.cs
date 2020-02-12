@@ -14,6 +14,7 @@ using Services.Broadcast.IntegrationTests.Stubs;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
+using Services.Broadcast.Entities;
 using Tam.Maestro.Common.DataLayer;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
@@ -278,7 +279,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void GetPricingInventoryTest()
         {
-            var result = _PlanPricingService.GetPricingInventory(1197, null, null, null);
+            var result = _PlanPricingService.GetPricingInventory(1197, new PricingInventoryGetRequestParametersDto());
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
 

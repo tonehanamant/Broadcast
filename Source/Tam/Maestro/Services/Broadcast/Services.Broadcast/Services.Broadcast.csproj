@@ -423,6 +423,7 @@
     <Compile Include="Entities\Campaign\ProgramLineupReportRequest.cs" />
     <Compile Include="Entities\Plan\VPVHRequest.cs" />
     <Compile Include="Entities\Plan\VPVHForAudience.cs" />
+    <Compile Include="Entities\PricingInventoryGetRequestParametersDto.cs" />
     <Compile Include="Entities\ProgramGuide\GuideResponseProgramDto.cs" />
     <Compile Include="Entities\ProgramGuide\GuideResponseElementDto.cs" />
     <Compile Include="Entities\ProgramGuide\GuideRequestDaypartDto.cs" />

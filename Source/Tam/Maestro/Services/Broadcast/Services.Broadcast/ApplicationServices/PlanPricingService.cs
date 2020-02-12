@@ -28,7 +28,7 @@ namespace Services.Broadcast.ApplicationServices
         void RunPricingJob(PlanPricingParametersDto planPricingParametersDto, int jobId);
         List<PlanPricingApiRequestParametersDto> GetPlanPricingRuns(int planId);
 
-        PlanPricingApiRequestDto GetPricingInventory(int planId, decimal? minCpm, decimal? maxCpm, double? inflationFactor);
+        PlanPricingApiRequestDto GetPricingInventory(int planId, PricingInventoryGetRequestParametersDto requestParameters);
 
         /// <summary>
         /// Gets the unit caps.
@@ -645,15 +645,15 @@ namespace Services.Broadcast.ApplicationServices
             }
         }
 
-        public PlanPricingApiRequestDto GetPricingInventory(int planId, decimal? minCpm, decimal? maxCpm, double? inflationFactor)
+        public PlanPricingApiRequestDto GetPricingInventory(int planId, PricingInventoryGetRequestParametersDto requestParameters)
         {
             var plan = _PlanRepository.GetPlan(planId);
             // this needs to create and pass a paremeters object
             var pricingParams = new PlanPricingInventoryEngine.ProgramInventoryOptionalParametersDto
             {
-                MinCPM = minCpm,
-                MaxCPM = maxCpm,
-                InflationFactor = inflationFactor
+                MinCPM = requestParameters.MinCpm,
+                MaxCPM = requestParameters.MaxCpm,
+                InflationFactor = requestParameters.InflationFactor
             };
             
             var inventory = _PlanPricingInventoryEngine.GetInventoryForPlan(plan, pricingParams);
