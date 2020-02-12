@@ -80,7 +80,7 @@ namespace Services.Broadcast.Entities.Plan
         /// <value>
         /// The flight days.
         /// </value>
-        public List<int> FlightDays { get; set; }
+        public List<int> FlightDays { get; set; } = new List<int>(); /* REMOVE INITIALIZATION AFTER FE IS DONE ON PRI-20800 */
 
         /// <summary>
         /// Gets or sets the flight start date.

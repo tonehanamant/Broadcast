@@ -181,6 +181,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
                     .EqualTo("Invalid flight hiatus day.  All days must be within the flight date range."));
         }
 
+        /* REMOVED UNTIL FE IS DONE ON PRI-20800
         [Test]
         public void ValidatePlan_InvalidFligthCannotStartOnNonFlightDay()
         {
@@ -229,6 +230,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
                 Throws.TypeOf<Exception>().With.Message
                     .EqualTo("Invalid flight hiatus day. Hiatus day cannot be a non-flight day."));
         }
+        */
 
         [Test]
         [TestCase(null)]
