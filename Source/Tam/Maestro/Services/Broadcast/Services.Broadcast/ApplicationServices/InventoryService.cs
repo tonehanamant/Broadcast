@@ -843,9 +843,10 @@ namespace Services.Broadcast.ApplicationServices
                 throw new FileNotFoundException(message, fileDetails.FileName);
             }
 
+            var friendlyFileName = $"{fileDetails.FileName}{fileNameSuffix}";
             var result = new ExistingInventoryErrorFileInfo
             {
-                FriendlyFileName = fileDetails.FileName,
+                FriendlyFileName = friendlyFileName,
                 FilePath = filePath
             };
             return result;
