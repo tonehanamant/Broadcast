@@ -29,7 +29,10 @@ namespace Services.Broadcast.Entities
             get { return FileName + FileExtension; }
             set
             {
-                FileName = Path.GetFileNameWithoutExtension(value);
+                //windows with NTFS allows only 255 chars limit on filename, so we're going to truncate the name
+                //excel can open a file that has the entire filePath less than 218 chars
+                //to have a margin for long path on people computers, we're going to truncate the filename at 64 chars
+                FileName = Path.GetFileNameWithoutExtension(value).Substring(0, 64);
                 FileExtension = Path.GetExtension(value);
             }
         }
