@@ -1,0 +1,14 @@
+﻿{
+  "IsPricingModelRunning": false,
+  "Job": null,
+  "Result": {
+    "OptimalCpm": 0.0,
+    "Programs": [],
+    "Totals": {
+      "AvgCpm": 0.0,
+      "AvgImpressions": 0.0,
+      "MarketCount": 0,
+      "StationCount": 0
+    }
+  }
+}

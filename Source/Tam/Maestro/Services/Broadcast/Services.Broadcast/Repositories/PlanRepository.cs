@@ -522,7 +522,8 @@ namespace Services.Broadcast.Repositories
                 InventorySourcePercentages = sortedSourcePercents,
                 InventorySourceTypePercentages = sortedSourceTypePercents,
                 UnitCaps = arg.unit_caps,
-                UnitCapsType = (UnitCapEnum)arg.unit_caps_type
+                UnitCapsType = (UnitCapEnum)arg.unit_caps_type,
+                Margin = arg.margin
             };
         }
 
@@ -970,7 +971,8 @@ namespace Services.Broadcast.Repositories
                         inflation_factor = planPricingRunModel.InflationFactor,
                         coverage_goal = planPricingRunModel.CoverageGoalPercent,
                         unit_caps_type = (int)planPricingRunModel.UnitCapType,
-                        unit_caps = planPricingRunModel.UnitCaps
+                        unit_caps = planPricingRunModel.UnitCaps,
+                        margin = planPricingRunModel.Margin
                     };
 
                     foreach (var market in planPricingRunModel.Markets)
@@ -1240,7 +1242,8 @@ namespace Services.Broadcast.Repositories
                     unit_caps = planPricingParametersDto.UnitCaps,
                     cpp = planPricingParametersDto.CPP,
                     currency = (int)planPricingParametersDto.Currency,
-                    rating_points = planPricingParametersDto.DeliveryRatingPoints
+                    rating_points = planPricingParametersDto.DeliveryRatingPoints,
+                    margin = planPricingParametersDto.Margin
                 };
 
                 planPricingParametersDto.InventorySourcePercentages.ForEach(s => planPricingParameters.plan_version_pricing_parameters_inventory_source_percentages.Add(

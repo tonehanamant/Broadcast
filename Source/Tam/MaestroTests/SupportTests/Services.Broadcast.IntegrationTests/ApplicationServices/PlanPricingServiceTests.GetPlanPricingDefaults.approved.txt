@@ -48,5 +48,6 @@
       "Percentage": 10
     }
   ],
-  "UnitCaps": 1
+  "UnitCaps": 1,
+  "UnitCapType": 1
 }

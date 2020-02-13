@@ -884,6 +884,7 @@
           <Property Name="inflation_factor" Type="float" />
           <Property Name="unit_caps_type" Type="int" Nullable="false" />
           <Property Name="unit_caps" Type="int" Nullable="false" />
+          <Property Name="margin" Type="float" />
         </EntityType>
         <EntityType Name="plan_version_pricing_inventory_source_percentages">
           <Key>
@@ -935,6 +936,7 @@
           <Property Name="cpp" Type="money" Nullable="false" />
           <Property Name="currency" Type="int" Nullable="false" />
           <Property Name="rating_points" Type="float" Nullable="false" />
+          <Property Name="margin" Type="float" />
         </EntityType>
         <EntityType Name="plan_version_pricing_parameters_inventory_source_percentages">
           <Key>
@@ -11617,6 +11619,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="plan_versions" Relationship="BroadcastModel.FK_plan_version_pricing_executions_plan_versions" FromRole="plan_version_pricing_executions" ToRole="plan_versions" />
           <NavigationProperty Name="plan_version_pricing_inventory_source_percentages" Relationship="BroadcastModel.FK_plan_version_pricing_inventory_source_percentages_plan_version_pricing_executions" FromRole="plan_version_pricing_executions" ToRole="plan_version_pricing_inventory_source_percentages" />
           <NavigationProperty Name="plan_version_pricing_inventory_source_type_percentages" Relationship="BroadcastModel.FK_plan_version_pricing_inventory_source_type_percentages_plan_version_pricing_executions" FromRole="plan_version_pricing_executions" ToRole="plan_version_pricing_inventory_source_type_percentages" />
+          <Property Name="margin" Type="Double" />
         </EntityType>
         <EntityType Name="plan_version_pricing_job">
           <Key>
@@ -11727,6 +11730,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="rating_points" Type="Double" Nullable="false" />
           <NavigationProperty Name="plan_version_pricing_parameters_inventory_source_percentages" Relationship="BroadcastModel.FK_plan_version_pricing_parameters_inventory_source_percentages_plan_version_pricing_parameters" FromRole="plan_version_pricing_parameters" ToRole="plan_version_pricing_parameters_inventory_source_percentages" />
           <NavigationProperty Name="plan_version_pricing_parameters_inventory_source_type_percentages" Relationship="BroadcastModel.FK_plan_version_pricing_parameters_inventory_source_type_percentages_plan_version_pricing_parameters" FromRole="plan_version_pricing_parameters" ToRole="plan_version_pricing_parameters_inventory_source_type_percentages" />
+          <Property Name="margin" Type="Double" />
         </EntityType>
         <Association Name="FK_plan_version_pricing_parameters_plan_versions">
           <End Type="BroadcastModel.plan_versions" Role="plan_versions" Multiplicity="1" />
@@ -13053,7 +13057,9 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_plan_version_flight_days_plan_versions">
-          <End Type="BroadcastModel.plan_versions" Role="plan_versions" Multiplicity="1" />
+          <End Type="BroadcastModel.plan_versions" Role="plan_versions" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Type="BroadcastModel.plan_version_flight_days" Role="plan_version_flight_days" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="plan_versions">
@@ -14750,6 +14756,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="plan_version_pricing_executions">
             <EntityTypeMapping TypeName="BroadcastModel.plan_version_pricing_executions">
               <MappingFragment StoreEntitySet="plan_version_pricing_executions">
+                <ScalarProperty Name="margin" ColumnName="margin" />
                 <ScalarProperty Name="unit_caps" ColumnName="unit_caps" />
                 <ScalarProperty Name="unit_caps_type" ColumnName="unit_caps_type" />
                 <ScalarProperty Name="inflation_factor" ColumnName="inflation_factor" />
@@ -14792,6 +14799,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="plan_version_pricing_parameters">
             <EntityTypeMapping TypeName="BroadcastModel.plan_version_pricing_parameters">
               <MappingFragment StoreEntitySet="plan_version_pricing_parameters">
+                <ScalarProperty Name="margin" ColumnName="margin" />
                 <ScalarProperty Name="rating_points" ColumnName="rating_points" />
                 <ScalarProperty Name="currency" ColumnName="currency" />
                 <ScalarProperty Name="cpp" ColumnName="cpp" />

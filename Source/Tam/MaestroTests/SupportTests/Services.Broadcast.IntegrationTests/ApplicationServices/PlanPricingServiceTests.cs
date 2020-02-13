@@ -42,12 +42,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 var result = _PlanPricingService.QueuePricingJob(new PlanPricingParametersDto
                 {
-                    PlanId = 1196
+                    PlanId = 1196,
+                    Margin = 20
                 }, new DateTime(2019, 11, 4));
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(PlanPricingJob), "Id");
-                var jsonSettings = new JsonSerializerSettings()
+                var jsonSettings = new JsonSerializerSettings
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                     ContractResolver = jsonResolver
@@ -226,6 +227,59 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     ProprietaryBlend = 0.2,
                     UnitCaps = 10,
                     UnitCapsType = UnitCapEnum.PerDay,
+                    InventorySourcePercentages = new List<PlanPricingInventorySourceDto>
+                    {
+                        new PlanPricingInventorySourceDto{Id = 3, Percentage = 12},
+                        new PlanPricingInventorySourceDto{Id = 5, Percentage = 13},
+                        new PlanPricingInventorySourceDto{Id = 6, Percentage = 14},
+                        new PlanPricingInventorySourceDto{Id = 7, Percentage = 15},
+                        new PlanPricingInventorySourceDto{Id = 10, Percentage = 16},
+                        new PlanPricingInventorySourceDto{Id = 11, Percentage = 17},
+                        new PlanPricingInventorySourceDto{Id = 12, Percentage = 8},
+                    }
+                };
+
+                var job = _PlanPricingService.QueuePricingJob(planPricingRequestDto, new DateTime(2019, 11, 4));
+
+                _PlanPricingService.RunPricingJob(planPricingRequestDto, job.Id);
+
+                var result = _PlanPricingService.GetCurrentPricingExecution(1197);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(PlanPricingJob), "Id");
+                jsonResolver.Ignore(typeof(PlanPricingProgramDto), "Id");
+                jsonResolver.Ignore(typeof(PlanPricingJob), "Completed");
+                jsonResolver.Ignore(typeof(PlanPricingJob), "DiagnosticResult");
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void RunPricingJobTest_CalculateAdjustedBudgetAndCPM()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var planPricingRequestDto = new PlanPricingParametersDto
+                {
+                    PlanId = 1196,
+                    MaxCpm = 100m,
+                    MinCpm = 1m,
+                    Budget = 1000,
+                    CompetitionFactor = 0.1,
+                    CPM = 5m,
+                    DeliveryImpressions = 50000,
+                    InflationFactor = 0.5,
+                    ProprietaryBlend = 0.2,
+                    UnitCaps = 10,
+                    UnitCapsType = UnitCapEnum.PerDay,
+                    Margin= 20,
                     InventorySourcePercentages = new List<PlanPricingInventorySourceDto>
                     {
                         new PlanPricingInventorySourceDto{Id = 3, Percentage = 12},

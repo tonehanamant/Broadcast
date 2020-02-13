@@ -193,6 +193,7 @@ namespace Services.Broadcast.ApplicationServices
             parameters.Markets = pricingMarkets;
             parameters.CoverageGoalPercent = plan.CoverageGoalPercent ?? 0;
 
+
             return parameters;
         }
 
@@ -229,7 +230,8 @@ namespace Services.Broadcast.ApplicationServices
                 UnitCaps = planPricingParametersDto.UnitCaps,
                 UnitCapType = planPricingParametersDto.UnitCapsType,
                 InventorySourcePercentages = planPricingParametersDto.InventorySourcePercentages,
-                InventorySourceTypePercentages = planPricingParametersDto.InventorySourceTypePercentages
+                InventorySourceTypePercentages = planPricingParametersDto.InventorySourceTypePercentages,
+                Margin = planPricingParametersDto.Margin
             };
 
             return parameters;
@@ -410,6 +412,13 @@ namespace Services.Broadcast.ApplicationServices
                         InflationFactor = planPricingParametersDto.InflationFactor
                     });
 
+                if (parameters.Margin.HasValue)
+                {
+                    parameters.BudgetGoal = parameters.BudgetGoal * (decimal)(1.0 - (parameters.Margin.Value / 100.0));
+                    parameters.CpmGoal = ProposalMath.CalculateCpm(parameters.BudgetGoal, parameters.ImpressionsGoal);
+                }
+
+
                 planPricingJobDiagnostic.RecordGatherInventoryEnd();
 
                 _ValidateInventory(inventory);
@@ -576,7 +585,7 @@ namespace Services.Broadcast.ApplicationServices
                 }))
                 .Where(x => x.ManifestDaypart.PrimaryProgram != null)
                 .GroupBy(x => x.ManifestDaypart.PrimaryProgram.Name);
-            
+
             foreach (var inventoryByProgramName in inventoryGroupedByProgramName)
             {
                 var programInventory = inventoryByProgramName.ToList();
@@ -622,7 +631,7 @@ namespace Services.Broadcast.ApplicationServices
         }
 
         private void _CalculateProgramTotals(
-            IEnumerable<PlanPricingApiResultSpotDto> allocatedProgramSpots, 
+            IEnumerable<PlanPricingApiResultSpotDto> allocatedProgramSpots,
             out decimal totalProgramCost,
             out double totalProgramImpressions,
             out int totalProgramSpots)

@@ -36,6 +36,7 @@ namespace EntityFrameworkMapping.Broadcast
         public decimal cpp { get; set; }
         public int currency { get; set; }
         public double rating_points { get; set; }
+        public Nullable<double> margin { get; set; }
     
         public virtual plan_versions plan_versions { get; set; }
         public virtual ICollection<plan_version_pricing_parameters_inventory_source_percentages> plan_version_pricing_parameters_inventory_source_percentages { get; set; }
