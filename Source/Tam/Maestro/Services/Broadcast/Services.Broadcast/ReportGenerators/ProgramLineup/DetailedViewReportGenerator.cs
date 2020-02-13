@@ -1,6 +1,7 @@
 ﻿using OfficeOpenXml;
 using OfficeOpenXml.Style;
 using Services.Broadcast.Entities.Campaign;
+using System;
 
 namespace Services.Broadcast.ReportGenerators.ProgramLineup
 {
@@ -28,7 +29,9 @@ namespace Services.Broadcast.ReportGenerators.ProgramLineup
         {
             worksheet.Cells[PLAN_HEADER_NAME_CELL].Value = reportData.PlanHeaderName;
             worksheet.Cells[REPORT_GENERATED_AND_ACCURACY_ESTIMATE_DATES_CELL].Value = 
-                $"Report generated on {reportData.ReportGeneratedDate}\nMost accurate estimate as of {reportData.AccuracyEstimateDate}";
+                $"Report generated on {reportData.ReportGeneratedDate}" +
+                Environment.NewLine +
+                $"Estimate as of {reportData.AccuracyEstimateDate}";
             
             worksheet.Cells[AGENCY_CELL].Value = reportData.Agency;
             worksheet.Cells[CLIENT_CELL].Value = reportData.Client;
