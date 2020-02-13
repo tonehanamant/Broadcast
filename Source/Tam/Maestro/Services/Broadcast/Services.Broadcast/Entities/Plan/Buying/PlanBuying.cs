@@ -189,7 +189,7 @@ namespace Services.Broadcast.Entities.Plan
 
     public class PlanBuyingListRequest
     {
-        public int StatusFilter { get; set; }
+        public PlanBuyingStatusEnum StatusFilter { get; set; }
         public PlanBuyingTimeFramesEnum FlightFilter { get; set; }
     }
 

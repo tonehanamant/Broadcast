@@ -3,8 +3,10 @@ using Newtonsoft.Json;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
+using Services.Broadcast.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 
 namespace Services.Broadcast.ApplicationServices.Plan
@@ -37,6 +39,13 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// </summary>
         /// <returns></returns>
         List<LookupDto> GetTimeFrames();
+
+        /// <summary>
+        /// Get statuses
+        /// </summary>
+        /// <returns></returns>
+        List<LookupDto> GetStatuses();
+        
     }
 
     public class PlanBuyingService : IPlanBuyingService
@@ -160,7 +169,47 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 });
             }
 
-            return result;
+            if (request.StatusFilter.Equals(PlanBuyingStatusEnum.Contracted))
+            {
+                result.Add(new PlanBuyingListingItem
+                {
+                    Id = 4,
+                    Campaign = new PlanBuyingListingItem.PlanBuyingListingItemCampaign
+                    {
+                        Id = 4,
+                        Name = "Updated Contracted Campaign"
+                    },
+                    Plan = new PlanBuyingListingItem.PlanBuyingListingItemDetails
+                    {
+                        Id = 4,
+                        Name = "Updated Contracted Plan",
+                        FlightStartDate = new DateTime(2020, 3, 4, 8, 30, 52),
+                        FlightEndDate = new DateTime(2020, 2, 4, 9, 30, 52),
+                        FlightActiveDays = 6,
+                        FlightHiatusDays = 1,
+                        Budget = 390000,
+                        Impressions = 23150000,
+                        CPM = 7.5
+                    },
+                    BookedBudget = 3337000,
+                    BookedImpressions = 98800000,
+                    BookedCPM = 2.22,
+                    GoalBudget = 321723,
+                    GoalImpressions = 44438000,
+                    GoalCPM = 5.11,
+                    BookedMarginPercent = 20.11,
+                    GoalMarginPercent = 31,
+                    BookedImpressionsPercent = 166,
+                    GoalImpressionsPercent = 143,
+                    BookedCPMMarginPercent = 44.02,
+                    GoalCPMMarginPercent = 24,
+                    Status = 1,
+                    ModifiedDate = new DateTime(2020, 2, 5, 6, 22, 33),
+                    ModifiedBy = "Michael Jordan"
+                });
+            }
+
+                return result;
         }
 
         public PlanBuying GetPlanBuyingById(int planId)
@@ -301,22 +350,26 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
         public List<LookupDto> GetTimeFrames()
         {
+            return Enum.GetValues(typeof(PlanBuyingTimeFramesEnum))
+               .Cast<PlanBuyingTimeFramesEnum>()
+               .Select(x => new LookupDto
+               {
+                   Id = (int)x,
+                   Display = x.GetDescriptionAttribute()
+               })
+               .OrderBy(x => x.Id).ToList();
+        }
 
-            var result = new List<LookupDto>
-            {
-                new LookupDto
-                {
-                    Id = 1,
-                    Display = "All"
-                },
-                 new LookupDto
-                {
-                    Id = 2,
-                    Display = "Within next 4 weeks"
-                }
-            };
-
-            return result;
+        public List<LookupDto> GetStatuses()
+        {
+            return Enum.GetValues(typeof(PlanBuyingStatusEnum))
+               .Cast<PlanBuyingStatusEnum>()
+               .Select(x => new LookupDto
+               {
+                   Id = (int)x,
+                   Display = x.GetDescriptionAttribute()
+               })
+               .OrderBy(x => x.Id).ToList();
         }
     }
 }

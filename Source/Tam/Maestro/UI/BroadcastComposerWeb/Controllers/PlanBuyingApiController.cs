@@ -63,7 +63,7 @@ namespace BroadcastComposerWeb.Controllers
         }
 
         /// <summary>
-        /// Gets the time frames.
+        /// Gets all the time frames.
         /// </summary>
         /// <returns>An object with a list of time frames.</returns>
         [HttpGet]
@@ -72,6 +72,18 @@ namespace BroadcastComposerWeb.Controllers
         {
             return
                _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanBuyingService>().GetTimeFrames());
+        }
+
+        /// <summary>
+        /// Gets all the statuses.
+        /// </summary>
+        /// <returns>An object with a list of statuses.</returns>
+        [HttpGet]
+        [Route("Statuses")]
+        public BaseResponse<List<LookupDto>> GetStatuses()
+        {
+            return
+               _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanBuyingService>().GetStatuses());
         }
     }
 }

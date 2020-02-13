@@ -360,6 +360,7 @@
     <Compile Include="Entities\CampaignQuarterDto.cs" />
     <Compile Include="Entities\DaypartCleanupDto.cs" />
     <Compile Include="Entities\Enums\BroadcastDayOfWeek.cs" />
+    <Compile Include="Entities\Enums\PlanBuyingStatusEnum.cs" />
     <Compile Include="Entities\Enums\PlanBuyingTimeFramesEnum.cs" />
     <Compile Include="Entities\InventoryPlannerDetails.cs" />
     <Compile Include="Entities\DTO\CurrentQuartersDto.cs" />

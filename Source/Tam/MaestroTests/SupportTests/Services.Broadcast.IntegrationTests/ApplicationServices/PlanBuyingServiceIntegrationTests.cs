@@ -21,7 +21,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             var plans = _PlanBuyingService.GetPlansBuying(new PlanBuyingListRequest
             {
-                StatusFilter = 0,
+                StatusFilter = PlanBuyingStatusEnum.Working,
                 FlightFilter = PlanBuyingTimeFramesEnum.All
             });
 
