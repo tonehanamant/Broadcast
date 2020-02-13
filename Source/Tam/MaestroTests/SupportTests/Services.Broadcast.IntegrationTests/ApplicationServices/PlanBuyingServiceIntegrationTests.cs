@@ -4,6 +4,7 @@ using IntegrationTests.Common;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.ApplicationServices.Plan;
+using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
 using Tam.Maestro.Common.DataLayer;
 
@@ -21,7 +22,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var plans = _PlanBuyingService.GetPlansBuying(new PlanBuyingListRequest
             {
                 StatusFilter = 0,
-                FlightFilter =  0
+                FlightFilter = PlanBuyingTimeFramesEnum.All
             });
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(plans));

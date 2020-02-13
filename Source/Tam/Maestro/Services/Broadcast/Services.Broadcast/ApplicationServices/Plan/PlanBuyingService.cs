@@ -1,8 +1,11 @@
 ﻿using Common.Services.ApplicationServices;
+using Newtonsoft.Json;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
 using System;
 using System.Collections.Generic;
+using Tam.Maestro.Data.Entities.DataTransferObjects;
 
 namespace Services.Broadcast.ApplicationServices.Plan
 {
@@ -28,6 +31,12 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// <param name="plan">Save The plan data.</param>
         /// <returns></returns>
         bool SavePlanBuying(int planId, PlanBuyingRequest plan);
+
+        /// <summary>
+        /// Get times frames
+        /// </summary>
+        /// <returns></returns>
+        List<LookupDto> GetTimeFrames();
     }
 
     public class PlanBuyingService : IPlanBuyingService
@@ -109,6 +118,47 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 ModifiedDate = new DateTime(2020, 1, 6, 6, 22, 33),
                 ModifiedBy = "Michael Jordan"
             });
+
+
+            if (request.FlightFilter.Equals(PlanBuyingTimeFramesEnum.All))
+            {
+                result.Add(new PlanBuyingListingItem
+                {
+                    Id = 3,
+                    Campaign = new PlanBuyingListingItem.PlanBuyingListingItemCampaign
+                    {
+                        Id = 3,
+                        Name = "Updated Campaign"
+                    },
+                    Plan = new PlanBuyingListingItem.PlanBuyingListingItemDetails
+                    {
+                        Id = 3,
+                        Name = "Updated Plan",
+                        FlightStartDate = new DateTime(2020, 3, 4, 8, 30, 52),
+                        FlightEndDate = new DateTime(2020, 2, 4, 9, 30, 52),
+                        FlightActiveDays = 6,
+                        FlightHiatusDays = 1,
+                        Budget = 390000,
+                        Impressions = 23150000,
+                        CPM = 7.5
+                    },
+                    BookedBudget = 5127000,
+                    BookedImpressions = 92100000,
+                    BookedCPM = 2.11,
+                    GoalBudget = 123723,
+                    GoalImpressions = 42238000,
+                    GoalCPM = 5.21,
+                    BookedMarginPercent = 20.11,
+                    GoalMarginPercent = 31,
+                    BookedImpressionsPercent = 166,
+                    GoalImpressionsPercent = 143,
+                    BookedCPMMarginPercent = 44.02,
+                    GoalCPMMarginPercent = 24,
+                    Status = 2,
+                    ModifiedDate = new DateTime(2020, 2, 5, 6, 22, 33),
+                    ModifiedBy = "Michael Jordan"
+                });
+            }
 
             return result;
         }
@@ -242,11 +292,31 @@ namespace Services.Broadcast.ApplicationServices.Plan
             };
 
             return result;
-        } 
+        }
 
         public bool SavePlanBuying(int planId, PlanBuyingRequest plan)
         {
             return true;
+        }
+
+        public List<LookupDto> GetTimeFrames()
+        {
+
+            var result = new List<LookupDto>
+            {
+                new LookupDto
+                {
+                    Id = 1,
+                    Display = "All"
+                },
+                 new LookupDto
+                {
+                    Id = 2,
+                    Display = "Within next 4 weeks"
+                }
+            };
+
+            return result;
         }
     }
 }

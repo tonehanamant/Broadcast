@@ -61,5 +61,17 @@ namespace BroadcastComposerWeb.Controllers
         {
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanBuyingService>().SavePlanBuying(planId, plan));
         }
+
+        /// <summary>
+        /// Gets the time frames.
+        /// </summary>
+        /// <returns>An object with a list of time frames.</returns>
+        [HttpGet]
+        [Route("TimeFrames")]
+        public BaseResponse<List<LookupDto>> GetTimeFrames()
+        {
+            return
+               _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanBuyingService>().GetTimeFrames());
+        }
     }
 }

@@ -64,5 +64,38 @@
       "Name": "Some New Plan"
     },
     "Status": 2
+  },
+  {
+    "BookedBudget": 5127000.0,
+    "BookedCPM": 2.11,
+    "BookedCPMMarginPercent": 44.02,
+    "BookedImpressions": 92100000.0,
+    "BookedImpressionsPercent": 166.0,
+    "BookedMarginPercent": 20.11,
+    "Campaign": {
+      "Id": 3,
+      "Name": "Updated Campaign"
+    },
+    "GoalBudget": 123723.0,
+    "GoalCPM": 5.21,
+    "GoalCPMMarginPercent": 24.0,
+    "GoalImpressions": 42238000.0,
+    "GoalImpressionsPercent": 143.0,
+    "GoalMarginPercent": 31.0,
+    "Id": 3,
+    "ModifiedBy": "Michael Jordan",
+    "ModifiedDate": "2020-02-05T06:22:33",
+    "Plan": {
+      "Budget": 390000.0,
+      "CPM": 7.5,
+      "FlightActiveDays": 6,
+      "FlightEndDate": "2020-02-04T09:30:52",
+      "FlightHiatusDays": 1,
+      "FlightStartDate": "2020-03-04T08:30:52",
+      "Id": 3,
+      "Impressions": 23150000.0,
+      "Name": "Updated Plan"
+    },
+    "Status": 2
   }
 ]

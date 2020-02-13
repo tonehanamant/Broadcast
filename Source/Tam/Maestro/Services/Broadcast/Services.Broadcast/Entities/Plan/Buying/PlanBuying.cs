@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Services.Broadcast.Entities.Enums;
+using System;
 using System.Collections.Generic;
 
 namespace Services.Broadcast.Entities.Plan
@@ -189,7 +190,7 @@ namespace Services.Broadcast.Entities.Plan
     public class PlanBuyingListRequest
     {
         public int StatusFilter { get; set; }
-        public int FlightFilter { get; set; }
+        public PlanBuyingTimeFramesEnum FlightFilter { get; set; }
     }
 
     public class PlanBuyingRequest
