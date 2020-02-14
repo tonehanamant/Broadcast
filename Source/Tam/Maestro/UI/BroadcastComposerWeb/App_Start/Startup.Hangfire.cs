@@ -48,7 +48,9 @@ namespace BroadcastComposerWeb
 
             var recurringJobsFactory = new RecurringJobsFactory(
                 BroadcastApplicationServiceFactory.Instance.Resolve<IRecurringJobManager>(),
-                BroadcastApplicationServiceFactory.Instance.Resolve<IPlanService>());
+                BroadcastApplicationServiceFactory.Instance.Resolve<IPlanService>(),
+                BroadcastApplicationServiceFactory.Instance.Resolve<IInventoryProgramsProcessingService>()
+                );
             recurringJobsFactory.AddOrUpdateRecurringJobs();
 
             //Configure Hangfire Dashboard and Dashboard Authorization

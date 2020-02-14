@@ -27,7 +27,11 @@ namespace Services.Broadcast.ApplicationServices
         [AutomaticRetry(Attempts = 0, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
         InventoryProgramsProcessingJobDiagnostics ProcessInventoryProgramsBySourceJob(int jobId);
 
-        InventoryProgramsBySourceJobEnqueueResultDto QueueProcessInventoryProgramsBySourceForWeeks(DateTime orientByDate, string username);
+        InventoryProgramsBySourceJobEnqueueResultDto QueueProcessInventoryProgramsBySourceForWeeksFromDate(DateTime orientByDate, string username);
+
+        [Queue("inventoryprogramsprocessing")]
+        [AutomaticRetry(Attempts = 0, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
+        InventoryProgramsBySourceJobEnqueueResultDto QueueProcessInventoryProgramsBySourceForWeeksFromNow(string username);
     }
 
     public class InventoryProgramsProcessingService : IInventoryProgramsProcessingService
@@ -116,7 +120,12 @@ namespace Services.Broadcast.ApplicationServices
             return result;
         }
 
-        public InventoryProgramsBySourceJobEnqueueResultDto QueueProcessInventoryProgramsBySourceForWeeks(DateTime orientByDate, string username)
+        public InventoryProgramsBySourceJobEnqueueResultDto QueueProcessInventoryProgramsBySourceForWeeksFromNow(string username)
+        {
+            return QueueProcessInventoryProgramsBySourceForWeeksFromDate(_GetDateTimeNow(), username);
+        }
+
+        public InventoryProgramsBySourceJobEnqueueResultDto QueueProcessInventoryProgramsBySourceForWeeksFromDate(DateTime orientByDate, string username)
         {
             var result = new InventoryProgramsBySourceJobEnqueueResultDto();
 

@@ -65,7 +65,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             _InventoryProgramsByFileJobsRepo.Setup(r => r.SetJobCompleteSuccess(It.IsAny<int>(), It.IsAny<string>())).Callback(() => setJobCompleteSuccessCalled++);
             var setJobCompleteErrorCalled = 0;
             _InventoryProgramsByFileJobsRepo.Setup(r => r.SetJobCompleteError(It.IsAny<int>(), It.IsAny<string>())).Callback(() => setJobCompleteErrorCalled++);
-            
+            var setJobCompleteWarningCalled = 0;
+            _InventoryProgramsByFileJobsRepo.Setup(r => r.SetJobCompleteWarning(It.IsAny<int>(), It.IsAny<string>())).Callback(() => setJobCompleteWarningCalled++);
+
             var getProgramsForGuideCalled = 0;
             _ProgramGuidClient.Setup(s => s.GetProgramsForGuide(It.IsAny<List<GuideRequestElementDto>>()))
                 .Callback(() => getProgramsForGuideCalled++)
@@ -78,8 +80,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             Assert.NotNull(results);
             Assert.AreEqual(1, inventoryProgramsByFileJobsRepoCalls);
             Assert.AreEqual(1, getStationInventoryManifestsByFileIdCalled);
-            Assert.AreEqual(1, setJobCompleteSuccessCalled);
+            Assert.AreEqual(0, setJobCompleteSuccessCalled);
             Assert.AreEqual(0, setJobCompleteErrorCalled);
+            Assert.AreEqual(1, setJobCompleteWarningCalled);
             Assert.AreEqual(0, getProgramsForGuideCalled);
         }
 
@@ -267,6 +270,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             _InventoryProgramsBySourceJobsRepo.Setup(r => r.SetJobCompleteSuccess(It.IsAny<int>(), It.IsAny<string>())).Callback(() => setJobCompleteSuccessCalled++);
             var setJobCompleteErrorCalled = 0;
             _InventoryProgramsBySourceJobsRepo.Setup(r => r.SetJobCompleteError(It.IsAny<int>(), It.IsAny<string>())).Callback(() => setJobCompleteErrorCalled++);
+            var setJobCompleteWarningCalled = 0;
+            _InventoryProgramsBySourceJobsRepo.Setup(r => r.SetJobCompleteWarning(It.IsAny<int>(), It.IsAny<string>())).Callback(() => setJobCompleteWarningCalled++);
 
             var getProgramsForGuideCalled = 0;
             _ProgramGuidClient.Setup(s => s.GetProgramsForGuide(It.IsAny<List<GuideRequestElementDto>>()))
@@ -281,9 +286,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             Assert.AreEqual(1, inventoryProgramsBySourceJobsRepoCalls);
             Assert.AreEqual(1, getInventorySourceCalled);
             Assert.AreEqual(1, getDisplayMediaWeekByFlightCalled);
-            Assert.AreEqual(1, getInventoryManifestsBySourceAndMediaWeekCalled);
-            Assert.AreEqual(1, setJobCompleteSuccessCalled);
+            Assert.AreEqual(3, getInventoryManifestsBySourceAndMediaWeekCalled);
+            Assert.AreEqual(0, setJobCompleteSuccessCalled);
             Assert.AreEqual(0, setJobCompleteErrorCalled);
+            Assert.AreEqual(1, setJobCompleteWarningCalled);
             Assert.AreEqual(0, getProgramsForGuideCalled);
         }
 

@@ -291,7 +291,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             var service = _GetService();
             service.UT_DateTimeNow = testDateNow;
 
-            var result = service.QueueProcessInventoryProgramsBySourceForWeeks(testDateNow, TEST_USERNAME);
+            var result = service.QueueProcessInventoryProgramsBySourceForWeeksFromDate(testDateNow, TEST_USERNAME);
 
             Assert.IsNotNull(result);
             Assert.AreEqual(2, result.Jobs.Count);

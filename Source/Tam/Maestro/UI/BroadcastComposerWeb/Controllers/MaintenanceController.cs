@@ -200,7 +200,7 @@ namespace BroadcastComposerWeb.Controllers
                 var orientByDate = ParseDateTimeString(orientByDateString, "OrientByDate");
 
                 var service = _ApplicationServiceFactory.GetApplicationService<IInventoryProgramsProcessingService>();
-                var result = service.QueueProcessInventoryProgramsBySourceForWeeks(orientByDate, _GetCurrentUserFullName());
+                var result = service.QueueProcessInventoryProgramsBySourceForWeeksFromDate(orientByDate, _GetCurrentUserFullName());
 
                 ViewBag.Message = $"Job queued as Job {result.Jobs.First().Id}. \r\n{result}";
             }
