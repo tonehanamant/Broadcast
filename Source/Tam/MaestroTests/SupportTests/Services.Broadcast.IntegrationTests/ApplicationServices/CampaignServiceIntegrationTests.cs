@@ -588,7 +588,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 //write excel file to file system(this is used for manual testing only)
                 var reportOutput = new CampaignReportGenerator(@".\Files\Excel templates").Generate(reportData);
-                
+
                 //uncomment this line if you need to see the actual file
                 //_WriteFileToLocalFileSystem(reportOutput);
 

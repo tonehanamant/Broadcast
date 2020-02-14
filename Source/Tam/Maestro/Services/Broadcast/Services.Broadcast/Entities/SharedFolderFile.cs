@@ -32,7 +32,9 @@ namespace Services.Broadcast.Entities
                 //windows with NTFS allows only 255 chars limit on filename, so we're going to truncate the name
                 //excel can open a file that has the entire filePath less than 218 chars
                 //to have a margin for long path on people computers, we're going to truncate the filename at 64 chars
-                FileName = Path.GetFileNameWithoutExtension(value).Substring(0, 64);
+                FileName = Path.GetFileNameWithoutExtension(value).Length > 64
+                        ? Path.GetFileNameWithoutExtension(value).Substring(0, 64)
+                        : Path.GetFileNameWithoutExtension(value);
                 FileExtension = Path.GetExtension(value);
             }
         }
