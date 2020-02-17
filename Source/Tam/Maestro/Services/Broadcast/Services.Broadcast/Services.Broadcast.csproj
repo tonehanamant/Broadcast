@@ -358,6 +358,7 @@
     <Compile Include="Clients\ConfigurationClientSwitch.cs" />
     <Compile Include="Entities\CampaignListItemDto.cs" />
     <Compile Include="Entities\CampaignQuarterDto.cs" />
+    <Compile Include="Entities\Day.cs" />
     <Compile Include="Entities\DaypartCleanupDto.cs" />
     <Compile Include="Entities\Enums\BroadcastDayOfWeek.cs" />
     <Compile Include="Entities\Enums\PlanBuyingStatusEnum.cs" />
@@ -392,6 +393,7 @@
     <Compile Include="Entities\InventoryFileRatingsJobDiagnostics.cs" />
     <Compile Include="Entities\InventorySummary\InventorySummaryTotals.cs" />
     <Compile Include="Entities\InventorySummary\InventoryUploadHistory.cs" />
+    <Compile Include="Entities\NtiToNsiConversionRate.cs" />
     <Compile Include="Entities\Nti\NtiUniverseExcelRecord.cs" />
     <Compile Include="Entities\Nti\NtiUniverse.cs" />
     <Compile Include="Entities\Nti\NtiUniverseAudienceMapping.cs" />
@@ -497,12 +499,14 @@
     <Compile Include="ReportGenerators\ProgramLineup\DetailedViewReportGenerator.cs" />
     <Compile Include="Repositories\AffiliateRepository.cs" />
     <Compile Include="Repositories\CampaignSummaryRepository.cs" />
+    <Compile Include="Repositories\DayRepository.cs" />
     <Compile Include="Repositories\DetectionPostDetailsRepository.cs" />
     <Compile Include="Repositories\DetectionRepository.cs" />
     <Compile Include="Repositories\DetectionTestDataGeneratorRepository.cs" />
     <Compile Include="Repositories\InventoryProgramsByFileJobsRepository.cs" />
     <Compile Include="Repositories\InventoryProgramsBySourceJobsRepository.cs" />
     <Compile Include="Repositories\InventoryProgramsJobsRepositoryBase.cs" />
+    <Compile Include="Repositories\NtiToNsiConversionRepository.cs" />
     <Compile Include="Repositories\NtiUniverseRepository.cs" />
     <Compile Include="Repositories\PlanRepository.cs" />
     <Compile Include="Repositories\PlanSummaryRepository.cs" />

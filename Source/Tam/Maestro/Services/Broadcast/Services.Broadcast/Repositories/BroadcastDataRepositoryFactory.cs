@@ -93,6 +93,8 @@ namespace Services.Broadcast.Repositories
             instance.RegisterType<IInventoryProgramsBySourceJobsRepository, InventoryProgramsBySourceJobsRepository>();
             instance.RegisterType<IAffiliateRepository, AffiliateRepository>();
             instance.RegisterType<ISharedFolderFilesRepository, SharedFolderFilesRepository>();
+            instance.RegisterType<INtiToNsiConversionRepository, NtiToNsiConversionRepository>();
+            instance.RegisterType<IDayRepository, DayRepository>();
 
             WasRegistered = true;
         }

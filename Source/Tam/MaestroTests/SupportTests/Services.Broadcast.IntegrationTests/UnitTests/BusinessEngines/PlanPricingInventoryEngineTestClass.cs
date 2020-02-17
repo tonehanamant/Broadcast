@@ -5,6 +5,7 @@ using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Plan;
 using Services.Broadcast.Entities.Plan.Pricing;
 using System.Collections.Generic;
+using Tam.Maestro.Services.ContractInterfaces.Common;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
 {
@@ -20,10 +21,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
         public List<PlanPricingInventoryProgram> UT_FilterProgramsByDayparts(
             PlanDto plan,
             List<PlanPricingInventoryProgram> programs,
-            List<DateRange> planFlightDateRanges,
-            double? inflationFactor = null)
+            DisplayDaypart planDisplayDaypartDays)
         {
-            return _FilterProgramsByDayparts(plan, programs, planFlightDateRanges);
+            return FilterProgramsByDayparts(plan, programs, planDisplayDaypartDays);
         }
 
         public List<PlanPricingInventoryProgram> UT_FilterProgramsByMinAndMaxCPM(
@@ -31,12 +31,25 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             decimal? minCPM,
             decimal? maxCPM)
         {
-            return _FilterProgramsByMinAndMaxCPM(programs, minCPM, maxCPM);
+            return FilterProgramsByMinAndMaxCPM(programs, minCPM, maxCPM);
         }
 
-        public void UT_ApplyInflationFactorToSpotCost(PlanPricingInventoryProgram program, double? inflationFactor)
+        public void UT_ApplyInflationFactorToSpotCost(List<PlanPricingInventoryProgram> programs, double? inflationFactor)
         {
-            _ApplyInflationFactorToSpotCost(program, inflationFactor);
+            ApplyInflationFactorToSpotCost(programs, inflationFactor);
+        }
+
+        public DisplayDaypart UT_GetPlanDaypartDaysFromPlanFlight(PlanDto plan, List<DateRange> planFlightDateRanges)
+        {
+            return GetPlanDaypartDaysFromPlanFlight(plan, planFlightDateRanges);
+        }
+
+        public void UT_ApplyNTIConversionToNSI(
+            PlanDto plan,
+            List<PlanPricingInventoryProgram> programs,
+            DisplayDaypart planDisplayDaypartDays)
+        {
+            ApplyNTIConversionToNSI(plan, programs, planDisplayDaypartDays);
         }
     }
 }

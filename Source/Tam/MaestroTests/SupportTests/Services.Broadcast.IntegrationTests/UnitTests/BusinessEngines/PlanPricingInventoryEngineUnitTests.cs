@@ -8,6 +8,7 @@ using Services.Broadcast.Entities.DTO.Program;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
 using Services.Broadcast.Entities.Plan.Pricing;
+using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,36 +19,41 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
 {
     public class PlanPricingInventoryEngineUnitTests
     {
+        private readonly PlanPricingInventoryEngineTestClass _PlanPricingInventoryEngine;
         private readonly Mock<IDataRepositoryFactory> _DataRepositoryFactoryMock;
         private readonly Mock<IImpressionsCalculationEngine> _ImpressionsCalculationEngineMock;
-        private readonly Mock<IGenreCache> _GenreCache;
-        private readonly PlanPricingInventoryEngineTestClass _PlanPricingInventoryEngine;
+        private readonly Mock<IGenreCache> _GenreCacheMock;
+        private readonly Mock<IDayRepository> _DayRepositoryMock;
+        private readonly Mock<INtiToNsiConversionRepository> _NtiToNsiConversionRepositoryMock;
 
         public PlanPricingInventoryEngineUnitTests()
         {
             _DataRepositoryFactoryMock = new Mock<IDataRepositoryFactory>();
             _ImpressionsCalculationEngineMock = new Mock<IImpressionsCalculationEngine>();
-            _GenreCache = new Mock<IGenreCache>();
+            _GenreCacheMock = new Mock<IGenreCache>();
+            _DayRepositoryMock = new Mock<IDayRepository>();
+            _NtiToNsiConversionRepositoryMock = new Mock<INtiToNsiConversionRepository>();
+
+            _DayRepositoryMock
+                .Setup(x => x.GetDays())
+                .Returns(_GetDays());
+
+            _NtiToNsiConversionRepositoryMock
+                .Setup(x => x.GetLatestNtiToNsiConversionRates())
+                .Returns(_GetNtiToNsiConversionRates());
+
+            _DataRepositoryFactoryMock
+                .Setup(x => x.GetDataRepository<INtiToNsiConversionRepository>())
+                .Returns(_NtiToNsiConversionRepositoryMock.Object);
+
+            _DataRepositoryFactoryMock
+                .Setup(x => x.GetDataRepository<IDayRepository>())
+                .Returns(_DayRepositoryMock.Object);
 
             _PlanPricingInventoryEngine = new PlanPricingInventoryEngineTestClass(
                 _DataRepositoryFactoryMock.Object,
                 _ImpressionsCalculationEngineMock.Object,
-                _GenreCache.Object);
-        }
-
-        [Test]
-        public void NoPlanDayparts()
-        {
-            var plan = _GetPlan();
-            var programs = new List<PlanPricingInventoryProgram> { new PlanPricingInventoryProgram() };
-            var expectedCount = programs.Count;
-            var planFlightDateRanges = _GetPlanFlightDateRanges();
-
-            plan.Dayparts = new List<PlanDaypartDto>();
-
-            var result = _PlanPricingInventoryEngine.UT_FilterProgramsByDayparts(plan, programs, planFlightDateRanges);
-
-            Assert.AreEqual(expectedCount, result.Count);
+                _GenreCacheMock.Object);
         }
 
         [Test]
@@ -56,7 +62,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             const int expectedCount = 0;
 
             var plan = _GetPlan();
-            var planFlightDateRanges = _GetPlanFlightDateRanges();
+            var planFlightDays = _GetPlanFlightDays();
 
             var programs = new List<PlanPricingInventoryProgram>
             {
@@ -83,7 +89,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 }
             };
 
-            var result = _PlanPricingInventoryEngine.UT_FilterProgramsByDayparts(plan, programs, planFlightDateRanges);
+            var result = _PlanPricingInventoryEngine.UT_FilterProgramsByDayparts(plan, programs, planFlightDays);
 
             Assert.AreEqual(expectedCount, result.Count);
         }
@@ -94,7 +100,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             const int expectedCount = 0;
 
             var plan = _GetPlan();
-            var planFlightDateRanges = _GetPlanFlightDateRanges();
+            var planFlightDays = _GetPlanFlightDays();
 
             var programs = new List<PlanPricingInventoryProgram>
             {
@@ -121,7 +127,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 }
             };
 
-            var result = _PlanPricingInventoryEngine.UT_FilterProgramsByDayparts(plan, programs, planFlightDateRanges);
+            var result = _PlanPricingInventoryEngine.UT_FilterProgramsByDayparts(plan, programs, planFlightDays);
 
             Assert.AreEqual(expectedCount, result.Count);
         }
@@ -132,7 +138,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             const int expectedCount = 1;
 
             var plan = _GetPlan();
-            var planFlightDateRanges = _GetPlanFlightDateRanges();
+            var planFlightDays = _GetPlanFlightDays();
 
             var programs = new List<PlanPricingInventoryProgram>
             {
@@ -159,7 +165,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 }
             };
 
-            var result = _PlanPricingInventoryEngine.UT_FilterProgramsByDayparts(plan, programs, planFlightDateRanges);
+            var result = _PlanPricingInventoryEngine.UT_FilterProgramsByDayparts(plan, programs, planFlightDays);
 
             Assert.AreEqual(expectedCount, result.Count);
         }
@@ -176,7 +182,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             int expectedCount)
         {
             var plan = _GetPlan();
-            var planFlightDateRanges = _GetPlanFlightDateRanges();
+            var planFlightDays = _GetPlanFlightDays();
 
             plan.Dayparts.First().Restrictions.ProgramRestrictions = new PlanDaypartDto.RestrictionsDto.ProgramRestrictionDto
             {
@@ -222,7 +228,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 }
             };
 
-            var result = _PlanPricingInventoryEngine.UT_FilterProgramsByDayparts(plan, programs, planFlightDateRanges);
+            var result = _PlanPricingInventoryEngine.UT_FilterProgramsByDayparts(plan, programs, planFlightDays);
 
             Assert.AreEqual(expectedCount, result.Count);
         }
@@ -239,7 +245,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             int expectedCount)
         {
             var plan = _GetPlan();
-            var planFlightDateRanges = _GetPlanFlightDateRanges();
+            var planFlightDays = _GetPlanFlightDays();
 
             plan.Dayparts.First().Restrictions.GenreRestrictions = new PlanDaypartDto.RestrictionsDto.GenreRestrictionsDto
             {
@@ -285,7 +291,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 }
             };
 
-            var result = _PlanPricingInventoryEngine.UT_FilterProgramsByDayparts(plan, programs, planFlightDateRanges);
+            var result = _PlanPricingInventoryEngine.UT_FilterProgramsByDayparts(plan, programs, planFlightDays);
 
             Assert.AreEqual(expectedCount, result.Count);
         }
@@ -302,7 +308,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             int expectedCount)
         {
             var plan = _GetPlan();
-            var planFlightDateRanges = _GetPlanFlightDateRanges();
+            var planFlightDays = _GetPlanFlightDays();
 
             plan.Dayparts.First().Restrictions.ShowTypeRestrictions = new PlanDaypartDto.RestrictionsDto.ShowTypeRestrictionsDto
             {
@@ -348,7 +354,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 }
             };
 
-            var result = _PlanPricingInventoryEngine.UT_FilterProgramsByDayparts(plan, programs, planFlightDateRanges);
+            var result = _PlanPricingInventoryEngine.UT_FilterProgramsByDayparts(plan, programs, planFlightDays);
 
             Assert.AreEqual(expectedCount, result.Count);
         }
@@ -359,7 +365,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             const int expectedCount = 0;
 
             var plan = _GetPlan();
-            var planFlightDateRanges = _GetPlanFlightDateRanges();
+            var planFlightDays = _GetPlanFlightDays();
 
             var restrictions = plan.Dayparts.First().Restrictions;
             restrictions.ShowTypeRestrictions = new PlanDaypartDto.RestrictionsDto.ShowTypeRestrictionsDto
@@ -424,7 +430,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 EndTimeSeconds = 39599 // 11am
             });
 
-            var result = _PlanPricingInventoryEngine.UT_FilterProgramsByDayparts(plan, programs, planFlightDateRanges);
+            var result = _PlanPricingInventoryEngine.UT_FilterProgramsByDayparts(plan, programs, planFlightDays);
 
             Assert.AreEqual(expectedCount, result.Count);
         }
@@ -435,7 +441,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             const int expectedCount = 1;
 
             var plan = _GetPlan();
-            var planFlightDateRanges = _GetPlanFlightDateRanges();
+            var planFlightDays = _GetPlanFlightDays();
 
             var restrictions = plan.Dayparts.First().Restrictions;
             restrictions.ShowTypeRestrictions = new PlanDaypartDto.RestrictionsDto.ShowTypeRestrictionsDto
@@ -506,7 +512,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 }
             };
 
-            var result = _PlanPricingInventoryEngine.UT_FilterProgramsByDayparts(plan, programs, planFlightDateRanges);
+            var result = _PlanPricingInventoryEngine.UT_FilterProgramsByDayparts(plan, programs, planFlightDays);
 
             Assert.AreEqual(expectedCount, result.Count);
         }
@@ -557,14 +563,17 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
         [TestCase(4.5, 313.5)]
         public void ApplyInflationToSpotCost(double? inflationFactor, double expectedResult)
         {
-            var program = new PlanPricingInventoryProgram
+            var programs = new List<PlanPricingInventoryProgram>
             {
-                SpotCost = 300.00M,
+                new PlanPricingInventoryProgram
+                {
+                    SpotCost = 300.00M,
+                }
             };
 
-            _PlanPricingInventoryEngine.UT_ApplyInflationFactorToSpotCost(program, inflationFactor);
+            _PlanPricingInventoryEngine.UT_ApplyInflationFactorToSpotCost(programs, inflationFactor);
 
-            Assert.AreEqual((decimal)expectedResult, program.SpotCost);
+            Assert.AreEqual((decimal)expectedResult, programs.Single().SpotCost);
         }
 
         [Test]
@@ -598,11 +607,91 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                     ProvidedImpressions = 23400.0
                 }
             };
-            
-            programs.ForEach(program => _PlanPricingInventoryEngine.UT_ApplyInflationFactorToSpotCost(program, inflationFactor));
+
+            _PlanPricingInventoryEngine.UT_ApplyInflationFactorToSpotCost(programs, inflationFactor);
             var result = _PlanPricingInventoryEngine.UT_FilterProgramsByMinAndMaxCPM(programs, (decimal?)minCPM, (decimal?)maxCPM);
 
             Assert.AreEqual(expectedCount, result.Count);
+        }
+
+        [Test]
+        public void GetsPlanDaypartDaysFromPlanFlight()
+        {
+            var expectedDaypart = new DisplayDaypart
+            {
+                Monday = true,
+                Sunday = true
+            };
+            var planFlightDateRanges = _GetPlanFlightDateRanges();
+            var plan = new PlanDto
+            {
+                FlightDays = new List<int> { 1, 3, 5, 7 }
+            };
+
+            var result = _PlanPricingInventoryEngine.UT_GetPlanDaypartDaysFromPlanFlight(plan, planFlightDateRanges);
+
+            Assert.AreEqual(expectedDaypart, result);
+        }
+
+        [Test]
+        public void DoesNotApplyNTIConversionToNSI_WhenPlanPostingType_IsNotNTI()
+        {
+            var plan = _GetPlan();
+            plan.PostingType = PostingTypeEnum.NSI;
+            var planFlightDays = _GetPlanFlightDays();
+            var programs = new List<PlanPricingInventoryProgram>
+            {
+                new PlanPricingInventoryProgram
+                {
+                    ProjectedImpressions = 1000,
+                    ProvidedImpressions = 2000
+                }
+            };
+
+            _PlanPricingInventoryEngine.UT_ApplyNTIConversionToNSI(plan, programs, planFlightDays);
+
+            Assert.AreEqual(1000, programs.Single().ProjectedImpressions);
+            Assert.AreEqual(2000, programs.Single().ProvidedImpressions);
+        }
+
+        [Test]
+        public void AppliesNTIConversionToNSI_WhenPlanPostingType_IsNTI()
+        {
+            var plan = _GetPlan();
+            plan.PostingType = PostingTypeEnum.NTI;
+            plan.Dayparts.Add(new PlanDaypartDto
+            {
+                DaypartCodeId = 2,
+                StartTimeSeconds = 32400, // 9am
+                EndTimeSeconds = 35999 // 10am
+            });
+
+            var planFlightDays = _GetPlanFlightDays();
+            var programs = new List<PlanPricingInventoryProgram>
+            {
+                new PlanPricingInventoryProgram
+                {
+                    ProjectedImpressions = 1000,
+                    ProvidedImpressions = 2000,
+                    ManifestDayparts = new List<PlanPricingInventoryProgram.ManifestDaypart>
+                    {
+                        new PlanPricingInventoryProgram.ManifestDaypart
+                        {
+                            Daypart = new DisplayDaypart
+                            {
+                                Monday = true,
+                                StartTime = 28800, // 8am
+                                EndTime = 37799 // 10:30am
+                            }
+                        }
+                    }
+                }
+            };
+
+            _PlanPricingInventoryEngine.UT_ApplyNTIConversionToNSI(plan, programs, planFlightDays);
+
+            Assert.AreEqual(800, programs.Single().ProjectedImpressions);
+            Assert.AreEqual(1600, programs.Single().ProvidedImpressions);
         }
 
         private PlanDto _GetPlan()
@@ -613,6 +702,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 {
                     new PlanDaypartDto
                     {
+                        DaypartCodeId = 1,
                         StartTimeSeconds = 36000, // 10am
                         EndTimeSeconds = 39599 // 11am
                     }
@@ -626,6 +716,76 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             {
                 new DateRange(new DateTime(2019, 12, 16), new DateTime(2019, 12, 17)), // Mon - Tue
                 new DateRange(new DateTime(2019, 12, 21), new DateTime(2019, 12, 22)) // Sat - Sun
+            };
+        }
+
+        private DisplayDaypart _GetPlanFlightDays()
+        {
+            return new DisplayDaypart
+            {
+                Monday = true,
+                Tuesday = true,
+                Saturday = true,
+                Sunday = true
+            };
+        }
+
+        private List<Day> _GetDays()
+        {
+            return new List<Day>
+            {
+                new Day
+                {
+                    Id = 1,
+                    Name = "Monday"
+                },
+                new Day
+                {
+                    Id = 2,
+                    Name = "Tuesday"
+                },
+                new Day
+                {
+                    Id = 3,
+                    Name = "Wednesday"
+                },
+                new Day
+                {
+                    Id = 4,
+                    Name = "Thursday"
+                },
+                new Day
+                {
+                    Id = 5,
+                    Name = "Friday"
+                },
+                new Day
+                {
+                    Id = 6,
+                    Name = "Saturday"
+                },
+                new Day
+                {
+                    Id = 7,
+                    Name = "Sunday"
+                }
+            };
+        }
+        
+        private List<NtiToNsiConversionRate> _GetNtiToNsiConversionRates()
+        {
+            return new List<NtiToNsiConversionRate>
+            {
+                new NtiToNsiConversionRate
+                {
+                    DaypartDefaultId = 1,
+                    ConversionRate = 0.75
+                },
+                new NtiToNsiConversionRate
+                {
+                    DaypartDefaultId = 2,
+                    ConversionRate = 0.85
+                }
             };
         }
     }
