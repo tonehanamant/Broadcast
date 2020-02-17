@@ -203,7 +203,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _CalculateSecondaryAudiencesDeliveryData(plan);
             _SetPlanVersionNumber(plan);
 
-            if(plan.Status == PlanStatusEnum.Contracted && plan.GoalBreakdownType != PlanGoalBreakdownTypeEnum.Custom)
+            if (plan.Status == PlanStatusEnum.Contracted && plan.GoalBreakdownType != PlanGoalBreakdownTypeEnum.Custom)
             {
                 plan.GoalBreakdownType = PlanGoalBreakdownTypeEnum.Custom;
             }
@@ -236,13 +236,13 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 }
             }
 
-            _SetPlanPricingParameters(plan);
-
             // We only aggregate data and run pricing for versions, not drafts.
             if (!plan.IsDraft)
             {
                 _DispatchPlanAggregation(plan, aggregatePlanSynchronously);
                 _CampaignAggregationJobTrigger.TriggerJob(plan.CampaignId, createdBy);
+
+                _SetPlanPricingParameters(plan);
                 _PlanPricingService.QueuePricingJob(plan.PricingParameters, createdDate);
             }
 
@@ -251,25 +251,22 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
         private void _SetPlanPricingParameters(PlanDto plan)
         {
-            if (plan.PricingParameters == null)
-            {
-                var pricingDefaults = _PlanPricingService.GetPlanPricingDefaults();
+            var pricingDefaults = _PlanPricingService.GetPlanPricingDefaults();
 
-                plan.PricingParameters = new PlanPricingParametersDto
-                {
-                    PlanId = plan.Id,
-                    Budget = (decimal)plan.Budget,
-                    CPM = (decimal)plan.TargetCPM,
-                    CPP = (decimal)plan.TargetCPP,
-                    Currency = plan.Currency,
-                    DeliveryImpressions = (double)plan.TargetImpressions / 1000,
-                    DeliveryRatingPoints = (double)plan.TargetRatingPoints,
-                    UnitCaps = pricingDefaults.UnitCaps,
-                    UnitCapsType = pricingDefaults.UnitCapType,
-                    InventorySourcePercentages = pricingDefaults.InventorySourcePercentages,
-                    InventorySourceTypePercentages = pricingDefaults.InventorySourceTypePercentages
-                };
-            }
+            plan.PricingParameters = new PlanPricingParametersDto
+            {
+                PlanId = plan.Id,
+                Budget = Convert.ToDecimal(plan.Budget),
+                CPM = Convert.ToDecimal(plan.TargetCPM),
+                CPP = Convert.ToDecimal(plan.TargetCPP),
+                Currency = plan.Currency,
+                DeliveryImpressions = Convert.ToDouble(plan.TargetImpressions) / 1000,
+                DeliveryRatingPoints = Convert.ToDouble(plan.TargetRatingPoints),
+                UnitCaps = pricingDefaults.UnitCaps,
+                UnitCapsType = pricingDefaults.UnitCapType,
+                InventorySourcePercentages = pricingDefaults.InventorySourcePercentages,
+                InventorySourceTypePercentages = pricingDefaults.InventorySourceTypePercentages
+            };
         }
 
         private void _VerifyWeeklyAdu(bool isAduEnabled, List<WeeklyBreakdownWeek> weeks)

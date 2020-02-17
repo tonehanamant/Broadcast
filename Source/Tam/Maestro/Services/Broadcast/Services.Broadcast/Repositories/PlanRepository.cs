@@ -270,6 +270,10 @@ namespace Services.Broadcast.Repositories
                         .Include(p => p.plan_versions.Select(x => x.plan_version_weeks))
                         .Include(p => p.plan_versions.Select(x => x.plan_version_summaries))
                         .Include(p => p.plan_versions.Select(x => x.plan_version_weeks.Select(y => y.media_weeks)))
+                        .Include(p => p.plan_versions.Select(x => x.plan_version_pricing_parameters))           
+                        .Include(p => p.plan_versions.Select(x => x.plan_version_pricing_parameters.Select(y=>y.plan_version_pricing_parameters_inventory_source_percentages)))
+                        .Include(p => p.plan_versions.Select(x => x.plan_version_pricing_parameters.Select(y => y.plan_version_pricing_parameters_inventory_source_type_percentages)))
+                        .Include(p => p.plan_versions.Select(x => x.plan_version_pricing_parameters.Select(y => y.plan_version_pricing_parameters_inventory_source_percentages.Select(r=> r.inventory_sources))))
                         .Single(s => s.id == planId, "Invalid plan id.");
                     return _MapToDto(entity, markets, versionId);
                 });
@@ -1092,15 +1096,15 @@ namespace Services.Broadcast.Repositories
         {
             return _InReadUncommitedTransaction(context =>
             {
-                var latestJob = context.plan_version_pricing_job
-                                    .Where(x => x.plan_versions.plan.id == planId)
-
-                                    // take jobs with status Queued or Processing first
-                                    .OrderByDescending(x => x.status == (int)BackgroundJobProcessingStatus.Queued || x.status == (int)BackgroundJobProcessingStatus.Processing)
-
-                                    // if there is no such then take latest completed
-                                    .ThenByDescending(x => x.completed_at)
-                                    .FirstOrDefault();
+                var latestJob = (from pvpj in context.plan_version_pricing_job
+                                from pv in context.plan_versions
+                                where pv.plan_id == planId && pv.plan.latest_version_id == pv.id
+                                select pvpj)
+                                // take jobs with status Queued or Processing first
+                                .OrderByDescending(x => x.status == (int)BackgroundJobProcessingStatus.Queued || x.status == (int)BackgroundJobProcessingStatus.Processing)
+                                //then take latest completed
+                                .ThenByDescending(x => x.completed_at)
+                                .FirstOrDefault();
 
                 if (latestJob == null)
                     return null;

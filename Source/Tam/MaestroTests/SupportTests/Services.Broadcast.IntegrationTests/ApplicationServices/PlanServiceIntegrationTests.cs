@@ -338,6 +338,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 //get the plan again
                 plan = _PlanService.GetPlan(newPlanId);
 
+                Assert.AreEqual(222, plan.PricingParameters.Budget);
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(plan, _GetJsonSettings()));
             }
         }
@@ -379,17 +380,17 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 PlanDto firstNewPlan = _GetNewPlan();
                 firstNewPlan.Status = PlanStatusEnum.Canceled;
 
-                var firstNewPlanId = _PlanService.SavePlan(firstNewPlan, "integration_test", new System.DateTime(2019, 10, 17));
+                var firstNewPlanId = _PlanService.SavePlan(firstNewPlan, "integration_test", new DateTime(2019, 10, 17));
 
                 PlanDto secondNewPlan = _GetNewPlan();
                 secondNewPlan.Status = PlanStatusEnum.Rejected;
 
-                var secondNewPlanId = _PlanService.SavePlan(secondNewPlan, "integration_test", new System.DateTime(2019, 10, 17));
+                var secondNewPlanId = _PlanService.SavePlan(secondNewPlan, "integration_test", new DateTime(2019, 10, 17));
 
                 PlanDto thirdNewPlan = _GetNewPlan();
                 thirdNewPlan.Status = PlanStatusEnum.Scenario;
 
-                var thirdNewPlanId = _PlanService.SavePlan(thirdNewPlan, "integration_test", new System.DateTime(2019, 10, 17));
+                var thirdNewPlanId = _PlanService.SavePlan(thirdNewPlan, "integration_test", new DateTime(2019, 10, 17));
 
                 Assert.IsTrue(firstNewPlanId > 0);
                 Assert.IsTrue(secondNewPlanId > 0);
@@ -508,6 +509,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             using (new TransactionScopeWrapper())
             {
+                IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<ITrafficApiClient>(new TrafficApiClientStub());
+
                 PlanDto newPlan = _GetNewPlan();
                 newPlan.ProductId = notExistingProductId;
 
