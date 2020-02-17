@@ -171,6 +171,23 @@ namespace Services.Broadcast.Entities.Plan
             public int Id { get; set; }
 
             public string Name { get; set; }
+
+            public PlanBuyingListingItem.PlanBuyingListingItemCampaign.PlanBuyingListingItemCampaignAdvertiser Advertiser { get; set; }
+
+            public PlanBuyingListingItem.PlanBuyingListingItemCampaign.PlanBuyingListingItemCampaignAgency Agency { get; set; }
+
+            public class PlanBuyingListingItemCampaignAdvertiser
+            {
+                public int Id { get; set; }
+                public string Name { get; set; }
+            }
+
+            public class PlanBuyingListingItemCampaignAgency
+            {
+                public int Id { get; set; }
+                public string Name { get; set; }
+            }
+
         }
 
         public class PlanBuyingListingItemDetails

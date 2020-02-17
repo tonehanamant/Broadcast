@@ -60,7 +60,17 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 Campaign = new PlanBuyingListingItem.PlanBuyingListingItemCampaign
                 {
                     Id = 1,
-                    Name = "Some Campaign"
+                    Name = "Some Campaign",
+                    Advertiser = new PlanBuyingListingItem.PlanBuyingListingItemCampaign.PlanBuyingListingItemCampaignAdvertiser
+                    {
+                        Id = 1,
+                        Name = "Some Advertiser",
+                    },
+                    Agency = new PlanBuyingListingItem.PlanBuyingListingItemCampaign.PlanBuyingListingItemCampaignAgency
+                    {
+                        Id = 1,
+                        Name = "Some Agency",
+                    }
                 },
                 Plan = new PlanBuyingListingItem.PlanBuyingListingItemDetails
                 {
@@ -97,7 +107,17 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 Campaign = new PlanBuyingListingItem.PlanBuyingListingItemCampaign
                 {
                     Id = 2,
-                    Name = "Some New Campaign"
+                    Name = "Some New Campaign",
+                    Advertiser = new PlanBuyingListingItem.PlanBuyingListingItemCampaign.PlanBuyingListingItemCampaignAdvertiser
+                    {
+                        Id = 2,
+                        Name = "Some New Advertiser",
+                    },
+                    Agency = new PlanBuyingListingItem.PlanBuyingListingItemCampaign.PlanBuyingListingItemCampaignAgency
+                    {
+                        Id = 2,
+                        Name = "Some New Agency",
+                    }
                 },
                 Plan = new PlanBuyingListingItem.PlanBuyingListingItemDetails
                 {
@@ -137,7 +157,17 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     Campaign = new PlanBuyingListingItem.PlanBuyingListingItemCampaign
                     {
                         Id = 3,
-                        Name = "Updated Campaign"
+                        Name = "Updated Campaign",
+                        Advertiser = new PlanBuyingListingItem.PlanBuyingListingItemCampaign.PlanBuyingListingItemCampaignAdvertiser
+                        {
+                            Id = 2,
+                            Name = "Some New Advertiser",
+                        },
+                        Agency = new PlanBuyingListingItem.PlanBuyingListingItemCampaign.PlanBuyingListingItemCampaignAgency
+                        {
+                            Id = 2,
+                            Name = "Some New Agency",
+                        }
                     },
                     Plan = new PlanBuyingListingItem.PlanBuyingListingItemDetails
                     {
@@ -177,7 +207,17 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     Campaign = new PlanBuyingListingItem.PlanBuyingListingItemCampaign
                     {
                         Id = 4,
-                        Name = "Updated Contracted Campaign"
+                        Name = "Updated Contracted Campaign",
+                        Advertiser = new PlanBuyingListingItem.PlanBuyingListingItemCampaign.PlanBuyingListingItemCampaignAdvertiser
+                        {
+                            Id = 1,
+                            Name = "Some Advertiser",
+                        },
+                        Agency = new PlanBuyingListingItem.PlanBuyingListingItemCampaign.PlanBuyingListingItemCampaignAgency
+                        {
+                            Id = 2,
+                            Name = "Some New Agency",
+                        }
                     },
                     Plan = new PlanBuyingListingItem.PlanBuyingListingItemDetails
                     {
@@ -209,7 +249,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 });
             }
 
-                return result;
+            return result;
         }
 
         public PlanBuying GetPlanBuyingById(int planId)

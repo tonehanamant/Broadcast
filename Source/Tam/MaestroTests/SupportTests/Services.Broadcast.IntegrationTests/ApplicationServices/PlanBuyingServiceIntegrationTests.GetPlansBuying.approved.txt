@@ -7,6 +7,14 @@
     "BookedImpressionsPercent": 133.0,
     "BookedMarginPercent": 26.15,
     "Campaign": {
+      "Advertiser": {
+        "Id": 1,
+        "Name": "Some Advertiser"
+      },
+      "Agency": {
+        "Id": 1,
+        "Name": "Some Agency"
+      },
       "Id": 1,
       "Name": "Some Campaign"
     },
@@ -40,6 +48,14 @@
     "BookedImpressionsPercent": 177.0,
     "BookedMarginPercent": 22.09,
     "Campaign": {
+      "Advertiser": {
+        "Id": 2,
+        "Name": "Some New Advertiser"
+      },
+      "Agency": {
+        "Id": 2,
+        "Name": "Some New Agency"
+      },
       "Id": 2,
       "Name": "Some New Campaign"
     },
@@ -73,6 +89,14 @@
     "BookedImpressionsPercent": 166.0,
     "BookedMarginPercent": 20.11,
     "Campaign": {
+      "Advertiser": {
+        "Id": 2,
+        "Name": "Some New Advertiser"
+      },
+      "Agency": {
+        "Id": 2,
+        "Name": "Some New Agency"
+      },
       "Id": 3,
       "Name": "Updated Campaign"
     },
