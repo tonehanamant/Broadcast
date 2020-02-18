@@ -19,7 +19,7 @@ namespace Services.Broadcast.Entities.Plan.Pricing
         public PlanCurrenciesEnum Currency { get; set; }
         public decimal CPP { get; set; }
         public double DeliveryRatingPoints { get; set; }
-        public double? Margin { get; set; }
+        public double Margin { get; set; }
         public List<PlanPricingInventorySourceDto> InventorySourcePercentages { get; set; } = new List<PlanPricingInventorySourceDto>();
         public List<PlanPricingInventorySourceTypeDto> InventorySourceTypePercentages { get; set; } = new List<PlanPricingInventorySourceTypeDto>();
     }

@@ -884,7 +884,7 @@
           <Property Name="inflation_factor" Type="float" />
           <Property Name="unit_caps_type" Type="int" Nullable="false" />
           <Property Name="unit_caps" Type="int" Nullable="false" />
-          <Property Name="margin" Type="float" />
+          <Property Name="margin" Type="float" Nullable="false" />
         </EntityType>
         <EntityType Name="plan_version_pricing_inventory_source_percentages">
           <Key>
@@ -936,7 +936,7 @@
           <Property Name="cpp" Type="money" Nullable="false" />
           <Property Name="currency" Type="int" Nullable="false" />
           <Property Name="rating_points" Type="float" Nullable="false" />
-          <Property Name="margin" Type="float" />
+          <Property Name="margin" Type="float" Nullable="false" />
         </EntityType>
         <EntityType Name="plan_version_pricing_parameters_inventory_source_percentages">
           <Key>
@@ -11619,7 +11619,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="plan_versions" Relationship="BroadcastModel.FK_plan_version_pricing_executions_plan_versions" FromRole="plan_version_pricing_executions" ToRole="plan_versions" />
           <NavigationProperty Name="plan_version_pricing_inventory_source_percentages" Relationship="BroadcastModel.FK_plan_version_pricing_inventory_source_percentages_plan_version_pricing_executions" FromRole="plan_version_pricing_executions" ToRole="plan_version_pricing_inventory_source_percentages" />
           <NavigationProperty Name="plan_version_pricing_inventory_source_type_percentages" Relationship="BroadcastModel.FK_plan_version_pricing_inventory_source_type_percentages_plan_version_pricing_executions" FromRole="plan_version_pricing_executions" ToRole="plan_version_pricing_inventory_source_type_percentages" />
-          <Property Name="margin" Type="Double" />
+          <Property Name="margin" Type="Double" Nullable="false" />
         </EntityType>
         <EntityType Name="plan_version_pricing_job">
           <Key>
@@ -11730,7 +11730,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="rating_points" Type="Double" Nullable="false" />
           <NavigationProperty Name="plan_version_pricing_parameters_inventory_source_percentages" Relationship="BroadcastModel.FK_plan_version_pricing_parameters_inventory_source_percentages_plan_version_pricing_parameters" FromRole="plan_version_pricing_parameters" ToRole="plan_version_pricing_parameters_inventory_source_percentages" />
           <NavigationProperty Name="plan_version_pricing_parameters_inventory_source_type_percentages" Relationship="BroadcastModel.FK_plan_version_pricing_parameters_inventory_source_type_percentages_plan_version_pricing_parameters" FromRole="plan_version_pricing_parameters" ToRole="plan_version_pricing_parameters_inventory_source_type_percentages" />
-          <Property Name="margin" Type="Double" />
+          <Property Name="margin" Type="Double" Nullable="false" />
         </EntityType>
         <Association Name="FK_plan_version_pricing_parameters_plan_versions">
           <End Type="BroadcastModel.plan_versions" Role="plan_versions" Multiplicity="1" />

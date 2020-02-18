@@ -135,17 +135,17 @@ namespace Services.Broadcast.ApplicationServices
         public PlanPricingDefaults GetPlanPricingDefaults()
         {
             const int default_percent = 10;
+            const float default_margin = 20;
             var allSources = _InventoryRepository.GetInventorySources();
 
-            var ppDefaults = new PlanPricingDefaults
+            return new PlanPricingDefaults
             {
                 UnitCaps = 1,
                 UnitCapType = UnitCapEnum.Per30Min,
                 InventorySourcePercentages = PlanPricingInventorySourceSortEngine.GetSortedInventorySourcePercents(default_percent, allSources),
-                InventorySourceTypePercentages = PlanPricingInventorySourceSortEngine.GetSortedInventorySourceTypePercents(default_percent)
+                InventorySourceTypePercentages = PlanPricingInventorySourceSortEngine.GetSortedInventorySourceTypePercents(default_percent),
+                Margin = default_margin
             };
-
-            return ppDefaults;
         }
 
         public PlanPricingResponseDto GetCurrentPricingExecution(int planId)
@@ -412,10 +412,10 @@ namespace Services.Broadcast.ApplicationServices
                         InflationFactor = planPricingParametersDto.InflationFactor
                     });
 
-                if (parameters.Margin.HasValue)
+                if (parameters.Margin > 0)
                 {
-                    parameters.BudgetGoal = parameters.BudgetGoal * (decimal)(1.0 - (parameters.Margin.Value / 100.0));
-                    parameters.CpmGoal = ProposalMath.CalculateCpm(parameters.BudgetGoal, parameters.ImpressionsGoal);
+                    parameters.BudgetGoal = parameters.BudgetGoal * (decimal)(1.0 - (parameters.Margin / 100.0));
+                    parameters.CpmGoal = parameters.BudgetGoal / Convert.ToDecimal(parameters.ImpressionsGoal);
                 }
 
 

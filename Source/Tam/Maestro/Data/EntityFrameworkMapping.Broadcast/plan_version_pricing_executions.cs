@@ -34,7 +34,7 @@ namespace EntityFrameworkMapping.Broadcast
         public Nullable<double> inflation_factor { get; set; }
         public int unit_caps_type { get; set; }
         public int unit_caps { get; set; }
-        public Nullable<double> margin { get; set; }
+        public double margin { get; set; }
     
         public virtual ICollection<plan_version_pricing_execution_markets> plan_version_pricing_execution_markets { get; set; }
         public virtual plan_versions plan_versions { get; set; }

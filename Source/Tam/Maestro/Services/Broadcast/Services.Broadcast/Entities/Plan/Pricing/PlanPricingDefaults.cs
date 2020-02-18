@@ -9,6 +9,6 @@ namespace Services.Broadcast.Entities.Plan.Pricing
         public UnitCapEnum UnitCapType { get; set; }
         public List<PlanPricingInventorySourceDto> InventorySourcePercentages { get; set; }
         public List<PlanPricingInventorySourceTypeDto> InventorySourceTypePercentages { get; set; }
-        
+        public double Margin { get; set; }
     }
 }

@@ -152,7 +152,7 @@
       }
     ],
     "InventorySourceTypePercentages": [],
-    "Margin": null,
+    "Margin": 0.0,
     "MaxCpm": 10.0000,
     "MinCpm": 1.0000,
     "PlanId": 1197,

@@ -4064,6 +4064,30 @@ END
 
 /*************************************** END PRI-20999 *****************************************************/
 
+/*************************************** START PRI-22782 *****************************************************/
+IF EXISTS(SELECT 1 FROM sys.columns WHERE  object_id = OBJECT_ID('plan_version_pricing_parameters') AND name = 'margin')
+BEGIN
+
+	EXEC('UPDATE plan_version_pricing_parameters
+	SET margin = 0
+	WHERE margin IS NULL')
+	
+	ALTER TABLE plan_version_pricing_parameters
+	ALTER COLUMN margin float NOT NULL
+END
+
+IF EXISTS(SELECT 1 FROM sys.columns WHERE  object_id = OBJECT_ID('plan_version_pricing_executions') AND name = 'margin')
+BEGIN	
+	
+	EXEC('UPDATE plan_version_pricing_executions
+	SET margin = 0
+	WHERE margin IS NULL')
+
+	ALTER TABLE plan_version_pricing_executions
+	ALTER COLUMN margin float NOT NULL
+END
+/*************************************** END PRI-22782 *****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version
