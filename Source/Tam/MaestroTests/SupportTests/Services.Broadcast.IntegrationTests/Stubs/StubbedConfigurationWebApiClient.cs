@@ -261,16 +261,7 @@ namespace Services.Broadcast.IntegrationTests.Stubs
                     result = @"OJE8vVrWiuZrou5oVn/uVdCmMSCRf/7vhlBB9Uz9bG/dQkN8WKjS1gXV01ANViI+UvbDSI8XjCs=";
                     break;
                 case "ProgramGuideUrl":
-                    
-                    // Dativa Staging
-                    result = @"https://h0ix5d7yhb.execute-api.us-east-1.amazonaws.com/staging/v1/programs/guide/";
-                    // Dativa Dev
-                    //result = @"https://qye2zoq6d0.execute-api.us-east-1.amazonaws.com/dev-abr/v1/programs/guide/";
-                    
-                    // TODO: Once we get endpoint version 1.0.1 in place use this one.
-                    // Cadent's Dativa Staging
-                    // this one isn't ready yet, but performs much faster.
-                    result = @"https://2ytscjyqvb.execute-api.us-east-1.amazonaws.com/staging/v1/programs/guide/";
+                    result = @"https://pemonp3we9.execute-api.us-east-1.amazonaws.com/staging/v1/programs/guide/";
                     break;
                 case "ProgramGuideTokenUrl":
                     result = @"https://dev-cmw.auth.us-east-1.amazoncognito.com/oauth2/token";
@@ -285,7 +276,6 @@ namespace Services.Broadcast.IntegrationTests.Stubs
                     result = @"5e9kdecif9k6r7ttetgd4e500t";
                     break;
                 case "ProgramGuideRequestElementMaxCount":
-                    // TODO: Once we get endpoint version 1.0.1 in place Change this to 100
                     result = "10";
                     break;
                 case "PlanPricingFloorPricingUrl":

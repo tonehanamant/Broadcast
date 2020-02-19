@@ -61,7 +61,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     Saturday = false,
                     Sunday = false,
                     StartTime = 7200,
-                    EndTime = 14400
+                    EndTime = 14399
                 }
             };
 
@@ -117,7 +117,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     Saturday = false,
                     Sunday = false,
                     StartTime = 7200,
-                    EndTime = 14400
+                    EndTime = 14399
                 }
             };
 
@@ -171,7 +171,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     Saturday = false,
                     Sunday = false,
                     StartTime = 7200,
-                    EndTime = 14400
+                    EndTime = 14399
                 }
             };
             var expectedErrorMessage = $"Bad Request.  Request '{requestElement.Id}' requires a NetworkAffiliate.";
@@ -209,7 +209,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     Saturday = false,
                     Sunday = false,
                     StartTime = 7200,
-                    EndTime = 14400
+                    EndTime = 14399
                 }
             };
             var expectedErrorMessage = $"Bad Request.  Request '{requestElement.Id}' requires StationCallLetters.";
@@ -250,7 +250,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         Saturday = false,
                         Sunday = false,
                         StartTime = 7200,
-                        EndTime = 14400
+                        EndTime = 14399
                     }
                 });
             }
@@ -291,7 +291,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         Saturday = false,
                         Sunday = false,
                         StartTime = 7200,
-                        EndTime = 14400
+                        EndTime = 14399
                     }
                 });
             }
