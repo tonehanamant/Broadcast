@@ -127,7 +127,8 @@ namespace Services.Broadcast.Repositories
                     {
                         var inventoryFileIds = (from file in context.inventory_files
                                                 join ratingJob in context.inventory_file_ratings_jobs on file.id equals ratingJob.inventory_file_id
-                                                join programEnrichmentJob in context.inventory_programs_by_file_jobs on file.id equals programEnrichmentJob.inventory_file_id
+                                                // TODO: Bring this back in when ProgramGuide v2 is deployed to Cadent environment.
+                                                // join programEnrichmentJob in context.inventory_programs_by_file_jobs on file.id equals programEnrichmentJob.inventory_file_id
                                                 join source in context.inventory_sources on file.inventory_source_id equals source.id
                                                 where inventorySourceTypes.Contains(source.inventory_source_type) &&
                                                       ratingJob.status == (int)BackgroundJobProcessingStatus.Succeeded // take only files with ratings calculated
