@@ -265,7 +265,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 UnitCaps = pricingDefaults.UnitCaps,
                 UnitCapsType = pricingDefaults.UnitCapType,
                 InventorySourcePercentages = pricingDefaults.InventorySourcePercentages,
-                InventorySourceTypePercentages = pricingDefaults.InventorySourceTypePercentages
+                InventorySourceTypePercentages = pricingDefaults.InventorySourceTypePercentages,
+                Margin = pricingDefaults.Margin
             };
         }
 

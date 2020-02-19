@@ -285,7 +285,7 @@
         "Percentage": 10
       }
     ],
-    "Margin": 0.0,
+    "Margin": 20.0,
     "MaxCpm": null,
     "MinCpm": null,
     "ProprietaryBlend": 0.0,
