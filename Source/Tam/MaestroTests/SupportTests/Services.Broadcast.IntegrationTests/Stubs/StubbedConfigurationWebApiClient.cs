@@ -294,6 +294,15 @@ namespace Services.Broadcast.IntegrationTests.Stubs
                 case "PlanPricingAllocationsUrl":
                     result = @"http://datascience-dev.cadent.tv/broadcast-openmarket-allocations/v1/allocation";
                     break;
+                case "InventoryProcessingNotificationEmails":
+                    result = "TestEmailsForInventoryProcessingNotificationEmails@cadent.tv";
+                    break;
+                case "InventoryProcessingGroupTimeoutHours":
+                    result = "7";
+                    break;
+                case "InventoryProcessingGroupMonitorPauseSeconds":
+                    result = "300";
+                    break;
                 default:
                     throw new Exception("Unknown SystemComponentParameter: " + parameterId);
             }

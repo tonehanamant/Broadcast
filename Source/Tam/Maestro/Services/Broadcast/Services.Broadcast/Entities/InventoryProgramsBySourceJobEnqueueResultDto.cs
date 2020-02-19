@@ -1,10 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Text;
 
 namespace Services.Broadcast.Entities
 {
     public class InventoryProgramsBySourceJobEnqueueResultDto
     {
+        public Guid? JobGroupId { get; set; }
+
         public List<InventoryProgramsBySourceJob> Jobs { get; set; } = new List<InventoryProgramsBySourceJob>();
 
         public override string ToString()
@@ -17,6 +20,7 @@ namespace Services.Broadcast.Entities
             {
                 sb.AppendLine("****************************************");
                 sb.AppendLine($"Job ID : {job.Id}");
+                sb.AppendLine($"Job Group ID : {JobGroupId?.ToString() ?? "null"}");
                 sb.AppendLine($"InventorySourceId : {job.InventorySourceId}");
                 sb.AppendLine($"StartDate : {job.StartDate}");
                 sb.AppendLine($"EndDate : {job.EndDate}");

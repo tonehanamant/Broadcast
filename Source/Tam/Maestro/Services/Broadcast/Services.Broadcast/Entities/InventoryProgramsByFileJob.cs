@@ -11,6 +11,8 @@ namespace Services.Broadcast.Entities
 
         public InventoryProgramsJobStatus Status { get; set; }
 
+        public string StatusMessage { get; set; }
+
         public DateTime QueuedAt { get; set; }
 
         public string QueuedBy { get; set; }

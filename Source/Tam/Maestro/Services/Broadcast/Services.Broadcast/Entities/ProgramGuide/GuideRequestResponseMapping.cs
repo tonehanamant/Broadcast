@@ -20,7 +20,6 @@ namespace Services.Broadcast.Entities.ProgramGuide
 
         public override string ToString()
         {
-            const string dateFormat = "yyyy-MM-dd";
             var sb = new StringBuilder();
 
             sb.AppendLine($"RequestEntryId : {RequestEntryId}");
@@ -29,8 +28,8 @@ namespace Services.Broadcast.Entities.ProgramGuide
             sb.AppendLine($"ManifestId : {ManifestId}");
             sb.AppendLine($"ManifestDaypartId : {ManifestDaypartId}");
             sb.AppendLine();
-            sb.AppendLine($"WeekStartDte : {WeekStartDte.ToString(dateFormat)}");
-            sb.AppendLine($"WeekEndDate : {WeekEndDate.ToString(dateFormat)}");
+            sb.AppendLine($"WeekStartDte : {WeekStartDte.ToString(BroadcastConstants.DATE_FORMAT_STANDARD)}");
+            sb.AppendLine($"WeekEndDate : {WeekEndDate.ToString(BroadcastConstants.DATE_FORMAT_STANDARD)}");
             sb.AppendLine();
             sb.AppendLine($"DaypartText : {DaypartText}");
             sb.AppendLine($"StationCallLetters : {StationCallLetters}");

@@ -14,11 +14,9 @@ namespace Services.Broadcast.Repositories
     public interface IInventoryProgramsBySourceJobsRepository : IDataRepository, IInventoryProgramsJobsRepository
     {
         int QueueJob(int sourceId, DateTime startDate, DateTime endDate, string queuedBy,
-            DateTime queuedAt);
+            DateTime queuedAt, Guid? jobGroupId);
 
         InventoryProgramsBySourceJob GetJob(int jobId);
-
-        InventoryProgramsBySourceJob GetLatestJob();
     }
 
     public class InventoryProgramsBySourceJobsRepository : InventoryProgramsJobsRepositoryBase, IInventoryProgramsBySourceJobsRepository
@@ -28,12 +26,13 @@ namespace Services.Broadcast.Repositories
             : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
 
         public int QueueJob(int sourceId, DateTime startDate, DateTime endDate, string queuedBy,
-            DateTime queuedAt)
+            DateTime queuedAt, Guid? jobGroupId)
         {
             return _InReadUncommitedTransaction(context =>
             {
                 var fileJob = new inventory_programs_by_source_jobs
                 {
+                    job_group_id = jobGroupId,
                     inventory_source_id = sourceId,
                     start_date = startDate,
                     end_date = endDate,
@@ -56,56 +55,21 @@ namespace Services.Broadcast.Repositories
             return _InReadUncommitedTransaction(context =>
             {
                 var job = context.inventory_programs_by_source_jobs.Single(j => j.id == jobId, $"Job with id '{jobId}' not found.");
-                return new InventoryProgramsBySourceJob
-                {
-                    Id = jobId,
-                    InventorySourceId = job.inventory_source_id,
-                    StartDate = job.start_date,
-                    EndDate = job.end_date,
-                    Status = (InventoryProgramsJobStatus)job.status,
-                    QueuedAt = job.queued_at,
-                    QueuedBy = job.queued_by,
-                    CompletedAt = job.completed_at
-                };
-            }
-            );
+                return _MapInventoryProgramsBySourceJob(job);
+            });
         }
 
-        public InventoryProgramsBySourceJob GetLatestJob()
-        {
-            return _InReadUncommitedTransaction(
-                context =>
-                {
-                    var job = context.inventory_programs_by_source_jobs
-                        .Where(j => j.status == (int)InventoryProgramsJobStatus.Queued)
-                        .OrderByDescending(j => j.queued_at)
-                        .FirstOrDefault();
-
-                    return job == null ? null : new InventoryProgramsBySourceJob
-                    {
-                        Id = job.id,
-                        InventorySourceId = job.inventory_source_id,
-                        StartDate = job.start_date,
-                        EndDate = job.end_date,
-                        Status = (InventoryProgramsJobStatus)job.status,
-                        QueuedAt = job.queued_at,
-                        QueuedBy = job.queued_by,
-                        CompletedAt = job.completed_at
-                    };
-                });
-        }
-
-        protected override void _UpdateJob(int jobId, InventoryProgramsJobStatus status, DateTime? completedAt)
+        protected override void _UpdateJob(int jobId, InventoryProgramsJobStatus status, string statusMessage, DateTime? completedAt)
         {
             _InReadUncommitedTransaction(context =>
             {
                 var job = context.inventory_programs_by_source_jobs.Single(j => j.id == jobId, $"Job with id '{jobId}' not found.");
                 job.status = (int)status;
+                job.status_message = statusMessage;
                 job.completed_at = completedAt;
 
                 context.SaveChanges();
-            }
-            );
+            });
         }
 
         protected override void _UpdateJobNotes(int jobId, string message, DateTime timestamp)
@@ -123,6 +87,23 @@ namespace Services.Broadcast.Repositories
                     context.SaveChanges();
                 }
             );
+        }
+
+        private InventoryProgramsBySourceJob _MapInventoryProgramsBySourceJob(inventory_programs_by_source_jobs job)
+        {
+            return new InventoryProgramsBySourceJob
+            {
+                Id = job.id,
+                JobGroupId = job.job_group_id,
+                InventorySourceId = job.inventory_source_id,
+                StartDate = job.start_date,
+                EndDate = job.end_date,
+                Status = (InventoryProgramsJobStatus)job.status,
+                StatusMessage = job.status_message,
+                QueuedAt = job.queued_at,
+                QueuedBy = job.queued_by,
+                CompletedAt = job.completed_at
+            };
         }
     }
 }

@@ -10,6 +10,15 @@ using Services.Broadcast.Helpers;
 
 namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 {		 
+	public static class AABSystemSettingsSystemParameter 
+	{ 
+		public static bool CreateCompanyInMaestroFeatureToggle  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<bool>
+					(AABSystemSettingsSystemParameterNames.ComponentID , AABSystemSettingsSystemParameterNames.CreateCompanyInMaestroFeatureToggle); }
+        }
+	}
+	 
 	public static class AccountingServiceSystemParameter 
 	{ 
 		public static string ApexDefaultBillingTerms  
@@ -765,6 +774,24 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.EnableProprietaryOAndOInventoryForPricingModel); }
         }
 	 
+		public static int InventoryProcessingGroupMonitorPauseSeconds  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<int>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.InventoryProcessingGroupMonitorPauseSeconds); }
+        }
+	 
+		public static int InventoryProcessingGroupTimeoutHours  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<int>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.InventoryProcessingGroupTimeoutHours); }
+        }
+	 
+		public static string InventoryProcessingNotificationEmails  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<string>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.InventoryProcessingNotificationEmails); }
+        }
+	 
 		public static int InventoryRatingsJobIntervalSeconds  
 		{
             get { return SystemComponentParameterHelper.GetPropertyValue<int>
@@ -1408,6 +1435,12 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 		{
             get { return SystemComponentParameterHelper.GetPropertyValue<bool>
 					(MarryWizardWebSystemParameterNames.ComponentID , MarryWizardWebSystemParameterNames.LogSelectedProposals); }
+        }
+	 
+		public static bool MarriedProposalEditFeatureToggle  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<bool>
+					(MarryWizardWebSystemParameterNames.ComponentID , MarryWizardWebSystemParameterNames.MarriedProposalEditFeatureToggle); }
         }
 	 
 		public static string MarryWizardAPIUrl  
@@ -2736,6 +2769,12 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 	 
 	public static class TrafficComposerWebSystemParameter 
 	{ 
+		public static bool AdvanceDeliveryGoalFeatureToggle  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<bool>
+					(TrafficComposerWebSystemParameterNames.ComponentID , TrafficComposerWebSystemParameterNames.AdvanceDeliveryGoalFeatureToggle); }
+        }
+	 
 		public static string BaseTrafficURL  
 		{
             get { return SystemComponentParameterHelper.GetPropertyValue<string>

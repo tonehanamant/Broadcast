@@ -51,6 +51,36 @@ GO
 /*************************************** START UPDATE SCRIPT *****************************************************/
 
 
+/*************************************** START PRI-17866 *****************************************************/
+
+IF NOT EXISTS(SELECT 1 FROM sys.columns 
+          WHERE Name = N'job_group_id'
+          AND Object_ID = Object_ID(N'inventory_programs_by_source_jobs')) 
+BEGIN 
+	ALTER TABLE inventory_programs_by_source_jobs
+		ADD job_group_id UNIQUEIDENTIFIER NULL
+END
+
+IF NOT EXISTS(SELECT 1 FROM sys.columns 
+          WHERE Name = N'status_message'
+          AND Object_ID = Object_ID(N'inventory_programs_by_source_jobs')) 
+BEGIN 
+	ALTER TABLE inventory_programs_by_source_jobs
+		ADD status_message varchar(200) NULL
+END
+
+IF NOT EXISTS(SELECT 1 FROM sys.columns 
+          WHERE Name = N'status_message'
+          AND Object_ID = Object_ID(N'inventory_programs_by_file_jobs')) 
+BEGIN 
+	ALTER TABLE inventory_programs_by_file_jobs
+		ADD status_message varchar(200) NULL
+END
+
+GO
+
+/*************************************** END PRI-17866 *****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

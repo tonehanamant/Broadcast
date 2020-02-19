@@ -442,6 +442,7 @@
           <Property Name="queued_at" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="queued_by" Type="varchar" MaxLength="63" Nullable="false" />
           <Property Name="completed_at" Type="datetime2" Precision="7" />
+          <Property Name="status_message" Type="varchar" MaxLength="200" />
         </EntityType>
         <EntityType Name="inventory_programs_by_source_job_notes">
           <Key>
@@ -464,6 +465,8 @@
           <Property Name="queued_at" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="queued_by" Type="varchar" MaxLength="63" Nullable="false" />
           <Property Name="completed_at" Type="datetime2" Precision="7" />
+          <Property Name="job_group_id" Type="uniqueidentifier" />
+          <Property Name="status_message" Type="varchar" MaxLength="200" />
         </EntityType>
         <EntityType Name="inventory_source_logos">
           <Key>
@@ -12917,6 +12920,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="completed_at" Type="DateTime" Precision="7" />
           <NavigationProperty Name="inventory_files" Relationship="BroadcastModel.FK_inventory_programs_by_file_jobs_inventory_file" FromRole="inventory_programs_by_file_jobs" ToRole="inventory_files" />
           <NavigationProperty Name="inventory_programs_by_file_job_notes" Relationship="BroadcastModel.FK_inventory_programs_by_file_job_notes_job" FromRole="inventory_programs_by_file_jobs" ToRole="inventory_programs_by_file_job_notes" />
+          <Property Name="status_message" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="inventory_programs_by_source_job_notes">
           <Key>
@@ -12942,6 +12946,8 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="completed_at" Type="DateTime" Precision="7" />
           <NavigationProperty Name="inventory_programs_by_source_job_notes" Relationship="BroadcastModel.FK_inventory_programs_by_source_job_notes_job" FromRole="inventory_programs_by_source_jobs" ToRole="inventory_programs_by_source_job_notes" />
           <NavigationProperty Name="inventory_sources" Relationship="BroadcastModel.FK_inventory_programs_by_source_jobs_inventory_source" FromRole="inventory_programs_by_source_jobs" ToRole="inventory_sources" />
+          <Property Name="job_group_id" Type="Guid" />
+          <Property Name="status_message" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK_inventory_programs_by_file_jobs_inventory_file">
           <End Type="BroadcastModel.inventory_files" Role="inventory_files" Multiplicity="1">
@@ -15239,6 +15245,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="inventory_programs_by_file_jobs">
             <EntityTypeMapping TypeName="BroadcastModel.inventory_programs_by_file_jobs">
               <MappingFragment StoreEntitySet="inventory_programs_by_file_jobs">
+                <ScalarProperty Name="status_message" ColumnName="status_message" />
                 <ScalarProperty Name="completed_at" ColumnName="completed_at" />
                 <ScalarProperty Name="queued_by" ColumnName="queued_by" />
                 <ScalarProperty Name="queued_at" ColumnName="queued_at" />
@@ -15261,6 +15268,8 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="inventory_programs_by_source_jobs">
             <EntityTypeMapping TypeName="BroadcastModel.inventory_programs_by_source_jobs">
               <MappingFragment StoreEntitySet="inventory_programs_by_source_jobs">
+                <ScalarProperty Name="status_message" ColumnName="status_message" />
+                <ScalarProperty Name="job_group_id" ColumnName="job_group_id" />
                 <ScalarProperty Name="completed_at" ColumnName="completed_at" />
                 <ScalarProperty Name="queued_by" ColumnName="queued_by" />
                 <ScalarProperty Name="queued_at" ColumnName="queued_at" />

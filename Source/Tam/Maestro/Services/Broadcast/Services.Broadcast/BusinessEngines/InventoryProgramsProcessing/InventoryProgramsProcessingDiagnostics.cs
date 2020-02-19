@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using Services.Broadcast.Entities;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
 
-namespace Services.Broadcast.Entities
+namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
 {
     public abstract class InventoryProgramsProcessingJobDiagnostics
     {

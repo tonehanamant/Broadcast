@@ -5,6 +5,7 @@ using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.BusinessEngines.InventoryProgramsProcessing;
 using System;
 using System.Collections.Generic;
+using Common.Services;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 {
@@ -14,8 +15,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         public InventoryProgramsProcessingServiceTestClass(
             IDataRepositoryFactory broadcastDataRepositoryFactory,
             IBackgroundJobClient backgroundJobClient,
-            IInventoryProgramsProcessingEngine inventoryProgramsProcessingEngine)
-        : base(broadcastDataRepositoryFactory, backgroundJobClient, inventoryProgramsProcessingEngine)
+            IInventoryProgramsProcessingEngine inventoryProgramsProcessingEngine,
+            IEmailerService emailerService)
+        : base(broadcastDataRepositoryFactory, backgroundJobClient, inventoryProgramsProcessingEngine, emailerService)
         {
         }
 
@@ -38,6 +40,20 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         protected override void _DoEnqueueProcessInventoryProgramsBySourceJob(int jobId)
         {
             UT_EnqueueProcessInventoryProgramsBySourceJobIds.Add(jobId);
+        }
+
+        public string UT_ConfiguredFromEmail { get; set; } = "DefaultConfiguredFromEmail";
+
+        protected override string _GetProcessingBySourceResultFromEmail()
+        {
+            return UT_ConfiguredFromEmail;
+        }
+
+        public string[] UT_GetToEmails { get; set; } = new string[]{ "DefaultConfiguredToEmail" };
+
+        protected override string[] _GetProcessingBySourceResultReportToEmails()
+        {
+            return UT_GetToEmails;
         }
     }
 }

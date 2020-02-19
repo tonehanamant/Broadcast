@@ -118,7 +118,7 @@ namespace BroadcastComposerWeb
             {
                 "inventoryrating", 
                 "planpricing", 
-                "inventoryprogramsprocessing", 
+                "inventoryprogramsprocessing",
                 "scxfilegeneration", 
                 "default"
             };

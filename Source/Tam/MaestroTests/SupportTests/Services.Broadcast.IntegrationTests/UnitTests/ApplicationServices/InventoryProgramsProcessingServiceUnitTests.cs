@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web.Mvc.Html;
+﻿using Common.Services;
 using Common.Services.Repositories;
 using Hangfire;
 using Moq;
@@ -10,14 +7,18 @@ using Services.Broadcast.BusinessEngines.InventoryProgramsProcessing;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Repositories;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Mail;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 {
     [TestFixture]
     public class InventoryProgramsProcessingServiceUnitTests
     {
+        private readonly DateTime _CurrentDateTime = new DateTime(2020, 02, 02);
         private const string TEST_USERNAME = "TestUser";
-        private const string TEST_DATE_FORMAT = "yyyy-MM-dd";
 
         private readonly Mock<IInventoryRepository> _InventoryRepository = new Mock<IInventoryRepository>();
         private readonly Mock<IInventoryFileRepository> _InventoryFileRepository = new Mock<IInventoryFileRepository>();
@@ -26,6 +27,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 
         private readonly Mock<IBackgroundJobClient> _BackgroundJobClient = new Mock<IBackgroundJobClient>();
         private readonly Mock<IInventoryProgramsProcessingEngine> _InventoryProgramsProcessingEngine = new Mock<IInventoryProgramsProcessingEngine>();
+
+        private readonly Mock<IEmailerService> _EmailerService = new Mock<IEmailerService>();
 
         [Test]
         public void QueueProcessInventoryProgramsByFileJob()
@@ -153,7 +156,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 
             var queueJobCalled = 0;
             _InventoryProgramsBySourceJobsRepository.Setup(s => s.QueueJob(It.IsAny<int>(),  
-                    It.IsAny<DateTime>(), It.IsAny<DateTime>(), It.IsAny<string>(), It.IsAny<DateTime>()))
+                    It.IsAny<DateTime>(), It.IsAny<DateTime>(), It.IsAny<string>(), It.IsAny<DateTime>(),
+                    It.IsAny<Guid?>()))
                 .Callback(() => queueJobCalled++)
                 .Returns(job.Id);
             var getJobCalled = 0;
@@ -170,8 +174,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             Assert.AreEqual(1, result.Jobs.Count);
             Assert.AreEqual(testJobId, result.Jobs.First().Id);
             Assert.AreEqual(testSourceId, result.Jobs.First().InventorySourceId);
-            Assert.AreEqual(startDate.ToString(TEST_DATE_FORMAT), result.Jobs.First().StartDate.ToString(TEST_DATE_FORMAT));
-            Assert.AreEqual(endDate.ToString(TEST_DATE_FORMAT), result.Jobs.First().EndDate.ToString(TEST_DATE_FORMAT));
+            Assert.AreEqual(startDate.ToString(BroadcastConstants.DATE_FORMAT_STANDARD), result.Jobs.First().StartDate.ToString(BroadcastConstants.DATE_FORMAT_STANDARD));
+            Assert.AreEqual(endDate.ToString(BroadcastConstants.DATE_FORMAT_STANDARD), result.Jobs.First().EndDate.ToString(BroadcastConstants.DATE_FORMAT_STANDARD));
             Assert.AreEqual(1, service.UT_EnqueueProcessInventoryProgramsBySourceJobIds.Count);
             Assert.AreEqual(1, queueJobCalled);
             Assert.AreEqual(1, getJobCalled);
@@ -206,7 +210,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 
             var queueJobCalled = 0;
             _InventoryProgramsBySourceJobsRepository.Setup(s => s.QueueJob(It.IsAny<int>(),
-                    It.IsAny<DateTime>(), It.IsAny<DateTime>(), It.IsAny<string>(), It.IsAny<DateTime>()))
+                    It.IsAny<DateTime>(), It.IsAny<DateTime>(), It.IsAny<string>(), It.IsAny<DateTime>(),
+                    It.IsAny<Guid?>()))
                 .Callback(() => queueJobCalled++)
                 .Returns(newJob.Id);
             var getJobCalled = 0;
@@ -228,22 +233,38 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             Assert.AreEqual(1, result.Jobs.Count);
             Assert.AreEqual(newJobId, result.Jobs.First().Id);
             Assert.AreEqual(testSourceId, result.Jobs.First().InventorySourceId);
-            Assert.AreEqual(startDate.ToString(TEST_DATE_FORMAT), result.Jobs.First().StartDate.ToString(TEST_DATE_FORMAT));
-            Assert.AreEqual(endDate.ToString(TEST_DATE_FORMAT), result.Jobs.First().EndDate.ToString(TEST_DATE_FORMAT));
+            Assert.AreEqual(startDate.ToString(BroadcastConstants.DATE_FORMAT_STANDARD), result.Jobs.First().StartDate.ToString(BroadcastConstants.DATE_FORMAT_STANDARD));
+            Assert.AreEqual(endDate.ToString(BroadcastConstants.DATE_FORMAT_STANDARD), result.Jobs.First().EndDate.ToString(BroadcastConstants.DATE_FORMAT_STANDARD));
             Assert.AreEqual(1, service.UT_EnqueueProcessInventoryProgramsBySourceJobIds.Count);
             Assert.AreEqual(1, queueJobCalled);
             Assert.AreEqual(2, getJobCalled);
         }
 
         [Test]
-        public void ProcessInventoryProgramsBySourceJob()
+        public void ProcessInventoryProgramsBySourceJob_Single()
         {
             const int jobId = 14;
-
+            var job = new InventoryProgramsBySourceJob
+            {
+                Id = 1,
+                InventorySourceId = 1,
+                JobGroupId = null,
+                Status = InventoryProgramsJobStatus.Error
+            };
             var processInventoryProgramsBySourceJobCalled = new List<int>();
             _InventoryProgramsProcessingEngine.Setup(s => s.ProcessInventoryProgramsBySourceJob(It.IsAny<int>()))
                 .Callback<int>((j) => processInventoryProgramsBySourceJobCalled.Add(j))
                 .Returns(new InventoryProgramsProcessingJobBySourceDiagnostics(null));
+            var getJobCalled = 0;
+            _InventoryProgramsBySourceJobsRepository.Setup(s => s.GetJob(It.IsAny<int>()))
+                .Callback(() => getJobCalled++)
+                .Returns(job);
+            var emailQuickSendCalled = new List<MonitorEmailProperties>();
+            _EmailerService.Setup(s => s.QuickSend(It.IsAny<bool>(), It.IsAny<string>(), It.IsAny<string>(),
+                    It.IsAny<MailPriority>(), It.IsAny<string>(), It.IsAny<string[]>(), It.IsAny<List<string>>()))
+                .Callback<bool, string, string, MailPriority, string, string[], List<string>>((h, b, s, p, f, t, a) =>
+                    emailQuickSendCalled.Add(new MonitorEmailProperties {pIsHtmlBody = h, pBody = b, pSubject = s, pPriority = p, from = f, pTos = t}))
+                .Returns(true);
 
             var service = _GetService();
 
@@ -252,6 +273,133 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             Assert.IsNotNull(result);
             Assert.AreEqual(1, processInventoryProgramsBySourceJobCalled.Count);
             Assert.AreEqual(jobId, processInventoryProgramsBySourceJobCalled.First());
+            Assert.AreEqual(1, getJobCalled);
+            Assert.AreEqual(0, emailQuickSendCalled.Count);
+        }
+
+        [Test]
+        public void ProcessInventoryProgramsBySourceJob_GroupSuccess()
+        {
+            const int jobId = 14;
+            var job = new InventoryProgramsBySourceJob
+            {
+                Id = 1,
+                InventorySourceId = 1,
+                JobGroupId = Guid.NewGuid(),
+                Status = InventoryProgramsJobStatus.Completed
+            };
+            var processInventoryProgramsBySourceJobCalled = new List<int>();
+            _InventoryProgramsProcessingEngine.Setup(s => s.ProcessInventoryProgramsBySourceJob(It.IsAny<int>()))
+                .Callback<int>((j) => processInventoryProgramsBySourceJobCalled.Add(j))
+                .Returns(new InventoryProgramsProcessingJobBySourceDiagnostics(null));
+            var getJobCalled = 0;
+            _InventoryProgramsBySourceJobsRepository.Setup(s => s.GetJob(It.IsAny<int>()))
+                .Callback(() => getJobCalled++)
+                .Returns(job);
+            var emailQuickSendCalled = new List<MonitorEmailProperties>();
+            _EmailerService.Setup(s => s.QuickSend(It.IsAny<bool>(), It.IsAny<string>(), It.IsAny<string>(),
+                    It.IsAny<MailPriority>(), It.IsAny<string>(), It.IsAny<string[]>(), It.IsAny<List<string>>()))
+                .Callback<bool, string, string, MailPriority, string, string[], List<string>>((h, b, s, p, f, t, a) =>
+                    emailQuickSendCalled.Add(new MonitorEmailProperties { pIsHtmlBody = h, pBody = b, pSubject = s, pPriority = p, from = f, pTos = t }))
+                .Returns(true);
+            _InventoryRepository.Setup(s => s.GetInventorySource(It.IsAny<int>()))
+                .Returns(new InventorySource { Name = "TestInventorySourceOne" });
+
+            var service = _GetService();
+
+            var result = service.ProcessInventoryProgramsBySourceJob(jobId);
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(1, processInventoryProgramsBySourceJobCalled.Count);
+            Assert.AreEqual(jobId, processInventoryProgramsBySourceJobCalled.First());
+            Assert.AreEqual(1, getJobCalled);
+            Assert.AreEqual(0, emailQuickSendCalled.Count);
+        }
+
+        [Test]
+        public void ProcessInventoryProgramsBySourceJob_GroupWarning()
+        {
+            const int jobId = 14;
+            var job = new InventoryProgramsBySourceJob
+            {
+                Id = 1,
+                InventorySourceId = 1,
+                JobGroupId = Guid.NewGuid(),
+                Status = InventoryProgramsJobStatus.Warning,
+                StatusMessage = "TestWarningMessage"
+            };
+            var processInventoryProgramsBySourceJobCalled = new List<int>();
+            _InventoryProgramsProcessingEngine.Setup(s => s.ProcessInventoryProgramsBySourceJob(It.IsAny<int>()))
+                .Callback<int>((j) => processInventoryProgramsBySourceJobCalled.Add(j))
+                .Returns(new InventoryProgramsProcessingJobBySourceDiagnostics(null));
+            var getJobCalled = 0;
+            _InventoryProgramsBySourceJobsRepository.Setup(s => s.GetJob(It.IsAny<int>()))
+                .Callback(() => getJobCalled++)
+                .Returns(job);
+            var emailQuickSendCalled = new List<MonitorEmailProperties>();
+            _EmailerService.Setup(s => s.QuickSend(It.IsAny<bool>(), It.IsAny<string>(), It.IsAny<string>(),
+                    It.IsAny<MailPriority>(), It.IsAny<string>(), It.IsAny<string[]>(), It.IsAny<List<string>>()))
+                .Callback<bool, string, string, MailPriority, string, string[], List<string>>((h, b, s, p, f, t, a) =>
+                    emailQuickSendCalled.Add(new MonitorEmailProperties { pIsHtmlBody = h, pBody = b, pSubject = s, pPriority = p, from = f, pTos = t }))
+                .Returns(true);
+            _InventoryRepository.Setup(s => s.GetInventorySource(It.IsAny<int>()))
+                .Returns(new InventorySource { Name = "TestInventorySourceOne" });
+
+            var service = _GetService();
+
+            var result = service.ProcessInventoryProgramsBySourceJob(jobId);
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(1, processInventoryProgramsBySourceJobCalled.Count);
+            Assert.AreEqual(jobId, processInventoryProgramsBySourceJobCalled.First());
+            Assert.AreEqual(1, getJobCalled);
+            Assert.AreEqual(1, emailQuickSendCalled.Count);
+            Assert.AreEqual(MailPriority.Normal, emailQuickSendCalled[0].pPriority);
+            Assert.IsTrue(emailQuickSendCalled[0].pSubject.Contains("with Warnings"));
+            Assert.IsTrue(emailQuickSendCalled[0].pBody.Contains("TestWarningMessage"));
+        }
+
+        [Test]
+        public void ProcessInventoryProgramsBySourceJob_GroupError()
+        {
+            const int jobId = 14;
+            var job = new InventoryProgramsBySourceJob
+            {
+                Id = 1,
+                InventorySourceId = 1,
+                JobGroupId = Guid.NewGuid(),
+                Status = InventoryProgramsJobStatus.Error,
+                StatusMessage = "TestErrorMessage"
+            };
+            var processInventoryProgramsBySourceJobCalled = new List<int>();
+            _InventoryProgramsProcessingEngine.Setup(s => s.ProcessInventoryProgramsBySourceJob(It.IsAny<int>()))
+                .Callback<int>((j) => processInventoryProgramsBySourceJobCalled.Add(j))
+                .Returns(new InventoryProgramsProcessingJobBySourceDiagnostics(null));
+            var getJobCalled = 0;
+            _InventoryProgramsBySourceJobsRepository.Setup(s => s.GetJob(It.IsAny<int>()))
+                .Callback(() => getJobCalled++)
+                .Returns(job);
+            var emailQuickSendCalled = new List<MonitorEmailProperties>();
+            _EmailerService.Setup(s => s.QuickSend(It.IsAny<bool>(), It.IsAny<string>(), It.IsAny<string>(),
+                    It.IsAny<MailPriority>(), It.IsAny<string>(), It.IsAny<string[]>(), It.IsAny<List<string>>()))
+                .Callback<bool, string, string, MailPriority, string, string[], List<string>>((h, b, s, p, f, t, a) =>
+                    emailQuickSendCalled.Add(new MonitorEmailProperties { pIsHtmlBody = h, pBody = b, pSubject = s, pPriority = p, from = f, pTos = t }))
+                .Returns(true);
+            _InventoryRepository.Setup(s => s.GetInventorySource(It.IsAny<int>()))
+                .Returns(new InventorySource { Name = "TestInventorySourceOne" });
+
+            var service = _GetService();
+
+            var result = service.ProcessInventoryProgramsBySourceJob(jobId);
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(1, processInventoryProgramsBySourceJobCalled.Count);
+            Assert.AreEqual(jobId, processInventoryProgramsBySourceJobCalled.First());
+            Assert.AreEqual(1, getJobCalled);
+            Assert.AreEqual(1, emailQuickSendCalled.Count);
+            Assert.AreEqual(MailPriority.High, emailQuickSendCalled[0].pPriority);
+            Assert.IsTrue(emailQuickSendCalled[0].pSubject.Contains("with Errors"));
+            Assert.IsTrue(emailQuickSendCalled[0].pBody.Contains("TestErrorMessage"));
         }
 
         [Test]
@@ -268,10 +416,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 
             var queuedJobs = new List<InventoryProgramsBySourceJob>();
             _InventoryProgramsBySourceJobsRepository.Setup(s => s.QueueJob(It.IsAny<int>(),
-                    It.IsAny<DateTime>(), It.IsAny<DateTime>(), It.IsAny<string>(), It.IsAny<DateTime>()))
-                .Callback<int, DateTime, DateTime, string, DateTime>((sourceId, start, end, user, queuedAt) => queuedJobs.Add(
+                    It.IsAny<DateTime>(), It.IsAny<DateTime>(), It.IsAny<string>(), It.IsAny<DateTime>(),
+                    It.IsAny<Guid?>()))
+                .Callback<int, DateTime, DateTime, string, DateTime, Guid?>((sourceId, start, end, user, queuedAt, jogGroupId) => queuedJobs.Add(
                     new InventoryProgramsBySourceJob
                     {
+                        JobGroupId = jogGroupId,
                         InventorySourceId = sourceId,
                         StartDate = start,
                         EndDate = end,
@@ -301,8 +451,18 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             var allQueuedSourceIDs = queuedJobs.Select(s => s.InventorySourceId).ToList();
             inventorySources.ForEach(r => Assert.AreEqual(1, allQueuedSourceIDs.Count(s => s == r.Id)));
             // all have same start \ End dates
-            queuedJobs.ForEach(j => Assert.AreEqual(expectedStartDate.ToString(TEST_DATE_FORMAT), j.StartDate.ToString(TEST_DATE_FORMAT)));
-            queuedJobs.ForEach(j => Assert.AreEqual(expectedEndDate.ToString(TEST_DATE_FORMAT), j.EndDate.ToString(TEST_DATE_FORMAT)));
+            queuedJobs.ForEach(j => Assert.AreEqual(expectedStartDate.ToString(BroadcastConstants.DATE_FORMAT_STANDARD), j.StartDate.ToString(BroadcastConstants.DATE_FORMAT_STANDARD)));
+            queuedJobs.ForEach(j => Assert.AreEqual(expectedEndDate.ToString(BroadcastConstants.DATE_FORMAT_STANDARD), j.EndDate.ToString(BroadcastConstants.DATE_FORMAT_STANDARD)));
+        }
+
+        private class MonitorEmailProperties
+        {
+            public bool pIsHtmlBody { get; set; }
+            public string pBody { get; set; }
+            public string pSubject { get; set; }
+            public MailPriority pPriority { get; set; }
+            public string from { get; set; }
+            public string[] pTos { get; set; }
         }
 
         private Mock<IDataRepositoryFactory> _GetDataRepositoryFactory()
@@ -324,7 +484,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             var service = new InventoryProgramsProcessingServiceTestClass(
                 dataRepoFactory.Object,
                 _BackgroundJobClient.Object,
-                _InventoryProgramsProcessingEngine.Object);
+                _InventoryProgramsProcessingEngine.Object,
+                _EmailerService.Object);
 
             return service;
         }

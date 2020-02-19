@@ -57,6 +57,7 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
 
             try
             {
+                var finalStatusMessage = "Processing warning.  See Job Notes.";
                 processDiagnostics.RecordStart();
 
                 var fileId = _InventoryProgramsByFileJobsRepository.GetJob(jobId).InventoryFileId;
@@ -77,25 +78,26 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
 
                 if (manifests.Any() == false)
                 {
-                    _InventoryProgramsByFileJobsRepository.SetJobCompleteWarning(jobId, "Job ending because no manifest records found to process.");
+                    var message = "Job ending because no manifest records found to process.";
+                    _InventoryProgramsByFileJobsRepository.SetJobCompleteWarning(jobId, message, message);
                     return processDiagnostics;
                 }
                 var result = _ProcessInventory(jobId, inventorySource, GenreSourceEnum.Dativa, manifests, null, processDiagnostics, _InventoryProgramsByFileJobsRepository);
 
                 if (result == InventoryProgramsJobStatus.Warning)
                 {
-                    _InventoryProgramsByFileJobsRepository.SetJobCompleteWarning(jobId);
+                    _InventoryProgramsByFileJobsRepository.SetJobCompleteWarning(jobId, null, null);
                 }
                 else
                 {
-                    _InventoryProgramsByFileJobsRepository.SetJobCompleteSuccess(jobId);
+                    _InventoryProgramsByFileJobsRepository.SetJobCompleteSuccess(jobId, null, null);
                 }
             }
             catch (Exception ex)
             {
                 LogHelper.Logger.Error(
                     $"Error caught processing an inventory file for program names.  JobId = '{jobId}'", ex);
-                _InventoryProgramsByFileJobsRepository.SetJobCompleteError(jobId, $"Error caught : {ex.Message} ; {ex.StackTrace}");
+                _InventoryProgramsByFileJobsRepository.SetJobCompleteError(jobId, ex.Message, $"Error caught : {ex.Message} ; {ex.StackTrace}");
 
                 throw;
             }
@@ -117,6 +119,8 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
 
             try
             {
+                var finalResult = InventoryProgramsJobStatus.Completed;
+                var finalStatusMessage = "Processing warning.  See Job Notes.";
                 processDiagnostics.RecordStart();
 
                 var job = _InventoryProgramsBySourceJobsRepository.GetJob(jobId);
@@ -128,10 +132,9 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
                 processDiagnostics.RecordMediaWeekIds(mediaWeekIds);
 
                 // this could be a lot of data, so iteration on weeks.
-                var finalResult = InventoryProgramsJobStatus.Completed;
                 foreach (var mediaWeekId in mediaWeekIds)
                 {
-                    _InventoryProgramsBySourceJobsRepository.UpdateJobMessage(jobId, $"Beginning iteration for media week id '{mediaWeekId}'.");
+                    _InventoryProgramsBySourceJobsRepository.UpdateJobNotes(jobId, $"Beginning iteration for media week id '{mediaWeekId}'.");
                     
                     /*** Gather Inventory ***/
                     processDiagnostics.RecordGatherInventoryStart();
@@ -143,7 +146,8 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
                     if (manifests.Any() == false)
                     {
                         finalResult = InventoryProgramsJobStatus.Warning;
-                        _InventoryProgramsBySourceJobsRepository.UpdateJobMessage(jobId, $"Iteration for media week id '{mediaWeekId}' is ending because no manifest records found to process.");
+                        finalStatusMessage = "Inventory gaps found in processing date range.";
+                        _InventoryProgramsBySourceJobsRepository.UpdateJobNotes(jobId, $"Iteration for media week id '{mediaWeekId}' is ending because no manifest records found to process.");
                         continue;
                     }
 
@@ -151,25 +155,24 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
                     if (iterationResult == InventoryProgramsJobStatus.Warning)
                     {
                         finalResult = InventoryProgramsJobStatus.Warning;
-                        _InventoryProgramsBySourceJobsRepository.UpdateJobMessage(jobId, $"Iteration for media week id '{mediaWeekId}' ended in warning.");
+                        _InventoryProgramsBySourceJobsRepository.UpdateJobNotes(jobId, $"Iteration for media week id '{mediaWeekId}' ended in warning.");
                     }
                 }
-                _InventoryProgramsBySourceJobsRepository.UpdateJobMessage(jobId, $"Completed '{mediaWeekIds.Count}' iterations for media weeks.");
+                _InventoryProgramsBySourceJobsRepository.UpdateJobNotes(jobId, $"Completed '{mediaWeekIds.Count}' iterations for media weeks.");
 
                 if (finalResult == InventoryProgramsJobStatus.Warning)
                 {
-                    _InventoryProgramsBySourceJobsRepository.SetJobCompleteWarning(jobId);
+                    _InventoryProgramsBySourceJobsRepository.SetJobCompleteWarning(jobId, finalStatusMessage, finalStatusMessage);
                 }
                 else
                 {
-                    _InventoryProgramsBySourceJobsRepository.SetJobCompleteSuccess(jobId);
+                    _InventoryProgramsBySourceJobsRepository.SetJobCompleteSuccess(jobId, null, null);
                 }
-                
             }
             catch (Exception ex)
             {
                 LogHelper.Logger.Error($"Error caught processing an inventory source for program names.  JobId = '{jobId}'", ex);
-                _InventoryProgramsBySourceJobsRepository.SetJobCompleteError(jobId, $"Error caught : {ex.Message} ; {ex.StackTrace}");
+                _InventoryProgramsBySourceJobsRepository.SetJobCompleteError(jobId, ex.Message, $"Error caught : {ex.Message} ; {ex.StackTrace}");
 
                 throw;
             }
@@ -189,8 +192,8 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
             var genreSourceId = (int) genreSource;
             var genres = _GenreRepository.GetGenresBySourceId(genreSourceId);
 
-            jobsRepository.UpdateJobMessage(jobId, $"Processing {inventoryManifests.Count} manifest records.");
-            jobsRepository.UpdateJobMessage(jobId, $"Found {genres.Count} genre records for source {genreSource} records.");
+            jobsRepository.UpdateJobNotes(jobId, $"Processing {inventoryManifests.Count} manifest records.");
+            jobsRepository.UpdateJobNotes(jobId, $"Found {genres.Count} genre records for source {genreSource} records.");
             
             /*** Transform to ProgramGuideApi Input ***/
             var distinctWeeks = inventoryManifests.SelectMany(m => m.ManifestWeeks).Select(w => w.MediaWeek).Distinct()
@@ -289,7 +292,7 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
                     if (programGuideResponse.Any() == false)
                     {
                         result = InventoryProgramsJobStatus.Warning;
-                        jobsRepository.UpdateJobMessage(jobId, $"Request set {currentRequestChunkIndex} returned no responses.");
+                        jobsRepository.UpdateJobNotes(jobId, $"Request set {currentRequestChunkIndex} returned no responses.");
                     }
                     else
                     {
@@ -304,7 +307,7 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
 
                             if (mappedResponses.Any() == false)
                             {
-                                jobsRepository.UpdateJobMessage(jobId, $"A request received no response : {mapping}");
+                                jobsRepository.UpdateJobNotes(jobId, $"A request received no response : {mapping}");
                                 result = InventoryProgramsJobStatus.Warning;
                                 continue;
                             }
@@ -342,7 +345,7 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
                         .Select(x => x.Select(v => v.Value).ToList())
                         .ToList();
 
-                    jobsRepository.UpdateJobMessage(jobId, $"Removing programs from {requestMappings.Count} manifests split into {deleteProgramsForDaypartsChunks.Count} chunks.");
+                    jobsRepository.UpdateJobNotes(jobId, $"Removing programs from {requestMappings.Count} manifests split into {deleteProgramsForDaypartsChunks.Count} chunks.");
                     deleteProgramsForDaypartsChunks.ForEach(chunk => 
                         _InventoryRepository.DeleteInventoryProgramsFromManifestDayparts(chunk.Select(c => c).ToList(), 
                             week.StartDate, week.EndDate));
@@ -360,7 +363,7 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
                     else
                     {
                         result = InventoryProgramsJobStatus.Warning;
-                        jobsRepository.UpdateJobMessage(jobId, $"Ending iteration without saving programs.");
+                        jobsRepository.UpdateJobNotes(jobId, $"Ending iteration without saving programs.");
                     }
 
                     processDiagnostics.RecordIterationStopSavePrograms(programSaveChunksCount);
@@ -372,12 +375,12 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
 
         internal void onMessageUpdated_ByFileJobs(int jobId, string message)
         {
-            _InventoryProgramsByFileJobsRepository.UpdateJobMessage(jobId, message);
+            _InventoryProgramsByFileJobsRepository.UpdateJobNotes(jobId, message);
         }
 
         internal void onMessageUpdated_BySourceJobs(int jobId, string message)
         {
-            _InventoryProgramsBySourceJobsRepository.UpdateJobMessage(jobId, message);
+            _InventoryProgramsBySourceJobsRepository.UpdateJobNotes(jobId, message);
         }
 
         protected virtual int _GetRequestElementMaxCount()

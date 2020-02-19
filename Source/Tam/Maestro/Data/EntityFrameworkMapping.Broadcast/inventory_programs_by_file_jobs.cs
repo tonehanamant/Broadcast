@@ -25,6 +25,7 @@ namespace EntityFrameworkMapping.Broadcast
         public System.DateTime queued_at { get; set; }
         public string queued_by { get; set; }
         public Nullable<System.DateTime> completed_at { get; set; }
+        public string status_message { get; set; }
     
         public virtual inventory_files inventory_files { get; set; }
         public virtual ICollection<inventory_programs_by_file_job_notes> inventory_programs_by_file_job_notes { get; set; }

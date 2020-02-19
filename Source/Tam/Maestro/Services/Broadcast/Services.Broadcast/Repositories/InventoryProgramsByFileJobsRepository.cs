@@ -52,15 +52,7 @@ namespace Services.Broadcast.Repositories
             return _InReadUncommitedTransaction(context =>
                 {
                     var job = context.inventory_programs_by_file_jobs.Single(j => j.id == jobId, $"Job with id '{jobId}' not found.");
-                    return new InventoryProgramsByFileJob
-                    {
-                        Id = jobId,
-                        InventoryFileId = job.inventory_file_id,
-                        Status = (InventoryProgramsJobStatus)job.status,
-                        QueuedAt = job.queued_at,
-                        QueuedBy = job.queued_by,
-                        CompletedAt = job.completed_at
-                    };
+                    return _MapInventoryProgramsByFileJob(job);
                 }
             );
         }
@@ -75,24 +67,17 @@ namespace Services.Broadcast.Repositories
                         .OrderByDescending(j => j.queued_at)
                         .FirstOrDefault();
 
-                    return job == null ? null : new InventoryProgramsByFileJob
-                    {
-                        Id = job.id,
-                        InventoryFileId = job.inventory_file_id,
-                        Status = (InventoryProgramsJobStatus)job.status,
-                        QueuedAt = job.queued_at,
-                        QueuedBy = job.queued_by,
-                        CompletedAt = job.completed_at
-                    };
+                    return job == null ? null : _MapInventoryProgramsByFileJob(job);
                 });
         }
 
-        protected override void _UpdateJob(int jobId, InventoryProgramsJobStatus status, DateTime? completedAt = null)
+        protected override void _UpdateJob(int jobId, InventoryProgramsJobStatus status, string statusMessage, DateTime? completedAt)
         {
             _InReadUncommitedTransaction(context =>
                 {
                     var job = context.inventory_programs_by_file_jobs.Single(j => j.id == jobId, $"Job with id '{jobId}' not found.");
                     job.status = (int)status;
+                    job.status_message = statusMessage;
                     job.completed_at = completedAt;
 
                     context.SaveChanges();
@@ -116,6 +101,20 @@ namespace Services.Broadcast.Repositories
                     context.SaveChanges();
                 }
             );
+        }
+
+        private InventoryProgramsByFileJob _MapInventoryProgramsByFileJob(inventory_programs_by_file_jobs job)
+        {
+            return new InventoryProgramsByFileJob
+            {
+                Id = job.id,
+                InventoryFileId = job.inventory_file_id,
+                Status = (InventoryProgramsJobStatus)job.status,
+                StatusMessage = job.status_message,
+                QueuedAt = job.queued_at,
+                QueuedBy = job.queued_by,
+                CompletedAt = job.completed_at
+            };
         }
     }
 }

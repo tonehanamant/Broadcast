@@ -7,6 +7,8 @@ namespace Services.Broadcast.Entities
     {
         public int Id { get; set; }
 
+        public Guid? JobGroupId { get; set; }
+
         public int InventorySourceId { get; set; }
 
         public DateTime StartDate { get; set; }
@@ -15,7 +17,7 @@ namespace Services.Broadcast.Entities
 
         public InventoryProgramsJobStatus Status { get; set; }
 
-        public string ErrorMessage { get; set; }
+        public string StatusMessage { get; set; }
 
         public DateTime QueuedAt { get; set; }
 

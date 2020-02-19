@@ -1,6 +1,4 @@
-﻿using Services.Broadcast.Repositories;
-
-namespace Services.Broadcast.Entities
+﻿namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
 {
     public class InventoryProgramsProcessingJobByFileDiagnostics : InventoryProgramsProcessingJobDiagnostics
     {

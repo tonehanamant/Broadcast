@@ -13,6 +13,8 @@ namespace Services.Broadcast.IntegrationTests.Stubs
     /// <seealso cref="Services.Broadcast.Clients.ProgramGuideApiClient" />
     public class ProgramGuideApiClientStub : ProgramGuideApiClient
     {
+        public static Exception ThrownOnPostAndGet { get; set; }
+
         public ProgramGuideApiClientStub(IAwsCognitoClient tokenClient)
             : base (tokenClient)
         {
@@ -20,6 +22,11 @@ namespace Services.Broadcast.IntegrationTests.Stubs
         
         protected override List<GuideApiResponseElementDto> _PostAndGet(string url, List<GuideApiRequestElementDto> data)
         {
+            if (ThrownOnPostAndGet != null)
+            {
+                throw ThrownOnPostAndGet;
+            }
+
             var result = new List<GuideApiResponseElementDto>();
             var currentProgramIndex = 0;
             foreach (var requestElement in data)

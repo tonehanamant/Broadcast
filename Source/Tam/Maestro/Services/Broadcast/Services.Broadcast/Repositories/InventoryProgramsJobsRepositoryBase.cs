@@ -12,13 +12,13 @@ namespace Services.Broadcast.Repositories
     {
         void UpdateJobStatus(int jobId, InventoryProgramsJobStatus status, string message = null);
 
-        void UpdateJobMessage(int jobId, string message);
+        void UpdateJobNotes(int jobId, string message);
 
-        void SetJobCompleteError(int jobId, string errorMessage);
+        void SetJobCompleteError(int jobId, string statusMessage, string notesMessage);
 
-        void SetJobCompleteWarning(int jobId, string warningMessage = null);
+        void SetJobCompleteWarning(int jobId, string statusMessage, string notesMessage);
 
-        void SetJobCompleteSuccess(int jobId, string message = null);
+        void SetJobCompleteSuccess(int jobId, string statusMessage, string notesMessage);
     }
 
     public abstract class InventoryProgramsJobsRepositoryBase : BroadcastRepositoryBase, IInventoryProgramsJobsRepository
@@ -27,48 +27,48 @@ namespace Services.Broadcast.Repositories
             ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient)
             : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
 
-        protected abstract void _UpdateJob(int jobId, InventoryProgramsJobStatus status, DateTime? completedAt);
+        protected abstract void _UpdateJob(int jobId, InventoryProgramsJobStatus status, string statusMessage, DateTime? completedAt);
 
         protected abstract void _UpdateJobNotes(int jobId, string message, DateTime timestamp);
 
         public void UpdateJobStatus(int jobId, InventoryProgramsJobStatus status, string message = null)
         {
-            _UpdateJob(jobId, status, null);
+            _UpdateJob(jobId, status, null, null);
             if (string.IsNullOrWhiteSpace(message) == false)
             {
                 _UpdateJobNotes(jobId, message, DateTime.Now);
             }
         }
 
-        public void UpdateJobMessage(int jobId, string message)
+        public void UpdateJobNotes(int jobId, string message)
         {
             _UpdateJobNotes(jobId, message, DateTime.Now);
         }
 
-        public void SetJobCompleteError(int jobId, string errorMessage)
+        public void SetJobCompleteError(int jobId, string statusMessage, string notesMessage)
         {
-            _UpdateJob(jobId, InventoryProgramsJobStatus.Error, DateTime.Now);
-            if (string.IsNullOrWhiteSpace(errorMessage) == false)
+            _UpdateJob(jobId, InventoryProgramsJobStatus.Error, statusMessage, DateTime.Now);
+            if (string.IsNullOrWhiteSpace(notesMessage) == false)
             {
-                _UpdateJobNotes(jobId, errorMessage, DateTime.Now);
+                _UpdateJobNotes(jobId, notesMessage, DateTime.Now);
             }
         }
 
-        public void SetJobCompleteWarning(int jobId, string warningMessage = null)
+        public void SetJobCompleteWarning(int jobId, string statusMessage, string notesMessage)
         {
-            _UpdateJob(jobId, InventoryProgramsJobStatus.Warning, DateTime.Now);
-            if (string.IsNullOrWhiteSpace(warningMessage) == false)
+            _UpdateJob(jobId, InventoryProgramsJobStatus.Warning, statusMessage, DateTime.Now);
+            if (string.IsNullOrWhiteSpace(notesMessage) == false)
             {
-                _UpdateJobNotes(jobId, warningMessage, DateTime.Now);
+                _UpdateJobNotes(jobId, notesMessage, DateTime.Now);
             }
         }
 
-        public void SetJobCompleteSuccess(int jobId, string message = null)
+        public void SetJobCompleteSuccess(int jobId, string statusMessage, string notesMessage)
         {
-            _UpdateJob(jobId, InventoryProgramsJobStatus.Completed, DateTime.Now);
-            if (string.IsNullOrWhiteSpace(message) == false)
+            _UpdateJob(jobId, InventoryProgramsJobStatus.Completed, statusMessage, DateTime.Now);
+            if (string.IsNullOrWhiteSpace(notesMessage) == false)
             {
-                _UpdateJobNotes(jobId, message, DateTime.Now);
+                _UpdateJobNotes(jobId, notesMessage, DateTime.Now);
             }
         }
     }

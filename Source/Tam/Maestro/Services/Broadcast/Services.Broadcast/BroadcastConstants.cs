@@ -19,5 +19,7 @@
         public const int NeilsonTimeSlotInSeconds = 900;    // 15 minute timeslot should be moved to System_Settings
 
         public const int OneDayInSeconds = 86400;
+
+        public const string DATE_FORMAT_STANDARD = "yyyy-MM-dd";
     }
 }

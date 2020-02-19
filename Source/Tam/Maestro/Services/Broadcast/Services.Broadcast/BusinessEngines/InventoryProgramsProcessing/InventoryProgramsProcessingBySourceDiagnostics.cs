@@ -2,12 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Services.Broadcast.Entities
+namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
 {
     public class InventoryProgramsProcessingJobBySourceDiagnostics : InventoryProgramsProcessingJobDiagnostics
     {
-        public const string DATE_FORMAT = "yyyy-MM-dd";
-
         public int InventorySourceId { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
@@ -26,8 +24,8 @@ namespace Services.Broadcast.Entities
             EndDate = endDate;
 
             _ReportToConsoleAndJobNotes($"SourceId : '{InventorySourceId}'");
-            _ReportToConsoleAndJobNotes($"StartDate : '{StartDate.ToString(DATE_FORMAT)}'");
-            _ReportToConsoleAndJobNotes($"EndDate : '{EndDate.ToString(DATE_FORMAT)}'");
+            _ReportToConsoleAndJobNotes($"StartDate : '{StartDate.ToString(BroadcastConstants.DATE_FORMAT_STANDARD)}'");
+            _ReportToConsoleAndJobNotes($"EndDate : '{EndDate.ToString(BroadcastConstants.DATE_FORMAT_STANDARD)}'");
         }
 
         public void RecordMediaWeekIds(List<int> mediaWeekIds)
@@ -41,8 +39,8 @@ namespace Services.Broadcast.Entities
         {
             var sb = new StringBuilder();
             sb.AppendLine($"SourceId : {InventorySourceId}");
-            sb.AppendLine($"StartDate : {StartDate.ToString(DATE_FORMAT)}");
-            sb.AppendLine($"EndDate : {EndDate.ToString(DATE_FORMAT)}");
+            sb.AppendLine($"StartDate : {StartDate.ToString(BroadcastConstants.DATE_FORMAT_STANDARD)}");
+            sb.AppendLine($"EndDate : {EndDate.ToString(BroadcastConstants.DATE_FORMAT_STANDARD)}");
             sb.AppendLine();
             sb.AppendLine($"Media Week Ids : {string.Join(",", MediaWeekIds)}");
             return sb.ToString();

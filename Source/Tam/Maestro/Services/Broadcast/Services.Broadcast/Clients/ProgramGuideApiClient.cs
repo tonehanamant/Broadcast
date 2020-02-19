@@ -19,7 +19,6 @@ namespace Services.Broadcast.Clients
     {
         private const string AUTHORIZATION = "Authorization";
         private const string BEARER = "Bearer";
-        private const string DATE_FORMAT = "yyyy-MM-dd";
         private const int RESPONSE_NOT_READY_PAUSE_MS = 500;
 
         private readonly IAwsCognitoClient _TokenClient;
@@ -60,8 +59,8 @@ namespace Services.Broadcast.Clients
             var apiRequestElement = new GuideApiRequestElementDto
             {
                 id = requestElement.Id,
-                startdate = requestElement.StartDate.ToString(DATE_FORMAT),
-                enddate = requestElement.EndDate.ToString(DATE_FORMAT),
+                startdate = requestElement.StartDate.ToString(BroadcastConstants.DATE_FORMAT_STANDARD),
+                enddate = requestElement.EndDate.ToString(BroadcastConstants.DATE_FORMAT_STANDARD),
                 station = requestElement.StationCallLetters,
                 affiliate = requestElement.NetworkAffiliate,
                 daypart = _MapRequestDaypart(requestElement.Daypart)
