@@ -85,7 +85,8 @@ namespace Services.Broadcast.ReportGenerators.CampaignExport
             currentRowIndex += 2;
             if (daypartsData.Any())
             {
-                string daypartsRowData = string.Join(", ", daypartsData.Select(x => $"{x.DaypartCode} - {x.StartTime} - {x.EndTime}").ToList());
+                string daypartsRowData = string.Join(", ", 
+                    daypartsData.Select(x => $"{x.DaypartCode} - {x.FlightDays} {x.StartTime} - {x.EndTime}").ToList());
                 WORKSHEET.Cells[$"{FOOTER_INFO_COLUMN_INDEX}{currentRowIndex}"].Value = daypartsRowData;
             }
         }

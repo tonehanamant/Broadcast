@@ -449,6 +449,17 @@
       "DaypartCodeId": 6,
       "DaysLabel": null,
       "EndTime": "06:00pm",
+      "FlightDays": "M-TU,TH-SU",
+      "GenreRestrictions": [],
+      "ProgramRestrictions": [],
+      "StartTime": "03:00pm"
+    },
+    {
+      "DaypartCode": "EF",
+      "DaypartCodeId": 6,
+      "DaysLabel": null,
+      "EndTime": "06:00pm",
+      "FlightDays": "M-SU",
       "GenreRestrictions": [],
       "ProgramRestrictions": [],
       "StartTime": "03:00pm"
@@ -458,6 +469,17 @@
       "DaypartCodeId": 14,
       "DaysLabel": null,
       "EndTime": "09:00am",
+      "FlightDays": "M-TU,TH-SU",
+      "GenreRestrictions": [],
+      "ProgramRestrictions": [],
+      "StartTime": "06:00am"
+    },
+    {
+      "DaypartCode": "EM",
+      "DaypartCodeId": 14,
+      "DaysLabel": null,
+      "EndTime": "09:00am",
+      "FlightDays": "M-SU",
       "GenreRestrictions": [],
       "ProgramRestrictions": [],
       "StartTime": "06:00am"
@@ -467,17 +489,32 @@
       "DaypartCodeId": 2,
       "DaysLabel": null,
       "EndTime": "01:00pm",
+      "FlightDays": "M-TU,TH-SU",
+      "GenreRestrictions": [],
+      "ProgramRestrictions": [],
+      "StartTime": "11:00am"
+    },
+    {
+      "DaypartCode": "MDN",
+      "DaypartCodeId": 2,
+      "DaysLabel": null,
+      "EndTime": "01:00pm",
+      "FlightDays": "M-SU",
       "GenreRestrictions": [],
       "ProgramRestrictions": [],
       "StartTime": "11:00am"
     }
   ],
   "FlightHiatuses": [
-    "3/15-3/17/20",
-    "3/19-3/21/20",
+    "3/19-3/20/20",
     "3/24/20",
-    "3/26-3/29/20",
-    "4/7-4/11/20"
+    "3/28/20",
+    "4/7/20",
+    "4/9-3/17/20",
+    "3/21/20",
+    "3/26/20",
+    "4/8-3/27/20",
+    "3/29/20"
   ],
   "FlowChartQuarterTables": [
     {

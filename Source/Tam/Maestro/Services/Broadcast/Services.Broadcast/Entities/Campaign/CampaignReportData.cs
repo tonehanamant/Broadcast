@@ -58,8 +58,10 @@ namespace Services.Broadcast.Entities.Campaign
         {
             HasSecondaryAudiences = plans.Any(x => x.SecondaryAudiences.Any());
 
-            List<ProjectedPlan> projectedPlans = _ProjectPlansForProposalExport(plans, spotLenghts, daypartDefaults, mediaMonthAndWeekAggregateCache, quarterCalculationEngine);
-            _PopulateHeaderData(exportType, campaign, plans, agency, advertiser, guaranteedDemos, spotLenghts, orderedAudiences, quarterCalculationEngine);
+            List<ProjectedPlan> projectedPlans = _ProjectPlansForProposalExport(plans, spotLenghts, daypartDefaults
+                , mediaMonthAndWeekAggregateCache, quarterCalculationEngine);
+            _PopulateHeaderData(exportType, campaign, plans, agency, advertiser
+                , guaranteedDemos, spotLenghts, orderedAudiences, quarterCalculationEngine);
 
             List<DateTime> hiatusDays = plans.SelectMany(x => x.FlightHiatusDays).Distinct().ToList();
 
@@ -91,13 +93,13 @@ namespace Services.Broadcast.Entities.Campaign
 
         private void _PopulateFlightHiatuses(List<DateTime> plansHiatuses)
         {
-            foreach (var group in plansHiatuses.GroupConsecutiveDays())
+            foreach (var group in plansHiatuses.GroupConnectedItems((a,b) => (b-a).Days > 1))
             {
-                if (group.Count == 1)
+                if (group.Count() == 1)
                 {
                     FlightHiatuses.Add(group.First().ToString(DATE_FORMAT_SHORT_YEAR_SINGLE_DIGIT));
                 }
-                if (group.Count > 1)
+                else
                 {
                     FlightHiatuses.Add($"{group.First().ToString(DATE_FORMAT_NO_YEAR_SINGLE_DIGIT)}-{group.Last().ToString(DATE_FORMAT_SHORT_YEAR_SINGLE_DIGIT)}");
                 }
@@ -111,7 +113,8 @@ namespace Services.Broadcast.Entities.Campaign
                 DaypartCodeId = x.DaypartCodeId,
                 DaypartCode = x.DaypartCode,
                 EndTime = x.DaypartEndTime,
-                StartTime = x.DaypartStartTime
+                StartTime = x.DaypartStartTime,
+                FlightDays = GroupHelper.GroupWeekDays(x.FlightDays)
             }).Distinct(new DaypartDataEqualityComparer()).ToList().OrderDayparts();
         }
 
@@ -119,10 +122,11 @@ namespace Services.Broadcast.Entities.Campaign
         {
             foreach (var plan in plans)
             {
+                string flightDaysString = GroupHelper.GroupWeekDays(plan.FlightDays);
                 foreach (var daypart in plan.Dayparts
                     .Where(x => x.Restrictions.GenreRestrictions != null && x.Restrictions.GenreRestrictions.Genres.Any()).ToList())
                 {
-                    var mappedDaypart = DaypartsData.Single(x => x.DaypartCodeId == daypart.DaypartCodeId);
+                    var mappedDaypart = DaypartsData.Single(x => x.DaypartCodeId == daypart.DaypartCodeId && x.FlightDays.Equals(flightDaysString));
                     var planDaypart = plan.Dayparts.Single(x => x.DaypartCodeId == daypart.DaypartCodeId);
                     mappedDaypart.GenreRestrictions.Add(new DaypartRestrictionsData
                     {
@@ -134,7 +138,7 @@ namespace Services.Broadcast.Entities.Campaign
                 foreach (var daypart in plan.Dayparts
                     .Where(x => x.Restrictions.ProgramRestrictions != null && x.Restrictions.ProgramRestrictions.Programs.Any()).ToList())
                 {
-                    var mappedDaypart = DaypartsData.Single(x => x.DaypartCodeId == daypart.DaypartCodeId);
+                    var mappedDaypart = DaypartsData.Single(x => x.DaypartCodeId == daypart.DaypartCodeId && x.FlightDays.Equals(flightDaysString));
                     var planDaypart = plan.Dayparts.Single(x => x.DaypartCodeId == daypart.DaypartCodeId);
                     mappedDaypart.ProgramRestrictions.Add(new DaypartRestrictionsData
                     {
@@ -210,50 +214,24 @@ namespace Services.Broadcast.Entities.Campaign
                     {
                         //if the daypart has weighting goal set, we use that and only apply the quarter factor
                         //if the daypart does not have weighting goal, we use the weighting goal and quarter factors together
-                        double multiplicationFactor = daypart.WeightingGoalPercent.HasValue
+                        double daypartWeightingFactor = daypart.WeightingGoalPercent.HasValue
                                     ? (daypart.WeightingGoalPercent.Value / 100) * quarterFactor
                                     : (weightingGoalFactor / 100) * quarterFactor;
 
                         var daypartCode = daypartDefaults.Single(dc => dc.Id == daypart.DaypartCodeId);
                         var newProjectedPlan = _GetEmptyWeek(null, plan, quarter, null, daypartDefaults, spotLenghts, daypart);
 
-                        newProjectedPlan.TotalCost = plan.Budget.Value * (decimal)multiplicationFactor;
+                        newProjectedPlan.TotalCost = plan.Budget.Value * (decimal)daypartWeightingFactor;
                         newProjectedPlan.Units = 0; //we have no value calculated and stored for this property at the moment                            
 
                         //HH data
-                        newProjectedPlan.TotalHHImpressions = plan.HHImpressions * multiplicationFactor;
-                        newProjectedPlan.TotalHHRatingPoints = plan.HHRatingPoints * multiplicationFactor;
-                        newProjectedPlan.HHCPM = newProjectedPlan.TotalHHImpressions == 0 ? 0 : newProjectedPlan.TotalCost / (decimal)newProjectedPlan.TotalHHImpressions * 1000;
-                        newProjectedPlan.HHCPP = newProjectedPlan.TotalHHRatingPoints == 0 ? 0 : newProjectedPlan.TotalCost / (decimal)newProjectedPlan.TotalHHRatingPoints;
+                        _ProjectHHAudienceData(plan, daypartWeightingFactor, newProjectedPlan);
 
                         //guaranteed audience data
-                        newProjectedPlan.GuaranteedAudience.IsGuaranteedAudience = true;
-                        newProjectedPlan.GuaranteedAudience.AudienceId = plan.AudienceId;
-                        newProjectedPlan.GuaranteedAudience.VPVH = plan.Vpvh;
-                        newProjectedPlan.GuaranteedAudience.TotalImpressions = plan.TargetImpressions.Value * multiplicationFactor;
-                        newProjectedPlan.GuaranteedAudience.TotalRatingPoints = plan.TargetRatingPoints.Value * multiplicationFactor;
-
-                        newProjectedPlan.GuaranteedAudience.CPM = newProjectedPlan.GuaranteedAudience.TotalImpressions == 0 ? 0
-                                : newProjectedPlan.TotalCost / (decimal)newProjectedPlan.GuaranteedAudience.TotalImpressions * 1000;
-                        newProjectedPlan.GuaranteedAudience.CPP = newProjectedPlan.GuaranteedAudience.TotalRatingPoints == 0 ? 0
-                                : newProjectedPlan.TotalCost / (decimal)newProjectedPlan.GuaranteedAudience.TotalRatingPoints;
+                        _ProjectGuaranteedAudienceData(plan, daypartWeightingFactor, newProjectedPlan);
 
                         //we only need secondary data mapped for the proposal tab, and not the others
-                        foreach (var audience in plan.SecondaryAudiences)
-                        {
-                            var secondaryAudience =
-                                new ProjectedPlan.Audience
-                                {
-                                    AudienceId = audience.AudienceId,
-                                    TotalImpressions = audience.Impressions.Value * multiplicationFactor,
-                                    TotalRatingPoints = audience.RatingPoints.Value * multiplicationFactor,
-
-                                };
-                            secondaryAudience.VPVH = newProjectedPlan.TotalHHImpressions == 0 ? 0 : secondaryAudience.TotalImpressions / newProjectedPlan.TotalHHImpressions;
-                            secondaryAudience.CPM = secondaryAudience.TotalImpressions == 0 ? 0 : newProjectedPlan.TotalCost / (decimal)secondaryAudience.TotalImpressions * 1000;
-                            secondaryAudience.CPP = secondaryAudience.TotalRatingPoints == 0 ? 0 : newProjectedPlan.TotalCost / (decimal)secondaryAudience.TotalRatingPoints;
-                            newProjectedPlan.SecondaryAudiences.Add(secondaryAudience);
-                        }
+                        _ProjectSecondaryAudiencesData(plan, daypartWeightingFactor, newProjectedPlan);
 
                         result.Add(newProjectedPlan);
                     });
@@ -261,6 +239,47 @@ namespace Services.Broadcast.Entities.Campaign
             });
 
             return result;
+        }
+
+        private static void _ProjectHHAudienceData(PlanDto plan, double factor, ProjectedPlan newProjectedPlan)
+        {
+            newProjectedPlan.TotalHHImpressions = plan.HHImpressions * factor;
+            newProjectedPlan.TotalHHRatingPoints = plan.HHRatingPoints * factor;
+            newProjectedPlan.HHCPM = _CalculateCost(newProjectedPlan.TotalHHImpressions * 1000, newProjectedPlan.TotalCost);
+            newProjectedPlan.HHCPP = _CalculateCost(newProjectedPlan.TotalHHRatingPoints, newProjectedPlan.TotalCost);
+        }
+
+        private static void _ProjectGuaranteedAudienceData(PlanDto plan, double factor, ProjectedPlan newProjectedPlan)
+        {
+            newProjectedPlan.GuaranteedAudience.IsGuaranteedAudience = true;
+            newProjectedPlan.GuaranteedAudience.AudienceId = plan.AudienceId;
+            newProjectedPlan.GuaranteedAudience.VPVH = plan.Vpvh;
+            newProjectedPlan.GuaranteedAudience.TotalImpressions = plan.TargetImpressions.Value * factor;
+            newProjectedPlan.GuaranteedAudience.TotalRatingPoints = plan.TargetRatingPoints.Value * factor;
+
+            newProjectedPlan.GuaranteedAudience.CPM =
+                _CalculateCost(newProjectedPlan.GuaranteedAudience.TotalImpressions * 1000, newProjectedPlan.TotalCost);
+            newProjectedPlan.GuaranteedAudience.CPP =
+                _CalculateCost(newProjectedPlan.GuaranteedAudience.TotalRatingPoints, newProjectedPlan.TotalCost);
+        }
+
+        private static void _ProjectSecondaryAudiencesData(PlanDto plan, double multiplicationFactor, ProjectedPlan newProjectedPlan)
+        {
+            foreach (var audience in plan.SecondaryAudiences)
+            {
+                var secondaryAudience =
+                    new ProjectedPlan.Audience
+                    {
+                        AudienceId = audience.AudienceId,
+                        TotalImpressions = audience.Impressions.Value * multiplicationFactor,
+                        TotalRatingPoints = audience.RatingPoints.Value * multiplicationFactor,
+
+                    };
+                secondaryAudience.VPVH = _CalculateVPVH(secondaryAudience.TotalImpressions, newProjectedPlan.TotalHHImpressions);
+                secondaryAudience.CPM = _CalculateCost(secondaryAudience.TotalImpressions * 1000, newProjectedPlan.TotalCost);
+                secondaryAudience.CPP = _CalculateCost(secondaryAudience.TotalRatingPoints, newProjectedPlan.TotalCost);
+                newProjectedPlan.SecondaryAudiences.Add(secondaryAudience);
+            }
         }
 
         //flow chart and contract tabs
@@ -333,9 +352,9 @@ namespace Services.Broadcast.Entities.Campaign
                                     : newProjectedPlan.TotalCost / (decimal)newProjectedPlan.GuaranteedAudience.TotalImpressions * 1000;
                             newProjectedPlan.GuaranteedAudience.CPP = newProjectedPlan.GuaranteedAudience.TotalRatingPoints == 0 ? 0
                                     : newProjectedPlan.TotalCost / (decimal)newProjectedPlan.GuaranteedAudience.TotalRatingPoints;
-                            
+
                             newProjectedPlan.HiatusDays = plan.FlightHiatusDays.Where(x => x.Date >= week.StartDate && x.Date <= week.EndDate).ToList();
-                            
+
                             result.Add(newProjectedPlan);
                         });
                     }
@@ -354,7 +373,8 @@ namespace Services.Broadcast.Entities.Campaign
 
         //Returns a ProjectedPlan object that will contain media and plan data without imps and cost data
         private static ProjectedPlan _GetEmptyWeek(MediaWeek mediaWeek, PlanDto plan, QuarterDetailDto quarter
-            , List<MediaMonth> mediaMonths, List<DaypartDefaultDto> daypartsDefault, List<LookupDto> spotLenghts, PlanDaypartDto daypart)
+            , List<MediaMonth> mediaMonths, List<DaypartDefaultDto> daypartsDefault
+            , List<LookupDto> spotLenghts, PlanDaypartDto daypart)
         {
             return new ProjectedPlan
             {
@@ -371,6 +391,7 @@ namespace Services.Broadcast.Entities.Campaign
                 SpotLengthId = plan.SpotLengthId,
                 SpotLength = spotLenghts.Single(y => y.Id == plan.SpotLengthId).Display,
                 Equivalized = plan.Equivalized,
+                FlightDays = plan.FlightDays
             };
         }
 
@@ -483,7 +504,7 @@ namespace Services.Broadcast.Entities.Campaign
         private void _CalculateTotalsForAduTable(FlowChartQuarterTableData tableData)
         {
             int aduUnitsNumber = tableData.UnitsValues.Sum(x => Convert.ToInt32(x));
-            if(aduUnitsNumber > 0)
+            if (aduUnitsNumber > 0)
             {
                 tableData.DistributionPercentages.Add("-");
                 tableData.UnitsValues.Add(aduUnitsNumber);
@@ -525,7 +546,7 @@ namespace Services.Broadcast.Entities.Campaign
 
         //this is the adu table for a quarter and daypart
         private FlowChartQuarterTableData _CalculateAduTableData(FlowChartQuarterTableData templateTable, List<PlanDto> plans)
-        {          
+        {
             var tableData = new FlowChartQuarterTableData
             {
                 TableTitle = $"{templateTable.QuarterLabel} {ADU}",
@@ -535,14 +556,14 @@ namespace Services.Broadcast.Entities.Campaign
             for (int i = 0; i < templateTable.WeeksStartDate.Count; i++)
             {
                 bool weekIsAdu = plans.Any(x => x.WeeklyBreakdownWeeks
-                                    .Where(y=>y.StartDate.Equals(Convert.ToDateTime(templateTable.WeeksStartDate[i]))
+                                    .Where(y => y.StartDate.Equals(Convert.ToDateTime(templateTable.WeeksStartDate[i]))
                                             && y.WeeklyAdu > 0).Any());
                 if (weekIsAdu)
                 {
                     tableData.DistributionPercentages.Add(EMPTY_CELL);
                     tableData.UnitsValues.Add(plans.SelectMany(x => x.WeeklyBreakdownWeeks
                                     .Where(y => y.StartDate.Equals(Convert.ToDateTime(templateTable.WeeksStartDate[i]))
-                                            && y.WeeklyAdu > 0).Select(y=>y.WeeklyAdu)).Sum());
+                                            && y.WeeklyAdu > 0).Select(y => y.WeeklyAdu)).Sum());
                     tableData.ImpressionsValues.Add(ADU);
                     tableData.CostValues.Add(ADU);
                     tableData.CPMValues.Add(ADU);
@@ -575,9 +596,9 @@ namespace Services.Broadcast.Entities.Campaign
                     };
 
                     List<FlowChartQuarterTableData> tablesInQuarter = new List<FlowChartQuarterTableData>();
-                    
+
                     var quarterItems = quarterGroup.ToList();
-                    quarterItems.GroupBy(y => new { y.DaypartCode})
+                    quarterItems.GroupBy(y => new { y.DaypartCode })
                     .ToList()
                     .ForEach(daypartGroup =>  //quarter daypart spot length equivalized group
                     {
@@ -628,7 +649,7 @@ namespace Services.Broadcast.Entities.Campaign
                         FlowChartQuarterTables.AddRange(tablesInQuarterDaypart);
                         FlowChartQuarterTables.Add(totalTableForDaypart);
                     });
-                    
+
                     FlowChartQuarterTableData aduTable = _CalculateAduTableData(tablesInQuarter.First(), plans);
                     FlowChartQuarterTables.Add(aduTable);
                 });
@@ -637,13 +658,14 @@ namespace Services.Broadcast.Entities.Campaign
         private string _GetHiatusDaysFormattedForWeek(List<DateTime> hiatuseDaysThisWeek)
         {
             List<string> formattedGroups = new List<string>();
-            foreach (var group in hiatuseDaysThisWeek.GroupConsecutiveDays())
+            hiatuseDaysThisWeek.Sort();
+            foreach (var group in hiatuseDaysThisWeek.GroupConnectedItems((a, b) => (b - a).Days > 1))
             {
-                if (group.Count == 1)
+                if (group.Count() == 1)
                 {
                     formattedGroups.Add(group.First().ToString(DATE_FORMAT_NO_YEAR_SINGLE_DIGIT));
                 }
-                if (group.Count > 1)
+                else
                 {
                     formattedGroups.Add($"{group.First().ToString(DATE_FORMAT_NO_YEAR_SINGLE_DIGIT)}-{group.Last().Day}");
                 }
@@ -745,6 +767,11 @@ namespace Services.Broadcast.Entities.Campaign
         private static decimal _CalculateCost(double points, decimal cost)
         {
             return points == 0 ? 0 : cost / (decimal)points;
+        }
+
+        private static double _CalculateVPVH(double impressions, double hhImpressions)
+        {
+            return hhImpressions == 0 ? 0 : impressions / hhImpressions;
         }
 
         private void _PopulateCampaignTotalsTable()
@@ -920,6 +947,7 @@ namespace Services.Broadcast.Entities.Campaign
             public string DaypartCode { get; set; }
             public string DaypartStartTime { get; set; }
             public string DaypartEndTime { get; set; }
+            public List<int> FlightDays { get; set; }
 
             public List<string> GuaranteedDemo { get; set; }
             public string SpotLength { get; set; }
@@ -939,7 +967,7 @@ namespace Services.Broadcast.Entities.Campaign
             public List<Audience> SecondaryAudiences { get; set; } = new List<Audience>();
 
             public List<DateTime> HiatusDays { get; set; } = new List<DateTime>();
-            
+
             internal class Audience
             {
                 public int AudienceId { get; set; }
@@ -991,6 +1019,7 @@ namespace Services.Broadcast.Entities.Campaign
         public string DaysLabel { get; set; }
         public string StartTime { get; set; }
         public string EndTime { get; set; }
+        public string FlightDays { get; set; }
         public List<DaypartRestrictionsData> GenreRestrictions { get; set; } = new List<DaypartRestrictionsData>();
         public List<DaypartRestrictionsData> ProgramRestrictions { get; set; } = new List<DaypartRestrictionsData>();
     }
@@ -1001,12 +1030,13 @@ namespace Services.Broadcast.Entities.Campaign
         {
             return x.DaypartCode.Equals(y.DaypartCode)
                 && x.StartTime.Equals(y.StartTime)
-                && x.EndTime.Equals(y.EndTime);
+                && x.EndTime.Equals(y.EndTime)
+                && x.FlightDays.Equals(y.FlightDays);
         }
 
         public int GetHashCode(DaypartData obj)
         {
-            return $"{obj.DaypartCode} {obj.StartTime} {obj.EndTime}".GetHashCode();
+            return $"{obj.DaypartCode} {obj.StartTime} {obj.EndTime} {obj.FlightDays}".GetHashCode();
         }
     }
 

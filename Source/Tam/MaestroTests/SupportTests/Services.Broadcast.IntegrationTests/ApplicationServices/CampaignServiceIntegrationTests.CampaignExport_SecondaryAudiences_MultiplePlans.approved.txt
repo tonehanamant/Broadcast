@@ -15,6 +15,7 @@
       "DaypartCodeId": 12,
       "DaysLabel": null,
       "EndTime": "04:00pm",
+      "FlightDays": "M-SU",
       "GenreRestrictions": [],
       "ProgramRestrictions": [],
       "StartTime": "09:00am"
@@ -24,6 +25,7 @@
       "DaypartCodeId": 1,
       "DaysLabel": null,
       "EndTime": "10:00am",
+      "FlightDays": "M-SU",
       "GenreRestrictions": [],
       "ProgramRestrictions": [],
       "StartTime": "04:00am"
@@ -33,6 +35,7 @@
       "DaypartCodeId": 2,
       "DaysLabel": null,
       "EndTime": "01:00pm",
+      "FlightDays": "M-F,SU",
       "GenreRestrictions": [
         {
           "ContainType": 2,
@@ -61,6 +64,7 @@
       "DaypartCodeId": 7,
       "DaysLabel": null,
       "EndTime": "08:00pm",
+      "FlightDays": "M-F,SU",
       "GenreRestrictions": [
         {
           "ContainType": 1,
@@ -86,6 +90,7 @@
       "DaypartCodeId": 8,
       "DaysLabel": null,
       "EndTime": "11:00pm",
+      "FlightDays": "M-SU",
       "GenreRestrictions": [],
       "ProgramRestrictions": [],
       "StartTime": "08:00pm"

@@ -2,6 +2,7 @@
 using Common.Services.Repositories;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Extensions;
+using Services.Broadcast.Helpers;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
@@ -11,13 +12,6 @@ namespace Services.Broadcast.ApplicationServices.Maintenance
 {
     public interface IDaypartCleanupService: IApplicationService
     {
-        /// <summary>
-        /// Calculates the daypart text.
-        /// </summary>
-        /// <param name="daypartDays">The daypart days.</param>
-        /// <returns>The daypart text</returns>
-        string CalculateDaypartText(List<int> daypartDays);
-
         /// <summary>
         /// Calculates the daypart days by the daypart text.
         /// </summary>
@@ -55,7 +49,7 @@ namespace Services.Broadcast.ApplicationServices.Maintenance
 
             allDayparts.ForEach(dp => {
                 var daypartDayText = dp.Text.Substring(0, dp.Text.IndexOf(' '));
-                var expectedDaypartDaysText = CalculateDaypartText(dp.Days);
+                var expectedDaypartDaysText = GroupHelper.GroupWeekDays(dp.Days);
 
                 if (daypartDayText != expectedDaypartDaysText)
                 {
@@ -103,43 +97,7 @@ namespace Services.Broadcast.ApplicationServices.Maintenance
 
             return $"{formattedStartTime}-{formattedEndTime}";
         }
-
-        /// <inheritdoc />
-        public string CalculateDaypartText(List<int> daypartDays)
-        {
-            var daysOfWeek = new List<string> { "M", "TU", "W", "TH", "F", "SA", "SU" };
-            var daypartString = string.Empty;
-
-            //construct the daypart days list
-            for (int i = 0; i < daysOfWeek.Count; i++)
-            {
-                if (!daypartDays.Contains(i + 1))
-                {
-                    daysOfWeek[i] = null;
-                }
-            }
-
-            //group the daypart days that are not empty
-            var groupOfDaypartDays = daysOfWeek.GroupConnected((a) => string.IsNullOrWhiteSpace(a));
-            var daypartDaysList = new List<string>();
-            foreach (var group in groupOfDaypartDays.Where(x => x.Count() > 0))
-            {
-                //if the group contains 1 element, join by comma
-                if (group.Count() == 1)
-                {
-                    daypartDaysList.Add(string.Join(",", group));
-                }
-                else  //if the group contains more then 2 elements, join the first and the last one with "-"
-                {
-                    daypartDaysList.Add($"{group.First()}-{group.Last()}");
-                }
-            }
-
-            daypartString = string.Join(",", daypartDaysList);
-            //number of active days this week is 7 minus number of hiatus days
-            return daypartString;
-        }
-
+        
         /// <inheritdoc />
         public List<int> CalculateDaypartDaysByText(string daypartText)
         {

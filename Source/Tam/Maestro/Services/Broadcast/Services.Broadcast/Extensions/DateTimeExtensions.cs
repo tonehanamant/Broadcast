@@ -37,38 +37,6 @@ namespace Services.Broadcast.Extensions
             return date.ToString("MMddyyyyy");
         }
 
-        public static List<List<DateTime>> GroupConsecutiveDays(this List<DateTime> dates)
-        {
-            var groups = new List<List<DateTime>>();
-            if (!dates.Any())
-            {
-                return groups;
-            }
-
-            dates.Sort();
-            // the group for the first element
-            var group1 = new List<DateTime>() { dates[0] };
-            groups.Add(group1);
-
-            DateTime lastDate = dates[0];
-            for (int i = 1; i < dates.Count; i++)
-            {
-                DateTime currDate = dates[i];
-                TimeSpan timeDiff = currDate - lastDate;
-
-                //we create another group if the difference is more than 1 day
-                bool isNewGroup = timeDiff.Days > 1;
-                if (isNewGroup)
-                {
-                    groups.Add(new List<DateTime>());
-                }
-                groups.Last().Add(currDate);
-                lastDate = currDate;
-            }
-
-            return groups;
-        }
-
         public static BroadcastDayOfWeek GetBroadcastDayOfWeek(this DateTime date)
         {
             return date.DayOfWeek == DayOfWeek.Sunday ? Entities.Enums.BroadcastDayOfWeek.Sunday : (BroadcastDayOfWeek)(int)date.DayOfWeek;

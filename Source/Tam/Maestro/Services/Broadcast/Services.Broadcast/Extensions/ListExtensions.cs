@@ -19,35 +19,44 @@ namespace Services.Broadcast.Extensions
         /// <summary>
         /// Groups the elements of a list by a function
         /// </summary>
-        /// <typeparam name="T">Type of the element</typeparam>
+        /// <typeparam name="T1">Type of the element</typeparam>
         /// <param name="list">The list.</param>
-        /// <param name="connectionCondition">The connection function.</param>
+        /// <param name="connectedCondition">The grouping function.</param>
         /// <returns>List of thehe connected groups </returns>
-        public static IEnumerable<IEnumerable<T>> GroupConnected<T>(this IEnumerable<T> list, Func<T, bool> connectionCondition)
-        {
-            if (list == null)
+        public static IEnumerable<IEnumerable<T1>> GroupConnectedItems<T1>(this IEnumerable<T1> list
+            , Func<T1, T1, bool> connectedCondition)
+        { 
+            if (!list.Any())
             {
                 yield break;
             }
             using (var enumerator = list.GetEnumerator())
             {
-                var temp = new List<T>();
+                var temp = new List<T1>();
+                T1 previous = default;
                 while (enumerator.MoveNext())
                 {
-                    T curr = enumerator.Current;
+                    T1 current = enumerator.Current;
                     {
-                        if (connectionCondition(curr))
+                        if (connectedCondition(previous, current))
                         {
-                            yield return temp;
-                            temp = new List<T>();
+                            if(temp.Count > 0)
+                            {
+                                yield return temp;
+                            }                            
+                            temp = new List<T1>();
                         }
-                        if(curr != default)
+                        if (current != default)
                         {
-                            temp.Add(curr);
-                        }                        
+                            temp.Add(current);
+                        }
+                        previous = current;
                     }
                 }
-                yield return temp;
+                if (temp.Count > 0)
+                {
+                    yield return temp;
+                }
             }
         }
 

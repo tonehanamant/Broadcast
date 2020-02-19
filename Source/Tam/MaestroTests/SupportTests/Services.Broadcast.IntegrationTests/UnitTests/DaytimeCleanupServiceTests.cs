@@ -2,6 +2,7 @@
 using Moq;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices.Maintenance;
+using Services.Broadcast.Helpers;
 using Services.Broadcast.Repositories;
 using System.Collections.Generic;
 
@@ -30,7 +31,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
         [TestCase("M-TH,SA-SU", new int[] { 1, 2, 3, 4, 6, 7 })]
         public void ValidateDaypartText(string expectedResult, int[] daypartDays)
         {
-            var result = _daypartCleanupService.CalculateDaypartText(new List<int>(daypartDays));
+            var result = GroupHelper.GroupWeekDays(new List<int>(daypartDays));
 
             Assert.AreEqual(expectedResult, result);
         }

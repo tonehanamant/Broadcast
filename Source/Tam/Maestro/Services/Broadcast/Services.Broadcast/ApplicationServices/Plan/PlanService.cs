@@ -881,9 +881,9 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
 
             //group the active days that are not null
-            var groupOfActiveDays = daysOfWeek.GroupConnected((a) => string.IsNullOrWhiteSpace(a));
+            var groupOfActiveDays = daysOfWeek.GroupConnectedItems((a, b) => !string.IsNullOrWhiteSpace(a) && string.IsNullOrWhiteSpace(b));
             var activeDaysList = new List<string>();
-            foreach (var group in groupOfActiveDays.Where(x => x.Count() > 0))
+            foreach (var group in groupOfActiveDays)
             {
                 //if the group contains 1 or 2 elements, join them by comma
                 if (group.Count() == 1 || group.Count() == 2)

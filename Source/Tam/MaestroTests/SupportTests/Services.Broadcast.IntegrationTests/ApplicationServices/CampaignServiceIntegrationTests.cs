@@ -592,10 +592,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 //uncomment this line if you need to see the actual file
                 //_WriteFileToLocalFileSystem(reportOutput);
 
-                Assert.AreEqual(reportOutput.Stream.Length,
-                    File.ReadAllBytes(@".\Files\Campaign export\Stub Advertiser EF EM MDN Q1'20-Q2'20 Plan Rev - 12-16.xlsx").LongLength);
                 Assert.IsTrue(DateTime.Now.ToString("MM/dd/yy").Equals(reportData.CreatedDate));
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(reportData, _GetJsonSettingsForCampaignExport()));
+                Assert.AreEqual(reportOutput.Stream.Length,
+                    File.ReadAllBytes(@".\Files\Campaign export\Stub Advertiser EF EM MDN Q1'20-Q2'20 Plan Rev - 12-16.xlsx").LongLength);                
             }
         }
 
@@ -682,10 +682,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 //uncomment this line if you need to see the actual file
                 //_WriteFileToLocalFileSystem(reportOutput);
 
-                Assert.AreEqual(reportOutput.Stream.Length,
-                    File.ReadAllBytes(@".\Files\Campaign export\Stub Advertiser EF EM MDN PA Q1'20-Q2'20 Plan Rev - 12-16.xlsx").LongLength);
                 Assert.IsTrue(DateTime.Now.ToString("MM/dd/yy").Equals(reportData.CreatedDate));
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(reportData, _GetJsonSettingsForCampaignExport()));
+                Assert.AreEqual(reportOutput.Stream.Length,
+                    File.ReadAllBytes(@".\Files\Campaign export\Stub Advertiser EF EM MDN PA Q1'20-Q2'20 Plan Rev - 12-16.xlsx").LongLength);                
             }
         }
 
@@ -711,10 +711,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 //uncomment this line if you need to see the actual file
                 //_WriteFileToLocalFileSystem(reportOutput);
 
-                Assert.AreEqual(reportOutput.Stream.Length,
-                    File.ReadAllBytes(@".\Files\Campaign export\Stub Advertiser EF EM MDN PA Q1'20-Q2'20 Plan Rev - 12-16 v2.xlsx").LongLength);
                 Assert.IsTrue(DateTime.Now.ToString("MM/dd/yy").Equals(reportData.CreatedDate));
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(reportData, _GetJsonSettingsForCampaignExport()));
+                Assert.AreEqual(reportOutput.Stream.Length,
+                    File.ReadAllBytes(@".\Files\Campaign export\Stub Advertiser EF EM MDN PA Q1'20-Q2'20 Plan Rev - 12-16 v2.xlsx").LongLength);
             }
         }
 
@@ -854,10 +854,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 //uncomment this line if you need to see the actual file
                 //_WriteFileToLocalFileSystem(reportOutput);
 
-                Assert.AreEqual(reportOutput.Stream.Length,
-                    File.ReadAllBytes(@".\Files\Campaign export\Stub Advertiser DAY EMN PT Q4'19 Plan Rev - 12-16.xlsx").LongLength);
                 Assert.IsTrue(DateTime.Now.ToString("MM/dd/yy").Equals(reportData.CreatedDate));
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(reportData, _GetJsonSettingsForCampaignExport()));
+                Assert.AreEqual(reportOutput.Stream.Length,
+                    File.ReadAllBytes(@".\Files\Campaign export\Stub Advertiser DAY EMN PT Q4'19 Plan Rev - 12-16.xlsx").LongLength);
             }
         }
 
@@ -883,12 +883,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 //uncomment this line if you need to see the actual file
                 //_WriteFileToLocalFileSystem(reportOutput);
 
-                Assert.AreEqual(reportOutput.Stream.Length,
-                    File.ReadAllBytes(@".\Files\Campaign export\Stub Advertiser DAY EMN MDN PA PT Q4'19-Q2'20 Plan Rev - 12-16.xlsx").LongLength);
                 Assert.IsTrue(DateTime.Now.ToString("MM/dd/yy").Equals(reportData.CreatedDate));
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(reportData, _GetJsonSettingsForCampaignExport()));
-
-                
+                Assert.AreEqual(reportOutput.Stream.Length,
+                    File.ReadAllBytes(@".\Files\Campaign export\Stub Advertiser DAY EMN MDN PA PT Q4'19-Q2'20 Plan Rev - 12-16.xlsx").LongLength);
             }
         }
 
