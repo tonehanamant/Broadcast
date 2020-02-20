@@ -49,12 +49,12 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 _InventoryFileTestHelper.UploadProprietaryInventoryFile(
                     "PricingModel_Barter.xlsx", 
                     processInventoryRatings: true, 
-                    processInventoryProgramsJob: true);
+                    processInventoryProgramsJob: false);
 
                 _InventoryFileTestHelper.UploadProprietaryInventoryFile(
                     "PricingModel_OAndO.xlsx", 
                     processInventoryRatings: true, 
-                    processInventoryProgramsJob: true);
+                    processInventoryProgramsJob: false);
 
                 var plan = _PlanRepository.GetPlan(1198);
                 var result = _PlanPricingInventoryEngine.GetInventoryForPlan(plan, new PlanPricingInventoryEngine.ProgramInventoryOptionalParametersDto());
@@ -86,7 +86,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     _InventoryFileTestHelper.UploadProprietaryInventoryFile(
                         "PricingModel_OAndO.xlsx",
                         processInventoryRatings: true,
-                        processInventoryProgramsJob: true);
+                        processInventoryProgramsJob: false);
 
                     var plan = _PlanRepository.GetPlan(1198);
                     var result = _PlanPricingInventoryEngine.GetInventoryForPlan(plan, new PlanPricingInventoryEngine.ProgramInventoryOptionalParametersDto());

@@ -148,6 +148,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private readonly IPlanPricingService _PlanPricingService;
         private readonly IQuarterCalculationEngine _QuarterCalculationEngine;
         private readonly IDaypartDefaultService _DaypartDefaultService;
+        private readonly IDayRepository _DayRepository;
 
         private const string _DaypartDefaultNotFoundMessage = "Unable to find daypart default";
 
@@ -172,6 +173,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _PlanRepository = broadcastDataRepositoryFactory.GetDataRepository<IPlanRepository>();
             _PlanSummaryRepository = broadcastDataRepositoryFactory.GetDataRepository<IPlanSummaryRepository>();
             _DaypartDefaultRepository = broadcastDataRepositoryFactory.GetDataRepository<IDaypartDefaultRepository>();
+            _DayRepository = broadcastDataRepositoryFactory.GetDataRepository<IDayRepository>();
             _PlanAggregator = planAggregator;
             _CampaignAggregationJobTrigger = campaignAggregationJobTrigger;
             _NsiUniverseService = nsiUniverseService;
@@ -202,6 +204,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _CalculateHouseholdDeliveryData(plan);
             _CalculateSecondaryAudiencesDeliveryData(plan);
             _SetPlanVersionNumber(plan);
+            _SetPlanFlightDays(plan);
 
             if (plan.Status == PlanStatusEnum.Contracted && plan.GoalBreakdownType != PlanGoalBreakdownTypeEnum.Custom)
             {
@@ -270,6 +273,17 @@ namespace Services.Broadcast.ApplicationServices.Plan
             };
         }
 
+        private void _SetPlanFlightDays(PlanDto plan)
+        {
+            // If no flight days were sent by the FE, we save the default seven days.
+            if (plan.FlightDays != null && plan.FlightDays.Any())
+                return;
+
+            var days = _DayRepository.GetDays();
+            plan.FlightDays = new List<int>();
+            plan.FlightDays.AddRange(days.Select(x => x.Id));
+        }
+
         private void _VerifyWeeklyAdu(bool isAduEnabled, List<WeeklyBreakdownWeek> weeks)
         {
             if (isAduEnabled) return;
@@ -278,7 +292,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 week.WeeklyAdu = 0;
         }
 
-        private static void _ConvertImpressionsToRawFormat(PlanDto plan)
+        private void _ConvertImpressionsToRawFormat(PlanDto plan)
         {
             //the UI is sending the user entered value instead of the raw value. BE needs to adjust
             if (plan.TargetImpressions.HasValue)
@@ -291,7 +305,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
         }
 
-        private static void _ConvertImpressionsToUserFormat(PlanDto plan)
+        private void _ConvertImpressionsToUserFormat(PlanDto plan)
         {
             //the UI is sending the user entered value instead of the raw value. BE needs to adjust
             if (plan.TargetImpressions.HasValue)

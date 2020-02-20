@@ -943,7 +943,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        public void SavePlan_WitInvalidFlightNotes()
+        public void SavePlan_WithInvalidFlightNotes()
         {
             using (new TransactionScopeWrapper())
             {
@@ -952,6 +952,50 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 Assert.That(() => _PlanService.SavePlan(testPlan, "integration_test",
                     new DateTime(2019, 01, 01)), Throws.TypeOf<Exception>().With.Message.EqualTo("Flight notes cannot be longer than 1024 characters."));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void SavePlan_NullFlightDays()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var newPlan = _GetNewPlan();
+                var newPlanId = _PlanService.SavePlan(newPlan, "integration_test", new System.DateTime(2019, 01, 01));
+                _ForceCompletePlanPricingJob(newPlanId);
+
+                var testPlan = _PlanService.GetPlan(newPlanId);
+                testPlan.FlightDays = null;
+
+                var modifedPlanId = _PlanService.SavePlan(testPlan, "integration_test", new System.DateTime(2019, 01, 15));
+                var finalPlan = _PlanService.GetPlan(modifedPlanId);
+
+                Assert.IsTrue(modifedPlanId > 0);
+                Assert.AreEqual(newPlanId, modifedPlanId);
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(finalPlan, _GetJsonSettings()));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void SavePlan_EmptyFlightDays()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var newPlan = _GetNewPlan();
+                var newPlanId = _PlanService.SavePlan(newPlan, "integration_test", new System.DateTime(2019, 01, 01));
+                _ForceCompletePlanPricingJob(newPlanId);
+
+                var testPlan = _PlanService.GetPlan(newPlanId);
+                testPlan.FlightDays = new List<int>();
+
+                var modifedPlanId = _PlanService.SavePlan(testPlan, "integration_test", new System.DateTime(2019, 01, 15));
+                var finalPlan = _PlanService.GetPlan(modifedPlanId);
+
+                Assert.IsTrue(modifedPlanId > 0);
+                Assert.AreEqual(newPlanId, modifedPlanId);
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(finalPlan, _GetJsonSettings()));
             }
         }
 

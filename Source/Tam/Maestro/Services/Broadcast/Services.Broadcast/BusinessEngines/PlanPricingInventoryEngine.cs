@@ -130,6 +130,20 @@ namespace Services.Broadcast.BusinessEngines
                 // PrimaryProgram is the one that has the most time
                 manifestDaypart.PrimaryProgram = programs.OrderByDescending(x => x.totalTimeInSeconds).First().program;
             }
+
+            // If no information from Dativa is available, set up the primary program using the program name from daypart.
+            var daypartsWithoutPrimaryPrograms = manifests.SelectMany(x => x.ManifestDayparts).Where(x => x.PrimaryProgram == null);
+
+            foreach (var manifestDaypart in daypartsWithoutPrimaryPrograms)
+            {
+                manifestDaypart.PrimaryProgram = new PlanPricingInventoryProgram.ManifestDaypart.Program
+                {
+                    Name = manifestDaypart.ProgramName,
+                    MaestroGenre = string.Empty,
+                    ShowType = string.Empty
+                };
+            }
+
         }
 
         private int _GetTotalTimeInSeconds(int startTime, int endTime)

@@ -57,6 +57,7 @@
           "ShowType": "Mini-Movie",
           "StartTime": 3600
         },
+        "ProgramName": "FRIENDS",
         "Programs": [
           {
             "DativaGenre": "Family",
@@ -78,8 +79,8 @@
       774,
       775
     ],
-    "ProjectedImpressions": 78662.75,
-    "ProvidedImpressions": 69000.0,
+    "ProjectedImpressions": 66863.3375,
+    "ProvidedImpressions": 58650.0,
     "SpotCost": 750.0000,
     "StationLegacyCallLetters": "WPIX",
     "Unit": null
@@ -142,6 +143,7 @@
           "ShowType": "Mini-Movie",
           "StartTime": 3600
         },
+        "ProgramName": "TWO & A HALF MEN",
         "Programs": [
           {
             "DativaGenre": "Family",
@@ -163,8 +165,8 @@
       774,
       775
     ],
-    "ProjectedImpressions": 67230.55,
-    "ProvidedImpressions": 59200.0,
+    "ProjectedImpressions": 57145.9675,
+    "ProvidedImpressions": 50320.0,
     "SpotCost": 700.0000,
     "StationLegacyCallLetters": "WPIX",
     "Unit": null
@@ -227,6 +229,7 @@
           "ShowType": "Mini-Movie",
           "StartTime": 3600
         },
+        "ProgramName": "FRIENDS",
         "Programs": [
           {
             "DativaGenre": "Family",
@@ -248,8 +251,8 @@
       774,
       775
     ],
-    "ProjectedImpressions": 89996.5,
-    "ProvidedImpressions": 60400.0,
+    "ProjectedImpressions": 76497.025,
+    "ProvidedImpressions": 51340.0,
     "SpotCost": 800.0000,
     "StationLegacyCallLetters": "WPIX",
     "Unit": null
@@ -312,6 +315,7 @@
           "ShowType": "Mini-Movie",
           "StartTime": 3600
         },
+        "ProgramName": "FRIENDS",
         "Programs": [
           {
             "DativaGenre": "Family",
@@ -333,8 +337,8 @@
       774,
       775
     ],
-    "ProjectedImpressions": 61366.0,
-    "ProvidedImpressions": 43600.0,
+    "ProjectedImpressions": 52161.1,
+    "ProvidedImpressions": 37060.0,
     "SpotCost": 750.0000,
     "StationLegacyCallLetters": "WPIX",
     "Unit": null
@@ -397,6 +401,7 @@
           "ShowType": "Mini-Movie",
           "StartTime": 3600
         },
+        "ProgramName": "FRIENDS 2X",
         "Programs": [
           {
             "DativaGenre": "Family",
@@ -418,8 +423,8 @@
       774,
       775
     ],
-    "ProjectedImpressions": 80069.375,
-    "ProvidedImpressions": 46800.0,
+    "ProjectedImpressions": 68058.96875,
+    "ProvidedImpressions": 39780.0,
     "SpotCost": 600.0000,
     "StationLegacyCallLetters": "WPIX",
     "Unit": null
@@ -482,6 +487,7 @@
           "ShowType": "Sports",
           "StartTime": 3600
         },
+        "ProgramName": "TWO & HALF MEN",
         "Programs": [
           {
             "DativaGenre": "Comedy",
@@ -503,8 +509,8 @@
       774,
       775
     ],
-    "ProjectedImpressions": 175.4,
-    "ProvidedImpressions": 600.0,
+    "ProjectedImpressions": 149.09,
+    "ProvidedImpressions": 510.0,
     "SpotCost": 50.0000,
     "StationLegacyCallLetters": "WPFO",
     "Unit": null
@@ -567,6 +573,7 @@
           "ShowType": "Sports",
           "StartTime": 3600
         },
+        "ProgramName": "2.5 MEN X2",
         "Programs": [
           {
             "DativaGenre": "Comedy",
@@ -588,8 +595,8 @@
       774,
       775
     ],
-    "ProjectedImpressions": 434.625,
-    "ProvidedImpressions": 600.0,
+    "ProjectedImpressions": 369.43125,
+    "ProvidedImpressions": 510.0,
     "SpotCost": 12.0000,
     "StationLegacyCallLetters": "WPFO",
     "Unit": null
@@ -652,6 +659,7 @@
           "ShowType": "Sports",
           "StartTime": 3600
         },
+        "ProgramName": "SEINFELD X2",
         "Programs": [
           {
             "DativaGenre": "Comedy",
@@ -673,8 +681,8 @@
       774,
       775
     ],
-    "ProjectedImpressions": 580.0,
-    "ProvidedImpressions": 400.0,
+    "ProjectedImpressions": 493.0,
+    "ProvidedImpressions": 340.0,
     "SpotCost": 12.0000,
     "StationLegacyCallLetters": "WPFO",
     "Unit": null
@@ -737,6 +745,7 @@
           "ShowType": "Sports",
           "StartTime": 3600
         },
+        "ProgramName": "2 BROKE GIRLS",
         "Programs": [
           {
             "DativaGenre": "Comedy",
@@ -758,8 +767,8 @@
       774,
       775
     ],
-    "ProjectedImpressions": 117.4,
-    "ProvidedImpressions": 400.0,
+    "ProjectedImpressions": 99.79,
+    "ProvidedImpressions": 340.0,
     "SpotCost": 12.0000,
     "StationLegacyCallLetters": "WPFO",
     "Unit": null

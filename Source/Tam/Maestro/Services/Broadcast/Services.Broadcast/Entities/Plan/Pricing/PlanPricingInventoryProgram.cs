@@ -39,6 +39,8 @@ namespace Services.Broadcast.Entities.Plan.Pricing
 
             public List<Program> Programs { get; set; }
 
+            public string ProgramName { get; set; }
+
             public class Program
             {
                 public string Name { get; set; }

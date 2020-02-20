@@ -134,7 +134,15 @@
           "_Wednesday": true
         },
         "Id": 576683,
-        "PrimaryProgram": null,
+        "PrimaryProgram": {
+          "DativaGenre": null,
+          "EndTime": 0,
+          "MaestroGenre": "",
+          "Name": "News 10 @ Noon",
+          "ShowType": "",
+          "StartTime": 0
+        },
+        "ProgramName": "News 10 @ Noon",
         "Programs": []
       }
     ],
@@ -143,7 +151,7 @@
     "MediaWeekIds": [
       744
     ],
-    "ProjectedImpressions": 21341.025,
+    "ProjectedImpressions": 18139.87125,
     "ProvidedImpressions": null,
     "SpotCost": 75.0000,
     "StationLegacyCallLetters": "WTEN",
@@ -284,7 +292,15 @@
           "_Wednesday": true
         },
         "Id": 576685,
-        "PrimaryProgram": null,
+        "PrimaryProgram": {
+          "DativaGenre": null,
+          "EndTime": 0,
+          "MaestroGenre": "",
+          "Name": "News 10 @ Noon",
+          "ShowType": "",
+          "StartTime": 0
+        },
+        "ProgramName": "News 10 @ Noon",
         "Programs": []
       }
     ],
@@ -293,8 +309,8 @@
     "MediaWeekIds": [
       744
     ],
-    "ProjectedImpressions": 21341.025,
-    "ProvidedImpressions": 1000.0,
+    "ProjectedImpressions": 18139.87125,
+    "ProvidedImpressions": 850.0,
     "SpotCost": 75.0000,
     "StationLegacyCallLetters": "WTEN",
     "Unit": null

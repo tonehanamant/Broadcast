@@ -177,6 +177,7 @@ namespace Services.Broadcast.Repositories
                             {
                                 Id = d.id,
                                 Daypart = DaypartCache.Instance.GetDisplayDaypart(d.daypart_id),
+                                ProgramName = d.program_name,
                                 Programs = d.station_inventory_manifest_daypart_programs.Select(p => new PlanPricingInventoryProgram.ManifestDaypart.Program
                                 {
                                     Name = p.name,

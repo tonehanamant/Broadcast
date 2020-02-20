@@ -79,7 +79,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var audiencesCache = new Mock<IBroadcastAudiencesCache>();
             var spotLengthEngine = new Mock<ISpotLengthEngine>();
             var quarterCalculationEngineMock = new Mock<IQuarterCalculationEngine>();
-
+            var dayRepository = new Mock<IDayRepository>();
+            dayRepository.Setup(s => s.GetDays()).Returns(new List<Day>());
+            var planPricingService = new Mock<IPlanPricingService>();
+            planPricingService.Setup(s => s.GetPlanPricingDefaults()).Returns(new Entities.Plan.Pricing.PlanPricingDefaults());
             var saveNewPlanCalls = new List<DateTime>();
             planBudgetDeliveryCalculator.Setup(s => s.CalculateBudget(It.IsAny<PlanDeliveryBudget>()))
                 .Returns(new PlanDeliveryBudget
@@ -100,6 +103,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             daypartCodeRepository.Setup(s => s.GetAllActiveDaypartDefaultsWithAllData()).Returns(_GetDaypartCodeDefaults());
             broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IDaypartDefaultRepository>())
                 .Returns(daypartCodeRepository.Object);
+            broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IDayRepository>())
+                .Returns(dayRepository.Object);
             var planSummaryRepo = new Mock<IPlanSummaryRepository>();
             var setStatusCalls = new List<Tuple<int, PlanAggregationProcessingStatusEnum, DateTime>>();
             planSummaryRepo.Setup(s =>
@@ -129,12 +134,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 Success = true,
                 LockedUserName = "IntegrationUser"
             });
-            var planPricingServiceMock = new Mock<IPlanPricingService>();
 
             var tc = new PlanService(broadcastDataRepositoryFactory.Object, planValidator.Object,
                 planBudgetDeliveryCalculator.Object, mediaMonthAndWeekAggregateCache.Object, planAggregator.Object,
                 campaignAggJobTrigger.Object, nsiUniverseService.Object, broadcastAudienceCacheMock.Object, spotLengthEngine.Object,
-                lockingManagerApplicationServiceMock.Object, planPricingServiceMock.Object, quarterCalculationEngineMock.Object, daypartDefaultService.Object);
+                lockingManagerApplicationServiceMock.Object, planPricingService.Object, quarterCalculationEngineMock.Object, daypartDefaultService.Object);
 
             var plan = _GetNewPlan();
             var campaignId = plan.CampaignId;
@@ -174,6 +178,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var audiencesCache = new Mock<IBroadcastAudiencesCache>();
             var quarterCalculationEngineMock = new Mock<IQuarterCalculationEngine>();
             var spotLengthEngine = new Mock<ISpotLengthEngine>();
+            var dayRepository = new Mock<IDayRepository>();
+            dayRepository.Setup(s => s.GetDays()).Returns(new List<Day>());
+            var planPricingService = new Mock<IPlanPricingService>();
+            planPricingService.Setup(s => s.GetPlanPricingDefaults()).Returns(new Entities.Plan.Pricing.PlanPricingDefaults());
             var saveNewPlanCalls = new List<DateTime>();
             planBudgetDeliveryCalculator.Setup(s => s.CalculateBudget(It.IsAny<PlanDeliveryBudget>()))
                 .Returns(new PlanDeliveryBudget
@@ -191,6 +199,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Callback(() => saveNewPlanCalls.Add(DateTime.Now));
             broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IPlanRepository>())
                 .Returns(planRepository.Object);
+            broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IDayRepository>())
+                .Returns(dayRepository.Object);
             var planSummaryRepo = new Mock<IPlanSummaryRepository>();
 
             var setStatusCalls = new List<Tuple<int, PlanAggregationProcessingStatusEnum, int, DateTime>>();
@@ -229,12 +239,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 Success = false,
                 LockedUserName = "IntegrationUser"
             });
-            var planPricingServiceMock = new Mock<IPlanPricingService>();
 
             var tc = new PlanService(broadcastDataRepositoryFactory.Object, planValidator.Object,
                 planBudgetDeliveryCalculator.Object, mediaMonthAndWeekAggregateCache.Object, planAggregator.Object,
                 campaignAggJobTrigger.Object, nsiUniverseService.Object, broadcastAudienceCacheMock.Object, spotLengthEngine.Object,
-                lockingManagerApplicationServiceMock.Object, planPricingServiceMock.Object, quarterCalculationEngineMock.Object, daypartDefaultService.Object);
+                lockingManagerApplicationServiceMock.Object, planPricingService.Object, quarterCalculationEngineMock.Object, daypartDefaultService.Object);
             var plan = _GetNewPlan();
             var campaignId = plan.CampaignId;
             var modifiedWho = "ModificationUser";
@@ -275,7 +284,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var audiencesCache = new Mock<IBroadcastAudiencesCache>();
             var spotLengthEngine = new Mock<ISpotLengthEngine>();
             var quarterCalculationEngineMock = new Mock<IQuarterCalculationEngine>();
-
+            var dayRepository = new Mock<IDayRepository>();
+            dayRepository.Setup(s => s.GetDays()).Returns(new List<Day>());
             var saveNewPlanCalls = new List<DateTime>();
             planBudgetDeliveryCalculator.Setup(s => s.CalculateBudget(It.IsAny<PlanDeliveryBudget>()))
                 .Returns(new PlanDeliveryBudget
@@ -296,6 +306,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             daypartCodeRepository.Setup(s => s.GetAllActiveDaypartDefaultsWithAllData()).Returns(_GetDaypartCodeDefaults());
             broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IDaypartDefaultRepository>())
                 .Returns(daypartCodeRepository.Object);
+            broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IDayRepository>())
+                .Returns(dayRepository.Object);
             var planSummaryRepo = new Mock<IPlanSummaryRepository>();
             var setStatusCalls = new List<Tuple<int, PlanAggregationProcessingStatusEnum, DateTime>>();
             planSummaryRepo.Setup(s =>

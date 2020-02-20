@@ -1097,9 +1097,8 @@ namespace Services.Broadcast.Repositories
             return _InReadUncommitedTransaction(context =>
             {
                 var latestJob = (from pvpj in context.plan_version_pricing_job
-                                from pv in context.plan_versions
-                                where pv.plan_id == planId && pv.plan.latest_version_id == pv.id
-                                select pvpj)
+                                 where pvpj.plan_versions.plan_id == planId
+                                 select pvpj)
                                 // take jobs with status Queued or Processing first
                                 .OrderByDescending(x => x.status == (int)BackgroundJobProcessingStatus.Queued || x.status == (int)BackgroundJobProcessingStatus.Processing)
                                 //then take latest completed

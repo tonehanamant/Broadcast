@@ -57,6 +57,7 @@
           "ShowType": "Mini-Movie",
           "StartTime": 3600
         },
+        "ProgramName": "FRIENDS",
         "Programs": [
           {
             "DativaGenre": "Family",
@@ -74,8 +75,8 @@
     "MediaWeekIds": [
       771
     ],
-    "ProjectedImpressions": 39331.375,
-    "ProvidedImpressions": 34500.0,
+    "ProjectedImpressions": 33431.66875,
+    "ProvidedImpressions": 29325.0,
     "SpotCost": 375.0000,
     "StationLegacyCallLetters": "WPIX",
     "Unit": null
@@ -138,6 +139,7 @@
           "ShowType": "Mini-Movie",
           "StartTime": 3600
         },
+        "ProgramName": "TWO & A HALF MEN",
         "Programs": [
           {
             "DativaGenre": "Family",
@@ -155,8 +157,8 @@
     "MediaWeekIds": [
       771
     ],
-    "ProjectedImpressions": 33615.275,
-    "ProvidedImpressions": 29600.0,
+    "ProjectedImpressions": 28572.98375,
+    "ProvidedImpressions": 25160.0,
     "SpotCost": 350.0000,
     "StationLegacyCallLetters": "WPIX",
     "Unit": null
@@ -219,6 +221,7 @@
           "ShowType": "Sports",
           "StartTime": 3600
         },
+        "ProgramName": "TWO & HALF MEN",
         "Programs": [
           {
             "DativaGenre": "Comedy",
@@ -236,8 +239,8 @@
     "MediaWeekIds": [
       771
     ],
-    "ProjectedImpressions": 87.7,
-    "ProvidedImpressions": 300.0,
+    "ProjectedImpressions": 74.545,
+    "ProvidedImpressions": 255.0,
     "SpotCost": 25.0000,
     "StationLegacyCallLetters": "WPFO",
     "Unit": null
@@ -300,6 +303,7 @@
           "ShowType": "Sports",
           "StartTime": 3600
         },
+        "ProgramName": "2 BROKE GIRLS",
         "Programs": [
           {
             "DativaGenre": "Comedy",
@@ -317,8 +321,8 @@
     "MediaWeekIds": [
       771
     ],
-    "ProjectedImpressions": 58.7,
-    "ProvidedImpressions": 200.0,
+    "ProjectedImpressions": 49.895,
+    "ProvidedImpressions": 170.0,
     "SpotCost": 6.0000,
     "StationLegacyCallLetters": "WPFO",
     "Unit": null

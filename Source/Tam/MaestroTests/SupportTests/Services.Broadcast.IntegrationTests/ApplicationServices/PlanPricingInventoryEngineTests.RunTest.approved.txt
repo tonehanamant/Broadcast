@@ -57,6 +57,7 @@
           "ShowType": "Mini-Movie",
           "StartTime": 3600
         },
+        "ProgramName": "FRIENDS",
         "Programs": [
           {
             "DativaGenre": "Family",
@@ -77,8 +78,8 @@
       774,
       775
     ],
-    "ProjectedImpressions": 39331.375,
-    "ProvidedImpressions": 34500.0,
+    "ProjectedImpressions": 33431.66875,
+    "ProvidedImpressions": 29325.0,
     "SpotCost": 375.0000,
     "StationLegacyCallLetters": "WPIX",
     "Unit": null
@@ -141,6 +142,7 @@
           "ShowType": "Mini-Movie",
           "StartTime": 3600
         },
+        "ProgramName": "TWO & A HALF MEN",
         "Programs": [
           {
             "DativaGenre": "Family",
@@ -161,8 +163,8 @@
       774,
       775
     ],
-    "ProjectedImpressions": 33615.275,
-    "ProvidedImpressions": 29600.0,
+    "ProjectedImpressions": 28572.98375,
+    "ProvidedImpressions": 25160.0,
     "SpotCost": 350.0000,
     "StationLegacyCallLetters": "WPIX",
     "Unit": null
@@ -225,6 +227,7 @@
           "ShowType": "Mini-Movie",
           "StartTime": 3600
         },
+        "ProgramName": "FRIENDS",
         "Programs": [
           {
             "DativaGenre": "Family",
@@ -245,8 +248,8 @@
       774,
       775
     ],
-    "ProjectedImpressions": 44998.25,
-    "ProvidedImpressions": 30200.0,
+    "ProjectedImpressions": 38248.5125,
+    "ProvidedImpressions": 25670.0,
     "SpotCost": 400.0000,
     "StationLegacyCallLetters": "WPIX",
     "Unit": null
@@ -309,6 +312,7 @@
           "ShowType": "Mini-Movie",
           "StartTime": 3600
         },
+        "ProgramName": "FRIENDS",
         "Programs": [
           {
             "DativaGenre": "Family",
@@ -329,8 +333,8 @@
       774,
       775
     ],
-    "ProjectedImpressions": 30683.0,
-    "ProvidedImpressions": 21800.0,
+    "ProjectedImpressions": 26080.55,
+    "ProvidedImpressions": 18530.0,
     "SpotCost": 375.0000,
     "StationLegacyCallLetters": "WPIX",
     "Unit": null
@@ -393,6 +397,7 @@
           "ShowType": "Mini-Movie",
           "StartTime": 3600
         },
+        "ProgramName": "FRIENDS 2X",
         "Programs": [
           {
             "DativaGenre": "Family",
@@ -413,8 +418,8 @@
       774,
       775
     ],
-    "ProjectedImpressions": 40034.6875,
-    "ProvidedImpressions": 23400.0,
+    "ProjectedImpressions": 34029.484375,
+    "ProvidedImpressions": 19890.0,
     "SpotCost": 300.0000,
     "StationLegacyCallLetters": "WPIX",
     "Unit": null
@@ -477,6 +482,7 @@
           "ShowType": "Sports",
           "StartTime": 3600
         },
+        "ProgramName": "TWO & HALF MEN",
         "Programs": [
           {
             "DativaGenre": "Comedy",
@@ -497,8 +503,8 @@
       774,
       775
     ],
-    "ProjectedImpressions": 87.7,
-    "ProvidedImpressions": 300.0,
+    "ProjectedImpressions": 74.545,
+    "ProvidedImpressions": 255.0,
     "SpotCost": 25.0000,
     "StationLegacyCallLetters": "WPFO",
     "Unit": null
@@ -561,6 +567,7 @@
           "ShowType": "Sports",
           "StartTime": 3600
         },
+        "ProgramName": "2.5 MEN X2",
         "Programs": [
           {
             "DativaGenre": "Comedy",
@@ -581,8 +588,8 @@
       774,
       775
     ],
-    "ProjectedImpressions": 217.3125,
-    "ProvidedImpressions": 300.0,
+    "ProjectedImpressions": 184.715625,
+    "ProvidedImpressions": 255.0,
     "SpotCost": 6.0000,
     "StationLegacyCallLetters": "WPFO",
     "Unit": null
@@ -645,6 +652,7 @@
           "ShowType": "Sports",
           "StartTime": 3600
         },
+        "ProgramName": "SEINFELD X2",
         "Programs": [
           {
             "DativaGenre": "Comedy",
@@ -665,8 +673,8 @@
       774,
       775
     ],
-    "ProjectedImpressions": 290.0,
-    "ProvidedImpressions": 200.0,
+    "ProjectedImpressions": 246.5,
+    "ProvidedImpressions": 170.0,
     "SpotCost": 6.0000,
     "StationLegacyCallLetters": "WPFO",
     "Unit": null
@@ -729,6 +737,7 @@
           "ShowType": "Sports",
           "StartTime": 3600
         },
+        "ProgramName": "2 BROKE GIRLS",
         "Programs": [
           {
             "DativaGenre": "Comedy",
@@ -749,8 +758,8 @@
       774,
       775
     ],
-    "ProjectedImpressions": 58.7,
-    "ProvidedImpressions": 200.0,
+    "ProjectedImpressions": 49.895,
+    "ProvidedImpressions": 170.0,
     "SpotCost": 6.0000,
     "StationLegacyCallLetters": "WPFO",
     "Unit": null
@@ -891,31 +900,15 @@
         },
         "Id": 633847,
         "PrimaryProgram": {
-          "DativaGenre": "News",
-          "EndTime": 7200,
-          "MaestroGenre": "News",
-          "Name": "11 NEWS @ 10:00PM - SAT",
-          "ShowType": "MOV",
-          "StartTime": 3600
+          "DativaGenre": null,
+          "EndTime": 0,
+          "MaestroGenre": "",
+          "Name": null,
+          "ShowType": "",
+          "StartTime": 0
         },
-        "Programs": [
-          {
-            "DativaGenre": "News",
-            "EndTime": 7200,
-            "MaestroGenre": "News",
-            "Name": "11 NEWS @ 10:00PM - SAT",
-            "ShowType": "MOV",
-            "StartTime": 3600
-          },
-          {
-            "DativaGenre": "News",
-            "EndTime": 7200,
-            "MaestroGenre": "News",
-            "Name": "11 NEWS @ 10:00PM - SAT",
-            "ShowType": "MOV",
-            "StartTime": 3600
-          }
-        ]
+        "ProgramName": null,
+        "Programs": []
       }
     ],
     "MarketCode": 101,
@@ -923,7 +916,7 @@
       772,
       773
     ],
-    "ProjectedImpressions": 8247.55,
+    "ProjectedImpressions": 7010.4175,
     "ProvidedImpressions": null,
     "SpotCost": 710.1468,
     "StationLegacyCallLetters": "HPIX",
@@ -1065,31 +1058,15 @@
         },
         "Id": 633849,
         "PrimaryProgram": {
-          "DativaGenre": "News",
-          "EndTime": 7200,
-          "MaestroGenre": "News",
-          "Name": "11 NEWS @ 5.30PM",
-          "ShowType": "MOVTBA",
-          "StartTime": 3600
+          "DativaGenre": null,
+          "EndTime": 0,
+          "MaestroGenre": "",
+          "Name": null,
+          "ShowType": "",
+          "StartTime": 0
         },
-        "Programs": [
-          {
-            "DativaGenre": "News",
-            "EndTime": 7200,
-            "MaestroGenre": "News",
-            "Name": "11 NEWS @ 5.30PM",
-            "ShowType": "MOVTBA",
-            "StartTime": 3600
-          },
-          {
-            "DativaGenre": "News",
-            "EndTime": 7200,
-            "MaestroGenre": "News",
-            "Name": "11 NEWS @ 5.30PM",
-            "ShowType": "MOVTBA",
-            "StartTime": 3600
-          }
-        ]
+        "ProgramName": null,
+        "Programs": []
       }
     ],
     "MarketCode": 101,
@@ -1097,7 +1074,7 @@
       772,
       773
     ],
-    "ProjectedImpressions": 8247.55,
+    "ProjectedImpressions": 7010.4175,
     "ProvidedImpressions": null,
     "SpotCost": 710.1468,
     "StationLegacyCallLetters": "HPIX",
@@ -1114,107 +1091,107 @@
       },
       {
         "AudienceId": 4,
-        "Impressions": 0.0,
+        "Impressions": 3680.075,
         "IsReference": false
       },
       {
         "AudienceId": 5,
-        "Impressions": 0.0,
+        "Impressions": 304.45,
         "IsReference": false
       },
       {
         "AudienceId": 6,
-        "Impressions": 0.0,
+        "Impressions": 0.32499999999999996,
         "IsReference": false
       },
       {
         "AudienceId": 7,
-        "Impressions": 0.0,
+        "Impressions": 782.85,
         "IsReference": false
       },
       {
         "AudienceId": 13,
-        "Impressions": 0.0,
+        "Impressions": 11377.724999999999,
         "IsReference": false
       },
       {
         "AudienceId": 14,
-        "Impressions": 0.0,
+        "Impressions": 28657.95,
         "IsReference": false
       },
       {
         "AudienceId": 15,
-        "Impressions": 0.0,
+        "Impressions": 67112.924999999988,
         "IsReference": false
       },
       {
         "AudienceId": 19,
-        "Impressions": 0.0,
+        "Impressions": 505.4,
         "IsReference": false
       },
       {
         "AudienceId": 20,
-        "Impressions": 0.0,
+        "Impressions": 0.05,
         "IsReference": false
       },
       {
         "AudienceId": 21,
-        "Impressions": 0.0,
+        "Impressions": 467.05,
         "IsReference": false
       },
       {
         "AudienceId": 22,
-        "Impressions": 0.0,
+        "Impressions": 1245.625,
         "IsReference": false
       },
       {
         "AudienceId": 28,
-        "Impressions": 0.0,
+        "Impressions": 5102.0750000000007,
         "IsReference": false
       },
       {
         "AudienceId": 29,
-        "Impressions": 0.0,
+        "Impressions": 14374.825,
         "IsReference": false
       },
       {
         "AudienceId": 30,
-        "Impressions": 0.0,
+        "Impressions": 34135.55,
         "IsReference": false
       },
       {
         "AudienceId": 31,
-        "Impressions": 0.0,
+        "Impressions": 158509.09999999998,
         "IsReference": false
       },
       {
         "AudienceId": 46,
-        "Impressions": 0.0,
+        "Impressions": 3293.625,
         "IsReference": false
       },
       {
         "AudienceId": 284,
-        "Impressions": 0.0,
+        "Impressions": 2126.125,
         "IsReference": false
       },
       {
         "AudienceId": 290,
-        "Impressions": 0.0,
+        "Impressions": 9194.675,
         "IsReference": false
       },
       {
         "AudienceId": 339,
-        "Impressions": 0.0,
+        "Impressions": 458.375,
         "IsReference": false
       },
       {
         "AudienceId": 347,
-        "Impressions": 0.0,
+        "Impressions": 10303.225,
         "IsReference": false
       },
       {
         "AudienceId": 348,
-        "Impressions": 0.0,
+        "Impressions": 3707.6,
         "IsReference": false
       }
     ],
@@ -1239,47 +1216,15 @@
         },
         "Id": 633852,
         "PrimaryProgram": {
-          "DativaGenre": "News",
-          "EndTime": 7200,
-          "MaestroGenre": "News",
-          "Name": "11 NEWS @  5:00AM",
-          "ShowType": "MOVTBA",
-          "StartTime": 3600
+          "DativaGenre": null,
+          "EndTime": 0,
+          "MaestroGenre": "",
+          "Name": "Eyewitness News at 430a",
+          "ShowType": "",
+          "StartTime": 0
         },
-        "Programs": [
-          {
-            "DativaGenre": "News",
-            "EndTime": 7200,
-            "MaestroGenre": "News",
-            "Name": "11 NEWS @  5:00AM",
-            "ShowType": "MOVTBA",
-            "StartTime": 3600
-          },
-          {
-            "DativaGenre": "News",
-            "EndTime": 7200,
-            "MaestroGenre": "News",
-            "Name": "11 NEWS @  5:00AM",
-            "ShowType": "MOVTBA",
-            "StartTime": 3600
-          },
-          {
-            "DativaGenre": "News",
-            "EndTime": 7200,
-            "MaestroGenre": "News",
-            "Name": "11 NEWS @  5:00AM",
-            "ShowType": "MOVTBA",
-            "StartTime": 3600
-          },
-          {
-            "DativaGenre": "News",
-            "EndTime": 7200,
-            "MaestroGenre": "News",
-            "Name": "11 NEWS @  5:00AM",
-            "ShowType": "MOVTBA",
-            "StartTime": 3600
-          }
-        ]
+        "ProgramName": "Eyewitness News at 430a",
+        "Programs": []
       }
     ],
     "MarketCode": 101,
@@ -1289,10 +1234,10 @@
       774,
       775
     ],
-    "ProjectedImpressions": 41974.75,
-    "ProvidedImpressions": 88000.0,
+    "ProjectedImpressions": 154195.29125,
+    "ProvidedImpressions": 74800.0,
     "SpotCost": 600.0016,
-    "StationLegacyCallLetters": "WNYW",
+    "StationLegacyCallLetters": "WCBS",
     "Unit": null
   }
 ]

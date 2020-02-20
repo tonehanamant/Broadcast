@@ -10,8 +10,8 @@
     "OptimalCpm": 13.3000,
     "Programs": [
       {
-        "AvgCpm": 12.9032,
-        "AvgImpressions": 55800.0,
+        "AvgCpm": 15.2562,
+        "AvgImpressions": 47430.0,
         "Genre": "Children",
         "MarketCount": 1,
         "PercentageOfBuy": 99.28825623,
@@ -19,8 +19,8 @@
         "StationCount": 1
       },
       {
-        "AvgCpm": 43.0000,
-        "AvgImpressions": 500.0,
+        "AvgCpm": 50.8412,
+        "AvgImpressions": 425.0,
         "Genre": "Comedy",
         "MarketCount": 1,
         "PercentageOfBuy": 0.71174377,
@@ -29,8 +29,8 @@
       }
     ],
     "Totals": {
-      "AvgCpm": 13.1174,
-      "AvgImpressions": 31222.22222222,
+      "AvgCpm": 15.5094,
+      "AvgImpressions": 26538.88888889,
       "MarketCount": 2,
       "StationCount": 2
     }
