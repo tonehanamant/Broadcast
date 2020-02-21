@@ -67,5 +67,11 @@ namespace Services.Broadcast.Extensions
                 yield return items.GetRange(i, Math.Min(chunkSize, items.Count - i));
             }
         }
+
+        public static double DoubleSumOrDefault(this IEnumerable<object> enumerable)
+        {
+            return enumerable.Select(x=> (double)x).DefaultIfEmpty().Sum();
+        }
+
     }
 }

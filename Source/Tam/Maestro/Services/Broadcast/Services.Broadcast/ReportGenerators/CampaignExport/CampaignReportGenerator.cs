@@ -13,7 +13,8 @@ namespace Services.Broadcast.ReportGenerators.CampaignExport
         private readonly string CONTRACT_WORKSHEET_NAME = "Contract";
         private readonly string TERMS_WORKSHEET_NAME = "Terms & Conditions";
         private readonly string FLOW_CHART_WORKSHEET_NAME = "Flow Chart";
-        
+        private readonly string FLOW_CHART_TEMPLATE_TABLES_WORKSHEET_NAME = "Flow Chart template tables";
+
         private readonly string CAMPAIGN_EXPORT_TEMPLATE_FILENAME = "Template - Campaign Export.xlsx";
         private readonly string CAMPAIGN_EXPORT_WITH_SECONDARY_DEMOS_TEMPLATE_FILENAME = "Template - Campaign Export With Secondary Audiences.xlsx";
         private readonly string TEMPLATES_FILE_PATH;
@@ -53,7 +54,9 @@ namespace Services.Broadcast.ReportGenerators.CampaignExport
             new ProposalReportGenerator().PopulateProposalTab(campaignReportData, proposalWorksheet);
 
             ExcelWorksheet flowChartWorksheet = ExportSharedLogic.GetWorksheet(templateFilePath, package, FLOW_CHART_WORKSHEET_NAME);
-            new FlowChartReportGenerator().PopulateFlowChartTab(campaignReportData, flowChartWorksheet);
+            ExcelWorksheet flowChartTemplateTablesWorksheet = ExportSharedLogic.GetWorksheet(templateFilePath, package, FLOW_CHART_TEMPLATE_TABLES_WORKSHEET_NAME);
+            new FlowChartReportGenerator().PopulateFlowChartTab(campaignReportData
+                , flowChartWorksheet, flowChartTemplateTablesWorksheet);
             if (campaignReportData.Status.Equals("Proposal"))
             {
                 package.Workbook.Worksheets.Delete(CONTRACT_WORKSHEET_NAME);
@@ -65,6 +68,9 @@ namespace Services.Broadcast.ReportGenerators.CampaignExport
                 ExcelWorksheet contractWorksheet = ExportSharedLogic.GetWorksheet(CAMPAIGN_EXPORT_TEMPLATE_FILENAME, package, CONTRACT_WORKSHEET_NAME);
                 new ContractReportGenerator().PopulateContractTab(campaignReportData, contractWorksheet);
             }
+
+            //remove flow chart template tables worksheet
+            package.Workbook.Worksheets.Delete(FLOW_CHART_TEMPLATE_TABLES_WORKSHEET_NAME);
 
             //set the first tab as the active tab in the file
             package.Workbook.Worksheets.First().Select();

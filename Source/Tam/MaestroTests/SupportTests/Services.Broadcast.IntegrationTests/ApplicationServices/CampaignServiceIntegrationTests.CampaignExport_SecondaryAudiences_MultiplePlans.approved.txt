@@ -112,8 +112,8 @@
         0.0,
         0.0,
         0.0,
-        250000.000000,
-        250000.000000
+        125000.000000,
+        125000.000000
       ],
       "CPMValues": [
         0.0,
@@ -145,8 +145,8 @@
         0.0,
         0.0,
         0.0,
-        0.25,
-        "-"
+        0.08333333,
+        0.08333333
       ],
       "HiatusDays": [
         [],
@@ -177,7 +177,7 @@
         "",
         "",
         "",
-        0
+        null
       ],
       "ImpressionsValues": [
         0.0,
@@ -192,16 +192,26 @@
         0.0,
         0.0,
         0.0,
-        10000.0,
-        10000.0
+        5000.0,
+        5000.0
       ],
-      "MonthsLabel": [
-        "October",
-        "November",
-        "December"
+      "Months": [
+        {
+          "Item1": "October",
+          "Item2": 4
+        },
+        {
+          "Item1": "November",
+          "Item2": 4
+        },
+        {
+          "Item1": "December",
+          "Item2": 5
+        }
       ],
       "QuarterLabel": "4Q '19",
       "TableTitle": "4Q '19 DAY :30s ",
+      "TotalWeeksInQuarter": 13,
       "UnitsValues": [
         0,
         0,
@@ -248,8 +258,8 @@
         0.0,
         0.0,
         0.0,
-        250000.000000,
-        250000.000000
+        125000.000000,
+        125000.000000
       ],
       "CPMValues": [
         0.0,
@@ -281,8 +291,8 @@
         0.0,
         0.0,
         0.0,
-        0.25,
-        "-"
+        0.08333333,
+        0.08333333
       ],
       "HiatusDays": [
         [],
@@ -313,7 +323,7 @@
         "",
         "",
         "",
-        0
+        null
       ],
       "ImpressionsValues": [
         0.0,
@@ -328,16 +338,26 @@
         0.0,
         0.0,
         0.0,
-        10000.0,
-        10000.0
+        5000.0,
+        5000.0
       ],
-      "MonthsLabel": [
-        "October",
-        "November",
-        "December"
+      "Months": [
+        {
+          "Item1": "October",
+          "Item2": 4
+        },
+        {
+          "Item1": "November",
+          "Item2": 4
+        },
+        {
+          "Item1": "December",
+          "Item2": 5
+        }
       ],
       "QuarterLabel": "4Q '19",
       "TableTitle": "4Q '19 DAY :15s eq.",
+      "TotalWeeksInQuarter": 13,
       "UnitsValues": [
         0,
         0,
@@ -384,8 +404,8 @@
         0.0,
         0.0,
         0.0,
-        500000.000000,
-        500000.000000
+        250000.000000,
+        250000.000000
       ],
       "CPMValues": [
         0.0,
@@ -417,8 +437,8 @@
         0.0,
         0.0,
         0.0,
-        0.25,
-        "-"
+        0.16666667,
+        0.16666667
       ],
       "HiatusDays": [
         [],
@@ -449,7 +469,7 @@
         "",
         "",
         "",
-        0
+        null
       ],
       "ImpressionsValues": [
         0.0,
@@ -464,16 +484,26 @@
         0.0,
         0.0,
         0.0,
-        20000.0,
-        20000.0
+        10000.0,
+        10000.0
       ],
-      "MonthsLabel": [
-        "October",
-        "November",
-        "December"
+      "Months": [
+        {
+          "Item1": "October",
+          "Item2": 4
+        },
+        {
+          "Item1": "November",
+          "Item2": 4
+        },
+        {
+          "Item1": "December",
+          "Item2": 5
+        }
       ],
       "QuarterLabel": null,
       "TableTitle": "4Q '19 DAY Total",
+      "TotalWeeksInQuarter": 13,
       "UnitsValues": [
         0,
         0,
@@ -520,8 +550,8 @@
         0.0,
         0.0,
         0.0,
-        250000.000000,
-        250000.000000
+        125000.000000,
+        125000.000000
       ],
       "CPMValues": [
         0.0,
@@ -553,8 +583,8 @@
         0.0,
         0.0,
         0.0,
-        0.25,
-        "-"
+        0.08333333,
+        0.08333333
       ],
       "HiatusDays": [
         [],
@@ -585,7 +615,7 @@
         "",
         "",
         "",
-        0
+        null
       ],
       "ImpressionsValues": [
         0.0,
@@ -600,16 +630,172 @@
         0.0,
         0.0,
         0.0,
-        10000.0,
-        10000.0
+        5000.0,
+        5000.0
       ],
-      "MonthsLabel": [
-        "October",
-        "November",
-        "December"
+      "Months": [
+        {
+          "Item1": "October",
+          "Item2": 4
+        },
+        {
+          "Item1": "November",
+          "Item2": 4
+        },
+        {
+          "Item1": "December",
+          "Item2": 5
+        }
       ],
       "QuarterLabel": "4Q '19",
       "TableTitle": "4Q '19 EMN :30s ",
+      "TotalWeeksInQuarter": 13,
+      "UnitsValues": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "WeeksStartDate": [
+        "2019-09-30T00:00:00",
+        "2019-10-07T00:00:00",
+        "2019-10-14T00:00:00",
+        "2019-10-21T00:00:00",
+        "2019-10-28T00:00:00",
+        "2019-11-04T00:00:00",
+        "2019-11-11T00:00:00",
+        "2019-11-18T00:00:00",
+        "2019-11-25T00:00:00",
+        "2019-12-02T00:00:00",
+        "2019-12-09T00:00:00",
+        "2019-12-16T00:00:00",
+        "2019-12-23T00:00:00"
+      ]
+    },
+    {
+      "CostValues": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        125000.000000,
+        125000.000000
+      ],
+      "CPMValues": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        25.000000,
+        25.000000
+      ],
+      "DaypartCode": "EMN",
+      "DistributionPercentages": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.08333333,
+        0.08333333
+      ],
+      "HiatusDays": [
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        []
+      ],
+      "HiatusDaysFormattedValues": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        null
+      ],
+      "ImpressionsValues": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        5000.0,
+        5000.0
+      ],
+      "Months": [
+        {
+          "Item1": "October",
+          "Item2": 4
+        },
+        {
+          "Item1": "November",
+          "Item2": 4
+        },
+        {
+          "Item1": "December",
+          "Item2": 5
+        }
+      ],
+      "QuarterLabel": "4Q '19",
+      "TableTitle": "4Q '19 EMN :15s eq.",
+      "TotalWeeksInQuarter": 13,
       "UnitsValues": [
         0,
         0,
@@ -658,142 +844,6 @@
         0.0,
         250000.000000,
         250000.000000
-      ],
-      "CPMValues": [
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        25.000000,
-        25.000000
-      ],
-      "DaypartCode": "EMN",
-      "DistributionPercentages": [
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        0.25,
-        "-"
-      ],
-      "HiatusDays": [
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
-        []
-      ],
-      "HiatusDaysFormattedValues": [
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        0
-      ],
-      "ImpressionsValues": [
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        10000.0,
-        10000.0
-      ],
-      "MonthsLabel": [
-        "October",
-        "November",
-        "December"
-      ],
-      "QuarterLabel": "4Q '19",
-      "TableTitle": "4Q '19 EMN :15s eq.",
-      "UnitsValues": [
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0
-      ],
-      "WeeksStartDate": [
-        "2019-09-30T00:00:00",
-        "2019-10-07T00:00:00",
-        "2019-10-14T00:00:00",
-        "2019-10-21T00:00:00",
-        "2019-10-28T00:00:00",
-        "2019-11-04T00:00:00",
-        "2019-11-11T00:00:00",
-        "2019-11-18T00:00:00",
-        "2019-11-25T00:00:00",
-        "2019-12-02T00:00:00",
-        "2019-12-09T00:00:00",
-        "2019-12-16T00:00:00",
-        "2019-12-23T00:00:00"
-      ]
-    },
-    {
-      "CostValues": [
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        500000.000000,
-        500000.000000
       ],
       "CPMValues": [
         0.0,
@@ -825,8 +875,8 @@
         0.0,
         0.0,
         0.0,
-        0.25,
-        "-"
+        0.16666667,
+        0.16666667
       ],
       "HiatusDays": [
         [],
@@ -857,7 +907,7 @@
         "",
         "",
         "",
-        0
+        null
       ],
       "ImpressionsValues": [
         0.0,
@@ -872,16 +922,26 @@
         0.0,
         0.0,
         0.0,
-        20000.0,
-        20000.0
+        10000.0,
+        10000.0
       ],
-      "MonthsLabel": [
-        "October",
-        "November",
-        "December"
+      "Months": [
+        {
+          "Item1": "October",
+          "Item2": 4
+        },
+        {
+          "Item1": "November",
+          "Item2": 4
+        },
+        {
+          "Item1": "December",
+          "Item2": 5
+        }
       ],
       "QuarterLabel": null,
       "TableTitle": "4Q '19 EMN Total",
+      "TotalWeeksInQuarter": 13,
       "UnitsValues": [
         0,
         0,
@@ -961,8 +1021,8 @@
         0.0,
         0.0,
         0.0,
-        0.5,
-        "-"
+        0.16666667,
+        0.16666667
       ],
       "HiatusDays": [
         [],
@@ -993,7 +1053,7 @@
         "",
         "",
         "",
-        0
+        null
       ],
       "ImpressionsValues": [
         0.0,
@@ -1011,13 +1071,23 @@
         10000.0,
         10000.0
       ],
-      "MonthsLabel": [
-        "October",
-        "November",
-        "December"
+      "Months": [
+        {
+          "Item1": "October",
+          "Item2": 4
+        },
+        {
+          "Item1": "November",
+          "Item2": 4
+        },
+        {
+          "Item1": "December",
+          "Item2": 5
+        }
       ],
       "QuarterLabel": "4Q '19",
       "TableTitle": "4Q '19 PT :30s ",
+      "TotalWeeksInQuarter": 13,
       "UnitsValues": [
         0,
         0,
@@ -1097,8 +1167,8 @@
         0.0,
         0.0,
         0.0,
-        0.5,
-        "-"
+        0.16666667,
+        0.16666667
       ],
       "HiatusDays": [
         [],
@@ -1129,7 +1199,7 @@
         "",
         "",
         "",
-        0
+        null
       ],
       "ImpressionsValues": [
         0.0,
@@ -1147,13 +1217,23 @@
         10000.0,
         10000.0
       ],
-      "MonthsLabel": [
-        "October",
-        "November",
-        "December"
+      "Months": [
+        {
+          "Item1": "October",
+          "Item2": 4
+        },
+        {
+          "Item1": "November",
+          "Item2": 4
+        },
+        {
+          "Item1": "December",
+          "Item2": 5
+        }
       ],
       "QuarterLabel": null,
       "TableTitle": "4Q '19 PT Total",
+      "TotalWeeksInQuarter": 13,
       "UnitsValues": [
         0,
         0,
@@ -1169,108 +1249,6 @@
         0,
         0,
         0
-      ],
-      "WeeksStartDate": [
-        "2019-09-30T00:00:00",
-        "2019-10-07T00:00:00",
-        "2019-10-14T00:00:00",
-        "2019-10-21T00:00:00",
-        "2019-10-28T00:00:00",
-        "2019-11-04T00:00:00",
-        "2019-11-11T00:00:00",
-        "2019-11-18T00:00:00",
-        "2019-11-25T00:00:00",
-        "2019-12-02T00:00:00",
-        "2019-12-09T00:00:00",
-        "2019-12-16T00:00:00",
-        "2019-12-23T00:00:00"
-      ]
-    },
-    {
-      "CostValues": [
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null
-      ],
-      "CPMValues": [
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null
-      ],
-      "DaypartCode": null,
-      "DistributionPercentages": [
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null
-      ],
-      "HiatusDays": [],
-      "HiatusDaysFormattedValues": [],
-      "ImpressionsValues": [
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null
-      ],
-      "MonthsLabel": [
-        "October",
-        "November",
-        "December"
-      ],
-      "QuarterLabel": null,
-      "TableTitle": "4Q '19 ADU",
-      "UnitsValues": [
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null
       ],
       "WeeksStartDate": [
         "2019-09-30T00:00:00",
@@ -1323,20 +1301,20 @@
       ],
       "DaypartCode": "MDN",
       "DistributionPercentages": [
-        0.01923077,
-        0.01923077,
-        0.01923077,
-        0.01923077,
-        0.01923077,
-        0.01923077,
-        0.01923077,
-        0.01923077,
-        0.01923077,
-        0.01923077,
-        0.01923077,
-        0.01923077,
-        0.01923077,
-        "-"
+        0.00641026,
+        0.00641026,
+        0.00641026,
+        0.00641026,
+        0.00641026,
+        0.00641026,
+        0.00641026,
+        0.00641026,
+        0.00641026,
+        0.00641026,
+        0.00641026,
+        0.00641026,
+        0.00641026,
+        0.08333333
       ],
       "HiatusDays": [
         [],
@@ -1367,7 +1345,7 @@
         "",
         "",
         "",
-        0
+        null
       ],
       "ImpressionsValues": [
         384.61538462,
@@ -1385,13 +1363,23 @@
         384.61538462,
         5000.0
       ],
-      "MonthsLabel": [
-        "January",
-        "February",
-        "March"
+      "Months": [
+        {
+          "Item1": "January",
+          "Item2": 4
+        },
+        {
+          "Item1": "February",
+          "Item2": 4
+        },
+        {
+          "Item1": "March",
+          "Item2": 5
+        }
       ],
       "QuarterLabel": "1Q '20",
       "TableTitle": "1Q '20 MDN :90s ",
+      "TotalWeeksInQuarter": 13,
       "UnitsValues": [
         0,
         0,
@@ -1459,20 +1447,20 @@
       ],
       "DaypartCode": null,
       "DistributionPercentages": [
-        0.01923077,
-        0.01923077,
-        0.01923077,
-        0.01923077,
-        0.01923077,
-        0.01923077,
-        0.01923077,
-        0.01923077,
-        0.01923077,
-        0.01923077,
-        0.01923077,
-        0.01923077,
-        0.01923077,
-        "-"
+        0.00641026,
+        0.00641026,
+        0.00641026,
+        0.00641026,
+        0.00641026,
+        0.00641026,
+        0.00641026,
+        0.00641026,
+        0.00641026,
+        0.00641026,
+        0.00641026,
+        0.00641026,
+        0.00641026,
+        0.08333333
       ],
       "HiatusDays": [
         [],
@@ -1503,7 +1491,7 @@
         "",
         "",
         "",
-        0
+        null
       ],
       "ImpressionsValues": [
         384.61538462,
@@ -1521,13 +1509,23 @@
         384.61538462,
         5000.0
       ],
-      "MonthsLabel": [
-        "January",
-        "February",
-        "March"
+      "Months": [
+        {
+          "Item1": "January",
+          "Item2": 4
+        },
+        {
+          "Item1": "February",
+          "Item2": 4
+        },
+        {
+          "Item1": "March",
+          "Item2": 5
+        }
       ],
       "QuarterLabel": null,
       "TableTitle": "1Q '20 MDN Total",
+      "TotalWeeksInQuarter": 13,
       "UnitsValues": [
         0,
         0,
@@ -1595,20 +1593,20 @@
       ],
       "DaypartCode": "PA",
       "DistributionPercentages": [
-        0.01923077,
-        0.01923077,
-        0.01923077,
-        0.01923077,
-        0.01923077,
-        0.01923077,
-        0.01923077,
-        0.01923077,
-        0.01923077,
-        0.01923077,
-        0.01923077,
-        0.01923077,
-        0.01923077,
-        "-"
+        0.00641026,
+        0.00641026,
+        0.00641026,
+        0.00641026,
+        0.00641026,
+        0.00641026,
+        0.00641026,
+        0.00641026,
+        0.00641026,
+        0.00641026,
+        0.00641026,
+        0.00641026,
+        0.00641026,
+        0.08333333
       ],
       "HiatusDays": [
         [],
@@ -1639,7 +1637,7 @@
         "",
         "",
         "",
-        0
+        null
       ],
       "ImpressionsValues": [
         384.61538462,
@@ -1657,13 +1655,23 @@
         384.61538462,
         5000.0
       ],
-      "MonthsLabel": [
-        "January",
-        "February",
-        "March"
+      "Months": [
+        {
+          "Item1": "January",
+          "Item2": 4
+        },
+        {
+          "Item1": "February",
+          "Item2": 4
+        },
+        {
+          "Item1": "March",
+          "Item2": 5
+        }
       ],
       "QuarterLabel": "1Q '20",
       "TableTitle": "1Q '20 PA :90s ",
+      "TotalWeeksInQuarter": 13,
       "UnitsValues": [
         0,
         0,
@@ -1731,20 +1739,20 @@
       ],
       "DaypartCode": null,
       "DistributionPercentages": [
-        0.01923077,
-        0.01923077,
-        0.01923077,
-        0.01923077,
-        0.01923077,
-        0.01923077,
-        0.01923077,
-        0.01923077,
-        0.01923077,
-        0.01923077,
-        0.01923077,
-        0.01923077,
-        0.01923077,
-        "-"
+        0.00641026,
+        0.00641026,
+        0.00641026,
+        0.00641026,
+        0.00641026,
+        0.00641026,
+        0.00641026,
+        0.00641026,
+        0.00641026,
+        0.00641026,
+        0.00641026,
+        0.00641026,
+        0.00641026,
+        0.08333333
       ],
       "HiatusDays": [
         [],
@@ -1775,7 +1783,7 @@
         "",
         "",
         "",
-        0
+        null
       ],
       "ImpressionsValues": [
         384.61538462,
@@ -1793,13 +1801,23 @@
         384.61538462,
         5000.0
       ],
-      "MonthsLabel": [
-        "January",
-        "February",
-        "March"
+      "Months": [
+        {
+          "Item1": "January",
+          "Item2": 4
+        },
+        {
+          "Item1": "February",
+          "Item2": 4
+        },
+        {
+          "Item1": "March",
+          "Item2": 5
+        }
       ],
       "QuarterLabel": null,
       "TableTitle": "1Q '20 PA Total",
+      "TotalWeeksInQuarter": 13,
       "UnitsValues": [
         0,
         0,
@@ -1867,7 +1885,7 @@
       ],
       "DaypartCode": "DAY",
       "DistributionPercentages": [
-        0.25,
+        0.08333333,
         0.0,
         0.0,
         0.0,
@@ -1880,7 +1898,7 @@
         0.0,
         0.0,
         0.0,
-        "-"
+        0.08333333
       ],
       "HiatusDays": [
         [],
@@ -1911,7 +1929,7 @@
         "",
         "",
         "",
-        0
+        null
       ],
       "ImpressionsValues": [
         5000.0,
@@ -1929,13 +1947,23 @@
         0.0,
         5000.0
       ],
-      "MonthsLabel": [
-        "January",
-        "February",
-        "March"
+      "Months": [
+        {
+          "Item1": "January",
+          "Item2": 4
+        },
+        {
+          "Item1": "February",
+          "Item2": 4
+        },
+        {
+          "Item1": "March",
+          "Item2": 5
+        }
       ],
       "QuarterLabel": "1Q '20",
       "TableTitle": "1Q '20 DAY :15s eq.",
+      "TotalWeeksInQuarter": 13,
       "UnitsValues": [
         0,
         0,
@@ -2003,7 +2031,7 @@
       ],
       "DaypartCode": null,
       "DistributionPercentages": [
-        0.25,
+        0.08333333,
         0.0,
         0.0,
         0.0,
@@ -2016,7 +2044,7 @@
         0.0,
         0.0,
         0.0,
-        "-"
+        0.08333333
       ],
       "HiatusDays": [
         [],
@@ -2047,7 +2075,7 @@
         "",
         "",
         "",
-        0
+        null
       ],
       "ImpressionsValues": [
         5000.0,
@@ -2065,13 +2093,23 @@
         0.0,
         5000.0
       ],
-      "MonthsLabel": [
-        "January",
-        "February",
-        "March"
+      "Months": [
+        {
+          "Item1": "January",
+          "Item2": 4
+        },
+        {
+          "Item1": "February",
+          "Item2": 4
+        },
+        {
+          "Item1": "March",
+          "Item2": 5
+        }
       ],
       "QuarterLabel": null,
       "TableTitle": "1Q '20 DAY Total",
+      "TotalWeeksInQuarter": 13,
       "UnitsValues": [
         0,
         0,
@@ -2139,7 +2177,7 @@
       ],
       "DaypartCode": "EMN",
       "DistributionPercentages": [
-        0.25,
+        0.08333333,
         0.0,
         0.0,
         0.0,
@@ -2152,7 +2190,7 @@
         0.0,
         0.0,
         0.0,
-        "-"
+        0.08333333
       ],
       "HiatusDays": [
         [],
@@ -2183,7 +2221,7 @@
         "",
         "",
         "",
-        0
+        null
       ],
       "ImpressionsValues": [
         5000.0,
@@ -2201,13 +2239,23 @@
         0.0,
         5000.0
       ],
-      "MonthsLabel": [
-        "January",
-        "February",
-        "March"
+      "Months": [
+        {
+          "Item1": "January",
+          "Item2": 4
+        },
+        {
+          "Item1": "February",
+          "Item2": 4
+        },
+        {
+          "Item1": "March",
+          "Item2": 5
+        }
       ],
       "QuarterLabel": "1Q '20",
       "TableTitle": "1Q '20 EMN :15s eq.",
+      "TotalWeeksInQuarter": 13,
       "UnitsValues": [
         0,
         0,
@@ -2275,7 +2323,7 @@
       ],
       "DaypartCode": null,
       "DistributionPercentages": [
-        0.25,
+        0.08333333,
         0.0,
         0.0,
         0.0,
@@ -2288,7 +2336,7 @@
         0.0,
         0.0,
         0.0,
-        "-"
+        0.08333333
       ],
       "HiatusDays": [
         [],
@@ -2319,7 +2367,7 @@
         "",
         "",
         "",
-        0
+        null
       ],
       "ImpressionsValues": [
         5000.0,
@@ -2337,13 +2385,23 @@
         0.0,
         5000.0
       ],
-      "MonthsLabel": [
-        "January",
-        "February",
-        "March"
+      "Months": [
+        {
+          "Item1": "January",
+          "Item2": 4
+        },
+        {
+          "Item1": "February",
+          "Item2": 4
+        },
+        {
+          "Item1": "March",
+          "Item2": 5
+        }
       ],
       "QuarterLabel": null,
       "TableTitle": "1Q '20 EMN Total",
+      "TotalWeeksInQuarter": 13,
       "UnitsValues": [
         0,
         0,
@@ -2359,108 +2417,6 @@
         0,
         0,
         0
-      ],
-      "WeeksStartDate": [
-        "2019-12-30T00:00:00",
-        "2020-01-06T00:00:00",
-        "2020-01-13T00:00:00",
-        "2020-01-20T00:00:00",
-        "2020-01-27T00:00:00",
-        "2020-02-03T00:00:00",
-        "2020-02-10T00:00:00",
-        "2020-02-17T00:00:00",
-        "2020-02-24T00:00:00",
-        "2020-03-02T00:00:00",
-        "2020-03-09T00:00:00",
-        "2020-03-16T00:00:00",
-        "2020-03-23T00:00:00"
-      ]
-    },
-    {
-      "CostValues": [
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null
-      ],
-      "CPMValues": [
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null
-      ],
-      "DaypartCode": null,
-      "DistributionPercentages": [
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null
-      ],
-      "HiatusDays": [],
-      "HiatusDaysFormattedValues": [],
-      "ImpressionsValues": [
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null
-      ],
-      "MonthsLabel": [
-        "January",
-        "February",
-        "March"
-      ],
-      "QuarterLabel": null,
-      "TableTitle": "1Q '20 ADU",
-      "UnitsValues": [
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null
       ],
       "WeeksStartDate": [
         "2019-12-30T00:00:00",
@@ -2513,20 +2469,20 @@
       ],
       "DaypartCode": "MDN",
       "DistributionPercentages": [
-        0.01923077,
-        0.01923077,
-        0.01923077,
-        0.01923077,
-        0.01923077,
-        0.01923077,
-        0.01923077,
-        0.01923077,
-        0.01923077,
-        0.01923077,
-        0.01923077,
-        0.01923077,
-        0.01923077,
-        "-"
+        0.00641026,
+        0.00641026,
+        0.00641026,
+        0.00641026,
+        0.00641026,
+        0.00641026,
+        0.00641026,
+        0.00641026,
+        0.00641026,
+        0.00641026,
+        0.00641026,
+        0.00641026,
+        0.00641026,
+        0.08333333
       ],
       "HiatusDays": [
         [],
@@ -2557,7 +2513,7 @@
         "",
         "",
         "",
-        0
+        null
       ],
       "ImpressionsValues": [
         384.61538462,
@@ -2575,13 +2531,23 @@
         384.61538462,
         5000.0
       ],
-      "MonthsLabel": [
-        "April",
-        "May",
-        "June"
+      "Months": [
+        {
+          "Item1": "April",
+          "Item2": 4
+        },
+        {
+          "Item1": "May",
+          "Item2": 5
+        },
+        {
+          "Item1": "June",
+          "Item2": 4
+        }
       ],
       "QuarterLabel": "2Q '20",
       "TableTitle": "2Q '20 MDN :90s ",
+      "TotalWeeksInQuarter": 13,
       "UnitsValues": [
         0,
         0,
@@ -2649,20 +2615,20 @@
       ],
       "DaypartCode": null,
       "DistributionPercentages": [
-        0.01923077,
-        0.01923077,
-        0.01923077,
-        0.01923077,
-        0.01923077,
-        0.01923077,
-        0.01923077,
-        0.01923077,
-        0.01923077,
-        0.01923077,
-        0.01923077,
-        0.01923077,
-        0.01923077,
-        "-"
+        0.00641026,
+        0.00641026,
+        0.00641026,
+        0.00641026,
+        0.00641026,
+        0.00641026,
+        0.00641026,
+        0.00641026,
+        0.00641026,
+        0.00641026,
+        0.00641026,
+        0.00641026,
+        0.00641026,
+        0.08333333
       ],
       "HiatusDays": [
         [],
@@ -2693,7 +2659,7 @@
         "",
         "",
         "",
-        0
+        null
       ],
       "ImpressionsValues": [
         384.61538462,
@@ -2711,13 +2677,23 @@
         384.61538462,
         5000.0
       ],
-      "MonthsLabel": [
-        "April",
-        "May",
-        "June"
+      "Months": [
+        {
+          "Item1": "April",
+          "Item2": 4
+        },
+        {
+          "Item1": "May",
+          "Item2": 5
+        },
+        {
+          "Item1": "June",
+          "Item2": 4
+        }
       ],
       "QuarterLabel": null,
       "TableTitle": "2Q '20 MDN Total",
+      "TotalWeeksInQuarter": 13,
       "UnitsValues": [
         0,
         0,
@@ -2785,20 +2761,20 @@
       ],
       "DaypartCode": "PA",
       "DistributionPercentages": [
-        0.01923077,
-        0.01923077,
-        0.01923077,
-        0.01923077,
-        0.01923077,
-        0.01923077,
-        0.01923077,
-        0.01923077,
-        0.01923077,
-        0.01923077,
-        0.01923077,
-        0.01923077,
-        0.01923077,
-        "-"
+        0.00641026,
+        0.00641026,
+        0.00641026,
+        0.00641026,
+        0.00641026,
+        0.00641026,
+        0.00641026,
+        0.00641026,
+        0.00641026,
+        0.00641026,
+        0.00641026,
+        0.00641026,
+        0.00641026,
+        0.08333333
       ],
       "HiatusDays": [
         [],
@@ -2829,7 +2805,7 @@
         "",
         "",
         "",
-        0
+        null
       ],
       "ImpressionsValues": [
         384.61538462,
@@ -2847,13 +2823,23 @@
         384.61538462,
         5000.0
       ],
-      "MonthsLabel": [
-        "April",
-        "May",
-        "June"
+      "Months": [
+        {
+          "Item1": "April",
+          "Item2": 4
+        },
+        {
+          "Item1": "May",
+          "Item2": 5
+        },
+        {
+          "Item1": "June",
+          "Item2": 4
+        }
       ],
       "QuarterLabel": "2Q '20",
       "TableTitle": "2Q '20 PA :90s ",
+      "TotalWeeksInQuarter": 13,
       "UnitsValues": [
         0,
         0,
@@ -2921,20 +2907,20 @@
       ],
       "DaypartCode": null,
       "DistributionPercentages": [
-        0.01923077,
-        0.01923077,
-        0.01923077,
-        0.01923077,
-        0.01923077,
-        0.01923077,
-        0.01923077,
-        0.01923077,
-        0.01923077,
-        0.01923077,
-        0.01923077,
-        0.01923077,
-        0.01923077,
-        "-"
+        0.00641026,
+        0.00641026,
+        0.00641026,
+        0.00641026,
+        0.00641026,
+        0.00641026,
+        0.00641026,
+        0.00641026,
+        0.00641026,
+        0.00641026,
+        0.00641026,
+        0.00641026,
+        0.00641026,
+        0.08333333
       ],
       "HiatusDays": [
         [],
@@ -2965,7 +2951,7 @@
         "",
         "",
         "",
-        0
+        null
       ],
       "ImpressionsValues": [
         384.61538462,
@@ -2983,13 +2969,23 @@
         384.61538462,
         5000.0
       ],
-      "MonthsLabel": [
-        "April",
-        "May",
-        "June"
+      "Months": [
+        {
+          "Item1": "April",
+          "Item2": 4
+        },
+        {
+          "Item1": "May",
+          "Item2": 5
+        },
+        {
+          "Item1": "June",
+          "Item2": 4
+        }
       ],
       "QuarterLabel": null,
       "TableTitle": "2Q '20 PA Total",
+      "TotalWeeksInQuarter": 13,
       "UnitsValues": [
         0,
         0,
@@ -3005,108 +3001,6 @@
         0,
         0,
         0
-      ],
-      "WeeksStartDate": [
-        "2020-03-30T00:00:00",
-        "2020-04-06T00:00:00",
-        "2020-04-13T00:00:00",
-        "2020-04-20T00:00:00",
-        "2020-04-27T00:00:00",
-        "2020-05-04T00:00:00",
-        "2020-05-11T00:00:00",
-        "2020-05-18T00:00:00",
-        "2020-05-25T00:00:00",
-        "2020-06-01T00:00:00",
-        "2020-06-08T00:00:00",
-        "2020-06-15T00:00:00",
-        "2020-06-22T00:00:00"
-      ]
-    },
-    {
-      "CostValues": [
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null
-      ],
-      "CPMValues": [
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null
-      ],
-      "DaypartCode": null,
-      "DistributionPercentages": [
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null
-      ],
-      "HiatusDays": [],
-      "HiatusDaysFormattedValues": [],
-      "ImpressionsValues": [
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null
-      ],
-      "MonthsLabel": [
-        "April",
-        "May",
-        "June"
-      ],
-      "QuarterLabel": null,
-      "TableTitle": "2Q '20 ADU",
-      "UnitsValues": [
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null
       ],
       "WeeksStartDate": [
         "2020-03-30T00:00:00",

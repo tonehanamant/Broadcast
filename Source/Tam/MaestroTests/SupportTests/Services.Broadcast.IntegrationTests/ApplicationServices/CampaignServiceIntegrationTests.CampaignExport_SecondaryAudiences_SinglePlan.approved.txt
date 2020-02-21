@@ -91,7 +91,7 @@
         0.0,
         0.0,
         0.25,
-        "-"
+        0.25
       ],
       "HiatusDays": [
         [],
@@ -122,7 +122,7 @@
         "",
         "",
         "",
-        0
+        null
       ],
       "ImpressionsValues": [
         0.0,
@@ -140,13 +140,23 @@
         5000.0,
         5000.0
       ],
-      "MonthsLabel": [
-        "October",
-        "November",
-        "December"
+      "Months": [
+        {
+          "Item1": "October",
+          "Item2": 4
+        },
+        {
+          "Item1": "November",
+          "Item2": 4
+        },
+        {
+          "Item1": "December",
+          "Item2": 5
+        }
       ],
       "QuarterLabel": "4Q '19",
       "TableTitle": "4Q '19 DAY :30s ",
+      "TotalWeeksInQuarter": 13,
       "UnitsValues": [
         0,
         0,
@@ -227,7 +237,7 @@
         0.0,
         0.0,
         0.25,
-        "-"
+        0.25
       ],
       "HiatusDays": [
         [],
@@ -258,7 +268,7 @@
         "",
         "",
         "",
-        0
+        null
       ],
       "ImpressionsValues": [
         0.0,
@@ -276,13 +286,23 @@
         5000.0,
         5000.0
       ],
-      "MonthsLabel": [
-        "October",
-        "November",
-        "December"
+      "Months": [
+        {
+          "Item1": "October",
+          "Item2": 4
+        },
+        {
+          "Item1": "November",
+          "Item2": 4
+        },
+        {
+          "Item1": "December",
+          "Item2": 5
+        }
       ],
       "QuarterLabel": null,
       "TableTitle": "4Q '19 DAY Total",
+      "TotalWeeksInQuarter": 13,
       "UnitsValues": [
         0,
         0,
@@ -363,7 +383,7 @@
         0.0,
         0.0,
         0.25,
-        "-"
+        0.25
       ],
       "HiatusDays": [
         [],
@@ -394,7 +414,7 @@
         "",
         "",
         "",
-        0
+        null
       ],
       "ImpressionsValues": [
         0.0,
@@ -412,13 +432,23 @@
         5000.0,
         5000.0
       ],
-      "MonthsLabel": [
-        "October",
-        "November",
-        "December"
+      "Months": [
+        {
+          "Item1": "October",
+          "Item2": 4
+        },
+        {
+          "Item1": "November",
+          "Item2": 4
+        },
+        {
+          "Item1": "December",
+          "Item2": 5
+        }
       ],
       "QuarterLabel": "4Q '19",
       "TableTitle": "4Q '19 EMN :30s ",
+      "TotalWeeksInQuarter": 13,
       "UnitsValues": [
         0,
         0,
@@ -499,7 +529,7 @@
         0.0,
         0.0,
         0.25,
-        "-"
+        0.25
       ],
       "HiatusDays": [
         [],
@@ -530,7 +560,7 @@
         "",
         "",
         "",
-        0
+        null
       ],
       "ImpressionsValues": [
         0.0,
@@ -548,13 +578,23 @@
         5000.0,
         5000.0
       ],
-      "MonthsLabel": [
-        "October",
-        "November",
-        "December"
+      "Months": [
+        {
+          "Item1": "October",
+          "Item2": 4
+        },
+        {
+          "Item1": "November",
+          "Item2": 4
+        },
+        {
+          "Item1": "December",
+          "Item2": 5
+        }
       ],
       "QuarterLabel": null,
       "TableTitle": "4Q '19 EMN Total",
+      "TotalWeeksInQuarter": 13,
       "UnitsValues": [
         0,
         0,
@@ -635,7 +675,7 @@
         0.0,
         0.0,
         0.5,
-        "-"
+        0.5
       ],
       "HiatusDays": [
         [],
@@ -666,7 +706,7 @@
         "",
         "",
         "",
-        0
+        null
       ],
       "ImpressionsValues": [
         0.0,
@@ -684,13 +724,23 @@
         10000.0,
         10000.0
       ],
-      "MonthsLabel": [
-        "October",
-        "November",
-        "December"
+      "Months": [
+        {
+          "Item1": "October",
+          "Item2": 4
+        },
+        {
+          "Item1": "November",
+          "Item2": 4
+        },
+        {
+          "Item1": "December",
+          "Item2": 5
+        }
       ],
       "QuarterLabel": "4Q '19",
       "TableTitle": "4Q '19 PT :30s ",
+      "TotalWeeksInQuarter": 13,
       "UnitsValues": [
         0,
         0,
@@ -771,7 +821,7 @@
         0.0,
         0.0,
         0.5,
-        "-"
+        0.5
       ],
       "HiatusDays": [
         [],
@@ -802,7 +852,7 @@
         "",
         "",
         "",
-        0
+        null
       ],
       "ImpressionsValues": [
         0.0,
@@ -820,13 +870,23 @@
         10000.0,
         10000.0
       ],
-      "MonthsLabel": [
-        "October",
-        "November",
-        "December"
+      "Months": [
+        {
+          "Item1": "October",
+          "Item2": 4
+        },
+        {
+          "Item1": "November",
+          "Item2": 4
+        },
+        {
+          "Item1": "December",
+          "Item2": 5
+        }
       ],
       "QuarterLabel": null,
       "TableTitle": "4Q '19 PT Total",
+      "TotalWeeksInQuarter": 13,
       "UnitsValues": [
         0,
         0,
@@ -842,108 +902,6 @@
         0,
         0,
         0
-      ],
-      "WeeksStartDate": [
-        "2019-09-30T00:00:00",
-        "2019-10-07T00:00:00",
-        "2019-10-14T00:00:00",
-        "2019-10-21T00:00:00",
-        "2019-10-28T00:00:00",
-        "2019-11-04T00:00:00",
-        "2019-11-11T00:00:00",
-        "2019-11-18T00:00:00",
-        "2019-11-25T00:00:00",
-        "2019-12-02T00:00:00",
-        "2019-12-09T00:00:00",
-        "2019-12-16T00:00:00",
-        "2019-12-23T00:00:00"
-      ]
-    },
-    {
-      "CostValues": [
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null
-      ],
-      "CPMValues": [
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null
-      ],
-      "DaypartCode": null,
-      "DistributionPercentages": [
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null
-      ],
-      "HiatusDays": [],
-      "HiatusDaysFormattedValues": [],
-      "ImpressionsValues": [
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null
-      ],
-      "MonthsLabel": [
-        "October",
-        "November",
-        "December"
-      ],
-      "QuarterLabel": null,
-      "TableTitle": "4Q '19 ADU",
-      "UnitsValues": [
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null
       ],
       "WeeksStartDate": [
         "2019-09-30T00:00:00",

@@ -416,19 +416,22 @@
     <None Include="Files\BVS Load For Invalid Media Week right limit.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Files\Campaign export\Stub Advertiser DAY EMN MDN PA PT Q4%2719-Q2%2720 Plan Rev - 12-16.xlsx">
+    <None Include="Files\Campaign export\CampaignExport_ContractOnlyPlans.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Files\Campaign export\Stub Advertiser DAY EMN PT Q4%2719 Plan Rev - 12-16.xlsx">
+    <None Include="Files\Campaign export\CampaignExport_ContractTypeWithRestrictions.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Files\Campaign export\Stub Advertiser EF EM MDN PA Q1%2720-Q2%2720 Plan Rev - 12-16 v2.xlsx">
+    <None Include="Files\Campaign export\CampaignExport_PlansWith13And14Weeks.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Files\Campaign export\Stub Advertiser EF EM MDN PA Q1%2720-Q2%2720 Plan Rev - 12-16.xlsx">
+    <None Include="Files\Campaign export\CampaignExport_ReservedPlanWithConstraints.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Files\Campaign export\Stub Advertiser EF EM MDN Q1%2720-Q2%2720 Plan Rev - 12-16.xlsx">
+    <None Include="Files\Campaign export\CampaignExport_SecondaryAudiences_MultiplePlans.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\Campaign export\CampaignExport_SecondaryAudiences_SinglePlan.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Files\Excel templates\Template - Campaign Export With Secondary Audiences.xlsx">
