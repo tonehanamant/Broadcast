@@ -79,7 +79,7 @@ namespace Services.Broadcast.ReportGenerators.CampaignExport
                     _SetRichTextStype(richText, true);
 
                     string contentRestrictionsRowText = string.Empty;
-                    string genreRestrictions = _GetRestrictions(daypart.GenreRestrictions, "Genres ");
+                    string genreRestrictions = _GetRestrictions(daypart.GenreRestrictions, "Genre ");
                     if (!string.IsNullOrWhiteSpace(genreRestrictions))
                     {
                         contentRestrictionsRowText += genreRestrictions;
@@ -117,7 +117,7 @@ namespace Services.Broadcast.ReportGenerators.CampaignExport
                 foreach (var groupByIncludeType in groupByContainType)
                 {
                     var items = groupByIncludeType.ToList();
-                    restrictionsText += $"{(groupByIncludeType.Key.Equals(ContainTypeEnum.Include) ? "include " : "exclude ")}";
+                    restrictionsText += $"{(groupByIncludeType.Key.Equals(ContainTypeEnum.Include) ? "Includes " : "Excludes ")}";
                     for (int i = 0; i < items.Count(); i++)
                     {
                         restrictionsText += string.Join(", ", items[i].Restrictions);

@@ -13,7 +13,7 @@ namespace Services.Broadcast.ReportGenerators.CampaignExport
         private readonly string CONTRACT_WORKSHEET_NAME = "Contract";
         private readonly string TERMS_WORKSHEET_NAME = "Terms & Conditions";
         private readonly string FLOW_CHART_WORKSHEET_NAME = "Flow Chart";
-        private readonly string FLOW_CHART_TEMPLATE_TABLES_WORKSHEET_NAME = "Flow Chart template tables";
+        private readonly string FLOW_CHART_TEMPLATE_TABLES_WORKSHEET_NAME = "Flow Chart Template Tables";
 
         private readonly string CAMPAIGN_EXPORT_TEMPLATE_FILENAME = "Template - Campaign Export.xlsx";
         private readonly string CAMPAIGN_EXPORT_WITH_SECONDARY_DEMOS_TEMPLATE_FILENAME = "Template - Campaign Export With Secondary Audiences.xlsx";
