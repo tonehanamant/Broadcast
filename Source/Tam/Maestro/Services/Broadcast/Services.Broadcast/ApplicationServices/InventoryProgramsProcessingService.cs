@@ -177,7 +177,7 @@ namespace Services.Broadcast.ApplicationServices
 
             if (job.JobGroupId.HasValue == false)
             {
-                // only report if the failure occured within a group process.
+                // only report if the failure occurred within a group process.
                 // A singular job can be triggered through the api directly or through the Maintenance screen.
                 return;
             }
@@ -232,7 +232,13 @@ namespace Services.Broadcast.ApplicationServices
             body.AppendLine();
             body.AppendLine($"Have a nice day.");
 
-            _SendProcessingBySourceResultReportEmail(subject, body.ToString(), priority);
+            var toEmails = _GetProcessingBySourceResultReportToEmails();
+            if (toEmails?.Any() != true)
+            {
+                throw new InvalidOperationException($"Failed to send notification email.  Email addresses are not configured correctly.");
+            }
+
+            _EmailerService.QuickSend(false, body.ToString(), subject, priority, toEmails);
         }
         
         protected virtual DateTime _GetDateTimeNow()
@@ -248,17 +254,6 @@ namespace Services.Broadcast.ApplicationServices
         protected virtual void _DoEnqueueProcessInventoryProgramsBySourceJob(int jobId)
         {
             _BackgroundJobClient.Enqueue<IInventoryProgramsProcessingService>(x => x.ProcessInventoryProgramsBySourceJob(jobId));
-        }
-
-        private void _SendProcessingBySourceResultReportEmail(string subject, string body, MailPriority priority)
-        {
-            var toEmails = _GetProcessingBySourceResultReportToEmails();
-            if (toEmails?.Any() != true)
-            {
-                throw new InvalidOperationException($"Failed to send notification email.  Email addresses are not configured correctly.");
-            }
-
-            _EmailerService.QuickSend(true, body, subject, priority, toEmails);
         }
 
         protected virtual string[] _GetProcessingBySourceResultReportToEmails()
