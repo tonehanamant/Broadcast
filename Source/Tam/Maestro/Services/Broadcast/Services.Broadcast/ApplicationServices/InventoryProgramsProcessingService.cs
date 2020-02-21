@@ -116,7 +116,7 @@ namespace Services.Broadcast.ApplicationServices
         {
             var oldJob = _InventoryProgramsBySourceJobsRepository.GetJob(jobId);
             var newJobId = _InventoryProgramsBySourceJobsRepository.QueueJob(oldJob.InventorySourceId, oldJob.StartDate,
-                oldJob.EndDate, username, _GetDateTimeNow(), null);
+                oldJob.EndDate, username, _GetDateTimeNow(), oldJob.JobGroupId);
             var newJob = _InventoryProgramsBySourceJobsRepository.GetJob(newJobId);
 
             _DoEnqueueProcessInventoryProgramsBySourceJob(newJob.Id);
