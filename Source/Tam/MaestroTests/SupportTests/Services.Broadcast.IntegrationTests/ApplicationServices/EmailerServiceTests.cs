@@ -19,11 +19,9 @@ namespace Services.Broadcast.IntegrationTests
         {
             IntegrationTestApplicationServiceFactory.Instance.RegisterType<IEmailerService, EmailerServiceStub>();
 
-            var from = new MailAddress("broadcastsmtp@crossmw.com");
-
             var emailerService = IntegrationTestApplicationServiceFactory.GetApplicationService<IEmailerService>() ;
 
-            (emailerService as EmailerServiceStub).QuickSend(true, "<b>Hello, world.</b>", "Test Hello", MailPriority.Normal, from, new List<MailAddress>() {new MailAddress("test@crossmw.com")});
+            (emailerService as EmailerServiceStub).QuickSend(true, "<b>Hello, world.</b>", "Test Hello", MailPriority.Normal, new List<MailAddress>() {new MailAddress("test@crossmw.com")});
 
             var response = EmailerServiceStub.LastMailMessageGenerated;
 

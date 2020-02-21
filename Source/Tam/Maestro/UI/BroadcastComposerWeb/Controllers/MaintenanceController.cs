@@ -45,7 +45,7 @@ namespace BroadcastComposerWeb.Controllers
         {
             var quickEmailer = _ApplicationServiceFactory.GetApplicationService<IEmailerService>();
             quickEmailer.QuickSend(true, "<b>test</b><br/> This is only a test", "Test Email from Broadcast",
-                MailPriority.Normal, "test@test.com", new string[] {"test_email@test.com"});
+                MailPriority.Normal, new string[] {"test_email@test.com"});
             ViewBag.Message = "Test email sent.";
            return View("Index");
         }

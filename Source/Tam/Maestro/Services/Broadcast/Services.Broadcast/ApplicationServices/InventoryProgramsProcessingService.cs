@@ -252,19 +252,13 @@ namespace Services.Broadcast.ApplicationServices
 
         private void _SendProcessingBySourceResultReportEmail(string subject, string body, MailPriority priority)
         {
-            var fromEmail = _GetProcessingBySourceResultFromEmail();
             var toEmails = _GetProcessingBySourceResultReportToEmails();
-            if (toEmails?.Any() != true || string.IsNullOrEmpty(fromEmail))
+            if (toEmails?.Any() != true)
             {
                 throw new InvalidOperationException($"Failed to send notification email.  Email addresses are not configured correctly.");
             }
 
-            _EmailerService.QuickSend(true, body, subject, priority, fromEmail, toEmails);
-        }
-
-        protected virtual string _GetProcessingBySourceResultFromEmail()
-        {
-            return BroadcastServiceSystemParameter.EmailFrom;
+            _EmailerService.QuickSend(true, body, subject, priority, toEmails);
         }
 
         protected virtual string[] _GetProcessingBySourceResultReportToEmails()

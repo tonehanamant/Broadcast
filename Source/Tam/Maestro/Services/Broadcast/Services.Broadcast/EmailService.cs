@@ -1,23 +1,21 @@
-﻿using System;
+﻿using Common.Services.ApplicationServices;
+using ConfigurationService.Client;
+using Services.Broadcast;
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Mail;
 using System.ServiceModel;
-using Common.Services.ApplicationServices;
-using ConfigurationService.Client;
-using Services.Broadcast;
 using Tam.Maestro.Common;
 using Tam.Maestro.Common.Utilities.Logging;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
-using Tam.Maestro.Services.Clients;
-using Tam.Maestro.Services.ContractInterfaces;
 
 namespace Common.Services
 {
     public interface IEmailerService : IApplicationService
     {
-        bool QuickSend(bool pIsHtmlBody, string pBody, string pSubject, MailPriority pPriority, string from, string[] pTos, List<string> attachFileNames = null);
-        bool QuickSend(bool pIsHtmlBody, string pBody, string pSubject, MailPriority pPriority, MailAddress from, List<MailAddress> pTos, List<string> attachFileNames = null);
+        bool QuickSend(bool pIsHtmlBody, string pBody, string pSubject, MailPriority pPriority, string[] pTos, List<string> attachFileNames = null);
+        bool QuickSend(bool pIsHtmlBody, string pBody, string pSubject, MailPriority pPriority, List<MailAddress> pTos, List<string> attachFileNames = null);
     }
 
 
@@ -29,17 +27,18 @@ namespace Common.Services
             _configurationWebApiClient = configurationWebApiClient;
         }
 
-        public bool QuickSend(bool pIsHtmlBody, string pBody, string pSubject, MailPriority pPriority, string from, string[] pTos, List<string> attachFileNames = null)
+        public bool QuickSend(bool pIsHtmlBody, string pBody, string pSubject, MailPriority pPriority, string[] pTos, List<string> attachFileNames = null)
         {
             List<MailAddress> lTos = new List<MailAddress>();
             foreach (string lTo in pTos)
+            {
                 lTos.Add(new MailAddress(lTo));
-            var fm = new MailAddress(from);
+            }
 
-            return QuickSend(pIsHtmlBody, pBody, pSubject, pPriority, fm, lTos, attachFileNames);
+            return QuickSend(pIsHtmlBody, pBody, pSubject, pPriority, lTos, attachFileNames);
         }
 
-        public bool QuickSend(bool pIsHtmlBody, string pBody, string pSubject, MailPriority pPriority, MailAddress from, List<MailAddress> pTos, List<string> attachFileNames = null)
+        public bool QuickSend(bool pIsHtmlBody, string pBody, string pSubject, MailPriority pPriority, List<MailAddress> pTos, List<string> attachFileNames = null)
         {
             if (!BroadcastServiceSystemParameter.EmailNotificationsEnabled)
                 return false;
@@ -52,6 +51,8 @@ namespace Common.Services
                 if (pTos == null || pTos.Count == 0)
                     return false;
 
+                var fromEmail = _GetFromEmail();
+
                 using (SmtpClient lSmtpClient = new SmtpClient())
                 {
                     lSmtpClient.Host = BroadcastServiceSystemParameter.EmailHost;
@@ -59,7 +60,7 @@ namespace Common.Services
                     lSmtpClient.Port = 587;
                     lSmtpClient.Credentials = GetSMTPNetworkCredential();
 
-                    var lMessage = BuildEmailMessage(pIsHtmlBody, pBody, pSubject, pPriority, @from, pTos, attachFileNames);
+                    var lMessage = BuildEmailMessage(pIsHtmlBody, pBody, pSubject, pPriority, fromEmail, pTos, attachFileNames);
 
                     var whiteList = BroadcastServiceSystemParameter.EmailWhiteList;
                     if (string.IsNullOrEmpty(whiteList))
@@ -125,6 +126,14 @@ namespace Common.Services
             }
 
             return userName;
+        }
+
+        private MailAddress _GetFromEmail()
+        {
+            // office365 requires the 'from' email to be for the credentialed account.
+            // in office365 the username is the same as the 'from' email.
+            var account = BroadcastServiceSystemParameter.EmailUsername;
+            return new MailAddress(account);
         }
 
         public static NetworkCredential GetSMTPNetworkCredential()

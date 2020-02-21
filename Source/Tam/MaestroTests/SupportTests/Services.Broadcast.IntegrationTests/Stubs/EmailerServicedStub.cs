@@ -19,21 +19,21 @@ namespace Services.Broadcast.IntegrationTests
             }
         }
 
-        public bool QuickSend(bool pIsHtmlBody, string pBody, string pSubject, MailPriority pPriority, string from,
+        public bool QuickSend(bool pIsHtmlBody, string pBody, string pSubject, MailPriority pPriority,
             string[] pTos, List<string> attachFileNames = null)
         {
             List<MailAddress> lTos = new List<MailAddress>();
             foreach (string lTo in pTos)
                 lTos.Add(new MailAddress(lTo));
-            var fm = new MailAddress(from);
 
-            return QuickSend(pIsHtmlBody, pBody, pSubject, pPriority, fm, lTos, attachFileNames);
+            return QuickSend(pIsHtmlBody, pBody, pSubject, pPriority, lTos, attachFileNames);
         }
 
-        public bool QuickSend(bool pIsHtmlBody, string pBody, string pSubject, MailPriority pPriority, MailAddress from,
+        public bool QuickSend(bool pIsHtmlBody, string pBody, string pSubject, MailPriority pPriority, 
             List<MailAddress> pTos, List<string> attachFileNames = null)
         {
-            LastMailMessageGenerated = EmailerService.BuildEmailMessage(pIsHtmlBody, pBody, pSubject, pPriority, @from,
+            var configuredFrom = new MailAddress("broadcastsmtp@crossmw.com");
+            LastMailMessageGenerated = EmailerService.BuildEmailMessage(pIsHtmlBody, pBody, pSubject, pPriority, configuredFrom,
                 pTos, attachFileNames);
 
             return true;

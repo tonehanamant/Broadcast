@@ -68,9 +68,8 @@ namespace Services.Broadcast.Helpers
             if (!BroadcastServiceSystemParameter.EmailNotificationsEnabled)
                 return;
 
-            var from = new MailAddress(BroadcastServiceSystemParameter.EmailUsername);
             var to = new List<MailAddress>() { new MailAddress(BroadcastServiceSystemParameter.WWTV_NotificationEmail) };
-            _EmailerService.QuickSend(false, emailBody, subject, MailPriority.Normal, from, to);
+            _EmailerService.QuickSend(false, emailBody, subject, MailPriority.Normal, to);
         }
 
     }

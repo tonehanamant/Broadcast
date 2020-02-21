@@ -261,9 +261,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 .Returns(job);
             var emailQuickSendCalled = new List<MonitorEmailProperties>();
             _EmailerService.Setup(s => s.QuickSend(It.IsAny<bool>(), It.IsAny<string>(), It.IsAny<string>(),
-                    It.IsAny<MailPriority>(), It.IsAny<string>(), It.IsAny<string[]>(), It.IsAny<List<string>>()))
-                .Callback<bool, string, string, MailPriority, string, string[], List<string>>((h, b, s, p, f, t, a) =>
-                    emailQuickSendCalled.Add(new MonitorEmailProperties {pIsHtmlBody = h, pBody = b, pSubject = s, pPriority = p, from = f, pTos = t}))
+                    It.IsAny<MailPriority>(), It.IsAny<string[]>(), It.IsAny<List<string>>()))
+                .Callback<bool, string, string, MailPriority, string[], List<string>>((h, b, s, p, t, a) =>
+                    emailQuickSendCalled.Add(new MonitorEmailProperties { pIsHtmlBody = h, pBody = b, pSubject = s, pPriority = p, pTos = t }))
                 .Returns(true);
 
             var service = _GetService();
@@ -298,9 +298,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 .Returns(job);
             var emailQuickSendCalled = new List<MonitorEmailProperties>();
             _EmailerService.Setup(s => s.QuickSend(It.IsAny<bool>(), It.IsAny<string>(), It.IsAny<string>(),
-                    It.IsAny<MailPriority>(), It.IsAny<string>(), It.IsAny<string[]>(), It.IsAny<List<string>>()))
-                .Callback<bool, string, string, MailPriority, string, string[], List<string>>((h, b, s, p, f, t, a) =>
-                    emailQuickSendCalled.Add(new MonitorEmailProperties { pIsHtmlBody = h, pBody = b, pSubject = s, pPriority = p, from = f, pTos = t }))
+                    It.IsAny<MailPriority>(), It.IsAny<string[]>(), It.IsAny<List<string>>()))
+                .Callback<bool, string, string, MailPriority, string[], List<string>>((h, b, s, p, t, a) =>
+                    emailQuickSendCalled.Add(new MonitorEmailProperties { pIsHtmlBody = h, pBody = b, pSubject = s, pPriority = p, pTos = t }))
                 .Returns(true);
             _InventoryRepository.Setup(s => s.GetInventorySource(It.IsAny<int>()))
                 .Returns(new InventorySource { Name = "TestInventorySourceOne" });
@@ -338,9 +338,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 .Returns(job);
             var emailQuickSendCalled = new List<MonitorEmailProperties>();
             _EmailerService.Setup(s => s.QuickSend(It.IsAny<bool>(), It.IsAny<string>(), It.IsAny<string>(),
-                    It.IsAny<MailPriority>(), It.IsAny<string>(), It.IsAny<string[]>(), It.IsAny<List<string>>()))
-                .Callback<bool, string, string, MailPriority, string, string[], List<string>>((h, b, s, p, f, t, a) =>
-                    emailQuickSendCalled.Add(new MonitorEmailProperties { pIsHtmlBody = h, pBody = b, pSubject = s, pPriority = p, from = f, pTos = t }))
+                    It.IsAny<MailPriority>(), It.IsAny<string[]>(), It.IsAny<List<string>>()))
+                .Callback<bool, string, string, MailPriority, string[], List<string>>((h, b, s, p, t, a) =>
+                    emailQuickSendCalled.Add(new MonitorEmailProperties { pIsHtmlBody = h, pBody = b, pSubject = s, pPriority = p, pTos = t }))
                 .Returns(true);
             _InventoryRepository.Setup(s => s.GetInventorySource(It.IsAny<int>()))
                 .Returns(new InventorySource { Name = "TestInventorySourceOne" });
@@ -381,9 +381,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 .Returns(job);
             var emailQuickSendCalled = new List<MonitorEmailProperties>();
             _EmailerService.Setup(s => s.QuickSend(It.IsAny<bool>(), It.IsAny<string>(), It.IsAny<string>(),
-                    It.IsAny<MailPriority>(), It.IsAny<string>(), It.IsAny<string[]>(), It.IsAny<List<string>>()))
-                .Callback<bool, string, string, MailPriority, string, string[], List<string>>((h, b, s, p, f, t, a) =>
-                    emailQuickSendCalled.Add(new MonitorEmailProperties { pIsHtmlBody = h, pBody = b, pSubject = s, pPriority = p, from = f, pTos = t }))
+                    It.IsAny<MailPriority>(), It.IsAny<string[]>(), It.IsAny<List<string>>()))
+                .Callback<bool, string, string, MailPriority, string[], List<string>>((h, b, s, p, t, a) =>
+                    emailQuickSendCalled.Add(new MonitorEmailProperties { pIsHtmlBody = h, pBody = b, pSubject = s, pPriority = p, pTos = t }))
                 .Returns(true);
             _InventoryRepository.Setup(s => s.GetInventorySource(It.IsAny<int>()))
                 .Returns(new InventorySource { Name = "TestInventorySourceOne" });

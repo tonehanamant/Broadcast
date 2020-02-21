@@ -111,10 +111,9 @@ namespace Services.Broadcast.ApplicationServices
 
         private void _SendErrorEmail(string filePath, string errorMessage)
         {
-            var from = new MailAddress(BroadcastServiceSystemParameter.EmailFrom);
             var to = new List<MailAddress>() { new MailAddress(_DataLakeSystemParameter.GetNotificationEmail()) };
 
-            _EmailerService.QuickSend(false, _CreateErrorEmail(filePath, errorMessage), "Data Lake File Failure", MailPriority.Normal, from, to);
+            _EmailerService.QuickSend(false, _CreateErrorEmail(filePath, errorMessage), "Data Lake File Failure", MailPriority.Normal, to);
         }
 
         private string _CreateErrorEmail(string filePath, string errorMessage)
