@@ -15,15 +15,17 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 {
     public class NtiUniverseServiceUnitTests
     {
-        private readonly Mock<IDataRepositoryFactory> _DataRepositoryFactoryMock;
-        private readonly Mock<IBroadcastAudiencesCache> _BroadcastAudiencesCacheMock;
-        private readonly Mock<IUniversesFileImporter> _UniversesFileImporterMock;
-        private readonly Mock<INtiUniverseRepository> _NtiUniverseRepositoryMock;
+        private NtiUniverseService _ntiUniverseService;
+        private Mock<IDataRepositoryFactory> _DataRepositoryFactoryMock;
+        private Mock<IBroadcastAudiencesCache> _BroadcastAudiencesCacheMock;
+        private Mock<IUniversesFileImporter> _UniversesFileImporterMock;
+        private Mock<INtiUniverseRepository> _NtiUniverseRepositoryMock;
 
         private readonly string _UserName = "UnitTestsUser";
         private readonly DateTime _Now = new DateTime(2019, 7, 1);
 
-        public NtiUniverseServiceUnitTests()
+       [SetUp]
+        public void Setup()
         {
             _DataRepositoryFactoryMock = new Mock<IDataRepositoryFactory>();
             _BroadcastAudiencesCacheMock = new Mock<IBroadcastAudiencesCache>();
@@ -33,6 +35,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _DataRepositoryFactoryMock
                 .Setup(x => x.GetDataRepository<INtiUniverseRepository>())
                 .Returns(_NtiUniverseRepositoryMock.Object);
+
+            _ntiUniverseService = new NtiUniverseService(
+                _DataRepositoryFactoryMock.Object,
+                _BroadcastAudiencesCacheMock.Object,
+                _UniversesFileImporterMock.Object);
         }
 
         [Test]
@@ -49,13 +56,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     new NtiUniverseExcelRecord { Year = 2020 }
                 });
 
-            var service = new NtiUniverseService(
-                _DataRepositoryFactoryMock.Object,
-                _BroadcastAudiencesCacheMock.Object,
-                _UniversesFileImporterMock.Object);
-            
             // Act
-            var caught = Assert.Throws<ApplicationException>(() => service.LoadUniverses(fileStream: It.IsAny<Stream>(), _UserName, _Now));
+            var caught = Assert.Throws<ApplicationException>(() => _ntiUniverseService.LoadUniverses(fileStream: It.IsAny<Stream>(), _UserName, _Now));
 
             // Assert
             Assert.AreEqual(expectedMessage, caught.Message);
@@ -75,13 +77,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     new NtiUniverseExcelRecord { Month = 6 }
                 });
 
-            var service = new NtiUniverseService(
-                _DataRepositoryFactoryMock.Object,
-                _BroadcastAudiencesCacheMock.Object,
-                _UniversesFileImporterMock.Object);
-
             // Act
-            var caught = Assert.Throws<ApplicationException>(() => service.LoadUniverses(fileStream: It.IsAny<Stream>(), _UserName, _Now));
+            var caught = Assert.Throws<ApplicationException>(() => _ntiUniverseService.LoadUniverses(fileStream: It.IsAny<Stream>(), _UserName, _Now));
 
             // Assert
             Assert.AreEqual(expectedMessage, caught.Message);
@@ -101,13 +98,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     new NtiUniverseExcelRecord { WeekNumber = 2 }
                 });
 
-            var service = new NtiUniverseService(
-                _DataRepositoryFactoryMock.Object,
-                _BroadcastAudiencesCacheMock.Object,
-                _UniversesFileImporterMock.Object);
-
             // Act
-            var caught = Assert.Throws<ApplicationException>(() => service.LoadUniverses(fileStream: It.IsAny<Stream>(), _UserName, _Now));
+            var caught = Assert.Throws<ApplicationException>(() => _ntiUniverseService.LoadUniverses(fileStream: It.IsAny<Stream>(), _UserName, _Now));
 
             // Assert
             Assert.AreEqual(expectedMessage, caught.Message);
@@ -126,13 +118,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     new NtiUniverseExcelRecord { NtiAudienceCode = string.Empty }
                 });
 
-            var service = new NtiUniverseService(
-                _DataRepositoryFactoryMock.Object,
-                _BroadcastAudiencesCacheMock.Object,
-                _UniversesFileImporterMock.Object);
-
             // Act
-            var caught = Assert.Throws<ApplicationException>(() => service.LoadUniverses(fileStream: It.IsAny<Stream>(), _UserName, _Now));
+            var caught = Assert.Throws<ApplicationException>(() => _ntiUniverseService.LoadUniverses(fileStream: It.IsAny<Stream>(), _UserName, _Now));
 
             // Assert
             Assert.AreEqual(expectedMessage, caught.Message);
@@ -160,13 +147,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     new NtiUniverseAudienceMapping { NtiAudienceCode = "F21-24" }
                 });
 
-            var service = new NtiUniverseService(
-                _DataRepositoryFactoryMock.Object,
-                _BroadcastAudiencesCacheMock.Object,
-                _UniversesFileImporterMock.Object);
-
             // Act
-            var caught = Assert.Throws<ApplicationException>(() => service.LoadUniverses(fileStream: It.IsAny<Stream>(), _UserName, _Now));
+            var caught = Assert.Throws<ApplicationException>(() => _ntiUniverseService.LoadUniverses(fileStream: It.IsAny<Stream>(), _UserName, _Now));
 
             // Assert
             Assert.AreEqual(expectedMessage, caught.Message);

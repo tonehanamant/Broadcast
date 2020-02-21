@@ -20,6 +20,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         private readonly DateTime CreatedDate = new DateTime(2019, 5, 14);
         private readonly INtiUniverseService _NtiUniverseService = IntegrationTestApplicationServiceFactory.GetApplicationService<INtiUniverseService>();
         private readonly INtiUniverseRepository _NtiUniverseRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<INtiUniverseRepository>();
+        private const int AUDIENCE_ID = 31;
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
@@ -37,6 +38,28 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 Approvals.Verify(loadedNsiUniversesJson);
             }
+        }
+
+        [Test]
+        public void GetNtiUniverse()
+        {
+            var ntiUniverse = _NtiUniverseService.GetLatestNtiUniverseByYear(AUDIENCE_ID, 2019);
+
+            Assert.AreEqual(120600000, ntiUniverse);
+        }
+
+        [Test]
+        public void GetNtiUniverse_UsePreviousYear()
+        {
+            var ntiUniverse = _NtiUniverseService.GetLatestNtiUniverseByYear(AUDIENCE_ID, 2020);
+
+            Assert.AreEqual(120600000, ntiUniverse);
+        }
+
+        [Test]
+        public void GetNtiUniverse_DoesntHaveNtiData()
+        {
+            Assert.That(() => _NtiUniverseService.GetLatestNtiUniverseByYear(AUDIENCE_ID, 2004), Throws.TypeOf<Exception>().With.Message.EqualTo("NTI universe not found."));
         }
 
         private JsonSerializerSettings _GetJsonSerializerSettingsForNTIUniverses()

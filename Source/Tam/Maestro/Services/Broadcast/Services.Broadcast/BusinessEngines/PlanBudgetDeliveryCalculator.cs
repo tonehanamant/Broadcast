@@ -16,12 +16,13 @@ namespace Services.Broadcast.BusinessEngines
 
     public class PlanBudgetDeliveryCalculator : IPlanBudgetDeliveryCalculator
     {
+        private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekAggregateCache;
+        private readonly INtiUniverseService _NtiUniverseService;
 
-        private readonly NsiUniverseService _NsiUniverseService;
-
-        public PlanBudgetDeliveryCalculator(NsiUniverseService nsiUniverseService)
+        public PlanBudgetDeliveryCalculator(INtiUniverseService ntiUniverseService, IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache)
         {
-            _NsiUniverseService = nsiUniverseService;
+            _NtiUniverseService = ntiUniverseService;
+            _MediaMonthAndWeekAggregateCache = mediaMonthAndWeekAggregateCache;
         }
 
         ///<inheritdoc/>
@@ -41,7 +42,8 @@ namespace Services.Broadcast.BusinessEngines
                 throw new Exception("Cannot calculate goal without media month and audience");
             }
 
-            input.Universe = _NsiUniverseService.GetAudienceUniverseForMediaMonth(input.MediaMonthId, input.AudienceId);
+            var mediaMonth = _MediaMonthAndWeekAggregateCache.GetMediaMonthById(input.MediaMonthId);
+            input.Universe = _NtiUniverseService.GetLatestNtiUniverseByYear(input.AudienceId, mediaMonth.Year);
 
             var result = input;
 

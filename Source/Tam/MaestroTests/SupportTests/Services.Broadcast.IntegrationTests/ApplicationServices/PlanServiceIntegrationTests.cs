@@ -30,6 +30,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         private readonly ICampaignService _CampaignService;
         private readonly IPlanPricingService _PlanPricingService;
 
+        private const int MEDIA_MONTH_ID = 450;
+        private const int AUDIENCE_ID = 31;
+
         public PlanServiceIntegrationTests()
         {
             IntegrationTestApplicationServiceFactory.Instance.RegisterType<IPricingApiClient, PricingApiClientStub>();
@@ -1071,8 +1074,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 Budget = 100m,
                 Impressions = 3000d,
-                AudienceId = 31,
-                MediaMonthId = 437
+                AudienceId = AUDIENCE_ID,
+                MediaMonthId = MEDIA_MONTH_ID
             });
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
@@ -1085,8 +1088,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 CPM = 100m,
                 Impressions = 3000d,
-                AudienceId = 31,
-                MediaMonthId = 437
+                AudienceId = AUDIENCE_ID,
+                MediaMonthId = MEDIA_MONTH_ID
             });
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
@@ -1099,8 +1102,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 CPM = 100m,
                 Budget = 3000m,
-                AudienceId = 31,
-                MediaMonthId = 437
+                AudienceId = AUDIENCE_ID,
+                MediaMonthId = MEDIA_MONTH_ID
             });
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
@@ -1113,8 +1116,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 CPP = 100m,
                 Budget = 3000m,
-                AudienceId = 31,
-                MediaMonthId = 437
+                AudienceId = AUDIENCE_ID,
+                MediaMonthId = MEDIA_MONTH_ID
             });
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
@@ -1127,8 +1130,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 CPP = 100m,
                 RatingPoints = 3000d,
-                AudienceId = 31,
-                MediaMonthId = 437
+                AudienceId = AUDIENCE_ID,
+                MediaMonthId = MEDIA_MONTH_ID
             });
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
@@ -1141,8 +1144,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 Budget = 100m,
                 RatingPoints = 3000d,
-                AudienceId = 31,
-                MediaMonthId = 437
+                AudienceId = AUDIENCE_ID,
+                MediaMonthId = MEDIA_MONTH_ID
             });
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
@@ -1157,7 +1160,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 RatingPoints = 0,
                 Impressions = 25000,
                 AudienceId = 34,
-                MediaMonthId = 437
+                MediaMonthId = MEDIA_MONTH_ID
             });
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
@@ -1170,8 +1173,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 CPM = 13.45m,
                 Impressions = 13.456d,
-                AudienceId = 31,
-                MediaMonthId = 437
+                AudienceId = AUDIENCE_ID,
+                MediaMonthId = MEDIA_MONTH_ID
             });
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
@@ -1184,8 +1187,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 Budget = 3000,
                 Impressions = 3000d,
-                AudienceId = 31,
-                MediaMonthId = 437
+                AudienceId = AUDIENCE_ID,
+                MediaMonthId = MEDIA_MONTH_ID
             });
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
@@ -1198,8 +1201,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 CPM = 1,
                 Impressions = 3000d,
-                AudienceId = 31,
-                MediaMonthId = 437
+                AudienceId = AUDIENCE_ID,
+                MediaMonthId = MEDIA_MONTH_ID
             });
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
@@ -1212,8 +1215,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 CPM = 1,
                 Budget = 3000,
-                AudienceId = 31,
-                MediaMonthId = 437
+                AudienceId = AUDIENCE_ID,
+                MediaMonthId = MEDIA_MONTH_ID
             });
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
@@ -1258,8 +1261,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     Budget = null,
                     CPM = null,
                     Impressions = null,
-                    MediaMonthId = 437,
-                    AudienceId = 5
+                    AudienceId = AUDIENCE_ID,
+                    MediaMonthId = MEDIA_MONTH_ID
                 }), Throws.TypeOf<Exception>().With.Message.EqualTo("At least 2 values needed to calculate goal amount"));
             }
         }
@@ -2145,7 +2148,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     new DateTime(2019,1,20),
                     new DateTime(2019,1,24)
                 },
-                AudienceId = 31,        //HH
+                AudienceId = AUDIENCE_ID,       //HH
                 AudienceType = AudienceTypeEnum.Nielsen,
                 HUTBookId = 437,
                 PostingType = PostingTypeEnum.NTI,

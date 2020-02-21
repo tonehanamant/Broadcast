@@ -23,6 +23,14 @@ namespace Services.Broadcast.ApplicationServices
         /// <param name="userName">The name of the current user</param>
         /// <param name="createdDate">Created date</param>
         void LoadUniverses(Stream fileStream, string userName, DateTime createdDate);
+
+        /// <summary>
+        /// Get the NTI universe from an audience and year
+        /// </summary>
+        /// <param name="audienceId">Audience id</param>
+        /// <param name="year">Year</param>
+        /// <returns>Universe</returns>
+        double GetLatestNtiUniverseByYear(int audienceId, int year);
     }
 
     public class NtiUniverseService : INtiUniverseService
@@ -30,6 +38,8 @@ namespace Services.Broadcast.ApplicationServices
         private readonly INtiUniverseRepository _NtiUniverseRepository;
         private readonly IBroadcastAudiencesCache _BroadcastAudiencesCache;
         private readonly IUniversesFileImporter _UniversesFileImporter;
+
+        private const string NTI_UNIVERSE_NOT_FOUND = "NTI universe not found.";
 
         public NtiUniverseService(
             IDataRepositoryFactory dataRepositoryFactory,
@@ -56,8 +66,24 @@ namespace Services.Broadcast.ApplicationServices
             _NtiUniverseRepository.SaveNtiUniverses(header);
         }
 
+        public double GetLatestNtiUniverseByYear(int audienceId, int year)
+        {
+            var universe = _NtiUniverseRepository.GetLatestNtiUniverseByYear(audienceId, year);
+
+            if (universe.HasValue)
+                return universe.Value;
+           
+            universe = _NtiUniverseRepository.GetLatestNtiUniverseByYear(audienceId, year - 1);
+
+            if (!universe.HasValue)
+                throw new Exception(NTI_UNIVERSE_NOT_FOUND);
+
+            return universe.Value;
+        }
+
+
         private void _AggregateUniversesByBroadcastAudience(
-            NtiUniverseHeader header, 
+            NtiUniverseHeader header,
             List<NtiUniverseAudienceMapping> ntiUniverseAudienceMappings)
         {
             var broadcastAudiences = _BroadcastAudiencesCache.GetAllEntities();
@@ -70,7 +96,7 @@ namespace Services.Broadcast.ApplicationServices
                 var universe = header.NtiUniverseDetails
                     .Where(x => ntiAudienceCodes.Contains(x.NtiAudienceCode, StringComparer.OrdinalIgnoreCase))
                     .Sum(x => x.Universe);
-                
+
                 result.Add(new NtiUniverse
                 {
                     Audience = audience,
@@ -121,7 +147,7 @@ namespace Services.Broadcast.ApplicationServices
         }
 
         private void _CheckForMissingAudiences(
-            List<NtiUniverseExcelRecord> universes, 
+            List<NtiUniverseExcelRecord> universes,
             List<NtiUniverseAudienceMapping> ntiUniverseAudienceMappings)
         {
             var ntiAudienceCodesFromFile = universes.Select(x => x.NtiAudienceCode);

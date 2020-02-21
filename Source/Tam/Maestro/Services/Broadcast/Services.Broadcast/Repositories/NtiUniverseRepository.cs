@@ -9,6 +9,8 @@ using System.Data.Entity;
 using System.Linq;
 using Services.Broadcast.Entities;
 using System;
+using System.Transactions;
+using System.Data;
 
 namespace Services.Broadcast.Repositories
 {
@@ -19,13 +21,15 @@ namespace Services.Broadcast.Repositories
         void SaveNtiUniverses(NtiUniverseHeader ntiUniverseHeader);
 
         NtiUniverseHeader GetLatestLoadedNsiUniverses();
+
+        double? GetLatestNtiUniverseByYear(int audienceId, int year);
     }
 
     public class NtiUniverseRepository : BroadcastRepositoryBase, INtiUniverseRepository
     {
         public NtiUniverseRepository(
             IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
-            ITransactionHelper pTransactionHelper, 
+            ITransactionHelper pTransactionHelper,
             IConfigurationWebApiClient pConfigurationWebApiClient)
             : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
 
@@ -42,7 +46,7 @@ namespace Services.Broadcast.Repositories
 
                 if (header == null)
                     throw new Exception("Nti universe data has not been loaded");
-                
+
                 return new NtiUniverseHeader
                 {
                     Id = header.id,
@@ -58,19 +62,14 @@ namespace Services.Broadcast.Repositories
                         NtiAudienceCode = x.nti_audience_code,
                         Universe = x.universe
                     }).ToList(),
-                    NtiUniverses = header.nti_universes.Select(x => new NtiUniverse
-                    {
-                        Id = x.id,
-                        Audience = _MapToBroadcastAudience(x.audience),
-                        Universe = x.universe
-                    }).ToList()
+                    NtiUniverses = header.nti_universes.Select(_MapToNtiUniverse).ToList()
                 };
             });
         }
 
         public List<NtiUniverseAudienceMapping> GetNtiUniverseAudienceMappings()
         {
-            return _InReadUncommitedTransaction(context => 
+            return _InReadUncommitedTransaction(context =>
             {
                 var mappings = context.nti_universe_audience_mappings
                     .Include(x => x.audience)
@@ -83,6 +82,26 @@ namespace Services.Broadcast.Repositories
                     Audience = _MapToBroadcastAudience(x.audience)
                 }).ToList();
             });
+        }
+
+        public double? GetLatestNtiUniverseByYear(int audienceId, int year)
+        {
+            using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, System.Transactions.IsolationLevel.ReadUncommitted))
+            {
+                var sql = @"SELECT universe
+                            FROM nti_universes
+                            WHERE audience_id = @audienceId 
+	                            AND nti_universe_header_id = (SELECT TOP 1 id FROM nti_universe_headers
+			                                                  WHERE year = @year ORDER BY month DESC)";
+
+                return _InReadUncommitedTransaction(context =>
+                {
+                    var mediaMonthParam = new System.Data.SqlClient.SqlParameter("year", SqlDbType.Int) { Value = year };
+                    var audienceParam = new System.Data.SqlClient.SqlParameter("audienceId", SqlDbType.Int) { Value = audienceId };
+
+                    return context.Database.SqlQuery<double?>(sql, mediaMonthParam, audienceParam).SingleOrDefault();
+                });
+            }
         }
 
         public void SaveNtiUniverses(NtiUniverseHeader header)
@@ -108,23 +127,33 @@ namespace Services.Broadcast.Repositories
                         universe = x.Universe
                     }).ToList()
                 });
-                
+
                 context.SaveChanges();
             });
         }
 
-        private BroadcastAudience _MapToBroadcastAudience(audience a)
+        private BroadcastAudience _MapToBroadcastAudience(audience audience)
         {
             return new BroadcastAudience
             {
-                Id = a.id,
-                CategoryCode = (EBroadcastAudienceCategoryCode)a.category_code,
-                SubCategoryCode = a.sub_category_code,
-                RangeStart = a.range_start,
-                RangeEnd = a.range_end,
-                Custom = a.custom,
-                Code = a.code,
-                Name = a.name,
+                Id = audience.id,
+                CategoryCode = (EBroadcastAudienceCategoryCode)audience.category_code,
+                SubCategoryCode = audience.sub_category_code,
+                RangeStart = audience.range_start,
+                RangeEnd = audience.range_end,
+                Custom = audience.custom,
+                Code = audience.code,
+                Name = audience.name,
+            };
+        }
+
+        private NtiUniverse _MapToNtiUniverse(nti_universes ntiUniveses)
+        {
+            return new NtiUniverse
+            {
+                Universe = ntiUniveses.universe,
+                Id = ntiUniveses.id,
+                Audience = _MapToBroadcastAudience(ntiUniveses.audience)
             };
         }
     }
