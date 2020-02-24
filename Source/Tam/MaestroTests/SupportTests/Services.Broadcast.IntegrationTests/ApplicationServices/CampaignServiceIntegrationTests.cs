@@ -38,7 +38,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         private readonly ICampaignService _CampaignService = IntegrationTestApplicationServiceFactory.GetApplicationService<ICampaignService>();
         private readonly ICampaignSummaryRepository _CampaignSummaryRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<ICampaignSummaryRepository>();
         private readonly IPlanRepository _PlanRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IPlanRepository>();
-        private static readonly bool WRITE_FILE_TO_DISK = false;
+        private static readonly bool WRITE_FILE_TO_DISK = true;
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
