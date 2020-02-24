@@ -1013,10 +1013,10 @@ namespace Services.Broadcast.Entities.Campaign
         private void _SetSpotLengths(List<PlanDto> plans, List<LookupDto> spotLenghts)
         {
             SpotLengths = plans
-                            .Select(x => new { spotLenghts.Single(y => y.Id == x.SpotLengthId).Display, x.Equivalized })
-                            .Distinct()
+                            .Select(x => new { spotLenghts.Single(y => y.Id == x.SpotLengthId).Display, x.Equivalized })                            
                             .OrderBy(x => int.Parse(x.Display))
                             .Select(x => $":{x.Display}{_GetEquivalizedStatus(x.Equivalized, x.Display)}")
+                            .Distinct()
                             .ToList();
         }
 
