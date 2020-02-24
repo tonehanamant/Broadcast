@@ -155,7 +155,7 @@
         }
       ],
       "QuarterLabel": "4Q '19",
-      "TableTitle": "4Q '19 DAY :30s ",
+      "TableTitle": "4Q '19 DAY :30s",
       "TotalWeeksInQuarter": 13,
       "UnitsValues": [
         0,
@@ -447,7 +447,7 @@
         }
       ],
       "QuarterLabel": "4Q '19",
-      "TableTitle": "4Q '19 EMN :30s ",
+      "TableTitle": "4Q '19 EMN :30s",
       "TotalWeeksInQuarter": 13,
       "UnitsValues": [
         0,
@@ -739,7 +739,7 @@
         }
       ],
       "QuarterLabel": "4Q '19",
-      "TableTitle": "4Q '19 PT :30s ",
+      "TableTitle": "4Q '19 PT :30s",
       "TotalWeeksInQuarter": 13,
       "UnitsValues": [
         0,

@@ -420,6 +420,9 @@
     <None Include="Files\Campaign export\CampaignExport_ContractOnlyPlans.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Files\Campaign export\CampaignExport_ContractOnlyPlansWithDaypartsSorting.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Files\Campaign export\CampaignExport_ContractTypeWithRestrictions.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

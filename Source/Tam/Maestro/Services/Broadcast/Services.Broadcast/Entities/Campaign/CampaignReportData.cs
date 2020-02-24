@@ -80,7 +80,9 @@ namespace Services.Broadcast.Entities.Campaign
 
             if (exportType.Equals(CampaignExportTypeEnum.Contract))
             {
-                _PopulateContractQuarterTableData(projectedPlans);
+                _PopulateContractQuarterTableData(projectedPlans, plans, spotLenghts
+                    , mediaMonthAndWeekAggregateCache
+                    , quarterCalculationEngine);
             }
 
             _SetExportFileName(projectedPlans, campaign.ModifiedDate);
@@ -432,7 +434,7 @@ namespace Services.Broadcast.Entities.Campaign
                         var row = new List<object>
                         {
                             daypartGroup.Key.DaypartCode,
-                            $"{daypartGroup.Key.SpotLength}{(daypartGroup.Key.Equivalized && ! daypartGroup.Key.SpotLength.Equals("30") ? $" eq." : string.Empty)}",
+                            $"{daypartGroup.Key.SpotLength}{_GetEquivalizedStatus(daypartGroup.Key.Equivalized, daypartGroup.Key.SpotLength)}",
                             unitsSum,
                             (unitsSum == 0 ? 0 : totalCost / unitsSum),
                             totalCost,
@@ -542,7 +544,7 @@ namespace Services.Broadcast.Entities.Campaign
                 //multiply impressions by 1000 to get the raw number because the total impressions are in raw format
                 var distributionPercentage = totalImpressions == 0
                     ? 0
-                    : (impressions * 1000)/ totalImpressions; //don't multiply by 100. excel is doing that as part of the cell format
+                    : (impressions * 1000) / totalImpressions; //don't multiply by 100. excel is doing that as part of the cell format
                 tableData.DistributionPercentages.Add(distributionPercentage);
             }
 
@@ -555,9 +557,7 @@ namespace Services.Broadcast.Entities.Campaign
         {
             //check if we have an ADU table for this quarter
             var weeksStartDates = templateTable.WeeksStartDate.Select(w => Convert.ToDateTime(w));
-            if (!plans.Any(x => x.WeeklyBreakdownWeeks
-                                    .Where(y => weeksStartDates.Contains(y.StartDate)
-                                            && y.WeeklyAdu > 0).Any()))
+            if (!plans.Any(x => x.WeeklyBreakdownWeeks.Any(y => weeksStartDates.Contains(y.StartDate) && y.WeeklyAdu > 0)))
             {
                 return;
             }
@@ -570,15 +570,13 @@ namespace Services.Broadcast.Entities.Campaign
             tableData.Months = templateTable.Months;
             for (int i = 0; i < templateTable.WeeksStartDate.Count; i++)
             {
-                bool weekIsAdu = plans.Any(x => x.WeeklyBreakdownWeeks
+                int thisWeekADUUnits = plans.SelectMany(x => x.WeeklyBreakdownWeeks
                                     .Where(y => y.StartDate.Equals(Convert.ToDateTime(templateTable.WeeksStartDate[i]))
-                                            && y.WeeklyAdu > 0).Any());
-                if (weekIsAdu)
+                                            && y.WeeklyAdu > 0).Select(y => y.WeeklyAdu)).Sum();
+                if (thisWeekADUUnits > 0)
                 {
                     tableData.DistributionPercentages.Add(EMPTY_CELL);
-                    tableData.UnitsValues.Add(plans.SelectMany(x => x.WeeklyBreakdownWeeks
-                                    .Where(y => y.StartDate.Equals(Convert.ToDateTime(templateTable.WeeksStartDate[i]))
-                                            && y.WeeklyAdu > 0).Select(y => y.WeeklyAdu)).Sum());
+                    tableData.UnitsValues.Add(thisWeekADUUnits);
                     tableData.ImpressionsValues.Add(ADU);
                     tableData.CostValues.Add(ADU);
                     tableData.CPMValues.Add(ADU);
@@ -627,7 +625,7 @@ namespace Services.Broadcast.Entities.Campaign
                             {
                                 FlowChartQuarterTableData newTable = new FlowChartQuarterTableData
                                 {
-                                    TableTitle = $"{quarter.ShortFormatQuarterNumberFirst()} {daypartGroup.Key.DaypartCode} :{daypartSpotLengthGroup.Key.SpotLength}s {(daypartSpotLengthGroup.Key.Equivalized && !daypartSpotLengthGroup.Key.SpotLength.Equals("30") ? "eq." : string.Empty)}",
+                                    TableTitle = $"{quarter.ShortFormatQuarterNumberFirst()} {daypartGroup.Key.DaypartCode} :{daypartSpotLengthGroup.Key.SpotLength}s{_GetEquivalizedStatus(daypartSpotLengthGroup.Key.Equivalized, daypartSpotLengthGroup.Key.SpotLength)}",
                                     DaypartCode = daypartGroup.Key.DaypartCode,
                                     QuarterLabel = quarter.ShortFormatQuarterNumberFirst()
                                 };
@@ -657,7 +655,7 @@ namespace Services.Broadcast.Entities.Campaign
                                                     //for all the exported plans
                                                     var distributionPercentage = totalNumberOfImpressionsForExportedPlans == 0
                                                         ? 0
-                                                        : itemsThisWeek.Sum(y => y.GuaranteedAudience.TotalImpressions) 
+                                                        : itemsThisWeek.Sum(y => y.GuaranteedAudience.TotalImpressions)
                                                                     / totalNumberOfImpressionsForExportedPlans; //do not multiply by 100. excel is doing that.
                                                     newTable.DistributionPercentages.Add(distributionPercentage);
                                                     newTable.UnitsValues.Add(0);    //we don't have units calculated yet
@@ -701,23 +699,27 @@ namespace Services.Broadcast.Entities.Campaign
             return string.Join(", ", formattedGroups);
         }
 
-        private void _PopulateContractQuarterTableData(List<ProjectedPlan> projectedPlans)
+        private void _PopulateContractQuarterTableData(List<ProjectedPlan> projectedPlans, List<PlanDto> plans
+            , List<LookupDto> spotLenghts
+            , IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache
+            , IQuarterCalculationEngine quarterCalculationEngine)
         {
             projectedPlans.GroupBy(x => new { x.QuarterNumber, x.QuarterYear })
                 .OrderBy(x => x.Key.QuarterYear).ThenBy(x => x.Key.QuarterNumber)
                 .ToList()
                 .ForEach(qDGrp =>   //quarter daypart group
                 {
-                    QuarterDetailDto quarter = new QuarterDetailDto
-                    {
-                        Quarter = qDGrp.Key.QuarterNumber,
-                        Year = qDGrp.Key.QuarterYear
-                    };
+                    QuarterDetailDto quarter = quarterCalculationEngine
+                    .GetQuarterDetail(qDGrp.Key.QuarterNumber, qDGrp.Key.QuarterYear);
                     var quarterTable = new ContractQuarterTableData
                     {
                         Title = quarter.LongFormat(),
                     };
                     qDGrp.ToList().GroupBy(y => new { y.DaypartCode, y.SpotLength, y.Equivalized, y.WeekStartDate })
+                    .OrderBy(x=>x.Key.WeekStartDate)    //ASC by week
+                    .ThenBy(x=> x.Key.DaypartCode)      //Alphabetically ASC by daypart code
+                    .ThenBy(x=> Convert.ToInt32(x.Key.SpotLength))  // ASC by order of time length
+                    .ThenByDescending(x=> x.Key.Equivalized)  // then by equivalized
                     .ToList()
                     .ForEach(row =>  //quarter daypart spot length equivalized group in the same week
                     {
@@ -735,7 +737,7 @@ namespace Services.Broadcast.Entities.Campaign
                             row.Key.DaypartCode,
                             row.Key.WeekStartDate.Value.ToShortDateString(),
                             units,
-                            $":{row.Key.SpotLength}s{(row.Key.Equivalized && !row.Key.SpotLength.Equals("30") ? " eq." : string.Empty)}",
+                            $":{row.Key.SpotLength}s{_GetEquivalizedStatus(row.Key.Equivalized, row.Key.SpotLength)}",
                             units == 0 ? 0 : totalCost / units,   //cost per unit
                             totalCost,
                             units == 0 ? 0 : (totalImpressions / units),    //impressions per unit
@@ -745,44 +747,119 @@ namespace Services.Broadcast.Entities.Campaign
 
                         quarterTable.Rows.Add(tableRow);
                     });
-                    quarterTable.TotalRow = _CalculateTotalsForContractTable(quarterTable.Rows, quarter.ShortFormatQuarterNumberFirst());
+                    _CalculateTotalsForContractTable(quarterTable, quarter.ShortFormatQuarterNumberFirst());
                     ContractQuarterTables.Add(quarterTable);
+                    _CalculateAduTableData(quarter, plans, spotLenghts, mediaMonthAndWeekAggregateCache);
                 });
             _CalculateContractTabTotals();
         }
 
+        private void _CalculateAduTableData(QuarterDetailDto quarter, List<PlanDto> plans
+            , List<LookupDto> spotLenghts
+            , IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache)
+        {
+            List<DateTime> weeksStartDate = mediaMonthAndWeekAggregateCache
+                .GetMediaWeeksByFlight(quarter.StartDate, quarter.EndDate)
+                .Select(x => x.StartDate).ToList();
+            if (!plans.Any(x => x.WeeklyBreakdownWeeks.Any(y => weeksStartDate.Contains(y.StartDate) && y.WeeklyAdu > 0)))
+            {
+                return;
+            }
+            ContractQuarterTableData table = new ContractQuarterTableData
+            {
+                Title = quarter.LongFormat(),
+                IsAduTable = true
+            };
+
+            foreach (var startDate in weeksStartDate)
+            {
+                if (!plans.Any(x => x.WeeklyBreakdownWeeks.Any(y => y.StartDate.Equals(startDate) && y.WeeklyAdu > 0)))
+                {
+                    continue;
+                }
+
+                plans.GroupBy(x => new { SpotLength = spotLenghts.Single(y => y.Id == x.SpotLengthId).Display, x.Equivalized })
+                    .OrderBy(x=> Convert.ToInt32(x.Key.SpotLength))
+                    .ThenByDescending(x=>x.Key.Equivalized)
+                    .ToList()
+                    .ForEach(group =>
+                    {
+                        int weeklyAdu = group.SelectMany(x => x.WeeklyBreakdownWeeks
+                                    .Where(y => y.StartDate.Equals(startDate)
+                                            && y.WeeklyAdu > 0).Select(y => y.WeeklyAdu)).Sum();
+                        if (weeklyAdu > 0)
+                        {
+                            table.Rows.Add(
+                                new List<object>
+                                {
+                                    EMPTY_CELL,
+                                    startDate,
+                                    weeklyAdu,
+                                    $"{group.Key.SpotLength}{_GetEquivalizedStatus(group.Key.Equivalized, group.Key.SpotLength)}",
+                                    ADU,
+                                    ADU,
+                                    ADU,
+                                    ADU,
+                                    ADU
+                                });
+                        }
+                    });
+            }
+            _CalculateTotalsForContractADUTable(table, quarter.ShortFormatQuarterNumberFirst());
+            ContractQuarterTables.Add(table);
+        }
+
+        /// <summary>
+        /// Calculates the contract tab totals for all the tables not ADU.
+        /// </summary>
         private void _CalculateContractTabTotals()
         {
             ContractTotals = new List<object>
             {
-                ContractQuarterTables.SelectMany(x=>x.Rows).Sum(x=>int.Parse(x[2].ToString())), //units
-                ContractQuarterTables.SelectMany(x=>x.Rows).Sum(x=>decimal.Parse(x[5].ToString())), //total cost
-                null,   //empty cell in the excel
-                ContractQuarterTables.SelectMany(x=>x.Rows).Sum(x=>double.Parse(x[7].ToString())), //total demo
-                null   //empty cell in the excel
+                ContractQuarterTables.Where(x=>!x.IsAduTable).SelectMany(x=>x.Rows).Sum(x=>int.Parse(x[2].ToString())), //units
+                ContractQuarterTables.Where(x=>!x.IsAduTable).SelectMany(x=>x.Rows).Sum(x=>decimal.Parse(x[5].ToString())), //total cost
+                EMPTY_CELL,
+                ContractQuarterTables.Where(x=>!x.IsAduTable).SelectMany(x=>x.Rows).Sum(x=>double.Parse(x[7].ToString())), //total demo
+                EMPTY_CELL
             };
             //CPM
-            ContractTotals.Add(_CalculateCost(double.Parse(ContractTotals[3].ToString()), decimal.Parse(ContractTotals[1].ToString())));
+            ContractTotals.Add(_CalculateCost(double.Parse(ContractTotals[3].ToString())
+                , decimal.Parse(ContractTotals[1].ToString())));
         }
 
-        private List<object> _CalculateTotalsForContractTable(List<List<object>> rows, string quarterLabel)
+        private void _CalculateTotalsForContractTable(ContractQuarterTableData quarterTable, string quarterLabel)
         {
-            //add null for all the cells that don't have data
+            decimal totalCost = quarterTable.Rows.Sum(x => decimal.Parse(x[5].ToString()));
+            double totalImpressions = quarterTable.Rows.Sum(x => double.Parse(x[7].ToString()));
 
-            decimal totalCost = rows.Sum(x => decimal.Parse(x[5].ToString()));
-            double totalImpressions = rows.Sum(x => double.Parse(x[7].ToString()));
-
-            return new List<object>
+            quarterTable.TotalRow = new List<object>
             {
-                null,
                 $"{quarterLabel} Totals",
-                rows.Sum(x => int.Parse(x[2].ToString())),    //units
-                "-",
-                "-",
+                quarterTable.Rows.Sum(x => Convert.ToInt32(x[2])),    //units
+                NO_VALUE_CELL,
+                NO_VALUE_CELL,
                 totalCost,     //cost
-                "-",
+                NO_VALUE_CELL,
                 totalImpressions,
                 _CalculateCost(totalImpressions, totalCost)
+            };
+        }
+
+        private void _CalculateTotalsForContractADUTable(ContractQuarterTableData quarterTable, string quarterLabel)
+        {
+            //units are the third value in the row
+            int totalUnits = quarterTable.Rows.Sum(x => Convert.ToInt32(x[2]));
+
+            quarterTable.TotalRow = new List<object>
+            {
+                $"{quarterLabel} Totals",
+                totalUnits,
+                NO_VALUE_CELL,
+                NO_VALUE_CELL,
+                NO_VALUE_CELL,
+                NO_VALUE_CELL,
+                NO_VALUE_CELL,
+                NO_VALUE_CELL
             };
         }
 
@@ -939,8 +1016,13 @@ namespace Services.Broadcast.Entities.Campaign
                             .Select(x => new { spotLenghts.Single(y => y.Id == x.SpotLengthId).Display, x.Equivalized })
                             .Distinct()
                             .OrderBy(x => int.Parse(x.Display))
-                            .Select(x => $":{x.Display}{(x.Equivalized && !x.Display.Equals("30") ? " eq." : string.Empty)}")
+                            .Select(x => $":{x.Display}{_GetEquivalizedStatus(x.Equivalized, x.Display)}")
                             .ToList();
+        }
+
+        private string _GetEquivalizedStatus(bool equivalized, string display)
+        {
+            return equivalized && !display.Equals("30") ? " eq." : string.Empty;
         }
 
         private void _SetGuaranteeedDemo(List<PlanAudienceDisplay> guaranteedDemos, List<PlanAudienceDisplay> orderedAudiences)
@@ -1103,5 +1185,6 @@ namespace Services.Broadcast.Entities.Campaign
         public string Title { get; set; }
         public List<List<object>> Rows { get; set; } = new List<List<object>>();
         public List<object> TotalRow { get; set; }
+        public bool IsAduTable { get; set; }
     }
 }

@@ -135,7 +135,7 @@
         }
       ],
       "QuarterLabel": "2Q '20",
-      "TableTitle": "2Q '20 ENLN :30s ",
+      "TableTitle": "2Q '20 ENLN :30s",
       "TotalWeeksInQuarter": 13,
       "UnitsValues": [
         0,
@@ -427,7 +427,7 @@
         }
       ],
       "QuarterLabel": "1Q '21",
-      "TableTitle": "1Q '21 ENLN :30s ",
+      "TableTitle": "1Q '21 ENLN :30s",
       "TotalWeeksInQuarter": 13,
       "UnitsValues": [
         0,
@@ -725,7 +725,7 @@
         }
       ],
       "QuarterLabel": "4Q '23",
-      "TableTitle": "4Q '23 ENLN :30s ",
+      "TableTitle": "4Q '23 ENLN :30s",
       "TotalWeeksInQuarter": 14,
       "UnitsValues": [
         0,
@@ -1027,7 +1027,7 @@
         }
       ],
       "QuarterLabel": "1Q '24",
-      "TableTitle": "1Q '24 ENLN :30s ",
+      "TableTitle": "1Q '24 ENLN :30s",
       "TotalWeeksInQuarter": 13,
       "UnitsValues": [
         0,

@@ -601,6 +601,34 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        public void CampaignExport_ContractOnlyPlansWithDaypartsSorting()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<ITrafficApiCache>(new TrafficApiCacheStub());
+                var _CampaignService = IntegrationTestApplicationServiceFactory.GetApplicationService<ICampaignService>();
+
+                var reportData = _CampaignService.GetAndValidateCampaignReportData(new CampaignReportRequest
+                {
+                    CampaignId = 652,
+                    ExportType = CampaignExportTypeEnum.Contract,
+                    SelectedPlans = new List<int> { 1852, 2233 }
+                });
+
+                //write excel file to file system(this is used for manual testing only)
+                var reportOutput = new CampaignReportGenerator(@".\Files\Excel templates").Generate(reportData);
+                reportOutput.Filename = "CampaignExport_ContractOnlyPlansWithDaypartsSorting.xlsx";
+                _WriteFileToLocalFileSystem(reportOutput);
+
+                Assert.IsTrue(DateTime.Now.ToString("MM/dd/yy").Equals(reportData.CreatedDate));
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(reportData, _GetJsonSettingsForCampaignExport()));
+                Assert.AreEqual(reportOutput.Stream.Length,
+                    File.ReadAllBytes(@".\Files\Campaign export\CampaignExport_ContractOnlyPlansWithDaypartsSorting.xlsx").LongLength);
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
         public void CampaignExport_GenerateCampaignReport()
         {
             var now = new DateTime(2020, 1, 1);

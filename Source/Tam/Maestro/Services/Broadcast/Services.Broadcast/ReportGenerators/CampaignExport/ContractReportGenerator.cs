@@ -8,7 +8,8 @@ namespace Services.Broadcast.ReportGenerators.CampaignExport
 {
     public class ContractReportGenerator
     {
-        private readonly string FOOTER_INFO_COLUMN_INDEX = "D";
+        private readonly string FOOTER_INFO_COLUMN = "D";
+        private readonly string TOTAL_START_COLUMN = "D";
         private readonly int ROWS_TO_COPY = 4;
         private readonly string START_COLUMN = "A";
         private readonly string PLAN_NAME_COLUMN = "C";
@@ -41,7 +42,7 @@ namespace Services.Broadcast.ReportGenerators.CampaignExport
             //content restrinctions row is 8 rows below the total row on this tab
             currentRowIndex += 8;
             ExportSharedLogic.PopulateContentRestrictions(contractWorksheet, campaignReportData.DaypartsData,
-                $"{FOOTER_INFO_COLUMN_INDEX}{currentRowIndex}");
+                $"{FOOTER_INFO_COLUMN}{currentRowIndex}");
         }
 
         private void _AddTotalContractTabData(List<object> contractTotals, ExcelWorksheet contractWorksheet)
@@ -75,11 +76,8 @@ namespace Services.Broadcast.ReportGenerators.CampaignExport
                 currentRowIndex++;  //go to next row
             }
 
-            var totalRow = table.TotalRow;
-            totalRow.Insert(0, table.Rows.Count % 2 == 0 ? "Odd" : "Even");
-            totalRow.Insert(1, null);
-            contractWorksheet.Cells[$"{START_COLUMN}{currentRowIndex}"]
-                    .LoadFromArrays(new List<object[]> { totalRow.ToArray() });
+            contractWorksheet.Cells[$"{TOTAL_START_COLUMN}{currentRowIndex}"]
+                    .LoadFromArrays(new List<object[]> { table.TotalRow.ToArray() });
             contractWorksheet.Row(currentRowIndex).Height = ExportSharedLogic.ROW_HEIGHT;
         }
     }

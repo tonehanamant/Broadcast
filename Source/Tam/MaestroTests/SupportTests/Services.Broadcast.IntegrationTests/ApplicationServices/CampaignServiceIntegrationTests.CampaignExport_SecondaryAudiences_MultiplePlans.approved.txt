@@ -210,7 +210,7 @@
         }
       ],
       "QuarterLabel": "4Q '19",
-      "TableTitle": "4Q '19 DAY :30s ",
+      "TableTitle": "4Q '19 DAY :30s",
       "TotalWeeksInQuarter": 13,
       "UnitsValues": [
         0,
@@ -648,7 +648,7 @@
         }
       ],
       "QuarterLabel": "4Q '19",
-      "TableTitle": "4Q '19 EMN :30s ",
+      "TableTitle": "4Q '19 EMN :30s",
       "TotalWeeksInQuarter": 13,
       "UnitsValues": [
         0,
@@ -1086,7 +1086,7 @@
         }
       ],
       "QuarterLabel": "4Q '19",
-      "TableTitle": "4Q '19 PT :30s ",
+      "TableTitle": "4Q '19 PT :30s",
       "TotalWeeksInQuarter": 13,
       "UnitsValues": [
         0,
@@ -1378,7 +1378,7 @@
         }
       ],
       "QuarterLabel": "1Q '20",
-      "TableTitle": "1Q '20 MDN :90s ",
+      "TableTitle": "1Q '20 MDN :90s",
       "TotalWeeksInQuarter": 13,
       "UnitsValues": [
         0,
@@ -1670,7 +1670,7 @@
         }
       ],
       "QuarterLabel": "1Q '20",
-      "TableTitle": "1Q '20 PA :90s ",
+      "TableTitle": "1Q '20 PA :90s",
       "TotalWeeksInQuarter": 13,
       "UnitsValues": [
         0,
@@ -2546,7 +2546,7 @@
         }
       ],
       "QuarterLabel": "2Q '20",
-      "TableTitle": "2Q '20 MDN :90s ",
+      "TableTitle": "2Q '20 MDN :90s",
       "TotalWeeksInQuarter": 13,
       "UnitsValues": [
         0,
@@ -2838,7 +2838,7 @@
         }
       ],
       "QuarterLabel": "2Q '20",
-      "TableTitle": "2Q '20 PA :90s ",
+      "TableTitle": "2Q '20 PA :90s",
       "TotalWeeksInQuarter": 13,
       "UnitsValues": [
         0,
