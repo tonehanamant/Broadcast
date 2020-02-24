@@ -423,13 +423,13 @@
     <None Include="Files\Campaign export\CampaignExport_ContractTypeWithRestrictions.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Files\Campaign export\CampaignExport_PlansWith13And14Weeks.xlsx">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="Files\Campaign export\CampaignExport_ReservedPlanWithConstraints.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Files\Campaign export\CampaignExport_SecondaryAudiences_MultiplePlans.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\Campaign export\CampaignExport_PlansWith13And14Weeks.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Files\Campaign export\CampaignExport_SecondaryAudiences_SinglePlan.xlsx">

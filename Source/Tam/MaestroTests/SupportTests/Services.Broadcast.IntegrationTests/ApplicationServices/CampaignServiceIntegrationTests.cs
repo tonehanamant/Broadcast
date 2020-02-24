@@ -595,7 +595,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Assert.IsTrue(DateTime.Now.ToString("MM/dd/yy").Equals(reportData.CreatedDate));
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(reportData, _GetJsonSettingsForCampaignExport()));
                 Assert.AreEqual(reportOutput.Stream.Length,
-                    File.ReadAllBytes(@".\Files\Campaign export\CampaignExport_ContractOnlyPlans.xlsx").LongLength);                
+                    File.ReadAllBytes(@".\Files\Campaign export\CampaignExport_ContractOnlyPlans.xlsx").LongLength);
             }
         }
 
@@ -624,7 +624,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 sharedFolderFile = sharedFolderRepository.GetFileById(fileId);
             }
-            
+
             Assert.AreNotEqual(Guid.Empty, fileId);
 
             fileServiceMock.Verify(x => x.Create(
@@ -685,7 +685,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Assert.IsTrue(DateTime.Now.ToString("MM/dd/yy").Equals(reportData.CreatedDate));
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(reportData, _GetJsonSettingsForCampaignExport()));
                 Assert.AreEqual(reportOutput.Stream.Length,
-                    File.ReadAllBytes(@".\Files\Campaign export\CampaignExport_ReservedPlanWithConstraints.xlsx").LongLength);                
+                    File.ReadAllBytes(@".\Files\Campaign export\CampaignExport_ReservedPlanWithConstraints.xlsx").LongLength);
             }
         }
 
@@ -708,7 +708,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 //write excel file to file system(this is used for manual testing only)
                 var reportOutput = new CampaignReportGenerator(@".\Files\Excel templates").Generate(reportData);
                 reportOutput.Filename = "CampaignExport_ContractTypeWithRestrictions.xlsx";
-                
+
                 _WriteFileToLocalFileSystem(reportOutput);
 
                 Assert.IsTrue(DateTime.Now.ToString("MM/dd/yy").Equals(reportData.CreatedDate));
@@ -909,9 +909,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 //write excel file to file system(this is used for manual testing only)
                 var reportOutput = new CampaignReportGenerator(@".\Files\Excel templates").Generate(reportData);
                 reportOutput.Filename = "CampaignExport_PlansWith13And14Weeks.xlsx";
-
                 _WriteFileToLocalFileSystem(reportOutput);
-
                 Assert.IsTrue(DateTime.Now.ToString("MM/dd/yy").Equals(reportData.CreatedDate));
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(reportData, _GetJsonSettingsForCampaignExport()));
                 Assert.AreEqual(reportOutput.Stream.Length,
@@ -932,7 +930,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 ContractResolver = jsonResolver
             };
         }
-        
+
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void ProgramLineupExport_GetProgramLineupReportData()
@@ -1057,7 +1055,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<ITrafficApiCache>(new TrafficApiCacheStub());
                 var _CampaignService = IntegrationTestApplicationServiceFactory.GetApplicationService<ICampaignService>();
                 _AddPricingJob(planId, new DateTime(2019, 12, 05), BackgroundJobProcessingStatus.Succeeded);
-                
+
                 var reportData = _CampaignService.GetProgramLineupReportData(new ProgramLineupReportRequest
                 {
                     SelectedPlans = new List<int> { planId }
@@ -1103,3 +1101,4 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
     }
 }
+
