@@ -301,6 +301,8 @@
     <Compile Include="ApplicationServices\SpotLengthServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\SpotTrackerServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\StationInventoryGroupServiceTests.cs" />
+    <Compile Include="ApplicationServices\StationMappingsIntegationTests.cs" />
+    <Compile Include="ApplicationServices\StationServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\TrafficServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\WhosWatchingTvServiceTests.cs" />
     <Compile Include="AttributeIgnorer.cs" />

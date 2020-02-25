@@ -81,6 +81,55 @@ GO
 
 /*************************************** END PRI-17866 *****************************************************/
 
+/*************************************** START PRI-21024 *****************************************************/
+IF OBJECT_ID('station_mappings') IS NULL
+BEGIN
+	CREATE TABLE [dbo].[station_mappings](
+		[id] int IDENTITY(1,1) NOT NULL,
+		[station_id] int NOT NULL,
+		[mapped_call_letters] [varchar](15) NOT NULL,
+		[map_set] int NOT NULL,
+		[created_date] datetime2(7) NOT NULL,
+		[created_by] varchar(63) NOT NULL,
+	 CONSTRAINT [PK_station_mappings] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY]
+
+	ALTER TABLE [dbo].[station_mappings]  WITH CHECK ADD CONSTRAINT [FK_station_mappings_stations] FOREIGN KEY([station_id])
+	REFERENCES [dbo].[stations] ([id])
+END
+
+IF OBJECT_ID('station_month_details') IS NULL
+BEGIN
+	CREATE TABLE [dbo].[station_month_details](
+		[station_id] [int] NOT NULL,
+		[media_month_id] [int] NOT NULL,
+		[affiliation] [varchar](7) NULL,
+		[market_code] [smallint] NULL,
+		[distributor_code] [int] NULL,
+	CONSTRAINT [PK_station_month_details] PRIMARY KEY CLUSTERED 
+	(
+		[station_id] ASC, [media_month_id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY]
+
+	ALTER TABLE [dbo].[station_month_details]  WITH CHECK ADD CONSTRAINT [FK_station_month_details_stations] FOREIGN KEY([station_id])
+	REFERENCES [dbo].[stations] ([id])
+
+	ALTER TABLE [dbo].[station_month_details]  WITH CHECK ADD CONSTRAINT [FK_station_month_details_media_months] FOREIGN KEY([media_month_id])
+	REFERENCES [dbo].[media_months] ([id])
+
+	ALTER TABLE [dbo].[station_month_details]  WITH CHECK ADD CONSTRAINT [FK_station_month_details_markets] FOREIGN KEY([market_code])
+	REFERENCES [dbo].[markets] ([market_code])
+
+	ALTER TABLE [dbo].[station_month_details]
+	ADD CONSTRAINT [UQ_station_month_details_station_id_station_month_details_media_month_id] 
+	UNIQUE ([station_id], [media_month_id])
+END
+/*************************************** END PRI-21024 *****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

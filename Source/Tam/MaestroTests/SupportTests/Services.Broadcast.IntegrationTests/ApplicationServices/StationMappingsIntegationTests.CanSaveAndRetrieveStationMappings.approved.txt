@@ -1,0 +1,27 @@
+﻿[
+  {
+    "MapSet": 1,
+    "MapValue": "WMAH-DT2",
+    "StationId": 2314
+  },
+  {
+    "MapSet": 4,
+    "MapValue": "DMAH",
+    "StationId": 2314
+  },
+  {
+    "MapSet": 2,
+    "MapValue": "WMAH-TV 19.2",
+    "StationId": 2314
+  },
+  {
+    "MapSet": 2,
+    "MapValue": "WMAH-TV+",
+    "StationId": 2314
+  },
+  {
+    "MapSet": 3,
+    "MapValue": "DMAH",
+    "StationId": 2314
+  }
+]

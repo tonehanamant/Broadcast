@@ -76,6 +76,35 @@ namespace BroadcastComposerWeb.Controllers
         }
 
         [HttpPost]
+        [Route("ImportStationMappings")]
+        public ActionResult ImportStationMappings(HttpPostedFileBase file)
+        {
+            if (file != null && file.ContentLength > 0)
+            {
+                var fileName = Path.GetFileName(file.FileName);
+                if (!fileName.EndsWith(".xlsx"))
+                {
+                    ViewBag.Message = "Only Excel (.xlsx) files supported";
+                }
+                else
+                {
+                    try
+                    {
+                        var service = _ApplicationServiceFactory.GetApplicationService<IStationMappingService>();
+                        service.LoadStationMappings(file.InputStream, fileName, "maintenance controller", DateTime.Now);
+                        ViewBag.Message = "Station mappings file uploaded and processed successfully !";
+                    }
+                    catch (Exception ex)
+                    {
+                        ViewBag.Message = ex.Message;
+                    }
+                }
+            }
+
+            return View("Index");
+        }
+
+        [HttpPost]
         public ActionResult ClearMediaMonthCrunchCache()
         {
             var service = _ApplicationServiceFactory.GetApplicationService<IRatingForecastService>();

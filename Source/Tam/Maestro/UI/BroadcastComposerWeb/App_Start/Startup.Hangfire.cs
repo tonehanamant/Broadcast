@@ -49,7 +49,8 @@ namespace BroadcastComposerWeb
             var recurringJobsFactory = new RecurringJobsFactory(
                 BroadcastApplicationServiceFactory.Instance.Resolve<IRecurringJobManager>(),
                 BroadcastApplicationServiceFactory.Instance.Resolve<IPlanService>(),
-                BroadcastApplicationServiceFactory.Instance.Resolve<IInventoryProgramsProcessingService>()
+                BroadcastApplicationServiceFactory.Instance.Resolve<IInventoryProgramsProcessingService>(),
+                BroadcastApplicationServiceFactory.Instance.Resolve<IStationService>()
                 );
             recurringJobsFactory.AddOrUpdateRecurringJobs();
 

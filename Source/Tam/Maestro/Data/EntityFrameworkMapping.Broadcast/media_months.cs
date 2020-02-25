@@ -28,6 +28,7 @@ namespace EntityFrameworkMapping.Broadcast
             this.inventory_file_proprietary_header = new HashSet<inventory_file_proprietary_header>();
             this.inventory_file_proprietary_header1 = new HashSet<inventory_file_proprietary_header>();
             this.nti_to_nsi_conversion_rates = new HashSet<nti_to_nsi_conversion_rates>();
+            this.station_month_details = new HashSet<station_month_details>();
         }
     
         public int id { get; set; }
@@ -50,5 +51,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<inventory_file_proprietary_header> inventory_file_proprietary_header { get; set; }
         public virtual ICollection<inventory_file_proprietary_header> inventory_file_proprietary_header1 { get; set; }
         public virtual ICollection<nti_to_nsi_conversion_rates> nti_to_nsi_conversion_rates { get; set; }
+        public virtual ICollection<station_month_details> station_month_details { get; set; }
     }
 }

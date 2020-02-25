@@ -14,15 +14,18 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IRecurringJobManager _RecurringJobManager;
         private readonly IPlanService _PlanService;
         private readonly IInventoryProgramsProcessingService _InventoryProgramsProcessingService;
+        private readonly IStationService _StationService;
 
         public RecurringJobsFactory(
             IRecurringJobManager recurringJobManager,
             IPlanService planService,
-            IInventoryProgramsProcessingService inventoryProgramsProcessingService)
+            IInventoryProgramsProcessingService inventoryProgramsProcessingService,
+            IStationService stationService)
         {
             _RecurringJobManager = recurringJobManager;
             _PlanService = planService;
             _InventoryProgramsProcessingService = inventoryProgramsProcessingService;
+            _StationService = stationService;
         }
 
         public void AddOrUpdateRecurringJobs()
@@ -40,6 +43,13 @@ namespace Services.Broadcast.ApplicationServices
                 Cron.Daily(_GetInventoryProgramsProcessingForWeeksJobRunHour()),
                 TimeZoneInfo.Local,
                 queue: "inventoryprogramsprocessing");
+
+            _RecurringJobManager.AddOrUpdate(
+                "stations-update",
+                () => _StationService.ImportStationsFromForecastDatabaseJobEntryPoint(RECURRING_JOBS_USERNAME),
+                Cron.Daily(_StationsUpdateJobRunHour()),
+                TimeZoneInfo.Local,
+                queue: "stationsupdate");
         }
 
         private int _GetPlanAutomaticStatusTransitionJobRunHour()
@@ -50,6 +60,11 @@ namespace Services.Broadcast.ApplicationServices
         private int _GetInventoryProgramsProcessingForWeeksJobRunHour()
         {
             return _GetConfiguredInt("InventoryProgramsProcessingForWeeksJobRunHour", 0);
+        }
+
+        private int _StationsUpdateJobRunHour()
+        {
+            return _GetConfiguredInt("StationImportJobRunHour", 0);
         }
 
         private int _GetConfiguredInt(string appSettingKey, int defaultValue)

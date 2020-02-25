@@ -407,6 +407,12 @@
         <EntityTypeShape EntityType="BroadcastModel.plan_version_flight_days" Width="1.5" PointX="19.25" PointY="0.75" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_flight_days_days" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_flight_days_plan_versions" />
+        <EntityTypeShape EntityType="BroadcastModel.station_mappings" Width="1.5" PointX="35.625" PointY="33" />
+        <EntityTypeShape EntityType="BroadcastModel.station_month_details" Width="1.5" PointX="8.25" PointY="9.75" />
+        <AssociationConnector Association="BroadcastModel.FK_station_month_details_markets" />
+        <AssociationConnector Association="BroadcastModel.FK_station_month_details_media_months" />
+        <AssociationConnector Association="BroadcastModel.FK_station_month_details_stations" />
+        <AssociationConnector Association="BroadcastModel.FK_station_mappings_stations" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

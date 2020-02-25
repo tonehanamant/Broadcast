@@ -187,5 +187,7 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<inventory_programs_by_source_jobs> inventory_programs_by_source_jobs { get; set; }
         public virtual DbSet<nti_to_nsi_conversion_rates> nti_to_nsi_conversion_rates { get; set; }
         public virtual DbSet<plan_version_flight_days> plan_version_flight_days { get; set; }
+        public virtual DbSet<station_mappings> station_mappings { get; set; }
+        public virtual DbSet<station_month_details> station_month_details { get; set; }
     }
 }

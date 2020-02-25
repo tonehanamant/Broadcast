@@ -41,7 +41,7 @@
           <Property Name="data_accredited" Type="bit" Nullable="false" />
           <Property Name="playback_type" Type="varchar" MaxLength="1" Nullable="false" />
           <Property Name="time_interval" Type="int" Nullable="false" />
-          <Property Name="collection_method" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="collection_method" Type="varchar" MaxLength="2" Nullable="false" />
           <Property Name="contest_indicator" Type="bit" Nullable="false" />
           <Property Name="report_period" Type="varchar" MaxLength="7" Nullable="false" />
           <Property Name="report_year" Type="smallint" Nullable="false" />
@@ -60,6 +60,32 @@
           <Property Name="usages" Type="bit" Nullable="false" />
           <Property Name="viewers" Type="bit" Nullable="false" />
           <Property Name="date_crunched" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="stations">
+          <Key>
+            <PropertyRef Name="media_month_id" />
+            <PropertyRef Name="distributor_code" />
+          </Key>
+          <Property Name="media_month_id" Type="smallint" Nullable="false" />
+          <Property Name="distributor_code" Type="int" Nullable="false" />
+          <Property Name="market_code" Type="int" Nullable="false" />
+          <Property Name="market_of_origin_code" Type="int" Nullable="false" />
+          <Property Name="call_letters" Type="varchar" MaxLength="31" Nullable="false" />
+          <Property Name="legacy_call_letters" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="start_datetime_of_survey" Type="datetime" Nullable="false" />
+          <Property Name="end_datetime_of_survey" Type="datetime" Nullable="false" />
+          <Property Name="parent_plus_indicator" Type="bit" Nullable="false" />
+          <Property Name="cable_long_name" Type="varchar" MaxLength="31" Nullable="false" />
+          <Property Name="broadcast_channel_number" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="distribution_source_type" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="primary_affiliation" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="secondary_affiliation" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="tertiary_affiliation" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="distributor_group" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="parent_indicator" Type="bit" Nullable="false" />
+          <Property Name="satellite_indicator" Type="bit" Nullable="false" />
+          <Property Name="station_type_code" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="reportability_status" Type="varchar" MaxLength="1" Nullable="false" />
         </EntityType>
         <EntityType Name="universes">
           <Key>
@@ -261,6 +287,7 @@
           <EntitySet Name="codes" EntityType="Self.codes" Schema="nsi" store:Type="Tables" />
           <EntitySet Name="market_headers" EntityType="Self.market_headers" Schema="nsi" store:Type="Tables" />
           <EntitySet Name="post_months" EntityType="Self.post_months" Schema="nsi" store:Type="Tables" />
+          <EntitySet Name="stations" EntityType="Self.stations" Schema="nsi" store:Type="Tables" />
           <EntitySet Name="universes" EntityType="Self.universes" Schema="nsi" store:Type="Tables" />
           <EntitySet Name="usages" EntityType="Self.usages" Schema="nsi" store:Type="Tables" />
           <EntitySet Name="usages_arc" EntityType="Self.usages_arc" Schema="nsi" store:Type="Tables" />
@@ -293,6 +320,7 @@
           <EntitySet Name="viewer_details_trunc" EntityType="broadcast_forecastModel.viewer_details_trunc" />
           <EntitySet Name="viewers_arc" EntityType="broadcast_forecastModel.viewers_arc" />
           <EntitySet Name="viewers_trunc" EntityType="broadcast_forecastModel.viewers_trunc" />
+          <EntitySet Name="stations" EntityType="broadcast_forecastModel.stations" />
         </EntityContainer>
         <EntityType Name="universe">
           <Key>
@@ -415,7 +443,7 @@
           <Property Name="data_accredited" Type="Boolean" Nullable="false" />
           <Property Name="playback_type" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
           <Property Name="time_interval" Type="Int32" Nullable="false" />
-          <Property Name="collection_method" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="collection_method" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
           <Property Name="contest_indicator" Type="Boolean" Nullable="false" />
           <Property Name="report_period" Type="String" Nullable="false" MaxLength="7" FixedLength="false" Unicode="false" />
           <Property Name="report_year" Type="Int16" Nullable="false" />
@@ -545,6 +573,32 @@
           <Property Name="market_code" Type="Int16" Nullable="false" />
           <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="legacy_call_letters" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="stations">
+          <Key>
+            <PropertyRef Name="media_month_id" />
+            <PropertyRef Name="distributor_code" />
+          </Key>
+          <Property Name="media_month_id" Type="Int16" Nullable="false" />
+          <Property Name="distributor_code" Type="Int32" Nullable="false" />
+          <Property Name="market_code" Type="Int32" Nullable="false" />
+          <Property Name="market_of_origin_code" Type="Int32" Nullable="false" />
+          <Property Name="call_letters" Type="String" Nullable="false" MaxLength="31" FixedLength="false" Unicode="false" />
+          <Property Name="legacy_call_letters" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="start_datetime_of_survey" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="end_datetime_of_survey" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="parent_plus_indicator" Type="Boolean" Nullable="false" />
+          <Property Name="cable_long_name" Type="String" Nullable="false" MaxLength="31" FixedLength="false" Unicode="false" />
+          <Property Name="broadcast_channel_number" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="distribution_source_type" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="primary_affiliation" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="secondary_affiliation" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="tertiary_affiliation" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="distributor_group" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="parent_indicator" Type="Boolean" Nullable="false" />
+          <Property Name="satellite_indicator" Type="Boolean" Nullable="false" />
+          <Property Name="station_type_code" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="reportability_status" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -773,6 +827,32 @@
                 <ScalarProperty Name="market_code" ColumnName="market_code" />
                 <ScalarProperty Name="end_time" ColumnName="end_time" />
                 <ScalarProperty Name="start_time" ColumnName="start_time" />
+                <ScalarProperty Name="media_month_id" ColumnName="media_month_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="stations">
+            <EntityTypeMapping TypeName="broadcast_forecastModel.stations">
+              <MappingFragment StoreEntitySet="stations">
+                <ScalarProperty Name="reportability_status" ColumnName="reportability_status" />
+                <ScalarProperty Name="station_type_code" ColumnName="station_type_code" />
+                <ScalarProperty Name="satellite_indicator" ColumnName="satellite_indicator" />
+                <ScalarProperty Name="parent_indicator" ColumnName="parent_indicator" />
+                <ScalarProperty Name="distributor_group" ColumnName="distributor_group" />
+                <ScalarProperty Name="tertiary_affiliation" ColumnName="tertiary_affiliation" />
+                <ScalarProperty Name="secondary_affiliation" ColumnName="secondary_affiliation" />
+                <ScalarProperty Name="primary_affiliation" ColumnName="primary_affiliation" />
+                <ScalarProperty Name="distribution_source_type" ColumnName="distribution_source_type" />
+                <ScalarProperty Name="broadcast_channel_number" ColumnName="broadcast_channel_number" />
+                <ScalarProperty Name="cable_long_name" ColumnName="cable_long_name" />
+                <ScalarProperty Name="parent_plus_indicator" ColumnName="parent_plus_indicator" />
+                <ScalarProperty Name="end_datetime_of_survey" ColumnName="end_datetime_of_survey" />
+                <ScalarProperty Name="start_datetime_of_survey" ColumnName="start_datetime_of_survey" />
+                <ScalarProperty Name="legacy_call_letters" ColumnName="legacy_call_letters" />
+                <ScalarProperty Name="call_letters" ColumnName="call_letters" />
+                <ScalarProperty Name="market_of_origin_code" ColumnName="market_of_origin_code" />
+                <ScalarProperty Name="market_code" ColumnName="market_code" />
+                <ScalarProperty Name="distributor_code" ColumnName="distributor_code" />
                 <ScalarProperty Name="media_month_id" ColumnName="media_month_id" />
               </MappingFragment>
             </EntityTypeMapping>

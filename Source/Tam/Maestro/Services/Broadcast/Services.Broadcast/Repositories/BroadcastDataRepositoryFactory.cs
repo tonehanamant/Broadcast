@@ -39,6 +39,7 @@ namespace Services.Broadcast.Repositories
             instance.RegisterType<IDetectionPostDetailsRepository, DetectionPostDetailsRepository>();
             instance.RegisterType<ITrackerMappingRepository, TrackerMappingRepository>();
             instance.RegisterType<IStationRepository, StationRepository>();
+            instance.RegisterType<IStationMappingRepository, StationMappingRepository>();
             instance.RegisterType<ISpotLengthRepository, SpotLengthBroadcastRepository>();
             instance.RegisterType<IInventoryFileRepository, InventoryFileRepository>();
             instance.RegisterType<IGenreRepository, GenreRepository>();
@@ -52,6 +53,7 @@ namespace Services.Broadcast.Repositories
             instance.RegisterType<INsiUniverseRepository, NsiUniverseRepository>();
             instance.RegisterType<INtiUniverseRepository, NtiUniverseRepository>();
             instance.RegisterType<INsiMarketRepository, NsiMarketRepository>();
+            instance.RegisterType<INsiStationRepository, NsiStationRepository>();
             instance.RegisterType<IRatingForecastRepository, RatingForecastRepository>();
             instance.RegisterType<IMarketRepository, MarketRepository>();
             instance.RegisterType<IMarketCoverageRepository, MarketCoverageRepository>();

@@ -19,6 +19,7 @@
         <EntityTypeShape EntityType="broadcast_forecastModel.viewer_details_trunc" Width="1.5" PointX="9.375" PointY="5.75" />
         <EntityTypeShape EntityType="broadcast_forecastModel.viewers_arc" Width="1.5" PointX="9.375" PointY="10.75" />
         <EntityTypeShape EntityType="broadcast_forecastModel.viewers_trunc" Width="1.5" PointX="11.375" PointY="0.75" />
+        <EntityTypeShape EntityType="broadcast_forecastModel.stations" Width="1.5" PointX="0.75" PointY="11.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

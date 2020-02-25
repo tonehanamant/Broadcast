@@ -1,0 +1,22 @@
+﻿[
+  {
+    "CadentCallLetters": "XDALB",
+    "MapSet": 1,
+    "MapValue": "XWALB-DT4"
+  },
+  {
+    "CadentCallLetters": "XDALB",
+    "MapSet": 2,
+    "MapValue": "XWALB 10.4"
+  },
+  {
+    "CadentCallLetters": "XDALB",
+    "MapSet": 3,
+    "MapValue": "XDALB"
+  },
+  {
+    "CadentCallLetters": "XDALB",
+    "MapSet": 4,
+    "MapValue": "XDALB"
+  }
+]

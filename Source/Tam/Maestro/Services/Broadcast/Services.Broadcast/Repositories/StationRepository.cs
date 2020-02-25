@@ -27,11 +27,44 @@ namespace Services.Broadcast.Repositories
         /// <returns>List of DisplayBroadcastStation objects</returns>
         List<DisplayBroadcastStation> GetBroadcastStations();
 
+        /// <summary>
+        /// Gets all the unrated broadcast stations (the ones with no station code).
+        /// </summary>
+        /// <returns>List of DisplayBroadcastStation objects</returns>
+        List<DisplayBroadcastStation> GetUnratedBroadcastStations();
+
         int GetBroadcastStationCodeByContactId(int stationContactId);
         void UpdateStation(int code, string user, DateTime timeStamp, int inventorySourceId);
         void UpdateStationList(List<int> stationIds, string user, DateTime timeStamp, int inventorySourceId);
         short? GetStationCode(string stationName);
         List<DisplayBroadcastStation> CreateStations(IEnumerable<DisplayBroadcastStation> stations, string user);
+
+        /// <summary>
+        /// Checks if a station exists for the given station call letters.
+        /// </summary>
+        /// <param name="stationCallLetters">The station call letters.</param>
+        /// <returns></returns>
+        bool ExistsStationWithCallLetter(string stationCallLetters);
+
+        /// <summary>
+        /// Gets the latest media month for which the station list details where imported
+        /// </summary>
+        /// <returns></returns>
+        int GetLatestMediaMonthIdFromStationMonthDetailsList();
+
+        /// <summary>
+        /// Creates the station.
+        /// </summary>
+        /// <param name="station">The station.</param>
+        /// <param name="user">The user.</param>
+        /// <returns></returns>
+        DisplayBroadcastStation CreateStation(DisplayBroadcastStation station, string user);
+
+        /// <summary>
+        /// Saves the station month details.
+        /// </summary>
+        /// <param name="stationMonthDetail">The station month detail.</param>
+        void SaveStationMonthDetails(StationMonthDetailDto stationMonthDetail);
     }
 
     public class StationRepository : BroadcastRepositoryBase, IStationRepository
@@ -153,7 +186,26 @@ namespace Services.Broadcast.Repositories
                                 ModifiedDate = s.modified_date
                             }).ToList());
         }
-        
+
+        /// <inheritdoc/>
+        public List<DisplayBroadcastStation> GetUnratedBroadcastStations()
+        {
+            return _InReadUncommitedTransaction(
+                context => (from s in context.stations
+                            where s.station_code == null
+                            select new DisplayBroadcastStation
+                            {
+                                Id = s.id,
+                                Code = s.station_code,
+                                Affiliation = s.affiliation,
+                                CallLetters = s.station_call_letters,
+                                LegacyCallLetters = s.legacy_call_letters,
+                                OriginMarket = s.market == null ? null : s.market.geography_name,
+                                MarketCode = s.market_code,
+                                ModifiedDate = s.modified_date
+                            }).ToList());
+        }
+
         public void UpdateStation(int code, string user, DateTime timeStamp, int inventorySourceId)
         {
             _InReadUncommitedTransaction(
@@ -249,6 +301,92 @@ namespace Services.Broadcast.Repositories
                         LegacyCallLetters = s.legacy_call_letters,
                         ModifiedDate = s.modified_date
                     }).ToList();
+                });
+        }
+
+        /// <inheritdoc/>
+        public DisplayBroadcastStation CreateStation(DisplayBroadcastStation station, string user)
+        {
+            return _InReadUncommitedTransaction(
+                context =>
+                {
+                    var newStation = _MapFromDto(station, user);
+
+                    context.stations.Add(newStation);
+                    context.SaveChanges();
+
+                    return _MapToDto(newStation);
+                });
+        }
+
+        private DisplayBroadcastStation _MapToDto(station newStation)
+        {
+            return new DisplayBroadcastStation
+            {
+                Id = newStation.id,
+                Code = newStation.station_code,
+                CallLetters = newStation.station_call_letters,
+                Affiliation = newStation.affiliation,
+                MarketCode = newStation.market_code,
+                LegacyCallLetters = newStation.legacy_call_letters,
+                ModifiedDate = newStation.modified_date
+            };
+        }
+
+        private station _MapFromDto(DisplayBroadcastStation station, string user)
+        {
+            return new station
+            {
+                station_call_letters = station.CallLetters,
+                legacy_call_letters = station.LegacyCallLetters,
+                station_code = station.Code,
+                affiliation = station.Affiliation,
+                modified_date = station.ModifiedDate.Value,
+                market_code =  (short?)station.MarketCode,
+                modified_by = user
+            };
+        }
+
+        /// <inheritdoc/>
+        public bool ExistsStationWithCallLetter(string stationCallLetters)
+        {
+            return _InReadUncommitedTransaction(
+                context =>
+                {
+                    return context.stations.Any(s => s.legacy_call_letters == stationCallLetters);
+                });
+        }
+
+        /// <inheritdoc/>
+        public int GetLatestMediaMonthIdFromStationMonthDetailsList()
+        {
+            return _InReadUncommitedTransaction(
+                context =>
+                {
+                    var result = context.station_month_details
+                    .OrderByDescending(station => station.media_month_id)
+                    .FirstOrDefault();
+
+                    return result != null ? result.media_month_id : 0;
+                });
+        }
+
+        public void SaveStationMonthDetails(StationMonthDetailDto stationMonthDetail)
+        {
+            _InReadUncommitedTransaction(
+                context =>
+                {
+                    var newStationMonthDetail = new station_month_details
+                    {
+                        station_id = stationMonthDetail.StationId,
+                        media_month_id = stationMonthDetail.MediaMonthId,
+                        affiliation = stationMonthDetail.Affiliation,
+                        market_code = stationMonthDetail.MarketCode,
+                        distributor_code = stationMonthDetail.DistributorCode,
+                    };
+
+                    context.station_month_details.Add(newStationMonthDetail);
+                    context.SaveChanges();
                 });
         }
     }

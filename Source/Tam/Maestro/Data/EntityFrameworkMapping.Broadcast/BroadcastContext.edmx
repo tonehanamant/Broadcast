@@ -2032,6 +2032,28 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.station_inventor
           <Property Name="overridden_rate" Type="money" />
           <Property Name="delivery_cpm" Type="money" />
         </EntityType>
+        <EntityType Name="station_mappings">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="station_id" Type="int" Nullable="false" />
+          <Property Name="mapped_call_letters" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="map_set" Type="int" Nullable="false" />
+          <Property Name="created_date" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="created_by" Type="varchar" MaxLength="63" Nullable="false" />
+        </EntityType>
+        <EntityType Name="station_month_details">
+          <Key>
+            <PropertyRef Name="station_id" />
+            <PropertyRef Name="media_month_id" />
+          </Key>
+          <Property Name="station_id" Type="int" Nullable="false" />
+          <Property Name="media_month_id" Type="int" Nullable="false" />
+          <Property Name="affiliation" Type="varchar" MaxLength="7" />
+          <Property Name="market_code" Type="smallint" />
+          <Property Name="distributor_code" Type="int" />
+        </EntityType>
         <EntityType Name="stations">
           <Key>
             <PropertyRef Name="id" />
@@ -5182,6 +5204,54 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_station_mappings_stations">
+          <End Role="stations" Type="Self.stations" Multiplicity="1" />
+          <End Role="station_mappings" Type="Self.station_mappings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="stations">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="station_mappings">
+              <PropertyRef Name="station_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_station_month_details_markets">
+          <End Role="markets" Type="Self.markets" Multiplicity="0..1" />
+          <End Role="station_month_details" Type="Self.station_month_details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="markets">
+              <PropertyRef Name="market_code" />
+            </Principal>
+            <Dependent Role="station_month_details">
+              <PropertyRef Name="market_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_station_month_details_media_months">
+          <End Role="media_months" Type="Self.media_months" Multiplicity="1" />
+          <End Role="station_month_details" Type="Self.station_month_details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="media_months">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="station_month_details">
+              <PropertyRef Name="media_month_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_station_month_details_stations">
+          <End Role="stations" Type="Self.stations" Multiplicity="1" />
+          <End Role="station_month_details" Type="Self.station_month_details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="stations">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="station_month_details">
+              <PropertyRef Name="station_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_stations_markets">
           <End Role="markets" Type="Self.markets" Multiplicity="0..1" />
           <End Role="stations" Type="Self.stations" Multiplicity="*" />
@@ -5354,6 +5424,8 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySet Name="station_inventory_spot_audiences" EntityType="Self.station_inventory_spot_audiences" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="station_inventory_spot_snapshots" EntityType="Self.station_inventory_spot_snapshots" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="station_inventory_spots" EntityType="Self.station_inventory_spots" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="station_mappings" EntityType="Self.station_mappings" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="station_month_details" EntityType="Self.station_month_details" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="stations" EntityType="Self.stations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="system_component_parameters" EntityType="Self.system_component_parameters" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="timespans" EntityType="Self.timespans" Schema="dbo" store:Type="Tables" />
@@ -6347,6 +6419,22 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <AssociationSet Name="FK_station_inventory_spots_station_inventory_manifest" Association="Self.FK_station_inventory_spots_station_inventory_manifest">
             <End Role="station_inventory_manifest" EntitySet="station_inventory_manifest" />
             <End Role="station_inventory_spots" EntitySet="station_inventory_spots" />
+          </AssociationSet>
+          <AssociationSet Name="FK_station_mappings_stations" Association="Self.FK_station_mappings_stations">
+            <End Role="stations" EntitySet="stations" />
+            <End Role="station_mappings" EntitySet="station_mappings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_station_month_details_markets" Association="Self.FK_station_month_details_markets">
+            <End Role="markets" EntitySet="markets" />
+            <End Role="station_month_details" EntitySet="station_month_details" />
+          </AssociationSet>
+          <AssociationSet Name="FK_station_month_details_media_months" Association="Self.FK_station_month_details_media_months">
+            <End Role="media_months" EntitySet="media_months" />
+            <End Role="station_month_details" EntitySet="station_month_details" />
+          </AssociationSet>
+          <AssociationSet Name="FK_station_month_details_stations" Association="Self.FK_station_month_details_stations">
+            <End Role="stations" EntitySet="stations" />
+            <End Role="station_month_details" EntitySet="station_month_details" />
           </AssociationSet>
           <AssociationSet Name="FK_stations_markets" Association="Self.FK_stations_markets">
             <End Role="markets" EntitySet="markets" />
@@ -7476,6 +7564,24 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="plan_versions" EntitySet="plan_versions" />
             <End Role="plan_version_flight_days" EntitySet="plan_version_flight_days" />
           </AssociationSet>
+          <EntitySet Name="station_mappings" EntityType="BroadcastModel.station_mappings" />
+          <EntitySet Name="station_month_details" EntityType="BroadcastModel.station_month_details" />
+          <AssociationSet Name="FK_station_month_details_markets" Association="BroadcastModel.FK_station_month_details_markets">
+            <End Role="market" EntitySet="markets" />
+            <End Role="station_month_details" EntitySet="station_month_details" />
+          </AssociationSet>
+          <AssociationSet Name="FK_station_month_details_media_months" Association="BroadcastModel.FK_station_month_details_media_months">
+            <End Role="media_months" EntitySet="media_months" />
+            <End Role="station_month_details" EntitySet="station_month_details" />
+          </AssociationSet>
+          <AssociationSet Name="FK_station_month_details_stations" Association="BroadcastModel.FK_station_month_details_stations">
+            <End Role="station" EntitySet="stations" />
+            <End Role="station_month_details" EntitySet="station_month_details" />
+          </AssociationSet>
+          <AssociationSet Name="FK_station_mappings_stations" Association="BroadcastModel.FK_station_mappings_stations">
+            <End Role="station" EntitySet="stations" />
+            <End Role="station_mappings" EntitySet="station_mappings" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="audience_audiences">
           <Key>
@@ -7592,6 +7698,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="inventory_file_proprietary_header" Relationship="BroadcastModel.FK_inventory_file_proprietary_header_media_months" FromRole="media_months" ToRole="inventory_file_proprietary_header" />
           <NavigationProperty Name="inventory_file_proprietary_header1" Relationship="BroadcastModel.FK_inventory_file_proprietary_header_media_months_hut_book" FromRole="media_months" ToRole="inventory_file_proprietary_header" />
           <NavigationProperty Name="nti_to_nsi_conversion_rates" Relationship="BroadcastModel.FK_nti_to_nsi_conversion_rates_media_months" FromRole="media_months" ToRole="nti_to_nsi_conversion_rates" />
+          <NavigationProperty Name="station_month_details" Relationship="BroadcastModel.FK_station_month_details_media_months" FromRole="media_months" ToRole="station_month_details" />
           </EntityType>
         <EntityType Name="media_weeks">
           <Key>
@@ -10608,6 +10715,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="stations" Relationship="BroadcastModel.FK_stations_markets" FromRole="market" ToRole="station" />
           <NavigationProperty Name="plan_version_available_markets" Relationship="BroadcastModel.FK_plan_available_markets_markets" FromRole="market" ToRole="plan_version_available_markets" />
           <NavigationProperty Name="plan_version_blackout_markets" Relationship="BroadcastModel.FK_plan_blackout_markets_markets" FromRole="market" ToRole="plan_version_blackout_markets" />
+          <NavigationProperty Name="station_month_details" Relationship="BroadcastModel.FK_station_month_details_markets" FromRole="market" ToRole="station_month_details" />
         </EntityType>
         <Association Name="FK_market_coverages_markets">
           <End Type="BroadcastModel.market" Role="market" Multiplicity="1" />
@@ -10785,6 +10893,8 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="station_inventory_loaded" Relationship="BroadcastModel.FK_station_inventory_loaded_stations" FromRole="station" ToRole="station_inventory_loaded" />
           <NavigationProperty Name="station_inventory_manifest" Relationship="BroadcastModel.FK_station_inventory_manifest_stations" FromRole="station" ToRole="station_inventory_manifest" />
           <NavigationProperty Name="station_inventory_spot_snapshots" Relationship="BroadcastModel.FK_station_inventory_spot_snapshots_stations" FromRole="station" ToRole="station_inventory_spot_snapshots" />
+          <NavigationProperty Name="station_month_details" Relationship="BroadcastModel.FK_station_month_details_stations" FromRole="station" ToRole="station_month_details" />
+          <NavigationProperty Name="station_mappings" Relationship="BroadcastModel.FK_station_mappings_stations" FromRole="station" ToRole="station_mappings" />
         </EntityType>
         <Association Name="FK_stations_markets">
           <End Type="BroadcastModel.market" Role="market" Multiplicity="0..1" />
@@ -13076,6 +13186,80 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="station_mappings">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="mapped_call_letters" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="created_date" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="created_by" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
+          <Property Name="station_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="station" Relationship="BroadcastModel.FK_station_mappings_stations" FromRole="station_mappings" ToRole="station" />
+          <Property Name="map_set" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="station_month_details">
+          <Key>
+            <PropertyRef Name="station_id" />
+            <PropertyRef Name="media_month_id" />
+          </Key>
+          <Property Name="station_id" Type="Int32" Nullable="false" />
+          <Property Name="media_month_id" Type="Int32" Nullable="false" />
+          <Property Name="affiliation" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
+          <Property Name="market_code" Type="Int16" />
+          <Property Name="distributor_code" Type="Int32" />
+          <NavigationProperty Name="market" Relationship="BroadcastModel.FK_station_month_details_markets" FromRole="station_month_details" ToRole="market" />
+          <NavigationProperty Name="media_months" Relationship="BroadcastModel.FK_station_month_details_media_months" FromRole="station_month_details" ToRole="media_months" />
+          <NavigationProperty Name="station" Relationship="BroadcastModel.FK_station_month_details_stations" FromRole="station_month_details" ToRole="station" />
+        </EntityType>
+        <Association Name="FK_station_month_details_markets">
+          <End Type="BroadcastModel.market" Role="market" Multiplicity="0..1" />
+          <End Type="BroadcastModel.station_month_details" Role="station_month_details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="market">
+              <PropertyRef Name="market_code" />
+            </Principal>
+            <Dependent Role="station_month_details">
+              <PropertyRef Name="market_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_station_month_details_media_months">
+          <End Type="BroadcastModel.media_months" Role="media_months" Multiplicity="1" />
+          <End Type="BroadcastModel.station_month_details" Role="station_month_details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="media_months">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="station_month_details">
+              <PropertyRef Name="media_month_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_station_month_details_stations">
+          <End Type="BroadcastModel.station" Role="station" Multiplicity="1" />
+          <End Type="BroadcastModel.station_month_details" Role="station_month_details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="station">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="station_month_details">
+              <PropertyRef Name="station_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_station_mappings_stations">
+          <End Type="BroadcastModel.station" Role="station" Multiplicity="1" />
+          <End Type="BroadcastModel.station_mappings" Role="station_mappings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="station">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="station_mappings">
+              <PropertyRef Name="station_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -15297,6 +15481,29 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
                 <ScalarProperty Name="day_id" ColumnName="day_id" />
                 <ScalarProperty Name="plan_version_id" ColumnName="plan_version_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="station_mappings">
+            <EntityTypeMapping TypeName="BroadcastModel.station_mappings">
+              <MappingFragment StoreEntitySet="station_mappings">
+                <ScalarProperty Name="map_set" ColumnName="map_set" />
+                <ScalarProperty Name="station_id" ColumnName="station_id" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="created_date" ColumnName="created_date" />
+                <ScalarProperty Name="mapped_call_letters" ColumnName="mapped_call_letters" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="station_month_details">
+            <EntityTypeMapping TypeName="BroadcastModel.station_month_details">
+              <MappingFragment StoreEntitySet="station_month_details">
+                <ScalarProperty Name="distributor_code" ColumnName="distributor_code" />
+                <ScalarProperty Name="market_code" ColumnName="market_code" />
+                <ScalarProperty Name="affiliation" ColumnName="affiliation" />
+                <ScalarProperty Name="media_month_id" ColumnName="media_month_id" />
+                <ScalarProperty Name="station_id" ColumnName="station_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

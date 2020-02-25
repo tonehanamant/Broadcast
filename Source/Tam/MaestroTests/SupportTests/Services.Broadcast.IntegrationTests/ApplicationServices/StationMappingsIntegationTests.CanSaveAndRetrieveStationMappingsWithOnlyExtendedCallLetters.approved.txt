@@ -1,0 +1,7 @@
+﻿[
+  {
+    "MapSet": 1,
+    "MapValue": "WMAH-DT2",
+    "StationId": 2314
+  }
+]

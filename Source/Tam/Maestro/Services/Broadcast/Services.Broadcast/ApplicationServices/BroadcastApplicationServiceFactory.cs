@@ -99,6 +99,7 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IProposalWeeklyTotalCalculationEngine, ProposalProprietaryTotalsCalculationEngine>();
             unityContainer.RegisterType<ITrafficService, TrafficService>();
             unityContainer.RegisterType<IStationInventoryGroupService, StationInventoryGroupService>();
+            unityContainer.RegisterType<IStationService, StationService>();
             unityContainer.RegisterType<INtiTransmittalsService, NtiTransmittalsService>();
             unityContainer.RegisterType<IPricingGuideService, PricingGuideService>();
             unityContainer.RegisterType<IProposalScxConverter, ProposalScxConverter>();
@@ -219,6 +220,7 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<ISharedFolderService, SharedFolderService>();
 
             unityContainer.RegisterType<IDaypartCleanupService, DaypartCleanupService>();
+            unityContainer.RegisterType<IStationMappingService, StationMappingService>();
 
             unityContainer.RegisterType<ITrafficApiClient, TrafficApiClient>();
             unityContainer.RegisterType<ICampaignAggregator, CampaignAggregator>();
