@@ -39,7 +39,8 @@ namespace Services.Broadcast.ApplicationServices
             return new EnvironmentDto
             {
                 Environment = environment,
-                DisplayCampaignLink = BroadcastServiceSystemParameter.DisplayCampaignLink
+                DisplayCampaignLink = BroadcastServiceSystemParameter.DisplayCampaignLink,
+                DisplayBuyingLink = BroadcastServiceSystemParameter.DisplayBuyingLink
             };
         }
     }

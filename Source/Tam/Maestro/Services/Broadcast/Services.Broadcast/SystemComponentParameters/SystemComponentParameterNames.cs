@@ -649,6 +649,11 @@ namespace Tam.Maestro.Common.SystemComponentParameter
             get { return "DefaultNtiConversionFactor"; }
         }
 	 
+		public static string DisplayBuyingLink  
+		{
+            get { return "DisplayBuyingLink"; }
+        }
+	 
 		public static string DisplayCampaignLink  
 		{
             get { return "DisplayCampaignLink"; }

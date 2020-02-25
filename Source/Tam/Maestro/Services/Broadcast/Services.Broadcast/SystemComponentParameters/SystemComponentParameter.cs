@@ -708,6 +708,12 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.DefaultNtiConversionFactor); }
         }
 	 
+		public static bool DisplayBuyingLink  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<bool>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.DisplayBuyingLink); }
+        }
+	 
 		public static bool DisplayCampaignLink  
 		{
             get { return SystemComponentParameterHelper.GetPropertyValue<bool>
