@@ -117,6 +117,7 @@ namespace BroadcastComposerWeb
             // all lower case.
             return new[]
             {
+                "stationsupdate", 
                 "inventoryrating", 
                 "planpricing", 
                 "inventoryprogramsprocessing",
