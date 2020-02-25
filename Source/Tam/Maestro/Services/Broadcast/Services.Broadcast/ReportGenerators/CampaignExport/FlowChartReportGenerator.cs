@@ -56,7 +56,7 @@ namespace Services.Broadcast.ReportGenerators.CampaignExport
         {
             WORKSHEET.Cells[$"{DAYPARTS.Column}{DAYPARTS.Row}"].Value = dayparts;
         }
-
+        
         private string _FindTemplateTableAddress(ExcelWorksheet templateTablesWorksheet, FlowChartQuarterTableData table)
         {
             string result = string.Empty;

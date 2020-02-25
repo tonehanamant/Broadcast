@@ -917,12 +917,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     File.ReadAllBytes(@".\Files\Campaign export\CampaignExport_SecondaryAudiences_MultiplePlans.xlsx").LongLength);
             }
         }
-
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void CampaignExport_PlansWith13And14Weeks()
         {
-             using (new TransactionScopeWrapper())
+            using (new TransactionScopeWrapper())
             {
                 IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<ITrafficApiCache>(new TrafficApiCacheStub());
                 var _CampaignService = IntegrationTestApplicationServiceFactory.GetApplicationService<ICampaignService>();
@@ -1131,3 +1130,4 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
     }
 }
+

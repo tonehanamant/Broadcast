@@ -402,12 +402,14 @@ namespace Services.Broadcast.Entities.Campaign
             projectedPlans.GroupBy(x => new { x.QuarterNumber, x.QuarterYear })
                 .OrderBy(x => x.Key.QuarterYear).ThenBy(x => x.Key.QuarterNumber)
                 .ToList()
-                .ForEach(planGroup =>
+                .ForEach(quarterGroup =>
                 {
-                    List<ProjectedPlan.Audience> secondaryAudiences = planGroup.First().SecondaryAudiences;
+                    List<ProjectedPlan.Audience> secondaryAudiences = quarterGroup
+                        .SelectMany(x => x.SecondaryAudiences)
+                        .Distinct(new ProjectedPlan.AudienceEqualityComparer()).ToList();
                     ProposalQuarterTableData newTable = new ProposalQuarterTableData
                     {
-                        QuarterLabel = $"Q{planGroup.Key.QuarterNumber} {planGroup.Key.QuarterYear}"
+                        QuarterLabel = $"Q{quarterGroup.Key.QuarterNumber} {quarterGroup.Key.QuarterYear}"
                     };
                     foreach (var demo in secondaryAudiences)
                     {
@@ -419,7 +421,7 @@ namespace Services.Broadcast.Entities.Campaign
                         newTable.SecondaryAudiencesTables.Add(secondaryTable);
                     }
 
-                    planGroup.GroupBy(x => new { x.DaypartCode, x.SpotLength, x.Equivalized })
+                    quarterGroup.GroupBy(x => new { x.DaypartCode, x.SpotLength, x.Equivalized })
                     .ToList()
                     .ForEach(daypartGroup =>
                     {
@@ -1088,6 +1090,19 @@ namespace Services.Broadcast.Entities.Campaign
                 public decimal CPP { get; set; }
                 public double WeightedPercentage { get; set; }
                 public bool IsGuaranteedAudience { get; set; }
+            }
+
+            internal class AudienceEqualityComparer : IEqualityComparer<Audience>
+            {
+                public bool Equals(Audience x, Audience y)
+                {
+                    return x.AudienceId == y.AudienceId;
+                }
+
+                public int GetHashCode(Audience obj)
+                {
+                    return $"{obj.AudienceId}".GetHashCode();
+                }
             }
         }
     }
