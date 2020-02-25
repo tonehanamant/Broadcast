@@ -130,6 +130,46 @@ BEGIN
 END
 /*************************************** END PRI-21024 *****************************************************/
 
+/*************************************** START PRI-20833 *****************************************************/
+IF OBJECT_ID('plan_version_pricing_job_inventory_source_estimates') IS NULL
+BEGIN
+	CREATE TABLE [dbo].[plan_version_pricing_job_inventory_source_estimates](
+		[id] int IDENTITY(1,1) NOT NULL,
+		[media_week_id] int NOT NULL,
+		[inventory_source_id] int NOT NULL,
+		[plan_version_pricing_job_id] int NOT NULL,
+		[impressions] float NOT NULL,
+		[cost] money NOT NULL
+	 CONSTRAINT [PK_plan_version_pricing_job_inventory_source_estimates] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY]
+
+	ALTER TABLE [dbo].[plan_version_pricing_job_inventory_source_estimates]
+	WITH CHECK ADD CONSTRAINT [FK_plan_version_pricing_job_inventory_source_estimates_media_weeks] 
+	FOREIGN KEY([media_week_id])
+	REFERENCES [dbo].[media_weeks] ([id])
+
+	ALTER TABLE [dbo].[plan_version_pricing_job_inventory_source_estimates] CHECK CONSTRAINT [FK_plan_version_pricing_job_inventory_source_estimates_media_weeks]
+
+
+	ALTER TABLE [dbo].[plan_version_pricing_job_inventory_source_estimates]
+	WITH CHECK ADD CONSTRAINT [FK_plan_version_pricing_job_inventory_source_estimates_inventory_sources] 
+	FOREIGN KEY([inventory_source_id])
+	REFERENCES [dbo].[inventory_sources] ([id])
+
+	ALTER TABLE [dbo].[plan_version_pricing_job_inventory_source_estimates] CHECK CONSTRAINT [FK_plan_version_pricing_job_inventory_source_estimates_inventory_sources]
+
+	ALTER TABLE [dbo].[plan_version_pricing_job_inventory_source_estimates]
+	WITH CHECK ADD CONSTRAINT [FK_plan_version_pricing_job_inventory_source_estimates_plan_version_pricing_job] 
+	FOREIGN KEY([plan_version_pricing_job_id])
+	REFERENCES [dbo].[plan_version_pricing_job] ([id])
+
+	ALTER TABLE [dbo].[plan_version_pricing_job_inventory_source_estimates] CHECK CONSTRAINT [FK_plan_version_pricing_job_inventory_source_estimates_plan_version_pricing_job]
+END
+/*************************************** END PRI-20833 *****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

@@ -19,15 +19,22 @@ namespace Services.Broadcast.Entities.Plan.Pricing
 
         public string Unit { get; set; }
 
-        public string InventorySource { get; set; }
-
-        public string InventorySourceType { get; set; }
+        public InventorySource InventorySource { get; set; }
 
         public List<ManifestDaypart> ManifestDayparts { get; set; }
 
         public List<ManifestAudience> ManifestAudiences { get; set; }
 
-        public List<int> MediaWeekIds { get; set; }
+        public List<ManifestWeek> ManifestWeeks { get; set; }
+
+        public class ManifestWeek
+        {
+            public int Id { get; set; }
+
+            public int MediaWeekId { get; set; }
+
+            public int Spots { get; set; }
+        }
 
         public class ManifestDaypart
         {

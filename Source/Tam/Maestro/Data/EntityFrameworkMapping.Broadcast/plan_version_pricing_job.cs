@@ -14,6 +14,11 @@ namespace EntityFrameworkMapping.Broadcast
     
     public partial class plan_version_pricing_job
     {
+        public plan_version_pricing_job()
+        {
+            this.plan_version_pricing_job_inventory_source_estimates = new HashSet<plan_version_pricing_job_inventory_source_estimates>();
+        }
+    
         public int id { get; set; }
         public int plan_version_id { get; set; }
         public int status { get; set; }
@@ -23,5 +28,6 @@ namespace EntityFrameworkMapping.Broadcast
         public string diagnostic_result { get; set; }
     
         public virtual plan_versions plan_versions { get; set; }
+        public virtual ICollection<plan_version_pricing_job_inventory_source_estimates> plan_version_pricing_job_inventory_source_estimates { get; set; }
     }
 }

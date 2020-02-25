@@ -17,6 +17,7 @@ using Services.Broadcast.BusinessEngines;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Data.EntityFrameworkMapping;
+using Services.Broadcast.Entities;
 
 namespace Services.Broadcast.Repositories
 {
@@ -122,6 +123,8 @@ namespace Services.Broadcast.Repositories
         PlanPricingJob GetPlanPricingJob(int jobId);
 
         PlanPricingParametersDto GetLatestParametersForPlanPricingJob(int jobId);
+
+        void SavePlanPricingEstimates(int jobId, List<PricingEstimate> estimates);
     }
 
     public class PlanRepository : BroadcastRepositoryBase, IPlanRepository
@@ -1430,6 +1433,27 @@ namespace Services.Broadcast.Repositories
                        .ThenByDescending(p => p.AvgCpm)
                        .ThenBy(p => p.ProgramName).ToList()
                 };
+            });
+        }
+
+        public void SavePlanPricingEstimates(int jobId, List<PricingEstimate> estimates)
+        {
+            _InReadUncommitedTransaction(context =>
+            {
+                var propertiesToIgnore = new List<string>() { "id" };
+
+                var itemsToInsert = estimates
+                    .Select(x => new plan_version_pricing_job_inventory_source_estimates
+                    {
+                        media_week_id = x.MediaWeekId,
+                        inventory_source_id = x.InventorySourceId,
+                        plan_version_pricing_job_id = jobId,
+                        impressions = x.Impressions,
+                        cost = x.Cost
+                    })
+                    .ToList();
+
+                BulkInsert(context, itemsToInsert, propertiesToIgnore);
             });
         }
     }

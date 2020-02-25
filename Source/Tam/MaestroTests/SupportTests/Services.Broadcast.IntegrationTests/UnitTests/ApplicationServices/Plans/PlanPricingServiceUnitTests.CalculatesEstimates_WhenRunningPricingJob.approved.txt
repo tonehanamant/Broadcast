@@ -1,0 +1,26 @@
+﻿[
+  {
+    "Cost": 40.8,
+    "Impressions": 744.0,
+    "InventorySourceId": 3,
+    "MediaWeekId": 100
+  },
+  {
+    "Cost": 51.6,
+    "Impressions": 948.0,
+    "InventorySourceId": 3,
+    "MediaWeekId": 101
+  },
+  {
+    "Cost": 32.5,
+    "Impressions": 650.0,
+    "InventorySourceId": 5,
+    "MediaWeekId": 100
+  },
+  {
+    "Cost": 7.5,
+    "Impressions": 150.0,
+    "InventorySourceId": 7,
+    "MediaWeekId": 100
+  }
+]

@@ -16,6 +16,8 @@ using System.Linq;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Common.Utilities.Logging;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
+using Tam.Maestro.Services.Cable.SystemComponentParameters;
+using static Services.Broadcast.BusinessEngines.PlanPricingInventoryEngine;
 
 namespace Services.Broadcast.ApplicationServices
 {
@@ -301,10 +303,10 @@ namespace Services.Broadcast.ApplicationServices
                         continue;
                     }
 
-                    var spots = program.MediaWeekIds.Select(mediaWeekId => new PlanPricingApiRequestSpotsDto
+                    var spots = program.ManifestWeeks.Select(manifestWeek => new PlanPricingApiRequestSpotsDto
                     {
                         Id = program.ManifestId,
-                        MediaWeekId = mediaWeekId,
+                        MediaWeekId = manifestWeek.MediaWeekId,
                         DaypartId = daypart.Daypart.Id,
                         Impressions = impressions,
                         Cost = program.SpotCost,
@@ -400,25 +402,34 @@ namespace Services.Broadcast.ApplicationServices
                 var plan = _PlanRepository.GetPlan(planPricingParametersDto.PlanId);
                 var pricingMarkets = _MapToPlanPricingPrograms(plan);
                 var parameters = _GetPricingApiRequestParameters(planPricingParametersDto, plan, pricingMarkets);
+                var programInventoryParameters = new ProgramInventoryOptionalParametersDto
+                {
+                    MinCPM = planPricingParametersDto.MinCpm,
+                    MaxCPM = planPricingParametersDto.MaxCpm,
+                    InflationFactor = planPricingParametersDto.InflationFactor
+                };
+
+                planPricingJobDiagnostic.RecordInventorySourceEstimatesCalculationStart();
+
+                var inventorySourceEstimates = _CalculateProprietaryInventorySourceEstimates(plan, programInventoryParameters);
+                _PlanRepository.SavePlanPricingEstimates(jobId, inventorySourceEstimates);
+
+                planPricingJobDiagnostic.RecordInventorySourceEstimatesCalculationEnd();
 
                 planPricingJobDiagnostic.RecordGatherInventoryStart();
 
+                var inventorySourceIds = _GetInventorySourceIdsByTypes(_GetSupportedInventorySourceTypes());
                 var inventory = _PlanPricingInventoryEngine.GetInventoryForPlan(
                     plan,
-                    new PlanPricingInventoryEngine.ProgramInventoryOptionalParametersDto
-                    {
-                        MinCPM = planPricingParametersDto.MinCpm,
-                        MaxCPM = planPricingParametersDto.MaxCpm,
-                        InflationFactor = planPricingParametersDto.InflationFactor
-                    });
+                    programInventoryParameters,
+                    inventorySourceIds);
 
                 if (parameters.Margin > 0)
                 {
                     parameters.BudgetGoal = parameters.BudgetGoal * (decimal)(1.0 - (parameters.Margin / 100.0));
                     parameters.CpmGoal = parameters.BudgetGoal / Convert.ToDecimal(parameters.ImpressionsGoal);
                 }
-
-
+                
                 planPricingJobDiagnostic.RecordGatherInventoryEnd();
 
                 _ValidateInventory(inventory);
@@ -481,6 +492,108 @@ namespace Services.Broadcast.ApplicationServices
 
                 LogHelper.Logger.Error($"Error attempting to run the pricing model : {exception.Message}", exception);
             }
+        }
+
+        private List<PricingEstimate> _CalculateProprietaryInventorySourceEstimates(
+            PlanDto plan,
+            ProgramInventoryOptionalParametersDto parameters)
+        {
+            var result = new List<PricingEstimate>();
+            var supportedInventorySourceIds = _GetInventorySourceIdsByTypes(new List<InventorySourceTypeEnum>
+            {
+                InventorySourceTypeEnum.Barter
+            });
+
+            var inventorySourcePreferences = plan.PricingParameters.InventorySourcePercentages
+                .Where(x => x.Percentage > 0 && supportedInventorySourceIds.Contains(x.Id))
+                .ToList();
+
+            var inventory = _PlanPricingInventoryEngine.GetInventoryForPlan(
+                    plan,
+                    parameters,
+                    inventorySourcePreferences.Select(x => x.Id));
+
+            foreach (var inventorySourcePreference in inventorySourcePreferences)
+            {
+                var inventorySourceId = inventorySourcePreference.Id;
+
+                var estimates = inventory
+                    .Where(x => x.InventorySource.Id == inventorySourceId)
+                    .SelectMany(x => x.ManifestWeeks.Select(w => new ProgramWithManifestWeek
+                    {
+                        Program = x,
+                        ManifestWeek = w
+                    }))
+                    .Where(x => x.ManifestWeek.Spots > 0)
+                    .GroupBy(x => x.ManifestWeek.MediaWeekId)
+                    .Select(programsByMediaWeekGrouping =>
+                    {
+                        _CalculateImpressionsAndCost(
+                            programsByMediaWeekGrouping,
+                            inventorySourcePreference.Percentage,
+                            out var totalWeekImpressions,
+                            out var totalWeekCost);
+
+                        return new PricingEstimate
+                        {
+                            InventorySourceId = inventorySourceId,
+                            MediaWeekId = programsByMediaWeekGrouping.Key,
+                            Impressions = totalWeekImpressions,
+                            Cost = totalWeekCost
+                        };
+                    });
+
+                result.AddRange(estimates);
+            }
+
+            return result;
+        }
+
+        private void _CalculateImpressionsAndCost(
+            IEnumerable<ProgramWithManifestWeek> programsWithManifestWeeks,
+            int percentageToUse,
+            out double totalWeekImpressions, 
+            out decimal totalWeekCost)
+        {
+            totalWeekImpressions = 0;
+            totalWeekCost = 0;
+
+            foreach (var programWithManifestWeek in programsWithManifestWeeks)
+            {
+                var program = programWithManifestWeek.Program;
+                var spots = programWithManifestWeek.ManifestWeek.Spots;
+                var impressionsPerSpot = program.ProvidedImpressions ?? program.ProjectedImpressions;
+                var impressions = impressionsPerSpot * spots * percentageToUse / 100;
+                var cost = program.SpotCost * spots * percentageToUse / 100;
+
+                totalWeekImpressions += impressions;
+                totalWeekCost += cost;
+            }
+        }
+
+        private List<int> _GetInventorySourceIdsByTypes(List<InventorySourceTypeEnum> inventorySourceTypes)
+        {
+            return _InventoryRepository
+                .GetInventorySources()
+                .Where(x => inventorySourceTypes.Contains(x.InventoryType))
+                .Select(x => x.Id)
+                .ToList();
+        }
+
+        private List<InventorySourceTypeEnum> _GetSupportedInventorySourceTypes()
+        {
+            var result = new List<InventorySourceTypeEnum>();
+
+            if (BroadcastServiceSystemParameter.EnableOpenMarketInventoryForPricingModel)
+                result.Add(InventorySourceTypeEnum.OpenMarket);
+
+            if (BroadcastServiceSystemParameter.EnableBarterInventoryForPricingModel)
+                result.Add(InventorySourceTypeEnum.Barter);
+
+            if (BroadcastServiceSystemParameter.EnableProprietaryOAndOInventoryForPricingModel)
+                result.Add(InventorySourceTypeEnum.ProprietaryOAndO);
+
+            return result;
         }
 
         private void _ValidateInventory(List<PlanPricingInventoryProgram> inventory)
@@ -664,8 +777,9 @@ namespace Services.Broadcast.ApplicationServices
                 MaxCPM = requestParameters.MaxCpm,
                 InflationFactor = requestParameters.InflationFactor
             };
-            
-            var inventory = _PlanPricingInventoryEngine.GetInventoryForPlan(plan, pricingParams);
+
+            var inventorySourceIds = _GetInventorySourceIdsByTypes(_GetSupportedInventorySourceTypes());
+            var inventory = _PlanPricingInventoryEngine.GetInventoryForPlan(plan, pricingParams, inventorySourceIds);
 
             var pricingApiRequest = new PlanPricingApiRequestDto
             {
@@ -685,6 +799,13 @@ namespace Services.Broadcast.ApplicationServices
             _PlanRepository.UpdatePlanPricingJob(job);
 
             return $"Job Id '{jobId}' has been forced to complete.";
+        }
+
+        private class ProgramWithManifestWeek
+        {
+            public PlanPricingInventoryProgram Program { get; set; }
+
+            public PlanPricingInventoryProgram.ManifestWeek ManifestWeek { get; set; }
         }
     }
 }

@@ -1,7 +1,11 @@
 ﻿[
   {
-    "InventorySource": "ABC O&O",
-    "InventorySourceType": "O&O",
+    "InventorySource": {
+      "Id": 10,
+      "InventoryType": 3,
+      "IsActive": true,
+      "Name": "ABC O&O"
+    },
     "ManifestAudiences": [
       {
         "AudienceId": 31,
@@ -146,13 +150,29 @@
         "Programs": []
       }
     ],
-    "MarketCode": 101,
-    "MediaWeekIds": [
-      772,
-      773,
-      774,
-      775
+    "ManifestWeeks": [
+      {
+        "Id": 3682429,
+        "MediaWeekId": 772,
+        "Spots": 2
+      },
+      {
+        "Id": 3682430,
+        "MediaWeekId": 773,
+        "Spots": 1
+      },
+      {
+        "Id": 3682431,
+        "MediaWeekId": 774,
+        "Spots": 3
+      },
+      {
+        "Id": 3682432,
+        "MediaWeekId": 775,
+        "Spots": 4
+      }
     ],
+    "MarketCode": 101,
     "ProjectedImpressions": 154195.29125,
     "ProvidedImpressions": 74800.0,
     "SpotCost": 600.0016,

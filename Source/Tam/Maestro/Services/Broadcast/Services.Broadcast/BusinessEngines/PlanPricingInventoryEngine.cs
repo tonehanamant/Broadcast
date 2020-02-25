@@ -11,7 +11,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Tam.Maestro.Common;
-using Tam.Maestro.Services.Cable.SystemComponentParameters;
 using Tam.Maestro.Services.ContractInterfaces.Common;
 using static Services.Broadcast.BusinessEngines.PlanPricingInventoryEngine;
 using static Services.Broadcast.Entities.Enums.ProposalEnums;
@@ -20,7 +19,10 @@ namespace Services.Broadcast.BusinessEngines
 {
     public interface IPlanPricingInventoryEngine : IApplicationService
     {
-        List<PlanPricingInventoryProgram> GetInventoryForPlan(PlanDto plan, ProgramInventoryOptionalParametersDto parameters);
+        List<PlanPricingInventoryProgram> GetInventoryForPlan(
+            PlanDto plan, 
+            ProgramInventoryOptionalParametersDto parameters,
+            IEnumerable<int> inventorySourceIds);
     }
 
     public class PlanPricingInventoryEngine : IPlanPricingInventoryEngine
@@ -42,11 +44,14 @@ namespace Services.Broadcast.BusinessEngines
             _DayRepository = broadcastDataRepositoryFactory.GetDataRepository<IDayRepository>();
         }
 
-        public List<PlanPricingInventoryProgram> GetInventoryForPlan(PlanDto plan, ProgramInventoryOptionalParametersDto parameters)
+        public List<PlanPricingInventoryProgram> GetInventoryForPlan(
+            PlanDto plan, 
+            ProgramInventoryOptionalParametersDto parameters,
+            IEnumerable<int> inventorySourceIds)
         {
             var planFlightDateRanges = _GetPlanDateRanges(plan);
             var planDisplayDaypartDays = GetPlanDaypartDaysFromPlanFlight(plan, planFlightDateRanges);
-            var programs = _GetPrograms(plan, planFlightDateRanges);
+            var programs = _GetPrograms(plan, planFlightDateRanges, inventorySourceIds);
 
             programs = FilterProgramsByDayparts(plan, programs, planDisplayDaypartDays);
 
@@ -71,9 +76,11 @@ namespace Services.Broadcast.BusinessEngines
             }
         }
 
-        private List<PlanPricingInventoryProgram> _GetPrograms(PlanDto plan, List<DateRange> planFlightDateRanges)
+        private List<PlanPricingInventoryProgram> _GetPrograms(
+            PlanDto plan, 
+            List<DateRange> planFlightDateRanges,
+            IEnumerable<int> inventorySourceIds)
         {
-            var supportedInventorySourceTypes = _GetSupportedInventorySourceTypes();
             var marketCodes = plan.AvailableMarkets.Select(m => (int)m.MarketCode).ToList();
             var programs = new List<PlanPricingInventoryProgram>();
 
@@ -83,7 +90,7 @@ namespace Services.Broadcast.BusinessEngines
                     planDateRange.Start.Value,
                     planDateRange.End.Value,
                     plan.SpotLengthId,
-                    supportedInventorySourceTypes,
+                    inventorySourceIds,
                     marketCodes);
 
                 programs.AddRange(programsForDateRange);
@@ -94,7 +101,12 @@ namespace Services.Broadcast.BusinessEngines
             {
                 var first = x.First();
 
-                first.MediaWeekIds = x.SelectMany(g => g.MediaWeekIds).Distinct().ToList();
+                // different calls to _StationProgramRepository.GetProgramsForPricingModel, may fetch different weeks
+                first.ManifestWeeks = x
+                    .SelectMany(g => g.ManifestWeeks)
+                    .GroupBy(w => w.Id)
+                    .Select(g => g.First())
+                    .ToList();
 
                 return first;
             }).ToList();
@@ -152,22 +164,6 @@ namespace Services.Broadcast.BusinessEngines
                 return endTime - startTime;
 
             return BroadcastConstants.OneDayInSeconds - startTime + endTime;
-        }
-
-        private List<int> _GetSupportedInventorySourceTypes()
-        {
-            var result = new List<InventorySourceTypeEnum>();
-
-            if (BroadcastServiceSystemParameter.EnableOpenMarketInventoryForPricingModel)
-                result.Add(InventorySourceTypeEnum.OpenMarket);
-
-            if (BroadcastServiceSystemParameter.EnableBarterInventoryForPricingModel)
-                result.Add(InventorySourceTypeEnum.Barter);
-
-            if (BroadcastServiceSystemParameter.EnableProprietaryOAndOInventoryForPricingModel)
-                result.Add(InventorySourceTypeEnum.ProprietaryOAndO);
-
-            return result.Select(x => (int)x).ToList();
         }
 
         private List<DateRange> _GetPlanDateRanges(PlanDto plan)

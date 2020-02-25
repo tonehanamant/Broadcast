@@ -1,7 +1,11 @@
 ﻿[
   {
-    "InventorySource": "Open Market",
-    "InventorySourceType": "Open Market",
+    "InventorySource": {
+      "Id": 1,
+      "InventoryType": 1,
+      "IsActive": true,
+      "Name": "Open Market"
+    },
     "ManifestAudiences": [
       {
         "AudienceId": 31,
@@ -70,14 +74,34 @@
         ]
       }
     ],
-    "MarketCode": 101,
-    "MediaWeekIds": [
-      771,
-      772,
-      773,
-      774,
-      775
+    "ManifestWeeks": [
+      {
+        "Id": 1697537,
+        "MediaWeekId": 771,
+        "Spots": 0
+      },
+      {
+        "Id": 1704819,
+        "MediaWeekId": 772,
+        "Spots": 0
+      },
+      {
+        "Id": 1712148,
+        "MediaWeekId": 773,
+        "Spots": 0
+      },
+      {
+        "Id": 1719502,
+        "MediaWeekId": 774,
+        "Spots": 0
+      },
+      {
+        "Id": 1727234,
+        "MediaWeekId": 775,
+        "Spots": 0
+      }
     ],
+    "MarketCode": 101,
     "ProjectedImpressions": 33431.66875,
     "ProvidedImpressions": 29325.0,
     "SpotCost": 375.0000,
@@ -85,8 +109,12 @@
     "Unit": null
   },
   {
-    "InventorySource": "Open Market",
-    "InventorySourceType": "Open Market",
+    "InventorySource": {
+      "Id": 1,
+      "InventoryType": 1,
+      "IsActive": true,
+      "Name": "Open Market"
+    },
     "ManifestAudiences": [
       {
         "AudienceId": 31,
@@ -155,14 +183,34 @@
         ]
       }
     ],
-    "MarketCode": 101,
-    "MediaWeekIds": [
-      771,
-      772,
-      773,
-      774,
-      775
+    "ManifestWeeks": [
+      {
+        "Id": 1697538,
+        "MediaWeekId": 771,
+        "Spots": 0
+      },
+      {
+        "Id": 1704820,
+        "MediaWeekId": 772,
+        "Spots": 0
+      },
+      {
+        "Id": 1712149,
+        "MediaWeekId": 773,
+        "Spots": 0
+      },
+      {
+        "Id": 1719503,
+        "MediaWeekId": 774,
+        "Spots": 0
+      },
+      {
+        "Id": 1727235,
+        "MediaWeekId": 775,
+        "Spots": 0
+      }
     ],
+    "MarketCode": 101,
     "ProjectedImpressions": 28572.98375,
     "ProvidedImpressions": 25160.0,
     "SpotCost": 350.0000,
@@ -170,8 +218,12 @@
     "Unit": null
   },
   {
-    "InventorySource": "Open Market",
-    "InventorySourceType": "Open Market",
+    "InventorySource": {
+      "Id": 1,
+      "InventoryType": 1,
+      "IsActive": true,
+      "Name": "Open Market"
+    },
     "ManifestAudiences": [
       {
         "AudienceId": 31,
@@ -240,14 +292,34 @@
         ]
       }
     ],
-    "MarketCode": 101,
-    "MediaWeekIds": [
-      771,
-      772,
-      773,
-      774,
-      775
+    "ManifestWeeks": [
+      {
+        "Id": 1697541,
+        "MediaWeekId": 771,
+        "Spots": 0
+      },
+      {
+        "Id": 1704823,
+        "MediaWeekId": 772,
+        "Spots": 0
+      },
+      {
+        "Id": 1712152,
+        "MediaWeekId": 773,
+        "Spots": 0
+      },
+      {
+        "Id": 1719506,
+        "MediaWeekId": 774,
+        "Spots": 0
+      },
+      {
+        "Id": 1727238,
+        "MediaWeekId": 775,
+        "Spots": 0
+      }
     ],
+    "MarketCode": 101,
     "ProjectedImpressions": 38248.5125,
     "ProvidedImpressions": 25670.0,
     "SpotCost": 400.0000,
@@ -255,8 +327,12 @@
     "Unit": null
   },
   {
-    "InventorySource": "Open Market",
-    "InventorySourceType": "Open Market",
+    "InventorySource": {
+      "Id": 1,
+      "InventoryType": 1,
+      "IsActive": true,
+      "Name": "Open Market"
+    },
     "ManifestAudiences": [
       {
         "AudienceId": 31,
@@ -325,14 +401,34 @@
         ]
       }
     ],
-    "MarketCode": 101,
-    "MediaWeekIds": [
-      771,
-      772,
-      773,
-      774,
-      775
+    "ManifestWeeks": [
+      {
+        "Id": 1697542,
+        "MediaWeekId": 771,
+        "Spots": 0
+      },
+      {
+        "Id": 1704824,
+        "MediaWeekId": 772,
+        "Spots": 0
+      },
+      {
+        "Id": 1712153,
+        "MediaWeekId": 773,
+        "Spots": 0
+      },
+      {
+        "Id": 1719507,
+        "MediaWeekId": 774,
+        "Spots": 0
+      },
+      {
+        "Id": 1727239,
+        "MediaWeekId": 775,
+        "Spots": 0
+      }
     ],
+    "MarketCode": 101,
     "ProjectedImpressions": 26080.55,
     "ProvidedImpressions": 18530.0,
     "SpotCost": 375.0000,
@@ -340,8 +436,12 @@
     "Unit": null
   },
   {
-    "InventorySource": "Open Market",
-    "InventorySourceType": "Open Market",
+    "InventorySource": {
+      "Id": 1,
+      "InventoryType": 1,
+      "IsActive": true,
+      "Name": "Open Market"
+    },
     "ManifestAudiences": [
       {
         "AudienceId": 31,
@@ -410,14 +510,34 @@
         ]
       }
     ],
-    "MarketCode": 101,
-    "MediaWeekIds": [
-      771,
-      772,
-      773,
-      774,
-      775
+    "ManifestWeeks": [
+      {
+        "Id": 1697545,
+        "MediaWeekId": 771,
+        "Spots": 0
+      },
+      {
+        "Id": 1704827,
+        "MediaWeekId": 772,
+        "Spots": 0
+      },
+      {
+        "Id": 1712156,
+        "MediaWeekId": 773,
+        "Spots": 0
+      },
+      {
+        "Id": 1719510,
+        "MediaWeekId": 774,
+        "Spots": 0
+      },
+      {
+        "Id": 1727242,
+        "MediaWeekId": 775,
+        "Spots": 0
+      }
     ],
+    "MarketCode": 101,
     "ProjectedImpressions": 34029.484375,
     "ProvidedImpressions": 19890.0,
     "SpotCost": 300.0000,
@@ -425,8 +545,12 @@
     "Unit": null
   },
   {
-    "InventorySource": "Open Market",
-    "InventorySourceType": "Open Market",
+    "InventorySource": {
+      "Id": 1,
+      "InventoryType": 1,
+      "IsActive": true,
+      "Name": "Open Market"
+    },
     "ManifestAudiences": [
       {
         "AudienceId": 31,
@@ -495,14 +619,34 @@
         ]
       }
     ],
-    "MarketCode": 100,
-    "MediaWeekIds": [
-      771,
-      772,
-      773,
-      774,
-      775
+    "ManifestWeeks": [
+      {
+        "Id": 1698584,
+        "MediaWeekId": 771,
+        "Spots": 0
+      },
+      {
+        "Id": 1705866,
+        "MediaWeekId": 772,
+        "Spots": 0
+      },
+      {
+        "Id": 1713195,
+        "MediaWeekId": 773,
+        "Spots": 0
+      },
+      {
+        "Id": 1720549,
+        "MediaWeekId": 774,
+        "Spots": 0
+      },
+      {
+        "Id": 1728281,
+        "MediaWeekId": 775,
+        "Spots": 0
+      }
     ],
+    "MarketCode": 100,
     "ProjectedImpressions": 74.545,
     "ProvidedImpressions": 255.0,
     "SpotCost": 25.0000,
@@ -510,8 +654,12 @@
     "Unit": null
   },
   {
-    "InventorySource": "Open Market",
-    "InventorySourceType": "Open Market",
+    "InventorySource": {
+      "Id": 1,
+      "InventoryType": 1,
+      "IsActive": true,
+      "Name": "Open Market"
+    },
     "ManifestAudiences": [
       {
         "AudienceId": 31,
@@ -580,14 +728,34 @@
         ]
       }
     ],
-    "MarketCode": 100,
-    "MediaWeekIds": [
-      771,
-      772,
-      773,
-      774,
-      775
+    "ManifestWeeks": [
+      {
+        "Id": 1698585,
+        "MediaWeekId": 771,
+        "Spots": 0
+      },
+      {
+        "Id": 1705867,
+        "MediaWeekId": 772,
+        "Spots": 0
+      },
+      {
+        "Id": 1713196,
+        "MediaWeekId": 773,
+        "Spots": 0
+      },
+      {
+        "Id": 1720550,
+        "MediaWeekId": 774,
+        "Spots": 0
+      },
+      {
+        "Id": 1728282,
+        "MediaWeekId": 775,
+        "Spots": 0
+      }
     ],
+    "MarketCode": 100,
     "ProjectedImpressions": 184.715625,
     "ProvidedImpressions": 255.0,
     "SpotCost": 6.0000,
@@ -595,8 +763,12 @@
     "Unit": null
   },
   {
-    "InventorySource": "Open Market",
-    "InventorySourceType": "Open Market",
+    "InventorySource": {
+      "Id": 1,
+      "InventoryType": 1,
+      "IsActive": true,
+      "Name": "Open Market"
+    },
     "ManifestAudiences": [
       {
         "AudienceId": 31,
@@ -665,14 +837,34 @@
         ]
       }
     ],
-    "MarketCode": 100,
-    "MediaWeekIds": [
-      771,
-      772,
-      773,
-      774,
-      775
+    "ManifestWeeks": [
+      {
+        "Id": 1698586,
+        "MediaWeekId": 771,
+        "Spots": 0
+      },
+      {
+        "Id": 1705868,
+        "MediaWeekId": 772,
+        "Spots": 0
+      },
+      {
+        "Id": 1713197,
+        "MediaWeekId": 773,
+        "Spots": 0
+      },
+      {
+        "Id": 1720551,
+        "MediaWeekId": 774,
+        "Spots": 0
+      },
+      {
+        "Id": 1728283,
+        "MediaWeekId": 775,
+        "Spots": 0
+      }
     ],
+    "MarketCode": 100,
     "ProjectedImpressions": 246.5,
     "ProvidedImpressions": 170.0,
     "SpotCost": 6.0000,
@@ -680,8 +872,12 @@
     "Unit": null
   },
   {
-    "InventorySource": "Open Market",
-    "InventorySourceType": "Open Market",
+    "InventorySource": {
+      "Id": 1,
+      "InventoryType": 1,
+      "IsActive": true,
+      "Name": "Open Market"
+    },
     "ManifestAudiences": [
       {
         "AudienceId": 31,
@@ -750,14 +946,34 @@
         ]
       }
     ],
-    "MarketCode": 100,
-    "MediaWeekIds": [
-      771,
-      772,
-      773,
-      774,
-      775
+    "ManifestWeeks": [
+      {
+        "Id": 1698587,
+        "MediaWeekId": 771,
+        "Spots": 0
+      },
+      {
+        "Id": 1705869,
+        "MediaWeekId": 772,
+        "Spots": 0
+      },
+      {
+        "Id": 1713198,
+        "MediaWeekId": 773,
+        "Spots": 0
+      },
+      {
+        "Id": 1720552,
+        "MediaWeekId": 774,
+        "Spots": 0
+      },
+      {
+        "Id": 1728284,
+        "MediaWeekId": 775,
+        "Spots": 0
+      }
     ],
+    "MarketCode": 100,
     "ProjectedImpressions": 49.895,
     "ProvidedImpressions": 170.0,
     "SpotCost": 6.0000,
@@ -765,8 +981,12 @@
     "Unit": null
   },
   {
-    "InventorySource": "TTWN",
-    "InventorySourceType": "Barter",
+    "InventorySource": {
+      "Id": 4,
+      "InventoryType": 2,
+      "IsActive": true,
+      "Name": "TTWN"
+    },
     "ManifestAudiences": [
       {
         "AudienceId": 31,
@@ -911,11 +1131,19 @@
         "Programs": []
       }
     ],
-    "MarketCode": 101,
-    "MediaWeekIds": [
-      772,
-      773
+    "ManifestWeeks": [
+      {
+        "Id": 3682431,
+        "MediaWeekId": 772,
+        "Spots": 2
+      },
+      {
+        "Id": 3682432,
+        "MediaWeekId": 773,
+        "Spots": 2
+      }
     ],
+    "MarketCode": 101,
     "ProjectedImpressions": 7010.4175,
     "ProvidedImpressions": null,
     "SpotCost": 710.1468,
@@ -923,8 +1151,12 @@
     "Unit": "AM 1"
   },
   {
-    "InventorySource": "TTWN",
-    "InventorySourceType": "Barter",
+    "InventorySource": {
+      "Id": 4,
+      "InventoryType": 2,
+      "IsActive": true,
+      "Name": "TTWN"
+    },
     "ManifestAudiences": [
       {
         "AudienceId": 31,
@@ -1069,11 +1301,19 @@
         "Programs": []
       }
     ],
-    "MarketCode": 101,
-    "MediaWeekIds": [
-      772,
-      773
+    "ManifestWeeks": [
+      {
+        "Id": 3682435,
+        "MediaWeekId": 772,
+        "Spots": 1
+      },
+      {
+        "Id": 3682436,
+        "MediaWeekId": 773,
+        "Spots": 1
+      }
     ],
+    "MarketCode": 101,
     "ProjectedImpressions": 7010.4175,
     "ProvidedImpressions": null,
     "SpotCost": 710.1468,
@@ -1081,8 +1321,12 @@
     "Unit": "AM 2"
   },
   {
-    "InventorySource": "ABC O&O",
-    "InventorySourceType": "O&O",
+    "InventorySource": {
+      "Id": 10,
+      "InventoryType": 3,
+      "IsActive": true,
+      "Name": "ABC O&O"
+    },
     "ManifestAudiences": [
       {
         "AudienceId": 31,
@@ -1227,13 +1471,29 @@
         "Programs": []
       }
     ],
-    "MarketCode": 101,
-    "MediaWeekIds": [
-      772,
-      773,
-      774,
-      775
+    "ManifestWeeks": [
+      {
+        "Id": 3682441,
+        "MediaWeekId": 772,
+        "Spots": 2
+      },
+      {
+        "Id": 3682442,
+        "MediaWeekId": 773,
+        "Spots": 1
+      },
+      {
+        "Id": 3682443,
+        "MediaWeekId": 774,
+        "Spots": 3
+      },
+      {
+        "Id": 3682444,
+        "MediaWeekId": 775,
+        "Spots": 4
+      }
     ],
+    "MarketCode": 101,
     "ProjectedImpressions": 154195.29125,
     "ProvidedImpressions": 74800.0,
     "SpotCost": 600.0016,

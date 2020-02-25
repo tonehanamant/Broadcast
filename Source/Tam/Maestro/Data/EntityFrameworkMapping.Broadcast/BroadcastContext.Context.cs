@@ -189,5 +189,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<plan_version_flight_days> plan_version_flight_days { get; set; }
         public virtual DbSet<station_mappings> station_mappings { get; set; }
         public virtual DbSet<station_month_details> station_month_details { get; set; }
+        public virtual DbSet<plan_version_pricing_job_inventory_source_estimates> plan_version_pricing_job_inventory_source_estimates { get; set; }
     }
 }

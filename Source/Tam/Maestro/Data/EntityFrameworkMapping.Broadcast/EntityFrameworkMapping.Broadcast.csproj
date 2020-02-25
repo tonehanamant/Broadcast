@@ -571,6 +571,9 @@
     <Compile Include="plan_version_pricing_job.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="plan_version_pricing_job_inventory_source_estimates.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="plan_version_pricing_parameters.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>

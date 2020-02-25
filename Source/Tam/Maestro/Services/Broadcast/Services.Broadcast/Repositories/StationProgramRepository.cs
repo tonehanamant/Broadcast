@@ -30,7 +30,7 @@ namespace Services.Broadcast.Repositories
             DateTime startDate, 
             DateTime endDate,
             int spotLengthId,
-            List<int> inventorySourceTypes,
+            IEnumerable<int> inventorySourceIds,
             List<int> marketCodes);
     }
 
@@ -119,7 +119,7 @@ namespace Services.Broadcast.Repositories
             DateTime startDate, 
             DateTime endDate, 
             int spotLengthId,
-            List<int> inventorySourceTypes,
+            IEnumerable<int> inventorySourceIds,
             List<int> marketCodes)
         {
             return _InReadUncommitedTransaction(
@@ -130,7 +130,7 @@ namespace Services.Broadcast.Repositories
                                                 // TODO: Bring this back in when ProgramGuide v2 is deployed to Cadent environment.
                                                 // join programEnrichmentJob in context.inventory_programs_by_file_jobs on file.id equals programEnrichmentJob.inventory_file_id
                                                 join source in context.inventory_sources on file.inventory_source_id equals source.id
-                                                where inventorySourceTypes.Contains(source.inventory_source_type) &&
+                                                where inventorySourceIds.Contains(source.id) &&
                                                       ratingJob.status == (int)BackgroundJobProcessingStatus.Succeeded // take only files with ratings calculated
                                                       // TODO: Bring this back in when ProgramGuide v2 is deployed to Cadent environment.
                                                       //    Commented out per PRI-22371 : Pricing - remove program job from pricing model
@@ -162,17 +162,26 @@ namespace Services.Broadcast.Repositories
                         return query.ToList().Select(x => new PlanPricingInventoryProgram
                         {
                             ManifestId = x.id,
-                            MediaWeekIds = x.station_inventory_manifest_weeks
+                            ManifestWeeks = x.station_inventory_manifest_weeks
                                 .Where(w => w.start_date <= endDate && w.end_date >= startDate)
-                                .Select(w => w.media_week_id)
-                                .Distinct()
+                                .Select(w => new PlanPricingInventoryProgram.ManifestWeek
+                                {
+                                    Id = w.id,
+                                    MediaWeekId = w.media_week_id,
+                                    Spots = w.spots
+                                })
                                 .ToList(),
                             SpotCost = x.station_inventory_manifest_rates.Single(r => r.spot_length_id == spotLengthId).spot_cost,
                             StationLegacyCallLetters = x.station.legacy_call_letters,
                             MarketCode = x.station.market_code.Value,
                             Unit = x.station_inventory_group?.name,
-                            InventorySource = x.inventory_sources.name,
-                            InventorySourceType = ((InventorySourceTypeEnum)x.inventory_sources.inventory_source_type).GetDescriptionAttribute(),
+                            InventorySource = new InventorySource
+                            {
+                                Id = x.inventory_sources.id,
+                                InventoryType = (InventorySourceTypeEnum)x.inventory_sources.inventory_source_type,
+                                IsActive = x.inventory_sources.is_active,
+                                Name = x.inventory_sources.name
+                            },
                             ManifestDayparts = x.station_inventory_manifest_dayparts.Select(d => new PlanPricingInventoryProgram.ManifestDaypart
                             {
                                 Id = d.id,

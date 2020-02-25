@@ -18,6 +18,8 @@ using Services.Broadcast.Entities.Plan;
 using Tam.Maestro.Services.ContractInterfaces.Common;
 using static Services.Broadcast.Entities.Plan.Pricing.PlanPricingInventoryProgram;
 using static Services.Broadcast.Entities.Plan.Pricing.PlanPricingInventoryProgram.ManifestDaypart;
+using Services.Broadcast.Entities;
+using static Services.Broadcast.BusinessEngines.PlanPricingInventoryEngine;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plans
 {
@@ -30,6 +32,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         private readonly Mock<IBackgroundJobClient> _BackgroundJobClientMock;
         private readonly Mock<IPlanPricingInventoryEngine> _PlanPricingInventoryEngineMock;
         private readonly Mock<IBroadcastLockingManagerApplicationService> _BroadcastLockingManagerApplicationServiceMock;
+        private readonly Mock<IPlanRepository> _PlanRepositoryMock;
+        private readonly Mock<IInventoryRepository> _InventoryRepositoryMock;
 
         public PlanPricingServiceUnitTests()
         {
@@ -39,218 +43,23 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _BackgroundJobClientMock = new Mock<IBackgroundJobClient>();
             _PlanPricingInventoryEngineMock = new Mock<IPlanPricingInventoryEngine>();
             _BroadcastLockingManagerApplicationServiceMock = new Mock<IBroadcastLockingManagerApplicationService>();
+            _PlanRepositoryMock = new Mock<IPlanRepository>();
+            _InventoryRepositoryMock = new Mock<IInventoryRepository>();
+
+            _DataRepositoryFactoryMock
+                .Setup(x => x.GetDataRepository<IPlanRepository>())
+                .Returns(_PlanRepositoryMock.Object);
+
+            _DataRepositoryFactoryMock
+                .Setup(x => x.GetDataRepository<IInventoryRepository>())
+                .Returns(_InventoryRepositoryMock.Object);
         }
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void AggregateResultsTest()
         {
-            var inventory = new List<PlanPricingInventoryProgram>
-            {
-                new PlanPricingInventoryProgram
-                {
-                    ManifestId = 1,
-                    StationLegacyCallLetters = "wnbc",
-                    MarketCode = 101,
-                    ManifestDayparts = new List<ManifestDaypart>
-                    {
-                        new ManifestDaypart
-                        {
-                            Daypart = new DisplayDaypart
-                            {
-                                Id = 1,
-                            },
-                            Programs = new List<Program>
-                            {
-                                new Program
-                                {
-                                    Name = "seinfeld",
-                                    MaestroGenre = "News"
-                                }
-                            },
-                            PrimaryProgram = new Program
-                            {
-                                Name = "seinfeld",
-                                MaestroGenre = "News"
-                            }
-                        }
-                    }
-                },
-                new PlanPricingInventoryProgram
-                {
-                    ManifestId = 2,
-                    StationLegacyCallLetters = "wabc",
-                    MarketCode = 101,
-                    ManifestDayparts = new List<ManifestDaypart>
-                    {
-                        new ManifestDaypart
-                        {
-                            Daypart = new DisplayDaypart
-                            {
-                                Id = 2
-                            },
-                            Programs = new List<Program>
-                            {
-                                new Program
-                                {
-                                    Name = "seinfeld",
-                                    MaestroGenre = "News"
-                                }
-                            },
-                            PrimaryProgram = new Program
-                            {
-                                Name = "seinfeld",
-                                MaestroGenre = "News"
-                            }
-                        }
-                    }
-                },
-                new PlanPricingInventoryProgram
-                {
-                    ManifestId = 3,
-                    StationLegacyCallLetters = "kpdx",
-                    MarketCode = 100,
-                    ManifestDayparts = new List<ManifestDaypart>
-                    {
-                        new ManifestDaypart
-                        {
-                            Daypart = new DisplayDaypart
-                            {
-                                Id = 3
-                            },
-                            Programs = new List<Program>
-                            {
-                                new Program
-                                {
-                                    Name = "seinfeld",
-                                    MaestroGenre = "News"
-                                }
-                            },
-                            PrimaryProgram = new Program
-                            {
-                                Name = "seinfeld",
-                                MaestroGenre = "News"
-                            }
-                        }
-                    }
-                },
-                new PlanPricingInventoryProgram
-                {
-                    ManifestId = 4,
-                    StationLegacyCallLetters = "kabc",
-                    MarketCode = 302,
-                    ManifestDayparts = new List<ManifestDaypart>
-                    {
-                        new ManifestDaypart
-                        {
-                            Daypart = new DisplayDaypart
-                            {
-                                Id = 4
-                            },
-                            Programs = new List<Program>
-                            {
-                                new Program
-                                {
-                                    Name = "seinfeld",
-                                    MaestroGenre = "News"
-                                }
-                            },
-                            PrimaryProgram = new Program
-                            {
-                                Name = "seinfeld",
-                                MaestroGenre = "News"
-                            }
-                        }
-                    }
-                },
-                new PlanPricingInventoryProgram
-                {
-                    ManifestId = 5,
-                    StationLegacyCallLetters = "wnbc",
-                    MarketCode = 101,
-                    ManifestDayparts = new List<ManifestDaypart>
-                    {
-                        new ManifestDaypart
-                        {
-                            Daypart = new DisplayDaypart
-                            {
-                                Id = 5
-                            },
-                            Programs = new List<Program>
-                            {
-                                new Program
-                                {
-                                    Name = "Good morning america",
-                                    MaestroGenre = "Early News"
-                                }
-                            },
-                            PrimaryProgram = new Program
-                            {
-                                Name = "Good morning america",
-                                MaestroGenre = "Early News"
-                            }
-                        }
-                    }
-                },
-                new PlanPricingInventoryProgram
-                {
-                    ManifestId = 6,
-                    StationLegacyCallLetters = "wabc",
-                    MarketCode = 101,
-                    ManifestDayparts = new List<ManifestDaypart>
-                    {
-                        new ManifestDaypart
-                        {
-                            Daypart = new DisplayDaypart
-                            {
-                                Id = 6
-                            },
-                            Programs = new List<Program>
-                            {
-                                new Program
-                                {
-                                    Name = "Good morning america",
-                                    MaestroGenre = "Early News"
-                                }
-                            },
-                            PrimaryProgram = new Program
-                            {
-                                Name = "Good morning america",
-                                MaestroGenre = "Early News"
-                            }
-                        }
-                    }
-                },
-                new PlanPricingInventoryProgram
-                {
-                    ManifestId = 7,
-                    StationLegacyCallLetters = "kpdx",
-                    MarketCode = 100,
-                    ManifestDayparts = new List<ManifestDaypart>
-                    {
-                        new ManifestDaypart
-                        {
-                            Daypart = new DisplayDaypart
-                            {
-                                Id = 7
-                            },
-                            Programs = new List<Program>
-                            {
-                                new Program
-                                {
-                                    Name = "Good morning america",
-                                    MaestroGenre = "Early News"
-                                }
-                            },
-                            PrimaryProgram = new Program
-                            {
-                                Name = "Good morning america",
-                                MaestroGenre = "Early News"
-                            }
-                        }
-                    }
-                }
-            };
+            var inventory = _GetPlanPricingInventoryPrograms();
 
             var apiResponse = new PlanPricingApiResponseDto
             {
@@ -392,7 +201,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             }
                         }
                     },
-                    MediaWeekIds = new List<int> {1, 2}
+                    ManifestWeeks = new List<ManifestWeek>
+                    {
+                        new ManifestWeek { MediaWeekId = 1 },
+                        new ManifestWeek { MediaWeekId = 2 }
+                    }
                 },
                 // should keep.  All good.
                 new PlanPricingInventoryProgram
@@ -426,7 +239,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             }
                         }
                     },
-                    MediaWeekIds = new List<int> {1, 2}
+                    ManifestWeeks = new List<ManifestWeek>
+                    {
+                        new ManifestWeek { MediaWeekId = 1 },
+                        new ManifestWeek { MediaWeekId = 2 }
+                    }
                 },
                 // should keep.  ProvidedImpressions = null but ProjectedImpressions > 0
                 new PlanPricingInventoryProgram
@@ -460,7 +277,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             }
                         }
                     },
-                    MediaWeekIds = new List<int> {1, 2}
+                    ManifestWeeks = new List<ManifestWeek>
+                    {
+                        new ManifestWeek { MediaWeekId = 1 },
+                        new ManifestWeek { MediaWeekId = 2 }
+                    }
                 },
                 // should filter due to ProvidedImpressions = null && ProjectedImpressions = 0
                 new PlanPricingInventoryProgram
@@ -494,7 +315,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             }
                         }
                     },
-                    MediaWeekIds = new List<int> {1, 2}
+                    ManifestWeeks = new List<ManifestWeek>
+                    {
+                        new ManifestWeek { MediaWeekId = 1 },
+                        new ManifestWeek { MediaWeekId = 2 }
+                    }
                 },
                 // should filter due to ProvidedImpressions = 0
                 new PlanPricingInventoryProgram
@@ -528,7 +353,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             }
                         }
                     },
-                    MediaWeekIds = new List<int> {1, 2}
+                    ManifestWeeks = new List<ManifestWeek>
+                    {
+                        new ManifestWeek { MediaWeekId = 1 },
+                        new ManifestWeek { MediaWeekId = 2 }
+                    }
                 },
                 // should filter due to ProvidedImpressions = null and ProjectedImpressions = 0
                 new PlanPricingInventoryProgram
@@ -562,7 +391,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             }
                         }
                     },
-                    MediaWeekIds = new List<int> {1, 2}
+                    ManifestWeeks = new List<ManifestWeek>
+                    {
+                        new ManifestWeek { MediaWeekId = 1 },
+                        new ManifestWeek { MediaWeekId = 2 }
+                    }
                 },
                 // should filter due to SpotCost = 0
                 new PlanPricingInventoryProgram
@@ -596,7 +429,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             }
                         }
                     },
-                    MediaWeekIds = new List<int> {1, 2}
+                    ManifestWeeks = new List<ManifestWeek>
+                    {
+                        new ManifestWeek { MediaWeekId = 1 },
+                        new ManifestWeek { MediaWeekId = 2 }
+                    }
                 }
             };
 
@@ -728,6 +565,522 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 _BroadcastLockingManagerApplicationServiceMock.Object);
 
             return service;
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void CalculatesEstimates_WhenRunningPricingJob()
+        {
+            // Arrange
+            const int jobId = 1;
+
+            var parameters = _GetPlanPricingParametersDto();
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))
+                .Returns(new PlanDto
+                {
+                    AvailableMarkets = new List<PlanAvailableMarketDto>(),
+                    PricingParameters = _GetPlanPricingParametersDto()
+                });
+
+            _InventoryRepositoryMock
+                .Setup(x => x.GetInventorySources())
+                .Returns(_GetInventorySources());
+
+            _PlanPricingInventoryEngineMock
+                .Setup(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>()))
+                .Returns(_GetPlanPricingInventoryPrograms());
+
+            List<PricingEstimate> passedParameters = null;
+            _PlanRepositoryMock
+                .Setup(x => x.SavePlanPricingEstimates(It.IsAny<int>(), It.IsAny<List<PricingEstimate>>()))
+                .Callback<int, List<PricingEstimate>>((p, p1) => { passedParameters = p1; });
+
+            var service = _GetService();
+
+            // Act
+            service.RunPricingJob(parameters, jobId);
+
+            // Assert
+            _PlanPricingInventoryEngineMock
+                .Verify(x => x.GetInventoryForPlan(
+                    It.IsAny<PlanDto>(),
+                    It.IsAny<ProgramInventoryOptionalParametersDto>(),
+                    It.Is<IEnumerable<int>>(list => list.SequenceEqual(new List<int> { 3, 5, 7 }))), Times.Once);
+
+            _PlanRepositoryMock
+                .Verify(x => x.SavePlanPricingEstimates(jobId, It.IsAny<List<PricingEstimate>>()), Times.Once);
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(passedParameters));
+        }
+
+        private PlanPricingParametersDto _GetPlanPricingParametersDto()
+        {
+            return new PlanPricingParametersDto
+            {
+                PlanId = 1197,
+                MaxCpm = 100m,
+                MinCpm = 1m,
+                Budget = 1000,
+                CompetitionFactor = 0.1,
+                CPM = 5m,
+                DeliveryImpressions = 50000,
+                InflationFactor = 0.5,
+                ProprietaryBlend = 0.2,
+                UnitCaps = 10,
+                UnitCapsType = UnitCapEnum.PerDay,
+                InventorySourcePercentages = new List<PlanPricingInventorySourceDto>
+                    {
+                        new PlanPricingInventorySourceDto{Id = 3, Percentage = 12},
+                        new PlanPricingInventorySourceDto{Id = 5, Percentage = 13},
+                        new PlanPricingInventorySourceDto{Id = 6, Percentage = 14},
+                        new PlanPricingInventorySourceDto{Id = 7, Percentage = 15},
+                        new PlanPricingInventorySourceDto{Id = 10, Percentage = 16},
+                        new PlanPricingInventorySourceDto{Id = 11, Percentage = 17},
+                        new PlanPricingInventorySourceDto{Id = 12, Percentage = 8},
+                    }
+            };
+        }
+
+        private List<InventorySource> _GetInventorySources()
+        {
+            return new List<InventorySource>
+            {
+                new InventorySource
+                {
+                    Id = 1,
+                    Name = "Open Market",
+                    InventoryType = InventorySourceTypeEnum.OpenMarket
+                },
+                new InventorySource
+                {
+                    Id = 3,
+                    Name = "TVB",
+                    InventoryType = InventorySourceTypeEnum.Barter
+                },
+                new InventorySource
+                {
+                    Id = 4,
+                    Name = "TTWN",
+                    InventoryType = InventorySourceTypeEnum.Barter
+                },
+                new InventorySource
+                {
+                    Id = 5,
+                    Name = "CNN",
+                    InventoryType = InventorySourceTypeEnum.Barter
+                },
+                new InventorySource
+                {
+                    Id = 7,
+                    Name = "LilaMax",
+                    InventoryType = InventorySourceTypeEnum.Barter
+                },
+                new InventorySource
+                {
+                    Id = 8,
+                    Name = "MLB",
+                    InventoryType = InventorySourceTypeEnum.Barter
+                },
+                new InventorySource
+                {
+                    Id = 9,
+                    Name = "Ference Media",
+                    InventoryType = InventorySourceTypeEnum.Barter
+                },
+                new InventorySource
+                {
+                    Id = 10,
+                    Name = "ABC O&O",
+                    InventoryType = InventorySourceTypeEnum.ProprietaryOAndO
+                },
+                new InventorySource
+                {
+                    Id = 11,
+                    Name = "NBC O&O",
+                    InventoryType = InventorySourceTypeEnum.ProprietaryOAndO
+                },
+                new InventorySource
+                {
+                    Id = 12,
+                    Name = "KATZ",
+                    InventoryType = InventorySourceTypeEnum.ProprietaryOAndO
+                },
+                new InventorySource
+                {
+                    Id = 13,
+                    Name = "20th Century Fox (Twentieth Century)",
+                    InventoryType = InventorySourceTypeEnum.Syndication
+                },
+                new InventorySource
+                {
+                    Id = 14,
+                    Name = "CBS Synd",
+                    InventoryType = InventorySourceTypeEnum.Syndication
+                },
+                new InventorySource
+                {
+                    Id = 15,
+                    Name = "NBCU Syn",
+                    InventoryType = InventorySourceTypeEnum.Syndication
+                },
+                new InventorySource
+                {
+                    Id = 16,
+                    Name = "WB Syn",
+                    InventoryType = InventorySourceTypeEnum.Syndication
+                },
+                new InventorySource
+                {
+                    Id = 17,
+                    Name = "Antenna TV",
+                    InventoryType = InventorySourceTypeEnum.Diginet
+                },
+                new InventorySource
+                {
+                    Id = 18,
+                    Name = "Bounce",
+                    InventoryType = InventorySourceTypeEnum.Diginet
+                },
+                new InventorySource
+                {
+                    Id = 19,
+                    Name = "BUZZR",
+                    InventoryType = InventorySourceTypeEnum.Diginet
+                },
+                new InventorySource
+                {
+                    Id = 20,
+                    Name = "COZI",
+                    InventoryType = InventorySourceTypeEnum.Diginet
+                },
+                new InventorySource
+                {
+                    Id = 21,
+                    Name = "Escape",
+                    InventoryType = InventorySourceTypeEnum.Diginet
+                },
+                new InventorySource
+                {
+                    Id = 22,
+                    Name = "Grit",
+                    InventoryType = InventorySourceTypeEnum.Diginet
+                },
+                new InventorySource
+                {
+                    Id = 23,
+                    Name = "HITV",
+                    InventoryType = InventorySourceTypeEnum.Diginet
+                },
+                new InventorySource
+                {
+                    Id = 24,
+                    Name = "Laff",
+                    InventoryType = InventorySourceTypeEnum.Diginet
+                },
+                new InventorySource
+                {
+                    Id = 25,
+                    Name = "Me TV",
+                    InventoryType = InventorySourceTypeEnum.Diginet
+                }
+            };
+        }
+
+        private List<PlanPricingInventoryProgram> _GetPlanPricingInventoryPrograms()
+        {
+            return new List<PlanPricingInventoryProgram>
+            {
+                new PlanPricingInventoryProgram
+                {
+                    ManifestId = 1,
+                    StationLegacyCallLetters = "wnbc",
+                    MarketCode = 101,
+                    ProvidedImpressions = 1000,
+                    ProjectedImpressions = 1100,
+                    SpotCost = 50,
+                    InventorySource = new InventorySource
+                    {
+                        Id = 3
+                    },
+                    ManifestDayparts = new List<ManifestDaypart>
+                    {
+                        new ManifestDaypart
+                        {
+                            Daypart = new DisplayDaypart
+                            {
+                                Id = 1,
+                            },
+                            Programs = new List<Program>
+                            {
+                                new Program
+                                {
+                                    Name = "seinfeld",
+                                    MaestroGenre = "News"
+                                }
+                            },
+                            PrimaryProgram = new Program
+                            {
+                                Name = "seinfeld",
+                                MaestroGenre = "News"
+                            }
+                        }
+                    },
+                    ManifestWeeks = new List<ManifestWeek>
+                    {
+                        new ManifestWeek
+                        {
+                            Spots = 2,
+                            MediaWeekId = 100,
+                        },
+                        new ManifestWeek
+                        {
+                            Spots = 3,
+                            MediaWeekId = 101,
+                        }
+                    }
+                },
+                new PlanPricingInventoryProgram
+                {
+                    ManifestId = 2,
+                    StationLegacyCallLetters = "wabc",
+                    MarketCode = 101,
+                    ProvidedImpressions = 1000,
+                    ProjectedImpressions = 1100,
+                    SpotCost = 50,
+                    InventorySource = new InventorySource
+                    {
+                        Id = 5
+                    },
+                    ManifestDayparts = new List<ManifestDaypart>
+                    {
+                        new ManifestDaypart
+                        {
+                            Daypart = new DisplayDaypart
+                            {
+                                Id = 2
+                            },
+                            Programs = new List<Program>
+                            {
+                                new Program
+                                {
+                                    Name = "seinfeld",
+                                    MaestroGenre = "News"
+                                }
+                            },
+                            PrimaryProgram = new Program
+                            {
+                                Name = "seinfeld",
+                                MaestroGenre = "News"
+                            }
+                        }
+                    },
+                    ManifestWeeks = new List<ManifestWeek>
+                    {
+                        new ManifestWeek
+                        {
+                            Spots = 5,
+                            MediaWeekId = 100
+                        }
+                    }
+                },
+                new PlanPricingInventoryProgram
+                {
+                    ManifestId = 3,
+                    StationLegacyCallLetters = "kpdx",
+                    MarketCode = 100,
+                    ProvidedImpressions = 1000,
+                    ProjectedImpressions = 1100,
+                    SpotCost = 50,
+                    InventorySource = new InventorySource
+                    {
+                        Id = 7
+                    },
+                    ManifestDayparts = new List<ManifestDaypart>
+                    {
+                        new ManifestDaypart
+                        {
+                            Daypart = new DisplayDaypart
+                            {
+                                Id = 3
+                            },
+                            Programs = new List<Program>
+                            {
+                                new Program
+                                {
+                                    Name = "seinfeld",
+                                    MaestroGenre = "News"
+                                }
+                            },
+                            PrimaryProgram = new Program
+                            {
+                                Name = "seinfeld",
+                                MaestroGenre = "News"
+                            }
+                        }
+                    },
+                    ManifestWeeks = new List<ManifestWeek>
+                    {
+                        new ManifestWeek
+                        {
+                            Spots = 1,
+                            MediaWeekId = 100
+                        }
+                    }
+                },
+                new PlanPricingInventoryProgram
+                {
+                    ManifestId = 4,
+                    StationLegacyCallLetters = "kabc",
+                    MarketCode = 302,
+                    InventorySource = new InventorySource
+                    {
+                        Id = 10
+                    },
+                    ManifestDayparts = new List<ManifestDaypart>
+                    {
+                        new ManifestDaypart
+                        {
+                            Daypart = new DisplayDaypart
+                            {
+                                Id = 4
+                            },
+                            Programs = new List<Program>
+                            {
+                                new Program
+                                {
+                                    Name = "seinfeld",
+                                    MaestroGenre = "News"
+                                }
+                            },
+                            PrimaryProgram = new Program
+                            {
+                                Name = "seinfeld",
+                                MaestroGenre = "News"
+                            }
+                        }
+                    },
+                    ManifestWeeks = new List<ManifestWeek>()
+                },
+                new PlanPricingInventoryProgram
+                {
+                    ManifestId = 5,
+                    StationLegacyCallLetters = "wnbc",
+                    MarketCode = 101,
+                    InventorySource = new InventorySource
+                    {
+                        Id = 13
+                    },
+                    ManifestDayparts = new List<ManifestDaypart>
+                    {
+                        new ManifestDaypart
+                        {
+                            Daypart = new DisplayDaypart
+                            {
+                                Id = 5
+                            },
+                            Programs = new List<Program>
+                            {
+                                new Program
+                                {
+                                    Name = "Good morning america",
+                                    MaestroGenre = "Early News"
+                                }
+                            },
+                            PrimaryProgram = new Program
+                            {
+                                Name = "Good morning america",
+                                MaestroGenre = "Early News"
+                            }
+                        }
+                    },
+                    ManifestWeeks = new List<ManifestWeek>()
+                },
+                new PlanPricingInventoryProgram
+                {
+                    ManifestId = 6,
+                    StationLegacyCallLetters = "wabc",
+                    MarketCode = 101,
+                    InventorySource = new InventorySource
+                    {
+                        Id = 17
+                    },
+                    ManifestDayparts = new List<ManifestDaypart>
+                    {
+                        new ManifestDaypart
+                        {
+                            Daypart = new DisplayDaypart
+                            {
+                                Id = 6
+                            },
+                            Programs = new List<Program>
+                            {
+                                new Program
+                                {
+                                    Name = "Good morning america",
+                                    MaestroGenre = "Early News"
+                                }
+                            },
+                            PrimaryProgram = new Program
+                            {
+                                Name = "Good morning america",
+                                MaestroGenre = "Early News"
+                            }
+                        }
+                    },
+                    ManifestWeeks = new List<ManifestWeek>()
+                },
+                new PlanPricingInventoryProgram
+                {
+                    ManifestId = 7,
+                    StationLegacyCallLetters = "kpdx",
+                    MarketCode = 100,
+                    ProvidedImpressions = null,
+                    ProjectedImpressions = 700,
+                    SpotCost = 40,
+                    InventorySource = new InventorySource
+                    {
+                        Id = 3
+                    },
+                    ManifestDayparts = new List<ManifestDaypart>
+                    {
+                        new ManifestDaypart
+                        {
+                            Daypart = new DisplayDaypart
+                            {
+                                Id = 7
+                            },
+                            Programs = new List<Program>
+                            {
+                                new Program
+                                {
+                                    Name = "Good morning america",
+                                    MaestroGenre = "Early News"
+                                }
+                            },
+                            PrimaryProgram = new Program
+                            {
+                                Name = "Good morning america",
+                                MaestroGenre = "Early News"
+                            }
+                        }
+                    },
+                    ManifestWeeks = new List<ManifestWeek>
+                    {
+                        new ManifestWeek
+                        {
+                            Spots = 6,
+                            MediaWeekId = 100,
+                        },
+                        new ManifestWeek
+                        {
+                            Spots = 7,
+                            MediaWeekId = 101,
+                        }
+                    }
+                }
+            };
         }
     }
 }

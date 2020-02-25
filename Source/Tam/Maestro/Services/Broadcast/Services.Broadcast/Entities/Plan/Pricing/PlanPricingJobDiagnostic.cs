@@ -12,6 +12,7 @@ namespace Services.Broadcast.Entities.Plan.Pricing
         private const string SW_KEY_TOTAL_DURATION = "TotalDuration";
         private const string SW_KEY_TOTAL_DURATION_GATHER_INVENTORY = "TotalDurationGatherInventory";
         private const string SW_KEY_TOTAL_DURATION_CALL_TO_API = "TotalDurationCallToApi";
+        private const string SW_KEY_TOTAL_DURATION_INVENTORY_SOURCE_ESTIMATES_CALCULATION = "TotalDurationInventorySourceEstimatesCalculation";
 
         public void RecordStart()
         {
@@ -23,6 +24,17 @@ namespace Services.Broadcast.Entities.Plan.Pricing
         {
             _StopTimer(SW_KEY_TOTAL_DURATION);
             DiagnosticMessage.AppendLine(_GetDurationString(SW_KEY_TOTAL_DURATION));
+        }
+
+        public void RecordInventorySourceEstimatesCalculationStart()
+        {
+            _StartTimer(SW_KEY_TOTAL_DURATION_INVENTORY_SOURCE_ESTIMATES_CALCULATION);
+        }
+
+        public void RecordInventorySourceEstimatesCalculationEnd()
+        {
+            _StopTimer(SW_KEY_TOTAL_DURATION_INVENTORY_SOURCE_ESTIMATES_CALCULATION);
+            DiagnosticMessage.AppendLine(_GetDurationString(SW_KEY_TOTAL_DURATION_INVENTORY_SOURCE_ESTIMATES_CALCULATION));
         }
 
         public void RecordGatherInventoryStart()
