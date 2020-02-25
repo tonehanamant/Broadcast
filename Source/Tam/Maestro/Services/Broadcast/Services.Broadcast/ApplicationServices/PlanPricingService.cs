@@ -501,7 +501,8 @@ namespace Services.Broadcast.ApplicationServices
             var result = new List<PricingEstimate>();
             var supportedInventorySourceIds = _GetInventorySourceIdsByTypes(new List<InventorySourceTypeEnum>
             {
-                InventorySourceTypeEnum.Barter
+                InventorySourceTypeEnum.Barter,
+                InventorySourceTypeEnum.ProprietaryOAndO
             });
 
             var inventorySourcePreferences = plan.PricingParameters.InventorySourcePercentages
