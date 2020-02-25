@@ -771,7 +771,6 @@ namespace Services.Broadcast.ApplicationServices
         public PlanPricingApiRequestDto GetPricingInventory(int planId, PricingInventoryGetRequestParametersDto requestParameters)
         {
             var plan = _PlanRepository.GetPlan(planId);
-            // this needs to create and pass a paremeters object
             var pricingParams = new PlanPricingInventoryEngine.ProgramInventoryOptionalParametersDto
             {
                 MinCPM = requestParameters.MinCpm,

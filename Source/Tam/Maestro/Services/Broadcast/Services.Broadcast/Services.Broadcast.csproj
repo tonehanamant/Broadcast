@@ -363,6 +363,7 @@
     <Compile Include="Entities\Day.cs" />
     <Compile Include="Entities\DaypartCleanupDto.cs" />
     <Compile Include="Entities\Enums\BroadcastDayOfWeek.cs" />
+    <Compile Include="Entities\Enums\InventoryPricingQuarterType.cs" />
     <Compile Include="Entities\Enums\PlanBuyingStatusEnum.cs" />
     <Compile Include="Entities\Enums\PlanBuyingTimeFramesEnum.cs" />
     <Compile Include="Entities\Enums\StationMapSetNamesEnum.cs" />
@@ -494,6 +495,7 @@
     <Compile Include="Helpers\DaypartTimeHelper.cs" />
     <Compile Include="Helpers\GroupHelper.cs" />
     <Compile Include="Helpers\KeyHelper.cs" />
+    <Compile Include="BusinessEngines\PlanPricingInventoryQuarterCalculatorEngine.cs" />
     <Compile Include="Helpers\SystemComponentParameterHelper.cs" />
     <Compile Include="ReflectionHelper.cs" />
     <Compile Include="ReportGenerators\CampaignExport\ContractReportGenerator.cs" />

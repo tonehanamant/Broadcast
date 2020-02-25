@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using Services.Broadcast.Entities.Enums;
+using System.Collections.Generic;
 using Tam.Maestro.Services.ContractInterfaces.Common;
 
 namespace Services.Broadcast.Entities.Plan.Pricing
@@ -20,6 +23,9 @@ namespace Services.Broadcast.Entities.Plan.Pricing
         public string Unit { get; set; }
 
         public InventorySource InventorySource { get; set; }
+
+        [JsonConverter(typeof(StringEnumConverter))]
+        public InventoryPricingQuarterType InventoryPricingQuarterType { get; set; }
 
         public List<ManifestDaypart> ManifestDayparts { get; set; }
 

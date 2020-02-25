@@ -1,20 +1,19 @@
-﻿using System.Data.Entity;
+﻿using Common.Services;
 using Common.Services.Repositories;
+using ConfigurationService.Client;
 using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.Enums;
+using Services.Broadcast.Entities.Plan.Pricing;
+using Services.Broadcast.Entities.StationInventory;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Transactions;
-using ConfigurationService.Client;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Data.EntityFrameworkMapping;
-using Services.Broadcast.Entities.StationInventory;
-using Services.Broadcast.Entities.Plan.Pricing;
-using Services.Broadcast.Entities.Enums;
-using Services.Broadcast.Helpers;
-using Common.Services;
 
 namespace Services.Broadcast.Repositories
 {
@@ -31,7 +30,7 @@ namespace Services.Broadcast.Repositories
             DateTime endDate,
             int spotLengthId,
             IEnumerable<int> inventorySourceIds,
-            List<int> marketCodes);
+            List<int> stationIds);
     }
 
     public class StationProgramRepository : BroadcastRepositoryBase, IStationProgramRepository
@@ -120,21 +119,16 @@ namespace Services.Broadcast.Repositories
             DateTime endDate, 
             int spotLengthId,
             IEnumerable<int> inventorySourceIds,
-            List<int> marketCodes)
+            List<int> stationIds)
         {
             return _InReadUncommitedTransaction(
                     context => 
                     {
                         var inventoryFileIds = (from file in context.inventory_files
                                                 join ratingJob in context.inventory_file_ratings_jobs on file.id equals ratingJob.inventory_file_id
-                                                // TODO: Bring this back in when ProgramGuide v2 is deployed to Cadent environment.
-                                                // join programEnrichmentJob in context.inventory_programs_by_file_jobs on file.id equals programEnrichmentJob.inventory_file_id
                                                 join source in context.inventory_sources on file.inventory_source_id equals source.id
                                                 where inventorySourceIds.Contains(source.id) &&
                                                       ratingJob.status == (int)BackgroundJobProcessingStatus.Succeeded // take only files with ratings calculated
-                                                      // TODO: Bring this back in when ProgramGuide v2 is deployed to Cadent environment.
-                                                      //    Commented out per PRI-22371 : Pricing - remove program job from pricing model
-                                                      // && programEnrichmentJob.status == (int)InventoryProgramsJobStatus.Completed // take only files with program data populated
                                                 group file by file.id into fileGroup
                                                 select fileGroup.Key).ToList();
 
@@ -142,7 +136,7 @@ namespace Services.Broadcast.Repositories
                                      from manifestWeek in manifest.station_inventory_manifest_weeks
                                      from manifestRate in manifest.station_inventory_manifest_rates
                                      where inventoryFileIds.Contains(manifest.file_id.Value) &&
-                                           marketCodes.Contains(manifest.station.market_code.Value) &&
+                                           stationIds.Contains(manifest.station.id) &&
                                            manifestWeek.start_date <= endDate && manifestWeek.end_date >= startDate &&
                                            manifestRate.spot_length_id == spotLengthId
                                      group manifest by manifest.id into manifestGroup

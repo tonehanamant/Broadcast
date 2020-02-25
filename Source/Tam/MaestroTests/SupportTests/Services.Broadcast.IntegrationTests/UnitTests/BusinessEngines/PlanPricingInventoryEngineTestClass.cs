@@ -14,9 +14,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
         public PlanPricingInventoryEngineTestClass(
             IDataRepositoryFactory broadcastDataRepositoryFactory,
             IImpressionsCalculationEngine impressionsCalculationEngine,
-            IGenreCache genreCache)
-            : base(broadcastDataRepositoryFactory, impressionsCalculationEngine, genreCache)
-        { }
+            IGenreCache genreCache,
+            IPlanPricingInventoryQuarterCalculatorEngine planPricingInventoryQuarterCalculatorEngine)
+            : base(broadcastDataRepositoryFactory, impressionsCalculationEngine, genreCache,
+                planPricingInventoryQuarterCalculatorEngine)
+        {
+        }
 
         public List<PlanPricingInventoryProgram> UT_FilterProgramsByDayparts(
             PlanDto plan,
@@ -50,6 +53,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             DisplayDaypart planDisplayDaypartDays)
         {
             ApplyNTIConversionToNSI(plan, programs, planDisplayDaypartDays);
+        }
+
+        public List<PlanPricingInventoryProgram> UT_GetFullPrograms(List<DateRange> dateRanges, int spotLengthId,
+            List<int> supportedInventorySourceTypes, List<short> availableMarkets, QuarterDetailDto planQuarter)
+        {
+            return _GetFullPrograms(dateRanges, spotLengthId, supportedInventorySourceTypes, availableMarkets, planQuarter);
         }
     }
 }

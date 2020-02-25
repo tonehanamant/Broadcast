@@ -25,6 +25,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
         private readonly Mock<IGenreCache> _GenreCacheMock;
         private readonly Mock<IDayRepository> _DayRepositoryMock;
         private readonly Mock<INtiToNsiConversionRepository> _NtiToNsiConversionRepositoryMock;
+        private readonly Mock<IPlanPricingInventoryQuarterCalculatorEngine> _PlanPricingInventoryQuarterCalculatorEngine;
+
+        private readonly Mock<IInventoryRepository> _InventoryRepository;
+        private readonly Mock<IStationProgramRepository> _StationProgramRepository;
+        private readonly Mock<IStationRepository> _StationRepository;
 
         public PlanPricingInventoryEngineUnitTests()
         {
@@ -33,6 +38,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             _GenreCacheMock = new Mock<IGenreCache>();
             _DayRepositoryMock = new Mock<IDayRepository>();
             _NtiToNsiConversionRepositoryMock = new Mock<INtiToNsiConversionRepository>();
+            _PlanPricingInventoryQuarterCalculatorEngine = new Mock<IPlanPricingInventoryQuarterCalculatorEngine>();
+
+            _InventoryRepository = new Mock<IInventoryRepository>();
+            _StationProgramRepository = new Mock<IStationProgramRepository>();
+            _StationRepository = new Mock<IStationRepository>();
 
             _DayRepositoryMock
                 .Setup(x => x.GetDays())
@@ -50,10 +60,23 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 .Setup(x => x.GetDataRepository<IDayRepository>())
                 .Returns(_DayRepositoryMock.Object);
 
+            _DataRepositoryFactoryMock
+                .Setup(x => x.GetDataRepository<IInventoryRepository>())
+                .Returns(_InventoryRepository.Object);
+
+            _DataRepositoryFactoryMock
+                .Setup(x => x.GetDataRepository<IStationProgramRepository>())
+                .Returns(_StationProgramRepository.Object);
+
+            _DataRepositoryFactoryMock
+                .Setup(x => x.GetDataRepository<IStationRepository>())
+                .Returns(_StationRepository.Object);
+
             _PlanPricingInventoryEngine = new PlanPricingInventoryEngineTestClass(
                 _DataRepositoryFactoryMock.Object,
                 _ImpressionsCalculationEngineMock.Object,
-                _GenreCacheMock.Object);
+                _GenreCacheMock.Object,
+                _PlanPricingInventoryQuarterCalculatorEngine.Object);
         }
 
         [Test]
@@ -692,6 +715,260 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
 
             Assert.AreEqual(800, programs.Single().ProjectedImpressions);
             Assert.AreEqual(1600, programs.Single().ProvidedImpressions);
+        }
+
+        /// <summary>
+        /// Test that the stations fallback if necessary.
+        /// </summary>
+        /// <remarks>
+        ///     Scenario : All stations are found in the plan quarter.
+        ///     Expected : No stations fallback.
+        /// </remarks>
+        [Test]
+        public void GetFullProgramsWhenAllStationsInPlanQuarter()
+        {
+            /*** Arrange ***/
+            const int marketCount = 3;
+            const int stationPerMarketCount = 2;
+            const int spotLengthId = 1;
+            var supportedInventorySourceTypes = new List<int> { 1 };
+            var flightDateRanges = new List<DateRange>
+            {
+                new DateRange(new DateTime(2020, 05, 01),
+                    new DateTime(2020, 05, 30))
+            };
+            var planQuarter = new QuarterDetailDto
+            {
+                Quarter = 4,
+                Year = 2020,
+                StartDate = new DateTime(2020, 09, 25),
+                EndDate = new DateTime(2020, 12, 27)
+            };
+            var fallbackQuarter = new QuarterDetailDto
+            {
+                Quarter = 4,
+                Year = 2019,
+                StartDate = new DateTime(2020, 09, 25),
+                EndDate = new DateTime(2020, 12, 27)
+            };
+            var fallbackDateRanges = new List<DateRange>() { flightDateRanges[0] };
+            var availableMarkets = new List<short> { 1,2,3,4,5 };
+            var availableStations = _GetAvailableStations(marketCount, stationPerMarketCount);
+
+            var inventory = availableStations.Select(s =>
+                    new PlanPricingInventoryProgram {StationLegacyCallLetters = s.LegacyCallLetters})
+                .ToList();
+
+            _StationRepository.Setup(s => s.GetBroadcastStationsByMarketCodes(It.IsAny<List<short>>()))
+                .Returns(availableStations);
+
+            _PlanPricingInventoryQuarterCalculatorEngine.Setup(s => s.GetPlanQuarter(It.IsAny<PlanDto>()))
+                .Returns(planQuarter);
+            _PlanPricingInventoryQuarterCalculatorEngine.Setup(s => s.GetInventoryFallbackQuarter())
+                .Returns(fallbackQuarter);
+            _PlanPricingInventoryQuarterCalculatorEngine.Setup(s => s.GetFallbackDateRanges(It.IsAny<DateRange>(),
+                    It.IsAny<QuarterDetailDto>(), It.IsAny<QuarterDetailDto>()))
+                .Returns(fallbackDateRanges);
+
+            _StationProgramRepository.Setup(s => s.GetProgramsForPricingModel(
+                    It.IsAny<DateTime>(), It.IsAny<DateTime>(), It.IsAny<int>(),
+                    It.IsAny<List<int>>(), It.IsAny<List<int>>()))
+                .Returns(inventory);
+
+            /*** Act ***/
+            var result = _PlanPricingInventoryEngine.UT_GetFullPrograms(flightDateRanges, spotLengthId, supportedInventorySourceTypes,
+                availableMarkets, planQuarter);
+
+            /*** Assert ***/
+            Assert.AreEqual(6, result.Count);
+            foreach (var station in availableStations)
+            {
+                Assert.AreEqual(1, result.Count(i => i.StationLegacyCallLetters == station.LegacyCallLetters));
+            }
+        }
+
+        /// <summary>
+        /// Test that the stations fallback if necessary.
+        /// </summary>
+        /// <remarks>
+        ///     Scenario : Some stations are found in the Plan Quarter and some in the Fallback Quarter.
+        ///     Expected :
+        ///     - 3 stations found in the Plan Quarter
+        ///     - 3 stations found in the Fallback Quarter
+        /// </remarks>
+        [Test]
+        public void GetFullProgramsWhenSomeStationsFallback()
+        {
+            /*** Arrange ***/
+            const int marketCount = 3;
+            const int stationPerMarketCount = 2;
+            const int spotLengthId = 1;
+            var supportedInventorySourceTypes = new List<int> { 1 };
+            var flightDateRanges = new List<DateRange>
+            {
+                new DateRange(new DateTime(2020, 12, 01),
+                    new DateTime(2020, 12, 25))
+            };
+            var planQuarter = new QuarterDetailDto
+            {
+                Quarter = 4,
+                Year = 2020,
+                StartDate = new DateTime(2020, 09, 25),
+                EndDate = new DateTime(2020, 12, 27)
+            };
+            var fallbackQuarter = new QuarterDetailDto
+            {
+                Quarter = 4,
+                Year = 2019,
+                StartDate = new DateTime(2020, 09, 25),
+                EndDate = new DateTime(2020, 12, 27)
+            };
+            var fallbackDateRanges = new List<DateRange>() { flightDateRanges[0] };
+
+            var availableMarkets = new List<short> { 1, 2, 3, 4, 5 };
+            var availableStations = _GetAvailableStations(marketCount, stationPerMarketCount);
+
+            var inventoryOne = new List<PlanPricingInventoryProgram>
+            {
+                new PlanPricingInventoryProgram {StationLegacyCallLetters = availableStations[0].LegacyCallLetters},
+                new PlanPricingInventoryProgram {StationLegacyCallLetters = availableStations[1].LegacyCallLetters},
+                new PlanPricingInventoryProgram {StationLegacyCallLetters = availableStations[2].LegacyCallLetters}
+            };
+            var inventoryTwo = new List<PlanPricingInventoryProgram>
+            {
+                new PlanPricingInventoryProgram { StationLegacyCallLetters = availableStations[3].LegacyCallLetters },
+                new PlanPricingInventoryProgram { StationLegacyCallLetters = availableStations[4].LegacyCallLetters },
+                new PlanPricingInventoryProgram { StationLegacyCallLetters = availableStations[5].LegacyCallLetters },
+            };
+
+            _StationRepository.Setup(s => s.GetBroadcastStationsByMarketCodes(It.IsAny<List<short>>()))
+                .Returns(availableStations);
+
+            _PlanPricingInventoryQuarterCalculatorEngine.Setup(s => s.GetPlanQuarter(It.IsAny<PlanDto>()))
+                .Returns(planQuarter);
+            _PlanPricingInventoryQuarterCalculatorEngine.Setup(s => s.GetInventoryFallbackQuarter())
+                .Returns(fallbackQuarter);
+            _PlanPricingInventoryQuarterCalculatorEngine.Setup(s => s.GetFallbackDateRanges(It.IsAny<DateRange>(),
+                    It.IsAny<QuarterDetailDto>(), It.IsAny<QuarterDetailDto>()))
+                .Returns(fallbackDateRanges);
+
+            _StationProgramRepository.SetupSequence(s => s.GetProgramsForPricingModel(
+                    It.IsAny<DateTime>(), It.IsAny<DateTime>(), It.IsAny<int>(),
+                    It.IsAny<List<int>>(), It.IsAny<List<int>>()))
+                .Returns(inventoryOne)
+                .Returns(inventoryTwo);
+
+            /*** Act ***/
+            var result = _PlanPricingInventoryEngine.UT_GetFullPrograms(flightDateRanges, spotLengthId, supportedInventorySourceTypes,
+                availableMarkets, planQuarter);
+
+            /*** Assert ***/
+            Assert.AreEqual(6, result.Count);
+            foreach (var station in availableStations)
+            {
+                Assert.AreEqual(1, result.Count(i => i.StationLegacyCallLetters == station.LegacyCallLetters));
+            }
+        }
+
+        /// <summary>
+        /// Test that the stations fallback if necessary.
+        /// </summary>
+        /// <remarks>
+        ///     Scenario : Some stations are found in the Plan Quarter and some in the Fallback Quarter, but some are not found in either.
+        ///     Expected :
+        ///     - 3 stations found in the Plan Quarter
+        ///     - 2 stations found in the Fallback Quarter
+        ///     - 1 station is not found
+        ///     - no error is thrown.
+        /// </remarks>
+        [Test]
+        public void GetFullProgramsWhenSomeStationsGetDropped()
+        {
+            /*** Arrange ***/
+            const int marketCount = 3;
+            const int stationPerMarketCount = 2;
+            const int spotLengthId = 1;
+            var supportedInventorySourceTypes = new List<int> { 1 };
+            var flightDateRanges = new List<DateRange>
+            {
+                new DateRange(new DateTime(2020, 12, 01),
+                    new DateTime(2020, 12, 25))
+            };
+            var planQuarter = new QuarterDetailDto
+            {
+                Quarter = 4,
+                Year = 2020,
+                StartDate = new DateTime(2020, 09, 25),
+                EndDate = new DateTime(2020, 12, 27)
+            };
+            var fallbackQuarter = new QuarterDetailDto
+            {
+                Quarter = 4,
+                Year = 2019,
+                StartDate = new DateTime(2020, 09, 25),
+                EndDate = new DateTime(2020, 12, 27)
+            };
+            var fallbackDateRanges = new List<DateRange>() { flightDateRanges[0] };
+            var availableMarkets = new List<short> { 1, 2, 3, 4, 5 };
+            var availableStations = _GetAvailableStations(marketCount, stationPerMarketCount);
+
+            var inventoryOne = new List<PlanPricingInventoryProgram>
+            {
+                new PlanPricingInventoryProgram {StationLegacyCallLetters = availableStations[0].LegacyCallLetters},
+                new PlanPricingInventoryProgram {StationLegacyCallLetters = availableStations[1].LegacyCallLetters},
+                new PlanPricingInventoryProgram {StationLegacyCallLetters = availableStations[2].LegacyCallLetters}
+            };
+            var inventoryTwo = new List<PlanPricingInventoryProgram>
+            {
+                new PlanPricingInventoryProgram { StationLegacyCallLetters = availableStations[3].LegacyCallLetters },
+                new PlanPricingInventoryProgram { StationLegacyCallLetters = availableStations[4].LegacyCallLetters },
+            };
+
+            _StationRepository.Setup(s => s.GetBroadcastStationsByMarketCodes(It.IsAny<List<short>>()))
+                .Returns(availableStations);
+
+            _PlanPricingInventoryQuarterCalculatorEngine.Setup(s => s.GetPlanQuarter(It.IsAny<PlanDto>()))
+                .Returns(planQuarter);
+            _PlanPricingInventoryQuarterCalculatorEngine.Setup(s => s.GetInventoryFallbackQuarter())
+                .Returns(fallbackQuarter);
+            _PlanPricingInventoryQuarterCalculatorEngine.Setup(s => s.GetFallbackDateRanges(It.IsAny<DateRange>(),
+                    It.IsAny<QuarterDetailDto>(), It.IsAny<QuarterDetailDto>()))
+                .Returns(fallbackDateRanges);
+
+            _StationProgramRepository.SetupSequence(s => s.GetProgramsForPricingModel(
+                    It.IsAny<DateTime>(), It.IsAny<DateTime>(), It.IsAny<int>(),
+                    It.IsAny<List<int>>(), It.IsAny<List<int>>()))
+                .Returns(inventoryOne)
+                .Returns(inventoryTwo);
+
+            /*** Act ***/
+            var result = _PlanPricingInventoryEngine.UT_GetFullPrograms(flightDateRanges, spotLengthId, supportedInventorySourceTypes,
+                availableMarkets, planQuarter);
+
+            /*** Assert ***/
+            Assert.AreEqual(5, result.Count);
+            foreach (var station in availableStations)
+            {
+                var expectedCount = station.LegacyCallLetters == availableStations[5].LegacyCallLetters ? 0 : 1;
+                Assert.AreEqual(expectedCount, result.Count(i => i.StationLegacyCallLetters == station.LegacyCallLetters));
+            }
+        }
+
+        private List<DisplayBroadcastStation> _GetAvailableStations(int marketCount, int stationsPerMarket)
+        {
+            var availableStations = new List<DisplayBroadcastStation>();
+            var stationId = 0;
+
+            for (var i = 1; i <= marketCount; i++)
+            {
+                for (var j = 1; j <= stationsPerMarket; j++)
+                {
+                    var stationName = $"ST{(++stationId).ToString().PadLeft(2, '0')}";
+                    availableStations.Add(new DisplayBroadcastStation { LegacyCallLetters = stationName, MarketCode = j });
+                }
+            }
+
+            return availableStations;
         }
 
         private PlanDto _GetPlan()

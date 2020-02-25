@@ -1,15 +1,14 @@
 ﻿using Common.Services.Extensions;
 using Common.Services.Repositories;
+using ConfigurationService.Client;
 using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Transactions;
-using ConfigurationService.Client;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
-using Tam.Maestro.Services.Clients;
 
 namespace Services.Broadcast.Repositories
 {
@@ -20,6 +19,8 @@ namespace Services.Broadcast.Repositories
         DisplayBroadcastStation GetBroadcastStationByLegacyCallLetters(string callLetters);
         DisplayBroadcastStation GetBroadcastStationByCallLetters(string stationCallLetters);
         List<DisplayBroadcastStation> GetBroadcastStationListByLegacyCallLetters(List<string> stationNameList);
+
+        List<DisplayBroadcastStation> GetBroadcastStationsByMarketCodes(List<short> marketCodes);
 
         /// <summary>
         /// Gets all the broadcast stations.
@@ -166,6 +167,28 @@ namespace Services.Broadcast.Repositories
                                 MarketCode = s.market_code,
                                 ModifiedDate = s.modified_date
                             }).ToList();
+                });
+        }
+
+        public List<DisplayBroadcastStation> GetBroadcastStationsByMarketCodes(List<short> marketCodes)
+        {
+            return _InReadUncommitedTransaction(
+                context =>
+                {
+                    return (from s in context.stations
+                        where s.market_code.HasValue
+                            && marketCodes.Contains(s.market_code.Value)
+                        select new DisplayBroadcastStation
+                        {
+                            Id = s.id,
+                            Code = s.station_code,
+                            Affiliation = s.affiliation,
+                            CallLetters = s.station_call_letters,
+                            LegacyCallLetters = s.legacy_call_letters,
+                            OriginMarket = s.market == null ? null : s.market.geography_name,
+                            MarketCode = s.market_code,
+                            ModifiedDate = s.modified_date
+                        }).ToList();
                 });
         }
 

@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using ApprovalTests;
+﻿using ApprovalTests;
 using ApprovalTests.Reporters;
 using IntegrationTests.Common;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using Services.Broadcast.Entities.StationInventory;
 using Services.Broadcast.Repositories;
+using System;
+using System.Collections.Generic;
 using Tam.Maestro.Common.DataLayer;
 
 namespace Services.Broadcast.IntegrationTests.Repositories

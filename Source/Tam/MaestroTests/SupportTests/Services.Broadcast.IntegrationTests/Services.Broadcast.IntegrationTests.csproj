@@ -317,6 +317,7 @@
     <Compile Include="Repositories\PlanSummaryRepositoryTests.cs" />
     <Compile Include="Repositories\RatingForcastRepositoryTests.cs" />
     <Compile Include="Repositories\PostRepositoryTests.cs" />
+    <Compile Include="Repositories\StationRepositoryTests.cs" />
     <Compile Include="Stubs\DataLakeFileServiceStub.cs" />
     <Compile Include="Stubs\FileServiceStub.cs" />
     <Compile Include="Stubs\ImpersonateUserStub.cs" />
@@ -347,6 +348,8 @@
     <Compile Include="UnitTests\BusinessEngines\PlanBudgetDeliveryCalculatorUnitTests.cs" />
     <Compile Include="UnitTests\BusinessEngines\PlanPricingInventoryEngineTestClass.cs" />
     <Compile Include="UnitTests\BusinessEngines\PlanPricingInventoryEngineUnitTests.cs" />
+    <Compile Include="UnitTests\BusinessEngines\PlanPricingInventoryQuarterCalculatorEngineTestClass.cs" />
+    <Compile Include="UnitTests\BusinessEngines\PlanPricingInventoryQuarterCalculatorEngineUnitTests.cs" />
     <Compile Include="UnitTests\BusinessEngines\PlanPricingInventorySourceSortEngineUnitTests.cs" />
     <Compile Include="UnitTests\BusinessEngines\TrackingEngineUnitTests.cs" />
     <Compile Include="UnitTests\DaytimeCleanupServiceTests.cs" />

@@ -11,6 +11,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Tam.Maestro.Common;
+using Tam.Maestro.Common.Utilities.Logging;
+using Tam.Maestro.Services.Cable.SystemComponentParameters;
 using Tam.Maestro.Services.ContractInterfaces.Common;
 using static Services.Broadcast.BusinessEngines.PlanPricingInventoryEngine;
 using static Services.Broadcast.Entities.Enums.ProposalEnums;
@@ -32,16 +34,22 @@ namespace Services.Broadcast.BusinessEngines
         private readonly IGenreCache _GenreCache;
         private readonly INtiToNsiConversionRepository _NtiToNsiConversionRepository;
         private readonly IDayRepository _DayRepository;
+        private readonly IStationRepository _StationRepository;
+        private readonly IPlanPricingInventoryQuarterCalculatorEngine _PlanPricingInventoryQuarterCalculatorEngine;
 
         public PlanPricingInventoryEngine(IDataRepositoryFactory broadcastDataRepositoryFactory,
                                           IImpressionsCalculationEngine impressionsCalculationEngine,
-                                          IGenreCache genreCache)
+                                          IGenreCache genreCache,
+                                          IPlanPricingInventoryQuarterCalculatorEngine planPricingInventoryQuarterCalculatorEngine)
         {
             _StationProgramRepository = broadcastDataRepositoryFactory.GetDataRepository<IStationProgramRepository>();
             _ImpressionsCalculationEngine = impressionsCalculationEngine;
             _GenreCache = genreCache;
+            _PlanPricingInventoryQuarterCalculatorEngine = planPricingInventoryQuarterCalculatorEngine;
+
             _NtiToNsiConversionRepository = broadcastDataRepositoryFactory.GetDataRepository<INtiToNsiConversionRepository>();
             _DayRepository = broadcastDataRepositoryFactory.GetDataRepository<IDayRepository>();
+            _StationRepository = broadcastDataRepositoryFactory.GetDataRepository<IStationRepository>();
         }
 
         public List<PlanPricingInventoryProgram> GetInventoryForPlan(
@@ -76,25 +84,69 @@ namespace Services.Broadcast.BusinessEngines
             }
         }
 
-        private List<PlanPricingInventoryProgram> _GetPrograms(
-            PlanDto plan, 
-            List<DateRange> planFlightDateRanges,
-            IEnumerable<int> inventorySourceIds)
+        /// <summary>
+        /// Attempts to gather the full inventory set from the plan's quarter or the fallback quarter.
+        /// </summary>
+        /// <remarks>
+        /// This does not  address if a plan's flight extends beyond a single quarter.
+        /// </remarks>
+        protected List<PlanPricingInventoryProgram> _GetFullPrograms(List<DateRange> dateRanges, int spotLengthId,
+            IEnumerable<int> inventorySourceIds, List<short> availableMarkets, QuarterDetailDto planQuarter)
         {
-            var marketCodes = plan.AvailableMarkets.Select(m => (int)m.MarketCode).ToList();
-            var programs = new List<PlanPricingInventoryProgram>();
+            var totalInventory = new List<PlanPricingInventoryProgram>();
+            var fallbackQuarter = _PlanPricingInventoryQuarterCalculatorEngine.GetInventoryFallbackQuarter();
 
-            foreach (var planDateRange in planFlightDateRanges)
+            var availableStations = _StationRepository.GetBroadcastStationsByMarketCodes(availableMarkets);
+
+            foreach (var dateRange in dateRanges)
             {
-                var programsForDateRange = _StationProgramRepository.GetProgramsForPricingModel(
-                    planDateRange.Start.Value,
-                    planDateRange.End.Value,
-                    plan.SpotLengthId,
-                    inventorySourceIds,
-                    marketCodes);
+                var ungatheredStationIds = availableStations.Select(s => s.Id).ToList();
 
-                programs.AddRange(programsForDateRange);
+                var inventoryForDateRange = _StationProgramRepository.GetProgramsForPricingModel(
+                    dateRange.Start.Value, dateRange.End.Value, spotLengthId, inventorySourceIds,
+                    ungatheredStationIds);
+
+                inventoryForDateRange.ForEach(p => p.InventoryPricingQuarterType = InventoryPricingQuarterType.Plan);
+                totalInventory.AddRange(inventoryForDateRange);
+
+                var gatheredStationCallsigns = totalInventory.Select(s => s.StationLegacyCallLetters).Distinct().ToList();
+                var fallbackStationIds = availableStations.Where(a => gatheredStationCallsigns.Contains(a.LegacyCallLetters) == false)
+                    .Select(s => s.Id).ToList();
+
+                if (fallbackStationIds.Any())
+                {
+                    // multiple DateRanges can be returned if the PlanQuarter has more weeks than the FallbackQuarter
+                    var fallbackDateRanges = _PlanPricingInventoryQuarterCalculatorEngine.GetFallbackDateRanges(dateRange, planQuarter, fallbackQuarter);
+                    foreach (var fallbackDateRange in fallbackDateRanges)
+                    {
+                        var fallbackInventory = _StationProgramRepository.GetProgramsForPricingModel(
+                            fallbackDateRange.Start.Value, fallbackDateRange.End.Value, spotLengthId, inventorySourceIds,
+                            fallbackStationIds);
+
+                        fallbackInventory.ForEach(p => p.InventoryPricingQuarterType = InventoryPricingQuarterType.Fallback);
+                        totalInventory.AddRange(fallbackInventory);
+                    }
+
+                    gatheredStationCallsigns = totalInventory.Select(s => s.StationLegacyCallLetters).Distinct().ToList();
+                    var stationsWithoutInventory = availableStations.Where(a => gatheredStationCallsigns.Contains(a.LegacyCallLetters) == false).ToList();
+
+                    if (stationsWithoutInventory.Any())
+                    {
+                        LogHelper.Logger.Warn($"Unable to gather inventory for DateRange {dateRange.Start.Value.ToString("yyyy-MM-dd")}"
+                                              + $" to {dateRange.End.Value.ToString("yyyy-MM-dd")} for {stationsWithoutInventory.Count} stations.");
+                    }
+                }
             }
+
+            return totalInventory;
+        }
+
+        private List<PlanPricingInventoryProgram> _GetPrograms(PlanDto plan, List<DateRange> planFlightDateRanges, IEnumerable<int> inventorySourceIds)
+        {
+            var marketCodes = plan.AvailableMarkets.Select(m => m.MarketCode).ToList();
+            var planQuarter = _PlanPricingInventoryQuarterCalculatorEngine.GetPlanQuarter(plan);
+
+            var programs = _GetFullPrograms(planFlightDateRanges, plan.SpotLengthId, inventorySourceIds, marketCodes, planQuarter);
 
             // so that programs are not repeated
             programs = programs.GroupBy(x => x.ManifestId).Select(x =>

@@ -1,0 +1,62 @@
+﻿[
+  {
+    "Affiliation": "IND",
+    "CallLetters": "WCIU-TV 26.2",
+    "Code": 3495,
+    "LegacyCallLetters": "WCUU",
+    "ManifestMaxEndDate": null,
+    "MarketCode": 202,
+    "OriginMarket": "Chicago",
+    "RateDataThrough": null
+  },
+  {
+    "Affiliation": "IND",
+    "CallLetters": "WGN-TV 9.1",
+    "Code": 5066,
+    "LegacyCallLetters": "WGN",
+    "ManifestMaxEndDate": null,
+    "MarketCode": 202,
+    "OriginMarket": "Chicago",
+    "RateDataThrough": null
+  },
+  {
+    "Affiliation": "IND",
+    "CallLetters": "WMEU-CD 48.3",
+    "Code": 4584,
+    "LegacyCallLetters": "WMEU",
+    "ManifestMaxEndDate": null,
+    "MarketCode": 202,
+    "OriginMarket": "Chicago",
+    "RateDataThrough": null
+  },
+  {
+    "Affiliation": "FOX",
+    "CallLetters": "WPFO 23.1",
+    "Code": 8346,
+    "LegacyCallLetters": "WPFO",
+    "ManifestMaxEndDate": null,
+    "MarketCode": 100,
+    "OriginMarket": "Portland-Auburn",
+    "RateDataThrough": null
+  },
+  {
+    "Affiliation": "CW",
+    "CallLetters": "WPIX 11.1",
+    "Code": 5014,
+    "LegacyCallLetters": "WPIX",
+    "ManifestMaxEndDate": null,
+    "MarketCode": 101,
+    "OriginMarket": "New York",
+    "RateDataThrough": null
+  },
+  {
+    "Affiliation": "MET",
+    "CallLetters": "WWME-CD 23.1",
+    "Code": 7472,
+    "LegacyCallLetters": "WWME",
+    "ManifestMaxEndDate": null,
+    "MarketCode": 202,
+    "OriginMarket": "Chicago",
+    "RateDataThrough": null
+  }
+]
