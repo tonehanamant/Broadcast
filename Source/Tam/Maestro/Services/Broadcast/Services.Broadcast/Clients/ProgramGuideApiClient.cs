@@ -110,7 +110,7 @@ namespace Services.Broadcast.Clients
             var responseProgram = new GuideResponseProgramDto
             {
                 ProgramName = apiResponseProgram.program,
-                SourceGenre = apiResponseProgram.genre,
+                SourceGenre = apiResponseProgram.genreid, // genre is the description whereas genreid is the value we map.
                 ShowType = apiResponseProgram.showtype,
                 SyndicationType = apiResponseProgram.syndicationtype,
                 Occurrences = apiResponseProgram.occurances,
