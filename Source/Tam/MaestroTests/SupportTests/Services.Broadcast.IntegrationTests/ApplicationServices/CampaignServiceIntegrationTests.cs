@@ -38,7 +38,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         private readonly ICampaignService _CampaignService = IntegrationTestApplicationServiceFactory.GetApplicationService<ICampaignService>();
         private readonly ICampaignSummaryRepository _CampaignSummaryRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<ICampaignSummaryRepository>();
         private readonly IPlanRepository _PlanRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IPlanRepository>();
-        private static readonly bool WRITE_FILE_TO_DISK = true;
+        private static readonly bool WRITE_FILE_TO_DISK = false;
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
@@ -922,7 +922,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void CampaignExport_PlansWith13And14Weeks()
         {
-            using (new TransactionScopeWrapper())
+             using (new TransactionScopeWrapper())
             {
                 IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<ITrafficApiCache>(new TrafficApiCacheStub());
                 var _CampaignService = IntegrationTestApplicationServiceFactory.GetApplicationService<ICampaignService>();
@@ -943,6 +943,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Assert.AreEqual(reportOutput.Stream.Length,
                     File.ReadAllBytes(@".\Files\Campaign export\CampaignExport_PlansWith13And14Weeks.xlsx").LongLength);
             }
+
+
         }
 
         private JsonSerializerSettings _GetJsonSettingsForCampaignExport()
@@ -1129,4 +1131,3 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
     }
 }
-

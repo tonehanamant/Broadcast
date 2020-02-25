@@ -9,6 +9,11 @@ namespace Services.Broadcast.ReportGenerators.CampaignExport
 {
     public class ProposalReportGenerator
     {
+        public string MarketsCoverage { get; private set; }
+        public string Dayparts { get; private set; }
+        public string FlightHiatuses { get; private set; }
+        public string Notes { get; private set; }
+
         #region Cells addresses
         private readonly string START_COLUMN = "A";
         private readonly string START_TOTAL_COLUMN = "E";
@@ -65,7 +70,8 @@ namespace Services.Broadcast.ReportGenerators.CampaignExport
             currentRowIndex += 2;
             if (!string.IsNullOrWhiteSpace(notes))
             {
-                WORKSHEET.Cells[$"{FOOTER_INFO_COLUMN_INDEX}{currentRowIndex}"].Value = notes;
+                Notes = notes;
+                WORKSHEET.Cells[$"{FOOTER_INFO_COLUMN_INDEX}{currentRowIndex}"].Value = Notes;
             }
         }
 
@@ -75,7 +81,8 @@ namespace Services.Broadcast.ReportGenerators.CampaignExport
             currentRowIndex += 2;
             if (flightHiatuses.Any())
             {
-                WORKSHEET.Cells[$"{FOOTER_INFO_COLUMN_INDEX}{currentRowIndex}"].Value = string.Join(", ", flightHiatuses);
+                FlightHiatuses = string.Join(", ", flightHiatuses);
+                WORKSHEET.Cells[$"{FOOTER_INFO_COLUMN_INDEX}{currentRowIndex}"].Value = FlightHiatuses;
             }
         }
 
@@ -85,9 +92,8 @@ namespace Services.Broadcast.ReportGenerators.CampaignExport
             currentRowIndex += 2;
             if (daypartsData.Any())
             {
-                string daypartsRowData = string.Join(", ", 
-                    daypartsData.Select(x => $"{x.DaypartCode} - {x.FlightDays} {x.StartTime} - {x.EndTime}").ToList());
-                WORKSHEET.Cells[$"{FOOTER_INFO_COLUMN_INDEX}{currentRowIndex}"].Value = daypartsRowData;
+                Dayparts = string.Join(", ", daypartsData.Select(x => $"{x.DaypartCode} - {x.FlightDays} {x.StartTime} - {x.EndTime}").ToList());
+                WORKSHEET.Cells[$"{FOOTER_INFO_COLUMN_INDEX}{currentRowIndex}"].Value = Dayparts;
             }
         }
 
@@ -95,12 +101,12 @@ namespace Services.Broadcast.ReportGenerators.CampaignExport
         {
             //markets row is the second row after current index
             currentRowIndex += 2;
-            string marketCoverageValue = string.Format("~{0}% Minimum TV HH Coverage{1}{2}"
+            MarketsCoverage = string.Format("~{0}% Minimum TV HH Coverage{1}{2}"
                 , data.CoveragePercentage
                 , data.BlackoutMarketsName.Any() ? $" | Blackout Markets: {string.Join(", ", data.BlackoutMarketsName)}" : string.Empty
                 , data.PreferentialMarketsName.Any() ? $" | Preferential Markets: {string.Join(", ", data.PreferentialMarketsName)}" : string.Empty
                 );
-            WORKSHEET.Cells[$"{FOOTER_INFO_COLUMN_INDEX}{currentRowIndex}"].Value = marketCoverageValue;
+            WORKSHEET.Cells[$"{FOOTER_INFO_COLUMN_INDEX}{currentRowIndex}"].Value = MarketsCoverage;
         }
 
         private void _PopulateQuarterTables(CampaignReportData campaignReportData)
@@ -250,12 +256,8 @@ namespace Services.Broadcast.ReportGenerators.CampaignExport
         {
             //because the template file has secondary audiences tables for all the quarters
             //we need to adjust the template dynamically if the current quarter does not have 
-            //secondary audiences tables
-            for (int i = 0; i < ROWS_SECONDARY_TABLE_WITH_SEPARATOR; i++)
-            {   //always delete the currentRowIndex + 1 row because once the row gets deleted
-                //the next iteration will skip rows if we use "i" instead of "1"
-                WORKSHEET.DeleteRow(currentRowIndex + 1);
-            }
+            //secondary audiences tables           
+            WORKSHEET.DeleteRow(currentRowIndex + 1, ROWS_SECONDARY_TABLE_WITH_SEPARATOR);
         }
 
         private void _AddSecondaryAudienceRowData(List<object> firstTableRow,

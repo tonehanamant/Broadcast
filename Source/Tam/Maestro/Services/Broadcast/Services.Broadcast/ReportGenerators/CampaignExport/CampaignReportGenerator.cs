@@ -51,12 +51,13 @@ namespace Services.Broadcast.ReportGenerators.CampaignExport
                 : Path.Combine(TEMPLATES_FILE_PATH, CAMPAIGN_EXPORT_TEMPLATE_FILENAME);
             var package = new ExcelPackage(new FileInfo(templateFilePath), useStream: true);
             ExcelWorksheet proposalWorksheet = ExportSharedLogic.GetWorksheet(templateFilePath, package, PROPOSAL_WORKSHEET_NAME);
-            new ProposalReportGenerator().PopulateProposalTab(campaignReportData, proposalWorksheet);
+            var proposalReportGenerator = new ProposalReportGenerator();
+            proposalReportGenerator.PopulateProposalTab(campaignReportData, proposalWorksheet);
 
             ExcelWorksheet flowChartWorksheet = ExportSharedLogic.GetWorksheet(templateFilePath, package, FLOW_CHART_WORKSHEET_NAME);
-            ExcelWorksheet flowChartTemplateTablesWorksheet = ExportSharedLogic.GetWorksheet(templateFilePath, package, FLOW_CHART_TEMPLATE_TABLES_WORKSHEET_NAME);
-            new FlowChartReportGenerator().PopulateFlowChartTab(campaignReportData
-                , flowChartWorksheet, flowChartTemplateTablesWorksheet);
+            ExcelWorksheet flowChartTemplateTablesWorksheet = ExportSharedLogic.GetWorksheet(templateFilePath, package, FLOW_CHART_TEMPLATE_TABLES_WORKSHEET_NAME);            
+            new FlowChartReportGenerator(flowChartWorksheet, flowChartTemplateTablesWorksheet)
+                .PopulateFlowChartTab(campaignReportData, proposalReportGenerator.Dayparts);
             if (campaignReportData.Status.Equals("Proposal"))
             {
                 package.Workbook.Worksheets.Delete(CONTRACT_WORKSHEET_NAME);
@@ -66,7 +67,11 @@ namespace Services.Broadcast.ReportGenerators.CampaignExport
             else
             {
                 ExcelWorksheet contractWorksheet = ExportSharedLogic.GetWorksheet(CAMPAIGN_EXPORT_TEMPLATE_FILENAME, package, CONTRACT_WORKSHEET_NAME);
-                new ContractReportGenerator().PopulateContractTab(campaignReportData, contractWorksheet);
+                new ContractReportGenerator(contractWorksheet).PopulateContractTab(campaignReportData
+                    , proposalReportGenerator.MarketsCoverage
+                    , proposalReportGenerator.Dayparts
+                    , proposalReportGenerator.FlightHiatuses
+                    , proposalReportGenerator.Notes);
             }
 
             //remove flow chart template tables worksheet

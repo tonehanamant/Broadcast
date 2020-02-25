@@ -12,6 +12,7 @@ namespace Services.Broadcast.ReportGenerators.CampaignExport
         private readonly int SECOND_MONTH_COLUMN_INDEX = 7;
         private readonly int THIRD_MONTH_COLUMN_INDEX = 11;
         private readonly string TABLE_TITLE_COLUMN = "B";
+        private readonly (string Column, int Row) DAYPARTS = ("D", 5);
 
         private readonly string TABLE_12_WEEKS = "A2:O9";
 
@@ -29,17 +30,31 @@ namespace Services.Broadcast.ReportGenerators.CampaignExport
         private readonly int ROWS_TO_COPY = 8;
         private int planNameRowIndex = 7;
         private int currentRowIndex = 0;
+        
+        private readonly ExcelWorksheet WORKSHEET;
+        private readonly ExcelWorksheet TEMPLATES_WORKSHEET;
 
-        public void PopulateFlowChartTab(CampaignReportData campaignReportData
-            , ExcelWorksheet flowChartWorksheet, ExcelWorksheet templateTablesWorksheet)
+        public FlowChartReportGenerator(ExcelWorksheet flowChartWorksheet, ExcelWorksheet templatesWorksheet)
         {
+            WORKSHEET = flowChartWorksheet;
+            TEMPLATES_WORKSHEET = templatesWorksheet;
+        }
+
+        public void PopulateFlowChartTab(CampaignReportData campaignReportData, string dayparts)
+        {
+            _PopulateDayparts(dayparts);
             currentRowIndex = planNameRowIndex;            
             foreach (var table in campaignReportData.FlowChartQuarterTables)
             {
-                string address = _FindTemplateTableAddress(templateTablesWorksheet, table);
-                _CopyTemplateTable(templateTablesWorksheet, flowChartWorksheet, address);
-                _AddFlowChartTable(flowChartWorksheet, table);
+                string address = _FindTemplateTableAddress(TEMPLATES_WORKSHEET, table);
+                _CopyTemplateTable(TEMPLATES_WORKSHEET, WORKSHEET, address);
+                _AddFlowChartTable(WORKSHEET, table);
             }
+        }
+
+        private void _PopulateDayparts(string dayparts)
+        {
+            WORKSHEET.Cells[$"{DAYPARTS.Column}{DAYPARTS.Row}"].Value = dayparts;
         }
 
         private string _FindTemplateTableAddress(ExcelWorksheet templateTablesWorksheet, FlowChartQuarterTableData table)
